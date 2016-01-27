@@ -13,11 +13,9 @@ namespace ExampleApp
             namespace TourExplorer
             {
                 TourExplorerCompositeViewController::TourExplorerCompositeViewController(ITourExplorerViewModel& tourExplorerViewModel,
-                                                                                         Menu::View::IMenuViewModel& searchMenuViewModel,
-                                                                                         ScreenControl::View::IScreenControlViewModel& watermarkViewModel)
+                                                                                         Menu::View::IMenuViewModel& searchMenuViewModel)
                 : m_tourExplorerViewModel(tourExplorerViewModel)
                 , m_searchMenuViewModel(searchMenuViewModel)
-                , m_watermarkViewModel(watermarkViewModel)
                 , m_tourExplorerOpen(false)
                 {
                     

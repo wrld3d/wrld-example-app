@@ -6,7 +6,6 @@
 #include "Tours.h"
 #include "ITourFullScreenImageViewModule.h"
 #include "TourFullScreenImageViewIncludes.h"
-#include "BidirectionalBus.h"
 #include "ScreenProperties.h"
 #include "TourFullScreenImageViewController.h"
 
@@ -25,8 +24,7 @@ namespace ExampleApp
                     TourFullScreenImageViewController* m_pViewController;
                     
                 public:
-                    TourFullScreenImageViewModule(ExampleApp::ExampleAppMessaging::TMessageBus& messageBus,
-                                                  ITourFullScreenImageViewModel& viewModel,
+                    TourFullScreenImageViewModule(ITourFullScreenImageViewModel& viewModel,
                                                   const Eegeo::Rendering::ScreenProperties& screenProperties);
                     
                     ~TourFullScreenImageViewModule();

@@ -100,7 +100,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
     }
     else
     {
-        ExampleApp::Menu::View::MenuItemModel item = section.GetItemAtIndex(index);
+        ExampleApp::Menu::View::MenuItemModel item = section.GetItemAtIndex(static_cast<int>(index));
         std::string json = item.SerializeJson();
         [self populateCellWithJson :json :cell :isHeader];
     }
@@ -158,7 +158,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
     else
     {
         ExampleApp::Menu::View::MenuViewInterop* interop = [m_pView getInterop];
-        interop->HandleItemSelected(indexPath.section, indexPath.row);
+        interop->HandleItemSelected(static_cast<int>(indexPath.section), static_cast<int>(indexPath.row));
     }
 }
 

@@ -18,7 +18,6 @@ namespace ExampleApp
                                                                URLRequest::View::URLRequestHandler& urlRequestHandler,
                                                                ITourExplorerCompositeViewController& tourExplorerCompositeViewController,
                                                                const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                                               Metrics::IMetricsService& metricsService,
                                                                ImageStore* pImageStore)
                 {
                     m_pView = [[TourExplorerView alloc] initWithParams
@@ -31,8 +30,7 @@ namespace ExampleApp
                     m_pViewController = Eegeo_NEW(TourExplorerViewController)(viewModel,
                                                                               tourExplorerCompositeViewController,
                                                                               *[m_pView getInterop],
-                                                                              messageBus,
-                                                                              metricsService);
+                                                                              messageBus);
                 }
                 
                 TourExplorerViewModule::~TourExplorerViewModule()

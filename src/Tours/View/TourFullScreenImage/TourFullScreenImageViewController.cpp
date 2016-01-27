@@ -13,11 +13,9 @@ namespace ExampleApp
             namespace TourFullScreenImage
             {
                 TourFullScreenImageViewController::TourFullScreenImageViewController(ITourFullScreenImageViewModel& viewModel,
-                                                                                     ITourFullScreenImageView& view,
-                                                                                     ExampleAppMessaging::TMessageBus& messageBus)
+                                                                                     ITourFullScreenImageView& view)
                 : m_viewModel(viewModel)
                 , m_view(view)
-                , m_messageBus(messageBus)
                 , m_beginFullScreenImageCeremonyCallback(this, &TourFullScreenImageViewController::OnCeremonyBegin)
                 , m_endFullScreenImageCeremonyCallback(this, &TourFullScreenImageViewController::OnCeremonyEnd)
                 {

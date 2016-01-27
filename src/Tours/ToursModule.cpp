@@ -16,18 +16,13 @@ namespace ExampleApp
                                  WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                  Search::SdkModel::ISearchRefreshService& searchRefreshService,
                                  Menu::View::IMenuViewModel& searchMenuViewModel,
-                                 ScreenControl::View::IScreenControlViewModel& watermarkViewModel,
                                  Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
                                  const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                 Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& gpsGlobeCameraController,
-                                 Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
                                  ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
                                  AppModes::SdkModel::IAppModeModel& appModeModel)
         {
             m_pToursCameraModule = Eegeo_NEW(SdkModel::Camera::TourCameraModule)(resourceCeilingProvider,
-                                                                                 screenProperties,
-                                                                                 gpsGlobeCameraController,
-                                                                                 terrainHeightProvider);
+                                                                                 screenProperties);
             
             
             m_pTourRepository = Eegeo_NEW(SdkModel::TourRepository);
@@ -46,8 +41,7 @@ namespace ExampleApp
                                                                           worldPinsService,
                                                                           *m_pTourWorldPinSelectionHandlerFactory);
             
-            m_pTourRemovedObserver = Eegeo_NEW(SdkModel::TourRemovedObserver)(*m_pTourRepository,
-                                                                              worldPinsService);
+            m_pTourRemovedObserver = Eegeo_NEW(SdkModel::TourRemovedObserver)(*m_pTourRepository);
             
             m_pTourActiveStateChangedMessageHandler = Eegeo_NEW(SdkModel::TourActiveStateChangedMessageHandler)(*m_pTourService,
                                                                                                                 messageBus);
@@ -62,8 +56,7 @@ namespace ExampleApp
             m_pTourExplorerViewModel = Eegeo_NEW(View::TourExplorer::TourExplorerViewModel)(identityProvider.GetNextIdentity(), false);
             
             m_pTourExplorerCompositeViewController = Eegeo_NEW(View::TourExplorer::TourExplorerCompositeViewController)(*m_pTourExplorerViewModel,
-                                                                                                                        searchMenuViewModel,
-                                                                                                                        watermarkViewModel);
+                                                                                                                        searchMenuViewModel);
             
             m_pTourSelectedViewObserver = Eegeo_NEW(View::TourExplorer::TourSelectedViewObserver)(*m_pTourExplorerCompositeViewController,
                                                                                                   messageBus);

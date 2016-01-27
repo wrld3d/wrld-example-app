@@ -36,7 +36,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<MyPinDetailsController> m_viewModelClosedCallback;
 
                 Eegeo::Helpers::TCallback0<MyPinDetailsController> m_viewRemovePinCallback;
-                Eegeo::Helpers::TCallback0<MyPinDetailsController> m_viewDismissedCallback;;
+                Eegeo::Helpers::TCallback0<MyPinDetailsController> m_viewDismissedCallback;
             };
         }
     }

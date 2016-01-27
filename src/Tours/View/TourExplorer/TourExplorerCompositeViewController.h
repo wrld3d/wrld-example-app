@@ -20,13 +20,11 @@ namespace ExampleApp
                 {
                     ITourExplorerViewModel& m_tourExplorerViewModel;
                     Menu::View::IMenuViewModel& m_searchMenuViewModel;
-                    ScreenControl::View::IScreenControlViewModel& m_watermarkViewModel;
                     bool m_tourExplorerOpen;
                     
                 public:
                     TourExplorerCompositeViewController(ITourExplorerViewModel& tourExplorerViewModel,
-                                                        Menu::View::IMenuViewModel& searchMenuViewModel,
-                                                        ScreenControl::View::IScreenControlViewModel& watermarkViewModel);
+                                                        Menu::View::IMenuViewModel& searchMenuViewModel);
                     
                     ~TourExplorerCompositeViewController();
                     

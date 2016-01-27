@@ -70,7 +70,6 @@ namespace ExampleApp
                 
                 m_pModel = Eegeo_NEW(InteriorsExplorerModel)(interiorController,
                                                              interiorSelectionModel,
-                                                             *m_pVisibilityUpdater,
                                                              visualMapService,
                                                              messageBus,
                                                              sdkModelDomainEventBus,

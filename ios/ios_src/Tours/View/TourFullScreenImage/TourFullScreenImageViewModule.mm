@@ -13,8 +13,7 @@ namespace ExampleApp
         {
             namespace TourFullScreenImage
             {
-                TourFullScreenImageViewModule::TourFullScreenImageViewModule(ExampleApp::ExampleAppMessaging::TMessageBus& messageBus,
-                                                                             ITourFullScreenImageViewModel& viewModel,
+                TourFullScreenImageViewModule::TourFullScreenImageViewModule(ITourFullScreenImageViewModel& viewModel,
                                                                              const Eegeo::Rendering::ScreenProperties& screenProperties)
                 {
                     m_pView = [[TourFullScreenImageView alloc] initWithParams
@@ -23,8 +22,7 @@ namespace ExampleApp
                                :screenProperties.GetPixelScale()];
                     
                     m_pViewController = Eegeo_NEW(TourFullScreenImageViewController)(viewModel,
-                                                                                     *[m_pView getInterop],
-                                                                                     messageBus);
+                                                                                     *[m_pView getInterop]);
                 }
                 
                 TourFullScreenImageViewModule::~TourFullScreenImageViewModule()

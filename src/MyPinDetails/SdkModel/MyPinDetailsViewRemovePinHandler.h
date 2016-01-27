@@ -24,7 +24,7 @@ namespace ExampleApp
                 ~MyPinDetailsViewRemovePinHandler();
 
             private:
-                ;
+                
                 MyPins::SdkModel::IMyPinsService& m_myPinsService;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 

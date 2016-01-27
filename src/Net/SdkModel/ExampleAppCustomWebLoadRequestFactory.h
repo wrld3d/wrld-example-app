@@ -20,13 +20,11 @@ namespace ExampleApp
         {
             class ExampleAppCustomWebLoadRequestFactory : public Eegeo::Web::IWebLoadRequestFactory
             {
-                Eegeo::Helpers::IHttpCache& m_httpCache;
                 Eegeo::Web::IWebLoadRequestFactory& m_webLoadRequestFactory;
                 INetworkCapabilities& m_networkCapabilities;
                 
             public:
-                ExampleAppCustomWebLoadRequestFactory(Eegeo::Helpers::IHttpCache& httpCache,
-                                                      Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
+                ExampleAppCustomWebLoadRequestFactory(Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
                                                       INetworkCapabilities& networkCapabilities);
                 
                 

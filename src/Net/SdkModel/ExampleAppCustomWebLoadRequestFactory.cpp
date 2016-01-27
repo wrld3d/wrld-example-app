@@ -9,11 +9,9 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            ExampleAppCustomWebLoadRequestFactory::ExampleAppCustomWebLoadRequestFactory(Eegeo::Helpers::IHttpCache& httpCache,
-                                                                                         Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
+            ExampleAppCustomWebLoadRequestFactory::ExampleAppCustomWebLoadRequestFactory(Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
                                                                                          INetworkCapabilities& networkCapabilities)
-            : m_httpCache(httpCache)
-            , m_webLoadRequestFactory(webLoadRequestFactory)
+            : m_webLoadRequestFactory(webLoadRequestFactory)
             , m_networkCapabilities(networkCapabilities)
             {
                 

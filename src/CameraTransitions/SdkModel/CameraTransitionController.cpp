@@ -32,8 +32,7 @@ namespace ExampleApp
                                                                    ExampleApp::AppCamera::SdkModel::IAppCameraController& appCameraController,
                                                                    Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                    Eegeo::Resources::Interiors::InteriorController& interiorController,
-                                                                   InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
-                                                                   ExampleApp::ExampleAppMessaging::TMessageBus& messageBus)
+                                                                   InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel)
             : m_cameraController(cameraController)
             , m_interiorsCameraController(interiorsCameraController)
             , m_navigationService(navigationService)
@@ -45,7 +44,6 @@ namespace ExampleApp
             , m_interiorsExplorerModel(interiorsExplorerModel)
             , m_isTransitioning(false)
             , m_defaultInteriorId(Eegeo::Resources::Interiors::InteriorId::NullId())
-            , m_messageBus(messageBus)
             {
 
             }

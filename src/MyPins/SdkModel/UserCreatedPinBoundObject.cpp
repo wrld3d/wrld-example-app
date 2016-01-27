@@ -14,10 +14,9 @@ namespace ExampleApp
             UserCreatedPinBoundObject* UserCreatedPinBoundObject::FromSerializedData(MyPinModel::TPinIdType pinId,
                                                                                      const std::string& serializedData,
                                                                                      MyPinsFileIO& myPinsFileIO,
-                                                                                     ExampleAppMessaging::TMessageBus& messageBus,
-                                                                                     Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory)
+                                                                                     ExampleAppMessaging::TMessageBus& messageBus)
             {
-                return Eegeo_NEW(UserCreatedPinBoundObject)(pinId, serializedData, myPinsFileIO, messageBus, webLoadRequestFactory);
+                return Eegeo_NEW(UserCreatedPinBoundObject)(pinId, serializedData, myPinsFileIO, messageBus);
             }
             
             UserCreatedPinBoundObject::UserCreatedPinBoundObject(MyPinModel::TPinIdType pinId,
@@ -25,8 +24,7 @@ namespace ExampleApp
                                                                  size_t imageSize,
                                                                  bool share,
                                                                  MyPinsFileIO& myPinsFileIO,
-                                                                 ExampleAppMessaging::TMessageBus& messageBus,
-                                                                 Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory)
+                                                                 ExampleAppMessaging::TMessageBus& messageBus)
             : m_pinId(pinId)
             , m_pImageData(pImageData)
             , m_imageSize(imageSize)
@@ -34,7 +32,6 @@ namespace ExampleApp
             , m_imagePath("")
             , m_myPinsFileIO(myPinsFileIO)
             , m_messageBus(messageBus)
-            , m_webLoadRequestFactory(webLoadRequestFactory)
             {
                 
             }
@@ -42,8 +39,7 @@ namespace ExampleApp
             UserCreatedPinBoundObject::UserCreatedPinBoundObject(MyPinModel::TPinIdType pinId,
                                                                  const std::string& imagePath,
                                                                  MyPinsFileIO& myPinsFileIO,
-                                                                 ExampleAppMessaging::TMessageBus& messageBus,
-                                                                 Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory)
+                                                                 ExampleAppMessaging::TMessageBus& messageBus)
             : m_pinId(pinId)
             , m_pImageData(NULL)
             , m_imageSize(0)
@@ -51,7 +47,6 @@ namespace ExampleApp
             , m_imagePath(imagePath)
             , m_myPinsFileIO(myPinsFileIO)
             , m_messageBus(messageBus)
-            , m_webLoadRequestFactory(webLoadRequestFactory)
             {
                 
             }

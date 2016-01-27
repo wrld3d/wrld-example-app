@@ -26,7 +26,6 @@ namespace ExampleApp
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                 Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& m_globeCameraTouchController;
                 Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
-                Eegeo::Camera::GlobeCamera::GlobeCameraTouchSettings m_cameraTouchSettings;
                 const Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
                 const bool m_interiorsAffectedByFlattening;
                 bool m_applyRestrictions;

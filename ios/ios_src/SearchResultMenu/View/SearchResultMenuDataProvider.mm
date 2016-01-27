@@ -51,7 +51,7 @@ CGFloat const SearchResultRowHeight = SECTION_HEADER_CELL_HEIGHT;
     }
     else
     {
-        ExampleApp::Menu::View::MenuItemModel item = section.GetItemAtIndex(index);
+        ExampleApp::Menu::View::MenuItemModel item = section.GetItemAtIndex(static_cast<int>(index));
 
         cell.textLabel.text = [NSString stringWithUTF8String:item.Name().c_str()];
         [cell.textLabel sizeToFit];

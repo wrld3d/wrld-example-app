@@ -1,13 +1,12 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-#include "ToursCameraTransitionController.h"
 #include "IToursCameraController.h"
+#include "ToursCameraTransitionController.h"
 #include "IToursCameraMode.h"
 #include "IToursCameraTransitionMode.h"
 #include "ITourService.h"
 #include "ToursCameraFadeTransitionMode.h"
 #include "GpsGlobeCameraController.h"
-#include "TerrainHeightProvider.h"
 #include "EarthConstants.h"
 #include "IntersectionTests.h"
 #include "InterestPointTransitionCameraMode.h"
@@ -21,15 +20,11 @@ namespace ExampleApp
             namespace Camera
             {
                 ToursCameraTransitionController::ToursCameraTransitionController(IToursCameraController& toursCameraController,
-                                                                                 Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& gpsGlobeCameraController,
-                                                                                 Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
                                                                                  Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& touchController)
                 : m_toursCameraController(toursCameraController)
                 , m_pToursTransitionMode(NULL)
                 , m_pToursCurrentMode(NULL)
                 , m_pToursNextMode(NULL)
-                , m_gpsGlobeCameraController(gpsGlobeCameraController)
-                , m_terrainHeightProvider(terrainHeightProvider)
                 , m_touchController(touchController)
                 {
                     

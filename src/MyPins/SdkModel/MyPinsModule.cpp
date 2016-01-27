@@ -53,12 +53,11 @@ namespace ExampleApp
                 m_pMyPinBoundObjectFactory = Eegeo_NEW(MyPinBoundObjectFactory)(messageBus,
                                                                                 sdkModelDomainEventBus,
                                                                                 categorySearchRepository,
-                                                                                myPinsSearchResultRefreshService,
-                                                                                platformAbstractions.GetWebLoadRequestFactory());
+                                                                                myPinsSearchResultRefreshService);
 
                 m_pMyPinsSelectionHandlerFactory = Eegeo_NEW(MyPinSelectionHandlerFactory)(*m_pMyPinBoundObjectRepository, metricsService);
                 
-                m_pMyPinVisibilityStateChangedHandlerFactory = Eegeo_NEW(MyPinVisibilityStateChangedHandlerFactory)(*m_pMyPinBoundObjectRepository, messageBus);
+                m_pMyPinVisibilityStateChangedHandlerFactory = Eegeo_NEW(MyPinVisibilityStateChangedHandlerFactory)(*m_pMyPinBoundObjectRepository);
 
                 m_pMyPinsFileIO = Eegeo_NEW(MyPinsFileIO)(platformAbstractions.GetFileIO(),
                                                           persistentSettings,

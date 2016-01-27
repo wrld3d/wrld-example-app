@@ -20,7 +20,6 @@ namespace ExampleApp
                     std::string m_name;
                     std::string m_country;
                     Eegeo::Space::LatLong m_location;
-                    int m_population;
                     
                 public:
                     GeoNamesSearchResultDto(const std::string& id,

@@ -14,7 +14,6 @@
 #include "InteriorsModel.h"
 #include "InteriorId.h"
 #include "InteriorsFloorModel.h"
-#include "InteriorVisibilityUpdater.h"
 #include "IVisualMapService.h"
 #include "VisualMapState.h"
 
@@ -42,14 +41,12 @@ namespace ExampleApp
             
             InteriorsExplorerModel::InteriorsExplorerModel(Eegeo::Resources::Interiors::InteriorController& controller,
                                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                           InteriorVisibilityUpdater& interiorVisibilityUpdater,
                                                            VisualMap::SdkModel::IVisualMapService& visualMapService,
                                                            ExampleAppMessaging::TMessageBus& messageBus,
                                                            ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                                            Metrics::IMetricsService& metricsService)
             : m_controller(controller)
             , m_interiorSelectionModel(interiorSelectionModel)
-            , m_interiorVisibilityUpdater(interiorVisibilityUpdater)
             , m_visualMapService(visualMapService)
             , m_messageBus(messageBus)
             , m_sdkModelDomainEventBus(sdkModelDomainEventBus)

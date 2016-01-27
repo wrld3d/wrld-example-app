@@ -274,8 +274,7 @@ namespace ExampleApp
                                                                                                                        m_pAppCameraModule->GetController(),
                                                                                                                        interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                        interiorsPresentationModule.GetController(),
-                                                                                                                       m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
-                                                                                                                       m_messageBus);
+                                                                                                                       m_pInteriorsExplorerModule->GetInteriorsExplorerModel());
         m_pCameraTransitionService->SetTransitionController(*m_pCameraTransitionController);
         
         m_pLoadingScreen = CreateLoadingScreen(screenProperties, m_pWorld->GetRenderingModule(), m_pWorld->GetPlatformAbstractionModule());
@@ -745,11 +744,8 @@ namespace ExampleApp
                                                        WorldPinsModule().GetWorldPinsService(),
                                                        SearchModule().GetSearchRefreshService(),
                                                        SearchResultMenuModule().GetMenuViewModel(),
-                                                       WatermarkModule().GetScreenControlViewModel(),
                                                        world.GetMapModule().GetResourceCeilingProvider(),
                                                        m_screenProperties,
-                                                       *m_pGlobeCameraController,
-                                                       world.GetTerrainModelModule().GetTerrainHeightProvider(),
                                                        m_sdkDomainEventBus,
                                                        *m_pAppModeModel);
         
@@ -794,7 +790,6 @@ namespace ExampleApp
         Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
         
         Tours::SdkModel::TourInstances::Example::ExampleTourStateMachineFactory factory(ToursModule().GetCameraTransitionController(),
-                                                                                        ToursModule().GetCameraController(),
                                                                                         m_pWorldPinsModule->GetWorldPinsService(),
                                                                                         m_interiorsEnabled,
                                                                                         interiorsPresentationModule.GetController(),
@@ -805,7 +800,6 @@ namespace ExampleApp
         ToursModule().GetTourService().AddTour(tourModel, *factory.CreateTourStateMachine(tourModel));
         
         m_pTwitterFeedTourModule = Eegeo_NEW(Tours::SdkModel::TourInstances::TwitterFeed::TwitterFeedTourModule)(ToursModule().GetCameraTransitionController(),
-                                                                                                                 ToursModule().GetCameraController(),
                                                                                                                  ToursModule().GetTourService(),
                                                                                                                  WorldPinsModule().GetWorldPinsService(),
                                                                                                                  interiorsPresentationModule.GetController(),
@@ -813,7 +807,6 @@ namespace ExampleApp
                                                                                                                  interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                  ToursModule().GetTourRepository(),
                                                                                                                  TwitterFeedModule().GetTwitterFeedService(),
-                                                                                                                 m_metricsService,
                                                                                                                  m_messageBus);
         
         const std::map<std::string, Tours::SdkModel::TourInstances::TwitterFeed::TweetStateData>& tweetStateDataMap = TwitterFeedTourModule().GetTweetStateDataMap();

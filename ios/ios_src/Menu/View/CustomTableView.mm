@@ -154,7 +154,7 @@
 {
     NSInteger numberOfSections = [self numberOfSections];
 
-    for (int i = indexPath.section + 1; i < numberOfSections; ++i)
+    for (long i = indexPath.section + 1; i < numberOfSections; ++i)
     {
         NSInteger numberOfRowsInSection = [self numberOfRowsInSection: i];
 

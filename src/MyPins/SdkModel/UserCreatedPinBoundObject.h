@@ -25,7 +25,6 @@ namespace ExampleApp
                 std::string m_imagePath;
                 MyPinsFileIO& m_myPinsFileIO;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
-                Eegeo::Web::IWebLoadRequestFactory& m_webLoadRequestFactory;
                 
                 void SubmitPinToWebService(const MyPinModel& pinModel);
                 
@@ -33,22 +32,19 @@ namespace ExampleApp
                 static UserCreatedPinBoundObject* FromSerializedData(MyPinModel::TPinIdType pinId,
                                                                      const std::string& serializedData,
                                                                      MyPinsFileIO& myPinsFileIO,
-                                                                     ExampleAppMessaging::TMessageBus& messageBus,
-                                                                     Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory);
+                                                                     ExampleAppMessaging::TMessageBus& messageBus);
                 
                 UserCreatedPinBoundObject(MyPinModel::TPinIdType pinId,
                                           Byte* imageData,
                                           size_t imageSize,
                                           bool share,
                                           MyPinsFileIO& myPinsFileIO,
-                                          ExampleAppMessaging::TMessageBus& messageBus,
-                                          Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory);
+                                          ExampleAppMessaging::TMessageBus& messageBus);
                 
                 UserCreatedPinBoundObject(MyPinModel::TPinIdType pinId,
                                           const std::string& imagePath,
                                           MyPinsFileIO& myPinsFileIO,
-                                          ExampleAppMessaging::TMessageBus& messageBus,
-                                          Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory);
+                                          ExampleAppMessaging::TMessageBus& messageBus);
                 
                 ~UserCreatedPinBoundObject();
                 
