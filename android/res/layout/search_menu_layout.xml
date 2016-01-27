@@ -5,7 +5,9 @@
     android:layout_height="fill_parent"
     android:layout_centerHorizontal="true"
     android:clipChildren="false"
-    android:clipToPadding="false" >
+    android:clipToPadding="false"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true" >
     
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -58,14 +60,6 @@
                 android:background="@drawable/menu_button"
                 android:scaleX="-1" >
             </RelativeLayout>
-
-            <ProgressBar
-                android:id="@+id/search_menu_spinner"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_centerInParent="true"
-                android:background="@android:color/transparent"
-                android:padding="5dp" />
 
             <TextView
                 android:id="@+id/search_menu_num_results_text"

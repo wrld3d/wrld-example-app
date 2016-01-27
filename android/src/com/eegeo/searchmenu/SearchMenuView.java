@@ -8,6 +8,7 @@ import java.util.List;
 
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView.OnItemClickListener;
@@ -23,7 +24,7 @@ import com.eegeo.menu.MenuView;
 import com.eegeo.menu.MenuViewJniMethods;
 import com.eegeo.mobileexampleapp.R;
 
-public class SearchMenuView extends MenuView implements TextView.OnEditorActionListener
+public class SearchMenuView extends MenuView implements TextView.OnEditorActionListener, OnFocusChangeListener
 {
     protected View m_closeButtonView = null;
     protected View m_progressSpinner = null;
@@ -41,6 +42,8 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     private MenuListAdapter m_listAdapter = null;
 
     private EditText m_editText;
+    private int m_disabledTextColor;
+    private int m_enabledTextColor;
     
     private TextView m_searchCountText;
     
@@ -65,7 +68,8 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         dragTabInteractiveView.setOnTouchListener(this);
 
         m_closeButtonView = m_view.findViewById(R.id.search_menu_close_button);
-        m_closeButtonView.setOnClickListener(new SearchMenuCloseButtonClickedHandler(m_nativeCallerPointer));
+        m_closeButtonView.setOnClickListener(new SearchMenuCloseButtonClickedHandler(m_nativeCallerPointer, this));
+        m_closeButtonView.setVisibility(View.GONE);
 
         m_progressSpinner = m_view.findViewById(R.id.search_menu_spinner);
         m_progressSpinner.setVisibility(View.GONE);
@@ -76,6 +80,11 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         m_editText = (EditText)m_view.findViewById(R.id.search_menu_view_edit_text_view);
         m_editText.setImeActionLabel("Search", KeyEvent.KEYCODE_ENTER);
         m_editText.setOnEditorActionListener(this);
+        m_editText.setOnFocusChangeListener(this);
+        m_editText.clearFocus();
+        m_disabledTextColor = m_activity.getResources().getColor(R.color.text_field_disabled);
+        m_enabledTextColor = m_activity.getResources().getColor(R.color.text_field_enabled);
+        m_editText.setTextColor(m_enabledTextColor);
         
         m_searchCountText = (TextView)m_view.findViewById(R.id.search_menu_result_count);
         m_searchCountText.setText("");
@@ -139,11 +148,14 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     @Override
     public boolean onEditorAction(TextView view, int actionId, KeyEvent event)
     {
-        if (actionId == EditorInfo.IME_ACTION_DONE)
+    	updateClearButtonVisibility();
+        if (actionId == EditorInfo.IME_ACTION_DONE ||
+        	actionId == KeyEvent.KEYCODE_ENTER)
         {
             final String queryText = m_editText.getText().toString();
             m_activity.dismissKeyboard(m_editText.getWindowToken());
-
+            
+            m_editText.clearFocus();
             if(queryText.length() > 0)
             {
                 SearchMenuViewJniMethods.PerformSearchQuery(m_nativeCallerPointer, queryText);
@@ -162,19 +174,37 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
 
     public void disableEditText()
     {
+    	m_closeButtonView.setVisibility(View.GONE);
+    	m_progressSpinner.setVisibility(View.VISIBLE);
         m_editText.setEnabled(false);
+        m_editText.setTextColor(m_disabledTextColor);
     }
 
     public void enableEditText()
     {
+    	m_closeButtonView.setVisibility(View.VISIBLE);
+    	m_progressSpinner.setVisibility(View.GONE);
         m_editText.setEnabled(true);
+        m_editText.setTextColor(m_enabledTextColor);
     }
     
     public void setEditText(String searchText, boolean isCategory)
     {
+    	setEditTextInternal(searchText, isCategory);
+    	m_editText.clearFocus();
+    }
+    
+    private void setEditTextInternal(String searchText, boolean isCategory)
+    {
     	m_editText.setText(searchText);
-    	
     	m_isCategory = isCategory;
+    	updateClearButtonVisibility();
+    }
+    
+    private void updateClearButtonVisibility()
+    {
+    	final String currentSearchText = m_editText.getText().toString();
+    	m_closeButtonView.setVisibility(currentSearchText.isEmpty() ? View.GONE : View.VISIBLE);
     }
     
     public void setSearchResultCount(final int searchResultCount)
@@ -249,5 +279,13 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         
     	m_searchListAdapter.setData(searchResultList);
     }
+
+	@Override
+	public void onFocusChange(View v, boolean hasFocus) {
+		if(hasFocus && m_isCategory)
+		{
+			setEditTextInternal("", false);
+		}
+	}
 }
 

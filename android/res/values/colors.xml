@@ -11,4 +11,6 @@
     <color name="menu_separator">#b1cce1</color>
     <color name="submenu_separator">#c6cecf</color>
     <color name="transparent">#00000000</color>
+    <color name="text_field_disabled">#6d6d6d</color>
+    <color name="text_field_enabled">#202020</color>
 </resources>
