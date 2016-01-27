@@ -892,9 +892,9 @@ namespace ExampleApp
 
         eegeoWorld.Update(updateParameters);
 
-        //m_pSearchModule->GetSearchRefreshService().TryRefreshSearch(dt, ecefInterestPoint);
+        m_pSearchModule->GetSearchRefreshService().TryRefreshSearch(dt, ecefInterestPoint);
 
-        //m_pPinsModule->GetController().Update(dt, renderCamera);
+        m_pPinsModule->GetController().Update(dt, renderCamera);
         
         if(!eegeoWorld.Initialising() || (m_pLoadingScreen == NULL && eegeoWorld.Initialising()))
         {
