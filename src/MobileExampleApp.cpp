@@ -632,8 +632,6 @@ namespace ExampleApp
                                                                                                                 m_pWorld->GetRenderingModule(),
                                                                                                                 m_pWorld->GetMapModule(),
                                                                                                                 m_screenProperties));
-
-            
         }
         
         std::vector<ScreenControl::View::IScreenControlViewModel*> reactors(GetReactorControls());
