@@ -556,6 +556,12 @@
     <Filter Include="Source Files\Windows\SettingsMenu\View">
       <UniqueIdentifier>{3b00818d-1338-49ae-b7c5-1a86b4a9e71b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Windows\SearchMenu">
+      <UniqueIdentifier>{e541256d-0a6b-4407-a022-b114b6b5db77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Windows\SearchMenu\View">
+      <UniqueIdentifier>{e6bf7dc6-d21a-4d47-9135-fe81d24f389c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\AppHost.cpp">
@@ -1838,6 +1844,15 @@
     </ClCompile>
     <ClCompile Include="..\..\src\SettingsMenu\View\SettingsMenuViewModule.cpp">
       <Filter>Source Files\Windows\SettingsMenu\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SearchMenu\View\SearchMenuView.cpp">
+      <Filter>Source Files\Windows\SearchMenu\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SearchMenu\View\SearchMenuViewModule.cpp">
+      <Filter>Source Files\Windows\SearchMenu\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SearchMenu\View\SearchMenuCLI.cpp">
+      <Filter>Source Files\Windows\SearchMenu\View</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -4051,6 +4066,21 @@
     </ClInclude>
     <ClInclude Include="..\..\src\SettingsMenu\View\SettingsMenuViewModule.h">
       <Filter>Source Files\Windows\SettingsMenu\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SearchMenu\View\SearchMenuViewModule.h">
+      <Filter>Source Files\Windows\SearchMenu\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SearchMenu\View\ISearchMenuViewModule.h">
+      <Filter>Source Files\Windows\SearchMenu\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SearchMenu\View\SearchMenuView.h">
+      <Filter>Source Files\Windows\SearchMenu\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SearchMenu\View\SearchMenuCLI.h">
+      <Filter>Source Files\Windows\SearchMenu\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SearchMenu\View\SearchMenuViewIncludes.h">
+      <Filter>Source Files\Windows\SearchMenu\View</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

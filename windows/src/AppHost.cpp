@@ -107,8 +107,8 @@ AppHost::AppHost(
     , m_WindowsNativeUIFactories(m_WindowsAlertBoxFactory, m_WindowsInputBoxFactory, m_WindowsKeyboardInputFactory)
     , m_pInputProcessor(NULL)
     , m_pWindowsPlatformAbstractionModule(NULL)
-    , m_pSecondaryMenuViewModule(NULL)
-    , m_pSearchResultMenuViewModule(NULL)
+    , m_pSettingsMenuViewModule(NULL)
+    , m_pSearchMenuViewModule(NULL)
     , m_pModalBackgroundViewModule(NULL)
     , m_pFlattenButtonViewModule(NULL)
     , m_pMyPinCreationViewModule(NULL)
@@ -577,9 +577,9 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
 
             Eegeo_DELETE m_pModalBackgroundViewModule;
 
-            Eegeo_DELETE m_pSearchResultMenuViewModule;
+            Eegeo_DELETE m_pSearchMenuViewModule;
 
-            Eegeo_DELETE m_pSecondaryMenuViewModule;
+            Eegeo_DELETE m_pSettingsMenuViewModule;
 
             Eegeo_DELETE m_pCompassViewModule;
 

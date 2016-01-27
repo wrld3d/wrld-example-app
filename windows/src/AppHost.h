@@ -122,8 +122,8 @@ private:
 
 
     Eegeo::Windows::WindowsPlatformAbstractionModule* m_pWindowsPlatformAbstractionModule;
-    ExampleApp::Menu::View::IMenuViewModule* m_pSecondaryMenuViewModule;
-    ExampleApp::Menu::View::IMenuViewModule* m_pSearchResultMenuViewModule;
+    ExampleApp::Menu::View::IMenuViewModule* m_pSettingsMenuViewModule;
+    ExampleApp::Menu::View::IMenuViewModule* m_pSearchMenuViewModule;
     ExampleApp::ModalBackground::View::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
     ExampleApp::FlattenButton::View::IFlattenButtonViewModule* m_pFlattenButtonViewModule;
     ExampleApp::SearchResultPoi::View::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;
