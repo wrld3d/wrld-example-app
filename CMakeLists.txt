@@ -38,16 +38,34 @@ if(${IOS})
 
     set(CMAKE_XCODE_EFFECTIVE_PLATFORMS "-iphoneos;-iphonesimulator")
     set(CMAKE_OSX_ARCHITECTURES "armv7;arm64;i386")
-    set(IOS_WARNING_FLAGS "-Wmost -Wpedantic -Werror -Wno-four-char-constants -Wno-unknown-pragmas -Wno-reorder -Wno-unused-variable")
+    set(IOS_WARNING_FLAGS "-Wmost -Werror -Wno-four-char-constants -Wno-unknown-pragmas -Wno-reorder")
+
     if(${COMPILE_CPP_03})
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -x objective-c++ ${IOS_WARNING_FLAGS}")
+        set(eegeo_sdk_lib "-lapps-on-maps")
     else(${COMPILE_CPP_03})
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -x objective-c++ -DCOMPILE_CPP_11 ${IOS_WARNING_FLAGS}")
+        set(eegeo_sdk_lib "-lapps-on-maps-cpp11")
     endif(${COMPILE_CPP_03})
 
-    SET(CMAKE_EXE_LINKER_FLAGS
-        "-framework CoreLocation -framework MobileCoreServices -framework SystemConfiguration -framework CFNetwork -framework GLKit -framework OpenGLES -framework UIKit -framework Foundation -framework QuartzCore -framework AVFoundation -framework CoreGraphics -framework CoreData -Lios/Include/eegeo -L/usr/lib/ -lturbojpeg -lz -lcurl -luv -lapps-on-maps-cpp11 -Lios/Include -lFlurry_6.0.0"
-    )
+    SET(ios_frameworks 
+      "-framework CoreLocation
+      -framework MobileCoreServices 
+      -framework SystemConfiguration 
+      -framework CFNetwork 
+      -framework GLKit 
+      -framework OpenGLES 
+      -framework UIKit 
+      -framework Foundation 
+      -framework QuartzCore 
+      -framework AVFoundation 
+      -framework CoreGraphics 
+      -framework CoreData
+      -framework CoreLocation")
+
+    SET(linker_search_paths "-Lios/Include/eegeo -Lios/Include")
+    SET(libs "${eegeo_sdk_lib} -lturbojpeg -lz -lcurl -luv -lFlurry_6.0.0")
+    SET(CMAKE_EXE_LINKER_FLAGS "${ios_frameworks} ${linker_search_paths} ${libs}")
 
     include_directories(${headers})
 
