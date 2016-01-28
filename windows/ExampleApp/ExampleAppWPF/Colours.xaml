@@ -12,4 +12,5 @@
     <SolidColorBrush x:Key="MenuSeparator" Color="#b1cce1"/>
     <SolidColorBrush x:Key="SubMenuSeparator" Color="#c6cecf"/>
     <SolidColorBrush x:Key="Transparent" Color="#00000000"/>
+    <SolidColorBrush x:Key="Highlight" Color="#FF8DD8F8"/>
 </ResourceDictionary>

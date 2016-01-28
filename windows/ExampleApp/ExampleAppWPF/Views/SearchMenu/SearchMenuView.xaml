@@ -27,19 +27,16 @@
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <DockPanel Margin="0,50,0,0" Width="270">
-                        <Grid Width="50" Height="50" VerticalAlignment="Top" DockPanel.Dock="Right" Background="{StaticResource Gold}">
+                        <Grid Width="50" Height="50" VerticalAlignment="Top" DockPanel.Dock="Right" Name="DragTabParentGrid" Background="{StaticResource Gold}">
                             <Image Source="/Assets/search_magglass.png" Width="50" Height="50" Name="SecondaryMenuDragTabView" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </Grid>
-                        
-                        <Grid Name="SecondaryMenuViewListContainer" Width="220" DockPanel.Dock="Left" Visibility="Hidden">
+
+                        <Grid Name="SecondaryMenuViewListContainer" Width="220" DockPanel.Dock="Left" Visibility="Hidden" Background="{StaticResource Gold}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="50"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
-                                <Grid.Background>
-                                    <ImageBrush ImageSource="/Assets/menu_bar.png"/>
-                                </Grid.Background>
                                 <Grid Margin="8,10,8,10">
                                     <TextBox Name="SecondaryMenuViewSearchEditTextView" Foreground="{StaticResource Black}" Height="36" VerticalAlignment="Center" HorizontalAlignment="Stretch" VerticalContentAlignment="Center"/>
                                 </Grid>

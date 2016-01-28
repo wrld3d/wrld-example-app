@@ -19,10 +19,16 @@ namespace ExampleAppWPF
         private MenuListAdapter m_adapter;
         private bool m_isFirstLayout = true;
         private Grid m_mainContainer;
+        private Grid m_dragTabContainer;
+        private bool m_isMouseDown = false;
+        private static readonly ResourceDictionary genericResourceDictionary;
 
         static SearchMenuView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SearchMenuView), new FrameworkPropertyMetadata(typeof(SearchMenuView)));
+
+            var uri = new Uri("/ExampleAppWPF;component/Colours.xaml", UriKind.Relative);
+            genericResourceDictionary = (ResourceDictionary)Application.LoadComponent(uri);
         }
 
         public SearchMenuView(IntPtr nativeCallerPointer) : base(nativeCallerPointer)
@@ -76,11 +82,11 @@ namespace ExampleAppWPF
             m_list.SelectionChanged += SelectionChanged;
             
             m_dragTabView = (Image)GetTemplateChild("SecondaryMenuDragTabView");
-            
-            m_dragTabClickHandler = new ControlClickHandler(m_dragTabView, OnDragTabMouseClick);
+            m_dragTabContainer = (Grid)GetTemplateChild("DragTabParentGrid");
 
-            m_dragTabView.MouseLeftButtonDown += OnDragTabMouseLeftButtonDown;
-            m_dragTabView.MouseLeftButtonUp += OnDragTabMouseLeftButtonUp;
+            m_dragTabView.MouseLeftButtonDown += OnMouseLeftButtonDown;
+            m_dragTabView.MouseLeftButtonUp += OnMouseLeftButtonUp;
+            m_dragTabView.MouseLeave += OnMouseLeave;
 
             m_editText = (TextBox)GetTemplateChild("SecondaryMenuViewSearchEditTextView");
             m_editText = (TextBox)GetTemplateChild("SecondaryMenuViewSearchEditTextView");
@@ -93,7 +99,28 @@ namespace ExampleAppWPF
             
             m_adapter = new MenuListAdapter(false, m_list, fadeInItemStoryboard, fadeOutItemStoryboard);
         }
-        
+
+        private void OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            m_dragTabContainer.Background = (SolidColorBrush)genericResourceDictionary["Gold"];
+            m_isMouseDown = false;
+        }
+
+        private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            m_dragTabContainer.Background = (SolidColorBrush)genericResourceDictionary["Highlight"];
+            m_isMouseDown = true;
+        }
+
+        private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if(m_isMouseDown)
+            {
+                m_dragTabContainer.Background = (SolidColorBrush)genericResourceDictionary["Gold"];
+                MenuViewCLIMethods.ViewClicked(m_nativeCallerPointer);
+            }
+        }
+
         private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (IsAnimating() || IsDragging() || m_adapter.IsAnimating())
