@@ -345,6 +345,8 @@ namespace ExampleApp
 
     MobileExampleApp::~MobileExampleApp()
     {
+        OnPause();
+
 		m_pAppModeModel->DestroyStateMachine();
 
         Eegeo_DELETE m_pUserInteractionModule;
