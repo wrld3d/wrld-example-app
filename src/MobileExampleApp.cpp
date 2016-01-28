@@ -99,6 +99,16 @@
 #include "SceneModelsModule.h"
 #include "VisualMapModule.h"
 #include "ConnectivityChangedObserver.h"
+#include "InteriorsResourceCounts.h"
+#include "HttpAsyncTextureLoader.h"
+#include "HttpAsyncCubeTextureLoader.h"
+#include "InteriorsMaterialsModule.h"
+#include "IInteriorsTextureResourceService.h"
+#include "InteriorMaterialSemantics.h"
+#include "IInteriorsMaterialDtoRepository.h"
+#include "InteriorsMaterialDto.h"
+#include "InteriorsMaterialParser.h"
+#include "InteriorsMaterialDescriptorLoader.h"
 
 #include "InteriorController.h"
 #include "EnvironmentRayCaster.h"
@@ -134,6 +144,47 @@ namespace ExampleApp
                         renderingModule.GetVertexBindingPool(),
                         platformAbstractionModule.GetTextureFileLoader());
             return loadingScreen;
+        }
+
+        void AddLocalMaterials(
+                Eegeo::Helpers::IFileIO& fileIO,
+                Eegeo::Resources::Interiors::IInteriorsTextureResourceService& interiorsTextureResourceService,
+                Eegeo::Resources::Interiors::Materials::IInteriorsMaterialDtoRepository& interiorsMaterialDtoRepository)
+        {
+            std::fstream stream;
+            size_t size;
+
+            if(fileIO.OpenFile(stream, size, "Interiors/Custom/custom_material_definitions.json"))
+            {
+                std::string materialsJson((std::istreambuf_iterator<char>(stream)), std::istreambuf_iterator<char>());
+
+                rapidjson::Document document;
+                if (document.Parse<0>(materialsJson.c_str()).HasParseError())
+                {
+                    Eegeo_ASSERT(false, "Error parsing local materials JSON file.\n");
+                }
+
+                for (rapidjson::Value::ConstMemberIterator iter = document.MemberBegin();
+                     iter != document.MemberEnd();
+                     ++iter)
+                {
+                    std::string interiorName(iter->name.GetString());
+                    const rapidjson::Value& materials(iter->value);
+
+                    size_t materialsCount(materials.Size());
+                    for(size_t i = 0; i < materialsCount; ++ i)
+                    {
+                        const rapidjson::Value& materialJson(materials[i]);
+                        Eegeo::Resources::Interiors::Materials::InteriorsMaterialDto dto(Eegeo::Resources::Interiors::Materials::ParseMaterial(materialJson));
+                        Eegeo_ASSERT(!interiorsMaterialDtoRepository.Contains(interiorName, dto.materialName));
+                        interiorsMaterialDtoRepository.Add(interiorName, dto);
+
+                        const bool localTexture = true;
+                        Eegeo::Resources::Interiors::Materials::CreateAndRegisterTextures(dto, interiorsTextureResourceService, localTexture);
+                        Eegeo::Resources::Interiors::Materials::CreateAndRegisterCubeMapTextures(dto, interiorsTextureResourceService, localTexture);
+                    }
+                }
+            }
         }
     }
 
@@ -236,6 +287,10 @@ namespace ExampleApp
         m_pWorld->GetMapModule().GetEnvironmentFlatteningService().SetEasingType(Eegeo::Rendering::EnvironmentFlatteningService::SmoothStep);
         m_pWorld->GetMapModule().GetEnvironmentFlatteningService().SetEaseDuration(0.5f);
 
+        AddLocalMaterials(m_platformAbstractions.GetFileIO(),
+                          m_pWorld->GetMapModule().GetInteriorsMaterialsModule().GetInteriorsTextureResourceService(),
+                          m_pWorld->GetMapModule().GetInteriorsMaterialsModule().GetInteriorsMaterialDtoRepository());
+
         m_pConnectivityChangedObserver = Eegeo_NEW(Net::SdkModel::ConnectivityChangedObserver)(m_pWorld->GetWebConnectivityValidator(), messageBus);
 
         Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule = m_pWorld->GetTerrainModelModule();
@@ -336,6 +391,8 @@ namespace ExampleApp
 
     MobileExampleApp::~MobileExampleApp()
     {
+        OnPause();
+
 		m_pAppModeModel->DestroyStateMachine();
 
         Eegeo_DELETE m_pUserInteractionModule;
@@ -472,7 +529,8 @@ namespace ExampleApp
                                                                                          interiorsAffectedByFlattening);
 
         Eegeo::Modules::Map::CityThemesModule& cityThemesModule = world.GetCityThemesModule();
-    
+        
+        Eegeo::Modules::Map::MapModule& mapModule = world.GetMapModule();
         
         m_pVisualMapModule = Eegeo_NEW(VisualMap::SdkModel::VisualMapModule)(cityThemesModule.GetCityThemesService(),
                                                                              cityThemesModule.GetCityThemesUpdater(),
@@ -511,7 +569,6 @@ namespace ExampleApp
 
 
         m_pMapModeModule = Eegeo_NEW(MapMode::SdkModel::MapModeModule)(m_pVisualMapModule->GetVisualMapService());
-
 
         m_pFlattenButtonModule = Eegeo_NEW(ExampleApp::FlattenButton::SdkModel::FlattenButtonModule)(m_pMapModeModule->GetMapModeModel(),
                                  m_identityProvider,
@@ -1092,6 +1149,8 @@ namespace ExampleApp
         {
             m_pLoadingScreen->NotifyScreenDimensionsChanged(screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
         }
+
+		m_pPinsModule->UpdateScreenProperties(m_screenProperties);
 
         m_pGlobeCameraController->UpdateScreenProperties(m_screenProperties);
 

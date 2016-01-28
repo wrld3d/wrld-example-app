@@ -44,6 +44,8 @@ namespace ExampleApp
                 View::IWatermarkDataRepository& GetWatermarkDataRepository() const;
                 
                 View::IWatermarkDataFactory& GetWatermarkDataFactory() const;
+                
+                void AddThirdPartyWatermarkData();
             };
         }
     }
