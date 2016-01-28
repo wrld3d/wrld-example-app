@@ -12,6 +12,7 @@
 #include "Rendering.h"
 #include "SearchMenuController.h"
 #include "Types.h"
+#include "IMenuViewModule.h"
 
 namespace ExampleApp
 {
@@ -19,7 +20,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            class SearchMenuViewModule: public ISearchMenuViewModule, private Eegeo::NonCopyable
+            class SearchMenuViewModule: public Menu::View::IMenuViewModule, private Eegeo::NonCopyable
             {
             private:
                 SearchMenuController* m_pController;
@@ -27,19 +28,19 @@ namespace ExampleApp
                 
             public:
                 SearchMenuViewModule(const std::string& viewName,
-                                     WindowsNativeState& nativeState, Menu::View::IMenuModel& searchMenuModel,
+                                     WindowsNativeState& nativeState,
+                                     Menu::View::IMenuModel& searchMenuModel,
                                      Menu::View::IMenuViewModel& searchMenuViewModel,
                                      Menu::View::IMenuSectionViewModel& searchSectionViewModel,
-                                     const Eegeo::Rendering::ScreenProperties& screenProperties,
                                      CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                                      Modality::View::IModalBackgroundView& modalBackgroundView,
                                      ExampleAppMessaging::TMessageBus& messageBus);
                 
                 ~SearchMenuViewModule();
                 
-                Menu::View::MenuController& GetMenuController() const;
+                Menu::View::MenuController& GetMenuController();
                 
-                SearchMenuView& GetSearchMenuView() const;
+                Menu::View::IMenuView& GetMenuView();
             };
         }
     }
