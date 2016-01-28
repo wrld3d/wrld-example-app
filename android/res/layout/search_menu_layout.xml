@@ -15,20 +15,21 @@
         android:layout_marginTop="50dp" >
 
         <LinearLayout
+            android:id="@+id/search_menu_drag_tab_container_view"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp" >
+
+            <include layout="@layout/search_results_bar_layout" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/search_menu_list_container_view"
             android:layout_width="220dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="50dp" 
             android:background="@color/gold"
             android:orientation="vertical"
             android:overScrollMode="never" >
-
-            <LinearLayout
-                android:id="@+id/search_menu_drag_tab_container_view"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp" >
-
-                <include layout="@layout/search_results_bar_layout" />
-            </LinearLayout>
 
             <include
                 android:layout_width="fill_parent"

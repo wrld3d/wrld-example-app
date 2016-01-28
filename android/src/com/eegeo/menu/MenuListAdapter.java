@@ -16,9 +16,11 @@ import com.eegeo.categories.CategoryResources;
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.animation.AnimatorSet;
+import android.view.animation.LinearInterpolator;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +36,7 @@ public class MenuListAdapter extends BaseAdapter
     private List<String> m_groups;
     private List<Boolean> m_groupsExpandable;
     private HashMap<String, List<String>> m_groupToChildrenMap;
+    private HashMap<Integer, SparseArray<View>> m_groupToChildrenViewMap;
     private int m_groupViewId;
     private int m_childViewId;
     private int m_menuBackgroundId;
@@ -72,6 +75,7 @@ public class MenuListAdapter extends BaseAdapter
         m_shouldAlignIconRight = shouldAlignIconRight;
         m_menuBackgroundId = menuBackgroundId;
         m_subMenuBackgroundId = subMenuBackgroundId;
+        m_groupToChildrenViewMap = new HashMap<Integer, SparseArray<View>>();
     }
 
     public boolean isAnimating()
@@ -84,6 +88,7 @@ public class MenuListAdapter extends BaseAdapter
         final List<Boolean> groupsExpandable,
         final HashMap<String, List<String>> groupToChildren)
     {
+    	m_groupToChildrenViewMap.clear();
         if(m_groups.size() != groups.size())
         {
             updateSources(groups, groupsExpandable, groupToChildren);
@@ -183,6 +188,7 @@ public class MenuListAdapter extends BaseAdapter
         {
         	m_expandContractAnim = new AnimatorSet();
         	m_expandContractAnim.playTogether(animations);
+        	m_expandContractAnim.setInterpolator(new LinearInterpolator());
         	if(!anyContractionAnimations)
         	{
         		updateSources(groups, groupsExpandable, groupToChildren);
@@ -296,14 +302,42 @@ public class MenuListAdapter extends BaseAdapter
         final String json = (String)getItem(index);
         
         final boolean isHeader = isHeader(index);
-
-        final int viewId = isHeader ? m_groupViewId : m_childViewId;
-        if(reusableView == null || (Integer)reusableView.getTag() != viewId)
+        final int groupIndex = getGroupIndexForViewIndex(index);
+        final String groupName = m_groups.get(groupIndex);
+        SparseArray<View> childrenViewMap = m_groupToChildrenViewMap.get(groupIndex);
+        if(childrenViewMap == null)
         {
-            LayoutInflater inflater = (LayoutInflater)m_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            reusableView = inflater.inflate(viewId, null);
-            reusableView.setTag((Integer)viewId);
+        	childrenViewMap = new SparseArray<View>();
+        	m_groupToChildrenViewMap.put(groupIndex, childrenViewMap);
         }
+        final int childId = getPlaceInGroup(index);
+        final int viewId = isHeader ? m_groupViewId : m_childViewId;
+        View cachedView = childrenViewMap.get(childId);
+        if(cachedView == null)
+        {
+        	LayoutInflater inflater = (LayoutInflater)m_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        	cachedView = inflater.inflate(viewId, null);
+        	cachedView.setTag((Integer)viewId);
+        	childrenViewMap.put(childId, cachedView);
+        }
+        else
+        {
+        	if(isHeader)
+        	{
+        		RelativeLayout openableArrow = (RelativeLayout)cachedView.findViewById(R.id.menu_list_openable_shape);
+        		if(m_animatedSizesMap.get(groupName) > 1)
+        		{
+        			openableArrow.setRotation(270);
+        		}
+        		else
+        		{
+        			openableArrow.setRotation(0);
+        		}
+        	}
+        	return cachedView;
+        }
+
+        reusableView = cachedView;
 
         try
         {
@@ -355,7 +389,6 @@ public class MenuListAdapter extends BaseAdapter
         else
         {
             RelativeLayout openableArrow = (RelativeLayout)reusableView.findViewById(R.id.menu_list_openable_shape);
-            int groupIndex = getGroupIndexForViewIndex(index);
 
             if(m_groupsExpandable.get(groupIndex))
             {
@@ -374,7 +407,6 @@ public class MenuListAdapter extends BaseAdapter
                     openableArrowParams.rightMargin = m_context.dipAsPx(20);
                 }
 
-                String groupName = m_groups.get(groupIndex);
                 if(m_animatedSizesMap.get(groupName) > 1)
                 {
                     openableArrow.setRotation(270);
