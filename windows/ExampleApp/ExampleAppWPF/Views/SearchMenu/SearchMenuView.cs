@@ -16,7 +16,6 @@ namespace ExampleAppWPF
         private double m_screenWidthPx;
         private double m_mainContainerOnScreenWidthPx;
         private TextBox m_editText;
-        private Image m_dragInteractionDirectionArrow;
         private MenuListAdapter m_adapter;
         private bool m_isFirstLayout = true;
 
@@ -41,42 +40,38 @@ namespace ExampleAppWPF
 
         private void PerformLayout(object sender, SizeChangedEventArgs e)
         {
-            if (m_dragInteractionDirectionArrow != null)
+            var currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
+            double onScreenState = (currentPosition.X - m_offscreenXPx) / (m_openXPx - m_offscreenXPx);
+            MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+            m_screenWidthPx = mainWindow.MainGrid.ActualWidth;
+
+            FrameworkElement listContainerView = (FrameworkElement)GetTemplateChild("SecondaryMenuViewListContainer");
+            double dragTabWidthPx = m_dragTabView.ActualWidth;
+
+            m_mainContainerOffscreenOffsetXPx = -m_dragTabView.Margin.Right;
+            double mainContainerWidthPx = listContainerView.ActualWidth;
+            m_mainContainerOnScreenWidthPx = mainContainerWidthPx - m_mainContainerOffscreenOffsetXPx;
+
+            m_totalWidthPx = mainContainerWidthPx + dragTabWidthPx;
+            m_offscreenXPx = m_screenWidthPx - Padding.Right;
+            m_closedXPx = m_screenWidthPx - /*m_activity.dipAsPx*/(m_mainContainerVisibleOnScreenWhenClosedDip) - dragTabWidthPx;
+            m_openXPx = m_screenWidthPx - m_mainContainerOnScreenWidthPx - dragTabWidthPx - Padding.Right;
+
+            double layoutX = m_offscreenXPx;
+
+            if (!m_isFirstLayout)
             {
-                var currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
-                double onScreenState = (currentPosition.X - m_offscreenXPx) / (m_openXPx - m_offscreenXPx);
-                MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
-                m_screenWidthPx = mainWindow.MainGrid.ActualWidth;
-
-                FrameworkElement listContainerView = (FrameworkElement)GetTemplateChild("SecondaryMenuViewListContainer");
-                double dragTabWidthPx = m_dragTabView.ActualWidth;
-
-                m_mainContainerOffscreenOffsetXPx = -m_dragTabView.Margin.Right;
-                double mainContainerWidthPx = listContainerView.ActualWidth;
-                m_mainContainerOnScreenWidthPx = mainContainerWidthPx - m_mainContainerOffscreenOffsetXPx;
-
-                m_totalWidthPx = mainContainerWidthPx + dragTabWidthPx;
-                m_offscreenXPx = m_screenWidthPx - Padding.Right;
-                m_closedXPx = m_screenWidthPx - /*m_activity.dipAsPx*/(m_mainContainerVisibleOnScreenWhenClosedDip) - dragTabWidthPx;
-                m_openXPx = m_screenWidthPx - m_mainContainerOnScreenWidthPx - dragTabWidthPx - Padding.Right;
-
-                double layoutX = m_offscreenXPx;
-
-                if (!m_isFirstLayout)
-                {
-                    layoutX = onScreenState * (m_openXPx - m_offscreenXPx) + m_offscreenXPx;                
-                }
-                
-                RenderTransform = new TranslateTransform(layoutX, currentPosition.Y);
-                m_isFirstLayout = false;
+                layoutX = onScreenState * (m_openXPx - m_offscreenXPx) + m_offscreenXPx;                
             }
+                
+            RenderTransform = new TranslateTransform(layoutX, currentPosition.Y);
+            m_isFirstLayout = false;
         }
 
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
 
-            m_dragInteractionDirectionArrow = (Image)GetTemplateChild("SecondaryMenuDragInteractionArrow");
             m_list = (ListBox)GetTemplateChild("SecondaryMenuItemList");
             m_list.SelectionChanged += SelectionChanged;
             
@@ -156,13 +151,11 @@ namespace ExampleAppWPF
             if (newXPx < (m_screenWidthPx - m_totalWidthPx))
             {
                 newXPx = m_screenWidthPx - m_totalWidthPx;
-                ShowInteractionArrowOpen();
             }
 
             if (newXPx > m_closedXPx)
             {
                 newXPx = m_closedXPx;
-                ShowInteractionArrowClosed();
             }
 
             double normalisedDragState = Math.Abs(newXPx + (-m_closedXPx)) / (Math.Abs(m_openXPx - m_closedXPx));
@@ -177,26 +170,12 @@ namespace ExampleAppWPF
 
         public override void AnimateToClosedOnScreen()
         {
-            ShowInteractionArrowClosed();
             base.AnimateToClosedOnScreen();
         }
 
         public override void AnimateToOpenOnScreen()
         {
-            ShowInteractionArrowOpen();
             base.AnimateToOpenOnScreen();
-        }
-
-        void ShowInteractionArrowOpen()
-        {
-            m_dragInteractionDirectionArrow.RenderTransform = new RotateTransform(180);
-            m_dragInteractionDirectionArrow.RenderTransformOrigin = new Point(0.5, 0.5);
-        }
-
-        void ShowInteractionArrowClosed()
-        {
-            m_dragInteractionDirectionArrow.RenderTransform = new RotateTransform(0);
-            m_dragInteractionDirectionArrow.RenderTransformOrigin = new Point(0.5, 0.5);
         }
 
         public void DisableEditText()

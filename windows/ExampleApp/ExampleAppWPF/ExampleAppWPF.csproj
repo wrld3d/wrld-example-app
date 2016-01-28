@@ -331,9 +331,6 @@
     <Resource Include="..\..\Resources\menu_bar.png">
       <Link>Assets\menu_bar.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\menu_button.png">
-      <Link>Assets\menu_button.png</Link>
-    </Resource>
     <Resource Include="..\..\Resources\search_results_bar_small.png">
       <Link>Assets\search_results_bar_small.png</Link>
     </Resource>
@@ -527,8 +524,8 @@
     <Resource Include="Assets\place_pin_background.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="..\..\Resources\menu_list.png">
-      <Link>Assets\menu_list.png</Link>
+    <Resource Include="..\..\Resources\search_magglass.png">
+      <Link>Assets\search_magglass.png</Link>
     </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

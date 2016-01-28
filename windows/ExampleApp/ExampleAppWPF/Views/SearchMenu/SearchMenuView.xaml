@@ -28,8 +28,7 @@
                     </ControlTemplate.Resources>
                     <StackPanel Orientation="Horizontal" Margin="0,50,0,0">
                         <Grid Width="50" Height="50" VerticalAlignment="Top">
-                            <Image Source="/Assets/menu_button.png" Width="50" Height="50" Name="SecondaryMenuDragTabView" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                            <Image IsHitTestVisible="False" Name="SecondaryMenuDragInteractionArrow" Width="50" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center" Source="/Assets/menu_list.png" />
+                            <Image Source="/Assets/search_magglass.png" Width="50" Height="50" Name="SecondaryMenuDragTabView" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </Grid>
                         
                         <Grid Name="SecondaryMenuViewListContainer" Width="220" >
