@@ -53,6 +53,9 @@ namespace ExampleApp
 				void RemoveSearchItemSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback);
 
 				void HandleSearchItemSelected(int index);
+
+				// Override of Menu ItemSelected to allow expansion of a section to trigger clear search
+				void HandleItemSelected(int sectionIndex, int itemIndex);
             };
         }
     }
