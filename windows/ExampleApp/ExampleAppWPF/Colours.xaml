@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:ExampleAppWPF">
-    <SolidColorBrush x:Key="Gold" Color="#1e7bc3"/>
+    <SolidColorBrush x:Key="Gold" Color="#1256B0"/>
     <SolidColorBrush x:Key="Olive" Color="#94a847"/>
     <SolidColorBrush x:Key="White" Color="#ffffff"/>
     <SolidColorBrush x:Key="Black" Color="#000000"/>
