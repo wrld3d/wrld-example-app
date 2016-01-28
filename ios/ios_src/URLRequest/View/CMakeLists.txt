@@ -1,10 +1,11 @@
 if(${IOS})
-set(headers ${headers} ios/ios_src/URLRequest/View
+set(headers ${headers} ios_src/URLRequest/View
 )
 set(currsources
-  ios/ios_src/URLRequest/View/URLRequestHandler.h
-  ios/ios_src/URLRequest/View/URLRequestHandler.mm
+  ios_src/URLRequest/View/CMakeLists.txt
+  ios_src/URLRequest/View/URLRequestHandler.h
+  ios_src/URLRequest/View/URLRequestHandler.mm
 )
 set(sources ${sources} ${currsources})
-source_group(\\_src\\URLRequest\\View FILES ${currsources})
+source_group(\\ios_src\\URLRequest\\View FILES ${currsources})
 endif(${IOS})

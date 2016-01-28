@@ -1,7 +1,8 @@
-set(headers ${headers} src/ViewControllerUpdater
+set(headers ${headers} ../src/ViewControllerUpdater
 )
 set(currsources
+  ../src/ViewControllerUpdater/CMakeLists.txt
 )
 set(sources ${sources} ${currsources})
-source_group(\\ViewControllerUpdater FILES ${currsources})
-include(src/ViewControllerUpdater/View/CMakeLists.txt)
+source_group(\\src\\ViewControllerUpdater FILES ${currsources})
+include(../src/ViewControllerUpdater/View/CMakeLists.txt)

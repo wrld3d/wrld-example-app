@@ -1,12 +1,13 @@
 if(${IOS})
-set(headers ${headers} ios/ios_src/Options/SdkModel
+set(headers ${headers} ios_src/Options/SdkModel
 )
 set(currsources
-  ios/ios_src/Options/SdkModel/CacheClearBackgroundTask.cpp
-  ios/ios_src/Options/SdkModel/CacheClearBackgroundTask.h
-  ios/ios_src/Options/SdkModel/ClearCacheMessageHandler.h
-  ios/ios_src/Options/SdkModel/ClearCacheMessageHandler.mm
+  ios_src/Options/SdkModel/CacheClearBackgroundTask.cpp
+  ios_src/Options/SdkModel/CacheClearBackgroundTask.h
+  ios_src/Options/SdkModel/ClearCacheMessageHandler.h
+  ios_src/Options/SdkModel/ClearCacheMessageHandler.mm
+  ios_src/Options/SdkModel/CMakeLists.txt
 )
 set(sources ${sources} ${currsources})
-source_group(\\_src\\Options\\SdkModel FILES ${currsources})
+source_group(\\ios_src\\Options\\SdkModel FILES ${currsources})
 endif(${IOS})

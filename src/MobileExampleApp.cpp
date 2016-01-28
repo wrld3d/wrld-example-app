@@ -158,7 +158,7 @@ namespace ExampleApp
                     size_t materialsCount(materials.Size());
                     for(size_t i = 0; i < materialsCount; ++ i)
                     {
-                        const rapidjson::Value& materialJson(materials[i]);
+                        const rapidjson::Value& materialJson(materials[static_cast<int>(i)]);
                         Eegeo::Resources::Interiors::Materials::InteriorsMaterialDto dto(Eegeo::Resources::Interiors::Materials::ParseMaterial(materialJson));
                         Eegeo_ASSERT(!interiorsMaterialDtoRepository.Contains(interiorName, dto.materialName));
                         interiorsMaterialDtoRepository.Add(interiorName, dto);

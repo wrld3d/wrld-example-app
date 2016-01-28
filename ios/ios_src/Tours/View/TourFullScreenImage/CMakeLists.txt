@@ -1,16 +1,17 @@
 if(${IOS})
-set(headers ${headers} ios/ios_src/Tours/View/TourFullScreenImage
+set(headers ${headers} ios_src/Tours/View/TourFullScreenImage
 )
 set(currsources
-  ios/ios_src/Tours/View/TourFullScreenImage/ITourFullScreenImageViewModule.h
-  ios/ios_src/Tours/View/TourFullScreenImage/TourFullScreenImageView.h
-  ios/ios_src/Tours/View/TourFullScreenImage/TourFullScreenImageView.mm
-  ios/ios_src/Tours/View/TourFullScreenImage/TourFullScreenImageViewIncludes.h
-  ios/ios_src/Tours/View/TourFullScreenImage/TourFullScreenImageViewInterop.h
-  ios/ios_src/Tours/View/TourFullScreenImage/TourFullScreenImageViewInterop.mm
-  ios/ios_src/Tours/View/TourFullScreenImage/TourFullScreenImageViewModule.h
-  ios/ios_src/Tours/View/TourFullScreenImage/TourFullScreenImageViewModule.mm
+  ios_src/Tours/View/TourFullScreenImage/CMakeLists.txt
+  ios_src/Tours/View/TourFullScreenImage/ITourFullScreenImageViewModule.h
+  ios_src/Tours/View/TourFullScreenImage/TourFullScreenImageView.h
+  ios_src/Tours/View/TourFullScreenImage/TourFullScreenImageView.mm
+  ios_src/Tours/View/TourFullScreenImage/TourFullScreenImageViewIncludes.h
+  ios_src/Tours/View/TourFullScreenImage/TourFullScreenImageViewInterop.h
+  ios_src/Tours/View/TourFullScreenImage/TourFullScreenImageViewInterop.mm
+  ios_src/Tours/View/TourFullScreenImage/TourFullScreenImageViewModule.h
+  ios_src/Tours/View/TourFullScreenImage/TourFullScreenImageViewModule.mm
 )
 set(sources ${sources} ${currsources})
-source_group(\\_src\\Tours\\View\\TourFullScreenImage FILES ${currsources})
+source_group(\\ios_src\\Tours\\View\\TourFullScreenImage FILES ${currsources})
 endif(${IOS})

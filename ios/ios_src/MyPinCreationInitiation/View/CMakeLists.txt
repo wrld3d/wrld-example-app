@@ -1,16 +1,17 @@
 if(${IOS})
-set(headers ${headers} ios/ios_src/MyPinCreationInitiation/View
+set(headers ${headers} ios_src/MyPinCreationInitiation/View
 )
 set(currsources
-  ios/ios_src/MyPinCreationInitiation/View/IMyPinCreationInitiationViewModule.h
-  ios/ios_src/MyPinCreationInitiation/View/MyPinCreationInitiationView.h
-  ios/ios_src/MyPinCreationInitiation/View/MyPinCreationInitiationView.mm
-  ios/ios_src/MyPinCreationInitiation/View/MyPinCreationInitiationViewIncludes.h
-  ios/ios_src/MyPinCreationInitiation/View/MyPinCreationInitiationViewInterop.h
-  ios/ios_src/MyPinCreationInitiation/View/MyPinCreationInitiationViewInterop.mm
-  ios/ios_src/MyPinCreationInitiation/View/MyPinCreationInitiationViewModule.h
-  ios/ios_src/MyPinCreationInitiation/View/MyPinCreationInitiationViewModule.mm
+  ios_src/MyPinCreationInitiation/View/CMakeLists.txt
+  ios_src/MyPinCreationInitiation/View/IMyPinCreationInitiationViewModule.h
+  ios_src/MyPinCreationInitiation/View/MyPinCreationInitiationView.h
+  ios_src/MyPinCreationInitiation/View/MyPinCreationInitiationView.mm
+  ios_src/MyPinCreationInitiation/View/MyPinCreationInitiationViewIncludes.h
+  ios_src/MyPinCreationInitiation/View/MyPinCreationInitiationViewInterop.h
+  ios_src/MyPinCreationInitiation/View/MyPinCreationInitiationViewInterop.mm
+  ios_src/MyPinCreationInitiation/View/MyPinCreationInitiationViewModule.h
+  ios_src/MyPinCreationInitiation/View/MyPinCreationInitiationViewModule.mm
 )
 set(sources ${sources} ${currsources})
-source_group(\\_src\\MyPinCreationInitiation\\View FILES ${currsources})
+source_group(\\ios_src\\MyPinCreationInitiation\\View FILES ${currsources})
 endif(${IOS})

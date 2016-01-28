@@ -1,12 +1,13 @@
 if(${IOS})
-set(headers ${headers} ios/ios_src/Views
+set(headers ${headers} ios_src/Views
 )
 set(currsources
-  ios/ios_src/Views/UILabelledCheckboxView.h
-  ios/ios_src/Views/UILabelledCheckboxView.mm
-  ios/ios_src/Views/UIView+TouchExclusivity.h
-  ios/ios_src/Views/UIView+TouchExclusivity.m
+  ios_src/Views/CMakeLists.txt
+  ios_src/Views/UILabelledCheckboxView.h
+  ios_src/Views/UILabelledCheckboxView.mm
+  ios_src/Views/UIView+TouchExclusivity.h
+  ios_src/Views/UIView+TouchExclusivity.m
 )
 set(sources ${sources} ${currsources})
-source_group(\\_src\\Views FILES ${currsources})
+source_group(\\ios_src\\Views FILES ${currsources})
 endif(${IOS})

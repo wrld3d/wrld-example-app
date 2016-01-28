@@ -1,18 +1,19 @@
 if(${IOS})
-set(headers ${headers} ios/ios_src/InitialExperience/View
+set(headers ${headers} ios_src/InitialExperience/View
 )
 set(currsources
-  ios/ios_src/InitialExperience/View/IInitialExperienceIntroViewModule.h
-  ios/ios_src/InitialExperience/View/InitialExperienceIntroBackgroundView.h
-  ios/ios_src/InitialExperience/View/InitialExperienceIntroBackgroundView.mm
-  ios/ios_src/InitialExperience/View/InitialExperienceIntroView.h
-  ios/ios_src/InitialExperience/View/InitialExperienceIntroView.mm
-  ios/ios_src/InitialExperience/View/InitialExperienceIntroViewIncludes.h
-  ios/ios_src/InitialExperience/View/InitialExperienceIntroViewInterop.h
-  ios/ios_src/InitialExperience/View/InitialExperienceIntroViewInterop.mm
-  ios/ios_src/InitialExperience/View/InitialExperienceIntroViewModule.h
-  ios/ios_src/InitialExperience/View/InitialExperienceIntroViewModule.mm
+  ios_src/InitialExperience/View/CMakeLists.txt
+  ios_src/InitialExperience/View/IInitialExperienceIntroViewModule.h
+  ios_src/InitialExperience/View/InitialExperienceIntroBackgroundView.h
+  ios_src/InitialExperience/View/InitialExperienceIntroBackgroundView.mm
+  ios_src/InitialExperience/View/InitialExperienceIntroView.h
+  ios_src/InitialExperience/View/InitialExperienceIntroView.mm
+  ios_src/InitialExperience/View/InitialExperienceIntroViewIncludes.h
+  ios_src/InitialExperience/View/InitialExperienceIntroViewInterop.h
+  ios_src/InitialExperience/View/InitialExperienceIntroViewInterop.mm
+  ios_src/InitialExperience/View/InitialExperienceIntroViewModule.h
+  ios_src/InitialExperience/View/InitialExperienceIntroViewModule.mm
 )
 set(sources ${sources} ${currsources})
-source_group(\\_src\\InitialExperience\\View FILES ${currsources})
+source_group(\\ios_src\\InitialExperience\\View FILES ${currsources})
 endif(${IOS})
