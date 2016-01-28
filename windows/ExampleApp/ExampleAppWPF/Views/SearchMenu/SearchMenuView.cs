@@ -18,6 +18,7 @@ namespace ExampleAppWPF
         private TextBox m_editText;
         private MenuListAdapter m_adapter;
         private bool m_isFirstLayout = true;
+        private Grid m_mainContainer;
 
         static SearchMenuView()
         {
@@ -45,17 +46,16 @@ namespace ExampleAppWPF
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
             m_screenWidthPx = mainWindow.MainGrid.ActualWidth;
 
-            FrameworkElement listContainerView = (FrameworkElement)GetTemplateChild("SecondaryMenuViewListContainer");
             double dragTabWidthPx = m_dragTabView.ActualWidth;
 
             m_mainContainerOffscreenOffsetXPx = -m_dragTabView.Margin.Right;
-            double mainContainerWidthPx = listContainerView.ActualWidth;
+            double mainContainerWidthPx = m_mainContainer.ActualWidth;
             m_mainContainerOnScreenWidthPx = mainContainerWidthPx - m_mainContainerOffscreenOffsetXPx;
 
             m_totalWidthPx = mainContainerWidthPx + dragTabWidthPx;
-            m_offscreenXPx = m_screenWidthPx - Padding.Right;
-            m_closedXPx = m_screenWidthPx - /*m_activity.dipAsPx*/(m_mainContainerVisibleOnScreenWhenClosedDip) - dragTabWidthPx;
-            m_openXPx = m_screenWidthPx - m_mainContainerOnScreenWidthPx - dragTabWidthPx - Padding.Right;
+            m_offscreenXPx = -(m_screenWidthPx / 2) - (m_totalWidthPx / 2);
+            m_closedXPx = m_offscreenXPx + ((mainContainerWidthPx + dragTabWidthPx) / 2);
+            m_openXPx = m_offscreenXPx + m_totalWidthPx;
 
             double layoutX = m_offscreenXPx;
 
@@ -85,6 +85,8 @@ namespace ExampleAppWPF
             m_editText = (TextBox)GetTemplateChild("SecondaryMenuViewSearchEditTextView");
             m_editText = (TextBox)GetTemplateChild("SecondaryMenuViewSearchEditTextView");
             m_editText.KeyDown += OnKeyDown;
+
+            m_mainContainer = (Grid)GetTemplateChild("SecondaryMenuViewListContainer");
 
             var fadeInItemStoryboard = ((Storyboard)Template.Resources["FadeInNewItems"]).Clone();
             var fadeOutItemStoryboard = ((Storyboard)Template.Resources["FadeOutOldItems"]).Clone();
@@ -171,11 +173,13 @@ namespace ExampleAppWPF
         public override void AnimateToClosedOnScreen()
         {
             base.AnimateToClosedOnScreen();
+            m_mainContainer.Visibility = Visibility.Hidden;
         }
 
         public override void AnimateToOpenOnScreen()
         {
             base.AnimateToOpenOnScreen();
+            m_mainContainer.Visibility = Visibility.Visible;
         }
 
         public void DisableEditText()

@@ -26,12 +26,12 @@
                             </ThicknessAnimationUsingKeyFrames>
                         </Storyboard>
                     </ControlTemplate.Resources>
-                    <StackPanel Orientation="Horizontal" Margin="0,50,0,0">
-                        <Grid Width="50" Height="50" VerticalAlignment="Top">
+                    <DockPanel Margin="0,50,0,0" Width="270">
+                        <Grid Width="50" Height="50" VerticalAlignment="Top" DockPanel.Dock="Right" Background="{StaticResource Gold}">
                             <Image Source="/Assets/search_magglass.png" Width="50" Height="50" Name="SecondaryMenuDragTabView" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </Grid>
                         
-                        <Grid Name="SecondaryMenuViewListContainer" Width="220" >
+                        <Grid Name="SecondaryMenuViewListContainer" Width="220" DockPanel.Dock="Left" Visibility="Hidden">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="50"/>
                                 <RowDefinition Height="*"/>
@@ -146,7 +146,7 @@
                                 </ScrollViewer>
                             </Grid>
                         </Grid>
-                    </StackPanel>
+                    </DockPanel>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
