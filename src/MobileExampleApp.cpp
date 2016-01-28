@@ -76,7 +76,6 @@
 #include "SearchVendorNames.h"
 #include "AppCameraModule.h"
 #include "AppCameraController.h"
-#include "InteriorsCustomMaterialsModule.h"
 #include "AppModeStatesFactory.h"
 #include "AppGlobeCameraWrapper.h"
 #include "NativeUIFactories.h"
@@ -89,6 +88,16 @@
 #include "SceneModelsModule.h"
 #include "VisualMapModule.h"
 #include "ConnectivityChangedObserver.h"
+#include "InteriorsResourceCounts.h"
+#include "HttpAsyncTextureLoader.h"
+#include "HttpAsyncCubeTextureLoader.h"
+#include "InteriorsMaterialsModule.h"
+#include "IInteriorsTextureResourceService.h"
+#include "InteriorMaterialSemantics.h"
+#include "IInteriorsMaterialDtoRepository.h"
+#include "InteriorsMaterialDto.h"
+#include "InteriorsMaterialParser.h"
+#include "InteriorsMaterialDescriptorLoader.h"
 
 
 namespace ExampleApp
@@ -119,6 +128,47 @@ namespace ExampleApp
                         renderingModule.GetVertexBindingPool(),
                         platformAbstractionModule.GetTextureFileLoader());
             return loadingScreen;
+        }
+
+        void AddLocalMaterials(
+                Eegeo::Helpers::IFileIO& fileIO,
+                Eegeo::Resources::Interiors::IInteriorsTextureResourceService& interiorsTextureResourceService,
+                Eegeo::Resources::Interiors::Materials::IInteriorsMaterialDtoRepository& interiorsMaterialDtoRepository)
+        {
+            std::fstream stream;
+            size_t size;
+
+            if(fileIO.OpenFile(stream, size, "Interiors/Custom/custom_material_definitions.json"))
+            {
+                std::string materialsJson((std::istreambuf_iterator<char>(stream)), std::istreambuf_iterator<char>());
+
+                rapidjson::Document document;
+                if (document.Parse<0>(materialsJson.c_str()).HasParseError())
+                {
+                    Eegeo_ASSERT(false, "Error parsing local materials JSON file.\n");
+                }
+
+                for (rapidjson::Value::ConstMemberIterator iter = document.MemberBegin();
+                     iter != document.MemberEnd();
+                     ++iter)
+                {
+                    std::string interiorName(iter->name.GetString());
+                    const rapidjson::Value& materials(iter->value);
+
+                    size_t materialsCount(materials.Size());
+                    for(size_t i = 0; i < materialsCount; ++ i)
+                    {
+                        const rapidjson::Value& materialJson(materials[i]);
+                        Eegeo::Resources::Interiors::Materials::InteriorsMaterialDto dto(Eegeo::Resources::Interiors::Materials::ParseMaterial(materialJson));
+                        Eegeo_ASSERT(!interiorsMaterialDtoRepository.Contains(interiorName, dto.materialName));
+                        interiorsMaterialDtoRepository.Add(interiorName, dto);
+
+                        const bool localTexture = true;
+                        Eegeo::Resources::Interiors::Materials::CreateAndRegisterTextures(dto, interiorsTextureResourceService, localTexture);
+                        Eegeo::Resources::Interiors::Materials::CreateAndRegisterCubeMapTextures(dto, interiorsTextureResourceService, localTexture);
+                    }
+                }
+            }
         }
     }
 
@@ -182,7 +232,6 @@ namespace ExampleApp
         , m_pWatermarkModule(NULL)
         , m_pInteriorsExplorerModule(NULL)
         , m_pInteriorsEntitiesPinsModule(NULL)
-        , m_pInteriorsCustomMaterialsModule(NULL)
         , m_screenProperties(screenProperties)
         , m_networkCapabilities(networkCapabilities)
         , m_setMetricsLocation(false)
@@ -212,7 +261,11 @@ namespace ExampleApp
                                                 NULL,
                                                 &errorHandler
                                                 );
-        
+
+        AddLocalMaterials(m_platformAbstractions.GetFileIO(),
+                          m_pWorld->GetMapModule().GetInteriorsMaterialsModule().GetInteriorsTextureResourceService(),
+                          m_pWorld->GetMapModule().GetInteriorsMaterialsModule().GetInteriorsMaterialDtoRepository());
+
         m_pConnectivityChangedObserver = Eegeo_NEW(Net::SdkModel::ConnectivityChangedObserver)(m_pWorld->GetWebConnectivityValidator(), messageBus);
 
         Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule = m_pWorld->GetTerrainModelModule();
@@ -291,6 +344,8 @@ namespace ExampleApp
 
     MobileExampleApp::~MobileExampleApp()
     {
+        OnPause();
+
 		m_pAppModeModel->DestroyStateMachine();
 
         Eegeo_DELETE m_pUserInteractionModule;
@@ -513,9 +568,6 @@ namespace ExampleApp
                                                                                                                 m_pWorld->GetRenderingModule(),
                                                                                                                 m_pWorld->GetMapModule(),
                                                                                                                 m_screenProperties));
-
-            
-            m_pInteriorsCustomMaterialsModule = Eegeo_NEW(InteriorsCustomMaterials::SdkModel::InteriorsCustomMaterialsModule)(mapModule.GetInteriorsStreamingModule(), m_platformAbstractions.GetFileIO());
                                                                                                             
         }
         
@@ -571,8 +623,6 @@ namespace ExampleApp
     void MobileExampleApp::DestroyApplicationModelModules()
     {
         m_initialExperienceModule.TearDown();
-
-        Eegeo_DELETE m_pInteriorsCustomMaterialsModule;
         
         Eegeo_DELETE m_pTwitterFeedModule;
 
