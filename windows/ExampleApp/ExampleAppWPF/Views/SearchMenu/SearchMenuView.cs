@@ -11,7 +11,7 @@ using System.Windows.Threading;
 
 namespace ExampleAppWPF
 {
-    public class SecondaryMenuView : MenuView
+    public class SearchMenuView : MenuView
     {
         private double m_screenWidthPx;
         private double m_mainContainerOnScreenWidthPx;
@@ -20,12 +20,12 @@ namespace ExampleAppWPF
         private MenuListAdapter m_adapter;
         private bool m_isFirstLayout = true;
 
-        static SecondaryMenuView()
+        static SearchMenuView()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(SecondaryMenuView), new FrameworkPropertyMetadata(typeof(SecondaryMenuView)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(SearchMenuView), new FrameworkPropertyMetadata(typeof(SearchMenuView)));
         }
 
-        public SecondaryMenuView(IntPtr nativeCallerPointer) : base(nativeCallerPointer)
+        public SearchMenuView(IntPtr nativeCallerPointer) : base(nativeCallerPointer)
         {
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
             mainWindow.MainGrid.Children.Add(this);

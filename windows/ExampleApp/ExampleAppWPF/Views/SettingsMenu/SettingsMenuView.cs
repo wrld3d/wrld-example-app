@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 
 namespace ExampleAppWPF
 {
-    public class SearchMenuView : MenuView
+    public class SettingsMenuView : MenuView
     {
         protected Button m_closeButtonView;
         protected ProgressBar m_progressSpinner;
@@ -29,12 +29,12 @@ namespace ExampleAppWPF
         private Image m_headerCategoryImage;
         private TextBlock m_headerText;
 
-        static SearchMenuView()
+        static SettingsMenuView()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(SearchMenuView), new FrameworkPropertyMetadata(typeof(SearchMenuView)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(SettingsMenuView), new FrameworkPropertyMetadata(typeof(SettingsMenuView)));
         }
 
-        public SearchMenuView(IntPtr nativeCallerPointer) : base(nativeCallerPointer)
+        public SettingsMenuView(IntPtr nativeCallerPointer) : base(nativeCallerPointer)
         {
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
             mainWindow.SizeChanged += PerformLayout;

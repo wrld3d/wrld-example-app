@@ -533,23 +533,23 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_messageBus
         );
 
-	/*m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(
+	m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(
 		app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
 		m_messageBus,
 		app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
-		app.SecondaryMenuModule().GetSecondaryMenuViewModel(),
-		app.SearchResultMenuModule().GetMenuViewModel(),
+		app.SettingsMenuModule().GetSettingsMenuViewModel(),
+		app.SearchMenuModule().GetSearchMenuViewModel(),
 		app.FlattenButtonModule().GetScreenControlViewModel(),
 		app.CompassModule().GetScreenControlViewModel(),
 		app.WatermarkModule().GetScreenControlViewModel(),
-		app.GetIdentityProvider());*/
+		app.GetIdentityProvider());
 
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
 
-    //viewControllerUpdaterModel.AddUpdateableObject(m_pSecondaryMenuViewModule->GetMenuController());
-    //viewControllerUpdaterModel.AddUpdateableObject(m_pSearchResultMenuViewModule->GetMenuController());
+    viewControllerUpdaterModel.AddUpdateableObject(m_pSettingsMenuViewModule->GetMenuController());
+    viewControllerUpdaterModel.AddUpdateableObject(m_pSearchMenuViewModule->GetMenuController());
 }
 
 void AppHost::DestroyApplicationViewModulesFromUiThread()

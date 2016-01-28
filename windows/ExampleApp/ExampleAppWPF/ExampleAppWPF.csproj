@@ -105,14 +105,14 @@
     <Compile Include="Views\Menu\MenuListItem.cs" />
     <Compile Include="Views\Options\OptionsCacheClearSubView.cs" />
     <Compile Include="Views\Options\OptionsView.cs" />
-    <Compile Include="Views\SearchResultMenu\SearchMenuListItem.cs" />
+    <Compile Include="Views\SettingsMenu\SearchMenuListItem.cs" />
     <Compile Include="StartupResourceLoader.cs" />
     <Compile Include="Views\SearchResultPoi\GeonamesSearchResultsPoiView.cs" />
     <Compile Include="Views\SearchResultPoi\ResultModels\YelpResultModel.cs" />
     <Compile Include="Views\SearchResultPoi\SearchResultCategoryMapper.cs" />
     <Compile Include="Views\SearchResultPoi\SearchResultPoiViewBase.cs" />
     <Compile Include="Views\SearchResultPoi\YelpSearchResultsPoiView.cs" />
-    <Compile Include="Views\SecondaryMenu\SubMenuListItem.cs" />
+    <Compile Include="Views\SearchMenu\SubMenuListItem.cs" />
     <Compile Include="Views\AboutPage\AboutPageView.cs" />
     <Compile Include="Views\MyPinCreationDetails\MyPinCreationDetailsView.cs" />
     <Compile Include="Views\MyPinCreationDetails\MyPinDetailsView.cs" />
@@ -120,8 +120,8 @@
     <Compile Include="Views\Watermark\WatermarkView.cs" />
     <Compile Include="Views\WorldPinOnMap\WorldPinOnMapView.cs" />
     <Compile Include="Views\Menu\MenuView.cs" />
-    <Compile Include="Views\SearchResultMenu\SearchMenuView.cs" />
-    <Compile Include="Views\SecondaryMenu\SecondaryMenuView.cs" />
+    <Compile Include="Views\SettingsMenu\SettingsMenuView.cs" />
+    <Compile Include="Views\SearchMenu\SearchMenuView.cs" />
     <Compile Include="Search\Yelp\YelpSearch.cs" />
     <Page Include="CheckBoxStyle.xaml">
       <SubType>Designer</SubType>
@@ -206,7 +206,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SearchResultMenu\SearchMenuView.xaml">
+    <Page Include="Views\SettingsMenu\SettingsMenuView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -218,7 +218,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SecondaryMenu\SecondaryMenuView.xaml">
+    <Page Include="Views\SearchMenu\SearchMenuView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
