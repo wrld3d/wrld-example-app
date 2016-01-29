@@ -38,10 +38,10 @@ set(IOS_WARNING_FLAGS "-Wmost -Werror -Wno-four-char-constants -Wno-unknown-prag
 
 if(${COMPILE_CPP_03})
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -x objective-c++ ${IOS_WARNING_FLAGS}")
-    set(eegeo_sdk_lib "-lapps-on-maps")
+    set(eegeo_sdk_libs "-lapps-on-maps -lapps-on-maps-sim")
 else(${COMPILE_CPP_03})
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -x objective-c++ -DCOMPILE_CPP_11 ${IOS_WARNING_FLAGS}")
-    set(eegeo_sdk_lib "-lapps-on-maps-cpp11")
+    set(eegeo_sdk_libs "-lapps-on-maps-cpp11 -lapps-on-maps-cpp11-sim")
 endif(${COMPILE_CPP_03})
 
 set(ios_frameworks 
@@ -61,7 +61,7 @@ set(ios_frameworks
   -framework CoreLocation")
 
 set(linker_search_paths "-LInclude/eegeo -LInclude")
-set(libs "${eegeo_sdk_lib} -lturbojpeg -lz -lcurl -luv -lFlurry_6.0.0")
+set(libs "${eegeo_sdk_libs} -lturbojpeg -lz -lcurl -luv -lFlurry_6.0.0")
 set(CMAKE_EXE_LINKER_FLAGS "${ios_frameworks} ${linker_search_paths} ${libs}")
 
 include_directories(${headers})
