@@ -12,6 +12,7 @@
 #include "BidirectionalBus.h"
 #include "SettingsMenuController.h"
 #include "Modality.h"
+#include "IMenuViewModule.h"
 
 namespace ExampleApp
 {
@@ -19,7 +20,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            class SettingsMenuViewModule: public ISettingsMenuViewModule, private Eegeo::NonCopyable
+            class SettingsMenuViewModule: public Menu::View::IMenuViewModule, private Eegeo::NonCopyable
             {
             private:
                 SettingsMenuView* m_pView;
@@ -37,8 +38,8 @@ namespace ExampleApp
 
                 ~SettingsMenuViewModule();
 
-                Menu::View::MenuController& GetMenuController() const;
-                Menu::View::IMenuView& GetMenuView() const;
+                Menu::View::MenuController& GetMenuController();
+                Menu::View::IMenuView& GetMenuView();
             };
         }
     }

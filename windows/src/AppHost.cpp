@@ -26,13 +26,11 @@
 #include "EnvironmentFlatteningService.h"
 #include "TtyHandler.h"
 #include "MenuViewModule.h"
-//#include "SecondaryMenuModule.h"
 #include "ModalityModule.h"
 #include "ModalBackgroundViewModule.h"
 #include "ModalBackgroundNativeViewModule.h"
 #include "MenuModel.h"
 #include "MenuViewModel.h"
-//#include "SearchResultMenuModule.h"
 #include "MenuOptionsModel.h"
 #include "SearchModule.h"
 #include "SearchResultOnMapModule.h"
@@ -85,6 +83,8 @@
 #include "WindowsPersistentSettingsModel.h"
 #include "IHttpCache.h"
 #include "HttpCache.h"
+#include "SearchMenuViewModule.h"
+#include "SettingsMenuViewModule.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
@@ -472,26 +472,25 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_messageBus
         );
 
-    /*m_pSecondaryMenuViewModule = Eegeo_NEW(ExampleApp::SecondaryMenu::View::SecondaryMenuViewModule)(
-        "ExampleAppWPF.SecondaryMenuView",
+    m_pSettingsMenuViewModule = Eegeo_NEW(ExampleApp::SettingsMenu::View::SettingsMenuViewModule)(
+        "ExampleAppWPF.SettingsMenuView",
         m_nativeState,
-        app.SecondaryMenuModule().GetSecondaryMenuModel(),
-        app.SecondaryMenuModule().GetSecondaryMenuViewModel(),
+        app.SettingsMenuModule().GetSettingsMenuModel(),
+        app.SettingsMenuModule().GetSettingsMenuViewModel(),
+        m_pModalBackgroundViewModule->GetView(),
         m_messageBus
-        );*/
+        );
 
-    /*m_pSearchResultMenuViewModule = Eegeo_NEW(ExampleApp::SearchResultMenu::View::SearchMenuViewModule)(
+    m_pSearchMenuViewModule = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchMenuViewModule)(
         "ExampleAppWPF.SearchMenuView",
         m_nativeState,
-        app.SearchResultMenuModule().GetSearchResultMenuModel(),
-        app.SearchResultMenuModule().GetMenuViewModel(),
+        app.SearchMenuModule().GetSearchMenuModel(),
+        app.SearchMenuModule().GetSearchMenuViewModel(),
+        app.SearchMenuModule().GetSearchSectionViewModel(),
         app.CategorySearchModule().GetCategorySearchRepository(),
-        app.SearchResultMenuModule().GetSearchResultMenuViewModel(),
-        app.SearchResultMenuModule().GetSearchResultMenuOptionsModel(),
-        app.SearchResultMenuModule().GetSearchResultMenuOrder(),
-        app.GetAppModeModel(),
+        m_pModalBackgroundViewModule->GetView(),
         m_messageBus
-        );*/
+        );
 
     // Pop-up layer.
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(
@@ -532,23 +531,23 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_messageBus
         );
 
-	/*m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(
+	m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(
 		app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
 		m_messageBus,
 		app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
-		app.SecondaryMenuModule().GetSecondaryMenuViewModel(),
-		app.SearchResultMenuModule().GetMenuViewModel(),
+		app.SettingsMenuModule().GetSettingsMenuViewModel(),
+		app.SearchMenuModule().GetSearchMenuViewModel(),
 		app.FlattenButtonModule().GetScreenControlViewModel(),
 		app.CompassModule().GetScreenControlViewModel(),
 		app.WatermarkModule().GetScreenControlViewModel(),
-		app.GetIdentityProvider());*/
+		app.GetIdentityProvider());
 
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
 
-    //viewControllerUpdaterModel.AddUpdateableObject(m_pSecondaryMenuViewModule->GetMenuController());
-    //viewControllerUpdaterModel.AddUpdateableObject(m_pSearchResultMenuViewModule->GetMenuController());
+    viewControllerUpdaterModel.AddUpdateableObject(m_pSettingsMenuViewModule->GetMenuController());
+    viewControllerUpdaterModel.AddUpdateableObject(m_pSearchMenuViewModule->GetMenuController());
 }
 
 void AppHost::DestroyApplicationViewModulesFromUiThread()

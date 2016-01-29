@@ -35,22 +35,17 @@ namespace ExampleApp
 
             SettingsMenuViewModule::~SettingsMenuViewModule()
             {
-                ASSERT_UI_THREAD
-
                 Eegeo_DELETE m_pController;
                 Eegeo_DELETE m_pView;
             }
 
-            Menu::View::MenuController& SettingsMenuViewModule::GetMenuController() const
+            Menu::View::MenuController& SettingsMenuViewModule::GetMenuController()
             {
-                ASSERT_UI_THREAD
-
                 return *m_pController;
             }
 
-            Menu::View::IMenuView& SettingsMenuViewModule::GetMenuView() const
+            Menu::View::IMenuView& SettingsMenuViewModule::GetMenuView()
             {
-                ASSERT_UI_THREAD
                 return *m_pView;
             }
         }

@@ -11,21 +11,27 @@ using System.Windows.Threading;
 
 namespace ExampleAppWPF
 {
-    public class SecondaryMenuView : MenuView
+    public class SearchMenuView : MenuView
     {
         private double m_screenWidthPx;
         private double m_mainContainerOnScreenWidthPx;
         private TextBox m_editText;
-        private Image m_dragInteractionDirectionArrow;
         private MenuListAdapter m_adapter;
         private bool m_isFirstLayout = true;
+        private Grid m_mainContainer;
+        private Grid m_dragTabContainer;
+        private bool m_isMouseDown = false;
+        private static readonly ResourceDictionary genericResourceDictionary;
 
-        static SecondaryMenuView()
+        static SearchMenuView()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(SecondaryMenuView), new FrameworkPropertyMetadata(typeof(SecondaryMenuView)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(SearchMenuView), new FrameworkPropertyMetadata(typeof(SearchMenuView)));
+
+            var uri = new Uri("/ExampleAppWPF;component/Colours.xaml", UriKind.Relative);
+            genericResourceDictionary = (ResourceDictionary)Application.LoadComponent(uri);
         }
 
-        public SecondaryMenuView(IntPtr nativeCallerPointer) : base(nativeCallerPointer)
+        public SearchMenuView(IntPtr nativeCallerPointer) : base(nativeCallerPointer)
         {
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
             mainWindow.MainGrid.Children.Add(this);
@@ -41,62 +47,80 @@ namespace ExampleAppWPF
 
         private void PerformLayout(object sender, SizeChangedEventArgs e)
         {
-            if (m_dragInteractionDirectionArrow != null)
+            var currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
+            double onScreenState = (currentPosition.X - m_offscreenXPx) / (m_openXPx - m_offscreenXPx);
+            MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+            m_screenWidthPx = mainWindow.MainGrid.ActualWidth;
+
+            double dragTabWidthPx = m_dragTabView.ActualWidth;
+
+            m_mainContainerOffscreenOffsetXPx = -m_dragTabView.Margin.Right;
+            double mainContainerWidthPx = m_mainContainer.ActualWidth;
+            m_mainContainerOnScreenWidthPx = mainContainerWidthPx - m_mainContainerOffscreenOffsetXPx;
+
+            m_totalWidthPx = mainContainerWidthPx + dragTabWidthPx;
+            m_offscreenXPx = -(m_screenWidthPx / 2) - (m_totalWidthPx / 2);
+            m_closedXPx = m_offscreenXPx + ((mainContainerWidthPx + dragTabWidthPx) / 2);
+            m_openXPx = m_offscreenXPx + m_totalWidthPx;
+
+            double layoutX = m_offscreenXPx;
+
+            if (!m_isFirstLayout)
             {
-                var currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
-                double onScreenState = (currentPosition.X - m_offscreenXPx) / (m_openXPx - m_offscreenXPx);
-                MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
-                m_screenWidthPx = mainWindow.MainGrid.ActualWidth;
-
-                FrameworkElement listContainerView = (FrameworkElement)GetTemplateChild("SecondaryMenuViewListContainer");
-                double dragTabWidthPx = m_dragTabView.ActualWidth;
-
-                m_mainContainerOffscreenOffsetXPx = -m_dragTabView.Margin.Right;
-                double mainContainerWidthPx = listContainerView.ActualWidth;
-                m_mainContainerOnScreenWidthPx = mainContainerWidthPx - m_mainContainerOffscreenOffsetXPx;
-
-                m_totalWidthPx = mainContainerWidthPx + dragTabWidthPx;
-                m_offscreenXPx = m_screenWidthPx - Padding.Right;
-                m_closedXPx = m_screenWidthPx - /*m_activity.dipAsPx*/(m_mainContainerVisibleOnScreenWhenClosedDip) - dragTabWidthPx;
-                m_openXPx = m_screenWidthPx - m_mainContainerOnScreenWidthPx - dragTabWidthPx - Padding.Right;
-
-                double layoutX = m_offscreenXPx;
-
-                if (!m_isFirstLayout)
-                {
-                    layoutX = onScreenState * (m_openXPx - m_offscreenXPx) + m_offscreenXPx;                
-                }
-                
-                RenderTransform = new TranslateTransform(layoutX, currentPosition.Y);
-                m_isFirstLayout = false;
+                layoutX = onScreenState * (m_openXPx - m_offscreenXPx) + m_offscreenXPx;                
             }
+                
+            RenderTransform = new TranslateTransform(layoutX, currentPosition.Y);
+            m_isFirstLayout = false;
         }
 
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
 
-            m_dragInteractionDirectionArrow = (Image)GetTemplateChild("SecondaryMenuDragInteractionArrow");
             m_list = (ListBox)GetTemplateChild("SecondaryMenuItemList");
             m_list.SelectionChanged += SelectionChanged;
             
             m_dragTabView = (Image)GetTemplateChild("SecondaryMenuDragTabView");
-            
-            m_dragTabClickHandler = new ControlClickHandler(m_dragTabView, OnDragTabMouseClick);
+            m_dragTabContainer = (Grid)GetTemplateChild("DragTabParentGrid");
 
-            m_dragTabView.MouseLeftButtonDown += OnDragTabMouseLeftButtonDown;
-            m_dragTabView.MouseLeftButtonUp += OnDragTabMouseLeftButtonUp;
+            m_dragTabView.MouseLeftButtonDown += OnMouseLeftButtonDown;
+            m_dragTabView.MouseLeftButtonUp += OnMouseLeftButtonUp;
+            m_dragTabView.MouseLeave += OnMouseLeave;
 
             m_editText = (TextBox)GetTemplateChild("SecondaryMenuViewSearchEditTextView");
             m_editText = (TextBox)GetTemplateChild("SecondaryMenuViewSearchEditTextView");
             m_editText.KeyDown += OnKeyDown;
+
+            m_mainContainer = (Grid)GetTemplateChild("SecondaryMenuViewListContainer");
 
             var fadeInItemStoryboard = ((Storyboard)Template.Resources["FadeInNewItems"]).Clone();
             var fadeOutItemStoryboard = ((Storyboard)Template.Resources["FadeOutOldItems"]).Clone();
             
             m_adapter = new MenuListAdapter(false, m_list, fadeInItemStoryboard, fadeOutItemStoryboard);
         }
-        
+
+        private void OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            m_dragTabContainer.Background = (SolidColorBrush)genericResourceDictionary["Gold"];
+            m_isMouseDown = false;
+        }
+
+        private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            m_dragTabContainer.Background = (SolidColorBrush)genericResourceDictionary["Highlight"];
+            m_isMouseDown = true;
+        }
+
+        private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if(m_isMouseDown)
+            {
+                m_dragTabContainer.Background = (SolidColorBrush)genericResourceDictionary["Gold"];
+                MenuViewCLIMethods.ViewClicked(m_nativeCallerPointer);
+            }
+        }
+
         private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (IsAnimating() || IsDragging() || m_adapter.IsAnimating())
@@ -156,13 +180,11 @@ namespace ExampleAppWPF
             if (newXPx < (m_screenWidthPx - m_totalWidthPx))
             {
                 newXPx = m_screenWidthPx - m_totalWidthPx;
-                ShowInteractionArrowOpen();
             }
 
             if (newXPx > m_closedXPx)
             {
                 newXPx = m_closedXPx;
-                ShowInteractionArrowClosed();
             }
 
             double normalisedDragState = Math.Abs(newXPx + (-m_closedXPx)) / (Math.Abs(m_openXPx - m_closedXPx));
@@ -177,26 +199,14 @@ namespace ExampleAppWPF
 
         public override void AnimateToClosedOnScreen()
         {
-            ShowInteractionArrowClosed();
             base.AnimateToClosedOnScreen();
+            m_mainContainer.Visibility = Visibility.Hidden;
         }
 
         public override void AnimateToOpenOnScreen()
         {
-            ShowInteractionArrowOpen();
             base.AnimateToOpenOnScreen();
-        }
-
-        void ShowInteractionArrowOpen()
-        {
-            m_dragInteractionDirectionArrow.RenderTransform = new RotateTransform(180);
-            m_dragInteractionDirectionArrow.RenderTransformOrigin = new Point(0.5, 0.5);
-        }
-
-        void ShowInteractionArrowClosed()
-        {
-            m_dragInteractionDirectionArrow.RenderTransform = new RotateTransform(0);
-            m_dragInteractionDirectionArrow.RenderTransformOrigin = new Point(0.5, 0.5);
+            m_mainContainer.Visibility = Visibility.Visible;
         }
 
         public void DisableEditText()

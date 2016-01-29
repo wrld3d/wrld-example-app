@@ -19,7 +19,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                //m_pView = Eegeo_NEW(ModalBackgroundAggregateView)(nativeState, messageBus);
+                m_pView = Eegeo_NEW(ModalBackgroundAggregateView)(nativeState, messageBus);
                 m_pController = Eegeo_NEW(Modality::View::ModalBackgroundController)(*m_pView, modalityModel);
             }
 
@@ -29,6 +29,15 @@ namespace ExampleApp
 
                 Eegeo_DELETE(m_pController);
                 Eegeo_DELETE(m_pView);
+            }
+            Modality::View::IModalBackgroundView& ModalBackgroundViewModule::GetView()
+            {
+                return *m_pView;
+            }
+
+            Modality::View::ModalBackgroundController& ModalBackgroundViewModule::GetController()
+            {
+                return *m_pController;
             }
         }
     }

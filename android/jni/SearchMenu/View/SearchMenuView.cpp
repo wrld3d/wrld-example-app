@@ -162,6 +162,13 @@ namespace ExampleApp
 
 				m_searchItemSelectedCallbacks.ExecuteCallbacks(index);
 			}
+
+			void SearchMenuView::HandleItemSelected(int sectionIndex, int itemIndex)
+			{
+				RemoveSeachKeyboard();
+				OnSearchCleared();
+				MenuView::HandleItemSelected(sectionIndex, itemIndex);
+			}
         }
     }
 }

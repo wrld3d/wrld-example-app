@@ -18,7 +18,7 @@ public class MenuSectionAnimatorUpdateListener implements ValueAnimator.Animator
     @Override
     public void onAnimationUpdate(ValueAnimator animator)
     {
-        int size = (Integer)animator.getAnimatedValue();
+        float size = (Float)animator.getAnimatedValue();
         m_adapter.setAnimatedGroupSize(m_groupName, size);
     }
 

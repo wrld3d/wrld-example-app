@@ -17,7 +17,6 @@ namespace ExampleApp
                                                        Menu::View::IMenuModel& searchMenuModel,
                                                        Menu::View::IMenuViewModel& searchMenuViewModel,
                                                        Menu::View::IMenuSectionViewModel& searchSectionViewModel,
-                                                       const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                        CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                                                        Modality::View::IModalBackgroundView& modalBackgroundView,
                                                        ExampleAppMessaging::TMessageBus& messageBus)
@@ -41,12 +40,12 @@ namespace ExampleApp
                 Eegeo_DELETE m_pView;
             }
 
-            Menu::View::MenuController& SearchMenuViewModule::GetMenuController() const
+            Menu::View::MenuController& SearchMenuViewModule::GetMenuController()
             {
                 return *m_pController;
             }
 
-            SearchMenuView& SearchMenuViewModule::GetSearchMenuView() const
+            Menu::View::IMenuView& SearchMenuViewModule::GetMenuView()
             {
                 return *m_pView;
             }

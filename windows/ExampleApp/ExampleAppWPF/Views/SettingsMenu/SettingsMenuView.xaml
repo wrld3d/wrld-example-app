@@ -8,10 +8,10 @@
         <ResourceDictionary Source="../../ListBoxControlTemplateNoPadding.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="{x:Type local:SearchMenuView}">
+    <Style TargetType="{x:Type local:SettingsMenuView}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:SearchMenuView}">
+                <ControlTemplate TargetType="{x:Type local:SettingsMenuView}">
                     <StackPanel Orientation="Horizontal">
                         <Grid Width="Auto" Height="Auto" Margin="0,50,0,0">
                             <Grid.RowDefinitions>

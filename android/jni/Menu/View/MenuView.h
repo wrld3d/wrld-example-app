@@ -41,7 +41,7 @@ namespace ExampleApp
                 MenuView(AndroidNativeState& nativeState,
                          const std::string& viewClassName);
 
-                ~MenuView();
+                virtual ~MenuView();
 
                 void SetTryDragFunc(Eegeo::Helpers::IFunc0<bool>& function);
 
@@ -113,7 +113,7 @@ namespace ExampleApp
 
                 void HandleDraggingViewCompleted();
 
-                void HandleItemSelected(int sectionIndex, int itemIndex);
+                virtual void HandleItemSelected(int sectionIndex, int itemIndex);
 
                 bool CallBeginDrag();
             };

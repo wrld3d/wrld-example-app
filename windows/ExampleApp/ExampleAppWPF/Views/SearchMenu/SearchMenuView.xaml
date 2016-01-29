@@ -8,10 +8,10 @@
         <ResourceDictionary Source="../../ListBoxControlTemplateNoPadding.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="{x:Type local:SecondaryMenuView}">
+    <Style TargetType="{x:Type local:SearchMenuView}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:SecondaryMenuView}">
+                <ControlTemplate TargetType="{x:Type local:SearchMenuView}">
                     <ControlTemplate.Resources>
                         <Storyboard x:Key="FadeInNewItems">
                             <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Duration="0:0:0.2" >
@@ -26,21 +26,17 @@
                             </ThicknessAnimationUsingKeyFrames>
                         </Storyboard>
                     </ControlTemplate.Resources>
-                    <StackPanel Orientation="Horizontal" Margin="0,50,0,0">
-                        <Grid Width="50" Height="50" VerticalAlignment="Top">
-                            <Image Source="/Assets/menu_button.png" Width="50" Height="50" Name="SecondaryMenuDragTabView" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                            <Image IsHitTestVisible="False" Name="SecondaryMenuDragInteractionArrow" Width="50" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center" Source="/Assets/menu_list.png" />
+                    <DockPanel Margin="0,50,0,0" Width="270">
+                        <Grid Width="50" Height="50" VerticalAlignment="Top" DockPanel.Dock="Right" Name="DragTabParentGrid" Background="{StaticResource Gold}">
+                            <Image Source="/Assets/search_magglass.png" Width="50" Height="50" Name="SecondaryMenuDragTabView" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </Grid>
-                        
-                        <Grid Name="SecondaryMenuViewListContainer" Width="220" >
+
+                        <Grid Name="SecondaryMenuViewListContainer" Width="220" DockPanel.Dock="Left" Visibility="Hidden" Background="{StaticResource Gold}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="50"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
-                                <Grid.Background>
-                                    <ImageBrush ImageSource="/Assets/menu_bar.png"/>
-                                </Grid.Background>
                                 <Grid Margin="8,10,8,10">
                                     <TextBox Name="SecondaryMenuViewSearchEditTextView" Foreground="{StaticResource Black}" Height="36" VerticalAlignment="Center" HorizontalAlignment="Stretch" VerticalContentAlignment="Center"/>
                                 </Grid>
@@ -147,7 +143,7 @@
                                 </ScrollViewer>
                             </Grid>
                         </Grid>
-                    </StackPanel>
+                    </DockPanel>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
