@@ -305,7 +305,12 @@
      animations:^
     {
         self.alpha = alpha;
-    }];
+    }
+     completion:^(BOOL finished) {
+         // Stop scrolling
+         CGPoint offset = self.pLabelsContainer.contentOffset;
+         [self.pLabelsContainer setContentOffset:offset animated:NO];
+     }];
 }
 
 - (void)_tapTabGesture:(UITapGestureRecognizer *)recognizer
