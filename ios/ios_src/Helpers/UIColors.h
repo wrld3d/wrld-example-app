@@ -27,7 +27,7 @@ namespace ExampleApp
             
             extern UIColor* TableHeaderPressColor;
             extern UIColor* TableSubCellPressColor;
-            extern UIColor* TableSeparatorHeaderColor;
+            extern UIColor* TableDividerColor;
             extern UIColor* TableSeparatorColor;
             extern UIColor* TableSearchCellColor;
             extern UIColor* TableSearchTextColor;

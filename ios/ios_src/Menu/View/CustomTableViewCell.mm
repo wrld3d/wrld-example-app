@@ -243,7 +243,7 @@
                                                                                    separatorWidth,
                                                                                    separatorHeight)] autorelease];
         
-        topSeparator.backgroundColor = ExampleApp::Helpers::ColorPalette::TableSeparatorHeaderColor;
+        topSeparator.backgroundColor = ExampleApp::Helpers::ColorPalette::TableDividerColor;
         
         [self->pCustomSeparatorContainer addSubview: topSeparator];
     }

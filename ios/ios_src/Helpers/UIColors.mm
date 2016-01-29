@@ -27,7 +27,7 @@ namespace ExampleApp
             
             UIColor* TableHeaderPressColor = [[UIColor alloc] initWithRed:130.f/255.f green:235.f/255.f blue:255.f/255.f alpha:1.f];
             UIColor* TableSubCellPressColor = [[UIColor alloc] initWithRed:84.f/255.f green:104.f/255.f blue:204.f/255.f alpha:1.f];
-            UIColor* TableSeparatorHeaderColor = [[UIColor alloc] initWithRed:177.f/255.f green:204.f/255.f blue:225.f/255.f alpha:1.f];
+            UIColor* TableDividerColor = [[UIColor alloc] initWithRed:177.f/255.f green:204.f/255.f blue:225.f/255.f alpha:1.f];
             UIColor* TableSeparatorColor = [[UIColor alloc] initWithRed:0.f/255.f green:43.f/255.f blue:99.f/255.f alpha:1.f];
             UIColor* TableSearchCellColor = [[UIColor alloc] initWithRed:242.f/255.f green:242.f/255.f blue:242.f/255.f alpha:1.f];
             UIColor* TableSearchTextColor = [[UIColor alloc] initWithRed:56.f/255.f green:56.f/255.f blue:56.f/255.f alpha:1.f];
