@@ -2,7 +2,7 @@ set(headers ${headers} ../src/Helpers
 )
 set(currsources
   ../src/Helpers/CMakeLists.txt
-  ../src/Helpers/ColorHelpers.h
+  ../src/Helpers/AppColorHelpers.h
   ../src/Helpers/ImagePathHelpers.h
   ../src/Helpers/InteriorHeightHelpers.cpp
   ../src/Helpers/InteriorHeightHelpers.h

@@ -10,25 +10,16 @@ endif(NOT ${IOS})
 project(ExampleApp)
 set(executable_name ExampleApp)
 
-macro (include_platform_headers platform_header_list)
-    file(GLOB_RECURSE new_list Include/eegeo/*.h)
-    set(dir_list "")
-    foreach(file_path ${new_list})
-        get_filename_component(dir_path ${file_path} PATH)
-        set(dir_list ${dir_list} ${dir_path})
-    endforeach()
-    list(REMOVE_DUPLICATES dir_list)
-    set(${platform_header_list} ${dir_list})
-endmacro()
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Include/eegeo/CMakeLists.txt")
+  include("${CMAKE_CURRENT_SOURCE_DIR}/Include/eegeo/CMakeLists.txt")
+else(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Include/eegeo/CMakeLists.txt")
+  message(FATAL_ERROR "Couldn't detect platform headers. Have you ran update.platform.sh?")
+endif(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Include/eegeo/CMakeLists.txt")
 
 include(../src/CMakeLists.txt)
 include(Include/CMakeLists.txt)
 include(ios_src/CMakeLists.txt)
 include(Resources/CMakeLists.txt)
-
-set(headers ${headers} ios)
-include_platform_headers(platform_header_list)
-set(headers ${headers} ${platform_header_list})
 
 set(storyboards
     ExampleApp/en.lproj/MainStoryboard_iPad.storyboard
