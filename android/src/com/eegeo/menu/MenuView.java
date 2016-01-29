@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -26,6 +27,7 @@ public abstract class MenuView implements View.OnTouchListener, View.OnClickList
     protected View m_view = null;
     protected ListView m_list = null;
     protected View m_dragTabView = null;
+    protected ImageButton m_dragButtonView = null;
     protected Boolean m_dragInProgress = false;
     protected OnItemClickListener m_menuItemSelectedListener = null;
     protected Boolean m_loggingEnabled = false;
@@ -329,6 +331,7 @@ public abstract class MenuView implements View.OnTouchListener, View.OnClickList
             m_touchAnchorXPx = xPx;
             m_touchAnchorYPx = yPx;
             m_dragAnchorSet = true;
+            ((ImageButton)view).setPressed(true);
             break;
         case MotionEvent.ACTION_UP:
             m_canBeginDrag = false;
@@ -341,6 +344,7 @@ public abstract class MenuView implements View.OnTouchListener, View.OnClickList
                 view.performClick();
             }
             m_dragAnchorSet = false;
+            ((ImageButton)view).setPressed(false);
             break;
         case MotionEvent.ACTION_MOVE:
 

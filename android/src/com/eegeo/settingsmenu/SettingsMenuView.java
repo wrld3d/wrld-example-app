@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
@@ -21,8 +22,7 @@ public class SettingsMenuView extends MenuView
 {
 	private int m_screenWidthPx;
     private int m_mainContainerOnScreenWidthPx;
-    private View m_dragInteractionDirectionArrow;
-
+    
     protected MenuListAdapter m_listAdapter = null;
 
     public SettingsMenuView(MainActivity activity, long nativeCallerPointer)
@@ -35,12 +35,13 @@ public class SettingsMenuView extends MenuView
     {
         final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
         m_view = m_activity.getLayoutInflater().inflate(R.layout.settings_menu_layout, uiRoot, false);
-        m_dragInteractionDirectionArrow = m_view.findViewById(R.id.settings_menu_drag_interaction_arrow);
         
         m_list = (ListView)m_view.findViewById(R.id.settings_menu_item_list);
         m_dragTabView = m_view.findViewById(R.id.settings_menu_drag_tab_view);
-        m_dragTabView.setOnClickListener(this);
-        m_dragTabView.setOnTouchListener(this);
+        
+        m_dragButtonView = (ImageButton)m_view.findViewById(R.id.settings_menu_drag_button_view);
+        m_dragButtonView.setOnClickListener(this);
+        m_dragButtonView.setOnTouchListener(this);
 
         m_screenWidthPx = uiRoot.getWidth();
 
@@ -105,13 +106,11 @@ public class SettingsMenuView extends MenuView
         if(newXPx < (m_screenWidthPx - m_totalWidthPx))
         {
             newXPx = m_screenWidthPx - m_totalWidthPx;
-            showInteractionArrowOpen();
         }
 
         if(newXPx > m_closedXPx)
         {
             newXPx = m_closedXPx;
-            showInteractionArrowClosed();
         }
 
         float normalisedDragState = Math.abs(newXPx + (-m_closedXPx)) / (Math.abs(m_openXPx - m_closedXPx));
@@ -129,29 +128,5 @@ public class SettingsMenuView extends MenuView
                                    HashMap<String, List<String>> groupToChildrenMap)
     {
         m_listAdapter.setData(groups, groupsExpandable, groupToChildrenMap);
-    }
-
-    @Override
-    public void animateToClosedOnScreen()
-    {
-    	showInteractionArrowClosed();
-    	super.animateToClosedOnScreen();
-    }
-
-    @Override
-    public void animateToOpenOnScreen()
-    {
-    	showInteractionArrowOpen();
-    	super.animateToOpenOnScreen();
-    }
-    
-    void showInteractionArrowOpen()
-    {
-    	m_dragInteractionDirectionArrow.setRotation(180);
-    }
-    
-    void showInteractionArrowClosed()
-    {
-    	m_dragInteractionDirectionArrow.setRotation(0);
     }
 }

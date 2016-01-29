@@ -41,8 +41,6 @@ public class MenuListAdapter extends BaseAdapter
     private HashMap<String, Integer> m_animatedSizesMap;
     private AnimatorSet m_expandContractAnim;
     private boolean m_shouldAlignIconRight;
-
-    private final float SubItemIndent = 22.0f;
     
     private final long MinAnimationDurationMilis = 200;
     private final long MaxAnimationDurationMilis = 500;
@@ -342,17 +340,8 @@ public class MenuListAdapter extends BaseAdapter
         {
             Log.e("Eegeo", "MenuListAdapter: Failed to read json data object: " + e.getMessage());
         }
-
-        if(!isHeader)
-        {
-            float scale = m_context.getResources().getDisplayMetrics().density;
-            reusableView.setPadding(
-                !m_shouldAlignIconRight ? (int)(SubItemIndent * scale + 0.5f) : 0,
-                0,
-                m_shouldAlignIconRight ? (int)(SubItemIndent * scale + 0.5f) : 0,
-                0);
-        }
-        else
+        
+        if(isHeader)
         {
             RelativeLayout openableArrow = (RelativeLayout)reusableView.findViewById(R.id.menu_list_openable_shape);
             int groupIndex = getGroupIndexForViewIndex(index);
@@ -360,27 +349,20 @@ public class MenuListAdapter extends BaseAdapter
             if(m_groupsExpandable.get(groupIndex))
             {
                 RelativeLayout.LayoutParams openableArrowParams = new RelativeLayout.LayoutParams(openableArrow.getLayoutParams());
-
-                if(m_shouldAlignIconRight)
-                {
-                    openableArrowParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
-                    openableArrow.setRotation(180);
-                    openableArrowParams.leftMargin = m_context.dipAsPx(20);
-                }
-                else
-                {
-                    openableArrowParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
-                    openableArrow.setRotation(0);
-                    openableArrowParams.rightMargin = m_context.dipAsPx(20);
-                }
-
+                
                 String groupName = m_groups.get(groupIndex);
                 if(m_animatedSizesMap.get(groupName) > 1)
                 {
                     openableArrow.setRotation(270);
                 }
+                
+                final int OpenableRightMargin = 18;
 
                 openableArrowParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+                openableArrowParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
+                openableArrowParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
+                openableArrowParams.rightMargin = m_context.dipAsPx(OpenableRightMargin);
+                
                 openableArrow.setLayoutParams(openableArrowParams);
             }
             else
@@ -399,22 +381,22 @@ public class MenuListAdapter extends BaseAdapter
         	backgroundContainer.setBackgroundDrawable(m_context.getResources().getDrawable(m_subMenuBackgroundId));	
         }
         
-
         View dividerContainer = reusableView.findViewById(R.id.menu_list_divider_container);
-        RelativeLayout.LayoutParams dividerContainerParams = new RelativeLayout.LayoutParams(dividerContainer.getLayoutParams());
-        if(isHeader)
+        
+        final int groupIndex = getGroupIndexForViewIndex(index); 
+        
+        if(isHeader && !m_groupsExpandable.get(groupIndex) && getPlaceInGroup(index) == 0)
         {
-        	dividerContainer.setBackgroundColor(m_context.getResources().getColor(R.color.menu_separator));
-        	dividerContainerParams.leftMargin = m_context.dipAsPx(22);
+        	dividerContainer.setVisibility(View.GONE);
+        }
+        else if(m_groupsExpandable.get(groupIndex) && isHeader && groupIndex == 0)
+        {
+        	dividerContainer.setVisibility(View.GONE);
         }
         else
         {
-        	dividerContainer.setBackgroundColor(m_context.getResources().getColor(R.color.submenu_separator));
-        	dividerContainerParams.leftMargin = m_context.dipAsPx(36);
+        	dividerContainer.setVisibility(View.VISIBLE);
         }
-        dividerContainerParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
-        dividerContainer.setLayoutParams(dividerContainerParams);
-        
         
         return reusableView;
     }

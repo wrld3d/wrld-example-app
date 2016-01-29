@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="220dp"
+    android:layout_width="249dp"
     android:layout_height="50dp"
     android:background="@color/gold" >
 
@@ -14,7 +14,7 @@
 
     <EditText
         android:id="@+id/search_menu_view_edit_text_view"
-        android:layout_width="184dp"
+        android:layout_width="212dp"
         android:layout_height="42dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="32dp"

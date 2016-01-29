@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="gold">#1e7bc3</color>
+    <color name="gold">#1256be</color>
     <color name="olive">#94a847</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
@@ -13,4 +13,19 @@
     <color name="transparent">#00000000</color>
     <color name="text_field_disabled">#6d6d6d</color>
     <color name="text_field_enabled">#202020</color>
+    <color name="ui_background">#FFFFFF</color>
+    <color name="ui_border">#1256be</color>
+    <color name="button_press">#CDFC0D</color>
+    <color name="menu_button_press">#82EBFF</color>
+    
+    <color name="table_header_press">#82EBFF</color>
+	<color name="table_sub_cell_press">#5468CC</color>
+	<color name="table_divider">#B1CCFF</color>
+	<color name="table_separator">#002B63</color>
+	<color name="table_search_cell">#F2F2F2</color>
+	<color name="table_search_text">#383838</color>
+	<color name="table_search_detail_text">#606060</color>
+	<color name="table_header_text">#CECECE</color>
+	<color name="table_sub_cell_text">#777777</color>
+	<color name="table_cell_highlight">#CCCCCC</color>
 </resources>

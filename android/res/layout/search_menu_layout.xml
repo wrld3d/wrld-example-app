@@ -16,9 +16,9 @@
 
         <LinearLayout
             android:id="@+id/search_menu_list_container_view"
-            android:layout_width="220dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/gold"
+            android:background="@android:color/transparent"
             android:orientation="vertical"
             android:overScrollMode="never" >
 
@@ -42,34 +42,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.01"
-                android:overScrollMode="never" >
+                android:background="@color/ui_border"
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                android:overScrollMode="never"
+                android:paddingLeft="32dp"
+                android:paddingRight="5dp" >
 
             </ListView>
 
         </LinearLayout>
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_toRightOf="@id/search_menu_list_container_view" >
 
-            <RelativeLayout
-                android:id="@+id/search_menu_drag_tab_view"
+            <ImageButton
+                android:id="@+id/search_menu_drag_button_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/menu_button"
-                android:scaleX="-1" >
-            </RelativeLayout>
+                android:background="@drawable/menu_button_color_states"
+                android:src="@drawable/button_search_menu_states" />
 
-            <TextView
-                android:id="@+id/search_menu_num_results_text"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_centerInParent="true"
-                android:background="@android:color/transparent"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="22dp" />
         </RelativeLayout>
 
     </RelativeLayout>

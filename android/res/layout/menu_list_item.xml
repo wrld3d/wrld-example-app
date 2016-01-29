@@ -2,46 +2,48 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/menu_list_item"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
-	    
-	<LinearLayout
-		android:id="@+id/menu_list_item_background_container"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-		>
-		
-	    <RelativeLayout android:layout_width="fill_parent"
-	        			android:layout_height="42dp">
-		    <ImageView
-		        android:id="@+id/menu_list_item_content_background"
-		  		android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"/>
-		    
-		    <TextView
-		        android:id="@+id/menu_list_item_name"
-		        android:layout_width="wrap_content"
-		        android:layout_height="fill_parent"
-		        android:layout_marginLeft="22dp"
-		        android:gravity="left|center_vertical"
-		        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-		        android:textColor="@color/darkgrey"
-		        android:textSize="22dp"/>
-		    
-		    <RelativeLayout 
-		        android:id="@+id/menu_list_openable_shape"
-		    	android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_centerVertical="true"
-		        android:scaleType="center"
-		    	android:background="@drawable/sub_menu_arrow"/>
-				    
-			<RelativeLayout
-		        android:id="@+id/menu_list_divider_container"
-		    	android:layout_width="fill_parent"
-		        android:layout_height="1dp"
-				android:layout_below="@+id/menu_list_item_icon"/>
-		        
-	    </RelativeLayout>
-	</LinearLayout>
+    android:layout_height="wrap_content" >
+
+    <RelativeLayout
+        android:id="@+id/menu_list_item_background_container"
+        android:layout_width="212dp"
+        android:layout_height="43dp" >
+
+        <ImageView
+            android:id="@+id/menu_list_item_content_background"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+
+        <TextView
+            android:id="@+id/menu_list_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:gravity="left|center_vertical"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:textColor="@color/table_header_text"
+            android:textSize="22sp" />
+
+        <RelativeLayout
+            android:id="@+id/menu_list_openable_shape"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="18dp"
+            android:background="@drawable/sub_menu_arrow" >
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/menu_list_divider_container"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/table_divider" >
+
+        </RelativeLayout>
+    </RelativeLayout>
+
 </RelativeLayout>
-   

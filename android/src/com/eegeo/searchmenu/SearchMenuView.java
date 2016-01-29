@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,7 +29,6 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
 {
     protected View m_closeButtonView = null;
     protected View m_progressSpinner = null;
-    protected TextView m_numResultsText = null;
 
     protected int m_totalHeightPx;
 
@@ -63,19 +63,17 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         m_list = (ListView)m_view.findViewById(R.id.search_menu_options_list_view);
         m_searchList = (ListView)m_view.findViewById(R.id.search_menu_item_list);
         m_dragTabView = m_view.findViewById(R.id.search_menu_drag_tab_container_view);
-        View dragTabInteractiveView = m_view.findViewById(R.id.search_menu_drag_tab_view);
-        dragTabInteractiveView.setOnClickListener(this);
-        dragTabInteractiveView.setOnTouchListener(this);
-
+        
+        m_dragButtonView = (ImageButton)m_view.findViewById(R.id.search_menu_drag_button_view);
+        m_dragButtonView.setOnClickListener(this);
+        m_dragButtonView.setOnTouchListener(this);
+        
         m_closeButtonView = m_view.findViewById(R.id.search_menu_close_button);
         m_closeButtonView.setOnClickListener(new SearchMenuCloseButtonClickedHandler(m_nativeCallerPointer, this));
         m_closeButtonView.setVisibility(View.GONE);
 
         m_progressSpinner = m_view.findViewById(R.id.search_menu_spinner);
         m_progressSpinner.setVisibility(View.GONE);
-
-        m_numResultsText = (TextView) m_view.findViewById(R.id.search_menu_num_results_text);
-        m_numResultsText.setVisibility(View.GONE);
         
         m_editText = (EditText)m_view.findViewById(R.id.search_menu_view_edit_text_view);
         m_editText.setImeActionLabel("Search", KeyEvent.KEYCODE_ENTER);
