@@ -6,6 +6,7 @@
 #include "IMenuViewModel.h"
 #include "IScreenControlViewModel.h"
 #include "IMyPinCreationInitiationViewModel.h"
+#include "InteriorsExplorerFloorSelectionDraggedMessage.h"
 #include "ApplyScreenControl.h"
 #include "WorldPinVisibility.h"
 
@@ -36,6 +37,7 @@ namespace ExampleApp
             , m_selectFloorCallback(this, &InteriorsExplorerController::OnSelectFloor)
             , m_stateChangedCallback(this, &InteriorsExplorerController::OnStateChanged)
             , m_floorSelectedCallback(this, &InteriorsExplorerController::OnFloorSelected)
+            , m_draggingFloorSelectionCallback(this, &InteriorsExplorerController::OnFloorSelectionDragged)
             , m_viewStateCallback(this, &InteriorsExplorerController::OnViewStateChangeScreenControl)
             , m_appModeChangedCallback(this, &InteriorsExplorerController::OnAppModeChanged)
             {
@@ -47,10 +49,12 @@ namespace ExampleApp
                 
                 m_view.InsertDismissedCallback(m_dismissedCallback);
                 m_view.InsertFloorSelectedCallback(m_selectFloorCallback);
+                m_view.InsertFloorSelectionDraggedCallback(m_draggingFloorSelectionCallback);
             }
         
             InteriorsExplorerController::~InteriorsExplorerController()
             {
+                m_view.RemoveFloorSelectionDraggedCallback(m_draggingFloorSelectionCallback);
                 m_view.RemoveDismissedCallback(m_dismissedCallback);
                 m_view.RemoveFloorSelectedCallback(m_selectFloorCallback);
                 
@@ -70,6 +74,11 @@ namespace ExampleApp
             void InteriorsExplorerController::OnSelectFloor(int& selected)
             {
                 m_messageBus.Publish(InteriorsExplorerSelectFloorMessage(selected));
+            }
+            
+            void InteriorsExplorerController::OnFloorSelectionDragged(float &dragParam)
+            {
+                m_messageBus.Publish(InteriorsExplorerFloorSelectionDraggedMessage(dragParam));
             }
             
             void InteriorsExplorerController::OnFloorSelected(const InteriorsExplorerFloorSelectedMessage& message)

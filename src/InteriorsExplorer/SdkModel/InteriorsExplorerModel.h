@@ -9,6 +9,7 @@
 #include "ICallback.h"
 #include "InteriorsExplorerExitMessage.h"
 #include "InteriorsExplorerSelectFloorMessage.h"
+#include "InteriorsExplorerFloorSelectionDraggedMessage.h"
 #include "InteriorId.h"
 #include "Metrics.h"
 #include "AppModes.h"
@@ -54,6 +55,7 @@ namespace ExampleApp
                 
                 void OnExit(const InteriorsExplorerExitMessage& message);
                 void OnSelectFloor(const InteriorsExplorerSelectFloorMessage& message);
+                void OnFloorSelectionDragged(const InteriorsExplorerFloorSelectionDraggedMessage& message);
                 
                 void PublishInteriorExplorerStateChange();
 
@@ -71,6 +73,7 @@ namespace ExampleApp
                 
                 Eegeo::Helpers::TCallback1<InteriorsExplorerModel, const InteriorsExplorerExitMessage&> m_exitCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerModel, const InteriorsExplorerSelectFloorMessage&> m_selectFloorCallback;
+                Eegeo::Helpers::TCallback1<InteriorsExplorerModel, const InteriorsExplorerFloorSelectionDraggedMessage&> m_floorSelectionDraggedCallback;
                 
                 bool m_interiorExplorerEnabled;
                 Eegeo::Helpers::CallbackCollection0 m_interiorExplorerExitedCallbacks;

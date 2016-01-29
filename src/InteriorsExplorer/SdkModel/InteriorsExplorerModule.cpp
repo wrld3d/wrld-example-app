@@ -51,6 +51,8 @@ namespace ExampleApp
                 globeCameraConfig.nearPlane = 0.4f * globeCameraConfig.zoomAltitudeLow;
                 globeCameraConfig.farPlane = 2.5f * globeCameraConfig.maxAltitude;
                 
+                globeCameraConfig.pitchCityMode = 30.0f;
+                
                 m_pGlobeCameraTouchController = globeCameraControllerFactory.CreateTouchController(touchConfig, screenProperties);
                 
                 m_pGlobeCameraController = globeCameraControllerFactory.CreateCameraController(globeCameraConfig,

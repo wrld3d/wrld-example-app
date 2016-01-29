@@ -17,6 +17,8 @@
 #include "IVisualMapService.h"
 #include "VisualMapState.h"
 
+#include "CurrentInteriorViewModel.h"
+
 #include "ICameraTransitionController.h"
 
 namespace ExampleApp
@@ -56,6 +58,7 @@ namespace ExampleApp
             , m_controllerFloorChangedCallback(this, &InteriorsExplorerModel::OnControllerFloorChanged)
             , m_exitCallback(this, &InteriorsExplorerModel::OnExit)
             , m_selectFloorCallback(this, &InteriorsExplorerModel::OnSelectFloor)
+            , m_floorSelectionDraggedCallback(this, &InteriorsExplorerModel::OnFloorSelectionDragged)
             , m_interiorExplorerEnabled(false)
             {
                 m_controller.RegisterStateChangedCallback(m_controllerStateChangedCallback);
@@ -64,10 +67,12 @@ namespace ExampleApp
                 
                 m_messageBus.SubscribeNative(m_exitCallback);
                 m_messageBus.SubscribeNative(m_selectFloorCallback);
+                m_messageBus.SubscribeNative(m_floorSelectionDraggedCallback);
             }
             
             InteriorsExplorerModel::~InteriorsExplorerModel()
             {
+                m_messageBus.UnsubscribeNative(m_floorSelectionDraggedCallback);
                 m_messageBus.UnsubscribeNative(m_selectFloorCallback);
                 m_messageBus.UnsubscribeNative(m_exitCallback);
 
@@ -134,6 +139,9 @@ namespace ExampleApp
                 const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = NULL;
                 Eegeo_ASSERT(m_controller.TryGetCurrentFloorModel(pFloorModel), "Could not fetch current floor model");
                 
+                Eegeo::Resources::Interiors::CurrentInteriorViewModel* pViewModel;
+                m_controller.TryGetCurrentViewModel(pViewModel);
+                
                 m_messageBus.Publish(InteriorsExplorerFloorSelectedMessage(m_controller.GetCurrentFloorIndex(), pFloorModel->GetReadableFloorName()));
             }
             
@@ -158,12 +166,41 @@ namespace ExampleApp
             {
                 SelectFloor(message.GetFloor());
             }
+            
+            void InteriorsExplorerModel::OnFloorSelectionDragged(const InteriorsExplorerFloorSelectionDraggedMessage &message)
+            {
+                const Eegeo::Resources::Interiors::InteriorsModel* pModel = NULL;
+                Eegeo_ASSERT(m_controller.TryGetCurrentModel(pModel), "Could not fetch current model");
+                
+                const float dragParameter = message.GetDragParam();
+                const float floorParam = dragParameter * (pModel->GetFloorCount()-1);
+                
+                // Need to expose
+                // - Being able to toggle expanded mode on off
+                // - Disabling the floor animation and setting the floor parameter manually.
+                //m_controller.Set
+                Eegeo::Resources::Interiors::CurrentInteriorViewModel* pViewModel = NULL;
+                if(m_controller.TryGetCurrentViewModel(pViewModel))
+                {
+                    Eegeo_TTY("SDKMODEL: DRAGGING %f", floorParam);
+                    pViewModel->SetExpandedModeEnabled(true);
+                    pViewModel->SetFloorParameter(floorParam);
+                }
+            }
 
             void InteriorsExplorerModel::SelectFloor(int floor)
             {
+                Eegeo_TTY("SDKMODEL: DRAG STOPPED SELECT FLOOR %d", floor);
                 if(!m_controller.InteriorIsVisible())
                 {
                     return;
+                }
+                Eegeo_TTY("SDKMODEL: DRAG STOPPED GET VM");
+                Eegeo::Resources::Interiors::CurrentInteriorViewModel* pViewModel = NULL;
+                if(m_controller.TryGetCurrentViewModel(pViewModel))
+                {
+                    Eegeo_TTY("SDKMODEL: DRAG STOPPED EXPANDED OFF");
+                    pViewModel->SetExpandedModeEnabled(false);
                 }
                 
                 if(m_controller.GetCurrentFloorIndex() == floor)

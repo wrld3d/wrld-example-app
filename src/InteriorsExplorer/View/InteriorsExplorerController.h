@@ -37,6 +37,7 @@ namespace ExampleApp
                 
                 void OnDismiss();
                 void OnSelectFloor(int& selected);
+                void OnFloorSelectionDragged(float& dragParam);
                 void OnFloorSelected(const InteriorsExplorerFloorSelectedMessage& message);
                 void OnStateChanged(const InteriorsExplorerStateChangedMessage& message);
                 void OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel &viewModel, float &state);
@@ -47,6 +48,7 @@ namespace ExampleApp
                 
                 Eegeo::Helpers::TCallback0<InteriorsExplorerController> m_dismissedCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, int> m_selectFloorCallback;
+                Eegeo::Helpers::TCallback1<InteriorsExplorerController, float> m_draggingFloorSelectionCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, const InteriorsExplorerStateChangedMessage&> m_stateChangedCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, const InteriorsExplorerFloorSelectedMessage&> m_floorSelectedCallback;
                 Eegeo::Helpers::TCallback2<InteriorsExplorerController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;

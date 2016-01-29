@@ -31,6 +31,8 @@ namespace ExampleApp
                 bool m_applyRestrictions;
                 float m_cameraInterestAltitude;
                 bool m_applyFloorOffset;
+                float m_normalDistanceToInterest;
+                float m_normalTilt;
                 
             public:
                 InteriorsExplorerCameraController(Eegeo::Resources::Interiors::InteriorController& interiorController,

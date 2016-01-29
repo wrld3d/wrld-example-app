@@ -17,6 +17,7 @@
 #include "InteriorHeightHelpers.h"
 #include "GlobeCameraController.h"
 #include "EnvironmentFlatteningService.h"
+#include "CurrentInteriorViewModel.h"
 
 namespace ExampleApp
 {
@@ -55,6 +56,7 @@ namespace ExampleApp
                 Eegeo::Space::EcefTangentBasis basis;
                 Eegeo::Camera::CameraHelpers::EcefTangentBasisFromPointAndHeading(Eegeo::Space::LatLong::FromDegrees(0, 0).ToECEF(), 0.0f, basis);
                 m_globeCameraController.SetView(basis, 100.0f);
+                m_globeCameraController.ApplyTilt(15.0f);
             }
             
             InteriorsExplorerCameraController::~InteriorsExplorerCameraController()
@@ -125,6 +127,18 @@ namespace ExampleApp
                 
                 if(m_interiorController.InteriorInScene())
                 {
+                    Eegeo::Resources::Interiors::CurrentInteriorViewModel* pViewModel = NULL;
+                    m_interiorController.TryGetCurrentViewModel(pViewModel);
+                    bool expanded = pViewModel->GetExpandedModeEnabled();
+                    float expandedParam = pViewModel->GetExpandedModeParameter();
+                    
+
+                    if(!expanded && expandedParam == 0.0f)
+                    {
+                        m_normalDistanceToInterest = m_globeCameraController.GetDistanceToInterest();
+                        m_normalTilt = 15.0f; // Can't get current tilt - Might have to manually calculate it which is a bit arse.
+                    }
+                    
                     Eegeo::dv3 cameraInterestEcef = m_globeCameraController.GetInterestBasis().GetPointEcef();
                     Eegeo::dv3 initialCameraInterestEcef = cameraInterestEcef;
                     cameraInterestEcef = cameraInterestEcef.Norm() * Eegeo::Space::EarthConstants::Radius;
@@ -139,12 +153,31 @@ namespace ExampleApp
 
                     const Eegeo::Space::EcefTangentBasis& interiorTangentBasis = pModel->GetTangentBasis();
                     Eegeo::dv3 origin = interiorTangentBasis.GetPointEcef();
-
+                    
                     Eegeo::v3 relativeCameraInterestEcef = (cameraInterestEcef - origin).ToSingle();
                     Eegeo::v3 cameraInterestTangentSpace = Eegeo::v3::MulRotate(relativeCameraInterestEcef, interiorTangentBasis.GetEcefToTangentTransform());
                     cameraInterestTangentSpace.y = m_cameraInterestAltitude;
-
+                    
+                    // Expanded view interest position.
+                    // TODO: Maybe subtly slide position up and down based on floor param and number of floors.
+                    float floorGap = Eegeo::v2(pModel->GetTangentSpaceBounds().Size().x, pModel->GetTangentSpaceBounds().Size().z).Length()*0.25f;
+                    float centerHeight = floorGap * pModel->GetFloorCount()*0.5f;
                     const Eegeo::Geometry::Bounds3D& tangentSpaceBounds = pModel->GetTangentSpaceBounds();
+                    
+                    Eegeo::v3 tangentSpaceOriginPoint = Eegeo::v3(tangentSpaceBounds.Center().x,
+                                                                  (tangentSpaceBounds.GetMin().y*m_environmentFlatteningService.GetCurrentScale()) + centerHeight,
+                                                                  tangentSpaceBounds.Center().z);
+
+                    cameraInterestTangentSpace = Eegeo::v3::Lerp(cameraInterestTangentSpace, tangentSpaceOriginPoint, expandedParam);
+                    
+                    // Zoom for expanded view
+                    // TODO: Bit of hackery here, coming up with a one-size solution is a bit tricky.
+                    // Current solution is... alright?
+                    float expandedZoom = (centerHeight) / Eegeo::Math::Tan(m_globeCameraController.GetRenderCamera().GetFOV()*0.5f)*1.75f;
+                    float zoom = Eegeo::Math::Lerp(m_normalDistanceToInterest, expandedZoom, expandedParam);
+                    float tilt = Eegeo::Math::Lerp(m_normalTilt, 0.0f, expandedParam);
+                    m_globeCameraController.SetView(m_globeCameraController.GetInterestBasis(), zoom);
+                    m_globeCameraController.ApplyTilt(tilt);
                     
                     if(m_applyRestrictions &&
                        (cameraInterestTangentSpace.x > tangentSpaceBounds.GetMax().x ||
@@ -246,7 +279,7 @@ namespace ExampleApp
             
             float InteriorsExplorerCameraController::GetFloorOffsetHeight() const
             {
-                const Eegeo::Resources::Interiors::CurrentInteriorViewModel* pViewModel = NULL;
+                Eegeo::Resources::Interiors::CurrentInteriorViewModel* pViewModel = NULL;
                 Eegeo_ASSERT(m_interiorController.TryGetCurrentViewModel(pViewModel), "Failed to get Interior Viewmodel");
                 
                 float interpolatedFloorValue = pViewModel->GetFloorParameter();

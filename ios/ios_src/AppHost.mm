@@ -126,7 +126,6 @@ AppHost::AppHost(
     Eegeo::EffectHandler::Initialise();
 
     Eegeo::Config::PlatformConfig platformConfig = Eegeo::iOS::iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion()).Build();
-    platformConfig.OptionsConfig.StartMapModuleAutomatically = false;
     platformConfig.CityThemesConfig.EmbeddedThemeManifestFile = "embedded_manifest.txt";
     platformConfig.CityThemesConfig.EmbeddedThemeTexturePath = "Textures/EmbeddedTheme";
     platformConfig.CityThemesConfig.EmbeddedThemeNameContains = "Summer";
@@ -237,10 +236,9 @@ void AppHost::NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProper
 
 void AppHost::Update(float dt)
 {
-    Eegeo::Modules::Map::MapModule& mapModule = m_pApp->World().GetMapModule();
-    if (!mapModule.IsRunning() && m_pAppLocationDelegate->HasReceivedPermissionResponse())
+    if (!m_pAppLocationDelegate->HasReceivedPermissionResponse())
     {
-        mapModule.Start();
+        return;
     }
 
     if(m_pApp->IsLoadingScreenComplete() && !m_requestedApplicationInitialiseViewState)

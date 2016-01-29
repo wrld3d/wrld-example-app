@@ -60,7 +60,7 @@ namespace ExampleApp
                     if(nextState == AppModes::SdkModel::InteriorMode)
                     {
                         m_interiorsCameraController.SetHeading(m_cameraController.GetHeadingDegrees());
-                        m_interiorsCameraController.SetTilt(0.0f);
+                        //m_interiorsCameraController.SetTilt(0.0f);
                     }
                 }
                 
