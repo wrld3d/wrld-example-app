@@ -8,6 +8,7 @@
 #include "MathFunc.h"
 #include "InteriorsExplorerFloorItemView.h"
 
+#import "ImmediatePanGestureRecognizer.h"
 #import "UIView+TouchExclusivity.h"
 #import <QuartzCore/QuartzCore.h>
 
@@ -55,11 +56,11 @@ namespace
         
         self.pFloorChangeButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 64, 64)] autorelease];
         [self.pFloorChangeButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"floor_selection_button") forState:UIControlStateNormal];
-        [self.pFloorChangeButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"floor_selection_button_down") forState:UIControlStateHighlighted];
+        [self.pFloorChangeButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"floor_selection_button_down") forState:UIControlStateSelected];
         m_draggingFloorButton = NO;
         [self.pFloorPanel addSubview:self.pFloorChangeButton];
         
-        UIPanGestureRecognizer* buttonDrag = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragButton:)];
+        ImmediatePanGestureRecognizer* buttonDrag = [[ImmediatePanGestureRecognizer alloc] initWithTarget:self action:@selector(dragButton:)];
         [self.pFloorChangeButton addGestureRecognizer:buttonDrag];
         [buttonDrag release];
         
@@ -378,13 +379,12 @@ namespace
     m_touchEnabled = enabled;
 }
 
-- (void) dragButton:(UIPanGestureRecognizer*)recognizer
+- (void) dragButton:(ImmediatePanGestureRecognizer*)recognizer
 {
     if(recognizer.state == UIGestureRecognizerStateChanged ||
        recognizer.state == UIGestureRecognizerStateEnded)
     {
-        // This ain't brilliant, but'll do - Doesn't start the gesture immediately (And should) - Recommended dealio seems to be to create custom gesture recognizer.
-        [self.pFloorChangeButton setHighlighted:recognizer.state != UIGestureRecognizerStateEnded];
+
         
         CGPoint translation = [recognizer translationInView:self.pFloorChangeButton];
         CGRect buttonFrame = self.pFloorChangeButton.frame;
@@ -394,6 +394,7 @@ namespace
         
         [recognizer setTranslation:CGPointZero inView:self.pFloorChangeButton];
     }
+    
     
     if(recognizer.state == UIGestureRecognizerStateBegan)
     {
@@ -407,14 +408,16 @@ namespace
     if(m_draggingFloorButton)
     {
         m_pInterop->SetFloorSelectionDrag(m_floorButtonParameter);
+        [self.pFloorChangeButton setSelected:YES];
+        
     }
     else
     {
-        // Set floor
         int floorCount = (int)m_tableViewFloorNames.size()-1;
         int floorIndex = (int)roundf(m_floorButtonParameter*floorCount);
         m_pInterop->SelectFloor(floorIndex);
         
+        [self.pFloorChangeButton setSelected:NO];
         [self moveButtonToFloorIndex:floorIndex :YES];
         [self hideFloorLabels];
     }

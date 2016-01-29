@@ -45,6 +45,7 @@
         [self addSubview:self.pFloorNameLabel];
         
         self.userInteractionEnabled = false;
+        self.pFloorNameLabel.userInteractionEnabled = false;
         
         [self hideName];
         

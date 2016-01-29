@@ -165,7 +165,7 @@ namespace ExampleApp
                     const Eegeo::Geometry::Bounds3D& tangentSpaceBounds = pModel->GetTangentSpaceBounds();
                     
                     Eegeo::v3 tangentSpaceOriginPoint = Eegeo::v3(tangentSpaceBounds.Center().x,
-                                                                  (tangentSpaceBounds.GetMin().y*m_environmentFlatteningService.GetCurrentScale()) + centerHeight,
+                                                                  (tangentSpaceBounds.GetMin().y*m_environmentFlatteningService.GetCurrentScale()) + centerHeight*1.2f,
                                                                   tangentSpaceBounds.Center().z);
 
                     cameraInterestTangentSpace = Eegeo::v3::Lerp(cameraInterestTangentSpace, tangentSpaceOriginPoint, expandedParam);
