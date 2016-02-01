@@ -26,22 +26,26 @@
                             </ThicknessAnimationUsingKeyFrames>
                         </Storyboard>
                     </ControlTemplate.Resources>
-                    <DockPanel Margin="0,50,0,0" Width="400">
+                    <DockPanel Margin="0,50,0,0" Width="332">
                         <Grid Width="50" Height="50" VerticalAlignment="Top" DockPanel.Dock="Right" Name="DragTabParentGrid" Background="{StaticResource Gold}">
-                            <Image Source="/Assets/search_magglass.png" Width="50" Height="50" Name="SecondaryMenuDragTabView" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            <Image Source="/Assets/search_magglass.png" Width="Auto" Height="Auto" Name="SecondaryMenuDragTabView" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </Grid>
 
-                        <Grid Name="SecondaryMenuViewListContainer" Width="350" DockPanel.Dock="Left" Visibility="Hidden" Height="Auto">
+                        <Grid Name="SecondaryMenuViewListContainer" DockPanel.Dock="Left" Visibility="Hidden" Height="Auto">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="50"/>
+                                <RowDefinition Height="6"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
-                                <Grid Background="{StaticResource Gold}">
-                                    <TextBox Name="SecondaryMenuViewSearchEditTextView" Foreground="{StaticResource Black}" Height="36" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="20,0,0,0"/>
-                                </Grid>
+                                <StackPanel Background="{StaticResource Gold}">
+                                    <TextBox Name="SecondaryMenuViewSearchEditTextView" Width="295" Foreground="{StaticResource Black}" Height="38" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="32,6,6,6"/>
+                                </StackPanel>
                             </Grid>
                             <Grid Grid.Row="1">
+                                <Grid Width="332" Height="6" Background="#002B63" Margin="0, 0, 0, 0"/>
+                            </Grid>
+                            <Grid Grid.Row="2">
                                 <ScrollViewer PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight}">
                                     <ListBox Name="SecondaryMenuItemList" Template="{StaticResource ListBoxControlTemplateNoPadding}" ItemsSource="{Binding Children}" Background="{StaticResource Transparent}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0">
                                         <ListBox.Resources>
@@ -70,7 +74,7 @@
                                                             <ColumnDefinition Width="*"/>
                                                             <ColumnDefinition Width="22"/>
                                                         </Grid.ColumnDefinitions>
-                                                        <Image Name="MenuListOpenableShape" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" RenderTransformOrigin=".5,.5" Source="/Assets/sub_menu_arrow.png" Width="16" Height="16">
+                                                        <Image Name="MenuListOpenableShape" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" RenderTransformOrigin=".5,.5" Source="/Assets/sub_menu_arrow.png" Width="19" Height="19">
                                                             <Image.Style>
                                                                 <Style TargetType="{x:Type Image}">
                                                                     <Style.Triggers>
@@ -92,11 +96,11 @@
                                                                 </Style>
                                                             </Image.Style>
                                                         </Image>
-                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" Margin="20,0,0,0">
+                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" Margin="41,0,0,0">
                                                             <Label Content="{Binding Path=Heading}" FontSize="22" Foreground="{StaticResource LightGrey}"/>
                                                         </StackPanel>
                                                     </Grid>
-                                                    <Grid Grid.Row="1" Grid.Column="1" Background="{StaticResource MenuSeparator}">
+                                                    <Grid Grid.Row="1" Grid.Column="1" Background="{StaticResource MenuSeparator}" Margin="32,0,0,0">
                                                         <Grid.Style>
                                                             <Style TargetType="{x:Type Grid}">
                                                                 <Style.Triggers>
@@ -116,24 +120,25 @@
                                             </DataTemplate>
 
                                             <DataTemplate DataType="{x:Type local:SubMenuListItem}">
-                                                <Grid Height="42" Margin="22,0,0,0" Background="White">
+                                                <Grid Height="38" Background="{StaticResource Gold}">
                                                     <Grid>
                                                         <Grid.RowDefinitions>
                                                             <RowDefinition Height="*"/>
+                                                            <RowDefinition Height="Auto"/>
                                                             <RowDefinition Height="1"/>
                                                         </Grid.RowDefinitions>
-                                                        <Grid HorizontalAlignment="Stretch" Grid.Row="0">
+                                                        <Grid HorizontalAlignment="Stretch" Grid.Row="0" >
                                                             <Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="Auto"/>
                                                                 <ColumnDefinition Width="*"/>
                                                                 <ColumnDefinition Width="Auto"/>
                                                             </Grid.ColumnDefinitions>
-                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0">
-                                                                <Image Source="{Binding Path=Icon}" Width="32" Height="32" VerticalAlignment="Center"/>
-                                                                <Label Content="{Binding Path=Heading}" FontSize="22" Foreground="{StaticResource DarkGrey}"/>
+                                                            <StackPanel Margin="32,0,20,0" Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" Background="White" Width="243">
+                                                                <Image Source="{Binding Path=Icon}" Width="26" Height="26" VerticalAlignment="Center"/>
+                                                                <Label Content="{Binding Path=Heading}" FontSize="16" Foreground="{StaticResource DarkGrey}" VerticalAlignment="Center"/>
                                                             </StackPanel>
                                                         </Grid>
-                                                        <Grid Grid.Row="1" Grid.Column="1" Background="{StaticResource SubMenuSeparator}" Margin="36,0,0,0">
+                                                        <Grid Grid.Row="1" Grid.Column="1" Background="{StaticResource SubMenuSeparator}">
                                                             <Grid.Style>
                                                                 <Style TargetType="{x:Type Grid}">
                                                                     <Style.Triggers>

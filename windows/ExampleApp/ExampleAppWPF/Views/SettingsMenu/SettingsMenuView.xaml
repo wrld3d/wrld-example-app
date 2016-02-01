@@ -18,7 +18,7 @@
                                 <RowDefinition Height="50"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <StackPanel Orientation="Horizontal" Grid.Row="0" Name="SearchMenuDragTabContainerView">
+                            <StackPanel Orientation="Horizontal" Grid.Row="0" Name="SettingsMenuDragTabContainerView">
 
                                 <!--begin include search_results_bar_layout-->
                                 <StackPanel Width="Auto" Height="Auto" Orientation="Horizontal">
@@ -27,10 +27,10 @@
                                     </StackPanel.Background>
 
                                     <Border BorderBrush="{x:Null}" Height="40" Margin="30,0,0,0">
-                                        <TextBlock Name="SearchMenuHeaderText" Text="" VerticalAlignment="Center" Width="205" Foreground="{StaticResource Gold}" FontSize="18"/>
+                                        <TextBlock Name="SettingsMenuHeaderText" Text="" VerticalAlignment="Center" Width="205" Foreground="{StaticResource Gold}" FontSize="18"/>
                                     </Border>
 
-                                    <Button Name="SearchMenuCloseButton" VerticalAlignment="Center" Margin="5,0,10,0" Width="19" Height="19"  FocusVisualStyle="{x:Null}">
+                                    <Button Name="SettingsMenuCloseButton" VerticalAlignment="Center" Margin="5,0,10,0" Width="19" Height="19"  FocusVisualStyle="{x:Null}">
                                         <Button.Style>
                                             <Style TargetType="Button" BasedOn="{StaticResource TransparentButtonStyle}">
                                                 <Style.Triggers>
@@ -57,26 +57,26 @@
 
                                 <Grid Name="SearchResultCount">
                                     <Grid Width="50" Height="50" VerticalAlignment="Top">
-                                        <Image Source="/Assets/menu_button.png" RenderTransformOrigin="0.5,0.5" Width="50" Height="50" Name="SearchMenuDragTabView" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <Image Source="/Assets/menu_button.png" RenderTransformOrigin="0.5,0.5" Width="50" Height="50" Name="SettingsMenuDragTabView" VerticalAlignment="Center" HorizontalAlignment="Center">
                                             <Image.RenderTransform>
                                                 <ScaleTransform ScaleX="-1"/>
                                             </Image.RenderTransform>
                                         </Image>
-                                        <ProgressBar IsHitTestVisible="False" Name="SearchMenuSpinner" Width="40" Height="40" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{StaticResource Transparent}" IsIndeterminate="True" />
+                                        <ProgressBar IsHitTestVisible="False" Name="SettingsMenuSpinner" Width="40" Height="40" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{StaticResource Transparent}" IsIndeterminate="True" />
                                         <Border BorderBrush="{x:Null}" Width="40" Height="40">
-                                            <TextBlock IsHitTestVisible="False" Name="SearchMenuNumResultsText" FontSize="22" Foreground="{StaticResource White}" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{StaticResource Transparent}"/>
+                                            <TextBlock IsHitTestVisible="False" Name="SettingsMenuNumResultsText" FontSize="22" Foreground="{StaticResource White}" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{StaticResource Transparent}"/>
                                         </Border>
                                     </Grid>
                                 </Grid>
 
                             </StackPanel>
 
-                            <Grid Name="SearchMenuViewListContainer" Width="270" Height="Auto" HorizontalAlignment="Left" Grid.Row="1">
+                            <Grid Name="SettingsMenuViewListContainer" Width="270" Height="Auto" HorizontalAlignment="Left" Grid.Row="1">
                                 <ScrollViewer PanningMode="VerticalOnly" 
               HorizontalScrollBarVisibility="Disabled"
               VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="{Binding RelativeSource={RelativeSource FindAncestor, 
                         AncestorType={x:Type Grid}}, Path=ActualHeight}">
-                                    <ListBox Name="SearchMenuItemList" Template="{StaticResource ListBoxControlTemplateNoPadding}" Background="{StaticResource Transparent}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0">
+                                    <ListBox Name="SettingsMenuItemList" Template="{StaticResource ListBoxControlTemplateNoPadding}" Background="{StaticResource Transparent}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0">
                                         <ListBox.Resources>
                                             <Style TargetType="ListBoxItem">
                                                 <Style.Resources>
@@ -88,7 +88,7 @@
                                                 <Setter Property="Padding" Value="0"/>
                                             </Style>
 
-                                            <DataTemplate DataType="{x:Type local:SearchMenuListItem}">
+                                            <DataTemplate DataType="{x:Type local:SettingsMenuListItem}">
                                                 <Grid HorizontalAlignment="Stretch" Height="42" Margin="0,0,0,0">
                                                     <Grid.Background>
                                                         <ImageBrush ImageSource="/Assets/search_result_background.png" />
