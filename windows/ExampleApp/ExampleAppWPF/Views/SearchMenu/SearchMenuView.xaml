@@ -26,26 +26,23 @@
                             </ThicknessAnimationUsingKeyFrames>
                         </Storyboard>
                     </ControlTemplate.Resources>
-                    <DockPanel Margin="0,50,0,0" Width="270">
+                    <DockPanel Margin="0,50,0,0" Width="400">
                         <Grid Width="50" Height="50" VerticalAlignment="Top" DockPanel.Dock="Right" Name="DragTabParentGrid" Background="{StaticResource Gold}">
                             <Image Source="/Assets/search_magglass.png" Width="50" Height="50" Name="SecondaryMenuDragTabView" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </Grid>
 
-                        <Grid Name="SecondaryMenuViewListContainer" Width="220" DockPanel.Dock="Left" Visibility="Hidden" Background="{StaticResource Gold}">
+                        <Grid Name="SecondaryMenuViewListContainer" Width="350" DockPanel.Dock="Left" Visibility="Hidden" Height="Auto">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="50"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
-                                <Grid Margin="8,10,8,10">
-                                    <TextBox Name="SecondaryMenuViewSearchEditTextView" Foreground="{StaticResource Black}" Height="36" VerticalAlignment="Center" HorizontalAlignment="Stretch" VerticalContentAlignment="Center"/>
+                                <Grid Background="{StaticResource Gold}">
+                                    <TextBox Name="SecondaryMenuViewSearchEditTextView" Foreground="{StaticResource Black}" Height="36" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="20,0,0,0"/>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="1">
-                                <ScrollViewer PanningMode="VerticalOnly" 
-              HorizontalScrollBarVisibility="Disabled"
-              VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="{Binding RelativeSource={RelativeSource FindAncestor, 
-                        AncestorType={x:Type Grid}}, Path=ActualHeight}">
+                                <ScrollViewer PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight}">
                                     <ListBox Name="SecondaryMenuItemList" Template="{StaticResource ListBoxControlTemplateNoPadding}" ItemsSource="{Binding Children}" Background="{StaticResource Transparent}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0">
                                         <ListBox.Resources>
                                             <Style TargetType="ListBoxItem">
@@ -59,28 +56,21 @@
                                             </Style>
 
                                             <DataTemplate DataType="{x:Type local:MenuListItem}">
-                                                <Grid HorizontalAlignment="Stretch" Height="42" Margin="0,0,0,0">
-                                                    <Grid.Background>
-                                                        <ImageBrush ImageSource="/Assets/menu_background1.png" />
-                                                    </Grid.Background>
+                                                <Grid HorizontalAlignment="Stretch" Height="42" Background="{StaticResource Gold}">
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition Height="*"/>
                                                         <RowDefinition Height="1"/>
                                                     </Grid.RowDefinitions>
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="22"/>
                                                         <ColumnDefinition Width="*"/>
                                                     </Grid.ColumnDefinitions>
-                                                    <Grid HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="1">
+                                                    <Grid HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="0">
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="Auto"/>
                                                             <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="Auto"/>
+                                                            <ColumnDefinition Width="22"/>
                                                         </Grid.ColumnDefinitions>
-                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" >
-                                                            <Label Content="{Binding Path=Heading}" FontSize="22" Foreground="{StaticResource DarkGrey}"/>
-                                                        </StackPanel>
-                                                        <Image Name="MenuListOpenableShape" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin=".5,.5" Source="/Assets/sub_menu_arrow.png" Width="16" Height="16">
+                                                        <Image Name="MenuListOpenableShape" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" RenderTransformOrigin=".5,.5" Source="/Assets/sub_menu_arrow.png" Width="16" Height="16">
                                                             <Image.Style>
                                                                 <Style TargetType="{x:Type Image}">
                                                                     <Style.Triggers>
@@ -102,17 +92,32 @@
                                                                 </Style>
                                                             </Image.Style>
                                                         </Image>
+                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" Margin="20,0,0,0">
+                                                            <Label Content="{Binding Path=Heading}" FontSize="22" Foreground="{StaticResource LightGrey}"/>
+                                                        </StackPanel>
                                                     </Grid>
-                                                    <Grid Grid.Row="1" Grid.Column="1" Background="{StaticResource MenuSeparator}"/>
+                                                    <Grid Grid.Row="1" Grid.Column="1" Background="{StaticResource MenuSeparator}">
+                                                        <Grid.Style>
+                                                            <Style TargetType="{x:Type Grid}">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsExpanded}" Value="false">
+                                                                        <Setter Property="Visibility" Value="Visible">
+                                                                        </Setter>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding IsExpanded}" Value="true">
+                                                                        <Setter Property="Visibility" Value="Hidden">
+                                                                        </Setter>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Grid.Style>
+                                                    </Grid>
                                                 </Grid>
                                             </DataTemplate>
 
                                             <DataTemplate DataType="{x:Type local:SubMenuListItem}">
-                                                <Grid Height="42" Margin="22,0,0,0">
+                                                <Grid Height="42" Margin="22,0,0,0" Background="White">
                                                     <Grid>
-                                                        <Grid.Background>
-                                                            <ImageBrush ImageSource="/Assets/menu_background2.png" />
-                                                        </Grid.Background>
                                                         <Grid.RowDefinitions>
                                                             <RowDefinition Height="*"/>
                                                             <RowDefinition Height="1"/>
@@ -123,12 +128,27 @@
                                                                 <ColumnDefinition Width="*"/>
                                                                 <ColumnDefinition Width="Auto"/>
                                                             </Grid.ColumnDefinitions>
-                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" >
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0">
                                                                 <Image Source="{Binding Path=Icon}" Width="32" Height="32" VerticalAlignment="Center"/>
                                                                 <Label Content="{Binding Path=Heading}" FontSize="22" Foreground="{StaticResource DarkGrey}"/>
                                                             </StackPanel>
                                                         </Grid>
-                                                        <Grid Grid.Row="1" Grid.Column="1" Background="{StaticResource SubMenuSeparator}" Margin="36,0,0,0"/>
+                                                        <Grid Grid.Row="1" Grid.Column="1" Background="{StaticResource SubMenuSeparator}" Margin="36,0,0,0">
+                                                            <Grid.Style>
+                                                                <Style TargetType="{x:Type Grid}">
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SubMenuListItem}}, Path=IsExpanded}" Value="false">
+                                                                            <Setter Property="Visibility" Value="Visible">
+                                                                            </Setter>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SubMenuListItem}}, Path=IsExpanded}" Value="true">
+                                                                            <Setter Property="Visibility" Value="Hidden">
+                                                                            </Setter>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Grid.Style>
+                                                        </Grid>
                                                     </Grid>
                                                 </Grid>
                                             </DataTemplate>
