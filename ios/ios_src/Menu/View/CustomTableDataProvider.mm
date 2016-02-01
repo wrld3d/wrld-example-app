@@ -300,10 +300,11 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
     cell.indentationLevel = 0;
     
     bool isHeader = (section.IsExpandable() && indexPath.row == 0) || !section.IsExpandable();
+    bool isExpandableHeader = isHeader && section.IsExpandable();
     bool hasSeparator = isHeader && sectionIndex != 0;
     
-    openableArrow.hidden = !(isHeader && section.IsExpandable());
-    [self setCellInfo:customCell :isHeader :hasSeparator];
+    openableArrow.hidden = !isExpandableHeader;
+    [self setCellInfo:customCell :isExpandableHeader :hasSeparator];
     
     if(isHeader)
     {
@@ -341,11 +342,15 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         
         CGRect imageFrame = CGRectZero;
         
+        float textInsetX;
+        
         if(document.HasMember("icon"))
         {
-            const float imageSize = 26.0f;
-            const float imageInsetX = 6.0f;
-            const float imageInsetY = 8.0f;
+            const float imageSize = isHeader ? 36.0f : 26.0f;
+            const float imageInsetX = isHeader? 4.0f : 6.0f;
+            const float imageInsetY = isHeader ? 2.0f : 8.0f;
+            
+            textInsetX = imageSize + imageInsetX * 2.0f;
             
             std::string icon = document["icon"].GetString();
             std::string iconResourceName = ExampleApp::Helpers::IconResources::GetSmallIconPathForResourceName(icon);
@@ -360,10 +365,10 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         }
         else
         {
+            textInsetX = 9.0f;
             cell.imageView.image = nil;
         }
         
-        const float textInsetX = cell.imageView.image == nil ? 9.0f : 38.0f;
         const float textY = 0.0f;
         const float textWidth = [tableView getCellWidth] - textInsetX;
         const float textHeight = isHeader ? CellConstants::SectionHeaderCellHeight : CellConstants::SubSectionCellHeight;
@@ -389,14 +394,14 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
     return headline ? HeaderCellFontSize : SubSectionCellFontSize;
 }
 
-- (void) setCellInfo:(CustomTableViewCell*)cell :(bool)isHeader :(bool)hasSeparator
+- (void) setCellInfo:(CustomTableViewCell*)cell :(bool)isExpandableHeader :(bool)hasSeparator
 {
     [cell setInfo :hasSeparator
                   :ExampleApp::Helpers::ColorPalette::UiBorderColor
-                  :isHeader ? ExampleApp::Helpers::ColorPalette::UiBorderColor : ExampleApp::Helpers::ColorPalette::TableSubCellColor
-                  :isHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderPressColor : ExampleApp::Helpers::ColorPalette::TableSubCellPressColor
-                  :isHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderTextColor : ExampleApp::Helpers::ColorPalette::TableSubCellTextColor
-                  :isHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderTextHighlightColor : ExampleApp::Helpers::ColorPalette::TableSubCellTextColor
+                  :isExpandableHeader ? ExampleApp::Helpers::ColorPalette::UiBorderColor : ExampleApp::Helpers::ColorPalette::TableSubCellColor
+                  :isExpandableHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderPressColor : ExampleApp::Helpers::ColorPalette::TableSubCellPressColor
+                  :isExpandableHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderTextColor : ExampleApp::Helpers::ColorPalette::TableSubCellTextColor
+                  :isExpandableHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderTextHighlightColor : ExampleApp::Helpers::ColorPalette::TableSubCellTextColor
                   :(UIImageView*)[cell.contentView viewWithTag:SubItemCellOpenableMenuArrowTag]];
 }
 

@@ -84,7 +84,7 @@ namespace
         [self.pDetailsPanel addSubview:self.pDismissButtonBackground];
         
         self.pDismissButton = [[[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, buttonSize, buttonSize)] autorelease];
-        [self.pDismissButton setDefaultStatesWithImageName:@"Arrow"];
+        [self.pDismissButton setDefaultStatesWithImageNames:@"button_exit_interior_off" :@"button_exit_interior_on"];
         [self.pDismissButton addTarget:self action:@selector(onCancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.pDismissButtonBackground addSubview:self.pDismissButton];
         

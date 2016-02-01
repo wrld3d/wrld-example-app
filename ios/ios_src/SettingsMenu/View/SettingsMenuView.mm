@@ -61,10 +61,23 @@
     const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     
     const float upperMargin = (isPhone ? 20.0f : 50.0f) * m_pixelScale;
-    const float tableCellWidth = (isPhone ? 249.0f : 295.0f) * m_pixelScale;
     const float dragTabOffsetX = 28.0f * m_pixelScale;
     const float dragTabSize = 50.0f * m_pixelScale;
     const float tableSpacing = 6.0f * m_pixelScale;
+    const float tableInset = 5.0f * m_pixelScale;
+    
+    float tableCellWidth;
+    
+    if(isPhone)
+    {
+        const float leftMargin = upperMargin;
+        
+        tableCellWidth = m_screenWidth - (leftMargin + dragTabSize + tableInset * 2);
+    }
+    else
+    {
+        tableCellWidth = 295.0f * m_pixelScale;
+    }
     
     const float titleLabelInsetX = 12.0f * m_pixelScale;
     
@@ -77,7 +90,7 @@
     m_dragTabOffScreenY = upperMargin;
     m_dragTabClosedOnScreenX = m_screenWidth - (m_dragTabWidth + m_dragTabOffsetX);
     m_dragTabClosedOnScreenY = m_dragTabOffScreenY;
-    m_dragTabOpenOnScreenX = m_screenWidth - (m_dragTabWidth + tableCellWidth);
+    m_dragTabOpenOnScreenX = m_screenWidth - (m_dragTabWidth + tableCellWidth + tableInset * 2);
     m_dragTabOpenOnScreenY = m_dragTabOffScreenY;
     
     self.pDragTab = [[[UIButton alloc] initWithFrame:CGRectMake(m_dragTabOffScreenX, m_dragTabOffScreenY, m_dragTabWidth, m_dragTabHeight)] autorelease];
@@ -93,7 +106,7 @@
     m_titleContainerClosedOnScreenX = m_dragTabClosedOnScreenX + m_dragTabWidth;
     m_titleContainerClosedOnScreenY = m_titleContainerOffScreenY;
     
-    m_titleContainerOpenOnScreenWidth = tableCellWidth;
+    m_titleContainerOpenOnScreenWidth = tableCellWidth + tableInset * 2;
     m_titleContainerOpenOnScreenHeight = m_titleContainerOffScreenHeight;
     m_titleContainerOpenOnScreenX = m_dragTabOpenOnScreenX + m_dragTabWidth;
     m_titleContainerOpenOnScreenY = m_titleContainerOffScreenY;
@@ -120,7 +133,7 @@
     self.pTitleLabel.font = [UIFont boldSystemFontOfSize:24];
     self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextHeaderColor;
     
-    m_menuContainerWidth = tableCellWidth;
+    m_menuContainerWidth = tableCellWidth + tableInset * 2;
     m_menuContainerHeight = m_screenHeight - (upperMargin + dragTabSize);
     m_menuContainerOffScreenX = m_screenWidth;
     m_menuContainerOffScreenY = upperMargin + dragTabSize;
@@ -155,7 +168,7 @@
                                menuView:self
                             hasSubMenus:true
                               cellWidth:tableCellWidth
-                              cellInset:0.0f
+                              cellInset:tableInset
           ] autorelease];
         customTableView.backgroundColor = [UIColor clearColor];
         customTableView.separatorStyle = UITableViewCellSeparatorStyleNone;

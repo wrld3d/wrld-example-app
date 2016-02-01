@@ -148,13 +148,25 @@
     
     const float upperMargin = (isPhone ? 20.0f : 50.0f) * m_pixelScale;
     const float lowerMargin = (isPhone ? 0.0f : 50.0f) * m_pixelScale;
-    const float tableCellWidth = (isPhone ? 212.0f : 295.0f) * m_pixelScale;
     const float searchCountLabelWidth = 32.0f * m_pixelScale;
     const float dragTabOffsetX = searchCountLabelWidth;
     const float dragTabSize = 50.0f * m_pixelScale;
     const float tableSpacing = 6.0f * m_pixelScale;
     
     const float tableCellRightInset = 5.0f * m_pixelScale;
+    
+    float tableCellWidth;
+    
+    if(isPhone)
+    {
+        const float rightMargin = upperMargin;
+        
+        tableCellWidth = m_screenWidth - (searchCountLabelWidth + tableCellRightInset + dragTabSize + rightMargin);
+    }
+    else
+    {
+        tableCellWidth = 295.0f * m_pixelScale;
+    }
     
     const float searchEditBoxLeftInset = 8.0f * m_pixelScale;
     const float searchEditBoxInsetY = 8.0f * m_pixelScale;
