@@ -21,9 +21,6 @@
     float m_titleAnimationDelaySeconds;
     float m_titleAnimationDurationSeconds;
     
-    float m_titleFadeAnimationDelaySeconds;
-    float m_titleFadeAnimationDurationSeconds;
-    
     float m_titleLabelWidth;
     float m_titleLabelHeight;
     float m_titleLabelOffScreenX;
@@ -32,9 +29,6 @@
     float m_titleLabelClosedOnScreenY;
     float m_titleLabelOpenOnScreenX;
     float m_titleLabelOpenOnScreenY;
-    float m_titleLabelOffScreenAlpha;
-    float m_titleLabelClosedOnScreenAlpha;
-    float m_titleLabelOpenOnScreenAlpha;
 }
 
 @property (nonatomic, retain) UILabel* pTitleLabel;
@@ -52,11 +46,8 @@
 {
     m_pSettingsMenuInterop = Eegeo_NEW(ExampleApp::SettingsMenu::View::SettingsMenuViewInterop)(self);
     
-    m_titleAnimationDelaySeconds = 0.2f;
-    m_titleAnimationDurationSeconds = 0.1f;
-    
-    m_titleFadeAnimationDelaySeconds = 0.15f;
-    m_titleFadeAnimationDurationSeconds = 0.15f;
+    m_titleAnimationDelaySeconds = 0.0f;
+    m_titleAnimationDurationSeconds = 0.3f;
     
     const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     
@@ -113,6 +104,7 @@
     
     self.pTitleContainer = [[[UIView alloc] initWithFrame:CGRectMake(m_titleContainerOffScreenX, m_titleContainerOffScreenY, m_titleContainerOffScreenWidth, m_titleContainerOffScreenHeight)] autorelease];
     self.pTitleContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
+    self.pTitleContainer.clipsToBounds = YES;
     
     m_titleLabelWidth = tableCellWidth - titleLabelInsetX;
     m_titleLabelHeight = dragTabSize;
@@ -123,12 +115,7 @@
     m_titleLabelOpenOnScreenX = m_titleLabelOffScreenX;
     m_titleLabelOpenOnScreenY = m_titleLabelClosedOnScreenY;
     
-    m_titleLabelOffScreenAlpha = 0.0f;
-    m_titleLabelClosedOnScreenAlpha = 0.0f;
-    m_titleLabelOpenOnScreenAlpha = 1.0f;
-    
     self.pTitleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(m_titleLabelOffScreenX, m_titleLabelOffScreenY, m_titleLabelWidth, m_titleLabelHeight)] autorelease];
-    self.pTitleLabel.alpha = m_titleLabelOffScreenAlpha;
     self.pTitleLabel.text = @"Settings";
     self.pTitleLabel.font = [UIFont boldSystemFontOfSize:24];
     self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextHeaderColor;
@@ -239,13 +226,6 @@
                                                                                                                  Eegeo::v2(m_titleLabelClosedOnScreenX, m_titleLabelClosedOnScreenY),
                                                                                                                  Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>)()));
     
-    m_onScreenAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewAlphaAnimator)(self.pTitleLabel,
-                                                                                                              m_titleAnimationDurationSeconds,
-                                                                                                              0.0,
-                                                                                                              m_titleLabelOffScreenAlpha,
-                                                                                                              m_titleLabelClosedOnScreenAlpha,
-                                                                                                              Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<float>)()));
-    
     // Open / closed on screen animations
     m_openAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewPositionAnimator)(self.pTitleLabel,
                                                                                                   m_titleAnimationDurationSeconds,
@@ -253,13 +233,6 @@
                                                                                                   Eegeo::v2(m_titleLabelClosedOnScreenX, m_titleLabelClosedOnScreenY),
                                                                                                   Eegeo::v2(m_titleLabelOpenOnScreenX, m_titleLabelOpenOnScreenY),
                                                                                                   Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>)()));
-    
-    m_openAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewAlphaAnimator)(self.pTitleLabel,
-                                                                                               m_titleFadeAnimationDurationSeconds,
-                                                                                               m_titleFadeAnimationDelaySeconds,
-                                                                                               m_titleLabelClosedOnScreenAlpha,
-                                                                                               m_titleLabelOpenOnScreenAlpha,
-                                                                                               Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<float>)()));
 }
 
 @end
