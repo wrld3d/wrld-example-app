@@ -15,8 +15,6 @@
     BOOL m_keyboardActive;
     BOOL m_returnPressed;
     BOOL m_currentSearchIsCategory;
-    
-    UITapGestureRecognizer* m_clearButtonTapGestureRecogniser;
 }
 
 @end
@@ -35,8 +33,7 @@
     
     m_pTextField.delegate = self;
     
-    m_clearButtonTapGestureRecogniser = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clearSearch)] autorelease];
-    [m_pClearButton addGestureRecognizer: m_clearButtonTapGestureRecogniser];
+    [m_pClearButton addTarget:self action:@selector(clearSearch) forControlEvents:UIControlEventTouchUpInside];
     
     m_pClearButton.hidden = m_pTextField.text.length == 0;
     
@@ -66,8 +63,6 @@
     [[NSNotificationCenter defaultCenter]removeObserver:self
                                                    name:UIKeyboardDidChangeFrameNotification
                                                  object:nil];
-    
-    [m_clearButtonTapGestureRecogniser release];
     
     m_pTextField.delegate = nil;
     

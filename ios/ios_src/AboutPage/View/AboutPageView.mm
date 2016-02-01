@@ -34,7 +34,8 @@
         [self.pControlContainer addSubview: self.pCloseButtonContainer];
 
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pCloseButton setDefaultStatesWithImageName:@"button_close_off"];
+        [self.pCloseButton setDefaultStatesWithImageNames:@"button_close_off" :@"button_close_on"];
+        [self.pCloseButton addTarget:self action:@selector(onCloseButtonTapped) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
 
         self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -82,10 +83,6 @@
         self.pEulaLink.textColor = ExampleApp::Helpers::ColorPalette::UiTextLinkColor;
         [self.pEulaLink addGestureRecognizer: pEulaTapHandler];
         [self.pLabelsContainer addSubview: self.pEulaLink];
-
-        m_tapGestureRecogniser = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_tapTabGesture:)];
-        [m_tapGestureRecogniser setDelegate:self];
-        [self.pCloseButton addGestureRecognizer: m_tapGestureRecogniser];
     }
 
     return self;
@@ -93,7 +90,6 @@
 
 - (void)dealloc
 {
-    [m_tapGestureRecogniser release];
     [self.pCloseButton removeFromSuperview];
     [self.pCloseButton release];
 
@@ -308,7 +304,7 @@
     }];
 }
 
-- (void)_tapTabGesture:(UITapGestureRecognizer *)recognizer
+- (void)onCloseButtonTapped
 {
     m_pInterop->CloseTapped();
 }

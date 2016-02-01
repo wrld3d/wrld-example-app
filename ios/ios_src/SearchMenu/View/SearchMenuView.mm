@@ -17,6 +17,8 @@
 #include "ViewPositionAnimator.h"
 #include "ViewSizeAnimator.h"
 
+#import "UIButton+DefaultStates.h"
+
 @interface SearchMenuView()
 {
     SearchResultsTableDataProvider* m_pSearchResultsDataProvider;
@@ -178,10 +180,7 @@
     m_dragTabOpenOnScreenY = m_dragTabOffScreenY;
     
     self.pDragTab = [[[UIButton alloc] initWithFrame:CGRectMake(m_dragTabOffScreenX, m_dragTabOffScreenY, m_dragTabWidth, m_dragTabHeight)] autorelease];
-    [self.pDragTab setBackgroundImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(ExampleApp::Helpers::ColorPalette::UiBorderColor)
-                             forState:UIControlStateNormal];
-    [self.pDragTab setBackgroundImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(ExampleApp::Helpers::ColorPalette::MenuButtonPressColor)
-                             forState:UIControlStateHighlighted];
+    [self.pDragTab setDefaultStatesWithImageNames:@"button_search_off" :@"button_search_on"];
     
     m_titleContainerOffScreenWidth = 0.0f;
     m_titleContainerOffScreenHeight = m_dragTabHeight;
@@ -271,7 +270,8 @@
     self.pSearchEditBoxClearButtonContainer = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, searchClearButtonSize + searchClearButtonRightInset, searchClearButtonSize)] autorelease];
     
     self.pSearchEditBoxClearButton = [[[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, searchClearButtonSize, searchClearButtonSize)] autorelease];
-    [self.pSearchEditBoxClearButton setImage:[UIImage imageNamed:@"search_results_close.png"] forState:UIControlStateNormal];
+    [self.pSearchEditBoxClearButton setImage:[UIImage imageNamed:@"button_clear_search_off"] forState:UIControlStateNormal];
+    [self.pSearchEditBoxClearButton setImage:[UIImage imageNamed:@"button_clear_search_on"] forState:UIControlStateHighlighted];
     
     self.pSearchEditBoxResultsSpinner = [[[SearchMenuResultsSpinner alloc] init] autorelease];
     self.pSearchEditBoxResultsSpinner.center = CGPointMake(12.0f, 12.0f);
@@ -378,8 +378,6 @@
     
     [self.pTableViewContainer addSubview:self.pSearchResultsTableContainerView];
     [self.pSearchResultsTableContainerView addSubview:self.pSearchResultsTableView];
-    
-    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pDragTab, "search_magglass", ExampleApp::Helpers::ImageHelpers::Centre);
     
     self.frame = CGRectMake(0, 0, m_screenWidth, m_screenHeight);
     

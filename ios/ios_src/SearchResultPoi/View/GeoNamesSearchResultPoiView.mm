@@ -20,6 +20,8 @@
 }
 @end
 
+const int DeletePinAlertViewTag = 1;
+
 @implementation GeoNamesSearchResultPoiView
 
 - (id)initWithInterop:(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*)pInterop
@@ -29,7 +31,12 @@
     if(self)
     {
         self->m_pRemovePinButtonImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_off") retain];
+        self->m_pRemovePinButtonHighlightImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_on") retain];
         self->m_pAddPinButtonImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_add_pin_off") retain];
+        self->m_pAddPinButtonHighlightImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_add_pin_on") retain];
+        
+        m_pController = [UIViewController alloc];
+        [m_pController setView:self];
         
         m_pInterop = pInterop;
         self.alpha = 0.f;
@@ -44,7 +51,7 @@
         [self.pControlContainer addSubview: self.pCloseButtonContainer];
         
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pCloseButton setDefaultStatesWithImageName:@"button_close_off"];
+        [self.pCloseButton setDefaultStatesWithImageNames:@"button_close_off" :@"button_close_on"];
         [self.pCloseButton addTarget:self action:@selector(handleClosedButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
         
@@ -128,8 +135,11 @@
     [self.pCountryContent release];
     
     [self->m_pRemovePinButtonImage release];
+    [self->m_pRemovePinButtonHighlightImage release];
     [self->m_pAddPinButtonImage release];
+    [self->m_pAddPinButtonHighlightImage release];
     
+    [m_pController release];
     [self removeFromSuperview];
     [super dealloc];
 }
@@ -320,12 +330,42 @@
     return pLabel;
 }
 
+-(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (alertView.tag)
+    {
+        case DeletePinAlertViewTag:
+        {
+            alertView.delegate = nil;
+            
+            if (buttonIndex == 1)
+            {
+                [self togglePinState];
+            }
+        }break;
+        default:
+            break;
+    }
+}
+
 - (void) handleClosedButtonSelected
 {
     m_pInterop->HandleCloseClicked();
 }
 
 - (void) handlePinButtonSelected
+{
+    if(m_isPinned)
+    {
+        [self performPinRemoveWarningCeremony];
+    }
+    else
+    {
+        [self togglePinState];
+    }
+}
+
+- (void) togglePinState
 {
     m_isPinned = !m_isPinned;
     m_pInterop->HandlePinToggleClicked(m_model);
@@ -337,14 +377,55 @@
     if(m_isPinned)
     {
         [self.pPinButton setImage:self->m_pRemovePinButtonImage forState:UIControlStateNormal];
-        [self.pPinButton setImage:self->m_pRemovePinButtonImage forState:UIControlStateHighlighted];
+        [self.pPinButton setImage:self->m_pRemovePinButtonHighlightImage forState:UIControlStateHighlighted];
     }
     else
     {
         [self.pPinButton setImage:self->m_pAddPinButtonImage forState:UIControlStateNormal];
-        [self.pPinButton setImage:self->m_pAddPinButtonImage forState:UIControlStateHighlighted];
+        [self.pPinButton setImage:self->m_pAddPinButtonHighlightImage forState:UIControlStateHighlighted];
     }
 }
 
+- (void) performPinRemoveWarningCeremony
+{
+    NSString* alertTitle = @"Remove Pin";
+    NSString* alertMessage = @"Are you sure you want to remove this pin?";
+    NSString* keepButtonText = @"No, keep it";
+    NSString* deleteButtonText = @"Yes, delete it";
+    
+    if([UIAlertController class])
+    {
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:alertTitle
+                                                                       message:alertMessage
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:keepButtonText
+                                                                style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction * action) {}];
+        
+        UIAlertAction* removePinAction = [UIAlertAction actionWithTitle:deleteButtonText
+                                                                  style:UIAlertActionStyleDefault
+                                                                handler: ^(UIAlertAction * action)
+                                          {
+                                              [self togglePinState];
+                                          }];
+        
+        [alert addAction:defaultAction];
+        [alert addAction:removePinAction];
+        [m_pController presentViewController:alert animated:YES completion:nil];
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:alertTitle
+                                                        message:alertMessage
+                                                       delegate:self
+                                              cancelButtonTitle:keepButtonText
+                                              otherButtonTitles:deleteButtonText, nil];
+        
+        [alert show];
+        alert.tag = DeletePinAlertViewTag;
+        [alert release];
+    }
+}
 
 @end

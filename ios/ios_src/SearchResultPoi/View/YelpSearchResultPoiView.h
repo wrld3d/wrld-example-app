@@ -26,7 +26,9 @@
     float m_labelsSectionWidth;
     
     UIImage* m_pRemovePinButtonImage;
+    UIImage* m_pRemovePinButtonHighlightImage;
     UIImage* m_pAddPinButtonImage;
+    UIImage* m_pAddPinButtonHighlightImage;
     UIImage* m_pVendorBrandingImage;
     
     CAGradientLayer* m_pGradientMask;

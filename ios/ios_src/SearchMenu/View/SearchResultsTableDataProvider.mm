@@ -219,7 +219,10 @@ static NSString *CellIdentifier = @"searchCell";
     [cell setInfo :false
                   :ExampleApp::Helpers::ColorPalette::UiBorderColor
                   :ExampleApp::Helpers::ColorPalette::TableSearchCellColor
-                  :ExampleApp::Helpers::ColorPalette::TableSubCellPressColor];
+                  :ExampleApp::Helpers::ColorPalette::TableSubCellPressColor
+                  :ExampleApp::Helpers::ColorPalette::TableSearchTextColor
+                  :ExampleApp::Helpers::ColorPalette::TableSearchTextColor
+                  :nil];
 }
 
 

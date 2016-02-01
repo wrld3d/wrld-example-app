@@ -33,12 +33,12 @@
         [self.pControlContainer addSubview: self.pOptionButtonsContainer];
         
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pCloseButton setDefaultStatesWithImageName:@"button_close_off"];
+        [self.pCloseButton setDefaultStatesWithImageNames:@"button_close_off" :@"button_close_on"];
         [self.pCloseButton addTarget:self action:@selector(handleCloseClicked) forControlEvents:UIControlEventTouchUpInside];
         [self.pOptionButtonsContainer addSubview: self.pCloseButton];
         
         self.pConfirmButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pConfirmButton setDefaultStatesWithImageName:@"button_ok_off"];
+        [self.pConfirmButton setDefaultStatesWithImageNames:@"button_ok_off" :@"button_ok_on"];
         [self.pConfirmButton addTarget:self action:@selector(handleConfirmClicked) forControlEvents:UIControlEventTouchUpInside];
         [self.pOptionButtonsContainer addSubview: self.pConfirmButton];
         

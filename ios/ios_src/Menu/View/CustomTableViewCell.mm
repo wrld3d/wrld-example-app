@@ -13,6 +13,9 @@
     bool m_requiresRefresh;
     bool m_customContentFramesSet;
     bool m_turingHighlightOff;
+    
+    UIImage* m_pArrowImage;
+    UIImage* m_pArrowHighlightImage;
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -70,7 +73,7 @@
     self.backgroundColor = m_pBackgroundColor;
     if(!m_turingHighlightOff)
     {
-        [self.contentView setBackgroundColor:(m_highlighted ? m_pPressColor : m_pContentBackgroundColor)];
+        [self setHighlightComponents:m_highlighted];
     }
     m_hasSetBackground = true;
 }
@@ -129,10 +132,23 @@
     m_highlighted = false;
     m_turingHighlightOff = false;
     m_customContentFramesSet = false;
+    
     m_row = indexPath.row;
     m_section = indexPath.section;
+    
     self->pCustomSeparatorContainer = [[UIView alloc]  initWithFrame:CGRectMake(0,0,0,0)];
     [self addSubview:self->pCustomSeparatorContainer];
+    
+    m_pArrowImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"sub_menu_arrow_off") retain];
+    m_pArrowHighlightImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"sub_menu_arrow_on") retain];
+}
+
+- (void)dealloc
+{
+    [m_pArrowImage release];
+    [m_pArrowHighlightImage release];
+    
+    [super dealloc];
 }
 
 - (void)setContentFrames:(CGRect)imageFrame
@@ -150,11 +166,18 @@
                 :(UIColor*)pBackgroundColor
                 :(UIColor*)pContentBackgroundColor
                 :(UIColor*)pPressColor
+                :(UIColor*)pTextColor
+                :(UIColor*)pTextHighlightColor
+                :(UIImageView*)pOpenableArrow
 {
     m_hasSeparator = hasSeparator;
     m_pBackgroundColor = pBackgroundColor;
     m_pContentBackgroundColor = pContentBackgroundColor;
     m_pPressColor = pPressColor;
+    m_pTextColor = pTextColor;
+    m_pTextHighlightColor = pTextHighlightColor;
+    m_pOpenableArrow = pOpenableArrow;
+    
     m_requiresRefresh = true;
 }
 
@@ -176,7 +199,7 @@
     if(![self canInteract])
     {
         m_turingHighlightOff = false;
-        [self.contentView setBackgroundColor:m_pContentBackgroundColor];
+        [self setHighlightComponents:NO];
         return;
     }
 
@@ -184,13 +207,12 @@
     {
         m_highlighted = true;
         m_turingHighlightOff = false;
-        [self.contentView setBackgroundColor:m_pPressColor];
+        [self setHighlightComponents:YES];
     }
     else
     {
         if(m_highlighted)
         {
-            m_highlighted = false;
             if(animated)
             {
                 m_turingHighlightOff = true;
@@ -199,15 +221,40 @@
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                     if(m_turingHighlightOff)
                     {
+                        m_highlighted = false;
                         m_turingHighlightOff = false;
-                        [self.contentView setBackgroundColor:m_pContentBackgroundColor];
+                        [self setHighlightComponents:NO];
                     }
                 });
             }
             else
             {
-                [self.contentView setBackgroundColor:m_pContentBackgroundColor];
+                [self setHighlightComponents:NO];
             }
+        }
+    }
+}
+
+- (void)setHighlightComponents:(BOOL)highlighted
+{
+    if(highlighted)
+    {
+        [self.contentView setBackgroundColor:m_pPressColor];
+        [self.textLabel setTextColor:m_pTextHighlightColor];
+        
+        if(m_pOpenableArrow != nil)
+        {
+            m_pOpenableArrow.image = m_pArrowHighlightImage;
+        }
+    }
+    else
+    {
+        [self.contentView setBackgroundColor:m_pContentBackgroundColor];
+        [self.textLabel setTextColor:m_pTextColor];
+        
+        if(m_pOpenableArrow != nil)
+        {
+            m_pOpenableArrow.image = m_pArrowImage;
         }
     }
 }

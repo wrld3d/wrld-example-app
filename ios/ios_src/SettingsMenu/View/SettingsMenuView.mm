@@ -12,6 +12,8 @@
 #include "ViewAlphaAnimator.h"
 #include "ViewPositionAnimator.h"
 
+#import "UIButton+DefaultStates.h"
+
 @interface SettingsMenuView()
 {
     ExampleApp::SettingsMenu::View::SettingsMenuViewInterop* m_pSettingsMenuInterop;
@@ -79,10 +81,7 @@
     m_dragTabOpenOnScreenY = m_dragTabOffScreenY;
     
     self.pDragTab = [[[UIButton alloc] initWithFrame:CGRectMake(m_dragTabOffScreenX, m_dragTabOffScreenY, m_dragTabWidth, m_dragTabHeight)] autorelease];
-    [self.pDragTab setBackgroundImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(ExampleApp::Helpers::ColorPalette::UiBorderColor)
-                             forState:UIControlStateNormal];
-    [self.pDragTab setBackgroundImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(ExampleApp::Helpers::ColorPalette::MenuButtonPressColor)
-                             forState:UIControlStateHighlighted];
+    [self.pDragTab setDefaultStatesWithImageNames:@"button_settings_off" :@"button_settings_on"];
     
     m_titleContainerOffScreenWidth = 0.0f;
     m_titleContainerOffScreenHeight = m_dragTabHeight;
@@ -176,8 +175,6 @@
     {
         [self.pTableViewContainer addSubview:self.pTableViewMap[@(i)]];
     }
-
-    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pDragTab, "settings_gear", ExampleApp::Helpers::ImageHelpers::Centre);
     
     self.frame = CGRectMake(0, 0, m_screenWidth, m_screenHeight);
 }

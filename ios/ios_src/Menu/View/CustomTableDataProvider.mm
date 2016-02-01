@@ -138,7 +138,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         m_tableSectionMap[tableView] = i;
     }
 
-    self.pOpenableMenuArrow = ExampleApp::Helpers::ImageHelpers::LoadImage(@"sub_menu_arrow");
+    self.pOpenableMenuArrow = ExampleApp::Helpers::ImageHelpers::LoadImage(@"sub_menu_arrow_off");
     return self;
 }
 
@@ -393,8 +393,11 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
 {
     [cell setInfo :hasSeparator
                   :ExampleApp::Helpers::ColorPalette::UiBorderColor
-                  :isHeader ? ExampleApp::Helpers::ColorPalette::UiBorderColor : ExampleApp::Helpers::ColorPalette::UiBackgroundColor
-                  :isHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderPressColor : ExampleApp::Helpers::ColorPalette::TableSubCellPressColor];
+                  :isHeader ? ExampleApp::Helpers::ColorPalette::UiBorderColor : ExampleApp::Helpers::ColorPalette::TableSubCellColor
+                  :isHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderPressColor : ExampleApp::Helpers::ColorPalette::TableSubCellPressColor
+                  :isHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderTextColor : ExampleApp::Helpers::ColorPalette::TableSubCellTextColor
+                  :isHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderTextHighlightColor : ExampleApp::Helpers::ColorPalette::TableSubCellTextColor
+                  :(UIImageView*)[cell.contentView viewWithTag:SubItemCellOpenableMenuArrowTag]];
 }
 
 

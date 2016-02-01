@@ -12,7 +12,6 @@ namespace ExampleApp
             extern UIColor* UiBorderColor;
             
             extern UIColor* ButtonPressColor;
-            extern UIColor* MenuButtonPressColor;
             
             extern UIColor* ModalBackgroundColor;
             
@@ -26,6 +25,7 @@ namespace ExampleApp
             extern UIColor* TextFieldDisabledColor;
             
             extern UIColor* TableHeaderPressColor;
+            extern UIColor* TableSubCellColor;
             extern UIColor* TableSubCellPressColor;
             extern UIColor* TableDividerColor;
             extern UIColor* TableSeparatorColor;
@@ -33,6 +33,7 @@ namespace ExampleApp
             extern UIColor* TableSearchTextColor;
             extern UIColor* TableSearchDetailTextColor;
             extern UIColor* TableHeaderTextColor;
+            extern UIColor* TableHeaderTextHighlightColor;
             extern UIColor* TableSubCellTextColor;
             extern UIColor* TableCellHighlightColor;
             
@@ -41,6 +42,7 @@ namespace ExampleApp
             extern UIColor* TwitterBlue;
             
             extern UIColor* CompassControlColor;
+            extern UIColor* CompassControlHighlightColor;
             
             extern UIColor* UiShadowColor;
         }

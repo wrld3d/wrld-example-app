@@ -34,11 +34,13 @@ const int DeletePinAlertViewTag = 2;
     
     if(self)
     {
+        self->m_pRemovePinButtonImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_off") retain];
+        self->m_pRemovePinButtonHighlightImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_on") retain];
+        self->m_pAddPinButtonImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_add_pin_off") retain];
+        self->m_pAddPinButtonHighlightImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_add_pin_on") retain];
+        
         m_pController = [UIViewController alloc];
         [m_pController setView:self];
-        
-        self->m_pRemovePinButtonImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_off") retain];
-        self->m_pAddPinButtonImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_add_pin_off") retain];
         
         m_pInterop = pInterop;
         self.alpha = 0.f;
@@ -53,7 +55,7 @@ const int DeletePinAlertViewTag = 2;
         [self.pControlContainer addSubview: self.pCloseButtonContainer];
         
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pCloseButton setDefaultStatesWithImageName:@"button_close_off"];
+        [self.pCloseButton setDefaultStatesWithImageNames:@"button_close_off" :@"button_close_off"];
         [self.pCloseButton addTarget:self action:@selector(handleClosedButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
         
@@ -245,7 +247,9 @@ const int DeletePinAlertViewTag = 2;
     [self.pRatingImage release];
     
     [self->m_pRemovePinButtonImage release];
+    [self->m_pRemovePinButtonHighlightImage release];
     [self->m_pAddPinButtonImage release];
+    [self->m_pAddPinButtonHighlightImage release];
     
     [m_pController release];
     [self removeFromSuperview];
@@ -767,12 +771,12 @@ const int DeletePinAlertViewTag = 2;
     if(m_isPinned)
     {
         [self.pPinButton setImage:self->m_pRemovePinButtonImage forState:UIControlStateNormal];
-        [self.pPinButton setImage:self->m_pRemovePinButtonImage forState:UIControlStateHighlighted];
+        [self.pPinButton setImage:self->m_pRemovePinButtonHighlightImage forState:UIControlStateHighlighted];
     }
     else
     {
         [self.pPinButton setImage:self->m_pAddPinButtonImage forState:UIControlStateNormal];
-        [self.pPinButton setImage:self->m_pAddPinButtonImage forState:UIControlStateHighlighted];
+        [self.pPinButton setImage:self->m_pAddPinButtonHighlightImage forState:UIControlStateHighlighted];
     }
 }
 

@@ -14,6 +14,8 @@
 
 @interface GeoNamesSearchResultPoiView : UIView<SearchResultPoiView>
 {
+    UIViewController* m_pController;
+    
     float m_stateChangeAnimationTimeSeconds;
     ExampleApp::Search::SdkModel::SearchResultModel m_model;
     ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* m_pInterop;
@@ -22,7 +24,9 @@
     float m_labelsSectionWidth;
     
     UIImage* m_pRemovePinButtonImage;
+    UIImage* m_pRemovePinButtonHighlightImage;
     UIImage* m_pAddPinButtonImage;
+    UIImage* m_pAddPinButtonHighlightImage;
 }
 
 - (id)initWithInterop:(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*)pInterop;

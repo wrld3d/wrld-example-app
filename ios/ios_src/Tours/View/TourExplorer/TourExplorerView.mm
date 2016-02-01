@@ -147,7 +147,7 @@
         [self.pDetailsPanel addSubview:self.pBackButtonBackground];
         
         self.pExitButton = [[UIButton alloc]initWithFrame:CGRectMake(0.0f, 0.0f, exitButtonSize, exitButtonSize)];
-        [self.pExitButton setDefaultStatesWithImageName:@"button_close_off"];
+        [self.pExitButton setDefaultStatesWithImageNames:@"button_close_off" :@"button_close_on"];
         [self.pExitButton addTarget:self action:@selector(handleExitButtonTap) forControlEvents:UIControlEventTouchUpInside];
         [self.pExitButtonBackground addSubview:self.pExitButton];
         

@@ -13,6 +13,9 @@
     UIColor* m_pBackgroundColor;
     UIColor* m_pContentBackgroundColor;
     UIColor* m_pPressColor;
+    UIColor* m_pTextColor;
+    UIColor* m_pTextHighlightColor;
+    UIImageView* m_pOpenableArrow;
     CGRect m_imageFrame;
     CGRect m_textFrame;
     CGRect m_detailTextFrame;
@@ -25,7 +28,10 @@
 - (void)setInfo :(bool)hasSeparator
                 :(UIColor*)pBackgroundColor
                 :(UIColor*)pContentBackgroundColor
-                :(UIColor*)pPressColor;
+                :(UIColor*)pPressColor
+                :(UIColor*)pTextColor
+                :(UIColor*)pTextHighlightColor
+                :(UIImageView*)pOpenableArrow;
 
 - (void)initCell:(CGFloat)initialWidth
                 :(CGFloat)leftInset

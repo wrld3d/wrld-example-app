@@ -6,6 +6,28 @@
 #include "ImageHelpers.h"
 #include "CompassViewInterop.h"
 
+enum CompassViewState
+{
+    Disabled,
+    Follow,
+    Compass
+};
+
+@interface CompassView()
+{
+    UIImage* m_pOuterShapeImage;
+    UIImage* m_pOuterShapeHighlightImage;
+    UIImage* m_pPointImage;
+    UIImage* m_pPointHighlightImage;
+    
+    UIColor* m_indicatorColor;
+    UIColor* m_indicatorHighlightColor;
+    
+    CompassViewState m_compassViewState;
+}
+
+@end
+
 @implementation CompassView
 
 - (id) initWithParams:(float)width :(float)height :(float)pixelScale
@@ -17,8 +39,14 @@
         m_pixelScale = 1.f;
         m_screenWidth = width/pixelScale;
         m_screenHeight = height/pixelScale;
-        m_gpsIndicatorColour = ExampleApp::Helpers::ColorPalette::CompassControlColor;
-
+        
+        m_indicatorColor = ExampleApp::Helpers::ColorPalette::CompassControlColor;
+        m_indicatorHighlightColor = ExampleApp::Helpers::ColorPalette::CompassControlHighlightColor;
+        
+        m_gpsIndicatorColour = m_indicatorColor;
+        
+        m_compassViewState = Disabled;
+        
         //control positioning
         m_width = 80.f;
         m_height = 80.f;
@@ -27,10 +55,15 @@
         m_yPosInactive = m_screenHeight + m_height;
         
         self.frame = CGRectMake(((m_screenWidth * 0.5f) - (m_width * 0.5f)), m_yPosInactive, m_width, m_height);
-
+        
+        self->m_pOuterShapeImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_compass_off") retain];
+        self->m_pOuterShapeHighlightImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_compass_on") retain];
+        self->m_pPointImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"compass_point_off") retain];
+        self->m_pPointHighlightImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"compass_point_on") retain];
+        
         //outer shape
-        self.pOuterShape = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, m_width, m_height)] autorelease];
-        self.pOuterShape.backgroundColor = [UIColor colorWithPatternImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"compass")];
+        self.pOuterShape = [[[UIImageView alloc] initWithFrame:CGRectMake(0.f, 0.f, m_width, m_height)] autorelease];
+        self.pOuterShape.image = m_pOuterShapeImage;
         [self addSubview: self.pOuterShape];
 
         //inner shape
@@ -52,13 +85,9 @@
         float pointWidth = 7.f;
         float pointHeight = 26.f;
         self.pPoint = [[[UIImageView alloc] initWithFrame:CGRectMake(0.f, 0.f, pointWidth, pointHeight)] autorelease];
-        self.pPoint.image = ExampleApp::Helpers::ImageHelpers::LoadImage(@"CompassPoint");
+        self.pPoint.image = m_pPointImage;
         self.pPoint.center = self.pOuterShape.center;
         [self addSubview: self.pPoint];
-
-        m_tapGestureRecogniser = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_tapTabGesture:)] autorelease];
-        [m_tapGestureRecogniser setDelegate:self];
-        [self addGestureRecognizer: m_tapGestureRecogniser];
         
         self.hidden = YES;
     }
@@ -69,7 +98,6 @@
 - (void)dealloc
 {
     Eegeo_DELETE m_pInterop;
-    [m_tapGestureRecogniser release];
 
     [self.pOuterShape removeFromSuperview];
     [self.pOuterShape release];
@@ -79,17 +107,56 @@
 
     [self.pPoint removeFromSuperview];
     [self.pPoint release];
+    
+    [self->m_pOuterShapeImage release];
+    [self->m_pOuterShapeHighlightImage release];
+    [self->m_pPointImage release];
+    [self->m_pPointHighlightImage release];
 
     [super dealloc];
 }
 
-- (void)layoutSubviews
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    [self setHighlighted:YES];
+}
 
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [[event allTouches] anyObject];
+    CGPoint touchLocation = [touch locationInView:self];
+    if(CGRectContainsPoint(self.bounds, touchLocation))
+    {
+        [self setHighlighted:YES];
+    }
+    else
+    {
+        [self setHighlighted:NO];
+    }
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [[event allTouches] anyObject];
+    CGPoint touchLocation = [touch locationInView:self];
+    
+    [self setHighlighted:NO];
+    if(CGRectContainsPoint(self.bounds, touchLocation))
+    {
+        m_pInterop->OnCycle();
+    }
+    
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self setHighlighted:NO];
 }
 
 - (void) showGpsDisabledView
 {
+    m_compassViewState = Disabled;
+    
     for (CAShapeLayer *layer in self.pInnerShape.layer.sublayers)
     {
         [layer setStrokeColor:[[UIColor clearColor] CGColor]];
@@ -99,6 +166,8 @@
 
 - (void) showGpsFollowView
 {
+    m_compassViewState = Follow;
+    
     for (CAShapeLayer *layer in self.pInnerShape.layer.sublayers)
     {
         [layer setStrokeColor:[m_gpsIndicatorColour CGColor]];
@@ -108,6 +177,8 @@
 
 - (void) showGpsCompassModeView
 {
+    m_compassViewState = Compass;
+    
     for (CAShapeLayer *layer in self.pInnerShape.layer.sublayers)
     {
         [layer setStrokeColor:[m_gpsIndicatorColour CGColor]];
@@ -200,9 +271,35 @@
      ];
 }
 
-- (void)_tapTabGesture:(UITapGestureRecognizer *)recognizer
+- (void) setHighlighted:(BOOL)highlighted
 {
-    m_pInterop->OnCycle();
+    if(highlighted)
+    {
+        self.pOuterShape.image = m_pOuterShapeHighlightImage;
+        self.pPoint.image = m_pPointHighlightImage;
+        m_gpsIndicatorColour = m_indicatorHighlightColor;
+    }
+    else
+    {
+        self.pOuterShape.image = m_pOuterShapeImage;
+        self.pPoint.image = m_pPointImage;
+        m_gpsIndicatorColour = m_indicatorColor;
+    }
+    
+    switch(m_compassViewState)
+    {
+        case Disabled:
+            [self showGpsDisabledView];
+            break;
+        case Follow:
+            [self showGpsFollowView];
+            break;
+        case Compass:
+            [self showGpsCompassModeView];
+            break;
+        default:
+            Eegeo_ASSERT(false, "Unhandled compass view state");
+    }
 }
 
 @end
