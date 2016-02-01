@@ -11,6 +11,7 @@
 #include "WorldPinVisibility.h"
 #include "MenuDragStateChangedMessage.h"
 #include "SearchVendorNames.h"
+#include "IInitialExperienceModel.h"
 
 namespace ExampleApp
 {
@@ -22,7 +23,8 @@ namespace ExampleApp
                                                                    Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
                                                                    WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                                    InteriorsExplorerCameraController& cameraController,
-                                                                   ExampleAppMessaging::TMessageBus& messageBus)
+                                                                   ExampleAppMessaging::TMessageBus& messageBus,
+                                                                   const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel)
             : m_interiorController(interiorController)
             , m_markerRepository(markerRepository)
             , m_worldPinsService(worldPinsService)
@@ -32,6 +34,7 @@ namespace ExampleApp
             , m_markerRemovedCallback(this, &InteriorWorldPinController::HandleMarkerRemoved)
             , m_menuDraggedCallback(this, &InteriorWorldPinController::HandleMenuDragged)
             , m_menuIsDragging(false)
+            , m_initialExperienceModel(initialExperienceModel)
             {
                 m_markerRepository.RegisterNotifyAddedCallback(m_markerAddedCallback);
                 m_markerRepository.RegisterNotifyRemovedCallback(m_markerRemovedCallback);
@@ -59,7 +62,8 @@ namespace ExampleApp
             
             const bool InteriorWorldPinController::PinInteractionAllowed(const std::string& interiorId) const
             {
-                return !m_menuIsDragging &&
+                const bool cameraUnlocked = m_initialExperienceModel.LockedCameraStepsCompleted();
+                return !m_menuIsDragging && cameraUnlocked &&
                     m_interiorController.GetCurrentState() == Eegeo::Resources::Interiors::InteriorViewState::NoInteriorSelected &&
                     m_deferedRemovalMap.find(interiorId) == m_deferedRemovalMap.end();
             }
