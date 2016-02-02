@@ -7,16 +7,18 @@ set(currsources
   src/AppInputDelegate.h
   src/AppRunner.cpp
   src/AppRunner.h
-  src/ExampleAppPch.cpp
   src/ExampleAppPch.h
   src/GlDisplayService.cpp
   src/GlDisplayService.h
   src/main.cpp
   src/main.h
 )
-set(sources ${sources} ${currsources})
 
-set_source_files_properties(${currsources} PROPERTIES COMPILE_FLAGS "/clr /EHa")
+set_source_files_properties(${currsources} PROPERTIES COMPILE_FLAGS "/clr /EHa /Y-")
+set_source_files_properties(src/ExampleAppPch.cpp PROPERTIES COMPILE_FLAGS "/Yc")
+set(currsources ${currsources} src/ExampleAppPch.cpp)
+
+set(sources ${sources} ${currsources})
 
 source_group(/ FILES ${currsources})
 include(src/AboutPage/CMakeLists.txt)

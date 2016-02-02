@@ -13,7 +13,7 @@ set(currsources
   src/MyPinCreation/View/MyPinCreationViewModule.h
 )
 
-set_source_files_properties(${currsources} PROPERTIES COMPILE_FLAGS "/clr /EHa")
+set_source_files_properties(${currsources} PROPERTIES COMPILE_FLAGS "/clr /EHa /Y-")
 
 set(sources ${sources} ${currsources})
 source_group(\\MyPinCreation\\View FILES ${currsources})

@@ -1,6 +1,6 @@
 set(headers ${headers} src/AboutPage/View
 )
-set(currsources
+set(clisource
   src/AboutPage/View/AboutPageCLI.cpp
   src/AboutPage/View/AboutPageCLI.h
   src/AboutPage/View/AboutPageView.cpp
@@ -11,7 +11,7 @@ set(currsources
   src/AboutPage/View/IAboutPageViewModule.h
 )
 
-set_source_files_properties(${currsources} PROPERTIES COMPILE_FLAGS "/clr /EHa")
+set_source_files_properties(${currsources} PROPERTIES COMPILE_FLAGS "/clr /EHa /Y-")
 
 set(sources ${sources} ${currsources})
 source_group(\\AboutPage\\View FILES ${currsources})

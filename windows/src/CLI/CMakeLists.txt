@@ -5,7 +5,7 @@ set(currsources
   src/CLI/MapImage.h
 )
 
-set_source_files_properties(${currsources} PROPERTIES COMPILE_FLAGS "/clr /EHa")
+set_source_files_properties(${currsources} PROPERTIES COMPILE_FLAGS "/clr /EHa /Y-")
 
 set(sources ${sources} ${currsources})
 source_group(\\CLI FILES ${currsources})

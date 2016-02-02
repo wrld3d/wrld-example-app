@@ -11,7 +11,7 @@ set(currsources
   src/Options/View/OptionsViewModule.h
 )
 
-set_source_files_properties(${currsources} PROPERTIES COMPILE_FLAGS "/clr /EHa")
+set_source_files_properties(${currsources} PROPERTIES COMPILE_FLAGS "/clr /EHa /Y-")
 
 set(sources ${sources} ${currsources})
 source_group(\\Options\\View FILES ${currsources})
