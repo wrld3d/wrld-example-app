@@ -17,7 +17,7 @@ namespace ExampleAppWPF
         protected Button m_closeButtonView;
         protected ProgressBar m_progressSpinner;
         protected TextBlock m_numResultsText;
-        protected FrameworkElement m_searchMenuViewListContainer;
+        protected FrameworkElement m_SettingsMenuViewListContainer;
 
         protected double m_totalHeightPx;
 
@@ -39,10 +39,10 @@ namespace ExampleAppWPF
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
             mainWindow.SizeChanged += PerformLayout;
             mainWindow.MainGrid.Children.Add(this);
-            Loaded += SearchMenuView_Loaded;
+            Loaded += SettingsMenuView_Loaded;
         }
 
-        private void SearchMenuView_Loaded(object sender, RoutedEventArgs e)
+        private void SettingsMenuView_Loaded(object sender, RoutedEventArgs e)
         {
             PerformLayout(sender, null);
         }
@@ -50,29 +50,29 @@ namespace ExampleAppWPF
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            m_searchMenuViewListContainer = (FrameworkElement)GetTemplateChild("SearchMenuViewListContainer");
-            m_list = (ListBox)GetTemplateChild("SearchMenuItemList");
+            m_SettingsMenuViewListContainer = (FrameworkElement)GetTemplateChild("SettingsMenuViewListContainer");
+            m_list = (ListBox)GetTemplateChild("SettingsMenuItemList");
             m_list.SelectionChanged += OnItemSelected;
 
-            m_dragTabView = (Image)GetTemplateChild("SearchMenuDragTabView");
+            m_dragTabView = (Image)GetTemplateChild("SettingsMenuDragTabView");
 
             m_dragTabClickHandler = new ControlClickHandler(m_dragTabView, OnDragTabMouseClick);
 
             m_dragTabView.MouseLeftButtonDown += OnDragTabMouseLeftButtonDown;
             m_dragTabView.MouseLeftButtonUp += OnDragTabMouseLeftButtonUp;
 
-            m_closeButtonView = (Button)GetTemplateChild("SearchMenuCloseButton");
+            m_closeButtonView = (Button)GetTemplateChild("SettingsMenuCloseButton");
             m_closeButtonView.Click += CloseButtonClicked;
 
-            m_progressSpinner = (ProgressBar)GetTemplateChild("SearchMenuSpinner");
+            m_progressSpinner = (ProgressBar)GetTemplateChild("SettingsMenuSpinner");
             m_progressSpinner.Visibility = Visibility.Hidden;
 
-            m_numResultsText = (TextBlock)GetTemplateChild("SearchMenuNumResultsText");
+            m_numResultsText = (TextBlock)GetTemplateChild("SettingsMenuNumResultsText");
             m_numResultsText.Visibility = Visibility.Hidden;
 
-            m_headerText = (TextBlock)GetTemplateChild("SearchMenuHeaderText");
+            m_headerText = (TextBlock)GetTemplateChild("SettingsMenuHeaderText");
 
-            //m_headerCategoryImage = (Image)GetTemplateChild("SearchMenuHeaderCategoryIcon");
+            //m_headerCategoryImage = (Image)GetTemplateChild("SettingsMenuHeaderCategoryIcon");
 
             PerformLayout(null, null);
         }
@@ -86,7 +86,7 @@ namespace ExampleAppWPF
 
             if (e.AddedItems != null && e.AddedItems.Count > 0)
             {
-                var item = (sender as ListBox).SelectedItem as SearchMenuListItem;
+                var item = (sender as ListBox).SelectedItem as SettingsMenuListItem;
                 (sender as ListBox).SelectedItem = null;
 
                 if (item != null)
@@ -99,10 +99,10 @@ namespace ExampleAppWPF
 
         private void CloseButtonClicked(object sender, RoutedEventArgs e)
         {
-            //SearchMenuViewCLIMethods.HandleClosed(m_nativeCallerPointer);
+            //SettingsMenuViewCLIMethods.HandleClosed(m_nativeCallerPointer);
         }
 
-        public void UpdateHeader(String searchText, bool pendingQueryResult, int numResults)
+        public void UpdateHeader(string searchText, bool pendingQueryResult, int numResults)
         {
             Dispatcher.Invoke(() =>
             {
@@ -198,13 +198,13 @@ namespace ExampleAppWPF
 
         private void PerformLayout(object sender, SizeChangedEventArgs e)
         {
-            if (m_dragTabView != null && m_searchMenuViewListContainer != null)
-            {
+            //if (m_dragTabView != null && m_SettingsMenuViewListContainer != null)
+            //{
                 double dragTabWidthPx = m_dragTabView.ActualWidth;
 
-                var listContainerPosition = m_searchMenuViewListContainer.RenderTransform.Transform(new Point(0.0, 0.0));
-                m_mainContainerOffscreenOffsetXPx = -(listContainerPosition.X - m_searchMenuViewListContainer.ActualWidth * 0.5);
-                double mainContainerWidthPx = m_searchMenuViewListContainer.ActualWidth;
+                var listContainerPosition = m_SettingsMenuViewListContainer.RenderTransform.Transform(new Point(0.0, 0.0));
+                m_mainContainerOffscreenOffsetXPx = -(listContainerPosition.X - m_SettingsMenuViewListContainer.ActualWidth * 0.5);
+                double mainContainerWidthPx = m_SettingsMenuViewListContainer.ActualWidth;
                 double mainContainerOnScreenWidthPx = mainContainerWidthPx;// - m_mainContainerOffscreenOffsetXPx;
 
                 MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
@@ -218,7 +218,7 @@ namespace ExampleAppWPF
 
                 var currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
                 RenderTransform = new TranslateTransform(m_offscreenXPx, 0.0);
-            }
+            //}
         }
 
 
@@ -228,12 +228,12 @@ namespace ExampleAppWPF
             
             if (groupToChildrenMap.TryGetValue("Search", out searchData))
             {
-                var itemsSource = new List<SearchMenuListItem>();
+                var itemsSource = new List<SettingsMenuListItem>();
                 var jsonObjects = from json in searchData select JObject.Parse(json);
 
                 foreach (var jsonObject in jsonObjects)
                 {
-                    var item = new SearchMenuListItem();
+                    var item = new SettingsMenuListItem();
                     item.Name = jsonObject["name"].Value<string>();
                     item.Details = jsonObject["details"].Value<string>();
                     

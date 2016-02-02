@@ -1536,18 +1536,6 @@
     <ClCompile Include="..\..\..\src\AppModes\States\SdkModel\WorldState.cpp">
       <Filter>Source Files\App\AppModes\States\SdkModel</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\InteriorsCustomMaterials\SdkModel\InteriorsCustomMaterialDtoRepository.cpp">
-      <Filter>Source Files\App\InteriorsCustomMaterials\SdkModel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\InteriorsCustomMaterials\SdkModel\InteriorsCustomMaterialFactory.cpp">
-      <Filter>Source Files\App\InteriorsCustomMaterials\SdkModel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\InteriorsCustomMaterials\SdkModel\InteriorsCustomMaterialParser.cpp">
-      <Filter>Source Files\App\InteriorsCustomMaterials\SdkModel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\InteriorsCustomMaterials\SdkModel\InteriorsCustomMaterialsModule.cpp">
-      <Filter>Source Files\App\InteriorsCustomMaterials\SdkModel</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\Helpers\InteriorHeightHelpers.cpp">
       <Filter>Source Files\App\Helpers</Filter>
     </ClCompile>
@@ -3529,33 +3517,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\AppModes\States\SdkModel\WorldState.h">
       <Filter>Source Files\App\AppModes\States\SdkModel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\InteriorsCustomMaterials\InteriorsCustomMaterials.h">
-      <Filter>Source Files\App\InteriorsCustomMaterials</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\InteriorsCustomMaterials\SdkModel\IInteriorsCustomMaterialDtoRepository.h">
-      <Filter>Source Files\App\InteriorsCustomMaterials\SdkModel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\InteriorsCustomMaterials\SdkModel\IInteriorsCustomMaterialsModule.h">
-      <Filter>Source Files\App\InteriorsCustomMaterials\SdkModel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\InteriorsCustomMaterials\SdkModel\InteriorsCustomMaterialDto.h">
-      <Filter>Source Files\App\InteriorsCustomMaterials\SdkModel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\InteriorsCustomMaterials\SdkModel\InteriorsCustomMaterialDtoRepository.h">
-      <Filter>Source Files\App\InteriorsCustomMaterials\SdkModel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\InteriorsCustomMaterials\SdkModel\InteriorsCustomMaterialFactory.h">
-      <Filter>Source Files\App\InteriorsCustomMaterials\SdkModel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\InteriorsCustomMaterials\SdkModel\InteriorsCustomMaterialKeys.h">
-      <Filter>Source Files\App\InteriorsCustomMaterials\SdkModel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\InteriorsCustomMaterials\SdkModel\InteriorsCustomMaterialParser.h">
-      <Filter>Source Files\App\InteriorsCustomMaterials\SdkModel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\InteriorsCustomMaterials\SdkModel\InteriorsCustomMaterialsModule.h">
-      <Filter>Source Files\App\InteriorsCustomMaterials\SdkModel</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\Helpers\InteriorHeightHelpers.h">
       <Filter>Source Files\App\Helpers</Filter>
