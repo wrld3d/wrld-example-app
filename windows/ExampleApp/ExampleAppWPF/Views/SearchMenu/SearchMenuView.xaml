@@ -61,6 +61,17 @@
 
                                             <DataTemplate DataType="{x:Type local:MenuListItem}">
                                                 <Grid HorizontalAlignment="Stretch" Height="42" Background="{StaticResource Gold}">
+                                                    <Grid.Triggers>
+                                                        <EventTrigger RoutedEvent="MouseDown">
+                                                            <BeginStoryboard>
+                                                                <Storyboard>
+                                                                    <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Grid.Background).(SolidColorBrush.Color)">
+                                                                        <EasingColorKeyFrame KeyTime="0" Value="#FF8DD8F8" />
+                                                                    </ColorAnimationUsingKeyFrames>
+                                                                </Storyboard>
+                                                            </BeginStoryboard>
+                                                        </EventTrigger>
+                                                    </Grid.Triggers>
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition Height="*"/>
                                                         <RowDefinition Height="1"/>
