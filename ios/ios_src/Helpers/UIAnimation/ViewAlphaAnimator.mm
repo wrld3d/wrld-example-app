@@ -16,20 +16,20 @@ namespace ExampleApp
                                                  double startDelaySeconds,
                                                  float defaultStartAlpha,
                                                  float targetAlpha,
-                                                 Easing::IEasingCurve<float>* curve)
+                                                 Easing::IEasingCurve<float>* pCurve)
             : ViewAnimatorBase(view, animationPeriodSeconds, startDelaySeconds)
             , m_defaultStartAlpha(defaultStartAlpha)
             , m_targetAlpha(targetAlpha)
             , m_deltaAlpha(0.0f)
             , m_currentStartAlpha(0.0f)
-            , m_curve(curve)
+            , m_pCurve(pCurve)
             {
-                Eegeo_ASSERT(m_curve != NULL, "Can't initialise ViewAlphaAnimator with NULL curve");
+                Eegeo_ASSERT(m_pCurve != NULL, "Can't initialise ViewAlphaAnimator with NULL curve");
             }
             
             ViewAlphaAnimator::~ViewAlphaAnimator()
             {
-                Eegeo_DELETE m_curve;
+                Eegeo_DELETE m_pCurve;
             }
             
             void ViewAlphaAnimator::OnPlay()
@@ -42,19 +42,19 @@ namespace ExampleApp
             {
                 if(m_isPlayingForward)
                 {
-                    m_currentStartAlpha = static_cast<float>(m_view.alpha);
+                    m_currentStartAlpha = static_cast<float>(m_pView.alpha);
                     m_deltaAlpha = m_targetAlpha - m_currentStartAlpha;
                 }
                 else
                 {
                     m_currentStartAlpha = m_defaultStartAlpha;
-                    m_deltaAlpha = static_cast<float>(m_view.alpha) - m_defaultStartAlpha;
+                    m_deltaAlpha = static_cast<float>(m_pView.alpha) - m_defaultStartAlpha;
                 }
             }
             
             void ViewAlphaAnimator::OnUpdate(double timerSeconds)
             {
-                m_view.alpha = std::ceil((*m_curve)((float)timerSeconds, m_currentStartAlpha, m_deltaAlpha, (float)m_animationPeriodSeconds));
+                m_pView.alpha = std::ceil((*m_pCurve)((float)timerSeconds, m_currentStartAlpha, m_deltaAlpha, (float)m_animationPeriodSeconds));
             }
         }
     }

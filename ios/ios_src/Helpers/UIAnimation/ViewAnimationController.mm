@@ -10,10 +10,10 @@ namespace ExampleApp
     {
         namespace UIAnimation
         {
-            ViewAnimationController::ViewAnimationController(UIView* mainView,
+            ViewAnimationController::ViewAnimationController(UIView* pMainView,
                                                              OnAnimationComplete forwardCompleteCallback,
                                                              OnAnimationComplete reverseCompleteCallback)
-            : m_mainView(mainView)
+            : m_pMainView(pMainView)
             , m_forwardCompleteCallback(forwardCompleteCallback)
             , m_reverseCompleteCallback(reverseCompleteCallback)
             , m_timerSeconds(0.0)
@@ -172,11 +172,11 @@ namespace ExampleApp
                 {
                     if(m_isPlayingForward && m_forwardCompleteCallback != NULL)
                     {
-                        m_forwardCompleteCallback(m_mainView);
+                        m_forwardCompleteCallback(m_pMainView);
                     }
                     else if(!m_isPlayingForward && m_reverseCompleteCallback != NULL)
                     {
-                        m_reverseCompleteCallback(m_mainView);
+                        m_reverseCompleteCallback(m_pMainView);
                     }
                 }
             }

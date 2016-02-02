@@ -16,20 +16,20 @@ namespace ExampleApp
                                                        double startDelaySeconds,
                                                        const Eegeo::v2& defaultStartPosition,
                                                        const Eegeo::v2& targetPosition,
-                                                       Easing::IEasingCurve<Eegeo::v2>* curve)
+                                                       Easing::IEasingCurve<Eegeo::v2>* pCurve)
             : ViewAnimatorBase(view, animationPeriodSeconds, startDelaySeconds)
             , m_defaultStartPosition(defaultStartPosition)
             , m_targetPosition(targetPosition)
             , m_deltaPosition(Eegeo::v2::Zero())
             , m_currentStartPosition(Eegeo::v2::Zero())
-            , m_curve(curve)
+            , m_pCurve(pCurve)
             {
-                Eegeo_ASSERT(m_curve != NULL, "Can't initialise ViewPositionAnimator with NULL curve");
+                Eegeo_ASSERT(m_pCurve != NULL, "Can't initialise ViewPositionAnimator with NULL curve");
             }
             
             ViewPositionAnimator::~ViewPositionAnimator()
             {
-                Eegeo_DELETE m_curve;
+                Eegeo_DELETE m_pCurve;
             }
             
             void ViewPositionAnimator::OnPlay()
@@ -42,24 +42,24 @@ namespace ExampleApp
             {
                 if(m_isPlayingForward)
                 {
-                    m_currentStartPosition = Eegeo::dv2(m_view.frame.origin.x, m_view.frame.origin.y).ToSingle();
+                    m_currentStartPosition = Eegeo::dv2(m_pView.frame.origin.x, m_pView.frame.origin.y).ToSingle();
                     m_deltaPosition = m_targetPosition - m_currentStartPosition;
                 }
                 else
                 {
                     m_currentStartPosition = m_defaultStartPosition;
-                    m_deltaPosition = Eegeo::dv2(m_view.frame.origin.x, m_view.frame.origin.y).ToSingle() - m_defaultStartPosition;
+                    m_deltaPosition = Eegeo::dv2(m_pView.frame.origin.x, m_pView.frame.origin.y).ToSingle() - m_defaultStartPosition;
                 }
             }
             
             void ViewPositionAnimator::OnUpdate(double timerSeconds)
             {
-                const Eegeo::v2& currentPosition = (*m_curve)((float)timerSeconds, m_currentStartPosition, m_deltaPosition, (float)m_animationPeriodSeconds);
+                const Eegeo::v2& currentPosition = (*m_pCurve)((float)timerSeconds, m_currentStartPosition, m_deltaPosition, (float)m_animationPeriodSeconds);
                 
-                CGRect frame = m_view.frame;
+                CGRect frame = m_pView.frame;
                 frame.origin.x = std::ceil(currentPosition.x);
                 frame.origin.y = std::ceil(currentPosition.y);
-                m_view.frame = frame;
+                m_pView.frame = frame;
             }
         }
     }

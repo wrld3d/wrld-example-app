@@ -16,7 +16,7 @@ namespace ExampleApp
                 bool m_isActive;
                 
             protected:
-                UIView* m_view;
+                UIView* m_pView;
                 bool m_isPlayingForward;
                 double m_animationPeriodSeconds;
                 double m_startDelaySeconds;
@@ -28,7 +28,7 @@ namespace ExampleApp
                 virtual void OnUpdate(double timerSeconds) = 0;
                 
             public:
-                ViewAnimatorBase(UIView* view,
+                ViewAnimatorBase(UIView* pView,
                                  double animationPeriodSeconds,
                                  double startDelaySeconds);
                 

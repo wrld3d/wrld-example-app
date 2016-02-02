@@ -22,7 +22,7 @@ namespace ExampleApp
                 Eegeo::v2 m_targetPosition;
                 Eegeo::v2 m_deltaPosition;
                 Eegeo::v2 m_currentStartPosition;
-                Easing::IEasingCurve<Eegeo::v2>* m_curve;
+                Easing::IEasingCurve<Eegeo::v2>* m_pCurve;
                 
             protected:
                 void OnPlay();
@@ -37,7 +37,7 @@ namespace ExampleApp
                                      double startDelaySeconds,
                                      const Eegeo::v2& defaultStartPosition,
                                      const Eegeo::v2& targetPosition,
-                                     Easing::IEasingCurve<Eegeo::v2>* curve);
+                                     Easing::IEasingCurve<Eegeo::v2>* pCurve);
                 
                 ~ViewPositionAnimator();
             };

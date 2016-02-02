@@ -21,7 +21,7 @@ namespace ExampleApp
                 float m_targetAlpha;
                 float m_deltaAlpha;
                 float m_currentStartAlpha;
-                Easing::IEasingCurve<float>* m_curve;
+                Easing::IEasingCurve<float>* m_pCurve;
                 
             protected:
                 void OnPlay();
@@ -36,7 +36,7 @@ namespace ExampleApp
                                   double startDelaySeconds,
                                   float defaultStartAlpha,
                                   float targetAlpha,
-                                  Easing::IEasingCurve<float>* curve);
+                                  Easing::IEasingCurve<float>* pCurve);
                 
                 ~ViewAlphaAnimator();
             };

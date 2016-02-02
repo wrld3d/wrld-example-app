@@ -18,7 +18,7 @@ namespace ExampleApp
                 typedef void(^OnAnimationComplete)(UIView*);
                 
             private:
-                UIView* m_mainView;
+                UIView* m_pMainView;
                 OnAnimationComplete m_forwardCompleteCallback;
                 OnAnimationComplete m_reverseCompleteCallback;
                 std::vector<ViewAnimatorBase*> m_animators;
@@ -31,7 +31,7 @@ namespace ExampleApp
                 void StartAnimatorsFromCurrent();
                 
             public:
-                ViewAnimationController(UIView* mainView,
+                ViewAnimationController(UIView* pMainView,
                                         OnAnimationComplete forwardCompleteCallback,
                                         OnAnimationComplete reverseCompleteCallback);
                 

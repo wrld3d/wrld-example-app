@@ -10,22 +10,22 @@ namespace ExampleApp
     {
         namespace UIAnimation
         {
-            ViewAnimatorBase::ViewAnimatorBase(UIView* view,
+            ViewAnimatorBase::ViewAnimatorBase(UIView* pView,
                                                double animationPeriodSeconds,
                                                double startDelaySeconds)
             : m_isActive(false)
             , m_isPlayingForward(true)
-            , m_view(view)
+            , m_pView(pView)
             , m_animationPeriodSeconds(animationPeriodSeconds)
             , m_startDelaySeconds(startDelaySeconds)
             {
-                Eegeo_ASSERT(m_view != NULL, "Can't initialise ViewAnimator with NULL view");
-                [m_view retain];
+                Eegeo_ASSERT(m_pView != NULL, "Can't initialise ViewAnimator with NULL view");
+                [m_pView retain];
             }
             
             ViewAnimatorBase::~ViewAnimatorBase()
             {
-                [m_view release];
+                [m_pView release];
             }
             
             void ViewAnimatorBase::Play(bool isPlayingForward)
@@ -84,7 +84,7 @@ namespace ExampleApp
             
             UIView* ViewAnimatorBase::GetView() const
             {
-                return m_view;
+                return m_pView;
             }
         }
     }

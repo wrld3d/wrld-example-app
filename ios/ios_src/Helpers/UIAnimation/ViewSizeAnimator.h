@@ -22,7 +22,7 @@ namespace ExampleApp
                 Eegeo::v2 m_targetSize;
                 Eegeo::v2 m_deltaSize;
                 Eegeo::v2 m_currentStartSize;
-                Easing::IEasingCurve<Eegeo::v2>* m_curve;
+                Easing::IEasingCurve<Eegeo::v2>* m_pCurve;
                 
             protected:
                 void OnPlay();
@@ -37,7 +37,7 @@ namespace ExampleApp
                                  double startDelaySeconds,
                                  const Eegeo::v2& defaultStartSize,
                                  const Eegeo::v2& targetSize,
-                                 Easing::IEasingCurve<Eegeo::v2>* curve);
+                                 Easing::IEasingCurve<Eegeo::v2>* pCurve);
                 
                 ~ViewSizeAnimator();
             };
