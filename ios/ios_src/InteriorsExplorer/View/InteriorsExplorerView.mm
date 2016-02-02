@@ -64,10 +64,10 @@ namespace
         [self.pFloorChangeButton addGestureRecognizer:buttonDrag];
         [buttonDrag release];
         
-        const float buttonSize = 40.f;
+        const float buttonSize = 50.f;
         const float labelLength = isPhone? 150.f : 200.f;
         
-        const float detailsPanelHeight = 40.0f;
+        const float detailsPanelHeight = 50.0f;
         float totalPanelLength = labelLength + buttonSize;
         
         float totalPanelHeight = detailsPanelHeight;
@@ -78,12 +78,14 @@ namespace
         
         
         self.pDismissButtonBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"menu_button")] autorelease];
-        self.pDismissButtonBackground.frame = CGRectMake(0.0f, 0.0f, buttonSize, buttonSize);
+        self.pDismissButtonBackground.frame = CGRectMake(totalPanelLength-buttonSize, 0.0f, buttonSize, buttonSize);
+        self.pDismissButtonBackground.transform = CGAffineTransformScale(CGAffineTransformIdentity, -1.f, 1.f);
         
         [self.pDetailsPanel addSubview:self.pDismissButtonBackground];
         
         self.pDismissButton = [[[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, buttonSize, buttonSize)] autorelease];
-        [self.pDismissButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"Arrow") forState:UIControlStateNormal];
+        [self.pDismissButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"interior_exit") forState:UIControlStateNormal];
+        [self.pDismissButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"interior_exit_down") forState:UIControlStateHighlighted];
         [self.pDismissButton addTarget:self action:@selector(onCancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.pDismissButtonBackground addSubview:self.pDismissButton];
         
@@ -91,9 +93,9 @@ namespace
         
         self.pDetailsPanelBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"place_pin_background")] autorelease];
         
-        self.pDetailsPanelBackground.frame = CGRectMake(buttonSize, 0, labelLength, detailsPanelHeight);
+        self.pDetailsPanelBackground.frame = CGRectMake(0, 0, labelLength, detailsPanelHeight);
         
-        UIBezierPath* roundedShapePath = [UIBezierPath bezierPathWithRoundedRect:self.pDetailsPanelBackground.bounds byRoundingCorners:UIRectCornerTopRight | UIRectCornerBottomRight cornerRadii:CGSizeMake(7.0f, 7.0f)];
+        UIBezierPath* roundedShapePath = [UIBezierPath bezierPathWithRoundedRect:self.pDetailsPanelBackground.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerBottomLeft cornerRadii:CGSizeMake(7.0f, 7.0f)];
         
         CAShapeLayer* roundedShapeLayer = [CAShapeLayer layer];
         roundedShapeLayer.frame = self.pDetailsPanelBackground.bounds;
@@ -108,7 +110,7 @@ namespace
         
         const float textPadding = 2.f;
         
-        self.pFloorNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake( textPadding + buttonSize, textPadding, labelLength - textPadding, detailsPanelHeight - textPadding)] autorelease];
+        self.pFloorNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake( textPadding, textPadding, labelLength - textPadding, detailsPanelHeight - textPadding)] autorelease];
         self.pFloorNameLabel.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
         self.pFloorNameLabel.textAlignment = NSTextAlignmentCenter;
         [self.pDetailsPanel addSubview:self.pFloorNameLabel];
