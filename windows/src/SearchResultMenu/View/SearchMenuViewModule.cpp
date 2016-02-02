@@ -3,7 +3,7 @@
 #include "WindowsNativeState.h"
 #include "Menu.h"
 #include "SearchMenuViewModule.h"
-//#include "SearchResultMenuController.h"
+#include "SearchMenuController.h"
 #include "SearchMenuView.h"
 #include "WindowsAppThreadAssertionMacros.h"
 
@@ -16,30 +16,24 @@ namespace ExampleApp
             SearchMenuViewModule::SearchMenuViewModule(
                 const std::string& viewName,
                 WindowsNativeState& nativeState,
-                Menu::View::IMenuModel& menuModel,
-                Menu::View::IMenuViewModel& menuViewModel,
+                Menu::View::IMenuModel& searchMenuModel,
+                Menu::View::IMenuViewModel& searchMenuViewModel,
+                Menu::View::IMenuSectionViewModel& searchSectionViewModel,
                 CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
-                Menu::View::IMenuOptionsModel& menuOptionsModel,
-                AppModes::SdkModel::IAppModeModel& appModeModel,
+                Modality::View::IModalBackgroundView& modalBackgroundView,
                 ExampleAppMessaging::TMessageBus& messageBus
                 )
             {
-                ASSERT_UI_THREAD
+                m_pView = Eegeo_NEW(SearchMenuView)(nativeState, viewName);
 
-                //    SearchMenuView* view = Eegeo_NEW(SearchMenuView)(nativeState, viewName);
-                //m_pView = view;
-
-                //m_pController = Eegeo_NEW(SearchResultMenu::View::SearchResultMenuController)(
-                //    *view,
-                //    *view,
-                //    menuModel,
-                //    menuViewModel,
-                //    menuOptionsModel,
-                //    searchResultMenuOrder,
-                //    categorySearchRepository,
-                //    searchResultMenuViewModel,
-                //    messageBus
-                //    );
+                m_pController = Eegeo_NEW(SearchMenuController)(searchMenuModel,
+                    searchMenuViewModel,
+                    *m_pView,
+                    *m_pView,
+                    searchSectionViewModel,
+                    categorySearchRepository,
+                    modalBackgroundView,
+                    messageBus);
             }
 
             SearchMenuViewModule::~SearchMenuViewModule()

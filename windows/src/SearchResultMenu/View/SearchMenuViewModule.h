@@ -17,7 +17,7 @@
 
 namespace ExampleApp
 {
-    namespace SearchResultMenu
+    namespace SearchMenu
     {
         namespace View
         {
@@ -31,18 +31,18 @@ namespace ExampleApp
                 SearchMenuViewModule(
                     const std::string& viewName,
                     WindowsNativeState& nativeState,
-                    Menu::View::IMenuModel& menuModelModel,
-                    Menu::View::IMenuViewModel& menuViewModel,
+                    Menu::View::IMenuModel& searchMenuModel,
+                    Menu::View::IMenuViewModel& searchMenuViewModel,
+                    Menu::View::IMenuSectionViewModel& searchSectionViewModel,
                     CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
-                    Menu::View::IMenuOptionsModel& menuOptionsModel,
-                    AppModes::SdkModel::IAppModeModel& appModeModel,
+                    Modality::View::IModalBackgroundView& modalBackgroundView,
                     ExampleAppMessaging::TMessageBus& messageBus
                     );
 
                 ~SearchMenuViewModule();
 
-                Menu::View::MenuController& GetMenuController() const;
-                Menu::View::IMenuView& GetMenuView() const;
+                Menu::View::MenuController& GetMenuController();
+                Menu::View::IMenuView& GetMenuView();
             };
         }
     }
