@@ -1,0 +1,65 @@
+cmake_minimum_required(VERSION 3.1)
+
+# not for Windows??
+#set(CMAKE_TOOLCHAIN_FILE "../cmake/toolchain/ios/iOS.cmake")
+
+set(windows_abi_name "x64")   # Pass this in?
+set(WINDOWS True)             # Toolchain?
+
+#if(NOT ${WINDOWS}) 
+#	message(FATAL_ERROR "Incorrect toolchain set: ${CMAKE_TOOLCHAIN_FILE}")
+#endif(NOT ${WINDOWS})
+
+project(ExampleApp)
+set(executable_name ExampleApp)
+
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/libs/eegeo/CMakeLists.txt")
+  include("${CMAKE_CURRENT_SOURCE_DIR}/libs/eegeo/CMakeLists.txt")
+else(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/libs/eegeo/CMakeLists.txt")
+  message(FATAL_ERROR "Couldn't detect platform headers. Have you run update.platform.sh?")
+endif(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/libs/eegeo/CMakeLists.txt")
+
+include(../src/CMakeLists.txt)
+include(src/CMakeLists.txt)
+
+add_definitions(-D__BYTE_ORDER__ -D__ORDER_LITTLE_ENDIAN__ -D_HAS_EXCEPTIONS=0 -DHAVE_STRUCT_TIMESPEC=1 -DNOMINMAX=1 -DCOMPILE_CPP_11=1 -DPTW32_STATIC_LIB -DCURL_STATICLIB)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4068 /wd4018 /wd4068 /Gd /MP")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /MP")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS} /NODEFAULTLIB:LIBCMT.lib")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /DDEBUG")
+
+# WX - warnings as errors...
+
+set(linker_search_paths
+	libs/eegeo/prebuilt/${windows_abi_name}/Release
+	libs/eegeo/ANGLE/${windows_abi_name}/Release
+	libs/eegeo/pthread/${windows_abi_name}
+	"C:/Program\ Files\ (x86)/Microsoft\ SDKs/Windows/v7.1A/Lib/x64" 
+)
+
+include_directories(${headers})
+link_directories(${linker_search_paths})
+
+set(libs 
+	eegeo-sdk
+	libEGL
+	libGLESv2
+	png
+	curl
+	turbojpeg
+	http-parser
+	xml2
+	pthreadVC2
+	jpeg
+	locationapi
+	libuv
+	IPHlpApi
+	UserEnv
+	psapi
+	)
+
+include_external_msproject(ExampleAppWPF "${CMAKE_SOURCE_DIR}/ExampleApp/ExampleAppWPF/ExampleAppWPF.csproj")
+
+add_library(${executable_name} SHARED ${sources} ${resources})
+
+target_link_libraries(${executable_name} ${libs})

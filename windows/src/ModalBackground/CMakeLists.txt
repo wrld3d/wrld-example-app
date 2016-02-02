@@ -1,0 +1,12 @@
+set(headers ${headers} src/ModalBackground
+)
+set(currsources
+  src/ModalBackground/ModalBackgroundViewIncludes.h
+)
+
+set_source_files_properties(${currsources} PROPERTIES COMPILE_FLAGS "/clr /EHa")
+
+set(sources ${sources} ${currsources})
+source_group(\\ModalBackground FILES ${currsources})
+include(src/ModalBackground/SdkModel/CMakeLists.txt)
+include(src/ModalBackground/View/CMakeLists.txt)
