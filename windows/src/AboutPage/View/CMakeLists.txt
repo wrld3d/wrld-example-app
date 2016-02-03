@@ -1,6 +1,6 @@
 set(headers ${headers} src/AboutPage/View
 )
-set(clisource
+set(currsources
   src/AboutPage/View/AboutPageCLI.cpp
   src/AboutPage/View/AboutPageCLI.h
   src/AboutPage/View/AboutPageView.cpp
