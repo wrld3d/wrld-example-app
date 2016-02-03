@@ -102,9 +102,10 @@ namespace ExampleApp
                 
                 if(!m_interiorExplorerEnabled)
                 {
-                    if (fromAnotherInterior)
+                    // stop the state stack from growing when going from interior to another interior.
+                    if (!fromAnotherInterior)
                     {
-                        ResumePreviousMapState();
+                        ChangeToInteriorMapState();
                     }
                     
                     const Eegeo::Resources::Interiors::InteriorId& interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
@@ -141,13 +142,7 @@ namespace ExampleApp
             
             void InteriorsExplorerModel::OnControllerVisibilityChanged()
             {
-                if (m_controller.InteriorIsVisible())
-                {
-                    ChangeToInteriorMapState();
-                }
-                else {
-                    ResumePreviousMapState();
-                }
+
             }
         
             void InteriorsExplorerModel::OnExit(const InteriorsExplorerExitMessage& message)
