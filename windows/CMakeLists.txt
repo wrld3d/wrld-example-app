@@ -1,14 +1,11 @@
 cmake_minimum_required(VERSION 3.1)
 
-# not for Windows??
-#set(CMAKE_TOOLCHAIN_FILE "../cmake/toolchain/ios/iOS.cmake")
+set(CMAKE_TOOLCHAIN_FILE "../cmake/toolchain/windows/windows.cmake")
 
 set(windows_abi_name "x64")   # Pass this in?
-set(WINDOWS True)             # Toolchain?
-
-#if(NOT ${WINDOWS}) 
-#	message(FATAL_ERROR "Incorrect toolchain set: ${CMAKE_TOOLCHAIN_FILE}")
-#endif(NOT ${WINDOWS})
+if(NOT ${WINDOWS}) 
+	message(FATAL_ERROR "Incorrect toolchain set: ${CMAKE_TOOLCHAIN_FILE}")
+endif(NOT ${WINDOWS})
 
 project(ExampleApp)
 set(executable_name ExampleApp)
@@ -31,6 +28,8 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /DDEBUG")
 
 # WX - warnings as errors...
+
+remove_visual_studio_compiler_flag_debug("/RTC1")
 
 set(linker_search_paths
 	libs/eegeo/prebuilt/${windows_abi_name}/Release
