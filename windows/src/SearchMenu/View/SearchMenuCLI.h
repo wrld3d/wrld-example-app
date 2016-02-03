@@ -2,13 +2,11 @@
 
 #pragma once
 
-#using "System.dll"
-#using "PresentationFramework.dll"
-
 namespace ExampleApp
 {
-    public ref class SettingsMenuViewCLIMethods
+    public ref class SearchMenuViewCLIMethods
 	{
-    
+    public:
+        static void PerformedSearchQuery(System::IntPtr nativePointer, System::String^ text);
 	};
 }

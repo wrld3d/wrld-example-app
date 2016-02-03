@@ -154,7 +154,7 @@ namespace ExampleAppWPF
 
                 if (queryText.Length > 0)
                 {
-                    //SecondaryMenuViewCLIMethods.PerformSearchQuery(m_nativeCallerPointer, queryText);
+                    SearchMenuViewCLIMethods.PerformedSearchQuery(m_nativeCallerPointer, queryText);
                 }
             }
         }
@@ -197,6 +197,11 @@ namespace ExampleAppWPF
             Debug.WriteLine("ACTION_MOVE x: {0}, clamp: {1}", newXPx, clampedNormalisedDragState);
         }
 
+        public void SetSearchSection(string[] searchResults)
+        {
+
+        }
+
         public override void AnimateToClosedOnScreen()
         {
             base.AnimateToClosedOnScreen();
@@ -222,6 +227,21 @@ namespace ExampleAppWPF
             {
                 m_editText.IsEnabled = true;
             });
+        }
+
+        public void SetEditText(string text, bool isCategory)
+        {
+
+        }
+
+        public void SetSearchResultCount(int count)
+        {
+
+        }
+
+        void CollapseAll()
+        {
+
         }
 
         protected override void RefreshListData(List<string> groups, List<bool> groupsExpandable, Dictionary<string, List<string>> groupToChildrenMap)
