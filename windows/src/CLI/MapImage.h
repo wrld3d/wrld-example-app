@@ -47,6 +47,7 @@ namespace ExampleApp
             IDirect3DSurface9* GetSurfaceFromShareHandle(void* shareHandle, int width, int height);
             void InvalidateImage();
             int GetScreenDPI();
+            void UpdateAndRender(float dt);
 
             IDirect3D9Ex* m_d3d9;
             IDirect3DDevice9Ex* m_d3d9Device;

@@ -152,9 +152,7 @@ namespace ExampleApp
 
         void MapImage::Render(float dt)
         {
-            m_appRunner->UpdateNative(dt);
-            m_appRunner->UpdateUiViews(dt);			
-
+            UpdateAndRender(dt);
             InvalidateImage();
         }
 
@@ -226,8 +224,16 @@ namespace ExampleApp
 
             void* surfaceSharePointer = m_appRunner->GetMainRenderSurfaceSharePointer();
             IDirect3DSurface9* surface = GetSurfaceFromShareHandle(surfaceSharePointer, width, height);
-            Lock();
+            Lock();            
+            UpdateAndRender(0.0f);
             SetBackBuffer(System::Windows::Interop::D3DResourceType::IDirect3DSurface9, System::IntPtr(surface));
+            AddDirtyRect(System::Windows::Int32Rect(
+                0,
+                0,
+                width,
+                height
+                ));
+            
             Unlock();
 
             surface->Release();
@@ -238,6 +244,12 @@ namespace ExampleApp
             SetProcessDPIAware();
             HDC screen = GetDC(NULL);
             return GetDeviceCaps(screen, LOGPIXELSX);
+        }
+
+        void MapImage::UpdateAndRender(float dt)
+        {
+            m_appRunner->UpdateNative(dt);
+            m_appRunner->UpdateUiViews(dt);
         }
     }
 }
