@@ -62,5 +62,5 @@ set(libs
 include_external_msproject(ExampleAppWPF "${CMAKE_SOURCE_DIR}/ExampleApp/ExampleAppWPF/ExampleAppWPF.csproj")
 
 add_library(${executable_name} SHARED ${sources} ${resources})
-
+add_dotnet_reference(${executable_name} "WindowsBase")
 target_link_libraries(${executable_name} ${libs})
