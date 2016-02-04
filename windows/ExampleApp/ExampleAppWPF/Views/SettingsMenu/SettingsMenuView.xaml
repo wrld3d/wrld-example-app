@@ -87,34 +87,6 @@
                                                 <Setter Property="FocusVisualStyle" Value="{x:Null}" />
                                                 <Setter Property="Padding" Value="0"/>
                                             </Style>
-
-                                            <DataTemplate DataType="{x:Type local:SettingsMenuListItem}">
-                                                <Grid HorizontalAlignment="Stretch" Height="42" Margin="0,0,0,0">
-                                                    <Grid.Background>
-                                                        <ImageBrush ImageSource="/Assets/search_result_background.png" />
-                                                    </Grid.Background>
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="*"/>
-                                                        <RowDefinition Height="1"/>
-                                                    </Grid.RowDefinitions>
-                                                    <Grid HorizontalAlignment="Stretch" Grid.Row="0">
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="Auto"/>
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="Auto"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" >
-                                                            <Image Source="{Binding Path=Icon}" Width="32" Height="32" VerticalAlignment="Center"/>
-                                                                <StackPanel HorizontalAlignment="Stretch">
-                                                                    <TextBlock Text="{Binding Path=Name}" FontSize="12" Foreground="{StaticResource DarkGrey}" MaxWidth="200" FontWeight="Bold" Margin="10,4,0,0" TextTrimming="CharacterEllipsis"/>
-                                                                    <TextBlock Text="{Binding Path=Details}" FontSize="10" Foreground="{StaticResource DarkGrey}" MaxWidth="200" Margin="10,0,0,0" TextTrimming="CharacterEllipsis"/>                                                                
-                                                                </StackPanel>
-                                                        </StackPanel>
-                                                    </Grid>
-                                                    <Grid Grid.Row="1" Grid.Column="1" Background="{StaticResource MenuSeparator}" Margin="22,0,0,0"/>
-                                                </Grid>
-                                            </DataTemplate>
-
                                         </ListBox.Resources>
                                     </ListBox>
                                 </ScrollViewer>

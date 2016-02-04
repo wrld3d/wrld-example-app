@@ -8,5 +8,9 @@ namespace ExampleApp
 	{
     public:
         static void PerformedSearchQuery(System::IntPtr nativePointer, System::String^ text);
+
+        static void OnSearchCleared(System::IntPtr nativeCallerPointer);
+
+        static void HandleSearchItemSelected(System::IntPtr nativeCallerPointer, int itemIndex);
 	};
 }

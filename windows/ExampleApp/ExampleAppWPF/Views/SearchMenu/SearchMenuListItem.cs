@@ -2,7 +2,7 @@ using System.Windows.Media.Imaging;
 
 namespace ExampleAppWPF
 {
-    public class SettingsMenuListItem
+    public class SearchMenuListItem
     {
         public string Name { get; set; }
         public string Details { get; set; }

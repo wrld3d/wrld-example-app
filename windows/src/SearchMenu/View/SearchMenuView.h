@@ -20,7 +20,7 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection1<int> m_searchItemSelectedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<const std::string&> m_searchPerformedCallbacks;
 
-                Helpers::ReflectionHelpers::Method<array<System::String^>^> mSetSearchSection;
+                Helpers::ReflectionHelpers::Method<System::String^, array<System::String^>^> mSetSearchSection;
                 Helpers::ReflectionHelpers::Method<void> mDisableEditText;
                 Helpers::ReflectionHelpers::Method<void> mEnableEditText;
                 Helpers::ReflectionHelpers::Method<System::String^, bool> mSetEditText;

@@ -85,6 +85,9 @@
 #include "HttpCache.h"
 #include "SearchMenuViewModule.h"
 #include "SettingsMenuViewModule.h"
+#include "SearchResultSectionViewModule.h"
+#include "SearchResultSectionModule.h"
+#include "SurveyViewModule.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
@@ -109,6 +112,7 @@ AppHost::AppHost(
     , m_pWindowsPlatformAbstractionModule(NULL)
     , m_pSettingsMenuViewModule(NULL)
     , m_pSearchMenuViewModule(NULL)
+    , m_pSearchResultSectionViewModule(NULL)
     , m_pModalBackgroundViewModule(NULL)
     , m_pFlattenButtonViewModule(NULL)
     , m_pMyPinCreationViewModule(NULL)
@@ -125,6 +129,7 @@ AppHost::AppHost(
     , m_pViewControllerUpdaterModule(NULL)
     , m_pWindowsFlurryMetricsService(NULL)
     , m_pInitialExperienceIntroViewModule(NULL)
+    , m_pSurverysViewModule(NULL)
 	, m_pInteriorsExplorerViewModule(NULL)
     , m_searchServiceModules()
     , m_failAlertHandler(this, &AppHost::HandleStartupFailure)
@@ -217,6 +222,8 @@ AppHost::AppHost(
         m_pApp->World().GetRenderingModule(),
         m_messageBus);
 
+    m_pSurverysViewModule = Eegeo_NEW(ExampleApp::Surveys::View::SurveyViewModule)(m_messageBus, *m_pWindowsFlurryMetricsService);
+
     m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_pApp);
     m_inputHandler.AddDelegateInputHandler(m_pAppInputDelegate);
 }
@@ -229,6 +236,9 @@ AppHost::~AppHost()
 
     Eegeo_DELETE m_pAppInputDelegate;
     m_pAppInputDelegate = NULL;
+
+    Eegeo_DELETE m_pSurverysViewModule;
+    m_pSurverysViewModule = NULL;
 
     Eegeo_DELETE m_pApp;
     m_pApp = NULL;
@@ -492,6 +502,13 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_messageBus
         );
 
+    m_pSearchResultSectionViewModule = Eegeo_NEW(ExampleApp::SearchResultSection::View::SearchResultSectionViewModule)(
+        app.SearchMenuModule().GetSearchMenuViewModel(),
+        app.SearchResultSectionModule().GetSearchResultSectionOptionsModel(),
+        app.SearchResultSectionModule().GetSearchResultSectionOrder(),
+        m_messageBus
+        );
+
     // Pop-up layer.
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(
         m_nativeState,
@@ -575,6 +592,8 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
             Eegeo_DELETE m_pSearchResultPoiViewModule;
 
             Eegeo_DELETE m_pModalBackgroundViewModule;
+
+            Eegeo_DELETE m_pSearchResultSectionViewModule;
 
             Eegeo_DELETE m_pSearchMenuViewModule;
 

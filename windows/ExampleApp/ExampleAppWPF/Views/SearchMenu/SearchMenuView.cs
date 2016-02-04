@@ -1,4 +1,5 @@
 ﻿using ExampleApp;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -22,6 +23,9 @@ namespace ExampleAppWPF
         private Grid m_dragTabContainer;
         private bool m_isMouseDown = false;
         private static readonly ResourceDictionary genericResourceDictionary;
+
+        private ListBox m_resultsList;
+        private MenuListAdapter m_resultListAdapter;
 
         static SearchMenuView()
         {
@@ -80,6 +84,9 @@ namespace ExampleAppWPF
 
             m_list = (ListBox)GetTemplateChild("SecondaryMenuItemList");
             m_list.SelectionChanged += SelectionChanged;
+
+            m_resultsList = (ListBox)GetTemplateChild("SearchResultsList");
+            m_resultsList.SelectionChanged += OnResultSelected;
             
             m_dragTabView = (Image)GetTemplateChild("SecondaryMenuDragTabView");
             m_dragTabContainer = (Grid)GetTemplateChild("DragTabParentGrid");
@@ -98,6 +105,12 @@ namespace ExampleAppWPF
             var fadeOutItemStoryboard = ((Storyboard)Template.Resources["FadeOutOldItems"]).Clone();
             
             m_adapter = new MenuListAdapter(false, m_list, fadeInItemStoryboard, fadeOutItemStoryboard);
+            m_resultListAdapter= new MenuListAdapter(false, m_list, fadeInItemStoryboard, fadeOutItemStoryboard);
+        }
+
+        private void OnResultSelected(object sender, SelectionChangedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void OnMouseLeave(object sender, MouseEventArgs e)
@@ -197,9 +210,22 @@ namespace ExampleAppWPF
             Debug.WriteLine("ACTION_MOVE x: {0}, clamp: {1}", newXPx, clampedNormalisedDragState);
         }
 
-        public void SetSearchSection(string[] searchResults)
+        public void SetSearchSection(string category, string[] searchResults)
         {
+            var itemsSource = new List<SearchMenuListItem>();
 
+            foreach (var str in searchResults)
+            {
+                var jObject = JObject.Parse(str);
+                var item = new SearchMenuListItem();
+                item.Name = jObject["name"].Value<string>();
+                item.Details = jObject["details"].Value<string>();
+
+                JToken iconStringToken;
+                var iconString = jObject.TryGetValue("icon", out iconStringToken) ? iconStringToken.Value<string>() : "misc";
+                item.Icon = new System.Windows.Media.Imaging.BitmapImage(ViewHelpers.MakeUriForImage(string.Format("icon1_{0}.png", iconString)));
+                itemsSource.Add(item);
+            }
         }
 
         public override void AnimateToClosedOnScreen()

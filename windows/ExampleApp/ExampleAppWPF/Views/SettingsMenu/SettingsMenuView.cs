@@ -86,7 +86,7 @@ namespace ExampleAppWPF
 
             if (e.AddedItems != null && e.AddedItems.Count > 0)
             {
-                var item = (sender as ListBox).SelectedItem as SettingsMenuListItem;
+                var item = (sender as ListBox).SelectedItem as SearchMenuListItem;
                 (sender as ListBox).SelectedItem = null;
 
                 if (item != null)
@@ -228,12 +228,12 @@ namespace ExampleAppWPF
             
             if (groupToChildrenMap.TryGetValue("Search", out searchData))
             {
-                var itemsSource = new List<SettingsMenuListItem>();
+                var itemsSource = new List<SearchMenuListItem>();
                 var jsonObjects = from json in searchData select JObject.Parse(json);
 
                 foreach (var jsonObject in jsonObjects)
                 {
-                    var item = new SettingsMenuListItem();
+                    var item = new SearchMenuListItem();
                     item.Name = jsonObject["name"].Value<string>();
                     item.Details = jsonObject["details"].Value<string>();
                     

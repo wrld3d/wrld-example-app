@@ -562,6 +562,15 @@
     <Filter Include="Source Files\Windows\SearchMenu\View">
       <UniqueIdentifier>{e6bf7dc6-d21a-4d47-9135-fe81d24f389c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Windows\SearchResultSection">
+      <UniqueIdentifier>{7e52fa66-d30e-473d-89f7-12b05e5c7179}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Windows\Surveys">
+      <UniqueIdentifier>{c46d1c70-0b6a-441e-8544-c72a6814bd68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Windows\Surveys\View">
+      <UniqueIdentifier>{ec67b5d9-eca5-476d-b097-8f595e72abd3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\AppHost.cpp">
@@ -1841,6 +1850,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\SearchMenu\View\SearchMenuCLI.cpp">
       <Filter>Source Files\Windows\SearchMenu\View</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SearchResultSection\View\SearchResultSectionViewModule.cpp">
+      <Filter>Source Files\Windows\SearchResultSection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Surveys\View\SurveyViewModule.cpp">
+      <Filter>Source Files\Windows\Surveys\View</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -4042,6 +4057,18 @@
     </ClInclude>
     <ClInclude Include="..\..\src\SearchMenu\View\SearchMenuViewIncludes.h">
       <Filter>Source Files\Windows\SearchMenu\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SearchResultSection\View\SearchResultSectionViewModule.h">
+      <Filter>Source Files\Windows\SearchResultSection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SearchResultSection\View\ISearchResultSectionViewModule.h">
+      <Filter>Source Files\Windows\SearchResultSection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Surveys\View\SurveyViewModule.h">
+      <Filter>Source Files\Windows\Surveys\View</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Surveys\View\ISurveyViewModule.h">
+      <Filter>Source Files\Windows\Surveys\View</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -44,7 +44,7 @@ namespace ExampleApp
                     searchResultArray[i] = str;
                 }
 
-                mSetSearchSection(searchResultArray);
+                mSetSearchSection(System::String::Empty, searchResultArray);
             }
 
             void SearchMenuView::RemoveSeachKeyboard()
