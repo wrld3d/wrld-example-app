@@ -55,6 +55,7 @@ namespace ExampleAppWPF
             double onScreenState = (currentPosition.X - m_offscreenXPx) / (m_openXPx - m_offscreenXPx);
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
             m_screenWidthPx = mainWindow.MainGrid.ActualWidth;
+            var screenWidthPy = mainWindow.MainGrid.ActualHeight;
 
             double dragTabWidthPx = m_dragTabView.ActualWidth;
 
@@ -76,6 +77,8 @@ namespace ExampleAppWPF
                 
             RenderTransform = new TranslateTransform(layoutX, currentPosition.Y);
             m_isFirstLayout = false;
+
+            m_mainContainer.MaxHeight = screenWidthPy - m_mainContainer.RenderTransform.Transform(new Point(0.0, 0.0)).Y - 50;
         }
 
         public override void OnApplyTemplate()
@@ -226,6 +229,8 @@ namespace ExampleAppWPF
                 item.Icon = new System.Windows.Media.Imaging.BitmapImage(ViewHelpers.MakeUriForImage(string.Format("icon1_{0}.png", iconString)));
                 itemsSource.Add(item);
             }
+
+            m_resultsList.ItemsSource = itemsSource;
         }
 
         public override void AnimateToClosedOnScreen()

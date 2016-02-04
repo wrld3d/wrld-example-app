@@ -26,12 +26,12 @@
                             </ThicknessAnimationUsingKeyFrames>
                         </Storyboard>
                     </ControlTemplate.Resources>
-                    <DockPanel Margin="0,50,0,0" Width="332">
+                    <DockPanel Margin="0,50,0,0" Width="382">
                         <Grid Width="50" Height="50" VerticalAlignment="Top" DockPanel.Dock="Right" Name="DragTabParentGrid" Background="{StaticResource Gold}">
                             <Image Source="/Assets/search_magglass.png" Width="Auto" Height="Auto" Name="SecondaryMenuDragTabView" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </Grid>
 
-                        <Grid Name="SecondaryMenuViewListContainer" DockPanel.Dock="Left" Visibility="Hidden" Height="Auto">
+                        <Grid Name="SecondaryMenuViewListContainer" DockPanel.Dock="Left" Visibility="Hidden">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="50"/>
                                 <RowDefinition Height="6"/>
@@ -46,8 +46,9 @@
                                 <Grid Width="332" Height="6" Background="#002B63" Margin="0, 0, 0, 0"/>
                             </Grid>
                             <Grid Grid.Row="2">
-                                <StackPanel Orientation="Vertical">
-                                    <ScrollViewer PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+                                <StackPanel  Orientation="Vertical">
+                                    <!--<Image Source="/Assets/arrow_3_up.png" Width="12" Height="12" Margin="41,0,0,0" />-->
+                                    <ScrollViewer PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True" MaxHeight="445">
                                         <ListBox Name="SearchResultsList" Template="{StaticResource ListBoxControlTemplateNoPadding}" Background="{StaticResource Transparent}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0">
                                             <ListBox.Resources>
                                                 <Style TargetType="ListBoxItem">
@@ -61,7 +62,7 @@
                                                 </Style>
 
                                                 <DataTemplate DataType="{x:Type local:SearchMenuListItem}">
-                                                    <Grid HorizontalAlignment="Stretch" Height="38" Margin="0,0,0,0">
+                                                    <Grid HorizontalAlignment="Stretch" Height="42" Background="{StaticResource Gold}">
                                                         <Grid.RowDefinitions>
                                                             <RowDefinition Height="*"/>
                                                             <RowDefinition Height="1"/>
@@ -72,15 +73,15 @@
                                                                 <ColumnDefinition Width="*"/>
                                                                 <ColumnDefinition Width="Auto"/> 
                                                             </Grid.ColumnDefinitions>
-                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" >
-                                                                <Image Source="{Binding Path=Icon}" Width="16" Height="16" VerticalAlignment="Center"/>
-                                                                <StackPanel HorizontalAlignment="Stretch">
-                                                                    <TextBlock Text="{Binding Path=Name}" FontSize="16" Foreground="{StaticResource DarkGrey}" MaxWidth="200" FontWeight="Bold" Margin="10,4,0,0" TextTrimming="CharacterEllipsis"/>
-                                                                    <TextBlock Text="{Binding Path=Details}" FontSize="16" Foreground="{StaticResource DarkGrey}" MaxWidth="200" Margin="10,0,0,0" TextTrimming="CharacterEllipsis"/>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" Background="White" Margin="41,0,0,0" >
+                                                                <Image Source="{Binding Path=Icon}" Width="30" Height="30" VerticalAlignment="Center" Margin="6,0,0,0"/>
+                                                                <StackPanel HorizontalAlignment="Stretch" Width="235">
+                                                                    <TextBlock Text="{Binding Path=Name}" FontSize="15" Foreground="{StaticResource DarkGrey}" MaxWidth="{Binding RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}, Path=Width}" FontWeight="Bold" Margin="10,4,0,0" TextTrimming="CharacterEllipsis"/>
+                                                                    <TextBlock Text="{Binding Path=Details}" FontSize="11" Foreground="{StaticResource DarkGrey}" MaxWidth="{Binding RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}, Path=Width}" Margin="10,0,0,0" TextTrimming="CharacterEllipsis"/>
                                                                 </StackPanel>
                                                             </StackPanel>
                                                         </Grid>
-                                                        <Grid Grid.Row="1" Grid.Column="1" Background="{StaticResource MenuSeparator}" Margin="22,0,0,0"/>
+                                                        <Grid Grid.Row="1" Grid.Column="1" Background="{StaticResource Gold}" Margin="42,0,0,0"/>
                                                     </Grid>
                                                 </DataTemplate>
 
@@ -185,8 +186,8 @@
                                                                     <ColumnDefinition Width="*"/>
                                                                     <ColumnDefinition Width="Auto"/>
                                                                 </Grid.ColumnDefinitions>
-                                                                <StackPanel Margin="32,0,20,0" Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" Background="White" Width="243">
-                                                                    <Image Source="{Binding Path=Icon}" Width="26" Height="26" VerticalAlignment="Center"/>
+                                                                <StackPanel Margin="32,0,20,0" Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" Background="White" Width="295">
+                                                                    <Image Source="{Binding Path=Icon}" Width="26" Height="26" VerticalAlignment="Center" Margin="6,0,0,0"/>
                                                                     <Label Content="{Binding Path=Heading}" FontSize="16" Foreground="{StaticResource DarkGrey}" VerticalAlignment="Center"/>
                                                                 </StackPanel>
                                                             </Grid>
