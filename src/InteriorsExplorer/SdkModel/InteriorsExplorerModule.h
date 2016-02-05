@@ -14,6 +14,7 @@
 #include "Metrics.h"
 #include "IIdentity.h"
 #include "VisualMap.h"
+#include "InitialExperience.h"
 
 namespace ExampleApp
 {
@@ -36,6 +37,7 @@ namespace ExampleApp
                                         ExampleAppMessaging::TMessageBus& messageBus,
                                         ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                         Metrics::IMetricsService& metricsService,
+                                        const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel,
                                         const bool interiorsAffectedByFlattening);
 
                 ~InteriorsExplorerModule();

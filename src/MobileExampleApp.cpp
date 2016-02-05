@@ -614,7 +614,14 @@ namespace ExampleApp
         Eegeo::Camera::GlobeCamera::GlobeCameraControllerFactory cameraControllerFactory(m_pWorld->GetTerrainModelModule().GetTerrainHeightProvider(),
                                                                                          mapModule.GetEnvironmentFlatteningService(),
                                                                                          mapModule.GetResourceCeilingProvider());
-        
+
+        Eegeo::Modules::Map::StreamingModule& streamingModule = world.GetStreamingModule();
+        m_pWorldAreaLoaderModule = Eegeo_NEW(WorldAreaLoader::SdkModel::WorldAreaLoaderModule)(streamingModule.GetPrecachingService());
+
+        m_initialExperienceModule.InitialiseWithApplicationModels(m_pWorldAreaLoaderModule->GetWorldAreaLoaderModel(),
+                m_pSearchResultMenuModule->GetMenuViewModel(),
+                m_pSearchResultMenuModule->GetSearchResultMenuViewModel());
+
         m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(interiorsPresentationModule.GetController(),
                                                                                                      interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                      interiorsModelModule.GetInteriorMarkerModelRepository(),
@@ -627,6 +634,7 @@ namespace ExampleApp
                                                                                                      m_messageBus,
                                                                                                      m_sdkDomainEventBus,
                                                                                                      m_metricsService,
+                                                                                                     m_initialExperienceModule.GetInitialExperienceModel(),
                                                                                                      interiorsAffectedByFlattening);
         
         
@@ -698,13 +706,6 @@ namespace ExampleApp
                                  openables,
                                  reactors);
 
-        Eegeo::Modules::Map::StreamingModule& streamingModule = world.GetStreamingModule();
-        m_pWorldAreaLoaderModule = Eegeo_NEW(WorldAreaLoader::SdkModel::WorldAreaLoaderModule)(streamingModule.GetPrecachingService());
-
-        m_initialExperienceModule.InitialiseWithApplicationModels(m_pWorldAreaLoaderModule->GetWorldAreaLoaderModel(),
-                                                                  m_pSearchResultMenuModule->GetMenuViewModel(),
-                                                                  m_pSearchResultMenuModule->GetSearchResultMenuViewModel());
-        
         m_pSecondaryMenuModule->AddMenuSection("Meeting Rooms", m_pSwallowSearchMenuModule->GetMeetingRoomsMenuModel(), false);
         m_pSecondaryMenuModule->AddMenuSection("Working Groups", m_pSwallowSearchMenuModule->GetWorkingGroupsMenuModel(), false);
         m_pSecondaryMenuModule->AddMenuSection("Facilities", m_pSwallowSearchMenuModule->GetFacilitiesMenuModel(), false);

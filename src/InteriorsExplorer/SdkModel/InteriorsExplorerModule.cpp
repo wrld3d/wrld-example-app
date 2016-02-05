@@ -12,6 +12,7 @@
 #include "GlobeCameraControllerConfiguration.h"
 #include "InteriorVisibilityUpdater.h"
 #include "InteriorExplorerUserInteractionModel.h"
+#include "IInitialExperienceModel.h"
 
 namespace ExampleApp
 {
@@ -31,6 +32,7 @@ namespace ExampleApp
                                                              ExampleAppMessaging::TMessageBus& messageBus,
                                                              ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                                              Metrics::IMetricsService& metricsService,
+                                                             const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel,
                                                              const bool interiorsAffectedByFlattening)
             {
                 m_pUserInteractionModel = Eegeo_NEW(InteriorExplorerUserInteractionModel)();
@@ -64,7 +66,8 @@ namespace ExampleApp
                                                                               markerRepository,
                                                                               worldPinsService,
                                                                               *m_pInteriorsCameraController,
-                                                                              messageBus);
+                                                                              messageBus,
+                                                                              initialExperienceModel);
                 
                 m_pModel = Eegeo_NEW(InteriorsExplorerModel)(interiorController,
                                                              interiorSelectionModel,
