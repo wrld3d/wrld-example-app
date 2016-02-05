@@ -27,8 +27,6 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /MP")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS} /NODEFAULTLIB:LIBCMT.lib")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /DDEBUG /GF")
 
-# WX - warnings as errors...
-
 remove_visual_studio_compiler_flag_debug("/RTC1")
 
 set(linker_search_paths
@@ -59,8 +57,26 @@ set(libs
 	psapi
 	)
 
-include_external_msproject(ExampleAppWPF "${CMAKE_SOURCE_DIR}/ExampleApp/ExampleAppWPF/ExampleAppWPF.csproj")
-
 add_library(${executable_name} SHARED ${sources} ${resources})
 add_dotnet_reference(${executable_name} "WindowsBase")
 target_link_libraries(${executable_name} ${libs})
+
+#############################################
+## Add C++ project reference to C# project ##
+#############################################
+set(cs_project_file "${CMAKE_SOURCE_DIR}/ExampleApp/ExampleAppWPF/ExampleAppWPF.csproj")
+set(cs_project_input_file "${CMAKE_SOURCE_DIR}ExampleAppWPF.csproj.in")
+
+# Get C++ project Windows style path relative to C# project
+file(RELATIVE_PATH relative_build_dir "${CMAKE_SOURCE_DIR}/ExampleApp/ExampleAppWPF" ${CMAKE_CURRENT_BINARY_DIR}/ExampleApp.vcxproj)
+string(REPLACE "/" "\\" wpf_relative_path_to_this_project ${relative_build_dir})
+
+# Create input file based off existing C# project
+execute_process(COMMAND cp "${cs_project_file}" ${cs_project_input_file})
+execute_process(COMMAND sed -i "s,<ProjectReference.*>,<ProjectReference Include=\"@CMAKE_EXAMPLEAPP_PROJECT_INCLUDE_PATH@\">,g" ${cs_project_input_file})
+
+# Substitute this C++ project's path into input file and replace C# project
+set(CMAKE_EXAMPLEAPP_PROJECT_INCLUDE_PATH ${wpf_relative_path_to_this_project})
+configure_file(${cs_project_input_file} ${cs_project_file})
+
+include_external_msproject(ExampleAppWPF ${cs_project_file})
