@@ -180,6 +180,10 @@ namespace ExampleApp
 
                 m_animationController.SetExpandedModeEnabled(true);
                 m_animationController.SetFloorParameter(floorParam);
+                
+                const int nearestFloorIndex = static_cast<int>(roundf(floorParam));
+                const Eegeo::Resources::Interiors::InteriorsFloorModel& floorModel = pModel->GetFloorAtIndex(nearestFloorIndex);
+                m_messageBus.Publish(InteriorsExplorerFloorSelectedMessage(nearestFloorIndex, floorModel.GetReadableFloorName()));
             }
 
             void InteriorsExplorerModel::SelectFloor(int floor)
