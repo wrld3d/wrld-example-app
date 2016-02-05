@@ -25,15 +25,15 @@ add_definitions(-D__BYTE_ORDER__ -D__ORDER_LITTLE_ENDIAN__ -D_HAS_EXCEPTIONS=0 -
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4068 /wd4018 /wd4068 /Gd /MP /Yu${precompiled_header} /FI${precompiled_header}")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /MP")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS} /NODEFAULTLIB:LIBCMT.lib")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /DDEBUG")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /DDEBUG /GF")
 
 # WX - warnings as errors...
 
 remove_visual_studio_compiler_flag_debug("/RTC1")
 
 set(linker_search_paths
-	libs/eegeo/prebuilt/${windows_abi_name}/Release
-	libs/eegeo/ANGLE/${windows_abi_name}/Release
+	libs/eegeo/prebuilt/${windows_abi_name}
+	libs/eegeo/ANGLE/${windows_abi_name}
 	libs/eegeo/pthread/${windows_abi_name}
 	"C:/Program\ Files\ (x86)/Microsoft\ SDKs/Windows/v7.1A/Lib/x64" 
 )
