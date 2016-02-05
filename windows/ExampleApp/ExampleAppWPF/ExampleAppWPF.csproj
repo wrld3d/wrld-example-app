@@ -262,7 +262,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ExampleApp\ExampleApp.vcxproj">
+    <ProjectReference Include="..\..\windows_build\ExampleApp.vcxproj">
       <Project>{6483906b-8db8-4f77-8da7-68865f7a9135}</Project>
       <Name>ExampleApp</Name>
     </ProjectReference>

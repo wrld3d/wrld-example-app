@@ -41,11 +41,11 @@ namespace ExampleApp
 
             void SearchResultPoiView::UpdateImage(const std::string& url, bool hasImage, const std::vector<unsigned char>* pImageBytes)
             {
-                array<System::Byte>^ imageDataArray = gcnew array<System::Byte>(pImageBytes->size());
+                array<System::Byte>^ imageDataArray = gcnew array<System::Byte>(static_cast<int>(pImageBytes->size()));
 
                 for (size_t i = 0; i < pImageBytes->size(); ++i)
                 {
-                    imageDataArray[i] = System::Byte(pImageBytes->at(i));
+                    imageDataArray[static_cast<int>(i)] = System::Byte(pImageBytes->at(i));
                 }
 
                 UpdateImageData(gcnew System::String(url.c_str()), hasImage, imageDataArray);

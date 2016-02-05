@@ -61,11 +61,11 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage, WPARAM wparam, LPARAM lparam)
         break;
 
     case WM_KEYDOWN:
-        g_pAppRunner->HandleKeyboardDownEvent(wparam);
+        g_pAppRunner->HandleKeyboardDownEvent(static_cast<char>(wparam));
         break;
 
     case WM_KEYUP:
-        g_pAppRunner->HandleKeyboardUpEvent(wparam);
+        g_pAppRunner->HandleKeyboardUpEvent(static_cast<char>(wparam));
         break;
 
     case WM_MOUSEMOVE:
@@ -226,7 +226,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pScmdline,
         {
             current = std::chrono::steady_clock::now();
             diff = current - end;
-            dt = std::chrono::duration_cast<std::chrono::milliseconds>(diff).count();
+            dt = static_cast<float>(std::chrono::duration_cast<std::chrono::milliseconds>(diff).count());
 
             g_pAppRunner->UpdateNative(dt / 1000.0f);
             g_pAppRunner->UpdateUiViews(dt / 1000.0f);

@@ -14,7 +14,7 @@ namespace ExampleApp
             {
             }
             
-            int IsConnected() const { return m_isConnected; }
+            bool IsConnected() const { return m_isConnected; }
             
         private:
             bool m_isConnected;

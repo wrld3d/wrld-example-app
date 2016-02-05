@@ -52,8 +52,8 @@ void AppRunner::CreateAppHost()
     {
         ExampleApp::Helpers::ImageHelpers::SetDeviceDensity(160);
         const Eegeo::Rendering::ScreenProperties& screenProperties = Eegeo::Rendering::ScreenProperties::Make(
-                    m_displayService.GetDisplayWidth(),
-                    m_displayService.GetDisplayHeight(),
+                    static_cast<float>(m_displayService.GetDisplayWidth()),
+                    static_cast<float>(m_displayService.GetDisplayHeight()),
                     ExampleApp::Helpers::ImageHelpers::GetPixelScale(),
                     m_pNativeState->deviceDpi);
         m_pAppHost = Eegeo_NEW(AppHost)
@@ -118,7 +118,7 @@ void AppRunner::HandleTouchEvent(const Eegeo::Windows::Input::TouchInputEvent& e
 void AppRunner::HandlePanStartEvent(int x, int y)
 {
     Eegeo::Windows::Input::TouchInputEvent panEvent(false, true, 0, Eegeo::Windows::Input::PAN_ACTION_IDENTIFIER);
-    Eegeo::Windows::Input::TouchInputPointerEvent pointerEvent(x, y, 0, 0);
+    Eegeo::Windows::Input::TouchInputPointerEvent pointerEvent(static_cast<float>(x), static_cast<float>(y), 0, 0);
 
     panEvent.pointerEvents.emplace_back(pointerEvent);
 
@@ -128,7 +128,7 @@ void AppRunner::HandlePanStartEvent(int x, int y)
 void AppRunner::HandlePanEndEvent(int x, int y)
 {
     Eegeo::Windows::Input::TouchInputEvent panEvent(true, false, 0, Eegeo::Windows::Input::PAN_ACTION_IDENTIFIER);
-    Eegeo::Windows::Input::TouchInputPointerEvent pointerEvent(x, y, 0, 0);
+    Eegeo::Windows::Input::TouchInputPointerEvent pointerEvent(static_cast<float>(x), static_cast<float>(y), 0, 0);
 
     panEvent.pointerEvents.emplace_back(pointerEvent);
 
@@ -138,7 +138,7 @@ void AppRunner::HandlePanEndEvent(int x, int y)
 void AppRunner::HandleMouseMoveEvent(int x, int y)
 {
     Eegeo::Windows::Input::TouchInputEvent mouseEvent(false, false, 0, 0);
-    Eegeo::Windows::Input::TouchInputPointerEvent pointerEvent(x, y, 0, 0);
+    Eegeo::Windows::Input::TouchInputPointerEvent pointerEvent(static_cast<float>(x), static_cast<float>(y), 0, 0);
 
     mouseEvent.pointerEvents.emplace_back(pointerEvent);
 
@@ -148,7 +148,7 @@ void AppRunner::HandleMouseMoveEvent(int x, int y)
 void AppRunner::HandleRotateStartEvent(int x, int y)
 {
     Eegeo::Windows::Input::TouchInputEvent rotateEvent(false, true, 0, Eegeo::Windows::Input::ROTATE_ACTION_IDENTIFIER);
-    Eegeo::Windows::Input::TouchInputPointerEvent pointerEvent(x, y, 0, 0);
+    Eegeo::Windows::Input::TouchInputPointerEvent pointerEvent(static_cast<float>(x), static_cast<float>(y), 0, 0);
 
     rotateEvent.pointerEvents.emplace_back(pointerEvent);
 
@@ -158,7 +158,7 @@ void AppRunner::HandleRotateStartEvent(int x, int y)
 void AppRunner::HandleRotateEndEvent(int x, int y)
 {
     Eegeo::Windows::Input::TouchInputEvent rotateEvent(true, false, 0, Eegeo::Windows::Input::ROTATE_ACTION_IDENTIFIER);
-	Eegeo::Windows::Input::TouchInputPointerEvent pointerEvent(x, y, 0, 0);
+    Eegeo::Windows::Input::TouchInputPointerEvent pointerEvent(static_cast<float>(x), static_cast<float>(y), 0, 0);
 
 	rotateEvent.pointerEvents.emplace_back(pointerEvent);
 
@@ -171,13 +171,13 @@ void AppRunner::HandleZoomEvent(short scrollWheelDirection, int zoomDistance, in
 
     if (scrollWheelDirection >= 0)
     {
-        Eegeo::Windows::Input::TouchInputPointerEvent pointerEvent(x, y, -zoomDistance, 0);
+        Eegeo::Windows::Input::TouchInputPointerEvent pointerEvent(static_cast<float>(x), static_cast<float>(y), -zoomDistance, 0);
 
         zoomEvent.pointerEvents.emplace_back(pointerEvent);
     }
     else
     {
-        Eegeo::Windows::Input::TouchInputPointerEvent pointerEvent(x, y, zoomDistance, 0);
+        Eegeo::Windows::Input::TouchInputPointerEvent pointerEvent(static_cast<float>(x), static_cast<float>(y), zoomDistance, 0);
 
         zoomEvent.pointerEvents.emplace_back(pointerEvent);
     }
@@ -214,7 +214,7 @@ void AppRunner::HandleKeyboardUpEvent(char keyCode)
 void AppRunner::HandleTiltStart(int x, int y)
 {
     Eegeo::Windows::Input::TouchInputEvent tiltEvent(false, true, 0, Eegeo::Windows::Input::TILT_ACTION_IDENTIFIER);
-    Eegeo::Windows::Input::TouchInputPointerEvent pointerEvent(x, y, 0, 0);
+    Eegeo::Windows::Input::TouchInputPointerEvent pointerEvent(static_cast<float>(x), static_cast<float>(y), 0, 0);
 
     tiltEvent.pointerEvents.emplace_back(pointerEvent);
 
@@ -224,7 +224,7 @@ void AppRunner::HandleTiltStart(int x, int y)
 void AppRunner::HandleTiltEnd(int x, int y)
 {
     Eegeo::Windows::Input::TouchInputEvent tiltEvent(true, false, 0, Eegeo::Windows::Input::TILT_ACTION_IDENTIFIER);
-    Eegeo::Windows::Input::TouchInputPointerEvent pointerEvent(x, y, 0, 0);
+    Eegeo::Windows::Input::TouchInputPointerEvent pointerEvent(static_cast<float>(x), static_cast<float>(y), 0, 0);
 
     tiltEvent.pointerEvents.emplace_back(pointerEvent);
 
@@ -239,8 +239,8 @@ void AppRunner::ActivateSharedSurface()
         
         m_pAppHost->SetSharedSurface(m_displayService.GetSharedSurface());
         const Eegeo::Rendering::ScreenProperties& screenProperties = Eegeo::Rendering::ScreenProperties::Make(
-            m_displayService.GetDisplayWidth(),
-            m_displayService.GetDisplayHeight(),
+            static_cast<float>(m_displayService.GetDisplayWidth()),
+            static_cast<float>(m_displayService.GetDisplayHeight()),
             1.f,
             m_pNativeState->deviceDpi);
         m_pAppHost->NotifyScreenPropertiesChanged(screenProperties);
@@ -292,8 +292,8 @@ bool AppRunner::TryBindDisplay()
         {
             m_pAppHost->SetSharedSurface(m_displayService.GetSharedSurface());
             const Eegeo::Rendering::ScreenProperties& screenProperties = Eegeo::Rendering::ScreenProperties::Make(
-                        m_displayService.GetDisplayWidth(),
-                        m_displayService.GetDisplayHeight(),
+                        static_cast<float>(m_displayService.GetDisplayWidth()),
+                        static_cast<float>(m_displayService.GetDisplayHeight()),
                         ExampleApp::Helpers::ImageHelpers::GetPixelScale(),
                         m_pNativeState->deviceDpi);
             m_pAppHost->NotifyScreenPropertiesChanged(screenProperties);

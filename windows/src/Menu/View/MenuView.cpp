@@ -79,10 +79,10 @@ namespace ExampleApp
                     numItems += section.Size();
                 }
 
-                array<System::String^>^ groupNamesArray = gcnew array<System::String^>(numSections);
-                array<System::Int32>^ groupSizesArray = gcnew array<System::Int32>(numSections);
-                array<System::Boolean>^ groupIsExpandableArray = gcnew array<System::Boolean>(numSections);
-                array<System::String^>^ childNamesArray = gcnew array<System::String^>(numItems);
+                array<System::String^>^ groupNamesArray = gcnew array<System::String^>(static_cast<int>(numSections));
+                array<System::Int32>^ groupSizesArray = gcnew array<System::Int32>(static_cast<int>(numSections));
+                array<System::Boolean>^ groupIsExpandableArray = gcnew array<System::Boolean>(static_cast<int>(numSections));
+                array<System::String^>^ childNamesArray = gcnew array<System::String^>(static_cast<int>(numItems));
 
                 size_t currentChildIndex = 0;
                 for (size_t groupIndex = 0; groupIndex < numSections; groupIndex++)
@@ -90,17 +90,17 @@ namespace ExampleApp
                     const IMenuSectionViewModel& section = *(sections.at(groupIndex));
                     for (size_t childIndex = 0; childIndex < section.Size(); childIndex++)
                     {
-                        int itemIndex = section.IsExpandable() ? childIndex - 1 : childIndex;
+                        int itemIndex = static_cast<int>(section.IsExpandable() ? childIndex - 1 : childIndex);
                         std::string jsonData = section.IsExpandable() && childIndex == 0
                             ? section.SerializeJson()
                             : section.GetItemAtIndex(itemIndex).SerializeJson();
-                        childNamesArray[currentChildIndex] = ConvertUTF8ToManagedString(jsonData);
+                        childNamesArray[static_cast<int>(currentChildIndex)] = ConvertUTF8ToManagedString(jsonData);
                         currentChildIndex++;
                     }
                     
-                    groupNamesArray[groupIndex] = ConvertUTF8ToManagedString(section.Name().c_str());
-                    groupSizesArray[groupIndex] = section.Size();
-                    groupIsExpandableArray[groupIndex] = section.IsExpandable();
+                    groupNamesArray[static_cast<int>(groupIndex)] = ConvertUTF8ToManagedString(section.Name().c_str());
+                    groupSizesArray[static_cast<int>(groupIndex)] = static_cast<System::Int32>(section.Size());
+                    groupIsExpandableArray[static_cast<int>(groupIndex)] = static_cast<System::Boolean>(section.IsExpandable());
                 }
 
                 PopulateData(System::IntPtr(this),
