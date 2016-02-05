@@ -390,7 +390,7 @@ namespace
         if(success)
         {
             NSData* imageData = [NSData dataWithBytes:&bytes->at(0) length:bytes->size()];
-            UIImage *image = [UIImage imageWithData:imageData];
+            UIImage* image = [UIImage imageWithData:imageData];
             [self.pPreviewImage setImage:image];
             
             [self.pPreviewImage.layer removeAllAnimations];
@@ -408,6 +408,7 @@ namespace
 
 - (void) setFullyActive
 {
+    [m_pController setView: self];
     if(self.alpha == 1.f)
     {
         return;
@@ -418,6 +419,7 @@ namespace
 
 - (void) setFullyInactive
 {
+    [m_pController setView: nil];
     if(self.alpha == 0.f)
     {
         return;

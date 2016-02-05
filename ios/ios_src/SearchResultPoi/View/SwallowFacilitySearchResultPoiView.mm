@@ -376,6 +376,7 @@ namespace
 
 - (void) setFullyActive
 {
+    [m_pController setView:self];
     if(self.alpha == 1.f)
     {
         return;
@@ -386,6 +387,7 @@ namespace
 
 - (void) setFullyInactive
 {
+    [m_pController setView:nil];
     if(self.alpha == 0.f)
     {
         return;
