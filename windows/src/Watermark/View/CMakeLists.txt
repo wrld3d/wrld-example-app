@@ -14,4 +14,4 @@ set(currsources
 set_source_files_properties(${currsources} PROPERTIES COMPILE_FLAGS "/clr /EHa /Y-")
 
 set(sources ${sources} ${currsources})
-source_group(\\Watermark\\View FILES ${currsources})
+source_group(\\windows_src\\\\Watermark\\View FILES ${currsources})

@@ -7,6 +7,6 @@ set(currsources
 set_source_files_properties(${currsources} PROPERTIES COMPILE_FLAGS "/clr /EHa /Y-")
 
 set(sources ${sources} ${currsources})
-source_group(\\ModalBackground FILES ${currsources})
+source_group(\\windows_src\\\\ModalBackground FILES ${currsources})
 include(src/ModalBackground/SdkModel/CMakeLists.txt)
 include(src/ModalBackground/View/CMakeLists.txt)

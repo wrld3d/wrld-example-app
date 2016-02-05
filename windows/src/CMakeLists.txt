@@ -20,7 +20,7 @@ set(currsources ${currsources} src/ExampleAppPch.cpp)
 
 set(sources ${sources} ${currsources})
 
-source_group(/ FILES ${currsources})
+source_group(\\windows_src\\ FILES ${currsources})
 include(src/AboutPage/CMakeLists.txt)
 include(src/CLI/CMakeLists.txt)
 include(src/Compass/CMakeLists.txt)

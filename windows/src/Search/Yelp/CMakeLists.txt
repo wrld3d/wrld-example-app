@@ -16,5 +16,5 @@ set(currsources
 set_source_files_properties(${currsources} PROPERTIES COMPILE_FLAGS "/clr /EHa /Y-")
 
 set(sources ${sources} ${currsources})
-source_group(\\Search\\Yelp FILES ${currsources})
+source_group(\\windows_src\\\\Search\\Yelp FILES ${currsources})
 include(src/Search/Yelp/OAuth/CMakeLists.txt)

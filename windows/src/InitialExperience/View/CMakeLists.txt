@@ -13,4 +13,4 @@ set(currsources
 set_source_files_properties(${currsources} PROPERTIES COMPILE_FLAGS "/clr /EHa /Y-")
 
 set(sources ${sources} ${currsources})
-source_group(\\InitialExperience\\View FILES ${currsources})
+source_group(\\windows_src\\\\InitialExperience\\View FILES ${currsources})

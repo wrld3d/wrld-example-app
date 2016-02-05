@@ -17,4 +17,4 @@ set(currsources
 set_source_files_properties(${currsources} PROPERTIES COMPILE_FLAGS "/clr /EHa /Y- /w")
 
 set(sources ${sources} ${currsources})
-source_group(\\Search\\Yelp\\OAuth FILES ${currsources})
+source_group(\\windows_src\\\\Search\\Yelp\\OAuth FILES ${currsources})
