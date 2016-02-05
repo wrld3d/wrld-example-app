@@ -38,9 +38,18 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
-                                <StackPanel Background="{StaticResource Gold}">
-                                    <TextBox Name="SecondaryMenuViewSearchEditTextView" Width="295" Foreground="{StaticResource Black}" Height="38" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="32,6,6,6"/>
-                                </StackPanel>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0">
+                                        <Rectangle Width="Auto" Height="Auto" Fill="{StaticResource Gold}"/>
+                                </Grid>
+                                <Grid Grid.Column="0">
+                                    <Border BorderBrush="White" Background="White" BorderThickness="1,1,1,1" CornerRadius="10" Width="295" Height="38" VerticalAlignment="Center" Margin="32,6,6,6"> 
+                                        <TextBox Name="SecondaryMenuViewSearchEditTextView" Foreground="{StaticResource Black}" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Margin="25,6,6,6"/>
+                                    </Border>
+                                </Grid>
                             </Grid>
                             <Grid Grid.Row="1">
                                 <Grid Width="332" Height="6" Background="#002B63" Margin="0, 0, 0, 0"/>

@@ -12,91 +12,122 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:SettingsMenuView}">
-                    <StackPanel Orientation="Horizontal">
-                        <Grid Width="Auto" Height="Auto" Margin="0,50,0,0">
+                    <ControlTemplate.Resources>
+                        <Storyboard x:Key="FadeInNewItems">
+                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Duration="0:0:0.2" >
+                                <SplineThicknessKeyFrame KeyTime="00:00:00.0" Value="0, -42, 0,0" />
+                                <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="0, 0,0,0" />
+                            </ThicknessAnimationUsingKeyFrames>
+                        </Storyboard>
+                        <Storyboard x:Key="FadeOutOldItems">
+                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Duration="0:0:0.2" >
+                                <SplineThicknessKeyFrame KeyTime="00:00:00.0" Value="0, 0, 0,0" />
+                                <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="0, -42,0,0" />
+                            </ThicknessAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </ControlTemplate.Resources>
+
+                    <DockPanel Margin="0,50,0,0" Width="382">
+                        <Grid Width="50" Height="50" VerticalAlignment="Top" DockPanel.Dock="Left" Name="DragTabParentGrid" Background="{StaticResource Gold}">
+                            <Image Source="/Assets/settings_gear.png" Width="Auto" Height="Auto" Name="SecondaryMenuDragTabView" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        </Grid>
+
+                        <Grid Name="SecondaryMenuViewListContainer" DockPanel.Dock="Right">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="50"/>
+                                <RowDefinition Height="6"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <StackPanel Orientation="Horizontal" Grid.Row="0" Name="SettingsMenuDragTabContainerView">
-
-                                <!--begin include search_results_bar_layout-->
-                                <StackPanel Width="Auto" Height="Auto" Orientation="Horizontal">
-                                    <StackPanel.Background>
-                                        <ImageBrush ImageSource="/Assets/search_results_bar_small.png" Stretch="Fill"/>
-                                    </StackPanel.Background>
-
-                                    <Border BorderBrush="{x:Null}" Height="40" Margin="30,0,0,0">
-                                        <TextBlock Name="SettingsMenuHeaderText" Text="" VerticalAlignment="Center" Width="205" Foreground="{StaticResource Gold}" FontSize="18"/>
-                                    </Border>
-
-                                    <Button Name="SettingsMenuCloseButton" VerticalAlignment="Center" Margin="5,0,10,0" Width="19" Height="19"  FocusVisualStyle="{x:Null}">
-                                        <Button.Style>
-                                            <Style TargetType="Button" BasedOn="{StaticResource TransparentButtonStyle}">
-                                                <Style.Triggers>
-                                                    <Trigger Property="IsPressed" Value="True">
-                                                        <Setter Property="Content">
-                                                            <Setter.Value>
-                                                                <Image Source="/Assets/buttonsmall_close_on.png" />
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                    </Trigger>
-                                                    <Trigger Property="IsPressed" Value="False">
-                                                        <Setter Property="Content">
-                                                            <Setter.Value>
-                                                                <Image Source="/Assets/buttonsmall_close_off.png" />
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                    </Trigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Button.Style>
-                                    </Button>
-                                </StackPanel>
-                                <!--end include search_results_bar_layout-->
-
-                                <Grid Name="SearchResultCount">
-                                    <Grid Width="50" Height="50" VerticalAlignment="Top">
-                                        <Image Source="/Assets/menu_button.png" RenderTransformOrigin="0.5,0.5" Width="50" Height="50" Name="SettingsMenuDragTabView" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            <Image.RenderTransform>
-                                                <ScaleTransform ScaleX="-1"/>
-                                            </Image.RenderTransform>
-                                        </Image>
-                                        <ProgressBar IsHitTestVisible="False" Name="SettingsMenuSpinner" Width="40" Height="40" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{StaticResource Transparent}" IsIndeterminate="True" />
-                                        <Border BorderBrush="{x:Null}" Width="40" Height="40">
-                                            <TextBlock IsHitTestVisible="False" Name="SettingsMenuNumResultsText" FontSize="22" Foreground="{StaticResource White}" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{StaticResource Transparent}"/>
-                                        </Border>
-                                    </Grid>
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0">
+                                    <Rectangle Width="Auto" Height="Auto" Fill="{StaticResource Gold}"/>
                                 </Grid>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Grid Width="332" Height="6" Background="#002B63" Margin="0, 0, 0, 0"/>
+                            </Grid>
+                            <Grid Grid.Row="2">
+                                <StackPanel  Orientation="Vertical">
+                                    <ScrollViewer PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight}">
+                                        <ListBox Name="SecondaryMenuItemList" Template="{StaticResource ListBoxControlTemplateNoPadding}" ItemsSource="{Binding Children}" Background="{StaticResource Transparent}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0">
+                                            <ListBox.Resources>
+                                                <Style TargetType="ListBoxItem">
+                                                    <Style.Resources>
+                                                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
+                                                        <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent"/>
+                                                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
+                                                    </Style.Resources>
+                                                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                                                    <Setter Property="Padding" Value="0"/>
+                                                </Style>
 
-                            </StackPanel>
-
-                            <Grid Name="SettingsMenuViewListContainer" Width="270" Height="Auto" HorizontalAlignment="Left" Grid.Row="1">
-                                <ScrollViewer PanningMode="VerticalOnly" 
-              HorizontalScrollBarVisibility="Disabled"
-              VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="{Binding RelativeSource={RelativeSource FindAncestor, 
-                        AncestorType={x:Type Grid}}, Path=ActualHeight}">
-                                    <ListBox Name="SettingsMenuItemList" Template="{StaticResource ListBoxControlTemplateNoPadding}" Background="{StaticResource Transparent}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0">
-                                        <ListBox.Resources>
-                                            <Style TargetType="ListBoxItem">
-                                                <Style.Resources>
-                                                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
-                                                    <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent"/>
-                                                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
-                                                </Style.Resources>
-                                                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-                                                <Setter Property="Padding" Value="0"/>
-                                            </Style>
-                                        </ListBox.Resources>
-                                    </ListBox>
-                                </ScrollViewer>
+                                                <DataTemplate DataType="{x:Type local:MenuListItem}">
+                                                    <Grid HorizontalAlignment="Stretch" Height="42" Background="{StaticResource Gold}">
+                                                        <Grid.Triggers>
+                                                            <EventTrigger RoutedEvent="MouseDown">
+                                                                <BeginStoryboard>
+                                                                    <Storyboard>
+                                                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Grid.Background).(SolidColorBrush.Color)">
+                                                                            <EasingColorKeyFrame KeyTime="0" Value="#FF8DD8F8" />
+                                                                        </ColorAnimationUsingKeyFrames>
+                                                                    </Storyboard>
+                                                                </BeginStoryboard>
+                                                            </EventTrigger>
+                                                        </Grid.Triggers>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="*"/>
+                                                            <RowDefinition Height="1"/>
+                                                        </Grid.RowDefinitions>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="0">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="22"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" Margin="0,0,41,0">
+                                                                <Label Content="{Binding Path=Heading}" FontSize="22" Foreground="{StaticResource LightGrey}"/>
+                                                            </StackPanel>
+                                                        </Grid>
+                                                        <Grid Grid.Row="1" Grid.Column="1" Background="{StaticResource MenuSeparator}" Margin="0,0,32,0">
+                                                            <Grid.Style>
+                                                                <Style TargetType="{x:Type Grid}">
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding IsExpanded}" Value="false">
+                                                                            <Setter Property="Visibility" Value="Visible">
+                                                                            </Setter>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding IsExpanded}" Value="true">
+                                                                            <Setter Property="Visibility" Value="Hidden">
+                                                                            </Setter>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Grid.Style>
+                                                        </Grid>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ListBox.Resources>
+                                            <ListBox.ItemContainerStyle>
+                                                <Style TargetType="{x:Type ListBoxItem}">
+                                                    <Setter Property="Grid.ZIndex" Value="{Binding ZIndex}" />
+                                                </Style>
+                                            </ListBox.ItemContainerStyle>
+                                        </ListBox>
+                                    </ScrollViewer>
+                                </StackPanel>
                             </Grid>
                         </Grid>
-                    </StackPanel>
-
+                    </DockPanel>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    
+
 </ResourceDictionary>

@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
@@ -14,24 +15,22 @@ namespace ExampleAppWPF
 {
     public class SettingsMenuView : MenuView
     {
-        protected Button m_closeButtonView;
-        protected ProgressBar m_progressSpinner;
-        protected TextBlock m_numResultsText;
-        protected FrameworkElement m_SettingsMenuViewListContainer;
-
-        protected double m_totalHeightPx;
-
-        protected double m_dragStartPosYPx;
-        protected double m_controlStartPosYPx;
-
-        private bool m_inAttractMode = false;
-
-        private Image m_headerCategoryImage;
-        private TextBlock m_headerText;
+        private double m_screenWidthPx;
+        private double m_mainContainerOnScreenWidthPx;
+        private TextBox m_editText;
+        private MenuListAdapter m_adapter;
+        private bool m_isFirstLayout = true;
+        private Grid m_mainContainer;
+        private Grid m_dragTabContainer;
+        private bool m_isMouseDown = false;
+        private static readonly ResourceDictionary genericResourceDictionary;
+        private CustomAppAnimation m_mainContainerAnim;
 
         static SettingsMenuView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SettingsMenuView), new FrameworkPropertyMetadata(typeof(SettingsMenuView)));
+            var uri = new Uri("/ExampleAppWPF;component/Colours.xaml", UriKind.Relative);
+            genericResourceDictionary = (ResourceDictionary)Application.LoadComponent(uri);
         }
 
         public SettingsMenuView(IntPtr nativeCallerPointer) : base(nativeCallerPointer)
@@ -50,35 +49,39 @@ namespace ExampleAppWPF
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            m_SettingsMenuViewListContainer = (FrameworkElement)GetTemplateChild("SettingsMenuViewListContainer");
-            m_list = (ListBox)GetTemplateChild("SettingsMenuItemList");
-            m_list.SelectionChanged += OnItemSelected;
 
-            m_dragTabView = (Image)GetTemplateChild("SettingsMenuDragTabView");
+            m_list = (ListBox)GetTemplateChild("SecondaryMenuItemList");
+            m_list.SelectionChanged += SelectionChanged;
 
-            m_dragTabClickHandler = new ControlClickHandler(m_dragTabView, OnDragTabMouseClick);
+            m_dragTabView = (Image)GetTemplateChild("SecondaryMenuDragTabView");
+            m_dragTabContainer = (Grid)GetTemplateChild("DragTabParentGrid");
 
-            m_dragTabView.MouseLeftButtonDown += OnDragTabMouseLeftButtonDown;
-            m_dragTabView.MouseLeftButtonUp += OnDragTabMouseLeftButtonUp;
+            m_dragTabView.MouseLeftButtonDown += OnMouseLeftButtonDown;
+            m_dragTabView.MouseLeftButtonUp += OnMouseLeftButtonUp;
+            m_dragTabView.MouseLeave += OnMouseLeave;
 
-            m_closeButtonView = (Button)GetTemplateChild("SettingsMenuCloseButton");
-            m_closeButtonView.Click += CloseButtonClicked;
+            m_mainContainer = (Grid)GetTemplateChild("SecondaryMenuViewListContainer");
+            m_mainContainerAnim = new CustomAppAnimation(m_mainContainer as FrameworkElement);
+            m_mainContainer.RenderTransformOrigin = new Point(0.5, 0.5);
 
-            m_progressSpinner = (ProgressBar)GetTemplateChild("SettingsMenuSpinner");
-            m_progressSpinner.Visibility = Visibility.Hidden;
+            m_menuAnimations.Add(m_mainContainerAnim);
 
-            m_numResultsText = (TextBlock)GetTemplateChild("SettingsMenuNumResultsText");
-            m_numResultsText.Visibility = Visibility.Hidden;
+            var fadeInItemStoryboard = ((Storyboard)Template.Resources["FadeInNewItems"]).Clone();
+            var fadeOutItemStoryboard = ((Storyboard)Template.Resources["FadeOutOldItems"]).Clone();
 
-            m_headerText = (TextBlock)GetTemplateChild("SettingsMenuHeaderText");
-
-            //m_headerCategoryImage = (Image)GetTemplateChild("SettingsMenuHeaderCategoryIcon");
+            m_adapter = new MenuListAdapter(false, m_list, fadeInItemStoryboard, fadeOutItemStoryboard);
 
             PerformLayout(null, null);
         }
-        private void OnItemSelected(object sender, SelectionChangedEventArgs e)
+
+        private void OnResultSelected(object sender, SelectionChangedEventArgs e)
         {
-            if (IsAnimating() || IsDragging())
+            //throw new NotImplementedException();
+        }
+
+        private void SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (IsAnimating() || IsDragging() || m_adapter.IsAnimating())
             {
                 (sender as ListBox).SelectedItem = null;
                 return;
@@ -86,73 +89,52 @@ namespace ExampleAppWPF
 
             if (e.AddedItems != null && e.AddedItems.Count > 0)
             {
-                var item = (sender as ListBox).SelectedItem as SearchMenuListItem;
+                MenuListItem item = (sender as ListBox).SelectedItem as MenuListItem;
                 (sender as ListBox).SelectedItem = null;
 
                 if (item != null)
                 {
-                    int position = m_list.Items.IndexOf(item);
-                    MenuViewCLIMethods.SelectedItem(m_nativeCallerPointer, 0, position);
+                    int position = m_adapter.Children.IndexOf(item);
+
+                    int sectionIndex = m_adapter.GetSectionIndex(position);
+                    int childIndex = m_adapter.GetItemIndex(position);
+
+                    MenuViewCLIMethods.SelectedItem(m_nativeCallerPointer, sectionIndex, childIndex);
                 }
             }
         }
 
-        private void CloseButtonClicked(object sender, RoutedEventArgs e)
+        private void OnMouseLeave(object sender, MouseEventArgs e)
         {
-            //SettingsMenuViewCLIMethods.HandleClosed(m_nativeCallerPointer);
+            m_dragTabContainer.Background = (SolidColorBrush)genericResourceDictionary["Gold"];
+            m_isMouseDown = false;
         }
 
-        public void UpdateHeader(string searchText, bool pendingQueryResult, int numResults)
+        private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Dispatcher.Invoke(() =>
+            m_dragTabContainer.Background = (SolidColorBrush)genericResourceDictionary["Highlight"];
+            m_isMouseDown = true;
+        }
+
+        private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (m_isMouseDown)
             {
-                if (pendingQueryResult)
-                {
-                    m_progressSpinner.Visibility = Visibility.Visible;
-                    m_numResultsText.Visibility = Visibility.Hidden;
-                }
-                else
-                {
-                    m_numResultsText.Text = numResults.ToString();
-                    m_numResultsText.Visibility = Visibility.Visible;
-                    m_progressSpinner.Visibility = Visibility.Hidden;
-                }
-
-                if (m_headerCategoryImage != null)
-                {
-                    //m_headerCategoryImage.
-                }
-
-                m_headerText.Text = searchText;
-            });
-        }
-
-        public void SetAttractMode(bool attractModeEnabled)
-        {
-            m_inAttractMode = attractModeEnabled;
-            UpdateAttractMode();
-        }
-
-        private void UpdateAttractMode()
-        {
-            //m_dragTabView.clearAnimation();
-
-            if (m_inAttractMode)
-            {
-
-                var currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
-                var animation = new DoubleAnimation();
-                animation.From = currentPosition.Y;
-                animation.To = currentPosition.Y - 10;
-                animation.Duration = new Duration(TimeSpan.FromMilliseconds(300));
-                animation.EasingFunction = new SineEase();
-                animation.RepeatBehavior = RepeatBehavior.Forever;
-                animation.AutoReverse = true;
-
-                var transform = new TranslateTransform(currentPosition.X, currentPosition.Y);
-                m_dragTabView.RenderTransform = transform;
-                transform.BeginAnimation(TranslateTransform.YProperty, animation);
+                m_dragTabContainer.Background = (SolidColorBrush)genericResourceDictionary["Gold"];
+                MenuViewCLIMethods.ViewClicked(m_nativeCallerPointer);
             }
+        }
+
+        public override void AnimateToClosedOnScreen()
+        {
+            base.AnimateToClosedOnScreen();
+            m_mainContainer.Visibility = Visibility.Hidden;
+        }
+
+        public override void AnimateToOpenOnScreen()
+        {
+            base.AnimateToOpenOnScreen();
+            m_mainContainer.Visibility = Visibility.Visible;
         }
 
 
@@ -161,19 +143,16 @@ namespace ExampleAppWPF
             m_dragInProgress = false;
 
             float minimumXValueToClose = StartedClosed(m_controlStartPosXPx) ? 0.35f : 0.65f;
-            bool close = xPx < (m_totalWidthPx * minimumXValueToClose);
-            double upXPx = close ? m_closedXPx : m_openXPx;
+            bool close = xPx < (m_mainContainerAnim.m_widthHeight.X * minimumXValueToClose);
+            double upXPx = close ? m_mainContainerAnim.m_closedPos.X : m_mainContainerAnim.m_openPos.X;
             Debug.WriteLine("ACTION_UP x: {0}", upXPx);
 
-            AnimateViewToX(upXPx);
+            AnimateViewToX(m_mainContainerAnim, upXPx);
             MenuViewCLIMethods.ViewDragCompleted(m_nativeCallerPointer);
-            UpdateAttractMode();
         }
 
         protected override void HandleDragUpdate(int xPx, int yPx)
         {
-            //m_dragTabView.clearAnimation();
-
             double newXPx = m_controlStartPosXPx + (xPx - m_dragStartPosXPx);
 
             if (newXPx > m_mainContainerOffscreenOffsetXPx)
@@ -181,12 +160,12 @@ namespace ExampleAppWPF
                 newXPx = m_mainContainerOffscreenOffsetXPx;
             }
 
-            if (newXPx < m_closedXPx)
+            if (newXPx < m_mainContainerAnim.m_closedPos.X)
             {
-                newXPx = m_closedXPx;
+                newXPx = m_mainContainerAnim.m_closedPos.X;
             }
 
-            float normalisedDragState = (float)((newXPx + (-m_closedXPx)) / (Math.Abs(m_openXPx - m_closedXPx)));
+            float normalisedDragState = (float)((newXPx + (-m_mainContainerAnim.m_closedPos.X)) / (Math.Abs(m_mainContainerAnim.m_openPos.X - m_mainContainerAnim.m_closedPos.X)));
             float clampedNormalisedDragState = Math.Max(Math.Min(normalisedDragState, 1.0f), 0.0f);
 
             MenuViewCLIMethods.ViewDragInProgress(m_nativeCallerPointer, clampedNormalisedDragState);
@@ -198,52 +177,42 @@ namespace ExampleAppWPF
 
         private void PerformLayout(object sender, SizeChangedEventArgs e)
         {
-            //if (m_dragTabView != null && m_SettingsMenuViewListContainer != null)
-            //{
-                double dragTabWidthPx = m_dragTabView.ActualWidth;
+            var currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
+            double onScreenState = (currentPosition.X - m_mainContainerAnim.m_offscreenPos.X) / (m_mainContainerAnim.m_openPos.X - m_mainContainerAnim.m_offscreenPos.X);
+            MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+            m_screenWidthPx = mainWindow.MainGrid.ActualWidth;
+            var screenWidthPy = mainWindow.MainGrid.ActualHeight;
 
-                var listContainerPosition = m_SettingsMenuViewListContainer.RenderTransform.Transform(new Point(0.0, 0.0));
-                m_mainContainerOffscreenOffsetXPx = -(listContainerPosition.X - m_SettingsMenuViewListContainer.ActualWidth * 0.5);
-                double mainContainerWidthPx = m_SettingsMenuViewListContainer.ActualWidth;
-                double mainContainerOnScreenWidthPx = mainContainerWidthPx;// - m_mainContainerOffscreenOffsetXPx;
+            double dragTabWidthPx = m_dragTabView.ActualWidth;
 
-                MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
-                double windowWidth = mainWindow.ActualWidth;
-                double totalWidth = mainContainerWidthPx + dragTabWidthPx;
+            m_mainContainerOffscreenOffsetXPx = -m_dragTabView.Margin.Right;
+            double mainContainerWidthPx = m_mainContainer.ActualWidth;
+            m_mainContainerOnScreenWidthPx = mainContainerWidthPx - m_mainContainerOffscreenOffsetXPx;
 
-                m_openXPx = 0;
-                m_closedXPx = -mainContainerWidthPx;
-                m_offscreenXPx = m_closedXPx - dragTabWidthPx;
-                m_totalWidthPx = totalWidth;
+            m_mainContainerAnim.m_widthHeight.X = mainContainerWidthPx + dragTabWidthPx;
+            m_mainContainerAnim.m_offscreenPos.X = (m_screenWidthPx / 2) + (m_mainContainerAnim.m_widthHeight.X / 2);
+            m_mainContainerAnim.m_closedPos.X = m_mainContainerAnim.m_offscreenPos.X - ((mainContainerWidthPx + dragTabWidthPx) / 2);
+            m_mainContainerAnim.m_openPos.X = m_mainContainerAnim.m_offscreenPos.X - m_mainContainerAnim.m_widthHeight.X;
 
-                var currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
-                RenderTransform = new TranslateTransform(m_offscreenXPx, 0.0);
-            //}
+            double layoutX = m_mainContainerAnim.m_offscreenPos.X;
+
+            if (!m_isFirstLayout)
+            {
+                layoutX = onScreenState * (m_mainContainerAnim.m_openPos.X - m_mainContainerAnim.m_offscreenPos.X) + m_mainContainerAnim.m_offscreenPos.X;
+            }
+
+            RenderTransform = new TranslateTransform(layoutX, currentPosition.Y);
+            m_isFirstLayout = false;
         }
 
 
         protected override void RefreshListData(List<string> groups, List<bool> groupsExpandable, Dictionary<string, List<string>> groupToChildrenMap)
         {
-            List<string> searchData;
-            
-            if (groupToChildrenMap.TryGetValue("Search", out searchData))
+            m_adapter.SetData(groups, groupsExpandable, groupToChildrenMap);
+
+            if (m_list.DataContext != m_adapter)
             {
-                var itemsSource = new List<SearchMenuListItem>();
-                var jsonObjects = from json in searchData select JObject.Parse(json);
-
-                foreach (var jsonObject in jsonObjects)
-                {
-                    var item = new SearchMenuListItem();
-                    item.Name = jsonObject["name"].Value<string>();
-                    item.Details = jsonObject["details"].Value<string>();
-                    
-                    JToken iconStringToken;
-                    var iconString = jsonObject.TryGetValue("icon", out iconStringToken) ? iconStringToken.Value<string>() : "misc";
-                    item.Icon = new BitmapImage(ViewHelpers.MakeUriForImage(string.Format("icon1_{0}.png", iconString)));
-                    itemsSource.Add(item);
-                }
-
-                m_list.ItemsSource = itemsSource;
+                m_list.DataContext = m_adapter;
             }
         }
     }

@@ -23,6 +23,7 @@ namespace ExampleAppWPF
         private Grid m_dragTabContainer;
         private bool m_isMouseDown = false;
         private static readonly ResourceDictionary genericResourceDictionary;
+        private CustomAppAnimation m_mainContainerAnim;
 
         private ListBox m_resultsList;
         private MenuListAdapter m_resultListAdapter;
@@ -52,7 +53,7 @@ namespace ExampleAppWPF
         private void PerformLayout(object sender, SizeChangedEventArgs e)
         {
             var currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
-            double onScreenState = (currentPosition.X - m_offscreenXPx) / (m_openXPx - m_offscreenXPx);
+            double onScreenState = (currentPosition.X - m_mainContainerAnim.m_offscreenPos.X) / (m_mainContainerAnim.m_openPos.X - m_mainContainerAnim.m_offscreenPos.X);
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
             m_screenWidthPx = mainWindow.MainGrid.ActualWidth;
             var screenWidthPy = mainWindow.MainGrid.ActualHeight;
@@ -63,16 +64,16 @@ namespace ExampleAppWPF
             double mainContainerWidthPx = m_mainContainer.ActualWidth;
             m_mainContainerOnScreenWidthPx = mainContainerWidthPx - m_mainContainerOffscreenOffsetXPx;
 
-            m_totalWidthPx = mainContainerWidthPx + dragTabWidthPx;
-            m_offscreenXPx = -(m_screenWidthPx / 2) - (m_totalWidthPx / 2);
-            m_closedXPx = m_offscreenXPx + ((mainContainerWidthPx + dragTabWidthPx) / 2);
-            m_openXPx = m_offscreenXPx + m_totalWidthPx;
+            m_mainContainerAnim.m_widthHeight.X = mainContainerWidthPx + dragTabWidthPx;
+            m_mainContainerAnim.m_offscreenPos.X = -(m_screenWidthPx / 2) - (m_mainContainerAnim.m_widthHeight.X / 2);
+            m_mainContainerAnim.m_closedPos.X = m_mainContainerAnim.m_offscreenPos.X + ((mainContainerWidthPx + dragTabWidthPx) / 2);
+            m_mainContainerAnim.m_openPos.X = m_mainContainerAnim.m_offscreenPos.X + m_mainContainerAnim.m_widthHeight.X;
 
-            double layoutX = m_offscreenXPx;
+            double layoutX = m_mainContainerAnim.m_offscreenPos.X;
 
             if (!m_isFirstLayout)
             {
-                layoutX = onScreenState * (m_openXPx - m_offscreenXPx) + m_offscreenXPx;                
+                layoutX = onScreenState * (m_mainContainerAnim.m_openPos.X - m_mainContainerAnim.m_offscreenPos.X) + m_mainContainerAnim.m_offscreenPos.X;                
             }
                 
             RenderTransform = new TranslateTransform(layoutX, currentPosition.Y);
@@ -99,10 +100,12 @@ namespace ExampleAppWPF
             m_dragTabView.MouseLeave += OnMouseLeave;
 
             m_editText = (TextBox)GetTemplateChild("SecondaryMenuViewSearchEditTextView");
-            m_editText = (TextBox)GetTemplateChild("SecondaryMenuViewSearchEditTextView");
             m_editText.KeyDown += OnKeyDown;
 
             m_mainContainer = (Grid)GetTemplateChild("SecondaryMenuViewListContainer");
+            m_mainContainerAnim = new CustomAppAnimation(m_mainContainer as FrameworkElement);
+
+            m_menuAnimations.Add(m_mainContainerAnim);
 
             var fadeInItemStoryboard = ((Storyboard)Template.Resources["FadeInNewItems"]).Clone();
             var fadeOutItemStoryboard = ((Storyboard)Template.Resources["FadeOutOldItems"]).Clone();
@@ -182,10 +185,10 @@ namespace ExampleAppWPF
             double xRatioForStateChange = StartedClosed(m_controlStartPosXPx) ? 0.35f : 0.65f;
             double threshold = (m_screenWidthPx - (m_mainContainerOnScreenWidthPx * xRatioForStateChange));
             bool open = xPx < threshold;
-            double upXPx = (open ? m_openXPx : m_closedXPx);
+            double upXPx = (open ? m_mainContainerAnim.m_openPos.X : m_mainContainerAnim.m_closedPos.X);
             Debug.WriteLine("ACTION_UP  x: {0}", upXPx);
 
-            AnimateViewToX(upXPx);
+            AnimateViewToX(m_mainContainerAnim, upXPx);
             MenuViewCLIMethods.ViewDragCompleted(m_nativeCallerPointer);
         }
 
@@ -193,17 +196,17 @@ namespace ExampleAppWPF
         {
             double newXPx = m_controlStartPosXPx + (xPx - m_dragStartPosXPx);
 
-            if (newXPx < (m_screenWidthPx - m_totalWidthPx))
+            if (newXPx < (m_screenWidthPx - m_mainContainerAnim.m_widthHeight.X))
             {
-                newXPx = m_screenWidthPx - m_totalWidthPx;
+                newXPx = m_screenWidthPx - m_mainContainerAnim.m_widthHeight.X;
             }
 
-            if (newXPx > m_closedXPx)
+            if (newXPx > m_mainContainerAnim.m_closedPos.X)
             {
-                newXPx = m_closedXPx;
+                newXPx = m_mainContainerAnim.m_closedPos.X;
             }
 
-            double normalisedDragState = Math.Abs(newXPx + (-m_closedXPx)) / (Math.Abs(m_openXPx - m_closedXPx));
+            double normalisedDragState = Math.Abs(newXPx + (-m_mainContainerAnim.m_closedPos.X)) / (Math.Abs(m_mainContainerAnim.m_openPos.X - m_mainContainerAnim.m_closedPos.X));
             float clampedNormalisedDragState = Math.Max(Math.Min((float)normalisedDragState, 1.0f), 0.0f);
 
             MenuViewCLIMethods.ViewDragInProgress(m_nativeCallerPointer, clampedNormalisedDragState);
@@ -262,7 +265,7 @@ namespace ExampleAppWPF
 
         public void SetEditText(string text, bool isCategory)
         {
-
+            m_editText.Text = text;
         }
 
         public void SetSearchResultCount(int count)
