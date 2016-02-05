@@ -527,6 +527,9 @@
     <Resource Include="..\..\Resources\search_magglass.png">
       <Link>Assets\search_magglass.png</Link>
     </Resource>
+	<Resource Include="..\..\Resources\button_exit_interior_on.png">
+      <Link>Assets\button_exit_interior_on.png</Link>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
