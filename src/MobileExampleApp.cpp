@@ -544,6 +544,15 @@ namespace ExampleApp
                                                                                          mapModule.GetEnvironmentFlatteningService(),
                                                                                          mapModule.GetResourceCeilingProvider());
         
+        Eegeo::Modules::Map::StreamingModule& streamingModule = world.GetStreamingModule();
+        m_pWorldAreaLoaderModule = Eegeo_NEW(WorldAreaLoader::SdkModel::WorldAreaLoaderModule)(streamingModule.GetPrecachingService());
+        
+        m_initialExperienceModule.InitialiseWithApplicationModels(m_pWorldAreaLoaderModule->GetWorldAreaLoaderModel(),
+                                                                  m_pSearchResultMenuModule->GetMenuViewModel(),
+                                                                  m_pSearchResultMenuModule->GetSearchResultMenuViewModel());
+        
+        const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel = m_initialExperienceModule.GetInitialExperienceModel();
+        
         m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(interiorsPresentationModule.GetController(),
                                                                                                      interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                      interiorsModelModule.GetInteriorMarkerModelRepository(),
@@ -556,6 +565,7 @@ namespace ExampleApp
                                                                                                      m_messageBus,
                                                                                                      m_sdkDomainEventBus,
                                                                                                      m_metricsService,
+                                                                                                     initialExperienceModel,
                                                                                                      interiorsAffectedByFlattening);
         
         InitialiseToursModules(mapModule, world, interiorsAffectedByFlattening);
@@ -579,13 +589,6 @@ namespace ExampleApp
         m_pReactionModelModule = Eegeo_NEW(Reaction::View::ReactionModelModule)(m_pReactionControllerModule->GetReactionControllerModel(),
                                  openables,
                                  reactors);
-
-        Eegeo::Modules::Map::StreamingModule& streamingModule = world.GetStreamingModule();
-        m_pWorldAreaLoaderModule = Eegeo_NEW(WorldAreaLoader::SdkModel::WorldAreaLoaderModule)(streamingModule.GetPrecachingService());
-
-        m_initialExperienceModule.InitialiseWithApplicationModels(m_pWorldAreaLoaderModule->GetWorldAreaLoaderModel(),
-                                                                  m_pSearchResultMenuModule->GetMenuViewModel(),
-                                                                  m_pSearchResultMenuModule->GetSearchResultMenuViewModel());
         
         m_pSecondaryMenuModule->AddMenuSection("Search", m_pCategorySearchModule->GetCategorySearchMenuModel(), true);
         m_pSecondaryMenuModule->AddMenuSection("Weather" , m_pWeatherMenuModule->GetWeatherMenuModel(), true);

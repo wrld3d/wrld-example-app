@@ -9,6 +9,7 @@
 #include <map>
 #include <string>
 #include "BidirectionalBus.h"
+#include "InitialExperience.h"
 
 namespace ExampleApp
 {
@@ -24,12 +25,15 @@ namespace ExampleApp
                                            Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
                                            WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                            InteriorsExplorerCameraController& cameraController,
-                                           ExampleAppMessaging::TMessageBus& messageBus);
+                                           ExampleAppMessaging::TMessageBus& messageBus,
+                                           const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel);
                 ~InteriorWorldPinController();
                 
                 const bool PinInteractionAllowed(const std::string& interiorId) const;
                 
                 void Update(float dt);
+                
+                void SetInitialExperienceComplete();
                 
             private:
                 
@@ -40,6 +44,7 @@ namespace ExampleApp
                 std::map<std::string, WorldPins::SdkModel::WorldPinItemModel*> m_interiorIdToWorldPinMap;
                 std::map<std::string, WorldPins::SdkModel::WorldPinItemModel*> m_deferedRemovalMap;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
+                const InitialExperience::SdkModel::IInitialExperienceModel& m_initialExperienceModel;
                 bool m_menuIsDragging;
                 
                 Eegeo::Helpers::TCallback1<InteriorWorldPinController, const Eegeo::Resources::Interiors::Markers::InteriorMarkerModel&> m_markerAddedCallback;
