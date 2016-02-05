@@ -81,7 +81,7 @@ namespace ExampleAppWPF
 
         private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (IsAnimating() || IsDragging() || m_adapter.IsAnimating())
+            if (IsAnimating() || m_adapter.IsAnimating())
             {
                 (sender as ListBox).SelectedItem = null;
                 return;
@@ -135,44 +135,6 @@ namespace ExampleAppWPF
         {
             base.AnimateToOpenOnScreen();
             m_mainContainer.Visibility = Visibility.Visible;
-        }
-
-
-        protected override void HandleDragFinish(int xPx, int yPx)
-        {
-            m_dragInProgress = false;
-
-            float minimumXValueToClose = StartedClosed(m_controlStartPosXPx) ? 0.35f : 0.65f;
-            bool close = xPx < (m_mainContainerAnim.m_widthHeight.X * minimumXValueToClose);
-            double upXPx = close ? m_mainContainerAnim.m_closedPos.X : m_mainContainerAnim.m_openPos.X;
-            Debug.WriteLine("ACTION_UP x: {0}", upXPx);
-
-            AnimateViewToX(m_mainContainerAnim, upXPx);
-            MenuViewCLIMethods.ViewDragCompleted(m_nativeCallerPointer);
-        }
-
-        protected override void HandleDragUpdate(int xPx, int yPx)
-        {
-            double newXPx = m_controlStartPosXPx + (xPx - m_dragStartPosXPx);
-
-            if (newXPx > m_mainContainerOffscreenOffsetXPx)
-            {
-                newXPx = m_mainContainerOffscreenOffsetXPx;
-            }
-
-            if (newXPx < m_mainContainerAnim.m_closedPos.X)
-            {
-                newXPx = m_mainContainerAnim.m_closedPos.X;
-            }
-
-            float normalisedDragState = (float)((newXPx + (-m_mainContainerAnim.m_closedPos.X)) / (Math.Abs(m_mainContainerAnim.m_openPos.X - m_mainContainerAnim.m_closedPos.X)));
-            float clampedNormalisedDragState = Math.Max(Math.Min(normalisedDragState, 1.0f), 0.0f);
-
-            MenuViewCLIMethods.ViewDragInProgress(m_nativeCallerPointer, clampedNormalisedDragState);
-
-            var currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
-            RenderTransform = new TranslateTransform(newXPx, currentPosition.Y);
-            Debug.WriteLine("ACTION_MOVE x: {0}, clamp: {1}", newXPx, clampedNormalisedDragState);
         }
 
         private void PerformLayout(object sender, SizeChangedEventArgs e)

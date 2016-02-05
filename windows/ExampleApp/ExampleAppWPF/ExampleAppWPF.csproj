@@ -472,8 +472,8 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="..\..\Resources\yelp_reviews.gif">
-      <Link>Assets\yelp_reviews.gif</Link>
+    <Resource Include="..\..\Resources\yelp_reviews.png">
+      <Link>Assets\yelp_reviews.png</Link>
     </Resource>
   </ItemGroup>
   <ItemGroup>

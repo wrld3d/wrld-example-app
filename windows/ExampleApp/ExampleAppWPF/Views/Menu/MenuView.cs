@@ -16,7 +16,6 @@ namespace ExampleAppWPF
 
         protected ListBox m_list = null;
         protected Image m_dragTabView;
-        protected bool m_dragInProgress = false;
         protected bool m_loggingEnabled = false;
 
         protected IntPtr m_nativeCallerPointer;
@@ -26,16 +25,12 @@ namespace ExampleAppWPF
 
         protected double m_mainContainerOffscreenOffsetXPx;
 
-        protected double m_dragStartPosXPx;
         protected double m_controlStartPosXPx;
 
         protected double m_touchAnchorXPx;
         protected double m_touchAnchorYPx;
 
         protected double m_dragThresholdPx;
-
-        protected bool m_dragAnchorSet = false;
-        protected bool m_canBeginDrag = false;
 
         protected bool m_isFirstAnimationCeremony = true;
 
@@ -87,7 +82,6 @@ namespace ExampleAppWPF
 
         public void Destroy()
         {
-            //m_mainWindow.SizeChanged -= PerformLayout;
             m_mainWindow.MainGrid.Children.Remove(this);
         }
 
@@ -103,83 +97,6 @@ namespace ExampleAppWPF
 
             return false;
         }
-
-        public bool IsDragging()
-        {
-            return m_dragInProgress;
-        }
-        protected void MenuView_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (IsAnimating() || !CanInteract())
-            {
-                m_dragAnchorSet = false;
-                return;
-            }
-
-            if (!m_canBeginDrag)
-            {
-                if(e.LeftButton == MouseButtonState.Released)
-                {
-                    // Click event, don't start drag
-                    return;
-                }
-
-                m_canBeginDrag = MenuViewCLIMethods.TryBeginDrag(m_nativeCallerPointer);
-            }
-
-            var mousePosition = e.GetPosition(m_mainWindow.MainGrid);
-            int xPx = (int)(mousePosition.X);
-            int yPx = (int)(mousePosition.Y);
-
-            // :TODO: need to re-write this across multiple events
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                m_touchAnchorXPx = xPx;
-                m_touchAnchorYPx = yPx;
-                m_dragAnchorSet = true;
-            }
-            else if (e.LeftButton == MouseButtonState.Released)
-            {
-                m_canBeginDrag = false;
-                if (m_dragInProgress)
-                {
-                    HandleDragFinish(xPx, yPx);
-                }
-                else if (m_dragAnchorSet)
-                {
-                    RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-                }
-                m_dragAnchorSet = false;
-            }
-            else
-            {
-                if (m_dragInProgress)
-                {
-                    HandleDragUpdate(xPx, yPx);
-                }
-                else if (m_canBeginDrag && m_dragAnchorSet)
-                {
-                    double mag = Math.Sqrt((m_touchAnchorXPx - xPx) * (m_touchAnchorXPx - xPx) + (m_touchAnchorYPx - yPx) * (m_touchAnchorYPx - yPx));
-
-                    if (mag >= m_dragThresholdPx)
-                    {
-                        HandleDragStart(xPx, yPx);
-                    }
-                }
-            }
-        }
-
-        protected void HandleDragStart(int xPx, int yPx)
-        {
-            m_dragInProgress = true;
-            m_dragStartPosXPx = xPx;
-            Debug.WriteLine("ACTION_DOWN x: {0}", xPx);
-
-            MenuViewCLIMethods.ViewDragStarted(m_nativeCallerPointer);
-        }
-
-        protected abstract void HandleDragUpdate(int xPx, int yPx);
-        protected abstract void HandleDragFinish(int xPx, int yPx);
 
         public void UpdateAnimation(float deltaSeconds)
         {
@@ -212,14 +129,14 @@ namespace ExampleAppWPF
                     done = true;
                 }
 
-                AnimateToCurrentPos(false);
+                AnimateToCurrentPos(anim, false);
 
                 if (done)
                 {
                     anim.m_animationCurrentPos.X = anim.m_animationEndPos.X;
                     anim.m_animationCurrentPos.Y = anim.m_animationEndPos.Y;
 
-                    AnimateToCurrentPos(false);
+                    AnimateToCurrentPos(anim, false);
 
                     Debug.WriteLine("animation complete", "(" + anim.m_animationCurrentPos.X + "," + anim.m_animationCurrentPos.Y + ")");
 
@@ -235,7 +152,7 @@ namespace ExampleAppWPF
                     }
                     else if(open)
                     {
-                        AnimateToCurrentPos(true);
+                        AnimateToCurrentPos(anim, true);
                         isOpen = true;
                     }
 
@@ -255,13 +172,10 @@ namespace ExampleAppWPF
             }
         }
 
-        void AnimateToCurrentPos(bool animationCompleteAndOpen)
+        void AnimateToCurrentPos(CustomAppAnimation anim, bool animationCompleteAndOpen)
         {
-            foreach (var anim in m_menuAnimations)
-            {
-                SetViewX(anim.m_animationCurrentPos.X);
-                SetViewY(anim.m_animationCurrentPos.Y); 
-            }
+            SetViewX(anim.m_animationCurrentPos.X);
+            SetViewY(anim.m_animationCurrentPos.Y);
 
             m_list.IsHitTestVisible = animationCompleteAndOpen;
         }
@@ -295,7 +209,7 @@ namespace ExampleAppWPF
         {
             foreach (var anim in m_menuAnimations)
             {
-                bool shouldRunAnimationBasedOnCurrentViewLocation = (!m_dragInProgress && ViewXPx(anim) != anim.m_closedPos.X);
+                bool shouldRunAnimationBasedOnCurrentViewLocation = (ViewXPx(anim) != anim.m_closedPos.X);
 
                 if (shouldRunAnimationBasedOnCurrentViewLocation || (anim.m_animating && anim.m_animationEndPos.X != anim.m_closedPos.X))
                 {
@@ -310,7 +224,7 @@ namespace ExampleAppWPF
         {
             foreach (var anim in m_menuAnimations)
             {
-                bool shouldRunAnimationBasedOnCurrentViewLocation = (!m_dragInProgress && ViewXPx(anim) != anim.m_openPos.X);
+                bool shouldRunAnimationBasedOnCurrentViewLocation = (ViewXPx(anim) != anim.m_openPos.X);
 
                 if (shouldRunAnimationBasedOnCurrentViewLocation || (anim.m_animating && anim.m_animationEndPos.X != anim.m_openPos.X))
                 {
@@ -327,7 +241,7 @@ namespace ExampleAppWPF
             {
                 foreach (var anim in m_menuAnimations)
                 {
-                    bool shouldRunAnimationBasedOnCurrentViewLocation = (!m_dragInProgress && ViewXPx(anim) != anim.m_offscreenPos.X);
+                    bool shouldRunAnimationBasedOnCurrentViewLocation = (ViewXPx(anim) != anim.m_offscreenPos.X);
 
                     if (shouldRunAnimationBasedOnCurrentViewLocation || (anim.m_animating && anim.m_animationEndPos.X != anim.m_offscreenPos.X))
                     {
@@ -351,7 +265,7 @@ namespace ExampleAppWPF
                 double viewXPx = ViewXPx(anim);
                 double newXPx = anim.m_offscreenPos.X + (((anim.m_closedPos.X - anim.m_offscreenPos.X) * onScreenState) + 0.5);
 
-                if (!m_dragInProgress && viewXPx != newXPx)
+                if (viewXPx != newXPx)
                 {
                     Debug.WriteLine("AnimateToIntermediateOnScreenState x: {0}", newXPx);
                     SetViewX(newXPx);
@@ -370,7 +284,7 @@ namespace ExampleAppWPF
             {
                 double newXPx = anim.m_closedPos.X + (((anim.m_openPos.X - anim.m_closedPos.X) * openState) + 0.5);
 
-                if (!m_dragInProgress && ViewXPx(anim) != newXPx)
+                if (ViewXPx(anim) != newXPx)
                 {
                     Debug.WriteLine("AnimateToIntermediateOpenState x: {0}", newXPx);
                     SetViewX(newXPx);
@@ -495,7 +409,7 @@ namespace ExampleAppWPF
 
         protected bool CanInteract()
         {
-            return m_dragInProgress || IsClosed() || IsOpen();
+            return IsClosed() || IsOpen();
         }
 
         protected bool IsClosed()

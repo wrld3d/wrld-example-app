@@ -44,6 +44,7 @@ namespace ExampleAppWPF
             m_containerAnimationCurrentPos = new Point();
 
             m_uiElement = uiElement;
+            m_uiElement.RenderTransformOrigin = new Point(0.0, 0.0);
         }
     }
 }

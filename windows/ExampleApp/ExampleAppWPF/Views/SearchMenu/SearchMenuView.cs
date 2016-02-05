@@ -142,7 +142,7 @@ namespace ExampleAppWPF
 
         private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (IsAnimating() || IsDragging() || m_adapter.IsAnimating())
+            if (IsAnimating() || m_adapter.IsAnimating())
             {
                 (sender as ListBox).SelectedItem = null;
                 return;
@@ -176,44 +176,6 @@ namespace ExampleAppWPF
                     SearchMenuViewCLIMethods.PerformedSearchQuery(m_nativeCallerPointer, queryText);
                 }
             }
-        }
-
-        protected override void HandleDragFinish(int xPx, int yPx)
-        {
-            m_dragInProgress = false;
-
-            double xRatioForStateChange = StartedClosed(m_controlStartPosXPx) ? 0.35f : 0.65f;
-            double threshold = (m_screenWidthPx - (m_mainContainerOnScreenWidthPx * xRatioForStateChange));
-            bool open = xPx < threshold;
-            double upXPx = (open ? m_mainContainerAnim.m_openPos.X : m_mainContainerAnim.m_closedPos.X);
-            Debug.WriteLine("ACTION_UP  x: {0}", upXPx);
-
-            AnimateViewToX(m_mainContainerAnim, upXPx);
-            MenuViewCLIMethods.ViewDragCompleted(m_nativeCallerPointer);
-        }
-
-        protected override void HandleDragUpdate(int xPx, int yPx)
-        {
-            double newXPx = m_controlStartPosXPx + (xPx - m_dragStartPosXPx);
-
-            if (newXPx < (m_screenWidthPx - m_mainContainerAnim.m_widthHeight.X))
-            {
-                newXPx = m_screenWidthPx - m_mainContainerAnim.m_widthHeight.X;
-            }
-
-            if (newXPx > m_mainContainerAnim.m_closedPos.X)
-            {
-                newXPx = m_mainContainerAnim.m_closedPos.X;
-            }
-
-            double normalisedDragState = Math.Abs(newXPx + (-m_mainContainerAnim.m_closedPos.X)) / (Math.Abs(m_mainContainerAnim.m_openPos.X - m_mainContainerAnim.m_closedPos.X));
-            float clampedNormalisedDragState = Math.Max(Math.Min((float)normalisedDragState, 1.0f), 0.0f);
-
-            MenuViewCLIMethods.ViewDragInProgress(m_nativeCallerPointer, clampedNormalisedDragState);
-
-            var currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
-            RenderTransform = new TranslateTransform(newXPx, currentPosition.Y);
-            Debug.WriteLine("ACTION_MOVE x: {0}, clamp: {1}", newXPx, clampedNormalisedDragState);
         }
 
         public void SetSearchSection(string category, string[] searchResults)

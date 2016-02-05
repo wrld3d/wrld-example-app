@@ -44,7 +44,7 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid Grid.Column="0">
-                                    <Rectangle Width="Auto" Height="Auto" Fill="{StaticResource Gold}"/>
+                                    <Rectangle Width="332" Height="50" Fill="{StaticResource Gold}"/>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="1">
