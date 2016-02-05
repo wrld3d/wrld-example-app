@@ -12,7 +12,9 @@ usage()
 	exit 1; 
 }
 
-projectPath=$(pwd)/./
+projectPath=$(pwd)/windows/WinBuild/
+rm -rf $projectPath
+mkdir $projectPath
 
 while getopts "p:k:n:v:i:" o; do
     case "${o}" in
@@ -70,6 +72,11 @@ fi
 if [ ! -f windows/nuget.exe ]; then
 	curl -o windows/nuget.exe https://api.nuget.org/downloads/nuget.exe
 fi
+
+pushd $projectPath
+cmake -G "Visual Studio 14 Win64" ..
+popd
+
 cmd //C windows\\build.bat
 resultcode=$?
 
