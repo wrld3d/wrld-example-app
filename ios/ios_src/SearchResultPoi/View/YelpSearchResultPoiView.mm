@@ -633,6 +633,7 @@ const int DeletePinAlertViewTag = 2;
 
 - (void) setFullyActive
 {
+    [m_pController setView:self];
     if(self.alpha == 1.f)
     {
         return;
@@ -643,6 +644,7 @@ const int DeletePinAlertViewTag = 2;
 
 - (void) setFullyInactive
 {
+    [m_pController setView:nil];
     if(self.alpha == 0.f)
     {
         return;
