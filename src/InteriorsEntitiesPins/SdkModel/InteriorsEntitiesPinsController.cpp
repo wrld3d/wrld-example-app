@@ -14,6 +14,7 @@
 #include "IInteriorsLabelController.h"
 #include "InteriorsFloorModel.h"
 #include "TerrainHeightProvider.h"
+#include "InteriorViewModel.h"
 
 namespace ExampleApp
 {
@@ -179,11 +180,13 @@ namespace ExampleApp
                 Eegeo_ASSERT(m_interiorController.TryGetCurrentFloorModel(pFloorModel), "Failed to fetch current floor");
                 int currentFloorNumber = pFloorModel->GetFloorNumber();
                 
+                const bool canShowPins = m_interiorController.GetViewModel().GetShowLabels();
+                
                 for (std::map<int, float>::iterator it = m_floorToScaleMap.begin(); it != m_floorToScaleMap.end(); ++it)
                 {
                     const int floorNumber = it->first;
                     float scale = it->second;
-                    float scaleDelta = floorNumber == currentFloorNumber && m_interiorViewState != Exiting ? t : -t;
+                    float scaleDelta = floorNumber == currentFloorNumber && m_interiorViewState != Exiting && canShowPins ? t : -t;
                     
                     scale += scaleDelta;
                     m_floorToScaleMap[floorNumber] = Eegeo::Math::Clamp01(scale);

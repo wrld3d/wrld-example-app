@@ -12,6 +12,7 @@
 #include "WorldPinsVisibilityMessage.h"
 #include "InteriorController.h"
 #include "WorldPinVisibility.h"
+#include "InteriorViewModel.h"
 
 namespace ExampleApp
 {
@@ -94,6 +95,7 @@ namespace ExampleApp
                                                          const Eegeo::Camera::RenderCamera& renderCamera)
             {
                 const bool showingInterior = m_interiorController.InteriorIsVisible();
+                const bool canShowInteriorPins = m_interiorController.GetViewModel().GetShowLabels();
                 
                 if((m_visibilityMask & worldPinItemModel.VisibilityMask()) == 0)
                 {
@@ -116,7 +118,7 @@ namespace ExampleApp
                     //hide if building and floor of pin not showing
                     const Eegeo::Resources::Interiors::InteriorsModel* pInteriorModel = NULL;
 
-                    hidePinFromInteriorData = !(worldPinItemModel.GetInteriorData().floor == m_interiorController.GetCurrentFloorIndex() &&
+                    hidePinFromInteriorData = !canShowInteriorPins || !(worldPinItemModel.GetInteriorData().floor == m_interiorController.GetCurrentFloorIndex() &&
                              m_interiorController.TryGetCurrentModel(pInteriorModel) &&
                              worldPinItemModel.GetInteriorData().building == pInteriorModel->GetId());
                 }
