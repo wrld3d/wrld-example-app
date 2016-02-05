@@ -5,6 +5,7 @@
 #include "InteriorsExplorerStateChangedMessage.h"
 #include "InteriorsExplorerFloorSelectedMessage.h"
 #include "InteriorsExplorerEnteredMessage.h"
+#include "DefaultInteriorAnimationController.h"
 
 #include "InteriorsModel.h"
 #include "InteriorsFloorModel.h"
@@ -16,8 +17,6 @@
 #include "InteriorsFloorModel.h"
 #include "IVisualMapService.h"
 #include "VisualMapState.h"
-
-#include "CurrentInteriorViewModel.h"
 
 #include "ICameraTransitionController.h"
 
@@ -42,12 +41,14 @@ namespace ExampleApp
             }
             
             InteriorsExplorerModel::InteriorsExplorerModel(Eegeo::Resources::Interiors::InteriorController& controller,
+                                                           Eegeo::Resources::Interiors::DefaultInteriorAnimationController& animationController,
                                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                            VisualMap::SdkModel::IVisualMapService& visualMapService,
                                                            ExampleAppMessaging::TMessageBus& messageBus,
                                                            ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                                            Metrics::IMetricsService& metricsService)
             : m_controller(controller)
+            , m_animationController(animationController)
             , m_interiorSelectionModel(interiorSelectionModel)
             , m_visualMapService(visualMapService)
             , m_messageBus(messageBus)
@@ -136,11 +137,13 @@ namespace ExampleApp
             
             void InteriorsExplorerModel::OnControllerFloorChanged()
             {
+                if(!m_interiorExplorerEnabled || !m_controller.InteriorIsVisible())
+                {
+                    return;
+                }
+                
                 const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = NULL;
                 Eegeo_ASSERT(m_controller.TryGetCurrentFloorModel(pFloorModel), "Could not fetch current floor model");
-                
-                Eegeo::Resources::Interiors::CurrentInteriorViewModel* pViewModel;
-                m_controller.TryGetCurrentViewModel(pViewModel);
                 
                 m_messageBus.Publish(InteriorsExplorerFloorSelectedMessage(m_controller.GetCurrentFloorIndex(), pFloorModel->GetReadableFloorName()));
             }
@@ -174,34 +177,19 @@ namespace ExampleApp
                 
                 const float dragParameter = message.GetDragParam();
                 const float floorParam = dragParameter * (pModel->GetFloorCount()-1);
-                
-                // Need to expose
-                // - Being able to toggle expanded mode on off
-                // - Disabling the floor animation and setting the floor parameter manually.
-                //m_controller.Set
-                Eegeo::Resources::Interiors::CurrentInteriorViewModel* pViewModel = NULL;
-                if(m_controller.TryGetCurrentViewModel(pViewModel))
-                {
-                    Eegeo_TTY("SDKMODEL: DRAGGING %f", floorParam);
-                    pViewModel->SetExpandedModeEnabled(true);
-                    pViewModel->SetFloorParameter(floorParam);
-                }
+
+                m_animationController.SetExpandedModeEnabled(true);
+                m_animationController.SetFloorParameter(floorParam);
             }
 
             void InteriorsExplorerModel::SelectFloor(int floor)
             {
-                Eegeo_TTY("SDKMODEL: DRAG STOPPED SELECT FLOOR %d", floor);
                 if(!m_controller.InteriorIsVisible())
                 {
                     return;
                 }
-                Eegeo_TTY("SDKMODEL: DRAG STOPPED GET VM");
-                Eegeo::Resources::Interiors::CurrentInteriorViewModel* pViewModel = NULL;
-                if(m_controller.TryGetCurrentViewModel(pViewModel))
-                {
-                    Eegeo_TTY("SDKMODEL: DRAG STOPPED EXPANDED OFF");
-                    pViewModel->SetExpandedModeEnabled(false);
-                }
+                
+                m_animationController.SetExpandedModeEnabled(false);
                 
                 if(m_controller.GetCurrentFloorIndex() == floor)
                 {

@@ -21,6 +21,7 @@ namespace ExampleApp
         namespace SdkModel
         {
             InteriorsExplorerModule::InteriorsExplorerModule(Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                             Eegeo::Resources::Interiors::DefaultInteriorAnimationController& interiorAnimationController,
                                                              Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                              Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
                                                              WorldPins::SdkModel::IWorldPinsService& worldPinsService,
@@ -61,6 +62,7 @@ namespace ExampleApp
                 
                 m_pInteriorsCameraController = Eegeo_NEW(InteriorsExplorerCameraController)(interiorController,
                                                                                             interiorSelectionModel,
+                                                                                            interiorAnimationController,
                                                                                             environmentFlatteningService,
                                                                                             *m_pGlobeCameraTouchController,
                                                                                             *m_pGlobeCameraController,
@@ -74,6 +76,7 @@ namespace ExampleApp
                                                                               initialExperienceModel);
                 
                 m_pModel = Eegeo_NEW(InteriorsExplorerModel)(interiorController,
+                                                             interiorAnimationController,
                                                              interiorSelectionModel,
                                                              visualMapService,
                                                              messageBus,

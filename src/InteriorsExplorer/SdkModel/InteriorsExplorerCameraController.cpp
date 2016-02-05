@@ -12,12 +12,12 @@
 #include "InteriorsModel.h"
 #include "InteriorSelectionModel.h"
 #include "CameraHelpers.h"
-#include "CurrentInteriorViewModel.h"
 #include "InteriorsFloorModel.h"
 #include "InteriorHeightHelpers.h"
 #include "GlobeCameraController.h"
 #include "EnvironmentFlatteningService.h"
-#include "CurrentInteriorViewModel.h"
+#include "DefaultInteriorAnimationController.h"
+#include "InteriorViewModel.h"
 
 namespace ExampleApp
 {
@@ -37,12 +37,14 @@ namespace ExampleApp
             InteriorsExplorerCameraController::InteriorsExplorerCameraController(
                                                                 Eegeo::Resources::Interiors::InteriorController& interiorController,
                                                                 Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                                                Eegeo::Resources::Interiors::DefaultInteriorAnimationController& interiorAnimationController,
                                                                 const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                                 Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& globeCameraTouchController,
                                                                 Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController,
                                                                 const bool interiorsAffectedByFlattening)
             : m_interiorController(interiorController)
             , m_interiorSelectionModel(interiorSelectionModel)
+            , m_interiorAnimationController(interiorAnimationController)
             , m_globeCameraTouchController(globeCameraTouchController)
             , m_globeCameraController(globeCameraController)
             , m_environmentFlatteningService(environmentFlatteningService)
@@ -127,10 +129,8 @@ namespace ExampleApp
                 
                 if(m_interiorController.InteriorInScene())
                 {
-                    Eegeo::Resources::Interiors::CurrentInteriorViewModel* pViewModel = NULL;
-                    m_interiorController.TryGetCurrentViewModel(pViewModel);
-                    bool expanded = pViewModel->GetExpandedModeEnabled();
-                    float expandedParam = pViewModel->GetExpandedModeParameter();
+                    bool expanded = m_interiorAnimationController.GetExpandedModeEnabled();
+                    float expandedParam = m_interiorAnimationController.GetExpandedModeParameter();
                     
 
                     if(!expanded && expandedParam == 0.0f)
@@ -279,17 +279,15 @@ namespace ExampleApp
             
             float InteriorsExplorerCameraController::GetFloorOffsetHeight() const
             {
-                Eegeo::Resources::Interiors::CurrentInteriorViewModel* pViewModel = NULL;
-                Eegeo_ASSERT(m_interiorController.TryGetCurrentViewModel(pViewModel), "Failed to get Interior Viewmodel");
-                
-                float interpolatedFloorValue = pViewModel->GetFloorParameter();
+                float interpolatedFloorValue = m_interiorAnimationController.GetFloorParameter();
                 
                 const int targetFloorA = (int)std::floor(interpolatedFloorValue);
                 const int targetFloorB = (int)std::ceil(interpolatedFloorValue);
                 const float interfloorParam = interpolatedFloorValue - (float)targetFloorA;
                 
-                float floorOffsetA = CalcFloorHeightAboveBase(pViewModel->GetModel(), targetFloorA);
-                float floorOffsetB = CalcFloorHeightAboveBase(pViewModel->GetModel(), targetFloorB);
+                const Eegeo::Resources::Interiors::InteriorsModel* pModel = m_interiorController.GetViewModel().GetInteriorModel();
+                float floorOffsetA = CalcFloorHeightAboveBase(*pModel, targetFloorA);
+                float floorOffsetB = CalcFloorHeightAboveBase(*pModel, targetFloorB);
                 
                 float floorOffset = Eegeo::Math::Lerp(floorOffsetA, floorOffsetB, interfloorParam);
                 return floorOffset;

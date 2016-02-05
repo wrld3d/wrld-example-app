@@ -22,6 +22,7 @@ namespace ExampleApp
                 
                 TransitionToInteriorPointStage(Eegeo::Resources::Interiors::InteriorController& interiorController,
                                                const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                               Eegeo::Resources::Interiors::DefaultInteriorAnimationController& interiorViewAnimator,
                                                InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                                InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& cameraController,
                                                const Eegeo::dv3& newInterestPoint,
@@ -42,6 +43,7 @@ namespace ExampleApp
                 
                 Eegeo::Resources::Interiors::InteriorController& m_interiorController;
                 const Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
+                Eegeo::Resources::Interiors::DefaultInteriorAnimationController& m_interiorViewAnimator;
                 InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel;
                 InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& m_cameraController;
                 

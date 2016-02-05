@@ -329,7 +329,9 @@ namespace ExampleApp
                                                                                                                        m_pAppCameraModule->GetController(),
                                                                                                                        interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                        interiorsPresentationModule.GetController(),
-                                                                                                                       m_pInteriorsExplorerModule->GetInteriorsExplorerModel());
+                                                                                                                       interiorsPresentationModule.GetDefaultInteriorViewAnimator(),
+                                                                                                                       m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
+                                                                                                                       m_messageBus);
         m_pCameraTransitionService->SetTransitionController(*m_pCameraTransitionController);
         
         m_pLoadingScreen = CreateLoadingScreen(screenProperties, m_pWorld->GetRenderingModule(), m_pWorld->GetPlatformAbstractionModule());
@@ -570,6 +572,7 @@ namespace ExampleApp
         const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel = m_initialExperienceModule.GetInitialExperienceModel();
         
         m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(interiorsPresentationModule.GetController(),
+                                                                                                     interiorsPresentationModule.GetDefaultInteriorViewAnimator(),
                                                                                                      interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                      interiorsModelModule.GetInteriorMarkerModelRepository(),
                                                                                                      m_pWorldPinsModule->GetWorldPinsService(),

@@ -24,6 +24,7 @@ namespace ExampleApp
                 bool m_cameraTouchEnabled;
                 Eegeo::Resources::Interiors::InteriorController& m_interiorController;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
+                Eegeo::Resources::Interiors::DefaultInteriorAnimationController& m_interiorAnimationController;
                 Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& m_globeCameraTouchController;
                 Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
                 const Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
@@ -37,6 +38,7 @@ namespace ExampleApp
             public:
                 InteriorsExplorerCameraController(Eegeo::Resources::Interiors::InteriorController& interiorController,
                                                   Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                                  Eegeo::Resources::Interiors::DefaultInteriorAnimationController& interiorAnimationController,
                                                   const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                   Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& m_globeCameraTouchController,
                                                   Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController,

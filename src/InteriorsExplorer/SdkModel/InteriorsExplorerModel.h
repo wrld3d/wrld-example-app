@@ -27,6 +27,7 @@ namespace ExampleApp
             public:
                 
                 InteriorsExplorerModel(Eegeo::Resources::Interiors::InteriorController& controller,
+                                       Eegeo::Resources::Interiors::DefaultInteriorAnimationController& animationController,
                                        Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                        VisualMap::SdkModel::IVisualMapService& visualMapService,
                                        ExampleAppMessaging::TMessageBus& messageBus,
@@ -60,6 +61,7 @@ namespace ExampleApp
                 void PublishInteriorExplorerStateChange();
 
                 Eegeo::Resources::Interiors::InteriorController& m_controller;
+                Eegeo::Resources::Interiors::DefaultInteriorAnimationController& m_animationController;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                 VisualMap::SdkModel::IVisualMapService& m_visualMapService;
 

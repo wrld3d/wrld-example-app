@@ -34,7 +34,9 @@ namespace ExampleApp
                                            ExampleApp::AppCamera::SdkModel::IAppCameraController& appCameraController,
                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                            Eegeo::Resources::Interiors::InteriorController& interiorController,
-                                           InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel);
+                                           Eegeo::Resources::Interiors::DefaultInteriorAnimationController& interiorViewAnimator,
+                                           InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
+                                           ExampleAppMessaging::TMessageBus& messageBus);
 
                 void StartTransitionTo(const Eegeo::dv3& newInterestPoint,
                                        float distanceFromInterest,
@@ -102,6 +104,7 @@ namespace ExampleApp
                 ExampleApp::AppCamera::SdkModel::IAppCameraController& m_appCameraController;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                 Eegeo::Resources::Interiors::InteriorController& m_interiorController;
+                Eegeo::Resources::Interiors::DefaultInteriorAnimationController& m_interiorViewAnimator;
                 InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel;
                
                 Eegeo::Resources::Interiors::InteriorId m_defaultInteriorId;

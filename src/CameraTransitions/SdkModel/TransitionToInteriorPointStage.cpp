@@ -4,6 +4,7 @@
 #include "InteriorController.h"
 #include "InteriorsExplorerModel.h"
 #include "InteriorsExplorerCameraController.h"
+#include "DefaultInteriorAnimationController.h"
 
 namespace ExampleApp
 {
@@ -13,6 +14,7 @@ namespace ExampleApp
         {
             TransitionToInteriorPointStage::TransitionToInteriorPointStage(Eegeo::Resources::Interiors::InteriorController& interiorController,
                                                                            const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                                                           Eegeo::Resources::Interiors::DefaultInteriorAnimationController& interiorViewAnimator,
                                                                            InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                                                            InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& cameraController,
                                                                            const Eegeo::dv3& newInterestPoint,
@@ -22,6 +24,7 @@ namespace ExampleApp
                                                                            bool jumpIfFar)
             : m_interiorController(interiorController)
             , m_interiorSelectionModel(interiorSelectionModel)
+            , m_interiorViewAnimator(interiorViewAnimator)
             , m_interiorsExplorerModel(interiorsExplorerModel)
             , m_cameraController(cameraController)
             , m_newInterestPoint(newInterestPoint)
@@ -65,7 +68,8 @@ namespace ExampleApp
                 
                 if(!m_initialisedNextInterior && m_interiorController.InteriorInScene())
                 {
-                    m_interiorController.SetCurrentFloor(m_targetFloorIndex, true);
+                    m_interiorController.SetCurrentFloor(m_targetFloorIndex);
+                    m_interiorViewAnimator.SkipFloorTransition();
                     m_endCameraInterestAltitude = m_cameraController.GetFloorOffsetHeight();
                     m_cameraInterestAltitudeStartTime = m_transitionTime;
                     m_initialisedNextInterior = true;
@@ -112,7 +116,8 @@ namespace ExampleApp
                 m_cameraController.SetCameraInterestAltitude(m_endCameraInterestAltitude);
                 m_cameraController.SetApplyRestrictions(true);
                 m_cameraController.SetApplyFloorOffset(true);
-                m_interiorController.SetCurrentFloor(m_targetFloorIndex, true);
+                m_interiorController.SetCurrentFloor(m_targetFloorIndex);
+                m_interiorViewAnimator.SkipFloorTransition();
                 m_interiorsExplorerModel.ShowInteriorExplorer(true);
             }
             

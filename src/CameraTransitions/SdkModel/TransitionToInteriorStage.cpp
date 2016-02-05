@@ -5,6 +5,7 @@
 #include "InteriorSelectionModel.h"
 #include "InteriorsExplorerCameraController.h"
 #include "InteriorId.h"
+#include "DefaultInteriorAnimationController.h"
 
 namespace ExampleApp
 {
@@ -14,6 +15,7 @@ namespace ExampleApp
         {
             TransitionToInteriorStage::TransitionToInteriorStage(Eegeo::Resources::Interiors::InteriorController& interiorController,
                                                                  const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                                                 Eegeo::Resources::Interiors::DefaultInteriorAnimationController& interiorViewAnimator,
                                                                  InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& cameraController,
                                                                  const Eegeo::dv3& newInterestPoint,
                                                                  float newDistanceToInterest,
@@ -21,6 +23,7 @@ namespace ExampleApp
                                                                  int targetFloorIndex)
             : m_interiorController(interiorController)
             , m_interiorSelectionModel(interiorSelectionModel)
+            , m_interiorViewAnimator(interiorViewAnimator)
             , m_cameraController(cameraController)
             , m_newInterestPoint(newInterestPoint)
             , m_interiorId(interiorId)
@@ -65,7 +68,8 @@ namespace ExampleApp
                 }
                 else if(m_interiorController.InteriorInScene())
                 {
-                    m_interiorController.SetCurrentFloor(m_targetFloorIndex, true);
+                    m_interiorController.SetCurrentFloor(m_targetFloorIndex);
+                    m_interiorViewAnimator.SkipFloorTransition();
                 }
             }
             
