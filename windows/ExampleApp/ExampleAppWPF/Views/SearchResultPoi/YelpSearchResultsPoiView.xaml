@@ -38,8 +38,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:YelpSearchResultsPoiView}">
-                    <Grid Width="480" >
-                        <Border>
+                    <Grid Width="480" Height="Auto" Background="White" Margin="20,17,20,20">
                         <Grid Name="SearchresultsPoiViewContainer" Width="440"  Margin="20,17,20,20">
                             <Grid Background="White">
                                 <Grid.RowDefinitions>
@@ -81,7 +80,6 @@
                                                             <ProgressBar Name="ImageProgress" HorizontalAlignment="Center" Visibility="Hidden"/>
                                                         </StackPanel>
                                                         <Grid Margin="0,0,0,0">
-                                                            <!--<Image Name="Loading_POI_Image" Source="Images/POI_ImagePlaceholderSmall.png" />-->
                                                             <Image Name="PoiImage"/>
                                                             <Grid Name="ImageGradient" Height="30" VerticalAlignment="Bottom"/>
                                                         </Grid>
@@ -194,7 +192,6 @@
                                 </WrapPanel>
                             </Grid>
                         </Grid>
-                        </Border>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
