@@ -22,7 +22,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            class InteriorsExplorerViewModule : public IInteriorsExplorerViewModule, private Eegeo::NonCopyable
+            class InteriorsExplorerViewModule : public IInteriorsExplorerViewModule
             {
             private:
                 InteriorsExplorerController* m_pController;

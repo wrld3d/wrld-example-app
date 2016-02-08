@@ -15,7 +15,6 @@ namespace ExampleApp
                 namespace TwitterFeed
                 {
                     TwitterFeedTourModule::TwitterFeedTourModule(Camera::IToursCameraTransitionController& toursCameraTransitionController,
-                                                                 Camera::IToursCameraController& toursCameraController,
                                                                  ITourService& tourService,
                                                                  WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                                  Eegeo::Resources::Interiors::InteriorController& interiorController,
@@ -23,7 +22,6 @@ namespace ExampleApp
                                                                  const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                  ITourRepository& tourRepository,
                                                                  Social::TwitterFeed::ITwitterFeedService& twitterFeedService,
-                                                                 Metrics::IMetricsService& metricsService,
                                                                  ExampleAppMessaging::TMessageBus& messageBus)
                     {
                         std::map<std::string, int> twitterTourIconOverrideMap;
@@ -45,7 +43,6 @@ namespace ExampleApp
                                                                           Eegeo::Space::LatLong(0,0));
                         
                         m_pTwitterFeedTourObserver = Eegeo_NEW(TwitterFeedTourObserver)(toursCameraTransitionController,
-                                                                                        toursCameraController,
                                                                                         tourService,
                                                                                         worldPinsService,
                                                                                         interiorController,
@@ -55,7 +52,6 @@ namespace ExampleApp
                                                                                         twitterFeedService,
                                                                                         m_tweetStateDataMap,
                                                                                         twitterTourIconOverrideMap,
-                                                                                        metricsService,
                                                                                         messageBus);
                     }
                     

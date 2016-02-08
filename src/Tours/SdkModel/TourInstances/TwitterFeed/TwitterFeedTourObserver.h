@@ -9,7 +9,6 @@
 #include "TwitterFeed.h"
 #include <map>
 #include <TweetStateData.h>
-#include "Metrics.h"
 #include "BidirectionalBus.h"
 #include "InteriorsExplorer.h"
 
@@ -27,7 +26,6 @@ namespace ExampleApp
                     {
                     private:
                         Camera::IToursCameraTransitionController& m_toursCameraTransitionController;
-                        Camera::IToursCameraController& m_toursCameraController;
                         ITourService& m_tourService;
                         WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
                         Eegeo::Resources::Interiors::InteriorController& m_interiorController;
@@ -35,7 +33,6 @@ namespace ExampleApp
                         const Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                         ITourRepository& m_tourRepository;
                         Social::TwitterFeed::ITwitterFeedService& m_twitterFeedService;
-                        Metrics::IMetricsService& m_metricsService;
                         
                         const std::map<std::string, TweetStateData>& m_tweetStateDataMap;
                         std::map<std::string, int> m_twitterTourIconOverrideMap;
@@ -52,7 +49,6 @@ namespace ExampleApp
                         void UpadateTweetLinksOut();
                     public:
                         TwitterFeedTourObserver(Camera::IToursCameraTransitionController& toursCameraTransitionController,
-                                                Camera::IToursCameraController& toursCameraController,
                                                 ITourService& tourService,
                                                 WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                 Eegeo::Resources::Interiors::InteriorController& interiorController,
@@ -62,7 +58,6 @@ namespace ExampleApp
                                                 Social::TwitterFeed::ITwitterFeedService& twitterFeedService,
                                                 const std::map<std::string, TweetStateData>& tweetStateDataMap,
                                                 const std::map<std::string, int>& twitterTourIconOverrideMap,
-                                                Metrics::IMetricsService& metricsService,
                                                 ExampleAppMessaging::TMessageBus& messageBus);
                         ~TwitterFeedTourObserver();
                     };

@@ -93,7 +93,7 @@ namespace
                     displayAddressMembersIndex < numDisplayAddressMembers;
                     ++ displayAddressMembersIndex)
                 {
-                    ss << ", " << displayAddress[displayAddressMembersIndex].GetString();
+                    ss << ", " << displayAddress[static_cast<unsigned int>(displayAddressMembersIndex)].GetString();
                 }
                 
                 entry.address = ss.str();

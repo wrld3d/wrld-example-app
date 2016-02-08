@@ -21,8 +21,6 @@ namespace ExampleApp
                 public:
                     
                     ToursCameraTransitionController(IToursCameraController& toursCameraController,
-                                                    Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& gpsGlobeCameraController,
-                                                    Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
                                                     Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& touchController);
                     
                     ~ToursCameraTransitionController();
@@ -56,8 +54,6 @@ namespace ExampleApp
                     IToursCameraMode* m_pToursCurrentMode;
                     IToursCameraMode* m_pToursNextMode;
                     
-                    Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_gpsGlobeCameraController;
-                    Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& m_terrainHeightProvider;
                     Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& m_touchController;
                 };
             }

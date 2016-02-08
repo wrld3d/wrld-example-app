@@ -14,14 +14,11 @@ namespace ExampleApp
             MyPinBoundObjectFactory::MyPinBoundObjectFactory(ExampleAppMessaging::TMessageBus& messageBus,
                                                              ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                                              CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
-                                                             Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
-                                                             MyPinsWebService& webService
-                                                             )
+                                                             Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService)
             : m_messageBus(messageBus)
             , m_sdkModelDomainEventBus(sdkModelDomainEventBus)
             , m_categorySearchRepository(categorySearchRepository)
             , m_myPinsSearchResultRefreshService(myPinsSearchResultRefreshService)
-            , m_webService(webService)
             {
                 
             }
@@ -42,8 +39,7 @@ namespace ExampleApp
                                                             imageSize,
                                                             share,
                                                             myPinsFileIO,
-                                                            m_messageBus,
-                                                            m_webService);
+                                                            m_messageBus);
             }
             
             IMyPinBoundObject* MyPinBoundObjectFactory::CreateSearchResultPinBoundObject(MyPinsFileIO& myPinsFileIO,
@@ -58,7 +54,6 @@ namespace ExampleApp
                                                              m_myPinsSearchResultRefreshService,
                                                              m_messageBus,
                                                              m_sdkModelDomainEventBus,
-                                                             m_webService,
                                                              myPinsService);
             }
             
@@ -75,8 +70,7 @@ namespace ExampleApp
                         return UserCreatedPinBoundObject::FromSerializedData(pinId,
                                                                              serializedData,
                                                                              myPinsFileIO,
-                                                                             m_messageBus,
-                                                                             m_webService);
+                                                                             m_messageBus);
                     }break;
                         
                     case SearchResultPoi:
@@ -88,7 +82,6 @@ namespace ExampleApp
                                                                               m_myPinsSearchResultRefreshService,
                                                                               m_messageBus,
                                                                               m_sdkModelDomainEventBus,
-                                                                              m_webService,
                                                                               myPinsService
                                                                               );
                     }break;

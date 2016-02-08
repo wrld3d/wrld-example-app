@@ -43,10 +43,7 @@ namespace ExampleApp
                                                              ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController,
                                                              Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                                              MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel)
-                : m_cameraController(cameraController)
-                , m_interiorController(interiorController)
-                , m_interiorCameraHandle(interiorCameraHandle)
-                , m_tourService(tourService)
+                : m_tourService(tourService)
                 , m_tourStartedCallback(this, &InteriorExplorerState::OnTourStarted)
                 , m_interiorExplorerUserInteractionModel(interiorExplorerUserInteractionModel)
                 , m_appModeModel(appModeModel)

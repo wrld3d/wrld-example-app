@@ -43,8 +43,8 @@ namespace ExampleApp
             inline System::String^ ConvertUTF8ToManagedString(const char* input)
             {
                 size_t stringByteCount = strlen(input);
-                array<System::Byte>^ stringBytes = gcnew array<System::Byte>(stringByteCount);
-                System::Runtime::InteropServices::Marshal::Copy(System::IntPtr((void*)input), stringBytes, 0, stringByteCount);
+                array<System::Byte>^ stringBytes = gcnew array<System::Byte>(static_cast<int>(stringByteCount));
+                System::Runtime::InteropServices::Marshal::Copy(System::IntPtr((void*)input), stringBytes, 0, static_cast<int>(stringByteCount));
 
                 return System::Text::Encoding::UTF8->GetString(stringBytes);
             }

@@ -9,7 +9,6 @@
 #include "WorldPins.h"
 #include "TwitterFeed.h"
 #include "TweetStateData.h"
-#include "Metrics.h"
 #include "BidirectionalBus.h"
 #include "InteriorsExplorer.h"
 
@@ -30,7 +29,6 @@ namespace ExampleApp
                         std::map<std::string, TweetStateData> m_tweetStateDataMap;
                     public:
                         TwitterFeedTourModule(Camera::IToursCameraTransitionController& toursCameraTransitionController,
-                                              Camera::IToursCameraController& toursCameraController,
                                               ITourService& tourService,
                                               WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                               Eegeo::Resources::Interiors::InteriorController& interiorController,
@@ -38,7 +36,6 @@ namespace ExampleApp
                                               const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                               ITourRepository& tourRepository,
                                               Social::TwitterFeed::ITwitterFeedService& twitterFeedService,
-                                              Metrics::IMetricsService& metricsService,
                                               ExampleAppMessaging::TMessageBus& messageBus);
                         ~TwitterFeedTourModule();
                         

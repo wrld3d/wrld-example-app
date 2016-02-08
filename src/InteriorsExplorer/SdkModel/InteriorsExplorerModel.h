@@ -27,7 +27,6 @@ namespace ExampleApp
                 
                 InteriorsExplorerModel(Eegeo::Resources::Interiors::InteriorController& controller,
                                        Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                       InteriorVisibilityUpdater& interiorVisibilityUpdater,
                                        VisualMap::SdkModel::IVisualMapService& visualMapService,
                                        ExampleAppMessaging::TMessageBus& messageBus,
                                        ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
@@ -60,7 +59,6 @@ namespace ExampleApp
 
                 Eegeo::Resources::Interiors::InteriorController& m_controller;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
-                InteriorVisibilityUpdater& m_interiorVisibilityUpdater;
                 VisualMap::SdkModel::IVisualMapService& m_visualMapService;
 
                 ExampleAppMessaging::TMessageBus& m_messageBus;

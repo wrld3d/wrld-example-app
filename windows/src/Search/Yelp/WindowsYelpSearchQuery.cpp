@@ -100,8 +100,8 @@ namespace ExampleApp
 					Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(m_yelpOAuthTokenSecret),
 					Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(searchTerm),
 					Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(categoryFilter),
-					m_searchQuery.Location().GetLatitudeInDegrees(),
-					m_searchQuery.Location().GetLongitudeInDegrees(),
+					static_cast<float>(m_searchQuery.Location().GetLatitudeInDegrees()),
+					static_cast<float>(m_searchQuery.Location().GetLongitudeInDegrees()),
 					radiusFilter,
 					function);
             }

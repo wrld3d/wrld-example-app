@@ -11,7 +11,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class CacheClearBackgroundTask : public Eegeo::Concurrency::Tasks::WorkItem, private Eegeo::NonCopyable
+            class CacheClearBackgroundTask : public Eegeo::Concurrency::Tasks::WorkItem
             {
                 Eegeo::Helpers::IHttpCache& m_iOSHttpCache;
                 ExampleAppMessaging::TMessageBus& m_messageBus;

@@ -11,7 +11,6 @@
 #include "Pin.h"
 
 #include "InteriorHeightHelpers.h"
-#include "EnvironmentFlatteningService.h"
 
 namespace ExampleApp
 {
@@ -22,12 +21,10 @@ namespace ExampleApp
             WorldPinsFloorHeightController::WorldPinsFloorHeightController(IWorldPinsRepository& worldPinsRepository,
                                                                            Eegeo::Pins::PinRepository& pinRepository,
                                                                            Eegeo::Resources::Interiors::InteriorController& interiorController,
-                                                                           const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                                            const bool interiorsAffectedByFlattening)
                 : m_worldPinsRepository(worldPinsRepository)
                 , m_pinRepository(pinRepository)
                 , m_interiorController(interiorController)
-                , m_environmentFlatteningService(environmentFlatteningService)
                 , m_interiorsAffectedByFlattening(interiorsAffectedByFlattening)
             {
             }

@@ -1,0 +1,49 @@
+set(headers ${headers} ../src/MyPins/SdkModel
+)
+set(currsources
+  ../src/MyPins/SdkModel/CMakeLists.txt
+  ../src/MyPins/SdkModel/IMyPinBoundObject.h
+  ../src/MyPins/SdkModel/IMyPinBoundObjectFactory.h
+  ../src/MyPins/SdkModel/IMyPinBoundObjectRepository.h
+  ../src/MyPins/SdkModel/IMyPinSelectionHandlerFactory.h
+  ../src/MyPins/SdkModel/IMyPinsModule.h
+  ../src/MyPins/SdkModel/IMyPinsRepository.h
+  ../src/MyPins/SdkModel/IMyPinsService.h
+  ../src/MyPins/SdkModel/IMyPinVisibilityStateChangedHandlerFactory.h
+  ../src/MyPins/SdkModel/MyPinBoundObjectFactory.cpp
+  ../src/MyPins/SdkModel/MyPinBoundObjectFactory.h
+  ../src/MyPins/SdkModel/MyPinBoundObjectRepository.cpp
+  ../src/MyPins/SdkModel/MyPinBoundObjectRepository.h
+  ../src/MyPins/SdkModel/MyPinModel.cpp
+  ../src/MyPins/SdkModel/MyPinModel.h
+  ../src/MyPins/SdkModel/MyPinSelectedMessageHandler.cpp
+  ../src/MyPins/SdkModel/MyPinSelectedMessageHandler.h
+  ../src/MyPins/SdkModel/MyPinSelectionHandler.cpp
+  ../src/MyPins/SdkModel/MyPinSelectionHandler.h
+  ../src/MyPins/SdkModel/MyPinSelectionHandlerFactory.cpp
+  ../src/MyPins/SdkModel/MyPinSelectionHandlerFactory.h
+  ../src/MyPins/SdkModel/MyPinsFileIO.cpp
+  ../src/MyPins/SdkModel/MyPinsFileIO.h
+  ../src/MyPins/SdkModel/MyPinsModule.cpp
+  ../src/MyPins/SdkModel/MyPinsModule.h
+  ../src/MyPins/SdkModel/MyPinsRepository.h
+  ../src/MyPins/SdkModel/MyPinsRepositoryObserver.cpp
+  ../src/MyPins/SdkModel/MyPinsRepositoryObserver.h
+  ../src/MyPins/SdkModel/MyPinsSemanticPinType.h
+  ../src/MyPins/SdkModel/MyPinsService.cpp
+  ../src/MyPins/SdkModel/MyPinsService.h
+  ../src/MyPins/SdkModel/MyPinVisibilityStateChangedHandler.cpp
+  ../src/MyPins/SdkModel/MyPinVisibilityStateChangedHandler.h
+  ../src/MyPins/SdkModel/MyPinVisibilityStateChangedHandlerFactory.cpp
+  ../src/MyPins/SdkModel/MyPinVisibilityStateChangedHandlerFactory.h
+  ../src/MyPins/SdkModel/SearchResultPinAddedEvent.cpp
+  ../src/MyPins/SdkModel/SearchResultPinAddedEvent.h
+  ../src/MyPins/SdkModel/SearchResultPinBoundObject.cpp
+  ../src/MyPins/SdkModel/SearchResultPinBoundObject.h
+  ../src/MyPins/SdkModel/SearchResultPinRemovedEvent.cpp
+  ../src/MyPins/SdkModel/SearchResultPinRemovedEvent.h
+  ../src/MyPins/SdkModel/UserCreatedPinBoundObject.cpp
+  ../src/MyPins/SdkModel/UserCreatedPinBoundObject.h
+)
+set(sources ${sources} ${currsources})
+source_group(\\src\\MyPins\\SdkModel FILES ${currsources})

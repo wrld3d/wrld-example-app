@@ -157,7 +157,7 @@
     self.hidden = false;
     [self setOffscreenPartsHiddenState:false];
 
-    float newX = m_closedX + (abs(m_openX - m_closedX) * openState);
+    float newX = m_closedX + (std::abs(m_openX - m_closedX) * openState);
     if(fabs(self.frame.origin.x - newX) < 0.01f)
     {
         return;

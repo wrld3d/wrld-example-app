@@ -1,5 +1,7 @@
 #pragma once
 
+#pragma warning(push, 0)
+
 #include "EegeoSDK.h"
 #include "Base/Types.h"
 #include "AnimatedObjects/AnimatedObject.h"
@@ -1210,3 +1212,5 @@
 #include "WorldStates/StreamingInitialSceneState.h"
 #include "WorldStates/WorldStateManager.h"
 #include "WorldStates/WorldStates.h"
+
+#pragma warning(pop)

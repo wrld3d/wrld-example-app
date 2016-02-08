@@ -1,0 +1,11 @@
+# This Application.mk file is automatically generated as part of the CMake build process.
+#
+# This file should not be edited directly!
+#
+
+APP_OPTIM := release
+APP_PLATFORM := android-${ANDROID_NATIVE_API_LEVEL}
+APP_STL := gnustl_static
+APP_ABI := ${ANDROID_NDK_ABI_NAME}
+
+@CPP_11_SETTINGS@

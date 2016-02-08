@@ -71,13 +71,13 @@ namespace ExampleApp
 
             void MenuController::RefreshPresentation()
             {
-                const int numSections = m_viewModel.SectionsCount();
+                const int numSections = static_cast<int>(m_viewModel.SectionsCount());
                 TSections sections;
                 sections.reserve(numSections);
 
                 for(size_t groupIndex = 0; groupIndex < numSections; groupIndex++)
                 {
-                    IMenuSectionViewModel& section = m_viewModel.GetMenuSection(groupIndex);
+                    IMenuSectionViewModel& section = m_viewModel.GetMenuSection(static_cast<int>(groupIndex));
                     sections.push_back(&section);
                 }
 
@@ -300,7 +300,7 @@ namespace ExampleApp
                 
                 for(size_t i = 0; i < m_viewModel.SectionsCount(); ++ i)
                 {
-                    IMenuSectionViewModel& section(m_viewModel.GetMenuSection(i));
+                    IMenuSectionViewModel& section(m_viewModel.GetMenuSection(static_cast<int>(i));
                     section.InsertExpandedChangedCallback(m_onMenuSectionExpandedStateChanged);
                     IMenuModel& model = section.GetModel();
                     model.InsertItemAddedCallback(m_onItemAddedCallback);
@@ -312,7 +312,7 @@ namespace ExampleApp
             {
                 for(size_t i = 0; i < m_viewModel.SectionsCount(); ++ i)
                 {
-                    IMenuSectionViewModel& section(m_viewModel.GetMenuSection(i));
+                    IMenuSectionViewModel& section(m_viewModel.GetMenuSection(static_cast<int>(i));
                     section.RemoveExpandedChangedCallback(m_onMenuSectionExpandedStateChanged);
                     IMenuModel& model = section.GetModel();
                     model.RemoveItemAddedCallback(m_onItemAddedCallback);

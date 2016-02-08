@@ -22,24 +22,20 @@ namespace ExampleApp
                 namespace TwitterFeed
                 {
                     TwitterFeedTourStateMachineFactory::TwitterFeedTourStateMachineFactory(Camera::IToursCameraTransitionController& toursCameraTransitionController,
-                                                                                           Camera::IToursCameraController& toursCameraController,
                                                                                            WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                                                            Eegeo::Resources::Interiors::InteriorController& interiorController,
                                                                                            InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
                                                                                            const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                                            const std::string& userId,
                                                                                            const std::map<std::string, TweetStateData>& tweetStateDataMap,
-                                                                                           Metrics::IMetricsService& metricsService,
                                                                                            ExampleAppMessaging::TMessageBus& messageBus)
-                    : m_toursCameraController(toursCameraController)
-                    , m_toursCameraTransitionController(toursCameraTransitionController)
+                    : m_toursCameraTransitionController(toursCameraTransitionController)
                     , m_worldPinsService(worldPinsService)
                     , m_interiorController(interiorController)
                     , m_interiorVisibilityUpdater(interiorVisibilityUpdater)
                     , m_interiorSelectionModel(interiorSelectionModel)
                     , m_userId(userId)
                     , m_tweetStateDataMap(tweetStateDataMap)
-                    , m_metricsService(metricsService)
                     , m_messageBus(messageBus)
                     {
                         

@@ -2,7 +2,7 @@
 
 allArguments=$@
 
-usage() { echo "Usage: $0 -p android|ios [-c]"; echo "  -p -> platform, ios or android (required)"; echo "  -c -> cpp11 support"; 1>&2; exit 1; }
+usage() { echo "Usage: $0 -p android|ios [-c]"; echo "  -p -> platform, ios or android (required)"; echo "  -c -> cpp03 support"; 1>&2; exit 1; }
 
 while getopts "p:c" o; do
     case "${o}" in
@@ -15,7 +15,7 @@ while getopts "p:c" o; do
             fi
             ;;
         c)
-            c="cpp11"
+            c="cpp03"
             ;;
         *)
             usage

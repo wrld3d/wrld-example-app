@@ -20,35 +20,15 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_callbacks;
 
             public:
-                SearchResultMenuViewInterop(SearchResultMenuView* pView)
-                    : m_pView(pView)
-                {
-                }
+                SearchResultMenuViewInterop(SearchResultMenuView* pView);
 
-                void SetHeader(const std::string& header, bool queryPending, size_t numResult)
-                {
-                    [m_pView updateViewForQuery :header :queryPending :numResult];
-                }
+                void SetHeader(const std::string& header, bool queryPending, size_t numResult);
+                void SetAttractMode(bool attractModeEnabled);
                 
-                void SetAttractMode(bool attractModeEnabled)
-                {
-                    [m_pView setAttractMode :attractModeEnabled];
-                }
-                
-                void InsertSearchClosed(Eegeo::Helpers::ICallback0& callback)
-                {
-                    m_callbacks.AddCallback(callback);
-                }
+                void InsertSearchClosed(Eegeo::Helpers::ICallback0& callback);
+                void RemoveSearchClosed(Eegeo::Helpers::ICallback0& callback);
 
-                void RemoveSearchClosed(Eegeo::Helpers::ICallback0& callback)
-                {
-                    m_callbacks.RemoveCallback(callback);
-                }
-
-                void SearchClosed()
-                {
-                    m_callbacks.ExecuteCallbacks();
-                }
+                void SearchClosed();
             };
         }
     }

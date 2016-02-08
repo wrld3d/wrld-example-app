@@ -2,7 +2,6 @@
 
 #include "TourRemovedObserver.h"
 #include "ITourRepository.h"
-#include "IWorldPinsService.h"
 
 namespace ExampleApp
 {
@@ -10,10 +9,8 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            TourRemovedObserver::TourRemovedObserver(ITourRepository& tourRepository,
-                                                     WorldPins::SdkModel::IWorldPinsService& worldPinsService)
+            TourRemovedObserver::TourRemovedObserver(ITourRepository& tourRepository)
             : m_tourRepository(tourRepository)
-            , m_worldPinsService(worldPinsService)
             , m_binding(this, &TourRemovedObserver::HandleTourRemoved)
             {
                 m_tourRepository.InsertItemAddedCallback(m_binding);
@@ -26,8 +23,7 @@ namespace ExampleApp
             
             void TourRemovedObserver::HandleTourRemoved(TourModel& tourModel)
             {
-                // TODO, wire this up...
-                //m_worldPinsService.RemovePin()
+                // TODO: This is not doing anything?
             }
         }
     }

@@ -45,12 +45,12 @@ namespace ExampleApp
 	array<System::String^>^ SearchResultModelCLI::HumanReadableCategories::get()
 	{
 		const std::vector<std::string>& humanReadableCategories(m_pSearchResultModel->GetHumanReadableCategories());
-		array<System::String^>^ humanCategoriesArray = gcnew array<System::String^>(humanReadableCategories.size());
+		array<System::String^>^ humanCategoriesArray = gcnew array<System::String^>(static_cast<int>(humanReadableCategories.size()));
 
 		for (size_t i = 0; i < humanReadableCategories.size(); ++i)
 		{
 			const std::string& categoryString(humanReadableCategories[i]);
-			humanCategoriesArray[i] = Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(categoryString);
+			humanCategoriesArray[static_cast<int>(i)] = Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(categoryString);
 		}
 
 		return humanCategoriesArray;

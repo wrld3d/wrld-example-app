@@ -244,7 +244,7 @@ const bool TestCycleCarouselMode = false;
 
 - (int)getItemCount
 {
-    return m_stateViewData.size();
+    return static_cast<int>(m_stateViewData.size());
 }
 
 - (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel
@@ -370,7 +370,7 @@ const bool TestCycleCarouselMode = false;
     //return CATransform3DTranslate(transform, 0.0f, 0.0f, offset * carousel.itemWidth);
     
     CGFloat distance = 100.0f; //number of pixels to move the items away from camera
-    CGFloat z = - fminf(1.0f, fabsf(offset)) * distance;
+    CGFloat z = - fminf(1.0f, std::abs(offset)) * distance;
     CGFloat spacing = 1.05f;
     CGFloat itemWidth = [self carouselItemWidth:carousel];
     return CATransform3DTranslate(transform, (offset * itemWidth) * spacing, 0.0f, z);
@@ -419,7 +419,7 @@ const bool TestCycleCarouselMode = false;
     }
     else
     {
-        m_selectionIndex = carousel.currentItemIndex;
+        m_selectionIndex = static_cast<int>(carousel.currentItemIndex);
         [self->m_interactionHandlerInstance performSelector:self->m_currentItemChangedHandler];
     }
     m_scrollingToSelected = false;

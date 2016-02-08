@@ -67,7 +67,7 @@ namespace ExampleApp
                 std::string m_weatherState;
                 std::string m_seasonState;
                 std::string m_explicitState;
-                std::string m_icon;;
+                std::string m_icon;
             };
         }
     }
