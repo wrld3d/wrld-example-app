@@ -52,7 +52,7 @@ namespace ExampleAppWPF
 
         private void PerformLayout(object sender, SizeChangedEventArgs e)
         {
-            var currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
+            var currentPosition = m_mainContainerAnim.m_uiElement.RenderTransform.Transform(new Point(0.0, 0.0));
             double onScreenState = (currentPosition.X - m_mainContainerAnim.m_offscreenPos.X) / (m_mainContainerAnim.m_openPos.X - m_mainContainerAnim.m_offscreenPos.X);
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
             m_screenWidthPx = mainWindow.MainGrid.ActualWidth;

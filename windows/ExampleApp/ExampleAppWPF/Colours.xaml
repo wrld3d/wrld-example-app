@@ -1,13 +1,17 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:ExampleAppWPF">
-    <SolidColorBrush x:Key="PrimaryBG_colour" Color="#FF1256B0"/>
-    <SolidColorBrush x:Key="LightBlueDividerLine" Color="#FFB1CCE1"/>
-    <SolidColorBrush x:Key="HeavyTextColour_32" Color="#FF202020"/>
-    <SolidColorBrush x:Key="SecondaryTextColour_56" Color="#FF383838"/>
-    <SolidColorBrush x:Key="TertiaryTextColour_96" Color="#FF606060"/>
-    <SolidColorBrush x:Key="HintTextColour_109" Color="#FF6D6D6D"/>
-    <SolidColorBrush x:Key="CatagoryTitleColour_206" Color="#FFCECECE"/>
+
+    <SolidColorBrush x:Key="PrimaryBG_colour" Color="#1256B0"/>
+    <SolidColorBrush x:Key="PrimaryBG_Over_Colour" Color="#002B63"/>
+    <SolidColorBrush x:Key="PrimaryBG_Down_Colour" Color="#FFCDFC0D"/>
+    <SolidColorBrush x:Key="PrimaryIcon_colour" Color="#FFFFFFFF"/>
+    <SolidColorBrush x:Key="PrimaryIcon_Down_colour" Color="#002B63"/>
+    <SolidColorBrush x:Key="InputBoxBG_colour" Color="#FFFFFFFF"/>
+    <SolidColorBrush x:Key="InputTextColour" Color="#FF202020"/>
+    <SolidColorBrush x:Key="InputBoxIconBG_colour" Color="#FF6D6D6D"/>
+    <SolidColorBrush x:Key="ExpanderHeaderColour" Color="#FFE2E2E2"/>
+    <SolidColorBrush x:Key="POIdetailsColour" Color="#606060"/>
 
     <SolidColorBrush x:Key="Gold" Color="#1256B0 "/>
     <SolidColorBrush x:Key="Olive" Color="#94a847 "/>
@@ -21,4 +25,9 @@
     <SolidColorBrush x:Key="SubMenuSeparator" Color="#c6cecf "/>
     <SolidColorBrush x:Key="Transparent" Color="#00000000"/>
     <SolidColorBrush x:Key="Highlight" Color="#FF8DD8F8"/>
+
+    <!-- Fonts -->
+    <FontFamily x:Key="PrimaryUIFont">Segoe UI</FontFamily>
+    <FontFamily x:Key="PrimaryUILightFont">Segoe UI Light</FontFamily>
+    
 </ResourceDictionary>

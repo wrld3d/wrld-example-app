@@ -174,8 +174,8 @@ namespace ExampleAppWPF
 
         void AnimateToCurrentPos(CustomAppAnimation anim, bool animationCompleteAndOpen)
         {
-            SetViewX(anim.m_animationCurrentPos.X);
-            SetViewY(anim.m_animationCurrentPos.Y);
+            SetViewX(anim.m_uiElement, anim.m_animationCurrentPos.X);
+            SetViewY(anim.m_uiElement, anim.m_animationCurrentPos.Y);
 
             m_list.IsHitTestVisible = animationCompleteAndOpen;
         }
@@ -268,7 +268,7 @@ namespace ExampleAppWPF
                 if (viewXPx != newXPx)
                 {
                     Debug.WriteLine("AnimateToIntermediateOnScreenState x: {0}", newXPx);
-                    SetViewX(newXPx);
+                    SetViewX(anim.m_uiElement, newXPx);
                 } 
             }
         }
@@ -287,7 +287,7 @@ namespace ExampleAppWPF
                 if (ViewXPx(anim) != newXPx)
                 {
                     Debug.WriteLine("AnimateToIntermediateOpenState x: {0}", newXPx);
-                    SetViewX(newXPx);
+                    SetViewX(anim.m_uiElement, newXPx);
                 }
             }
         }
@@ -372,18 +372,25 @@ namespace ExampleAppWPF
 
             anim.m_animating = true;
         }
-        protected void SetViewX(double viewXPx)
+        protected void SetViewX(UIElement element, double viewXPx)
         {
             var currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
             Debug.WriteLine("SetViewX {0}", viewXPx);
             RenderTransform = new TranslateTransform(viewXPx, currentPosition.Y);
         }
 
-        protected void SetViewY(double viewYPx)
+        protected void SetViewY(UIElement element, double viewYPx)
         {
-            var currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
+            var currentPosition = element.RenderTransform.Transform(new Point(0.0, 0.0));
             Debug.WriteLine("SetViewY {0}", viewYPx);
-            RenderTransform = new TranslateTransform(currentPosition.X, viewYPx);
+            element.RenderTransform = new TranslateTransform(currentPosition.X, viewYPx);
+        }
+
+        protected void SetViewXY(double viewXPx, double viewYPx, UIElement element)
+        {
+            var currentPosition = element.RenderTransform.Transform(new Point(0.0, 0.0));
+            Debug.WriteLine("SetViewY {0}", viewYPx);
+            element.RenderTransform = new TranslateTransform(currentPosition.X, viewYPx);
         }
 
         protected int ViewXPx(CustomAppAnimation anim)
@@ -414,13 +421,13 @@ namespace ExampleAppWPF
 
         protected bool IsClosed()
         {
-            var currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
+            var currentPosition = m_menuAnimations[0].m_uiElement.RenderTransform.Transform(new Point(0.0, 0.0));
             return currentPosition.X == m_menuAnimations[0].m_closedPos.X;
         }
 
         protected bool IsOpen()
         {
-            var currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
+            var currentPosition = m_menuAnimations[0].m_uiElement.RenderTransform.Transform(new Point(0.0, 0.0));
             return currentPosition.X == m_menuAnimations[0].m_openPos.X;
         }
     }
