@@ -9,6 +9,8 @@ namespace ExampleAppWPF
 {
     public class CustomAppAnimation
     {
+        public enum State { Closed, Open, OffScreen };
+
         public Point m_widthHeight;
 
         public Point m_offscreenPos;
@@ -16,6 +18,7 @@ namespace ExampleAppWPF
         public Point m_openPos;
 
         public bool m_animating;
+        public State m_currentState;
         public Point m_animationEndPos;
         public Point m_animationStartPos;
         public Point m_animationCurrentPos;
@@ -35,6 +38,7 @@ namespace ExampleAppWPF
             m_openPos = new Point();
 
             m_animating = false;
+            m_currentState = State.OffScreen;
             m_animationEndPos = new Point();
             m_animationStartPos = new Point();
             m_animationCurrentPos = new Point();

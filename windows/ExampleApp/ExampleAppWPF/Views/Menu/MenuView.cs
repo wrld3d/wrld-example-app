@@ -216,6 +216,17 @@ namespace ExampleAppWPF
                     double newXPx = anim.m_closedPos.X;
                     Debug.WriteLine("AnimateToClosedOnScreen x: {0}", newXPx);
                     AnimateViewToX(anim, newXPx);
+
+                    if(anim.m_currentState == CustomAppAnimation.State.Open)
+                    {
+                        anim.m_animationCurrentPos = anim.m_openPos;
+                    }
+                    else if(anim.m_currentState == CustomAppAnimation.State.OffScreen)
+                    {
+                        anim.m_animationCurrentPos = anim.m_offscreenPos;
+                    }
+
+                    anim.m_currentState = CustomAppAnimation.State.Closed;
                 } 
             }
         }
@@ -231,6 +242,8 @@ namespace ExampleAppWPF
                     double newXPx = anim.m_openPos.X;
                     Debug.WriteLine("AnimateToOpenOnScreen x: {0}", newXPx);
                     AnimateViewToX(anim, newXPx);
+
+                    anim.m_currentState = CustomAppAnimation.State.Open;
                 }
             }
         }
@@ -248,6 +261,17 @@ namespace ExampleAppWPF
                         double newXPx = anim.m_offscreenPos.X;
                         Debug.WriteLine("AnimateOffScreen x: {0}", newXPx);
                         AnimateViewToX(anim, newXPx);
+
+                        if(anim.m_currentState == CustomAppAnimation.State.Open)
+                        {
+                            anim.m_containerAnimationCurrentPos = anim.m_openPos;
+                        }
+                        else if (anim.m_currentState == CustomAppAnimation.State.Closed)
+                        {
+                            anim.m_containerAnimationCurrentPos = anim.m_closedPos;
+                        }
+
+                        anim.m_currentState = CustomAppAnimation.State.OffScreen;
                     } 
                 }
             });
@@ -338,7 +362,6 @@ namespace ExampleAppWPF
 
             anim.m_animationStartPos.Y = anim.m_animationCurrentPos.Y = anim.m_animationEndPos.Y = ViewYPx(anim);
 
-            anim.m_animationCurrentPos.X = ViewXPx(anim);
             anim.m_animationEndPos.X = xAsPx;
 
             anim.m_animating = true;
@@ -421,14 +444,12 @@ namespace ExampleAppWPF
 
         protected bool IsClosed()
         {
-            var currentPosition = m_menuAnimations[0].m_uiElement.RenderTransform.Transform(new Point(0.0, 0.0));
-            return currentPosition.X == m_menuAnimations[0].m_closedPos.X;
+            return m_menuAnimations[0].m_currentState == CustomAppAnimation.State.Closed;
         }
 
         protected bool IsOpen()
         {
-            var currentPosition = m_menuAnimations[0].m_uiElement.RenderTransform.Transform(new Point(0.0, 0.0));
-            return currentPosition.X == m_menuAnimations[0].m_openPos.X;
+            return m_menuAnimations[0].m_currentState == CustomAppAnimation.State.Open;
         }
     }
 }
