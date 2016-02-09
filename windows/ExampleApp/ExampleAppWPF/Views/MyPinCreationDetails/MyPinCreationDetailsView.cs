@@ -153,6 +153,7 @@ namespace ExampleAppWPF
             m_description.Text = string.Empty;
             m_shouldShareButton.IsChecked = false;
             m_poiImage.Source = m_prevSource;
+            m_imageBuffer = null;
         }
 
         public void Dismiss()
