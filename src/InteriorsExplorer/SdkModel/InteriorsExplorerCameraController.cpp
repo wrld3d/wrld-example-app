@@ -178,15 +178,14 @@ namespace ExampleApp
                 }
                 m_inExpandedMode = expanded;
                 
-                float floorGap = m_interiorAnimationController.CalculateExpandedSpaceBetweenFloors(pModel->GetTangentSpaceBounds());
-                float centerHeight = floorGap * pModel->GetFloorCount()*0.5f;
+                const float expandedCenterHeight = m_interiorAnimationController.CalculateExpandedHeight()*0.5f;
                 
-                float expandedDistanceToInterest = (centerHeight / Eegeo::Math::Tan(fovRadians*0.5f)) * AdditionalExpandedDistanceToInterestFactor;
+                float expandedDistanceToInterest = (expandedCenterHeight / Eegeo::Math::Tan(fovRadians*0.5f)) * AdditionalExpandedDistanceToInterestFactor;
                 float distanceToInterest = Eegeo::Math::Lerp(m_normalDistanceToInterest, expandedDistanceToInterest, expandedParam);
                 m_globeCameraController.SetView(m_globeCameraController.GetInterestBasis(), distanceToInterest);
                 
                 Eegeo::dv3 initialCameraInterestEcef = m_globeCameraController.GetInterestBasis().GetPointEcef();
-                Eegeo::dv3 finalCameraInterestEcef = CalculateInterestPoint(pModel, centerHeight, expandedParam, centerCameraOnFloor);
+                Eegeo::dv3 finalCameraInterestEcef = CalculateInterestPoint(pModel, expandedCenterHeight, expandedParam, centerCameraOnFloor);
                 
                 const double PositionUpdateThresholdDistanceSq = 0.01;
                 if((finalCameraInterestEcef - initialCameraInterestEcef).LengthSq() > PositionUpdateThresholdDistanceSq)
