@@ -179,7 +179,7 @@ namespace
     }
     
     CGPoint touchLocation = [touch locationInView:self];
-    if (CGRectContainsPoint(self.pFloorPanel.frame, touchLocation) && m_floorSelectionEnabled)
+    if (CGRectContainsPoint(self.pFloorChangeButton.frame, touchLocation) && m_floorSelectionEnabled)
         return YES;
     if (CGRectContainsPoint(self.pDetailsPanel.frame, touchLocation))
         return YES;
