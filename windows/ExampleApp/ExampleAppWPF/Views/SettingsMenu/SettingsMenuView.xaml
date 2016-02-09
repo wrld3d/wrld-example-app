@@ -44,6 +44,18 @@
                                                                 <Setter TargetName="SearchButtonIcon" Property="Source" Value="/Assets/button_settings_on.png"/>
                                                                 <Setter TargetName="SearchButtonGrid" Property="Background" Value="{StaticResource PrimaryBG_Down_Colour}"/>
                                                             </Trigger>
+                                                            <Trigger Property="IsMouseOver" Value="False">
+                                                                <Setter TargetName="SearchButtonGrid" Property="Background" Value="{StaticResource PrimaryBG_colour}"/>
+                                                            </Trigger>
+                                                            <MultiTrigger>
+                                                                <MultiTrigger.Conditions>
+                                                                    <Condition Property="IsMouseOver" Value="True"/>
+                                                                    <Condition Property="IsPressed" Value="False" />
+                                                                </MultiTrigger.Conditions>
+                                                                <MultiTrigger.Setters>
+                                                                    <Setter TargetName="SearchButtonGrid" Property="Background" Value="{StaticResource PrimaryBG_Over_Colour}"/>
+                                                                </MultiTrigger.Setters>
+                                                            </MultiTrigger>
                                                         </ControlTemplate.Triggers>
                                                     </ControlTemplate>
                                                 </Setter.Value>
