@@ -19,7 +19,7 @@
     <SolidColorBrush x:Key="Black" Color="#000000 "/>
     <SolidColorBrush x:Key="DarkGrey" Color="#777777 "/>
     <SolidColorBrush x:Key="Grey" Color="#aaaaaa "/>
-    <SolidColorBrush x:Key="LightGrey" Color="#cccccc "/>
+    <SolidColorBrush x:Key="LightGrey" Color="#CECECE"/>
     <SolidColorBrush x:Key="Blue" Color="#291e9a "/>
     <SolidColorBrush x:Key="MenuSeparator" Color="#b1cce1 "/>
     <SolidColorBrush x:Key="SubMenuSeparator" Color="#c6cecf "/>

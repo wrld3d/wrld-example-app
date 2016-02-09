@@ -4,7 +4,6 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../../Colours.xaml" />
-        <ResourceDictionary Source="../../TransparentButtonStyle.xaml" />
         <ResourceDictionary Source="../../ListBoxControlTemplateNoPadding.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
@@ -28,7 +27,7 @@
                     </ControlTemplate.Resources>
                     <DockPanel Margin="0,50,0,0" Width="382">
                         <Grid Width="50" Height="50" VerticalAlignment="Top" DockPanel.Dock="Right" Name="DragTabParentGrid" Background="{StaticResource Gold}">
-                            <Image Source="/Assets/search_magglass.png" Width="Auto" Height="Auto" Name="SecondaryMenuDragTabView" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            <Image Source="/Assets/button_search_off.png" Width="Auto" Height="Auto" Name="SecondaryMenuDragTabView" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </Grid>
 
                         <Grid Name="SecondaryMenuViewListContainer" DockPanel.Dock="Left" Visibility="Hidden">

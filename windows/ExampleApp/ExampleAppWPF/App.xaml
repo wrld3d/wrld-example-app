@@ -7,6 +7,7 @@
         <SolidColorBrush x:Key="PrimaryBG_colour" Color="#FF1256B0"/>
         <SolidColorBrush x:Key="PrimaryBG_Over_Colour" Color="#002B63"/>
         <SolidColorBrush x:Key="PrimaryBG_Down_Colour" Color="#FFCDFC0D"/>
+        <SolidColorBrush x:Key="LightGrey" Color="#CECECE"/>
 
         <!-- Custom ScrollBar-->
         <Style x:Key="ScrollBarTrackThumb"
@@ -30,7 +31,7 @@
         </Style>
         <Style TargetType="{x:Type ScrollBar}">
             <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
-            <Setter Property="Foreground" Value="{DynamicResource PrimaryBG_colour}" />
+            <Setter Property="Foreground" Value="{StaticResource LightGrey}" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Width" Value="7" />
             <Setter Property="Template">

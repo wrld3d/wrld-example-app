@@ -281,14 +281,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="..\..\Resources\button_streets_off.png">
-      <Link>Assets\button_streets_off.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\button_streets_on.png">
-      <Link>Assets\button_streets_on.png</Link>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="..\..\Resources\arrow.png">
       <Link>Assets\arrow.png</Link>
     </Resource>
@@ -307,16 +299,8 @@
     <Resource Include="..\..\Resources\arrow3_up.png">
       <Link>Assets\arrow3_up.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\compass.png">
-      <Link>Assets\compass.png</Link>
-    </Resource>
     <Resource Include="..\..\Resources\compass_point.png">
       <Link>Assets\compass_point.png</Link>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="..\..\Resources\button_create_poi.png">
-      <Link>Assets\button_create_poi.png</Link>
     </Resource>
   </ItemGroup>
   <ItemGroup>
@@ -525,14 +509,44 @@
     <Resource Include="Assets\place_pin_background.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="..\..\Resources\search_magglass.png">
-      <Link>Assets\search_magglass.png</Link>
-    </Resource>
-	<Resource Include="..\..\Resources\button_exit_interior_on.png">
+    <Resource Include="..\..\Resources\button_exit_interior_on.png">
       <Link>Assets\button_exit_interior_on.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\settings_gear.png">
       <Link>Assets\settings_gear.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_compass_off.png">
+      <Link>Assets\button_compass_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_compass_on.png">
+      <Link>Assets\button_compass_on.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_create_poi_off.png">
+      <Link>Assets\button_create_poi_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_create_poi_on.png">
+      <Link>Assets\button_create_poi_on.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_flatten_off.png">
+      <Link>Assets\button_flatten_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_flatten_on.png">
+      <Link>Assets\button_flatten_on.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_unflatten_off.png">
+      <Link>Assets\button_unflatten_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_unflatten_on.png">
+      <Link>Assets\button_unflatten_on.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_search_off.png">
+      <Link>Assets\button_search_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_settings_on.png">
+      <Link>Assets\button_settings_on.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_settings_off.png">
+      <Link>Assets\button_settings_off.png</Link>
     </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

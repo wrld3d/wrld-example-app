@@ -7,8 +7,13 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CompassView}">
                     <Canvas Name="ImageCanvas">
-                        <Image Name="ButtonImage" Source="/Assets/compass.png" Width="120" Height="120"/>
+                        <Image Name="ButtonImage" Source="/Assets/button_compass_off.png" Width="120" Height="120"/>
                     </Canvas>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ButtonImage" Property="Source" Value="/Assets/button_compass_on.png"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
