@@ -144,14 +144,32 @@
                                                 </Style>
 
                                                 <DataTemplate DataType="{x:Type local:MenuListItem}">
-                                                    <Grid HorizontalAlignment="Stretch" Height="42" Background="{StaticResource Gold}">
+                                                    <Grid Name="MenuItemGrid" HorizontalAlignment="Stretch" Height="42" Background="{StaticResource Gold}">
                                                         <Grid.Triggers>
                                                             <EventTrigger RoutedEvent="MouseDown">
                                                                 <BeginStoryboard>
                                                                     <Storyboard>
-                                                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Grid.Background).(SolidColorBrush.Color)">
-                                                                            <EasingColorKeyFrame KeyTime="0" Value="#FF8DD8F8" />
-                                                                        </ColorAnimationUsingKeyFrames>
+                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MenuItemGrid" Storyboard.TargetProperty="Background">
+                                                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource PrimaryBG_Down_Colour}"/>
+                                                                        </ObjectAnimationUsingKeyFrames>
+                                                                    </Storyboard>
+                                                                </BeginStoryboard>
+                                                            </EventTrigger>
+                                                            <EventTrigger RoutedEvent="MouseEnter">
+                                                                <BeginStoryboard>
+                                                                    <Storyboard>
+                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MenuItemGrid" Storyboard.TargetProperty="Background">
+                                                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource PrimaryBG_Over_Colour}"/>
+                                                                        </ObjectAnimationUsingKeyFrames>
+                                                                    </Storyboard>
+                                                                </BeginStoryboard>
+                                                            </EventTrigger>
+                                                            <EventTrigger RoutedEvent="MouseLeave">
+                                                                <BeginStoryboard>
+                                                                    <Storyboard>
+                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MenuItemGrid" Storyboard.TargetProperty="Background">
+                                                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource PrimaryBG_colour}"/>
+                                                                        </ObjectAnimationUsingKeyFrames>
                                                                     </Storyboard>
                                                                 </BeginStoryboard>
                                                             </EventTrigger>
