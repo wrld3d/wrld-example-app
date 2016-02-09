@@ -53,12 +53,10 @@ namespace ExampleAppWPF
             m_list = (ListBox)GetTemplateChild("SecondaryMenuItemList");
             m_list.SelectionChanged += SelectionChanged;
 
-            m_dragTabView = (Image)GetTemplateChild("SecondaryMenuDragTabView");
+            m_dragTabView = (Button)GetTemplateChild("SecondaryMenuDragTabView");
             m_dragTabContainer = (Grid)GetTemplateChild("DragTabParentGrid");
 
-            m_dragTabView.MouseLeftButtonDown += OnMouseLeftButtonDown;
-            m_dragTabView.MouseLeftButtonUp += OnMouseLeftButtonUp;
-            m_dragTabView.MouseLeave += OnMouseLeave;
+            m_dragTabView.Click += OnIconClick;
 
             m_mainContainer = (Grid)GetTemplateChild("SecondaryMenuViewListContainer");
             m_mainContainerAnim = new CustomAppAnimation(m_mainContainer as FrameworkElement);
@@ -72,6 +70,11 @@ namespace ExampleAppWPF
             m_adapter = new MenuListAdapter(false, m_list, fadeInItemStoryboard, fadeOutItemStoryboard);
 
             PerformLayout(null, null);
+        }
+
+        private void OnIconClick(object sender, RoutedEventArgs e)
+        {
+            MenuViewCLIMethods.ViewClicked(m_nativeCallerPointer);
         }
 
         private void OnResultSelected(object sender, SelectionChangedEventArgs e)
@@ -101,27 +104,6 @@ namespace ExampleAppWPF
 
                     MenuViewCLIMethods.SelectedItem(m_nativeCallerPointer, sectionIndex, childIndex);
                 }
-            }
-        }
-
-        private void OnMouseLeave(object sender, MouseEventArgs e)
-        {
-            m_dragTabContainer.Background = (SolidColorBrush)genericResourceDictionary["Gold"];
-            m_isMouseDown = false;
-        }
-
-        private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            m_dragTabContainer.Background = (SolidColorBrush)genericResourceDictionary["Highlight"];
-            m_isMouseDown = true;
-        }
-
-        private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            if (m_isMouseDown)
-            {
-                m_dragTabContainer.Background = (SolidColorBrush)genericResourceDictionary["Gold"];
-                MenuViewCLIMethods.ViewClicked(m_nativeCallerPointer);
             }
         }
 

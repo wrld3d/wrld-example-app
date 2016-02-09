@@ -92,12 +92,10 @@ namespace ExampleAppWPF
             m_resultsList = (ListBox)GetTemplateChild("SearchResultsList");
             m_resultsList.SelectionChanged += OnResultSelected;
             
-            m_dragTabView = (Image)GetTemplateChild("SecondaryMenuDragTabView");
+            m_dragTabView = (Button)GetTemplateChild("SecondaryMenuDragTabView");
             m_dragTabContainer = (Grid)GetTemplateChild("DragTabParentGrid");
 
-            m_dragTabView.MouseLeftButtonDown += OnMouseLeftButtonDown;
-            m_dragTabView.MouseLeftButtonUp += OnMouseLeftButtonUp;
-            m_dragTabView.MouseLeave += OnMouseLeave;
+            m_dragTabView.Click += OnIconClick;
 
             m_editText = (TextBox)GetTemplateChild("SecondaryMenuViewSearchEditTextView");
             m_editText.KeyDown += OnKeyDown;
@@ -114,30 +112,14 @@ namespace ExampleAppWPF
             m_resultListAdapter= new MenuListAdapter(false, m_list, fadeInItemStoryboard, fadeOutItemStoryboard);
         }
 
+        private void OnIconClick(object sender, RoutedEventArgs e)
+        {
+            MenuViewCLIMethods.ViewClicked(m_nativeCallerPointer);
+        }
+
         private void OnResultSelected(object sender, SelectionChangedEventArgs e)
         {
             throw new NotImplementedException();
-        }
-
-        private void OnMouseLeave(object sender, MouseEventArgs e)
-        {
-            m_dragTabContainer.Background = (SolidColorBrush)genericResourceDictionary["Gold"];
-            m_isMouseDown = false;
-        }
-
-        private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            m_dragTabContainer.Background = (SolidColorBrush)genericResourceDictionary["Highlight"];
-            m_isMouseDown = true;
-        }
-
-        private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            if(m_isMouseDown)
-            {
-                m_dragTabContainer.Background = (SolidColorBrush)genericResourceDictionary["Gold"];
-                MenuViewCLIMethods.ViewClicked(m_nativeCallerPointer);
-            }
         }
 
         private void SelectionChanged(object sender, SelectionChangedEventArgs e)

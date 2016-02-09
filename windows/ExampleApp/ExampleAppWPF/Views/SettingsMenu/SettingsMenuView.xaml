@@ -29,7 +29,29 @@
 
                     <DockPanel Margin="0,50,0,0" Width="382">
                         <Grid Width="50" Height="50" VerticalAlignment="Top" DockPanel.Dock="Left" Name="DragTabParentGrid" Background="{StaticResource Gold}">
-                            <Image Source="/Assets/settings_gear.png" Width="Auto" Height="Auto" Name="SecondaryMenuDragTabView" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            <Button Width="Auto" Height="Auto" Name="SecondaryMenuDragTabView" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}">
+                                        <Style.Setters>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                        <Grid Name="SearchButtonGrid"  Background="{StaticResource Gold}">
+                                                            <Image Source="/Assets/button_settings_off.png" Width="50" Height="50" Name="SearchButtonIcon" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                        </Grid>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsPressed" Value="True">
+                                                                <Setter TargetName="SearchButtonIcon" Property="Source" Value="/Assets/button_settings_on.png"/>
+                                                                <Setter TargetName="SearchButtonGrid" Property="Background" Value="{StaticResource PrimaryBG_Down_Colour}"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style.Setters>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
                         </Grid>
 
                         <Grid Name="SecondaryMenuViewListContainer" DockPanel.Dock="Right">

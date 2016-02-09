@@ -15,7 +15,7 @@ namespace ExampleAppWPF
         protected ControlClickHandler m_dragTabClickHandler = null;
 
         protected ListBox m_list = null;
-        protected Image m_dragTabView;
+        protected Button m_dragTabView;
         protected bool m_loggingEnabled = false;
 
         protected IntPtr m_nativeCallerPointer;
