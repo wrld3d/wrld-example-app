@@ -65,15 +65,15 @@ The project is configured to build for multiple target CPU architectures, creati
 \- [Microsoft Visual Studio 2015](https://www.visualstudio.com/en-us/downloads/download-visual-studio-vs.aspx)  
 \- [MinGW](http://www.mingw.org/)  
 \- [CMake](https://cmake.org/) (>= 3.1.1)  
-1. Clone the repo: **git clone git@github.com:eegeo/mobile-example-app.git**.
+1. Clone the repo: **git clone git@github.com:eegeo/mobile-example-app.git**.  
 2. Get the latest Windows SDK by running **sh ./update.platform -p windows** from the repo root.
-3. Within the windows directory, create a build directory for your project
+3. Within the windows directory, create a build directory for your project  
 4. Navigate to your build directory and generate the project with CMake: `cmake -G "Visual Studio 14 Win64" ..`  
-This is an 'out of source' build - all of the objects and binaries will be built inside of this directory. The `..` denotes that we're generating from source in the parent (in this case 'windows') directory.
-5. Open the ExampleApp.sln solution that CMake has generated
-6. Obtain an [eeGeo API key](https://www.eegeo.com/developers/apikeys) and add it to the [ApiKey file](https://github.com/eegeo/mobile-example-app/blob/master/src/ApiKey.h#L10).
-7. Right click the ExampleAppWPF project and choose `Set as StartUp Project`
-8. Build and Run the app
+This is an 'out of source' build - all of the objects and binaries will be built inside of this directory. The `..` denotes that we're generating from source in the parent (in this case 'windows') directory.  
+5. Open the ExampleApp.sln solution that CMake has generated  
+6. Obtain an [eeGeo API key](https://www.eegeo.com/developers/apikeys) and add it to the [ApiKey file](https://github.com/eegeo/mobile-example-app/blob/master/src/ApiKey.h#L10).  
+7. Right click the ExampleAppWPF project and choose `Set as StartUp Project`  
+8. Build and Run the app  
 
 ### API Key 
 
