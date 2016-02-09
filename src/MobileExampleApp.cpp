@@ -573,6 +573,7 @@ namespace ExampleApp
         
         m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(interiorsPresentationModule.GetController(),
                                                                                                      interiorsPresentationModule.GetDefaultInteriorViewAnimator(),
+                                                                                                     interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                      interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                      interiorsModelModule.GetInteriorMarkerModelRepository(),
                                                                                                      m_pWorldPinsModule->GetWorldPinsService(),

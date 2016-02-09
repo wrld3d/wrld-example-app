@@ -21,10 +21,18 @@ namespace ExampleApp
             class InteriorsExplorerCameraController : public AppCamera::SdkModel::IAppCamera, private Eegeo::NonCopyable
             {
             private:
+                
+                void UpdateCameraView();
+                Eegeo::dv3 CalculateInterestPoint(const Eegeo::Resources::Interiors::InteriorsModel* pModel,
+                                                  float centerHeightAboveGround,
+                                                  float expandedParam,
+                                                  bool shouldCenterOnFloor);
+                
                 bool m_cameraTouchEnabled;
                 Eegeo::Resources::Interiors::InteriorController& m_interiorController;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                 Eegeo::Resources::Interiors::DefaultInteriorAnimationController& m_interiorAnimationController;
+                Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& m_globeCameraTouchController;
                 Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
                 const Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
@@ -32,13 +40,14 @@ namespace ExampleApp
                 bool m_applyRestrictions;
                 float m_cameraInterestAltitude;
                 bool m_applyFloorOffset;
+                bool m_inExpandedMode;
                 float m_normalDistanceToInterest;
-                float m_normalTilt;
                 
             public:
                 InteriorsExplorerCameraController(Eegeo::Resources::Interiors::InteriorController& interiorController,
                                                   Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                   Eegeo::Resources::Interiors::DefaultInteriorAnimationController& interiorAnimationController,
+                                                  Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                   const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                   Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& m_globeCameraTouchController,
                                                   Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController,
@@ -47,13 +56,9 @@ namespace ExampleApp
                 ~InteriorsExplorerCameraController();
                 
                 const Eegeo::Camera::CameraState GetCameraState() const;
-                
                 const Eegeo::Camera::RenderCamera GetRenderCamera() const;
-                
                 Eegeo::dv3 ComputeNonFlattenedCameraPosition() const;
-                
                 Eegeo::ITouchController& GetTouchController() const;
-                
                 Eegeo::Camera::GlobeCamera::GlobeCameraController& GetGlobeCameraController();
                 
                 void Update(float dt);
@@ -68,15 +73,10 @@ namespace ExampleApp
                 float GetHeadingDegrees() const;
                 
                 void SetTilt(float tiltDegrees);
-                
                 void SetApplyRestrictions(bool applyRestrictions);
-                
                 void SetApplyFloorOffset(bool applyFloorOffset);
-                
                 float GetCameraInterestAltitude() const;
                 void SetCameraInterestAltitude(float cameraInterestAltitude);
-                
-                // Must be able to get interior model
                 float GetFloorOffsetHeight() const;
             };
         }

@@ -17,6 +17,7 @@
 #include "InteriorsFloorModel.h"
 #include "IVisualMapService.h"
 #include "VisualMapState.h"
+#include "InteriorInteractionModel.h"
 
 #include "ICameraTransitionController.h"
 
@@ -42,6 +43,7 @@ namespace ExampleApp
             
             InteriorsExplorerModel::InteriorsExplorerModel(Eegeo::Resources::Interiors::InteriorController& controller,
                                                            Eegeo::Resources::Interiors::DefaultInteriorAnimationController& animationController,
+                                                           Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                            VisualMap::SdkModel::IVisualMapService& visualMapService,
                                                            ExampleAppMessaging::TMessageBus& messageBus,
@@ -49,6 +51,7 @@ namespace ExampleApp
                                                            Metrics::IMetricsService& metricsService)
             : m_controller(controller)
             , m_animationController(animationController)
+            , m_interiorInteractionModel(interiorInteractionModel)
             , m_interiorSelectionModel(interiorSelectionModel)
             , m_visualMapService(visualMapService)
             , m_messageBus(messageBus)
@@ -178,7 +181,7 @@ namespace ExampleApp
                 const float dragParameter = message.GetDragParam();
                 const float floorParam = dragParameter * (pModel->GetFloorCount()-1);
 
-                m_animationController.SetExpandedModeEnabled(true);
+                m_interiorInteractionModel.SetExpanded(true);
                 m_animationController.SetFloorParameter(floorParam);
                 
                 const int nearestFloorIndex = static_cast<int>(roundf(floorParam));
@@ -193,7 +196,7 @@ namespace ExampleApp
                     return;
                 }
                 
-                m_animationController.SetExpandedModeEnabled(false);
+                m_interiorInteractionModel.SetExpanded(false);
                 
                 if(m_controller.GetCurrentFloorIndex() == floor)
                 {

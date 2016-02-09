@@ -22,6 +22,7 @@ namespace ExampleApp
         {
             InteriorsExplorerModule::InteriorsExplorerModule(Eegeo::Resources::Interiors::InteriorController& interiorController,
                                                              Eegeo::Resources::Interiors::DefaultInteriorAnimationController& interiorAnimationController,
+                                                             Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                              Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                              Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
                                                              WorldPins::SdkModel::IWorldPinsService& worldPinsService,
@@ -52,8 +53,6 @@ namespace ExampleApp
                 globeCameraConfig.nearPlane = 0.4f * globeCameraConfig.zoomAltitudeLow;
                 globeCameraConfig.farPlane = 2.5f * globeCameraConfig.maxAltitude;
                 
-                globeCameraConfig.pitchCityMode = 30.0f;
-                
                 m_pGlobeCameraTouchController = globeCameraControllerFactory.CreateTouchController(touchConfig, screenProperties);
                 
                 m_pGlobeCameraController = globeCameraControllerFactory.CreateCameraController(globeCameraConfig,
@@ -63,6 +62,7 @@ namespace ExampleApp
                 m_pInteriorsCameraController = Eegeo_NEW(InteriorsExplorerCameraController)(interiorController,
                                                                                             interiorSelectionModel,
                                                                                             interiorAnimationController,
+                                                                                            interiorInteractionModel,
                                                                                             environmentFlatteningService,
                                                                                             *m_pGlobeCameraTouchController,
                                                                                             *m_pGlobeCameraController,
@@ -77,6 +77,7 @@ namespace ExampleApp
                 
                 m_pModel = Eegeo_NEW(InteriorsExplorerModel)(interiorController,
                                                              interiorAnimationController,
+                                                             interiorInteractionModel,
                                                              interiorSelectionModel,
                                                              visualMapService,
                                                              messageBus,

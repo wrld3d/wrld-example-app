@@ -27,6 +27,7 @@ namespace ExampleApp
             public:
                 InteriorsExplorerModule(Eegeo::Resources::Interiors::InteriorController& interiorController,
                                         Eegeo::Resources::Interiors::DefaultInteriorAnimationController& interiorAnimationController,
+                                        Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                         Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                         Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
                                         WorldPins::SdkModel::IWorldPinsService& worldPinsService,
