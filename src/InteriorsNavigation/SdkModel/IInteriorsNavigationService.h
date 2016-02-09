@@ -14,6 +14,7 @@ namespace ExampleApp
             class IInteriorsNavigationService : protected Eegeo::NonCopyable
             {
             public:
+                virtual ~IInteriorsNavigationService(){}
                 
                 virtual void SetGpsMode(Eegeo::Location::NavigationService::GpsMode mode) = 0;
                 

@@ -17,20 +17,10 @@ namespace ExampleApp
         {
             InteriorsExplorerController::InteriorsExplorerController(IInteriorsExplorerView& view,
                                                                      InteriorsExplorerViewModel& viewModel,
-                                                                     ExampleAppMessaging::TMessageBus& messageBus,
-                                                                     MyPinCreation::View::IMyPinCreationInitiationViewModel& initiationViewModel,
-                                                                     ExampleApp::Menu::View::IMenuViewModel& secondaryMenuViewModel,
-                                                                     ExampleApp::Menu::View::IMenuViewModel& searchResultMenuViewModel,
-                                                                     ScreenControl::View::IScreenControlViewModel& flattenViewModel,
-                                                                     ScreenControl::View::IScreenControlViewModel& compassViewModel)
+                                                                     ExampleAppMessaging::TMessageBus& messageBus)
             : m_view(view)
             , m_viewModel(viewModel)
             , m_messageBus(messageBus)
-            , m_initiationViewModel(initiationViewModel)
-            , m_secondaryMenuViewModel(secondaryMenuViewModel)
-            , m_searchResultMenuViewModel(searchResultMenuViewModel)
-            , m_flattenViewModel(flattenViewModel)
-            , m_compassViewModel(compassViewModel)
             , m_appMode(AppModes::SdkModel::WorldMode)
             , m_dismissedCallback(this, &InteriorsExplorerController::OnDismiss)
             , m_selectFloorCallback(this, &InteriorsExplorerController::OnSelectFloor)

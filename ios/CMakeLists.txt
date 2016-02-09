@@ -7,8 +7,8 @@ if(NOT ${IOS})
 	message(FATAL_ERROR "Incorrect toolchain set: ${CMAKE_TOOLCHAIN_FILE}")
 endif(NOT ${IOS})
 
-project(ExampleApp)
-set(executable_name ExampleApp)
+project(ProjectSwallow)
+set(executable_name ProjectSwallow)
 
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Include/eegeo/CMakeLists.txt")
   include("${CMAKE_CURRENT_SOURCE_DIR}/Include/eegeo/CMakeLists.txt")
@@ -29,7 +29,8 @@ set(storyboards
 set(EEGEO_PLIST_BUNDLE_EXECUTABLE "\${EXECUTABLE_NAME}")
 set(EEGEO_PLIST_BUNDLE_IDENTIFIER "eegeo.\${PRODUCT_NAME:rfc1034identifier}")
 set(EEGEO_PLIST_BUNDLE_SHORT_VERSION_STRING "\${PRODUCT_VERSION}")
-set(EEGEO_PLIST_BUNDLE_DISPLAY_NAME "Eegeo Example")
+set(EEGEO_PLIST_BUNDLE_DISPLAY_NAME "Project Swallow")
+set(EEGEO_PLIST_PRODUCT_NAME "\${PRODUCT_NAME}")
 
 # compiler/linker settings
 set(CMAKE_XCODE_EFFECTIVE_PLATFORMS "-iphoneos;-iphonesimulator")
@@ -39,11 +40,11 @@ set(IOS_WARNING_FLAGS "-Wmost -Werror -Wno-four-char-constants -Wno-unknown-prag
 if(${COMPILE_CPP_03})
     message(STATUS "CMake generating C++03 build")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -x objective-c++ ${IOS_WARNING_FLAGS}")
-    set(eegeo_sdk_libs "-lapps-on-maps -lapps-on-maps-sim")
+    set(eegeo_sdk_libs "-lapps-on-maps -lapps-on-maps-sim -lsdk-extensions-sqlite -lsdk-extensions-sqlite-sim")
 else(${COMPILE_CPP_03})
     message(STATUS "CMake generating C++11 build")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -x objective-c++ -DCOMPILE_CPP_11 ${IOS_WARNING_FLAGS}")
-    set(eegeo_sdk_libs "-lapps-on-maps-cpp11 -lapps-on-maps-cpp11-sim")
+    set(eegeo_sdk_libs "-lapps-on-maps-cpp11 -lapps-on-maps-cpp11-sim -lsdk-extensions-sqlite-cpp11 -lsdk-extensions-sqlite-cpp11-sim")
 endif(${COMPILE_CPP_03})
 
 set(ios_frameworks 
@@ -85,7 +86,7 @@ RESOURCE "${allresources}"
 # project settings
 set_xcode_property (${executable_name} GCC_TREAT_WARNINGS_AS_ERRORS "YES")
 set_xcode_property (${executable_name} CODE_SIGN_IDENTITY "iPhone Developer")
-set_xcode_property (${executable_name} IPHONEOS_DEPLOYMENT_TARGET "5.0")
+set_xcode_property (${executable_name} IPHONEOS_DEPLOYMENT_TARGET "6.0")
 set_xcode_property (${executable_name} TARGETED_DEVICE_FAMILY "1,2")
 set_xcode_property (${executable_name} ENABLE_BITCODE "No")
 
@@ -94,7 +95,7 @@ set_xcode_property (${executable_name} ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME "L
 set_xcode_property (${executable_name} COMBINE_HIDPI_IMAGES "No")
 
 set_xcode_property(${executable_name} GCC_PRECOMPILE_PREFIX_HEADER "YES")
-set_xcode_property(${executable_name} GCC_PREFIX_HEADER "ExampleApp/ExampleApp-Prefix.pch")
+set_xcode_property(${executable_name} GCC_PREFIX_HEADER "ExampleApp/ProjectSwallowApp-Prefix.pch")
 
 
 if(${COMPILE_CPP_03})
@@ -106,4 +107,4 @@ else(${COMPILE_CPP_03})
   set_xcode_property(${executable_name} CLANG_CXX_LIBRARY "libc++")
 endif(${COMPILE_CPP_03})
 
-set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH "NO")
+set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH "YES")

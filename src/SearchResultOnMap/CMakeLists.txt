@@ -2,6 +2,8 @@ set(headers ${headers} ../src/SearchResultOnMap
 )
 set(currsources
   ../src/SearchResultOnMap/CMakeLists.txt
+  ../src/SearchResultOnMap/SearchResultMeetingAvailabilityChanged.cpp
+  ../src/SearchResultOnMap/SearchResultMeetingAvailabilityChanged.h
   ../src/SearchResultOnMap/SearchResultOnMap.h
   ../src/SearchResultOnMap/SearchResultOnMapItemModelSelectedMessage.cpp
   ../src/SearchResultOnMap/SearchResultOnMapItemModelSelectedMessage.h

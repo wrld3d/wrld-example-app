@@ -14,11 +14,6 @@ namespace ExampleApp
         {
             InteriorsExplorerViewModule::InteriorsExplorerViewModule(InteriorsExplorerViewModel& viewModel,
                                                                      ExampleAppMessaging::TMessageBus& messageBus,
-                                                                     MyPinCreation::View::IMyPinCreationInitiationViewModel& initiationViewModel,
-                                                                     ExampleApp::Menu::View::IMenuViewModel& secondaryMenuViewModel,
-                                                                     ExampleApp::Menu::View::IMenuViewModel& searchResultMenuViewModel,
-                                                                     ScreenControl::View::IScreenControlViewModel& flattenViewModel,
-                                                                     ScreenControl::View::IScreenControlViewModel& compassViewModel,
                                                                      const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                                      Eegeo::Helpers::IdentityProvider& identityProvider)
             {
@@ -26,12 +21,7 @@ namespace ExampleApp
                 
                 m_pController = Eegeo_NEW(InteriorsExplorerController)(*[m_pView getInterop],
                                                                        viewModel,
-                                                                       messageBus,
-                                                                       initiationViewModel,
-                                                                       secondaryMenuViewModel,
-                                                                       searchResultMenuViewModel,
-                                                                       flattenViewModel,
-                                                                       compassViewModel);
+                                                                       messageBus);
                 
 
             }

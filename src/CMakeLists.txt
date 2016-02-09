@@ -1,4 +1,4 @@
-set(headers ${headers} ../src
+set(headers ${headers} ../src/
 )
 set(currsources
   ../src/ApiKey.h
@@ -11,7 +11,7 @@ set(currsources
   ../src/PlatformAbstractionsFacade.h
 )
 set(sources ${sources} ${currsources})
-source_group(\\src FILES ${currsources})
+source_group(\\src\\/ FILES ${currsources})
 include(../src/AboutPage/CMakeLists.txt)
 include(../src/AppCamera/CMakeLists.txt)
 include(../src/ApplicationConfig/CMakeLists.txt)
@@ -26,6 +26,7 @@ include(../src/Helpers/CMakeLists.txt)
 include(../src/InitialExperience/CMakeLists.txt)
 include(../src/InteriorsEntitiesPins/CMakeLists.txt)
 include(../src/InteriorsExplorer/CMakeLists.txt)
+include(../src/InteriorsNavigation/CMakeLists.txt)
 include(../src/MapMode/CMakeLists.txt)
 include(../src/Menu/CMakeLists.txt)
 include(../src/Metrics/CMakeLists.txt)
@@ -40,6 +41,7 @@ include(../src/Options/CMakeLists.txt)
 include(../src/PersistentSettings/CMakeLists.txt)
 include(../src/PlaceJumps/CMakeLists.txt)
 include(../src/Reaction/CMakeLists.txt)
+include(../src/ReportPinsVisibilityMasking/CMakeLists.txt)
 include(../src/Repository/CMakeLists.txt)
 include(../src/ScreenControl/CMakeLists.txt)
 include(../src/Search/CMakeLists.txt)
@@ -48,6 +50,7 @@ include(../src/SearchResultOnMap/CMakeLists.txt)
 include(../src/SearchResultPoi/CMakeLists.txt)
 include(../src/SecondaryMenu/CMakeLists.txt)
 include(../src/Social/CMakeLists.txt)
+include(../src/SwallowPoiDb/CMakeLists.txt)
 include(../src/Tours/CMakeLists.txt)
 include(../src/URLRequest/CMakeLists.txt)
 include(../src/UserInteraction/CMakeLists.txt)

@@ -24,3 +24,4 @@ set(currsources
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\SearchResultMenu\\View FILES ${currsources})
+include(../src/SearchResultMenu/View/Swallow/CMakeLists.txt)

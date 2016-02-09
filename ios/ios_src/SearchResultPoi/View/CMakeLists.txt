@@ -16,6 +16,16 @@ set(currsources
   ios_src/SearchResultPoi/View/SearchResultPoiViewInterop.mm
   ios_src/SearchResultPoi/View/SearchResultPoiViewModule.h
   ios_src/SearchResultPoi/View/SearchResultPoiViewModule.mm
+  ios_src/SearchResultPoi/View/SwallowDepartmentSearchResultPoiView.h
+  ios_src/SearchResultPoi/View/SwallowDepartmentSearchResultPoiView.mm
+  ios_src/SearchResultPoi/View/SwallowFacilitySearchResultPoiView.h
+  ios_src/SearchResultPoi/View/SwallowFacilitySearchResultPoiView.mm
+  ios_src/SearchResultPoi/View/SwallowMeetingRoomSearchResultPoiView.h
+  ios_src/SearchResultPoi/View/SwallowMeetingRoomSearchResultPoiView.mm
+  ios_src/SearchResultPoi/View/SwallowPersonSearchResultPoiView.h
+  ios_src/SearchResultPoi/View/SwallowPersonSearchResultPoiView.mm
+  ios_src/SearchResultPoi/View/SwallowWorkingGroupSearchResultPoiView.h
+  ios_src/SearchResultPoi/View/SwallowWorkingGroupSearchResultPoiView.mm
   ios_src/SearchResultPoi/View/YelpSearchResultPoiView.h
   ios_src/SearchResultPoi/View/YelpSearchResultPoiView.mm
 )

@@ -63,7 +63,6 @@ namespace ExampleApp
                 , m_receivedQueryResponseHandler(this, &SecondaryMenuController::OnSearchQueryResponseReceivedMessage)
                 , m_onSearchCallback(this, &SecondaryMenuController::OnSearch)
                 , m_appModeChangedCallback(this, &SecondaryMenuController::OnAppModeChanged)
-                , m_appModeAllowsOpen(true)
             {
                 m_secondaryMenuView.InsertSearchPeformedCallback(m_onSearchCallback);
                 m_viewModel.InsertOpenStateChangedCallback(m_onOpenStateChangedCallback);

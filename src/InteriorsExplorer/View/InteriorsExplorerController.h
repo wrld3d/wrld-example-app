@@ -24,12 +24,7 @@ namespace ExampleApp
                 
                 InteriorsExplorerController(IInteriorsExplorerView& view,
                                             InteriorsExplorerViewModel& viewModel,
-                                            ExampleAppMessaging::TMessageBus& messageBus,
-                                            MyPinCreation::View::IMyPinCreationInitiationViewModel& initiationViewModel,
-                                            ExampleApp::Menu::View::IMenuViewModel& secondaryMenuViewModel,
-                                            ExampleApp::Menu::View::IMenuViewModel& searchResultMenuViewModel,
-                                            ScreenControl::View::IScreenControlViewModel& flattenViewModel,
-                                            ScreenControl::View::IScreenControlViewModel& compassViewModel);
+                                            ExampleAppMessaging::TMessageBus& messageBus);
                 
                 ~InteriorsExplorerController();
                 
@@ -51,12 +46,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, const InteriorsExplorerFloorSelectedMessage&> m_floorSelectedCallback;
                 Eegeo::Helpers::TCallback2<InteriorsExplorerController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
-                
-                MyPinCreation::View::IMyPinCreationInitiationViewModel& m_initiationViewModel;
-                ExampleApp::Menu::View::IMenuViewModel& m_secondaryMenuViewModel;
-                ExampleApp::Menu::View::IMenuViewModel& m_searchResultMenuViewModel;
-                ScreenControl::View::IScreenControlViewModel& m_flattenViewModel;
-                ScreenControl::View::IScreenControlViewModel& m_compassViewModel;
+            
                 AppModes::SdkModel::AppMode m_appMode;
                 
                 ExampleAppMessaging::TMessageBus& m_messageBus;

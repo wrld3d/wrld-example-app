@@ -1,6 +1,5 @@
 set(resources ${resources}
 		Resources/ApplicationConfigs
-		Resources/ApplicationConfigs/standard_config.json
 		Resources/Arrow.png
 		Resources/arrow1.png
 		Resources/arrow1@2x.png
@@ -46,6 +45,24 @@ set(resources ${resources}
 		Resources/button_gallery_off.png
 		Resources/button_gallery_off@2x.png
 		Resources/button_gallery_off@3x.png
+		Resources/button_occupancy_available_off.png
+		Resources/button_occupancy_available_off@2x.png
+		Resources/button_occupancy_available_off@3x.png
+		Resources/button_occupancy_available_on.png
+		Resources/button_occupancy_available_on@2x.png
+		Resources/button_occupancy_available_on@3x.png
+		Resources/button_occupancy_availablesoon_off.png
+		Resources/button_occupancy_availablesoon_off@2x.png
+		Resources/button_occupancy_availablesoon_off@3x.png
+		Resources/button_occupancy_availablesoon_on.png
+		Resources/button_occupancy_availablesoon_on@2x.png
+		Resources/button_occupancy_availablesoon_on@3x.png
+		Resources/button_occupancy_occupied_off.png
+		Resources/button_occupancy_occupied_off@2x.png
+		Resources/button_occupancy_occupied_off@3x.png
+		Resources/button_occupancy_occupied_on.png
+		Resources/button_occupancy_occupied_on@2x.png
+		Resources/button_occupancy_occupied_on@3x.png
 		Resources/button_ok_off.png
 		Resources/button_ok_off@2x.png
 		Resources/button_ok_off@3x.png
@@ -124,6 +141,9 @@ set(resources ${resources}
 		Resources/icon1_dusk.png
 		Resources/icon1_dusk@2x.png
 		Resources/icon1_dusk@3x.png
+		Resources/icon1_emergencyexit.png
+		Resources/icon1_emergencyexit@2x.png
+		Resources/icon1_emergencyexit@3x.png
 		Resources/icon1_foggy.png
 		Resources/icon1_foggy@2x.png
 		Resources/icon1_foggy@3x.png
@@ -133,6 +153,9 @@ set(resources ${resources}
 		Resources/icon1_hotel.png
 		Resources/icon1_hotel@2x.png
 		Resources/icon1_hotel@3x.png
+		Resources/icon1_meetingroom.png
+		Resources/icon1_meetingroom@2x.png
+		Resources/icon1_meetingroom@3x.png
 		Resources/icon1_misc.png
 		Resources/icon1_misc@2x.png
 		Resources/icon1_misc@3x.png
@@ -142,6 +165,9 @@ set(resources ${resources}
 		Resources/icon1_nightlife.png
 		Resources/icon1_nightlife@2x.png
 		Resources/icon1_nightlife@3x.png
+		Resources/icon1_office.png
+		Resources/icon1_office@2x.png
+		Resources/icon1_office@3x.png
 		Resources/icon1_options.png
 		Resources/icon1_options@2x.png
 		Resources/icon1_options@3x.png
@@ -151,9 +177,15 @@ set(resources ${resources}
 		Resources/icon1_park.png
 		Resources/icon1_park@2x.png
 		Resources/icon1_park@3x.png
+		Resources/icon1_person.png
+		Resources/icon1_person@2x.png
+		Resources/icon1_person@3x.png
 		Resources/icon1_place.png
 		Resources/icon1_place@2x.png
 		Resources/icon1_place@3x.png
+		Resources/icon1_printstation.png
+		Resources/icon1_printstation@2x.png
+		Resources/icon1_printstation@3x.png
 		Resources/icon1_rainy.png
 		Resources/icon1_rainy@2x.png
 		Resources/icon1_rainy@3x.png
@@ -163,18 +195,27 @@ set(resources ${resources}
 		Resources/icon1_spring.png
 		Resources/icon1_spring@2x.png
 		Resources/icon1_spring@3x.png
+		Resources/icon1_stationery.png
+		Resources/icon1_stationery@2x.png
+		Resources/icon1_stationery@3x.png
 		Resources/icon1_summer.png
 		Resources/icon1_summer@2x.png
 		Resources/icon1_summer@3x.png
 		Resources/icon1_sunny.png
 		Resources/icon1_sunny@2x.png
 		Resources/icon1_sunny@3x.png
+		Resources/icon1_toilets.png
+		Resources/icon1_toilets@2x.png
+		Resources/icon1_toilets@3x.png
 		Resources/icon1_tours.png
 		Resources/icon1_tours@2x.png
 		Resources/icon1_tours@3x.png
 		Resources/icon1_winter.png
 		Resources/icon1_winter@2x.png
 		Resources/icon1_winter@3x.png
+		Resources/icon1_workinggroup.png
+		Resources/icon1_workinggroup@2x.png
+		Resources/icon1_workinggroup@3x.png
 		Resources/icon_create_poi.png
 		Resources/icon_create_poi@2x.png
 		Resources/icon_create_poi@3x.png
@@ -182,12 +223,6 @@ set(resources ${resources}
 		Resources/image_blank@2x.png
 		Resources/image_blank@3x.png
 		Resources/Interiors
-		Resources/Interiors/icons_interior_entities.png
-		Resources/Interiors/icons_interior_entities@2x.png
-		Resources/Interiors/icons_interior_entities@3x.png
-		Resources/Interiors/interiors_pin.png
-		Resources/Interiors/interiors_pin@2x.png
-		Resources/Interiors/interiors_pin@3x.png
 		Resources/menu_background1.png
 		Resources/menu_background1@2x.png
 		Resources/menu_background1@3x.png
@@ -206,12 +241,6 @@ set(resources ${resources}
 		Resources/micello_logo.png
 		Resources/micello_logo@2x.png
 		Resources/micello_logo@3x.png
-		Resources/PlaceholderCube/placeholder_cube_negX.png
-		Resources/PlaceholderCube/placeholder_cube_negY.png
-		Resources/PlaceholderCube/placeholder_cube_negZ.png
-		Resources/PlaceholderCube/placeholder_cube_posX.png
-		Resources/PlaceholderCube/placeholder_cube_posY.png
-		Resources/PlaceholderCube/placeholder_cube_posZ.png
 		Resources/place_pin_background.png
 		Resources/place_pin_background@2x.png
 		Resources/place_pin_background@3x.png
@@ -219,6 +248,13 @@ set(resources ${resources}
 		Resources/place_pin_right@2x.png
 		Resources/place_pin_right@3x.png
 		Resources/placeholder.pvr
+		Resources/PlaceholderCube
+		Resources/PlaceholderCube/placeholder_cube_negX.png
+		Resources/PlaceholderCube/placeholder_cube_negY.png
+		Resources/PlaceholderCube/placeholder_cube_negZ.png
+		Resources/PlaceholderCube/placeholder_cube_posX.png
+		Resources/PlaceholderCube/placeholder_cube_posY.png
+		Resources/PlaceholderCube/placeholder_cube_posZ.png
 		Resources/placejumps.json
 		Resources/poi_marker.png
 		Resources/poi_marker@2x.png
@@ -239,145 +275,28 @@ set(resources ${resources}
 		Resources/search_results_close@2x.png
 		Resources/search_results_close@3x.png
 		Resources/SearchResultOnMap
-		Resources/SearchResultOnMap/PinIconTexturePage.png
-		Resources/SearchResultOnMap/PinIconTexturePage@2x.png
-		Resources/SearchResultOnMap/PinIconTexturePage@3x.png
 		Resources/SplashScreen
-		Resources/SplashScreen/Icon-60@2x.png
-		Resources/SplashScreen/Icon-60@3x.png
-		Resources/SplashScreen/Icon-76.png
-		Resources/SplashScreen/Icon-76@2x.png
-		Resources/SplashScreen/Icon-Small-40.png
-		Resources/SplashScreen/Icon-Small-40@2x.png
-		Resources/SplashScreen/Icon-Small-40@3x.png
-		Resources/SplashScreen/Icon-Small.png
-		Resources/SplashScreen/Icon-Small@2x.png
-		Resources/SplashScreen/Icon-Small@3x.png
-		Resources/SplashScreen/SplashScreen.png
-		Resources/SplashScreen/SplashScreen@2x.png
-		Resources/SplashScreen/SplashScreen@3x.png
+		Resources/SplashScreen//Icon-60@2x.png
+		Resources/SplashScreen//Icon-60@3x.png
+		Resources/SplashScreen//Icon-76.png
+		Resources/SplashScreen//Icon-76@2x.png
+		Resources/SplashScreen//Icon-Small-40.png
+		Resources/SplashScreen//Icon-Small-40@2x.png
+		Resources/SplashScreen//Icon-Small-40@3x.png
+		Resources/SplashScreen//Icon-Small.png
+		Resources/SplashScreen//Icon-Small@2x.png
+		Resources/SplashScreen//Icon-Small@3x.png
+		Resources/SplashScreen//SplashScreen.png
+		Resources/SplashScreen//SplashScreen@2x.png
+		Resources/SplashScreen//SplashScreen@3x.png
 		Resources/sub_menu_arrow.png
 		Resources/sub_menu_arrow@2x.png
 		Resources/sub_menu_arrow@3x.png
 		Resources/Textures
+		Resources/Textures/.DS_Store
 		Resources/Textures/EmbeddedTheme
-		Resources/Textures/EmbeddedTheme/London_London_railDiffuse_repeat.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_ldn_trains_01.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_placeholder_no_data.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_SanFran_roadDiffuse_repeat.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_SanFran_wallDiffuse.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_sf_planes_01.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_sf_vehicles_01.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture0.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture0_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture1.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture10.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture10_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture11.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture11_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture12.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture12_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture13.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture13_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture14.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture14_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture15.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture15_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture16.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture16_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture17.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture17_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture18.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture18_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture1_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture2.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture2_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture3.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture3_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture4.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture4_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture5.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture5_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture6.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture6_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture7.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture7_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture8.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture8_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture9.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture9_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_trees_01.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_trees_top_01.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_VehicleModels_recce_trams.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_Water_01.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_Water_01_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_Water_02.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_Water_02_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_Water_03.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_Water_03_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_water_normalmap.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_water_reflectionmap.pvr
 		Resources/Tours
-		Resources/Tours/browser_back.png
-		Resources/Tours/browser_forward.png
-		Resources/Tours/page.png
-		Resources/Tours/placeholder.png
-		Resources/Tours/play_icon.png
-		Resources/Tours/play_icon@2x.png
-		Resources/Tours/play_icon@3x.png
-		Resources/Tours/States
-		Resources/Tours/States/Twitter
-		Resources/Tours/States/Twitter/favoriteIcon.png
-		Resources/Tours/States/Twitter/NotLoaded
-		Resources/Tours/States/Twitter/NotLoaded/ProfilePicCatNotLoaded.png
-		Resources/Tours/States/Twitter/NotLoaded/ProfilePicCatNotLoaded@2x.png
-		Resources/Tours/States/Twitter/NotLoaded/ProfilePicCatNotLoaded@3x.png
-		Resources/Tours/States/Twitter/NotLoaded/ProfilePicNotLoaded.png
-		Resources/Tours/States/Twitter/NotLoaded/ProfilePicNotLoaded@2x.png
-		Resources/Tours/States/Twitter/NotLoaded/ProfilePicNotLoaded@3x.png
-		Resources/Tours/States/Twitter/replyIcon.png
-		Resources/Tours/States/Twitter/retweetIcon.png
-		Resources/Tours/States/Twitter/tweet_bird.png
-		Resources/Tours/States/Twitter/tweet_bird@2x.png
-		Resources/Tours/States/Twitter/tweet_bird@3x.png
 		Resources/weatherstates.json
 		Resources/Yelp
-		Resources/Yelp/reviewsFromYelpRED.png
-		Resources/Yelp/reviewsFromYelpRED@2x.png
-		Resources/Yelp/reviewsFromYelpRED@3x.png
-		Resources/Yelp/stars_0_0.png
-		Resources/Yelp/stars_0_0@2x.png
-		Resources/Yelp/stars_0_0@3x.png
-		Resources/Yelp/stars_1_0.png
-		Resources/Yelp/stars_1_0@2x.png
-		Resources/Yelp/stars_1_0@3x.png
-		Resources/Yelp/stars_1_5.png
-		Resources/Yelp/stars_1_5@2x.png
-		Resources/Yelp/stars_1_5@3x.png
-		Resources/Yelp/stars_2_0.png
-		Resources/Yelp/stars_2_0@2x.png
-		Resources/Yelp/stars_2_0@3x.png
-		Resources/Yelp/stars_2_5.png
-		Resources/Yelp/stars_2_5@2x.png
-		Resources/Yelp/stars_2_5@3x.png
-		Resources/Yelp/stars_3_0.png
-		Resources/Yelp/stars_3_0@2x.png
-		Resources/Yelp/stars_3_0@3x.png
-		Resources/Yelp/stars_3_5.png
-		Resources/Yelp/stars_3_5@2x.png
-		Resources/Yelp/stars_3_5@3x.png
-		Resources/Yelp/stars_4_0.png
-		Resources/Yelp/stars_4_0@2x.png
-		Resources/Yelp/stars_4_0@3x.png
-		Resources/Yelp/stars_4_5.png
-		Resources/Yelp/stars_4_5@2x.png
-		Resources/Yelp/stars_4_5@3x.png
-		Resources/Yelp/stars_5_0.png
-		Resources/Yelp/stars_5_0@2x.png
-		Resources/Yelp/stars_5_0@3x.png
-		Resources/Yelp/yelp_logo.png
-		Resources/Yelp/yelp_logo@2x.png
-		Resources/Yelp/yelp_logo@3x.png
-		Resources/Yelp/yelp_logo_100x50.png
 		ExampleApp/Images.xcassets
 )

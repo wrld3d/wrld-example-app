@@ -23,12 +23,14 @@ namespace ExampleApp
                 ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkModelDomainEventBus;
                 CategorySearch::View::ICategorySearchRepository& m_categorySearchRepository;
                 Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& m_myPinsSearchResultRefreshService;
+                MyPinsWebService& m_webService;
                 
             public:
                 MyPinBoundObjectFactory(ExampleAppMessaging::TMessageBus& messageBus,
                                         ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                         CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
-                                        Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService);
+                                        Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
+                                        MyPinsWebService& webService);
                 
                 ~MyPinBoundObjectFactory();
                 

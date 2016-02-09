@@ -22,7 +22,6 @@ namespace ExampleApp
             private:
                 ISecondaryMenuView& m_secondaryMenuView;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
-                bool m_appModeAllowsOpen;
 
                 Eegeo::Helpers::TCallback2<SecondaryMenuController, OpenableControl::View::IOpenableControlViewModel&, float> m_onOpenStateChangedCallback;
                 Eegeo::Helpers::TCallback1<SecondaryMenuController, const Search::SearchQueryPerformedMessage&> m_performedQueryHandler;

@@ -14,11 +14,13 @@ namespace ExampleApp
             MyPinBoundObjectFactory::MyPinBoundObjectFactory(ExampleAppMessaging::TMessageBus& messageBus,
                                                              ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                                              CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
-                                                             Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService)
+                                                             Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
+                                                             MyPinsWebService& webService)
             : m_messageBus(messageBus)
             , m_sdkModelDomainEventBus(sdkModelDomainEventBus)
             , m_categorySearchRepository(categorySearchRepository)
             , m_myPinsSearchResultRefreshService(myPinsSearchResultRefreshService)
+            , m_webService(webService)
             {
                 
             }
@@ -39,7 +41,8 @@ namespace ExampleApp
                                                             imageSize,
                                                             share,
                                                             myPinsFileIO,
-                                                            m_messageBus);
+                                                            m_messageBus,
+                                                            m_webService);
             }
             
             IMyPinBoundObject* MyPinBoundObjectFactory::CreateSearchResultPinBoundObject(MyPinsFileIO& myPinsFileIO,
@@ -70,7 +73,8 @@ namespace ExampleApp
                         return UserCreatedPinBoundObject::FromSerializedData(pinId,
                                                                              serializedData,
                                                                              myPinsFileIO,
-                                                                             m_messageBus);
+                                                                             m_messageBus,
+                                                                             m_webService);
                     }break;
                         
                     case SearchResultPoi:

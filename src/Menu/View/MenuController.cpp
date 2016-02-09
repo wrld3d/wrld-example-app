@@ -300,7 +300,7 @@ namespace ExampleApp
                 
                 for(size_t i = 0; i < m_viewModel.SectionsCount(); ++ i)
                 {
-                    IMenuSectionViewModel& section(m_viewModel.GetMenuSection(static_cast<int>(i));
+                    IMenuSectionViewModel& section(m_viewModel.GetMenuSection(static_cast<int>(i)));
                     section.InsertExpandedChangedCallback(m_onMenuSectionExpandedStateChanged);
                     IMenuModel& model = section.GetModel();
                     model.InsertItemAddedCallback(m_onItemAddedCallback);
@@ -312,7 +312,7 @@ namespace ExampleApp
             {
                 for(size_t i = 0; i < m_viewModel.SectionsCount(); ++ i)
                 {
-                    IMenuSectionViewModel& section(m_viewModel.GetMenuSection(static_cast<int>(i));
+                    IMenuSectionViewModel& section(m_viewModel.GetMenuSection(static_cast<int>(i)));
                     section.RemoveExpandedChangedCallback(m_onMenuSectionExpandedStateChanged);
                     IMenuModel& model = section.GetModel();
                     model.RemoveItemAddedCallback(m_onItemAddedCallback);

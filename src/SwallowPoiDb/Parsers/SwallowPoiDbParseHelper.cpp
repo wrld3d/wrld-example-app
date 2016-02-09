@@ -17,7 +17,7 @@ namespace ExampleApp
 			{
 				rapidjson::Value resultValue(rapidjson::kStringType);
 
-				resultValue.SetString(value.c_str(), value.size(), allocator);
+				resultValue.SetString(value.c_str(), static_cast<int>(value.size()), allocator);
 
 				out_jsonValue.AddMember(name.c_str(),
 					resultValue,
