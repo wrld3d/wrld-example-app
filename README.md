@@ -63,8 +63,10 @@ The project is configured to build for multiple target CPU architectures, creati
 **To get started with the example app (Windows):**
 > Requirements:  
 \- [Microsoft Visual Studio 2015](https://www.visualstudio.com/en-us/downloads/download-visual-studio-vs.aspx)  
-\- [MinGW](http://www.mingw.org/)  
+\- [Git for Windows](https://git-for-windows.github.io/)  
 \- [CMake](https://cmake.org/) (>= 3.1.1)  
+
+Please use Git Bash, supplied with Git for Windows to run the following steps:  
 1. Clone the repo: **git clone git@github.com:eegeo/mobile-example-app.git**.  
 2. Get the latest Windows SDK by running **sh ./update.platform -p windows** from the repo root.
 3. Within the windows directory, create a build directory for your project  
