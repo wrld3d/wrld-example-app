@@ -38,7 +38,7 @@ if [ -z "$pathToProjectDir" ]; then
 fi
 
 # Compile the xcode project.
-(cd $pathToProjectDir && xcodebuild -target $targetName ONLY_ACTIVE_ARCH='NO' PRODUCT_NAME=$productName PRODUCT_VERSION=$productVersion)
+(cd $pathToProjectDir && xcodebuild -target $targetName -configuration Release ONLY_ACTIVE_ARCH='NO' PRODUCT_NAME=$productName PRODUCT_VERSION=$productVersion)
 resultcode=$?
 
 # Output the result of the operation.
