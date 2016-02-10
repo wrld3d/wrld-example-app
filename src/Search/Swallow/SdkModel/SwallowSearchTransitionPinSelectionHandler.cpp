@@ -28,7 +28,7 @@ namespace ExampleApp
                 void SwallowSearchTransitionPinSelectionHandler::SelectPin()
                 {
                     Eegeo::Camera::CameraState cameraState = m_appCameraController.GetCameraState();
-                    float distanceToInterest = (cameraState.LocationEcef()-cameraState.InterestPointEcef()).Length();
+                    float distanceToInterest = static_cast<float>((cameraState.LocationEcef()-cameraState.InterestPointEcef()).Length());
                     m_transitionController.StartTransitionTo(m_transitionResult.GetTargetLatLong().ToECEF(), distanceToInterest,  m_transitionResult.GetTargetInteriorId(), m_transitionResult.GetTargetInteriorFloor());
                 }
             }

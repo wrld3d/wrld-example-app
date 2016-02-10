@@ -33,6 +33,7 @@ set(linker_search_paths
 	libs/eegeo/prebuilt/${windows_abi_name}
 	libs/eegeo/ANGLE/${windows_abi_name}
 	libs/eegeo/pthread/${windows_abi_name}
+	libs/eegeo/sdk-extensions/${windows_abi_name}
 	"C:/Program\ Files\ (x86)/Microsoft\ SDKs/Windows/v7.1A/Lib/x64" 
 )
 
@@ -41,6 +42,7 @@ link_directories(${linker_search_paths})
 
 set(libs 
 	eegeo-sdk
+	eegeo-sdk-extensions-sqlite
 	libEGL
 	libGLESv2
 	png
