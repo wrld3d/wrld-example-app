@@ -24,6 +24,16 @@ namespace
     return m_pInterop;
 }
 
+- (UIColor*) textColorNormal
+{
+    return [UIColor colorWithRed:(18.0f/255.0f) green:(86.0f/255.0f) blue:(176.0f/255.0f) alpha:1.0f];
+}
+
+- (UIColor*) textColorHighlighted
+{
+    return [UIColor colorWithRed:(205.0f/255.0f) green:(252.0f/255.0f) blue:(13.0f/255.0f) alpha:1.0f];;
+}
+
 - (id) initWithParams:(float)width :(float)height :(float)pixelScale
 {
     if (self = [super init])
@@ -59,6 +69,16 @@ namespace
         [self.pFloorChangeButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"floor_selection_button_down") forState:UIControlStateSelected];
         m_draggingFloorButton = NO;
         [self.pFloorPanel addSubview:self.pFloorChangeButton];
+        
+        const float upperPadding = 3.0f;
+        self.pFloorOnButtonLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, upperPadding, 64, 64-upperPadding)] autorelease];
+        self.pFloorOnButtonLabel.lineBreakMode = NSLineBreakByClipping;
+        self.pFloorOnButtonLabel.adjustsFontSizeToFitWidth = NO;
+        self.pFloorOnButtonLabel.textColor = [UIColor whiteColor];
+        self.pFloorOnButtonLabel.textAlignment = NSTextAlignmentCenter;
+        self.pFloorOnButtonLabel.font = [UIFont boldSystemFontOfSize:12.0f];
+        self.pFloorChangeButton.userInteractionEnabled = NO;
+        [self.pFloorChangeButton addSubview:self.pFloorOnButtonLabel];
         
         ImmediatePanGestureRecognizer* buttonDrag = [[ImmediatePanGestureRecognizer alloc] initWithTarget:self action:@selector(dragButton:)];
         [self.pFloorChangeButton addGestureRecognizer:buttonDrag];
@@ -122,6 +142,7 @@ namespace
         m_touchEnabled = NO;
         m_floorSelectionEnabled = NO;
         
+        [self hideFloorLabels];
         [self setHidden:YES];
     }
     
@@ -179,7 +200,7 @@ namespace
     }
     
     CGPoint touchLocation = [touch locationInView:self];
-    if (CGRectContainsPoint(self.pFloorChangeButton.frame, touchLocation) && m_floorSelectionEnabled)
+    if (CGRectContainsPoint(self.pFloorPanel.frame, touchLocation) && m_floorSelectionEnabled)
         return YES;
     if (CGRectContainsPoint(self.pDetailsPanel.frame, touchLocation))
         return YES;
@@ -194,6 +215,13 @@ namespace
 - (void) setSelectedFloor:(int)floorIndex
 {
     Eegeo_ASSERT(floorIndex >= 0 && floorIndex < m_tableViewFloorNames.size(), "Invalid floorindex - Out of range 0 << %d << %d", floorIndex, m_tableViewFloorNames.size());
+    [self refreshFloorIndicator:floorIndex];
+    //error.
+    // FIX THAT.
+    if(!m_draggingFloorButton)
+    {
+        [self moveButtonToFloorIndex:floorIndex :YES];
+    }
 }
 
 - (void) updateFloors: (const std::vector<std::string>&) floorShortNames withCurrentFloor: (int) currentlySelectedFloorIndex;
@@ -206,6 +234,7 @@ namespace
     [self setNeedsLayout];
     [self layoutIfNeeded];
     
+    [self refreshFloorIndicator:currentlySelectedFloorIndex];
     [self moveButtonToFloorIndex:currentlySelectedFloorIndex :NO];
 }
 
@@ -257,6 +286,12 @@ namespace
     m_floorSelectionEnabled= (floorCount > 1);
     self.pFloorPanel.hidden = !m_floorSelectionEnabled;
     self.pFloorPanel.userInteractionEnabled = self.pFloorChangeButton.userInteractionEnabled = m_floorSelectionEnabled;
+}
+
+- (void) refreshFloorIndicator:(int)floorIndex
+{
+    int nameIndex = static_cast<int>(m_tableViewFloorNames.size()-1) - floorIndex;
+    self.pFloorOnButtonLabel.text = [NSString stringWithCString:m_tableViewFloorNames.at(nameIndex).c_str() encoding:NSUTF8StringEncoding];
 }
 
 - (int) reverseIndex:(int)floorIndex
@@ -407,11 +442,11 @@ namespace
                             recognizer.state != UIGestureRecognizerStateFailed &&
                             recognizer.state != UIGestureRecognizerStateCancelled;
     m_floorButtonParameter = 1.0f - (float)(self.pFloorChangeButton.frame.origin.y / (self.pFloorPanel.frame.size.height-self.pFloorChangeButton.frame.size.height));
+    
     if(m_draggingFloorButton)
     {
         m_pInterop->SetFloorSelectionDrag(m_floorButtonParameter);
         [self.pFloorChangeButton setSelected:YES];
-        
     }
     else
     {
@@ -419,8 +454,8 @@ namespace
         int floorIndex = (int)roundf(m_floorButtonParameter*floorCount);
         m_pInterop->SelectFloor(floorIndex);
         
-        [self.pFloorChangeButton setSelected:NO];
         [self moveButtonToFloorIndex:floorIndex :YES];
+        [self.pFloorChangeButton setSelected:NO];
         [self hideFloorLabels];
     }
 }
@@ -431,6 +466,8 @@ namespace
     {
         [item hideName];
     }
+    
+    self.pFloorOnButtonLabel.textColor = [self textColorNormal];
 }
 
 - (void) showFloorLabels
@@ -439,6 +476,8 @@ namespace
     {
         [item showName];
     }
+    
+    self.pFloorOnButtonLabel.textColor = [self textColorHighlighted];
 }
 
 - (void) moveButtonToFloorIndex:(int)floorIndex :(BOOL)shouldAnimate

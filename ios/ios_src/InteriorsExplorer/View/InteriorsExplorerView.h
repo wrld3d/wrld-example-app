@@ -66,8 +66,13 @@
 
 - (void) refreshFloorViews;
 
+// NOTE: Replace these once integrated with search ux colour scheme.
+- (UIColor*) textColorNormal;
+- (UIColor*) textColorHighlighted;
+
 @property(nonatomic, retain) UIView* pFloorPanel;
 @property(nonatomic, retain) UIButton* pFloorChangeButton;
+@property(nonatomic, retain) UILabel* pFloorOnButtonLabel;
 
 @property(nonatomic, retain) UIView* pDetailsPanel;
 @property(nonatomic, retain) UIImageView* pDetailsPanelBackground;
