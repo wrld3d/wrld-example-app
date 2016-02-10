@@ -77,11 +77,6 @@ namespace ExampleAppWPF
             MenuViewCLIMethods.ViewClicked(m_nativeCallerPointer);
         }
 
-        private void OnResultSelected(object sender, SelectionChangedEventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
-
         private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (IsAnimating() || m_adapter.IsAnimating())

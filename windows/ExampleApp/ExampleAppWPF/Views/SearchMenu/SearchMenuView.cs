@@ -113,7 +113,7 @@ namespace ExampleAppWPF
             var fadeOutItemStoryboard = ((Storyboard)Template.Resources["FadeOutOldItems"]).Clone();
             
             m_adapter = new MenuListAdapter(false, m_list, fadeInItemStoryboard, fadeOutItemStoryboard);
-            m_resultListAdapter= new MenuListAdapter(false, m_list, fadeInItemStoryboard, fadeOutItemStoryboard);
+            m_resultListAdapter= new MenuListAdapter(false, m_resultsList, fadeInItemStoryboard, fadeOutItemStoryboard);
         }
 
         private void OnIconClick(object sender, RoutedEventArgs e)
@@ -123,7 +123,12 @@ namespace ExampleAppWPF
 
         private void OnResultSelected(object sender, SelectionChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            var resultsList = sender as ListBox;
+
+            if (resultsList?.SelectedItems.Count > 0)
+            {
+                SearchMenuViewCLIMethods.HandleSearchItemSelected(m_nativeCallerPointer, resultsList.SelectedIndex);
+            }
         }
 
         private void SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -166,6 +171,12 @@ namespace ExampleAppWPF
 
         public void SetSearchSection(string category, string[] searchResults)
         {
+            m_resultListAdapter.ResetData();
+
+            var groups = new List<string>(searchResults.Length);
+            var groupsExpandable = new List<bool>(searchResults.Length);
+            var groupToChildren = new Dictionary<string, List<string>>();
+
             var itemsSource = new List<SearchMenuListItem>();
 
             foreach (var str in searchResults)
@@ -179,7 +190,15 @@ namespace ExampleAppWPF
                 var iconString = jObject.TryGetValue("icon", out iconStringToken) ? iconStringToken.Value<string>() : "misc";
                 item.Icon = new System.Windows.Media.Imaging.BitmapImage(ViewHelpers.MakeUriForImage(string.Format("icon1_{0}.png", iconString)));
                 itemsSource.Add(item);
+
+                groups.Add(str);
+                groupsExpandable.Add(false);
+                groupToChildren.Add(str, new List<string>());
             }
+
+            m_resultListAdapter.SetData(groups, groupsExpandable, groupToChildren);
+
+            m_resultsList.DataContext = m_resultListAdapter;
 
             m_resultsList.ItemsSource = itemsSource;
         }
@@ -230,10 +249,7 @@ namespace ExampleAppWPF
         {
             m_adapter.SetData(groups, groupsExpandable, groupToChildrenMap);
 
-            if (m_list.DataContext != m_adapter)
-            {
-                m_list.DataContext = m_adapter;
-            }
+            m_list.DataContext = m_adapter;
         }
     }
 }

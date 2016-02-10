@@ -44,6 +44,17 @@ namespace ExampleAppWPF
             return m_runningAnimations > 0;
         }
 
+        public void ResetData()
+        {
+            m_animatedSizesMap.Clear();;
+
+            m_groups.Clear();;
+            m_groupsExpandable.Clear();;
+            m_groupToChildrenMap.Clear();;
+
+            m_children.Clear();
+        }
+
         public void SetData(
             List<string> groups,
             List<bool> groupsExpandable,
