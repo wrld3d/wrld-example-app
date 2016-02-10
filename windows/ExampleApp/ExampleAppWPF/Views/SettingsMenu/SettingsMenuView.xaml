@@ -80,14 +80,17 @@
                                 <Grid Grid.Column="0">
                                     <Rectangle Width="332" Height="50" Fill="{StaticResource Gold}"/>
                                 </Grid>
+                                <Grid Grid.Column="0">
+                                    <TextBlock Text="Settings" Foreground="White" FontSize="22" FontFamily="{StaticResource PrimaryUIFont}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+                                </Grid>
                             </Grid>
                             <Grid Grid.Row="1">
                                 <Grid Width="332" Height="6" Background="#002B63" Margin="0, 0, 0, 0"/>
                             </Grid>
                             <Grid Grid.Row="2">
                                 <StackPanel  Orientation="Vertical">
-                                    <ScrollViewer PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight}">
-                                        <ListBox Name="SecondaryMenuItemList" Template="{StaticResource ListBoxControlTemplateNoPadding}" ItemsSource="{Binding Children}" Background="{StaticResource Transparent}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0">
+                                    <ScrollViewer Background="{StaticResource PrimaryBG_colour}" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+                                        <ListBox Margin="5,0,5,0" Name="SecondaryMenuItemList" Template="{StaticResource ListBoxControlTemplateNoPadding}" ItemsSource="{Binding Children}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0">
                                             <ListBox.Resources>
                                                 <Style TargetType="ListBoxItem">
                                                     <Style.Resources>
@@ -99,51 +102,70 @@
                                                     <Setter Property="Padding" Value="0"/>
                                                 </Style>
 
-                                                <DataTemplate DataType="{x:Type local:MenuListItem}">
-                                                    <Grid HorizontalAlignment="Stretch" Height="42" Background="{StaticResource Gold}">
-                                                        <Grid.Triggers>
-                                                            <EventTrigger RoutedEvent="MouseDown">
-                                                                <BeginStoryboard>
-                                                                    <Storyboard>
-                                                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Grid.Background).(SolidColorBrush.Color)">
-                                                                            <EasingColorKeyFrame KeyTime="0" Value="#FF8DD8F8" />
-                                                                        </ColorAnimationUsingKeyFrames>
-                                                                    </Storyboard>
-                                                                </BeginStoryboard>
-                                                            </EventTrigger>
-                                                        </Grid.Triggers>
-                                                        <Grid.RowDefinitions>
-                                                            <RowDefinition Height="*"/>
-                                                            <RowDefinition Height="1"/>
-                                                        </Grid.RowDefinitions>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="*"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <Grid HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="0">
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="Auto"/>
-                                                                <ColumnDefinition Width="*"/>
-                                                                <ColumnDefinition Width="22"/>
-                                                            </Grid.ColumnDefinitions>
-                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" Margin="0,0,41,0">
-                                                                <Label Content="{Binding Path=Heading}" FontSize="22" Foreground="{StaticResource LightGrey}"/>
-                                                            </StackPanel>
-                                                        </Grid>
-                                                        <Grid Grid.Row="1" Grid.Column="1" Background="{StaticResource MenuSeparator}" Margin="0,0,32,0">
-                                                            <Grid.Style>
-                                                                <Style TargetType="{x:Type Grid}">
-                                                                    <Style.Triggers>
-                                                                        <DataTrigger Binding="{Binding IsExpanded}" Value="false">
-                                                                            <Setter Property="Visibility" Value="Visible">
-                                                                            </Setter>
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding IsExpanded}" Value="true">
-                                                                            <Setter Property="Visibility" Value="Hidden">
-                                                                            </Setter>
-                                                                        </DataTrigger>
-                                                                    </Style.Triggers>
-                                                                </Style>
-                                                            </Grid.Style>
+                                                <DataTemplate DataType="{x:Type local:SubMenuListItem}">
+                                                    <Grid Height="38" Background="{StaticResource Gold}">
+                                                        <Grid>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*"/>
+                                                                <RowDefinition Height="Auto"/>
+                                                                <RowDefinition Height="1"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Grid HorizontalAlignment="Stretch" Grid.Row="0" >
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="Auto"/>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="Auto"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <StackPanel Name="SubMenuItemPanel" Margin="0,0,5,0" Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" Background="{StaticResource SubMenuItemDefaultColour}" Width="330">
+                                                                    <StackPanel.Triggers>
+                                                                        <EventTrigger RoutedEvent="MouseDown">
+                                                                            <BeginStoryboard>
+                                                                                <Storyboard>
+                                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SubMenuItemPanel" Storyboard.TargetProperty="Background">
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource SubMenuItemMouseDownColour}"/>
+                                                                                    </ObjectAnimationUsingKeyFrames>
+                                                                                </Storyboard>
+                                                                            </BeginStoryboard>
+                                                                        </EventTrigger>
+                                                                        <EventTrigger RoutedEvent="MouseEnter">
+                                                                            <BeginStoryboard>
+                                                                                <Storyboard>
+                                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SubMenuItemPanel" Storyboard.TargetProperty="Background">
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource SubMenuItemMouseOverColour}"/>
+                                                                                    </ObjectAnimationUsingKeyFrames>
+                                                                                </Storyboard>
+                                                                            </BeginStoryboard>
+                                                                        </EventTrigger>
+                                                                        <EventTrigger RoutedEvent="MouseLeave">
+                                                                            <BeginStoryboard>
+                                                                                <Storyboard>
+                                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SubMenuItemPanel" Storyboard.TargetProperty="Background">
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource SubMenuItemDefaultColour}"/>
+                                                                                    </ObjectAnimationUsingKeyFrames>
+                                                                                </Storyboard>
+                                                                            </BeginStoryboard>
+                                                                        </EventTrigger>
+                                                                    </StackPanel.Triggers>
+                                                                    <Image Source="{Binding Path=Icon}" Width="26" Height="26" VerticalAlignment="Center" Margin="6,0,0,0"/>
+                                                                    <Label Content="{Binding Path=Heading}" FontSize="16" Foreground="{StaticResource DarkGrey}" VerticalAlignment="Center"/>
+                                                                </StackPanel>
+                                                            </Grid>
+                                                            <Grid Grid.Row="1" Grid.Column="1" Background="{StaticResource SubMenuSeparator}">
+                                                                <Grid.Style>
+                                                                    <Style TargetType="{x:Type Grid}">
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SubMenuListItem}}, Path=IsExpanded}" Value="false">
+                                                                                <Setter Property="Visibility" Value="Visible">
+                                                                                </Setter>
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SubMenuListItem}}, Path=IsExpanded}" Value="true">
+                                                                                <Setter Property="Visibility" Value="Hidden">
+                                                                                </Setter>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </Grid.Style>
+                                                            </Grid>
                                                         </Grid>
                                                     </Grid>
                                                 </DataTemplate>

@@ -299,8 +299,11 @@
     <Resource Include="..\..\Resources\arrow3_up.png">
       <Link>Assets\arrow3_up.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\compass_point.png">
-      <Link>Assets\compass_point.png</Link>
+    <Resource Include="..\..\Resources\compass_point_off.png">
+      <Link>Assets\compass_point_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\compass_point_on.png">
+      <Link>Assets\compass_point_on.png</Link>
     </Resource>
   </ItemGroup>
   <ItemGroup>

@@ -39,6 +39,11 @@
                             <Image Source="/Assets/arrow1.png" Width="15" Height="19" HorizontalAlignment="Center" Stretch="Fill"/>
                         </Grid>
                     </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="SearchResultOnMapViewContainer" Value="{StaticResource SubMenuItemMouseOverColour}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
