@@ -18,3 +18,8 @@ obj
 .project
 .settings/
 **/xcuserdata/
+**/*.vcxproj
+**/*.vcxproj.filters
+**/*.csproj
+**/*.xcodeproj
+**/*.sln
