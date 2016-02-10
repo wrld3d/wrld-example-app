@@ -293,7 +293,6 @@ set(resources ${resources}
 		Resources/sub_menu_arrow@2x.png
 		Resources/sub_menu_arrow@3x.png
 		Resources/Textures
-		Resources/Textures/.DS_Store
 		Resources/Textures/EmbeddedTheme
 		Resources/Tours
 		Resources/weatherstates.json
