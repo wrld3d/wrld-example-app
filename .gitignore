@@ -19,3 +19,8 @@ obj
 .settings/
 **/xcuserdata/
 **/.~lock*
+**/*.vcxproj
+**/*.vcxproj.filters
+**/*.csproj
+**/*.xcodeproj
+**/*.sln
