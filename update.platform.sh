@@ -49,7 +49,7 @@ elif [ "$p" == "windows" ]; then
 
 fi
 
-if [ "$c" == "cpp03" ]; then
+if [[ ( "$c" == "cpp03" ) || ( "$p" == "windows" ) ]]; then
    srcPackageName="$srcPackageName.tar.gz"
 else
    srcPackageName="$srcPackageName.cpp11.tar.gz"
