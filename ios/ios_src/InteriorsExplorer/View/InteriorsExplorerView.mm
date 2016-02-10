@@ -103,11 +103,11 @@ namespace
         
         [self.pDetailsPanel addSubview:self.pDismissButtonBackground];
         
-        self.pDismissButton = [[[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, buttonSize, buttonSize)] autorelease];
+        self.pDismissButton = [[[UIButton alloc] initWithFrame:self.pDismissButtonBackground.frame] autorelease];
         [self.pDismissButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"interior_exit") forState:UIControlStateNormal];
         [self.pDismissButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"interior_exit_down") forState:UIControlStateHighlighted];
         [self.pDismissButton addTarget:self action:@selector(onCancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [self.pDismissButtonBackground addSubview:self.pDismissButton];
+        [self.pDetailsPanel addSubview:self.pDismissButton];
         
         self.pDismissButtonBackground.userInteractionEnabled = YES;
         
@@ -216,8 +216,7 @@ namespace
 {
     Eegeo_ASSERT(floorIndex >= 0 && floorIndex < m_tableViewFloorNames.size(), "Invalid floorindex - Out of range 0 << %d << %d", floorIndex, m_tableViewFloorNames.size());
     [self refreshFloorIndicator:floorIndex];
-    //error.
-    // FIX THAT.
+    
     if(!m_draggingFloorButton)
     {
         [self moveButtonToFloorIndex:floorIndex :YES];
