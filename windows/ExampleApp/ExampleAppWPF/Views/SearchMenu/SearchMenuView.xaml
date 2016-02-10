@@ -88,8 +88,7 @@
                                 <Grid Width="332" Height="6" Background="#002B63" Margin="0, 0, 0, 0"/>
                             </Grid>
                             <Grid Grid.Row="2">
-                                <StackPanel  Orientation="Vertical">
-                                    <!--<Image Source="/Assets/arrow_3_up.png" Width="12" Height="12" Margin="41,0,0,0" />-->
+                                <StackPanel  Orientation="Vertical" >
                                     <ScrollViewer PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True" MaxHeight="445">
                                         <ListBox Name="SearchResultsList" Template="{StaticResource ListBoxControlTemplateNoPadding}" Background="{StaticResource Transparent}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0">
                                             <ListBox.Resources>
@@ -130,8 +129,8 @@
                                             </ListBox.Resources>
                                         </ListBox>
                                     </ScrollViewer>
-                                    <ScrollViewer PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight}">
-                                        <ListBox Name="SecondaryMenuItemList" Template="{StaticResource ListBoxControlTemplateNoPadding}" ItemsSource="{Binding Children}" Background="{StaticResource Transparent}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0">
+                                    <ScrollViewer Background="{StaticResource PrimaryBG_colour}" Name="MenuOptionsView" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True" >
+                                        <ListBox Margin="25,0,0,0" Name="SecondaryMenuItemList" Template="{StaticResource ListBoxControlTemplateNoPadding}" ItemsSource="{Binding Children}" Background="{StaticResource Transparent}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0">
                                             <ListBox.Resources>
                                                 <Style TargetType="ListBoxItem">
                                                     <Style.Resources>
@@ -209,11 +208,11 @@
                                                                     </Style>
                                                                 </Image.Style>
                                                             </Image>
-                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" Margin="41,0,0,0">
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" Margin="0,0,10,0">
                                                                 <Label Content="{Binding Path=Heading}" FontSize="22" Foreground="{StaticResource LightGrey}"/>
                                                             </StackPanel>
                                                         </Grid>
-                                                        <Grid Grid.Row="1" Grid.Column="1" Background="{StaticResource MenuSeparator}" Margin="32,0,0,0">
+                                                        <Grid Grid.Row="1" Grid.Column="1" Background="{StaticResource MenuSeparator}" Margin="0,0,5,0">
                                                             <Grid.Style>
                                                                 <Style TargetType="{x:Type Grid}">
                                                                     <Style.Triggers>
@@ -246,7 +245,36 @@
                                                                     <ColumnDefinition Width="*"/>
                                                                     <ColumnDefinition Width="Auto"/>
                                                                 </Grid.ColumnDefinitions>
-                                                                <StackPanel Margin="32,0,20,0" Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" Background="White" Width="295">
+                                                                <StackPanel Name="SubMenuItemPanel" Margin="0,0,20,0" Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" Background="{StaticResource SubMenuItemDefaultColour}" Width="290">
+                                                                    <StackPanel.Triggers>
+                                                                        <EventTrigger RoutedEvent="MouseDown">
+                                                                            <BeginStoryboard>
+                                                                                <Storyboard>
+                                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SubMenuItemPanel" Storyboard.TargetProperty="Background">
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource SubMenuItemMouseDownColour}"/>
+                                                                                    </ObjectAnimationUsingKeyFrames>
+                                                                                </Storyboard>
+                                                                            </BeginStoryboard>
+                                                                        </EventTrigger>
+                                                                        <EventTrigger RoutedEvent="MouseEnter">
+                                                                            <BeginStoryboard>
+                                                                                <Storyboard>
+                                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SubMenuItemPanel" Storyboard.TargetProperty="Background">
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource SubMenuItemMouseOverColour}"/>
+                                                                                    </ObjectAnimationUsingKeyFrames>
+                                                                                </Storyboard>
+                                                                            </BeginStoryboard>
+                                                                        </EventTrigger>
+                                                                        <EventTrigger RoutedEvent="MouseLeave">
+                                                                            <BeginStoryboard>
+                                                                                <Storyboard>
+                                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SubMenuItemPanel" Storyboard.TargetProperty="Background">
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource SubMenuItemDefaultColour}"/>
+                                                                                    </ObjectAnimationUsingKeyFrames>
+                                                                                </Storyboard>
+                                                                            </BeginStoryboard>
+                                                                        </EventTrigger>
+                                                                    </StackPanel.Triggers>
                                                                     <Image Source="{Binding Path=Icon}" Width="26" Height="26" VerticalAlignment="Center" Margin="6,0,0,0"/>
                                                                     <Label Content="{Binding Path=Heading}" FontSize="16" Foreground="{StaticResource DarkGrey}" VerticalAlignment="Center"/>
                                                                 </StackPanel>

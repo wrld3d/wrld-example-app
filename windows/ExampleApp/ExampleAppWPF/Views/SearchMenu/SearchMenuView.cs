@@ -27,6 +27,7 @@ namespace ExampleAppWPF
 
         private ListBox m_resultsList;
         private MenuListAdapter m_resultListAdapter;
+        private ScrollViewer m_menuOptionsView;
 
         static SearchMenuView()
         {
@@ -52,7 +53,7 @@ namespace ExampleAppWPF
 
         private void PerformLayout(object sender, SizeChangedEventArgs e)
         {
-            var currentPosition = m_mainContainerAnim.m_uiElement.RenderTransform.Transform(new Point(0.0, 0.0));
+            var currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
             double onScreenState = (currentPosition.X - m_mainContainerAnim.m_offscreenPos.X) / (m_mainContainerAnim.m_openPos.X - m_mainContainerAnim.m_offscreenPos.X);
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
             m_screenWidthPx = mainWindow.MainGrid.ActualWidth;
@@ -80,11 +81,14 @@ namespace ExampleAppWPF
             m_isFirstLayout = false;
 
             m_mainContainer.MaxHeight = screenWidthPy - m_mainContainer.RenderTransform.Transform(new Point(0.0, 0.0)).Y - 50;
+            m_menuOptionsView.MaxHeight = screenWidthPy * 0.75;
         }
 
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+
+            m_menuOptionsView = (ScrollViewer)GetTemplateChild("MenuOptionsView");
 
             m_list = (ListBox)GetTemplateChild("SecondaryMenuItemList");
             m_list.SelectionChanged += SelectionChanged;

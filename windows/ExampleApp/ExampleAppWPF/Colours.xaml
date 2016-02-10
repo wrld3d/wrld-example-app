@@ -13,6 +13,10 @@
     <SolidColorBrush x:Key="ExpanderHeaderColour" Color="#FFE2E2E2"/>
     <SolidColorBrush x:Key="POIdetailsColour" Color="#606060"/>
 
+    <SolidColorBrush x:Key="SubMenuItemDefaultColour" Color="#F2F2F2"/>
+    <SolidColorBrush x:Key="SubMenuItemMouseOverColour" Color="#CCE4FF"/>
+    <SolidColorBrush x:Key="SubMenuItemMouseDownColour" Color="#EDFCB0"/>
+
     <SolidColorBrush x:Key="Gold" Color="#1256B0 "/>
     <SolidColorBrush x:Key="Olive" Color="#94a847 "/>
     <SolidColorBrush x:Key="White" Color="#ffffff "/>

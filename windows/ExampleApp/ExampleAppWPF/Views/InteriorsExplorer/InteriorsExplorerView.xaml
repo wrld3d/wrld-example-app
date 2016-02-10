@@ -5,7 +5,6 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../../Colours.xaml" />
-        <ResourceDictionary Source="../../TransparentButtonStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type local:InteriorsExplorerView}">
@@ -18,10 +17,37 @@
                                 <ColumnDefinition Width="40"/>
                                 <ColumnDefinition Width="200"/>
                             </Grid.ColumnDefinitions>
-                            <Button Name="DismissButton" Width="40" Height="40" Grid.Column="0" Style="{StaticResource TransparentButtonStyle}">
-                                <Grid Background="{StaticResource Gold}">
-                                    <Image VerticalAlignment="Center" HorizontalAlignment="Center" Source="/Assets/button_exit_interior_on.png"/>
-                                </Grid>
+                            <Button Name="DismissButton" Width="40" Height="40" Grid.Column="0">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}">
+                                        <Style.Setters>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                        <Grid Name="ExitButtonGrid" Background="{StaticResource PrimaryBG_colour}">
+                                                            <Image Source="/Assets/button_exit_interior_off.png"  Name="ExitButtonIcon"/>
+                                                        </Grid>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsPressed" Value="True">
+                                                                <Setter TargetName="ExitButtonIcon" Property="Source" Value="/Assets/button_exit_interior_on.png"/>
+                                                                <Setter TargetName="ExitButtonGrid" Property="Background" Value="{StaticResource PrimaryBG_Down_Colour}"/>
+                                                            </Trigger>
+                                                            <MultiTrigger>
+                                                                <MultiTrigger.Conditions>
+                                                                    <Condition  Property="IsMouseOver" Value="True" />
+                                                                    <Condition Property="IsPressed" Value="False"/>
+                                                                </MultiTrigger.Conditions>
+                                                                <MultiTrigger.Setters>
+                                                                    <Setter TargetName="ExitButtonGrid" Property="Background" Value="{StaticResource PrimaryBG_Over_Colour}"/>
+                                                                </MultiTrigger.Setters>
+                                                            </MultiTrigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style.Setters>
+                                    </Style>
+                                </Button.Style>
                             </Button>
                             <Grid Grid.Column="1">
                                 <Border Name="Mask" CornerRadius="0,5,5,0" Background="White"/>
@@ -49,6 +75,7 @@
                                             <Grid HorizontalAlignment="Stretch" Grid.Row="0">
                                                 <TextBlock Text="{Binding}" FontSize="14" Foreground="{StaticResource DarkGrey}" MaxWidth="200" HorizontalAlignment="Center" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
                                             </Grid>
+                                            <Grid Grid.Row="1" Background="{StaticResource LightGrey}"/>
                                         </Grid>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
