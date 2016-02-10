@@ -38,7 +38,7 @@ else
 fi
 popd
 
-(cd $projectPath && xcodebuild -target ProjectSwallow -arch "i386" -sdk "iphonesimulator")
+(cd $projectPath && xcodebuild -target ProjectSwallowApp -arch "i386" -sdk "iphonesimulator")
 resultcode=$?
 
 echo
