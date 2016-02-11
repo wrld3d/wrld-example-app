@@ -22,9 +22,10 @@ namespace ExampleApp
             {
             private:
                 
-                void UpdateCameraView();
+                void UpdateCameraView(const Eegeo::Resources::Interiors::InteriorsModel& interiorModel,
+                                      const Eegeo::Resources::Interiors::InteriorsFloorModel& currentFloorModel);
                 void HandleInteractionModelChanged();
-                Eegeo::dv3 CalculateInterestPoint(const Eegeo::Resources::Interiors::InteriorsModel* pModel,
+                Eegeo::dv3 CalculateInterestPoint(const Eegeo::Resources::Interiors::InteriorsModel& interiorModel,
                                                   float centerHeightAboveGround,
                                                   float expandedParam,
                                                   bool shouldCenterOnFloor);
@@ -44,9 +45,6 @@ namespace ExampleApp
                 bool m_applyRestrictions;
                 float m_cameraInterestAltitude;
                 bool m_applyFloorOffset;
-                bool m_inExpandedMode;
-                float m_normalDistanceToInterest;
-                float m_normalTilt;
                 
             public:
                 InteriorsExplorerCameraController(Eegeo::Resources::Interiors::InteriorController& interiorController,

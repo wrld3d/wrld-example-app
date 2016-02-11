@@ -40,6 +40,35 @@ namespace ExampleApp
                     float diagonalLength = Eegeo::v2(floorModel.GetTangentSpaceBounds().Size().x,floorModel.GetTangentSpaceBounds().Size().z).Length();
                     return ((diagonalLength * 0.5f) / Eegeo::Math::Tan(fieldOfViewRadians*0.5f));
                 }
+                
+                const float CalculateCollapsedDistanceToInterest(const Eegeo::Resources::Interiors::InteriorsFloorModel& currentInteriorFloorModel,
+                                                                 float currentDistanceToInterest,
+                                                                 float fovRadians,
+                                                                 bool returningFromExpanded)
+                {
+                    float collapsedDistanceToInterest = currentDistanceToInterest;
+                    if(returningFromExpanded)
+                    {
+                        collapsedDistanceToInterest = CalcRecommendedOverviewDistanceForFloor(currentInteriorFloorModel, fovRadians);
+                    }
+                    
+                    return collapsedDistanceToInterest;
+                }
+                
+                const float CalculateExpandedDistanceToInterest(float expandedInteriorCenterHeight, float fovRadians)
+                {
+                    return (expandedInteriorCenterHeight / Eegeo::Math::Tan(fovRadians*0.5f)) * AdditionalExpandedDistanceToInterestFactor;
+                }
+                
+                const float CalculateCollapsedTiltDegrees(float currentTiltDegrees, bool returningFromExpanded)
+                {
+                    if(returningFromExpanded)
+                    {
+                        return 0.0f;
+                    }
+                    
+                    return currentTiltDegrees;
+                }
             }
             
             
@@ -61,11 +90,9 @@ namespace ExampleApp
             , m_environmentFlatteningService(environmentFlatteningService)
             , m_cameraTouchEnabled(false)
             , m_interiorsAffectedByFlattening(interiorsAffectedByFlattening)
-            , m_normalDistanceToInterest(0.0f)
             , m_applyRestrictions(true)
             , m_cameraInterestAltitude(0)
             , m_applyFloorOffset(true)
-            , m_inExpandedMode(false)
             , m_interactionModelChangedCallback(this, &InteriorsExplorerCameraController::HandleInteractionModelChanged)
             {
                 // Temp manually set initial cam pos.
@@ -156,59 +183,51 @@ namespace ExampleApp
                 
                 m_globeCameraController.Update(dt);
                 
-                if(!m_interiorController.InteriorInScene())
+                if(m_interiorController.InteriorInScene())
                 {
-                    return;
+                    const Eegeo::Resources::Interiors::InteriorsModel* pModel = NULL;
+                    m_interiorController.TryGetCurrentModel(pModel);
+                    if(pModel == NULL)
+                    {
+                        return;
+                    }
+                    
+                    const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = NULL;
+                    m_interiorController.TryGetCurrentFloorModel(pFloorModel);
+                    if(pFloorModel == NULL)
+                    {
+                        return;
+                    }
+                    
+                    UpdateCameraView(*pModel, *pFloorModel);
                 }
                 
-                UpdateCameraView();
             }
             
-            void InteriorsExplorerCameraController::UpdateCameraView()
-            {
-                // TODO: Could do with sensible eventing + refactoring re: handling expanded mode.
-                
-                const Eegeo::Resources::Interiors::InteriorsModel* pModel = NULL;
-                m_interiorController.TryGetCurrentModel(pModel);
-                if(pModel == NULL)
-                {
-                    return;
-                }
-                
-                float fovRadians = m_globeCameraController.GetRenderCamera().GetFOV();
-                bool centerCameraOnFloor = false;
 
-                if (m_interiorInteractionModel.IsExitingExpanded())
-                {
-                    const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = NULL;
-                    if(m_interiorController.TryGetCurrentFloorModel(pFloorModel))
-                    {
-                        m_normalDistanceToInterest = CalcRecommendedOverviewDistanceForFloor(*pFloorModel, fovRadians);
-                        m_normalTilt = 0.0f;
-                        centerCameraOnFloor = true;
-                    }
-                }
-                else
-                {
-                    m_normalDistanceToInterest = m_globeCameraController.GetDistanceToInterest();
-                    m_normalTilt = m_globeCameraController.GetTiltDegrees();
-                }
-                m_inExpandedMode = !m_interiorInteractionModel.IsCollapsed();
-                
+            
+            void InteriorsExplorerCameraController::UpdateCameraView(const Eegeo::Resources::Interiors::InteriorsModel& interiorModel,
+                                                                     const Eegeo::Resources::Interiors::InteriorsFloorModel& currentFloorModel)
+            {
+                float fovRadians = m_globeCameraController.GetRenderCamera().GetFOV();
+                bool expanded = m_interiorInteractionModel.IsExpanded();
+                float expandedParam =  Eegeo::Math::SinEaseInOut(m_interiorAnimationController.GetExpandedModeParameter());
+                const bool returningFromExpandedMode = !expanded && expandedParam > 0.0f;
                 const float expandedCenterHeight = m_interiorAnimationController.CalculateExpandedHeight()*0.5f;
                 
-                float expandedDistanceToInterest = (expandedCenterHeight / Eegeo::Math::Tan(fovRadians*0.5f)) * AdditionalExpandedDistanceToInterestFactor;
-                const float expandedParam =  Eegeo::Math::SinEaseInOut(m_interiorAnimationController.GetExpandedModeParameter());
-                float distanceToInterest = Eegeo::Math::Lerp(m_normalDistanceToInterest, expandedDistanceToInterest, expandedParam);
+                float collapsedDistanceToInterest = CalculateCollapsedDistanceToInterest(currentFloorModel, m_globeCameraController.GetDistanceToInterest(), fovRadians, returningFromExpandedMode);
+                float expandedDistanceToInterest = CalculateExpandedDistanceToInterest(expandedCenterHeight, fovRadians);
+                float distanceToInterest = Eegeo::Math::Lerp(collapsedDistanceToInterest, expandedDistanceToInterest, expandedParam);
                 m_globeCameraController.SetView(m_globeCameraController.GetInterestBasis(), distanceToInterest);
                 
-                const float tiltWhenExpandedDegrees = 0.0f;
-                float tiltDegrees = Eegeo::Math::Lerp(m_normalTilt, tiltWhenExpandedDegrees, expandedParam);
+                float collapsedTiltDegrees = CalculateCollapsedTiltDegrees(m_globeCameraController.GetTiltDegrees(), returningFromExpandedMode);
+                const float expandedTiltDegrees = 0.0f;
+                float tiltDegrees = Eegeo::Math::Lerp(collapsedTiltDegrees, expandedTiltDegrees, expandedParam);
                 m_globeCameraController.ApplyTilt(tiltDegrees);
                 
+                bool shouldFocusOnFloorCenter = returningFromExpandedMode;
                 Eegeo::dv3 initialCameraInterestEcef = m_globeCameraController.GetInterestBasis().GetPointEcef();
-                Eegeo::dv3 finalCameraInterestEcef = CalculateInterestPoint(pModel, expandedCenterHeight, expandedParam, centerCameraOnFloor);
-                
+                Eegeo::dv3 finalCameraInterestEcef = CalculateInterestPoint(interiorModel, expandedCenterHeight, expandedParam, shouldFocusOnFloorCenter);
                 const double PositionUpdateThresholdDistanceSq = 0.01;
                 if((finalCameraInterestEcef - initialCameraInterestEcef).LengthSq() > PositionUpdateThresholdDistanceSq)
                 {
@@ -216,7 +235,7 @@ namespace ExampleApp
                 }
             }
             
-            Eegeo::dv3 InteriorsExplorerCameraController::CalculateInterestPoint(const Eegeo::Resources::Interiors::InteriorsModel* pModel,
+            Eegeo::dv3 InteriorsExplorerCameraController::CalculateInterestPoint(const Eegeo::Resources::Interiors::InteriorsModel& interiorModel,
                                                                                  float centerHeightAboveGround,
                                                                                  float expandedParam,
                                                                                  bool shouldCenterOnFloor)
@@ -229,7 +248,7 @@ namespace ExampleApp
                     m_cameraInterestAltitude = GetFloorOffsetHeight();
                 }
                 
-                const Eegeo::Space::EcefTangentBasis& interiorTangentBasis = pModel->GetTangentBasis();
+                const Eegeo::Space::EcefTangentBasis& interiorTangentBasis = interiorModel.GetTangentBasis();
                 Eegeo::dv3 origin = interiorTangentBasis.GetPointEcef();
                 
                 Eegeo::v3 relativeCameraInterestEcef = (cameraInterestEcef - origin).ToSingle();
@@ -248,7 +267,7 @@ namespace ExampleApp
                 
                 // Expanded view interest position.
                 // TODO: Maybe subtly slide position up and down based on floor param and number of floors.
-                const Eegeo::Geometry::Bounds3D& tangentSpaceBounds = pModel->GetTangentSpaceBounds();
+                const Eegeo::Geometry::Bounds3D& tangentSpaceBounds = interiorModel.GetTangentSpaceBounds();
                 
                 const float additionalHeightAboveCenterFactor = 1.2f;
                 Eegeo::v3 cameraInterestTangentSpaceExpanded = Eegeo::v3(tangentSpaceBounds.Center().x,
@@ -269,11 +288,11 @@ namespace ExampleApp
                 }
                 
                 Eegeo::m33 tangentBasis;
-                pModel->GetTangentBasis().GetBasisOrientationAsMatrix(tangentBasis);
+                interiorTangentBasis.GetBasisOrientationAsMatrix(tangentBasis);
                 relativeCameraInterestEcef = Eegeo::v3::Mul(cameraInterestTangentSpace, tangentBasis);
                 
                 Eegeo::dv3 finalEcefInterestPosition;
-                Eegeo::dv3 interiorOriginAtBase = pModel->GetTangentBasis().GetPointEcef() + pModel->GetTangentBasis().GetUp() * pModel->GetTangentSpaceBounds().GetMin().y;
+                Eegeo::dv3 interiorOriginAtBase = interiorTangentBasis.GetPointEcef() + interiorTangentBasis.GetUp() * tangentSpaceBounds.GetMin().y;
                 if(!m_interiorsAffectedByFlattening)
                 {
                     finalEcefInterestPosition = m_environmentFlatteningService.GetScaledPointEcef(interiorOriginAtBase, m_environmentFlatteningService.GetCurrentScale()) + relativeCameraInterestEcef;
