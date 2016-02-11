@@ -181,7 +181,11 @@ namespace ExampleApp
                 const float dragParameter = message.GetDragParam();
                 const float floorParam = dragParameter * (pModel->GetFloorCount()-1);
 
-                m_interiorInteractionModel.SetExpanded(true);
+                const bool shouldEnterExpandedMode = m_interiorInteractionModel.IsCollapsed() || m_interiorInteractionModel.IsExitingExpanded();
+                if (shouldEnterExpandedMode)
+                {
+                    m_interiorInteractionModel.ToggleExpanded();
+                }
                 m_animationController.SetFloorParameter(floorParam);
                 
                 const int nearestFloorIndex = static_cast<int>(roundf(floorParam));
@@ -196,7 +200,11 @@ namespace ExampleApp
                     return;
                 }
                 
-                m_interiorInteractionModel.SetExpanded(false);
+                const bool shouldExitExpandedMode = m_interiorInteractionModel.IsFullyExpanded() || m_interiorInteractionModel.IsEnteringExpanded();
+                if (shouldExitExpandedMode)
+                {
+                    m_interiorInteractionModel.ToggleExpanded();
+                }
                 
                 if(m_controller.GetCurrentFloorIndex() == floor)
                 {

@@ -175,13 +175,10 @@ namespace ExampleApp
                     return;
                 }
                 
-                bool expanded = m_interiorInteractionModel.IsExpanded();
-                float expandedParam =  Eegeo::Math::SinEaseInOut(m_interiorAnimationController.GetExpandedModeParameter());
-                
                 float fovRadians = m_globeCameraController.GetRenderCamera().GetFOV();
                 bool centerCameraOnFloor = false;
-                const bool returningFromExpandedMode = !expanded && expandedParam > 0.0f;
-                if(returningFromExpandedMode)
+
+                if (m_interiorInteractionModel.IsExitingExpanded())
                 {
                     const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = NULL;
                     if(m_interiorController.TryGetCurrentFloorModel(pFloorModel))
@@ -196,11 +193,12 @@ namespace ExampleApp
                     m_normalDistanceToInterest = m_globeCameraController.GetDistanceToInterest();
                     m_normalTilt = m_globeCameraController.GetTiltDegrees();
                 }
-                m_inExpandedMode = expanded;
+                m_inExpandedMode = !m_interiorInteractionModel.IsCollapsed();
                 
                 const float expandedCenterHeight = m_interiorAnimationController.CalculateExpandedHeight()*0.5f;
                 
                 float expandedDistanceToInterest = (expandedCenterHeight / Eegeo::Math::Tan(fovRadians*0.5f)) * AdditionalExpandedDistanceToInterestFactor;
+                const float expandedParam =  Eegeo::Math::SinEaseInOut(m_interiorAnimationController.GetExpandedModeParameter());
                 float distanceToInterest = Eegeo::Math::Lerp(m_normalDistanceToInterest, expandedDistanceToInterest, expandedParam);
                 m_globeCameraController.SetView(m_globeCameraController.GetInterestBasis(), distanceToInterest);
                 
