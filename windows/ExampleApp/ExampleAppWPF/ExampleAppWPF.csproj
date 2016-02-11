@@ -560,6 +560,12 @@
     <Resource Include="..\..\Resources\search_results_spinner.png">
       <Link>Assets\search_results_spinner.png</Link>
     </Resource>
+    <Resource Include="..\..\Resources\button_clear_search_off.png">
+      <Link>Assets\button_clear_search_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_clear_search_on.png">
+      <Link>Assets\button_clear_search_on.png</Link>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

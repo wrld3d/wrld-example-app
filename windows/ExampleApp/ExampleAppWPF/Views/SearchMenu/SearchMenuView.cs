@@ -28,6 +28,7 @@ namespace ExampleAppWPF
         private MenuListAdapter m_resultListAdapter;
         private Grid m_resultsSpinner;
         private TextBlock m_resultsCount;
+        private Button m_resultsClearButton;
         private ScrollViewer m_menuOptionsView;
 
         private Canvas m_resultsCountContainer;
@@ -98,6 +99,9 @@ namespace ExampleAppWPF
             m_resultsCount = (TextBlock)GetTemplateChild("SearchResultCount");
             m_resultsCountContainer = (Canvas)GetTemplateChild("SearchResultCountContainer");
 
+            m_resultsClearButton = (Button)GetTemplateChild("SearchClear");
+            m_resultsClearButton.Click += OnResultsClear;
+
             m_list = (ListBox)GetTemplateChild("SecondaryMenuItemList");
             m_list.SelectionChanged += SelectionChanged;
 
@@ -125,6 +129,24 @@ namespace ExampleAppWPF
 
             m_adapter = new MenuListAdapter(false, m_list, fadeInItemStoryboard, fadeOutItemStoryboard);
             m_resultListAdapter= new MenuListAdapter(false, m_resultsList, fadeInItemStoryboard, fadeOutItemStoryboard);
+        }
+
+        private void ClearSearchResultsListBox()
+        {
+            m_resultListAdapter.ResetData();
+
+            m_resultListAdapter.CollapseAll();
+            m_resultsList.DataContext = null;
+            m_resultsList.ItemsSource = null;
+        }
+
+        private void OnResultsClear(object sender, RoutedEventArgs e)
+        {
+            SearchMenuViewCLIMethods.OnSearchCleared(m_nativeCallerPointer);
+
+            m_resultsClearButton.Visibility = Visibility.Hidden;
+
+            ClearSearchResultsListBox();
         }
 
         private void OnIconClick(object sender, RoutedEventArgs e)
@@ -213,7 +235,9 @@ namespace ExampleAppWPF
             m_resultsList.DataContext = m_resultListAdapter;
 
             m_resultsList.ItemsSource = itemsSource;
+
             m_resultsSpinner.Visibility = Visibility.Hidden;
+            m_resultsClearButton.Visibility = Visibility.Visible;
         }
 
         public override void AnimateToClosedOnScreen()
