@@ -35,6 +35,8 @@ namespace ExampleAppWPF
         private Storyboard m_openResultCountAnim;
         private Storyboard m_closeResultCountAnim;
 
+        private string m_defaultEditText;
+
         static SearchMenuView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SearchMenuView), new FrameworkPropertyMetadata(typeof(SearchMenuView)));
@@ -115,6 +117,9 @@ namespace ExampleAppWPF
 
             m_editText = (TextBox)GetTemplateChild("SecondaryMenuViewSearchEditTextView");
             m_editText.KeyDown += OnKeyDown;
+            m_editText.GotFocus += OnSearchBoxSelected;
+            m_editText.LostFocus += OnSearchBoxUnSelected;
+            m_defaultEditText = m_editText.Text;
 
             m_mainContainer = (Grid)GetTemplateChild("SecondaryMenuViewListContainer");
             m_mainContainerAnim = new CustomAppAnimation(m_mainContainer as FrameworkElement);
@@ -129,6 +134,22 @@ namespace ExampleAppWPF
 
             m_adapter = new MenuListAdapter(false, m_list, fadeInItemStoryboard, fadeOutItemStoryboard);
             m_resultListAdapter= new MenuListAdapter(false, m_resultsList, fadeInItemStoryboard, fadeOutItemStoryboard);
+        }
+
+        private void OnSearchBoxUnSelected(object sender, RoutedEventArgs e)
+        {
+            if( m_editText.Text.Replace(" ", null) == string.Empty)
+            {
+                m_editText.Text = m_defaultEditText;
+            }
+        }
+
+        private void OnSearchBoxSelected(object sender, RoutedEventArgs e)
+        {
+            if(m_editText.Text == m_defaultEditText)
+            {
+                m_editText.Text = string.Empty;
+            }
         }
 
         private void ClearSearchResultsListBox()

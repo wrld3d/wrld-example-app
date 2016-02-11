@@ -118,8 +118,8 @@
                                         <Rectangle Width="Auto" Height="Auto" Fill="{StaticResource Gold}"/>
                                 </Grid>
                                 <Grid Grid.Column="0">
-                                    <Border BorderBrush="White" Background="White" BorderThickness="1,1,1,1" CornerRadius="10" Width="295" Height="38" VerticalAlignment="Center" Margin="32,8,6,8"> 
-                                        <TextBox Name="SecondaryMenuViewSearchEditTextView" Foreground="{StaticResource Black}" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Margin="10,6,6,6"/>
+                                    <Border BorderBrush="White" Background="White" BorderThickness="1,1,1,1" CornerRadius="10" Width="295" Height="38" VerticalAlignment="Center" Margin="32,8,6,8">
+                                        <TextBox Text="Enter Search Term" Name="SecondaryMenuViewSearchEditTextView" FontFamily="{StaticResource PrimaryUIFont}" FontSize="18" Foreground="{StaticResource InputTextColour}" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Margin="10,6,6,6"/>
                                     </Border>
                                 </Grid>
                                 <Grid Margin="270,0,0,0" Grid.Column="0" Name="SearchResultsSpinner" Visibility="Hidden">
