@@ -27,7 +27,12 @@ namespace ExampleAppWPF
         private ListBox m_resultsList;
         private MenuListAdapter m_resultListAdapter;
         private Grid m_resultsSpinner;
+        private TextBlock m_resultsCount;
         private ScrollViewer m_menuOptionsView;
+
+        private Canvas m_resultsCountContainer;
+        private Storyboard m_openResultCountAnim;
+        private Storyboard m_closeResultCountAnim;
 
         static SearchMenuView()
         {
@@ -90,6 +95,8 @@ namespace ExampleAppWPF
 
             m_menuOptionsView = (ScrollViewer)GetTemplateChild("MenuOptionsView");
             m_resultsSpinner = (Grid)GetTemplateChild("SearchResultsSpinner");
+            m_resultsCount = (TextBlock)GetTemplateChild("SearchResultCount");
+            m_resultsCountContainer = (Canvas)GetTemplateChild("SearchResultCountContainer");
 
             m_list = (ListBox)GetTemplateChild("SecondaryMenuItemList");
             m_list.SelectionChanged += SelectionChanged;
@@ -112,7 +119,10 @@ namespace ExampleAppWPF
 
             var fadeInItemStoryboard = ((Storyboard)Template.Resources["FadeInNewItems"]).Clone();
             var fadeOutItemStoryboard = ((Storyboard)Template.Resources["FadeOutOldItems"]).Clone();
-            
+
+            m_openResultCountAnim = ((Storyboard)Template.Resources["OpenSearchCount"]).Clone();
+            m_closeResultCountAnim = ((Storyboard)Template.Resources["CloseSearchCount"]).Clone();
+
             m_adapter = new MenuListAdapter(false, m_list, fadeInItemStoryboard, fadeOutItemStoryboard);
             m_resultListAdapter= new MenuListAdapter(false, m_resultsList, fadeInItemStoryboard, fadeOutItemStoryboard);
         }
@@ -210,12 +220,14 @@ namespace ExampleAppWPF
         {
             base.AnimateToClosedOnScreen();
             m_mainContainer.Visibility = Visibility.Hidden;
+            m_closeResultCountAnim.Begin(m_resultsCountContainer);
         }
 
         public override void AnimateToOpenOnScreen()
         {
             base.AnimateToOpenOnScreen();
             m_mainContainer.Visibility = Visibility.Visible;
+            m_openResultCountAnim.Begin(m_resultsCountContainer);
         }
 
         public void DisableEditText()
@@ -240,7 +252,15 @@ namespace ExampleAppWPF
 
         public void SetSearchResultCount(int count)
         {
-
+            if(count > 0)
+            {
+                m_resultsCount.Text = count.ToString();
+                m_resultsCountContainer.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                m_resultsCountContainer.Visibility = Visibility.Hidden;
+            }
         }
 
         protected override void RefreshListData(List<string> groups, List<bool> groupsExpandable, Dictionary<string, List<string>> groupToChildrenMap)

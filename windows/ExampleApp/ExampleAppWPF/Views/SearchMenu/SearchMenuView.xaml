@@ -45,6 +45,20 @@
                                 <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="0, -42,0,0" />
                             </ThicknessAnimationUsingKeyFrames>
                         </Storyboard>
+
+                        <Storyboard x:Key="CloseSearchCount">
+                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Duration="0:0:0.2" >
+                                <SplineThicknessKeyFrame KeyTime="00:00:00.0" Value="-635,0,0,0" />
+                                <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="0,0,0,0"/>
+                            </ThicknessAnimationUsingKeyFrames>
+                        </Storyboard>
+
+                        <Storyboard x:Key="OpenSearchCount">
+                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Duration="0:0:0.2" >
+                                <SplineThicknessKeyFrame KeyTime="00:00:00.0" Value="0,0,0,0" />
+                                <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="-635,0,0,0" />
+                            </ThicknessAnimationUsingKeyFrames>
+                        </Storyboard>
                     </ControlTemplate.Resources>
                     <DockPanel Margin="0,50,0,0" Width="382">
                         <Grid Width="50" Height="50" VerticalAlignment="Top" DockPanel.Dock="Right" Name="DragTabParentGrid" Background="{StaticResource Gold}">
@@ -84,6 +98,10 @@
                                 </Button.Style>
                             </Button>
                         </Grid>
+
+                        <Canvas Name="SearchResultCountContainer" VerticalAlignment="Top" DockPanel.Dock="Right" Background="{StaticResource PrimaryBG_colour}" Width="32" Height="50" Panel.ZIndex="100" Margin="-635,0,0,0" Visibility="Hidden">
+                            <TextBlock IsEnabled="False" Margin="0,12,2,0"  Name="SearchResultCount" Text="20" Foreground="{StaticResource LightGrey}" TextAlignment="Center" Width="32" Height="50" FontFamily="{StaticResource PrimaryUIFont}" FontSize="18"/>
+                        </Canvas>
 
                         <Grid Name="SecondaryMenuViewListContainer" DockPanel.Dock="Left" Visibility="Hidden">
                             <Grid.RowDefinitions>
