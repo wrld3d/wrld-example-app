@@ -66,16 +66,20 @@ namespace ExampleApp
             , m_cameraInterestAltitude(0)
             , m_applyFloorOffset(true)
             , m_inExpandedMode(false)
+            , m_interactionModelChangedCallback(this, &InteriorsExplorerCameraController::HandleInteractionModelChanged)
             {
                 // Temp manually set initial cam pos.
                 Eegeo::Space::EcefTangentBasis basis;
                 Eegeo::Camera::CameraHelpers::EcefTangentBasisFromPointAndHeading(Eegeo::Space::LatLong::FromDegrees(0, 0).ToECEF(), 0.0f, basis);
                 m_globeCameraController.SetView(basis, 100.0f);
                 m_globeCameraController.ApplyTilt(0.0f);
+                
+                m_interiorInteractionModel.RegisterModelChangedCallback(m_interactionModelChangedCallback);
             }
             
             InteriorsExplorerCameraController::~InteriorsExplorerCameraController()
             {
+                m_interiorInteractionModel.UnregisterModelChangedCallback(m_interactionModelChangedCallback);
             }
             
             const Eegeo::Camera::CameraState InteriorsExplorerCameraController::GetCameraState() const
@@ -120,6 +124,18 @@ namespace ExampleApp
                 return m_globeCameraTouchController;
             }
             
+            void InteriorsExplorerCameraController::HandleInteractionModelChanged()
+            {
+                Eegeo::Camera::GlobeCamera::GlobeCameraTouchSettings touchSettings = m_globeCameraController.GetTouchSettings();
+                const bool isExpanded = m_interiorInteractionModel.IsExpanded();
+               
+                touchSettings.ZoomEnabled = !isExpanded;
+                touchSettings.RotateEnabled = !isExpanded;
+                touchSettings.TiltEnabled = !isExpanded;
+                
+                m_globeCameraController.SetTouchSettings(touchSettings);
+            }
+            
             void InteriorsExplorerCameraController::Update(float dt)
             {
                 if(!m_interiorSelectionModel.IsInteriorSelected())
@@ -150,6 +166,8 @@ namespace ExampleApp
             
             void InteriorsExplorerCameraController::UpdateCameraView()
             {
+                // TODO: Could do with sensible eventing + refactoring re: handling expanded mode.
+                
                 const Eegeo::Resources::Interiors::InteriorsModel* pModel = NULL;
                 m_interiorController.TryGetCurrentModel(pModel);
                 if(pModel == NULL)
@@ -169,12 +187,14 @@ namespace ExampleApp
                     if(m_interiorController.TryGetCurrentFloorModel(pFloorModel))
                     {
                         m_normalDistanceToInterest = CalcRecommendedOverviewDistanceForFloor(*pFloorModel, fovRadians);
+                        m_normalTilt = 0.0f;
                         centerCameraOnFloor = true;
                     }
                 }
                 else
                 {
                     m_normalDistanceToInterest = m_globeCameraController.GetDistanceToInterest();
+                    m_normalTilt = m_globeCameraController.GetTiltDegrees();
                 }
                 m_inExpandedMode = expanded;
                 
@@ -183,6 +203,10 @@ namespace ExampleApp
                 float expandedDistanceToInterest = (expandedCenterHeight / Eegeo::Math::Tan(fovRadians*0.5f)) * AdditionalExpandedDistanceToInterestFactor;
                 float distanceToInterest = Eegeo::Math::Lerp(m_normalDistanceToInterest, expandedDistanceToInterest, expandedParam);
                 m_globeCameraController.SetView(m_globeCameraController.GetInterestBasis(), distanceToInterest);
+                
+                const float tiltWhenExpandedDegrees = 0.0f;
+                float tiltDegrees = Eegeo::Math::Lerp(m_normalTilt, tiltWhenExpandedDegrees, expandedParam);
+                m_globeCameraController.ApplyTilt(tiltDegrees);
                 
                 Eegeo::dv3 initialCameraInterestEcef = m_globeCameraController.GetInterestBasis().GetPointEcef();
                 Eegeo::dv3 finalCameraInterestEcef = CalculateInterestPoint(pModel, expandedCenterHeight, expandedParam, centerCameraOnFloor);

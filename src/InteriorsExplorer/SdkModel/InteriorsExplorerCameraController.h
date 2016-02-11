@@ -23,6 +23,7 @@ namespace ExampleApp
             private:
                 
                 void UpdateCameraView();
+                void HandleInteractionModelChanged();
                 Eegeo::dv3 CalculateInterestPoint(const Eegeo::Resources::Interiors::InteriorsModel* pModel,
                                                   float centerHeightAboveGround,
                                                   float expandedParam,
@@ -36,12 +37,16 @@ namespace ExampleApp
                 Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& m_globeCameraTouchController;
                 Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
                 const Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
+                
+                Eegeo::Helpers::TCallback0<InteriorsExplorerCameraController> m_interactionModelChangedCallback;
+                
                 const bool m_interiorsAffectedByFlattening;
                 bool m_applyRestrictions;
                 float m_cameraInterestAltitude;
                 bool m_applyFloorOffset;
                 bool m_inExpandedMode;
                 float m_normalDistanceToInterest;
+                float m_normalTilt;
                 
             public:
                 InteriorsExplorerCameraController(Eegeo::Resources::Interiors::InteriorController& interiorController,
