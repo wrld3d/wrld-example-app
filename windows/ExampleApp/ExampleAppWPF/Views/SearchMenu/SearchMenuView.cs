@@ -37,6 +37,9 @@ namespace ExampleAppWPF
 
         private string m_defaultEditText;
 
+        private ControlClickHandler m_menuListClickHandler;
+        private ControlClickHandler m_resultsListClickHandler;
+
         static SearchMenuView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SearchMenuView), new FrameworkPropertyMetadata(typeof(SearchMenuView)));
@@ -107,11 +110,13 @@ namespace ExampleAppWPF
             m_resultsClearButton.Click += OnResultsClear;
 
             m_list = (ListBox)GetTemplateChild("SecondaryMenuItemList");
-            m_list.SelectionChanged += SelectionChanged;
+            m_menuListClickHandler = new ControlClickHandler(OnMenuListItemSelected, m_list);
+            m_list.PreviewMouseWheel += OnMenuScrollWheel;
 
             m_resultsList = (ListBox)GetTemplateChild("SearchResultsList");
-            m_resultsList.SelectionChanged += OnResultSelected;
-            
+            m_resultsListClickHandler = new ControlClickHandler(OnResultsListItemsSelected, m_resultsList);
+            m_resultsList.PreviewMouseWheel += OnMenuScrollWheel;
+
             m_dragTabView = (Button)GetTemplateChild("SecondaryMenuDragTabView");
             m_dragTabContainer = (Grid)GetTemplateChild("DragTabParentGrid");
 
@@ -136,6 +141,39 @@ namespace ExampleAppWPF
 
             m_adapter = new MenuListAdapter(false, m_list, fadeInItemStoryboard, fadeOutItemStoryboard);
             m_resultListAdapter= new MenuListAdapter(false, m_resultsList, fadeInItemStoryboard, fadeOutItemStoryboard);
+        }
+
+        private void OnMenuScrollWheel(object sender, MouseWheelEventArgs e)
+        {
+            m_menuOptionsView.RaiseEvent(e);
+        }
+
+        private void OnMenuListItemSelected(object sender, MouseEventArgs e)
+        {
+            if (IsAnimating() || m_adapter.IsAnimating())
+            {
+                (sender as ListBox).SelectedItem = null;
+                return;
+            }
+
+            var item = m_list.SelectedItem as MenuListItem;
+            if (item != null)
+            {
+                int position = m_adapter.Children.IndexOf(item);
+
+                int sectionIndex = m_adapter.GetSectionIndex(position);
+                int childIndex = m_adapter.GetItemIndex(position);
+
+                MenuViewCLIMethods.SelectedItem(m_nativeCallerPointer, sectionIndex, childIndex);
+            }
+        }
+
+        private void OnResultsListItemsSelected(object sender, MouseEventArgs e)
+        {
+            if (m_resultsList.SelectedItems?.Count > 0)
+            {
+                SearchMenuViewCLIMethods.HandleSearchItemSelected(m_nativeCallerPointer, m_resultsList.SelectedIndex);
+            }
         }
 
         private void OnSearchBoxUnSelected(object sender, RoutedEventArgs e)
@@ -177,41 +215,6 @@ namespace ExampleAppWPF
             MenuViewCLIMethods.ViewClicked(m_nativeCallerPointer);
         }
 
-        private void OnResultSelected(object sender, SelectionChangedEventArgs e)
-        {
-            var resultsList = sender as ListBox;
-
-            if (resultsList?.SelectedItems.Count > 0)
-            {
-                SearchMenuViewCLIMethods.HandleSearchItemSelected(m_nativeCallerPointer, resultsList.SelectedIndex);
-            }
-        }
-
-        private void SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (IsAnimating() || m_adapter.IsAnimating())
-            {
-                (sender as ListBox).SelectedItem = null;
-                return;
-            }
-
-            if (e.AddedItems != null && e.AddedItems.Count > 0)
-            {
-                MenuListItem item = (sender as ListBox).SelectedItem as MenuListItem;
-                (sender as ListBox).SelectedItem = null;
-
-                if (item != null)
-                {
-                    int position = m_adapter.Children.IndexOf(item);
-
-                    int sectionIndex = m_adapter.GetSectionIndex(position);
-                    int childIndex = m_adapter.GetItemIndex(position);
-
-                    MenuViewCLIMethods.SelectedItem(m_nativeCallerPointer, sectionIndex, childIndex);
-                }
-            }
-        }
-        
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
