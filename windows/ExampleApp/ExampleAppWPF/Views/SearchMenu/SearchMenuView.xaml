@@ -210,7 +210,7 @@
                                                 </Style>
 
                                                 <DataTemplate DataType="{x:Type local:MenuListItem}">
-                                                    <Grid Name="MenuItemGrid" HorizontalAlignment="Stretch" Height="42" Background="{StaticResource Gold}">
+                                                    <Grid Name="MenuItemGrid" HorizontalAlignment="Stretch" Height="42" Background="{StaticResource Gold}" Width="295">
                                                         <Grid.Triggers>
                                                             <EventTrigger RoutedEvent="MouseDown">
                                                                 <BeginStoryboard>
@@ -251,7 +251,7 @@
                                                             <Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="Auto"/>
                                                                 <ColumnDefinition Width="*"/>
-                                                                <ColumnDefinition Width="22"/>
+                                                                <ColumnDefinition Width="24"/>
                                                             </Grid.ColumnDefinitions>
                                                             <Image Name="MenuListOpenableShape" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" RenderTransformOrigin=".5,.5" Source="/Assets/sub_menu_arrow.png" Width="19" Height="19">
                                                                 <Image.Style>

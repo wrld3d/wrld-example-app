@@ -133,7 +133,7 @@ namespace ExampleAppWPF
 
             m_mainContainerAnim.m_widthHeight.X = mainContainerWidthPx + dragTabWidthPx;
             m_mainContainerAnim.m_offscreenPos.X = (m_screenWidthPx / 2) + (m_mainContainerAnim.m_widthHeight.X / 2);
-            m_mainContainerAnim.m_closedPos.X = m_mainContainerAnim.m_offscreenPos.X - ((mainContainerWidthPx + dragTabWidthPx) / 2);
+            m_mainContainerAnim.m_closedPos.X = m_mainContainerAnim.m_offscreenPos.X - (dragTabWidthPx + 32);
             m_mainContainerAnim.m_openPos.X = m_mainContainerAnim.m_offscreenPos.X - m_mainContainerAnim.m_widthHeight.X;
 
             double layoutX = m_mainContainerAnim.m_offscreenPos.X;
