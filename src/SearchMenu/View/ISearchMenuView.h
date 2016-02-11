@@ -4,6 +4,7 @@
 
 #include "Menu.h"
 #include "IMenuSectionViewModel.h"
+#include <vector>
 
 namespace ExampleApp
 {

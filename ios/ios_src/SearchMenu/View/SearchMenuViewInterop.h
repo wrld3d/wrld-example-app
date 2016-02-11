@@ -110,6 +110,11 @@ namespace ExampleApp
                 {
                     m_searchItemSelectedCallbacks.ExecuteCallbacks(index);
                 }
+                
+                void SetMenuSections(const std::vector<Menu::View::IMenuSectionViewModel*>& sections)
+                {
+                    
+                }
             };
         }
     }
