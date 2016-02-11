@@ -21,12 +21,12 @@ namespace ExampleAppWPF
         private bool m_isFirstLayout = true;
         private Grid m_mainContainer;
         private Grid m_dragTabContainer;
-        private bool m_isMouseDown = false;
         private static readonly ResourceDictionary genericResourceDictionary;
         private CustomAppAnimation m_mainContainerAnim;
 
         private ListBox m_resultsList;
         private MenuListAdapter m_resultListAdapter;
+        private Grid m_resultsSpinner;
         private ScrollViewer m_menuOptionsView;
 
         static SearchMenuView()
@@ -89,6 +89,7 @@ namespace ExampleAppWPF
             base.OnApplyTemplate();
 
             m_menuOptionsView = (ScrollViewer)GetTemplateChild("MenuOptionsView");
+            m_resultsSpinner = (Grid)GetTemplateChild("SearchResultsSpinner");
 
             m_list = (ListBox)GetTemplateChild("SecondaryMenuItemList");
             m_list.SelectionChanged += SelectionChanged;
@@ -165,6 +166,7 @@ namespace ExampleAppWPF
                 if (queryText.Length > 0)
                 {
                     SearchMenuViewCLIMethods.PerformedSearchQuery(m_nativeCallerPointer, queryText);
+                    m_resultsSpinner.Visibility = Visibility.Visible;
                 }
             }
         }
@@ -201,6 +203,7 @@ namespace ExampleAppWPF
             m_resultsList.DataContext = m_resultListAdapter;
 
             m_resultsList.ItemsSource = itemsSource;
+            m_resultsSpinner.Visibility = Visibility.Hidden;
         }
 
         public override void AnimateToClosedOnScreen()
@@ -236,11 +239,6 @@ namespace ExampleAppWPF
         }
 
         public void SetSearchResultCount(int count)
-        {
-
-        }
-
-        void CollapseAll()
         {
 
         }

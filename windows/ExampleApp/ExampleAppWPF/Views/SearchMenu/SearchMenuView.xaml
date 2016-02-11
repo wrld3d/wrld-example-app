@@ -7,6 +7,27 @@
         <ResourceDictionary Source="../../ListBoxControlTemplateNoPadding.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <Style x:Key="RotatingAnim" TargetType="{x:Type Image}">
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <RotateTransform Angle="0"/>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="true">
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle"
+                        From="0" To="360" Duration="0:0:1.5" RepeatBehavior="Forever" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <Style TargetType="{x:Type local:SearchMenuView}">
         <Setter Property="Template">
             <Setter.Value>
@@ -82,6 +103,9 @@
                                     <Border BorderBrush="White" Background="White" BorderThickness="1,1,1,1" CornerRadius="10" Width="295" Height="38" VerticalAlignment="Center" Margin="32,8,6,8"> 
                                         <TextBox Name="SecondaryMenuViewSearchEditTextView" Foreground="{StaticResource Black}" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Margin="10,6,6,6"/>
                                     </Border>
+                                </Grid>
+                                <Grid Margin="270,0,0,0" Grid.Column="0" Name="SearchResultsSpinner" Visibility="Hidden">
+                                    <Image Style="{StaticResource RotatingAnim}" Source="/Assets/search_results_spinner.png" Width="25" Height="25" RenderTransformOrigin="0.5,0.5"/>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="1">
