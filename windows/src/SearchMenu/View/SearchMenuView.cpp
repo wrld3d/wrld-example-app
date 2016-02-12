@@ -30,7 +30,7 @@ namespace ExampleApp
 
             void SearchMenuView::SetSearchSection(Menu::View::IMenuSectionViewModel& searchSection)
             {
-                int resultCount = searchSection.Size();
+                int resultCount = static_cast<int>(searchSection.Size());
 
                 if (resultCount <= 0)
                 {

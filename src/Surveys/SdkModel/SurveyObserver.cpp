@@ -190,12 +190,12 @@ namespace ExampleApp
             
             bool SurveyObserver::WeatherRequirementsMet() const
             {
-                return GetSurveyConditions() & WeatherSelected;
+                return (GetSurveyConditions() & WeatherSelected) != 0;
             }
             
             bool SurveyObserver::PinCreationRequirementsMet() const
             {
-                return GetSurveyConditions() & PinCreated;
+                return (GetSurveyConditions() & PinCreated) != 0;
             }
         }
     }
