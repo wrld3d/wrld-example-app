@@ -3,6 +3,8 @@ set(headers ${headers} ios_src/SearchResultPoi/View
 )
 set(currsources
   ios_src/SearchResultPoi/View/CMakeLists.txt
+  ios_src/SearchResultPoi/View/EegeoSearchResultPoiView.h
+  ios_src/SearchResultPoi/View/EegeoSearchResultPoiView.mm
   ios_src/SearchResultPoi/View/ExampleTourSearchResultPoiView.h
   ios_src/SearchResultPoi/View/ExampleTourSearchResultPoiView.mm
   ios_src/SearchResultPoi/View/GeoNamesSearchResultPoiView.h

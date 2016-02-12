@@ -4,6 +4,7 @@
 #include "SearchResultModel.h"
 #include "SearchVendorNames.h"
 #include "YelpSearchJsonParser.h"
+#include "EegeoJsonParser.h"
 
 namespace ExampleApp
 {
@@ -17,6 +18,10 @@ namespace ExampleApp
                 if(vendor == YelpVendorName)
                 {
                     return Yelp::SdkModel::TryParseImageDetails(searchResultModel, out_imageUrl);
+                }
+                else if(vendor == EegeoVendorName)
+                {
+                    return EegeoPois::SdkModel::TryParseImageDetails(searchResultModel, out_imageUrl);
                 }
                 
                 return false;

@@ -166,7 +166,8 @@ namespace ExampleApp
 
         void CreateApplicationModelModules(const std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*>& platformImplementedSearchServiceModules,
                                            Eegeo::UI::NativeUIFactories& nativeUIFactories,
-                                           const bool interiorsAffectedByFlattening);
+                                           const bool interiorsAffectedByFlattening,
+                                           const std::string& apiKey);
 
         void DestroyApplicationModelModules();
 

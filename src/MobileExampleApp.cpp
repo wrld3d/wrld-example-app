@@ -73,7 +73,9 @@
 #include "ICompassViewModel.h"
 #include "CombinedSearchServiceModule.h"
 #include "GeoNamesSearchServiceModule.h"
+#include "EegeoSearchServiceModule.h"
 #include "SearchVendorNames.h"
+#include "YelpSearchConstants.h"
 #include "AppCameraModule.h"
 #include "AppCameraController.h"
 #include "AppModeStatesFactory.h"
@@ -317,7 +319,7 @@ namespace ExampleApp
                                                                                        Eegeo::Streaming::QuadTreeCube::MAX_DEPTH_TO_VISIT,
                                                                                        mapModule.GetEnvironmentFlatteningService());
         
-        CreateApplicationModelModules(platformImplementedSearchServiceModules, nativeUIFactories, platformConfig.OptionsConfig.InteriorsAffectedByFlattening);
+        CreateApplicationModelModules(platformImplementedSearchServiceModules, nativeUIFactories, platformConfig.OptionsConfig.InteriorsAffectedByFlattening, apiKey);
         
         m_pCameraTransitionController = Eegeo_NEW(ExampleApp::CameraTransitions::SdkModel::CameraTransitionController)(*m_pGlobeCameraController,
                                                                                                                        m_pInteriorsExplorerModule->GetInteriorsCameraController(),
@@ -370,7 +372,8 @@ namespace ExampleApp
 
     void MobileExampleApp::CreateApplicationModelModules(const std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*>& platformImplementedSearchServiceModules,
                                                          Eegeo::UI::NativeUIFactories& nativeUIFactories,
-                                                         const bool interiorsAffectedByFlattening)
+                                                         const bool interiorsAffectedByFlattening,
+                                                         const std::string& apiKey)
     {
         Eegeo::EegeoWorld& world = *m_pWorld;
         
@@ -400,6 +403,19 @@ namespace ExampleApp
                                                                                                           m_platformAbstractions.GetUrlEncoder(),
                                                                                                           m_networkCapabilities);
         }
+        const bool useEegeoPois = false;
+        if(useEegeoPois)
+        {
+            // For Mobile Example App purposes, we use the same taxonomy as Yelp
+            // You could configure your own taxonomy via the category: attribute of a POI submitted to poi-service
+            std::vector<std::string> supportedCategories = Search::Yelp::SearchConstants::GetCategories();
+            m_searchServiceModules[Search::EegeoVendorName] = Eegeo_NEW(Search::EegeoPois::SdkModel::EegeoSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
+                                                                                                                                       m_platformAbstractions.GetUrlEncoder(),
+                                                                                                                                       m_networkCapabilities,
+                                                                                                                                       supportedCategories,
+                                                                                                                                       apiKey);
+        }
+        
         searchServiceModulesForCombinedSearch.insert(m_searchServiceModules.begin(), m_searchServiceModules.end());
         
         m_pSearchServiceModule = Eegeo_NEW(Search::Combined::SdkModel::CombinedSearchServiceModule)(searchServiceModulesForCombinedSearch);
