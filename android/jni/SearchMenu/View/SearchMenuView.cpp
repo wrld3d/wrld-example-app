@@ -169,6 +169,11 @@ namespace ExampleApp
 				OnSearchCleared();
 				MenuView::HandleItemSelected(sectionIndex, itemIndex);
 			}
+
+			void SearchMenuView::SetMenuSections(const std::vector<Menu::View::IMenuSectionViewModel*>& sections)
+			{
+
+			}
         }
     }
 }
