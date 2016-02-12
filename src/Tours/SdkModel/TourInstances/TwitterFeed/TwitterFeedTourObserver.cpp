@@ -23,7 +23,6 @@ namespace ExampleApp
                 namespace TwitterFeed
                 {
                     TwitterFeedTourObserver::TwitterFeedTourObserver(Camera::IToursCameraTransitionController& toursCameraTransitionController,
-                                                                     Camera::IToursCameraController& toursCameraController,
                                                                      ITourService& tourService,
                                                                      WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                                      Eegeo::Resources::Interiors::InteriorController& interiorController,
@@ -33,10 +32,8 @@ namespace ExampleApp
                                                                      Social::TwitterFeed::ITwitterFeedService& twitterFeedService,
                                                                      const std::map<std::string, TweetStateData>& tweetStateDataMap,
                                                                      const std::map<std::string, int>& twitterTourIconOverrideMap,
-                                                                     Metrics::IMetricsService& metricsService,
                                                                      ExampleAppMessaging::TMessageBus& messageBus)
                     : m_toursCameraTransitionController(toursCameraTransitionController)
-                    , m_toursCameraController(toursCameraController)
                     , m_tourService(tourService)
                     , m_worldPinsService(worldPinsService)
                     , m_interiorController(interiorController)
@@ -47,7 +44,6 @@ namespace ExampleApp
                     , m_twitterFeedLoadedCallback(this, &TwitterFeedTourObserver::OnTwitterFeedLoaded)
                     , m_tweetStateDataMap(tweetStateDataMap)
                     , m_twitterTourIconOverrideMap(twitterTourIconOverrideMap)
-                    , m_metricsService(metricsService)
                     , m_messageBus(messageBus)
                     {
                         m_twitterFeedService.AddFeedLoadedCallback(m_twitterFeedLoadedCallback);
@@ -137,14 +133,12 @@ namespace ExampleApp
                                                                          twitterBaseProfileImage);
                         
                         TwitterFeedTourStateMachineFactory factory(m_toursCameraTransitionController,
-                                                                   m_toursCameraController,
                                                                    m_worldPinsService,
                                                                    m_interiorController,
                                                                    m_interiorVisibilityUpdater,
                                                                    m_interiorSelectionModel,
                                                                    userId,
                                                                    m_tweetStateDataMap,
-                                                                   m_metricsService,
                                                                    m_messageBus);
                         
                         m_tourService.AddTour(tourModel, *factory.CreateTourStateMachine(tourModel));

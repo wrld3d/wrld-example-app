@@ -133,8 +133,8 @@
     m_turingHighlightOff = false;
     m_customContentFramesSet = false;
     
-    m_row = indexPath.row;
-    m_section = indexPath.section;
+    m_row = static_cast<int>(indexPath.row);
+    m_section = static_cast<int>(indexPath.section);
     
     self->pCustomSeparatorContainer = [[UIView alloc]  initWithFrame:CGRectMake(0,0,0,0)];
     [self addSubview:self->pCustomSeparatorContainer];

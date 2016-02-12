@@ -320,7 +320,7 @@ void AppHost::HandleTouchInputEvent(const Eegeo::Windows::Input::TouchInputEvent
 {
     ASSERT_NATIVE_THREAD
 
-        m_pInputProcessor->HandleInput(event, m_nativeState.screenWidth, m_nativeState.screenHeight);
+        m_pInputProcessor->HandleInput(event, static_cast<float>(m_nativeState.screenWidth), static_cast<float>(m_nativeState.screenHeight));
 }
 
 void AppHost::HandleKeyboardInputEvent(const Eegeo::Windows::Input::KeyboardInputEvent& event)

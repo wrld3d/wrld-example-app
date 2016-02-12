@@ -6,7 +6,6 @@
 #include "Tours.h"
 #include "ICallback.h"
 #include "IScreenControlViewModel.h"
-#include "BidirectionalBus.h"
 #include "IMetricsService.h"
 
 namespace ExampleApp
@@ -22,8 +21,7 @@ namespace ExampleApp
                 public:
                     
                     TourFullScreenImageViewController(ITourFullScreenImageViewModel& viewModel,
-                                                      ITourFullScreenImageView& view,
-                                                      ExampleAppMessaging::TMessageBus& messageBus);
+                                                      ITourFullScreenImageView& view);
                     
                     ~TourFullScreenImageViewController();
                     
@@ -34,7 +32,6 @@ namespace ExampleApp
                     
                     ITourFullScreenImageViewModel& m_viewModel;
                     ITourFullScreenImageView& m_view;
-                    ExampleAppMessaging::TMessageBus& m_messageBus;
                     
                     Eegeo::Helpers::TCallback0<TourFullScreenImageViewController> m_beginFullScreenImageCeremonyCallback;
                     Eegeo::Helpers::TCallback0<TourFullScreenImageViewController> m_endFullScreenImageCeremonyCallback;

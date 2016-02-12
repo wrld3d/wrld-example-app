@@ -1,0 +1,54 @@
+if(${IOS})
+set(headers ${headers} ios_src
+)
+set(currsources
+  ios_src/AppDelegate.h
+  ios_src/AppDelegate.mm
+  ios_src/AppHost.h
+  ios_src/AppHost.mm
+  ios_src/AppInputDelegate.h
+  ios_src/AppInputDelegate.mm
+  ios_src/AppLocationDelegate.h
+  ios_src/AppLocationDelegate.mm
+  ios_src/AppRunner.h
+  ios_src/AppRunner.mm
+  ios_src/CMakeLists.txt
+  ios_src/GlDisplayService.h
+  ios_src/GlDisplayService.mm
+  ios_src/Main.mm
+  ios_src/ViewController.h
+  ios_src/ViewController.mm
+)
+set(sources ${sources} ${currsources})
+source_group(\\ios_src FILES ${currsources})
+include(ios_src/AboutPage/CMakeLists.txt)
+include(ios_src/ApplicationConfig/CMakeLists.txt)
+include(ios_src/Compass/CMakeLists.txt)
+include(ios_src/FlattenButton/CMakeLists.txt)
+include(ios_src/Helpers/CMakeLists.txt)
+include(ios_src/ImageStore/CMakeLists.txt)
+include(ios_src/InitialExperience/CMakeLists.txt)
+include(ios_src/InteriorsExplorer/CMakeLists.txt)
+include(ios_src/LinkOutObserver/CMakeLists.txt)
+include(ios_src/Menu/CMakeLists.txt)
+include(ios_src/Metrics/CMakeLists.txt)
+include(ios_src/ModalBackground/CMakeLists.txt)
+include(ios_src/MyPinCreationConfirmation/CMakeLists.txt)
+include(ios_src/MyPinCreationDetails/CMakeLists.txt)
+include(ios_src/MyPinCreationInitiation/CMakeLists.txt)
+include(ios_src/MyPinDetails/CMakeLists.txt)
+include(ios_src/Options/CMakeLists.txt)
+include(ios_src/PersistentSettings/CMakeLists.txt)
+include(ios_src/Search/CMakeLists.txt)
+include(ios_src/SearchMenu/CMakeLists.txt)
+include(ios_src/SearchResultPoi/CMakeLists.txt)
+include(ios_src/SearchResultSection/CMakeLists.txt)
+include(ios_src/SecondaryMenu/CMakeLists.txt)
+include(ios_src/SettingsMenu/CMakeLists.txt)
+include(ios_src/Surveys/CMakeLists.txt)
+include(ios_src/Tours/CMakeLists.txt)
+include(ios_src/URLRequest/CMakeLists.txt)
+include(ios_src/Views/CMakeLists.txt)
+include(ios_src/Watermark/CMakeLists.txt)
+include(ios_src/WorldPinOnMap/CMakeLists.txt)
+endif(${IOS})

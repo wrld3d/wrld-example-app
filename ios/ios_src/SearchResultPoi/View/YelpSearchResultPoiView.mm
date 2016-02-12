@@ -146,7 +146,7 @@ const int DeletePinAlertViewTag = 2;
         self.pReviewsContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextCopyColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
         [self.pLabelsContainer addSubview: self.pReviewsContent];
         
-        m_pGradientMask = [CAGradientLayer layer];
+        m_pGradientMask = [[CAGradientLayer layer] retain];
         m_pGradientMask.colors = @[(id)[UIColor clearColor].CGColor,
                                    (id)[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.5f].CGColor];
         m_pGradientMask.locations = @[@0.8, @1.0];
@@ -634,6 +634,7 @@ const int DeletePinAlertViewTag = 2;
 
 - (void) setFullyActive
 {
+    [m_pController setView:self];
     if(self.alpha == 1.f)
     {
         return;
@@ -644,6 +645,7 @@ const int DeletePinAlertViewTag = 2;
 
 - (void) setFullyInactive
 {
+    [m_pController setView:nil];
     if(self.alpha == 0.f)
     {
         return;

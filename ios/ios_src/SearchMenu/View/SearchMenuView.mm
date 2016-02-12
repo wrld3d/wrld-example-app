@@ -644,7 +644,7 @@
     self.pSearchEditBoxBackground.hidden = hidden;
 }
 
-- (void) setSearchResultCount:(int)searchResultCount
+- (void) setSearchResultCount:(NSInteger)searchResultCount
 {
     if(searchResultCount == 0)
     {
@@ -678,7 +678,7 @@
     }
     else
     {
-        [self.pSearchCountLabel setText:[NSString stringWithFormat:@"%d", searchResultCount]];
+        [self.pSearchCountLabel setText:[NSString stringWithFormat:@"%d", static_cast<int>(searchResultCount)]];
         
         if(!m_resultsVisible)
         {

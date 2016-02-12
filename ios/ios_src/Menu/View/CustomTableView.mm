@@ -179,7 +179,7 @@
     
     const float cellHeight = [self.delegate tableView:self heightForRowAtIndexPath:(NSIndexPath*)[indexPaths firstObject]];
     
-    const float animationDuration = [self getAnimationDurationForCellCount:[indexPaths count]];
+    const float animationDuration = [self getAnimationDurationForCellCount:static_cast<int>([indexPaths count])];
     
     m_pAnimationController = Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewAnimationController)(self,
                                                                                                   ^(UIView* view){
@@ -223,7 +223,7 @@
     
     const float cellHeight = [self.delegate tableView:self heightForRowAtIndexPath:(NSIndexPath*)[indexPaths firstObject]];
     
-    const float animationDuration = [self getAnimationDurationForCellCount:[indexPaths count]];
+    const float animationDuration = [self getAnimationDurationForCellCount:static_cast<int>([indexPaths count])];
     
     m_pAnimationController = Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewAnimationController)(self,
                                                                                                   ^(UIView* view){

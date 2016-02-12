@@ -454,7 +454,7 @@ enum MenuState
     
     const float velocityThreshold = 200.0f * m_pixelScale;
     
-    if(!stateChange && fabsf(absoluteVelocity.x) > velocityThreshold)
+    if(!stateChange && fabsf(static_cast<float>(absoluteVelocity.x)) > velocityThreshold)
     {
         int stateChangeDirection;
         

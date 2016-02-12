@@ -194,7 +194,6 @@ namespace ExampleApp
                 for (std::vector<MyPinModel*>::const_iterator it = pinModels.begin(); it != pinModels.end(); ++it)
                 {
                     const MyPinModel* pinModel = *it;
-                    const Eegeo::Space::LatLong& latLong = pinModel->GetLatLong();
 
                     rapidjson::Value pinModelJson;
                     MyPinModelToJson(*pinModel, allocator, m_myPinBoundObjectRepository, pinModelJson);

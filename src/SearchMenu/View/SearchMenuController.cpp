@@ -106,7 +106,7 @@ namespace ExampleApp
                 m_searchMenuView.CollapseAll();
                 m_searchMenuView.EnableEditText();
                 
-                m_searchMenuView.SetSearchResultCount(message.GetResults().size());
+                m_searchMenuView.SetSearchResultCount(static_cast<int>(message.GetResults().size()));
             }
             
             void SearchMenuController::OnSearch(const std::string& searchQuery)

@@ -378,11 +378,9 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                             *m_pURLRequestHandler,
                                                                                             app.ToursModule().GetToursExplorerCompositeViewController(),
                                                                                             screenProperties,
-                                                                                            m_iOSFlurryMetricsService,
                                                                                             m_pImageStore);
     
-        m_pTourFullScreenImageViewModule = Eegeo_NEW(ExampleApp::Tours::View::TourFullScreenImage::TourFullScreenImageViewModule)(m_messageBus,
-                                                                                                                                  app.ToursModule().GetTourFullScreenImageViewModel(),
+        m_pTourFullScreenImageViewModule = Eegeo_NEW(ExampleApp::Tours::View::TourFullScreenImage::TourFullScreenImageViewModule)(app.ToursModule().GetTourFullScreenImageViewModel(),
                                                                                                                                   screenProperties);
     }
     

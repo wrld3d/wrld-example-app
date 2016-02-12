@@ -1,9 +1,9 @@
 cd windows
 set VCTargetsPath=%PROGRAMFILES(X86)%\MSBuild\Microsoft.Cpp\v4.0\V140
 set copyDestination=ExampleApp\ExampleAppWPF\bin\Release
-nuget.exe restore ExampleApp\ExampleApp.sln
-"%VCTargetsPath%\..\..\..\14.0\Bin\msbuild" ExampleApp\ExampleApp.sln /p:Configuration=Release /p:Platform=x64 /t:Clean
-"%VCTargetsPath%\..\..\..\14.0\Bin\msbuild" ExampleApp\ExampleApp.sln /p:Configuration=Release /p:Platform=x64 /target:ExampleAppWPF
+nuget.exe restore WinBuild\ExampleApp.sln
+"%VCTargetsPath%\..\..\..\14.0\Bin\msbuild" WinBuild\ExampleApp.sln /p:Configuration=Release /p:Platform=x64 /t:Clean
+"%VCTargetsPath%\..\..\..\14.0\Bin\msbuild" WinBuild\ExampleApp.sln /p:Configuration=Release /p:Platform=x64 /target:ExampleAppWPF
 
 if %ERRORLEVEL% NEQ 0 (
 	echo "Compile failed."

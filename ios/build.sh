@@ -1,8 +1,11 @@
 #!/bin/sh
 
-usage() { echo "Usage: $0 -p ios [-c]"; echo "  -p -> platform, ios or android (required)"; echo "  -c -> cpp11 support"; 1>&2; exit 1; }
+usage() { echo "Usage: $0 -p ios [-c]"; echo "  -p -> platform, ios or android (required)"; echo "  -c -> cpp03 support"; 1>&2; exit 1; }
 
-projectPath=$(pwd)/./
+projectPath=$(pwd)/XcodeBuild/
+rm -rf $projectPath
+mkdir $projectPath
+
 targetName="INVALID"
 
 while getopts "p:c" o; do
@@ -14,7 +17,7 @@ while getopts "p:c" o; do
             fi
             ;;
         c)
-            c="cpp11"
+            c="cpp03"
             ;;
         *)
             usage
@@ -27,13 +30,15 @@ if [ -z "${p}" ]; then
     usage
 fi
 
-if [ "$c" == "cpp11" ]; then
-   targetName="ExampleAppCpp11"
+pushd $projectPath
+if [ "$c" == "cpp03" ]; then
+  cmake -G Xcode .. -DCOMPILE_CPP_03=1
 else
-   targetName="ExampleApp"
+  cmake -G Xcode ..
 fi
+popd
 
-(cd $projectPath && xcodebuild -target $targetName -arch "i386" -sdk "iphonesimulator")
+(cd $projectPath && xcodebuild -target ExampleApp -arch "i386" -sdk "iphonesimulator")
 resultcode=$?
 
 echo

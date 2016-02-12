@@ -21,7 +21,6 @@ namespace ExampleApp
                     ITourExplorerViewModel& m_tourExplorerViewModel;
                     Menu::View::IMenuViewModel& m_searchMenuViewModel;
                     Menu::View::IMenuViewModel& m_settingsMenuViewModel;
-                    ScreenControl::View::IScreenControlViewModel& m_watermarkViewModel;
                     bool m_tourExplorerOpen;
                     
                 public:

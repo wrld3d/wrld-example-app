@@ -19,7 +19,6 @@ namespace ExampleApp
                 : m_tourExplorerViewModel(tourExplorerViewModel)
                 , m_searchMenuViewModel(searchMenuViewModel)
                 , m_settingsMenuViewModel(searchMenuViewModel)
-                , m_watermarkViewModel(watermarkViewModel)
                 , m_tourExplorerOpen(false)
                 {
                     

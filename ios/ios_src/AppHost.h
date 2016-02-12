@@ -13,7 +13,6 @@
 #include "iOSKeyboardInputFactory.h"
 #include "iOSAlertBoxFactory.h"
 #include "NativeUIFactories.h"
-#include "TouchEventWrapper.h"
 #include "Blitter.h"
 #include "AppInputDelegate.h"
 #include "AppLocationDelegate.h"

@@ -24,7 +24,6 @@ namespace ExampleApp
                 , m_name(name)
                 , m_country(country)
                 , m_location(location)
-                , m_population(population)
                 {
                     
                 }

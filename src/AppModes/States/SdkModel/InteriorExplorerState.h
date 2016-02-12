@@ -39,18 +39,12 @@ namespace ExampleApp
                 class InteriorExplorerState : public Helpers::IStateMachineState
                 {
                 private:
-                    
-                    AppCamera::SdkModel::IAppCameraController& m_cameraController;
-                    int m_interiorCameraHandle;
-                    
                     Eegeo::Helpers::TCallback0<InteriorExplorerState> m_tourStartedCallback;
                     Tours::SdkModel::ITourService& m_tourService;
                     Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_worldCameraController;
                     ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& m_interiorsCameraController;
                     Eegeo::UI::NativeUIFactories& m_nativeUIFactories;
                     Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<InteriorExplorerState> m_failAlertHandler;
-                    
-                    Eegeo::Resources::Interiors::InteriorController& m_interiorController;
                     
                     Helpers::StateMachine* m_pSubStateMachine;
                     std::vector<Helpers::IStateMachineState*> m_subStates;

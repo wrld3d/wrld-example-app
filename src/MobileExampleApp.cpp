@@ -161,7 +161,7 @@ namespace ExampleApp
                     size_t materialsCount(materials.Size());
                     for(size_t i = 0; i < materialsCount; ++ i)
                     {
-                        const rapidjson::Value& materialJson(materials[i]);
+                        const rapidjson::Value& materialJson(materials[static_cast<int>(i)]);
                         Eegeo::Resources::Interiors::Materials::InteriorsMaterialDto dto(Eegeo::Resources::Interiors::Materials::ParseMaterial(materialJson));
                         Eegeo_ASSERT(!interiorsMaterialDtoRepository.Contains(interiorName, dto.materialName));
                         interiorsMaterialDtoRepository.Add(interiorName, dto);
@@ -332,8 +332,7 @@ namespace ExampleApp
                                                                                                                        m_pAppCameraModule->GetController(),
                                                                                                                        interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                        interiorsPresentationModule.GetController(),
-                                                                                                                       m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
-                                                                                                                       m_messageBus);
+                                                                                                                       m_pInteriorsExplorerModule->GetInteriorsExplorerModel());
         m_pCameraTransitionService->SetTransitionController(*m_pCameraTransitionController);
         
         m_pLoadingScreen = CreateLoadingScreen(screenProperties, m_pWorld->GetRenderingModule(), m_pWorld->GetPlatformAbstractionModule());
@@ -803,19 +802,19 @@ namespace ExampleApp
     void MobileExampleApp::InitialiseToursModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world, const bool interiorsAffectedByFlattening)
     {
         m_pToursModule = Eegeo_NEW(ExampleApp::Tours::ToursModule)(m_identityProvider,
-                                                       m_metricsService,
-                                                       m_messageBus,
-                                                       WorldPinsModule().GetWorldPinsService(),
-                                                       SearchModule().GetSearchRefreshService(),
-                                                       SearchMenuModule().GetSearchMenuViewModel(),
-                                                       SettingsMenuModule().GetSettingsMenuViewModel(),
-                                                       WatermarkModule().GetScreenControlViewModel(),
-                                                       world.GetMapModule().GetResourceCeilingProvider(),
-                                                       m_screenProperties,
-                                                       *m_pGlobeCameraController,
-                                                       world.GetTerrainModelModule().GetTerrainHeightProvider(),
-                                                       m_sdkDomainEventBus,
-                                                       *m_pAppModeModel);
+                                                                   m_metricsService,
+                                                                   m_messageBus,
+                                                                   WorldPinsModule().GetWorldPinsService(),
+                                                                   SearchModule().GetSearchRefreshService(),
+                                                                   SearchMenuModule().GetSearchMenuViewModel(),
+                                                                   SettingsMenuModule().GetSettingsMenuViewModel(),
+                                                                   WatermarkModule().GetScreenControlViewModel(),
+                                                                   world.GetMapModule().GetResourceCeilingProvider(),
+                                                                   m_screenProperties,
+                                                                   *m_pGlobeCameraController,
+                                                                   world.GetTerrainModelModule().GetTerrainHeightProvider(),
+                                                                   m_sdkDomainEventBus,
+                                                                   *m_pAppModeModel);
         
     }
     
@@ -858,7 +857,6 @@ namespace ExampleApp
         Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
         
         Tours::SdkModel::TourInstances::Example::ExampleTourStateMachineFactory factory(ToursModule().GetCameraTransitionController(),
-                                                                                        ToursModule().GetCameraController(),
                                                                                         m_pWorldPinsModule->GetWorldPinsService(),
                                                                                         m_interiorsEnabled,
                                                                                         interiorsPresentationModule.GetController(),
@@ -869,7 +867,6 @@ namespace ExampleApp
         ToursModule().GetTourService().AddTour(tourModel, *factory.CreateTourStateMachine(tourModel));
         
         m_pTwitterFeedTourModule = Eegeo_NEW(Tours::SdkModel::TourInstances::TwitterFeed::TwitterFeedTourModule)(ToursModule().GetCameraTransitionController(),
-                                                                                                                 ToursModule().GetCameraController(),
                                                                                                                  ToursModule().GetTourService(),
                                                                                                                  WorldPinsModule().GetWorldPinsService(),
                                                                                                                  interiorsPresentationModule.GetController(),
@@ -877,7 +874,6 @@ namespace ExampleApp
                                                                                                                  interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                  ToursModule().GetTourRepository(),
                                                                                                                  TwitterFeedModule().GetTwitterFeedService(),
-                                                                                                                 m_metricsService,
                                                                                                                  m_messageBus);
         
         const std::map<std::string, Tours::SdkModel::TourInstances::TwitterFeed::TweetStateData>& tweetStateDataMap = TwitterFeedTourModule().GetTweetStateDataMap();

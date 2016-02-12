@@ -26,9 +26,7 @@ namespace ExampleApp
                                  AppModes::SdkModel::IAppModeModel& appModeModel)
         {
             m_pToursCameraModule = Eegeo_NEW(SdkModel::Camera::TourCameraModule)(resourceCeilingProvider,
-                                                                                 screenProperties,
-                                                                                 gpsGlobeCameraController,
-                                                                                 terrainHeightProvider);
+                                                                                 screenProperties);
             
             
             m_pTourRepository = Eegeo_NEW(SdkModel::TourRepository);
@@ -47,8 +45,7 @@ namespace ExampleApp
                                                                           worldPinsService,
                                                                           *m_pTourWorldPinSelectionHandlerFactory);
             
-            m_pTourRemovedObserver = Eegeo_NEW(SdkModel::TourRemovedObserver)(*m_pTourRepository,
-                                                                              worldPinsService);
+            m_pTourRemovedObserver = Eegeo_NEW(SdkModel::TourRemovedObserver)(*m_pTourRepository);
             
             m_pTourActiveStateChangedMessageHandler = Eegeo_NEW(SdkModel::TourActiveStateChangedMessageHandler)(*m_pTourService,
                                                                                                                 messageBus);

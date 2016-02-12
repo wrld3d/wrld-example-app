@@ -13,9 +13,7 @@ namespace ExampleApp
             namespace Camera
             {
                 TourCameraModule::TourCameraModule(Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
-                                                   const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                                   Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& gpsGlobeCameraController,
-                                                   Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider)
+                                                   const Eegeo::Rendering::ScreenProperties& screenProperties)
                 {
                     Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration touchConfig = Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration::CreateDefault();
                     
@@ -26,8 +24,6 @@ namespace ExampleApp
                                                                                 screenProperties);
                     
                     m_pToursCameraTransitionController = Eegeo_NEW(ToursCameraTransitionController)(*m_pToursCameraController,
-                                                                                                    gpsGlobeCameraController,
-                                                                                                    terrainHeightProvider,
                                                                                                     *m_pTouchController);
 
                 }

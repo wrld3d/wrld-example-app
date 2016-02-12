@@ -14,7 +14,6 @@
 #include "NavigationService.h"
 #include "IPlatformAbstractionModule.h"
 #include "SettingsMenu.h"
-#include "SearchMenu.h"
 #include "SearchResultSection.h"
 #include "SearchMenu.h"
 #include "Modality.h"
@@ -159,7 +158,6 @@ namespace ExampleApp
         Net::SdkModel::ConnectivityChangedObserver* m_pConnectivityChangedObserver;
         
         Tours::IToursModule* m_pToursModule;
-        Eegeo::Modules::FireworksModule* m_pFireworksModule;
         float m_toursPinDiameter;
         Tours::SdkModel::TourInstances::TwitterFeed::ITwitterFeedTourModule* m_pTwitterFeedTourModule;
         

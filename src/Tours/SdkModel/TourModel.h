@@ -7,7 +7,7 @@
 #include <vector>
 #include "LatLongAltitude.h"
 #include "TourStateModel.h"
-#include "ColorHelpers.h"
+#include "AppColorHelpers.h"
 #include "WorldPinInteriorData.h"
 #include "TweetModel.h"
 

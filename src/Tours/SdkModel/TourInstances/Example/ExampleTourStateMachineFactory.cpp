@@ -24,15 +24,13 @@ namespace ExampleApp
                 namespace Example
                 {
                     ExampleTourStateMachineFactory::ExampleTourStateMachineFactory(Camera::IToursCameraTransitionController& toursCameraTransitionController,
-                                                                                   Camera::IToursCameraController& toursCameraController,
                                                                                    WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                                                    bool interiorsEnabled,
                                                                                    Eegeo::Resources::Interiors::InteriorController& interiorController,
                                                                                    InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
                                                                                    const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                                    ExampleAppMessaging::TMessageBus& messageBus)
-                    : m_toursCameraController(toursCameraController)
-                    , m_toursCameraTransitionController(toursCameraTransitionController)
+                    : m_toursCameraTransitionController(toursCameraTransitionController)
                     , m_worldPinsService(worldPinsService)
                     , m_interiorController(interiorController)
                     , m_interiorVisibilityUpdater(interiorVisibilityUpdater)

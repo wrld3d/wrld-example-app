@@ -16,11 +16,9 @@ namespace ExampleApp
             class SettingsMenuViewInterop : private Eegeo::NonCopyable, public ISettingsMenuView
             {
             private:
-                SettingsMenuView* m_pView;
 
             public:
                 SettingsMenuViewInterop(SettingsMenuView* pView)
-                    : m_pView(pView)
                 {
                 }
             };

@@ -14,7 +14,6 @@
 #include "InteriorsModel.h"
 #include "InteriorId.h"
 #include "InteriorsFloorModel.h"
-#include "InteriorVisibilityUpdater.h"
 #include "IVisualMapService.h"
 #include "VisualMapState.h"
 
@@ -42,14 +41,12 @@ namespace ExampleApp
             
             InteriorsExplorerModel::InteriorsExplorerModel(Eegeo::Resources::Interiors::InteriorController& controller,
                                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                           InteriorVisibilityUpdater& interiorVisibilityUpdater,
                                                            VisualMap::SdkModel::IVisualMapService& visualMapService,
                                                            ExampleAppMessaging::TMessageBus& messageBus,
                                                            ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                                            Metrics::IMetricsService& metricsService)
             : m_controller(controller)
             , m_interiorSelectionModel(interiorSelectionModel)
-            , m_interiorVisibilityUpdater(interiorVisibilityUpdater)
             , m_visualMapService(visualMapService)
             , m_messageBus(messageBus)
             , m_sdkModelDomainEventBus(sdkModelDomainEventBus)
@@ -102,9 +99,10 @@ namespace ExampleApp
                 
                 if(!m_interiorExplorerEnabled)
                 {
-                    if (fromAnotherInterior)
+                    // stop the state stack from growing when going from interior to another interior.
+                    if (!fromAnotherInterior)
                     {
-                        ResumePreviousMapState();
+                        ChangeToInteriorMapState();
                     }
                     
                     const Eegeo::Resources::Interiors::InteriorId& interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
@@ -141,13 +139,7 @@ namespace ExampleApp
             
             void InteriorsExplorerModel::OnControllerVisibilityChanged()
             {
-                if (m_controller.InteriorIsVisible())
-                {
-                    ChangeToInteriorMapState();
-                }
-                else {
-                    ResumePreviousMapState();
-                }
+
             }
         
             void InteriorsExplorerModel::OnExit(const InteriorsExplorerExitMessage& message)

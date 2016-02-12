@@ -36,9 +36,15 @@ using namespace Eegeo::iOS;
 - (void)onPause
 {
     m_pAppRunner->Pause();
-
+    
+// TODO: Not sure if we want to ignore this, EAGLContext* is _Nonnull
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
+    
     GLKView* glkView = (GLKView *)self.view;
     glkView.context = nil;
+    
+#pragma clang diagnostic pop
 }
 
 - (void)onResume
@@ -97,6 +103,9 @@ using namespace Eegeo::iOS;
 {
     for (UIView *subview in [self view].subviews)
     {
+// TODO: Way around this?
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-method-access"
         if ([subview respondsToSelector: @selector(consumesTouch:)])
         {
             if([subview consumesTouch: touch])
@@ -104,7 +113,7 @@ using namespace Eegeo::iOS;
                 return NO;
             }
         }
-
+#pragma clang diagnostic pop
     }
     return YES;
 }

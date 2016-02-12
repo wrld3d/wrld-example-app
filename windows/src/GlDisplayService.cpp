@@ -202,7 +202,7 @@ bool GlDisplayService::TryBindDisplay(const WindowsNativeState& state)
 {
     ASSERT_NATIVE_THREAD
 
-    EGLint w, h, format;
+    EGLint w, h;
     EGLConfig config;
     EGLSurface surface;
      

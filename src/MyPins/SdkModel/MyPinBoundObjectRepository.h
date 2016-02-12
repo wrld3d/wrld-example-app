@@ -24,7 +24,7 @@ namespace ExampleApp
                 
                 void RemoveBoundItemForPin(MyPinModel::TPinIdType pinId);
                 
-                IMyPinBoundObject& GetBoundObjectForPin(const MyPinModel& myPinModel);;
+                IMyPinBoundObject& GetBoundObjectForPin(const MyPinModel& myPinModel);
             };
         }
     }

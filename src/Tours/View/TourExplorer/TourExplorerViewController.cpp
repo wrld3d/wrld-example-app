@@ -20,13 +20,11 @@ namespace ExampleApp
                 TourExplorerViewController::TourExplorerViewController(ITourExplorerViewModel& viewModel,
                                                                        ITourExplorerCompositeViewController& tourExplorerCompositeViewController,
                                                                        ITourExplorerView& view,
-                                                                       ExampleAppMessaging::TMessageBus& messageBus,
-                                                                       Metrics::IMetricsService& metricsService)
+                                                                       ExampleAppMessaging::TMessageBus& messageBus)
                 : m_viewModel(viewModel)
                 , m_tourExplorerCompositeViewController(tourExplorerCompositeViewController)
                 , m_view(view)
                 , m_messageBus(messageBus)
-                , m_metricsService(metricsService)
                 , m_dismissedCallback(this, &TourExplorerViewController::OnDismissed)
                 , m_exitedCallback(this, &TourExplorerViewController::OnExited)
                 , m_stateChangedCallback(this, &TourExplorerViewController::OnStateChanged)

@@ -12,12 +12,10 @@ namespace ExampleApp
     , m_pPlatformWebLoadRequestFactory(NULL)
     {
         
-        m_pWebLoadRequestFactory = Eegeo_NEW(ExampleApp::Net::SdkModel::ExampleAppCustomWebLoadRequestFactory)(wrappedPlatformAbstractions.GetHttpCache(),
-                                                                                                               wrappedPlatformAbstractions.GetWebLoadRequestFactory(),
+        m_pWebLoadRequestFactory = Eegeo_NEW(ExampleApp::Net::SdkModel::ExampleAppCustomWebLoadRequestFactory)(wrappedPlatformAbstractions.GetWebLoadRequestFactory(),
                                                                                                                networkCapabilities);
         
-        m_pPlatformWebLoadRequestFactory = Eegeo_NEW(ExampleApp::Net::SdkModel::ExampleAppCustomWebLoadRequestFactory)(wrappedPlatformAbstractions.GetHttpCache(),
-                                                                                                                       wrappedPlatformAbstractions.GetPlatformWebLoadRequestFactory(),
+        m_pPlatformWebLoadRequestFactory = Eegeo_NEW(ExampleApp::Net::SdkModel::ExampleAppCustomWebLoadRequestFactory)(wrappedPlatformAbstractions.GetPlatformWebLoadRequestFactory(),
                                                                                                                        networkCapabilities);
     }
     

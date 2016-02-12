@@ -26,7 +26,6 @@ namespace ExampleApp
                                                                                        Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
                                                                                        ExampleAppMessaging::TMessageBus& messageBus,
                                                                                        ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
-                                                                                       Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
                                                                                        ExampleApp::MyPins::SdkModel::IMyPinsService& myPinsService)
             {
                 Search::SdkModel::SearchResultModel searchResultModel;
@@ -43,7 +42,6 @@ namespace ExampleApp
                                                              myPinsSearchResultRefreshService,
                                                              messageBus,
                                                              sdkModelDomainEventBus,
-                                                             webLoadRequestFactory,
                                                              myPinsService);
             }
             
@@ -54,17 +52,14 @@ namespace ExampleApp
                                                                    Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
                                                                    ExampleAppMessaging::TMessageBus& messageBus,
                                                                    ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
-                                                                   Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
                                                                    ExampleApp::MyPins::SdkModel::IMyPinsService& myPinsService)
-            : m_pinId(pinId)
-            , m_searchResult(searchResult)
+            : m_searchResult(searchResult)
             , m_serialized(Search::SdkModel::SerializeToJson(m_searchResult))
             , m_myPinsFileIO(myPinsFileIO)
             , m_categorySearchRepository(categorySearchRepository)
             , m_myPinsSearchResultRefreshService(myPinsSearchResultRefreshService)
             , m_messageBus(messageBus)
             , m_sdkModelDomainEventBus(sdkModelDomainEventBus)
-            , m_webLoadRequestFactory(webLoadRequestFactory)
             , m_pinVendorRequiresRefreshing(m_searchResult.GetVendor() == Search::YelpVendorName)
             , m_isCurrentlyRefreshingResult(false)
             , m_myPinsService(myPinsService)

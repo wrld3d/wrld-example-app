@@ -52,7 +52,7 @@ namespace
         {
             Eegeo_ASSERT(m_hasSetUiThreadId, "UI thread has not yet been nominated.\n");
             const pthread_t currentThreadId(pthread_self());
-            AssertWithLogAndBreak(pthread_equal(m_uiThreadId, currentThreadId), "Must be running on nominated UI thread", file, line);
+            AssertWithLogAndBreak(pthread_equal(m_uiThreadId, currentThreadId) != 0, "Must be running on nominated UI thread", file, line);
         }
 
         void RemoveNominationForUiThread()
@@ -71,7 +71,7 @@ namespace
         {
             Eegeo_ASSERT(m_hasSetNativeThreadId, "Native thread has not yet been nominated.\n");
             const pthread_t currentThreadId(pthread_self());
-            AssertWithLogAndBreak(pthread_equal(m_nativeThreadId, currentThreadId), "Must be running on nominated native thread", file, line);
+            AssertWithLogAndBreak(pthread_equal(m_nativeThreadId, currentThreadId) != 0, "Must be running on nominated native thread", file, line);
         }
 
         void RemoveNominationForNativeThread()

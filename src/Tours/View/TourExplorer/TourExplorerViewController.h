@@ -7,7 +7,6 @@
 #include "ICallback.h"
 #include "IScreenControlViewModel.h"
 #include "BidirectionalBus.h"
-#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -24,8 +23,7 @@ namespace ExampleApp
                     TourExplorerViewController(ITourExplorerViewModel& viewModel,
                                                ITourExplorerCompositeViewController& tourExplorerCompositeViewController,
                                                ITourExplorerView& view,
-                                               ExampleAppMessaging::TMessageBus& messageBus,
-                                               Metrics::IMetricsService& metricsService);
+                                               ExampleAppMessaging::TMessageBus& messageBus);
                     
                     ~TourExplorerViewController();
                     
@@ -48,9 +46,7 @@ namespace ExampleApp
                     Eegeo::Helpers::TCallback0<TourExplorerViewController> m_exitedCallback;
                     Eegeo::Helpers::TCallback1<TourExplorerViewController, int> m_stateChangedCallback;
                     Eegeo::Helpers::TCallback1<TourExplorerViewController, std::string> m_tourChangeRequestCallback;
-                    Eegeo::Helpers::TCallback0<TourExplorerViewController> m_currentTourCardTappedCallback;
-                    
-                    Metrics::IMetricsService& m_metricsService;
+                    Eegeo::Helpers::TCallback0<TourExplorerViewController> m_currentTourCardTappedCallback;                
                 };
             }
         }

@@ -9,11 +9,8 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            MyPinVisibilityStateChangedHandlerFactory::MyPinVisibilityStateChangedHandlerFactory(MyPins::SdkModel::IMyPinBoundObjectRepository& myPinBoundObjectRepository,
-                                                                       
-                                                                                                 ExampleAppMessaging::TMessageBus& messageBus)
+            MyPinVisibilityStateChangedHandlerFactory::MyPinVisibilityStateChangedHandlerFactory(MyPins::SdkModel::IMyPinBoundObjectRepository& myPinBoundObjectRepository)
             : m_myPinBoundObjectRepository(myPinBoundObjectRepository)
-            , m_messageBus(messageBus)
             {
                 
             }

@@ -26,9 +26,7 @@ namespace ExampleApp
                     
                 public:
                     TourCameraModule(Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
-                                     const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                     Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& gpsGlobeCameraController,
-                                     Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider);
+                                     const Eegeo::Rendering::ScreenProperties& screenProperties);
 
                     
                     ~TourCameraModule();

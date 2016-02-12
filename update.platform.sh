@@ -21,7 +21,7 @@ while getopts "p:c" o; do
             fi
             ;;
         c)
-            c="cpp11"
+            c="cpp03"
             ;;
         *)
             usage
@@ -49,10 +49,10 @@ elif [ "$p" == "windows" ]; then
 
 fi
 
-if [ "$c" == "cpp11" ]; then
-   srcPackageName="$srcPackageName.cpp11.tar.gz"
-else
+if [[ ( "$c" == "cpp03" ) || ( "$p" == "windows" ) ]]; then
    srcPackageName="$srcPackageName.tar.gz"
+else
+   srcPackageName="$srcPackageName.cpp11.tar.gz"
 fi
 
 echo "Updating $p platform..."

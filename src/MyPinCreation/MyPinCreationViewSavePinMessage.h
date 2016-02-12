@@ -34,7 +34,6 @@ namespace ExampleApp
             std::string m_title;
             std::string m_description;
             std::string m_ratingsImage;
-            int m_reviewCount;
             Byte* m_pImageData;
             size_t m_imageSize;
             bool m_shouldShare;

@@ -122,7 +122,7 @@ static NSString *CellIdentifier = @"searchCell";
         }
     }
     
-    ExampleApp::Menu::View::MenuItemModel item = m_pSearchResultsSection->GetItemAtIndex(indexPath.row);
+    ExampleApp::Menu::View::MenuItemModel item = m_pSearchResultsSection->GetItemAtIndex(static_cast<int>(indexPath.row));
     std::string json = item.SerializeJson();
     [self populateCellWithJson :json :cell];
     

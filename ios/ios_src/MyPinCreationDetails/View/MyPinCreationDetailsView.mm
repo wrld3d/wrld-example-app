@@ -594,7 +594,7 @@
         return YES;
     }
 
-    int remainingNumberOfCharactersInDescription = m_maxNumberOfCharactersInDescription - textView.text.length;
+    int remainingNumberOfCharactersInDescription = static_cast<int>(m_maxNumberOfCharactersInDescription - textView.text.length);
     NSString* partialText = [text substringToIndex: remainingNumberOfCharactersInDescription + range.length];
 
     NSMutableString* mutableDescriptionText = [NSMutableString stringWithFormat: @"%@", textView.text];
