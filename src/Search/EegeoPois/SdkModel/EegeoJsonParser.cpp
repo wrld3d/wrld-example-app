@@ -86,7 +86,7 @@ namespace ExampleApp
                                                                                json["title"].GetString(),
                                                                                json["subtitle"].GetString(),
                                                                                location,
-                                                                               json["height_offset"].GetDouble(),
+                                                                               static_cast<float>(json["height_offset"].GetDouble()),
                                                                                indoor,
                                                                                interiorId,
                                                                                json["floor_id"].GetInt(),
