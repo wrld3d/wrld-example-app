@@ -13,7 +13,7 @@ set(executable_name ExampleApp)
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Include/eegeo/CMakeLists.txt")
   include("${CMAKE_CURRENT_SOURCE_DIR}/Include/eegeo/CMakeLists.txt")
 else(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Include/eegeo/CMakeLists.txt")
-  message(FATAL_ERROR "Couldn't detect platform headers. Have you ran update.platform.sh?")
+  message(FATAL_ERROR "Couldn't detect platform headers. Have you run update.platform.sh?")
 endif(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Include/eegeo/CMakeLists.txt")
 
 include(../src/CMakeLists.txt)
