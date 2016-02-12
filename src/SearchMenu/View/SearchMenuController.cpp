@@ -56,11 +56,11 @@ namespace ExampleApp
                 m_messageBus.SubscribeUi(m_receivedQueryResponseHandler);
                 m_messageBus.SubscribeUi(m_appModeChangedCallback);
 
-                const int numSections = m_viewModel.SectionsCount();
+                const int numSections = static_cast<int>(m_viewModel.SectionsCount());
                 std::vector<Menu::View::IMenuSectionViewModel*> sections;
                 sections.reserve(numSections);
 
-                for (size_t groupIndex = 0; groupIndex < numSections; groupIndex++)
+                for (int groupIndex = 0; groupIndex < numSections; groupIndex++)
                 {
                     Menu::View::IMenuSectionViewModel& section = m_viewModel.GetMenuSection(groupIndex);
                     sections.push_back(&section);
