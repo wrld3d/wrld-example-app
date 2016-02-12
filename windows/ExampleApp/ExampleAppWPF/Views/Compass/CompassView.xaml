@@ -13,6 +13,15 @@
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="ButtonImage" Property="Source" Value="/Assets/button_compass_on.png"/>
                         </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsPressed" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="ButtonImage" Property="Source" Value="/Assets/button_compass_over.png"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

@@ -44,6 +44,17 @@ namespace ExampleAppWPF
             return m_runningAnimations > 0;
         }
 
+        public void ResetData()
+        {
+            m_animatedSizesMap.Clear();
+
+            m_groups.Clear();
+            m_groupsExpandable.Clear();
+            m_groupToChildrenMap.Clear();
+
+            m_children.Clear();
+        }
+
         public void SetData(
             List<string> groups,
             List<bool> groupsExpandable,
@@ -121,7 +132,18 @@ namespace ExampleAppWPF
             --m_runningAnimations;
         }
 
-        private void UpdateAndAnimateSources(
+        public void CollapseAll()
+        {
+            for (var i = 0; i < m_list.Items.Count; ++i)
+            {
+                ListBoxItem item = (ListBoxItem)m_list.ItemContainerGenerator.ContainerFromItem(m_list.Items[i]);
+                m_fadeOutItemAnimation.Begin(item);
+            }
+
+            m_children.Clear();
+        }
+
+        public void UpdateAndAnimateSources(
             List<string> groups,
             List<bool> groupsExpandable,
             Dictionary<string, List<string>> groupToChildren)

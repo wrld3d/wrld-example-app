@@ -26,6 +26,8 @@ namespace ExampleApp
                 Helpers::ReflectionHelpers::Method<System::String^, bool> mSetEditText;
                 Helpers::ReflectionHelpers::Method<int> mSetSearchResultCount;
 
+                std::vector<Menu::View::IMenuSectionViewModel*> m_currentSections;
+
             public:
                 SearchMenuView(WindowsNativeState& nativeState,
                     const std::string& viewClassName);
@@ -64,6 +66,8 @@ namespace ExampleApp
                 void UpdateTableAnimation(float dt);
 
                 void SetTableCanInteract(bool interact);
+
+                void SetMenuSections(const std::vector<Menu::View::IMenuSectionViewModel*>& sections);
             };
         }
     }

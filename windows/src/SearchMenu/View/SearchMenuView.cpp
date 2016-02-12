@@ -17,6 +17,7 @@ namespace ExampleApp
             SearchMenuView::SearchMenuView(WindowsNativeState& nativeState,
                 const std::string& viewClassName)
                 : Menu::View::MenuView(nativeState, viewClassName)
+                , m_currentSections(0)
             {
                 m_uiViewClass = GetTypeFromEntryAssembly("ExampleAppWPF.SearchMenuView");
 
@@ -74,12 +75,12 @@ namespace ExampleApp
 
             void SearchMenuView::CollapseAll()
             {
-                /*for (Menu::View::TSections::iterator it = MenuView::m_currentSections.begin(); it != m_currentSections.end(); ++it)
+                for (Menu::View::TSections::iterator it = m_currentSections.begin(); it != m_currentSections.end(); ++it)
                 {
                     (*it)->Contract();
                 }
 
-                UpdateMenuSectionViews(m_currentSections);*/
+                UpdateMenuSectionViews(m_currentSections);
             }
 
             void SearchMenuView::InsertSearchPeformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)
@@ -140,6 +141,11 @@ namespace ExampleApp
             void SearchMenuView::SetTableCanInteract(bool interact)
             {
 
+            }
+
+            void SearchMenuView::SetMenuSections(const std::vector<Menu::View::IMenuSectionViewModel*>& sections)
+            {
+                m_currentSections = sections;
             }
         }
     }

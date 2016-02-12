@@ -55,6 +55,18 @@ namespace ExampleApp
                 m_messageBus.SubscribeUi(m_performedQueryHandler);
                 m_messageBus.SubscribeUi(m_receivedQueryResponseHandler);
                 m_messageBus.SubscribeUi(m_appModeChangedCallback);
+
+                const int numSections = m_viewModel.SectionsCount();
+                std::vector<Menu::View::IMenuSectionViewModel*> sections;
+                sections.reserve(numSections);
+
+                for (size_t groupIndex = 0; groupIndex < numSections; groupIndex++)
+                {
+                    Menu::View::IMenuSectionViewModel& section = m_viewModel.GetMenuSection(groupIndex);
+                    sections.push_back(&section);
+                }
+                
+                m_searchMenuView.SetMenuSections(sections);
             }
             
             SearchMenuController::~SearchMenuController()

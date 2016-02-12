@@ -526,11 +526,17 @@
     <Resource Include="..\..\Resources\button_compass_on.png">
       <Link>Assets\button_compass_on.png</Link>
     </Resource>
+    <Resource Include="..\..\Resources\button_compass_over.png">
+      <Link>Assets\button_compass_over.png</Link>
+    </Resource>
     <Resource Include="..\..\Resources\button_create_poi_off.png">
       <Link>Assets\button_create_poi_off.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\button_create_poi_on.png">
       <Link>Assets\button_create_poi_on.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_create_poi_over.png">
+      <Link>Assets\button_create_poi_over.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\button_flatten_off.png">
       <Link>Assets\button_flatten_off.png</Link>
@@ -538,11 +544,17 @@
     <Resource Include="..\..\Resources\button_flatten_on.png">
       <Link>Assets\button_flatten_on.png</Link>
     </Resource>
+    <Resource Include="..\..\Resources\button_flatten_off_over.png">
+      <Link>Assets\button_flatten_off_over.png</Link>
+    </Resource>
     <Resource Include="..\..\Resources\button_unflatten_off.png">
       <Link>Assets\button_unflatten_off.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\button_unflatten_on.png">
       <Link>Assets\button_unflatten_on.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_unflatten_on_over.png">
+      <Link>Assets\button_unflatten_on_over.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\button_search_off.png">
       <Link>Assets\button_search_off.png</Link>
@@ -555,6 +567,15 @@
     </Resource>
     <Resource Include="..\..\Resources\button_settings_off.png">
       <Link>Assets\button_settings_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\search_results_spinner.png">
+      <Link>Assets\search_results_spinner.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_clear_search_off.png">
+      <Link>Assets\button_clear_search_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_clear_search_on.png">
+      <Link>Assets\button_clear_search_on.png</Link>
     </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

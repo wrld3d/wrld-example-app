@@ -3,6 +3,8 @@
 #pragma once
 
 #include "Menu.h"
+#include "IMenuSectionViewModel.h"
+#include <vector>
 
 namespace ExampleApp
 {
@@ -39,6 +41,8 @@ namespace ExampleApp
                 virtual void RemoveSearchItemSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback) = 0;
                 
                 virtual void HandleSearchItemSelected(int index) = 0;
+
+                virtual void SetMenuSections(const std::vector<Menu::View::IMenuSectionViewModel*>& sections) = 0;
             };
         }
     }

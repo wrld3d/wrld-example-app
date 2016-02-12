@@ -14,10 +14,10 @@
                     <Grid>
                         <Grid Name="DetailsPanel" Width="Auto" Height="40" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,40,0,0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="40"/>
                                 <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="40"/>
                             </Grid.ColumnDefinitions>
-                            <Button Name="DismissButton" Width="40" Height="40" Grid.Column="0">
+                            <Button Name="DismissButton" Width="40" Height="40" Grid.Column="1">
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}">
                                         <Style.Setters>
@@ -49,7 +49,7 @@
                                     </Style>
                                 </Button.Style>
                             </Button>
-                            <Grid Grid.Column="1">
+                            <Grid Grid.Column="0">
                                 <Border Name="Mask" CornerRadius="0,5,5,0" Background="White"/>
                                 <Grid Background="White">
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="FloorName" Foreground="{StaticResource DarkGrey}" FontSize="16"/>
