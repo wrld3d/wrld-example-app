@@ -3,15 +3,49 @@
     "AssetExtension_OSX": ".png", 
     "AssetExtension_Windows": ".dds", 
     "AssetExtension_iOS": ".pvr", 
-    "AssetRoot_Android": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v512/", 
-    "AssetRoot_OSX": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v512/", 
-    "AssetRoot_Windows": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v512/", 
-    "AssetRoot_iOS": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v512/", 
+    "AssetRoot_Android": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v534/", 
+    "AssetRoot_OSX": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v534/", 
+    "AssetRoot_Windows": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v534/", 
+    "AssetRoot_iOS": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v534/", 
     "GlobeViewAltitude": 15000, 
     "GlobeViewThemeState": "GlobeView", 
     "InteriorMaterials": {
         "id": "common", 
         "materials": [
+            {
+                "DiffuseColor": [
+                    0.8, 
+                    0.8, 
+                    0.8, 
+                    1.0
+                ], 
+                "DiffuseTexturePath": "common/textures/marblefloor-interior", 
+                "MaterialName": "bathroomtiles", 
+                "MaterialType": "InteriorsSpecularMaterial", 
+                "SpecularColor": [
+                    0.3, 
+                    0.3, 
+                    0.3, 
+                    1.0
+                ], 
+                "SpecularPower": 100.0, 
+                "SpecularityFromTextureLuminance": 1.0
+            }, 
+            {
+                "DiffuseTexturePath": "common/textures/carpetcircles", 
+                "MaterialName": "carpetcircles", 
+                "MaterialType": "InteriorsDiffuseTexturedMaterial"
+            }, 
+            {
+                "DiffuseTexturePath": "common/textures/hotelcarpet_02", 
+                "MaterialName": "hotelcarpet_02", 
+                "MaterialType": "InteriorsDiffuseTexturedMaterial"
+            }, 
+            {
+                "DiffuseTexturePath": "common/textures/hotel_carpet", 
+                "MaterialName": "hotel_carpet", 
+                "MaterialType": "InteriorsDiffuseTexturedMaterial"
+            }, 
             {
                 "DiffuseTexturePath": "common/textures/flooring-interior", 
                 "MaterialName": "InteriorMaterial_CiscoCarpet", 
@@ -72,6 +106,19 @@
                 "DiffuseTexturePath": "common/textures/swallowwalltempmaterial-interior", 
                 "MaterialName": "InteriorMaterial_SwallowCGHWall", 
                 "MaterialType": "InteriorsDiffuseTexturedMaterial"
+            }, 
+            {
+                "CubeMapTexturePath": "common/textures/interior_ciscobedfont_Floor_0", 
+                "DiffuseTexturePath": "common/textures/shinycars", 
+                "MaterialName": "shinycars", 
+                "MaterialType": "InteriorsCubeMappedMaterial", 
+                "ReflectionColor": [
+                    0.2, 
+                    0.2, 
+                    0.2, 
+                    0.5
+                ], 
+                "ViewOffsetScale": 0.8
             }, 
             {
                 "CubeMapTexturePath": "common/textures/interior_swallow", 
@@ -247,15 +294,47 @@
                 "SpecularPower": 100.0, 
                 "SpecularityFromTextureLuminance": 1.0, 
                 "ViewOffsetScale": 0.8
+            }, 
+            {
+                "DiffuseColor": [
+                    0.5, 
+                    0.5, 
+                    0.5, 
+                    1.0
+                ], 
+                "DiffuseTexturePath": "common/textures/retailsquaretile", 
+                "FresnelBias": 0.1, 
+                "FresnelPower": 2.0, 
+                "FresnelScale": 1.0, 
+                "MaterialName": "tilefloorreflection", 
+                "MaterialType": "InteriorsStencilMirrorMaterial", 
+                "MirrorClearColor": [
+                    0.3, 
+                    0.3, 
+                    0.3, 
+                    1.0
+                ], 
+                "SpecularityFromTextureLuminance": 1.0, 
+                "ViewOffsetScale": 0.8
+            }, 
+            {
+                "DiffuseTexturePath": "common/textures/wallaperhotel-01", 
+                "MaterialName": "wallaperhotel-01", 
+                "MaterialType": "InteriorsDiffuseTexturedMaterial"
+            }, 
+            {
+                "DiffuseTexturePath": "common/textures/woodtexture", 
+                "MaterialName": "woodtexture", 
+                "MaterialType": "InteriorsDiffuseTexturedMaterial"
             }
         ]
     }, 
-    "InteriorMaterialsRoot": "http://d2xvsc8j92rfya.cloudfront.net/interior-materials/v35/", 
+    "InteriorMaterialsRoot": "http://d2xvsc8j92rfya.cloudfront.net/interior-materials/v59/", 
     "LandmarkTexturePostfixes": [
         "", 
         "night"
     ], 
-    "LandmarkTextureRoot": "http://d2xvsc8j92rfya.cloudfront.net/landmark_textures/test_builds/v541/", 
+    "LandmarkTextureRoot": "http://d2xvsc8j92rfya.cloudfront.net/landmark_textures/test_builds/v546/", 
     "Themes": [
         {
             "BaseAltitude": 0, 
