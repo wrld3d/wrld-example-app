@@ -9,25 +9,21 @@
 #include "IconResources.h"
 #include "StringHelpers.h"
 #import "UIView+TouchExclusivity.h"
-#include "YelpSearchResultPoiView.h"
+#include "EegeoJsonParser.h"
+#include "EegeoSearchResultPoiView.h"
 #include "App.h"
-#include "YelpSearchJsonParser.h"
 
-@interface YelpSearchResultPoiView()<UIGestureRecognizerDelegate>
+@interface EegeoSearchResultPoiView()<UIGestureRecognizerDelegate>
 {
 }
 @end
 
-namespace
-{
-    const bool AllowPinning = false;
-    const float RatingImageWidth = 100.f;
-    const float RatingImageHeight = 30.f;
-    const int PhoneAlertViewTag = 1;
-    const int DeletePinAlertViewTag = 2;
-}
+const float RatingImageWidth = 100.f;
+const float RatingImageHeight = 30.f;
+const int PhoneAlertViewTag = 1;
+const int DeletePinAlertViewTag = 2;
 
-@implementation YelpSearchResultPoiView
+@implementation EegeoSearchResultPoiView
 
 - (id)initWithInterop:(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*)pInterop;
 {
@@ -58,12 +54,9 @@ namespace
         [self.pCloseButton addTarget:self action:@selector(handleClosedButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
         
-        if(AllowPinning)
-        {
-            self.pPinButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-            [self.pPinButton addTarget:self action:@selector(handlePinButtonSelected) forControlEvents:UIControlEventTouchUpInside];
-            [self.pCloseButtonContainer addSubview: self.pPinButton];
-        }
+        self.pPinButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pPinButton addTarget:self action:@selector(handlePinButtonSelected) forControlEvents:UIControlEventTouchUpInside];
+        [self.pCloseButtonContainer addSubview: self.pPinButton];
         
         self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
@@ -93,16 +86,6 @@ namespace
         self.pPreviewImageSpinner.center = CGPointZero;
         [self.pPreviewImage addSubview: self.pPreviewImageSpinner];
         
-        self.pRatingImage = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pLabelsContainer addSubview: self.pRatingImage];
-        
-        self.pReviewCountLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pReviewCountLabel.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
-        self.pReviewCountLabel.textAlignment = NSTextAlignmentLeft;
-        self.pReviewCountLabel.font = [UIFont systemFontOfSize:12.0];
-        self.pReviewCountLabel.backgroundColor = [UIColor clearColor];
-        [self.pLabelsContainer addSubview: self.pReviewCountLabel];
-        
         self.pAddressHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pAddressHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
         [self.pLabelsContainer addSubview: self.pAddressHeaderContainer];
@@ -130,6 +113,22 @@ namespace
         
         [self.pLabelsContainer addSubview: self.pPhoneContent];
         
+        self.pWebHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pWebHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        
+        [self.pLabelsContainer addSubview: self.pWebHeaderContainer];
+        
+        self.pWebHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::WhiteTone :ExampleApp::Helpers::ColorPalette::GoldTone];
+        [self.pWebHeaderContainer addSubview: self.pWebHeaderLabel];
+        
+        self.pWebContent = [self createLabel :ExampleApp::Helpers::ColorPalette::MainHudColor :ExampleApp::Helpers::ColorPalette::WhiteTone];
+        self.pWebContent.textColor = ExampleApp::Helpers::ColorPalette::LinkTone;
+        UITapGestureRecognizer* webTappedGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTappedOnLink:)];
+        [self.pWebContent setUserInteractionEnabled:YES];
+        [self.pWebContent addGestureRecognizer:webTappedGesture];
+        
+        [self.pLabelsContainer addSubview: self.pWebContent];
+        
         self.pCategoriesHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pCategoriesHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
         [self.pLabelsContainer addSubview: self.pCategoriesHeaderContainer];
@@ -140,18 +139,7 @@ namespace
         self.pCategoriesContent = [self createLabel :ExampleApp::Helpers::ColorPalette::MainHudColor :ExampleApp::Helpers::ColorPalette::WhiteTone];
         self.pCategoriesContent.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
         [self.pLabelsContainer addSubview: self.pCategoriesContent];
-        
-        self.pReviewsHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pReviewsHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
-        [self.pLabelsContainer addSubview: self.pReviewsHeaderContainer];
-        
-        self.pReviewsHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::WhiteTone :ExampleApp::Helpers::ColorPalette::GoldTone];
-        [self.pReviewsHeaderContainer addSubview: self.pReviewsHeaderLabel];
-        
-        self.pReviewsContent = [self createLabel :ExampleApp::Helpers::ColorPalette::MainHudColor :ExampleApp::Helpers::ColorPalette::WhiteTone];
-        self.pReviewsContent.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
-        [self.pLabelsContainer addSubview: self.pReviewsContent];
-        
+       
         m_pGradientMask = [[CAGradientLayer layer] retain];
         m_pGradientMask.colors = @[(id)[UIColor clearColor].CGColor,
                                    (id)[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.5f].CGColor];
@@ -170,24 +158,12 @@ namespace
 {
     [m_pGradientMask release];
     m_pGradientMask = nil;
-    
-    [self->m_pVendorBrandingImage release];
-    self->m_pVendorBrandingImage = nil;
-    
-    [self.pVendorBrandingImageContainer removeFromSuperview];
-    [self.pVendorBrandingImageContainer release];
-    
-    [self.pVendorWebLinkButton removeFromSuperview];
-    [self.pVendorWebLinkButton release];
-    
+        
     [self.pCloseButton removeFromSuperview];
     [self.pCloseButton release];
     
-    if(AllowPinning)
-    {
-        [self.pPinButton removeFromSuperview];
-        [self.pPinButton release];
-    }
+    [self.pPinButton removeFromSuperview];
+    [self.pPinButton release];
     
     [self.pCloseButtonContainer removeFromSuperview];
     [self.pCloseButtonContainer release];
@@ -228,6 +204,15 @@ namespace
     [self.pPhoneContent removeFromSuperview];
     [self.pPhoneContent release];
     
+    [self.pWebHeaderLabel removeFromSuperview];
+    [self.pWebHeaderLabel release];
+    
+    [self.pWebHeaderContainer removeFromSuperview];
+    [self.pWebHeaderContainer release];
+    
+    [self.pWebContent removeFromSuperview];
+    [self.pWebContent release];
+    
     [self.pCategoriesHeaderContainer removeFromSuperview];
     [self.pCategoriesHeaderContainer release];
     
@@ -237,23 +222,11 @@ namespace
     [self.pCategoriesContent removeFromSuperview];
     [self.pCategoriesContent release];
     
-    [self.pReviewsHeaderContainer removeFromSuperview];
-    [self.pReviewsHeaderContainer release];
-    
-    [self.pReviewsHeaderLabel removeFromSuperview];
-    [self.pReviewsHeaderLabel release];
-    
-    [self.pReviewsContent removeFromSuperview];
-    [self.pReviewsContent release];
-    
     [self.pPreviewImage removeFromSuperview];
-    [self.pPreviewImage release];
+    //[self.pPreviewImage release];
     
     [self.pPreviewImageSpinner removeFromSuperview];
     [self.pPreviewImageSpinner release];
-    
-    [self.pRatingImage removeFromSuperview];
-    [self.pRatingImage release];
     
     [self->m_pRemovePinButtonBackgroundImage release];
     [self->m_pRemovePinHighlightButtonBackgroundImage release];
@@ -319,13 +292,10 @@ namespace
                                          closeButtonSectionHeight,
                                          closeButtonSectionHeight);
     
-    if(AllowPinning)
-    {
-        self.pPinButton.frame = CGRectMake(0.f,
-                                           0.f,
-                                           closeButtonSectionHeight,
-                                           closeButtonSectionHeight);
-    }
+    self.pPinButton.frame = CGRectMake(0.f,
+                                       0.f,
+                                       closeButtonSectionHeight,
+                                       closeButtonSectionHeight);
     
     self.pCategoryIconContainer.frame = CGRectMake(0.f, 0.f, headlineHeight, headlineHeight);
     const float titlePadding = 10.0f;
@@ -334,15 +304,6 @@ namespace
                                         mainWindowWidth - (headlineHeight + titlePadding),
                                         headlineHeight);
     self.pTitleLabel.font = [UIFont systemFontOfSize:24.0f];
-    
-    self->m_pVendorBrandingImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"yelp_logo_100x50", true) retain];
-    self.pVendorBrandingImageContainer = [[[UIImageView alloc] initWithImage:self->m_pVendorBrandingImage] autorelease];
-    //[self.pCloseButtonContainer addSubview:self.pVendorBrandingImageContainer];
-    
-    CGRect frame = self.pVendorBrandingImageContainer.frame;
-    frame.origin.x = (self.pCloseButtonContainer.frame.size.width * 0.5f) - (frame.size.width * 0.5f);
-    frame.origin.y = (self.pCloseButtonContainer.frame.size.height * 0.5f) - (frame.size.height * 0.5f);
-    self.pVendorBrandingImageContainer.frame = frame;
 }
 
 - (void) performDynamicContentLayout
@@ -352,10 +313,8 @@ namespace
     const float headerTextPadding = 3.0f;
     
     float currentLabelY = 8.f;
-    const bool hasImage = !m_yelpModel.GetImageUrl().empty();
-    const bool hasReviewBar = !self.pReviewCountLabel.hidden;
     
-    if(!m_yelpModel.GetImageUrl().empty())
+    if(!m_eegeoModel.GetImageUrl().empty())
     {
         currentLabelY = 0.f;
         const CGFloat imageX = (self.frame.size.width * 0.5f - m_imageWidth * 0.5f);
@@ -365,82 +324,26 @@ namespace
         currentLabelY += (m_imageHeight + imageBottomPadding);
     }
     
-    const float reviewCountWidth = 40.0f;
-    const float reviewCountHeight = 17.0f;
-    const float yelpButtonWidth = 115.0f;
-    const float yelpButtonHeight = 25.0f;
-    const float reviewSpacing = 4.0f;
-    
-    const float fullRatingsWidth = (m_ratingsImageWidth + reviewSpacing + reviewCountWidth);
-    const CGFloat barButtonCentredX = (self.frame.size.width * 0.5f - yelpButtonWidth * 0.5f);
-    const CGFloat reviewBarOffsetX = (self.frame.size.width * 0.5f - (yelpButtonWidth + fullRatingsWidth) * 0.5f);
-    const CGFloat yelpButtonOffsetX = reviewBarOffsetX + fullRatingsWidth;
-    
-    const CGFloat rateBarOriginX = hasImage ? barButtonCentredX : reviewBarOffsetX;
-    const CGFloat yelpButtonX = (hasImage || !hasReviewBar) ? barButtonCentredX : yelpButtonOffsetX;
-    const CGFloat imageBottomPadding = 8.0;
-    
-    if(!m_yelpModel.GetRatingImageUrl().empty())
+    if(!m_eegeoModel.GetWebUrl().empty())
     {
-        UIImage* image = ExampleApp::Helpers::ImageHelpers::LoadImage(m_yelpModel.GetRatingImageUrl());
-        [self.pRatingImage setImage:image];
-
-        m_ratingsImageWidth = image.size.width;
-        m_ratingsImageHeight = image.size.height;
-
-        const CGFloat imageX = hasImage ? (self.frame.size.width * 0.5f) - m_ratingsImageWidth*0.5f : roundf(rateBarOriginX);
-        const CGFloat imageY = hasImage
-            ? self.pPreviewImage.frame.origin.y + self.pPreviewImage.frame.size.height - yelpButtonHeight - reviewSpacing
-            : currentLabelY + (yelpButtonHeight*0.5f) - (m_ratingsImageHeight*0.5f);
-        self.pRatingImage.frame = CGRectMake(imageX, imageY, m_ratingsImageWidth, m_ratingsImageHeight);
+        self.pWebHeaderContainer.frame = CGRectMake(0.f, currentLabelY, m_labelsSectionWidth, headerLabelHeight + 2 * headerTextPadding);
+        self.pWebHeaderContainer.hidden = false;
         
-        CGRect frame = self.pRatingImage.frame;
-        const CGFloat initialFrameHeight = frame.size.height;
-        frame.size = image.size;
-        frame.origin.x = imageX;
-        frame.origin.y = imageY;
-        self.pRatingImage.frame = frame;
-        self.pRatingImage.hidden = false;
+        self.pWebHeaderLabel.frame = CGRectMake(headerTextPadding, headerTextPadding, m_labelsSectionWidth - headerTextPadding, headerLabelHeight);
+        self.pWebHeaderLabel.text = @"Web";
+        self.pWebHeaderLabel.hidden = false;
+        currentLabelY += labelYSpacing + self.pWebHeaderContainer.frame.size.height;
         
-        self.pReviewCountLabel.frame = CGRectMake(imageX + frame.size.width + reviewSpacing, imageY, reviewCountWidth, reviewCountHeight);
-        self.pReviewCountLabel.textColor = hasImage ? ExampleApp::Helpers::ColorPalette::WhiteTone : ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+        self.pWebContent.frame = CGRectMake(headerTextPadding, currentLabelY, m_labelsSectionWidth - headerTextPadding, 32.f);
+        self.pWebContent.text = [NSString stringWithUTF8String:m_eegeoModel.GetWebUrl().c_str()];
+        self.pWebContent.hidden = false;
+        [self.pWebContent sizeToFit];
         
-        const CGFloat imageContentHeightDifference = (image.size.height - initialFrameHeight);
-        const CGFloat newContentHeight = self.pLabelsContainer.contentSize.height + imageContentHeightDifference;
-        [self.pLabelsContainer setContentSize:CGSizeMake(self.pLabelsContainer.contentSize.width, newContentHeight)];
-        
-        self.pRatingImage.hidden = self.pReviewCountLabel.hidden;
-        
-    }
-    
-    if(!m_yelpModel.GetWebUrl().empty())
-    {
-        if(self.pVendorWebLinkButton != nil)
-        {
-            [self.pVendorWebLinkButton removeFromSuperview];
-            self.pVendorWebLinkButton = nil;
-        }
-        
-        UIImage* pButtonImage = ExampleApp::Helpers::ImageHelpers::LoadImage(@"reviewsFromYelpRED");
-        self.pVendorWebLinkButton = [[[UIButton alloc] initWithFrame:CGRectMake(roundf(yelpButtonX),
-                                                                                roundf(currentLabelY),
-                                                                                pButtonImage.size.width,
-                                                                                pButtonImage.size.height)] autorelease];
-        self.pVendorWebLinkButton.frame = CGRectIntegral(self.pVendorWebLinkButton.frame);
-        
-        // Set kCAFilterNearest for point filtering on link button, as button has baked text so needs to be pixel perfect.
-        self.pVendorWebLinkButton.imageView.layer.minificationFilter = kCAFilterNearest;
-        self.pVendorWebLinkButton.imageView.layer.magnificationFilter = kCAFilterNearest;
-        
-        [self.pVendorWebLinkButton setImage:pButtonImage forState:UIControlStateNormal];
-        [self.pVendorWebLinkButton addTarget:self action:@selector(handleLinkClicked) forControlEvents:UIControlEventTouchUpInside];
-        [self.pLabelsContainer addSubview: self.pVendorWebLinkButton];
-        
-        currentLabelY += (yelpButtonHeight + imageBottomPadding);
+        currentLabelY += labelYSpacing + self.pWebContent.frame.size.height;
     }
     
     
-    if(!m_yelpModel.GetPhone().empty())
+    if(!m_eegeoModel.GetPhone().empty())
     {
         self.pPhoneHeaderContainer.frame = CGRectMake(0.f, currentLabelY, m_labelsSectionWidth, headerLabelHeight + 2 * headerTextPadding);
         self.pPhoneHeaderContainer.hidden = false;
@@ -451,7 +354,7 @@ namespace
         currentLabelY += labelYSpacing + self.pPhoneHeaderContainer.frame.size.height;
         
         self.pPhoneContent.frame = CGRectMake(headerTextPadding, currentLabelY, m_labelsSectionWidth - headerTextPadding, 32.f);
-        self.pPhoneContent.text = [NSString stringWithUTF8String:m_yelpModel.GetPhone().c_str()];
+        self.pPhoneContent.text = [NSString stringWithUTF8String:m_eegeoModel.GetPhone().c_str()];
         self.pPhoneContent.hidden = false;
         [self.pPhoneContent sizeToFit];
         
@@ -514,35 +417,6 @@ namespace
         currentLabelY += labelYSpacing + self.pCategoriesContent.frame.size.height;
     }
     
-    if(!m_yelpModel.GetReviews().empty())
-    {
-        self.pReviewsHeaderContainer.frame = CGRectMake(0.f, currentLabelY, m_labelsSectionWidth, headerLabelHeight + 2 * headerTextPadding);
-        self.pReviewsHeaderContainer.hidden = false;
-        
-        self.pReviewsHeaderLabel.frame = CGRectMake(headerTextPadding, headerTextPadding, m_labelsSectionWidth - headerTextPadding, headerLabelHeight);
-        self.pReviewsHeaderLabel.text = @"Review Snippet";
-        self.pReviewsHeaderLabel.hidden = false;
-        currentLabelY += labelYSpacing + self.pReviewsHeaderContainer.frame.size.height;
-        
-        self.pReviewsContent.frame = CGRectMake(headerTextPadding, currentLabelY, m_labelsSectionWidth - headerTextPadding, 85.f);
-        self.pReviewsContent.text = @"";
-        self.pReviewsContent.numberOfLines = 0;
-        self.pReviewsContent.adjustsFontSizeToFitWidth = NO;
-        self.pReviewsContent.lineBreakMode = NSLineBreakByTruncatingTail;
-        
-        std::string reviewsText;
-        const std::vector<std::string>& reviewsList(m_yelpModel.GetReviews());
-        for(std::vector<std::string>::const_iterator it = reviewsList.begin(); it != reviewsList.end(); ++it)
-        {
-            reviewsText += (*it) + "\n";
-        }
-        
-        self.pReviewsContent.text = [NSString stringWithUTF8String:reviewsText.c_str()];
-        self.pReviewsContent.hidden = false;
-        [self.pReviewsContent sizeToFit];
-        
-        currentLabelY += labelYSpacing + self.pReviewsContent.frame.size.height;
-    }
     
     [self.pLabelsContainer setContentSize:CGSizeMake(m_labelsSectionWidth, currentLabelY)];
 }
@@ -552,16 +426,10 @@ namespace
     Eegeo_ASSERT(pModel != NULL);
     
     m_model = *pModel;
-    
-    m_yelpModel = ExampleApp::Search::Yelp::SdkModel::TransformToYelpSearchResult(m_model);
-    
+    m_eegeoModel = ExampleApp::Search::EegeoPois::SdkModel::TransformToEegeoSearchResult(m_model);
+
     m_isPinned = isPinned;
     [self updatePinnedButtonState];
-    
-    if(!AllowPinning && m_isPinned)
-    {
-        [self togglePinState];
-    }
     
     self.pTitleLabel.text = [NSString stringWithUTF8String:pModel->GetTitle().c_str()];
     
@@ -573,30 +441,20 @@ namespace
     self.pAddressContent.hidden = true;
     self.pPhoneHeaderContainer.hidden = true;
     self.pPhoneContent.hidden = true;
+    self.pWebHeaderContainer.hidden = true;
+    self.pWebContent.hidden = true;
     self.pPreviewImage.hidden = true;
     self.pCategoriesHeaderContainer.hidden = true;
     self.pCategoriesContent.hidden = true;
-    self.pReviewsHeaderContainer.hidden = true;
-    self.pReviewsContent.hidden = true;
-    self.pVendorWebLinkButton.hidden = true;
-    self.pReviewCountLabel.hidden = true;
     
     const CGFloat previewImagePlaceholderSize = 64.f;
     m_imageWidth = m_imageHeight = previewImagePlaceholderSize;
     m_ratingsImageWidth = RatingImageWidth;
     m_ratingsImageHeight = RatingImageHeight;
     
-    if(m_yelpModel.GetReviewCount() > 0)
-    {
-        self.pReviewCountLabel.hidden = false;
-        self.pReviewCountLabel.text = [NSString stringWithFormat:@"(%d)", m_yelpModel.GetReviewCount()];
-    }
-    
-    
-    
     [self performDynamicContentLayout];
     
-    if(!m_yelpModel.GetImageUrl().empty())
+    if(!m_eegeoModel.GetImageUrl().empty())
     {
         [self.pPreviewImage setImage:nil];
         [self.pPreviewImageSpinner startAnimating];
@@ -607,7 +465,7 @@ namespace
 
 - (void) updateImage:(const std::string&)url :(bool)success bytes:(const std::vector<Byte>*)bytes;
 {
-    if(url == m_yelpModel.GetImageUrl())
+    if(url == m_eegeoModel.GetImageUrl())
     {
         [self.pPreviewImageSpinner stopAnimating];
         
@@ -711,7 +569,7 @@ namespace
 
 - (void) handleLinkClicked
 {
-    NSString* preFormattedUrlString = [NSString stringWithUTF8String:m_yelpModel.GetWebUrl().c_str()];
+    NSString* preFormattedUrlString = [NSString stringWithUTF8String:m_eegeoModel.GetWebUrl().c_str()];
         
     NSString* webUrlString = ([preFormattedUrlString rangeOfString:@"http"].location != NSNotFound)
     ? preFormattedUrlString
@@ -787,18 +645,15 @@ namespace
 
 - (void) updatePinnedButtonState
 {
-    if(AllowPinning)
+    if(m_isPinned)
     {
-        if(m_isPinned)
-        {
-            [self.pPinButton setBackgroundImage:self->m_pRemovePinButtonBackgroundImage forState:UIControlStateNormal];
-            [self.pPinButton setBackgroundImage:self->m_pRemovePinHighlightButtonBackgroundImage forState:UIControlStateHighlighted];
-        }
-        else
-        {
-            [self.pPinButton setBackgroundImage:self->m_pAddPinButtonBackgroundImage forState:UIControlStateNormal];
-            [self.pPinButton setBackgroundImage:self->m_pAddPinHighlightButtonBackgroundImage forState:UIControlStateHighlighted];
-        }
+        [self.pPinButton setBackgroundImage:self->m_pRemovePinButtonBackgroundImage forState:UIControlStateNormal];
+        [self.pPinButton setBackgroundImage:self->m_pRemovePinHighlightButtonBackgroundImage forState:UIControlStateHighlighted];
+    }
+    else
+    {
+        [self.pPinButton setBackgroundImage:self->m_pAddPinButtonBackgroundImage forState:UIControlStateNormal];
+        [self.pPinButton setBackgroundImage:self->m_pAddPinHighlightButtonBackgroundImage forState:UIControlStateHighlighted];
     }
 }
 

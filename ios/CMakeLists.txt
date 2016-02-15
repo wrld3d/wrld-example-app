@@ -13,7 +13,7 @@ set(executable_name ProjectSwallowApp)
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Include/eegeo/CMakeLists.txt")
   include("${CMAKE_CURRENT_SOURCE_DIR}/Include/eegeo/CMakeLists.txt")
 else(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Include/eegeo/CMakeLists.txt")
-  message(FATAL_ERROR "Couldn't detect platform headers. Have you ran update.platform.sh?")
+  message(FATAL_ERROR "Couldn't detect platform headers. Have you run update.platform.sh?")
 endif(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Include/eegeo/CMakeLists.txt")
 
 include(../src/CMakeLists.txt)
@@ -34,6 +34,7 @@ set(EEGEO_PLIST_PRODUCT_NAME "\${PRODUCT_NAME}")
 
 # compiler/linker settings
 set(CMAKE_XCODE_EFFECTIVE_PLATFORMS "-iphoneos;-iphonesimulator")
+set(CMAKE_)
 set(CMAKE_OSX_ARCHITECTURES "armv7;arm64;i386")
 set(IOS_WARNING_FLAGS "-Wmost -Werror -Wno-four-char-constants -Wno-unknown-pragmas -Wno-reorder")
 

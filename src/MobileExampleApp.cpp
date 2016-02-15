@@ -73,6 +73,7 @@
 #include "ICompassViewModel.h"
 #include "CombinedSearchServiceModule.h"
 #include "GeoNamesSearchServiceModule.h"
+#include "EegeoSearchServiceModule.h"
 #include "SearchVendorNames.h"
 #include "SwallowPoiDbModule.h"
 #include "SwallowPoiDbWebLoader.h"
@@ -82,6 +83,7 @@
 #include "SwallowSearchConstants.h"
 #include "SwallowSearchTransitionPinController.h"
 #include "SwallowPoiDbServiceProvider.h"
+#include "YelpSearchConstants.h"
 #include "AppCameraModule.h"
 #include "AppCameraController.h"
 #include "AppModeStatesFactory.h"
@@ -344,7 +346,7 @@ namespace ExampleApp
 
 		CreateSQLiteModule(nativeUIFactories);
         
-        CreateApplicationModelModules(platformImplementedSearchServiceModules, nativeUIFactories, platformConfig.OptionsConfig.InteriorsAffectedByFlattening);
+        CreateApplicationModelModules(platformImplementedSearchServiceModules, nativeUIFactories, platformConfig.OptionsConfig.InteriorsAffectedByFlattening, applicationConfiguration.EegeoApiKey());
         
         m_pRayCaster = Eegeo_NEW(Eegeo::Collision::EnvironmentRayCaster)(mapModule.GetAggregateCollisionBvhProvider(),
                                                                          mapModule.GetEnvironmentFlatteningService());
@@ -433,7 +435,8 @@ namespace ExampleApp
 
     void MobileExampleApp::CreateApplicationModelModules(const std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*>& platformImplementedSearchServiceModules,
                                                          Eegeo::UI::NativeUIFactories& nativeUIFactories,
-                                                         const bool interiorsAffectedByFlattening)
+                                                         const bool interiorsAffectedByFlattening,
+                                                         const std::string& apiKey)
     {
         Eegeo::EegeoWorld& world = *m_pWorld;
         
@@ -504,6 +507,19 @@ namespace ExampleApp
                                                                                                                                     m_networkCapabilities,
                                                                                                                                     m_applicationConfiguration.GeoNamesUserName());
         }
+        const bool useEegeoPois = false;
+        if(useEegeoPois)
+        {
+            // For Mobile Example App purposes, we use the same taxonomy as Yelp
+            // You could configure your own taxonomy via the category: attribute of a POI submitted to poi-service
+            std::vector<std::string> supportedCategories = Search::Yelp::SearchConstants::GetCategories();
+            m_searchServiceModules[Search::EegeoVendorName] = Eegeo_NEW(Search::EegeoPois::SdkModel::EegeoSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
+                                                                                                                                       m_platformAbstractions.GetUrlEncoder(),
+                                                                                                                                       m_networkCapabilities,
+                                                                                                                                       supportedCategories,
+                                                                                                                                       apiKey);
+        }
+        
         searchServiceModulesForCombinedSearch.insert(m_searchServiceModules.begin(), m_searchServiceModules.end());
         
         // add this after we add the search services to the searchServiceModulesForCombinedSearch object just for cleanup purposes

@@ -15,35 +15,37 @@ This section will walk you through the process of getting up and running quickly
 
 The SDK is distributed as a C++ static library with headers, with an [example app](https://github.com/eegeo/mobile-example-app) to demonstrate project configuration and show the use of the SDK in practice. A [shell script](https://github.com/eegeo/mobile-example-app/blob/master/update.platform.sh) is provided in the example app repo root which fetches the SDK. The SDK is deployed continuously; the most up to date version can be obtained by running this shell script. We recommend doing so often, in order to reduce the impact of updating.
 
-Both C++ 03 and C++ 11 versions of the SDK binaries are provided in order to maximise compatibility.
+Both C++ 03 and C++ 11 versions of the SDK binaries are provided in order to maximise compatibility. By default, the instructions for each platform below detail how to build C++11 builds. For C++03 only builds, see the 'C++03 Only Builds' section of this readme.
 
 ### Cross-Platform Mobile Example App
 
 The [Mobile Example App](https://github.com/eegeo/mobile-example-app) is an open source version of eeGeo's [Recce](https://www.eegeo.com/recce) app, available for [iOS](https://itunes.apple.com/gb/app/recce/id858600575) and [Android](https://play.google.com/store/apps/details?id=com.eegeo.recce). This repo is intended to demonstrate a practical application of the eeGeo SDKs cross-platform capabilities by presenting an architecture that shares all of the domain model code between iOS and Android, with platform-specific implementations only for views and OS dependent services (such as IO).
 
-Much of the application code is shared between platforms, reducing duplication and maintenance overhead for developers.  
+Much of the application code is shared between platforms, reducing duplication and maintenance overhead for developers. 
+
+The iOS and Windows projects are generated using CMake to avoid having to deal with merge conflicts in project files. The Android project does not make use of this, as Eclipse utlitises workspaces rather than single project files. 
 
 **To get started with the example app (iOS):**
-
-The following steps assume XCode is present.
+> Requirements:  
+\- [Xcode](https://developer.apple.com/xcode/) (version tested: 7.2)  
+\- [CMake](https://cmake.org/) (>= 3.1.1)
 
 1. Clone the repo: **git clone git@github.com:eegeo/mobile-example-app.git**.
 2. Get the latest iOS SDK by running **sh ./update.platform -p ios** from the repo root.
-3. Obtain an [eeGeo API key](https://www.eegeo.com/developers/apikeys) and add it to the [ApiKey file](https://github.com/eegeo/mobile-example-app/blob/master/src/ApiKey.h#L10).
-4. Open and build the **./ios/ExampleApp.xcodeproj**.
+3. Within the ios directory, create a build directory for your project
+4. Navigate to your build directory and generate the project with CMake: `cmake -G Xcode ..`  
+This is an 'out of source' build - all of the objects and binaries will be built inside of this directory. The `..` denotes that we're generating from source in the parent (in this case 'ios') directory.
+5. Open the ExampleApp.xcodeproj that CMake has generated
+6. Obtain an [eeGeo API key](https://www.eegeo.com/developers/apikeys) and add it to the [ApiKey file](https://github.com/eegeo/mobile-example-app/blob/master/src/ApiKey.h#L10).
+7. Build and run project
 
 To build at the command line, run **./build.sh -p ios** from the repository root.
 
-**Note**: In step 2, we download a C++ 03 binary. If you require a C++ 11 binary, run **sh ./update.platform -p ios -c**.
-
-* **./update.platform.sh -p ios -c** will fetch c++ 11/libc++ ABI compatible versions of the SDK for libc++
-* **./build.sh -p ios -c** from the command line will build targeting c++ 11 / libc++
-* An additional target in the XCode project file is provided for c++ 11 support: ExampleAppCpp11
-
-
 **To get started with the example app (Android):**
-
-The following steps assume Eclipse and the NDK are present. In order to run, your version of Android Developer Tools must be >= 22.6. In order to support 64-bit ABIs, you must be using [Android NDK revision](http://developer.android.com/tools/sdk/ndk/index.html#Revisions) 10d or later.
+> Requirements:  
+\- [Eclipse IDE for Java Developers](https://eclipse.org/downloads/)   
+\- [Android Developer Tools](http://developer.android.com/tools/help/adt.html) (>= 22.6)  
+\- [Android NDK](http://developer.android.com/tools/sdk/ndk/index.html) (>= r10d)
 
 1. Clone the repo: **git clone git@github.com:eegeo/mobile-example-app.git**.
 2. Get the latest Android SDK by running **sh ./update.platform -p android** from the repo root.
@@ -58,29 +60,35 @@ The project is configured to build for multiple target CPU architectures, creati
 
 [build.sh](https://github.com/eegeo/mobile-example-app/blob/master/build.sh) can be used to generate the native library if you want to manually package the .apk. To build at the command line, run **./build.sh -p android** from the repository root.
 
-**Note**: In step 2, we download a C++ 03 binary. If you require a C++ 11 binary, run **sh ./update.platform -p android -c**.
-
-* Android c++ 11 support is **EXPERIMENTAL** due to the experimental nature of c++ 11 support in the NDK (more information [here]( https://developer.android.com/tools/sdk/ndk/index.html) & [here](https://gcc.gnu.org/gcc-4.8/cxx0x_status.html))
-* Only tested against Android [NDK](https://developer.android.com/tools/sdk/ndk/index.html) version r10d 
-* Only tested against gcc 4.9 & gnu libstd++ (see [android/jni/Application.mk](https://github.com/eegeo/mobile-example-app/blob/master/android/jni/Application.mk) for how to target these)
-* **./update.platform.sh -p android -c** will fetch c++ 11/gnu libstdc++ ABI compatible versions of the SDK
-* **./build -p android -c** from the command line will build targeting c++ 11
-* Pass COMPILE_CPP_11=1 to ndk-build to build cpp11
-
 **To get started with the example app (Windows):**
+> Requirements:  
+\- [Microsoft Visual Studio 2015](https://www.visualstudio.com/en-us/downloads/download-visual-studio-vs.aspx)  
+\- [Git for Windows](https://git-for-windows.github.io/)  
+\- [CMake](https://cmake.org/) (>= 3.1.1)  
 
-* The following steps assume Visual Studio 2015 and MinGW are installed.
-* Clone this repository and run `./update.platform.sh -p windows`
-* Open ./windows/ExampleApp/ExampleApp.sln
-* Right click the ExampleAppWPF project and choose `Set as StartUp Project`
-* Choose `x64` as your build platform instead of `Any CPU`
-* Build and Run the app
+Please use Git Bash, supplied with Git for Windows to run the following steps:  
+1. Clone the repo: **git clone git@github.com:eegeo/mobile-example-app.git**.  
+2. Get the latest Windows SDK by running **sh ./update.platform -p windows** from the repo root.
+3. Within the windows directory, create a build directory for your project  
+4. Navigate to your build directory and generate the project with CMake: `cmake -G "Visual Studio 14 Win64" ..`  
+This is an 'out of source' build - all of the objects and binaries will be built inside of this directory. The `..` denotes that we're generating from source in the parent (in this case 'windows') directory.  
+5. Open the ExampleApp.sln solution that CMake has generated  
+6. Obtain an [eeGeo API key](https://www.eegeo.com/developers/apikeys) and add it to the [ApiKey file](https://github.com/eegeo/mobile-example-app/blob/master/src/ApiKey.h#L10).  
+7. Right click the ExampleAppWPF project and choose `Set as StartUp Project`  
+8. Build and Run the app  
 
 ### API Key 
 
 In order to use the eeGeo 3D Maps API, you must sign up for a free developer account at https://www.eegeo.com/developers. After signing up, you'll be able to create an [API key](https://www.eegeo.com/developers/apikeys) for your apps. 
 
 After signing up for a developer account and creating an API key, add it to the example app [ApiKey file](https://github.com/eegeo/mobile-example-app/blob/master/src/ApiKey.h#L10) as described in the previous section.
+
+### C++ 03 Only Builds
+It's possible to build C++03 only versions of the application. To do this, you'll need to pull down a C\++03 version of the SDK.
+* `./update.platform.sh -p [ios|android|windows] -c` will fetch c\++03/libc++ ABI compatible versions of the SDK for libc++
+* `./build -p [ios|android|windows] -c` from the command line will build targeting c\++03 / libc++
+* For Android builds, omit the COMPILE_CPP_11=1 flag from your ndkbuild command  
+* For CMake builds, add `DCOMPILE_CPP_03=1` to your cmake command. e.g. `cmake -G Xcode -DCOMPILE_CPP_03=1 ..`
 
 
 ## SDK Overview 

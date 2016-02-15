@@ -21,6 +21,7 @@
 #include "SwallowWorkingGroupSearchResultPoiView.h"
 #include "SwallowFacilitySearchResultPoiView.h"
 #include "SwallowDepartmentSearchResultPoiView.h"
+#include "EegeoSearchResultPoiView.h"
 #include "ExampleTourSearchResultPoiView.h"
 
 @interface SearchResultPoiViewContainer()<UIGestureRecognizerDelegate>
@@ -92,6 +93,10 @@
     else if(vendor == ExampleApp::Search::GeoNamesVendorName)
     {
         return [[GeoNamesSearchResultPoiView alloc] initWithInterop:m_pInterop];
+    }
+    else if(vendor == ExampleApp::Search::EegeoVendorName)
+    {
+        return [[EegeoSearchResultPoiView alloc] initWithInterop:m_pInterop];
     }
     else if(vendor == ExampleApp::Search::ExampleTourVendorName)
     {
