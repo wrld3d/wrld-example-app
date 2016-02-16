@@ -66,7 +66,7 @@ cflags := -Wall -Wno-unknown-pragmas -Wno-sign-compare -Wno-format-security -Wno
 ifdef COMPILE_CPP_11  
   cppflags := -DCOMPILE_CPP_11=1 -std=c++11
 else  
-  cppflags :=
+  cppflags := -std=c++0x
 endif
 
 
