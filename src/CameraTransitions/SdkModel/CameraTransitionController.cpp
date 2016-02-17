@@ -33,7 +33,7 @@ namespace ExampleApp
                                                                    Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                    Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                    const Eegeo::Resources::Interiors::IInteriorController& interiorController,
-                                                                   Eegeo::Resources::Interiors::DefaultInteriorAnimationController& interiorViewAnimator,
+                                                                   Eegeo::Resources::Interiors::IInteriorFloorAnimator& interiorViewAnimator,
                                                                    InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                                                    ExampleApp::ExampleAppMessaging::TMessageBus& messageBus)
             : m_cameraController(cameraController)

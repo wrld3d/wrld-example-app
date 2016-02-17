@@ -330,7 +330,7 @@ namespace ExampleApp
                                                                                                                        interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                        interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                                        interiorsPresentationModule.GetController(),
-                                                                                                                       interiorsPresentationModule.GetDefaultInteriorViewAnimator(),
+                                                                                                                       interiorsPresentationModule.GetInteriorFloorAnimator(),
                                                                                                                        m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
                                                                                                                        m_messageBus);
         m_pCameraTransitionService->SetTransitionController(*m_pCameraTransitionController);
@@ -573,7 +573,7 @@ namespace ExampleApp
         const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel = m_initialExperienceModule.GetInitialExperienceModel();
         
         m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(interiorsPresentationModule.GetController(),
-                                                                                                     interiorsPresentationModule.GetDefaultInteriorViewAnimator(),
+                                                                                                     interiorsPresentationModule.GetInteriorFloorAnimator(),
                                                                                                      interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                      interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                      interiorsModelModule.GetInteriorMarkerModelRepository(),

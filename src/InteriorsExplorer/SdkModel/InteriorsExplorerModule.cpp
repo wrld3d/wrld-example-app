@@ -21,7 +21,7 @@ namespace ExampleApp
         namespace SdkModel
         {
             InteriorsExplorerModule::InteriorsExplorerModule(Eegeo::Resources::Interiors::IInteriorController& interiorController,
-                                                             Eegeo::Resources::Interiors::DefaultInteriorAnimationController& interiorAnimationController,
+                                                             Eegeo::Resources::Interiors::IInteriorFloorAnimator& interiorFloorAnimator,
                                                              Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                              Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                              Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
@@ -61,7 +61,7 @@ namespace ExampleApp
                 
                 m_pInteriorsCameraController = Eegeo_NEW(InteriorsExplorerCameraController)(interiorController,
                                                                                             interiorSelectionModel,
-                                                                                            interiorAnimationController,
+                                                                                            interiorFloorAnimator,
                                                                                             interiorInteractionModel,
                                                                                             environmentFlatteningService,
                                                                                             *m_pGlobeCameraTouchController,

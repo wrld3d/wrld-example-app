@@ -35,8 +35,8 @@ namespace ExampleApp
                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                            Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                            const Eegeo::Resources::Interiors::IInteriorController& interiorController,
-                                           // todo dependency on concrete DefaultInteriorAnimationController - should be IInteriorViewAnimator or not at all
-                                           Eegeo::Resources::Interiors::DefaultInteriorAnimationController& interiorViewAnimator,
+                                           // todo remove dependency, IInteriorFloorAnimator is not for this purpose
+                                           Eegeo::Resources::Interiors::IInteriorFloorAnimator& interiorViewAnimator,
                                            InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                            ExampleAppMessaging::TMessageBus& messageBus);
 
@@ -107,7 +107,7 @@ namespace ExampleApp
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                 Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 const Eegeo::Resources::Interiors::IInteriorController& m_interiorController;
-                Eegeo::Resources::Interiors::DefaultInteriorAnimationController& m_interiorViewAnimator;
+                Eegeo::Resources::Interiors::IInteriorFloorAnimator& m_interiorViewAnimator;
                 InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel;
                
                 Eegeo::Resources::Interiors::InteriorId m_defaultInteriorId;

@@ -16,7 +16,7 @@
 #include "InteriorHeightHelpers.h"
 #include "GlobeCameraController.h"
 #include "EnvironmentFlatteningService.h"
-#include "DefaultInteriorAnimationController.h"
+#include "IInteriorFloorAnimator.h"
 #include "InteriorInteractionModel.h"
 
 namespace ExampleApp
@@ -74,7 +74,7 @@ namespace ExampleApp
             InteriorsExplorerCameraController::InteriorsExplorerCameraController(
                                                                 const Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                                                 Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                                Eegeo::Resources::Interiors::DefaultInteriorAnimationController& interiorAnimationController,
+                                                                Eegeo::Resources::Interiors::IInteriorFloorAnimator& interiorFloorAnimator,
                                                                 Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                 const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                                 Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& globeCameraTouchController,
@@ -82,7 +82,7 @@ namespace ExampleApp
                                                                 const bool interiorsAffectedByFlattening)
             : m_interiorController(interiorController)
             , m_interiorSelectionModel(interiorSelectionModel)
-            , m_interiorAnimationController(interiorAnimationController)
+            , m_interiorFloorAnimator(interiorFloorAnimator)
             , m_interiorInteractionModel(interiorInteractionModel)
             , m_globeCameraTouchController(globeCameraTouchController)
             , m_globeCameraController(globeCameraController)
@@ -211,7 +211,7 @@ namespace ExampleApp
                 float fovRadians = m_globeCameraController.GetRenderCamera().GetFOV();
                 float expandedParam =  Eegeo::Math::SinEaseInOut(m_interiorInteractionModel.GetExpandedParam());
                 const bool returningFromExpandedMode = m_interiorInteractionModel.IsExitingExpanded();
-                const float expandedCenterHeight = m_interiorAnimationController.CalculateExpandedHeight(interiorModel)*0.5f;
+                const float expandedCenterHeight = m_interiorFloorAnimator.CalculateExpandedHeight(interiorModel)*0.5f;
                 
                 float collapsedDistanceToInterest = CalculateCollapsedDistanceToInterest(currentFloorModel, m_globeCameraController.GetDistanceToInterest(), fovRadians, returningFromExpandedMode);
                 float expandedDistanceToInterest = CalculateExpandedDistanceToInterest(expandedCenterHeight, fovRadians);

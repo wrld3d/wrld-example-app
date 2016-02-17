@@ -33,7 +33,7 @@ namespace ExampleApp
                 bool m_cameraTouchEnabled;
                 const Eegeo::Resources::Interiors::IInteriorController& m_interiorController;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
-                Eegeo::Resources::Interiors::DefaultInteriorAnimationController& m_interiorAnimationController;
+                Eegeo::Resources::Interiors::IInteriorFloorAnimator& m_interiorFloorAnimator;
                 Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& m_globeCameraTouchController;
                 Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
@@ -49,8 +49,8 @@ namespace ExampleApp
             public:
                 InteriorsExplorerCameraController(const Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                                   Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                  // todo dependency on concrete DefaultInteriorAnimationController - should be IInteriorViewAnimator or not at all
-                                                  Eegeo::Resources::Interiors::DefaultInteriorAnimationController& interiorAnimationController,
+                                                  // todo remove dependency, IInteriorFloorAnimator is not for this purpose
+                                                  Eegeo::Resources::Interiors::IInteriorFloorAnimator& interiorFloorAnimator,
                                                   Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                   const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                   Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& m_globeCameraTouchController,
