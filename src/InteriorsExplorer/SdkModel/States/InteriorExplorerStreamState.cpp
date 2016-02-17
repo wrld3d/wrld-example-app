@@ -2,7 +2,7 @@
 
 #include "InteriorExplorerStreamState.h"
 #include "IAppCameraController.h"
-#include "InteriorController.h"
+#include "IInteriorController.h"
 #include "CameraFrustumStreamingVolume.h"
 #include "InteriorVisibilityUpdater.h"
 
@@ -15,7 +15,7 @@ namespace ExampleApp
             namespace States
             {
                 InteriorExplorerStreamState::InteriorExplorerStreamState(AppModes::States::SdkModel::InteriorExplorerState& parentState,
-                                                                         Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                                         const Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                                                          Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
                                                                          InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater)
                 : m_parentState(parentState)

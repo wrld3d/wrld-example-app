@@ -328,6 +328,7 @@ namespace ExampleApp
                                                                                                                        *m_pAppModeModel,
                                                                                                                        m_pAppCameraModule->GetController(),
                                                                                                                        interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                                                                       interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                                        interiorsPresentationModule.GetController(),
                                                                                                                        interiorsPresentationModule.GetDefaultInteriorViewAnimator(),
                                                                                                                        m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
@@ -805,6 +806,7 @@ namespace ExampleApp
                                  m_identityProvider,
                                  m_messageBus,
                                  interiorsPresentationModule.GetController(),
+                                 interiorsPresentationModule.GetInteriorInteractionModel(),
                                  m_sdkDomainEventBus,
                                  interiorsAffectedByFlattening);
     }
@@ -867,6 +869,7 @@ namespace ExampleApp
                                                                                         m_interiorsEnabled,
                                                                                         interiorsPresentationModule.GetController(),
                                                                                         m_pInteriorsExplorerModule->GetInteriorVisibilityUpdater(),
+                                                                                        interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                         interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                         m_messageBus);
         
@@ -877,6 +880,7 @@ namespace ExampleApp
                                                                                                                  WorldPinsModule().GetWorldPinsService(),
                                                                                                                  interiorsPresentationModule.GetController(),
                                                                                                                  m_pInteriorsExplorerModule->GetInteriorVisibilityUpdater(),
+                                                                                                                 interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                                  interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                  ToursModule().GetTourRepository(),
                                                                                                                  TwitterFeedModule().GetTwitterFeedService(),

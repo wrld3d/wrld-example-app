@@ -46,6 +46,8 @@ namespace ExampleApp
                     Eegeo::UI::NativeUIFactories& m_nativeUIFactories;
                     Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<InteriorExplorerState> m_failAlertHandler;
                     
+                    Eegeo::Resources::Interiors::IInteriorController& m_interiorController;
+                    
                     Helpers::StateMachine* m_pSubStateMachine;
                     std::vector<Helpers::IStateMachineState*> m_subStates;
                     
@@ -63,7 +65,8 @@ namespace ExampleApp
                 public:
                     
                     InteriorExplorerState(AppCamera::SdkModel::IAppCameraController& cameraController,
-                                          Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                          Eegeo::Resources::Interiors::IInteriorController& interiorController,
+                                          Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                           int interiorCameraHandle,
                                           Tours::SdkModel::ITourService& tourService,
                                           Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,

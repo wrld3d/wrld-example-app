@@ -9,12 +9,13 @@
 #include "IntersectionTests.h"
 #include "IPoiRingController.h"
 #include "IAppModeModel.h"
-#include "InteriorController.h"
+#include "IInteriorController.h"
 #include "InteriorsFloorModel.h"
 #include "Bounds.h"
 #include "InteriorsModel.h"
 #include "EcefTangentBasis.h"
 #include "InteriorHeightHelpers.h"
+#include "InteriorInteractionModel.h"
 
 namespace ExampleApp
 {
@@ -28,13 +29,15 @@ namespace ExampleApp
                                                                Eegeo::Collision::IRayPicker& rayPicker,
                                                                const IPoiRingController& poiRingController,
                                                                ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
-                                                               Eegeo::Resources::Interiors::InteriorController& interiorController)
+                                                               const Eegeo::Resources::Interiors::IInteriorController& interiorController,
+                                                               Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel)
                     : m_myPinCreationModel(myPinCreationModel)
                     , m_rayPicker(rayPicker)
                     , m_poiRingController(poiRingController)
                     , m_isDragging(false)
                     , m_appModeModel(appModeModel)
                     , m_interiorController(interiorController)
+                    , m_interiorInteractionModel(interiorInteractionModel)
                 {
 
                 }
@@ -161,8 +164,10 @@ namespace ExampleApp
                         Eegeo_ASSERT(m_interiorController.TryGetCurrentModel(interiorsModel), "Couldn't get current interiorsModel");
                         
                         const Eegeo::dv3 originNormal = interiorsModel->GetTangentBasis().GetUp();
+                        
+                        const int selectedFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
 
-                        float floorHeightAboveSeaLevel = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(*interiorsModel, m_interiorController.GetCurrentFloorIndex());
+                        float floorHeightAboveSeaLevel = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(*interiorsModel, selectedFloorIndex);
                         
                         const Eegeo::dv3 point = originNormal * (floorHeightAboveSeaLevel + Eegeo::Space::EarthConstants::Radius);
                         

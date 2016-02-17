@@ -32,9 +32,10 @@ namespace ExampleApp
                                                   WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                   bool isInterior,
                                                   WorldPins::SdkModel::WorldPinInteriorData& worldPinInteriorData,
-                                                  Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                  const Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                                   InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
-                                                  const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                                  Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                  Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                   const TweetStateData& tweetStateData,
                                                   const Eegeo::Space::LatLong& pinLocation,
                                                   const std::string& placeName,
@@ -62,9 +63,10 @@ namespace ExampleApp
                         Eegeo::Space::LatLong m_pinLocation;
                         bool m_isInterior;
                         WorldPins::SdkModel::WorldPinInteriorData m_worldPinInteriorData;
-                        Eegeo::Resources::Interiors::InteriorController& m_interiorController;
+                        const Eegeo::Resources::Interiors::IInteriorController& m_interiorController;
+                        Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                         InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& m_interiorVisibilityUpdater;
-                        const Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
+                        Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                         
                         const std::string m_pinPlacename;
                         const std::string m_pinImageUrl;

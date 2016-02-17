@@ -4,7 +4,8 @@
 
 #include "EarthConstants.h"
 #include "IWorldPinsRepository.h"
-#include "InteriorController.h"
+#include "IInteriorController.h"
+#include "InteriorInteractionModel.h"
 #include "InteriorsFloorModel.h"
 #include "InteriorsModel.h"
 #include "PinRepository.h"
@@ -20,11 +21,15 @@ namespace ExampleApp
         {
             WorldPinsFloorHeightController::WorldPinsFloorHeightController(IWorldPinsRepository& worldPinsRepository,
                                                                            Eegeo::Pins::PinRepository& pinRepository,
-                                                                           Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                                           const Eegeo::Resources::Interiors::IInteriorController& interiorController,
+                                                                           Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                                           const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                                            const bool interiorsAffectedByFlattening)
                 : m_worldPinsRepository(worldPinsRepository)
                 , m_pinRepository(pinRepository)
                 , m_interiorController(interiorController)
+                , m_interiorInteractionModel(interiorInteractionModel)
+                , m_environmentFlatteningService(environmentFlatteningService)
                 , m_interiorsAffectedByFlattening(interiorsAffectedByFlattening)
             {
             }
@@ -44,15 +49,17 @@ namespace ExampleApp
                         const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = NULL;
                         if (m_interiorController.TryGetCurrentFloorModel(pFloorModel))
                         {
-                            float altitude = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(*pModel, m_interiorController.GetCurrentFloorIndex());
-                            float heightAboveTerrain = Helpers::InteriorHeightHelpers::INTERIOR_FLOOR_HEIGHT*m_interiorController.GetCurrentFloorIndex();;
+                            const int selectedFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
+                            
+                            float altitude = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(*pModel, selectedFloorIndex);
+                            float heightAboveTerrain = Helpers::InteriorHeightHelpers::INTERIOR_FLOOR_HEIGHT*selectedFloorIndex;
                             
                             for(size_t i = 0; i < m_worldPinsRepository.GetItemCount(); ++i)
                             {
                                 WorldPinItemModel& worldPinItemModel = *m_worldPinsRepository.GetItemAtIndex(i);
                                 if (worldPinItemModel.NeedsFloorHeight())
                                 {
-                                    if (worldPinItemModel.GetInteriorData().floor == m_interiorController.GetCurrentFloorIndex() &&
+                                    if (worldPinItemModel.GetInteriorData().floor == selectedFloorIndex &&
                                         worldPinItemModel.GetInteriorData().building == pModel->GetId())
                                     {
                                         Eegeo::Pins::Pin* pPin = m_pinRepository.GetPinById(worldPinItemModel.Id());

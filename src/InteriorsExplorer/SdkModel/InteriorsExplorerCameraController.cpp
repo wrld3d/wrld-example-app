@@ -6,7 +6,7 @@
 #include "EarthConstants.h"
 #include "GlobeCameraTouchController.h"
 #include "GlobeCameraController.h"
-#include "InteriorController.h"
+#include "IInteriorController.h"
 #include "InteriorMarkerModel.h"
 #include "InteriorMarkerModelRepository.h"
 #include "InteriorsModel.h"
@@ -17,7 +17,6 @@
 #include "GlobeCameraController.h"
 #include "EnvironmentFlatteningService.h"
 #include "DefaultInteriorAnimationController.h"
-#include "InteriorViewModel.h"
 #include "InteriorInteractionModel.h"
 
 namespace ExampleApp
@@ -73,7 +72,7 @@ namespace ExampleApp
             
             
             InteriorsExplorerCameraController::InteriorsExplorerCameraController(
-                                                                Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                                const Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                                                 Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                 Eegeo::Resources::Interiors::DefaultInteriorAnimationController& interiorAnimationController,
                                                                 Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
@@ -210,10 +209,9 @@ namespace ExampleApp
                                                                      const Eegeo::Resources::Interiors::InteriorsFloorModel& currentFloorModel)
             {
                 float fovRadians = m_globeCameraController.GetRenderCamera().GetFOV();
-                bool expanded = m_interiorInteractionModel.IsExpanded();
-                float expandedParam =  Eegeo::Math::SinEaseInOut(m_interiorAnimationController.GetExpandedModeParameter());
-                const bool returningFromExpandedMode = !expanded && expandedParam > 0.0f;
-                const float expandedCenterHeight = m_interiorAnimationController.CalculateExpandedHeight()*0.5f;
+                float expandedParam =  Eegeo::Math::SinEaseInOut(m_interiorInteractionModel.GetExpandedParam());
+                const bool returningFromExpandedMode = m_interiorInteractionModel.IsExitingExpanded();
+                const float expandedCenterHeight = m_interiorAnimationController.CalculateExpandedHeight(interiorModel)*0.5f;
                 
                 float collapsedDistanceToInterest = CalculateCollapsedDistanceToInterest(currentFloorModel, m_globeCameraController.GetDistanceToInterest(), fovRadians, returningFromExpandedMode);
                 float expandedDistanceToInterest = CalculateExpandedDistanceToInterest(expandedCenterHeight, fovRadians);
@@ -371,15 +369,23 @@ namespace ExampleApp
             
             float InteriorsExplorerCameraController::GetFloorOffsetHeight() const
             {
-                float interpolatedFloorValue = m_interiorAnimationController.GetFloorParameter();
+                const Eegeo::Resources::Interiors::InteriorsModel* pModel = NULL;
+                
+                if (!m_interiorController.TryGetCurrentModel(pModel))
+                {
+                    return 0.f;
+                }
+                
+                const Eegeo::Resources::Interiors::InteriorsModel& model = *pModel;
+                
+                const float interpolatedFloorValue = m_interiorInteractionModel.GetFloorParam();
                 
                 const int targetFloorA = (int)std::floor(interpolatedFloorValue);
                 const int targetFloorB = (int)std::ceil(interpolatedFloorValue);
                 const float interfloorParam = interpolatedFloorValue - (float)targetFloorA;
                 
-                const Eegeo::Resources::Interiors::InteriorsModel* pModel = m_interiorController.GetViewModel().GetInteriorModel();
-                float floorOffsetA = CalcFloorHeightAboveBase(*pModel, targetFloorA);
-                float floorOffsetB = CalcFloorHeightAboveBase(*pModel, targetFloorB);
+                float floorOffsetA = CalcFloorHeightAboveBase(model, targetFloorA);
+                float floorOffsetB = CalcFloorHeightAboveBase(model, targetFloorB);
                 
                 float floorOffset = Eegeo::Math::Lerp(floorOffsetA, floorOffsetB, interfloorParam);
                 return floorOffset;

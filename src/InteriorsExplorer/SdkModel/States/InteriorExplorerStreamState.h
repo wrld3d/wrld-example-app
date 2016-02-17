@@ -23,7 +23,7 @@ namespace ExampleApp
                     {
                     private:
                         
-                        Eegeo::Resources::Interiors::InteriorController& m_interiorController;
+                        const Eegeo::Resources::Interiors::IInteriorController& m_interiorController;
                         Eegeo::Streaming::CameraFrustumStreamingVolume& m_cameraFrustumStreamingVolume;
                         InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& m_interiorVisibilityUpdater;
                         
@@ -35,7 +35,7 @@ namespace ExampleApp
                     public:
                         
                         InteriorExplorerStreamState(AppModes::States::SdkModel::InteriorExplorerState& parentState,
-                                                    Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                    const Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                                     Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
                                                     InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater);
                         

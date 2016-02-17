@@ -66,6 +66,7 @@ namespace ExampleApp
                                                                                                 m_pEntityPinsModule->GetController(),
                                                                                                 m_pEntityPinsModule->GetRepository(),
                                                                                                 interiorsPresentationModule.GetController(),
+                                                                                                interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                 interiorsPresentationModule.GetInteriorsLabelsController(),
                                                                                                 terrainModelModule.GetTerrainHeightProvider());
                 

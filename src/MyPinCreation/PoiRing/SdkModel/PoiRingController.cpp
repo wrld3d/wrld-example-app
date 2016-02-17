@@ -18,7 +18,8 @@
 #include "TerrainHeightProvider.h"
 #include "TransformHelpers.h"
 #include "VectorMath.h"
-#include "InteriorController.h"
+#include "IInteriorController.h"
+#include "InteriorInteractionModel.h"
 
 #include "InteriorHeightHelpers.h"
 #include "ScreenProperties.h"
@@ -77,7 +78,8 @@ namespace ExampleApp
                                                      PoiRingView& poiRingView,
                                                      Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                      Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
-                                                     Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                     const Eegeo::Resources::Interiors::IInteriorController& interiorController,
+                                                     Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                      Eegeo::Rendering::ScreenProperties& screenProperties,
                                                      const bool interiorsAffectedByFlattening)
                     : m_myPinCreationModel(myPinCreationModel)
@@ -90,6 +92,7 @@ namespace ExampleApp
                     , m_iconSize(0.0f)
                     , m_ringRadius(0.0f)
                     , m_interiorController(interiorController)
+                    , m_interiorInteractionModel(interiorInteractionModel)
                     , m_screenProperties(screenProperties)
                     , m_interiorsAffectedByFlattening(interiorsAffectedByFlattening)
                 {
@@ -132,10 +135,12 @@ namespace ExampleApp
                                 const Eegeo::Resources::Interiors::InteriorId& buildingId = pModel->GetId();
                                 m_myPinCreationModel.SetBuildingId(buildingId);
                             }
+                            
+                            const int selectedFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
 
-                            m_myPinCreationModel.SetFloor(m_interiorController.GetCurrentFloorIndex());
+                            m_myPinCreationModel.SetFloor(selectedFloorIndex);
                             m_myPinCreationModel.SetTerrainHeight(pModel->GetTangentSpaceBounds().GetMin().y);
-                            float floorHeightAboveSeaLevel = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(*pModel, m_interiorController.GetCurrentFloorIndex());
+                            float floorHeightAboveSeaLevel = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(*pModel, selectedFloorIndex);
                             const float floorHeightAboveTerrain = floorHeightAboveSeaLevel - m_myPinCreationModel.GetTerrainHeight();
                             m_myPinCreationModel.SetHeightAboveTerrain(floorHeightAboveTerrain);
                         }

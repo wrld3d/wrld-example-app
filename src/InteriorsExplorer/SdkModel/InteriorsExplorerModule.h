@@ -25,7 +25,7 @@ namespace ExampleApp
             class InteriorsExplorerModule : public IInteriorsExplorerModule, private Eegeo::NonCopyable
             {
             public:
-                InteriorsExplorerModule(Eegeo::Resources::Interiors::InteriorController& interiorController,
+                InteriorsExplorerModule(Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                         Eegeo::Resources::Interiors::DefaultInteriorAnimationController& interiorAnimationController,
                                         Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                         Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,

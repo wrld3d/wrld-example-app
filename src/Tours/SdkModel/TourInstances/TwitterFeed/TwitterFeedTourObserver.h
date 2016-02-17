@@ -28,9 +28,10 @@ namespace ExampleApp
                         Camera::IToursCameraTransitionController& m_toursCameraTransitionController;
                         ITourService& m_tourService;
                         WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
-                        Eegeo::Resources::Interiors::InteriorController& m_interiorController;
+                        const Eegeo::Resources::Interiors::IInteriorController& m_interiorController;
                         InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& m_interiorVisibilityUpdater;
-                        const Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
+                        Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
+                        Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                         ITourRepository& m_tourRepository;
                         Social::TwitterFeed::ITwitterFeedService& m_twitterFeedService;
                         
@@ -51,9 +52,10 @@ namespace ExampleApp
                         TwitterFeedTourObserver(Camera::IToursCameraTransitionController& toursCameraTransitionController,
                                                 ITourService& tourService,
                                                 WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                                Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                const Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                                 InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
-                                                const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                                Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                 ITourRepository& tourRepository,
                                                 Social::TwitterFeed::ITwitterFeedService& twitterFeedService,
                                                 const std::map<std::string, TweetStateData>& tweetStateDataMap,

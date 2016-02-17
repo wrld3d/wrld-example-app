@@ -19,7 +19,7 @@ namespace ExampleApp
             namespace SdkModel
             {
                 AppModeStatesFactory::AppModeStatesFactory(AppCamera::SdkModel::IAppCameraController& appCameraController,
-                                                           Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                           Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                                            AppCamera::SdkModel::AppGlobeCameraWrapper& worldCameraController,
                                                            InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorCameraController,
                                                            Tours::SdkModel::Camera::IToursCameraController& toursCameraController,
@@ -69,6 +69,7 @@ namespace ExampleApp
                     
                     states.push_back(Eegeo_NEW(States::SdkModel::InteriorExplorerState)(m_appCameraController,
                                                                                         m_interiorController,
+                                                                                        m_interiorSelectionModel,
                                                                                         interiorCameraHandle,
                                                                                         m_tourService,
                                                                                         m_cameraFrustumStreamingVolume,

@@ -27,7 +27,8 @@ namespace ExampleApp
                                       PoiRingView& poiRingView,
                                       Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                       Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
-                                      Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                      const Eegeo::Resources::Interiors::IInteriorController& interiorController,
+                                      Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                       Eegeo::Rendering::ScreenProperties& screenProperties,
                                       const bool interiorsAffectedByFlattening);
 
@@ -39,7 +40,8 @@ namespace ExampleApp
                 private:
                     Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
                     Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& m_terrainHeightProvider;
-                    Eegeo::Resources::Interiors::InteriorController& m_interiorController;
+                    const Eegeo::Resources::Interiors::IInteriorController& m_interiorController;
+                    Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
 
                     MyPinCreation::SdkModel::IMyPinCreationModel& m_myPinCreationModel;
 

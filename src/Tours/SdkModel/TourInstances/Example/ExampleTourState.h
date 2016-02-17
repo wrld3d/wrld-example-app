@@ -36,9 +36,10 @@ namespace ExampleApp
                                          Camera::IToursCameraTransitionController& toursCameraTransitionController,
                                          WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                          WorldPins::SdkModel::WorldPinInteriorData& worldPinInteriorData,
-                                         Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                         Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                          InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
-                                         const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                         Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                         Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                          ExampleAppMessaging::TMessageBus& messageBus);
                         ~ExampleTourState();
                         
@@ -61,9 +62,10 @@ namespace ExampleApp
                         
                         bool m_interior;
                         WorldPins::SdkModel::WorldPinInteriorData m_worldPinInteriorData;
-                        Eegeo::Resources::Interiors::InteriorController& m_interiorController;
+                        Eegeo::Resources::Interiors::IInteriorController& m_interiorController;
+                        Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                         InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& m_interiorVisibilityUpdater;
-                        const Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
+                        Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                         ExampleAppMessaging::TMessageBus& m_messageBus;
                         
                         ExampleCurrentTourCardTappedHandler* m_pTourCardTappedHandler;

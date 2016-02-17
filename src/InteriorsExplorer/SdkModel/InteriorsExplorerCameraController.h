@@ -31,7 +31,7 @@ namespace ExampleApp
                                                   bool shouldCenterOnFloor);
                 
                 bool m_cameraTouchEnabled;
-                Eegeo::Resources::Interiors::InteriorController& m_interiorController;
+                const Eegeo::Resources::Interiors::IInteriorController& m_interiorController;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                 Eegeo::Resources::Interiors::DefaultInteriorAnimationController& m_interiorAnimationController;
                 Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
@@ -47,8 +47,9 @@ namespace ExampleApp
                 bool m_applyFloorOffset;
                 
             public:
-                InteriorsExplorerCameraController(Eegeo::Resources::Interiors::InteriorController& interiorController,
+                InteriorsExplorerCameraController(const Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                                   Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                                  // todo dependency on concrete DefaultInteriorAnimationController - should be IInteriorViewAnimator or not at all
                                                   Eegeo::Resources::Interiors::DefaultInteriorAnimationController& interiorAnimationController,
                                                   Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                   const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,

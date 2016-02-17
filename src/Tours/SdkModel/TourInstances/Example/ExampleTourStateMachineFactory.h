@@ -27,9 +27,10 @@ namespace ExampleApp
                         ExampleTourStateMachineFactory(Camera::IToursCameraTransitionController& toursCameraTransitionController,
                                                        WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                        bool interiorsEnabled,
-                                                       Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                       Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                                        InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
-                                                       const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                                       Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                       Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                        ExampleAppMessaging::TMessageBus& messageBus);
                         ~ExampleTourStateMachineFactory();
                         
@@ -41,9 +42,10 @@ namespace ExampleApp
                         WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
                         
                         bool m_interiorsEnabled;
-                        Eegeo::Resources::Interiors::InteriorController& m_interiorController;
+                        Eegeo::Resources::Interiors::IInteriorController& m_interiorController;
                         InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& m_interiorVisibilityUpdater;
-                        const Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
+                        Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
+                        Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                         ExampleAppMessaging::TMessageBus& m_messageBus;
                     };
                 }

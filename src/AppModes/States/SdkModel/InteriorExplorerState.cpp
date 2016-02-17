@@ -2,7 +2,7 @@
 
 #include "InteriorExplorerState.h"
 #include "IAppCameraController.h"
-#include "InteriorController.h"
+#include "IInteriorController.h"
 #include "InteriorExplorerSetupState.h"
 #include "InteriorExplorerStreamState.h"
 #include "InteriorExplorerViewingState.h"
@@ -31,7 +31,8 @@ namespace ExampleApp
             namespace SdkModel
             {
                 InteriorExplorerState::InteriorExplorerState(AppCamera::SdkModel::IAppCameraController& cameraController,
-                                                             Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                             Eegeo::Resources::Interiors::IInteriorController& interiorController,
+                                                             Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                              int interiorCameraHandle,
                                                              Tours::SdkModel::ITourService& tourService,
                                                              Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
@@ -70,7 +71,7 @@ namespace ExampleApp
                                                                                                                        cameraFrustumStreamingVolume));
                     
                     m_subStates.push_back(Eegeo_NEW(InteriorsExplorer::SdkModel::States::InteriorExplorerExitingState)(*this,
-                                                                                                                       interiorController,
+                                                                                                                       interiorSelectionModel,
                                                                                                                        cameraFrustumStreamingVolume,
                                                                                                                        interiorVisibilityUpdater,
                                                                                                                        interiorsExplorerModel

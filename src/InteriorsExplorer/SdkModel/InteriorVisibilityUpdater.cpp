@@ -2,7 +2,7 @@
 
 #include "InteriorVisibilityUpdater.h"
 #include "MathFunc.h"
-#include "InteriorController.h"
+#include "IInteriorController.h"
 
 namespace ExampleApp
 {
@@ -10,7 +10,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            InteriorVisibilityUpdater::InteriorVisibilityUpdater(Eegeo::Resources::Interiors::InteriorController& interiorController,
+            InteriorVisibilityUpdater::InteriorVisibilityUpdater(Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                                                  float transitionDurationTimeSeconds)
             : m_interiorController(interiorController)
             , m_interiorShouldDisplay(false)
@@ -79,7 +79,7 @@ namespace ExampleApp
                 
                 m_interiorTransitionParameter = Eegeo::Math::Clamp01(m_interiorTransitionParameter);
                 
-                m_interiorController.SetExteriorToInteriorParam(m_interiorTransitionParameter);
+                m_interiorController.SetVisibilityParam(m_interiorTransitionParameter);
             }
         }
     }

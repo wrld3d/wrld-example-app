@@ -2,7 +2,6 @@
 
 #include "InteriorExplorerViewingState.h"
 #include "IAppCameraController.h"
-#include "InteriorController.h"
 #include "CameraFrustumStreamingVolume.h"
 #include "InteriorVisibilityUpdater.h"
 #include "InteriorsExplorerModel.h"

@@ -2,10 +2,10 @@
 
 #include "InteriorExplorerExitingState.h"
 #include "IAppCameraController.h"
-#include "InteriorController.h"
 #include "CameraFrustumStreamingVolume.h"
 #include "InteriorVisibilityUpdater.h"
 #include "InteriorsExplorerModel.h"
+#include "InteriorSelectionModel.h"
 
 namespace ExampleApp
 {
@@ -16,12 +16,12 @@ namespace ExampleApp
             namespace States
             {
                 InteriorExplorerExitingState::InteriorExplorerExitingState(AppModes::States::SdkModel::InteriorExplorerState& parentState,
-                                                                           Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                                           Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                            Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
                                                                            InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
                                                                            InteriorsExplorerModel& interiorsExplorerModel)
                 : m_parentState(parentState)
-                , m_interiorController(interiorController)
+                , m_interiorSelectionModel(interiorSelectionModel)
                 , m_cameraFrustumStreamingVolume(cameraFrustumStreamingVolume)
                 , m_interiorVisibilityUpdater(interiorVisibilityUpdater)
                 , m_interiorsExplorerModel(interiorsExplorerModel)
@@ -46,7 +46,7 @@ namespace ExampleApp
                         {
                             m_interiorsExplorerModel.ResumePreviousMapState();
                         }
-                        m_interiorController.ClearSelectedInterior();
+                        m_interiorSelectionModel.ClearSelection();
                         m_parentState.ReturnToWorldMode();
                     }
                 }

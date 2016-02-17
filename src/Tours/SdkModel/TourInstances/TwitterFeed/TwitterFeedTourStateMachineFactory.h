@@ -28,9 +28,10 @@ namespace ExampleApp
                     private:
                         Camera::IToursCameraTransitionController& m_toursCameraTransitionController;
                         WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
-                        Eegeo::Resources::Interiors::InteriorController& m_interiorController;
+                        const Eegeo::Resources::Interiors::IInteriorController& m_interiorController;
                         InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& m_interiorVisibilityUpdater;
-                        const Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
+                        Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
+                        Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                         std::string m_userId;
                         ExampleAppMessaging::TMessageBus& m_messageBus;
                         
@@ -38,9 +39,10 @@ namespace ExampleApp
                     public:
                         TwitterFeedTourStateMachineFactory(Camera::IToursCameraTransitionController& toursCameraTransitionController,
                                                            WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                                           Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                           const Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                                            InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
-                                                           const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                                           Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                           Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                            const std::string& userId,
                                                            const std::map<std::string, TweetStateData>& tweetStateDataMap,
                                                            ExampleAppMessaging::TMessageBus& messageBus);

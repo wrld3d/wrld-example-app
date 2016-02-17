@@ -15,7 +15,7 @@ namespace ExampleApp
             {
             public:
                 
-                InteriorVisibilityUpdater(Eegeo::Resources::Interiors::InteriorController& interiorController,
+                InteriorVisibilityUpdater(Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                           float interiorTransitionTimeSeconds);
                 ~InteriorVisibilityUpdater();
                 
@@ -29,7 +29,7 @@ namespace ExampleApp
                 
             private:
                 
-                Eegeo::Resources::Interiors::InteriorController& m_interiorController;
+                Eegeo::Resources::Interiors::IInteriorController& m_interiorController;
                 float m_interiorTransitionParameter;
                 float m_interiorTransitionTimeSeconds;
                 bool m_interiorShouldDisplay;

@@ -10,9 +10,9 @@
 #include "RenderCamera.h"
 #include "IWorldPinsRepository.h"
 #include "WorldPinsVisibilityMessage.h"
-#include "InteriorController.h"
+#include "IInteriorController.h"
 #include "WorldPinVisibility.h"
-#include "InteriorViewModel.h"
+#include "InteriorInteractionModel.h"
 
 namespace ExampleApp
 {
@@ -23,7 +23,8 @@ namespace ExampleApp
             WorldPinsScaleController::WorldPinsScaleController(IWorldPinsRepository& worldPinsRepository,
                                                                IWorldPinsService& worldPinsService,
                                                                ExampleAppMessaging::TMessageBus& messageBus,
-                                                               Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                               const Eegeo::Resources::Interiors::IInteriorController& interiorController,
+                                                               Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus)
                 : m_worldPinsRepository(worldPinsRepository)
                 , m_worldPinsService(worldPinsService)
@@ -34,6 +35,7 @@ namespace ExampleApp
                 , m_targetVisibilityScale(1.f)
                 , m_visibilityAnimationDuration(0.2f)
                 , m_interiorController(interiorController)
+                , m_interiorInteractionModel(interiorInteractionModel)
                 , m_sdkDomainEventBus(sdkDomainEventBus)
                 , m_visibilityMask(WorldPins::SdkModel::WorldPinVisibility::All)
                 , m_hideOutdoorPinsIndoors(true)
@@ -95,7 +97,7 @@ namespace ExampleApp
                                                          const Eegeo::Camera::RenderCamera& renderCamera)
             {
                 const bool showingInterior = m_interiorController.InteriorIsVisible();
-                const bool canShowInteriorPins = m_interiorController.GetViewModel().GetShowLabels();
+                const bool canShowInteriorPins = m_interiorInteractionModel.IsCollapsed();
                 
                 if((m_visibilityMask & worldPinItemModel.VisibilityMask()) == 0)
                 {
@@ -118,7 +120,7 @@ namespace ExampleApp
                     //hide if building and floor of pin not showing
                     const Eegeo::Resources::Interiors::InteriorsModel* pInteriorModel = NULL;
 
-                    hidePinFromInteriorData = !canShowInteriorPins || !(worldPinItemModel.GetInteriorData().floor == m_interiorController.GetCurrentFloorIndex() &&
+                    hidePinFromInteriorData = !canShowInteriorPins || !(worldPinItemModel.GetInteriorData().floor == m_interiorInteractionModel.GetSelectedFloorIndex() &&
                              m_interiorController.TryGetCurrentModel(pInteriorModel) &&
                              worldPinItemModel.GetInteriorData().building == pInteriorModel->GetId());
                 }

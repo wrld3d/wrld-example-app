@@ -21,7 +21,8 @@ namespace ExampleApp
                                              const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                              Eegeo::Helpers::IIdentityProvider& identityProvider,
                                              ExampleAppMessaging::TMessageBus& messageBus,
-                                             Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                             const Eegeo::Resources::Interiors::IInteriorController& interiorController,
+                                             Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                              ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
                                              const bool interiorsAffectedByFlattening)
             {
@@ -39,12 +40,15 @@ namespace ExampleApp
                                               *m_pWorldPinsService,
                                               messageBus,
                                               interiorController,
+                                              interiorInteractionModel,
                                               sdkDomainEventBus);
                 
                 
                 m_pWorldPinsFloorHeightController = Eegeo_NEW(WorldPinsFloorHeightController)(*m_pWorldPinsRepository,
                                                                                               pinRepository,
                                                                                               interiorController,
+                                                                                              interiorInteractionModel,
+                                                                                              environmentFlatteningService,
                                                                                               interiorsAffectedByFlattening);
 
                 m_pWorldPinsInFocusViewModel = Eegeo_NEW(View::WorldPinInFocusViewModel)(identityProvider.GetNextIdentity());

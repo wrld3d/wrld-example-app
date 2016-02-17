@@ -33,7 +33,9 @@ namespace ExampleApp
                                            ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                            ExampleApp::AppCamera::SdkModel::IAppCameraController& appCameraController,
                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                           Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                           Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                           const Eegeo::Resources::Interiors::IInteriorController& interiorController,
+                                           // todo dependency on concrete DefaultInteriorAnimationController - should be IInteriorViewAnimator or not at all
                                            Eegeo::Resources::Interiors::DefaultInteriorAnimationController& interiorViewAnimator,
                                            InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                            ExampleAppMessaging::TMessageBus& messageBus);
@@ -103,7 +105,8 @@ namespace ExampleApp
                 ExampleApp::AppModes::SdkModel::IAppModeModel& m_appModeModel;
                 ExampleApp::AppCamera::SdkModel::IAppCameraController& m_appCameraController;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
-                Eegeo::Resources::Interiors::InteriorController& m_interiorController;
+                Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
+                const Eegeo::Resources::Interiors::IInteriorController& m_interiorController;
                 Eegeo::Resources::Interiors::DefaultInteriorAnimationController& m_interiorViewAnimator;
                 InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel;
                

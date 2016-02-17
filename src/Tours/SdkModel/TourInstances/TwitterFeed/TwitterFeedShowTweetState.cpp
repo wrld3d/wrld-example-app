@@ -15,10 +15,11 @@
 #include "SpaceHelpers.h"
 #include "WorldPinVisibility.h"
 #include "WorldPinInteriorData.h"
-#include "InteriorController.h"
+#include "IInteriorController.h"
 #include "InteriorVisibilityUpdater.h"
 #include "InteriorSelectionModel.h"
 #include "SearchVendorNames.h"
+#include "InteriorInteractionModel.h"
 
 namespace ExampleApp
 {
@@ -35,9 +36,10 @@ namespace ExampleApp
                                                                          WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                                          bool isInterior,
                                                                          WorldPins::SdkModel::WorldPinInteriorData& worldPinInteriorData,
-                                                                         Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                                         const Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                                                          InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
-                                                                         const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                                                         Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                                         Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                          const TweetStateData& tweetStateData,
                                                                          const Eegeo::Space::LatLong& pinLocation,
                                                                          const std::string& placeName,
@@ -60,6 +62,7 @@ namespace ExampleApp
                     , m_worldPinInteriorData(worldPinInteriorData)
                     , m_interiorController(interiorController)
                     , m_interiorVisibilityUpdater(interiorVisibilityUpdater)
+                    , m_interiorInteractionModel(interiorInteractionModel)
                     , m_interiorSelectionModel(interiorSelectionModel)
                     , m_pPinModel(NULL)
                     , m_cameraTransitionComplete(false)
@@ -89,12 +92,12 @@ namespace ExampleApp
                         
                         if(m_isInterior && m_interiorSelectionModel.GetSelectedInteriorId() != m_worldPinInteriorData.building)
                         {
-                            m_interiorController.SetSelectedInterior(m_worldPinInteriorData.building);
+                            m_interiorSelectionModel.SelectInteriorId(m_worldPinInteriorData.building);
                             m_interiorVisibilityUpdater.SetInteriorShouldDisplay(false);
                         }
                         else if (!m_isInterior)
                         {
-                            m_interiorController.ClearSelectedInterior();
+                            m_interiorSelectionModel.ClearSelection();
                             m_interiorVisibilityUpdater.SetInteriorShouldDisplay(false);
                         }
                     }
@@ -148,7 +151,7 @@ namespace ExampleApp
                         else if(!m_interiorTransitionComplete && m_isInterior && m_interiorController.InteriorInScene())
                         {
                             m_interiorTransitionComplete = true;
-                            m_interiorController.SetCurrentFloor(m_worldPinInteriorData.floor);
+                            m_interiorInteractionModel.SetSelectedFloorIndex(m_worldPinInteriorData.floor);
                         }
                     }
                     

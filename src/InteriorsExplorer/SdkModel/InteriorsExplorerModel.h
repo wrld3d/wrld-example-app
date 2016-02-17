@@ -25,9 +25,7 @@ namespace ExampleApp
             class InteriorsExplorerModel : private Eegeo::NonCopyable
             {
             public:
-                
-                InteriorsExplorerModel(Eegeo::Resources::Interiors::InteriorController& controller,
-                                       Eegeo::Resources::Interiors::DefaultInteriorAnimationController& animationController,
+                InteriorsExplorerModel(Eegeo::Resources::Interiors::IInteriorController& controller,
                                        Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                        Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                        VisualMap::SdkModel::IVisualMapService& visualMapService,
@@ -51,9 +49,7 @@ namespace ExampleApp
 
             private:
                 
-                void OnControllerStateChanged();
-                void OnControllerVisibilityChanged();
-                void OnControllerFloorChanged();
+                void HandleInteractionModelChanged();
                 
                 void OnExit(const InteriorsExplorerExitMessage& message);
                 void OnSelectFloor(const InteriorsExplorerSelectFloorMessage& message);
@@ -61,8 +57,7 @@ namespace ExampleApp
                 
                 void PublishInteriorExplorerStateChange();
 
-                Eegeo::Resources::Interiors::InteriorController& m_controller;
-                Eegeo::Resources::Interiors::DefaultInteriorAnimationController& m_animationController;
+                Eegeo::Resources::Interiors::IInteriorController& m_controller;
                 Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                 VisualMap::SdkModel::IVisualMapService& m_visualMapService;
@@ -71,9 +66,7 @@ namespace ExampleApp
                 ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkModelDomainEventBus;
                 Metrics::IMetricsService& m_metricsService;
                 
-                Eegeo::Helpers::TCallback0<InteriorsExplorerModel> m_controllerStateChangedCallback;
-                Eegeo::Helpers::TCallback0<InteriorsExplorerModel> m_controllerVisibilityChangedCallback;
-                Eegeo::Helpers::TCallback0<InteriorsExplorerModel> m_controllerFloorChangedCallback;
+                Eegeo::Helpers::TCallback0<InteriorsExplorerModel> m_interactionModelChangedCallback;
                 
                 Eegeo::Helpers::TCallback1<InteriorsExplorerModel, const InteriorsExplorerExitMessage&> m_exitCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerModel, const InteriorsExplorerSelectFloorMessage&> m_selectFloorCallback;
