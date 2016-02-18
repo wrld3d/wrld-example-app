@@ -14,6 +14,8 @@
 #include "GlobeCameraTouchSettings.h"
 #include "GlobeCameraController.h"
 #include "GpsGlobeCameraComponentConfiguration.h"
+#include "InteriorsCameraController.h"
+#include "InteriorsCameraControllerFactory.h"
 #include "ITextureFileLoader.h"
 #include "IWeatherMenuModule.h"
 #include "CompassUpdateController.h"
@@ -59,7 +61,6 @@
 #include "InteriorsPresentationModule.h"
 #include "InteriorsModelModule.h"
 #include "InteriorsExplorerModule.h"
-#include "InteriorsExplorerCameraController.h"
 #include "InteriorsEntitiesPinsModule.h"
 #include "InteriorsEntitiesPinsController.h"
 #include "PinsModule.h"
@@ -80,6 +81,7 @@
 #include "AppCameraController.h"
 #include "AppModeStatesFactory.h"
 #include "AppGlobeCameraWrapper.h"
+#include "AppInteriorCameraWrapper.h"
 #include "NativeUIFactories.h"
 #include "UserInteractionModule.h"
 #include "UserInteractionModel.h"
@@ -562,6 +564,12 @@ namespace ExampleApp
         Eegeo::Camera::GlobeCamera::GlobeCameraControllerFactory cameraControllerFactory(m_pWorld->GetTerrainModelModule().GetTerrainHeightProvider(),
                                                                                          mapModule.GetEnvironmentFlatteningService(),
                                                                                          mapModule.GetResourceCeilingProvider());
+        Eegeo::Resources::Interiors::InteriorsCameraControllerFactory interiorsCameraControllerFactory(cameraControllerFactory,
+                                                                                                       interiorsPresentationModule.GetController(),
+                                                                                                       interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                                                       interiorsPresentationModule.GetInteriorFloorAnimator(),
+                                                                                                       interiorsPresentationModule.GetInteriorInteractionModel(),
+                                                                                                       mapModule.GetEnvironmentFlatteningService());
         
         Eegeo::Modules::Map::StreamingModule& streamingModule = world.GetStreamingModule();
         m_pWorldAreaLoaderModule = Eegeo_NEW(WorldAreaLoader::SdkModel::WorldAreaLoaderModule)(streamingModule.GetPrecachingService());
@@ -580,7 +588,7 @@ namespace ExampleApp
                                                                                                      m_pWorldPinsModule->GetWorldPinsService(),
                                                                                                      mapModule.GetEnvironmentFlatteningService(),
                                                                                                      m_pVisualMapModule->GetVisualMapService(),
-                                                                                                     cameraControllerFactory,
+                                                                                                     interiorsCameraControllerFactory,
                                                                                                      m_screenProperties,
                                                                                                      m_identityProvider,
                                                                                                      m_messageBus,
@@ -588,6 +596,8 @@ namespace ExampleApp
                                                                                                      m_metricsService,
                                                                                                      initialExperienceModel,
                                                                                                      interiorsAffectedByFlattening);
+        
+        m_pInteriorCameraWrapper = Eegeo_NEW(AppCamera::SdkModel::AppInteriorCameraWrapper)(m_pInteriorsExplorerModule->GetInteriorsCameraController());
         
         InitialiseToursModules(mapModule, world, interiorsAffectedByFlattening);
         
@@ -628,7 +638,7 @@ namespace ExampleApp
         AppModes::States::SdkModel::AppModeStatesFactory appModeStatesFactory(m_pAppCameraModule->GetController(),
                                                                               interiorsPresentationModule.GetController(),
                                                                               *m_pGlobeCameraWrapper,
-                                                                              m_pInteriorsExplorerModule->GetInteriorsCameraController(),
+                                                                              *m_pInteriorCameraWrapper,
                                                                               m_pToursModule->GetCameraController(),
                                                                               *m_pStreamingVolume,
                                                                               m_pInteriorsExplorerModule->GetInteriorVisibilityUpdater(),
@@ -691,6 +701,8 @@ namespace ExampleApp
         Eegeo_DELETE m_pWeatherMenuModule;
         
         Eegeo_DELETE m_pGpsMarkerModule;
+        
+        Eegeo_DELETE m_pInteriorCameraWrapper;
 
 		Eegeo_DELETE m_pInteriorsExplorerModule;
 
@@ -1044,7 +1056,7 @@ namespace ExampleApp
 
         m_pGlobeCameraController->UpdateScreenProperties(m_screenProperties);
 
-		m_pInteriorsExplorerModule->GetInteriorsCameraController().GetGlobeCameraController().UpdateScreenProperties(m_screenProperties);
+		m_pInteriorsExplorerModule->GetInteriorsCameraController().UpdateScreenProperties(m_screenProperties);
     }
 
     void MobileExampleApp::InitialiseApplicationViewState()

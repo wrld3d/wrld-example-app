@@ -10,6 +10,7 @@ namespace ExampleApp
             class IAppCameraController;
             class IAppCamera;
             class AppGlobeCameraWrapper;
+            class AppInteriorCameraWrapper;
         }
     }
 }

@@ -31,7 +31,7 @@ namespace ExampleApp
                     AppCamera::SdkModel::IAppCameraController& m_appCameraController;
                     Eegeo::Resources::Interiors::IInteriorController& m_interiorController;
                     AppCamera::SdkModel::AppGlobeCameraWrapper& m_worldCameraController;
-                    InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& m_interiorCameraController;
+                    AppCamera::SdkModel::AppInteriorCameraWrapper& m_interiorCameraController;
                     Tours::SdkModel::Camera::IToursCameraController& m_toursCameraController;
                     Eegeo::Streaming::CameraFrustumStreamingVolume& m_cameraFrustumStreamingVolume;
                     InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& m_interiorVisibilityUpdate;
@@ -50,7 +50,7 @@ namespace ExampleApp
                     AppModeStatesFactory(AppCamera::SdkModel::IAppCameraController& appCameraController,
                                          Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                          AppCamera::SdkModel::AppGlobeCameraWrapper& worldCameraController,
-                                         InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorCameraController,
+                                         AppCamera::SdkModel::AppInteriorCameraWrapper& interiorCameraController,
                                          Tours::SdkModel::Camera::IToursCameraController& toursCameraController,
                                          Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
                                          InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,

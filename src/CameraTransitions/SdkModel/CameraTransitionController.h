@@ -27,7 +27,7 @@ namespace ExampleApp
             public:
 
                 CameraTransitionController(Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
-                                           ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController,
+                                           Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
                                            Eegeo::Location::NavigationService& navigationService,
                                            Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
                                            ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
@@ -99,7 +99,7 @@ namespace ExampleApp
                 void StartQueuedTransition();
                 
                 Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_cameraController;
-                ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& m_interiorsCameraController;
+                Eegeo::Resources::Interiors::InteriorsCameraController& m_interiorsCameraController;
                 Eegeo::Location::NavigationService& m_navigationService;
                 Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& m_terrainHeightProvider;
                 ExampleApp::AppModes::SdkModel::IAppModeModel& m_appModeModel;

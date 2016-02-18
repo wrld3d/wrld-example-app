@@ -9,7 +9,7 @@
 #include "InteriorExplorerExitingState.h"
 #include "InteriorSelectionModel.h"
 #include "IAppModeModel.h"
-#include "InteriorsExplorerCameraController.h"
+#include "InteriorsCameraController.h"
 #include "GpsGlobeCameraController.h"
 #include "GlobeCameraController.h"
 #include "CameraHelpers.h"
@@ -41,7 +41,7 @@ namespace ExampleApp
                                                              InteriorsExplorer::SdkModel::InteriorExplorerUserInteractionModel& interiorExplorerUserInteractionModel,
                                                              AppModes::SdkModel::IAppModeModel& appModeModel,
                                                              Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& worldCameraController,
-                                                             ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController,
+                                                             Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
                                                              Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                                              MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel)
                 : m_tourService(tourService)

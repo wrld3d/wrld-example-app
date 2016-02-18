@@ -25,7 +25,7 @@ namespace ExampleApp
                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                            Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
                                            WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                           InteriorsExplorerCameraController& cameraController,
+                                           Eegeo::Resources::Interiors::InteriorsCameraController& cameraController,
                                            ExampleAppMessaging::TMessageBus& messageBus,
                                            const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel);
                 ~InteriorWorldPinController();
@@ -42,7 +42,7 @@ namespace ExampleApp
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                 Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& m_markerRepository;
                 WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
-                InteriorsExplorerCameraController& m_cameraController;
+                Eegeo::Resources::Interiors::InteriorsCameraController& m_cameraController;
                 std::map<std::string, WorldPins::SdkModel::WorldPinItemModel*> m_interiorIdToWorldPinMap;
                 std::map<std::string, WorldPins::SdkModel::WorldPinItemModel*> m_deferedRemovalMap;
                 ExampleAppMessaging::TMessageBus& m_messageBus;

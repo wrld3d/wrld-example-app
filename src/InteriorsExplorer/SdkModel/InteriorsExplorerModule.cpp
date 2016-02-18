@@ -1,15 +1,13 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "InteriorsExplorerModule.h"
-#include "InteriorsExplorerCameraController.h"
 #include "InteriorsExplorerViewModel.h"
 #include "InteriorsExplorerModel.h"
 #include "InteriorWorldPinController.h"
 #include "GlobeCameraController.h"
-#include "GlobeCameraControllerFactory.h"
+#include "InteriorsCameraControllerFactory.h"
+#include "InteriorsCameraController.h"
 #include "GlobeCameraTouchController.h"
-#include "GlobeCameraTouchControllerConfiguration.h"
-#include "GlobeCameraControllerConfiguration.h"
 #include "InteriorVisibilityUpdater.h"
 #include "InteriorExplorerUserInteractionModel.h"
 #include "IInitialExperienceModel.h"
@@ -28,7 +26,7 @@ namespace ExampleApp
                                                              WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                              const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                              VisualMap::SdkModel::IVisualMapService& visualMapService,
-                                                             Eegeo::Camera::GlobeCamera::GlobeCameraControllerFactory& globeCameraControllerFactory,
+                                                             Eegeo::Resources::Interiors::InteriorsCameraControllerFactory& interiorCameraControllerFactory,
                                                              const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                              Eegeo::Helpers::IIdentityProvider& identityProvider,
                                                              ExampleAppMessaging::TMessageBus& messageBus,
@@ -42,31 +40,19 @@ namespace ExampleApp
                 const float transitionTime = 0.5f;
                 m_pVisibilityUpdater = Eegeo_NEW(InteriorVisibilityUpdater)(interiorController, transitionTime);
                 
-                Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration touchConfig = Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration::CreateDefault();
-                Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration globeCameraConfig = Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration::CreateDefault(false);
+                m_pGlobeCameraTouchController = interiorCameraControllerFactory.CreateTouchController(screenProperties);
                 
-                globeCameraConfig.terrainFollowingEnabled = false;
-                globeCameraConfig.zoomAltitudeLow = 50.0f;
-                globeCameraConfig.maxAltitude = 1700.f;
-                globeCameraConfig.computeNearFarPlanes = false;
-                // near and far multipliers aproximated from cos( 65 ) so should allow for tilt + fov = 65
-                globeCameraConfig.nearPlane = 0.4f * globeCameraConfig.zoomAltitudeLow;
-                globeCameraConfig.farPlane = 2.5f * globeCameraConfig.maxAltitude;
+                m_pGlobeCameraController = interiorCameraControllerFactory.CreateInteriorGlobeCameraController(false,
+                                                                                                               *m_pGlobeCameraTouchController,
+                                                                                                               screenProperties);
                 
-                m_pGlobeCameraTouchController = globeCameraControllerFactory.CreateTouchController(touchConfig, screenProperties);
+                Eegeo::Resources::Interiors::InteriorsCameraConfiguration cameraConfig = Eegeo::Resources::Interiors::InteriorsCameraController::CreateDefaultConfig();
                 
-                m_pGlobeCameraController = globeCameraControllerFactory.CreateCameraController(globeCameraConfig,
-                                                                                               *m_pGlobeCameraTouchController,
-                                                                                               screenProperties);
+                m_pInteriorsCameraController = interiorCameraControllerFactory.CreateInteriorsCameraController(cameraConfig,
+                                                                                                               *m_pGlobeCameraTouchController,
+                                                                                                               *m_pGlobeCameraController,
+                                                                                                               interiorsAffectedByFlattening);
                 
-                m_pInteriorsCameraController = Eegeo_NEW(InteriorsExplorerCameraController)(interiorController,
-                                                                                            interiorSelectionModel,
-                                                                                            interiorFloorAnimator,
-                                                                                            interiorInteractionModel,
-                                                                                            environmentFlatteningService,
-                                                                                            *m_pGlobeCameraTouchController,
-                                                                                            *m_pGlobeCameraController,
-                                                                                            interiorsAffectedByFlattening);
                 
                 m_pWorldPinController = Eegeo_NEW(InteriorWorldPinController)(interiorController,
                                                                               interiorSelectionModel,
@@ -114,7 +100,7 @@ namespace ExampleApp
                 return *m_pVisibilityUpdater;
             }
             
-            InteriorsExplorerCameraController& InteriorsExplorerModule::GetInteriorsCameraController() const
+            Eegeo::Resources::Interiors::InteriorsCameraController& InteriorsExplorerModule::GetInteriorsCameraController() const
             {
                 return *m_pInteriorsCameraController;
             }

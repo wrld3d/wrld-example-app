@@ -3,12 +3,11 @@
 #include "TransitionToInteriorStage.h"
 #include "IInteriorController.h"
 #include "InteriorSelectionModel.h"
-#include "InteriorsExplorerCameraController.h"
 #include "InteriorId.h"
 #include "InteriorInteractionModel.h"
 #include "IInteriorController.h"
 #include "InteriorSelectionModel.h"
-#include "InteriorsExplorerCameraController.h"
+#include "InteriorsCameraController.h"
 
 namespace ExampleApp
 {
@@ -19,7 +18,7 @@ namespace ExampleApp
             TransitionToInteriorStage::TransitionToInteriorStage(const Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                                                  Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                  Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                                 InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& cameraController,
+                                                                 Eegeo::Resources::Interiors::InteriorsCameraController& cameraController,
                                                                  const Eegeo::dv3& newInterestPoint,
                                                                  float newDistanceToInterest,
                                                                  const Eegeo::Resources::Interiors::InteriorId& interiorId,

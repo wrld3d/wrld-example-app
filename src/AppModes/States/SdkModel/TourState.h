@@ -39,7 +39,7 @@ namespace ExampleApp
                     Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                     
                     Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_worldCameraController;
-                    ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& m_interiorsCameraController;
+                    Eegeo::Resources::Interiors::InteriorsCameraController& m_interiorsCameraController;
                     
                     MyPinCreation::SdkModel::IMyPinCreationModel& m_myPinCreationModel;
                     
@@ -55,7 +55,8 @@ namespace ExampleApp
                               Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                               AppModes::SdkModel::IAppModeModel& appModeModel,
                               Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& worldCameraController,
-                              InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController,
+                              Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
+                              InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                               MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
                               VisualMap::SdkModel::IVisualMapService& visualMapService);
                     

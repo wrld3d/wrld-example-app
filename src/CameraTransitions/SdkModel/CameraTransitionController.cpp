@@ -9,7 +9,7 @@
 #include "Quaternion.h"
 #include "NavigationService.h"
 #include "TerrainHeightProvider.h"
-#include "InteriorsExplorerCameraController.h"
+#include "InteriorsCameraController.h"
 #include "IAppModeModel.h"
 #include "InteriorSelectionModel.h"
 #include "TransitionToWorldPointStage.h"
@@ -25,7 +25,7 @@ namespace ExampleApp
         namespace SdkModel
         {
             CameraTransitionController::CameraTransitionController(Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
-                                                                   ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController,
+                                                                   Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
                                                                    Eegeo::Location::NavigationService& navigationService,
                                                                    Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
                                                                    ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,

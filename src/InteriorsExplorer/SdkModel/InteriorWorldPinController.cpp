@@ -24,7 +24,7 @@ namespace ExampleApp
                                                                    Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                    Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
                                                                    WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                                                   InteriorsExplorerCameraController& cameraController,
+                                                                   Eegeo::Resources::Interiors::InteriorsCameraController& cameraController,
                                                                    ExampleAppMessaging::TMessageBus& messageBus,
                                                                    const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel)
             : m_interiorController(interiorController)

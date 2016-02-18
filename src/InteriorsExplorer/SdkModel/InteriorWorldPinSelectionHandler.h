@@ -6,7 +6,7 @@
 #include "InteriorsExplorer.h"
 #include "IWorldPinSelectionHandler.h"
 #include "InteriorSelectionModel.h"
-#include "InteriorsExplorerCameraController.h"
+#include "InteriorsCameraController.h"
 #include "InteriorMarkerModel.h"
 #include "InteriorWorldPinController.h"
 
@@ -22,7 +22,7 @@ namespace ExampleApp
                 
                 InteriorWorldPinSelectionHandler(const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                                  Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                 InteriorsExplorerCameraController& cameraController,
+                                                 Eegeo::Resources::Interiors::InteriorsCameraController& cameraController,
                                                  const Eegeo::dv3& ecefInterestPoint,
                                                  const InteriorWorldPinController& pinController)
                 : m_interiorId(interiorId)
@@ -52,7 +52,7 @@ namespace ExampleApp
                 
                 Eegeo::Resources::Interiors::InteriorId m_interiorId;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
-                InteriorsExplorerCameraController& m_cameraController;
+                Eegeo::Resources::Interiors::InteriorsCameraController& m_cameraController;
                 const Eegeo::dv3 m_ecefInterestPoint;
                 const InteriorWorldPinController& m_pinController;
             };

@@ -6,9 +6,8 @@
 #include "InteriorExplorerState.h"
 #include "TourState.h"
 #include "AppGlobeCameraWrapper.h"
-#include "InteriorsExplorerCameraController.h"
+#include "AppInteriorCameraWrapper.h"
 #include "IToursCameraController.h"
-#include "AppGlobeCameraWrapper.h"
 
 namespace ExampleApp
 {
@@ -21,7 +20,7 @@ namespace ExampleApp
                 AppModeStatesFactory::AppModeStatesFactory(AppCamera::SdkModel::IAppCameraController& appCameraController,
                                                            Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                                            AppCamera::SdkModel::AppGlobeCameraWrapper& worldCameraController,
-                                                           InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorCameraController,
+                                                           AppCamera::SdkModel::AppInteriorCameraWrapper& interiorCameraController,
                                                            Tours::SdkModel::Camera::IToursCameraController& toursCameraController,
                                                            Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
                                                            InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdate,
@@ -65,7 +64,7 @@ namespace ExampleApp
                                                                              m_tourService,
                                                                              m_interiorSelectionModel,
                                                                              m_appModeModel,
-                                                                             m_interiorCameraController));
+                                                                             m_interiorCameraController.GetInteriorCameraController()));
                     
                     states.push_back(Eegeo_NEW(States::SdkModel::InteriorExplorerState)(m_appCameraController,
                                                                                         m_interiorController,
@@ -78,7 +77,7 @@ namespace ExampleApp
                                                                                         m_interiorExplorerUserInteractionModel,
                                                                                         m_appModeModel,
                                                                                         m_worldCameraController.GetGlobeCameraController(),
-                                                                                        m_interiorCameraController,
+                                                                                        m_interiorCameraController.GetInteriorCameraController(),
                                                                                         m_nativeUIFactories,
                                                                                         m_myPinCreationModel));
                     
@@ -88,7 +87,8 @@ namespace ExampleApp
                                                                             m_interiorSelectionModel,
                                                                             m_appModeModel,
                                                                             m_worldCameraController.GetGlobeCameraController(),
-                                                                            m_interiorCameraController,
+                                                                            m_interiorCameraController.GetInteriorCameraController(),
+                                                                            m_interiorsExplorerModel,
                                                                             m_myPinCreationModel,
                                                                             m_visualMapService));
 

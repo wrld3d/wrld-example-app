@@ -21,7 +21,7 @@ namespace ExampleApp
                 TransitionToInteriorStage(const Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                           Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                           Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                          InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& cameraController,
+                                          Eegeo::Resources::Interiors::InteriorsCameraController& cameraController,
                                           const Eegeo::dv3& newInterestPoint,
                                           float newDistanceToInterest,
                                           const Eegeo::Resources::Interiors::InteriorId& interiorId,
@@ -38,7 +38,7 @@ namespace ExampleApp
                 const Eegeo::Resources::Interiors::IInteriorController& m_interiorController;
                 Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
-                InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& m_cameraController;
+                Eegeo::Resources::Interiors::InteriorsCameraController& m_cameraController;
                 
                 Eegeo::dv3 m_newInterestPoint;
                 Eegeo::dv3 m_startInterestPoint;
