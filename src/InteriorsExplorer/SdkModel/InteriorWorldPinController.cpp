@@ -20,15 +20,13 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            InteriorWorldPinController::InteriorWorldPinController(const Eegeo::Resources::Interiors::IInteriorController& interiorController,
-                                                                   Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+            InteriorWorldPinController::InteriorWorldPinController(Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                    Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
                                                                    WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                                    Eegeo::Resources::Interiors::InteriorsCameraController& cameraController,
                                                                    ExampleAppMessaging::TMessageBus& messageBus,
                                                                    const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel)
-            : m_interiorController(interiorController)
-            , m_interiorSelectionModel(interiorSelectionModel)
+            : m_interiorSelectionModel(interiorSelectionModel)
             , m_markerRepository(markerRepository)
             , m_worldPinsService(worldPinsService)
             , m_cameraController(cameraController)
@@ -67,7 +65,7 @@ namespace ExampleApp
             {
                 const bool cameraUnlocked = m_initialExperienceModel.LockedCameraStepsCompleted();
                 return !m_menuIsDragging && cameraUnlocked &&
-                    m_interiorController.GetCurrentState() == Eegeo::Resources::Interiors::InteriorViewState::NoInteriorSelected &&
+                    !m_interiorSelectionModel.IsInteriorSelected() &&
                     m_deferedRemovalMap.find(interiorId) == m_deferedRemovalMap.end();
             }
             

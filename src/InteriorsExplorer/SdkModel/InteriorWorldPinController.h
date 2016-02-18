@@ -21,8 +21,7 @@ namespace ExampleApp
             {
             public:
                 
-                InteriorWorldPinController(const Eegeo::Resources::Interiors::IInteriorController& interiorController,
-                                           Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                InteriorWorldPinController(Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                            Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
                                            WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                            Eegeo::Resources::Interiors::InteriorsCameraController& cameraController,
@@ -37,8 +36,7 @@ namespace ExampleApp
                 void SetInitialExperienceComplete();
                 
             private:
-                
-                const Eegeo::Resources::Interiors::IInteriorController& m_interiorController;
+
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                 Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& m_markerRepository;
                 WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;

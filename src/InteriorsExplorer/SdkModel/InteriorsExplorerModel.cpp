@@ -40,27 +40,25 @@ namespace ExampleApp
                 }
             }
             
-            InteriorsExplorerModel::InteriorsExplorerModel(Eegeo::Resources::Interiors::IInteriorController& controller,
-                                                           Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+            InteriorsExplorerModel::InteriorsExplorerModel(Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                            VisualMap::SdkModel::IVisualMapService& visualMapService,
                                                            ExampleAppMessaging::TMessageBus& messageBus,
                                                            ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                                            Metrics::IMetricsService& metricsService)
-            : m_controller(controller)
-            , m_interiorInteractionModel(interiorInteractionModel)
+            : m_interiorInteractionModel(interiorInteractionModel)
             , m_interiorSelectionModel(interiorSelectionModel)
             , m_visualMapService(visualMapService)
             , m_messageBus(messageBus)
             , m_sdkModelDomainEventBus(sdkModelDomainEventBus)
             , m_metricsService(metricsService)
-            , m_interactionModelChangedCallback(this, &InteriorsExplorerModel::HandleInteractionModelChanged)
+            , m_interactionModelStateChangedCallback(this, &InteriorsExplorerModel::HandleInteractionModelStateChanged)
             , m_exitCallback(this, &InteriorsExplorerModel::OnExit)
             , m_selectFloorCallback(this, &InteriorsExplorerModel::OnSelectFloor)
             , m_floorSelectionDraggedCallback(this, &InteriorsExplorerModel::OnFloorSelectionDragged)
             , m_interiorExplorerEnabled(false)
             {
-                m_interiorInteractionModel.RegisterModelChangedCallback(m_interactionModelChangedCallback);
+                m_interiorInteractionModel.RegisterInteractionStateChangedCallback(m_interactionModelStateChangedCallback);
                 
                 m_messageBus.SubscribeNative(m_exitCallback);
                 m_messageBus.SubscribeNative(m_selectFloorCallback);
@@ -73,7 +71,7 @@ namespace ExampleApp
                 m_messageBus.UnsubscribeNative(m_selectFloorCallback);
                 m_messageBus.UnsubscribeNative(m_exitCallback);
 
-                m_interiorInteractionModel.UnregisterModelChangedCallback(m_interactionModelChangedCallback);
+                m_interiorInteractionModel.UnregisterInteractionStateChangedCallback(m_interactionModelStateChangedCallback);
             }
 
             void InteriorsExplorerModel::ChangeToInteriorMapState()
@@ -95,7 +93,7 @@ namespace ExampleApp
             
             void InteriorsExplorerModel::ShowInteriorExplorer(bool fromAnotherInterior)
             {
-                Eegeo_ASSERT(m_controller.InteriorInScene(), "Can't show interior explorer without a selected and streamed interior");
+                Eegeo_ASSERT(m_interiorInteractionModel.HasInteriorModel(), "Can't show interior explorer without a selected and streamed interior");
                 
                 if(!m_interiorExplorerEnabled)
                 {
@@ -126,15 +124,20 @@ namespace ExampleApp
             }
             
            
-            void InteriorsExplorerModel::HandleInteractionModelChanged()
+            void InteriorsExplorerModel::HandleInteractionModelStateChanged()
             {
-                if(!m_interiorExplorerEnabled || !m_controller.InteriorIsVisible())
+                if (!m_interiorExplorerEnabled)
                 {
                     return;
                 }
                 
-                const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = NULL;
-                Eegeo_ASSERT(m_controller.TryGetCurrentFloorModel(pFloorModel), "Could not fetch current floor model");
+                if (!m_interiorInteractionModel.HasInteriorModel())
+                {
+                    return;
+                }
+                
+                const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = m_interiorInteractionModel.GetSelectedFloorModel();
+                Eegeo_ASSERT(pFloorModel, "Could not fetch current floor model");
                 
                 m_messageBus.Publish(InteriorsExplorerFloorSelectedMessage(m_interiorInteractionModel.GetSelectedFloorIndex(), pFloorModel->GetReadableFloorName()));
             }
@@ -159,8 +162,8 @@ namespace ExampleApp
             
             void InteriorsExplorerModel::OnFloorSelectionDragged(const InteriorsExplorerFloorSelectionDraggedMessage &message)
             {
-                const Eegeo::Resources::Interiors::InteriorsModel* pModel = NULL;
-                Eegeo_ASSERT(m_controller.TryGetCurrentModel(pModel), "Could not fetch current model");
+                const Eegeo::Resources::Interiors::InteriorsModel* pModel = m_interiorInteractionModel.GetInteriorModel();
+                Eegeo_ASSERT(pModel, "Could not fetch current model");
                 
                 const float dragParameter = message.GetDragParam();
                 const float floorParam = dragParameter * (pModel->GetFloorCount()-1);
@@ -179,7 +182,7 @@ namespace ExampleApp
 
             void InteriorsExplorerModel::SelectFloor(int floor)
             {
-                if(!m_controller.InteriorIsVisible())
+                if (!m_interiorInteractionModel.HasInteriorModel())
                 {
                     return;
                 }
@@ -197,32 +200,29 @@ namespace ExampleApp
                 
                 m_interiorInteractionModel.SetSelectedFloorIndex(floor);
                 
-                const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = NULL;
-                Eegeo_ASSERT(m_controller.TryGetCurrentFloorModel(pFloorModel), "Could not fetch current floor model");
+                const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = m_interiorInteractionModel.GetSelectedFloorModel();
+                Eegeo_ASSERT(pFloorModel, "Could not fetch current floor model");
 
                 m_metricsService.SetEvent(MetricEventInteriorFloorSelected, "InteriorId", m_interiorSelectionModel.GetSelectedInteriorId().Value(), "FloorName", pFloorModel->GetFloorName());
             }
 
             void InteriorsExplorerModel::PublishInteriorExplorerStateChange()
             {
-                
-                int floor = m_controller.InteriorInScene() ? m_interiorInteractionModel.GetSelectedFloorIndex() : 0;
-                
                 std::string floorName;
                 std::vector<std::string> floorShortNames;
+                int floor = 0;
                 
-                if (m_controller.InteriorInScene())
+                if (m_interiorInteractionModel.HasInteriorModel())
                 {
-                    const Eegeo::Resources::Interiors::InteriorsModel* pModel = NULL;
-                    m_controller.TryGetCurrentModel(pModel);
-                    
+                    floor = m_interiorInteractionModel.GetSelectedFloorIndex();
+                    const Eegeo::Resources::Interiors::InteriorsModel* pModel = m_interiorInteractionModel.GetInteriorModel();
                     Eegeo_ASSERT(pModel != NULL, "Couldn't get current model for interior");
                     const Eegeo::Resources::Interiors::TFloorModelVector& floorModels = pModel->GetFloors();
                     
                     std::transform(floorModels.begin(), floorModels.end(), std::back_inserter(floorShortNames), ToFloorName);
                     
-                    const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = NULL;
-                    Eegeo_ASSERT(m_controller.TryGetCurrentFloorModel(pFloorModel), "Could not fetch current floor model");
+                    const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = m_interiorInteractionModel.GetSelectedFloorModel();
+                    Eegeo_ASSERT(pFloorModel, "Could not fetch current floor model");
                     floorName = pFloorModel->GetReadableFloorName();
                 }
                 

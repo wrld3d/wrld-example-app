@@ -54,16 +54,14 @@ namespace ExampleApp
                                                                                                                interiorsAffectedByFlattening);
                 
                 
-                m_pWorldPinController = Eegeo_NEW(InteriorWorldPinController)(interiorController,
-                                                                              interiorSelectionModel,
+                m_pWorldPinController = Eegeo_NEW(InteriorWorldPinController)(interiorSelectionModel,
                                                                               markerRepository,
                                                                               worldPinsService,
                                                                               *m_pInteriorsCameraController,
                                                                               messageBus,
                                                                               initialExperienceModel);
                 
-                m_pModel = Eegeo_NEW(InteriorsExplorerModel)(interiorController,
-                                                             interiorInteractionModel,
+                m_pModel = Eegeo_NEW(InteriorsExplorerModel)(interiorInteractionModel,
                                                              interiorSelectionModel,
                                                              visualMapService,
                                                              messageBus,
