@@ -184,7 +184,7 @@ namespace ExampleApp
                 
                 int currentFloorNumber = floorModel.GetFloorNumber();
 
-                const bool canShowPins = m_interiorInteractionModel.IsCollapsed();
+                const bool canShowPins = m_interiorInteractionModel.IsCollapsed() && m_interiorController.IsFadingInOrVisible();
                 
                 for (std::map<int, float>::iterator it = m_floorToScaleMap.begin(); it != m_floorToScaleMap.end(); ++it)
                 {
