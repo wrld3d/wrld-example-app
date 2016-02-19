@@ -118,11 +118,10 @@ namespace ExampleApp
                 if(showingInterior && worldPinItemModel.IsInterior())
                 {
                     //hide if building and floor of pin not showing
-                    const Eegeo::Resources::Interiors::InteriorsModel* pInteriorModel = NULL;
+                    const bool isSameBuilding = m_interiorInteractionModel.HasInteriorModel() ? (m_interiorInteractionModel.GetInteriorModel()->GetId() == worldPinItemModel.GetInteriorData().building) : false;
+                    const bool isSameFloor = worldPinItemModel.GetInteriorData().floor == m_interiorInteractionModel.GetSelectedFloorIndex();
 
-                    hidePinFromInteriorData = !canShowInteriorPins || !(worldPinItemModel.GetInteriorData().floor == m_interiorInteractionModel.GetSelectedFloorIndex() &&
-                             m_interiorController.TryGetCurrentModel(pInteriorModel) &&
-                             worldPinItemModel.GetInteriorData().building == pInteriorModel->GetId());
+                    hidePinFromInteriorData = !canShowInteriorPins || !isSameBuilding || !isSameFloor;
                 }
                 
                 // hide when close to edge of screen

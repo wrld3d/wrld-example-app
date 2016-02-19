@@ -47,7 +47,7 @@ namespace ExampleApp
             
             void TransitionToInteriorPointStage::Start()
             {
-                Eegeo_ASSERT(m_interiorController.InteriorInScene(), "Must be inside interior to start this transition");
+                Eegeo_ASSERT(m_interiorInteractionModel.HasInteriorModel(), "Must be inside interior to start this transition");
                 m_startCameraInterestAltitude = m_cameraController.GetFloorOffsetHeight();
                 m_endCameraInterestAltitude = m_startCameraInterestAltitude;
                 m_interiorSelectionModel.ClearSelection();
@@ -69,7 +69,7 @@ namespace ExampleApp
                     return;
                 }
                 
-                if(!m_initialisedNextInterior && m_interiorController.InteriorInScene())
+                if(!m_initialisedNextInterior && m_interiorInteractionModel.HasInteriorModel())
                 {
                     m_interiorInteractionModel.SetSelectedFloorIndex(m_targetFloorIndex);
                     m_endCameraInterestAltitude = m_cameraController.GetFloorOffsetHeight();

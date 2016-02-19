@@ -107,7 +107,7 @@ namespace ExampleApp
                                                                         heightOffsetMetres,
                                                                         WorldPins::SdkModel::WorldPinVisibility::TourPin);
                         }
-                        else if(!m_interiorTransitionComplete && m_interior && m_interiorController.InteriorInScene())
+                        else if(!m_interiorTransitionComplete && m_interior && m_interiorInteractionModel.HasInteriorModel())
                         {
                             m_interiorTransitionComplete = true;
                             m_interiorInteractionModel.SetSelectedFloorIndex(m_worldPinInteriorData.floor);

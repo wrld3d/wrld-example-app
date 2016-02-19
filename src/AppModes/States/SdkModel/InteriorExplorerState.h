@@ -67,6 +67,7 @@ namespace ExampleApp
                     InteriorExplorerState(AppCamera::SdkModel::IAppCameraController& cameraController,
                                           Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                           Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                          Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                           int interiorCameraHandle,
                                           Tours::SdkModel::ITourService& tourService,
                                           Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,

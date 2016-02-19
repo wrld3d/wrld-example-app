@@ -128,19 +128,17 @@ namespace ExampleApp
                         m_myPinCreationModel.SetInterior(showingInterior);
                         if(showingInterior)
                         {
-                            const Eegeo::Resources::Interiors::InteriorsModel *pModel = NULL;
-                            bool success = m_interiorController.TryGetCurrentModel(pModel);
-                            if(success)
-                            {
-                                const Eegeo::Resources::Interiors::InteriorId& buildingId = pModel->GetId();
-                                m_myPinCreationModel.SetBuildingId(buildingId);
-                            }
+                            Eegeo_ASSERT(m_interiorInteractionModel.HasInteriorModel());
+                            const Eegeo::Resources::Interiors::InteriorsModel& model = *m_interiorInteractionModel.GetInteriorModel();
+                            const Eegeo::Resources::Interiors::InteriorId& buildingId = model.GetId();
+                            m_myPinCreationModel.SetBuildingId(buildingId);
+                            
                             
                             const int selectedFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
 
                             m_myPinCreationModel.SetFloor(selectedFloorIndex);
-                            m_myPinCreationModel.SetTerrainHeight(pModel->GetTangentSpaceBounds().GetMin().y);
-                            float floorHeightAboveSeaLevel = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(*pModel, selectedFloorIndex);
+                            m_myPinCreationModel.SetTerrainHeight(model.GetTangentSpaceBounds().GetMin().y);
+                            float floorHeightAboveSeaLevel = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(model, selectedFloorIndex);
                             const float floorHeightAboveTerrain = floorHeightAboveSeaLevel - m_myPinCreationModel.GetTerrainHeight();
                             m_myPinCreationModel.SetHeightAboveTerrain(floorHeightAboveTerrain);
                         }

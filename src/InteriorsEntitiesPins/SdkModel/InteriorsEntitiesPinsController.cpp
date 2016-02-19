@@ -178,9 +178,11 @@ namespace ExampleApp
             {
                 std::map<int, float> easedfloorScales;
 
-                const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = NULL;
-                Eegeo_ASSERT(m_interiorController.TryGetCurrentFloorModel(pFloorModel), "Failed to fetch current floor");
-                int currentFloorNumber = pFloorModel->GetFloorNumber();
+                Eegeo_ASSERT(m_interiorInteractionModel.HasInteriorModel(), "no current interior");
+                
+                const Eegeo::Resources::Interiors::InteriorsFloorModel& floorModel = *m_interiorInteractionModel.GetSelectedFloorModel();
+                
+                int currentFloorNumber = floorModel.GetFloorNumber();
 
                 const bool canShowPins = m_interiorInteractionModel.IsCollapsed();
                 

@@ -68,7 +68,7 @@ namespace ExampleApp
                     float lerpDistance = Eegeo::Math::Lerp(m_startDistanceToInterest, m_targetDistanceToInterest, smoothT);
                     m_cameraController.SetDistanceToInterest(lerpDistance);
                 }
-                else if(m_interiorController.InteriorInScene())
+                else if(m_interiorInteractionModel.HasInteriorModel())
                 {
                     m_interiorInteractionModel.SetSelectedFloorIndex(m_targetFloorIndex);
                 }

@@ -40,46 +40,39 @@ namespace ExampleApp
             
             void WorldPinsFloorHeightController::Update(float deltaSeconds)
             {
-                bool showingInterior = m_interiorController.InteriorIsVisible();
-                if(showingInterior)
+                if (m_interiorInteractionModel.HasInteriorModel())
                 {
-                    const Eegeo::Resources::Interiors::InteriorsModel *pModel = NULL;
-                    if (m_interiorController.TryGetCurrentModel(pModel))
+                    const Eegeo::Resources::Interiors::InteriorsModel& interiorModel = *m_interiorInteractionModel.GetInteriorModel();
+                    const int selectedFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
+                    
+                    float altitude = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(interiorModel, selectedFloorIndex);
+                    float heightAboveTerrain = Helpers::InteriorHeightHelpers::INTERIOR_FLOOR_HEIGHT*selectedFloorIndex;
+                    
+                    for(size_t i = 0; i < m_worldPinsRepository.GetItemCount(); ++i)
                     {
-                        const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = NULL;
-                        if (m_interiorController.TryGetCurrentFloorModel(pFloorModel))
+                        WorldPinItemModel& worldPinItemModel = *m_worldPinsRepository.GetItemAtIndex(i);
+                        if (worldPinItemModel.NeedsFloorHeight())
                         {
-                            const int selectedFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
-                            
-                            float altitude = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(*pModel, selectedFloorIndex);
-                            float heightAboveTerrain = Helpers::InteriorHeightHelpers::INTERIOR_FLOOR_HEIGHT*selectedFloorIndex;
-                            
-                            for(size_t i = 0; i < m_worldPinsRepository.GetItemCount(); ++i)
+                            if (worldPinItemModel.GetInteriorData().floor == selectedFloorIndex &&
+                                worldPinItemModel.GetInteriorData().building == interiorModel.GetId())
                             {
-                                WorldPinItemModel& worldPinItemModel = *m_worldPinsRepository.GetItemAtIndex(i);
-                                if (worldPinItemModel.NeedsFloorHeight())
+                                Eegeo::Pins::Pin* pPin = m_pinRepository.GetPinById(worldPinItemModel.Id());
+                                if(m_interiorsAffectedByFlattening)
                                 {
-                                    if (worldPinItemModel.GetInteriorData().floor == selectedFloorIndex &&
-                                        worldPinItemModel.GetInteriorData().building == pModel->GetId())
-                                    {
-                                        Eegeo::Pins::Pin* pPin = m_pinRepository.GetPinById(worldPinItemModel.Id());
-                                        if(m_interiorsAffectedByFlattening)
-                                        {
-                                            pPin->SetTerrainHeight(altitude, 14);
-                                            pPin->SetHeightAboveTerrain(0.0f);
-                                        }
-                                        else
-                                        {
-                                            pPin->SetTerrainHeight(pModel->GetTangentSpaceBounds().GetMin().y, 14);
-                                            pPin->SetHeightAboveTerrain(heightAboveTerrain);
-                                        }
-                                    }
+                                    pPin->SetTerrainHeight(altitude, 14);
+                                    pPin->SetHeightAboveTerrain(0.0f);
+                                }
+                                else
+                                {
+                                    pPin->SetTerrainHeight(interiorModel.GetTangentSpaceBounds().GetMin().y, 14);
+                                    pPin->SetHeightAboveTerrain(heightAboveTerrain);
                                 }
                             }
                         }
                     }
                 }
             }
+            
         }
     }
 }

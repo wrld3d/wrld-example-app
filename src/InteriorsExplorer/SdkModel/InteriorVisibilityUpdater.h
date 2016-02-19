@@ -16,13 +16,13 @@ namespace ExampleApp
             public:
                 
                 InteriorVisibilityUpdater(Eegeo::Resources::Interiors::IInteriorController& interiorController,
+                                          const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                          const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                           float interiorTransitionTimeSeconds);
                 ~InteriorVisibilityUpdater();
                 
                 void SetInteriorShouldDisplay(bool shouldDisplay);
-                const bool GetInteriorShouldDisplay() const;
                 
-                void SetInteriorTransitionParam(float param);
                 const float GetInteriorTransitionParam() const;
                 
                 void Update(float dt);
@@ -30,8 +30,11 @@ namespace ExampleApp
             private:
                 
                 Eegeo::Resources::Interiors::IInteriorController& m_interiorController;
+                const Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
+                const Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
+                const float m_interiorTransitionTimeSeconds;
+                
                 float m_interiorTransitionParameter;
-                float m_interiorTransitionTimeSeconds;
                 bool m_interiorShouldDisplay;
                 
             };

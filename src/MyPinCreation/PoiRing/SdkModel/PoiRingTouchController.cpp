@@ -159,9 +159,9 @@ namespace ExampleApp
 
                     if(m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode && m_interiorController.InteriorIsVisible())
                     {
-                        const Eegeo::Resources::Interiors::InteriorsModel* interiorsModel;
+                        const Eegeo::Resources::Interiors::InteriorsModel* interiorsModel = m_interiorInteractionModel.GetInteriorModel();
                         
-                        Eegeo_ASSERT(m_interiorController.TryGetCurrentModel(interiorsModel), "Couldn't get current interiorsModel");
+                        Eegeo_ASSERT(interiorsModel, "Couldn't get current interiorsModel");
                         
                         const Eegeo::dv3 originNormal = interiorsModel->GetTangentBasis().GetUp();
                         

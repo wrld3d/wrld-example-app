@@ -5,6 +5,7 @@
 #include "IInteriorController.h"
 #include "CameraFrustumStreamingVolume.h"
 #include "InteriorVisibilityUpdater.h"
+#include "InteriorInteractionModel.h"
 
 namespace ExampleApp
 {
@@ -16,10 +17,12 @@ namespace ExampleApp
             {
                 InteriorExplorerStreamState::InteriorExplorerStreamState(AppModes::States::SdkModel::InteriorExplorerState& parentState,
                                                                          const Eegeo::Resources::Interiors::IInteriorController& interiorController,
+                                                                         const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                          Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
                                                                          InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater)
                 : m_parentState(parentState)
                 , m_interiorController(interiorController)
+                , m_interiorInteractionModel(interiorInteractionModel)
                 , m_cameraFrustumStreamingVolume(cameraFrustumStreamingVolume)
                 , m_interiorVisibilityUpdater(interiorVisibilityUpdater)
                 , m_maxTimeout(5.0f)
@@ -48,7 +51,7 @@ namespace ExampleApp
                         return;
                     }
                     
-                    if(m_interiorController.InteriorInScene())
+                    if (m_interiorInteractionModel.HasInteriorModel())
                     {
                         m_parentState.SetLastEntryAttemptSuccessful(true);
                         m_interiorVisibilityUpdater.SetInteriorShouldDisplay(true);

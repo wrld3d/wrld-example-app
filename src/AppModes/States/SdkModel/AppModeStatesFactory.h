@@ -40,6 +40,7 @@ namespace ExampleApp
                     InteriorsExplorer::SdkModel::InteriorExplorerUserInteractionModel& m_interiorExplorerUserInteractionModel;
                     Tours::SdkModel::ITourService& m_tourService;
                     Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
+                    Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                     Eegeo::UI::NativeUIFactories& m_nativeUIFactories;
                     MyPinCreation::SdkModel::IMyPinCreationModel& m_myPinCreationModel;
                     VisualMap::SdkModel::IVisualMapService& m_visualMapService;
@@ -59,6 +60,7 @@ namespace ExampleApp
                                          AppModes::SdkModel::IAppModeModel& appModeModel,
                                          Tours::SdkModel::ITourService& tourService,
                                          Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                         Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                          Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                          MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
                                          VisualMap::SdkModel::IVisualMapService& visualMapService);

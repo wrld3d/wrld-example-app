@@ -38,7 +38,7 @@ namespace ExampleApp
                 m_pUserInteractionModel = Eegeo_NEW(InteriorExplorerUserInteractionModel)();
                 
                 const float transitionTime = 0.5f;
-                m_pVisibilityUpdater = Eegeo_NEW(InteriorVisibilityUpdater)(interiorController, transitionTime);
+                m_pVisibilityUpdater = Eegeo_NEW(InteriorVisibilityUpdater)(interiorController, interiorSelectionModel, interiorInteractionModel, transitionTime);
                 
                 m_pGlobeCameraTouchController = interiorCameraControllerFactory.CreateTouchController(screenProperties);
                 

@@ -647,6 +647,7 @@ namespace ExampleApp
                                                                               *m_pAppModeModel,
                                                                               m_pToursModule->GetTourService(),
                                                                               interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                              interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                               nativeUIFactories,
                                                                               m_pMyPinCreationModule->GetMyPinCreationModel(),
                                                                               m_pVisualMapModule->GetVisualMapService());

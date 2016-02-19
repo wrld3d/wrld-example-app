@@ -29,6 +29,7 @@ namespace ExampleApp
                                                            AppModes::SdkModel::IAppModeModel& appModeModel,
                                                            Tours::SdkModel::ITourService& tourService,
                                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                                           Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                            Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                                            MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
                                                            VisualMap::SdkModel::IVisualMapService& visualMapService)
@@ -44,6 +45,7 @@ namespace ExampleApp
                 , m_appModeModel(appModeModel)
                 , m_tourService(tourService)
                 , m_interiorSelectionModel(interiorSelectionModel)
+                , m_interiorInteractionModel(interiorInteractionModel)
                 , m_nativeUIFactories(nativeUIFactories)
                 , m_myPinCreationModel(myPinCreationModel)
                 , m_visualMapService(visualMapService)
@@ -69,6 +71,7 @@ namespace ExampleApp
                     states.push_back(Eegeo_NEW(States::SdkModel::InteriorExplorerState)(m_appCameraController,
                                                                                         m_interiorController,
                                                                                         m_interiorSelectionModel,
+                                                                                        m_interiorInteractionModel,
                                                                                         interiorCameraHandle,
                                                                                         m_tourService,
                                                                                         m_cameraFrustumStreamingVolume,

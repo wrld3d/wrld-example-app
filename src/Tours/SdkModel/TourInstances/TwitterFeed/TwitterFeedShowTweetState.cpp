@@ -148,7 +148,7 @@ namespace ExampleApp
                                 m_pPinModel->SetFocusable(false);
                             }
                         }
-                        else if(!m_interiorTransitionComplete && m_isInterior && m_interiorController.InteriorInScene())
+                        else if(!m_interiorTransitionComplete && m_isInterior && m_interiorInteractionModel.HasInteriorModel())
                         {
                             m_interiorTransitionComplete = true;
                             m_interiorInteractionModel.SetSelectedFloorIndex(m_worldPinInteriorData.floor);
