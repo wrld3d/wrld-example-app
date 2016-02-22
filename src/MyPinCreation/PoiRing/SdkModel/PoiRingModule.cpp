@@ -97,8 +97,8 @@ namespace ExampleApp
                                            *m_pPoiRingView,
                                            mapModule.GetEnvironmentFlatteningService(),
                                            terrainModelModule.GetTerrainHeightProvider(),
-                                           interiorsPresentationModule.GetController(),
                                            interiorsPresentationModule.GetInteriorInteractionModel(),
+                                           interiorsPresentationModule.GetInteriorTransitionModel(),
                                            screenProperties,
                                            interiorsAffectedByFlattening);
 
@@ -110,8 +110,8 @@ namespace ExampleApp
                                                                                   *m_pTerrainRayPicker,
                                                                                   *m_pPoiRingController,
                                                                                   appModeModel,
-                                                                                  interiorsPresentationModule.GetController(),
-                                                                                  interiorsPresentationModule.GetInteriorInteractionModel());
+                                                                                  interiorsPresentationModule.GetInteriorInteractionModel(),
+                                                                                  interiorsPresentationModule.GetInteriorTransitionModel());
                 }
 
                 PoiRingModule::~PoiRingModule()

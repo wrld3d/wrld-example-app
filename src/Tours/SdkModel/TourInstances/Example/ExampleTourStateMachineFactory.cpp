@@ -26,14 +26,12 @@ namespace ExampleApp
                     ExampleTourStateMachineFactory::ExampleTourStateMachineFactory(Camera::IToursCameraTransitionController& toursCameraTransitionController,
                                                                                    WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                                                    bool interiorsEnabled,
-                                                                                   Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                                                                    InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
                                                                                    Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                                    Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                                    ExampleAppMessaging::TMessageBus& messageBus)
                     : m_toursCameraTransitionController(toursCameraTransitionController)
                     , m_worldPinsService(worldPinsService)
-                    , m_interiorController(interiorController)
                     , m_interiorVisibilityUpdater(interiorVisibilityUpdater)
                     , m_interiorInteractionModel(interiorInteractionModel)
                     , m_interiorSelectionModel(interiorSelectionModel)
@@ -67,7 +65,6 @@ namespace ExampleApp
                                                                                 m_toursCameraTransitionController,
                                                                                 m_worldPinsService,
                                                                                 hotelPinInteriorData,
-                                                                                m_interiorController,
                                                                                 m_interiorVisibilityUpdater,
                                                                                 m_interiorInteractionModel,
                                                                                 m_interiorSelectionModel,
@@ -79,7 +76,6 @@ namespace ExampleApp
                                                                                 m_toursCameraTransitionController,
                                                                                 m_worldPinsService,
                                                                                 blankWorldPinInteriorData,
-                                                                                m_interiorController,
                                                                                 m_interiorVisibilityUpdater,
                                                                                 m_interiorInteractionModel,
                                                                                 m_interiorSelectionModel,
@@ -92,7 +88,6 @@ namespace ExampleApp
                                                                                 m_toursCameraTransitionController,
                                                                                 m_worldPinsService,
                                                                                 blankWorldPinInteriorData,
-                                                                                m_interiorController,
                                                                                 m_interiorVisibilityUpdater,
                                                                                 m_interiorInteractionModel,
                                                                                 m_interiorSelectionModel,

@@ -32,7 +32,6 @@ namespace ExampleApp
                                                   WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                   bool isInterior,
                                                   WorldPins::SdkModel::WorldPinInteriorData& worldPinInteriorData,
-                                                  const Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                                   InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
                                                   Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                   Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
@@ -63,7 +62,6 @@ namespace ExampleApp
                         Eegeo::Space::LatLong m_pinLocation;
                         bool m_isInterior;
                         WorldPins::SdkModel::WorldPinInteriorData m_worldPinInteriorData;
-                        const Eegeo::Resources::Interiors::IInteriorController& m_interiorController;
                         Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                         InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& m_interiorVisibilityUpdater;
                         Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;

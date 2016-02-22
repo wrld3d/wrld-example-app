@@ -25,7 +25,6 @@ namespace ExampleApp
                     TwitterFeedTourObserver::TwitterFeedTourObserver(Camera::IToursCameraTransitionController& toursCameraTransitionController,
                                                                      ITourService& tourService,
                                                                      WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                                                     const Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                                                      InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
                                                                      Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                      Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
@@ -37,7 +36,6 @@ namespace ExampleApp
                     : m_toursCameraTransitionController(toursCameraTransitionController)
                     , m_tourService(tourService)
                     , m_worldPinsService(worldPinsService)
-                    , m_interiorController(interiorController)
                     , m_interiorVisibilityUpdater(interiorVisibilityUpdater)
                     , m_interiorInteractionModel(interiorInteractionModel)
                     , m_interiorSelectionModel(interiorSelectionModel)
@@ -136,7 +134,6 @@ namespace ExampleApp
                         
                         TwitterFeedTourStateMachineFactory factory(m_toursCameraTransitionController,
                                                                    m_worldPinsService,
-                                                                   m_interiorController,
                                                                    m_interiorVisibilityUpdater,
                                                                    m_interiorInteractionModel,
                                                                    m_interiorSelectionModel,

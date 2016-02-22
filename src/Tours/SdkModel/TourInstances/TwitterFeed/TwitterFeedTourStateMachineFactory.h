@@ -28,7 +28,6 @@ namespace ExampleApp
                     private:
                         Camera::IToursCameraTransitionController& m_toursCameraTransitionController;
                         WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
-                        const Eegeo::Resources::Interiors::IInteriorController& m_interiorController;
                         InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& m_interiorVisibilityUpdater;
                         Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                         Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
@@ -39,7 +38,6 @@ namespace ExampleApp
                     public:
                         TwitterFeedTourStateMachineFactory(Camera::IToursCameraTransitionController& toursCameraTransitionController,
                                                            WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                                           const Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                                            InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
                                                            Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,

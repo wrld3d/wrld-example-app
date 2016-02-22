@@ -15,7 +15,6 @@
 #include "SpaceHelpers.h"
 #include "WorldPinVisibility.h"
 #include "WorldPinInteriorData.h"
-#include "IInteriorController.h"
 #include "InteriorVisibilityUpdater.h"
 #include "InteriorSelectionModel.h"
 #include "SearchVendorNames.h"
@@ -36,7 +35,6 @@ namespace ExampleApp
                                                                          WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                                          bool isInterior,
                                                                          WorldPins::SdkModel::WorldPinInteriorData& worldPinInteriorData,
-                                                                         const Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                                                          InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
                                                                          Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                          Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
@@ -60,7 +58,6 @@ namespace ExampleApp
                     , m_worldPinsService(worldPinsService)
                     , m_isInterior(isInterior)
                     , m_worldPinInteriorData(worldPinInteriorData)
-                    , m_interiorController(interiorController)
                     , m_interiorVisibilityUpdater(interiorVisibilityUpdater)
                     , m_interiorInteractionModel(interiorInteractionModel)
                     , m_interiorSelectionModel(interiorSelectionModel)

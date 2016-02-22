@@ -6,7 +6,6 @@
 #include "IWorldPinsService.h"
 #include "WorldPinFocusData.h"
 #include "ExampleTourPinSelectionHandler.h"
-#include "IInteriorController.h"
 #include "ExampleCurrentTourCardTappedHandler.h"
 #include "WorldPinItemModel.h"
 #include "WorldPinVisibility.h"
@@ -31,7 +30,6 @@ namespace ExampleApp
                                                        Camera::IToursCameraTransitionController& toursCameraTransitionController,
                                                        WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                        WorldPins::SdkModel::WorldPinInteriorData& worldPinInteriorData,
-                                                       Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                                        InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
                                                        Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                        Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
@@ -44,7 +42,6 @@ namespace ExampleApp
                     , m_pPinItemModel(NULL)
                     , m_interior(isInterior)
                     , m_worldPinInteriorData(worldPinInteriorData)
-                    , m_interiorController(interiorController)
                     , m_interiorVisibilityUpdater(interiorVisibilityUpdater)
                     , m_interiorInteractionModel(interiorInteractionModel)
                     , m_interiorSelectionModel(interiorSelectionModel)

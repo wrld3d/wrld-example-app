@@ -31,7 +31,6 @@ namespace ExampleApp
                         TwitterFeedTourModule(Camera::IToursCameraTransitionController& toursCameraTransitionController,
                                               ITourService& tourService,
                                               WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                              const Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                               InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
                                               Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                               Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,

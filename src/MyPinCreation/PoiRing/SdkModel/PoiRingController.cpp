@@ -18,8 +18,8 @@
 #include "TerrainHeightProvider.h"
 #include "TransformHelpers.h"
 #include "VectorMath.h"
-#include "IInteriorController.h"
 #include "InteriorInteractionModel.h"
+#include "InteriorTransitionModel.h"
 
 #include "InteriorHeightHelpers.h"
 #include "ScreenProperties.h"
@@ -78,8 +78,8 @@ namespace ExampleApp
                                                      PoiRingView& poiRingView,
                                                      Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                      Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
-                                                     const Eegeo::Resources::Interiors::IInteriorController& interiorController,
-                                                     Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                     const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                     const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                                      Eegeo::Rendering::ScreenProperties& screenProperties,
                                                      const bool interiorsAffectedByFlattening)
                     : m_myPinCreationModel(myPinCreationModel)
@@ -91,8 +91,8 @@ namespace ExampleApp
                     , m_iconPosition(Eegeo::dv3::Zero())
                     , m_iconSize(0.0f)
                     , m_ringRadius(0.0f)
-                    , m_interiorController(interiorController)
                     , m_interiorInteractionModel(interiorInteractionModel)
+                    , m_interiorTransitionModel(interiorTransitionModel)
                     , m_screenProperties(screenProperties)
                     , m_interiorsAffectedByFlattening(interiorsAffectedByFlattening)
                 {
@@ -101,7 +101,7 @@ namespace ExampleApp
 
                 void PoiRingController::Update(float dt, const Eegeo::Camera::RenderCamera& renderCamera, const Eegeo::dv3& cameraEcefInterestPoint)
                 {
-                    const bool showingInterior = m_interiorController.InteriorIsVisible();
+                    const bool showingInterior = m_interiorTransitionModel.InteriorIsVisible();
                     float interiorDownScale = showingInterior ? 0.5f : 1.0f;
                     const float altitude = (float)(renderCamera.GetAltitude() - (m_myPinCreationModel.GetPosition().Length() - Eegeo::Space::EarthConstants::Radius));
                     const float outerRingRadiusInMeters = 120.f * interiorDownScale;

@@ -18,9 +18,9 @@ namespace ExampleApp
             {
             public:
                 
-                TransitionToInteriorPointStage(const Eegeo::Resources::Interiors::IInteriorController& interiorController,
-                                               Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                TransitionToInteriorPointStage(Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                               const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                                InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                                Eegeo::Resources::Interiors::InteriorsCameraController& cameraController,
                                                const Eegeo::dv3& newInterestPoint,
@@ -39,9 +39,9 @@ namespace ExampleApp
                 
                 bool ShouldJumpTo(Eegeo::dv3& newInterestPoint);
                 
-                const Eegeo::Resources::Interiors::IInteriorController& m_interiorController;
                 Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
+                const Eegeo::Resources::Interiors::InteriorTransitionModel& m_interiorTransitionModel;
                 InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel;
                 Eegeo::Resources::Interiors::InteriorsCameraController& m_cameraController;
                 

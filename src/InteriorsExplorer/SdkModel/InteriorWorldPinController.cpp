@@ -12,7 +12,6 @@
 #include "MenuDragStateChangedMessage.h"
 #include "SearchVendorNames.h"
 #include "IInitialExperienceModel.h"
-#include "IInteriorController.h"
 
 namespace ExampleApp
 {

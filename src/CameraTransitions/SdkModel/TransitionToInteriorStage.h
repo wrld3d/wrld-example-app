@@ -18,9 +18,10 @@ namespace ExampleApp
             {
             public:
                 
-                TransitionToInteriorStage(const Eegeo::Resources::Interiors::IInteriorController& interiorController,
+                TransitionToInteriorStage(
                                           Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                           Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                          const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                           Eegeo::Resources::Interiors::InteriorsCameraController& cameraController,
                                           const Eegeo::dv3& newInterestPoint,
                                           float newDistanceToInterest,
@@ -35,9 +36,9 @@ namespace ExampleApp
                 
             private:
                 
-                const Eegeo::Resources::Interiors::IInteriorController& m_interiorController;
                 Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
+                const Eegeo::Resources::Interiors::InteriorTransitionModel& m_interiorTransitionModel;
                 Eegeo::Resources::Interiors::InteriorsCameraController& m_cameraController;
                 
                 Eegeo::dv3 m_newInterestPoint;

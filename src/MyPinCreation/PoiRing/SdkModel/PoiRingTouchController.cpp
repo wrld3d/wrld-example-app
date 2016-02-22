@@ -9,13 +9,13 @@
 #include "IntersectionTests.h"
 #include "IPoiRingController.h"
 #include "IAppModeModel.h"
-#include "IInteriorController.h"
 #include "InteriorsFloorModel.h"
 #include "Bounds.h"
 #include "InteriorsModel.h"
 #include "EcefTangentBasis.h"
 #include "InteriorHeightHelpers.h"
 #include "InteriorInteractionModel.h"
+#include "InteriorTransitionModel.h"
 
 namespace ExampleApp
 {
@@ -29,15 +29,15 @@ namespace ExampleApp
                                                                Eegeo::Collision::IRayPicker& rayPicker,
                                                                const IPoiRingController& poiRingController,
                                                                ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
-                                                               const Eegeo::Resources::Interiors::IInteriorController& interiorController,
-                                                               Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel)
+                                                               const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                               const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel)
                     : m_myPinCreationModel(myPinCreationModel)
                     , m_rayPicker(rayPicker)
                     , m_poiRingController(poiRingController)
                     , m_isDragging(false)
                     , m_appModeModel(appModeModel)
-                    , m_interiorController(interiorController)
                     , m_interiorInteractionModel(interiorInteractionModel)
+                    , m_interiorTransitionModel(interiorTransitionModel)
                 {
 
                 }
@@ -157,7 +157,7 @@ namespace ExampleApp
                 {
                     bool rayPick = false;
 
-                    if(m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode && m_interiorController.InteriorIsVisible())
+                    if(m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode && m_interiorTransitionModel.InteriorIsVisible())
                     {
                         const Eegeo::Resources::Interiors::InteriorsModel* interiorsModel = m_interiorInteractionModel.GetInteriorModel();
                         

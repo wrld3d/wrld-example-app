@@ -32,7 +32,7 @@ namespace ExampleApp
                                                                    ExampleApp::AppCamera::SdkModel::IAppCameraController& appCameraController,
                                                                    Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                    Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                                                   const Eegeo::Resources::Interiors::IInteriorController& interiorController,
+                                                                   const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                                                    Eegeo::Resources::Interiors::IInteriorFloorAnimator& interiorViewAnimator,
                                                                    InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                                                    ExampleApp::ExampleAppMessaging::TMessageBus& messageBus)
@@ -43,9 +43,9 @@ namespace ExampleApp
             , m_appModeModel(appModeModel)
             , m_interiorSelectionModel(interiorSelectionModel)
             , m_interiorInteractionModel(interiorInteractionModel)
+            , m_interiorTransitionModel(interiorTransitionModel)
             , m_appCameraController(appCameraController)
             , m_interiorViewAnimator(interiorViewAnimator)
-            , m_interiorController(interiorController)
             , m_interiorsExplorerModel(interiorsExplorerModel)
             , m_isTransitioning(false)
             , m_defaultInteriorId(Eegeo::Resources::Interiors::InteriorId::NullId())
@@ -217,9 +217,9 @@ namespace ExampleApp
                                                                               const Eegeo::Resources::Interiors::InteriorId &interiorId,
                                                                               int targetFloorIndex)
             {
-                ICameraTransitionStage* pStage = Eegeo_NEW(TransitionToInteriorStage)(m_interiorController,
-                                                                                      m_interiorInteractionModel,
+                ICameraTransitionStage* pStage = Eegeo_NEW(TransitionToInteriorStage)(m_interiorInteractionModel,
                                                                                       m_interiorSelectionModel,
+                                                                                      m_interiorTransitionModel,
                                                                                       m_interiorsCameraController,
                                                                                       newInterestPoint,
                                                                                       newDistanceToInterest,
@@ -235,9 +235,10 @@ namespace ExampleApp
                                                                                    int targetFloorIndex,
                                                                                    bool jumpIfFar)
             {
-                ICameraTransitionStage* pStage = Eegeo_NEW(TransitionToInteriorPointStage)(m_interiorController,
+                ICameraTransitionStage* pStage = Eegeo_NEW(TransitionToInteriorPointStage)(
                                                                                            m_interiorInteractionModel,
                                                                                            m_interiorSelectionModel,
+                                                                                           m_interiorTransitionModel,
                                                                                            m_interiorsExplorerModel,
                                                                                            m_interiorsCameraController,
                                                                                            newInterestPoint,

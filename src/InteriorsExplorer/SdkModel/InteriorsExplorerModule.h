@@ -25,10 +25,10 @@ namespace ExampleApp
             class InteriorsExplorerModule : public IInteriorsExplorerModule, private Eegeo::NonCopyable
             {
             public:
-                InteriorsExplorerModule(Eegeo::Resources::Interiors::IInteriorController& interiorController,
-                                        Eegeo::Resources::Interiors::IInteriorFloorAnimator& interiorFloorAnimator,
+                InteriorsExplorerModule(Eegeo::Resources::Interiors::IInteriorFloorAnimator& interiorFloorAnimator,
                                         Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                         Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                        Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                         Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
                                         WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                         const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,

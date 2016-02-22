@@ -65,8 +65,8 @@ namespace ExampleApp
                 m_pInteriorsEntitiesPinsController = Eegeo_NEW(InteriorsEntitiesPinsController)(interiorsModelModule.GetInteriorsEntitiesRepository(),
                                                                                                 m_pEntityPinsModule->GetController(),
                                                                                                 m_pEntityPinsModule->GetRepository(),
-                                                                                                interiorsPresentationModule.GetController(),
                                                                                                 interiorsPresentationModule.GetInteriorInteractionModel(),
+                                                                                                interiorsPresentationModule.GetInteriorTransitionModel(),
                                                                                                 interiorsPresentationModule.GetInteriorsLabelsController(),
                                                                                                 terrainModelModule.GetTerrainHeightProvider());
                 

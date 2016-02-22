@@ -2,9 +2,9 @@
 
 #include "InteriorVisibilityUpdater.h"
 #include "MathFunc.h"
-#include "IInteriorController.h"
 #include "InteriorSelectionModel.h"
 #include "InteriorInteractionModel.h"
+#include "InteriorTransitionModel.h"
 
 namespace ExampleApp
 {
@@ -12,11 +12,11 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            InteriorVisibilityUpdater::InteriorVisibilityUpdater(Eegeo::Resources::Interiors::IInteriorController& interiorController,
+            InteriorVisibilityUpdater::InteriorVisibilityUpdater(Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                                                  const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                  const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                  float transitionDurationTimeSeconds)
-            : m_interiorController(interiorController)
+            : m_interiorTransitionModel(interiorTransitionModel)
             , m_interiorSelectionModel(interiorSelectionModel)
             , m_interiorInteractionModel(interiorInteractionModel)
             , m_interiorShouldDisplay(false)
@@ -34,12 +34,6 @@ namespace ExampleApp
             void InteriorVisibilityUpdater::SetInteriorShouldDisplay(bool shouldDisplay)
             {
                 m_interiorShouldDisplay = shouldDisplay;
-            }
-
-           
-            const float InteriorVisibilityUpdater::GetInteriorTransitionParam() const
-            {
-                return m_interiorTransitionParameter;
             }
             
             void InteriorVisibilityUpdater::Update(float dt)
@@ -60,7 +54,7 @@ namespace ExampleApp
                 m_interiorTransitionParameter += delta / m_interiorTransitionTimeSeconds;
                 m_interiorTransitionParameter = Eegeo::Math::Clamp01(m_interiorTransitionParameter);
                 
-                m_interiorController.SetVisibilityParam(m_interiorTransitionParameter);
+                m_interiorTransitionModel.SetVisibilityParam(m_interiorTransitionParameter);
             }
         }
     }

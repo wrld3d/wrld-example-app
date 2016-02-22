@@ -10,9 +10,9 @@
 #include "RenderCamera.h"
 #include "IWorldPinsRepository.h"
 #include "WorldPinsVisibilityMessage.h"
-#include "IInteriorController.h"
 #include "WorldPinVisibility.h"
 #include "InteriorInteractionModel.h"
+#include "InteriorTransitionModel.h"
 
 namespace ExampleApp
 {
@@ -23,8 +23,8 @@ namespace ExampleApp
             WorldPinsScaleController::WorldPinsScaleController(IWorldPinsRepository& worldPinsRepository,
                                                                IWorldPinsService& worldPinsService,
                                                                ExampleAppMessaging::TMessageBus& messageBus,
-                                                               const Eegeo::Resources::Interiors::IInteriorController& interiorController,
-                                                               Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                               const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                               const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                                                ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus)
                 : m_worldPinsRepository(worldPinsRepository)
                 , m_worldPinsService(worldPinsService)
@@ -34,8 +34,8 @@ namespace ExampleApp
                 , m_visibilityScale(0.f)
                 , m_targetVisibilityScale(1.f)
                 , m_visibilityAnimationDuration(0.2f)
-                , m_interiorController(interiorController)
                 , m_interiorInteractionModel(interiorInteractionModel)
+                , m_interiorTransitionModel(interiorTransitionModel)
                 , m_sdkDomainEventBus(sdkDomainEventBus)
                 , m_visibilityMask(WorldPins::SdkModel::WorldPinVisibility::All)
                 , m_hideOutdoorPinsIndoors(true)
@@ -96,7 +96,7 @@ namespace ExampleApp
             bool WorldPinsScaleController::ShouldHidePin(WorldPins::SdkModel::WorldPinItemModel& worldPinItemModel,
                                                          const Eegeo::Camera::RenderCamera& renderCamera)
             {
-                const bool showingInterior = m_interiorController.InteriorIsVisible();
+                const bool showingInterior = m_interiorTransitionModel.InteriorIsVisible();
                 const bool canShowInteriorPins = m_interiorInteractionModel.IsCollapsed();
                 
                 if((m_visibilityMask & worldPinItemModel.VisibilityMask()) == 0)

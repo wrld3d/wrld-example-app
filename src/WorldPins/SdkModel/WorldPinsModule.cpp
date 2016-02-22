@@ -21,8 +21,8 @@ namespace ExampleApp
                                              const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                              Eegeo::Helpers::IIdentityProvider& identityProvider,
                                              ExampleAppMessaging::TMessageBus& messageBus,
-                                             const Eegeo::Resources::Interiors::IInteriorController& interiorController,
-                                             Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                             const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                             const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                              ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
                                              const bool interiorsAffectedByFlattening)
             {
@@ -39,14 +39,13 @@ namespace ExampleApp
                 m_pWorldPinsScaleController = Eegeo_NEW(WorldPinsScaleController)(*m_pWorldPinsRepository,
                                               *m_pWorldPinsService,
                                               messageBus,
-                                              interiorController,
                                               interiorInteractionModel,
+                                              interiorTransitionModel,
                                               sdkDomainEventBus);
                 
                 
                 m_pWorldPinsFloorHeightController = Eegeo_NEW(WorldPinsFloorHeightController)(*m_pWorldPinsRepository,
                                                                                               pinRepository,
-                                                                                              interiorController,
                                                                                               interiorInteractionModel,
                                                                                               environmentFlatteningService,
                                                                                               interiorsAffectedByFlattening);

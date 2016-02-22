@@ -1,12 +1,11 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "TransitionToInteriorPointStage.h"
-#include "IInteriorController.h"
 #include "InteriorsExplorerModel.h"
 #include "InteriorsCameraController.h"
 #include "InteriorInteractionModel.h"
-#include "IInteriorController.h"
 #include "InteriorSelectionModel.h"
+#include "InteriorTransitionModel.h"
 
 
 namespace ExampleApp
@@ -15,9 +14,9 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            TransitionToInteriorPointStage::TransitionToInteriorPointStage(const Eegeo::Resources::Interiors::IInteriorController& interiorController,
-                                                                           Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+            TransitionToInteriorPointStage::TransitionToInteriorPointStage(Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                                                           const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                                                            InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                                                            Eegeo::Resources::Interiors::InteriorsCameraController& cameraController,
                                                                            const Eegeo::dv3& newInterestPoint,
@@ -25,9 +24,9 @@ namespace ExampleApp
                                                                            const Eegeo::Resources::Interiors::InteriorId &interiorId,
                                                                            int targetFloorIndex,
                                                                            bool jumpIfFar)
-            : m_interiorController(interiorController)
-            , m_interiorInteractionModel(interiorInteractionModel)
+            : m_interiorInteractionModel(interiorInteractionModel)
             , m_interiorSelectionModel(interiorSelectionModel)
+            , m_interiorTransitionModel(interiorTransitionModel)
             , m_interiorsExplorerModel(interiorsExplorerModel)
             , m_cameraController(cameraController)
             , m_newInterestPoint(newInterestPoint)
@@ -124,7 +123,7 @@ namespace ExampleApp
             
             const bool TransitionToInteriorPointStage::StageIsComplete() const
             {
-                return m_transitionTime >= 1.0f && m_interiorController.InteriorIsVisible();
+                return m_transitionTime >= 1.0f && m_interiorTransitionModel.InteriorIsVisible();
             }
             
             bool TransitionToInteriorPointStage::ShouldJumpTo(Eegeo::dv3& newInterestPoint)

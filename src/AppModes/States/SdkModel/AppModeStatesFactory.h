@@ -29,7 +29,6 @@ namespace ExampleApp
                 {
                 private:
                     AppCamera::SdkModel::IAppCameraController& m_appCameraController;
-                    Eegeo::Resources::Interiors::IInteriorController& m_interiorController;
                     AppCamera::SdkModel::AppGlobeCameraWrapper& m_worldCameraController;
                     AppCamera::SdkModel::AppInteriorCameraWrapper& m_interiorCameraController;
                     Tours::SdkModel::Camera::IToursCameraController& m_toursCameraController;
@@ -49,7 +48,6 @@ namespace ExampleApp
                 public:
                     
                     AppModeStatesFactory(AppCamera::SdkModel::IAppCameraController& appCameraController,
-                                         Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                          AppCamera::SdkModel::AppGlobeCameraWrapper& worldCameraController,
                                          AppCamera::SdkModel::AppInteriorCameraWrapper& interiorCameraController,
                                          Tours::SdkModel::Camera::IToursCameraController& toursCameraController,

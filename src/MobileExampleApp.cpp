@@ -331,7 +331,7 @@ namespace ExampleApp
                                                                                                                        m_pAppCameraModule->GetController(),
                                                                                                                        interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                        interiorsPresentationModule.GetInteriorInteractionModel(),
-                                                                                                                       interiorsPresentationModule.GetController(),
+                                                                                                                       interiorsPresentationModule.GetInteriorTransitionModel(),
                                                                                                                        interiorsPresentationModule.GetInteriorFloorAnimator(),
                                                                                                                        m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
                                                                                                                        m_messageBus);
@@ -565,7 +565,6 @@ namespace ExampleApp
                                                                                          mapModule.GetEnvironmentFlatteningService(),
                                                                                          mapModule.GetResourceCeilingProvider());
         Eegeo::Resources::Interiors::InteriorsCameraControllerFactory interiorsCameraControllerFactory(cameraControllerFactory,
-                                                                                                       interiorsPresentationModule.GetController(),
                                                                                                        interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                        interiorsPresentationModule.GetInteriorFloorAnimator(),
                                                                                                        interiorsPresentationModule.GetInteriorInteractionModel(),
@@ -580,10 +579,10 @@ namespace ExampleApp
         
         const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel = m_initialExperienceModule.GetInitialExperienceModel();
         
-        m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(interiorsPresentationModule.GetController(),
-                                                                                                     interiorsPresentationModule.GetInteriorFloorAnimator(),
+        m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(interiorsPresentationModule.GetInteriorFloorAnimator(),
                                                                                                      interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                      interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                                                     interiorsPresentationModule.GetInteriorTransitionModel(),
                                                                                                      interiorsModelModule.GetInteriorMarkerModelRepository(),
                                                                                                      m_pWorldPinsModule->GetWorldPinsService(),
                                                                                                      mapModule.GetEnvironmentFlatteningService(),
@@ -636,7 +635,6 @@ namespace ExampleApp
         Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
         
         AppModes::States::SdkModel::AppModeStatesFactory appModeStatesFactory(m_pAppCameraModule->GetController(),
-                                                                              interiorsPresentationModule.GetController(),
                                                                               *m_pGlobeCameraWrapper,
                                                                               *m_pInteriorCameraWrapper,
                                                                               m_pToursModule->GetCameraController(),
@@ -818,8 +816,8 @@ namespace ExampleApp
                                  mapModule.GetEnvironmentFlatteningService(),
                                  m_identityProvider,
                                  m_messageBus,
-                                 interiorsPresentationModule.GetController(),
                                  interiorsPresentationModule.GetInteriorInteractionModel(),
+                                 interiorsPresentationModule.GetInteriorTransitionModel(),
                                  m_sdkDomainEventBus,
                                  interiorsAffectedByFlattening);
     }
@@ -880,7 +878,6 @@ namespace ExampleApp
         Tours::SdkModel::TourInstances::Example::ExampleTourStateMachineFactory factory(ToursModule().GetCameraTransitionController(),
                                                                                         m_pWorldPinsModule->GetWorldPinsService(),
                                                                                         m_interiorsEnabled,
-                                                                                        interiorsPresentationModule.GetController(),
                                                                                         m_pInteriorsExplorerModule->GetInteriorVisibilityUpdater(),
                                                                                         interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                         interiorsPresentationModule.GetInteriorSelectionModel(),
@@ -891,7 +888,6 @@ namespace ExampleApp
         m_pTwitterFeedTourModule = Eegeo_NEW(Tours::SdkModel::TourInstances::TwitterFeed::TwitterFeedTourModule)(ToursModule().GetCameraTransitionController(),
                                                                                                                  ToursModule().GetTourService(),
                                                                                                                  WorldPinsModule().GetWorldPinsService(),
-                                                                                                                 interiorsPresentationModule.GetController(),
                                                                                                                  m_pInteriorsExplorerModule->GetInteriorVisibilityUpdater(),
                                                                                                                  interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                                  interiorsPresentationModule.GetInteriorSelectionModel(),

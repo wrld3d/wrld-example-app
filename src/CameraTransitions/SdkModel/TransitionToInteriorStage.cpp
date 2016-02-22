@@ -1,13 +1,12 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "TransitionToInteriorStage.h"
-#include "IInteriorController.h"
 #include "InteriorSelectionModel.h"
 #include "InteriorId.h"
 #include "InteriorInteractionModel.h"
-#include "IInteriorController.h"
 #include "InteriorSelectionModel.h"
 #include "InteriorsCameraController.h"
+#include "InteriorTransitionModel.h"
 
 namespace ExampleApp
 {
@@ -15,17 +14,18 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            TransitionToInteriorStage::TransitionToInteriorStage(const Eegeo::Resources::Interiors::IInteriorController& interiorController,
+            TransitionToInteriorStage::TransitionToInteriorStage(
                                                                  Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                  Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                                                 const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                                                  Eegeo::Resources::Interiors::InteriorsCameraController& cameraController,
                                                                  const Eegeo::dv3& newInterestPoint,
                                                                  float newDistanceToInterest,
                                                                  const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                                                  int targetFloorIndex)
-            : m_interiorController(interiorController)
-            , m_interiorInteractionModel(interiorInteractionModel)
+            : m_interiorInteractionModel(interiorInteractionModel)
             , m_interiorSelectionModel(interiorSelectionModel)
+            , m_interiorTransitionModel(interiorTransitionModel)
             , m_cameraController(cameraController)
             , m_newInterestPoint(newInterestPoint)
             , m_interiorId(interiorId)
@@ -86,7 +86,7 @@ namespace ExampleApp
                 {
                     return m_transitionTime >= 1.0f;
                 }
-                else return m_interiorController.InteriorIsVisible();
+                else return m_interiorTransitionModel.InteriorIsVisible();
             }
             
             const bool TransitionToInteriorStage::StageHasFailed() const

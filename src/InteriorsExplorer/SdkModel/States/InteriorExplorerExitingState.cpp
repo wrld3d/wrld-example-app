@@ -36,17 +36,18 @@ namespace ExampleApp
                 {
                     m_cameraFrustumStreamingVolume.SetForceMaximumRefinement(true);
                     m_interiorVisibilityUpdater.SetInteriorShouldDisplay(false);
+                    m_interiorSelectionModel.ClearSelection();
                 }
                 
                 void InteriorExplorerExitingState::Update(float dt)
                 {
-                    if(m_interiorVisibilityUpdater.GetInteriorTransitionParam() <= 0.0f)
+                    if (!m_interiorSelectionModel.IsInteriorSelected())
                     {
                         if (m_parentState.GetLastEntryAttemptSuccessful())
                         {
                             m_interiorsExplorerModel.ResumePreviousMapState();
                         }
-                        m_interiorSelectionModel.ClearSelection();
+                        
                         m_parentState.ReturnToWorldMode();
                     }
                 }

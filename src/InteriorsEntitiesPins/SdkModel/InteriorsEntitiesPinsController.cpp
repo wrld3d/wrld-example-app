@@ -6,7 +6,6 @@
 #include "InteriorsEntityModel.h"
 #include "LatLongAltitude.h"
 #include "Pin.h"
-#include "IInteriorController.h"
 #include "MathsHelpers.h"
 #include "PinController.h"
 #include "InteriorsModelRepository.h"
@@ -16,6 +15,7 @@
 #include "TerrainHeightProvider.h"
 #include "InteriorInteractionModel.h"
 #include "InteriorsEntitiesRepository.h"
+#include "InteriorTransitionModel.h"
 
 namespace ExampleApp
 {
@@ -26,15 +26,15 @@ namespace ExampleApp
             InteriorsEntitiesPinsController::InteriorsEntitiesPinsController(Eegeo::Resources::Interiors::Entities::InteriorsEntitiesRepository& interiorsEntitiesRepostiory,
                                                                              Eegeo::Pins::PinController& pinController,
                                                                              Eegeo::Pins::PinRepository& pinRepository,
-                                                                             Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                                                              Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                                             const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                                                              Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& interiorsLabelsController,
                                                                              Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider)
             : m_interiorsEntitiesRepository(interiorsEntitiesRepostiory)
             , m_pinController(pinController)
             , m_pinRepository(pinRepository)
-            , m_interiorController(interiorController)
             , m_interiorInteractionModel(interiorInteractionModel)
+            , m_interiorTransitionModel(interiorTransitionModel)
             , m_interiorsLabelsController(interiorsLabelsController)
             , m_entitiesAddedCallback(this, &InteriorsEntitiesPinsController::OnEntitiesAdded)
             , m_entitiesRemovedCallback(this, &InteriorsEntitiesPinsController::OnEntitiesRemoved)
@@ -84,7 +84,7 @@ namespace ExampleApp
             {
                 const float TransitionTimeInSeconds = 0.75f;
                 
-                if (m_interiorInteractionModel.HasInteriorModel() && m_interiorController.InteriorIsVisible())
+                if (m_interiorInteractionModel.HasInteriorModel() && m_interiorTransitionModel.InteriorIsVisible())
                 {
                     UpdateScaleForPins(dt/TransitionTimeInSeconds);
                 }
@@ -184,7 +184,7 @@ namespace ExampleApp
                 
                 int currentFloorNumber = floorModel.GetFloorNumber();
 
-                const bool canShowPins = m_interiorInteractionModel.IsCollapsed() && m_interiorController.IsFadingInOrVisible();
+                const bool canShowPins = m_interiorInteractionModel.IsCollapsed() && m_interiorTransitionModel.IsFadingInOrFullyVisible();
                 
                 for (std::map<int, float>::iterator it = m_floorToScaleMap.begin(); it != m_floorToScaleMap.end(); ++it)
                 {

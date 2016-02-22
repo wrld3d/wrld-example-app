@@ -29,8 +29,8 @@ namespace ExampleApp
                 InteriorsEntitiesPinsController(Eegeo::Resources::Interiors::Entities::InteriorsEntitiesRepository& interiorsEntitiesRepository,
                                                 Eegeo::Pins::PinController& pinController,
                                                 Eegeo::Pins::PinRepository& pinRepository,
-                                                Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                                 Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                                 Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& interiorsLabelsController,
                                                 Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider);
                 
@@ -50,8 +50,8 @@ namespace ExampleApp
                 Eegeo::Resources::Interiors::Entities::InteriorsEntitiesRepository& m_interiorsEntitiesRepository;
                 Eegeo::Pins::PinController& m_pinController;
                 Eegeo::Pins::PinRepository& m_pinRepository;
-                Eegeo::Resources::Interiors::IInteriorController& m_interiorController;
                 Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
+                const Eegeo::Resources::Interiors::InteriorTransitionModel& m_interiorTransitionModel;
                 Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& m_interiorsLabelsController;
                 
                 Eegeo::Helpers::TCallback2<InteriorsEntitiesPinsController, const std::string&, const Eegeo::Resources::Interiors::Entities::TEntityModelVector&> m_entitiesAddedCallback;

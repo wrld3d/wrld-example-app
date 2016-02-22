@@ -34,7 +34,7 @@ namespace ExampleApp
                                            ExampleApp::AppCamera::SdkModel::IAppCameraController& appCameraController,
                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                            Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                           const Eegeo::Resources::Interiors::IInteriorController& interiorController,
+                                           const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                            // todo remove dependency, IInteriorFloorAnimator is not for this purpose
                                            Eegeo::Resources::Interiors::IInteriorFloorAnimator& interiorViewAnimator,
                                            InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
@@ -106,7 +106,7 @@ namespace ExampleApp
                 ExampleApp::AppCamera::SdkModel::IAppCameraController& m_appCameraController;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                 Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
-                const Eegeo::Resources::Interiors::IInteriorController& m_interiorController;
+                const Eegeo::Resources::Interiors::InteriorTransitionModel& m_interiorTransitionModel;
                 Eegeo::Resources::Interiors::IInteriorFloorAnimator& m_interiorViewAnimator;
                 InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel;
                

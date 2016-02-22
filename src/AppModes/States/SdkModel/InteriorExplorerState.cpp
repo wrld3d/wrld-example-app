@@ -2,7 +2,6 @@
 
 #include "InteriorExplorerState.h"
 #include "IAppCameraController.h"
-#include "IInteriorController.h"
 #include "InteriorExplorerSetupState.h"
 #include "InteriorExplorerStreamState.h"
 #include "InteriorExplorerViewingState.h"
@@ -31,7 +30,6 @@ namespace ExampleApp
             namespace SdkModel
             {
                 InteriorExplorerState::InteriorExplorerState(AppCamera::SdkModel::IAppCameraController& cameraController,
-                                                             Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                                              Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                              Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                              int interiorCameraHandle,
@@ -45,7 +43,9 @@ namespace ExampleApp
                                                              Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
                                                              Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                                              MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel)
-                : m_tourService(tourService)
+                : m_cameraController(cameraController)
+                , m_interiorCameraHandle(interiorCameraHandle)
+                , m_tourService(tourService)
                 , m_tourStartedCallback(this, &InteriorExplorerState::OnTourStarted)
                 , m_interiorExplorerUserInteractionModel(interiorExplorerUserInteractionModel)
                 , m_appModeModel(appModeModel)
@@ -62,7 +62,6 @@ namespace ExampleApp
                                                                                                                      interiorCameraHandle));
                     
                     m_subStates.push_back(Eegeo_NEW(InteriorsExplorer::SdkModel::States::InteriorExplorerStreamState)(*this,
-                                                                                                                      interiorController,
                                                                                                                       interiorInteractionModel,
                                                                                                                       cameraFrustumStreamingVolume,
                                                                                                                       interiorVisibilityUpdater));

@@ -18,7 +18,6 @@ namespace ExampleApp
             namespace SdkModel
             {
                 AppModeStatesFactory::AppModeStatesFactory(AppCamera::SdkModel::IAppCameraController& appCameraController,
-                                                           Eegeo::Resources::Interiors::IInteriorController& interiorController,
                                                            AppCamera::SdkModel::AppGlobeCameraWrapper& worldCameraController,
                                                            AppCamera::SdkModel::AppInteriorCameraWrapper& interiorCameraController,
                                                            Tours::SdkModel::Camera::IToursCameraController& toursCameraController,
@@ -34,7 +33,6 @@ namespace ExampleApp
                                                            MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
                                                            VisualMap::SdkModel::IVisualMapService& visualMapService)
                 : m_appCameraController(appCameraController)
-                , m_interiorController(interiorController)
                 , m_worldCameraController(worldCameraController)
                 , m_interiorCameraController(interiorCameraController)
                 , m_toursCameraController(toursCameraController)
@@ -69,7 +67,6 @@ namespace ExampleApp
                                                                              m_interiorCameraController.GetInteriorCameraController()));
                     
                     states.push_back(Eegeo_NEW(States::SdkModel::InteriorExplorerState)(m_appCameraController,
-                                                                                        m_interiorController,
                                                                                         m_interiorSelectionModel,
                                                                                         m_interiorInteractionModel,
                                                                                         interiorCameraHandle,

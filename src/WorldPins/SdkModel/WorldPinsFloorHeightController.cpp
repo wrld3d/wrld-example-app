@@ -4,7 +4,6 @@
 
 #include "EarthConstants.h"
 #include "IWorldPinsRepository.h"
-#include "IInteriorController.h"
 #include "InteriorInteractionModel.h"
 #include "InteriorsFloorModel.h"
 #include "InteriorsModel.h"
@@ -21,13 +20,11 @@ namespace ExampleApp
         {
             WorldPinsFloorHeightController::WorldPinsFloorHeightController(IWorldPinsRepository& worldPinsRepository,
                                                                            Eegeo::Pins::PinRepository& pinRepository,
-                                                                           const Eegeo::Resources::Interiors::IInteriorController& interiorController,
-                                                                           Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                                           const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                            const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                                            const bool interiorsAffectedByFlattening)
                 : m_worldPinsRepository(worldPinsRepository)
                 , m_pinRepository(pinRepository)
-                , m_interiorController(interiorController)
                 , m_interiorInteractionModel(interiorInteractionModel)
                 , m_environmentFlatteningService(environmentFlatteningService)
                 , m_interiorsAffectedByFlattening(interiorsAffectedByFlattening)
