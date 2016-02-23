@@ -47,6 +47,11 @@ namespace ExampleApp
                 mSetFloorName(ConvertUTF8ToManagedString(name));
             }
 
+            void InteriorsExplorerView::SetFloorSelectionDrag(float dragParam)
+            {
+                // todo
+            }
+
             void InteriorsExplorerView::SetOnScreenStateToIntermediateValue(float value)
             {
                 mSetOnScreenStateToIntermediateValue(value);
@@ -110,6 +115,17 @@ namespace ExampleApp
             {
                 m_selectedFloorCallbacks.RemoveCallback(callback);
             }
+
+            void InteriorsExplorerView::InsertFloorSelectionDraggedCallback(Eegeo::Helpers::ICallback1<float>& callback)
+            {
+                m_floorSelectionDraggedCallbacks.AddCallback(callback);
+            }
+
+            void InteriorsExplorerView::RemoveFloorSelectionDraggedCallback(Eegeo::Helpers::ICallback1<float>& callback)
+            {
+                m_floorSelectionDraggedCallbacks.RemoveCallback(callback);
+            }
+
 
             InteriorsExplorerView::~InteriorsExplorerView()
             {
