@@ -15,20 +15,15 @@
                     <Grid>
                         <Grid Name="DetailsPanel" Width="Auto" Height="40" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,40,0,0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="40"/>
                                 <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="40"/>                                
                             </Grid.ColumnDefinitions>
-                            <Button Name="DismissButton" Width="40" Height="40" Grid.Column="0" Style="{StaticResource TransparentButtonStyle}">
-                                <Grid>
-                                    <Image VerticalAlignment="Center" HorizontalAlignment="Center" Width="40" Height="40" Source="/Assets/menu_button.png"/>
-                                    <Image VerticalAlignment="Center" HorizontalAlignment="Center" Width="14" Height="24" Source="/Assets/arrow.png"/>
-                                </Grid>
-                            </Button>
-                            <Grid Grid.Column="1">
-                                <Border Name="Mask" CornerRadius="0,5,5,0" Background="White"/>
+                            <Grid Grid.Column="0">
+                                <Border Name="Mask" CornerRadius="5,0,0,5" Background="White"/>
                                 <Grid>
                                     <Grid.Background>
-                                        <ImageBrush ImageSource="/Assets/place_pin_background.png"/>
+                                        <ImageBrush ImageSource="/Assets/place_pin_background.png">
+                                        </ImageBrush>
                                     </Grid.Background>
                                     <Grid.OpacityMask>
                                         <VisualBrush Visual="{Binding ElementName=Mask}"/>
@@ -36,6 +31,20 @@
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="FloorName" Foreground="{StaticResource DarkGrey}" FontSize="16"/>
                                 </Grid>
                             </Grid>
+                            <Button Name="DismissButton" Width="40" Height="40" Grid.Column="1" Style="{StaticResource TransparentButtonStyle}">
+                                <Grid>
+                                    <Image VerticalAlignment="Center" HorizontalAlignment="Center" Width="40" Height="40" Source="/Assets/menu_button.png">
+                                        <Image.LayoutTransform>
+                                            <ScaleTransform ScaleX="-1"/>
+                                        </Image.LayoutTransform>
+                                    </Image>
+                                    <Image VerticalAlignment="Center" HorizontalAlignment="Center" Width="14" Height="24" Source="/Assets/arrow.png">
+                                        <Image.LayoutTransform>
+                                            <ScaleTransform ScaleX="-1"/>
+                                        </Image.LayoutTransform>
+                                    </Image>
+                                </Grid>
+                            </Button>
                         </Grid>
 
                         <Grid Name="FloorPanel" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto">
