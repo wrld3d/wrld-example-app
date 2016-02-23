@@ -47,7 +47,6 @@ namespace ExampleApp
                 m_pWorldPinsFloorHeightController = Eegeo_NEW(WorldPinsFloorHeightController)(*m_pWorldPinsRepository,
                                                                                               pinRepository,
                                                                                               interiorInteractionModel,
-                                                                                              environmentFlatteningService,
                                                                                               interiorsAffectedByFlattening);
 
                 m_pWorldPinsInFocusViewModel = Eegeo_NEW(View::WorldPinInFocusViewModel)(identityProvider.GetNextIdentity());

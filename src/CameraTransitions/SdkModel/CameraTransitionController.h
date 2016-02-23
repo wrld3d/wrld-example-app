@@ -15,6 +15,7 @@
 #include <queue>
 #include "AppCamera.h"
 #include "CallbackCollection.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -35,8 +36,6 @@ namespace ExampleApp
                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                            Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                            const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
-                                           // todo remove dependency, IInteriorFloorAnimator is not for this purpose
-                                           Eegeo::Resources::Interiors::IInteriorFloorAnimator& interiorViewAnimator,
                                            InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                            ExampleAppMessaging::TMessageBus& messageBus);
 
@@ -107,7 +106,6 @@ namespace ExampleApp
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                 Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 const Eegeo::Resources::Interiors::InteriorTransitionModel& m_interiorTransitionModel;
-                Eegeo::Resources::Interiors::IInteriorFloorAnimator& m_interiorViewAnimator;
                 InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel;
                
                 Eegeo::Resources::Interiors::InteriorId m_defaultInteriorId;

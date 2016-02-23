@@ -33,7 +33,6 @@ namespace ExampleApp
                                                                    Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                    Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                    const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
-                                                                   Eegeo::Resources::Interiors::IInteriorFloorAnimator& interiorViewAnimator,
                                                                    InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                                                    ExampleApp::ExampleAppMessaging::TMessageBus& messageBus)
             : m_cameraController(cameraController)
@@ -45,7 +44,6 @@ namespace ExampleApp
             , m_interiorInteractionModel(interiorInteractionModel)
             , m_interiorTransitionModel(interiorTransitionModel)
             , m_appCameraController(appCameraController)
-            , m_interiorViewAnimator(interiorViewAnimator)
             , m_interiorsExplorerModel(interiorsExplorerModel)
             , m_isTransitioning(false)
             , m_defaultInteriorId(Eegeo::Resources::Interiors::InteriorId::NullId())
