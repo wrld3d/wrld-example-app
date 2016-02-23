@@ -56,6 +56,7 @@ namespace ExampleApp
             , m_selectFloorCallback(this, &InteriorsExplorerModel::OnSelectFloor)
             , m_floorSelectionDraggedCallback(this, &InteriorsExplorerModel::OnFloorSelectionDragged)
             , m_interiorExplorerEnabled(false)
+            , m_currentInteriorFloorIndex(0)
             {
                 m_interiorInteractionModel.RegisterInteractionStateChangedCallback(m_interactionModelStateChangedCallback);
                 
@@ -138,7 +139,12 @@ namespace ExampleApp
                 const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = m_interiorInteractionModel.GetSelectedFloorModel();
                 Eegeo_ASSERT(pFloorModel, "Could not fetch current floor model");
                 
-                m_messageBus.Publish(InteriorsExplorerFloorSelectedMessage(m_interiorInteractionModel.GetSelectedFloorIndex(), pFloorModel->GetReadableFloorName()));
+                if(m_currentInteriorFloorIndex != m_interiorInteractionModel.GetSelectedFloorIndex())
+                {
+                	m_currentInteriorFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
+                    m_messageBus.Publish(InteriorsExplorerFloorSelectedMessage(m_interiorInteractionModel.GetSelectedFloorIndex(), pFloorModel->GetReadableFloorName()));
+                }
+
             }
             
         
@@ -207,6 +213,8 @@ namespace ExampleApp
 
             void InteriorsExplorerModel::PublishInteriorExplorerStateChange()
             {
+            	m_currentInteriorFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
+
                 std::string floorName;
                 std::vector<std::string> floorShortNames;
                 int floor = 0;
@@ -226,7 +234,7 @@ namespace ExampleApp
                 }
                 
                 m_messageBus.Publish(InteriorsExplorerStateChangedMessage(m_interiorExplorerEnabled,
-                                                                          floor,
+                														  m_currentInteriorFloorIndex,
                                                                           floorName,
                                                                           floorShortNames));
             }

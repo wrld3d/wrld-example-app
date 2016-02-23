@@ -70,6 +70,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<InteriorsExplorerModel, const InteriorsExplorerSelectFloorMessage&> m_selectFloorCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerModel, const InteriorsExplorerFloorSelectionDraggedMessage&> m_floorSelectionDraggedCallback;
                 
+                int m_currentInteriorFloorIndex;
                 bool m_interiorExplorerEnabled;
                 Eegeo::Helpers::CallbackCollection0 m_interiorExplorerExitedCallbacks;
             };
