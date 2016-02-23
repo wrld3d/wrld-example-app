@@ -25,19 +25,19 @@ namespace ExampleApp
                     
                     if(document.HasMember("phone") && std::string(document["phone"].GetString()).empty() == false)
                     {
-                        valueObject.AddMember("display_phone", document["phone"].GetString(), allocator);
+                        valueObject.AddMember("display_phone", rapidjson::Value(document["display_phone"], allocator), allocator);
                     }
                     if(document.HasMember("web") && std::string(document["web"].GetString()).empty() == false)
                     {
-                        valueObject.AddMember("url", document["web"].GetString(), allocator);
+                        valueObject.AddMember("url", rapidjson::Value(document["web"], allocator), allocator);
                     }
                     if(document.HasMember("imageUrl") && std::string(document["imageUrl"].GetString()).empty() == false)
                     {
-                        valueObject.AddMember("image_url", document["imageUrl"].GetString(), allocator);
+                        valueObject.AddMember("image_url", rapidjson::Value(document["imageUrl"], allocator), allocator);
                     }
                     if(document.HasMember("ratingImageUrl") && std::string(document["ratingImageUrl"].GetString()).empty() == false)
                     {
-                        valueObject.AddMember("rating", document["ratingImageUrl"].GetString(), allocator);
+                        valueObject.AddMember("rating", rapidjson::Value(document["ratingImageUrl"], allocator), allocator);
                     }
                     if(document.HasMember("reviews"))
                     {
@@ -45,7 +45,7 @@ namespace ExampleApp
                         if(reviewsJson.Size() > 0)
                         {
                             rapidjson::SizeType index = 0;
-                            valueObject.AddMember("snippet_text", reviewsJson[index].GetString(), allocator);
+                            valueObject.AddMember("snippet_text", rapidjson::Value(reviewsJson[index], allocator), allocator);
                         }
                     }
                     if(document.HasMember("reviewCount"))
@@ -69,23 +69,23 @@ namespace ExampleApp
                 const std::vector<std::string>& categories(searchResult.GetHumanReadableCategories());
                 for(std::vector<std::string>::const_iterator it = categories.begin(); it != categories.end(); ++ it)
                 {
-                    categoriesJson.PushBack(it->c_str(), allocator);
+                    categoriesJson.PushBack(rapidjson::Value(it->c_str(), allocator), allocator);
                 }
                 
                 valueObject.AddMember("version", searchResult.GetVersion(), allocator);
-                valueObject.AddMember("id", searchResult.GetIdentifier().c_str(), allocator);
-                valueObject.AddMember("title", searchResult.GetTitle().c_str(), allocator);
-                valueObject.AddMember("subtitle", searchResult.GetSubtitle().c_str(), allocator);
+                valueObject.AddMember("id", rapidjson::Value(searchResult.GetIdentifier().c_str(), allocator), allocator);
+                valueObject.AddMember("title", rapidjson::Value(searchResult.GetTitle().c_str(), allocator), allocator);
+                valueObject.AddMember("subtitle", rapidjson::Value(searchResult.GetSubtitle().c_str(), allocator), allocator);
                 valueObject.AddMember("interior", searchResult.IsInterior(), allocator);
-                valueObject.AddMember("building", searchResult.GetBuildingId().Value().c_str(), allocator);
+                valueObject.AddMember("building", rapidjson::Value(searchResult.GetBuildingId().Value().c_str(), allocator), allocator);
                 valueObject.AddMember("floor", searchResult.GetFloor(), allocator);
-                valueObject.AddMember("category", searchResult.GetCategory().c_str(), allocator);
+                valueObject.AddMember("category", rapidjson::Value(searchResult.GetCategory().c_str(), allocator), allocator);
                 valueObject.AddMember("humanReadableCategories", categoriesJson, allocator);
-                valueObject.AddMember("vendor", searchResult.GetVendor().c_str(), allocator);
+                valueObject.AddMember("vendor", rapidjson::Value(searchResult.GetVendor().c_str(), allocator), allocator);
                 valueObject.AddMember("latitude", searchResult.GetLocation().GetLatitudeInDegrees(), allocator);
                 valueObject.AddMember("longitude", searchResult.GetLocation().GetLongitudeInDegrees(), allocator);
                 valueObject.AddMember("heightAboveTerrain", searchResult.GetHeightAboveTerrainMetres(), allocator);
-                valueObject.AddMember("json", searchResult.GetJsonData().c_str(), allocator);
+                valueObject.AddMember("json", rapidjson::Value(searchResult.GetJsonData().c_str(), allocator), allocator);
                 valueObject.AddMember("createTimestamp", searchResult.GetCreationTimestamp(), allocator);
                 
                 rapidjson::StringBuffer strbuf;
