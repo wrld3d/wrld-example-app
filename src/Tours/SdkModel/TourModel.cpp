@@ -40,7 +40,7 @@ namespace ExampleApp
                 }
                 else
                 {
-                    valueObject.AddMember("twitter_image", rapidjson::Value(tourModel.TwitterBaseProfileImage().c_str(), allocator), allocator);
+                    valueObject.AddMember("twitter_image", rapidjson::Value(tourModel.TwitterBaseProfileImage().c_str(), allocator).Move(), allocator);
                 }
                 
                 rapidjson::StringBuffer strbuf;
