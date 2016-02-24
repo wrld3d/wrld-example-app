@@ -49,7 +49,7 @@ namespace ExampleApp
 
             void InteriorsExplorerView::SetFloorSelectionDrag(float dragParam)
             {
-                // todo
+                m_floorSelectionDraggedCallbacks.ExecuteCallbacks(dragParam);
             }
 
             void InteriorsExplorerView::SetOnScreenStateToIntermediateValue(float value)

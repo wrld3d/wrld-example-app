@@ -153,6 +153,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="SimpleSlider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -261,7 +265,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\WinBuild\ExampleApp.vcxproj">
+    <ProjectReference Include="..\..\build\ExampleApp.vcxproj">
       <Project>{6483906b-8db8-4f77-8da7-68865f7a9135}</Project>
       <Name>ExampleApp</Name>
     </ProjectReference>
@@ -528,6 +532,14 @@
   <ItemGroup>
     <Resource Include="..\..\Resources\menu_list.png">
       <Link>Assets\menu_list.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\floor_selection_button.png">
+      <Link>Assets\floor_selection_button.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\floor_selection_button_down.png">
+      <Link>Assets\floor_selection_button_down.png</Link>
     </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
