@@ -115,8 +115,8 @@ namespace ExampleApp
 
                             rapidjson::Document::AllocatorType& allocator = jsonDocument.GetAllocator();
                             
-                            jsonDocument.AddMember("pinImageUrl", rapidjson::Value(m_pinImageUrl.c_str(), allocator), allocator);
-                            jsonDocument.AddMember("pinContentUrl", rapidjson::Value(m_pinContentUrl.c_str(), allocator), allocator);
+                            jsonDocument.AddMember("pinImageUrl", rapidjson::Value(m_pinImageUrl.c_str(), allocator).Move(), allocator);
+                            jsonDocument.AddMember("pinContentUrl", rapidjson::Value(m_pinContentUrl.c_str(), allocator).Move(), allocator);
                             jsonDocument.AddMember("isVideo", m_hasAttachedVideo, allocator);
                             
                             rapidjson::StringBuffer buffer;

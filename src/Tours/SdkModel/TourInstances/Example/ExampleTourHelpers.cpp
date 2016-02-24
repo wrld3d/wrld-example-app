@@ -48,7 +48,7 @@ namespace ExampleApp
                         rapidjson::Document::AllocatorType& allocator = jsonDoc.GetAllocator();
                         rapidjson::Value valueObject(rapidjson::kObjectType);
                         
-                        valueObject.AddMember("imageUrl", rapidjson::Value(model.ImagePath().c_str(), allocator), allocator);
+                        valueObject.AddMember("imageUrl", rapidjson::Value(model.ImagePath().c_str(), allocator).Move(), allocator);
                         
                         rapidjson::StringBuffer strbuf;
                         rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
