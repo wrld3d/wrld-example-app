@@ -7,6 +7,8 @@
 #include "InteriorsModelRepository.h"
 #include "InteriorsModel.h"
 #include "WatermarkAlignmentStateChangedMessage.h"
+#include "InteriorsExplorerModel.h"
+#include "InteriorSelectionModel.h"
 
 namespace ExampleApp
 {
@@ -15,29 +17,31 @@ namespace ExampleApp
         namespace SdkModel
         {
             WatermarkInteriorStateChangedObserver::WatermarkInteriorStateChangedObserver(WatermarkModel& watermarkModel,
+                                                                                         Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                                          Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
-                                                                                         ExampleAppMessaging::TMessageBus& messageBus,
-                                                                                         ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus)
+                                                                                         InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
+                                                                                         ExampleAppMessaging::TMessageBus& messageBus)
             : m_watermarkModel(watermarkModel)
+            , m_interiorSelectionModel(interiorSelectionModel)
             , m_interiorsModelRepository(interiorsModelRepository)
+            , m_interiorsExplorerModel(interiorsExplorerModel)
             , m_messageBus(messageBus)
-            , m_sdkModelDomainEventBus(sdkModelDomainEventBus)
             , m_interiorExplorerEnteredCallback(this, &WatermarkInteriorStateChangedObserver::OnInteriorExplorerEntered)
             , m_interiorExplorerExitCallback(this, &WatermarkInteriorStateChangedObserver::OnInteriorExplorerExit)
             {
-                m_messageBus.SubscribeNative(m_interiorExplorerExitCallback);
-                m_sdkModelDomainEventBus.Subscribe(m_interiorExplorerEnteredCallback);
+                m_interiorsExplorerModel.InsertInteriorExplorerEnteredCallback(m_interiorExplorerEnteredCallback);
+                m_interiorsExplorerModel.InsertInteriorExplorerExitedCallback(m_interiorExplorerExitCallback);
             }
                 
             WatermarkInteriorStateChangedObserver::~WatermarkInteriorStateChangedObserver()
             {
-                m_messageBus.UnsubscribeNative(m_interiorExplorerExitCallback);
-                m_sdkModelDomainEventBus.Unsubscribe(m_interiorExplorerEnteredCallback);
+                m_interiorsExplorerModel.RemoveInteriorExplorerEnteredCallback(m_interiorExplorerEnteredCallback);
+                m_interiorsExplorerModel.RemoveInteriorExplorerExitedCallback(m_interiorExplorerExitCallback);
             }
             
-            void WatermarkInteriorStateChangedObserver::OnInteriorExplorerEntered(const InteriorsExplorer::InteriorsExplorerEnteredMessage& message)
+            void WatermarkInteriorStateChangedObserver::OnInteriorExplorerEntered()
             {
-                const std::string& interiorName = message.GetInteriorId().Value();
+                const std::string& interiorName = m_interiorSelectionModel.GetSelectedInteriorId().Value();
                 
                 if (m_interiorsModelRepository.HasInterior(interiorName))
                 {
@@ -51,7 +55,7 @@ namespace ExampleApp
                 }
             }
             
-            void WatermarkInteriorStateChangedObserver::OnInteriorExplorerExit(const InteriorsExplorer::InteriorsExplorerExitMessage& message)
+            void WatermarkInteriorStateChangedObserver::OnInteriorExplorerExit()
             {
                 m_watermarkModel.SetId(DefaultEegeoWatermarkId);
                 m_messageBus.Publish(WatermarkAlignmentStateChangedMessage(false));
