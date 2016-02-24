@@ -44,11 +44,11 @@ namespace ExampleApp
 								allocator,
 								valueObject);
                 
-				valueObject.AddMember(Search::Swallow::SearchConstants::DISTANCE_FIELD_NAME.c_str(),
+				valueObject.AddMember(rapidjson::StringRef(Search::Swallow::SearchConstants::DISTANCE_FIELD_NAME.c_str()),
                                       resultRow.Cell(columnOffset + poi_distance).AsReal(),
                                       allocator);
                 
-				valueObject.AddMember(Search::Swallow::SearchConstants::HEADING_DEGREES_FIELD_NAME.c_str(),
+				valueObject.AddMember(rapidjson::StringRef(Search::Swallow::SearchConstants::HEADING_DEGREES_FIELD_NAME.c_str()),
                                       resultRow.Cell(columnOffset + poi_heading_degrees).AsReal(),
                                       allocator);
                 

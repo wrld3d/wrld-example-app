@@ -49,15 +49,15 @@ namespace ExampleApp
 								allocator,
 								valueObject);
                 
-                valueObject.AddMember(Search::Swallow::SearchConstants::TARGET_INTERIOR_FLOOR_FIELD_NAME.c_str(),
+                valueObject.AddMember(rapidjson::StringRef(Search::Swallow::SearchConstants::TARGET_INTERIOR_FLOOR_FIELD_NAME.c_str()),
                                       resultRow.Cell(columnOffset + poi_target_interior_floor).AsInteger(),
                                       allocator);
                 
-                valueObject.AddMember(Search::Swallow::SearchConstants::TARGET_LATITUDE_DEGREES_FIELD_NAME.c_str(),
+                valueObject.AddMember(rapidjson::StringRef(Search::Swallow::SearchConstants::TARGET_LATITUDE_DEGREES_FIELD_NAME.c_str()),
                                       resultRow.Cell(columnOffset + poi_target_latitude_degrees).AsReal(),
                                       allocator);
                 
-                valueObject.AddMember(Search::Swallow::SearchConstants::TARGET_LONGITUDE_DEGREES_FILED_NAME.c_str(),
+                valueObject.AddMember(rapidjson::StringRef(Search::Swallow::SearchConstants::TARGET_LONGITUDE_DEGREES_FILED_NAME.c_str()),
                                       resultRow.Cell(columnOffset + poi_target_longitude_degrees).AsReal(),
                                       allocator);
                 
