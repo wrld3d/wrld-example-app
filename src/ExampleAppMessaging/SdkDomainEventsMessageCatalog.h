@@ -7,7 +7,6 @@
 #include "SearchResultPinAddedEvent.h"
 #include "SearchResultPinRemovedEvent.h"
 #include "WorldPinsVisibilityMessage.h"
-#include "InteriorsExplorerEnteredMessage.h"
 
 namespace ExampleApp
 {
@@ -17,7 +16,6 @@ namespace ExampleApp
         : public Eegeo::Messaging::CatalogBinding<MyPins::SdkModel::SearchResultPinAddedEvent>
         , public Eegeo::Messaging::CatalogBinding<MyPins::SdkModel::SearchResultPinRemovedEvent>
         , public Eegeo::Messaging::CatalogBinding<WorldPins::WorldPinsVisibilityMessage>
-        , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerEnteredMessage>
         , private Eegeo::NonCopyable
         {
             

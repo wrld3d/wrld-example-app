@@ -379,13 +379,6 @@ namespace ExampleApp
         
         m_pReactionControllerModule = Eegeo_NEW(Reaction::View::ReactionControllerModule)();
 
-        m_pWatermarkModule = Eegeo_NEW(ExampleApp::Watermark::SdkModel::WatermarkModule)(m_identityProvider,
-                                                                                         m_applicationConfiguration.Name(),
-                                                                                         m_applicationConfiguration.GoogleAnalyticsReferrerToken(),
-                                                                                         world.GetMapModule().GetInteriorsModelModule().GetInteriorsModelRepository(),
-                                                                                         m_messageBus,
-                                                                                         m_sdkDomainEventBus);
-
         m_pAboutPageModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageModule)(m_identityProvider,
                                                                                      m_pReactionControllerModule->GetReactionControllerModel(),
                                                                                      m_applicationConfiguration.ProductVersion());
@@ -524,7 +517,7 @@ namespace ExampleApp
                                                                                                      m_pSearchModule->GetSearchResultMyPinsService(),
                                                                                                      m_messageBus,
                                                                                                      m_metricsService);
-        
+
         m_pMyPinCreationModule = Eegeo_NEW(ExampleApp::MyPinCreation::SdkModel::MyPinCreationModule)(m_pMyPinsModule->GetMyPinsService(),
                                  m_identityProvider,
                                  m_pSecondaryMenuModule->GetSecondaryMenuViewModel(),
@@ -579,10 +572,17 @@ namespace ExampleApp
                                                                                                      m_screenProperties,
                                                                                                      m_identityProvider,
                                                                                                      m_messageBus,
-                                                                                                     m_sdkDomainEventBus,
                                                                                                      m_metricsService,
                                                                                                      initialExperienceModel,
                                                                                                      interiorsAffectedByFlattening);
+        
+        m_pWatermarkModule = Eegeo_NEW(ExampleApp::Watermark::SdkModel::WatermarkModule)(m_identityProvider,
+                                                                                         m_applicationConfiguration.Name(),
+                                                                                         m_applicationConfiguration.GoogleAnalyticsReferrerToken(),
+                                                                                         world.GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel(),
+                                                                                         world.GetMapModule().GetInteriorsModelModule().GetInteriorsModelRepository(),
+                                                                                         m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
+                                                                                         m_messageBus);
         
         InitialiseToursModules(mapModule, world, interiorsAffectedByFlattening);
         
@@ -687,6 +687,8 @@ namespace ExampleApp
         
         Eegeo_DELETE m_pGpsMarkerModule;
 
+        Eegeo_DELETE m_pWatermarkModule;
+        
 		Eegeo_DELETE m_pInteriorsExplorerModule;
 
         Eegeo_DELETE m_pSearchModule;
@@ -709,7 +711,6 @@ namespace ExampleApp
         
         Eegeo_DELETE m_pAboutPageModule;
         
-        Eegeo_DELETE m_pWatermarkModule;
 
         Eegeo_DELETE m_pReactionControllerModule;
     }

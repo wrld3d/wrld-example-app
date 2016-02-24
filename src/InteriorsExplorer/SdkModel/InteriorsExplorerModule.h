@@ -35,7 +35,6 @@ namespace ExampleApp
                                         const Eegeo::Rendering::ScreenProperties& screenProperties,
                                         Eegeo::Helpers::IIdentityProvider& identityProvider,
                                         ExampleAppMessaging::TMessageBus& messageBus,
-                                        ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                         Metrics::IMetricsService& metricsService,
                                         const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel,
                                         const bool interiorsAffectedByFlattening);

@@ -17,9 +17,10 @@ namespace ExampleApp
             WatermarkModule::WatermarkModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
                                              const std::string& appName,
                                              const std::string& googleAnalyticsReferrerToken,
+                                             Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                              Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
-                                             ExampleAppMessaging::TMessageBus& messageBus,
-                                             ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus)
+                                             InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
+                                             ExampleAppMessaging::TMessageBus& messageBus)
             {
                 m_pViewModel = Eegeo_NEW(View::WatermarkViewModel)(identityProvider.GetNextIdentity(), false);
                 
@@ -32,9 +33,10 @@ namespace ExampleApp
                 m_pWatermarkModel = Eegeo_NEW(WatermarkModel)();
                 
                 m_pWatermarkInteriorStateChangedObserver = Eegeo_NEW(WatermarkInteriorStateChangedObserver)(*m_pWatermarkModel,
+                                                                                                            interiorSelectionModel,
                                                                                                             interiorsModelRepository,
-                                                                                                            messageBus,
-                                                                                                            sdkModelDomainEventBus);
+                                                                                                            interiorsExplorerModel,
+                                                                                                            messageBus);
                 AddThirdPartyWatermarkData();
             }
             

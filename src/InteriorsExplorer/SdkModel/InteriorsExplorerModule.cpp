@@ -30,7 +30,6 @@ namespace ExampleApp
                                                              const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                              Eegeo::Helpers::IIdentityProvider& identityProvider,
                                                              ExampleAppMessaging::TMessageBus& messageBus,
-                                                             ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                                              Metrics::IMetricsService& metricsService,
                                                              const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel,
                                                              const bool interiorsAffectedByFlattening)
@@ -75,7 +74,6 @@ namespace ExampleApp
                                                              interiorSelectionModel,
                                                              visualMapService,
                                                              messageBus,
-                                                             sdkModelDomainEventBus,
                                                              metricsService);
                 
                 m_pViewModel = Eegeo_NEW(View::InteriorsExplorerViewModel)(false, identityProvider.GetNextIdentity());
