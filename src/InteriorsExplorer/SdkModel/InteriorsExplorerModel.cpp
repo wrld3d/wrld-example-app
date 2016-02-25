@@ -217,11 +217,9 @@ namespace ExampleApp
 
                 std::string floorName;
                 std::vector<std::string> floorShortNames;
-                int floor = 0;
                 
                 if (m_interiorInteractionModel.HasInteriorModel())
                 {
-                    floor = m_interiorInteractionModel.GetSelectedFloorIndex();
                     const Eegeo::Resources::Interiors::InteriorsModel* pModel = m_interiorInteractionModel.GetInteriorModel();
                     Eegeo_ASSERT(pModel != NULL, "Couldn't get current model for interior");
                     const Eegeo::Resources::Interiors::TFloorModelVector& floorModels = pModel->GetFloors();

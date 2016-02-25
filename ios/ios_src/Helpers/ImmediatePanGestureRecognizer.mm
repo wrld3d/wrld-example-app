@@ -7,6 +7,11 @@
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
+    if(self.state >= UIGestureRecognizerStateBegan)
+    {
+        return;
+    }
+    
     [super touchesBegan:(NSSet*)touches withEvent:(UIEvent*) event];
     self.state = UIGestureRecognizerStateBegan;
 }

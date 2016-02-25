@@ -69,6 +69,7 @@
     
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:0.25];
+    [UIView setAnimationBeginsFromCurrentState:YES];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
     
     self.alpha = 1.0f;
@@ -83,6 +84,7 @@
     
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:0.25];
+    [UIView setAnimationBeginsFromCurrentState:YES];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
     
     self.alpha = 0.5f;

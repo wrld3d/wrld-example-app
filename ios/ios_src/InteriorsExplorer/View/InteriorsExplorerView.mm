@@ -12,11 +12,6 @@
 #import "UIView+TouchExclusivity.h"
 #import <QuartzCore/QuartzCore.h>
 
-namespace
-{
-    const int LabelTag = 1;
-}
-
 @implementation InteriorsExplorerView
 
 - (ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewInterop*) getInterop
@@ -44,7 +39,7 @@ namespace
         m_screenWidth = width/pixelScale;
         m_screenHeight = height/pixelScale;
         
-        self.floorListViews = [NSMutableArray array];
+        self.pFloorListViews = [NSMutableArray array];
         
         m_stateChangeAnimationTimeSeconds = 0.2f;
         
@@ -68,6 +63,11 @@ namespace
         [self.pFloorChangeButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"floor_selection_button") forState:UIControlStateNormal];
         [self.pFloorChangeButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"floor_selection_button_down") forState:UIControlStateSelected];
         m_draggingFloorButton = NO;
+        
+        ImmediatePanGestureRecognizer* buttonDrag = [[ImmediatePanGestureRecognizer alloc] initWithTarget:self action:@selector(dragButton:)];
+        [self.pFloorChangeButton addGestureRecognizer:buttonDrag];
+        [buttonDrag release];
+        
         [self.pFloorPanel addSubview:self.pFloorChangeButton];
         
         const float upperPadding = 3.0f;
@@ -77,12 +77,10 @@ namespace
         self.pFloorOnButtonLabel.textColor = [UIColor whiteColor];
         self.pFloorOnButtonLabel.textAlignment = NSTextAlignmentCenter;
         self.pFloorOnButtonLabel.font = [UIFont boldSystemFontOfSize:12.0f];
-        self.pFloorChangeButton.userInteractionEnabled = NO;
+        self.pFloorOnButtonLabel.userInteractionEnabled = NO;
         [self.pFloorChangeButton addSubview:self.pFloorOnButtonLabel];
         
-        ImmediatePanGestureRecognizer* buttonDrag = [[ImmediatePanGestureRecognizer alloc] initWithTarget:self action:@selector(dragButton:)];
-        [self.pFloorChangeButton addGestureRecognizer:buttonDrag];
-        [buttonDrag release];
+        
         
         const float buttonSize = 50.f;
         const float labelLength = isPhone? 150.f : 200.f;
@@ -239,12 +237,12 @@ namespace
 
 - (void) refreshFloorViews
 {
-    for(InteriorsExplorerFloorItemView* item in self.floorListViews)
+    for(InteriorsExplorerFloorItemView* item in self.pFloorListViews)
     {
         [item removeFromSuperview];
     }
     
-    [self.floorListViews removeAllObjects];
+    [self.pFloorListViews removeAllObjects];
     
     const float heightPerFloor = 50;
     const float divisionWidth = 40;
@@ -272,11 +270,11 @@ namespace
                                                                                                             :(floorIndex == floorCount-1)] autorelease];
         CGRect viewFrame = pFloorView.frame;
         viewFrame.origin.y = yOffset;
-        viewFrame.origin.x = 22.0f; // ((buttonWidth / 2.0f) - (0.25 * divisionWidth)
+        viewFrame.origin.x = (self.pFloorChangeButton.frame.size.width / 2.0f) - (0.25 * divisionWidth);
         pFloorView.frame = viewFrame;
         
         [self.pFloorPanel insertSubview:pFloorView belowSubview:self.pFloorChangeButton];
-        [self.floorListViews addObject:pFloorView];
+        [self.pFloorListViews addObject:pFloorView];
         
         yOffset += heightPerFloor;
         floorIndex++;
@@ -291,68 +289,6 @@ namespace
 {
     int nameIndex = static_cast<int>(m_tableViewFloorNames.size()-1) - floorIndex;
     self.pFloorOnButtonLabel.text = [NSString stringWithCString:m_tableViewFloorNames.at(nameIndex).c_str() encoding:NSUTF8StringEncoding];
-}
-
-- (int) reverseIndex:(int)floorIndex
-{
-    return int((m_tableViewFloorNames.size() - floorIndex)-1);
-}
-
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return m_tableViewFloorNames.size();
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    return nil;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 0.0f;
-}
-
-- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *Identifier = @"ReusableCellIdentifier";
-    UILabel *label;
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Identifier];
-    if(cell == nil)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identifier];
-        
-        label = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, 0.0, 0.0)];
-        label.tag = LabelTag;
-        label.textAlignment = NSTextAlignmentCenter;
-        label.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
-        label.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-        [cell.contentView addSubview:label];
-        
-        cell.backgroundView = [[UIImageView alloc] initWithImage:[ [UIImage imageNamed:@"place_pin_background"] stretchableImageWithLeftCapWidth:0.0 topCapHeight:0.0] ];
-        UIView *selectedColorView = [[UIView alloc] init];
-        selectedColorView.backgroundColor = ExampleApp::Helpers::ColorPalette::LightGreyTone;
-        [cell setSelectedBackgroundView:selectedColorView];
-        
-    }
-    
-    label = (UILabel *)[cell.contentView viewWithTag:LabelTag];
-    label.text = [NSString stringWithUTF8String:m_tableViewFloorNames.at(indexPath.item).c_str()];
-    
-    return cell;
-}
-
-
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    m_pInterop->SelectFloor([self reverseIndex:static_cast<int>(indexPath.item)]);
 }
 
 - (void) setFullyOnScreen
@@ -420,7 +356,6 @@ namespace
     if(recognizer.state == UIGestureRecognizerStateChanged ||
        recognizer.state == UIGestureRecognizerStateEnded)
     {
-
         
         CGPoint translation = [recognizer translationInView:self.pFloorChangeButton];
         CGRect buttonFrame = self.pFloorChangeButton.frame;
@@ -430,7 +365,6 @@ namespace
         
         [recognizer setTranslation:CGPointZero inView:self.pFloorChangeButton];
     }
-    
     
     if(recognizer.state == UIGestureRecognizerStateBegan)
     {
@@ -461,7 +395,7 @@ namespace
 
 - (void) hideFloorLabels
 {
-    for(InteriorsExplorerFloorItemView* item in self.floorListViews)
+    for(InteriorsExplorerFloorItemView* item in self.pFloorListViews)
     {
         [item hideName];
     }
@@ -471,7 +405,7 @@ namespace
 
 - (void) showFloorLabels
 {
-    for(InteriorsExplorerFloorItemView* item in self.floorListViews)
+    for(InteriorsExplorerFloorItemView* item in self.pFloorListViews)
     {
         [item showName];
     }
@@ -481,8 +415,8 @@ namespace
 
 - (void) moveButtonToFloorIndex:(int)floorIndex :(BOOL)shouldAnimate
 {
-    int floorCount = static_cast<int>(self.floorListViews.count);
-    InteriorsExplorerFloorItemView* topItem = [self.floorListViews objectAtIndex:0];
+    int floorCount = static_cast<int>(self.pFloorListViews.count);
+    InteriorsExplorerFloorItemView* topItem = [self.pFloorListViews objectAtIndex:0];
     CGRect topFrame = topItem.frame;
     CGFloat topY = topFrame.origin.y + 25.0f - self.pFloorChangeButton.frame.size.height*0.5f;
     CGFloat newY = topY + ((floorCount-1)-floorIndex) * 50;

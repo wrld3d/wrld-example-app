@@ -9,7 +9,7 @@
 
 @class InteriorsExplorerView;
 
-@interface InteriorsExplorerView : UIView <UITableViewDelegate, UITableViewDataSource>
+@interface InteriorsExplorerView : UIView
 {
     ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewInterop* m_pInterop;
     
@@ -60,8 +60,6 @@
 
 - (void) animateTo:(float)t;
 
-- (int) reverseIndex:(int)floorIndex;
-
 - (void) setTouchEnabled:(BOOL)enabled;
 
 - (void) refreshFloorViews;
@@ -82,6 +80,6 @@
 @property(nonatomic, retain) UIImageView* pDismissButtonBackground;
 @property(nonatomic, retain) UILabel* pFloorNameLabel;
 
-@property(nonatomic, retain) NSMutableArray* floorListViews;
+@property(nonatomic, retain) NSMutableArray* pFloorListViews;
 
 @end
