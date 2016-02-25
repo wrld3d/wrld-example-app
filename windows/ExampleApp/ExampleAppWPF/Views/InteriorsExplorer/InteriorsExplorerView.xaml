@@ -8,8 +8,29 @@
         <ResourceDictionary Source="../../TransparentButtonStyle.xaml" />
         <ResourceDictionary Source="../../SimpleSlider.xaml" />        
     </ResourceDictionary.MergedDictionaries>
-    
-    
+
+    <Style x:Key="ExitButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Image VerticalAlignment="Center" HorizontalAlignment="Center" Width="40" Height="40" Source="/Assets/menu_button.png">
+                            <Image.LayoutTransform>
+                                <ScaleTransform ScaleX="-1"/>
+                            </Image.LayoutTransform>
+                        </Image>
+                        <Image Name="PART_Image" Source="/Assets/button_exit_interior_off.png" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Source" Value="/Assets/button_exit_interior_on.png" TargetName="PART_Image"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 
     <Style TargetType="{x:Type local:InteriorsExplorerView}">
         <Setter Property="Template">
@@ -34,37 +55,23 @@
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="FloorName" Foreground="{StaticResource DarkGrey}" FontSize="16"/>
                                 </Grid>
                             </Grid>
-                            <Button Name="DismissButton" Width="40" Height="40" Grid.Column="1" Style="{StaticResource TransparentButtonStyle}">
-                                <Grid>
-                                    <Image VerticalAlignment="Center" HorizontalAlignment="Center" Width="40" Height="40" Source="/Assets/menu_button.png">
-                                        <Image.LayoutTransform>
-                                            <ScaleTransform ScaleX="-1"/>
-                                        </Image.LayoutTransform>
-                                    </Image>
-                                    <Image VerticalAlignment="Center" HorizontalAlignment="Center" Width="14" Height="24" Source="/Assets/arrow.png">
-                                        <Image.LayoutTransform>
-                                            <ScaleTransform ScaleX="-1"/>
-                                        </Image.LayoutTransform>
-                                    </Image>
-                                </Grid>
-                            </Button>
+                            <Button Name="DismissButton" Width="40" Height="40" Grid.Column="1" Style="{StaticResource ExitButtonStyle}"/>
                         </Grid>
 
-                        <Grid Name="FloorPanel" HorizontalAlignment="Right" VerticalAlignment="Center" Width="auto">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="50"/>
-                                <ColumnDefinition Width="12"/>
-                            </Grid.ColumnDefinitions>
+                        <Grid Name="FloorPanel" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="auto">
                             <Slider Name="FloorSlider"
                                     Grid.Column="0"
                                     Style="{StaticResource SimpleSlider}"
-                                    Orientation="Vertical"
-                                    Height="200"
+                                    Orientation="Vertical"                                    
+                                    VerticalAlignment="Bottom"
+                                    Margin="0,0,20,20"
+                                    MinHeight="300"
                                     Minimum="0"
                                     Maximum="1"
                                     TickFrequency="1"
-                                    TickPlacement="Both"
+                                    TickPlacement="TopLeft"                                    
                                     IsMoveToPointEnabled="True"
+                                    Foreground="{StaticResource LightGrey}"
                             />
                         </Grid>
                     </Grid>

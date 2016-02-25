@@ -22,7 +22,7 @@ namespace ExampleAppWPF
         private double m_stateChangeAnimationTimeMilliseconds = 200.0;
         private bool m_dragInProgress = false;
 
-        private const float DefaultOffscreenOffsetX = 80.0f;
+        private const float DefaultOffscreenOffsetX = 100.0f;
 
         static InteriorsExplorerView()
         {
