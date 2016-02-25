@@ -92,7 +92,7 @@ namespace ExampleApp
                         rapidjson::Document json;
                         if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
                         {
-                            json[SearchConstants::AVAILABILITY_FIELD_NAME.c_str()] = rapidjson::Value(updatedAvailability.c_str(), json.GetAllocator());
+                            json[SearchConstants::AVAILABILITY_FIELD_NAME.c_str()] = rapidjson::Value(updatedAvailability.c_str(), json.GetAllocator()).Move();
                         }
                         
                         rapidjson::StringBuffer strbuf;
