@@ -13,6 +13,7 @@
 
 #include "SearchResultModel.h"
 #include "SearchVendorNames.h"
+#include "SwallowSearchParser.h"
 #include "SwallowPoiDbParseHelper.h"
 #include "SwallowSearchConstants.h"
 
@@ -64,7 +65,7 @@ namespace ExampleApp
                 
                 std::string modelID = Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME + std::string("_") + resultRow.Cell(columnOffset + poi_id).AsText();
                 Eegeo::Space::LatLong modelLocation = Eegeo::Space::LatLong::FromDegrees(resultRow.Cell(columnOffset + poi_latitude_degrees).AsReal(), resultRow.Cell(columnOffset + poi_longitude_degrees).AsReal());
-                std::string modelSubTitle = GetFormattedAvailabilityString(availability);
+                std::string modelSubTitle = Search::Swallow::SdkModel::SearchParser::GetFormattedAvailabilityString(availability);
                 
                 return Search::SdkModel::SearchResultModel(ExampleApp::Search::SdkModel::SearchResultModel::CurrentVersion,
                                                            modelID,
