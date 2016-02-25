@@ -4,4 +4,5 @@ xlwt
 python-dateutil
 pyshp
 geojson
+pillow
 requests
