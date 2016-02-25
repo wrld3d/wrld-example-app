@@ -312,7 +312,7 @@ def build_employee_table(xls_book, sheet_index, db_cursor, connection, src_image
 
     table_name = xls_sheet.name
 
-    poi_columns = ['name', 'job_title', 'image_filename', 'working_group', 'office_location', 'desk_code', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees']
+    poi_columns = ['name', 'job_title', 'image_filename', 'working_group', 'office_location', 'desk_code']
     control_columns = ['available_in_app']
     expected_columns = poi_columns + control_columns
     available_in_app_col_index = len(poi_columns)
@@ -347,29 +347,13 @@ def build_employee_table(xls_book, sheet_index, db_cursor, connection, src_image
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated desk_code column values")
 
-    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'interior_id', first_data_row_number, available_in_app_col_index)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated interior_id column values")
-
-    all_validated &= validate_required_int_field(xls_sheet, poi_columns, 'interior_floor', first_data_row_number, available_in_app_col_index, MIN_FLOOR)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated interior floor number")
-
-    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'latitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LAT, MAX_LAT)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated title latitude_degrees values")
-
-    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'longitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LNG, MAX_LNG)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated title longitude_degrees values")
-
     if not all_validated:
         raise ValueError("failed validation")
 
     build_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path, dest_image_dir, verbose)
 
     column_names = ['id'] + poi_columns
-    column_types = ['INTEGER PRIMARY KEY', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'INTEGER', 'REAL', 'REAL']
+    column_types = ['INTEGER PRIMARY KEY', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'TEXT']
     create_table(db_cursor, table_name, column_names, column_types)
 
     insert_into_table_with_image_column(db_cursor, table_name, column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename'), dest_image_relative_dir)
