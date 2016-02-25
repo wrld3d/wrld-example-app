@@ -42,6 +42,10 @@
         self.pFloorNameLabel.textColor = [UIColor whiteColor];
         self.pFloorNameLabel.textAlignment = NSTextAlignmentLeft;
         self.pFloorNameLabel.text = floorName;
+        [self.pFloorNameLabel sizeToFit];
+        CGRect f = self.pFloorNameLabel.frame;
+        f.size.height = height;
+        self.pFloorNameLabel.frame = f;
         [self addSubview:self.pFloorNameLabel];
         
         self.userInteractionEnabled = false;
