@@ -21,6 +21,8 @@
 #include "SearchVendorNames.h"
 #include "SwallowSearchConstants.h"
 
+#include "EegeoJsonParser.h"
+
 namespace ExampleApp
 {
     namespace Search
@@ -35,30 +37,14 @@ namespace ExampleApp
                     {
                         rapidjson::Document json;
                         
-                        std::string name;
-                        std::string jobTitle;
-                        std::string imageFilename;
                         std::string workingGroup;
                         std::string officeLocation;
                         std::string deskCode;
+                        std::string imageUrl;
                         
+                        TryParseImageDetails(searchResultModel, imageUrl);
                         if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
                         {
-                            if(json.HasMember(SearchConstants::NAME_FIELD_NAME.c_str()) && json[SearchConstants::NAME_FIELD_NAME.c_str()].IsString())
-                            {
-                                name = json[SearchConstants::NAME_FIELD_NAME.c_str()].GetString();
-                            }
-                            
-                            if(json.HasMember(SearchConstants::JOB_TITLE_FIELD_NAME.c_str()) && json[SearchConstants::JOB_TITLE_FIELD_NAME.c_str()].IsString())
-                            {
-                                jobTitle = json[SearchConstants::JOB_TITLE_FIELD_NAME.c_str()].GetString();
-                            }
-                            
-                            if(json.HasMember(SearchConstants::IMAGE_FILENAME_FIELD_NAME.c_str()) && json[SearchConstants::IMAGE_FILENAME_FIELD_NAME.c_str()].IsString())
-                            {
-                                imageFilename = json[SearchConstants::IMAGE_FILENAME_FIELD_NAME.c_str()].GetString();
-                            }
-                            
                             if(json.HasMember(SearchConstants::WORKING_GROUP_FIELD_NAME.c_str()) && json[SearchConstants::WORKING_GROUP_FIELD_NAME.c_str()].IsString())
                             {
                                 workingGroup = json[SearchConstants::WORKING_GROUP_FIELD_NAME.c_str()].GetString();
@@ -79,12 +65,33 @@ namespace ExampleApp
                             Eegeo_ASSERT(false, "JSON parse error transforming search result model to swallow person model");
                         }
                         
-                        return SwallowPersonResultModel(name,
-                                                        jobTitle,
-                                                        imageFilename,
+                        return SwallowPersonResultModel(searchResultModel.GetTitle(),
+                                                        searchResultModel.GetSubtitle(),
+                                                        imageUrl,
                                                         workingGroup,
                                                         officeLocation,
                                                         deskCode);
+                    }
+                    
+                    std::string GetFormattedAvailabilityString(const std::string& availabilityString)
+                    {
+                        if(availabilityString == Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE)
+                        {
+                            return "Available";
+                        }
+                        else if(availabilityString == Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_SOON)
+                        {
+                            return "Available Soon";
+                        }
+                        else if(availabilityString == Search::Swallow::SearchConstants::MEETING_ROOM_OCCUPIED)
+                        {
+                            return "Occupied";
+                        }
+                        else
+                        {
+                            Eegeo_ASSERT(false, "Unrecognised meeting room availabity string");
+                            return "Unknown";
+                        }
                     }
                     
                     ExampleApp::Search::SdkModel::SearchResultModel MutateMeetingRoomAvailability(const Search::SdkModel::SearchResultModel& searchResultModel, const std::string& updatedAvailability)
@@ -110,7 +117,7 @@ namespace ExampleApp
                                                                    searchResultModel.GetFloor(),
                                                                    Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME,
                                                                    std::vector<std::string>(),
-                                                                   Search::SwallowMeetingRoomsVendorName,
+                                                                   Search::EegeoVendorName,
                                                                    strbuf.GetString(),
                                                                    searchResultModel.GetCreationTimestamp());
                     }
@@ -119,157 +126,86 @@ namespace ExampleApp
                     {
                         rapidjson::Document json;
                         
-                        std::string name;
                         std::string imageUrl;
-                        std::string availability;
+                        std::string availability = "available";
                         
+                        TryParseImageDetails(searchResultModel, imageUrl);
                         if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
                         {
-                            if(json.HasMember(SearchConstants::NAME_FIELD_NAME.c_str()) && json[SearchConstants::NAME_FIELD_NAME.c_str()].IsString())
-                            {
-                                name = json[SearchConstants::NAME_FIELD_NAME.c_str()].GetString();
-                            }
-                            
-                            if(json.HasMember(SearchConstants::IMAGE_FILENAME_FIELD_NAME.c_str()) && json[SearchConstants::IMAGE_FILENAME_FIELD_NAME.c_str()].IsString())
-                            {
-                                imageUrl = json[SearchConstants::IMAGE_FILENAME_FIELD_NAME.c_str()].GetString();
-                            }
-                            
                             if(json.HasMember(SearchConstants::AVAILABILITY_FIELD_NAME.c_str()) && json[SearchConstants::AVAILABILITY_FIELD_NAME.c_str()].IsString())
                             {
                                 availability = json[SearchConstants::AVAILABILITY_FIELD_NAME.c_str()].GetString();
                             }
                         }
-                        else
-                        {
-                            Eegeo_ASSERT(false, "JSON parse error transforming search result model to swallow meeting room model");
-                        }
                         
-                        return SwallowMeetingRoomResultModel(name,
+                        return SwallowMeetingRoomResultModel(searchResultModel.GetTitle(),
                                                              imageUrl,
                                                              availability);
                     }
                     
                     SwallowWorkingGroupResultModel TransformToSwallowWorkingGroupResult(const Search::SdkModel::SearchResultModel& searchResultModel)
                     {
-                        rapidjson::Document json;
-                        
-                        std::string name;
                         std::string imageUrl;
+                        TryParseImageDetails(searchResultModel, imageUrl);
+                        rapidjson::Document json;
                         std::string description;
-                        
                         if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
                         {
-                            if(json.HasMember(SearchConstants::NAME_FIELD_NAME.c_str()) && json[SearchConstants::NAME_FIELD_NAME.c_str()].IsString())
-                            {
-                                name = json[SearchConstants::NAME_FIELD_NAME.c_str()].GetString();
-                            }
-                            
-                            if(json.HasMember(SearchConstants::IMAGE_FILENAME_FIELD_NAME.c_str()) && json[SearchConstants::IMAGE_FILENAME_FIELD_NAME.c_str()].IsString())
-                            {
-                                imageUrl = json[SearchConstants::IMAGE_FILENAME_FIELD_NAME.c_str()].GetString();
-                            }
-                            
                             if(json.HasMember(SearchConstants::DESCRIPTION_FIELD_NAME.c_str()) && json[SearchConstants::DESCRIPTION_FIELD_NAME.c_str()].IsString())
                             {
                                 description = json[SearchConstants::DESCRIPTION_FIELD_NAME.c_str()].GetString();
                             }
                         }
-                        else
-                        {
-                            Eegeo_ASSERT(false, "JSON parse error transforming search result model to swallow working group model");
-                        }
-                        
-                        return SwallowWorkingGroupResultModel(name,
+                        return SwallowWorkingGroupResultModel(searchResultModel.GetTitle(),
                                                               imageUrl,
                                                               description);
                     }
                     
                     SwallowFacilityResultModel TransformToSwallowFacilityResult(const Search::SdkModel::SearchResultModel& searchResultModel)
                     {
-                        rapidjson::Document json;
-                        
-                        std::string name;
                         std::string imageUrl;
+                        TryParseImageDetails(searchResultModel, imageUrl);
+                        rapidjson::Document json;
                         std::string description;
-                        
                         if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
                         {
-                            if(json.HasMember(SearchConstants::NAME_FIELD_NAME.c_str()) && json[SearchConstants::NAME_FIELD_NAME.c_str()].IsString())
-                            {
-                                name = json[SearchConstants::NAME_FIELD_NAME.c_str()].GetString();
-                            }
-                            
-                            if(json.HasMember(SearchConstants::IMAGE_FILENAME_FIELD_NAME.c_str()) && json[SearchConstants::IMAGE_FILENAME_FIELD_NAME.c_str()].IsString())
-                            {
-                                imageUrl = json[SearchConstants::IMAGE_FILENAME_FIELD_NAME.c_str()].GetString();
-                            }
-                            
                             if(json.HasMember(SearchConstants::DESCRIPTION_FIELD_NAME.c_str()) && json[SearchConstants::DESCRIPTION_FIELD_NAME.c_str()].IsString())
                             {
                                 description = json[SearchConstants::DESCRIPTION_FIELD_NAME.c_str()].GetString();
                             }
                         }
-                        else
-                        {
-                            Eegeo_ASSERT(false, "JSON parse error transforming search result model to swallow working group model");
-                        }
-                        
-                        return SwallowFacilityResultModel(name,
+                        return SwallowFacilityResultModel(searchResultModel.GetTitle(),
                                                           imageUrl,
                                                           description);
                     }
                     
                     SwallowDepartmentResultModel TransformToSwallowDepartmentResult(const Search::SdkModel::SearchResultModel& searchResultModel)
                     {
-                        rapidjson::Document json;
-                        
-                        std::string name;
                         std::string imageUrl;
+                        TryParseImageDetails(searchResultModel, imageUrl);
+                        rapidjson::Document json;
                         std::string description;
-                        
                         if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
                         {
-                            if(json.HasMember(SearchConstants::NAME_FIELD_NAME.c_str()) && json[SearchConstants::NAME_FIELD_NAME.c_str()].IsString())
-                            {
-                                name = json[SearchConstants::NAME_FIELD_NAME.c_str()].GetString();
-                            }
-                            
-                            if(json.HasMember(SearchConstants::IMAGE_FILENAME_FIELD_NAME.c_str()) && json[SearchConstants::IMAGE_FILENAME_FIELD_NAME.c_str()].IsString())
-                            {
-                                imageUrl = json[SearchConstants::IMAGE_FILENAME_FIELD_NAME.c_str()].GetString();
-                            }
-                            
                             if(json.HasMember(SearchConstants::DESCRIPTION_FIELD_NAME.c_str()) && json[SearchConstants::DESCRIPTION_FIELD_NAME.c_str()].IsString())
                             {
                                 description = json[SearchConstants::DESCRIPTION_FIELD_NAME.c_str()].GetString();
                             }
                         }
-                        else
-                        {
-                            Eegeo_ASSERT(false, "JSON parse error transforming search result model to swallow working group model");
-                        }
-                        
-                        return SwallowDepartmentResultModel(name,
-                                                          imageUrl,
-                                                          description);
+                        return SwallowDepartmentResultModel(searchResultModel.GetTitle(),
+                                                            imageUrl,
+                                                            description);
                     }
                     
                     SwallowOfficeResultModel TransformToSwallowOfficeResult(const Search::SdkModel::SearchResultModel& searchResultModel)
                     {
                         rapidjson::Document json;
                         
-                        std::string name;
                         float distance = 0.0f;
                         float headingDegrees = 0.0f;
                         
                         if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
                         {
-                            if(json.HasMember(SearchConstants::NAME_FIELD_NAME.c_str()) && json[SearchConstants::NAME_FIELD_NAME.c_str()].IsString())
-                            {
-                                name = json[SearchConstants::NAME_FIELD_NAME.c_str()].GetString();
-                            }
-                            
                             if(json.HasMember(SearchConstants::DISTANCE_FIELD_NAME.c_str()) && json[SearchConstants::DISTANCE_FIELD_NAME.c_str()].IsNumber())
                             {
                                 distance = (float)json[SearchConstants::DISTANCE_FIELD_NAME.c_str()].GetDouble();
@@ -285,7 +221,7 @@ namespace ExampleApp
                             Eegeo_ASSERT(false, "JSON parse error transforming search result model to swallow working group model");
                         }
                         
-                        return SwallowOfficeResultModel(name,
+                        return SwallowOfficeResultModel(searchResultModel.GetTitle(),
                                                         distance,
                                                         headingDegrees);
                     }
@@ -333,21 +269,7 @@ namespace ExampleApp
                     
                     bool TryParseImageDetails(const Search::SdkModel::SearchResultModel& searchResultModel, std::string& out_imageUrl)
                     {
-                        if(searchResultModel.GetVendor().find(Search::SwallowVendorName) == 0)
-                        {
-                            rapidjson::Document json;
-                            
-                            if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
-                            {
-                                if(json.HasMember(SearchConstants::IMAGE_FILENAME_FIELD_NAME.c_str()) && json[SearchConstants::IMAGE_FILENAME_FIELD_NAME.c_str()].IsString())
-                                {
-                                    out_imageUrl = json[SearchConstants::IMAGE_FILENAME_FIELD_NAME.c_str()].GetString();
-                                    return true;
-                                }
-                            }
-                        }
-                        
-                        return false;
+                        return Search::EegeoPois::SdkModel::TryParseImageDetails(searchResultModel, out_imageUrl);
                     }
                 }
             }

@@ -9,7 +9,7 @@
 #include "SearchVendorNames.h"
 #include "SwallowSearchParser.h"
 #include "SwallowOfficeResultMenuOption.h"
-
+#include "SwallowSearchConstants.h"
 
 namespace ExampleApp
 {
@@ -61,9 +61,16 @@ namespace ExampleApp
                 for(int i = 0; i < m_lastAddedResults.size(); ++i)
                 {
                     const Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
+                    std::string subtitle = model.GetSubtitle();
+                    if (model.GetCategory() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
+                    {
+                        // Availability is no longer a subtitle as that affects search results.
+                        Search::Swallow::SdkModel::SwallowMeetingRoomResultModel meetingRoomModel = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(model);
+                        subtitle = Search::Swallow::SdkModel::SearchParser::GetFormattedAvailabilityString(meetingRoomModel.GetAvailability());
+                    }
                     m_menuOptions.AddItem(model.GetIdentifier(),
                                           model.GetTitle(),
-                                          model.GetSubtitle(),
+                                          subtitle,
                                           model.GetCategory(),
                                           GetMenuOptionByVendor(model.GetVendor(), model));
                 }
@@ -73,7 +80,7 @@ namespace ExampleApp
             
             Menu::View::IMenuOption* SearchResultMenuController::GetMenuOptionByVendor(const std::string& vendor, const Search::SdkModel::SearchResultModel& model) const
             {
-                if(vendor == Search::SwallowOfficesVendorName)
+                if(vendor == Search::EegeoVendorName && model.GetCategory() ==  Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME)
                 {
                     Search::Swallow::SdkModel::SwallowOfficeResultModel officeModel = Search::Swallow::SdkModel::SearchParser::TransformToSwallowOfficeResult(model);
                     

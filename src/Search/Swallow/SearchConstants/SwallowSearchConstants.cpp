@@ -19,6 +19,7 @@ namespace ExampleApp
                 const std::string AVAILABILITY_FIELD_NAME = "availability";
                 const std::string DESCRIPTION_FIELD_NAME = "description";
                 const std::string CATEGORY_FIELD_NAME = "category";
+                const std::string SUBCATEGORY_FIELD_NAME = "subcategory";
                 const std::string DISTANCE_FIELD_NAME = "distance";
                 const std::string HEADING_DEGREES_FIELD_NAME = "heading_degrees";
                 const std::string TARGET_INTERIOR_ID_FIELD_NAME = "target_interior_id";
@@ -53,16 +54,35 @@ namespace ExampleApp
                     
                     std::vector<ExampleApp::CategorySearch::View::CategorySearchModel> categories;
                     
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Meeting Rooms", MEETING_ROOM_CATEGORY_NAME, "meetingroom", showCategoriesInSearchMenu));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Working Groups", WORKING_GROUP_CATEGORY_NAME, "workinggroup", showCategoriesInSearchMenu));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Facilities", FACILITY_CATEGORY_NAME, "toilets", showCategoriesInSearchMenu));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Offices", OFFICE_CATEGORY_NAME, "office", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Meeting Rooms", MEETING_ROOM_CATEGORY_NAME, true, "meetingroom", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Working Groups", WORKING_GROUP_CATEGORY_NAME, false, "workinggroup", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Facilities", FACILITY_CATEGORY_NAME, true, "toilets", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Offices", OFFICE_CATEGORY_NAME, false, "office", showCategoriesInSearchMenu));
                     
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Toilets", OFFICE_CATEGORY_NAME, "toilets", false));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Print Stations", PRINT_STATION_CATEGORY_NAME, "printstation", false));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Stationary", STATIONERY_CATEGORY_NAME, "stationary", false));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("People", PERSON_CATEGORY_NAME, "person", false));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Department", DEPARTMENT_CATEGORY_NAME, "department", false));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Toilets", OFFICE_CATEGORY_NAME, true, "toilets", false));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Print Stations", PRINT_STATION_CATEGORY_NAME, true, "printstation", false));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Stationary", STATIONERY_CATEGORY_NAME, true, "stationary", false));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("People", PERSON_CATEGORY_NAME, false, "person", false));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Department", DEPARTMENT_CATEGORY_NAME, false, "department", false));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Transitions", TRANSITION_CATEGORY_NAME, false, "transition", false));
+                    return categories;
+                }
+                
+                std::vector<std::string> GetAllCategories()
+                {
+                    std::vector<std::string> categories;
+                    
+                    categories.push_back(MEETING_ROOM_CATEGORY_NAME);
+                    categories.push_back(WORKING_GROUP_CATEGORY_NAME);
+                    categories.push_back(FACILITY_CATEGORY_NAME);
+                    categories.push_back(OFFICE_CATEGORY_NAME);
+                    categories.push_back(TOILETS_CATEGORY_NAME);
+                    categories.push_back(PRINT_STATION_CATEGORY_NAME);
+                    categories.push_back(DEPARTMENT_CATEGORY_NAME);
+                    categories.push_back(STATIONERY_CATEGORY_NAME);
+                    categories.push_back(PERSON_CATEGORY_NAME);
+                    categories.push_back(TRANSITION_CATEGORY_NAME);
+                    
                     return categories;
                 }
                 

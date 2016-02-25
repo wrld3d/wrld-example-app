@@ -145,6 +145,7 @@ namespace ExampleApp
         ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsModule* m_pMyPinCreationDetailsModule;
         ExampleApp::MyPins::SdkModel::IMyPinsModule* m_pMyPinsModule;
         ExampleApp::MyPinDetails::SdkModel::IMyPinDetailsModule* m_pMyPinDetailsModule;
+        Search::Swallow::SdkModel::SwallowSearchServiceModule* m_pSwallowSearchServiceModule;
         Search::Swallow::SdkModel::ISwallowSearchMenuModule* m_pSwallowSearchMenuModule;
         ExampleApp::Options::IOptionsModule* m_pOptionsModule;
         Watermark::SdkModel::IWatermarkModule* m_pWatermarkModule;

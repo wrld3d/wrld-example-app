@@ -34,6 +34,8 @@ namespace ExampleApp
                 
                 virtual bool CanHandleCategory(const std::string& category) const;
                 
+                virtual bool CanHandleIndoor() const { return false; }
+                
                 void InsertOnPerformedQueryCallback(Eegeo::Helpers::ICallback1<const SearchQuery&>& callback);
 
                 void RemoveOnPerformedQueryCallback(Eegeo::Helpers::ICallback1<const SearchQuery&>& callback);

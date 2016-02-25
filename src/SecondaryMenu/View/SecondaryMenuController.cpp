@@ -30,7 +30,7 @@ namespace ExampleApp
             void SecondaryMenuController::OnSearch(const std::string& searchQuery)
             {
                 m_viewModel.Close();
-                m_messageBus.Publish(PerformedSearchMessage(searchQuery, false));
+                m_messageBus.Publish(PerformedSearchMessage(searchQuery, false, false));
             }
 
             void SecondaryMenuController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)

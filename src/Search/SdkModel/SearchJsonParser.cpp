@@ -24,12 +24,6 @@ namespace ExampleApp
                 {
                     return EegeoPois::SdkModel::TryParseImageDetails(searchResultModel, out_imageUrl);
                 }
-                
-                if(vendor.find(SwallowVendorName) == 0)
-                {
-                    return Swallow::SdkModel::SearchParser::TryParseImageDetails(searchResultModel, out_imageUrl);
-                }
-                
                 return false;
             }
         }

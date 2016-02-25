@@ -74,7 +74,7 @@ namespace ExampleApp
                                                            resultRow.Cell(columnOffset + poi_interior_floor).AsInteger(),
                                                            Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME,
                                                            std::vector<std::string>(),
-                                                           Search::SwallowWorkingGroupsVendorName,
+                                                           Search::EegeoVendorName,
                                                            strbuf.GetString(),
                                                            Eegeo::Helpers::Time::MillisecondsSinceEpoch());
             }

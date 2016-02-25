@@ -18,11 +18,21 @@ namespace ExampleApp
                 class SwallowCategoryMenuOption : public Menu::View::IMenuOption, private Eegeo::NonCopyable
                 {
                     std::string m_category;
+                    bool m_hasRadiusOverride;
+                    bool m_interior;
+                    float m_radiusOverride;
                     Menu::View::IMenuViewModel& m_menuViewModel;
                     ExampleAppMessaging::TMessageBus& m_messageBus;
                 public:
                     SwallowCategoryMenuOption(std::string category,
+                                              bool forceInteriorQuery,
                                               Menu::View::IMenuViewModel& menuViewModel,
+                                              ExampleAppMessaging::TMessageBus& messageBus);
+
+                    SwallowCategoryMenuOption(std::string category,
+                                              bool forceInteriorQuery,
+                                              Menu::View::IMenuViewModel& menuViewModel,
+                                              float radius,
                                               ExampleAppMessaging::TMessageBus& messageBus);
                     
                     ~SwallowCategoryMenuOption();

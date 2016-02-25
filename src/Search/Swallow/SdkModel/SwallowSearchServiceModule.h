@@ -12,6 +12,8 @@
 #include "SwallowPoiDb.h"
 #include "SwallowSearch.h"
 #include "WorldPins.h"
+#include "SearchQuery.h"
+#include "SearchResultModel.h"
 
 namespace ExampleApp
 {
@@ -21,27 +23,31 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                class SwallowSearchServiceModule : public Search::SdkModel::ISearchServiceModule, private Eegeo::NonCopyable
+                class SwallowSearchServiceModule : private Eegeo::NonCopyable
                 {
                 private:
-                    Search::SdkModel::ISearchService* m_pSearchService;
                     SwallowSearchTransitionPinController* m_pSwallowSearchTransitionPinController;
                     SwallowOfficeResultMenuOptionSelectedMessageHandler* m_pSwallowOfficeResultMenuOptionSelectedMessageHandler;
+                    Search::SdkModel::ISearchService& m_searchService;
+                    Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
                     
+                    Eegeo::Helpers::TCallback2<SwallowSearchServiceModule, const Search::SdkModel::SearchQuery&, const std::vector<Search::SdkModel::SearchResultModel>& > m_transitionCallback;
+                    
+                    void OnTransitionResult(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results);
                 public:
-                    SwallowSearchServiceModule(SwallowPoiDb::SwallowPoiDbServiceProvider& swallowPoiDbServiceProvider,
+                    SwallowSearchServiceModule(Search::SdkModel::ISearchService& searchService,
+                                               Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                                CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                                                AppCamera::SdkModel::IAppCameraController& appCameraController,
                                                ExampleAppMessaging::TMessageBus& messageBus,
                                                WorldPins::SdkModel::IWorldPinsService& worldPinsService);
                     
                     ~SwallowSearchServiceModule();
-                    
-                    Search::SdkModel::ISearchService& GetSearchService() const;
-                    
+                   
                     std::vector<CategorySearch::View::CategorySearchModel> GetCategorySearchModels() const;
                     
                     SwallowSearchTransitionPinController& GetSwallowSearchTransitionPinController() const;
+                    
                 };
             }
         }

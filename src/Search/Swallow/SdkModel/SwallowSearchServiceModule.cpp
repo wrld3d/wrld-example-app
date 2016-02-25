@@ -6,6 +6,7 @@
 #include "SwallowSearchConstants.h"
 #include "SwallowSearchService.h"
 #include "SwallowSearchTransitionPinController.h"
+#include "ISearchQueryPerformer.h"
 
 namespace ExampleApp
 {
@@ -15,21 +16,26 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                SwallowSearchServiceModule::SwallowSearchServiceModule(SwallowPoiDb::SwallowPoiDbServiceProvider& swallowPoiDbServiceProvider,
+                SwallowSearchServiceModule::SwallowSearchServiceModule(Search::SdkModel::ISearchService& searchService,
+                                                                       Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                                                        CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                                                                        AppCamera::SdkModel::IAppCameraController& appCameraController,
                                                                        ExampleAppMessaging::TMessageBus& messageBus,
                                                                        WorldPins::SdkModel::IWorldPinsService& worldPinsService)
-                : m_pSearchService(NULL)
+                : m_searchService(searchService)
+                , m_searchQueryPerformer(searchQueryPerformer)
                 , m_pSwallowOfficeResultMenuOptionSelectedMessageHandler(NULL)
                 , m_pSwallowSearchTransitionPinController(NULL)
+                , m_transitionCallback(this, &SwallowSearchServiceModule::OnTransitionResult)
                 {
-                    m_pSearchService = Eegeo_NEW(SwallowSearchService)(SearchConstants::GetCategories(),
-                                                                       swallowPoiDbServiceProvider);
+                    m_searchService.InsertOnReceivedQueryResultsCallback(m_transitionCallback);
                     
                     m_pSwallowOfficeResultMenuOptionSelectedMessageHandler = Eegeo_NEW(SwallowOfficeResultMenuOptionSelectedMessageHandler)(cameraTransitionController, messageBus);
                     
                     m_pSwallowSearchTransitionPinController = Eegeo_NEW(SwallowSearchTransitionPinController)(worldPinsService, cameraTransitionController, appCameraController);
+
+                    ExampleApp::Search::SdkModel::SearchQuery query(SearchConstants::TRANSITION_CATEGORY_NAME, true, false, Eegeo::Space::LatLongAltitude::FromDegrees(51.520199, -0.086243, 0.0), 1000.0);
+                    m_searchService.PerformLocationQuerySearch(query);
                 }
                     
                 SwallowSearchServiceModule::~SwallowSearchServiceModule()
@@ -37,13 +43,6 @@ namespace ExampleApp
                     Eegeo_DELETE m_pSwallowSearchTransitionPinController;
                     
                     Eegeo_DELETE m_pSwallowOfficeResultMenuOptionSelectedMessageHandler;
-                    
-                    Eegeo_DELETE m_pSearchService;
-                }
-                    
-                Search::SdkModel::ISearchService& SwallowSearchServiceModule::GetSearchService() const
-                {
-                    return *m_pSearchService;
                 }
                     
                 std::vector<CategorySearch::View::CategorySearchModel> SwallowSearchServiceModule::GetCategorySearchModels() const
@@ -54,6 +53,15 @@ namespace ExampleApp
                 SwallowSearchTransitionPinController& SwallowSearchServiceModule::GetSwallowSearchTransitionPinController() const
                 {
                     return *m_pSwallowSearchTransitionPinController;
+                }
+                
+                void SwallowSearchServiceModule::OnTransitionResult(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results)
+                {
+                    if (query.IsCategory() && query.Query() == SearchConstants::TRANSITION_CATEGORY_NAME)
+                    {
+                        (*m_pSwallowSearchTransitionPinController)(results);
+                        m_searchQueryPerformer.RemoveSearchQueryResults();
+                    }
                 }
             }
         }

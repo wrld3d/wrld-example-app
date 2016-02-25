@@ -8,33 +8,27 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            SearchQueryObserver::SearchQueryObserver(ISearchService& exteriorSearchService,
-                                                     ISearchService& interiorSearchService,
+            SearchQueryObserver::SearchQueryObserver(ISearchService& searchService,
                     ISearchQueryPerformer& searchQueryPerformer,
                     ExampleAppMessaging::TMessageBus& messageBus)
-                : m_exteriorSearchService(exteriorSearchService)
-                , m_interiorSearchService(interiorSearchService)
+                : m_searchService(searchService)
                 , m_searchQueryPerformer(searchQueryPerformer)
                 , m_messageBus(messageBus)
                 , m_searchQueryPerformedCallback(this, &SearchQueryObserver::HandleSearchQueryPerformed)
                 , m_searchQueryResponseCallback(this, &SearchQueryObserver::HandleSearchQueryResponseReceived)
                 , m_searchQueryResultsClearedCallback(this, &SearchQueryObserver::HandleSearchQueryCleared)
             {
-                m_exteriorSearchService.InsertOnPerformedQueryCallback(m_searchQueryPerformedCallback);
-                m_exteriorSearchService.InsertOnReceivedQueryResultsCallback(m_searchQueryResponseCallback);
+                m_searchService.InsertOnPerformedQueryCallback(m_searchQueryPerformedCallback);
+                m_searchService.InsertOnReceivedQueryResultsCallback(m_searchQueryResponseCallback);
                 
-                m_interiorSearchService.InsertOnPerformedQueryCallback(m_searchQueryPerformedCallback);
-                m_interiorSearchService.InsertOnReceivedQueryResultsCallback(m_searchQueryResponseCallback);
                 m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(m_searchQueryResultsClearedCallback);
             }
 
             SearchQueryObserver::~SearchQueryObserver()
             {
-                m_exteriorSearchService.RemoveOnPerformedQueryCallback(m_searchQueryPerformedCallback);
-                m_exteriorSearchService.RemoveOnReceivedQueryResultsCallback(m_searchQueryResponseCallback);
+                m_searchService.RemoveOnPerformedQueryCallback(m_searchQueryPerformedCallback);
+                m_searchService.RemoveOnReceivedQueryResultsCallback(m_searchQueryResponseCallback);
                 
-                m_interiorSearchService.RemoveOnPerformedQueryCallback(m_searchQueryPerformedCallback);
-                m_interiorSearchService.RemoveOnReceivedQueryResultsCallback(m_searchQueryResponseCallback);
                 m_searchQueryPerformer.RemoveOnSearchResultsClearedCallback(m_searchQueryResultsClearedCallback);
             }
 

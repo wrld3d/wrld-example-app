@@ -1,9 +1,10 @@
 // Copyright eeGeo Ltd 2016, All Rights Reserved
 
-#include "EegeoSearchQuery.h"
+#include "EegeoInteriorSearchQuery.h"
 #include "IWebLoadRequestFactory.h"
 #include "IWebLoadRequest.h"
 #include "ApiKey.h"
+#include "InteriorId.h"
 
 #include <sstream>
 #include <iomanip>
@@ -16,37 +17,35 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                EegeoSearchQuery::EegeoSearchQuery(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
-                                                   Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
-                                                   const Search::SdkModel::SearchQuery& query,
-                                                   const std::string& apiKey,
-                                                   Eegeo::Helpers::ICallback0& completionCallback)
+                EegeoInteriorSearchQuery::EegeoInteriorSearchQuery(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
+                                                                   Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
+                                                                   const Search::SdkModel::SearchQuery& query,
+                                                                   const std::string& apiKey,
+                                                                   const Eegeo::Resources::Interiors::InteriorId& interiorId,
+                                                                   int floorIdx,
+                                                                   Eegeo::Helpers::ICallback0& completionCallback)
                 : m_apiKey(apiKey)
                 , m_completionCallback(completionCallback)
                 , m_responseString("")
                 , m_isSuccess(false)
-                , m_webRequestCompleteCallback(this, &EegeoSearchQuery::OnWebResponseReceived)
+                , m_interiorId(interiorId)
+                , m_floorIdx(floorIdx)
+                , m_webRequestCompleteCallback(this, &EegeoInteriorSearchQuery::OnWebResponseReceived)
                 {
+                    Eegeo_ASSERT(query.IsCategory(), "Only support category indoor queries");
                     std::string encodedQuery;
                     urlEncoder.UrlEncode(query.Query(), encodedQuery);
                     
                     std::stringstream urlstream;
                     urlstream.setf(std::ios_base::fixed);
                     urlstream << "https://poi-staging.eegeo.com";
-                    if (query.IsCategory())
-                    {
-                        urlstream << "/category?c=";
-                    }
-                    else
-                    {
-                        urlstream << "/search?s=";
-                    }
+                    urlstream << "/indoor?c=";
                     urlstream << encodedQuery;
-                    urlstream << "&r=" << std::setprecision(4) << (query.Radius() * 1.5f); // increased for Swallow
-                    urlstream << "&lat=" << std::setprecision(8) << query.Location().GetLatitudeInDegrees();
-                    urlstream << "&lon=" << std::setprecision(8) << query.Location().GetLongitudeInDegrees();
+                    urlstream << "&f=";
+                    urlstream << m_floorIdx;
+                    urlstream << "&i=";
+                    urlstream << m_interiorId.Value();
                     urlstream << "&n=200"; // increased for Swallow
-                    urlstream << "&ms=0.1"; // minimum score filter for Swallow
                     urlstream << "&apikey=" << m_apiKey;
                     
                     std::string url = urlstream.str();
@@ -54,27 +53,27 @@ namespace ExampleApp
                     m_pWebLoadRequest->Load();
                 }
                 
-                EegeoSearchQuery::~EegeoSearchQuery()
+                EegeoInteriorSearchQuery::~EegeoInteriorSearchQuery()
                 {
                     
                 }
                 
-                void EegeoSearchQuery::Cancel()
+                void EegeoInteriorSearchQuery::Cancel()
                 {
                     m_pWebLoadRequest->Cancel();
                 }
                 
-                bool EegeoSearchQuery::IsSucceeded()
+                bool EegeoInteriorSearchQuery::IsSucceeded()
                 {
                     return m_isSuccess;
                 }
                 
-                const std::string& EegeoSearchQuery::ResponseString()
+                const std::string& EegeoInteriorSearchQuery::ResponseString()
                 {
                     return m_responseString;
                 }
                 
-                void EegeoSearchQuery::OnWebResponseReceived(Eegeo::Web::IWebResponse& webResponse)
+                void EegeoInteriorSearchQuery::OnWebResponseReceived(Eegeo::Web::IWebResponse& webResponse)
                 {
                     if(webResponse.IsSucceeded())
                     {

@@ -19,8 +19,7 @@ namespace ExampleApp
         {
             class SearchQueryObserver : private Eegeo::NonCopyable
             {
-                ISearchService& m_exteriorSearchService;
-                ISearchService& m_interiorSearchService;
+                ISearchService& m_searchService;
                 ISearchQueryPerformer& m_searchQueryPerformer;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Helpers::TCallback1<SearchQueryObserver, const SearchQuery&> m_searchQueryPerformedCallback;
@@ -34,8 +33,7 @@ namespace ExampleApp
                 void HandleSearchQueryCleared();
 
             public:
-                SearchQueryObserver(ISearchService& exteriorSearchService,
-                                    ISearchService& interiorSearchService,
+                SearchQueryObserver(ISearchService& searchService,
                                     ISearchQueryPerformer& searchQueryPerformer,
                                     ExampleAppMessaging::TMessageBus& messageBus);
 

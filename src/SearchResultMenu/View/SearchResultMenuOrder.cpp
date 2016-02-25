@@ -13,13 +13,18 @@ namespace ExampleApp
         {
             bool SearchResultMenuOrder::operator() (const Search::SdkModel::SearchResultModel& a, const Search::SdkModel::SearchResultModel& b)
             {
-                //GeoNames results on top
-                if(a.GetVendor() != b.GetVendor() && a.GetVendor() == Search::GeoNamesVendorName)
+                //Order eeGeo results on top
+                if(a.GetVendor() != b.GetVendor() && a.GetVendor() == Search::EegeoVendorName)
                 {
                         return true;
                 }
                 //Order GeoNames results as they came in
                 if(a.GetVendor() == Search::GeoNamesVendorName || b.GetVendor() == Search::GeoNamesVendorName)
+                {
+                    return false;
+                }
+                //Order eeGeo results as they came in
+                if(a.GetVendor() == Search::EegeoVendorName || b.GetVendor() == Search::EegeoVendorName)
                 {
                     return false;
                 }

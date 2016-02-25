@@ -13,11 +13,30 @@ namespace ExampleApp
             namespace View
             {
                 SwallowCategoryMenuOption::SwallowCategoryMenuOption(std::string category,
+                                                                     bool forceInteriorQuery,
                                                                      Menu::View::IMenuViewModel& menuViewModel,
                                                                      ExampleAppMessaging::TMessageBus& messageBus)
                 : m_category(category)
+                , m_interior(forceInteriorQuery)
                 , m_menuViewModel(menuViewModel)
                 , m_messageBus(messageBus)
+                , m_hasRadiusOverride(false)
+                , m_radiusOverride(0.f)
+                {
+                    
+                }
+                
+                SwallowCategoryMenuOption::SwallowCategoryMenuOption(std::string category,
+                                                                     bool forceInteriorQuery,
+                                                                     Menu::View::IMenuViewModel& menuViewModel,
+                                                                     float radius,
+                                                                     ExampleAppMessaging::TMessageBus& messageBus)
+                : m_category(category)
+                , m_interior(forceInteriorQuery)
+                , m_menuViewModel(menuViewModel)
+                , m_messageBus(messageBus)
+                , m_hasRadiusOverride(true)
+                , m_radiusOverride(radius)
                 {
                     
                 }
@@ -30,7 +49,14 @@ namespace ExampleApp
                 void SwallowCategoryMenuOption::Select()
                 {
                     m_menuViewModel.Close();
-                    m_messageBus.Publish(CategorySearch::CategorySearchSelectedMessage(m_category));
+                    if (m_hasRadiusOverride)
+                    {
+                        m_messageBus.Publish(CategorySearch::CategorySearchSelectedMessage(m_category, m_interior, m_radiusOverride));
+                    }
+                    else
+                    {
+                        m_messageBus.Publish(CategorySearch::CategorySearchSelectedMessage(m_category, m_interior));
+                    }
                 }
             }
         }

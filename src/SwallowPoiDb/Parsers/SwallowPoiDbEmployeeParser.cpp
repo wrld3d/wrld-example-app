@@ -92,7 +92,7 @@ namespace ExampleApp
                                                            resultRow.Cell(columnOffset + poi_interior_floor).AsInteger(),
                                                            Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME,
                                                            std::vector<std::string>(),
-                                                           Search::SwallowPeopleVendorName,
+                                                           Search::EegeoVendorName,
 														   strbuf.GetString(),
                                                            Eegeo::Helpers::Time::MillisecondsSinceEpoch());
             }

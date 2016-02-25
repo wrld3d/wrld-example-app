@@ -82,7 +82,7 @@ namespace ExampleApp
                                                            interiorFloor,
                                                            Search::Swallow::SearchConstants::TRANSITION_CATEGORY_NAME,
                                                            std::vector<std::string>(),
-                                                           Search::SwallowTransitionsVendorName,
+                                                           Search::EegeoVendorName,
 														   strbuf.GetString(),
                                                            Eegeo::Helpers::Time::MillisecondsSinceEpoch());
             }

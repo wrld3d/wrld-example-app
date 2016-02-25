@@ -5,6 +5,7 @@
 #include "EegeoJsonParser.h"
 #include "EegeoSearchQueryFactory.h"
 #include "EegeoSearchService.h"
+#include "SwallowSearchConstants.h"
 
 namespace ExampleApp
 {
@@ -15,17 +16,21 @@ namespace ExampleApp
             namespace SdkModel
             {
                 EegeoSearchServiceModule::EegeoSearchServiceModule(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
-                                                                           Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
-                                                                           Net::SdkModel::INetworkCapabilities& networkCapabilities,
-                                                                           const std::vector<std::string>& availableCategories,
-                                                                           const std::string& apiKey)
+                                                                   Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
+                                                                   Net::SdkModel::INetworkCapabilities& networkCapabilities,
+                                                                   const std::vector<std::string>& availableCategories,
+                                                                   const std::string& apiKey,
+                                                                   Eegeo::Resources::Interiors::InteriorController& interiorsController,
+                                                                   Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel)
                 : m_pEegeoSearchQueryFactory(NULL)
                 , m_pEegeoParser(NULL)
                 , m_pSearchService(NULL)
                 {
                     m_pEegeoSearchQueryFactory = Eegeo_NEW(EegeoSearchQueryFactory)(webRequestFactory,
-                                                                                            urlEncoder,
-                                                                                            apiKey);
+                                                                                    urlEncoder,
+                                                                                    interiorsController,
+                                                                                    interiorSelectionModel,
+                                                                                    apiKey);
                     m_pEegeoParser = Eegeo_NEW(EegeoJsonParser)();
                     
                     m_pSearchService = Eegeo_NEW(EegeoSearchService)(*m_pEegeoSearchQueryFactory,
@@ -48,7 +53,7 @@ namespace ExampleApp
                 
                 std::vector<CategorySearch::View::CategorySearchModel> EegeoSearchServiceModule::GetCategorySearchModels() const
                 {
-                    return std::vector<CategorySearch::View::CategorySearchModel>();
+                    return Search::Swallow::SearchConstants::GetCategorySearchModels();
                 }
             }
         }

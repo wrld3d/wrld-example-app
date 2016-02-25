@@ -70,7 +70,7 @@ namespace ExampleApp
                                                            0,
                                                            Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME,
                                                            std::vector<std::string>(),
-                                                           Search::SwallowOfficesVendorName,
+                                                           Search::EegeoVendorName,
                                                            strbuf.GetString(),
                                                            Eegeo::Helpers::Time::MillisecondsSinceEpoch());
             }

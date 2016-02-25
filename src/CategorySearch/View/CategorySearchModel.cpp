@@ -12,10 +12,12 @@ namespace ExampleApp
         {
             CategorySearchModel::CategorySearchModel(const std::string& name,
                                                      const std::string& searchCategory,
+                                                     bool interior,
                                                      const std::string& icon,
                                                      bool visibleInSearchMenu)
                 : m_name(name)
                 , m_searchCategory(searchCategory)
+                , m_interior(interior)
                 , m_icon(icon)
                 , m_visibleInSearchMenu(visibleInSearchMenu)
             {
@@ -35,6 +37,11 @@ namespace ExampleApp
             const std::string& CategorySearchModel::SearchCategory() const
             {
                 return m_searchCategory;
+            }
+            
+            bool CategorySearchModel::Interior() const
+            {
+                return m_interior;
             }
             
             bool CategorySearchModel::IsVisibleInSearchMenu() const

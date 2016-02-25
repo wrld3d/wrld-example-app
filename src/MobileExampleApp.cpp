@@ -359,7 +359,7 @@ namespace ExampleApp
                                                                                                       );
         
         m_pInteriorsHighlightVisibilityController = Eegeo_NEW(IntHighlights::InteriorsHighlightVisibilityController)(mapModule.GetInteriorsPresentationModule().GetController(),
-                                                                                                                     m_searchServiceModules[Search::SwallowVendorName + "_standalone"]->GetSearchService(),
+                                                                                                                     m_searchServiceModules[Search::EegeoVendorName]->GetSearchService(),
                                                                                                                      m_pSearchModule->GetSearchQueryPerformer(),
                                                                                                                      m_pSearchModule->GetSearchResultRepository(),
                                                                                                                      mapModule.GetInteriorsPresentationModule().GetInteriorsLabelsController(),
@@ -449,12 +449,6 @@ namespace ExampleApp
         Eegeo_ASSERT(m_pSwallowPoiDbModule == NULL);
         Eegeo_ASSERT(m_pSQLiteModule != NULL);
         
-        const std::string destSqliteDbFilename = "pois.db";
-        
-        m_pSwallowPoiDbModule = SwallowPoiDb::SwallowPoiDbModule::Create(m_applicationConfiguration.SqliteDbUrl(),
-                                                                         destSqliteDbFilename,
-                                                                         *m_pSQLiteModule);
-        
         m_pReactionControllerModule = Eegeo_NEW(Reaction::View::ReactionControllerModule)();
 
         m_pAboutPageModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageModule)(m_identityProvider,
@@ -469,28 +463,7 @@ namespace ExampleApp
         // TODO: Check if this module is still relevant
         m_pAppCameraModule = Eegeo_NEW(AppCamera::SdkModel::AppCameraModule)();
         
-        Search::Swallow::SdkModel::SwallowSearchServiceModule* pSwallowSearchServiceModule = Eegeo_NEW(Search::Swallow::SdkModel::SwallowSearchServiceModule)(m_pSwallowPoiDbModule->GetSwallowPoiDbServiceProvider(),
-                                                                                                                                                              *m_pCameraTransitionService,
-                                                                                                                                                              m_pAppCameraModule->GetController(),
-                                                                                                                                                              m_messageBus,
-                                                                                                                                                              m_pWorldPinsModule->GetWorldPinsService());
-        
-        
-        
-        m_pSwallowPoiDbModule->GetSwallowPoiDbServiceProvider().AddTransitionLoadedCallback(pSwallowSearchServiceModule->GetSwallowSearchTransitionPinController());
-        
-        Search::Swallow::SdkModel::SwallowSearchServiceModule* pStandaloneSwallowSearchServiceModule = Eegeo_NEW(Search::Swallow::SdkModel::SwallowSearchServiceModule)(m_pSwallowPoiDbModule->GetSwallowPoiDbServiceProvider(),
-                                                                                                                                                              *m_pCameraTransitionService,
-                                                                                                                                                              m_pAppCameraModule->GetController(),
-                                                                                                                                                              m_messageBus,
-                                                                                                                                                              m_pWorldPinsModule->GetWorldPinsService());
-        
-        m_pSwallowPoiDbModule->GetSwallowPoiDbServiceProvider().AddTransitionLoadedCallback(pStandaloneSwallowSearchServiceModule->GetSwallowSearchTransitionPinController());
-        m_pSwallowPoiDbModule->GetSwallowPoiDbWebLoader().Load();
-        
         std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*> searchServiceModulesForCombinedSearch = platformImplementedSearchServiceModules;
-        
-        m_searchServiceModules[Search::SwallowVendorName] = pSwallowSearchServiceModule;
         
         const bool useGeoName = true;
         if(useGeoName)
@@ -500,33 +473,36 @@ namespace ExampleApp
                                                                                                                                     m_networkCapabilities,
                                                                                                                                     m_applicationConfiguration.GeoNamesUserName());
         }
-        const bool useEegeoPois = false;
+        const bool useEegeoPois = true;
         if(useEegeoPois)
         {
-            // For Mobile Example App purposes, we use the same taxonomy as Yelp
-            // You could configure your own taxonomy via the category: attribute of a POI submitted to poi-service
-            std::vector<std::string> supportedCategories = Search::Yelp::SearchConstants::GetCategories();
+            std::vector<std::string> supportedCategories = Search::Swallow::SearchConstants::GetAllCategories();
             m_searchServiceModules[Search::EegeoVendorName] = Eegeo_NEW(Search::EegeoPois::SdkModel::EegeoSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
-                                                                                                                                       m_platformAbstractions.GetUrlEncoder(),
-                                                                                                                                       m_networkCapabilities,
-                                                                                                                                       supportedCategories,
-                                                                                                                                       apiKey);
+                                                                                                                               m_platformAbstractions.GetUrlEncoder(),
+                                                                                                                               m_networkCapabilities,
+                                                                                                                               supportedCategories,
+                                                                                                                               apiKey,
+                                                                                                                               world.GetMapModule().GetInteriorsPresentationModule().GetController(),
+                                                                                                                               world.GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel());
         }
         
         searchServiceModulesForCombinedSearch.insert(m_searchServiceModules.begin(), m_searchServiceModules.end());
         
-        // add this after we add the search services to the searchServiceModulesForCombinedSearch object just for cleanup purposes
-        m_searchServiceModules[Search::SwallowVendorName + "_standalone"] = pStandaloneSwallowSearchServiceModule;
-        
-        m_pSearchServiceModule = Eegeo_NEW(Search::Combined::SdkModel::CombinedSearchServiceModule)(searchServiceModulesForCombinedSearch);
+        m_pSearchServiceModule = Eegeo_NEW(Search::Combined::SdkModel::CombinedSearchServiceModule)(searchServiceModulesForCombinedSearch, *m_pAppModeModel);
         
         m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(m_pSearchServiceModule->GetSearchService(),
-                                                                    pStandaloneSwallowSearchServiceModule->GetSearchService(),
                                                                     *m_pGlobeCameraController,
                                                                     *m_pCameraTransitionService,
+                                                                    m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetController(),
                                                                     m_messageBus,
-                                                                    m_sdkDomainEventBus,
-                                                                    *m_pAppModeModel);
+                                                                    m_sdkDomainEventBus);
+        
+        m_pSwallowSearchServiceModule = Eegeo_NEW(Search::Swallow::SdkModel::SwallowSearchServiceModule)(m_pSearchServiceModule->GetSearchService(),
+                                                                                                         m_pSearchModule->GetSearchQueryPerformer(),
+                                                                                                         *m_pCameraTransitionService,
+                                                                                                         m_pAppCameraModule->GetController(),
+                                                                                                         m_messageBus,
+                                                                                                         m_pWorldPinsModule->GetWorldPinsService());
         
         m_pGpsMarkerModule = Eegeo_NEW(ExampleApp::GpsMarker::SdkModel::GpsMarkerModule)(m_pWorld->GetRenderingModule(),
                                                                                          m_platformAbstractions,
@@ -782,7 +758,7 @@ namespace ExampleApp
         Eegeo_DELETE m_pPoiRingModule;
         
         Eegeo_DELETE m_pMyPinCreationModule;
-
+        
         Eegeo_DELETE m_pSearchResultMenuModule;
 
         Eegeo_DELETE m_pSearchResultOnMapModule;
@@ -813,6 +789,8 @@ namespace ExampleApp
 
         Eegeo_DELETE m_pSearchModule;
         
+        Eegeo_DELETE m_pSwallowSearchServiceModule;
+        
         for(std::map<std::string, ExampleApp::Search::SdkModel::ISearchServiceModule*>::iterator it = m_searchServiceModules.begin(); it != m_searchServiceModules.end(); ++it)
         {
             Eegeo_DELETE (*it).second;
@@ -836,7 +814,7 @@ namespace ExampleApp
 
         Eegeo_DELETE m_pReactionControllerModule;
         
-        Eegeo_DELETE m_pSwallowPoiDbModule;
+        //Eegeo_DELETE m_pSwallowPoiDbModule;
     }
 
     std::vector<ExampleApp::OpenableControl::View::IOpenableControlViewModel*> MobileExampleApp::GetOpenableControls() const

@@ -77,7 +77,7 @@ namespace ExampleApp
                                                            resultRow.Cell(columnOffset + poi_interior_floor).AsInteger(),
                                                            Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME,
                                                            std::vector<std::string>(),
-                                                           Search::SwallowMeetingRoomsVendorName,
+                                                           Search::EegeoVendorName,
                                                            strbuf.GetString(),
                                                            Eegeo::Helpers::Time::MillisecondsSinceEpoch());
             }
@@ -85,27 +85,6 @@ namespace ExampleApp
             Search::SdkModel::SearchResultModel SwallowPoiDbMeetingRoomParser::SQLiteResultRowToSearchResult(const Eegeo::SQLite::SQLiteResultRow& resultRow, const std::string& assetsBaseUrl)
             {
                 return SQLiteResultRowToSearchResult(resultRow, assetsBaseUrl, FtsQueryColumnIndices_MAX);
-            }
-            
-            std::string SwallowPoiDbMeetingRoomParser::GetFormattedAvailabilityString(const std::string& availabilityString) const
-            {
-                if(availabilityString == Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE)
-                {
-                    return "Available";
-                }
-                else if(availabilityString == Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_SOON)
-                {
-                    return "Available Soon";
-                }
-                else if(availabilityString == Search::Swallow::SearchConstants::MEETING_ROOM_OCCUPIED)
-                {
-                    return "Occupied";
-                }
-                else
-                {
-                    Eegeo_ASSERT(false, "Unrecognised meeting room availabity string");
-                    return "Unknown";
-                }
             }
         }
     }

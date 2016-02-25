@@ -5,6 +5,7 @@
 #include "MenuOptionsModel.h"
 #include "SwallowCategoryMenuOption.h"
 #include "SwallowSearchConstants.h"
+#include "EarthConstants.h"
 
 namespace ExampleApp
 {
@@ -32,6 +33,7 @@ namespace ExampleApp
                                                              "",
                                                              "",
                                                              Eegeo_NEW(View::SwallowCategoryMenuOption)(Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME,
+                                                                                                        true,
                                                                                                         menuViewModel,
                                                                                                         messageBus));
                     
@@ -42,6 +44,7 @@ namespace ExampleApp
                                                               "",
                                                               "",
                                                               Eegeo_NEW(View::SwallowCategoryMenuOption)(Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME,
+                                                                                                         false,
                                                                                                          menuViewModel,
                                                                                                          messageBus));
                     
@@ -52,6 +55,7 @@ namespace ExampleApp
                                                            "",
                                                            "",
                                                            Eegeo_NEW(View::SwallowCategoryMenuOption)(Search::Swallow::SearchConstants::FACILITY_CATEGORY_NAME,
+                                                                                                      true,
                                                                                                       menuViewModel,
                                                                                                       messageBus));
                     
@@ -62,7 +66,9 @@ namespace ExampleApp
                                                         "",
                                                         "",
                                                         Eegeo_NEW(View::SwallowCategoryMenuOption)(Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME,
+                                                                                                   false,
                                                                                                    menuViewModel,
+                                                                                                   Eegeo::Space::EarthConstants::Radius*2.0,
                                                                                                    messageBus));
                 }
                 

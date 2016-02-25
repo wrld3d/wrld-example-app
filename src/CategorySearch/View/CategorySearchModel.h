@@ -14,17 +14,20 @@ namespace ExampleApp
             {
                 std::string m_name;
                 std::string m_searchCategory;
+                bool m_interior;
                 std::string m_icon;
                 bool m_visibleInSearchMenu;
 
             public:
-                CategorySearchModel(const std::string& name, const std::string& searchCategory, const std::string& icon, bool visibleInSearchMenu);
+                CategorySearchModel(const std::string& name, const std::string& searchCategory, bool interior, const std::string& icon, bool visibleInSearchMenu);
 
                 const std::string& Name() const;
 
                 const std::string& SearchCategory() const;
 
                 const std::string& Icon() const;
+                
+                bool Interior() const;
                 
                 bool IsVisibleInSearchMenu() const;
             };

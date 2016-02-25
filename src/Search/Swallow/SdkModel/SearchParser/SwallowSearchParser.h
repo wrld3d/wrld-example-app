@@ -3,6 +3,7 @@
 #pragma once
 
 #include <vector>
+#include <string>
 
 #include "Types.h"
 
@@ -42,6 +43,8 @@ namespace ExampleApp
                     SwallowTransitionResultModel TransformToSwallowTransitionResult(const Search::SdkModel::SearchResultModel& searchResultModel);
                     
                     bool TryParseImageDetails(const Search::SdkModel::SearchResultModel& searchResultModel, std::string& out_imageUrl);
+                    
+                    std::string GetFormattedAvailabilityString(const std::string& availabilityString);
                 }
             }
         }

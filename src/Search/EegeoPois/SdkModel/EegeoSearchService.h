@@ -38,6 +38,8 @@ namespace ExampleApp
                     
                     ~EegeoSearchService();
                     
+                    bool CanHandleIndoor() const { return true; }
+
                     void CancelInFlightQueries();
                     
                     void PerformLocationQuerySearch(const Search::SdkModel::SearchQuery& query);

@@ -12,13 +12,16 @@ namespace ExampleApp
         {
             std::string m_searchQuery;
             bool m_isCategory;
+            bool m_isInterior;
 
         public:
-            PerformedSearchMessage(const std::string& searchQuery, bool isCategory);
+            PerformedSearchMessage(const std::string& searchQuery, bool isCategory, bool isInterior);
 
             const std::string& SearchQuery() const;
 
             bool IsCategory() const;
+            
+            bool IsInterior() const;
         };
     }
 }

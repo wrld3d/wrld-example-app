@@ -5,6 +5,8 @@
 #include "ISearchQueryPerformer.h"
 #include "LatLongAltitude.h"
 #include "ICameraTransitionController.h"
+#include "SwallowSearchConstants.h"
+#include "InteriorController.h"
 
 namespace ExampleApp
 {
@@ -12,47 +14,41 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            SearchRefreshService::SearchRefreshService(ISearchService& exteriorSearchService,
-                                                       ISearchService& interiorSearchService,
+            SearchRefreshService::SearchRefreshService(ISearchService& searchService,
                     ISearchQueryPerformer& searchQueryPerformer,
                     CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
+                    Eegeo::Resources::Interiors::InteriorController& interiorController,
                     float minimumSecondsBetweenUpdates,
                     float minimumMetresBetweenUpdates)
                 : m_minimumSecondsBetweenUpdates(minimumSecondsBetweenUpdates)
                 , m_minimumMetresSquaredBetweenUpdates(minimumMetresBetweenUpdates * minimumMetresBetweenUpdates)
-                , m_exteriorSearchService(exteriorSearchService)
-                , m_interiorSearchService(interiorSearchService)
+                , m_searchService(searchService)
                 , m_searchQueryPerformer(searchQueryPerformer)
                 , m_cameraTransitionsController(cameraTransitionsController)
-                , m_pSearchResultQueryIssuedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback1<SearchRefreshService, const SearchQuery&>))(this, &SearchRefreshService::HandleSearchQueryIssued))
-                , m_pSearchResultResponseReceivedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<SearchRefreshService, const SearchQuery&, const std::vector<SearchResultModel>& >))(this, &SearchRefreshService::HandleSearchResultsResponseReceived))
-                , m_pSearchQueryResultsClearedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<SearchRefreshService>)(this, &SearchRefreshService::HandleSearchQueryResultsCleared))
+                , m_interiorController(interiorController)
+                , m_searchResultQueryIssuedCallback(this, &SearchRefreshService::HandleSearchQueryIssued)
+                , m_searchResultResponseReceivedCallback(this, &SearchRefreshService::HandleSearchResultsResponseReceived)
+                , m_searchQueryResultsClearedCallback(this, &SearchRefreshService::HandleSearchQueryResultsCleared)
+                , m_interiorChangedCallback(this, &SearchRefreshService::HandleInteriorChanged)
                 , m_queriesPending(0)
                 , m_searchResultsExist(false)
+                , m_searchResultsCleared(false)
                 , m_secondsSincePreviousRefresh(0.f)
                 , m_cameraTransitioning(false)
                 , m_enabled(true)
             {
-                m_interiorSearchService.InsertOnPerformedQueryCallback(*m_pSearchResultQueryIssuedCallback);
-                m_interiorSearchService.InsertOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
-                
-                m_exteriorSearchService.InsertOnPerformedQueryCallback(*m_pSearchResultQueryIssuedCallback);
-                m_exteriorSearchService.InsertOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
-                m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(*m_pSearchQueryResultsClearedCallback);
+                m_searchService.InsertOnPerformedQueryCallback(m_searchResultQueryIssuedCallback);
+                m_searchService.InsertOnReceivedQueryResultsCallback(m_searchResultResponseReceivedCallback);
+                m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(m_searchQueryResultsClearedCallback);
+                m_interiorController.RegisterStateChangedCallback(m_interiorChangedCallback);
             }
 
             SearchRefreshService::~SearchRefreshService()
             {
-                m_searchQueryPerformer.RemoveOnSearchResultsClearedCallback(*m_pSearchQueryResultsClearedCallback);
-                m_exteriorSearchService.RemoveOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
-                m_exteriorSearchService.RemoveOnPerformedQueryCallback(*m_pSearchResultQueryIssuedCallback);
-                
-                m_interiorSearchService.RemoveOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
-                m_interiorSearchService.RemoveOnPerformedQueryCallback(*m_pSearchResultQueryIssuedCallback);
-
-                Eegeo_DELETE m_pSearchResultResponseReceivedCallback;
-                Eegeo_DELETE m_pSearchResultQueryIssuedCallback;
-                Eegeo_DELETE m_pSearchQueryResultsClearedCallback;
+                m_interiorController.UnregisterStateChangedCallback(m_interiorChangedCallback);
+                m_searchQueryPerformer.RemoveOnSearchResultsClearedCallback(m_searchQueryResultsClearedCallback);
+                m_searchService.RemoveOnReceivedQueryResultsCallback(m_searchResultResponseReceivedCallback);
+                m_searchService.RemoveOnPerformedQueryCallback(m_searchResultQueryIssuedCallback);
             }
 
             void SearchRefreshService::SetEnabled(bool enabled)
@@ -97,7 +93,15 @@ namespace ExampleApp
                         {
                             m_previousQueryLocationEcef = ecefLocation;
                             const SearchQuery& previousQuery = m_searchQueryPerformer.GetPreviousSearchQuery();
-                            m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), currentLocation);
+                            if (previousQuery.IsCategory() && previousQuery.Query() == Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME)
+                            {
+                                // Bodged for Swallow Office category query.
+                                m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), previousQuery.IsInterior(), currentLocation, previousQuery.Radius());
+                            }
+                            else
+                            {
+                                m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), previousQuery.IsInterior(), currentLocation);
+                            }
 
                             m_secondsSincePreviousRefresh = 0.f;
                         }
@@ -105,15 +109,32 @@ namespace ExampleApp
                 }
             }
 
+            void SearchRefreshService::HandleInteriorChanged()
+            {
+                if (!m_searchResultsCleared && m_searchResultsExist)
+                {
+                    const SearchQuery& previousQuery = m_searchQueryPerformer.GetPreviousSearchQuery();
+                    if (m_interiorController.GetCurrentState() == Eegeo::Resources::Interiors::InteriorViewState::InteriorInScene && previousQuery.IsCategory())
+                    {
+                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), previousQuery.IsInterior());
+                        m_secondsSincePreviousRefresh = 0.f;
+                    }
+                }
+            }
+
             void SearchRefreshService::HandleSearchQueryIssued(const SearchQuery& query)
             {
                 ++ m_queriesPending;
+                m_searchResultsCleared = false;
             }
 
             void SearchRefreshService::HandleSearchResultsResponseReceived(const SearchQuery& query,
                     const std::vector<SearchResultModel>& results)
             {
-                m_searchResultsExist = true;
+                if (!m_searchResultsCleared)
+                {
+                    m_searchResultsExist = true;
+                }
                 m_previousQueryLocationEcef = query.Location().ToECEF();
                 -- m_queriesPending;
                 Eegeo_ASSERT(m_queriesPending >= 0);
@@ -121,6 +142,7 @@ namespace ExampleApp
 
             void SearchRefreshService::HandleSearchQueryResultsCleared()
             {
+                m_searchResultsCleared = true;
                 m_searchResultsExist = false;
             }
         }

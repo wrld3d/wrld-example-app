@@ -1,10 +1,11 @@
 import getopt
 import os
 import shutil
-import sqlite3
 import sys
 import traceback
-import Image
+import requests
+import json
+from PIL import Image
 
 import xlrd
 
@@ -32,85 +33,6 @@ MAX_HEADING = 360
 
 MIN_FLOOR = 0
 
-
-def make_create_table_command(table_name, column_names, column_types):
-    zipped = zip(column_names, column_types)
-    comma_separated_column_names_with_types = ', '.join([' '.join(pair) for pair in zipped])
-
-    sql_create_table_command = u'create table "' + \
-                               table_name + \
-                               '"  (' +\
-                               comma_separated_column_names_with_types + \
-                               ');'
-    return sql_create_table_command
-
-
-def create_table(db_cursor, table_name, column_names, column_types):
-    sql_create_table_cmd = make_create_table_command(table_name, column_names, column_types)
-    db_cursor.execute(sql_create_table_cmd)
-
-
-def to_relative_image_path(dest_image_relative_dir, image_filename):
-    image_filename = image_filename.lstrip().rstrip()
-    return os.path.normcase(os.path.join(dest_image_relative_dir, image_filename)).replace("\\","/")
-
-def insert_into_table_with_image_column(db_cursor, 
-                                        table_name, 
-                                        column_names, 
-                                        xls_sheet, 
-                                        first_data_row_number, 
-                                        available_in_app_col_index,
-                                        image_filename_col_index,
-                                        dest_image_relative_dir):
-    placeholder_fields = ['?'] * len(column_names)
-    comma_separated_placeholder_fields = ','.join(placeholder_fields)
-    sql_insert_row_cmd = u'INSERT INTO "' +\
-                         table_name +\
-                         '" VALUES (' +\
-                         comma_separated_placeholder_fields +\
-                         ');'
-
-    for row_num in range(first_data_row_number, xls_sheet.nrows):
-        if not is_row_available_in_app(xls_sheet, row_num, available_in_app_col_index):
-            print("skipping row " + str(row_num))
-            continue
-        row_values = xls_sheet.row_values(row_num, 0, len(column_names) - 1)
-
-        image_filename = row_values[image_filename_col_index]
-        if image_filename:
-            image_filename =  filename_to_jpg(image_filename)
-            row_values[image_filename_col_index] = to_relative_image_path(dest_image_relative_dir, image_filename)
-
-        insert_values = [None] + row_values
-        if len(insert_values) != len(column_names):
-            raise ValueError("mismatched columns for row: " + insert_values)
-        db_cursor.execute(sql_insert_row_cmd, insert_values)
-
-def insert_into_table(db_cursor, 
-                      table_name, 
-                      column_names, 
-                      xls_sheet, 
-                      first_data_row_number, 
-                      available_in_app_col_index):
-    placeholder_fields = ['?'] * len(column_names)
-    comma_separated_placeholder_fields = ','.join(placeholder_fields)
-    sql_insert_row_cmd = u'INSERT INTO "' +\
-                         table_name +\
-                         '" VALUES (' +\
-                         comma_separated_placeholder_fields +\
-                         ');'
-
-    for row_num in range(first_data_row_number, xls_sheet.nrows):
-        if not is_row_available_in_app(xls_sheet, row_num, available_in_app_col_index):
-            print("skipping row " + str(row_num))
-            continue
-        row_values = xls_sheet.row_values(row_num, 0, len(column_names) - 1)
-
-        insert_values = [None] + row_values
-        if len(insert_values) != len(column_names):
-            raise ValueError("mismatched columns for row: " + insert_values)
-        db_cursor.execute(sql_insert_row_cmd, insert_values)
-
 def validate_column_names(xls_sheet, column_name_row, expected_columns):
     sheet_column_names = []
 
@@ -126,11 +48,50 @@ def validate_column_names(xls_sheet, column_name_row, expected_columns):
 
     return validated
 
+def to_relative_image_path(dest_image_relative_dir, image_filename):
+    image_filename = image_filename.lstrip().rstrip()
+    return os.path.normcase(os.path.join(dest_image_relative_dir, image_filename)).replace("\\","/")
+
+def gather_table_with_image(column_names, 
+                            xls_sheet, 
+                            first_data_row_number, 
+                            available_in_app_col_index,
+                            image_filename_col_index,
+                            dest_image_relative_dir):
+    for row_num in range(first_data_row_number, xls_sheet.nrows):
+        if not is_row_available_in_app(xls_sheet, row_num, available_in_app_col_index):
+            print("skipping row " + str(row_num))
+            continue
+        row_values = xls_sheet.row_values(row_num, 0, len(column_names) - 1)
+
+        image_filename = row_values[image_filename_col_index]
+        if image_filename:
+            image_filename =  filename_to_jpg(image_filename)
+            row_values[image_filename_col_index] = to_relative_image_path(dest_image_relative_dir, image_filename)
+
+        insert_values = [None] + row_values
+        if len(insert_values) != len(column_names):
+            raise ValueError("mismatched columns for row: " + insert_values)
+        yield insert_values
+
+def gather_table(column_names, 
+                      xls_sheet, 
+                      first_data_row_number, 
+                      available_in_app_col_index):
+    for row_num in range(first_data_row_number, xls_sheet.nrows):
+        if not is_row_available_in_app(xls_sheet, row_num, available_in_app_col_index):
+            print("skipping row " + str(row_num))
+            continue
+        row_values = xls_sheet.row_values(row_num, 0, len(column_names) - 1)
+
+        insert_values = [None] + row_values
+        if len(insert_values) != len(column_names):
+            raise ValueError("mismatched columns for row: " + insert_values)
+        yield insert_values
 
 def is_row_available_in_app(xls_sheet, row_num, available_in_app_col_index):
     available_in_app = xls_sheet.cell_value(row_num, available_in_app_col_index).encode('utf-8')
     return available_in_app == "Yes"
-
 
 def validate_images(xls_sheet, first_data_row_number, image_column_index, available_in_app_col_index, image_dir):
     all_images_validated = True
@@ -285,35 +246,60 @@ def build_images(xls_sheet, first_data_row_number, image_column_index, available
                 print ("Convert " + src_image_path + " to " + dest_image_path)
             img.save(dest_image_path, "JPEG")
 
-def validate_table_exists(db_cursor, table_name):
-    db_cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-
-    result_row = db_cursor.fetchone()
-    while result_row != None:
-        if result_row[0] == table_name:
-            return
-        else:
-            result_row = db_cursor.fetchone()
-
-    raise ValueError("Failed to create table")
-
-
-def log_result_info(db_cursor, table_name, verbose):
-    print('Created table: ' + table_name)
-    db_cursor.execute("SELECT COUNT(*) FROM " + table_name)
-    row_count = db_cursor.fetchone()[0]
-    print("row_count: " + str(row_count))
-
-    if verbose:
-        for row in db_cursor.execute("SELECT * FROM " + table_name):
-            print(row)
-
-def build_employee_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir):
+def collect_desks(xls_book, sheet_index, first_data_row_number, column_name_row):
+    desks = {}
     xls_sheet = xls_book.sheet_by_index(sheet_index)
 
-    table_name = xls_sheet.name
+    poi_columns = ['desk', 'latitude_degrees', 'longitude_degrees', 'interior_id', 'interior_floor']
+    control_columns = ['available_in_app']
+    expected_columns = poi_columns + control_columns
+    available_in_app_col_index = len(poi_columns)
 
-    poi_columns = ['name', 'job_title', 'image_filename', 'working_group', 'office_location', 'desk_code', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees']
+    all_validated = True
+
+    all_validated &= validate_column_names(xls_sheet, column_name_row, expected_columns)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated column names")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'desk', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated name column values")
+
+    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'latitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LAT, MAX_LAT)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated title latitude_degrees values")
+
+    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'longitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LNG, MAX_LNG)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated title longitude_degrees values")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'interior_id', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated interior_id column values")
+
+    all_validated &= validate_required_int_field(xls_sheet, poi_columns, 'interior_floor', first_data_row_number, available_in_app_col_index, MIN_FLOOR)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated interior floor number")
+
+    if not all_validated:
+        raise ValueError("failed validation")
+
+    column_names = ['id'] + poi_columns
+    for v in gather_table(column_names, xls_sheet, first_data_row_number, available_in_app_col_index):
+        desk = {
+            "desk":v[column_names.index('desk')],
+            "lat":float(v[column_names.index('latitude_degrees')]),
+            "lon":float(v[column_names.index('longitude_degrees')]),
+   			"indoor_id":v[column_names.index('interior_id')],
+  			"floor_id":int(v[column_names.index('interior_floor')]),
+	       }
+        desks[desk['desk']] = desk
+    return desks
+
+def collect_employee_table(xls_book, sheet_index, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir, desks):
+    xls_sheet = xls_book.sheet_by_index(sheet_index)
+
+    poi_columns = ['name', 'job_title', 'image_filename', 'working_group', 'office_location', 'desk_code']
     control_columns = ['available_in_app']
     expected_columns = poi_columns + control_columns
     available_in_app_col_index = len(poi_columns)
@@ -348,47 +334,38 @@ def build_employee_table(xls_book, sheet_index, db_cursor, connection, src_image
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated desk_code column values")
 
-    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'interior_id', first_data_row_number, available_in_app_col_index)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated interior_id column values")
-
-    all_validated &= validate_required_int_field(xls_sheet, poi_columns, 'interior_floor', first_data_row_number, available_in_app_col_index, MIN_FLOOR)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated interior floor number")
-
-    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'latitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LAT, MAX_LAT)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated title latitude_degrees values")
-
-    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'longitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LNG, MAX_LNG)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated title longitude_degrees values")
-
     if not all_validated:
         raise ValueError("failed validation")
 
     build_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path, dest_image_dir, verbose)
 
     column_names = ['id'] + poi_columns
-    column_types = ['INTEGER PRIMARY KEY', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'INTEGER', 'REAL', 'REAL']
-    create_table(db_cursor, table_name, column_names, column_types)
+    for v in gather_table_with_image(column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename'), dest_image_relative_dir):
+    	desk_code = v[column_names.index('desk_code')]
+    	if not desk_code in desks:
+    		print "WARNING: No desk found for {0} skipping employee {1}".format(desk_code, v[column_names.index('name')])
+    	else:
+	    	desk = desks[desk_code]
+	    	yield {
+	            "title":v[column_names.index('name')],
+	            "subtitle":v[column_names.index('job_title')],
+	            "category":"person",
+	            "lat":desk['lat'],
+	            "lon":desk['lon'],
+	            "indoor":True,
+	  			"indoor_id":desk['indoor_id'],
+	  			"floor_id":desk['floor_id'],
+	            "user_data":
+	            {
+	              "image_url":v[column_names.index('image_filename')],
+	              "desk_code":desk_code,
+	              "office_location":v[column_names.index('office_location')],
+	              "working_group":v[column_names.index('working_group')]
+	            }
+	       }
 
-    insert_into_table_with_image_column(db_cursor, table_name, column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename'), dest_image_relative_dir)
-
-    connection.commit()
-
-    validate_table_exists(db_cursor, table_name)
-
-    log_result_info(db_cursor, table_name, verbose)
-
-    connection.commit()
-
-def build_meeting_room_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir):
+def collect_meeting_room_table(xls_book, sheet_index, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir):
     xls_sheet = xls_book.sheet_by_index(sheet_index)
-
-    table_name = xls_sheet.name
-
-    print(str(table_name))
 
     poi_columns = ['name', 'image_filename', 'availability', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees']
     control_columns = ['available_in_app']
@@ -434,26 +411,28 @@ def build_meeting_room_table(xls_book, sheet_index, db_cursor, connection, src_i
 
     build_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path, dest_image_dir, verbose)
 
+    poi_columns = ['name', 'image_filename', 'availability', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees']
+
     column_names = ['id'] + poi_columns
-    column_types = ['INTEGER PRIMARY KEY', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'INTEGER', 'REAL', 'REAL']
-    create_table(db_cursor, table_name, column_names, column_types)
+    for v in gather_table_with_image(column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename'), dest_image_relative_dir):
+        yield  {
+            "title":v[column_names.index('name')],
+            "subtitle":"",
+            "category":"meeting_room",
+            "lat":float(v[column_names.index('latitude_degrees')]),
+            "lon":float(v[column_names.index('longitude_degrees')]),
+            "indoor":True,
+  			"indoor_id":v[column_names.index('interior_id')],
+  			"floor_id":int(v[column_names.index('interior_floor')]),
+            "user_data":
+            {
+              "image_url":v[column_names.index('image_filename')],
+              "availability":v[column_names.index('availability')]
+            }
+       }
 
-    insert_into_table_with_image_column(db_cursor, table_name, column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename'), dest_image_relative_dir)
-
-    connection.commit()
-
-    validate_table_exists(db_cursor, table_name)
-
-    log_result_info(db_cursor, table_name, verbose)
-
-    connection.commit()
-
-def build_working_group_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir):
+def collect_working_group_table(xls_book, sheet_index, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir):
     xls_sheet = xls_book.sheet_by_index(sheet_index)
-
-    table_name = xls_sheet.name
-
-    print(str(table_name))
 
     poi_columns = ['name', 'image_filename', 'description', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees']
     control_columns = ['available_in_app']
@@ -500,25 +479,25 @@ def build_working_group_table(xls_book, sheet_index, db_cursor, connection, src_
     build_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path, dest_image_dir, verbose)
 
     column_names = ['id'] + poi_columns
-    column_types = ['INTEGER PRIMARY KEY', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'INTEGER', 'REAL', 'REAL']
-    create_table(db_cursor, table_name, column_names, column_types)
+    for v in gather_table_with_image(column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename'), dest_image_relative_dir):
+    	yield {
+            "title":v[column_names.index('name')],
+            "subtitle":"",
+            "category":"working_group",
+            "lat":float(v[column_names.index('latitude_degrees')]),
+            "lon":float(v[column_names.index('longitude_degrees')]),
+            "indoor":True,
+  			"indoor_id":v[column_names.index('interior_id')],
+  			"floor_id":int(v[column_names.index('interior_floor')]),
+            "user_data":
+            {
+              "image_url":v[column_names.index('image_filename')],
+              "description":v[column_names.index('description')]
+            }
+       }
 
-    insert_into_table_with_image_column(db_cursor, table_name, column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename'), dest_image_relative_dir)
-
-    connection.commit()
-
-    validate_table_exists(db_cursor, table_name)
-
-    log_result_info(db_cursor, table_name, verbose)
-
-    connection.commit()
-
-def build_facility_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir):
+def collect_facility_table(xls_book, sheet_index, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir):
     xls_sheet = xls_book.sheet_by_index(sheet_index)
-
-    table_name = xls_sheet.name
-
-    print(str(table_name))
 
     poi_columns = ['name', 'category', 'image_filename', 'description', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees']
     control_columns = ['available_in_app']
@@ -569,25 +548,26 @@ def build_facility_table(xls_book, sheet_index, db_cursor, connection, src_image
     build_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path, dest_image_dir, verbose)
 
     column_names = ['id'] + poi_columns
-    column_types = ['INTEGER PRIMARY KEY', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'INTEGER', 'REAL', 'REAL']
-    create_table(db_cursor, table_name, column_names, column_types)
+    for v in gather_table_with_image(column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename'), dest_image_relative_dir):
+    	yield {
+            "title":v[column_names.index('name')],
+            "subtitle":"",
+            "category":"facility",
+            "lat":float(v[column_names.index('latitude_degrees')]),
+            "lon":float(v[column_names.index('longitude_degrees')]),
+            "indoor":True,
+  			"indoor_id":v[column_names.index('interior_id')],
+  			"floor_id":int(v[column_names.index('interior_floor')]),
+            "user_data":
+            {
+              "image_url":v[column_names.index('image_filename')],
+              "subcategory":v[column_names.index('category')],
+              "description":v[column_names.index('description')]
+            }
+       }
 
-    insert_into_table_with_image_column(db_cursor, table_name, column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename'), dest_image_relative_dir)
-
-    connection.commit()
-
-    validate_table_exists(db_cursor, table_name)
-
-    log_result_info(db_cursor, table_name, verbose)
-
-    connection.commit()
-
-def build_department_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir):
+def collect_department_table(xls_book, sheet_index, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir):
     xls_sheet = xls_book.sheet_by_index(sheet_index)
-    
-    table_name = xls_sheet.name
-    
-    print(str(table_name))
     
     poi_columns = ['name', 'image_filename', 'description', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees']
     control_columns = ['available_in_app']
@@ -633,26 +613,26 @@ def build_department_table(xls_book, sheet_index, db_cursor, connection, src_ima
 
     build_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path, dest_image_dir, verbose)
 
-    column_names = ['id'] + poi_columns
-    column_types = ['INTEGER PRIMARY KEY', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'INTEGER', 'REAL', 'REAL']
-    create_table(db_cursor, table_name, column_names, column_types)
+    column_names = ['id'] + poi_columns    
+    for v in gather_table_with_image(column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename'), dest_image_relative_dir):
+    	yield {
+            "title":v[column_names.index('name')],
+            "subtitle":"",
+            "category":"department",
+            "lat":float(v[column_names.index('latitude_degrees')]),
+            "lon":float(v[column_names.index('longitude_degrees')]),
+            "indoor":True,
+  			"indoor_id":v[column_names.index('interior_id')],
+  			"floor_id":int(v[column_names.index('interior_floor')]),
+            "user_data":
+            {
+              "image_url":v[column_names.index('image_filename')],
+              "description":v[column_names.index('description')]
+            }
+       }
     
-    insert_into_table_with_image_column(db_cursor, table_name, column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename'), dest_image_relative_dir)
-    
-    connection.commit()
-    
-    validate_table_exists(db_cursor, table_name)
-    
-    log_result_info(db_cursor, table_name, verbose)
-    
-    connection.commit()
-
-def build_office_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir):
+def collect_office_table(xls_book, sheet_index, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir):
     xls_sheet = xls_book.sheet_by_index(sheet_index)
-
-    table_name = xls_sheet.name
-
-    print(str(table_name))
 
     poi_columns = ['name', 'latitude_degrees', 'longitude_degrees', 'distance', 'heading_degrees']
     control_columns = ['available_in_app']
@@ -689,25 +669,22 @@ def build_office_table(xls_book, sheet_index, db_cursor, connection, src_image_f
         raise ValueError("failed validation")
 
     column_names = ['id'] + poi_columns
-    column_types = ['INTEGER PRIMARY KEY', 'TEXT', 'REAL', 'REAL', 'REAL', 'REAL']
-    create_table(db_cursor, table_name, column_names, column_types)
+    for v in gather_table(column_names, xls_sheet, first_data_row_number, available_in_app_col_index):
+    	yield {
+            "title":v[column_names.index('name')],
+            "subtitle":"",
+            "category":"office",
+            "lat":float(v[column_names.index('latitude_degrees')]),
+            "lon":float(v[column_names.index('longitude_degrees')]),
+            "user_data":
+            {
+              "distance":float(v[column_names.index('distance')]),
+              "heading_degrees":float(v[column_names.index('heading_degrees')])
+            }
+       }
 
-    insert_into_table(db_cursor, table_name, column_names, xls_sheet, first_data_row_number, available_in_app_col_index)
-
-    connection.commit()
-
-    validate_table_exists(db_cursor, table_name)
-
-    log_result_info(db_cursor, table_name, verbose)
-
-    connection.commit()
-
-def build_transition_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir):
+def collect_transition_table(xls_book, sheet_index, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir):
     xls_sheet = xls_book.sheet_by_index(sheet_index)
-
-    table_name = xls_sheet.name
-
-    print(str(table_name))
 
     poi_columns = ['interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees', 'target_interior_id', 'target_interior_floor', 'target_latitude_degrees', 'target_longitude_degrees']
     control_columns = ['available_in_app']
@@ -756,28 +733,46 @@ def build_transition_table(xls_book, sheet_index, db_cursor, connection, src_ima
         raise ValueError("failed validation")
 
     column_names = ['id'] + poi_columns
-    column_types = ['INTEGER PRIMARY KEY', 'TEXT', 'INTEGER', 'REAL', 'REAL', 'TEXT', 'INTEGER', 'REAL', 'REAL']
-    create_table(db_cursor, table_name, column_names, column_types)
+    for v in gather_table(column_names, xls_sheet, first_data_row_number, available_in_app_col_index):
+    	yield  {
+            "title":"Transition",
+            "subtitle":"Indoor Transition",
+            "category":"transition",
+            "lat":float(v[column_names.index('latitude_degrees')]),
+            "lon":float(v[column_names.index('longitude_degrees')]),
+            "indoor":True,
+  			"indoor_id":v[column_names.index('interior_id')],
+  			"floor_id":int(v[column_names.index('interior_floor')]),
+            "user_data":
+            {
+              "target_interior_id":v[column_names.index('target_interior_id')],
+              "target_interior_floor":int(v[column_names.index('target_interior_floor')]),
+              "target_latitude_degrees":float(v[column_names.index('target_latitude_degrees')]),
+              "target_longitude_degrees":float(v[column_names.index('target_longitude_degrees')])
+            }
+       }
 
-    insert_into_table(db_cursor, table_name, column_names, xls_sheet, first_data_row_number, available_in_app_col_index)
+def delete_existing_pois(poi_service_url, dev_auth_token):
+	url = "{0}/pois/?token={1}".format(poi_service_url, dev_auth_token)
+	response = requests.delete(url)
+	print "delete {1}: {0}".format(url, response.status_code)
 
-    connection.commit()
 
-    validate_table_exists(db_cursor, table_name)
+def persist_entities(entities, poi_service_url, dev_auth_token, cdn_base_url, dest_assets_relative_path):
+	for entity in entities:
+		if 'user_data' in entity:
+			if 'image_url' in entity['user_data']:
+				original = entity['user_data']['image_url']
+				fixed = original.replace(dest_assets_relative_path, "")
+				entity['user_data']['image_url'] = "{0}{1}".format(cdn_base_url, fixed)
 
-    log_result_info(db_cursor, table_name, verbose)
+		url = "{0}/pois/?token={1}".format(poi_service_url, dev_auth_token)
+		response = requests.post(url, json=entity)
+		print "post {2}: {0} => {1}".format(url, entity, response.status_code)
 
-    connection.commit()
 
-def build_db(src_xls_path, dest_db_path, dest_assets_relative_path, verbose, stop_on_first_error):
-    print("sqlite3.sqlite_version " + sqlite3.sqlite_version)
-    print("sqlite3.version " + sqlite3.version)
-
+def build_db(src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, dest_assets_relative_path, verbose, stop_on_first_error):
     src_dir = os.path.normpath(os.path.dirname(src_xls_path))
-    dest_dir = os.path.normpath(os.path.dirname(dest_db_path))
-
-    if src_dir is dest_dir:
-        raise ValueError("source and dest dirs are the same")
 
     column_name_row = 0
     first_data_row_number = 1
@@ -790,72 +785,86 @@ def build_db(src_xls_path, dest_db_path, dest_assets_relative_path, verbose, sto
     if not os.path.exists(src_image_folder_path):
         raise ValueError("images folder not found: " + src_image_folder_path)
 
-    if os.path.exists(dest_dir):
-        print("cleaning destination folder: " + dest_dir)
-        shutil.rmtree(dest_dir)
-
     dest_image_relative_dir = os.path.normcase(os.path.join(dest_assets_relative_path, IMAGES_FOLDER)).replace("\\","/")
 
-    dest_image_dir = os.path.normpath(os.path.join(dest_dir, dest_image_relative_dir))
+    dest_image_dir = os.path.normpath(dest_image_relative_dir)
+
+    if os.path.exists(dest_image_dir):
+        print("cleaning destination folder: " + dest_image_dir)
+        shutil.rmtree(dest_image_dir)
+
     print("creating dest folder: " + dest_image_dir)
     os.makedirs(dest_image_dir)
 
-    connection = sqlite3.connect(dest_db_path)
-    db_cursor = connection.cursor()
-
     xls_book =  xlrd.open_workbook(src_xls_path)
+
+    sheet_index = 7
+
+    desks = collect_desks(xls_book, sheet_index, first_data_row_number, column_name_row)
+
+    entities = []
 
     sheet_index = 0
 
-    build_employee_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir)
+    for e in collect_employee_table(xls_book, sheet_index, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir, desks):
+    	entities.append(e)
 
     sheet_index = 1
 
-    build_meeting_room_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir)
+    for e in collect_meeting_room_table(xls_book, sheet_index, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir):
+    	entities.append(e)
 
     sheet_index = 2
 
-    build_working_group_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir)
+    for e in collect_working_group_table(xls_book, sheet_index, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir):
+    	entities.append(e)
 
     sheet_index = 3
 
-    build_facility_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir)
+    for e in collect_facility_table(xls_book, sheet_index, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir):
+    	entities.append(e)
 
     sheet_index = 4
 
-    build_office_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir)
+    for e in collect_office_table(xls_book, sheet_index, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir):
+    	entities.append(e)
 
     sheet_index = 5
 
-    build_transition_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir)
+    for e in collect_transition_table(xls_book, sheet_index, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir):
+    	entities.append(e)
     
     sheet_index = 6
     
-    build_department_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir)
+    for e in collect_department_table(xls_book, sheet_index, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir):
+    	entities.append(e)
 
-    db_cursor.close()
-    connection.close()
+    delete_existing_pois(poi_service_url, dev_auth_token)
+    persist_entities(entities, poi_service_url, dev_auth_token, cdn_base_url, dest_assets_relative_path)
 
 def print_usage():
     print 'Usage: '
-    print 'poi_database_builder.py -i <input_xls_path> -o <output_db_path> -a <output_asset_relative_path> [-v | -s]'
-    print 'poi_database_builder.py [-h | -help]'
+    print 'export_to_poi_service.py -i <input_xls_path> -u <poi_service_url> -k <dev_auth_token> -a <output_asset_relative_path> [-v | -s]'
+    print 'export_to_poi_service.py [-h | -help]'
     print
     print 'Options: '
     print '-i --input_xls_path      Filepath to source xls spreadsheet'
-    print '-o --output_db_path      Filepath to dest sqlite3 db file'
+    print '-u --poi_service_url     URL to poi-service'
+    print '-k --dev_auth_token      eeGeo Developer Auth Token'
     print '-h --help                Display this screen'
     print '-v --verbose             Verbose logging, including dump contents of resulting Poi table'
     print '-s --stop                Stop on first validation error'
 
 def get_args(argv):
     input_xls_path = ''
-    output_db_path = ''
+    poi_service_url = ''
+    dev_auth_token = ''
     output_assets_path = ''
+    cdn_base_url = ''
     verbose = False
     stop_on_first_error = False
     try:
-        opts, args = getopt.getopt(argv,"hvsi:o:a:",["input_xls_path=","output_db_path=","output_assets_path=","verbose","stop"])
+        opts, args = getopt.getopt(argv,"hvsi:u:k:c:a:",["input_xls_path=","poi_service_url=","dev_auth_token=","cdn_base_url=","output_assets_path=","verbose","stop"])
     except getopt.GetoptError:
         print_usage()
         sys.exit(2)
@@ -865,8 +874,12 @@ def get_args(argv):
             sys.exit()
         elif opt in ("-i", "--input_xls_path"):
             input_xls_path = arg
-        elif opt in ("-o", "--output_db_path"):
-            output_db_path = arg
+        elif opt in ("-u", "--poi_service_url"):
+            poi_service_url = arg
+        elif opt in ("-k", "--dev_auth_token"):
+        	dev_auth_token = arg
+        elif opt in ("-c", "--cdn_base_url"):
+        	cdn_base_url = arg
         elif opt in ("-a", "--output_assets_path"):
             output_assets_path = arg
         elif opt in ("-v", "--verbose"):
@@ -874,16 +887,16 @@ def get_args(argv):
         elif opt in ("-s", "--stop"):
             stop_on_first_error = True
 
-    return input_xls_path, output_db_path, output_assets_path, verbose, stop_on_first_error
+    return input_xls_path, poi_service_url, dev_auth_token, cdn_base_url, output_assets_path, verbose, stop_on_first_error
 
 if __name__ == '__main__':
     try:
-        src_xls_path, dest_db_path, dest_assets_relative_path, verbose, stop_on_first_error = get_args(sys.argv[1:])
+        src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, dest_assets_relative_path, verbose, stop_on_first_error = get_args(sys.argv[1:])
 
         print 'src_xls_path=' + src_xls_path
-        print 'dest_db_path=' + dest_db_path
+        print 'poi_service_url=' + poi_service_url
 
-        build_db(src_xls_path, dest_db_path, dest_assets_relative_path, verbose, stop_on_first_error)
+        build_db(src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, dest_assets_relative_path, verbose, stop_on_first_error)
     except Exception as e:
         _, _, exc_traceback = sys.exc_info()
         print(str(traceback.format_exc(exc_traceback)))

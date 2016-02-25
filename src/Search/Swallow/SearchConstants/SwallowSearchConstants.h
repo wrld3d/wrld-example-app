@@ -23,6 +23,7 @@ namespace ExampleApp
                 extern const std::string AVAILABILITY_FIELD_NAME;
                 extern const std::string DESCRIPTION_FIELD_NAME;
                 extern const std::string CATEGORY_FIELD_NAME;
+                extern const std::string SUBCATEGORY_FIELD_NAME;
                 extern const std::string DISTANCE_FIELD_NAME;
                 extern const std::string HEADING_DEGREES_FIELD_NAME;
                 extern const std::string TARGET_INTERIOR_ID_FIELD_NAME;
@@ -52,6 +53,8 @@ namespace ExampleApp
                 extern const int MEETING_ROOM_MAX_PRIORITY;
                 
                 std::vector<CategorySearch::View::CategorySearchModel> GetCategorySearchModels();
+
+                std::vector<std::string> GetAllCategories();
                 
                 std::vector<std::string> GetCategories();
             }

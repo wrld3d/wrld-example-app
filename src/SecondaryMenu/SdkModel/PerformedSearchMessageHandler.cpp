@@ -28,7 +28,7 @@ namespace ExampleApp
             void PerformedSearchMessageHandler::OnPerformedSearchMessage(const PerformedSearchMessage& message)
             {
                 m_metricsService.SetEvent("Search", "Search string", message.SearchQuery().c_str());
-                m_searchQueryPerformer.PerformSearchQuery(message.SearchQuery(), message.IsCategory());
+                m_searchQueryPerformer.PerformSearchQuery(message.SearchQuery(), message.IsCategory(), message.IsInterior());
             }
         }
     }

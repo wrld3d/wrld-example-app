@@ -80,7 +80,7 @@ namespace ExampleApp
                                                            resultRow.Cell(columnOffset + poi_interior_floor).AsInteger(),
                                                            resultRow.Cell(columnOffset + poi_category).AsText(),
                                                            std::vector<std::string>(),
-                                                           Search::SwallowFacilitiesVendorName,
+                                                           Search::EegeoVendorName,
                                                            strbuf.GetString(),
                                                            Eegeo::Helpers::Time::MillisecondsSinceEpoch());
             }

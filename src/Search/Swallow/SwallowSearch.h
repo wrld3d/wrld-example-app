@@ -12,6 +12,7 @@ namespace ExampleApp
             namespace SdkModel
             {
                 class ISwallowSearchMenuModule;
+                class SwallowSearchServiceModule;
                 class SwallowSearchService;
                 class SwallowOfficeResultMenuOptionSelectedMessageHandler;
                 class SwallowSearchTransitionPinController;

@@ -19,6 +19,7 @@
 #include "IMyPinsService.h"
 #include "MyPinModel.h"
 #include "WorldPinVisibility.h"
+#include "SwallowSearchConstants.h"
 
 using ExampleApp::Search::SdkModel::SearchResultModel;
 
@@ -103,7 +104,8 @@ namespace ExampleApp
                     }
                     
                 }
-                else if(pSearchResultModel->GetVendor() != Search::SwallowOfficesVendorName)
+                else if((pSearchResultModel->GetCategory() != Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME)
+                        && (pSearchResultModel->GetCategory() != Search::Swallow::SearchConstants::TRANSITION_CATEGORY_NAME))
                 {
                     AddSearchResultOnMap(*pSearchResultModel);
                 }
@@ -135,7 +137,8 @@ namespace ExampleApp
                         pWorldPinItemModel->SetVisibilityMask(newVisibilityMask);
                     }
                 }
-                else if(pSearchResultModel->GetVendor() != Search::SwallowOfficesVendorName)
+                else if((pSearchResultModel->GetCategory() != Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME)
+                        && (pSearchResultModel->GetCategory() != Search::Swallow::SearchConstants::TRANSITION_CATEGORY_NAME))
                 {
                     RemoveSearchResultOnMap(*pSearchResultModel);
                 }

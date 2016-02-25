@@ -28,7 +28,7 @@ namespace ExampleApp
             void CategorySearchMenuOption::Select()
             {
                 m_menuViewModel.Close();
-                m_messageBus.Publish(CategorySearchSelectedMessage(m_model.SearchCategory()));
+                m_messageBus.Publish(CategorySearchSelectedMessage(m_model.SearchCategory(), m_model.Interior()));
             }
         }
     }

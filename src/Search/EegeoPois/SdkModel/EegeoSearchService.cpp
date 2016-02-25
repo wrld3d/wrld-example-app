@@ -24,7 +24,7 @@ namespace ExampleApp
                 , m_eeGeoSearchQueryFactory(EegeoSearchQueryFactory)
                 , m_eeGeoParser(EegeoParser)
                 , m_networkCapabilities(networkCapabilities)
-                , m_currentQueryModel("", false, Eegeo::Space::LatLongAltitude(0, 0, 0), 0.f)
+                , m_currentQueryModel("", false, false, Eegeo::Space::LatLongAltitude(0, 0, 0), 0.f)
                 , m_searchCallback(this,&EegeoSearchService::HandleSearchResponse)
                 , m_pCurrentRequest(NULL)
                 , m_hasActiveQuery(false)

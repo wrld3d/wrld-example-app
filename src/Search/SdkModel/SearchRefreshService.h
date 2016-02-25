@@ -11,6 +11,7 @@
 #include "SearchQuery.h"
 #include "CameraTransitions.h"
 #include "VectorMath.h"
+#include "Interiors.h"
 
 namespace ExampleApp
 {
@@ -23,26 +24,28 @@ namespace ExampleApp
                 const float m_minimumSecondsBetweenUpdates;
                 const float m_minimumMetresSquaredBetweenUpdates;
 
-                ISearchService& m_exteriorSearchService;
-                ISearchService& m_interiorSearchService;
+                ISearchService& m_searchService;
                 
                 ISearchQueryPerformer& m_searchQueryPerformer;
                 CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionsController;
-                Eegeo::Helpers::ICallback1<const SearchQuery&>* m_pSearchResultQueryIssuedCallback;
-                Eegeo::Helpers::ICallback2<const SearchQuery&, const std::vector<SearchResultModel>&>* m_pSearchResultResponseReceivedCallback;
-                Eegeo::Helpers::ICallback0* m_pSearchQueryResultsClearedCallback;
+                Eegeo::Resources::Interiors::InteriorController& m_interiorController;
+                Eegeo::Helpers::TCallback1<SearchRefreshService, const SearchQuery&> m_searchResultQueryIssuedCallback;
+                Eegeo::Helpers::TCallback2<SearchRefreshService, const SearchQuery&, const std::vector<SearchResultModel>&> m_searchResultResponseReceivedCallback;
+                Eegeo::Helpers::TCallback0<SearchRefreshService> m_searchQueryResultsClearedCallback;
+                Eegeo::Helpers::TCallback0<SearchRefreshService> m_interiorChangedCallback;
                 int m_queriesPending;
                 bool m_searchResultsExist;
+                bool m_searchResultsCleared;
                 float m_secondsSincePreviousRefresh;
                 bool m_cameraTransitioning;
                 Eegeo::dv3 m_previousQueryLocationEcef;
                 bool m_enabled;
 
             public:
-                SearchRefreshService(ISearchService& exteriorSearchService,
-                                     ISearchService& interiorSearchService,
+                SearchRefreshService(ISearchService& searchService,
                                      ISearchQueryPerformer& searchQueryPerformer,
                                      CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
+                                     Eegeo::Resources::Interiors::InteriorController& interiorController,
                                      float minimumSecondsBetweenUpdates,
                                      float minimumMetresBetweenUpdates);
 
@@ -56,6 +59,8 @@ namespace ExampleApp
                 }
 
             private:
+                void HandleInteriorChanged();
+
                 void HandleSearchQueryIssued(const SearchQuery& query);
 
                 void HandleSearchResultsResponseReceived(const SearchQuery& query,

@@ -23,6 +23,7 @@
 #include "SwallowDepartmentSearchResultPoiView.h"
 #include "EegeoSearchResultPoiView.h"
 #include "ExampleTourSearchResultPoiView.h"
+#include "SwallowSearchConstants.h"
 
 @interface SearchResultPoiViewContainer()<UIGestureRecognizerDelegate>
 {
@@ -54,7 +55,7 @@
 {
     Eegeo_ASSERT(m_pCurrentActiveVendorView == NULL);
 
-    self->m_pCurrentActiveVendorView = [self createSearchResultPoiViewForVendor:pModel->GetVendor()];
+    self->m_pCurrentActiveVendorView = [self createSearchResultPoiViewForVendor:pModel->GetVendor() :pModel->GetCategory()];
     [[self superview] addSubview: self->m_pCurrentActiveVendorView];
     [self->m_pCurrentActiveVendorView layoutSubviews];
     [self->m_pCurrentActiveVendorView setContent:pModel :isPinned];
@@ -84,7 +85,7 @@
     return m_pInterop;
 }
 
-- (UIView<SearchResultPoiView>*) createSearchResultPoiViewForVendor:(const std::string&)vendor
+- (UIView<SearchResultPoiView>*) createSearchResultPoiViewForVendor:(const std::string&)vendor :(const std::string&)category
 {
     if(vendor == ExampleApp::Search::YelpVendorName)
     {
@@ -94,31 +95,31 @@
     {
         return [[GeoNamesSearchResultPoiView alloc] initWithInterop:m_pInterop];
     }
-    else if(vendor == ExampleApp::Search::EegeoVendorName)
-    {
-        return [[EegeoSearchResultPoiView alloc] initWithInterop:m_pInterop];
-    }
     else if(vendor == ExampleApp::Search::ExampleTourVendorName)
     {
         return [[ExampleTourSearchResultPoiView alloc] initWithInterop:m_pInterop];
     }
-    else if(vendor == ExampleApp::Search::SwallowPeopleVendorName)
+    else if(vendor == ExampleApp::Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
     {
         return [[SwallowPersonSearchResultPoiView alloc] initWithInterop:m_pInterop];
     }
-    else if(vendor == ExampleApp::Search::SwallowMeetingRoomsVendorName)
+    else if(vendor == ExampleApp::Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
     {
         return [[SwallowMeetingRoomSearchResultPoiView alloc] initWithInterop:m_pInterop];
     }
-    else if(vendor == ExampleApp::Search::SwallowWorkingGroupsVendorName)
+    else if(vendor == ExampleApp::Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME)
     {
         return [[SwallowWorkingGroupSearchResultPoiView alloc] initWithInterop:m_pInterop];
     }
-    else if(vendor == ExampleApp::Search::SwallowFacilitiesVendorName)
+    else if(vendor == ExampleApp::Search::EegeoVendorName && (category == ExampleApp::Search::Swallow::SearchConstants::PRINT_STATION_CATEGORY_NAME
+                                                              || category == ExampleApp::Search::Swallow::SearchConstants::TOILETS_CATEGORY_NAME
+                                                              || category == ExampleApp::Search::Swallow::SearchConstants::FACILITY_CATEGORY_NAME
+                                                              || category == ExampleApp::Search::Swallow::SearchConstants::EMERGENCY_EXIT_CATEGORY_NAME
+                                                              || category == ExampleApp::Search::Swallow::SearchConstants::STATIONERY_CATEGORY_NAME))
     {
         return [[SwallowFacilitySearchResultPoiView alloc] initWithInterop:m_pInterop];
     }
-    else if(vendor == ExampleApp::Search::SwallowDepartmentsVendorName)
+    else if(vendor == ExampleApp::Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME)
     {
         return [[SwallowDepartmentSearchResultPoiView alloc] initWithInterop:m_pInterop];
     }

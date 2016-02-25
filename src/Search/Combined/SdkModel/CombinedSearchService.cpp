@@ -2,6 +2,8 @@
 
 #include "CombinedSearchService.h"
 #include "SearchQuery.h"
+#include "IAppModeModel.h"
+#include "SwallowSearchConstants.h"
 
 namespace ExampleApp
 {
@@ -11,12 +13,14 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                CombinedSearchService::CombinedSearchService(const std::map<std::string,Search::SdkModel::ISearchService*>& searchServices)
+                CombinedSearchService::CombinedSearchService(const std::map<std::string,Search::SdkModel::ISearchService*>& searchServices,
+                                                             AppModes::SdkModel::IAppModeModel& appModeModel)
                 : SearchServiceBase(std::vector<std::string>())
                 , m_searchServices(searchServices)
                 , m_searchQueryResponseCallback(this, &CombinedSearchService::OnSearchResponseRecieved)
                 , m_pendingResultsLeft(0)
-                , m_currentQueryModel("", false, Eegeo::Space::LatLongAltitude(0, 0, 0), 0.f)
+                , m_appModeModel(appModeModel)
+                , m_currentQueryModel("", false, false, Eegeo::Space::LatLongAltitude(0, 0, 0), 0.f)
                 , m_hasActiveQuery(false)
                 {
                     std::map<std::string,Search::SdkModel::ISearchService*>::const_iterator iter;
@@ -65,11 +69,28 @@ namespace ExampleApp
                     
                     for (std::map<std::string,Search::SdkModel::ISearchService*>::const_iterator iter = m_searchServices.begin(); iter != m_searchServices.end(); ++iter)
                     {
-                        bool canPerformQuery = !query.IsCategory() || (*iter).second->CanHandleCategory(query.Query());
+                        bool isIndoor = m_appModeModel.GetAppMode() != AppModes::SdkModel::WorldMode;
+                        bool isCategory = query.IsCategory();
+                        bool canPerformCategory = isCategory && (*iter).second->CanHandleCategory(query.Query());
+                        bool canPerformIndoor = isIndoor && (*iter).second->CanHandleIndoor();
                         
-                        if(canPerformQuery)
+                        if (isIndoor)
                         {
-                            queryServices.push_back((*iter).second);
+                            if (canPerformIndoor)
+                            {
+                                queryServices.push_back((*iter).second);
+                            }
+                        }
+                        else
+                        {
+                            if(canPerformCategory)
+                            {
+                                queryServices.push_back((*iter).second);
+                            }
+                            else if (!isCategory)
+                            {
+                                queryServices.push_back((*iter).second);
+                            }
                         }
                     }
                     
@@ -128,7 +149,22 @@ namespace ExampleApp
                 void CombinedSearchService::OnSearchResponseRecieved(const Search::SdkModel::SearchQuery& query,
                                                                         const std::vector<Search::SdkModel::SearchResultModel>& results)
                 {
-                    m_combinedResults.insert(m_combinedResults.end(), results.begin(), results.end());
+                    std::vector<Search::SdkModel::SearchResultModel> filtered;
+                    filtered.reserve(results.size());
+                    
+                    for (std::vector<Search::SdkModel::SearchResultModel>::const_iterator it = results.begin();
+                         it != results.end();
+                         it++)
+                    {
+                        const Search::SdkModel::SearchResultModel& searchResult = *it;
+                        if (searchResult.GetCategory() == Search::Swallow::SearchConstants::TRANSITION_CATEGORY_NAME && !query.IsCategory())
+                        {
+                            continue;
+                        }
+                        filtered.push_back(searchResult);
+                    }
+                    
+                    m_combinedResults.insert(m_combinedResults.end(), filtered.begin(), filtered.end());
                     
                     if( --m_pendingResultsLeft <= 0)
                     {
