@@ -32,25 +32,7 @@ if [ -z "$build_number" ]; then
         exit 1
 fi
 
-dest_path=$5
-if [ -z "$dest_path" ]; then
-        echo
-        echo "Error: dest_path must be provided"
-        echo
-        exit 1
-fi
-
-if [ -d "$dest_path" ]; then
-		echo
-		echo "Cleaning dest path"
-		echo
-		rm -rf $dest_path
-		mkdir -p $dest_path
-fi
-
-destAssetsPath="$(printf "%s/assets/v%d" $dest_path $build_number)"
-
-python export_to_poi_service.py -i $srcXlsFilename -u $destPoiServiceUrl -k $eegeoDevAuthToken -a $destAssetsPath -v -c http://cdn1.eegeo.com/swallow-pois/assets/v$build_number
+python export_to_poi_service.py -i $srcXlsFilename -u $destPoiServiceUrl -k $eegeoDevAuthToken -v -c http://cdn1.eegeo.com/swallow-pois/assets/v$build_number
 returnCode=$?
 if [ $returnCode -ne 0 ]; then
 	echo

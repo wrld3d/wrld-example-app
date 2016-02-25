@@ -4,8 +4,7 @@ import shutil
 import sqlite3
 import sys
 import traceback
-import Image
-
+from PIL import Image
 import xlrd
 
 IMAGES_FOLDER = "images"
