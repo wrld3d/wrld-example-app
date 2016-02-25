@@ -196,6 +196,7 @@ namespace ExampleAppWPF
             m_dragInProgress = false;
 
             var floorIndex = (int)Math.Round(m_floorSlider.Value);
+            m_floorSlider.Value = floorIndex;
 
             InteriorsExplorerCLIMethods.SelectFloor(m_nativeCallerPointer, floorIndex);
         }
