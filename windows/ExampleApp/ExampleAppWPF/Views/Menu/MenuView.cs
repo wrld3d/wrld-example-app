@@ -134,22 +134,16 @@ namespace ExampleAppWPF
 
         public virtual float NormalisedAnimationProgress()
         {
-            double? progress = 0.0;
-
             if (m_openState == MENU_CLOSING)
             {
-                progress = m_closeMenuIconAnim.GetCurrentProgress(m_menuIconGrid);
-
-                progress = progress == null ? 0.0f : 1.0 - progress;
+                return (float)(1.0f - Math.Max(0.0001f, m_closeMenuIconAnim.GetCurrentProgress(m_menuIconGrid) ?? 0.0f));
             }
             else if (m_openState == MENU_OPENING)
             {
-                progress = m_openSearchIconAnim.GetCurrentProgress(m_menuIconGrid);
-
-                progress = progress == null ? 0.0f : progress;
+                return (float)(Math.Max(0.0001f, m_openSearchIconAnim.GetCurrentProgress(m_menuIconGrid) ?? 0.0f));
             }
 
-            return (float)progress;
+            return 0.0f;
         }
 
         private void OnAnimCompleted(object sender, EventArgs e)
