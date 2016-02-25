@@ -6,7 +6,10 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../../Colours.xaml" />
         <ResourceDictionary Source="../../TransparentButtonStyle.xaml" />
+        <ResourceDictionary Source="../../SimpleSlider.xaml" />        
     </ResourceDictionary.MergedDictionaries>
+    
+    
 
     <Style TargetType="{x:Type local:InteriorsExplorerView}">
         <Setter Property="Template">
@@ -16,7 +19,7 @@
                         <Grid Name="DetailsPanel" Width="Auto" Height="40" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,40,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="200"/>
-                                <ColumnDefinition Width="40"/>                                
+                                <ColumnDefinition Width="40"/>
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
                                 <Border Name="Mask" CornerRadius="5,0,0,5" Background="White"/>
@@ -47,32 +50,22 @@
                             </Button>
                         </Grid>
 
-                        <Grid Name="FloorPanel" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Image Grid.Row="0" Source="/Assets/floor_selection_top.png" Stretch="Uniform" Width="50"/>
-                            <ListBox Name="FloorList" Grid.Row="1" HorizontalContentAlignment="Stretch">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid HorizontalAlignment="Stretch" Height="42" Margin="0,0,0,0">
-                                            <Grid.Background>
-                                                <ImageBrush ImageSource="/Assets/place_pin_background.png" Stretch="Fill"/>
-                                            </Grid.Background>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="1"/>
-                                            </Grid.RowDefinitions>
-                                            <Grid HorizontalAlignment="Stretch" Grid.Row="0">
-                                                <TextBlock Text="{Binding}" FontSize="14" Foreground="{StaticResource DarkGrey}" MaxWidth="200" HorizontalAlignment="Center" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
-                                            </Grid>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                            <Image Grid.Row="2" Source="/Assets/floor_selection_bottom.png" Stretch="Uniform" Width="50"/>
+                        <Grid Name="FloorPanel" HorizontalAlignment="Right" VerticalAlignment="Center" Width="auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="12"/>
+                            </Grid.ColumnDefinitions>
+                            <Slider Name="FloorSlider"
+                                    Grid.Column="0"
+                                    Style="{StaticResource SimpleSlider}"
+                                    Orientation="Vertical"
+                                    Height="200"
+                                    Minimum="0"
+                                    Maximum="1"
+                                    TickFrequency="1"
+                                    TickPlacement="Both"
+                                    IsMoveToPointEnabled="True"
+                            />
                         </Grid>
                     </Grid>
                 </ControlTemplate>
