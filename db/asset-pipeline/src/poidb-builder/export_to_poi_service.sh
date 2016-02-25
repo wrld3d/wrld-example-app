@@ -27,15 +27,22 @@ fi
 build_number=$4
 if [ -z "$build_number" ]; then
         echo
-        echo "Error: destAssetsRelativePath must be provided"
+        echo "Error: build_number must be provided"
         echo
         exit 1
 fi
 
+dest_path=$5
+if [ -z "$dest_path" ]; then
+        echo
+        echo "Error: dest_path must be provided"
+        echo
+        exit 1
+fi
 
-destAssetsRelativePath="$(printf "assets/v%d" $build_number)"
+destAssetsPath="$(printf "%s/assets/v%d" $dest_path $build_number)"
 
-python export_to_poi_service.py -i $srcXlsFilename -u $destPoiServiceUrl -k $eegeoDevAuthToken -a $destAssetsRelativePath -v -c http://cdn1.eegeo.com/swallow-pois/assets/v$build_number
+python export_to_poi_service.py -i $srcXlsFilename -u $destPoiServiceUrl -k $eegeoDevAuthToken -a $destAssetsPath -v -c http://cdn1.eegeo.com/swallow-pois/assets/v$build_number
 returnCode=$?
 if [ $returnCode -ne 0 ]; then
 	echo

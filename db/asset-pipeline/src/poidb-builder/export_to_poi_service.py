@@ -844,7 +844,7 @@ def build_db(src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, dest_a
 
 def print_usage():
     print 'Usage: '
-    print 'export_to_poi_service.py -i <input_xls_path> -u <poi_service_url> -k <dev_auth_token> -a <output_asset_relative_path> [-v | -s]'
+    print 'export_to_poi_service.py -i <input_xls_path> -u <poi_service_url> -k <dev_auth_token> -a <output_assets_path> [-v | -s]'
     print 'export_to_poi_service.py [-h | -help]'
     print
     print 'Options: '
@@ -891,12 +891,12 @@ def get_args(argv):
 
 if __name__ == '__main__':
     try:
-        src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, dest_assets_relative_path, verbose, stop_on_first_error = get_args(sys.argv[1:])
+        src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, output_assets_path, verbose, stop_on_first_error = get_args(sys.argv[1:])
 
         print 'src_xls_path=' + src_xls_path
         print 'poi_service_url=' + poi_service_url
 
-        build_db(src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, dest_assets_relative_path, verbose, stop_on_first_error)
+        build_db(src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, output_assets_path, verbose, stop_on_first_error)
     except Exception as e:
         _, _, exc_traceback = sys.exc_info()
         print(str(traceback.format_exc(exc_traceback)))
