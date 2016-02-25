@@ -136,16 +136,7 @@ AppHost::AppHost(
     Eegeo::TtyHandler::TtyEnabled = true;
     Eegeo::AssertHandler::BreakOnAssert = true;
 
-    
-    static LocationOverride locationOverride;
-    locationOverride.latRadians = Eegeo::Math::Deg2Rad(51.5202688);
-    locationOverride.lonRadians = Eegeo::Math::Deg2Rad(-0.0864312);
-    locationOverride.altitudeMeters = 19.22;
-    locationOverride.horizontalAccuracyMeters = 10.0;
-    locationOverride.headingDegrees = 0.0;
-
-
-    m_pWindowsLocationService = Eegeo_NEW(WindowsLocationService)(&nativeState, &locationOverride);
+    m_pWindowsLocationService = Eegeo_NEW(WindowsLocationService)(&nativeState);
     m_pWindowsConnectivityService = Eegeo_NEW(WindowsConnectivityService)(&nativeState);
 
     m_pJpegLoader = Eegeo_NEW(Eegeo::Helpers::Jpeg::JpegLoader)();
