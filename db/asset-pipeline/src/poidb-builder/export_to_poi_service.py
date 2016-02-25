@@ -522,7 +522,7 @@ def collect_facility_table(xls_book, sheet_index, src_image_folder_path, verbose
             }
        }
 
-def collect_department_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row):
+def collect_department_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row, departments):
     xls_sheet = xls_book.sheet_by_index(sheet_index)
     
     poi_columns = ['name', 'image_filename', 'description', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees']
@@ -569,8 +569,13 @@ def collect_department_table(xls_book, sheet_index, src_image_folder_path, verbo
 
     column_names = ['id'] + poi_columns    
     for v in gather_table_with_image(column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename')):
+        department_name = v[column_names.index('name')]
+        department_desks = []
+        if department_name in departments:
+            for employee in departments[department_name]:
+                department_desks.append(employee["user_data"]["desk_code"])
     	yield {
-            "title":v[column_names.index('name')],
+            "title":department_name,
             "subtitle":"",
             "category":"department",
             "lat":float(v[column_names.index('latitude_degrees')]),
@@ -581,7 +586,8 @@ def collect_department_table(xls_book, sheet_index, src_image_folder_path, verbo
             "user_data":
             {
               "image_url":v[column_names.index('image_filename')],
-              "description":v[column_names.index('description')]
+              "description":v[column_names.index('description')],
+              "desks":department_desks
             }
        }
     
@@ -745,10 +751,15 @@ def build_db(src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, verbos
     desks = collect_desks(xls_book, sheet_index, first_data_row_number, column_name_row)
 
     entities = []
+    departments = {}
 
     sheet_index = 0
 
     for e in collect_employee_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row, desks):
+    	department = e['user_data']['working_group']
+    	if not department in departments:
+			departments[department] = []    		
+    	departments[department].append(e)
     	entities.append(e)
 
     sheet_index = 1
@@ -778,7 +789,7 @@ def build_db(src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, verbos
     
     sheet_index = 6
     
-    for e in collect_department_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row):
+    for e in collect_department_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row, departments):
     	entities.append(e)
 
     delete_existing_pois(poi_service_url, dev_auth_token)

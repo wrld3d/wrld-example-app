@@ -20,6 +20,7 @@ namespace ExampleApp
                 extern const std::string WORKING_GROUP_FIELD_NAME;
                 extern const std::string OFFICE_LOCATION_FIELD_NAME;
                 extern const std::string DESK_CODE_FIELD_NAME;
+                extern const std::string DESKS_FIELD_NAME;
                 extern const std::string AVAILABILITY_FIELD_NAME;
                 extern const std::string DESCRIPTION_FIELD_NAME;
                 extern const std::string CATEGORY_FIELD_NAME;

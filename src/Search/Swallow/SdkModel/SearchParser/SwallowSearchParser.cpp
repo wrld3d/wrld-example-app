@@ -185,16 +185,31 @@ namespace ExampleApp
                         TryParseImageDetails(searchResultModel, imageUrl);
                         rapidjson::Document json;
                         std::string description;
+                        std::vector<std::string> desks;
                         if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
                         {
                             if(json.HasMember(SearchConstants::DESCRIPTION_FIELD_NAME.c_str()) && json[SearchConstants::DESCRIPTION_FIELD_NAME.c_str()].IsString())
                             {
                                 description = json[SearchConstants::DESCRIPTION_FIELD_NAME.c_str()].GetString();
                             }
+                            
+                            if(json.HasMember(SearchConstants::DESKS_FIELD_NAME.c_str()) && json[SearchConstants::DESKS_FIELD_NAME.c_str()].IsArray())
+                            {
+                                rapidjson::Value& deskJsonArray = json[SearchConstants::DESKS_FIELD_NAME.c_str()];
+                                desks.reserve(deskJsonArray.Size());
+                                for (rapidjson::SizeType i = 0; i < deskJsonArray.Size(); i++)
+                                {
+                                    if (deskJsonArray[i].IsString())
+                                    {
+                                        desks.push_back(deskJsonArray[i].GetString());
+                                    }
+                                }
+                            }
                         }
                         return SwallowDepartmentResultModel(searchResultModel.GetTitle(),
                                                             imageUrl,
-                                                            description);
+                                                            description,
+                                                            desks);
                     }
                     
                     SwallowOfficeResultModel TransformToSwallowOfficeResult(const Search::SdkModel::SearchResultModel& searchResultModel)
