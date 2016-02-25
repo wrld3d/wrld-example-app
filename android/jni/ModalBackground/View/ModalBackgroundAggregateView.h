@@ -3,8 +3,11 @@
 #pragma once
 
 #include "IModalBackgroundView.h"
+
 #include "AndroidNativeState.h"
 #include "BidirectionalBus.h"
+#include "CallbackCollection.h"
+#include "ICallback.h"
 
 namespace ExampleApp
 {
@@ -22,6 +25,11 @@ namespace ExampleApp
                 void SetFullyInactive();
                 void SetActiveStateToIntermediateValue(float modality);
 
+                void InsertTappedCallback(Eegeo::Helpers::ICallback0& callback);
+                void RemoveTappedCallback(Eegeo::Helpers::ICallback0& callback);
+
+                void HandleViewTapped();
+
             private:
 
                 AndroidNativeState& m_nativeState;
@@ -29,6 +37,7 @@ namespace ExampleApp
                 jclass m_uiViewClass;
                 jobject m_uiView;
 
+                Eegeo::Helpers::CallbackCollection0 m_tappedCallbacks;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
             };
         }

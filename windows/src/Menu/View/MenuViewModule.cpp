@@ -23,8 +23,8 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                m_pView = Eegeo_NEW(MenuView)(nativeState, viewName);
-                m_pController = Eegeo_NEW(MenuController)(menuModel, menuViewModel, *m_pView, messageBus);
+               /* m_pView = Eegeo_NEW(MenuView)(nativeState, viewName);
+                m_pController = Eegeo_NEW(MenuController)(menuModel, menuViewModel, *m_pView, messageBus);*/
             }
 
             MenuViewModule::~MenuViewModule()

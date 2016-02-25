@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -22,6 +23,8 @@ namespace ExampleAppWPF
         private ImageSource m_ratingsImage;
         private Visibility m_ratingCountVisibility;
         private string m_url;
+
+        private ControlClickHandler m_yelpReviewImageClickHandler;
         
         public string PhoneText
         {
@@ -170,7 +173,8 @@ namespace ExampleAppWPF
             m_poiImage = (Image)GetTemplateChild("PoiImage");
 
             var yelpButton = (Image)GetTemplateChild("WebVendorLinkStyle");
-            yelpButton.PreviewMouseLeftButtonDown += (s, e) => HandleWebLinkButtonClicked();
+
+            m_yelpReviewImageClickHandler = new ControlClickHandler(yelpButton, HandleWebLinkButtonClicked);
         }
         
         public override void DisplayPoiInfo(Object modelObject, bool isPinned)
@@ -209,7 +213,7 @@ namespace ExampleAppWPF
             m_poiImage.Visibility = Visibility.Visible;
         }
         
-        public void HandleWebLinkButtonClicked()
+        public void HandleWebLinkButtonClicked(object sender, MouseEventArgs e)
         {
             if (!string.IsNullOrEmpty(m_url))
             {

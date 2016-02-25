@@ -8,26 +8,43 @@ namespace ExampleApp
     {
         namespace ColorPalette
         {
-            extern UIColor* OliveTone;
-            extern UIColor* WhiteTone;
-            extern UIColor* BlackTone;
-            extern UIColor* DarkGreyTone;
-            extern UIColor* GreyTone;
-            extern UIColor* GoldTone;
-            extern UIColor* LightGreyTone;
+            extern UIColor* UiBackgroundColor;
+            extern UIColor* UiBorderColor;
             
-            extern UIColor* MainHudColor;
+            extern UIColor* ButtonPressColor;
+            
             extern UIColor* ModalBackgroundColor;
-            extern UIColor* LinkTone;
-            extern UIColor* UiTextHeaderColour;
-            extern UIColor* UiTextCopyColour;
-            extern UIColor* UiBaseColour;
-            extern UIColor* MenuSeparatorHeaderColor;
-            extern UIColor* MenuSeparatorSubMenuColor;
+            
+            extern UIColor* UiTextTitleColor;
+            extern UIColor* UiTextHeaderColor;
+            extern UIColor* UiTextCopyColor;
+            extern UIColor* UiTextCopyLightColor;
+            extern UIColor* UiTextLinkColor;
+            
+            extern UIColor* TextFieldEnabledColor;
+            extern UIColor* TextFieldDisabledColor;
+            
+            extern UIColor* TableHeaderPressColor;
+            extern UIColor* TableSubCellColor;
+            extern UIColor* TableSubCellPressColor;
+            extern UIColor* TableDividerColor;
+            extern UIColor* TableSeparatorColor;
+            extern UIColor* TableSearchCellColor;
+            extern UIColor* TableSearchTextColor;
+            extern UIColor* TableSearchDetailTextColor;
+            extern UIColor* TableHeaderTextColor;
+            extern UIColor* TableHeaderTextHighlightColor;
+            extern UIColor* TableSubCellTextColor;
+            extern UIColor* TableCellHighlightColor;
             
             extern UIColor* TwitterDarkGrey;
             extern UIColor* TwitterLightGrey;
             extern UIColor* TwitterBlue;
+            
+            extern UIColor* CompassControlColor;
+            extern UIColor* CompassControlHighlightColor;
+            
+            extern UIColor* UiShadowColor;
         }
     }
 }

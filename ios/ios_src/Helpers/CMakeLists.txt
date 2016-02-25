@@ -14,4 +14,5 @@ set(currsources
 )
 set(sources ${sources} ${currsources})
 source_group(\\ios_src\\Helpers FILES ${currsources})
+include(ios_src/Helpers/UIAnimation/CMakeLists.txt)
 endif(${IOS})

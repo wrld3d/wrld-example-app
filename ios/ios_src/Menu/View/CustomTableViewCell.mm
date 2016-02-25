@@ -4,16 +4,58 @@
 #include "UIColors.h"
 #include "ImageHelpers.h"
 
-const float SubViewInset = 22.f;
-
 @implementation CustomTableViewCell
 {
     UIView* pCustomSeparatorContainer;
     bool m_hasSetBackground;
     bool m_hasSetSeparators;
-    bool m_selected;
     bool m_highlighted;
     bool m_requiresRefresh;
+    bool m_customContentFramesSet;
+    bool m_turingHighlightOff;
+    
+    UIImage* m_pArrowImage;
+    UIImage* m_pArrowHighlightImage;
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    if([self canInteract])
+    {
+        [self makeHighlighted:YES animated:NO];
+    }
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [[event allTouches] anyObject];
+    CGPoint touchLocation = [touch locationInView:self];
+    if(CGRectContainsPoint(self.bounds, touchLocation) && [self canInteract])
+    {
+        [self makeHighlighted:YES animated:NO];
+    }
+    else
+    {
+        [self makeHighlighted:NO animated:NO];
+    }
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [[event allTouches] anyObject];
+    CGPoint touchLocation = [touch locationInView:self];
+    
+    [self makeHighlighted:NO animated:YES];
+    if(CGRectContainsPoint(self.bounds, touchLocation) && [self canInteract])
+    {
+        [self->m_tableDataProvider tableView:self->m_tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:self->m_row inSection:self->m_section]];
+    }
+    
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self makeHighlighted:NO animated:NO];
 }
 
 -(void) lazySetBackgroundPresentation
@@ -28,27 +70,25 @@ const float SubViewInset = 22.f;
 
 -(void) setBackgroundPresentation
 {
-    if(m_isHeader)
+    self.backgroundColor = m_pBackgroundColor;
+    if(!m_turingHighlightOff)
     {
-        if(m_headerBackgroundImage != nil)
-        {
-            self.contentView.backgroundColor = [UIColor colorWithPatternImage:ExampleApp::Helpers::ImageHelpers::LoadImage(m_headerBackgroundImage)];
-            m_hasSetBackground = true;
-        }
+        [self setHighlightComponents:m_highlighted];
     }
-    else
-    {
-        if(m_subMenuBackgroundImage != nil)
-        {
-            self.contentView.backgroundColor = [UIColor colorWithPatternImage:ExampleApp::Helpers::ImageHelpers::LoadImage(m_subMenuBackgroundImage)];
-            m_hasSetBackground = true;
-        }
-    }
+    m_hasSetBackground = true;
 }
 
 -(bool) requiresVisualRefresh
 {
     return !m_hasSetBackground || !m_hasSetSeparators || m_tableView.hasDynamicCellPresentation || m_requiresRefresh;
+}
+
+- (CGRect)getContentViewRect
+{
+    return CGRectMake(m_leftInset,
+                      0.0f,
+                      m_initialWidth,
+                      self.frame.size.height - 1.0f);
 }
 
 - (void)layoutSubviews
@@ -59,84 +99,93 @@ const float SubViewInset = 22.f;
         [super layoutSubviews];
     }
     
-    CGRect r = self.contentView.frame;
-
-    if(!m_isHeader)
+    [self setClipsToBounds:YES];
+    
+    self->pCustomSeparatorContainer.frame = [self getContentViewRect];
+    
+    [self.contentView setClipsToBounds:YES];
+    self.contentView.frame = [self getContentViewRect];
+    
+    if(m_customContentFramesSet)
     {
-        r = CGRectMake(m_rightAlignFrame ? SubViewInset : 0.f,
-                       r.origin.y,
-                       m_initialWidth - SubViewInset,
-                       r.size.height);
-    }
-    else
-    {
-        r = CGRectMake(0.f,
-                       r.origin.y,
-                       m_initialWidth,
-                       r.size.height);
-    }
-
-    self.contentView.frame = r;
-    self->pCustomSeparatorContainer.frame = r;
-    self.backgroundColor = [UIColor clearColor];
-
-    CGRect imageFrame = self.imageView.frame;
-    const float initialImageX = static_cast<float>(imageFrame.origin.x);
-    imageFrame.origin.x = m_rightAlignImage ? (r.size.width - imageFrame.size.width) : 0.f;
-    self.imageView.frame = imageFrame;
-
-    CGRect accessoryFrame = self.accessoryView.frame;
-    accessoryFrame.origin.x = m_rightAlignImage ? (r.size.width - accessoryFrame.size.width) : 0.f;
-    self.accessoryView.frame = accessoryFrame;
-
-    if(!m_rightAlignImage)
-    {
-        const float delta = (imageFrame.origin.x - initialImageX);
-
-        CGRect labelFrame = self.textLabel.frame;
-        labelFrame.origin.x += delta;
-        self.textLabel.frame = labelFrame;
-
-        CGRect detailFrame = self.detailTextLabel.frame;
-        detailFrame.origin.x += delta;
-        self.detailTextLabel.frame = detailFrame;
+        self.imageView.frame = m_imageFrame;
+        self.textLabel.frame = m_textFrame;
+        self.detailTextLabel.frame = m_detailTextFrame;
     }
     
-    [self insertSeparators :r :imageFrame];
+    [self insertSeparators :[self getContentViewRect]];
     [self lazySetBackgroundPresentation];
 }
 
-- (void)initCell:(CGFloat)initialWidth :(CustomTableView*)tableView;
+- (void)initCell:(CGFloat)initialWidth
+                :(CGFloat)leftInset
+                :(NSIndexPath*)indexPath
+                :(CustomTableView*)tableView
+                :(UITableViewController<UITableViewDelegate>*)tableDataProvider
 {
-    m_initialWidth = static_cast<float>(initialWidth);
+    m_initialWidth = initialWidth;
+    m_leftInset = leftInset;
     m_tableView = tableView;
+    m_tableDataProvider = tableDataProvider;
     m_hasSetBackground = false;
     m_hasSetSeparators = false;
-    m_selected = false;
     m_highlighted = false;
+    m_turingHighlightOff = false;
+    m_customContentFramesSet = false;
+    
+    m_row = static_cast<int>(indexPath.row);
+    m_section = static_cast<int>(indexPath.section);
+    
     self->pCustomSeparatorContainer = [[UIView alloc]  initWithFrame:CGRectMake(0,0,0,0)];
     [self addSubview:self->pCustomSeparatorContainer];
+    
+    m_pArrowImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"sub_menu_arrow_off") retain];
+    m_pArrowHighlightImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"sub_menu_arrow_on") retain];
 }
 
-- (void)setAlignInfo:(bool)rightAlignFrame
-                    :(bool)rightAlignImage
-                    :(bool)isHeader
-                    :(NSString*)headerBackgroundImage
-                    :(NSString*)subMenuBackgroundImage
+- (void)dealloc
 {
-    m_rightAlignFrame = rightAlignFrame;
-    m_rightAlignImage = rightAlignImage;
-    m_isHeader = isHeader;
-    m_headerBackgroundImage = headerBackgroundImage;
-    m_subMenuBackgroundImage = subMenuBackgroundImage;
+    [m_pArrowImage release];
+    [m_pArrowHighlightImage release];
+    
+    [super dealloc];
+}
+
+- (void)setContentFrames:(CGRect)imageFrame
+                        :(CGRect)textFrame
+                        :(CGRect)detailTextFrame
+{
+    m_imageFrame = imageFrame;
+    m_textFrame = textFrame;
+    m_detailTextFrame = detailTextFrame;
+    
+    m_customContentFramesSet = true;
+}
+
+- (void)setInfo :(bool)hasSeparator
+                :(UIColor*)pBackgroundColor
+                :(UIColor*)pContentBackgroundColor
+                :(UIColor*)pPressColor
+                :(UIColor*)pTextColor
+                :(UIColor*)pTextHighlightColor
+                :(UIImageView*)pOpenableArrow
+{
+    m_hasSeparator = hasSeparator;
+    m_pBackgroundColor = pBackgroundColor;
+    m_pContentBackgroundColor = pContentBackgroundColor;
+    m_pPressColor = pPressColor;
+    m_pTextColor = pTextColor;
+    m_pTextHighlightColor = pTextHighlightColor;
+    m_pOpenableArrow = pOpenableArrow;
+    
     m_requiresRefresh = true;
 }
 
 - (BOOL)canInteract
 {
-    if([m_tableView respondsToSelector:@selector(inAnimationCeremony)])
+    if([m_tableView respondsToSelector:@selector(isAnimating)])
     {
-        if([m_tableView inAnimationCeremony])
+        if([m_tableView isAnimating])
         {
             return false;
         }
@@ -145,53 +194,77 @@ const float SubViewInset = 22.f;
     return true;
 }
 
-- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
+- (void)makeHighlighted:(BOOL)highlighted animated:(BOOL)animated
 {
     if(![self canInteract])
     {
-        [self setBackgroundPresentation];
+        m_turingHighlightOff = false;
+        [self setHighlightComponents:NO];
         return;
     }
 
     if (highlighted)
     {
         m_highlighted = true;
-        [self.contentView setBackgroundColor: ExampleApp::Helpers::ColorPalette::LightGreyTone];
+        m_turingHighlightOff = false;
+        [self setHighlightComponents:YES];
     }
     else
     {
         if(m_highlighted)
         {
-            [self setBackgroundPresentation];
+            if(animated)
+            {
+                m_turingHighlightOff = true;
+                double delayInSeconds = 0.2;
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    if(m_turingHighlightOff)
+                    {
+                        m_highlighted = false;
+                        m_turingHighlightOff = false;
+                        [self setHighlightComponents:NO];
+                    }
+                });
+            }
+            else
+            {
+                [self setHighlightComponents:NO];
+            }
         }
-        m_highlighted = false;
+    }
+}
+
+- (void)setHighlightComponents:(BOOL)highlighted
+{
+    if(highlighted)
+    {
+        [self.contentView setBackgroundColor:m_pPressColor];
+        [self.textLabel setTextColor:m_pTextHighlightColor];
+        
+        if(m_pOpenableArrow != nil)
+        {
+            m_pOpenableArrow.image = m_pArrowHighlightImage;
+        }
+    }
+    else
+    {
+        [self.contentView setBackgroundColor:m_pContentBackgroundColor];
+        [self.textLabel setTextColor:m_pTextColor];
+        
+        if(m_pOpenableArrow != nil)
+        {
+            m_pOpenableArrow.image = m_pArrowImage;
+        }
     }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
-    if(![self canInteract])
-    {
-        [self setBackgroundPresentation];
-        return;
-    }
 
-    if (selected)
-    {
-        [self.contentView setBackgroundColor: ExampleApp::Helpers::ColorPalette::LightGreyTone];
-        m_selected = true;
-    }
-    else
-    {
-        if(m_selected)
-        {
-            [self setBackgroundPresentation];
-        }
-        m_selected = false;
-    }
 }
 
-- (void)insertSeparators:(CGRect)cellFrame :(CGRect)imageFrame
+- (void)insertSeparators:(CGRect)cellFrame
 {
     if(m_hasSetSeparators && !m_tableView.hasDynamicCellPresentation)
     {
@@ -206,57 +279,20 @@ const float SubViewInset = 22.f;
         }
     }
     
-    NSIndexPath* indexPath = [m_tableView indexPathForCell:self];
-    
-    const bool isTop = indexPath.row == 0;
-    const bool isBottom = indexPath.row == [m_tableView numberOfRowsInSection:indexPath.section] - 1;
-    
-    if(!m_isHeader)
-    {
-        if(!isBottom)
-        {
-            CGFloat separatorY      = cellFrame.size.height;
-            CGFloat separatorHeight = (1.f / [UIScreen mainScreen].scale);
-            CGFloat separatorWidth  = cellFrame.size.width - imageFrame.size.width;
-            CGFloat separatorInset  = m_rightAlignImage ? 0.f : imageFrame.size.width;
-            
-            UIImageView* separator = [[[UIImageView alloc] initWithFrame:CGRectMake(separatorInset,
-                                                                                    separatorY,
-                                                                                    separatorWidth,
-                                                                                    separatorHeight)] autorelease];
-            
-            separator.backgroundColor = ExampleApp::Helpers::ColorPalette::MenuSeparatorSubMenuColor;
-            [self->pCustomSeparatorContainer addSubview: separator];
-        }
-    }
-    else
+    if(m_hasSeparator)
     {
         CGFloat topSeparatorY       = 0.f;
-        CGFloat bottomSeparatorY    = cellFrame.size.height;
         CGFloat separatorHeight     = (1.f / [UIScreen mainScreen].scale);
-        CGFloat separatorWidth      = cellFrame.size.width - SubViewInset;
-        CGFloat separatorInset      = m_rightAlignImage ? 0.f : cellFrame.origin.x + SubViewInset;
+        CGFloat separatorWidth      = cellFrame.size.width;
         
-        if(!isTop)
-        {
-            UIImageView* topSeparator = [[[UIImageView alloc] initWithFrame:CGRectMake(separatorInset,
-                                                                                       topSeparatorY,
-                                                                                       separatorWidth,
-                                                                                       separatorHeight)] autorelease];
-            
-            topSeparator.backgroundColor = ExampleApp::Helpers::ColorPalette::MenuSeparatorHeaderColor;
-            
-            [self->pCustomSeparatorContainer addSubview: topSeparator];
-        }
+        UIImageView* topSeparator = [[[UIImageView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                                   topSeparatorY,
+                                                                                   separatorWidth,
+                                                                                   separatorHeight)] autorelease];
         
-        UIImageView* bottomSeparator = [[[UIImageView alloc] initWithFrame:CGRectMake(separatorInset,
-                                                                                      bottomSeparatorY,
-                                                                                      separatorWidth,
-                                                                                      separatorHeight)] autorelease];
+        topSeparator.backgroundColor = ExampleApp::Helpers::ColorPalette::TableDividerColor;
         
-        bottomSeparator.backgroundColor = ExampleApp::Helpers::ColorPalette::MenuSeparatorHeaderColor;
-        
-        [self->pCustomSeparatorContainer addSubview: bottomSeparator];
+        [self->pCustomSeparatorContainer addSubview: topSeparator];
     }
 }
 

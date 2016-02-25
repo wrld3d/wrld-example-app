@@ -9,8 +9,6 @@
 #include "PersistentSettings.h"
 #include "BidirectionalBus.h"
 #include "Menu.h"
-#include "SearchResultMenu.h"
-#include "InitialExperienceSearchResultAttractModeModule.h"
 
 namespace ExampleApp
 {
@@ -26,14 +24,9 @@ namespace ExampleApp
 
         protected:
 
-            std::vector<SdkModel::IInitialExperienceStep*> CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel,
-                                                                       Menu::View::IMenuViewModel& searchMenuViewModelControl,
-                                                                       SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel) ;
+            std::vector<SdkModel::IInitialExperienceStep*> CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel);
             
             ExampleAppMessaging::TMessageBus& m_messageBus;
-            
-        private:
-            SearchResultAttractMode::InitialExperienceSearchResultAttractModeModule* m_pInitialExperienceSearchResultAttractModeModule;
         };
     }
 }

@@ -15,8 +15,8 @@ namespace ExampleApp
             InteriorsExplorerViewModule::InteriorsExplorerViewModule(InteriorsExplorerViewModel& viewModel,
                                                                      ExampleAppMessaging::TMessageBus& messageBus,
                                                                      MyPinCreation::View::IMyPinCreationInitiationViewModel& initiationViewModel,
-                                                                     ExampleApp::Menu::View::IMenuViewModel& secondaryMenuViewModel,
-                                                                     ExampleApp::Menu::View::IMenuViewModel& searchResultMenuViewModel,
+                                                                     ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
+                                                                     ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
                                                                      ScreenControl::View::IScreenControlViewModel& flattenViewModel,
                                                                      ScreenControl::View::IScreenControlViewModel& compassViewModel,
                                                                      const Eegeo::Rendering::ScreenProperties& screenProperties,
@@ -28,8 +28,8 @@ namespace ExampleApp
                                                                        viewModel,
                                                                        messageBus,
                                                                        initiationViewModel,
-                                                                       secondaryMenuViewModel,
-                                                                       searchResultMenuViewModel,
+                                                                       searchMenuViewModel,
+                                                                       settingsMenuViewModel,
                                                                        flattenViewModel,
                                                                        compassViewModel);
                 

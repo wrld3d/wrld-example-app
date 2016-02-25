@@ -38,8 +38,8 @@ namespace ExampleApp
                 const std::string& Icon() const;
 
                 std::string SerializeJson() const;
-
-                void Select();
+                
+                IMenuOption& MenuOption();
             };
 
             inline bool operator==(const MenuItemModel& lhs, const MenuItemModel& rhs)

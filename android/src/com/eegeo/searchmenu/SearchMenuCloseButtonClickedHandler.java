@@ -2,24 +2,24 @@
 
 package com.eegeo.searchmenu;
 
-import com.eegeo.entrypointinfrastructure.MainActivity;
-
 import android.view.View;
 
 public class SearchMenuCloseButtonClickedHandler implements View.OnClickListener
 {
-    private MainActivity m_activity;
     private long m_nativeCallerPointer;
+    private final SearchMenuView m_searchMenuView;
 
-    SearchMenuCloseButtonClickedHandler(MainActivity activity, long nativeCallerPointer)
+    SearchMenuCloseButtonClickedHandler(long nativeCallerPointer,
+            							final SearchMenuView menuView)
     {
-        m_activity = activity;
         m_nativeCallerPointer = nativeCallerPointer;
+        m_searchMenuView = menuView;
     }
 
     @Override
     public void onClick(View view)
     {
-        SearchMenuViewJniMethods.HandleClosed(m_nativeCallerPointer);
+    	m_searchMenuView.setEditText("", false);
+        SearchMenuViewJniMethods.OnSearchCleared(m_nativeCallerPointer);
     }
 }

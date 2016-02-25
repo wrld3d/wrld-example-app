@@ -23,6 +23,21 @@ namespace ExampleApp
             {
                 [m_pView setActiveStateToIntermediateValue:modality];
             }
+            
+            void ModalBackgroundViewInterop::InsertTappedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_tappedCallbacks.AddCallback(callback);
+            }
+            
+            void ModalBackgroundViewInterop::RemoveTappedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_tappedCallbacks.RemoveCallback(callback);
+            }
+            
+            void ModalBackgroundViewInterop::HandleViewTapped()
+            {
+                m_tappedCallbacks.ExecuteCallbacks();
+            }
         }
     }
 }

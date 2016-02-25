@@ -10,6 +10,7 @@ namespace ExampleAppWPF
         private int m_zIndex;
         private string m_heading;
         private bool m_isExpanded;
+        private bool m_justAdded;
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
@@ -37,6 +38,7 @@ namespace ExampleAppWPF
             JObject parsed = JObject.Parse(json);
             m_heading = parsed["name"].Value<string>();
             IsExpanded = isExpanded;
+            JustAdded = m_justAdded = false;
         }
 
         public int ZIndex
@@ -57,7 +59,24 @@ namespace ExampleAppWPF
             }
         }
 
-        public bool JustAdded { get; set; }
+        public bool JustAdded
+        {
+            get
+            {
+                 return m_justAdded;
+            }
+
+            set
+            {
+                if (value != m_justAdded)
+                {
+                    m_justAdded = value;
+
+                    OnPropertyChanged("JustAdded");
+                }
+            }
+        }
+
         public bool JustRemoved
         {
             get

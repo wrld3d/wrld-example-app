@@ -4,8 +4,8 @@
 
 #include "Types.h"
 #include "CatalogBinding.h"
-#include "PerformedSearchMessage.h"
-#include "SearchResultMenuItemSelectedMessage.h"
+#include "SearchMenuPerformedSearchMessage.h"
+#include "SearchResultSectionItemSelectedMessage.h"
 #include "CategorySearchSelectedMessage.h"
 #include "WeatherSelectedMessage.h"
 #include "PlaceJumpSelectedMessage.h"
@@ -26,7 +26,6 @@
 #include "InitialExperienceIntroDismissedMessage.h"
 #include "SearchResultPoiPinToggledMessage.h"
 #include "SearchResultPoiViewOpenedMessage.h"
-#include "InitialExperienceSearchResultAttractModeModelStateExitedMessage.h"
 #include "TourActiveStateChangedMessage.h"
 #include "ActiveTourQuitSelectedMessage.h"
 #include "TourChangeRequestMessage.h"
@@ -41,8 +40,8 @@ namespace ExampleApp
     namespace ExampleAppMessaging
     {
         class UiToNativeMessageCatalog
-            : public Eegeo::Messaging::CatalogBinding<SecondaryMenu::PerformedSearchMessage>
-            , public Eegeo::Messaging::CatalogBinding<SearchResultMenu::SearchResultMenuItemSelectedMessage>
+            : public Eegeo::Messaging::CatalogBinding<SearchMenu::SearchMenuPerformedSearchMessage>
+            , public Eegeo::Messaging::CatalogBinding<SearchResultSection::SearchResultSectionItemSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<CategorySearch::CategorySearchSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<WeatherMenu::WeatherSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<PlaceJumps::PlaceJumpSelectedMessage>
@@ -50,7 +49,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Modality::UpdateNativeModalBackgroundMessage>
             , public Eegeo::Messaging::CatalogBinding<FlattenButton::FlattenButtonViewStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Compass::CompassViewCycledMessage>
-            , public Eegeo::Messaging::CatalogBinding<SearchResultMenu::SearchResultViewClearedMessage>
+            , public Eegeo::Messaging::CatalogBinding<SearchResultSection::SearchResultViewClearedMessage>
             , public Eegeo::Messaging::CatalogBinding<MyPinCreation::MyPinCreationViewStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<MyPinCreation::MyPinCreationViewSavePinMessage>
             , public Eegeo::Messaging::CatalogBinding<MyPinDetails::MyPinDetailsViewRemovePinMessage>
@@ -63,7 +62,6 @@ namespace ExampleApp
         	, public Eegeo::Messaging::CatalogBinding<InitialExperience::InitialExperienceIntroDismissedMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiPinToggledMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiViewOpenedMessage>
-            , public Eegeo::Messaging::CatalogBinding<InitialExperience::SearchResultAttractMode::InitialExperienceSearchResultAttractModeModelStateExitedMessage>
             , public Eegeo::Messaging::CatalogBinding<Tours::TourActiveStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Tours::ActiveTourQuitSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<Tours::TourChangeRequestMessage>

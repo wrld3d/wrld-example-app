@@ -16,8 +16,8 @@
         <ResourceDictionary Source="../Views/MyPinCreationDetails/MyPinCreationDetailsView.xaml" />
         <ResourceDictionary Source="../Views/MyPinCreationDetails/MyPinDetailsView.xaml" />
         <ResourceDictionary Source="../Views/Menu/MenuView.xaml" />
-        <ResourceDictionary Source="../Views/SearchResultMenu/SearchMenuView.xaml" />
-        <ResourceDictionary Source="../Views/SecondaryMenu/SecondaryMenuView.xaml" />
+        <ResourceDictionary Source="../Views/SettingsMenu/SettingsMenuView.xaml" />
+        <ResourceDictionary Source="../Views/SearchMenu/SearchMenuView.xaml" />
         <ResourceDictionary Source="../Views/Options/OptionsCacheClearSubView.xaml" />
         <ResourceDictionary Source="../Views/WorldPinOnMap/WorldPinOnMapView.xaml" />
         <ResourceDictionary Source="../Views/SearchResultPoi/GeoNamesSearchResultsPoiView.xaml" />

@@ -10,27 +10,111 @@
 #include "MenuViewInterop.h"
 #include "MenuSectionViewModel.h"
 #include "ImageHelpers.h"
-#include <sstream>
+#include "UIHelpers.h"
+
+static const float HeaderCellFontSize = 22.0f;
+static const float SubSectionCellFontSize = 16.0f;
+
+static NSString *HeaderCellIdentifier = @"headercell";
+static NSString *SubSectionCellIdentifier = @"subsectioncell";
+
+@interface CustomTableDataProvider()
+{
+    std::map<CustomTableView*, size_t> m_tableSectionMap;
+    std::vector<size_t> m_cachedTableSizes;
+}
+
+@end
 
 @implementation CustomTableDataProvider
 
 NSInteger const SubItemCellOpenableMenuArrowTag = 1;
 
-- (size_t)getTotalNumberOfCellsInTableView
-{
-    return ExampleApp::Menu::View::NumberOfCells(m_currentSections);
-}
-
-- (size_t)getNumberOfSections
-{
-    return m_currentSections.size();
-}
-
 - (void)updateMenuSections:(ExampleApp::Menu::View::TSections*)sections
 {
-    m_currentSections = *sections;
-    [[m_pView pTableview] reloadData];
+    bool sectionsUpdated = false;
+    
+    if(sections->size() != m_currentSections.size())
+    {
+        sectionsUpdated = true;
+    }
+    else
+    {
+        for(int i = 0; i < sections->size(); ++i)
+        {
+            if((*sections)[i] != m_currentSections[i] || (*sections)[i]->GetTotalItemCount() != m_cachedTableSizes[i])
+            {
+                sectionsUpdated = true;
+                break;
+            }
+        }
+    }
+    
+    if(sectionsUpdated)
+    {
+        m_currentSections = *sections;
+        
+        m_cachedTableSizes.resize(m_currentSections.size());
+        
+        for(int i = 0; i < m_cachedTableSizes.size(); ++i)
+        {
+            m_cachedTableSizes[i] = m_currentSections[i]->GetTotalItemCount();
+        }
+        
+        for(std::map<CustomTableView*, size_t>::const_iterator it = m_tableSectionMap.begin(); it != m_tableSectionMap.end(); ++it)
+        {
+            [it->first reloadData];
+        }
+        
+        [m_pView refreshTableHeights];
+    }
+}
 
+- (float)getRealTableHeight
+{
+    int numberOfHeaders = 0;
+    int numberOfSubSectionCells = 0;
+    
+    for(ExampleApp::Menu::View::TSections::iterator it = m_currentSections.begin(); it != m_currentSections.end(); ++it)
+    {
+        if((*it)->IsExpandable())
+        {
+            ++numberOfHeaders;
+            if((*it)->IsExpanded())
+            {
+                numberOfSubSectionCells += (*it)->GetTotalItemCount();
+            }
+        }
+        else
+        {
+            numberOfHeaders += (*it)->GetTotalItemCount();
+        }
+    }
+    
+    return CellConstants::SectionHeaderCellHeight * numberOfHeaders + CellConstants::SubSectionCellHeight * numberOfSubSectionCells;
+}
+
+- (float)getRealHeightForTable:(CustomTableView*)customTableView
+{
+    int numberOfHeaders = 0;
+    int numberOfSubSectionCells = 0;
+    
+    const ExampleApp::Menu::View::IMenuSectionViewModel& section = *(m_currentSections[m_tableSectionMap[customTableView]]);
+    
+    if(section.IsExpandable())
+    {
+        ++numberOfHeaders;
+        if(section.IsExpanded())
+        {
+            numberOfSubSectionCells += section.GetTotalItemCount();
+        }
+    }
+    else
+    {
+        numberOfHeaders += section.GetTotalItemCount();
+    }
+    
+    return CellConstants::SectionHeaderCellHeight * numberOfHeaders + CellConstants::SubSectionCellHeight * numberOfSubSectionCells;
 }
 
 - (void)dealloc
@@ -40,45 +124,66 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
 }
 
 - (id)initWithParams:(MenuView*)view
+                    :(NSMutableDictionary*)tableViewMap
 {
     m_pView = view;
+    
+    for(int i = 0; i < [tableViewMap count]; ++i)
+    {
+        CustomTableView* tableView = tableViewMap[@(i)];
+        
+        [tableView setDataSource:self];
+        [tableView setDelegate:self];
+        
+        m_tableSectionMap[tableView] = i;
+    }
 
-    CustomTableView* tableView = [m_pView pTableview];
-    [tableView setDataSource:self];
-    [tableView setDelegate:self];
-
-    self.pOpenableMenuArrow = ExampleApp::Helpers::ImageHelpers::LoadImage(@"sub_menu_arrow");
+    self.pOpenableMenuArrow = ExampleApp::Helpers::ImageHelpers::LoadImage(@"sub_menu_arrow_off");
     return self;
 }
 
 - (UITableViewCell *)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    std::stringstream ss;
-
-    const ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections.at(indexPath.section);
+    CustomTableView* customTableView = static_cast<CustomTableView*>(tableView);
+    
+    const ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections.at(m_tableSectionMap[customTableView]);
     const NSInteger index = section.IsExpandable() ? indexPath.row - 1 : indexPath.row;
     const bool isExpandableHeader = section.IsExpandable() && indexPath.row == 0;
-
-    static NSString *CellIdentifier = @"cell";
-
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    const bool isHeader = isExpandableHeader | !section.IsExpandable();
+    
+    NSString *CurrentCellIdentifier = isHeader ? HeaderCellIdentifier : SubSectionCellIdentifier;
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CurrentCellIdentifier];
     if(cell == nil)
     {
-        cell = [[[CustomTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-        [(CustomTableViewCell*)cell initCell: m_pView.pTableview.bounds.size.width :(CustomTableView*)tableView];
+        cell = [[[CustomTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CurrentCellIdentifier] autorelease];
+        
+        [(CustomTableViewCell*)cell initCell:(CGFloat)[customTableView getCellWidth]
+                                            :(CGFloat)[customTableView getCellInset]
+                                            :indexPath
+                                            :customTableView
+                                            :self];
+        
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
-
+        
         UIImageView* pOpenableMenuArrowView = [[[UIImageView alloc] initWithImage:self.pOpenableMenuArrow] autorelease];
         pOpenableMenuArrowView.tag = SubItemCellOpenableMenuArrowTag;
-
-        const float tableWidth = m_pView.pTableview.bounds.size.width;
-        const float openableArrowX = [m_pView isRightMenu] ? (tableWidth - 20.f) : 0.f;
+        
+        const float openableArrowWidth = pOpenableMenuArrowView.frame.size.width;
+        const float openableArrowHeight = pOpenableMenuArrowView.frame.size.height;
+        
+        const float openableArrowRightInset = 18.0f + openableArrowWidth / 2.0f;
+        const float openableArrowTopInset = (CellConstants::SectionHeaderCellHeight - openableArrowHeight) * 0.5f;
+        
+        const float openableArrowX = [customTableView getCellWidth] - openableArrowRightInset;
+        const float openableArrowY = openableArrowTopInset;
+        
         pOpenableMenuArrowView.frame = CGRectMake(openableArrowX,
-                                                  (SECTION_HEADER_CELL_HEIGHT*0.5f) - 8.f,
+                                                  openableArrowY,
                                                   pOpenableMenuArrowView.frame.size.width,
                                                   pOpenableMenuArrowView.frame.size.height);
         
-        [cell addSubview:pOpenableMenuArrowView];
+        [cell.contentView addSubview:pOpenableMenuArrowView];
 
         if ([cell respondsToSelector:@selector(layoutMargins)])
         {
@@ -90,34 +195,30 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
             [cell setSeparatorInset:UIEdgeInsetsZero];
         }
     }
-
-    const bool isHeader = isExpandableHeader | !section.IsExpandable();
-
-    if(isExpandableHeader)
-    {
-        std::string json = section.SerializeJson();
-        [self populateCellWithJson :json :cell :isHeader];
-    }
-    else
-    {
-        ExampleApp::Menu::View::MenuItemModel item = section.GetItemAtIndex(static_cast<int>(index));
-        std::string json = item.SerializeJson();
-        [self populateCellWithJson :json :cell :isHeader];
-    }
+    
+    std::string json = isExpandableHeader ? section.SerializeJson() : section.GetItemAtIndex(static_cast<int>(index)).SerializeJson();
+    [self populateCellWithJson:json :cell :customTableView :isHeader];
 
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(self.rowSelectionDelegate != NULL)
+    {
+        [self.rowSelectionDelegate onRowSelected];
+    }
+    
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     CustomTableViewCell *cell = (CustomTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
     if(![cell canInteract])
     {
         return;
     }
+    
+    size_t sectionIndex = m_tableSectionMap[(CustomTableView*)tableView];
 
-    ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections.at(indexPath.section);
+    ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections.at(sectionIndex);
 
     if(section.IsExpandable() && indexPath.row == 0)
     {
@@ -136,9 +237,12 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         {
             section.Expand();
             rows = section.Size();
-            [self showOpenableArrowOpen:cell];
+            // Commented following code line out to fix arrow animation. Fixes MPLY-6376.
+            // (first animation call fails at start and sets final value for animation)
+            // relying on animation in willDisplayCell that is called right after and will succeed
+            //[self showOpenableArrowOpen:cell];
         }
-
+        
         for(int i=1; i <rows; i++)
         {
             NSIndexPath *tmpIndexPath = [NSIndexPath indexPathForRow:i inSection:indexPath.section];
@@ -147,18 +251,35 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
 
         if(!section.IsExpanded())
         {
+            if(self.rowSelectionDelegate != NULL)
+            {
+                [self.rowSelectionDelegate onSectionContracted];
+            }
+            
             [tableView deleteRowsAtIndexPaths:tmpArray withRowAnimation:UITableViewRowAnimationNone];
         }
         else
         {
+            if(self.rowSelectionDelegate != NULL)
+            {
+                [self.rowSelectionDelegate onSectionExpanded];
+            }
+            
             [tableView insertRowsAtIndexPaths:tmpArray withRowAnimation:UITableViewRowAnimationNone];
+            
+            for(std::map<CustomTableView*, size_t>::const_iterator it = m_tableSectionMap.begin(); it != m_tableSectionMap.end(); ++it)
+            {
+                if(it->first != tableView)
+                {
+                    [self collapseSectionForTable:it->first];
+                }
+            }
         }
-
     }
     else
     {
         ExampleApp::Menu::View::MenuViewInterop* interop = [m_pView getInterop];
-        interop->HandleItemSelected(static_cast<int>(indexPath.section), static_cast<int>(indexPath.row));
+        interop->HandleItemSelected(static_cast<int>(sectionIndex), static_cast<int>(indexPath.row));
     }
 }
 
@@ -171,23 +292,22 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         return;
     }
     
-    ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections.at(indexPath.section);
-    UIImageView *openableArrow = (UIImageView*)[cell viewWithTag:SubItemCellOpenableMenuArrowTag];
-
-    if(section.IsExpandable() && indexPath.row != 0)
+    size_t sectionIndex = m_tableSectionMap[(CustomTableView*)tableView];
+    ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections.at(sectionIndex);
+    
+    UIImageView *openableArrow = (UIImageView*)[cell.contentView viewWithTag:SubItemCellOpenableMenuArrowTag];
+    
+    cell.indentationLevel = 0;
+    
+    bool isHeader = (section.IsExpandable() && indexPath.row == 0) || !section.IsExpandable();
+    bool isExpandableHeader = isHeader && section.IsExpandable();
+    bool hasSeparator = isHeader && sectionIndex != 0;
+    
+    openableArrow.hidden = !isExpandableHeader;
+    [self setCellInfo:customCell :isExpandableHeader :hasSeparator];
+    
+    if(isHeader)
     {
-        cell.textLabel.font = [UIFont systemFontOfSize:[self getTextLabelFontSize:false]];
-        cell.indentationLevel = 0;
-
-        openableArrow.hidden = true;
-        [self setCellAlignInfo:customCell:false];
-    }
-    else
-    {
-        cell.textLabel.font = [UIFont systemFontOfSize:[self getTextLabelFontSize:true]];
-        cell.indentationLevel = 0;
-        openableArrow.hidden = !section.IsExpandable();
-
         if(section.IsExpanded())
         {
             [self showOpenableArrowOpen :cell];
@@ -196,93 +316,146 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         {
             [self showOpenableArrowClosed :cell];
         }
-
-        [self setCellAlignInfo:customCell:true];
     }
-
-    cell.textLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextHeaderColour;
-    [cell setBackgroundColor:ExampleApp::Helpers::ColorPalette::WhiteTone];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections.at(indexPath.section);
-
+    
     if(section.IsExpandable() && indexPath.row != 0)
     {
-        return SUB_SECTION_CELL_HEIGHT;
+        return CellConstants::SubSectionCellHeight;
     }
     else
     {
-        return SECTION_HEADER_CELL_HEIGHT;
+        return CellConstants::SectionHeaderCellHeight;
     }
 }
 
-- (void) populateCellWithJson:(std::string)json :(UITableViewCell*)cell :(const bool)isHeader
+- (void) populateCellWithJson:(std::string)json :(UITableViewCell*)cell :(CustomTableView*)tableView :(bool)isHeader
 {
     rapidjson::Document document;
     if (!document.Parse<0>(json.c_str()).HasParseError())
     {
         std::string name = document["name"].GetString();
         
+        CGRect imageFrame = CGRectZero;
+        
+        float textInsetX;
+        
         if(document.HasMember("icon"))
         {
+            const float imageSize = isHeader ? 36.0f : 26.0f;
+            const float imageInsetX = isHeader? 4.0f : 6.0f;
+            const float imageInsetY = isHeader ? 2.0f : 8.0f;
+            
+            textInsetX = imageSize + imageInsetX * 2.0f;
+            
             std::string icon = document["icon"].GetString();
             std::string iconResourceName = ExampleApp::Helpers::IconResources::GetSmallIconPathForResourceName(icon);
             
             cell.imageView.image = ExampleApp::Helpers::ImageHelpers::LoadImage(iconResourceName);
             cell.imageView.contentMode = UIViewContentModeScaleToFill;
+            
+            imageFrame = CGRectMake(imageInsetX,
+                                    imageInsetY,
+                                    imageSize,
+                                    imageSize);
         }
         else
         {
+            textInsetX = 9.0f;
             cell.imageView.image = nil;
         }
-
-        if ([m_pView isRightMenu])
-        {
-            cell.textLabel.text = [NSString stringWithUTF8String:name.c_str()];
-        }
-        else
-        {
-            for (UIView* subview in cell.contentView.subviews)
-            {
-                [subview removeFromSuperview];
-            }
-
-            const float subLabelWidth = 160.f;
-            const float subLabelHeight = isHeader ? SECTION_HEADER_CELL_HEIGHT : SUB_SECTION_CELL_HEIGHT;
-            UILabel *subLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, subLabelWidth, subLabelHeight)];
-            subLabel.backgroundColor = [UIColor clearColor];
-            subLabel.textAlignment = NSTextAlignmentRight;
-            subLabel.text = [NSString stringWithUTF8String:name.c_str()];
-            subLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextHeaderColour;
-            subLabel.highlightedTextColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
-            subLabel.font = [UIFont systemFontOfSize: [self getTextLabelFontSize: isHeader]];
-            [cell.contentView addSubview: subLabel];
-        }
+        
+        const float textY = 0.0f;
+        const float textWidth = [tableView getCellWidth] - textInsetX;
+        const float textHeight = isHeader ? CellConstants::SectionHeaderCellHeight : CellConstants::SubSectionCellHeight;
+        
+        cell.textLabel.text = [NSString stringWithUTF8String:name.c_str()];
+        cell.textLabel.font = [UIFont systemFontOfSize: [self getTextLabelFontSize:isHeader]];
+        cell.textLabel.textColor = isHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderTextColor : ExampleApp::Helpers::ColorPalette::TableSubCellTextColor;
+        [cell.textLabel sizeToFit];
+        
+        CGRect textFrame = CGRectMake(textInsetX,
+                                      textY,
+                                      textWidth,
+                                      textHeight);
+        
+        [(CustomTableViewCell*)cell setContentFrames:imageFrame
+                                                    :textFrame
+                                                    :CGRectZero];
     }
 }
 
-- (float)getTextLabelFontSize:(bool)headline
+- (float)getTextLabelFontSize :(bool)headline
 {
-    return headline ? 25.0 : 20.f;
+    return headline ? HeaderCellFontSize : SubSectionCellFontSize;
 }
 
-- (void) setCellAlignInfo:(CustomTableViewCell*)cell :(bool)isHeader
+- (void) setCellInfo:(CustomTableViewCell*)cell :(bool)isExpandableHeader :(bool)hasSeparator
 {
-    bool isRightMenu = [m_pView isRightMenu];
-    [cell setAlignInfo :isRightMenu :!isRightMenu :isHeader :@"menu_background1" :@"menu_background2"];
+    [cell setInfo :hasSeparator
+                  :ExampleApp::Helpers::ColorPalette::UiBorderColor
+                  :isExpandableHeader ? ExampleApp::Helpers::ColorPalette::UiBorderColor : ExampleApp::Helpers::ColorPalette::TableSubCellColor
+                  :isExpandableHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderPressColor : ExampleApp::Helpers::ColorPalette::TableSubCellPressColor
+                  :isExpandableHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderTextColor : ExampleApp::Helpers::ColorPalette::TableSubCellTextColor
+                  :isExpandableHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderTextHighlightColor : ExampleApp::Helpers::ColorPalette::TableSubCellTextColor
+                  :(UIImageView*)[cell.contentView viewWithTag:SubItemCellOpenableMenuArrowTag]];
 }
 
 
 - (NSInteger)numberOfSectionsInTableView: (UITableView *)tableView
 {
-    return m_currentSections.size();
+    if(m_tableSectionMap.find((CustomTableView*)tableView) == m_tableSectionMap.end() || m_currentSections.size() == 0)
+    {
+        return 0;
+    }
+    else
+    {
+        return 1;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return m_currentSections.at(section)->Size();
+    return m_currentSections.at(m_tableSectionMap[(CustomTableView*)tableView])->Size();
+}
+
+- (void)collapseAll
+{
+    for(std::map<CustomTableView*, size_t>::const_iterator it = m_tableSectionMap.begin(); it != m_tableSectionMap.end(); ++it)
+    {
+        [self collapseSectionForTable:it->first];
+    }
+}
+
+- (void)collapseSectionForTable:(CustomTableView*)tableView
+{
+    size_t sectionIndex = m_tableSectionMap[tableView];
+    
+    ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections[sectionIndex];
+    
+    if(section.IsExpandable() && section.IsExpanded())
+    {
+        NSInteger rows;
+        
+        NSMutableArray *tmpArray = [NSMutableArray array];
+        
+        [self showOpenableArrowClosed:[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]]];
+        
+        rows = section.Size();
+        section.Contract();
+        
+        for(int i = 1; i < rows; ++i)
+        {
+            NSIndexPath *tmpIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
+            [tmpArray addObject:tmpIndexPath];
+        }
+        
+        [tableView deleteRowsAtIndexPaths:tmpArray withRowAnimation:UITableViewRowAnimationNone];
+    }
 }
 
 - (CGAffineTransform)computeOpenableArrowTransform:(float)degrees
@@ -292,14 +465,28 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
 
 - (void)showOpenableArrowClosed:(UITableViewCell *)cell
 {
-    const float angle = [m_pView isRightMenu] ? 0.f : 180.f;
-    UIImageView *openableArrow = (UIImageView*)[cell viewWithTag:SubItemCellOpenableMenuArrowTag];
-    openableArrow.transform = [self computeOpenableArrowTransform:angle];
+    const float angle = 0.f;
+    UIImageView *openableArrow = (UIImageView*)[cell.contentView viewWithTag:SubItemCellOpenableMenuArrowTag];
+    
+    [UIView animateWithDuration:0.2f
+                          delay:0.0f
+                        options:UIViewAnimationCurveEaseInOut
+                     animations:^{
+                         openableArrow.transform = [self computeOpenableArrowTransform:angle];
+                     }
+                     completion:nil];
 }
 
 - (void)showOpenableArrowOpen:(UITableViewCell *)cell
 {
-    UIImageView *openableArrow = (UIImageView*)[cell viewWithTag:SubItemCellOpenableMenuArrowTag];
-    openableArrow.transform = [self computeOpenableArrowTransform:270.f];
+    const float angle = 270.0f;
+    UIImageView *openableArrow = (UIImageView*)[cell.contentView viewWithTag:SubItemCellOpenableMenuArrowTag];
+    [UIView animateWithDuration:0.2f
+                          delay:0.0f
+                        options:UIViewAnimationCurveEaseInOut
+                     animations:^{
+                         openableArrow.transform = [self computeOpenableArrowTransform:angle];
+                     }
+                     completion:nil];
 }
 @end;

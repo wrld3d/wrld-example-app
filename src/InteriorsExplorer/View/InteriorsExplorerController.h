@@ -26,8 +26,8 @@ namespace ExampleApp
                                             InteriorsExplorerViewModel& viewModel,
                                             ExampleAppMessaging::TMessageBus& messageBus,
                                             MyPinCreation::View::IMyPinCreationInitiationViewModel& initiationViewModel,
-                                            ExampleApp::Menu::View::IMenuViewModel& secondaryMenuViewModel,
-                                            ExampleApp::Menu::View::IMenuViewModel& searchResultMenuViewModel,
+                                            ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
+                                            ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
                                             ScreenControl::View::IScreenControlViewModel& flattenViewModel,
                                             ScreenControl::View::IScreenControlViewModel& compassViewModel);
                 
@@ -53,8 +53,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
                 
                 MyPinCreation::View::IMyPinCreationInitiationViewModel& m_initiationViewModel;
-                ExampleApp::Menu::View::IMenuViewModel& m_secondaryMenuViewModel;
-                ExampleApp::Menu::View::IMenuViewModel& m_searchResultMenuViewModel;
+                ExampleApp::Menu::View::IMenuViewModel& m_searchMenuViewModel;
+                ExampleApp::Menu::View::IMenuViewModel& m_settingsMenuViewModel;
                 ScreenControl::View::IScreenControlViewModel& m_flattenViewModel;
                 ScreenControl::View::IScreenControlViewModel& m_compassViewModel;
                 AppModes::SdkModel::AppMode m_appMode;

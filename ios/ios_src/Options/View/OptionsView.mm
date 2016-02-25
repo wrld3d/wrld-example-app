@@ -8,8 +8,10 @@
 #include "ImageHelpers.h"
 #include "IconResources.h"
 #include "OptionsViewInterop.h"
-#import "UIView+TouchExclusivity.h"
 #include "UIHelpers.h"
+
+#import "UIButton+DefaultStates.h"
+#import "UIView+TouchExclusivity.h"
 
 @implementation OptionsView
 
@@ -22,40 +24,39 @@
         m_pInterop = Eegeo_NEW(ExampleApp::Options::View::OptionsViewInterop)(self);
         self.alpha = 0.f;
         m_stateChangeAnimationTimeSeconds = 0.2f;
+        
+        const CGFloat buttonSize = 20.0;
 
         self.pControlContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         [self addSubview: self.pControlContainer];
 
         self.pCloseButtonContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pCloseButtonContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pCloseButtonContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         [self.pControlContainer addSubview: self.pCloseButtonContainer];
 
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pCloseButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_close_off") forState:UIControlStateNormal];
+        [self.pCloseButton setDefaultStatesWithImageNames:@"button_close_off" :@"button_close_on"];
+        [self.pCloseButton addTarget:self action:@selector(onCloseButtonTapped) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
 
         self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::MainHudColor;
+        self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pControlContainer addSubview: self.pContentContainer];
 
         self.pOptionsContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pOptionsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+        self.pOptionsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pContentContainer addSubview: self.pOptionsContainer];
 
         self.pHeadlineContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+        self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pControlContainer addSubview: self.pHeadlineContainer];
 
         self.pTitleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextTitleColor;
         [self.pHeadlineContainer addSubview: self.pTitleLabel];
-
-        m_tapGestureRecogniser = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_tapTabGesture:)];
-        [m_tapGestureRecogniser setDelegate:self];
-        [self.pCloseButton addGestureRecognizer: m_tapGestureRecogniser];
         
-        self.pWifiOnlyCheckbox = [[[UILabelledCheckboxView alloc] initWithParams:20.f
+        self.pWifiOnlyCheckbox = [[[UILabelledCheckboxView alloc] initWithParams:buttonSize
                                                                                 :"button_checkbox_off"
                                                                                 :"button_checkbox_on"
                                                                                 :"Stream over Wi-fi only"
@@ -65,7 +66,7 @@
 
         [self.pOptionsContainer addSubview: self.pWifiOnlyCheckbox];
         
-        self.pCacheEnabledCheckbox = [[[UILabelledCheckboxView alloc] initWithParams:20.f
+        self.pCacheEnabledCheckbox = [[[UILabelledCheckboxView alloc] initWithParams:buttonSize
                                                                                     :"button_checkbox_off"
                                                                                     :"button_checkbox_on"
                                                                                     :"Enable data caching on device"
@@ -75,15 +76,20 @@
 
         [self.pOptionsContainer addSubview: self.pCacheEnabledCheckbox];
         
-        self.pClearCacheButton = [[[UILabelledCheckboxView alloc] initWithParams:20.f
-                                                                                :"buttonsmall_close_off"
-                                                                                :"buttonsmall_close_on"
-                                                                                :"Clear cached map data"
-                                                                                :false
-                                                                                :self
-                                                                                :@selector(cacheClearSelectionHandler)] autorelease];
+        self.pClearCacheButton = [[[UIButton alloc] initWithFrame:CGRectMake(0.0, 0.0, buttonSize, buttonSize)] autorelease];
+        [self.pClearCacheButton setImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_clear_cache_off") forState:UIControlStateNormal];
+        [self.pClearCacheButton setImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_clear_cache_on") forState:UIControlStateHighlighted];
+        [self.pClearCacheButton addTarget:self action:@selector(cacheClearSelectionHandler) forControlEvents:UIControlEventTouchUpInside];
         
         [self.pOptionsContainer addSubview: self.pClearCacheButton];
+        
+        self.pClearCacheLabel = [[[UILabel alloc] initWithFrame: CGRectMake(0.0, 0.0, 0.0, buttonSize)] autorelease];
+        self.pClearCacheLabel.font = [UIFont systemFontOfSize: 16.f];
+        self.pClearCacheLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
+        self.pClearCacheLabel.text = @"Clear cached map data";
+        [self.pClearCacheLabel sizeToFit];
+        
+        [self.pOptionsContainer addSubview:self.pClearCacheLabel];
         
         [self setTouchExclusivity:self];
         
@@ -95,8 +101,6 @@
 
 - (void)dealloc
 {
-    [m_tapGestureRecogniser release];
-    
     [self.pCloseButton removeFromSuperview];
     [self.pCloseButton release];
 
@@ -108,6 +112,9 @@
 
     [self.pHeadlineContainer removeFromSuperview];
     [self.pHeadlineContainer release];
+    
+    [self.pClearCacheLabel removeFromSuperview];
+    [self.pClearCacheLabel release];
     
     [self.pClearCacheButton removeFromSuperview];
     [self.pClearCacheButton release];
@@ -219,6 +226,11 @@
     CGRect clearCacheButtonFrame = self.pClearCacheButton.frame;
     clearCacheButtonFrame.origin.y = optionsContentY + (optionsDeltaY * 2);
     self.pClearCacheButton.frame = clearCacheButtonFrame;
+    
+    CGRect clearCacheLabelFrame = self.pClearCacheLabel.frame;
+    clearCacheLabelFrame.origin.x = clearCacheButtonFrame.origin.x + clearCacheButtonFrame.size.width + 5.0;
+    clearCacheLabelFrame.origin.y = clearCacheButtonFrame.origin.y + ((clearCacheButtonFrame.size.height / 2.0) - (clearCacheLabelFrame.size.height / 2.0));
+    self.pClearCacheLabel.frame = clearCacheLabelFrame;
 }
 
 - (void) setStreamOverWifiOnlySelected:(bool)isStreamOverWifiOnlySelected
@@ -312,7 +324,7 @@
     }];
 }
 
-- (void)_tapTabGesture:(UITapGestureRecognizer *)recognizer
+- (void)onCloseButtonTapped
 {
     m_pInterop->HandleCloseSelected();
 }

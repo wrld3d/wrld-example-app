@@ -12,7 +12,6 @@
 @interface AboutPageView : UIView <UIGestureRecognizerDelegate>
 {
     ExampleApp::AboutPage::View::AboutPageViewInterop* m_pInterop;
-    UITapGestureRecognizer* m_tapGestureRecogniser;
     float m_stateChangeAnimationTimeSeconds;
 }
 
