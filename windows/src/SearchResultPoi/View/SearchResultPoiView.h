@@ -62,7 +62,7 @@ namespace ExampleApp
 
                 void HandlePinToggleClicked();
 
-                void CreateVendorSpecificPoiView(const std::string& vendor);
+                void CreateVendorSpecificPoiView(const std::string& vendor, const std::string& category);
             };
         }
     }

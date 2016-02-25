@@ -6,6 +6,7 @@
 #include "WindowsAppThreadAssertionMacros.h"
 #include "SearchResultModelCLI.h"
 #include "ReflectionHelpers.h"
+#include "SwallowSearchConstants.h"
 
 using namespace ExampleApp::Helpers::ReflectionHelpers;
 
@@ -30,7 +31,7 @@ namespace ExampleApp
             void SearchResultPoiView::Show(const Search::SdkModel::SearchResultModel model, bool isPinned)
             {
                 m_model = model;
-                CreateVendorSpecificPoiView(m_model.GetVendor());
+                CreateVendorSpecificPoiView(m_model.GetVendor(), m_model.GetCategory());
 
 				DisplayPoiInfo(gcnew SearchResultModelCLI(m_model), isPinned);
             }
@@ -105,37 +106,41 @@ namespace ExampleApp
                 m_togglePinClickedCallbacks.ExecuteCallbacks(m_model);
             }
 
-            void SearchResultPoiView::CreateVendorSpecificPoiView(const std::string& vendor)
+            void SearchResultPoiView::CreateVendorSpecificPoiView(const std::string& vendor, const std::string& category)
             {
                 ASSERT_UI_THREAD
 				
                 std::string viewClassName = "";
 				
-                if(vendor == "Yelp")
+                if(vendor == ExampleApp::Search::YelpVendorName)
                 {
 					viewClassName = "ExampleAppWPF.YelpSearchResultsPoiView";
                 }
-                else if(vendor == "GeoNames")
+                else if(vendor == ExampleApp::Search::GeoNamesVendorName)
                 {
 					viewClassName = "ExampleAppWPF.GeoNamesSearchResultsPoiView";
                 }
-				else if (vendor == ExampleApp::Search::SwallowPeopleVendorName)
+				else if (vendor == ExampleApp::Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
 				{
 					viewClassName = "ExampleAppWPF.SwallowPersonSearchResultsPoiView";
 				}
-				else if (vendor == ExampleApp::Search::SwallowMeetingRoomsVendorName)
+				else if (vendor == ExampleApp::Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
 				{
 					viewClassName = "ExampleAppWPF.SwallowMeetingRoomSearchResultsPoiView";
 				}
-				else if (vendor == ExampleApp::Search::SwallowWorkingGroupsVendorName)
+				else if (vendor == ExampleApp::Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME)
 				{
 					viewClassName = "ExampleAppWPF.SwallowWorkingGroupSearchResultsPoiView";
 				}
-				else if (vendor == ExampleApp::Search::SwallowFacilitiesVendorName)
+				else if (vendor == ExampleApp::Search::EegeoVendorName && (category == ExampleApp::Search::Swallow::SearchConstants::PRINT_STATION_CATEGORY_NAME
+					|| category == ExampleApp::Search::Swallow::SearchConstants::TOILETS_CATEGORY_NAME
+					|| category == ExampleApp::Search::Swallow::SearchConstants::FACILITY_CATEGORY_NAME
+					|| category == ExampleApp::Search::Swallow::SearchConstants::EMERGENCY_EXIT_CATEGORY_NAME
+					|| category == ExampleApp::Search::Swallow::SearchConstants::STATIONERY_CATEGORY_NAME))
 				{
 					viewClassName = "ExampleAppWPF.SwallowFacilitySearchResultsPoiView";
 				}
-				else if (vendor == ExampleApp::Search::SwallowDepartmentsVendorName)
+				else if (vendor == ExampleApp::Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME)
 				{
 					viewClassName = "ExampleAppWPF.SwallowDepartmentSearchResultsPoiView";
 				}
