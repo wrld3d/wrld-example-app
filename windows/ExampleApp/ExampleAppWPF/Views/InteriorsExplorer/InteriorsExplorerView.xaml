@@ -72,8 +72,12 @@
                                     TickPlacement="TopLeft"                                    
                                     IsMoveToPointEnabled="True"
                                     Tag="0"
-                                    Foreground="{StaticResource LightGrey}"
-                            />
+                                    Foreground="{StaticResource LightGrey}">
+                                <Slider.Background>
+                                    <SolidColorBrush Opacity="0.0"/>
+                                </Slider.Background>
+                            </Slider>
+                            
                         </Grid>
                     </Grid>
                 </ControlTemplate>

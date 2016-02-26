@@ -23,7 +23,6 @@ namespace ExampleAppWPF
         private double m_stateChangeAnimationTimeMilliseconds = 200.0;
         private bool m_dragInProgress = false;
         private string[] m_floorShortNames;
-        
 
         private const float DefaultOffscreenOffsetX = 100.0f;
 
@@ -32,7 +31,7 @@ namespace ExampleAppWPF
 
         static InteriorsExplorerView()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(InteriorsExplorerView), new FrameworkPropertyMetadata(typeof(InteriorsExplorerView)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(InteriorsExplorerView), new FrameworkPropertyMetadata(typeof(InteriorsExplorerView)));            
         }
 
         public InteriorsExplorerView(IntPtr nativeCallerPointer)
@@ -52,7 +51,6 @@ namespace ExampleAppWPF
             m_floorSlider.ValueChanged += OnSliderValueChanged;
 
             m_floorSlider.ApplyTemplate();
-
 
             m_sliderTickBar = GetTickBar(m_floorSlider);
 
@@ -179,6 +177,32 @@ namespace ExampleAppWPF
             detailsPanelAnimation.Completed += Storyboard_Completed;
 
             m_detailsPanel.BeginAnimation(OpacityProperty, detailsPanelAnimation);
+
+
+            //var testAnim = new DoubleAnimation();
+            //testAnim.From = 1.0;
+            //testAnim.To = 0.0;
+            //testAnim.AutoReverse = true;
+            //testAnim.RepeatBehavior = RepeatBehavior.Forever;
+            //testAnim.Duration = new Duration(TimeSpan.FromSeconds(1.0));
+
+            //m_floorSlider.Background.BeginAnimation(Brush.OpacityProperty, testAnim);
+
+            //testAnim.CurrentTimeInvalidated += delegate (object sender, EventArgs e)
+            //{
+            //    //var value = (double)(testAnim.GetValue(OpacityProperty));
+            //    var test = m_floorSlider.Background.Opacity;
+            //    m_floorSlider.Background.Opacity = test;
+            //    m_floorSlider.Background.InvalidateProperty(OpacityProperty);
+            //    m_floorSlider.InvalidateVisual();
+            //};
+
+
+            //            m_floorSlider.Background = m_testBrush;
+            //m_floorSlider.BeginAnimation(OpacityProperty, testAnim);
+            //m_testBrush.Opacity = 0.3;
+
+
         }
 
         private void Storyboard_Completed(object sender, EventArgs e)
@@ -227,7 +251,6 @@ namespace ExampleAppWPF
             if (m_dragInProgress)
             {
                 SetFloorSelectionDrag(e.NewValue);
-
             }
         }
 
