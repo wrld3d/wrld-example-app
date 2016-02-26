@@ -2,6 +2,7 @@
 
 #include "PlaceJumpsDataParser.h"
 #include "document.h"
+#include "error/en.h"
 #include "LatLongAltitude.h"
 #include "Logger.h"
 
@@ -18,7 +19,9 @@ namespace ExampleApp
                     rapidjson::Document document;
                     if(document.Parse<0>(json.c_str()).HasParseError())
                     {
-                        EXAMPLE_LOG("JSON ERROR: %s/n", document.GetParseError());
+                        rapidjson::ParseErrorCode errorCode = document.GetParseError();
+                        const char* errorMessage = rapidjson::GetParseError_En(errorCode);
+                        EXAMPLE_LOG("JSON ERROR: (Code %d) %s/n", errorCode, errorMessage);
                         return false;
                     }
 
