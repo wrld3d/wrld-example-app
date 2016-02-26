@@ -16,7 +16,7 @@ namespace ExampleApp
             std::string SerialiseMenuItemToJson(const TMenuItem& menuItem)
             {
                 rapidjson::StringBuffer stringBuffer;
-                rapidjson::Writer<rapidjson::StringBuffer> writer = rapidjson::Writer<rapidjson::StringBuffer>(stringBuffer);
+                rapidjson::Writer<rapidjson::StringBuffer> writer(stringBuffer);
 
                 writer.StartObject();
 
