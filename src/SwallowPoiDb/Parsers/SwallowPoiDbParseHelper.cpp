@@ -19,7 +19,7 @@ namespace ExampleApp
 
 				resultValue.SetString(value.c_str(), static_cast<int>(value.size()), allocator);
 
-				out_jsonValue.AddMember(name.c_str(),
+                out_jsonValue.AddMember(rapidjson::Value(name.c_str(), allocator).Move(),
 					resultValue,
 					allocator);
 			}
