@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "ICallback.h"
+
 namespace ExampleApp
 {
     namespace Modality
@@ -16,6 +18,9 @@ namespace ExampleApp
                 virtual void SetFullyActive() = 0;
                 virtual void SetFullyInactive() = 0;
                 virtual void SetActiveStateToIntermediateValue(float modality) = 0;
+                
+                virtual void InsertTappedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                virtual void RemoveTappedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
             };
         }
     }

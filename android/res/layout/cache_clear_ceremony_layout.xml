@@ -94,21 +94,24 @@
            android:layout_width="fill_parent"
            android:layout_height="wrap_content"
            android:layout_alignParentBottom="true"
-           android:id="@+id/cache_clear_ceremony_view_footer">
+           android:id="@+id/cache_clear_ceremony_view_footer"
+           android:background="@color/gold">
          
-         <com.eegeo.helpers.TintableImageView
+         <ImageView
              android:id="@+id/cache_clear_ceremony_confirm_button"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_alignParentLeft="true"
-             android:background="@drawable/button_ok_off" />
+             android:background="@drawable/menu_button_color_states"
+             android:src="@drawable/button_pin_ok_states" />
  
-         <com.eegeo.helpers.TintableImageView
+         <ImageView
              android:id="@+id/cache_clear_ceremony_close_button"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_alignParentRight="true"
-             android:background="@drawable/button_close_off" />
+             android:background="@drawable/menu_button_color_states"
+             android:src="@drawable/button_pin_close_states" />
          
          </RelativeLayout>
 	        

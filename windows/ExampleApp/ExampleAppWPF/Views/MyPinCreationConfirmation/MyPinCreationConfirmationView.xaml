@@ -10,7 +10,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:MyPinCreationConfirmationView}" >
-                    <StackPanel Name="MainPanel" Orientation="Horizontal">
+                    <StackPanel Name="MainPanel" Orientation="Horizontal" Background="{StaticResource Gold}">
                         <Image Name="Close" Source="/Assets/button_close_place_pin_off.png" Width="60" Height="60" Stretch="Uniform"/>
                         <Grid Background="{StaticResource White}" Width="280" Height="60">
                             <TextBlock Text="Drag marker to place report" FontSize="14" Foreground="Gray" Margin="5, 0, 5, 0" FontWeight="Bold" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -21,7 +21,7 @@
             </Setter.Value>
         </Setter>
         <Setter Property="Height" Value="60"/>
-        <Setter Property="Width" Value="440"/>
+        <Setter Property="Width" Value="400"/>
         <Setter Property="VerticalAlignment" Value="Bottom"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
     </Style>

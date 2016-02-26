@@ -7,6 +7,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
+using System.Windows.Shapes;
 
 namespace ExampleAppWPF
 {
@@ -15,44 +17,44 @@ namespace ExampleAppWPF
         protected ControlClickHandler m_dragTabClickHandler = null;
 
         protected ListBox m_list = null;
-        protected Image m_dragTabView;
-        protected bool m_dragInProgress = false;
+        protected Button m_menuIcon;
         protected bool m_loggingEnabled = false;
 
         protected IntPtr m_nativeCallerPointer;
 
-        protected double m_stateChangeAnimationTimeMilliseconds = 200;
-        protected double m_mainContainerVisibleOnScreenWhenClosedDip = 0;
+        protected double m_animationTimeMilliseconds = 200;
 
-        protected double m_offscreenYPx;
-        protected double m_closedYPx;
-        protected double m_openYPx;
+        protected Grid m_menuIconGrid;
+        protected Grid m_menuViewContainer;
+        protected Grid m_mainContainer;
 
-        protected double m_mainContainerOffscreenOffsetXPx;
-        protected double m_totalWidthPx;
-        protected double m_offscreenXPx;
-        protected double m_closedXPx;
-        protected double m_openXPx;
+        protected Storyboard m_openSearchIconAnim;
+        protected Storyboard m_closeMenuIconAnim;
 
-        protected double m_dragStartPosXPx;
-        protected double m_controlStartPosXPx;
+        protected Storyboard m_openSearchContainerAnim;
+        protected Storyboard m_closeMenuContainerAnim;
 
-        protected double m_touchAnchorXPx;
-        protected double m_touchAnchorYPx;
+        protected Storyboard m_openBackgroundRect;
+        protected Storyboard m_closeBackgroundRect;
+        protected Rectangle m_backgroundRectangle;
 
-        protected double m_dragThresholdPx;
+        protected MainWindow m_mainWindow;
 
-        protected bool m_dragAnchorSet = false;
-        protected bool m_canBeginDrag = false;
+        protected bool m_isAnimating;
+        protected bool m_isOffScreen;
+        protected float m_openState;
 
-        protected bool m_animating = false;
-        protected Point m_animationEndPos = new Point();
-        protected Point m_animationStartPos = new Point();
-        protected Point m_animationCurrentPos = new Point();
+        protected double m_offScreenPos;
+        protected double m_onScreenPos;
 
-        protected bool m_isFirstAnimationCeremony = true;
+        protected const float MENU_CLOSED = 0.0f;
+        protected const float MENU_OFFSCREEN = 0.1f;
+        protected const float MENU_OPEN = 1.0f;
+        protected const float MENU_CLOSING = 0.4f;
+        protected const float MENU_OPENING = 0.5f;
+        protected const float MENU_OFFSCREENING = 0.6f;
 
-        MainWindow m_mainWindow;
+        private Action<object, EventArgs> m_animationCompleteCallback;
 
         protected abstract void RefreshListData(List<string> groups, List<bool> groupsExpandable, Dictionary<string, List<string>> groupToChildrenMap);
 
@@ -65,10 +67,24 @@ namespace ExampleAppWPF
         {
             m_nativeCallerPointer = nativeCallerPointer;
 
-            int dragThesholdDip = 10;
-            m_dragThresholdPx = ConversionHelpers.AndroidToWindowsDip(dragThesholdDip);
-
             m_mainWindow = (MainWindow)Application.Current.MainWindow;
+
+            m_openState = -1.0f;
+            m_isAnimating = false;
+            m_isOffScreen = true;
+        }
+
+        protected void PerformLayout(object sender, SizeChangedEventArgs e)
+        {
+            if (m_isOffScreen)
+                m_menuViewContainer.RenderTransform = new TranslateTransform(m_offScreenPos, 0);
+            else
+                m_menuViewContainer.RenderTransform = new TranslateTransform(m_onScreenPos, 0);
+        }
+
+        protected void SetAnimationCompleteCallback(Action<object, EventArgs> callback)
+        {
+            m_animationCompleteCallback = callback;
         }
         
         public override void OnApplyTemplate()
@@ -78,7 +94,7 @@ namespace ExampleAppWPF
 
         protected void OnDragTabMouseClick(object sender, MouseButtonEventArgs e)
         {
-            if (m_animating)
+            if(IsAnimating())
             {
                 return;
             }
@@ -98,254 +114,163 @@ namespace ExampleAppWPF
 
         public void Destroy()
         {
-            //m_mainWindow.SizeChanged -= PerformLayout;
             m_mainWindow.MainGrid.Children.Remove(this);
         }
 
-        public bool IsAnimating()
+        public virtual bool IsAnimating()
         {
-            return m_animating;
+            return m_isAnimating;
         }
 
-        public bool IsDragging()
+        public virtual void UpdateAnimation(float deltaSeconds)
         {
-            return m_dragInProgress;
-        }
-        protected void MenuView_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (m_animating || !CanInteract())
-            {
-                m_dragAnchorSet = false;
-                return;
-            }
-
-            if (!m_canBeginDrag)
-            {
-                if(e.LeftButton == MouseButtonState.Released)
-                {
-                    // Click event, don't start drag
-                    return;
-                }
-
-                m_canBeginDrag = MenuViewCLIMethods.TryBeginDrag(m_nativeCallerPointer);
-            }
-
-            var mousePosition = e.GetPosition(m_mainWindow.MainGrid);
-            int xPx = (int)(mousePosition.X);
-            int yPx = (int)(mousePosition.Y);
-
-            // :TODO: need to re-write this across multiple events
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                m_touchAnchorXPx = xPx;
-                m_touchAnchorYPx = yPx;
-                m_dragAnchorSet = true;
-            }
-            else if (e.LeftButton == MouseButtonState.Released)
-            {
-                m_canBeginDrag = false;
-                if (m_dragInProgress)
-                {
-                    HandleDragFinish(xPx, yPx);
-                }
-                else if (m_dragAnchorSet)
-                {
-                    RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-                }
-                m_dragAnchorSet = false;
-            }
-            else
-            {
-                if (m_dragInProgress)
-                {
-                    HandleDragUpdate(xPx, yPx);
-                }
-                else if (m_canBeginDrag && m_dragAnchorSet)
-                {
-                    double mag = Math.Sqrt((m_touchAnchorXPx - xPx) * (m_touchAnchorXPx - xPx) + (m_touchAnchorYPx - yPx) * (m_touchAnchorYPx - yPx));
-
-                    if (mag >= m_dragThresholdPx)
-                    {
-                        HandleDragStart(xPx, yPx);
-                    }
-                }
-            }
-        }
-
-        protected void HandleDragStart(int xPx, int yPx)
-        {
-            m_dragInProgress = true;
-            m_dragStartPosXPx = xPx;
-            m_controlStartPosXPx = ViewXPx();
-            Debug.WriteLine("ACTION_DOWN x: {0}", xPx);
-
-            MenuViewCLIMethods.ViewDragStarted(m_nativeCallerPointer);
-        }
-
-        protected abstract void HandleDragUpdate(int xPx, int yPx);
-        protected abstract void HandleDragFinish(int xPx, int yPx);
-
-        public void UpdateAnimation(float deltaSeconds)
-        {
-            Vector totalDelta = m_animationEndPos - m_animationStartPos;
-                //PointFExtensions.vectorSubtract(m_animationEndPos, m_animationStartPos);
-            double totalDeltaLen = totalDelta.Length;
-            bool done;
-
-            if (totalDeltaLen > 0.001)
-            {
-                double animationUnitsPerSecond = (totalDeltaLen / (m_stateChangeAnimationTimeMilliseconds / 1e3));
-                double frameDeltaUnits = animationUnitsPerSecond * deltaSeconds;
-                Vector norm = totalDelta / totalDeltaLen;
-                Vector delta = norm * frameDeltaUnits;
-                m_animationCurrentPos += delta;
-
-                Vector currentPosDirToEnd = m_animationEndPos - m_animationCurrentPos;
-                currentPosDirToEnd.Normalize();
-                
-                double dp = Vector.Multiply(currentPosDirToEnd, norm);
-                done = dp < 0.0;
-            }
-            else
-            {
-                done = true;
-            }
-
-            AnimateToCurrentPos(false);
-
-            if (done)
-            {
-                m_animationCurrentPos.X = m_animationEndPos.X;
-                m_animationCurrentPos.Y = m_animationEndPos.Y;
-
-                AnimateToCurrentPos(false);
-
-                Debug.WriteLine("animation complete", "(" + m_animationCurrentPos.X + "," + m_animationCurrentPos.Y + ")");
-
-                bool closed = (m_animationEndPos.X == m_closedXPx && m_animationStartPos.X != m_animationEndPos.X) ||
-                                 (m_animationEndPos.Y == m_closedYPx && m_animationStartPos.Y != m_animationEndPos.Y);
-
-                bool open = (m_animationEndPos.X == m_openXPx && m_animationStartPos.X != m_animationEndPos.X) ||
-                               (m_animationEndPos.Y == m_openYPx && m_animationStartPos.Y != m_animationEndPos.Y);
-
-                if (closed)
-                {
-                    MenuViewCLIMethods.ViewCloseCompleted(m_nativeCallerPointer);
-                    m_mainWindow.EnableInput();
-                }
-                else if (open)
-                {
-                    AnimateToCurrentPos(true);
-                    MenuViewCLIMethods.ViewOpenCompleted(m_nativeCallerPointer);
-                    m_mainWindow.DisableInput();
-                }
-
-                m_animating = false;
-            }
+            
         }
 
         void AnimateToCurrentPos(bool animationCompleteAndOpen)
         {
-            SetViewX(m_animationCurrentPos.X);
-            SetViewY(m_animationCurrentPos.Y);
             m_list.IsHitTestVisible = animationCompleteAndOpen;
         }
 
-        public float NormalisedAnimationProgress()
+        public virtual float NormalisedAnimationProgress()
         {
-            float totalDistance = (float)(m_animationEndPos - m_animationStartPos).Length;
-            float currentDistance = (float)(m_animationEndPos - m_animationCurrentPos).Length;
-            float result = currentDistance / totalDistance;
-            result = Math.Max(Math.Min(result, 1.0f), 0.0f);
-
-            if (m_animationEndPos.X != m_animationStartPos.X)
+            if (m_openState == MENU_CLOSING)
             {
-                if (m_animationEndPos.X == m_openXPx)
-                {
-                    result = 1.0f - result;
-                }
+                return (float)(1.0f - Math.Max(0.0001f, m_closeMenuIconAnim.GetCurrentProgress(m_menuIconGrid) ?? 0.0f));
             }
-            else if (m_animationEndPos.Y != m_animationStartPos.Y)
+            else if (m_openState == MENU_OPENING)
             {
-                if (m_animationEndPos.Y == m_openYPx)
-                {
-                    result = 1.0f - result;
-                }
+                return (float)(Math.Max(0.0001f, m_openSearchIconAnim.GetCurrentProgress(m_menuIconGrid) ?? 0.0f));
             }
 
-            return result;
+            return 0.0f;
+        }
+
+        private void OnAnimCompleted(object sender, EventArgs e)
+        {
+            m_isAnimating = false;
+
+            if (m_openState == MENU_CLOSING)
+            {
+                m_closeMenuIconAnim.Completed -= OnAnimCompleted;
+                m_openState = MENU_CLOSED;
+
+                MenuViewCLIMethods.ViewCloseCompleted(m_nativeCallerPointer);
+                m_mainWindow.EnableInput();
+
+                m_isOffScreen = false;
+            }
+            else if (m_openState == MENU_OPENING)
+            {
+                m_openSearchIconAnim.Completed -= OnAnimCompleted;
+                m_openState = MENU_OPEN;
+
+                MenuViewCLIMethods.ViewOpenCompleted(m_nativeCallerPointer);
+                m_mainWindow.DisableInput();
+
+                m_isOffScreen = false;
+            }
+            else if (m_openState == MENU_OFFSCREENING)
+            {
+                m_openState = MENU_OFFSCREEN;
+                m_isOffScreen = true;
+            }
+
+            if (m_animationCompleteCallback != null)
+            {
+                m_animationCompleteCallback(sender, e);
+            }
         }
 
         public virtual void AnimateToClosedOnScreen()
         {
-            bool shouldRunAnimationBasedOnCurrentViewLocation = (!m_dragInProgress && ViewXPx() != m_closedXPx);
+            if (m_openState == MENU_CLOSED || m_openState == MENU_CLOSING)
+                return;
 
-            if (shouldRunAnimationBasedOnCurrentViewLocation || (m_animating && m_animationEndPos.X != m_closedXPx))
+            m_closeMenuIconAnim.Completed += OnAnimCompleted;
+            m_closeMenuIconAnim.Begin(m_menuIconGrid, isControllable:true);
+            m_closeMenuContainerAnim.Begin(m_mainContainer);
+            m_closeBackgroundRect.Begin(m_backgroundRectangle);
+
+            m_openState = MENU_CLOSING;
+            m_isAnimating = true;
+
+            m_backgroundRectangle.Visibility = Visibility.Visible;
+
+            if (m_isOffScreen)
             {
-                double newXPx = m_closedXPx;
-                Debug.WriteLine("AnimateToClosedOnScreen x: {0}", newXPx);
-                AnimateViewToX(newXPx);
+                var mainGrid = (Application.Current.MainWindow as MainWindow).MainGrid;
+
+                var screenWidth = mainGrid.ActualWidth;
+                var totalWidth = m_mainContainer.ActualWidth + m_menuIcon.ActualWidth;
+
+                var db = new DoubleAnimation(m_onScreenPos, TimeSpan.FromMilliseconds(m_animationTimeMilliseconds));
+
+                try
+                {
+                    m_menuViewContainer.RenderTransform.BeginAnimation(TranslateTransform.XProperty, db);
+                }
+                catch (Exception e)
+                {
+                    e = null;
+                }
+
+                m_backgroundRectangle.Visibility = Visibility. Hidden;
             }
         }
 
         public virtual void AnimateToOpenOnScreen()
         {
-            bool shouldRunAnimationBasedOnCurrentViewLocation = (!m_dragInProgress && ViewXPx() != m_openXPx);
+            if (m_openState == MENU_OPEN || m_openState == MENU_OPENING)
+                return;
 
-            if (shouldRunAnimationBasedOnCurrentViewLocation || (m_animating && m_animationEndPos.X != m_openXPx))
-            {
-                double newXPx = m_openXPx;
-                Debug.WriteLine("AnimateToOpenOnScreen x: {0}", newXPx);
-                AnimateViewToX(newXPx);
-            }
+            m_openSearchIconAnim.Completed += OnAnimCompleted;
+            m_openSearchIconAnim.Begin(m_menuIconGrid, isControllable:true);
+            m_openSearchContainerAnim.Begin(m_mainContainer);
+            m_openBackgroundRect.Begin(m_backgroundRectangle);
+
+            m_isAnimating = true;
+
+            m_openState = MENU_OPENING;
+            m_backgroundRectangle.Visibility = Visibility.Visible;
         }
 
-        public void AnimateOffScreen()
+        public virtual void AnimateOffScreen()
         {
             Dispatcher.Invoke(() =>
             {
-                bool shouldRunAnimationBasedOnCurrentViewLocation = (!m_dragInProgress && ViewXPx() != m_offscreenXPx);
+                m_openState = MENU_OFFSCREENING;
 
-                if (shouldRunAnimationBasedOnCurrentViewLocation || (m_animating && m_animationEndPos.X != m_offscreenXPx))
+                var db = new DoubleAnimation(m_offScreenPos, TimeSpan.FromMilliseconds(m_animationTimeMilliseconds));
+                db.Completed += OnAnimCompleted;
+
+                try
                 {
-                    double newXPx = m_offscreenXPx;
-                    Debug.WriteLine("AnimateOffScreen x: {0}", newXPx);
-                    AnimateViewToX(newXPx);
+                    m_menuViewContainer.RenderTransform.BeginAnimation(TranslateTransform.XProperty, db);
+                }
+                catch(Exception e)
+                {
+
                 }
             });
         }
 
         public void AnimateToIntermediateOnScreenState(float onScreenState)
         {
-            if (m_animating)
+            if (IsAnimating())
             {
                 return;
-            }
-
-            double viewXPx = ViewXPx();
-            double newXPx = m_offscreenXPx + (((m_closedXPx - m_offscreenXPx) * onScreenState) + 0.5);
-
-            if (!m_dragInProgress && viewXPx != newXPx)
-            {
-                Debug.WriteLine("AnimateToIntermediateOnScreenState x: {0}", newXPx);
-                SetViewX(newXPx);
             }
         }
 
         public void AnimateToIntermediateOpenState(float openState)
         {
-            if (m_animating)
+            if (IsAnimating())
             {
                 return;
             }
 
-            double newXPx = m_closedXPx + (((m_openXPx - m_closedXPx) * openState) + 0.5);
-
-            if (!m_dragInProgress && ViewXPx() != newXPx)
-            {
-                Debug.WriteLine("AnimateToIntermediateOpenState x: {0}", newXPx);
-                SetViewX(newXPx);
-            }
+            
         }
 
         public void PopulateData(
@@ -375,111 +300,19 @@ namespace ExampleAppWPF
             RefreshListData(groups, groupsExpandable, childMap);
         }
 
-        protected void AnimateViewToX(double xAsPx)
-        {
-            if (xAsPx == m_offscreenXPx || xAsPx == m_closedXPx)
-            {
-                m_animationStartPos.X = m_isFirstAnimationCeremony ? m_offscreenXPx : m_openXPx;
-            }
-            else if (xAsPx == m_openXPx)
-            {
-                m_animationStartPos.X = m_closedXPx;
-            }
-            else
-            {
-                throw new ArgumentException(string.Format("Invalid animation target {0} ", xAsPx));
-            }
-
-            m_isFirstAnimationCeremony = false;
-
-            m_animationStartPos.Y =
-                m_animationCurrentPos.Y =
-                    m_animationEndPos.Y = ViewYPx();
-
-            m_animationCurrentPos.X = ViewXPx();
-            m_animationEndPos.X = xAsPx;
-
-            m_animating = true;
-        }
-
-        protected void AnimateViewToY(double yAsPx)
-        {
-            bool fromOffScreen = (ViewYPx() == m_offscreenYPx);
-
-            if (yAsPx == m_offscreenYPx || yAsPx == m_closedYPx)
-            {
-                m_animationStartPos.Y = (m_isFirstAnimationCeremony || fromOffScreen) ? m_offscreenYPx : m_openYPx;
-            }
-            else if (yAsPx == m_openYPx)
-            {
-                m_animationStartPos.Y = m_closedYPx;
-            }
-            else
-            {
-                throw new ArgumentException(string.Format("Invalid animation target {0}", yAsPx));
-            }
-
-            m_isFirstAnimationCeremony = false;
-
-            m_animationStartPos.X =
-                m_animationCurrentPos.X =
-                    m_animationEndPos.X = ViewXPx();
-
-            m_animationCurrentPos.Y = ViewYPx();
-            m_animationEndPos.Y = yAsPx;
-
-            m_animating = true;
-        }
-        protected void SetViewX(double viewXPx)
-        {
-            var currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
-            Debug.WriteLine("SetViewX {0}", viewXPx);
-            RenderTransform = new TranslateTransform(viewXPx, currentPosition.Y);
-        }
-
-        protected void SetViewY(double viewYPx)
-        {
-            var currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
-            Debug.WriteLine("SetViewY {0}", viewYPx);
-            RenderTransform = new TranslateTransform(currentPosition.X, viewYPx);
-        }
-
-        protected int ViewXPx()
-        {
-            var currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
-            int x = (int)currentPosition.X;
-            return x;
-        }
-
-        protected int ViewYPx()
-        {
-            var currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
-            int y = (int)currentPosition.Y;
-            return y;
-        }
-
-        protected bool StartedClosed(double controlStartPosXDip)
-        {
-            double deltaClosed = Math.Abs(controlStartPosXDip - m_closedXPx);
-            double deltaOpen = Math.Abs(controlStartPosXDip - m_openXPx);
-            return deltaClosed < deltaOpen;
-        }
-
         protected bool CanInteract()
         {
-            return m_dragInProgress || IsClosed() || IsOpen();
+            return IsClosed() || IsOpen();
         }
 
         protected bool IsClosed()
         {
-            var currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
-            return currentPosition.X == m_closedXPx;
+            return m_openState == MENU_CLOSED;
         }
 
         protected bool IsOpen()
         {
-            var currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
-            return currentPosition.X == m_openXPx;
+            return m_openState == MENU_OPEN;
         }
     }
 }

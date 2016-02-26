@@ -28,15 +28,11 @@ namespace ExampleApp
                 return m_persistentSettings;
             }
 
-            void InitialExperienceModuleBase::InitialiseWithApplicationModels(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel &worldAreaLoaderModel,
-                                                                              Menu::View::IMenuViewModel& searchMenuViewModelControl,
-                                                                              SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel)
+            void InitialExperienceModuleBase::InitialiseWithApplicationModels(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel &worldAreaLoaderModel)
             {
                 Eegeo_ASSERT(m_pInitialExperienceModel == NULL, "Cannot call InitialExperienceModule::InitialiseWithApplicationModels twice.\n");
 
-                std::vector<IInitialExperienceStep*> steps = CreateSteps(worldAreaLoaderModel,
-                                                                         searchMenuViewModelControl,
-                                                                         searchResultMenuViewModel);
+                std::vector<IInitialExperienceStep*> steps = CreateSteps(worldAreaLoaderModel);
 
                 const int lastCameraLockedStep = 0;
                 

@@ -14,6 +14,11 @@ namespace ExampleApp
         {
             InteriorsExplorerViewModule::InteriorsExplorerViewModule(InteriorsExplorerViewModel& viewModel,
                                                                      ExampleAppMessaging::TMessageBus& messageBus,
+                                                                     MyPinCreation::View::IMyPinCreationInitiationViewModel& initiationViewModel,
+                                                                     ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
+                                                                     ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
+                                                                     ScreenControl::View::IScreenControlViewModel& flattenViewModel,
+                                                                     ScreenControl::View::IScreenControlViewModel& compassViewModel,
                                                                      const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                                      Eegeo::Helpers::IdentityProvider& identityProvider)
             {
@@ -21,9 +26,12 @@ namespace ExampleApp
                 
                 m_pController = Eegeo_NEW(InteriorsExplorerController)(*[m_pView getInterop],
                                                                        viewModel,
-                                                                       messageBus);
-                
-
+                                                                       messageBus,
+                                                                       initiationViewModel,
+                                                                       searchMenuViewModel,
+                                                                       settingsMenuViewModel,
+                                                                       flattenViewModel,
+                                                                       compassViewModel);
             }
             
             InteriorsExplorerViewModule::~InteriorsExplorerViewModule()

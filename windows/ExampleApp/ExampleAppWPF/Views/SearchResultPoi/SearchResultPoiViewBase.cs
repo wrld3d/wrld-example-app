@@ -37,9 +37,9 @@ namespace ExampleAppWPF
 
         public override void OnApplyTemplate()
         {
-            Image closeButton = (Image)GetTemplateChild("CloseButton");
+            Button closeButton = (Button)GetTemplateChild("CloseButton");
 
-            m_closeButtonClickHandler = new ControlClickHandler(closeButton, HandleCloseButtonClicked);
+            m_closeButtonClickHandler = new ControlClickHandler(HandleCloseButtonClicked, closeButton);
         }
 
         protected void HideAll()

@@ -34,7 +34,7 @@
         [self.pCheckbox setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(uncheckedAsset) forState:UIControlStateSelected];
         
         self.pLabel.font = [UIFont systemFontOfSize: 16.f];
-        self.pLabel.textColor = ExampleApp::Helpers::ColorPalette::GreyTone;
+        self.pLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
         self.pLabel.text = [NSString stringWithUTF8String:labelContents];
         [self.pLabel sizeToFit];
         

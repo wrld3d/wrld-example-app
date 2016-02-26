@@ -24,6 +24,8 @@ namespace ExampleApp
                 ModalBackgroundViewModule(Modality::View::IModalityModel& modalityModel, const Eegeo::Rendering::ScreenProperties& screenProperties);
                 ~ModalBackgroundViewModule();
 
+                ExampleApp::Modality::View::IModalBackgroundView& GetModalBackgroundViewInterop();
+                
                 ModalBackgroundView& GetModalBackgroundView();
             };
         }

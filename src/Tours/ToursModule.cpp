@@ -16,8 +16,12 @@ namespace ExampleApp
                                  WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                  Search::SdkModel::ISearchRefreshService& searchRefreshService,
                                  Menu::View::IMenuViewModel& searchMenuViewModel,
+                                 Menu::View::IMenuViewModel& settingsMenuViewModel,
+                                 ScreenControl::View::IScreenControlViewModel& watermarkViewModel,
                                  Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
                                  const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                 Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& gpsGlobeCameraController,
+                                 Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
                                  ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
                                  AppModes::SdkModel::IAppModeModel& appModeModel)
         {
@@ -56,7 +60,9 @@ namespace ExampleApp
             m_pTourExplorerViewModel = Eegeo_NEW(View::TourExplorer::TourExplorerViewModel)(identityProvider.GetNextIdentity(), false);
             
             m_pTourExplorerCompositeViewController = Eegeo_NEW(View::TourExplorer::TourExplorerCompositeViewController)(*m_pTourExplorerViewModel,
-                                                                                                                        searchMenuViewModel);
+                                                                                                                        searchMenuViewModel,
+                                                                                                                        settingsMenuViewModel,
+                                                                                                                        watermarkViewModel);
             
             m_pTourSelectedViewObserver = Eegeo_NEW(View::TourExplorer::TourSelectedViewObserver)(*m_pTourExplorerCompositeViewController,
                                                                                                   messageBus);

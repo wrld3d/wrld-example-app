@@ -14,6 +14,11 @@ namespace ExampleApp
         {
             InteriorsExplorerViewModule::InteriorsExplorerViewModule(InteriorsExplorerViewModel& viewModel,
                                                                      ExampleAppMessaging::TMessageBus& messageBus,
+                                                                     MyPinCreation::View::IMyPinCreationInitiationViewModel& initiationViewModel,
+                                                                     ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
+                                                                     ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
+                                                                     ScreenControl::View::IScreenControlViewModel& flattenViewModel,
+                                                                     ScreenControl::View::IScreenControlViewModel& compassViewModel,
                                                                      Eegeo::Helpers::IdentityProvider& identityProvider,
 																	 AndroidNativeState& nativeState)
             {
@@ -21,8 +26,12 @@ namespace ExampleApp
 
             	m_pController = Eegeo_NEW(InteriorsExplorerController)(*m_pView,
                                                                        viewModel,
-                                                                       messageBus);
-
+                                                                       messageBus,
+                                                                       initiationViewModel,
+                                                                       settingsMenuViewModel,
+                                                                       searchMenuViewModel,
+                                                                       flattenViewModel,
+                                                                       compassViewModel);
             }
             
             InteriorsExplorerViewModule::~InteriorsExplorerViewModule()

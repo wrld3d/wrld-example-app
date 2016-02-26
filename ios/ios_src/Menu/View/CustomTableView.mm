@@ -2,33 +2,66 @@
 
 #import "CustomTableView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "CustomTableViewCell.h"
+#import "MenuView.h"
+#import "CellConstants.h"
+#import "CircleCurve.h"
+#import "ViewAnimationController.h"
+#import "ViewPositionAnimator.h"
+#import "ViewSizeAnimator.h"
+
+@interface CustomTableView ()
+
+@end
 
 @implementation CustomTableView
 {
-    float m_animationSpeed;
-    bool m_inAnimationCeremony;
-    UIScrollView* m_pContainer;
+    float m_maxAnimationDuration;
+    float m_minAnimationDuration;
+    float m_cellAnimationDuration;
+    bool m_isAnimating;
+    MenuView* m_pMenuView;
     bool m_hasSubMenus;
+    float m_cellWidth;
+    float m_cellInset;
+    
+    ExampleApp::Helpers::UIAnimation::ViewAnimationController* m_pAnimationController;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style container:(UIScrollView*)container hasSubMenus:(bool)hasSubMenus
+- (instancetype)initWithFrame:(CGRect)frame
+                        style:(UITableViewStyle)style
+                     menuView:(MenuView*)menuView
+                  hasSubMenus:(bool)hasSubMenus
+                    cellWidth:(float)cellWidth
+                    cellInset:(float)cellInset
 {
     id it = [super initWithFrame:frame style:style];
-    m_pContainer = container;
-    m_animationSpeed = 0.3f;
-    m_inAnimationCeremony = NO;
+    m_pMenuView = menuView;
+    m_maxAnimationDuration = 0.5f;
+    m_minAnimationDuration = 0.2f;
+    m_cellAnimationDuration = 0.1f;
+    m_isAnimating = NO;
     m_hasSubMenus = hasSubMenus;
+    m_cellWidth = cellWidth;
+    m_cellInset = cellInset;
+    
+    self.pBackgroundView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, frame.size.width, frame.size.height)];
+    [self addSubview:self.pBackgroundView];
+    
+    m_pAnimationController = NULL;
+    
     return it;
 }
 
--(BOOL)hasDynamicCellPresentation
+- (void)dealloc
 {
-    return m_hasSubMenus;
-}
-
--(BOOL)inAnimationCeremony
-{
-    return m_inAnimationCeremony;
+    if(m_pAnimationController != NULL)
+    {
+        Eegeo_DELETE m_pAnimationController;
+        m_pAnimationController = NULL;
+    }
+    
+    [super dealloc];
 }
 
 - (void)layoutSubviews
@@ -49,141 +82,252 @@
             
             zOffset -= zOffsetIncrement;
         }
+    }
+    
+    [self sendSubviewToBack:self.pBackgroundView];
+}
+
+- (BOOL)hasDynamicCellPresentation
+{
+    return m_hasSubMenus;
+}
+
+- (BOOL)isAnimating
+{
+    return m_isAnimating;
+}
+
+- (void)updateAnimation:(double)deltaSeconds
+{
+    Eegeo_ASSERT([self isAnimating], "updateAnimation called when table is not animating, please call isAnimating to check that animation is running before calling updateAnimation");
+    
+    m_pAnimationController->Update(deltaSeconds);
+    
+    [m_pMenuView onTableAnimationUpdated];
+    
+    if(!m_pAnimationController->IsActive())
+    {
+        Eegeo_DELETE m_pAnimationController;
+        m_pAnimationController = NULL;
         
-        m_pContainer.contentSize = self.contentSize;
+        [self setInteractionEnabled:YES];
     }
 }
 
 -(void)setInteractionEnabled:(BOOL)enabled
 {
-    m_inAnimationCeremony = !enabled;
-    self.userInteractionEnabled = enabled;
+    m_isAnimating = !enabled;
+    
+    [m_pMenuView setTableCanInteract:enabled];
+    
     self.scrollEnabled = enabled;
-    m_pContainer.userInteractionEnabled = YES;
-    m_pContainer.scrollEnabled = YES;
+}
+
+- (float)getCellWidth
+{
+    return m_cellWidth;
+}
+
+- (float)getCellInset
+{
+    return m_cellInset;
+}
+
+- (float)refreshHeight:(float)realHeight
+{
+    if(!m_isAnimating)
+    {
+        CGRect frame = self.frame;
+        frame.size.height = realHeight;
+        self.frame = frame;
+        
+        frame = self.pBackgroundView.frame;
+        frame.size.height = realHeight;
+        self.pBackgroundView.frame = frame;
+    }
+    
+    return self.pBackgroundView.frame.size.height;
+}
+
+- (float)getAnimationDurationForCellCount:(int)cellCount
+{
+    return Eegeo::Math::Clamp(cellCount * m_cellAnimationDuration, m_minAnimationDuration, m_maxAnimationDuration);
 }
 
 -(void)insertRowsAtIndexPaths:(NSArray *)indexPaths withRowAnimation:(UITableViewRowAnimation)animation
 {
+    if([indexPaths count] == 0)
+    {
+        return;
+    }
+    
+    if([self isHidden])
+    {
+        [self reloadData];
+        [m_pMenuView refreshTableHeights];
+        
+        return;
+    }
+    
+    [self reloadData];
+    
+    const float currentTableHeight = self.frame.size.height;
+    
+    [m_pMenuView refreshTableHeights];
+    
     [self setInteractionEnabled: NO];
-
-    [self reloadData];
-
-    int count = 1;
-    CGFloat height = -1;
-    float offset = 0.f;
-
-    for (NSIndexPath *indexPath in indexPaths)
-    {
-        UITableViewCell *cell = [self cellForRowAtIndexPath:indexPath];
-        height = static_cast<float>(cell.bounds.size.height);
-        offset += height;
-        cell.transform = CGAffineTransformMakeTranslation(0.f, -height * count++);
-    }
-
-    [self animateSubsequentSections: [indexPaths lastObject] withOffset: offset];
-
-    [UIView beginAnimations: @"cellTransform" context: NULL];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDidStopSelector:@selector(rowsAddedCompleted:finished:context:)];
-    for (NSIndexPath *indexPath in indexPaths)
-    {
-        UITableViewCell *cell = [self cellForRowAtIndexPath:indexPath];;
-
-        [UIView setAnimationDuration: m_animationSpeed];
-        cell.transform = CGAffineTransformIdentity;
-    }
-
-    [self relaxCells: [indexPaths lastObject] :CGAffineTransformIdentity];
-    [UIView commitAnimations];
-}
-
-- (void)rowsAddedCompleted:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context
-{
-    [self setInteractionEnabled: YES];
-}
-
-- (void)rowsDeleteComplete:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context
-{
-    for (int section = 0; section < [self numberOfSections]; section++)
-    {
-        for (int row = 0; row < [self numberOfRowsInSection:section]; row++)
-        {
-            NSIndexPath* cellPath = [NSIndexPath indexPathForRow:row inSection:section];
-            UITableViewCell* cell = [self cellForRowAtIndexPath:cellPath];
-            cell.transform = CGAffineTransformIdentity;
-        }
-    }
-
-    [self reloadData];
-    [self setInteractionEnabled: YES];
+    
+    const float cellHeight = [self.delegate tableView:self heightForRowAtIndexPath:(NSIndexPath*)[indexPaths firstObject]];
+    
+    const float animationDuration = [self getAnimationDurationForCellCount:static_cast<int>([indexPaths count])];
+    
+    m_pAnimationController = Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewAnimationController)(self,
+                                                                                                  ^(UIView* view){
+                                                                                                      [(CustomTableView*)view setInteractionEnabled:YES];
+                                                                                                  },
+                                                                                                  NULL);
+    
+    // animate inserted cells
+    [self addCellHeightAnimatorsWithIndexPaths:indexPaths startHeight:0.0f endHeight:cellHeight animationDuration:m_cellAnimationDuration animationDelay:animationDuration - m_cellAnimationDuration];
+    
+    // animate subsequent cells
+    const float heightOffset = cellHeight * [indexPaths count];
+    [self addCellPositionAnimatorsAfterIndexPath:(NSIndexPath*)[indexPaths lastObject] deltaY:-heightOffset deltaStart:true animationDuration:animationDuration];
+    
+    // animate background
+    [self addBackgroundAnimatorWithStartHeight:currentTableHeight endHeight:[m_pMenuView getHeightForTable:self] animationDuration:animationDuration];
+    
+    m_pAnimationController->Play();
+    
+    [m_pMenuView onTableAnimationUpdated];
 }
 
 -(void)deleteRowsAtIndexPaths:(NSArray *)indexPaths withRowAnimation:(UITableViewRowAnimation)animation
 {
-    [self setInteractionEnabled: NO];
+    if([indexPaths count] == 0)
+    {
+        return;
+    }
+    
+    if([self isHidden])
+    {
+        [self reloadData];
+        [m_pMenuView refreshTableHeights];
+        
+        return;
+    }
+    
+    [self setInteractionEnabled:NO];
+    
+    const float currentTableHeight = self.frame.size.height;
+    
+    const float cellHeight = [self.delegate tableView:self heightForRowAtIndexPath:(NSIndexPath*)[indexPaths firstObject]];
+    
+    const float animationDuration = [self getAnimationDurationForCellCount:static_cast<int>([indexPaths count])];
+    
+    m_pAnimationController = Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewAnimationController)(self,
+                                                                                                  ^(UIView* view){
+                                                                                                      CustomTableView* tableView = (CustomTableView*)view;
+                                                                                                      
+                                                                                                      [tableView reloadData];
+                                                                                                      [tableView->m_pMenuView refreshTableHeights];
+                                                                                                      [tableView setInteractionEnabled:YES];
+                                                                                                  },
+                                                                                                  NULL);
+    
+    // animate removed cells
+    [self addCellHeightAnimatorsWithIndexPaths:indexPaths startHeight:cellHeight endHeight:0.0f animationDuration:m_cellAnimationDuration animationDelay:0.0];
+    
+    // animate subsequent cells
+    const float heightOffset = cellHeight * [indexPaths count];
+    [self addCellPositionAnimatorsAfterIndexPath:(NSIndexPath*)[indexPaths lastObject] deltaY:-heightOffset deltaStart:false animationDuration:animationDuration];
+    
+    // animate background
+    [self addBackgroundAnimatorWithStartHeight:currentTableHeight endHeight:currentTableHeight - heightOffset animationDuration:animationDuration];
+    
+    m_pAnimationController->Play();
+    
+    [m_pMenuView onTableAnimationUpdated];
+}
 
-    int count = 1;
-    float height = -1;
-
-    [UIView beginAnimations: @"cellTransform" context: NULL];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDidStopSelector:@selector(rowsDeleteComplete:finished:context:)];
-
-    float offset = 0.f;
-
+- (void)addCellHeightAnimatorsWithIndexPaths:(NSArray*)indexPaths
+                                 startHeight:(float)startHeight
+                                   endHeight:(float)endHeight
+                           animationDuration:(double)animationDuration
+                              animationDelay:(double)animationDelay
+{
     for (NSIndexPath *indexPath in indexPaths)
     {
         UITableViewCell *cell = [self cellForRowAtIndexPath:indexPath];
-
-        height = cell.bounds.size.height;
-        [UIView setAnimationDuration: m_animationSpeed];
-        offset = (-height * count++);
-        cell.transform = CGAffineTransformMakeTranslation(0.f, offset);
+        
+        if(cell != nil)
+        {
+            const float cellWidth = cell.frame.size.width;
+            
+            CGRect frame = cell.frame;
+            frame.size.height = startHeight;
+            cell.frame = frame;
+            
+            m_pAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewSizeAnimator)(cell,
+                                                                                                              animationDuration,
+                                                                                                              animationDelay,
+                                                                                                              Eegeo::v2(cellWidth, startHeight),
+                                                                                                              Eegeo::v2(cellWidth, endHeight),
+                                                                                                              Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>)()));
+        }
     }
-
-    const size_t cellsDeleted = indexPaths.count;
-    m_pContainer.contentSize = CGSizeMake(self.contentSize.width, self.contentSize.height - (cellsDeleted*height));
-    [self scrollRectToVisible: CGRectMake(0, 0, self.contentSize.width, 0) animated:YES];
-
-    [self relaxCells: [indexPaths lastObject]: CGAffineTransformMakeTranslation(0.f, offset)];
-    [UIView commitAnimations];
 }
 
--(void)animateSubsequentSections:(NSIndexPath*) indexPath withOffset:(float) offset
+- (void)addCellPositionAnimatorsAfterIndexPath:(NSIndexPath*)indexPath
+                                        deltaY:(float)deltaY
+                                    deltaStart:(bool)deltaStart
+                             animationDuration:(float)animationDuration
 {
     NSInteger numberOfSections = [self numberOfSections];
-
-    for (long i = indexPath.section + 1; i < numberOfSections; ++i)
+    
+    for (NSInteger i = (indexPath).section + 1; i < numberOfSections; ++i)
     {
         NSInteger numberOfRowsInSection = [self numberOfRowsInSection: i];
-
+        
         for (NSInteger j = 0; j < numberOfRowsInSection; ++j)
         {
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:i];
             UITableViewCell *cell = [self cellForRowAtIndexPath:indexPath];
-
-            cell.transform = CGAffineTransformMakeTranslation(0.f, -offset);
+            
+            if(cell != nil)
+            {
+                const float startY = deltaStart ? cell.frame.origin.y + deltaY : cell.frame.origin.y;
+                const float endY = deltaStart ? cell.frame.origin.y : cell.frame.origin.y + deltaY;
+                
+                CGRect frame = cell.frame;
+                frame.origin.y = startY;
+                cell.frame = frame;
+                
+                m_pAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewPositionAnimator)(cell,
+                                                                                                                      animationDuration,
+                                                                                                                      0.0,
+                                                                                                                      Eegeo::v2(cell.frame.origin.x, startY),
+                                                                                                                      Eegeo::v2(cell.frame.origin.x, endY),
+                                                                                                                      Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>)()));
+            }
         }
     }
 }
 
--(void)relaxCells:(NSIndexPath*)indexPath :(CGAffineTransform)transform
+- (void)addBackgroundAnimatorWithStartHeight:(float)startHeight
+                                   endHeight:(float)endHeight
+                           animationDuration:(float)animationDuration
 {
-    NSInteger numberOfSections = [self numberOfSections];
-
-    for (NSInteger i = indexPath.section + 1; i < numberOfSections; ++i)
-    {
-        NSInteger numberOfRowsInSection = [self numberOfRowsInSection: i];
-
-        for (int j = 0; j < numberOfRowsInSection; ++j)
-        {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:i];
-            UITableViewCell *cell = [self cellForRowAtIndexPath:indexPath];
-            cell.transform = transform;
-        }
-    }
+    CGRect frame = self.pBackgroundView.frame;
+    frame.size.height = startHeight;
+    self.pBackgroundView.frame = frame;
+    
+    m_pAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewSizeAnimator)(self.pBackgroundView,
+                                                                                                      animationDuration,
+                                                                                                      0.0,
+                                                                                                      Eegeo::v2(self.pBackgroundView.frame.size.width, startHeight),
+                                                                                                      Eegeo::v2(self.pBackgroundView.frame.size.width, endHeight),
+                                                                                                      Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>)()));
 }
-
 
 @end

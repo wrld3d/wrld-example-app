@@ -57,10 +57,10 @@ namespace ExampleAppWPF
             m_reviewsView = (StackPanel)GetTemplateChild("SearchResultOnMapView");
             m_reviewImageAndNumber = (StackPanel)GetTemplateChild("ReviewsPanel");
 
-            m_clickHandler = new ControlClickHandler(m_reviewsView, OnClick);
+            m_clickHandler = new ControlClickHandler(OnMouseLeftButtonUp, this);
         }
 
-        private void OnClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             ExampleApp.WorldPinOnMapCLI.OnSelected(m_nativeCallerPointer);
         }

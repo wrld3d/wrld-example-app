@@ -2,12 +2,11 @@
 
 #pragma once
 
-#include "IMenuView.h"
+#include "MenuView.h"
 #include "MenuViewIncludes.h"
 #include "IFunc.h"
 #include "ICallback.h"
 #include "CallbackCollection.h"
-#include "CustomTableDataProvider.h"
 
 namespace ExampleApp
 {
@@ -19,7 +18,6 @@ namespace ExampleApp
             {
             private:
                 MenuView* m_pView;
-                CustomTableDataProvider* m_pProvider;
                 Eegeo::Helpers::IFunc0<bool>* m_pTryDragFunc;
                 Eegeo::Helpers::CallbackCollection0 m_onViewClickedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_onViewOpenedCallbacks;
@@ -30,16 +28,15 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection2<int, int> m_onItemSelectedCallbacks;
 
             public:
-                MenuViewInterop(MenuView* pView, CustomTableDataProvider* pProvider)
+                MenuViewInterop(MenuView* pView)
                     : m_pView(pView)
                     , m_pTryDragFunc(NULL)
-                    , m_pProvider(pProvider)
                 {
                 }
 
-                void SetCanInteract(bool canInteract)
+                void SetTableCanInteract(bool canInteract)
                 {
-                    [m_pView setCanInteract:canInteract];
+                    [m_pView setTableCanInteract:canInteract];
                 }
 
                 void SetTryDragFunc(Eegeo::Helpers::IFunc0<bool>& function)
@@ -55,23 +52,32 @@ namespace ExampleApp
 
                 float GetAnimationProgress() const
                 {
-                    return [m_pView animationValue];
+                    return [m_pView openOnScreenState];
                 }
 
                 bool IsAnimating() const
                 {
                     return [m_pView isAnimating];
                 }
-
+                
+                bool IsTableAnimating() const
+                {
+                    return [m_pView isTableAnimating];
+                }
+                
                 void UpdateAnimation(float dt)
                 {
                     [m_pView updateAnimation:dt];
                 }
-
+                
+                void UpdateTableAnimation(float dt)
+                {
+                    [m_pView updateTableAnimation:dt];
+                }
+                
                 void UpdateMenuSectionViews(TSections& sections)
                 {
-                    [m_pView refreshTableHeights:sections.size() numberOfCells:NumberOfCells(sections)];
-                    [m_pProvider updateMenuSections:&sections];
+                    [m_pView updateMenuSections:&sections];
                 }
 
                 void SetFullyOnScreenOpen()

@@ -2,43 +2,58 @@
 
 package com.eegeo.searchmenu;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
-import android.widget.ImageView;
+import android.view.View.OnFocusChangeListener;
+import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.view.ViewGroup;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.ProjectSwallowApp.R;
 import com.eegeo.categories.CategoryResources;
+import com.eegeo.menu.MenuItemSelectedListener;
+import com.eegeo.menu.MenuListAdapter;
 import com.eegeo.menu.MenuView;
-import com.eegeo.menu.MenuViewJniMethods;
 
-public class SearchMenuView extends MenuView
+public class SearchMenuView extends MenuView implements TextView.OnEditorActionListener, OnFocusChangeListener, TextWatcher
 {
     protected View m_closeButtonView = null;
     protected View m_progressSpinner = null;
-    protected TextView m_numResultsText = null;
 
     protected int m_totalHeightPx;
 
     protected int m_dragStartPosYPx;
     protected int m_controlStartPosYPx;
+
+    private ListView m_searchList = null;
+    private SearchMenuAdapter m_searchListAdapter = null;
+    private MenuListAdapter m_listAdapter = null;
+    private OnItemClickListener m_searchMenuItemSelectedListener = null;
     
-    private boolean m_inAttractMode = false;
-
-    private SearchMenuAdapter m_listAdapter = null;
-
-    private ImageView m_headerCategoryImage;
-    private TextView m_headerText;
-
+    private EditText m_editText;
+    private int m_disabledTextColor;
+    private int m_enabledTextColor;
+    
+    private TextView m_searchCountText;
+    
+    private boolean m_isCategory;
+    
+    private ArrayList<String> m_pendingResults = null;
+    private int m_resultsCount = 0;
+    
+    private SearchMenuAnimationHandler m_searchMenuAnimationHandler = null;
+    	
     public SearchMenuView(MainActivity activity, long nativeCallerPointer)
     {
         super(activity, nativeCallerPointer);
@@ -50,20 +65,33 @@ public class SearchMenuView extends MenuView
         final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
         m_view = m_activity.getLayoutInflater().inflate(R.layout.search_menu_layout, uiRoot, false);
 
-        m_list = (ListView)m_view.findViewById(R.id.search_menu_item_list);
-        m_dragTabView = m_view.findViewById(R.id.search_menu_drag_tab_container_view);
-        View dragTabInteractiveView = m_view.findViewById(R.id.search_menu_drag_tab_view);
-        dragTabInteractiveView.setOnClickListener(this);
-        dragTabInteractiveView.setOnTouchListener(this);
-
-        m_closeButtonView = m_view.findViewById(R.id.search_menu_close_button);
-        m_closeButtonView.setOnClickListener(new SearchMenuCloseButtonClickedHandler(m_activity, m_nativeCallerPointer));
+        m_list = (ListView)m_view.findViewById(R.id.search_menu_options_list_view);
+        m_searchList = (ListView)m_view.findViewById(R.id.search_menu_item_list);
+        
+        View dragButtonView = m_view.findViewById(R.id.search_menu_drag_button_view);
+        dragButtonView.setOnClickListener(this);
+        
+        m_closeButtonView = m_view.findViewById(R.id.search_menu_clear_button);
+        m_closeButtonView.setOnClickListener(new SearchMenuCloseButtonClickedHandler(m_nativeCallerPointer, this));
+        m_closeButtonView.setVisibility(View.GONE);
 
         m_progressSpinner = m_view.findViewById(R.id.search_menu_spinner);
         m_progressSpinner.setVisibility(View.GONE);
-
-        m_numResultsText = (TextView) m_view.findViewById(R.id.search_menu_num_results_text);
-        m_numResultsText.setVisibility(View.GONE);
+        
+        m_editText = (EditText)m_view.findViewById(R.id.search_menu_view_edit_text_view);
+        m_editText.setImeActionLabel("Search", KeyEvent.KEYCODE_ENTER);
+        m_editText.setOnEditorActionListener(this);
+        m_editText.addTextChangedListener(this);
+        m_editText.setOnFocusChangeListener(this);
+        m_editText.clearFocus();
+        m_disabledTextColor = m_activity.getResources().getColor(R.color.text_field_disabled);
+        m_enabledTextColor = m_activity.getResources().getColor(R.color.text_field_enabled);
+        m_editText.setTextColor(m_enabledTextColor);
+        
+        m_searchCountText = (TextView)m_view.findViewById(R.id.search_menu_result_count);
+        m_searchCountText.setText("");
+        
+        final MenuView scopedMenuView = this;
 
         m_view.addOnLayoutChangeListener(new View.OnLayoutChangeListener() 
         {
@@ -71,130 +99,239 @@ public class SearchMenuView extends MenuView
 			public void onLayoutChange(View v, int left, int top, int right,
 					int bottom, int oldLeft, int oldTop, int oldRight,
 					int oldBottom) 
-			{   
-		        View listContainerView = m_view.findViewById(R.id.search_menu_view_list_container);
-		
-		        int dragTabWidthPx = m_dragTabView.getWidth();
-		
-		        m_mainContainerOffscreenOffsetXPx = -listContainerView.getLeft();
-		        int mainContainerWidthPx = listContainerView.getWidth();
-		        int mainContainerOnScreenWidthPx = mainContainerWidthPx - m_mainContainerOffscreenOffsetXPx;
-		
-		        m_totalWidthPx = mainContainerWidthPx + dragTabWidthPx;
-		        m_offscreenXPx = -m_totalWidthPx;
-		        m_closedXPx = -(mainContainerOnScreenWidthPx - m_activity.dipAsPx(m_mainContainerVisibleOnScreenWhenClosedDip));
-		        m_openXPx = -m_mainContainerOffscreenOffsetXPx;
-		        m_view.setX(m_offscreenXPx);
+			{
+		        m_menuAnimationHandler = m_searchMenuAnimationHandler = new SearchMenuAnimationHandler(m_activity, m_view, scopedMenuView);
+		        
+		        m_menuAnimationHandler.setToIntermediateOnScreenState(0.0f);
+		        
 		        m_view.removeOnLayoutChangeListener(this);
 			}
 		});
-
+        
         uiRoot.addView(m_view);
-
-        m_listAdapter = new SearchMenuAdapter(m_activity, R.layout.search_menu_list_item);
+        
+        m_listAdapter = new MenuListAdapter(
+        		m_activity, 
+        		R.layout.menu_list_item, 
+        		R.layout.menu_list_subitem);
+        
         m_list.setAdapter(m_listAdapter);
-
-        m_headerCategoryImage = (ImageView)m_view.findViewById(R.id.search_menu_header_category_icon);
-        m_headerText = (TextView)m_view.findViewById(R.id.search_menu_header_text);
-
-        m_menuItemSelectedListener = new SearchMenuItemSelectedListener(m_nativeCallerPointer, this);
+        
+        m_menuItemSelectedListener = new MenuItemSelectedListener(
+                m_listAdapter,
+                this,
+                m_nativeCallerPointer
+            );
         m_list.setOnItemClickListener(m_menuItemSelectedListener);
+        
+        m_searchListAdapter = new SearchMenuAdapter(m_activity, R.layout.search_menu_list_item);
+        m_searchList.setAdapter(m_searchListAdapter);
+        
+        m_searchMenuItemSelectedListener = new SearchMenuItemSelectedListener(m_nativeCallerPointer, this);
+        m_searchList.setOnItemClickListener(m_searchMenuItemSelectedListener);
         
         ViewGroup vg = (ViewGroup)m_view;
         m_activity.recursiveDisableSplitMotionEvents(vg);
-    }
-
-    public void updateHeader(final String searchText, final boolean pendingQueryResult, final int numResults)
-    {
-        if(pendingQueryResult)
-        {
-            m_progressSpinner.setVisibility(View.VISIBLE);
-            m_numResultsText.setVisibility(View.GONE);
-        }
-        else
-        {
-            m_numResultsText.setText(String.valueOf(numResults));
-            m_numResultsText.setVisibility(View.VISIBLE);
-            m_progressSpinner.setVisibility(View.GONE);
-        }
-
-        if(m_headerCategoryImage != null)
-        {
-        	m_headerCategoryImage.setImageResource(CategoryResources.getSmallIconForCategory(m_activity, searchText));
-        }
         
-        m_headerText.setText(searchText);
+        m_isCategory = false;
     }
     
-    public void setAttractMode(boolean attractModeEnabled)
+    @Override
+    public boolean onEditorAction(TextView view, int actionId, KeyEvent event)
     {
-        m_inAttractMode = attractModeEnabled;
-        updateAttractMode();
-    }
-    
-    private void updateAttractMode()
-    {
-    	m_dragTabView.clearAnimation();
-    	
-        if(m_inAttractMode)
-        {	
-    		Animation anim = new TranslateAnimation(0, -10.f, 0.f, 0.f);
-    		anim.setDuration(300);
-    		anim.setInterpolator(new AccelerateDecelerateInterpolator());
-    		anim.setRepeatCount(TranslateAnimation.INFINITE);
-    		anim.setRepeatMode(TranslateAnimation.REVERSE);
-    		
-    		m_dragTabView.startAnimation(anim);
+    	updateClearButtonVisibility();
+        if (actionId == EditorInfo.IME_ACTION_DONE ||
+        	actionId == KeyEvent.KEYCODE_ENTER)
+        {
+            final String queryText = m_editText.getText().toString();
+            m_activity.dismissKeyboard(m_editText.getWindowToken());
+            
+            m_editText.clearFocus();
+            if(queryText.length() > 0)
+            {
+                SearchMenuViewJniMethods.PerformSearchQuery(m_nativeCallerPointer, queryText);
+            }
+
+            return true;
         }
+
+        return false;
+    }
+    
+    @Override
+    public void afterTextChanged(Editable s)
+    {
+    	
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after)
+    {
+        
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count)
+    {
+    	updateClearButtonVisibility();
+    } 
+    
+    public void removeSearchKeyboard()
+    {
+        m_activity.dismissKeyboard(m_editText.getWindowToken());
+    }
+
+    public void disableEditText()
+    {
+    	m_closeButtonView.setVisibility(View.GONE);
+    	m_progressSpinner.setVisibility(View.VISIBLE);
+        m_editText.setEnabled(false);
+        m_editText.setTextColor(m_disabledTextColor);
+    }
+
+    public void enableEditText()
+    {
+    	m_closeButtonView.setVisibility(View.VISIBLE);
+    	m_progressSpinner.setVisibility(View.GONE);
+        m_editText.setEnabled(true);
+        m_editText.setTextColor(m_enabledTextColor);
+    }
+    
+    public void setEditText(String searchText, boolean isCategory)
+    {
+    	setEditTextInternal(searchText, isCategory);
+    	m_editText.clearFocus();
+    }
+    
+    private void setEditTextInternal(String searchText, boolean isCategory)
+    {
+    	m_editText.setText(searchText);
+    	m_isCategory = isCategory;
+    	updateClearButtonVisibility();
+    }
+    
+    private void updateClearButtonVisibility()
+    {
+    	m_closeButtonView.setVisibility(View.VISIBLE);
+    }
+    
+    public void setSearchResultCount(final int searchResultCount)
+    {
+    	if(searchResultCount == 0)
+    	{
+    		m_searchCountText.setText("");
+    		m_searchMenuAnimationHandler.hideSearchResultsView();
+    	}
+    	else
+    	{
+    		Integer searchResultCountWrapp = searchResultCount;
+    		m_searchCountText.setText(searchResultCountWrapp.toString());
+    		m_searchMenuAnimationHandler.showSearchResultsView();
+    	}
     }
 
     @Override
     protected void handleDragFinish(int xPx, int yPx)
     {
-        m_dragInProgress = false;
         
-        final float minimumXValueToClose = startedClosed(m_controlStartPosXPx) ? 0.35f : 0.65f;
-        final Boolean close = xPx < (m_totalWidthPx * minimumXValueToClose);
-        final int upXPx = close ? m_closedXPx : m_openXPx;
-        log("ACTION_UP", "x: " + upXPx);
-
-        animateViewToX(upXPx);
-        MenuViewJniMethods.ViewDragCompleted(m_nativeCallerPointer);
-        updateAttractMode();
     }
 
     @Override
     protected void handleDragUpdate(int xPx, int yPx)
     {
-    	m_dragTabView.clearAnimation();
     	
-        float newXPx = m_controlStartPosXPx + (xPx - m_dragStartPosXPx);
-
-        if(newXPx > m_mainContainerOffscreenOffsetXPx)
-        {
-            newXPx = m_mainContainerOffscreenOffsetXPx;
-        }
-
-        if(newXPx < m_closedXPx)
-        {
-            newXPx = m_closedXPx;
-        }
-
-        float normalisedDragState = (newXPx + (-m_closedXPx)) / (Math.abs(m_openXPx - m_closedXPx));
-        final float clampedNormalisedDragState = clamp(normalisedDragState, 0.f, 1.f);
-
-        MenuViewJniMethods.ViewDragInProgress(m_nativeCallerPointer, clampedNormalisedDragState);
-
-        m_view.setX(newXPx);
-        log("ACTION_MOVE", "x: " + newXPx+ ", clamp: " + clampedNormalisedDragState);
     }
 
     @Override
     protected void refreshListData(List<String> groups,
                                    List<Boolean> groupsExpandable,
                                    HashMap<String, List<String>> groupToChildrenMap)
-    {
-        m_listAdapter.setData(groupToChildrenMap.get("Search"));
+    {   
+    	m_listAdapter.setData(groups, groupsExpandable, groupToChildrenMap);
     }
+    
+    public void setSearchSection(final int resultCount,
+    							 final String[] searchResults)
+    {
+    	ArrayList<String> searchResultList = new ArrayList<String>();
+        for(int i = 0; i < resultCount; i++)
+        {
+        	searchResultList.add(searchResults[i]);
+        }
+        
+        if(m_menuAnimationHandler.isOffScreen())
+        {
+        	m_pendingResults = searchResultList;
+        }
+        else
+        {
+        	updateResults(searchResultList);
+        }
+    }
+    
+    private void updateResults(ArrayList<String> searchResults)
+    {
+        m_resultsCount = searchResults.size();
+    	updateSearchMenuHeight(m_resultsCount);
+    	m_searchListAdapter.setData(searchResults);
+    	m_pendingResults = null;
+    }
+    
+    private void updateSearchMenuHeight(int resultCount)
+    {   
+        final RelativeLayout mainSearchSubview = (RelativeLayout)m_view.findViewById(R.id.search_menu_view);
+
+        final View topBar = (View)m_view.findViewById(R.id.search_menu_title_bar);
+        final View menuListContainer = (View)m_view.findViewById(R.id.search_menu_options_list_view);
+        
+        final float viewHeight = mainSearchSubview.getHeight();
+        final float occupiedHeight = topBar.getHeight() + menuListContainer.getHeight();    
+        final float availableHeight = viewHeight - occupiedHeight;
+        
+    	final float cellHeight = m_activity.getResources().getDimension(R.dimen.search_menu_result_cell_height);
+    	final float fullHeight = cellHeight * resultCount;
+
+    	final int height = (int)Math.min(fullHeight, availableHeight);
+    	
+    	ViewGroup.LayoutParams params = m_searchList.getLayoutParams();
+    	params.height = height; 
+    	m_searchList.setLayoutParams(params);
+    }
+
+	@Override
+	public void onFocusChange(View v, boolean hasFocus) 
+	{
+		if(hasFocus && m_isCategory)
+		{
+			setEditTextInternal("", false);
+		}
+	}
+
+    private boolean hasPendingResults() { return m_pendingResults != null; }
+
+	@Override
+	public void onOpenOnScreenAnimationStart() 
+	{
+		super.onOpenOnScreenAnimationStart();
+		
+        m_list.setVisibility(View.VISIBLE);
+        m_searchList.setVisibility(View.VISIBLE);
+        
+		if(hasPendingResults())
+		{
+        	updateResults(m_pendingResults);
+		}
+		
+    	updateSearchMenuHeight(m_resultsCount);
+	}
+
+	@Override
+	public void onClosedOnScreenAnimationComplete()
+	{
+		super.onClosedOnScreenAnimationComplete();
+		
+        m_list.setVisibility(View.GONE);
+        m_searchList.setVisibility(View.GONE);
+	}
 }
 

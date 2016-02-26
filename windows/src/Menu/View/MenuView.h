@@ -51,7 +51,7 @@ namespace ExampleApp
                 MenuView(WindowsNativeState& nativeState,
                          const std::string& viewClassName);
 
-                ~MenuView();
+                virtual ~MenuView();
 
                 void SetTryDragFunc(Eegeo::Helpers::IFunc0<bool>& function);
 

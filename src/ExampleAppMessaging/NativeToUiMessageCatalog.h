@@ -25,8 +25,6 @@
 #include "ShowInitialExperienceIntroMessage.h"
 #include "CompletedCacheClearMessage.h"
 #include "SearchResultPoiViewImageDownloadCompletedMessage.h"
-#include "InitialExperienceSearchResultAttractModeModelStateEnteredMessage.h"
-#include "InitialExperienceSearchResultAttractModeModelStateUpdatedMessage.h"
 #include "InteriorsExplorerFloorSelectedMessage.h"
 #include "InteriorsExplorerStateChangedMessage.h"
 #include "WatermarkModelChangedMessage.h"
@@ -40,14 +38,16 @@
 #include "URLRequestedMessage.h"
 #include "DeeplinkURLRequestedMessage.h"
 #include "ConnectivityChangedViewMessage.h"
+#include "StartSearchSurveyMessage.h"
+#include "StartUxSurveyMessage.h"
 
 namespace ExampleApp
 {
     namespace ExampleAppMessaging
     {
         class NativeToUiMessageCatalog
-            : public Eegeo::Messaging::CatalogBinding<SearchResultMenu::SearchResultAddedMessage>
-            , public Eegeo::Messaging::CatalogBinding<SearchResultMenu::SearchResultRemovedMessage>
+            : public Eegeo::Messaging::CatalogBinding<SearchResultSection::SearchResultAddedMessage>
+            , public Eegeo::Messaging::CatalogBinding<SearchResultSection::SearchResultRemovedMessage>
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryPerformedMessage>
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryRemovedMessage>
             , public Eegeo::Messaging::CatalogBinding<FlattenButton::FlattenButtonModelStateChangedMessage>
@@ -67,8 +67,6 @@ namespace ExampleApp
         	, public Eegeo::Messaging::CatalogBinding<InitialExperience::ShowInitialExperienceIntroMessage>
             , public Eegeo::Messaging::CatalogBinding<Options::CompletedCacheClearMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiViewImageDownloadCompletedMessage>
-            , public Eegeo::Messaging::CatalogBinding<InitialExperience::SearchResultAttractMode::InitialExperienceSearchResultAttractModeModelStateEnteredMessage>
-            , public Eegeo::Messaging::CatalogBinding<InitialExperience::SearchResultAttractMode::InitialExperienceSearchResultAttractModeModelStateUpdatedMessage>
             , public Eegeo::Messaging::CatalogBinding<Watermark::SetWatermarkVisibilityMessage>
             , public Eegeo::Messaging::CatalogBinding<Watermark::WatermarkModelChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Watermark::WatermarkAlignmentStateChangedMessage>
@@ -82,6 +80,8 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<URLRequest::URLRequestedMessage>
             , public Eegeo::Messaging::CatalogBinding<URLRequest::DeeplinkURLRequestedMessage>
             , public Eegeo::Messaging::CatalogBinding<Net::ConnectivityChangedViewMessage>
+            , public Eegeo::Messaging::CatalogBinding<Surveys::StartSearchSurveyMessage>
+            , public Eegeo::Messaging::CatalogBinding<Surveys::StartUxSurveyMessage>
             , private Eegeo::NonCopyable
         {
 

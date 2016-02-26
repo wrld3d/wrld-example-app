@@ -6,7 +6,21 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:MyPinCreationButtonView}">
-                    <Image Name="ButtonImage" Source="/Assets/button_create_poi.png"/>
+                    <Image Name="ButtonImage" Source="/Assets/button_create_poi_off.png"/>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ButtonImage" Property="Source" Value="/Assets/button_create_poi_on.png"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsPressed" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="ButtonImage" Property="Source" Value="/Assets/button_create_poi_over.png"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

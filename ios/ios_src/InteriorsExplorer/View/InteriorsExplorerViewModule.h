@@ -14,6 +14,7 @@
 #include "IMetricsService.h"
 #include "IIdentity.h"
 #include "Interiors.h"
+#include "ScreenControlViewModelIncludes.h"
 #include "IInteriorsExplorerViewModule.h"
 
 namespace ExampleApp
@@ -32,6 +33,11 @@ namespace ExampleApp
             public:
                 InteriorsExplorerViewModule(InteriorsExplorerViewModel& viewModel,
                                             ExampleAppMessaging::TMessageBus& messageBus,
+                                            MyPinCreation::View::IMyPinCreationInitiationViewModel& initiationViewModel,
+                                            ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
+                                            ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
+                                            ScreenControl::View::IScreenControlViewModel& flattenViewModel,
+                                            ScreenControl::View::IScreenControlViewModel& compassViewModel,
                                             const Eegeo::Rendering::ScreenProperties& screenProperties,
                                             Eegeo::Helpers::IdentityProvider& identityProvider);
                 

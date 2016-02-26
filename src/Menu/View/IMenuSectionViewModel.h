@@ -34,7 +34,10 @@ namespace ExampleApp
                 virtual MenuItemModel GetItemAtIndex(int index) const = 0;
 
                 virtual bool IsExpanded() const = 0;
+                
                 virtual bool IsExpandable() const = 0;
+                
+                virtual bool IsHeader() const = 0;
 
                 virtual void Expand() = 0;
                 virtual void Contract() = 0;

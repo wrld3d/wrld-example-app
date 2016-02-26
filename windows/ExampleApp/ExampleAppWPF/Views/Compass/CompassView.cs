@@ -42,11 +42,7 @@ namespace ExampleAppWPF
 
         public override void OnApplyTemplate()
         {
-            var bitmap = new BitmapImage(ViewHelpers.MakeUriForImage("compass_point.png"));
-            m_compassPoint.Source = bitmap;
-            m_compassPoint.Width = bitmap.PixelWidth;
-            m_compassPoint.Height = bitmap.PixelHeight;
-            m_compassPoint.Visibility = Visibility.Collapsed;
+            m_compassPoint = (Image)GetTemplateChild("CompassArrow");
             m_compassInner.Visibility = Visibility.Collapsed;
 
             m_compassInner.Width = 50.0;
@@ -55,7 +51,6 @@ namespace ExampleAppWPF
 
             var canvas = (Canvas)GetTemplateChild("ImageCanvas");
             canvas.Children.Add(m_compassInner);
-            canvas.Children.Add(m_compassPoint);
         }
 
         private void CompassView_Click(object sender, RoutedEventArgs e)
@@ -65,39 +60,37 @@ namespace ExampleAppWPF
 
         private void PerformLayout(object sender, RoutedEventArgs e)
         {
-            if (m_compassPoint != null && m_compassPoint.Source != null)
+            Point currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
+            double onScreenState = (currentPosition.Y - m_yPosInactive) / (m_yPosActive - m_yPosInactive);
+
+            MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+            double screenHeight = mainWindow.ActualHeight;
+            double screenWidth = mainWindow.ActualWidth;
+
+            double viewHeight = ActualHeight;
+            double viewWidth = ActualWidth;
+
+            double pointWidth = m_compassPoint.Width;
+            double pointHeight = m_compassPoint.Height;
+
+            m_compassPointOffsetX = (viewWidth) * 0.5;
+            m_compassPointOffsetY = (viewHeight) * 0.5;
+
+            m_yPosActive = screenHeight * 0.5 - (viewHeight * 0.5 + ConversionHelpers.AndroidToWindowsDip(16));
+            m_yPosInactive = screenHeight * 0.5 + viewHeight * 0.5;
+
+            double layoutY = m_yPosInactive;
+
+            if (!m_isFirstLayout)
             {
-                Point currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
-                double onScreenState = (currentPosition.Y - m_yPosInactive) / (m_yPosActive - m_yPosInactive);
+                layoutY = onScreenState * (m_yPosActive - m_yPosInactive) + m_yPosInactive;
+            }
 
-                MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
-                double screenHeight = mainWindow.ActualHeight;
-                double screenWidth = mainWindow.ActualWidth;
-                double viewHeight = ActualHeight;
-                double viewWidth = ActualWidth;
-                var bitmap = m_compassPoint.Source as BitmapImage;
-                double pointWidth = bitmap.PixelWidth;
-                double pointHeight = bitmap.PixelHeight;
+            m_isFirstLayout = false;
 
-                m_compassPointOffsetX = (viewWidth) * 0.5;
-                m_compassPointOffsetY = (viewHeight) * 0.5;
+            var transform = new TranslateTransform(0.0, layoutY);
 
-                m_yPosActive = screenHeight * 0.5 - (viewHeight * 0.5 + ConversionHelpers.AndroidToWindowsDip(16));
-                m_yPosInactive = screenHeight * 0.5 + viewHeight * 0.5;
-
-                double layoutY = m_yPosInactive;
-
-                if (!m_isFirstLayout)
-                {
-                    layoutY = onScreenState * (m_yPosActive - m_yPosInactive) + m_yPosInactive;
-                }
-
-                m_isFirstLayout = false;
-
-                var transform = new TranslateTransform(0.0, layoutY);
-
-                RenderTransform = transform;
-            }            
+            RenderTransform = transform;
         }
         
         public void Destroy()

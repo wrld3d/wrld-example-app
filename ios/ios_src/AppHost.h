@@ -21,8 +21,9 @@
 #include "InitialExperience.h"
 #include "iOSPersistentSettingsModel.h"
 #include "ViewControllerUpdater.h"
-#include "SecondaryMenuViewIncludes.h"
-#include "SearchResultMenuViewModule.h"
+#include "SettingsMenuViewIncludes.h"
+#include "SearchMenuViewIncludes.h"
+#include "SearchResultSectionViewIncludes.h"
 #include "ModalBackgroundViewIncludes.h"
 #include "FlattenButtonViewIncludes.h"
 #include "SearchResultPoiViewIncludes.h"
@@ -52,8 +53,9 @@
 #include "ImageStore.h"
 #include "ICallback.h"
 #include "UserInteraction.h"
+#include "LinkOutObserver.h"
 #include "URLRequestHandler.h"
-
+#include "SurveyViewIncludes.h"
 
 @class ViewController;
 class AppInputDelegate;
@@ -103,9 +105,10 @@ private:
     Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory m_iOSAlertBoxFactory;
     Eegeo::UI::NativeUIFactories m_iOSNativeUIFactories;
     Eegeo::iOS::iOSPlatformAbstractionModule* m_piOSPlatformAbstractionModule;
-
-    ExampleApp::SecondaryMenu::View::ISecondaryMenuViewModule* m_pSecondaryMenuViewModule;
-    ExampleApp::SearchResultMenu::View::ISearchResultMenuViewModule* m_pSearchResultMenuViewModule;
+    
+    ExampleApp::SettingsMenu::View::ISettingsMenuViewModule* m_pSettingsMenuViewModule;
+    ExampleApp::SearchMenu::View::ISearchMenuViewModule* m_pSearchMenuViewModule;
+    ExampleApp::SearchResultSection::View::ISearchResultSectionViewModule* m_pSearchResultSectionViewModule;
     ExampleApp::ModalBackground::View::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
     ExampleApp::FlattenButton::View::IFlattenButtonViewModule* m_pFlattenButtonViewModule;
     ExampleApp::SearchResultPoi::View::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;
@@ -129,8 +132,9 @@ private:
     std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*> m_searchServiceModules;
     ExampleApp::Metrics::iOSFlurryMetricsService& m_iOSFlurryMetricsService;
     ExampleApp::InteriorsExplorer::View::IInteriorsExplorerViewModule* m_pInteriorsExplorerViewModule;
-    
+    ExampleApp::LinkOutObserver::LinkOutObserver* m_pLinkOutObserver;
     ExampleApp::URLRequest::View::URLRequestHandler* m_pURLRequestHandler;
+    ExampleApp::Surveys::View::ISurveyViewModule* m_pSurveyViewModule;
     
     ImageStore* m_pImageStore;
     

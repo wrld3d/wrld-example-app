@@ -10,7 +10,6 @@
 @interface CompassView : UIView <UIGestureRecognizerDelegate>
 {
     ExampleApp::Compass::View::CompassViewInterop* m_pInterop;
-    UITapGestureRecognizer* m_tapGestureRecogniser;
 
     UIColor* m_gpsIndicatorColour;
 
@@ -55,7 +54,7 @@
 
 - (void) animateToY:(float)y;
 
-@property (nonatomic, retain) UIView* pOuterShape;
+@property (nonatomic, retain) UIImageView* pOuterShape;
 @property (nonatomic, retain) UIView* pInnerShape;
 @property (nonatomic, retain) UIImageView* pPoint;
 

@@ -20,7 +20,7 @@ namespace ExampleApp
             {
             public:
 
-                MenuSectionViewModel(const std::string& name, const std::string& icon, IMenuModel& menuModel, bool isExpandable);
+                MenuSectionViewModel(const std::string& name, const std::string& icon, IMenuModel& menuModel, bool isExpandable, bool isHeader);
                 
                 IMenuModel& GetModel() const
                 {
@@ -30,17 +30,17 @@ namespace ExampleApp
                 const std::string& Name() const
                 {
                     return m_name;
-                };
+                }
 
                 const std::string& Icon() const
                 {
                     return m_icon;
-                };
+                }
 
                 std::string Details() const
                 {
                     return "";
-                };
+                }
 
                 std::string SerializeJson() const;
 
@@ -53,10 +53,16 @@ namespace ExampleApp
                 bool IsExpanded() const
                 {
                     return m_isExpandable ? m_expanded : true;
-                };
+                }
+                
                 bool IsExpandable() const
                 {
                     return m_isExpandable;
+                }
+                
+                bool IsHeader() const
+                {
+                    return m_isHeader;
                 }
 
                 void Expand();
@@ -70,7 +76,7 @@ namespace ExampleApp
                 std::string m_name;
                 std::string m_icon;
                 IMenuModel& m_menuModel;
-
+                const bool m_isHeader;
                 const bool m_isExpandable;
                 bool m_expanded;
                 

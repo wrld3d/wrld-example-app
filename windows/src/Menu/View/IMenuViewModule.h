@@ -16,8 +16,8 @@ namespace ExampleApp
             public:
                 virtual ~IMenuViewModule() { }
 
-                virtual IMenuView& GetMenuView() const = 0;
-                virtual MenuController& GetMenuController() const = 0;
+                virtual IMenuView& GetMenuView() = 0;
+                virtual MenuController& GetMenuController() = 0;
             };
         }
     }
