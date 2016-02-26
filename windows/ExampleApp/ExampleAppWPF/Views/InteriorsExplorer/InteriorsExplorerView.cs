@@ -12,17 +12,23 @@ namespace ExampleAppWPF
     {
         private IntPtr m_nativeCallerPointer;
         private Slider m_floorSlider;
+        private TickBarVerticalWithLabels m_sliderTickBar;
         private TextBlock m_floorName;
         private Button m_dismissButton;
         private Grid m_floorPanel;
         private Grid m_detailsPanel;
-        private int m_floorCount;
+        
         private int m_selectedFloorIndex;
         private double m_panelOffscreenOffsetX;
         private double m_stateChangeAnimationTimeMilliseconds = 200.0;
         private bool m_dragInProgress = false;
+        private string[] m_floorShortNames;
+        
 
         private const float DefaultOffscreenOffsetX = 100.0f;
+
+        private int FloorCount { get { return m_floorShortNames.Length; } }
+        private bool FloorSelectionEnabled { get { return FloorCount > 1; } }
 
         static InteriorsExplorerView()
         {
@@ -46,6 +52,9 @@ namespace ExampleAppWPF
             m_floorSlider.ValueChanged += OnSliderValueChanged;
 
             m_floorSlider.ApplyTemplate();
+
+
+            m_sliderTickBar = GetTickBar(m_floorSlider);
 
             var sliderThumb = GetThumb(m_floorSlider);
 
@@ -72,6 +81,12 @@ namespace ExampleAppWPF
             return track == null ? null : track.Thumb;
         }
 
+        private static TickBarVerticalWithLabels GetTickBar(Slider slider)
+        {
+            var tickBar = slider.Template.FindName("SliderTickBar", slider);
+            return tickBar == null ? null : tickBar as TickBarVerticalWithLabels;
+        }
+
         private void OnClickDismiss(object sender, RoutedEventArgs e)
         {
             InteriorsExplorerCLIMethods.Dismiss(m_nativeCallerPointer);
@@ -85,14 +100,18 @@ namespace ExampleAppWPF
                 mainWindow.MainGrid.Children.Remove(this);
             }
         }
-        public void UpdateFloors(string[] floorNames, int currentlySelectedFloorIndex)
+        public void UpdateFloors(string[] floorShortNames, int currentlySelectedFloorIndex)
         {
-            m_floorCount = floorNames.Length;
+            m_floorShortNames = floorShortNames;
+
+            m_sliderTickBar.TickLabels = string.Join(",", floorShortNames);
+
             m_selectedFloorIndex = currentlySelectedFloorIndex;
 
             m_floorSlider.Minimum = 0;
-            m_floorSlider.Maximum = m_floorCount - 1;
+            m_floorSlider.Maximum = FloorCount - 1;
             m_floorSlider.Value = m_selectedFloorIndex;
+            UpdateFloorSliderTagFromValue();
         }
         public void SetFloorName(string name)
         {
@@ -141,9 +160,11 @@ namespace ExampleAppWPF
             var storyboard = new Storyboard();
             var currentPosition = m_floorPanel.RenderTransform.Transform(new Point(0.0, 0.0));
 
+
+            
             var floorPanelAnimation = new DoubleAnimation();
             floorPanelAnimation.From = currentPosition.X;
-            floorPanelAnimation.To = CalcPanelX(t);
+            floorPanelAnimation.To = CalcPanelX(FloorSelectionEnabled ? t : 0.0f);
             floorPanelAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(m_stateChangeAnimationTimeMilliseconds));
 
             var transform = new TranslateTransform(currentPosition.X, currentPosition.Y);
@@ -206,6 +227,7 @@ namespace ExampleAppWPF
             if (m_dragInProgress)
             {
                 SetFloorSelectionDrag(e.NewValue);
+
             }
         }
 
@@ -213,6 +235,13 @@ namespace ExampleAppWPF
         {
             double dragParam = Math.Min(1.0, sliderValue / m_floorSlider.Maximum);
             InteriorsExplorerCLIMethods.SetFloorSelectionDrag(m_nativeCallerPointer, dragParam);
+            UpdateFloorSliderTagFromValue();
+        }
+
+        private void UpdateFloorSliderTagFromValue()
+        {
+            var floorIndex = (int)Math.Round(m_floorSlider.Value);
+            m_floorSlider.Tag = m_floorShortNames[floorIndex];
 
         }
     }

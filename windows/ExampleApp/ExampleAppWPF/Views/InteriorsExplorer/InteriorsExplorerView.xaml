@@ -64,13 +64,14 @@
                                     Style="{StaticResource SimpleSlider}"
                                     Orientation="Vertical"                                    
                                     VerticalAlignment="Bottom"
-                                    Margin="0,0,20,20"
+                                    Margin="0,0,20,13"
                                     MinHeight="300"
                                     Minimum="0"
                                     Maximum="1"
                                     TickFrequency="1"
                                     TickPlacement="TopLeft"                                    
                                     IsMoveToPointEnabled="True"
+                                    Tag="0"
                                     Foreground="{StaticResource LightGrey}"
                             />
                         </Grid>

@@ -2,9 +2,16 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:ExampleAppWPF">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../../Colours.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <SolidColorBrush x:Key="SliderThumbActive" Color="#cdfc0d"/>
+
     <Style x:Key="SliderThumb" TargetType="{x:Type Thumb}" >
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="Focusable" Value="False" />
         <Setter Property="Height"
           Value="50" />
         <Setter Property="Width"
@@ -12,54 +19,33 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Ellipse x:Name="Ellipse">
-                        <Ellipse.Fill>
-                            <ImageBrush ImageSource="/Assets/floor_selection_button.png"></ImageBrush>
-                        </Ellipse.Fill>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState Name="MouseOver">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill)" Storyboard.TargetName="Ellipse">
-                                            <ObjectAnimationUsingKeyFrames.KeyFrames>
-                                                <DiscreteObjectKeyFrame KeyTime="0">
-                                                    <DiscreteObjectKeyFrame.Value>
-                                                        <ImageBrush ImageSource="/Assets/floor_selection_button_mouse_over.png" />
-                                                    </DiscreteObjectKeyFrame.Value>
-                                                </DiscreteObjectKeyFrame>
-                                            </ObjectAnimationUsingKeyFrames.KeyFrames>
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Normal">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill)" Storyboard.TargetName="Ellipse">
-                                            <ObjectAnimationUsingKeyFrames.KeyFrames>
-                                                <DiscreteObjectKeyFrame KeyTime="0">
-                                                    <DiscreteObjectKeyFrame.Value>
-                                                        <ImageBrush ImageSource="/Assets/floor_selection_button.png" />
-                                                    </DiscreteObjectKeyFrame.Value>
-                                                </DiscreteObjectKeyFrame>
-                                            </ObjectAnimationUsingKeyFrames.KeyFrames>
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Pressed">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill)" Storyboard.TargetName="Ellipse">
-                                            <ObjectAnimationUsingKeyFrames.KeyFrames>
-                                                <DiscreteObjectKeyFrame KeyTime="0">
-                                                    <DiscreteObjectKeyFrame.Value>
-                                                        <ImageBrush ImageSource="/Assets/floor_selection_button_down.png" />
-                                                    </DiscreteObjectKeyFrame.Value>
-                                                </DiscreteObjectKeyFrame>
-                                            </ObjectAnimationUsingKeyFrames.KeyFrames>
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                    </Ellipse>
+                    <Canvas SnapsToDevicePixels="true">
+                        <Grid Height="50" Width="50">
+                            <Image x:Name="Thumb_Background" Height="50" Width="50" Source="/Assets/floor_selection_button.png" >
+                                <Image.Clip>
+                                    <EllipseGeometry Center="25,25" RadiusX="25" RadiusY="25" />
+                                </Image.Clip>
+                            </Image>
+                            <Border BorderBrush="{x:Null}" Margin="0,0,0,-2">
+                                <Label x:Name="Thumb_Label" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                           Foreground="{StaticResource Blue}"
+                                           FontSize="10"
+                                           Content="{Binding Tag, RelativeSource={RelativeSource AncestorType={x:Type Slider}}}"
+                                           />
+                                
+                            </Border>
+                        </Grid>
+                    </Canvas>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Source" TargetName="Thumb_Background" Value="/Assets/floor_selection_button_mouse_over.png"/>
+                            <Setter Property="Foreground" TargetName="Thumb_Label" Value="{StaticResource Blue}"/>
+                        </Trigger>
+                        <Trigger Property="IsDragging" Value="true">
+                            <Setter Property="Source" TargetName="Thumb_Background" Value="/Assets/floor_selection_button_down.png"/>
+                            <Setter Property="Foreground" TargetName="Thumb_Label" Value="{StaticResource SliderThumbActive}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -85,22 +71,35 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Track Grid.Column="0" x:Name="PART_Track"   >
-                <Track.DecreaseRepeatButton>
+                <!--<Track.DecreaseRepeatButton>
                     <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{StaticResource SliderRepeatButtonStyle}"/>
                 </Track.DecreaseRepeatButton>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource SliderRepeatButtonStyle}"/>
-                </Track.IncreaseRepeatButton>
+                </Track.IncreaseRepeatButton>-->
                 <Track.Thumb>
                     <Thumb Style="{StaticResource SliderThumb}" />
                 </Track.Thumb>
                 
             </Track>
-            <TickBar x:Name="LeftTick" Visibility="Visible" Fill="{TemplateBinding Foreground}" HorizontalAlignment="Right" Placement="Left" Grid.Column="1" Width="15"/>
+            <local:TickBarVerticalWithLabels x:Name="SliderTickBar" 
+                                             TickLabels=""  
+                                             Visibility="Visible" 
+                                             Fill="{TemplateBinding Foreground}" 
+                                             HorizontalAlignment="Right" 
+                                             Placement="Left" 
+                                             Grid.Column="1" 
+                                             Width="15" 
+                                             TickLabelsOffset="-4.0"
+                                             Panel.ZIndex="-10"/>
             <Border x:Name="TrackLine" 
-                BorderBrush="{TemplateBinding Foreground}"                                        
-                BorderThickness="1.0" CornerRadius="1"
-                Margin="0,25" HorizontalAlignment="Right" Width="1.0" Grid.Column="1" />
+                    BorderBrush="{TemplateBinding Foreground}"                                        
+                    BorderThickness="1.0" 
+                    CornerRadius="1"
+                    Margin="0,25" 
+                    HorizontalAlignment="Right" 
+                    Width="1.0" 
+                    Grid.Column="1" />
         </Grid>
     </ControlTemplate>
 

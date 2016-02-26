@@ -36,7 +36,7 @@ namespace ExampleApp
 
                 for (int floorIndex = 0; floorIndex < floorCount; ++floorIndex)
                 {
-                    floorNames[floorIndex] = ConvertUTF8ToManagedString(floorShortNames[(floorCount - 1) - floorIndex]);
+                    floorNames[floorIndex] = ConvertUTF8ToManagedString(floorShortNames[floorIndex]);
                 }
 
                 mUpdateFloors(floorNames, currentlySelectedFloorIndex);
