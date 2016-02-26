@@ -62,16 +62,11 @@ namespace ExampleApp
             void MenuView::SetTryDragFunc(Eegeo::Helpers::IFunc0<bool>& function)
             {
                 ASSERT_UI_THREAD
-
-                Eegeo_ASSERT(m_pTryDragFunc == NULL, "TryDragFunc already set");
-                m_pTryDragFunc = &function;
             }
 
             void MenuView::ClearTryDragFunc()
             {
                 ASSERT_UI_THREAD
-
-                m_pTryDragFunc = NULL;
             }
 
             float MenuView::GetAnimationProgress() const
@@ -109,6 +104,8 @@ namespace ExampleApp
             void MenuView::UpdateMenuSectionViews(TSections& sections)
             {
                 ASSERT_UI_THREAD
+
+				m_currentSections = sections;
 
                 AndroidSafeNativeThreadAttachment attached(m_nativeState);
                 JNIEnv* env = attached.envForThread;
@@ -257,43 +254,31 @@ namespace ExampleApp
             void MenuView::InsertOnDragStarted(Eegeo::Helpers::ICallback0& callback)
             {
                 ASSERT_UI_THREAD
-
-                m_onDragStartedCallbacks.AddCallback(callback);
             }
 
             void MenuView::RemoveOnDragStarted(Eegeo::Helpers::ICallback0& callback)
             {
                 ASSERT_UI_THREAD
-
-                m_onDragStartedCallbacks.RemoveCallback(callback);
             }
 
             void MenuView::InsertOnDrag(Eegeo::Helpers::ICallback1<float>& callback)
             {
                 ASSERT_UI_THREAD
-
-                m_onDragCallbacks.AddCallback(callback);
             }
 
             void MenuView::RemoveOnDrag(Eegeo::Helpers::ICallback1<float>& callback)
             {
                 ASSERT_UI_THREAD
-
-                m_onDragCallbacks.RemoveCallback(callback);
             }
 
             void MenuView::InsertOnDragCompleted(Eegeo::Helpers::ICallback0& callback)
             {
                 ASSERT_UI_THREAD
-
-                m_onDragCompletedCallbacks.AddCallback(callback);
             }
 
             void MenuView::RemoveOnDragCompleted(Eegeo::Helpers::ICallback0& callback)
             {
                 ASSERT_UI_THREAD
-
-                m_onDragCompletedCallbacks.RemoveCallback(callback);
             }
 
             void MenuView::InsertOnItemSelected(Eegeo::Helpers::ICallback2<int, int>& callback)
@@ -334,22 +319,16 @@ namespace ExampleApp
             void MenuView::HandleDraggingViewStarted()
             {
                 ASSERT_UI_THREAD
-
-                m_onDragStartedCallbacks.ExecuteCallbacks();
             }
 
             void MenuView::HandleDraggingViewInProgress(float progress)
             {
                 ASSERT_UI_THREAD
-
-                m_onDragCallbacks.ExecuteCallbacks(progress);
             }
 
             void MenuView::HandleDraggingViewCompleted()
             {
                 ASSERT_UI_THREAD
-
-                m_onDragCompletedCallbacks.ExecuteCallbacks();
             }
 
             void MenuView::HandleItemSelected(int sectionIndex, int itemIndex)
@@ -362,9 +341,7 @@ namespace ExampleApp
             bool MenuView::CallBeginDrag()
             {
                 ASSERT_UI_THREAD
-
-                Eegeo_ASSERT(m_pTryDragFunc != NULL, "No drag function registered");
-                return (*m_pTryDragFunc)();
+				return false;
             }
 
             void MenuView::SetCanInteract(bool canInteract)

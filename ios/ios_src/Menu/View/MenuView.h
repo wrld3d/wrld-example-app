@@ -7,78 +7,70 @@
 #include "VectorMath.h"
 #include "CustomTableView.h"
 #include "MenuViewIncludes.h"
+#include "IMenuView.h"
+#include "ViewAnimationController.h"
 
 @class MenuView;
 
 @interface MenuView : UIView
 {
-    ExampleApp::Menu::View::MenuViewInterop* m_pInterop;
     CustomTableDataProvider* m_pDataProvider;
-    UIColor* m_pColour;
-
-    bool m_rightMenu;
-
+    
+    ExampleApp::Helpers::UIAnimation::ViewAnimationController* m_onScreenAnimationController;
+    ExampleApp::Helpers::UIAnimation::ViewAnimationController* m_openAnimationController;
+    
+    float m_stateChangeAnimationTimeSeconds;
+    
     float m_screenWidth;
     float m_screenHeight;
     float m_pixelScale;
-
-    float m_stateChangeAnimationTimeSeconds;
-    float m_offscreenX, m_offscreenY;
-    float m_closedX, m_closedY;
-    float m_openX, m_openY;
-
-    float m_mainContainerVisibleOnScreenWhenClosedX;
-    float m_mainContainerVisibleOnScreenWhenClosedY;
-    float m_mainContainerOffscreenOffsetX;
-    float m_mainContainerOffscreenOffsetY;
-    float m_mainContainerX;
-    float m_mainContainerY;
-    float m_mainContainerOnScreenWidth;
-    float m_mainContainerOnScreenHeight;
-    float m_mainContainerWidth;
-    float m_mainContainerHeight;
-
-    float m_dragTabX;
-    float m_dragTabY;
+    
+    float m_tableSpacing;
+    
+    float m_dragTabOffsetX;
     float m_dragTabWidth;
     float m_dragTabHeight;
-
-    float m_searchBoxOffsetIntoContainer;
-    float m_searchBoxX;
-    float m_searchBoxY;
-    float m_searchBoxWidth;
-    float m_searchBoxHeight;
-
-    float m_tableOffsetIntoContainerX;
-    float m_tableOffsetIntoContainerY;
-    float m_tableX;
-    float m_tableY;
-    float m_tableWidth;
-    float m_tableHeight;
-
-    CGPoint m_dragStartPos;
-    CGPoint m_controlStartPos;
-
-    bool m_animating;
-    Eegeo::v2 m_animationStartPos;
-    Eegeo::v2 m_animationCurrentPos;
-    Eegeo::v2 m_animationEndPos;
-    bool m_isFirstAnimationCeremony;
+    float m_dragTabOffScreenX;
+    float m_dragTabOffScreenY;
+    float m_dragTabClosedOnScreenX;
+    float m_dragTabClosedOnScreenY;
+    float m_dragTabOpenOnScreenX;
+    float m_dragTabOpenOnScreenY;
+    
+    float m_titleContainerOffScreenWidth;
+    float m_titleContainerOffScreenHeight;
+    float m_titleContainerOffScreenX;
+    float m_titleContainerOffScreenY;
+    float m_titleContainerClosedOnScreenWidth;
+    float m_titleContainerClosedOnScreenHeight;
+    float m_titleContainerClosedOnScreenX;
+    float m_titleContainerClosedOnScreenY;
+    float m_titleContainerOpenOnScreenWidth;
+    float m_titleContainerOpenOnScreenHeight;
+    float m_titleContainerOpenOnScreenX;
+    float m_titleContainerOpenOnScreenY;
+    
+    float m_menuContainerWidth;
+    float m_menuContainerHeight;
+    float m_menuContainerOffScreenX;
+    float m_menuContainerOffScreenY;
+    float m_menuContainerClosedOnScreenX;
+    float m_menuContainerClosedOnScreenY;
+    float m_menuContainerOpenOnScreenX;
+    float m_menuContainerOpenOnScreenY;
 }
 
 - (id) initWithParams:(float)width
-    :(float)height
-    :(float)pixelScale
-    :(bool)rightMenu
-    :(size_t)numberOfSections
-    :(size_t)numberOfCells
-    :(CustomTableDataProvider*)dataProvider;
+                     :(float)height
+                     :(float)pixelScale
+                     :(CustomTableDataProvider*)dataProvider
+                     :(int)tableCount;
 
 - (ExampleApp::Menu::View::MenuViewInterop*) getInterop;
 
-- (BOOL) isRightMenu;
-
 - (BOOL) consumesTouch:(UITouch *)touch;
+
+- (void) initializeAnimators;
 
 - (void) animateToRemovedFromScreen;
 
@@ -88,42 +80,37 @@
 
 - (void) setOnScreenStateToIntermediateValue:(float)onScreenState;
 
-- (void) setOpenStateToIntermediateValue:(float)openState;
-
-- (void) beginDrag:(CGPoint)absolutePosition velocity:(CGPoint)absoluteVelocity;
-
-- (void) updateDrag:(CGPoint)absolutePosition velocity:(CGPoint)absoluteVelocity;
-
-- (void) completeDrag:(CGPoint)absolutePosition velocity:(CGPoint)absoluteVelocity;
-
 - (void) updateAnimation:(float)deltaSeconds;
+
+- (void) updateTableAnimation:(float)deltaSeconds;
+
+- (void) onTableAnimationUpdated;
 
 - (BOOL) isAnimating;
 
-- (float) animationValue;
+- (BOOL) isTableAnimating;
 
-- (void) animateToX:(float)x;
-
-- (void) animateToY:(float)y;
+- (float) openOnScreenState;
 
 - (void) setOffscreenPartsHiddenState:(bool)hidden;
 
-- (void) initialiseViews:(size_t)numberOfSections numberOfCells:(size_t)numberOfCells;
+- (void) initializeViews;
 
-- (void) dragTabGesture:(UIPanGestureRecognizer *)recognizer;
+- (void) refreshTableHeights;
 
-- (void) tapTabGesture:(UITapGestureRecognizer *)recognizer;
+- (float) getHeightForTable:(CustomTableView*)tableView;
 
-- (void) refreshTableHeights:(size_t)numberOfSections numberOfCells:(size_t)numberOfCells;
-
-- (void) setCanInteract:(BOOL)canInteract;
+- (void) setTableCanInteract:(BOOL)canInteract;
 
 - (BOOL) canInteract;
 
+- (void)updateMenuSections:(ExampleApp::Menu::View::TSections*)sections;
+
+@property (nonatomic, retain) UIButton* pDragTab;
+@property (nonatomic, retain) UIView* pTitleContainer;
 @property (nonatomic, retain) UIView* pMenuContainer;
-@property (nonatomic, retain) UIView* pDragTab;
-@property (nonatomic, retain) UIView* pMenuHeaderStub;
-@property (nonatomic, retain) CustomTableView* pTableview;
-@property (nonatomic, retain) UIScrollView* pTableviewContainer;
+@property (nonatomic, retain) UIView* pTopTableSeparator;
+@property (nonatomic, retain) NSMutableDictionary* pTableViewMap;
+@property (nonatomic, retain) UIScrollView* pTableViewContainer;
 
 @end

@@ -29,7 +29,6 @@ namespace ExampleApp
                                        Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                        VisualMap::SdkModel::IVisualMapService& visualMapService,
                                        ExampleAppMessaging::TMessageBus& messageBus,
-                                       ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                        Metrics::IMetricsService& metricsService);
                 ~InteriorsExplorerModel();
                 
@@ -43,6 +42,8 @@ namespace ExampleApp
                 void ChangeToInteriorMapState();
                 void ResumePreviousMapState();
                 
+                void InsertInteriorExplorerEnteredCallback(Eegeo::Helpers::ICallback0& callback);
+                void RemoveInteriorExplorerEnteredCallback(Eegeo::Helpers::ICallback0& callback);
                 void InsertInteriorExplorerExitedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveInteriorExplorerExitedCallback(Eegeo::Helpers::ICallback0& callback);
 
@@ -61,7 +62,6 @@ namespace ExampleApp
                 VisualMap::SdkModel::IVisualMapService& m_visualMapService;
 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
-                ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkModelDomainEventBus;
                 Metrics::IMetricsService& m_metricsService;
                 
                 Eegeo::Helpers::TCallback0<InteriorsExplorerModel> m_interactionModelStateChangedCallback;
@@ -72,6 +72,7 @@ namespace ExampleApp
                 
                 int m_currentInteriorFloorIndex;
                 bool m_interiorExplorerEnabled;
+                Eegeo::Helpers::CallbackCollection0 m_interiorExplorerEnteredCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_interiorExplorerExitedCallbacks;
             };
         }

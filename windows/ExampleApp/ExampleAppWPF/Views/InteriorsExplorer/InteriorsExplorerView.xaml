@@ -2,11 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:ExampleAppWPF">
 
-
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../../Colours.xaml" />
         <ResourceDictionary Source="../../TransparentButtonStyle.xaml" />
-        <ResourceDictionary Source="../../SimpleSlider.xaml" />        
+        <ResourceDictionary Source="../../SimpleSlider.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="ExitButtonStyle" TargetType="{x:Type Button}">
@@ -30,7 +29,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
 
     <Style TargetType="{x:Type local:InteriorsExplorerView}">
         <Setter Property="Template">

@@ -25,10 +25,10 @@
     bool m_isPinned;
     float m_labelsSectionWidth;
     
-    UIImage* m_pRemovePinButtonBackgroundImage;
-    UIImage* m_pRemovePinHighlightButtonBackgroundImage;
-    UIImage* m_pAddPinButtonBackgroundImage;
-    UIImage* m_pAddPinHighlightButtonBackgroundImage;
+    UIImage* m_pRemovePinButtonImage;
+    UIImage* m_pRemovePinButtonHighlightImage;
+    UIImage* m_pAddPinButtonImage;
+    UIImage* m_pAddPinButtonHighlightImage;
     UIImage* m_pVendorBrandingImage;
     
     CAGradientLayer* m_pGradientMask;

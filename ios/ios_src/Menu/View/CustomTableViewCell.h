@@ -7,27 +7,48 @@
 
 @interface CustomTableViewCell : UITableViewCell
 {
-    bool m_rightAlignFrame;
-    bool m_rightAlignImage;
-    bool m_isHeader;
-    NSString* m_headerBackgroundImage;
-    NSString* m_subMenuBackgroundImage;
-    float m_initialWidth;
+    bool m_hasSeparator;
+    CGFloat m_initialWidth;
+    CGFloat m_leftInset;
+    UIColor* m_pBackgroundColor;
+    UIColor* m_pContentBackgroundColor;
+    UIColor* m_pPressColor;
+    UIColor* m_pTextColor;
+    UIColor* m_pTextHighlightColor;
+    UIImageView* m_pOpenableArrow;
+    CGRect m_imageFrame;
+    CGRect m_textFrame;
+    CGRect m_detailTextFrame;
     CustomTableView* m_tableView;
+    UITableViewController<UITableViewDelegate>* m_tableDataProvider;
+    int m_row;
+    int m_section;
 }
 
-- (void)setAlignInfo:(bool)rightAlignFrame
-                    :(bool)rightAlignImage
-                    :(bool)isHeader
-                    :(NSString*)headerBackgroundImage
-                    :(NSString*)subMenuBackgroundImage;
+- (void)setInfo :(bool)hasSeparator
+                :(UIColor*)pBackgroundColor
+                :(UIColor*)pContentBackgroundColor
+                :(UIColor*)pPressColor
+                :(UIColor*)pTextColor
+                :(UIColor*)pTextHighlightColor
+                :(UIImageView*)pOpenableArrow;
 
-- (void)initCell:(CGFloat)initialWidth :(CustomTableView*)tableView;
+- (void)initCell:(CGFloat)initialWidth
+                :(CGFloat)leftInset
+                :(NSIndexPath *)indexPath
+                :(CustomTableView*)tableView
+                :(UITableViewController<UITableViewDelegate>*)tableDataProvider;
+
+- (void)setContentFrames:(CGRect)imageFrame
+                        :(CGRect)textFrame
+                        :(CGRect)detailTextFrame;
 
 - (void)layoutSubviews;
 
 - (BOOL)canInteract;
 
 - (bool)requiresVisualRefresh;
+
+- (CGRect)getContentViewRect;
 
 @end

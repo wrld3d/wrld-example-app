@@ -66,9 +66,13 @@ using namespace Eegeo::iOS;
     {
         AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
         
+        self.pBackingView = [[[UIView alloc] initWithFrame:[self view].frame] autorelease];
+        self.pBackingView.hidden = NO;
+        self.pBackingView.backgroundColor = [UIColor clearColor];
+        [[self view] addSubview:self.pBackingView];
         m_pAppRunner = new AppRunner(*self, [self view], *appDelegate.applicationConfiguration, *appDelegate.metricsService);
     }
-
+    [[self view] sendSubviewToBack:self.pBackingView];
     m_pAppRunner->NotifyViewLayoutChanged();
 }
 

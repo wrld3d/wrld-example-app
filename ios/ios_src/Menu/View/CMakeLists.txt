@@ -6,6 +6,7 @@ set(currsources
   ios_src/Menu/View/CMakeLists.txt
   ios_src/Menu/View/CustomTableDataProvider.h
   ios_src/Menu/View/CustomTableDataProvider.mm
+  ios_src/Menu/View/CustomTableRowSelectionDelegate.h
   ios_src/Menu/View/CustomTableView.h
   ios_src/Menu/View/CustomTableView.mm
   ios_src/Menu/View/CustomTableViewCell.h

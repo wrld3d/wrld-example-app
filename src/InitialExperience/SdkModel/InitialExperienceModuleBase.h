@@ -8,7 +8,6 @@
 #include "WorldAreaLoader.h"
 #include "PersistentSettings.h"
 #include "Menu.h"
-#include "SearchResultMenu.h"
 
 namespace ExampleApp
 {
@@ -28,9 +27,7 @@ namespace ExampleApp
 
                 ~InitialExperienceModuleBase();
 
-                void InitialiseWithApplicationModels(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel,
-                                                     Menu::View::IMenuViewModel& searchMenuViewModelControl,
-                                                     SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel);
+                void InitialiseWithApplicationModels(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel);
 
                 void TearDown();
 
@@ -42,9 +39,7 @@ namespace ExampleApp
 
                 PersistentSettings::IPersistentSettingsModel& GetPersistentSettings() const;
 
-                virtual std::vector<IInitialExperienceStep*> CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel &worldAreaLoaderModel,
-                                                                         Menu::View::IMenuViewModel& searchMenuViewModelControl,
-                                                                         SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel)  = 0;
+                virtual std::vector<IInitialExperienceStep*> CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel &worldAreaLoaderModel)  = 0;
             };
         }
     }

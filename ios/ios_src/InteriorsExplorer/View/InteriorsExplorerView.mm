@@ -7,8 +7,8 @@
 #include "App.h"
 #include "MathFunc.h"
 #include "InteriorsExplorerFloorItemView.h"
-
 #import "ImmediatePanGestureRecognizer.h"
+#import "UIButton+DefaultStates.h"
 #import "UIView+TouchExclusivity.h"
 #import <QuartzCore/QuartzCore.h>
 
@@ -67,7 +67,7 @@
         ImmediatePanGestureRecognizer* buttonDrag = [[ImmediatePanGestureRecognizer alloc] initWithTarget:self action:@selector(dragButton:)];
         [self.pFloorChangeButton addGestureRecognizer:buttonDrag];
         [buttonDrag release];
-        
+
         [self.pFloorPanel addSubview:self.pFloorChangeButton];
         
         const float upperPadding = 3.0f;
@@ -94,7 +94,6 @@
         
         self.pDetailsPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_screenWidth * 0.5f - totalPanelLength * 0.5f, upperMargin, totalPanelLength, totalPanelHeight)] autorelease];
         
-        
         self.pDismissButtonBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"menu_button")] autorelease];
         self.pDismissButtonBackground.frame = CGRectMake(totalPanelLength-buttonSize, 0.0f, buttonSize, buttonSize);
         self.pDismissButtonBackground.transform = CGAffineTransformScale(CGAffineTransformIdentity, -1.f, 1.f);
@@ -104,6 +103,7 @@
         self.pDismissButton = [[[UIButton alloc] initWithFrame:self.pDismissButtonBackground.frame] autorelease];
         [self.pDismissButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"interior_exit") forState:UIControlStateNormal];
         [self.pDismissButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"interior_exit_down") forState:UIControlStateHighlighted];
+        
         [self.pDismissButton addTarget:self action:@selector(onCancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.pDetailsPanel addSubview:self.pDismissButton];
         
@@ -123,13 +123,14 @@
         roundedShapeLayer.lineWidth = 1.0f;
         
         self.pDetailsPanelBackground.layer.mask = roundedShapeLayer;
-        
+
         [self.pDetailsPanel addSubview:self.pDetailsPanelBackground];
         
         const float textPadding = 2.f;
         
         self.pFloorNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake( textPadding, textPadding, labelLength - textPadding, detailsPanelHeight - textPadding)] autorelease];
-        self.pFloorNameLabel.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+        self.pFloorNameLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
+
         self.pFloorNameLabel.textAlignment = NSTextAlignmentCenter;
         [self.pDetailsPanel addSubview:self.pFloorNameLabel];
         

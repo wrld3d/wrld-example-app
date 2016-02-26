@@ -16,13 +16,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
+
 import org.json.*;
 
 public class SearchMenuAdapter extends BaseAdapter
 {
-
     private int m_itemViewId;
     private List<String> m_nameData;
     private Activity m_context;
@@ -69,7 +69,7 @@ public class SearchMenuAdapter extends BaseAdapter
             LayoutInflater inflater = (LayoutInflater)m_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             contextView = inflater.inflate(m_itemViewId, null);
         }
-
+        
         try
         {
             JSONObject data = new JSONObject(json);
@@ -84,15 +84,15 @@ public class SearchMenuAdapter extends BaseAdapter
             TextView detailLabel = (TextView)contextView.findViewById(R.id.menu_list_item_detail);
             detailLabel.setText(data.getString("details"));
 
-            RelativeLayout categoryIcon = (RelativeLayout)contextView.findViewById(R.id.menu_list_item_icon);
+            ImageView categoryIcon = (ImageView)contextView.findViewById(R.id.menu_list_item_icon);
             String categoryIconString = data.has("icon") ? data.getString("icon") : m_defaultIconString;
-            categoryIcon.setBackgroundResource(CategoryResources.getSearchResultIconForCategory(m_context, categoryIconString));
+            categoryIcon.setImageResource(CategoryResources.getSearchResultIconForCategory(m_context, categoryIconString));
+            
         }
-        catch(JSONException exception)
+        catch(Exception exception)
         {
             Log.e("Eegeo", "SearchMenuAdapter: Failed to read json data object: " + exception.getMessage());
         }
-
 
         return contextView;
     }

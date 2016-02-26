@@ -20,6 +20,8 @@ namespace ExampleAppWPF
         private MainWindow m_currentWindow;
         private StackPanel m_reviewImageAndNumber;
 
+        private ControlClickHandler m_clickHandler;
+
         static WorldPinOnMapView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(WorldPinOnMapView), new FrameworkPropertyMetadata(typeof(WorldPinOnMapView)));
@@ -54,12 +56,12 @@ namespace ExampleAppWPF
             m_poiAccreditationImage = (Image)GetTemplateChild("SearchResultOnMapAccreditationLogo");
             m_reviewsView = (StackPanel)GetTemplateChild("SearchResultOnMapView");
             m_reviewImageAndNumber = (StackPanel)GetTemplateChild("ReviewsPanel");
+
+            m_clickHandler = new ControlClickHandler(OnMouseLeftButtonUp, this);
         }
 
-        protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+        private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            base.OnMouseLeftButtonUp(e);
-
             ExampleApp.WorldPinOnMapCLI.OnSelected(m_nativeCallerPointer);
         }
 

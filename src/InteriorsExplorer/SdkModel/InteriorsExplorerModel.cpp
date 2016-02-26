@@ -3,7 +3,6 @@
 #include "InteriorsExplorerModel.h"
 #include "InteriorsExplorerStateChangedMessage.h"
 #include "InteriorsExplorerFloorSelectedMessage.h"
-#include "InteriorsExplorerEnteredMessage.h"
 
 #include "InteriorsModel.h"
 #include "InteriorsFloorModel.h"
@@ -43,13 +42,11 @@ namespace ExampleApp
                                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                            VisualMap::SdkModel::IVisualMapService& visualMapService,
                                                            ExampleAppMessaging::TMessageBus& messageBus,
-                                                           ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                                            Metrics::IMetricsService& metricsService)
             : m_interiorInteractionModel(interiorInteractionModel)
             , m_interiorSelectionModel(interiorSelectionModel)
             , m_visualMapService(visualMapService)
             , m_messageBus(messageBus)
-            , m_sdkModelDomainEventBus(sdkModelDomainEventBus)
             , m_metricsService(metricsService)
             , m_interactionModelStateChangedCallback(this, &InteriorsExplorerModel::HandleInteractionModelStateChanged)
             , m_exitCallback(this, &InteriorsExplorerModel::OnExit)
@@ -109,7 +106,7 @@ namespace ExampleApp
                     m_metricsService.BeginTimedEvent(MetricEventInteriorsVisible);
                     m_interiorExplorerEnabled = true;
                     PublishInteriorExplorerStateChange();
-                    m_sdkModelDomainEventBus.Publish(InteriorsExplorerEnteredMessage(interiorId));
+                    m_interiorExplorerEnteredCallbacks.ExecuteCallbacks();
                 }
             }
             
@@ -235,6 +232,15 @@ namespace ExampleApp
                 														  m_currentInteriorFloorIndex,
                                                                           floorName,
                                                                           floorShortNames));
+            }
+            
+            void InteriorsExplorerModel::InsertInteriorExplorerEnteredCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_interiorExplorerEnteredCallbacks.AddCallback(callback);
+            }
+            void InteriorsExplorerModel::RemoveInteriorExplorerEnteredCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_interiorExplorerEnteredCallbacks.RemoveCallback(callback);
             }
             
             void InteriorsExplorerModel::InsertInteriorExplorerExitedCallback(Eegeo::Helpers::ICallback0& callback)

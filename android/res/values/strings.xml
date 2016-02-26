@@ -37,4 +37,5 @@
     <string name="my_pin_details_icon">Icon for My Pin details dialog box</string>
     
     <string name="placeholder">Lorem ipsum dolor sit amet.</string>
+    <string name="settings_header">Settings</string>
 </resources>

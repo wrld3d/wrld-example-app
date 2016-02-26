@@ -33,10 +33,15 @@
 @property (nonatomic, retain) UIView* pBannerBarContainer;
 @property (nonatomic, retain) UIView* pWelcomeImage;
 
-@property (nonatomic, retain) UIView* pMenuDialogContainer;
-@property (nonatomic, retain) UILabel* pMenuDialogTitle;
-@property (nonatomic, retain) UITextView* pMenuDialogDescription;
-@property (nonatomic, retain) UIView* pMenuDialogArrow;
+@property (nonatomic, retain) UIView* pSettingsMenuDialogContainer;
+@property (nonatomic, retain) UILabel* pSettingsMenuDialogTitle;
+@property (nonatomic, retain) UITextView* pSettingsMenuDialogDescription;
+@property (nonatomic, retain) UIView* pSettingsMenuDialogArrow;
+
+@property (nonatomic, retain) UIView* pSearchMenuDialogContainer;
+@property (nonatomic, retain) UILabel* pSearchMenuDialogTitle;
+@property (nonatomic, retain) UITextView* pSearchMenuDialogDescription;
+@property (nonatomic, retain) UIView* pSearchMenuDialogArrow;
 
 @property (nonatomic, retain) UIView* pCompassDialogContainer;
 @property (nonatomic, retain) UILabel* pCompassDialogTitle;

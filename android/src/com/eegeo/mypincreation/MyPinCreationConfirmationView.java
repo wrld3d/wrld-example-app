@@ -4,6 +4,7 @@ package com.eegeo.mypincreation;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
@@ -14,8 +15,8 @@ public class MyPinCreationConfirmationView implements View.OnClickListener
     protected MainActivity m_activity = null;
     protected long m_nativeCallerPointer;
     protected View m_view = null;
-    protected Button m_closeButton = null;
-    protected Button m_confirmButton = null;
+    protected ImageView m_closeButton = null;
+    protected ImageView m_confirmButton = null;
 
     private float m_yPosActive;
     private float m_yPosInactive;
@@ -44,9 +45,9 @@ public class MyPinCreationConfirmationView implements View.OnClickListener
         final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
         m_view = m_activity.getLayoutInflater().inflate(R.layout.poi_creation_confirmation_layout, uiRoot, false);
 
-        m_closeButton = (Button)m_view.findViewById(R.id.poi_creation_confirmation_close_button);
+        m_closeButton = (ImageView)m_view.findViewById(R.id.poi_creation_confirmation_close_button);
         m_closeButton.setOnClickListener(this);
-        m_confirmButton = (Button)m_view.findViewById(R.id.poi_creation_confirmation_ok_button);
+        m_confirmButton = (ImageView)m_view.findViewById(R.id.poi_creation_confirmation_ok_button);
         m_confirmButton.setOnClickListener(this);
         m_view.addOnLayoutChangeListener(new View.OnLayoutChangeListener() 
         {

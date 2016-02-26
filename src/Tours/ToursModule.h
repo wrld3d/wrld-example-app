@@ -62,8 +62,12 @@ namespace ExampleApp
                         WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                         Search::SdkModel::ISearchRefreshService& searchRefreshService,
                         Menu::View::IMenuViewModel& searchMenuViewModel,
+                        Menu::View::IMenuViewModel& settingsMenuViewModel,
+                        ScreenControl::View::IScreenControlViewModel& watermarkViewModel,
                         Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
                         const Eegeo::Rendering::ScreenProperties& screenProperties,
+                        Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& gpsGlobeCameraController,
+                        Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
                         ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
                         AppModes::SdkModel::IAppModeModel& appModeModel);
             

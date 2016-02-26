@@ -7,8 +7,8 @@
 #include "IIdentity.h"
 #include "WatermarkViewModel.h"
 #include "BidirectionalBus.h"
-#include "SdkModelDomainEventBus.h"
 #include "Interiors.h"
+#include "InteriorsExplorer.h"
 
 namespace ExampleApp
 {
@@ -29,9 +29,10 @@ namespace ExampleApp
                 WatermarkModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
                                 const std::string& appName,
                                 const std::string& googleAnalyticsReferrerToken,
+                                Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                 Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
-                                ExampleAppMessaging::TMessageBus& messageBus,
-                                ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus);
+                                InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
+                                ExampleAppMessaging::TMessageBus& messageBus);
                 
                 ~WatermarkModule();
                 

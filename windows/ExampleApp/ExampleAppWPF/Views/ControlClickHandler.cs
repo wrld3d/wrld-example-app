@@ -19,6 +19,15 @@ namespace ExampleAppWPF
             control.MouseLeftButtonUp += OnLeftButtonUp;
         }
 
+        public ControlClickHandler(Action<object, MouseButtonEventArgs> onClickAction, FrameworkElement control)
+        {
+            m_onClickAction = onClickAction;
+
+            control.PreviewMouseLeftButtonDown += OnLeftButtonDown;
+            control.MouseLeave += OnMouseLeave;
+            control.PreviewMouseLeftButtonUp += OnLeftButtonUp;
+        }
+
         private void OnLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             m_mouseDown = true;

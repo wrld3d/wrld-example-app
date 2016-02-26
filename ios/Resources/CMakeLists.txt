@@ -25,30 +25,75 @@ set(resources ${resources}
 		Resources/button_add_pin_off.png
 		Resources/button_add_pin_off@2x.png
 		Resources/button_add_pin_off@3x.png
+		Resources/button_add_pin_on.png
+		Resources/button_add_pin_on@2x.png
+		Resources/button_add_pin_on@3x.png
 		Resources/button_checkbox_off.png
 		Resources/button_checkbox_off@2x.png
 		Resources/button_checkbox_off@3x.png
 		Resources/button_checkbox_on.png
 		Resources/button_checkbox_on@2x.png
 		Resources/button_checkbox_on@3x.png
+		Resources/button_clear_cache_off.png
+		Resources/button_clear_cache_off@2x.png
+		Resources/button_clear_cache_off@3x.png
+		Resources/button_clear_cache_on.png
+		Resources/button_clear_cache_on@2x.png
+		Resources/button_clear_cache_on@3x.png
+		Resources/button_clear_search_off.png
+		Resources/button_clear_search_off@2x.png
+		Resources/button_clear_search_off@3x.png
+		Resources/button_clear_search_on.png
+		Resources/button_clear_search_on@2x.png
+		Resources/button_clear_search_on@3x.png
 		Resources/button_close_off.png
 		Resources/button_close_off@2x.png
 		Resources/button_close_off@3x.png
+		Resources/button_close_on.png
+		Resources/button_close_on@2x.png
+		Resources/button_close_on@3x.png
 		Resources/button_close_place_pin_off.png
 		Resources/button_close_place_pin_off@2x.png
 		Resources/button_close_place_pin_off@3x.png
 		Resources/button_close_place_pin_on.png
 		Resources/button_close_place_pin_on@2x.png
 		Resources/button_close_place_pin_on@3x.png
-		Resources/button_create_poi.png
-		Resources/button_create_poi@2x.png
-		Resources/button_create_poi@3x.png
+		Resources/button_compass_off.png
+		Resources/button_compass_off@2x.png
+		Resources/button_compass_off@3x.png
+		Resources/button_compass_on.png
+		Resources/button_compass_on@2x.png
+		Resources/button_compass_on@3x.png
+		Resources/button_create_poi_off.png
+		Resources/button_create_poi_off@2x.png
+		Resources/button_create_poi_off@3x.png
+		Resources/button_create_poi_on.png
+		Resources/button_create_poi_on@2x.png
+		Resources/button_create_poi_on@3x.png
+		Resources/button_exit_interior_off.png
+		Resources/button_exit_interior_off@2x.png
+		Resources/button_exit_interior_off@3x.png
+		Resources/button_exit_interior_on.png
+		Resources/button_exit_interior_on@2x.png
+		Resources/button_exit_interior_on@3x.png
+		Resources/button_flatten_off.png
+		Resources/button_flatten_off@2x.png
+		Resources/button_flatten_off@3x.png
+		Resources/button_flatten_on.png
+		Resources/button_flatten_on@2x.png
+		Resources/button_flatten_on@3x.png
 		Resources/button_gallery_off.png
 		Resources/button_gallery_off@2x.png
 		Resources/button_gallery_off@3x.png
+		Resources/button_gallery_on.png
+		Resources/button_gallery_on@2x.png
+		Resources/button_gallery_on@3x.png
 		Resources/button_ok_off.png
 		Resources/button_ok_off@2x.png
 		Resources/button_ok_off@3x.png
+		Resources/button_ok_on.png
+		Resources/button_ok_on@2x.png
+		Resources/button_ok_on@3x.png
 		Resources/button_ok_place_pin_off.png
 		Resources/button_ok_place_pin_off@2x.png
 		Resources/button_ok_place_pin_off@3x.png
@@ -58,30 +103,40 @@ set(resources ${resources}
 		Resources/button_photo_off.png
 		Resources/button_photo_off@2x.png
 		Resources/button_photo_off@3x.png
+		Resources/button_photo_on.png
+		Resources/button_photo_on@2x.png
+		Resources/button_photo_on@3x.png
 		Resources/button_remove_pin_off.png
 		Resources/button_remove_pin_off@2x.png
 		Resources/button_remove_pin_off@3x.png
-		Resources/button_streets_off.png
-		Resources/button_streets_off@2x.png
-		Resources/button_streets_off@3x.png
-		Resources/button_streets_on.png
-		Resources/button_streets_on@2x.png
-		Resources/button_streets_on@3x.png
-		Resources/buttonsmall_close_off.png
-		Resources/buttonsmall_close_off@2x.png
-		Resources/buttonsmall_close_off@3x.png
-		Resources/buttonsmall_close_on.png
-		Resources/buttonsmall_close_on@2x.png
-		Resources/buttonsmall_close_on@3x.png
-		Resources/CloseIcon.png
-		Resources/CloseIcon@2x.png
-		Resources/CloseIcon@3x.png
-		Resources/compass.png
-		Resources/compass@2x.png
-		Resources/compass@3x.png
-		Resources/CompassPoint.png
-		Resources/CompassPoint@2x.png
-		Resources/CompassPoint@3x.png
+		Resources/button_remove_pin_on.png
+		Resources/button_remove_pin_on@2x.png
+		Resources/button_remove_pin_on@3x.png
+		Resources/button_search_off.png
+		Resources/button_search_off@2x.png
+		Resources/button_search_off@3x.png
+		Resources/button_search_on.png
+		Resources/button_search_on@2x.png
+		Resources/button_search_on@3x.png
+		Resources/button_settings_off.png
+		Resources/button_settings_off@2x.png
+		Resources/button_settings_off@3x.png
+		Resources/button_settings_on.png
+		Resources/button_settings_on@2x.png
+		Resources/button_settings_on@3x.png
+		Resources/button_unflatten_off.png
+		Resources/button_unflatten_off@2x.png
+		Resources/button_unflatten_off@3x.png
+		Resources/button_unflatten_on.png
+		Resources/button_unflatten_on@2x.png
+		Resources/button_unflatten_on@3x.png
+		Resources/CMakeLists.txt
+		Resources/compass_point_off.png
+		Resources/compass_point_off@2x.png
+		Resources/compass_point_off@3x.png
+		Resources/compass_point_on.png
+		Resources/compass_point_on@2x.png
+		Resources/compass_point_on@3x.png
 		Resources/DejaVuSansBold.fnt
 		Resources/DejaVuSansBold_0.png
 		Resources/eegeo_logo.png
@@ -206,12 +261,6 @@ set(resources ${resources}
 		Resources/micello_logo.png
 		Resources/micello_logo@2x.png
 		Resources/micello_logo@3x.png
-		Resources/PlaceholderCube/placeholder_cube_negX.png
-		Resources/PlaceholderCube/placeholder_cube_negY.png
-		Resources/PlaceholderCube/placeholder_cube_negZ.png
-		Resources/PlaceholderCube/placeholder_cube_posX.png
-		Resources/PlaceholderCube/placeholder_cube_posY.png
-		Resources/PlaceholderCube/placeholder_cube_posZ.png
 		Resources/place_pin_background.png
 		Resources/place_pin_background@2x.png
 		Resources/place_pin_background@3x.png
@@ -219,10 +268,26 @@ set(resources ${resources}
 		Resources/place_pin_right@2x.png
 		Resources/place_pin_right@3x.png
 		Resources/placeholder.pvr
+		Resources/PlaceholderCube
+		Resources/PlaceholderCube/placeholder_cube_negX.png
+		Resources/PlaceholderCube/placeholder_cube_negY.png
+		Resources/PlaceholderCube/placeholder_cube_negZ.png
+		Resources/PlaceholderCube/placeholder_cube_posX.png
+		Resources/PlaceholderCube/placeholder_cube_posY.png
+		Resources/PlaceholderCube/placeholder_cube_posZ.png
 		Resources/placejumps.json
 		Resources/poi_marker.png
 		Resources/poi_marker@2x.png
 		Resources/poi_marker@3x.png
+		Resources/results_anchor_arrow.png
+		Resources/results_anchor_arrow@2x.png
+		Resources/results_anchor_arrow@3x.png
+		Resources/search_mag_glass_off.png
+		Resources/search_mag_glass_off@2x.png
+		Resources/search_mag_glass_off@3x.png
+		Resources/search_mag_glass_on.png
+		Resources/search_mag_glass_on@2x.png
+		Resources/search_mag_glass_on@3x.png
 		Resources/search_result_background.png
 		Resources/search_result_background@2x.png
 		Resources/search_result_background@3x.png
@@ -235,13 +300,13 @@ set(resources ${resources}
 		Resources/search_results_bar_small.png
 		Resources/search_results_bar_small@2x.png
 		Resources/search_results_bar_small@3x.png
-		Resources/search_results_close.png
-		Resources/search_results_close@2x.png
-		Resources/search_results_close@3x.png
+		Resources/search_results_spinner.png
+		Resources/search_results_spinner@2x.png
+		Resources/search_results_spinner@3x.png
 		Resources/SearchResultOnMap
-		Resources/SearchResultOnMap/PinIconTexturePage.png
-		Resources/SearchResultOnMap/PinIconTexturePage@2x.png
-		Resources/SearchResultOnMap/PinIconTexturePage@3x.png
+		Resources/SearchResultOnMap/pin_icon_texture_page.png
+		Resources/SearchResultOnMap/pin_icon_texture_page@2x.png
+		Resources/SearchResultOnMap/pin_icon_texture_page@3x.png
 		Resources/SplashScreen
 		Resources/SplashScreen/Icon-60@2x.png
 		Resources/SplashScreen/Icon-60@3x.png
@@ -256,9 +321,12 @@ set(resources ${resources}
 		Resources/SplashScreen/SplashScreen.png
 		Resources/SplashScreen/SplashScreen@2x.png
 		Resources/SplashScreen/SplashScreen@3x.png
-		Resources/sub_menu_arrow.png
-		Resources/sub_menu_arrow@2x.png
-		Resources/sub_menu_arrow@3x.png
+		Resources/sub_menu_arrow_off.png
+		Resources/sub_menu_arrow_off@2x.png
+		Resources/sub_menu_arrow_off@3x.png
+		Resources/sub_menu_arrow_on.png
+		Resources/sub_menu_arrow_on@2x.png
+		Resources/sub_menu_arrow_on@3x.png
 		Resources/Textures
 		Resources/Textures/EmbeddedTheme
 		Resources/Textures/EmbeddedTheme/London_London_railDiffuse_repeat.pvr
@@ -327,6 +395,8 @@ set(resources ${resources}
 		Resources/Tours/play_icon@3x.png
 		Resources/Tours/States
 		Resources/Tours/States/Twitter
+		Resources/Tours/States/Twitter/browser_back.png
+		Resources/Tours/States/Twitter/browser_forward.png
 		Resources/Tours/States/Twitter/favoriteIcon.png
 		Resources/Tours/States/Twitter/NotLoaded
 		Resources/Tours/States/Twitter/NotLoaded/ProfilePicCatNotLoaded.png
@@ -335,6 +405,9 @@ set(resources ${resources}
 		Resources/Tours/States/Twitter/NotLoaded/ProfilePicNotLoaded.png
 		Resources/Tours/States/Twitter/NotLoaded/ProfilePicNotLoaded@2x.png
 		Resources/Tours/States/Twitter/NotLoaded/ProfilePicNotLoaded@3x.png
+		Resources/Tours/States/Twitter/play_icon.png
+		Resources/Tours/States/Twitter/play_icon@2x.png
+		Resources/Tours/States/Twitter/play_icon@3x.png
 		Resources/Tours/States/Twitter/replyIcon.png
 		Resources/Tours/States/Twitter/retweetIcon.png
 		Resources/Tours/States/Twitter/tweet_bird.png

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "ModalBackgroundViewIncludes.h"
+#include "Modality.h"
 
 namespace ExampleApp
 {
@@ -14,6 +15,8 @@ namespace ExampleApp
             {
             public:
                 virtual ~IModalBackgroundViewModule() { }
+                
+                virtual ExampleApp::Modality::View::IModalBackgroundView& GetModalBackgroundViewInterop() = 0;
 
                 virtual ModalBackgroundView& GetModalBackgroundView() = 0;
             };

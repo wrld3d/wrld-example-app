@@ -27,14 +27,16 @@ namespace ExampleApp
 
                 virtual float GetAnimationProgress() const = 0;
                 virtual bool IsAnimating() const = 0;
+                virtual bool IsTableAnimating() const = 0;
                 virtual void UpdateAnimation(float dt) = 0;
+                virtual void UpdateTableAnimation(float dt) = 0;
 
                 virtual void UpdateMenuSectionViews(TSections& sections) = 0;
 
                 virtual void SetFullyOnScreenOpen() = 0;
                 virtual void SetFullyOnScreenClosed() = 0;
 
-                virtual void SetCanInteract(bool canInteract) = 0;
+                virtual void SetTableCanInteract(bool canInteract) = 0;
 
                 virtual void InsertOnViewClicked(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveOnViewClicked(Eegeo::Helpers::ICallback0& callback) = 0;
