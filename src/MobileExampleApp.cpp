@@ -368,7 +368,6 @@ namespace ExampleApp
                                                                                                                      m_messageBus);
         
         m_pInteriorsEntityIdHighlightController = Eegeo_NEW(InteriorsExplorer::SdkModel::Highlights::InteriorsEntityIdHighlightVisibilityController)(
-                                                                                                                    mapModule.GetInteriorsPresentationModule().GetController(),
                                                                                                                     m_searchServiceModules[Search::EegeoVendorName]->GetSearchService(),
                                                                                                                     m_pSearchModule->GetSearchQueryPerformer(),
                                                                                                                     m_pSearchModule->GetSearchResultRepository(),

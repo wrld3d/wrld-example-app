@@ -22,8 +22,7 @@ namespace ExampleApp
                 class InteriorsEntityIdHighlightVisibilityController : public Eegeo::Resources::Interiors::InteriorsEntityIdHighlightController
                 {
                 public:
-                    InteriorsEntityIdHighlightVisibilityController(Eegeo::Resources::Interiors::InteriorController& interiorController,
-                                                           Search::SdkModel::ISearchService& searchService,
+                    InteriorsEntityIdHighlightVisibilityController(Search::SdkModel::ISearchService& searchService,
                                                            Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                                            Search::SdkModel::ISearchResultRepository& searchResultRepository,
                                                            const Eegeo::Resources::Interiors::InteriorsInstanceRepository& instanceRepository,
@@ -32,21 +31,17 @@ namespace ExampleApp
                     ~InteriorsEntityIdHighlightVisibilityController();
                     
                 private:
-                    void OnSearchPerformed(const Search::SdkModel::SearchQuery& query);
                     void OnSearchResultsLoaded(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results);
                     void OnSearchResultCleared();
                     
-                    void OnInteriorVisibilityChanged();
+                    Eegeo::Resources::Interiors::CountPerRenderable m_lastSearchedRenderables;
                     
-                    Eegeo::Resources::Interiors::InteriorController& m_interiorController;
                     Search::SdkModel::ISearchService& m_searchService;
                     Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
                     Search::SdkModel::ISearchResultRepository& m_searchResultRepository;
 
-                    Eegeo::Helpers::TCallback1<InteriorsEntityIdHighlightVisibilityController, const Search::SdkModel::SearchQuery&> m_searchPerformedHandler;
                     Eegeo::Helpers::TCallback2<InteriorsEntityIdHighlightVisibilityController, const Search::SdkModel::SearchQuery&, const std::vector<Search::SdkModel::SearchResultModel>&> m_searchResultsHandler;
                     Eegeo::Helpers::TCallback0<InteriorsEntityIdHighlightVisibilityController> m_searchResultsClearedHandler;
-                    Eegeo::Helpers::TCallback0<InteriorsEntityIdHighlightVisibilityController> m_interiorVisibilityChangedHandler;
 
                     typedef Eegeo::Resources::Interiors::InteriorsEntityIdHighlightController Super;
                 };
