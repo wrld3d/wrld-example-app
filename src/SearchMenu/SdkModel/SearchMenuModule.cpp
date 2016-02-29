@@ -56,14 +56,14 @@ namespace ExampleApp
             void SearchMenuModule::SetSearchSection(const std::string& name,
                                                     Menu::View::IMenuModel& menuModel)
             {
-                m_pSearchSectionViewModel = Eegeo_NEW(Menu::View::MenuSectionViewModel)(name, "", menuModel, false, false);
+                m_pSearchSectionViewModel = Eegeo_NEW(Menu::View::MenuSectionViewModel)(name, "", menuModel, false);
             }
             
             void SearchMenuModule::AddMenuSection(const std::string& name,
                                                   Menu::View::IMenuModel& menuModel,
                                                   bool isExpandable)
             {
-                Menu::View::MenuSectionViewModel* pMenuSection = Eegeo_NEW(Menu::View::MenuSectionViewModel)(name, "", menuModel, isExpandable, true);
+                Menu::View::MenuSectionViewModel* pMenuSection = Eegeo_NEW(Menu::View::MenuSectionViewModel)(name, "", menuModel, isExpandable);
                 m_pMenuViewModel->AddSection(*pMenuSection);
                 m_sections.push_back(pMenuSection);
             }
