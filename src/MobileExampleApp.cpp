@@ -367,8 +367,13 @@ namespace ExampleApp
                                                                                                                      mapModule.GetInteriorsPresentationModule().GetInteriorsLabelsController(),
                                                                                                                      m_messageBus);
         
-        m_pInteriorsEntityIdHighlightController = Eegeo_NEW(Eegeo::Resources::Interiors::InteriorsEntityIdHighlightController)(mapModule.GetInteriorsModelModule().GetInteriorsInstanceRepository(),
-                                                                                                                               Eegeo::v4(0.0f, 1.0f, 0.0f, 1.0f));
+        m_pInteriorsEntityIdHighlightController = Eegeo_NEW(InteriorsExplorer::SdkModel::Highlights::InteriorsEntityIdHighlightVisibilityController)(
+                                                                                                                    mapModule.GetInteriorsPresentationModule().GetController(),
+                                                                                                                    m_searchServiceModules[Search::EegeoVendorName]->GetSearchService(),
+                                                                                                                    m_pSearchModule->GetSearchQueryPerformer(),
+                                                                                                                    m_pSearchModule->GetSearchResultRepository(),
+                                                                                                                    mapModule.GetInteriorsModelModule().GetInteriorsInstanceRepository(),
+                                                                                                                    Eegeo::v4(0.0f, 1.0f, 0.0f, 1.0f));
         
         
         m_pCameraTransitionController = Eegeo_NEW(ExampleApp::CameraTransitions::SdkModel::CameraTransitionController)(*m_pGlobeCameraController,

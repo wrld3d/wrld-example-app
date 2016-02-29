@@ -88,7 +88,7 @@
 #include "PickingController.h"
 #include "IRayCaster.h"
 #include "VisualMap.h"
-#include "InteriorsEntityIdHighlightController.h"
+#include "InteriorsEntityIdHighlightVisibilityController.h"
 
 
 namespace ExampleApp
@@ -166,7 +166,7 @@ namespace ExampleApp
         ReportPinsVisibilityMasking::SdkModel::ReportPinsVisibilityMaskingModule* m_pReportPinsVisibilityMaskingModule;
         Eegeo::Picking::PickingController* m_pInteriorsPickingController;
         InteriorsExplorer::SdkModel::Highlights::InteriorsHighlightVisibilityController* m_pInteriorsHighlightVisibilityController;
-        Eegeo::Resources::Interiors::InteriorsEntityIdHighlightController* m_pInteriorsEntityIdHighlightController;
+        InteriorsExplorer::SdkModel::Highlights::InteriorsEntityIdHighlightVisibilityController* m_pInteriorsEntityIdHighlightController;
         Eegeo::Collision::IRayCaster* m_pRayCaster;
         VisualMap::SdkModel::IVisualMapModule* m_pVisualMapModule;
         
