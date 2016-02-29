@@ -184,9 +184,9 @@ namespace ExampleApp
                 
                 void InteriorsHighlightVisibilityController::ConfigureRenderableForAvailability(Eegeo::Rendering::Renderables::InteriorHighlightRenderable& renderable, const std::string& availability)
                 {
-                    const Eegeo::v4 available(0.0f, 1.0f, 0.0f, 0.3f);
-                    const Eegeo::v4 availableSoon(1.0f, 0.8f, 0.0f, 0.3f);
-                    const Eegeo::v4 occupied(1.0f, 0.0f, 0.0f, 0.3f);
+                    const Eegeo::v4 available(0.0f, 1.0f, 0.0f, 0.4f);
+                    const Eegeo::v4 availableSoon(1.0f, 0.8f, 0.0f, 0.4f);
+                    const Eegeo::v4 occupied(1.0f, 0.0f, 0.0f, 0.4f);
                     const Eegeo::v4 unknown(1.0f, 1.0f, 1.0f, 0.0f);
                     
                     if (availability == Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE)

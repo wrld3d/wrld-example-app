@@ -33,8 +33,10 @@ namespace ExampleApp
                 private:
                     void OnSearchResultsLoaded(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results);
                     void OnSearchResultCleared();
+                    void OnSearchItemSelected(int sectionIndex, int itemIndex);
                     
-                    Eegeo::Resources::Interiors::CountPerRenderable m_lastSearchedRenderables;
+                    Eegeo::Resources::Interiors::CountPerRenderable m_lastHighlightedRenderables;
+                    std::map<int, std::vector<std::string> > m_lastSearchedResults;
                     
                     Search::SdkModel::ISearchService& m_searchService;
                     Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;

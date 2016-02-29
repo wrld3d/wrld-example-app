@@ -51,8 +51,8 @@ namespace ExampleApp
                 
                 void InteriorsEntityIdHighlightVisibilityController::OnSearchResultCleared()
                 {
-                    for (Eegeo::Resources::Interiors::CountPerRenderable::iterator i = m_lastSearchedRenderables.begin();
-                        i != m_lastSearchedRenderables.end();
+                    for (Eegeo::Resources::Interiors::CountPerRenderable::iterator i = m_lastHighlightedRenderables.begin();
+                        i != m_lastHighlightedRenderables.end();
                         ++i)
                     {
                         Eegeo::Rendering::Renderables::InstancedInteriorFloorRenderable* currentRenderable = dynamic_cast<Eegeo::Rendering::Renderables::InstancedInteriorFloorRenderable*>(i->first);
@@ -63,39 +63,45 @@ namespace ExampleApp
                         currentRenderable->SetInstancedRenderState(currentState);
                     }
 
-                    m_lastSearchedRenderables.clear();
+                    m_lastHighlightedRenderables.clear();
+                }
+
+                void InteriorsEntityIdHighlightVisibilityController::OnSearchItemSelected(int sectionIndex, int itemIndex)
+                {
+                    OnSearchResultCleared();
+
+                    std::map<int, std::vector<std::string> >::iterator result = m_lastSearchedResults.find(itemIndex);
+                    
+                    if (result != m_lastSearchedResults.end())
+                    {
+                        Super::HighlightEntityIds(result->second, m_lastHighlightedRenderables);
+                    }
                 }
 
                 void InteriorsEntityIdHighlightVisibilityController::OnSearchResultsLoaded(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results)
                 {
-                    std::vector<std::string> deskIds;
+                    m_lastHighlightedRenderables.clear();
 
-                    for(std::vector<Search::SdkModel::SearchResultModel>::const_iterator it = results.begin(); it != results.end(); ++it)
+                    int i = 0;
+                    for(std::vector<Search::SdkModel::SearchResultModel>::const_iterator it = results.begin(); it != results.end(); ++it, ++i)
                     {
                         if((*it).GetCategory() == Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME)
                         {
                             const Search::Swallow::SdkModel::SwallowDepartmentResultModel& department = Search::Swallow::SdkModel::SearchParser::TransformToSwallowDepartmentResult(*it);
 
-                            //need to confirm behaviour for partial searches
-                            /*if (department.GetName() != query.Query())
-                            {
-                                continue;
-                            }*/
-
                             const std::vector<std::string>& currentDeskIds = department.GetAllDesks();
-
-                            deskIds.insert(deskIds.end(), currentDeskIds.begin(), currentDeskIds.end());
+                            
+                            m_lastSearchedResults.insert(std::make_pair(i, currentDeskIds));
                         }
-                    }
+                        else if ((*it).GetCategory() == Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
+                        {
+                            const Search::Swallow::SdkModel::SwallowPersonResultModel& person = Search::Swallow::SdkModel::SearchParser::TransformToSwallowPersonResult(*it);
 
-                    if (!m_lastSearchedRenderables.empty())
-                    {
-                        OnSearchResultCleared();
-                    }
+                            std::vector<std::string> desks(1);
+                            desks[0] = person.GetDeskCode();
 
-                    if (!deskIds.empty())
-                    {
-                        Super::HighlightEntityIds(deskIds, m_lastSearchedRenderables);
+                            m_lastSearchedResults.insert(std::make_pair(i, desks));
+                        }
                     }
                 }
             }
