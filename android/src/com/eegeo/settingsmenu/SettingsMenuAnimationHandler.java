@@ -30,6 +30,7 @@ public class SettingsMenuAnimationHandler extends MenuAnimationHandler
 		View titleContainerView = m_view.findViewById(R.id.settings_menu_title_container);
 		View listItemContainerView = m_view.findViewById(R.id.settings_menu_list_container);
 		View settingsMenuTitleView = m_view.findViewById(R.id.settings_menu_title);
+		View settingsMenuSeparatorView = m_view.findViewById(R.id.settings_menu_title_separator);
 		
 		final RelativeLayout uiRoot = (RelativeLayout)m_mainActivity.findViewById(R.id.ui_container);
 		
@@ -49,11 +50,13 @@ public class SettingsMenuAnimationHandler extends MenuAnimationHandler
 		addAnimator(m_onScreenAnimatorSet, 0.0f, 0.0f, new ViewScaleXAnimatorUpdateListener(titleContainerView), new CircleInOutTimeInterpolator());
 		addAnimator(m_onScreenAnimatorSet, 0, dragTabWidthPx + menuButtonMarginPx, new ViewXAnimatorUpdateListener(listItemContainerView), new CircleInOutTimeInterpolator());
 		addAnimator(m_onScreenAnimatorSet, 0.0f, 0.0f, new ViewAlphaAnimatorUpdateListener(settingsMenuTitleView), new CircleInOutTimeInterpolator());
+		addAnimator(m_onScreenAnimatorSet, 0, dragTabWidthPx + menuButtonMarginPx, new ViewXAnimatorUpdateListener(settingsMenuSeparatorView), new CircleInOutTimeInterpolator());
 		
 		addAnimator(m_openAnimatorSet, screenWidthPx - (dragTabWidthPx + menuButtonMarginPx), screenWidthPx - (dragTabWidthPx + titleContainerWidthPx), new ViewXAnimatorUpdateListener(m_view), new CircleInOutTimeInterpolator());
 		addAnimator(m_openAnimatorSet, 0.0f, 1.0f, new ViewScaleXAnimatorUpdateListener(titleContainerView), new CircleInOutTimeInterpolator());
 		addAnimator(m_openAnimatorSet, dragTabWidthPx + menuButtonMarginPx, dragTabWidthPx, new ViewXAnimatorUpdateListener(listItemContainerView), new CircleInOutTimeInterpolator());
 		addAnimator(m_openAnimatorSet, 0.0f, 1.0f, new ViewAlphaAnimatorUpdateListener(settingsMenuTitleView), new CircleInOutTimeInterpolator());
+		addAnimator(m_openAnimatorSet, dragTabWidthPx + menuButtonMarginPx, dragTabWidthPx, new ViewXAnimatorUpdateListener(settingsMenuSeparatorView), new CircleInOutTimeInterpolator());
 	}
 	
 	protected void addAnimator(ReversibleAnimatorSet animatorSet, float startVal, float endVal, AnimatorUpdateListener updateListener, TimeInterpolator interpolator)
