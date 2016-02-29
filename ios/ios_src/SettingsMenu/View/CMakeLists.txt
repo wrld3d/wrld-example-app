@@ -9,6 +9,8 @@ set(currsources
   ios_src/SettingsMenu/View/SettingsMenuViewInterop.h
   ios_src/SettingsMenu/View/SettingsMenuViewModule.h
   ios_src/SettingsMenu/View/SettingsMenuViewModule.mm
+  ios_src/SettingsMenu/View/SettingsTableDataProvider.h
+  ios_src/SettingsMenu/View/SettingsTableDataProvider.mm
 )
 set(sources ${sources} ${currsources})
 source_group(\\ios_src\\SettingsMenu\\View FILES ${currsources})
