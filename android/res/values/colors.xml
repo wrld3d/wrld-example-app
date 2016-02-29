@@ -29,4 +29,5 @@
 	<color name="table_header_text">#CECECE</color>
 	<color name="table_sub_cell_text">#777777</color>
 	<color name="table_cell_highlight">#CCCCCC</color>
+	<color name="menu_header_separator">#002B63</color>
 </resources>

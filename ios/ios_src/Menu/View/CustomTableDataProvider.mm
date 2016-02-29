@@ -299,14 +299,14 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
     
     cell.indentationLevel = 0;
     
-    bool isHeader = (section.IsExpandable() && indexPath.row == 0) || !section.IsExpandable();
-    bool isExpandableHeader = isHeader && section.IsExpandable();
+    bool isExpandableHeader = section.IsExpandable() && indexPath.row == 0;
+    bool isHeader = isExpandableHeader || !section.IsExpandable();
     bool hasSeparator = isHeader && sectionIndex != 0;
     
     openableArrow.hidden = !isExpandableHeader;
-    [self setCellInfo:customCell :isExpandableHeader :section.IsHeader() :hasSeparator];
+    [self setCellInfo:customCell :isHeader :hasSeparator];
     
-    if(isHeader)
+    if(isExpandableHeader)
     {
         if(section.IsExpanded())
         {
@@ -394,14 +394,14 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
     return headline ? HeaderCellFontSize : SubSectionCellFontSize;
 }
 
-- (void) setCellInfo:(CustomTableViewCell*)cell :(bool)isExpandableHeader :(bool)isHeader :(bool)hasSeparator
+- (void) setCellInfo:(CustomTableViewCell*)cell :(bool)isHeader :(bool)hasSeparator
 {
     [cell setInfo :hasSeparator
                   :ExampleApp::Helpers::ColorPalette::UiBorderColor
-                  :isExpandableHeader || isHeader ? ExampleApp::Helpers::ColorPalette::UiBorderColor : ExampleApp::Helpers::ColorPalette::TableSubCellColor
-                  :isExpandableHeader || isHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderPressColor : ExampleApp::Helpers::ColorPalette::TableSubCellPressColor
-                  :isExpandableHeader || isHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderTextColor : ExampleApp::Helpers::ColorPalette::TableSubCellTextColor
-                  :isExpandableHeader || isHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderTextHighlightColor : ExampleApp::Helpers::ColorPalette::TableSubCellTextColor
+                  :isHeader ? ExampleApp::Helpers::ColorPalette::UiBorderColor : ExampleApp::Helpers::ColorPalette::TableSubCellColor
+                  :isHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderPressColor : ExampleApp::Helpers::ColorPalette::TableSubCellPressColor
+                  :isHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderTextColor : ExampleApp::Helpers::ColorPalette::TableSubCellTextColor
+                  :isHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderTextHighlightColor : ExampleApp::Helpers::ColorPalette::TableSubCellTextColor
                   :(UIImageView*)[cell.contentView viewWithTag:SubItemCellOpenableMenuArrowTag]];
 }
 

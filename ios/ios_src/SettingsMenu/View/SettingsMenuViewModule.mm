@@ -19,7 +19,7 @@ namespace ExampleApp
                                                            Modality::View::IModalBackgroundView& modalBackgroundView,
                                                            ExampleAppMessaging::TMessageBus& messageBus)
             {
-                m_pDataProvider = [CustomTableDataProvider alloc];
+                m_pDataProvider = [SettingsTableDataProvider alloc];
 
                 m_pView = [[SettingsMenuView alloc] initWithParams
                            :screenProperties.GetScreenWidth()

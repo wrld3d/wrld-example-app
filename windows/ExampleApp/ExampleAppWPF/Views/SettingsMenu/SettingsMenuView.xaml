@@ -183,7 +183,7 @@
                                                                 </Grid.ColumnDefinitions>
                                                                 <StackPanel Name="SettingsMenuItemPanel" Margin="0,0,0,0" Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" Background="{StaticResource SubMenuItemDefaultColour}" Width="330">
                                                                     <StackPanel.Triggers>
-                                                                        <EventTrigger RoutedEvent="MouseDown">
+                                                                        <EventTrigger RoutedEvent="MouseLeftButtonDown">
                                                                             <BeginStoryboard>
                                                                                 <Storyboard>
                                                                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SettingsMenuItemPanel" Storyboard.TargetProperty="Background">

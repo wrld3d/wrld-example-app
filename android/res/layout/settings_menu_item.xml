@@ -12,14 +12,14 @@
 	        android:layout_margin="6dp"
 	        android:contentDescription="@string/content_desc_category_icon"
 	        android:scaleType="fitCenter"
+	        android:layout_centerVertical="true"
 	        android:src="@drawable/icon1_coffee" />
 
         <TextView
             android:id="@+id/menu_list_item_name"
             android:layout_width="wrap_content"
-            android:layout_height="43dp"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="8dp"
             android:layout_toRightOf="@+id/menu_list_item_icon"
             android:gravity="left|center_vertical"
             android:textAppearance="?android:attr/textAppearanceListItemSmall"

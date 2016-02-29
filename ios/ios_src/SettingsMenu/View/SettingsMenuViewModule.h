@@ -9,7 +9,7 @@
 #include "Modality.h"
 #include "Rendering.h"
 #include "BidirectionalBus.h"
-#include "CustomTableDataProvider.h"
+#include "SettingsTableDataProvider.h"
 
 namespace ExampleApp
 {
@@ -22,7 +22,7 @@ namespace ExampleApp
             private:
                 SettingsMenuController* m_pController;
                 SettingsMenuView* m_pView;
-                CustomTableDataProvider* m_pDataProvider;
+                SettingsTableDataProvider* m_pDataProvider;
 
             public:
                 SettingsMenuViewModule(Menu::View::IMenuModel& settingsMenuModel,
