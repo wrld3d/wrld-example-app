@@ -30,6 +30,7 @@ namespace ExampleAppWPF
         protected ScrollViewer m_scrollSection = null;
 
         private ControlClickHandler m_closeButtonClickHandler = null;
+        private ControlClickHandler m_uploadButtonClickHandler = null;
 
         private byte[] m_imageBuffer = null;
         private Uri m_currentImageUri = null;
@@ -85,10 +86,11 @@ namespace ExampleAppWPF
             
             m_submitButton.MouseLeftButtonDown += OnSubmitClick;
             m_submitButton.MouseLeftButtonUp += OnSubmitClick;
-            m_selectFromGalleryButton.MouseLeftButtonDown += OnSelectFromGalleryClick;
 
             Image closeButton = CheckAndGetProperty("CloseButton") as Image;
             m_closeButtonClickHandler = new ControlClickHandler(closeButton, OnCloseClick);
+
+            m_uploadButtonClickHandler = new ControlClickHandler(m_selectFromGalleryButton, OnSelectFromGalleryClick);
 
             m_tosLink.Click += OnHyperlinkClick;
         }

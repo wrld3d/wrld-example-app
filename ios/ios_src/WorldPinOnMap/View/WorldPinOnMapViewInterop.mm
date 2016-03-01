@@ -43,7 +43,7 @@ namespace ExampleApp
 
             void WorldPinOnMapViewInterop::UpdateScreenState(float screenState)
             {
-                [m_pView setAlpha:screenState];
+                [m_pView updateScreenState:screenState];
             }
         }
     }

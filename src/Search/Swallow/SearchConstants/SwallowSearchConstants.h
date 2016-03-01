@@ -58,6 +58,8 @@ namespace ExampleApp
                 std::vector<std::string> GetAllCategories();
                 
                 std::vector<std::string> GetCategories();
+                
+                bool ShouldShowCategoryAsSearchResult(const std::string& category);
             }
         }
     }

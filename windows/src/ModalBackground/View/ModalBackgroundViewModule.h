@@ -29,6 +29,9 @@ namespace ExampleApp
                 );
 
                 ~ModalBackgroundViewModule();
+
+                Modality::View::IModalBackgroundView& GetView();
+                Modality::View::ModalBackgroundController& GetController();
             };
         }
     }

@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "MenuController.h"
+#include "IMenuOption.h"
 #include "IOpenableControlViewModel.h"
 #include "MenuDragStateChangedMessage.h"
 #include "MenuSectionExpandedChangedMessage.h"
@@ -112,8 +113,15 @@ namespace ExampleApp
                         m_viewModel.UpdateOpenState(normalisedAnimationProgress);
                     }
                 }
-
-                m_view.SetCanInteract(m_viewModel.IsFullyOpen());
+                
+                if(m_view.IsTableAnimating())
+                {
+                    m_view.UpdateTableAnimation(dt);
+                }
+                else
+                {
+                    m_view.SetTableCanInteract(m_viewModel.IsFullyOpen());
+                }
             }
 
             void MenuController::OnViewClicked()
@@ -241,6 +249,13 @@ namespace ExampleApp
                     else
                     {
                         section.Expand();
+                        for(int i = 0; i < m_viewModel.SectionsCount(); ++i)
+                        {
+                            if(i != sectionIndex)
+                            {
+                                m_viewModel.GetMenuSection(i).Contract();
+                            }
+                        }
                     }
                     m_presentationDirty = true;
                     return;
@@ -248,8 +263,7 @@ namespace ExampleApp
                 else
                 {
                     int index = section.IsExpandable() ? itemIndex - 1 : itemIndex;
-                    MenuItemModel item = section.GetItemAtIndex(index);
-                    item.Select();
+                    section.GetItemAtIndex(index).MenuOption().Select();
                 }
             }
 

@@ -33,7 +33,6 @@ namespace ExampleApp
             public:
                 InteriorsExplorerViewModule(InteriorsExplorerViewModel& viewModel,
                                             ExampleAppMessaging::TMessageBus& messageBus,
-                                            Eegeo::Helpers::IdentityProvider& identityProvider,
 											AndroidNativeState &nativeState);
                 
                 ~InteriorsExplorerViewModule();

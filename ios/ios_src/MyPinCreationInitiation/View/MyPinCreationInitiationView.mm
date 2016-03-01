@@ -33,7 +33,8 @@
         self.pPoiCreateButton = [[[UIButton alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
         [self addSubview: self.pPoiCreateButton];
 
-        [self.pPoiCreateButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_create_poi") forState:UIControlStateNormal];
+        [self.pPoiCreateButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_create_poi_off") forState:UIControlStateNormal];
+        [self.pPoiCreateButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_create_poi_on") forState:UIControlStateHighlighted];
         self.pPoiCreateButton.frame = CGRectMake(0.f, 0.f, m_width, m_height);
         [self.pPoiCreateButton addTarget:self action:@selector(onClick:) forControlEvents:UIControlEventTouchUpInside];
         

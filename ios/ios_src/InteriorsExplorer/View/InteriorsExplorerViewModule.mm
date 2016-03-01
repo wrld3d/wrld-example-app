@@ -22,8 +22,6 @@ namespace ExampleApp
                 m_pController = Eegeo_NEW(InteriorsExplorerController)(*[m_pView getInterop],
                                                                        viewModel,
                                                                        messageBus);
-                
-
             }
             
             InteriorsExplorerViewModule::~InteriorsExplorerViewModule()

@@ -17,7 +17,12 @@
         [self setFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
         [self setBackgroundColor: ExampleApp::Helpers::ColorPalette::ModalBackgroundColor];
         self.alpha = 0.f;
-        m_stateChangeAnimationTimeSeconds = 0.2;
+        m_stateChangeAnimationTimeSeconds = 0.2f;
+        
+        m_tapGestureRecogniser = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGesture:)] autorelease];
+        [m_tapGestureRecogniser setDelegate:self];
+        
+        [self addGestureRecognizer:m_tapGestureRecogniser];
     }
 
     return self;
@@ -27,6 +32,7 @@
 {
     Eegeo_DELETE m_pInterop;
 
+    [self removeGestureRecognizer:m_tapGestureRecogniser];
     [self removeFromSuperview];
     [super dealloc];
 }
@@ -69,7 +75,7 @@
 
 - (BOOL)consumesTouch:(UITouch *)touch
 {
-    return self.alpha > 0.f;
+    return [self isVisible];
 }
 
 - (void) animateToAlpha:(float)alpha
@@ -79,6 +85,19 @@
     {
         self.alpha = alpha;
     }];
+}
+
+- (void)tapGesture:(UITapGestureRecognizer *)recognizer
+{
+    if([self isVisible])
+    {
+        m_pInterop->HandleViewTapped();
+    }
+}
+
+- (BOOL)isVisible
+{
+    return self.alpha > 0.0f;
 }
 
 @end

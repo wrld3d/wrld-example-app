@@ -14,6 +14,7 @@
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -26,7 +27,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -107,7 +107,7 @@
     <Compile Include="Views\Menu\MenuListItem.cs" />
     <Compile Include="Views\Options\OptionsCacheClearSubView.cs" />
     <Compile Include="Views\Options\OptionsView.cs" />
-    <Compile Include="Views\SearchResultMenu\SearchMenuListItem.cs" />
+    <Compile Include="Views\SearchMenu\SearchMenuListItem.cs" />
     <Compile Include="StartupResourceLoader.cs" />
     <Compile Include="Views\SearchResultPoi\ResultModels\SwallowDepartmentResultModel.cs" />
     <Compile Include="Views\SearchResultPoi\ResultModels\SwallowFacilityResultModel.cs" />
@@ -124,7 +124,7 @@
     <Compile Include="Views\SearchResultPoi\SwallowPersonSearchResultsPoiView.cs" />
     <Compile Include="Views\SearchResultPoi\SwallowWorkingGroupSearchResultsPoiView.cs" />
     <Compile Include="Views\SearchResultPoi\YelpSearchResultsPoiView.cs" />
-    <Compile Include="Views\SecondaryMenu\SubMenuListItem.cs" />
+    <Compile Include="Views\SearchMenu\SubMenuListItem.cs" />
     <Compile Include="Views\AboutPage\AboutPageView.cs" />
     <Compile Include="Views\MyPinCreationDetails\MyPinCreationDetailsView.cs" />
     <Compile Include="Views\MyPinCreationDetails\MyPinDetailsView.cs" />
@@ -132,8 +132,8 @@
     <Compile Include="Views\Watermark\WatermarkView.cs" />
     <Compile Include="Views\WorldPinOnMap\WorldPinOnMapView.cs" />
     <Compile Include="Views\Menu\MenuView.cs" />
-    <Compile Include="Views\SearchResultMenu\SearchMenuView.cs" />
-    <Compile Include="Views\SecondaryMenu\SecondaryMenuView.cs" />
+    <Compile Include="Views\SettingsMenu\SettingsMenuView.cs" />
+    <Compile Include="Views\SearchMenu\SearchMenuView.cs" />
     <Compile Include="Search\Yelp\YelpSearch.cs" />
     <Page Include="CheckBoxStyle.xaml">
       <SubType>Designer</SubType>
@@ -218,7 +218,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SearchResultMenu\SearchMenuView.xaml">
+    <Page Include="Views\SettingsMenu\SettingsMenuView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -250,7 +250,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SecondaryMenu\SecondaryMenuView.xaml">
+    <Page Include="Views\SearchMenu\SearchMenuView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -312,14 +312,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="..\..\Resources\button_streets_off.png">
-      <Link>Assets\button_streets_off.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\button_streets_on.png">
-      <Link>Assets\button_streets_on.png</Link>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="..\..\Resources\arrow.png">
       <Link>Assets\arrow.png</Link>
     </Resource>
@@ -338,16 +330,11 @@
     <Resource Include="..\..\Resources\arrow3_up.png">
       <Link>Assets\arrow3_up.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\compass.png">
-      <Link>Assets\compass.png</Link>
+    <Resource Include="..\..\Resources\compass_point_off.png">
+      <Link>Assets\compass_point_off.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\compass_point.png">
-      <Link>Assets\compass_point.png</Link>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="..\..\Resources\button_create_poi.png">
-      <Link>Assets\button_create_poi.png</Link>
+    <Resource Include="..\..\Resources\compass_point_on.png">
+      <Link>Assets\compass_point_on.png</Link>
     </Resource>
   </ItemGroup>
   <ItemGroup>
@@ -363,16 +350,16 @@
     <Resource Include="..\..\Resources\menu_bar.png">
       <Link>Assets\menu_bar.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\menu_button.png">
-      <Link>Assets\menu_button.png</Link>
-    </Resource>
     <Resource Include="..\..\Resources\search_results_bar_small.png">
       <Link>Assets\search_results_bar_small.png</Link>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="..\..\Resources\sub_menu_arrow.png">
-      <Link>Assets\sub_menu_arrow.png</Link>
+    <Resource Include="..\..\Resources\sub_menu_arrow_off.png">
+      <Link>Assets\sub_menu_arrow_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\sub_menu_arrow_on.png">
+      <Link>Assets\sub_menu_arrow_on.png</Link>
     </Resource>
   </ItemGroup>
   <ItemGroup>
@@ -453,6 +440,9 @@
     <Resource Include="..\..\Resources\icon1_sunny.png">
       <Link>Assets\icon1_sunny.png</Link>
     </Resource>
+    <Resource Include="..\..\Resources\icon1_transition.png">
+      <Link>Assets\icon1_transition.png</Link>
+    </Resource>
     <Resource Include="..\..\Resources\icon1_winter.png">
       <Link>Assets\icon1_winter.png</Link>
     </Resource>
@@ -480,6 +470,9 @@
     <Resource Include="..\..\Resources\button_close_off.png">
       <Link>Assets\button_close_off.png</Link>
     </Resource>
+    <Resource Include="..\..\Resources\button_close_on.png">
+      <Link>Assets\button_close_on.png</Link>
+    </Resource>
     <Resource Include="..\..\Resources\button_ok_off.png">
       <Link>Assets\button_ok_off.png</Link>
     </Resource>
@@ -489,7 +482,12 @@
     <Resource Include="..\..\Resources\search_result_background.png">
       <Link>Assets\search_result_background.png</Link>
     </Resource>
-    <Resource Include="Assets\button_remove_pin_off.png" />
+    <Resource Include="..\..\Resources\button_remove_pin_off.png">
+      <Link>Assets\button_remove_pin_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_remove_pin_on.png">
+      <Link>Assets\button_remove_pin_on.png</Link>
+    </Resource>
     <Resource Include="..\..\Resources\eegeo_logo.png">
       <Link>Assets\eegeo_logo.png</Link>
     </Resource>
@@ -506,13 +504,16 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="..\..\Resources\yelp_reviews.gif">
-      <Link>Assets\yelp_reviews.gif</Link>
+    <Resource Include="..\..\Resources\yelp_reviews.png">
+      <Link>Assets\yelp_reviews.png</Link>
     </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="..\..\Resources\button_add_pin_off.png">
       <Link>Assets\button_add_pin_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_add_pin_on.png">
+      <Link>Assets\button_add_pin_on.png</Link>
     </Resource>
   </ItemGroup>
   <ItemGroup>
@@ -559,8 +560,74 @@
     <Resource Include="Assets\place_pin_background.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="..\..\Resources\menu_list.png">
-      <Link>Assets\menu_list.png</Link>
+    <Resource Include="..\..\Resources\button_exit_interior_off.png">
+      <Link>Assets\button_exit_interior_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_exit_interior_on.png">
+      <Link>Assets\button_exit_interior_on.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\settings_gear.png">
+      <Link>Assets\settings_gear.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_compass_off.png">
+      <Link>Assets\button_compass_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_compass_on.png">
+      <Link>Assets\button_compass_on.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_compass_over.png">
+      <Link>Assets\button_compass_over.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_create_poi_off.png">
+      <Link>Assets\button_create_poi_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_create_poi_on.png">
+      <Link>Assets\button_create_poi_on.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_create_poi_over.png">
+      <Link>Assets\button_create_poi_over.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_flatten_off.png">
+      <Link>Assets\button_flatten_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_flatten_on.png">
+      <Link>Assets\button_flatten_on.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_flatten_off_over.png">
+      <Link>Assets\button_flatten_off_over.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_unflatten_off.png">
+      <Link>Assets\button_unflatten_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_unflatten_on.png">
+      <Link>Assets\button_unflatten_on.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_unflatten_on_over.png">
+      <Link>Assets\button_unflatten_on_over.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_search_off.png">
+      <Link>Assets\button_search_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_search_on.png">
+      <Link>Assets\button_search_on.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_settings_on.png">
+      <Link>Assets\button_settings_on.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_settings_off.png">
+      <Link>Assets\button_settings_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\search_results_spinner.png">
+      <Link>Assets\search_results_spinner.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_clear_search_off.png">
+      <Link>Assets\button_clear_search_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_clear_search_on.png">
+      <Link>Assets\button_clear_search_on.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\poi_placeholder.png">
+      <Link>Assets\poi_placeholder.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\icon1_office.png">
       <Link>Assets\icon1_office.png</Link>

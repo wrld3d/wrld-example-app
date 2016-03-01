@@ -4,7 +4,6 @@
 #include "IMyPinCreationInitiationViewModel.h"
 #include "IMyPinCreationConfirmationViewModel.h"
 #include "IMenuViewModel.h"
-#include "ISearchResultMenuViewModel.h"
 #include "ISearchQueryPerformer.h"
 #include "WorldPinsVisibilityMessage.h"
 #include "GpsMarkerVisibilityMessage.h"
@@ -19,26 +18,26 @@ namespace ExampleApp
             MyPinCreationCompositeViewModel::MyPinCreationCompositeViewModel(ExampleAppMessaging::TMessageBus& messageBus,
                     IMyPinCreationInitiationViewModel& initiationViewModel,
                     IMyPinCreationConfirmationViewModel& confirmationViewModel,
-                    ExampleApp::Menu::View::IMenuViewModel& secondaryMenuViewModel,
-                    ExampleApp::Menu::View::IMenuViewModel& searchResultMenuViewModel,
+                    ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
+                    ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
                     ScreenControl::View::IScreenControlViewModel& interiorControlViewModel)
                 : m_stateChangeHandler(this, &MyPinCreationCompositeViewModel::OnPoiRingStateChangedMessage)
-                , m_searchResultMenuStateChangedCallback(this, &MyPinCreationCompositeViewModel::HandleSearchResultMenuStateChanged)
+                , m_settingsMenuStateChangedCallback(this, &MyPinCreationCompositeViewModel::HandleSettingsMenuStateChanged)
                 , m_messageBus(messageBus)
                 , m_initiationViewModel(initiationViewModel)
                 , m_confirmationViewModel(confirmationViewModel)
-                , m_secondaryMenuViewModel(secondaryMenuViewModel)
-                , m_searchResultMenuViewModel(searchResultMenuViewModel)
                 , m_interiorControlViewModel(interiorControlViewModel)
+                , m_searchMenuViewModel(searchMenuViewModel)
+                , m_settingsMenuViewModel(settingsMenuViewModel)
             {
                 m_messageBus.SubscribeUi(m_stateChangeHandler);
-                m_searchResultMenuViewModel.InsertOnScreenStateChangedCallback(m_searchResultMenuStateChangedCallback);
+                m_settingsMenuViewModel.InsertOnScreenStateChangedCallback(m_settingsMenuStateChangedCallback);
             }
 
             MyPinCreationCompositeViewModel::~MyPinCreationCompositeViewModel()
             {
                 m_messageBus.UnsubscribeUi(m_stateChangeHandler);
-                m_searchResultMenuViewModel.RemoveOnScreenStateChangedCallback(m_searchResultMenuStateChangedCallback);
+                m_settingsMenuViewModel.RemoveOnScreenStateChangedCallback(m_settingsMenuStateChangedCallback);
             }
 
             void MyPinCreationCompositeViewModel::OnPoiRingStateChangedMessage(const ExampleApp::MyPinCreation::MyPinCreationStateChangedMessage &message)
@@ -48,10 +47,10 @@ namespace ExampleApp
                 case Inactive:
                 {
                     m_initiationViewModel.AddToScreen();
-                    m_secondaryMenuViewModel.AddToScreen();
-                    m_searchResultMenuViewModel.AddToScreen();
                     m_interiorControlViewModel.AddToScreen();
-                    
+                    m_searchMenuViewModel.AddToScreen();
+                    m_settingsMenuViewModel.AddToScreen();
+
                     m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::All));
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(true));
 
@@ -62,13 +61,13 @@ namespace ExampleApp
                 {
                     m_confirmationViewModel.AddToScreen();
                     m_initiationViewModel.RemoveFromScreen();
-                    m_secondaryMenuViewModel.RemoveFromScreen();
                     m_interiorControlViewModel.RemoveFromScreen();
+                    m_searchMenuViewModel.RemoveFromScreen();
 
                     m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::None));
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(false));
 
-                    m_searchResultMenuViewModel.RemoveFromScreen();
+                    m_settingsMenuViewModel.RemoveFromScreen();
                     break;
                 }
                 case Details:
@@ -84,7 +83,8 @@ namespace ExampleApp
                 }
             }
 
-            void MyPinCreationCompositeViewModel::HandleSearchResultMenuStateChanged(ScreenControl::View::IScreenControlViewModel& viewModel, float& onScreenState)
+            // TODO: Investigate if this is necessary
+            void MyPinCreationCompositeViewModel::HandleSettingsMenuStateChanged(ScreenControl::View::IScreenControlViewModel& viewModel, float& onScreenState)
             {
                 if (viewModel.IsFullyOnScreen())
                 {

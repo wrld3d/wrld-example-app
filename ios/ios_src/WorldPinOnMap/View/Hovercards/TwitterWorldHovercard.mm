@@ -28,7 +28,7 @@
         
         // shadow
         self.pMainControlShadowContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pMainControlShadowContainer setBackgroundColor: ExampleApp::Helpers::ColorPalette::GreyTone];
+        [self.pMainControlShadowContainer setBackgroundColor: ExampleApp::Helpers::ColorPalette::UiShadowColor];
         [self addSubview: self.pMainControlShadowContainer];
         
         // main control container
@@ -36,14 +36,14 @@
         [self.pMainControlContainer setBackgroundColor: [UIColor clearColor]];
         [self addSubview: self.pMainControlContainer];
         
-        // gold top strip
+        // top strip
         self.pTopStrip = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pTopStrip setBackgroundColor: ExampleApp::Helpers::ColorPalette::TwitterBlue];
         [self.pMainControlContainer addSubview: self.pTopStrip];
         
         // label container
         self.pLabelBack = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pLabelBack setBackgroundColor: ExampleApp::Helpers::ColorPalette::MainHudColor];
+        [self.pLabelBack setBackgroundColor: ExampleApp::Helpers::ColorPalette::UiTextHeaderColor];
         [self.pMainControlContainer addSubview: self.pLabelBack];
         
         // name label

@@ -14,7 +14,6 @@ namespace ExampleApp
         {
             InteriorsExplorerViewModule::InteriorsExplorerViewModule(InteriorsExplorerViewModel& viewModel,
                                                                      ExampleAppMessaging::TMessageBus& messageBus,
-                                                                     Eegeo::Helpers::IdentityProvider& identityProvider,
 																	 AndroidNativeState& nativeState)
             {
             	m_pView = Eegeo_NEW(InteriorsExplorerView)(nativeState);
@@ -22,7 +21,6 @@ namespace ExampleApp
             	m_pController = Eegeo_NEW(InteriorsExplorerController)(*m_pView,
                                                                        viewModel,
                                                                        messageBus);
-
             }
             
             InteriorsExplorerViewModule::~InteriorsExplorerViewModule()

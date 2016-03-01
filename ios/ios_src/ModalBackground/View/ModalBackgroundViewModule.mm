@@ -25,6 +25,11 @@ namespace ExampleApp
                 Eegeo_DELETE m_pController;
                 [m_pView release];
             }
+            
+            Modality::View::IModalBackgroundView& ModalBackgroundViewModule::GetModalBackgroundViewInterop()
+            {
+                return *[m_pView getInterop];
+            }
 
             ModalBackgroundView& ModalBackgroundViewModule::GetModalBackgroundView()
             {
