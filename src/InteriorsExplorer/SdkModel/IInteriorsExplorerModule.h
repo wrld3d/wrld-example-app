@@ -24,7 +24,7 @@ namespace ExampleApp
                 
                 virtual InteriorVisibilityUpdater& GetInteriorVisibilityUpdater() const = 0;
                 
-                virtual InteriorsExplorerCameraController& GetInteriorsCameraController() const = 0;
+                virtual Eegeo::Resources::Interiors::InteriorsCameraController& GetInteriorsCameraController() const = 0;
                 
                 virtual void Update(float dt) const = 0;
                 

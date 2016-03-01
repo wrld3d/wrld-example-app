@@ -11,9 +11,9 @@ namespace ExampleApp
             namespace Highlights
             {
                 InteriorsHighlightPickingController::InteriorsHighlightPickingController(Eegeo::Collision::IRayCaster& rayCaster,
-                                                                                         Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                                                         const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                                          Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService)
-                : PickingController(rayCaster, interiorController, environmentFlatteningService, Eegeo::Collision::CollisionGroup::Highlights)
+                : PickingController(rayCaster, interiorInteractionModel, environmentFlatteningService, Eegeo::Collision::CollisionGroup::Highlights)
                 {
                     
                 }

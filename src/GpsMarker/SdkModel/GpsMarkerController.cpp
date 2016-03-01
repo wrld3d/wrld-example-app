@@ -5,7 +5,6 @@
 #include "GpsMarkerView.h"
 #include "VectorMath.h"
 #include "EnvironmentFlatteningService.h"
-#include "InteriorController.h"
 #include "InteriorHeightHelpers.h"
 #include "EarthConstants.h"
 #include "InteriorsModel.h"
@@ -21,12 +20,10 @@ namespace ExampleApp
             GpsMarkerController::GpsMarkerController(GpsMarkerModel& model,
                                                      GpsMarkerView& view,
                                                      Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                                     Eegeo::Resources::Interiors::InteriorController& interiorController,
                                                      ExampleAppMessaging::TMessageBus& messageBus)
             : m_model(model)
             , m_view(view)
             , m_environmentFlatteningService(environmentFlatteningService)
-            , m_interiorController(interiorController)
             , m_messageBus(messageBus)
             , m_updateTime(0.0f)
             , m_visibilityCount(1)
@@ -70,7 +67,7 @@ namespace ExampleApp
                 if(m_model.HasLocation())
                 {
                     Eegeo::dv3 finalPosition;
-                    m_model.GetFinalEcefPosition(m_environmentFlatteningService, m_interiorController, finalPosition);
+                    m_model.GetFinalEcefPosition(m_environmentFlatteningService, finalPosition);
                     m_view.DrawIconAtEcefPosition(renderCamera, finalPosition);
                 }
             }

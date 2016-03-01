@@ -9,7 +9,6 @@ namespace ExampleApp
         namespace SdkModel
         {
             class IInteriorsExplorerModule;
-            class InteriorsExplorerCameraController;
             class InteriorsExplorerModel;
             class InteriorWorldPinController;
             class InteriorVisibilityUpdater;

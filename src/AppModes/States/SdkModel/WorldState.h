@@ -27,7 +27,7 @@ namespace ExampleApp
                     
                     AppModes::SdkModel::IAppModeModel& m_appModeModel;
                     
-                    ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& m_interiorsCameraController;
+                    Eegeo::Resources::Interiors::InteriorsCameraController& m_interiorsCameraController;
                     
                     Eegeo::Helpers::TCallback0<WorldState> m_tourStartedCallback;
                     Tours::SdkModel::ITourService& m_tourService;
@@ -44,7 +44,7 @@ namespace ExampleApp
                                Tours::SdkModel::ITourService& tourService,
                                Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                AppModes::SdkModel::IAppModeModel& appModeModel,
-                               ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController);
+                               Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController);
                     
                     ~WorldState();
                     

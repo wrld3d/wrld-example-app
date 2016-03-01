@@ -391,5 +391,17 @@ set(resources ${resources}
 		Resources/Tours/States/Twitter/tweet_bird@3x.png
 		Resources/weatherstates.json
 		Resources/Yelp
+		Resources/interior_exit_down.png
+		Resources/interior_exit_down@2x.png
+		Resources/interior_exit_down@3x.png
+		Resources/interior_exit.png
+		Resources/interior_exit@2x.png
+		Resources/interior_exit@3x.png
+		Resources/floor_selection_button_down.png
+		Resources/floor_selection_button_down@2x.png
+		Resources/floor_selection_button_down@3x.png
+		Resources/floor_selection_button.png
+		Resources/floor_selection_button@2x.png
+		Resources/floor_selection_button@3x.png
 		ExampleApp/Images.xcassets
 )

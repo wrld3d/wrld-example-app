@@ -35,8 +35,7 @@ namespace ExampleApp
                                              Net::SdkModel::INetworkCapabilities& networkCapabilities,
                                              const std::vector<std::string>& availableCategories,
                                              const std::string& apiKey,
-                                             Eegeo::Resources::Interiors::InteriorController& interiorsController,
-                                             Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel);
+                                             const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel);
                     
                     ~EegeoSearchServiceModule();
                     

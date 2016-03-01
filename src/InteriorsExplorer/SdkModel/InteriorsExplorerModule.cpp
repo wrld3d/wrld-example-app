@@ -1,15 +1,13 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "InteriorsExplorerModule.h"
-#include "InteriorsExplorerCameraController.h"
 #include "InteriorsExplorerViewModel.h"
 #include "InteriorsExplorerModel.h"
 #include "InteriorWorldPinController.h"
 #include "GlobeCameraController.h"
-#include "GlobeCameraControllerFactory.h"
+#include "InteriorsCameraControllerFactory.h"
+#include "InteriorsCameraController.h"
 #include "GlobeCameraTouchController.h"
-#include "GlobeCameraTouchControllerConfiguration.h"
-#include "GlobeCameraControllerConfiguration.h"
 #include "InteriorVisibilityUpdater.h"
 #include "InteriorExplorerUserInteractionModel.h"
 #include "IInitialExperienceModel.h"
@@ -20,13 +18,15 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            InteriorsExplorerModule::InteriorsExplorerModule(Eegeo::Resources::Interiors::InteriorController& interiorController,
+            InteriorsExplorerModule::InteriorsExplorerModule(Eegeo::Resources::Interiors::IInteriorFloorAnimator& interiorFloorAnimator,
+                                                             Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                              Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                                             Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                                              Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
                                                              WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                              const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                              VisualMap::SdkModel::IVisualMapService& visualMapService,
-                                                             Eegeo::Camera::GlobeCamera::GlobeCameraControllerFactory& globeCameraControllerFactory,
+                                                             Eegeo::Resources::Interiors::InteriorsCameraControllerFactory& interiorCameraControllerFactory,
                                                              const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                              Eegeo::Helpers::IIdentityProvider& identityProvider,
                                                              ExampleAppMessaging::TMessageBus& messageBus,
@@ -37,38 +37,31 @@ namespace ExampleApp
                 m_pUserInteractionModel = Eegeo_NEW(InteriorExplorerUserInteractionModel)();
                 
                 const float transitionTime = 0.5f;
-                m_pVisibilityUpdater = Eegeo_NEW(InteriorVisibilityUpdater)(interiorController, transitionTime);
+                m_pVisibilityUpdater = Eegeo_NEW(InteriorVisibilityUpdater)(interiorTransitionModel, interiorSelectionModel, interiorInteractionModel, transitionTime);
                 
-                Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration touchConfig = Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration::CreateDefault();
-                Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration globeCameraConfig = Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration::CreateDefault(false);
+                m_pGlobeCameraTouchController = interiorCameraControllerFactory.CreateTouchController(screenProperties);
                 
-                globeCameraConfig.terrainFollowingEnabled = false;
-                globeCameraConfig.zoomAltitudeLow = 50.0f;
-                globeCameraConfig.fovZoomedInCity = 10.0f;
-                globeCameraConfig.fovZoomedInGlobe = 90.0f;
-                globeCameraConfig.maxAltitude = 250.0f;
+                m_pGlobeCameraController = interiorCameraControllerFactory.CreateInteriorGlobeCameraController(false,
+                                                                                                               *m_pGlobeCameraTouchController,
+                                                                                                               screenProperties);
+
                 
-                m_pGlobeCameraTouchController = globeCameraControllerFactory.CreateTouchController(touchConfig, screenProperties);
+                Eegeo::Resources::Interiors::InteriorsCameraConfiguration cameraConfig = Eegeo::Resources::Interiors::InteriorsCameraController::CreateDefaultConfig();
                 
-                m_pGlobeCameraController = globeCameraControllerFactory.CreateCameraController(globeCameraConfig,
-                                                                                               *m_pGlobeCameraTouchController,
-                                                                                               screenProperties);
+                m_pInteriorsCameraController = interiorCameraControllerFactory.CreateInteriorsCameraController(cameraConfig,
+                                                                                                               *m_pGlobeCameraTouchController,
+                                                                                                               *m_pGlobeCameraController,
+                                                                                                               interiorsAffectedByFlattening);
                 
-                m_pInteriorsCameraController = Eegeo_NEW(InteriorsExplorerCameraController)(interiorController,
-                                                                                            interiorSelectionModel,
-                                                                                            environmentFlatteningService,
-                                                                                            *m_pGlobeCameraTouchController,
-                                                                                            *m_pGlobeCameraController,
-                                                                                            interiorsAffectedByFlattening);
                 
-                m_pWorldPinController = Eegeo_NEW(InteriorWorldPinController)(interiorController,
+                m_pWorldPinController = Eegeo_NEW(InteriorWorldPinController)(interiorSelectionModel,
                                                                               markerRepository,
                                                                               worldPinsService,
                                                                               *m_pInteriorsCameraController,
                                                                               messageBus,
                                                                               initialExperienceModel);
                 
-                m_pModel = Eegeo_NEW(InteriorsExplorerModel)(interiorController,
+                m_pModel = Eegeo_NEW(InteriorsExplorerModel)(interiorInteractionModel,
                                                              interiorSelectionModel,
                                                              visualMapService,
                                                              messageBus,
@@ -104,7 +97,7 @@ namespace ExampleApp
                 return *m_pVisibilityUpdater;
             }
             
-            InteriorsExplorerCameraController& InteriorsExplorerModule::GetInteriorsCameraController() const
+            Eegeo::Resources::Interiors::InteriorsCameraController& InteriorsExplorerModule::GetInteriorsCameraController() const
             {
                 return *m_pInteriorsCameraController;
             }

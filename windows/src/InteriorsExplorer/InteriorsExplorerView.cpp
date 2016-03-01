@@ -36,7 +36,7 @@ namespace ExampleApp
 
                 for (int floorIndex = 0; floorIndex < floorCount; ++floorIndex)
                 {
-                    floorNames[floorIndex] = ConvertUTF8ToManagedString(floorShortNames[(floorCount - 1) - floorIndex]);
+                    floorNames[floorIndex] = ConvertUTF8ToManagedString(floorShortNames[floorIndex]);
                 }
 
                 mUpdateFloors(floorNames, currentlySelectedFloorIndex);
@@ -45,6 +45,11 @@ namespace ExampleApp
             void InteriorsExplorerView::SetFloorName(const std::string& name)
             {
                 mSetFloorName(ConvertUTF8ToManagedString(name));
+            }
+
+            void InteriorsExplorerView::SetFloorSelectionDrag(float dragParam)
+            {
+                m_floorSelectionDraggedCallbacks.ExecuteCallbacks(dragParam);
             }
 
             void InteriorsExplorerView::SetOnScreenStateToIntermediateValue(float value)
@@ -110,6 +115,17 @@ namespace ExampleApp
             {
                 m_selectedFloorCallbacks.RemoveCallback(callback);
             }
+
+            void InteriorsExplorerView::InsertFloorSelectionDraggedCallback(Eegeo::Helpers::ICallback1<float>& callback)
+            {
+                m_floorSelectionDraggedCallbacks.AddCallback(callback);
+            }
+
+            void InteriorsExplorerView::RemoveFloorSelectionDraggedCallback(Eegeo::Helpers::ICallback1<float>& callback)
+            {
+                m_floorSelectionDraggedCallbacks.RemoveCallback(callback);
+            }
+
 
             InteriorsExplorerView::~InteriorsExplorerView()
             {

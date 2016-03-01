@@ -19,7 +19,7 @@ namespace ExampleApp
                 {
                 public:
                     InteriorsHighlightPickingController(Eegeo::Collision::IRayCaster& rayCaster,
-                                                        Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                        const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                         Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService);
                     
                     void ProcessRayCastResult(const Eegeo::Collision::RayCasterResult& pickResult);

@@ -4,8 +4,9 @@
     xmlns:local="clr-namespace:ExampleAppWPF">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="../Colours.xaml" />
+        <ResourceDictionary Source="../Colours.xaml" />        
         <ResourceDictionary Source="../TransparentButtonStyle.xaml" />
+        <ResourceDictionary Source="../SimpleSlider.xaml" />
         <ResourceDictionary Source="../Views/Options/OptionsView.xaml" />
         <ResourceDictionary Source="../Views/FlattenButton/FlattenButtonView.xaml" />
         <ResourceDictionary Source="../Views/Compass/CompassView.xaml" />

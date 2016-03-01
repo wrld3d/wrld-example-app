@@ -17,7 +17,7 @@ namespace ExampleApp
             SearchModule::SearchModule(ISearchService& exteriorSearchService,
                                        Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
                                        CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
-                                       Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                       Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                        ExampleAppMessaging::TMessageBus& messageBus,
                                        ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus)
             {
@@ -35,7 +35,7 @@ namespace ExampleApp
                 m_pSearchRefreshService = Eegeo_NEW(SearchRefreshService)(exteriorSearchService,
                                           *m_pSearchQueryPerformer,
                                           cameraTransitionsController,
-                                          interiorController,
+                                          interiorInteractionModel,
                                           1.f,
                                           100.f);
 

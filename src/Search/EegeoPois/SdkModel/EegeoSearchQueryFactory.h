@@ -25,13 +25,11 @@ namespace ExampleApp
                 {
                     Eegeo::Web::IWebLoadRequestFactory& m_webRequestFactory;
                     Eegeo::Helpers::UrlHelpers::IUrlEncoder& m_urlEncoder;
-                    const Eegeo::Resources::Interiors::InteriorController& m_interiorsController;
-                    const Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
+                    const Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 public:
                     EegeoSearchQueryFactory(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                             Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
-                                            const Eegeo::Resources::Interiors::InteriorController& interiorsController,
-                                            const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                            const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                             const std::string& apiKey);
                     
                     ~EegeoSearchQueryFactory();

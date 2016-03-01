@@ -58,11 +58,11 @@ namespace ExampleApp
                 const AppModes::SdkModel::AppMode appMode = message.GetAppMode();
                 m_appModeAllowsOpen = appMode == AppModes::SdkModel::WorldMode;
                 
-                if(m_appModeAllowsOpen)
+                if(m_appModeAllowsOpen && !m_viewModel.IsFullyOnScreen())
                 {
                     m_viewModel.AddToScreen();
                 }
-                else if(!m_appModeAllowsOpen)
+                else if(!m_appModeAllowsOpen && !m_viewModel.IsFullyOffScreen())
                 {
                     m_viewModel.RemoveFromScreen();
                 }

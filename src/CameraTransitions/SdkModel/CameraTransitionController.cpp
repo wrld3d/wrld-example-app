@@ -9,7 +9,7 @@
 #include "Quaternion.h"
 #include "NavigationService.h"
 #include "TerrainHeightProvider.h"
-#include "InteriorsExplorerCameraController.h"
+#include "InteriorsCameraController.h"
 #include "IAppModeModel.h"
 #include "InteriorSelectionModel.h"
 #include "TransitionToWorldPointStage.h"
@@ -26,15 +26,17 @@ namespace ExampleApp
         namespace SdkModel
         {
             CameraTransitionController::CameraTransitionController(Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
-                                                                   ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController,
+                                                                   Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
                                                                    Eegeo::Location::NavigationService& navigationService,
                                                                    ExampleApp::InteriorsNavigation::SdkModel::IInteriorsNavigationService& interiorsNavigationService,
                                                                    Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
                                                                    ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                                                    ExampleApp::AppCamera::SdkModel::IAppCameraController& appCameraController,
                                                                    Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                                   Eegeo::Resources::Interiors::InteriorController& interiorController,
-                                                                   InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel)
+                                                                   Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                                   const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
+                                                                   InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
+                                                                   ExampleApp::ExampleAppMessaging::TMessageBus& messageBus)
             : m_cameraController(cameraController)
             , m_interiorsCameraController(interiorsCameraController)
             , m_navigationService(navigationService)
@@ -42,8 +44,9 @@ namespace ExampleApp
             , m_terrainHeightProvider(terrainHeightProvider)
             , m_appModeModel(appModeModel)
             , m_interiorSelectionModel(interiorSelectionModel)
+            , m_interiorInteractionModel(interiorInteractionModel)
+            , m_interiorTransitionModel(interiorTransitionModel)
             , m_appCameraController(appCameraController)
-            , m_interiorController(interiorController)
             , m_interiorsExplorerModel(interiorsExplorerModel)
             , m_isTransitioning(false)
             , m_defaultInteriorId(Eegeo::Resources::Interiors::InteriorId::NullId())
@@ -216,8 +219,9 @@ namespace ExampleApp
                                                                               const Eegeo::Resources::Interiors::InteriorId &interiorId,
                                                                               int targetFloorIndex)
             {
-                ICameraTransitionStage* pStage = Eegeo_NEW(TransitionToInteriorStage)(m_interiorController,
+                ICameraTransitionStage* pStage = Eegeo_NEW(TransitionToInteriorStage)(m_interiorInteractionModel,
                                                                                       m_interiorSelectionModel,
+                                                                                      m_interiorTransitionModel,
                                                                                       m_interiorsCameraController,
                                                                                       newInterestPoint,
                                                                                       newDistanceToInterest,
@@ -233,8 +237,10 @@ namespace ExampleApp
                                                                                    int targetFloorIndex,
                                                                                    bool jumpIfFar)
             {
-                ICameraTransitionStage* pStage = Eegeo_NEW(TransitionToInteriorPointStage)(m_interiorController,
+                ICameraTransitionStage* pStage = Eegeo_NEW(TransitionToInteriorPointStage)(
+                                                                                           m_interiorInteractionModel,
                                                                                            m_interiorSelectionModel,
+                                                                                           m_interiorTransitionModel,
                                                                                            m_interiorsExplorerModel,
                                                                                            m_interiorsCameraController,
                                                                                            newInterestPoint,

@@ -31,7 +31,9 @@ namespace ExampleApp
                 float m_targetVisibilityScale;
                 bool m_hideOutdoorPinsIndoors;
                 const float m_visibilityAnimationDuration;
-                Eegeo::Resources::Interiors::InteriorController& m_interiorController;
+                
+                const Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
+                const Eegeo::Resources::Interiors::InteriorTransitionModel& m_interiorTransitionModel;
 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Helpers::TCallback1<WorldPinsScaleController, const WorldPinsVisibilityMessage&> m_visibilityMessageHandlerBinding;
@@ -45,7 +47,8 @@ namespace ExampleApp
                 WorldPinsScaleController(IWorldPinsRepository& worldPinsRepository,
                                          WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                          ExampleAppMessaging::TMessageBus& messageBus,
-                                         Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                         const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                         const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                          ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus);
 
                 ~WorldPinsScaleController();
