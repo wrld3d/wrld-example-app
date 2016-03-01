@@ -12,7 +12,7 @@
     bool m_highlighted;
     bool m_requiresRefresh;
     bool m_customContentFramesSet;
-    bool m_turingHighlightOff;
+    bool m_turningHighlightOff;
     
     UIImage* m_pArrowImage;
     UIImage* m_pArrowHighlightImage;
@@ -50,12 +50,11 @@
     {
         [self->m_tableDataProvider tableView:self->m_tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:self->m_row inSection:self->m_section]];
     }
-    
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    [self makeHighlighted:NO animated:NO];
+    [self makeHighlighted:NO animated:YES];
 }
 
 -(void) lazySetBackgroundPresentation
@@ -71,7 +70,7 @@
 -(void) setBackgroundPresentation
 {
     self.backgroundColor = m_pBackgroundColor;
-    if(!m_turingHighlightOff)
+    if(!m_turningHighlightOff)
     {
         [self setHighlightComponents:m_highlighted];
     }
@@ -130,7 +129,7 @@
     m_hasSetBackground = false;
     m_hasSetSeparators = false;
     m_highlighted = false;
-    m_turingHighlightOff = false;
+    m_turningHighlightOff = false;
     m_customContentFramesSet = false;
     
     m_row = static_cast<int>(indexPath.row);
@@ -198,7 +197,7 @@
 {
     if(![self canInteract])
     {
-        m_turingHighlightOff = false;
+        m_turningHighlightOff = false;
         [self setHighlightComponents:NO];
         return;
     }
@@ -206,7 +205,7 @@
     if (highlighted)
     {
         m_highlighted = true;
-        m_turingHighlightOff = false;
+        m_turningHighlightOff = false;
         [self setHighlightComponents:YES];
     }
     else
@@ -215,14 +214,14 @@
         {
             if(animated)
             {
-                m_turingHighlightOff = true;
-                double delayInSeconds = 0.2;
+                m_turningHighlightOff = true;
+                const double delayInSeconds = 0.2;
                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                    if(m_turingHighlightOff)
+                    if(m_turningHighlightOff)
                     {
                         m_highlighted = false;
-                        m_turingHighlightOff = false;
+                        m_turningHighlightOff = false;
                         [self setHighlightComponents:NO];
                     }
                 });
