@@ -26,12 +26,7 @@ namespace ExampleApp
                 
                 m_pController = Eegeo_NEW(InteriorsExplorerController)(*m_pView,
                                                                        viewModel,
-                                                                       messageBus,
-                                                                       initiationViewModel,
-                                                                       searchMenuViewModel,
-                                                                       settingsMenuViewModel,
-                                                                       flattenViewModel,
-                                                                       compassViewModel);
+                                                                       messageBus);
             }
             
             InteriorsExplorerViewModule::~InteriorsExplorerViewModule()
