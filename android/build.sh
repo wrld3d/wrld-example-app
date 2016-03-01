@@ -27,10 +27,10 @@ if [ -z "${p}" ]; then
     usage
 fi
 
-if [ "$c" != "cpp03" ]; then
-    echo "Building for cpp11"
+if [ "$c" == "cpp03" ]; then
+    echo "Building for cpp03"
     # note the leading space. on windows, ndk-build.cmd seems to tokenise on spaces    
-    ndkbuild_arguments=" COMPILE_CPP_11=1"
+    ndkbuild_arguments=" COMPILE_CPP_03=1"
 fi
 
 # running on msys (basically the git provided shell we use on windows)

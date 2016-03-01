@@ -1,6 +1,6 @@
 #!/bin/bash
 
-usage() { echo "Usage: $0 -p android|ios|windows [-c]"; echo "  -p -> platform, ios, android or windows (required)"; echo "  -c -> cpp11 support"; 1>&2; exit 1; }
+usage() { echo "Usage: $0 -p android|ios|windows [-c]"; echo "  -p -> platform, ios, android or windows (required)"; echo "  -c -> cpp03 support"; 1>&2; exit 1; }
 
 baseUrl="http://s3.amazonaws.com/eegeo-static/"
 srcPackageName="INVALID"
