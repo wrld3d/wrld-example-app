@@ -292,7 +292,8 @@ namespace ExampleAppWPF
                 var jObject = JObject.Parse(str);
                 var item = new SearchMenuListItem();
                 item.Name = jObject["name"].Value<string>();
-                item.Details = jObject["details"].Value<string>();
+
+                item.Details = jObject["details"]?.Value<string>();
 
                 JToken iconStringToken;
                 var iconString = jObject.TryGetValue("icon", out iconStringToken) ? iconStringToken.Value<string>() : "misc";
@@ -301,7 +302,10 @@ namespace ExampleAppWPF
 
                 groups.Add(str);
                 groupsExpandable.Add(false);
-                groupToChildren.Add(str, new List<string>());
+                if (!groupToChildren.ContainsKey(str))
+                {
+                    groupToChildren.Add(str, new List<string>());
+                }
             }
 
             m_resultListAdapter.SetData(groups, groupsExpandable, groupToChildren);
