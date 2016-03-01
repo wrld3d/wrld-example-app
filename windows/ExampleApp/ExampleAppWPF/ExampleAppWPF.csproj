@@ -440,6 +440,9 @@
     <Resource Include="..\..\Resources\icon1_sunny.png">
       <Link>Assets\icon1_sunny.png</Link>
     </Resource>
+    <Resource Include="..\..\Resources\icon1_transition.png">
+      <Link>Assets\icon1_transition.png</Link>
+    </Resource>
     <Resource Include="..\..\Resources\icon1_winter.png">
       <Link>Assets\icon1_winter.png</Link>
     </Resource>

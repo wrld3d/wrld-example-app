@@ -445,6 +445,14 @@
                                                                                     </BeginStoryboard>
                                                                                 </DataTrigger.EnterActions>
                                                                             </DataTrigger>
+
+                                                                            <DataTrigger Binding="{Binding IsExpandable}" Value="false">
+                                                                                <Setter Property="Visibility" Value="Hidden"/>
+                                                                            </DataTrigger>
+
+                                                                            <DataTrigger Binding="{Binding IsExpandable}" Value="true">
+                                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                            </DataTrigger>
                                                                         </Style.Triggers>
                                                                     </Style>
                                                                 </Image.Style>
