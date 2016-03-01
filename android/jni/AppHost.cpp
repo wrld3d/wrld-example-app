@@ -561,13 +561,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(
     																							 app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
                                                                                                  m_messageBus,
-                                                                                                 app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
-																								 app.SettingsMenuModule().GetSettingsMenuViewModel(),
-                                                                                                 app.SearchMenuModule().GetSearchMenuViewModel(),
-                                                                                                 app.FlattenButtonModule().GetScreenControlViewModel(),
-                                                                                                 app.CompassModule().GetScreenControlViewModel(),
-                                                                                                 app.GetIdentityProvider(),
-																								 m_nativeState);
+                                                                                                 m_nativeState);
 
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
 
