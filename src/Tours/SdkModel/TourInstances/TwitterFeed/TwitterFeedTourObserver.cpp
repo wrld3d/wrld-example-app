@@ -81,8 +81,13 @@ namespace ExampleApp
                         rapidjson::Document jsonDocument;
                         jsonDocument.SetObject();
                         
-                        jsonDocument.AddMember("screenName", userId.c_str(), jsonDocument.GetAllocator());
-                        jsonDocument.AddMember("imageUrl", tweetRepository.GetItemAtIndex(0)->GetBaseProfileImageUrl().c_str(), jsonDocument.GetAllocator());
+                        rapidjson::Document::AllocatorType& allocator = jsonDocument.GetAllocator();
+
+                        rapidjson::Value userIdValue(userId.c_str(), allocator);
+                        rapidjson::Value imageUrlValue(tweetRepository.GetItemAtIndex(0)->GetBaseProfileImageUrl().c_str(), allocator);
+                        
+                        jsonDocument.AddMember("screenName", userIdValue, allocator);
+                        jsonDocument.AddMember("imageUrl", imageUrlValue, allocator);
                         
                         rapidjson::StringBuffer buffer;
                         rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);

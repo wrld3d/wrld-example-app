@@ -6,11 +6,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.eegeo.entrypointinfrastructure.INativeMessageRunner;
-
 public class MenuItemSelectedListener implements OnItemClickListener
 {
-    private final INativeMessageRunner m_nativeMessageRunner;
     private final long m_nativeCallerPointer;
     private MenuListAdapter m_adapter;
     private final MenuView m_menuView;
@@ -18,12 +15,10 @@ public class MenuItemSelectedListener implements OnItemClickListener
     public MenuItemSelectedListener(
         MenuListAdapter adapter,
         MenuView menuView,
-        INativeMessageRunner nativeMessageRunner,
         long nativeCallerPointer)
     {
         m_adapter = adapter;
         m_menuView = menuView;
-        m_nativeMessageRunner = nativeMessageRunner;
         m_nativeCallerPointer = nativeCallerPointer;
     }
 

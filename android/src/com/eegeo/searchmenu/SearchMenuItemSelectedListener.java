@@ -2,7 +2,7 @@
 
 package com.eegeo.searchmenu;
 
-import com.eegeo.menu.MenuViewJniMethods;
+import com.eegeo.searchmenu.SearchMenuViewJniMethods;
 
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,7 +10,6 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class SearchMenuItemSelectedListener implements OnItemClickListener
 {
-
     private final long m_nativeCallerPointer;
     private final SearchMenuView m_searchMenuView;
 
@@ -31,8 +30,7 @@ public class SearchMenuItemSelectedListener implements OnItemClickListener
         }
 
         final int index = position;
-
-        MenuViewJniMethods.SelectedItem(m_nativeCallerPointer, 0, index);
+        SearchMenuViewJniMethods.SelectedItem(m_nativeCallerPointer, index);
     }
 }
 

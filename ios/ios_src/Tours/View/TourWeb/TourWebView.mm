@@ -37,7 +37,7 @@
         self.backgroundColor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.5f];
         
         self.pWebView = [[UIWebView alloc] initWithFrame:m_frameOff];
-        self.pWebView.layer.borderColor = ExampleApp::Helpers::ColorPalette::GoldTone.CGColor;
+        self.pWebView.layer.borderColor = ExampleApp::Helpers::ColorPalette::UiBorderColor.CGColor;
         self.pWebView.layer.borderWidth = 4.0f;
         self.pWebView.backgroundColor = [UIColor whiteColor];
         self.pWebView.scalesPageToFit = YES;

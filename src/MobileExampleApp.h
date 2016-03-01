@@ -13,8 +13,9 @@
 #include "SearchResultOnMap.h"
 #include "NavigationService.h"
 #include "IPlatformAbstractionModule.h"
-#include "SecondaryMenu.h"
-#include "SearchResultMenu.h"
+#include "SettingsMenu.h"
+#include "SearchResultSection.h"
+#include "SearchMenu.h"
 #include "Modality.h"
 #include "FlattenButton.h"
 #include "Search.h"
@@ -27,11 +28,9 @@
 #include "SearchResultPoi.h"
 #include "WeatherMenu.h"
 #include "CameraTransitions.h"
-#include "SecondaryMenuModule.h"
 #include "ModalityModule.h"
 #include "MenuModel.h"
 #include "MenuViewModel.h"
-#include "SearchResultMenuModule.h"
 #include "MenuOptionsModel.h"
 #include "AboutPageModule.h"
 #include "SearchModule.h"
@@ -82,7 +81,7 @@
 #include "TwitterFeed.h"
 #include "TwitterFeedTour.h"
 #include "VisualMap.h"
-
+#include "Surveys.h"
 
 namespace ExampleApp
 {
@@ -112,8 +111,9 @@ namespace ExampleApp
         ExampleApp::Metrics::IMetricsService& m_metricsService;
         
         Eegeo::Helpers::IdentityProvider m_identityProvider;
-        ExampleApp::SecondaryMenu::SdkModel::ISecondaryMenuModule* m_pSecondaryMenuModule;
-        ExampleApp::SearchResultMenu::SdkModel::ISearchResultMenuModule* m_pSearchResultMenuModule;
+        ExampleApp::SettingsMenu::SdkModel::ISettingsMenuModule* m_pSettingsMenuModule;
+        ExampleApp::SearchMenu::SdkModel::ISearchMenuModule* m_pSearchMenuModule;
+        ExampleApp::SearchResultSection::SdkModel::ISearchResultSectionModule* m_pSearchResultSectionModule;
         ExampleApp::Modality::View::IModalityModule* m_pModalityModule;
         ExampleApp::CategorySearch::SdkModel::ICategorySearchModule* m_pCategorySearchModule;
         ExampleApp::MapMode::SdkModel::IMapModeModule* m_pMapModeModule;
@@ -153,6 +153,7 @@ namespace ExampleApp
         UserInteraction::SdkModel::UserInteractionModule* m_pUserInteractionModule;
         Social::TwitterFeed::ITwitterFeedModule* m_pTwitterFeedModule;
         VisualMap::SdkModel::IVisualMapModule* m_pVisualMapModule;
+        Surveys::SdkModel::ISurveyModule* m_pSurveyModule;
         
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
         Net::SdkModel::ConnectivityChangedObserver* m_pConnectivityChangedObserver;
@@ -244,15 +245,20 @@ namespace ExampleApp
         {
             return *m_pCameraTransitionService;
         }
-
-        const ExampleApp::SecondaryMenu::SdkModel::ISecondaryMenuModule& SecondaryMenuModule() const
+        
+        const ExampleApp::SettingsMenu::SdkModel::ISettingsMenuModule& SettingsMenuModule() const
         {
-            return *m_pSecondaryMenuModule;
+            return *m_pSettingsMenuModule;
         }
 
-        const SearchResultMenu::SdkModel::ISearchResultMenuModule& SearchResultMenuModule() const
+        const SearchMenu::SdkModel::ISearchMenuModule& SearchMenuModule() const
         {
-            return *m_pSearchResultMenuModule;
+            return *m_pSearchMenuModule;
+        }
+        
+        const SearchResultSection::SdkModel::ISearchResultSectionModule& SearchResultSectionModule() const
+        {
+            return *m_pSearchResultSectionModule;
         }
 
         const ExampleApp::Modality::View::IModalityModule& ModalityModule() const

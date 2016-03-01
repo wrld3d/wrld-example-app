@@ -8,10 +8,13 @@
 #include "ImageHelpers.h"
 #include "IconResources.h"
 #include "StringHelpers.h"
-#import "UIView+TouchExclusivity.h"
 #include "YelpSearchResultPoiView.h"
 #include "App.h"
 #include "YelpSearchJsonParser.h"
+#include "UIHelpers.h"
+
+#import "UIButton+DefaultStates.h"
+#import "UIView+TouchExclusivity.h"
 
 @interface YelpSearchResultPoiView()<UIGestureRecognizerDelegate>
 {
@@ -31,51 +34,53 @@ const int DeletePinAlertViewTag = 2;
     
     if(self)
     {
+        self->m_pRemovePinButtonImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_off") retain];
+        self->m_pRemovePinButtonHighlightImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_on") retain];
+        self->m_pAddPinButtonImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_add_pin_off") retain];
+        self->m_pAddPinButtonHighlightImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_add_pin_on") retain];
+        
         m_pController = [UIViewController alloc];
         [m_pController setView:self];
-        
-        self->m_pRemovePinButtonBackgroundImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_off") retain];
-        self->m_pAddPinButtonBackgroundImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_add_pin_off") retain];
         
         m_pInterop = pInterop;
         self.alpha = 0.f;
         m_stateChangeAnimationTimeSeconds = 0.2f;
         
         self.pControlContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::MainHudColor;
+        self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self addSubview: self.pControlContainer];
         
         self.pCloseButtonContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pCloseButtonContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pCloseButtonContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         [self.pControlContainer addSubview: self.pCloseButtonContainer];
         
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pCloseButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_close_off") forState:UIControlStateNormal];
+        [self.pCloseButton setDefaultStatesWithImageNames:@"button_close_off" :@"button_close_off"];
         [self.pCloseButton addTarget:self action:@selector(handleClosedButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
         
         self.pPinButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pPinButton setDefaultStates];
         [self.pPinButton addTarget:self action:@selector(handlePinButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pPinButton];
         
         self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+        self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pControlContainer addSubview: self.pContentContainer];
         
         self.pLabelsContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pLabelsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+        self.pLabelsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pContentContainer addSubview: self.pLabelsContainer];
         
         self.pHeadlineContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+        self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pControlContainer addSubview: self.pHeadlineContainer];
         
         self.pCategoryIconContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pCategoryIconContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+        self.pCategoryIconContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pHeadlineContainer addSubview: self.pCategoryIconContainer];
         
-        self.pTitleLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::MainHudColor :ExampleApp::Helpers::ColorPalette::WhiteTone];
-        self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pTitleLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextTitleColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
         [self.pHeadlineContainer addSubview: self.pTitleLabel];
         
         self.pPreviewImage = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -90,33 +95,31 @@ const int DeletePinAlertViewTag = 2;
         [self.pLabelsContainer addSubview: self.pRatingImage];
         
         self.pReviewCountLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pReviewCountLabel.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+        self.pReviewCountLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
         self.pReviewCountLabel.textAlignment = NSTextAlignmentLeft;
         self.pReviewCountLabel.font = [UIFont systemFontOfSize:12.0];
         self.pReviewCountLabel.backgroundColor = [UIColor clearColor];
         [self.pLabelsContainer addSubview: self.pReviewCountLabel];
         
         self.pAddressHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pAddressHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pAddressHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         [self.pLabelsContainer addSubview: self.pAddressHeaderContainer];
         
-        self.pAddressHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::WhiteTone :ExampleApp::Helpers::ColorPalette::GoldTone];
+        self.pAddressHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextHeaderColor :ExampleApp::Helpers::ColorPalette::UiBorderColor];
         [self.pAddressHeaderContainer addSubview: self.pAddressHeaderLabel];
         
-        self.pAddressContent = [self createLabel :ExampleApp::Helpers::ColorPalette::MainHudColor :ExampleApp::Helpers::ColorPalette::WhiteTone];
-        self.pAddressContent.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+        self.pAddressContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextCopyColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
         [self.pLabelsContainer addSubview: self.pAddressContent];
         
         self.pPhoneHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pPhoneHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pPhoneHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         
         [self.pLabelsContainer addSubview: self.pPhoneHeaderContainer];
         
-        self.pPhoneHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::WhiteTone :ExampleApp::Helpers::ColorPalette::GoldTone];
+        self.pPhoneHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextHeaderColor :ExampleApp::Helpers::ColorPalette::UiBorderColor];
         [self.pPhoneHeaderContainer addSubview: self.pPhoneHeaderLabel];
         
-        self.pPhoneContent = [self createLabel :ExampleApp::Helpers::ColorPalette::MainHudColor :ExampleApp::Helpers::ColorPalette::WhiteTone];
-        self.pPhoneContent.textColor = ExampleApp::Helpers::ColorPalette::LinkTone;
+        self.pPhoneContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextLinkColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
         UITapGestureRecognizer* phoneTappedGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTappedOnPhone:)];
         [self.pPhoneContent setUserInteractionEnabled:YES];
         [self.pPhoneContent addGestureRecognizer:phoneTappedGesture];
@@ -124,25 +127,23 @@ const int DeletePinAlertViewTag = 2;
         [self.pLabelsContainer addSubview: self.pPhoneContent];
         
         self.pCategoriesHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pCategoriesHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pCategoriesHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         [self.pLabelsContainer addSubview: self.pCategoriesHeaderContainer];
         
-        self.pCategoriesHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::WhiteTone :ExampleApp::Helpers::ColorPalette::GoldTone];
+        self.pCategoriesHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextHeaderColor :ExampleApp::Helpers::ColorPalette::UiBorderColor];
         [self.pCategoriesHeaderContainer addSubview: self.pCategoriesHeaderLabel];
         
-        self.pCategoriesContent = [self createLabel :ExampleApp::Helpers::ColorPalette::MainHudColor :ExampleApp::Helpers::ColorPalette::WhiteTone];
-        self.pCategoriesContent.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+        self.pCategoriesContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextCopyColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
         [self.pLabelsContainer addSubview: self.pCategoriesContent];
         
         self.pReviewsHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pReviewsHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pReviewsHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         [self.pLabelsContainer addSubview: self.pReviewsHeaderContainer];
         
-        self.pReviewsHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::WhiteTone :ExampleApp::Helpers::ColorPalette::GoldTone];
+        self.pReviewsHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextHeaderColor :ExampleApp::Helpers::ColorPalette::UiBorderColor];
         [self.pReviewsHeaderContainer addSubview: self.pReviewsHeaderLabel];
         
-        self.pReviewsContent = [self createLabel :ExampleApp::Helpers::ColorPalette::MainHudColor :ExampleApp::Helpers::ColorPalette::WhiteTone];
-        self.pReviewsContent.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+        self.pReviewsContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextCopyColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
         [self.pLabelsContainer addSubview: self.pReviewsContent];
         
         m_pGradientMask = [[CAGradientLayer layer] retain];
@@ -245,10 +246,10 @@ const int DeletePinAlertViewTag = 2;
     [self.pRatingImage removeFromSuperview];
     [self.pRatingImage release];
     
-    [self->m_pRemovePinButtonBackgroundImage release];
-    [self->m_pRemovePinHighlightButtonBackgroundImage release];
-    [self->m_pAddPinButtonBackgroundImage release];
-    [self->m_pAddPinHighlightButtonBackgroundImage release];
+    [self->m_pRemovePinButtonImage release];
+    [self->m_pRemovePinButtonHighlightImage release];
+    [self->m_pAddPinButtonImage release];
+    [self->m_pAddPinButtonHighlightImage release];
     
     [m_pController release];
     [self removeFromSuperview];
@@ -390,7 +391,7 @@ const int DeletePinAlertViewTag = 2;
         self.pRatingImage.hidden = false;
         
         self.pReviewCountLabel.frame = CGRectMake(imageX + frame.size.width + reviewSpacing, imageY, reviewCountWidth, reviewCountHeight);
-        self.pReviewCountLabel.textColor = hasImage ? ExampleApp::Helpers::ColorPalette::WhiteTone : ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+        self.pReviewCountLabel.textColor = hasImage ? ExampleApp::Helpers::ColorPalette::UiTextHeaderColor : ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
         
         const CGFloat imageContentHeightDifference = (image.size.height - initialFrameHeight);
         const CGFloat newContentHeight = self.pLabelsContainer.contentSize.height + imageContentHeightDifference;
@@ -771,13 +772,13 @@ const int DeletePinAlertViewTag = 2;
 {
     if(m_isPinned)
     {
-        [self.pPinButton setBackgroundImage:self->m_pRemovePinButtonBackgroundImage forState:UIControlStateNormal];
-        [self.pPinButton setBackgroundImage:self->m_pRemovePinHighlightButtonBackgroundImage forState:UIControlStateHighlighted];
+        [self.pPinButton setImage:self->m_pRemovePinButtonImage forState:UIControlStateNormal];
+        [self.pPinButton setImage:self->m_pRemovePinButtonHighlightImage forState:UIControlStateHighlighted];
     }
     else
     {
-        [self.pPinButton setBackgroundImage:self->m_pAddPinButtonBackgroundImage forState:UIControlStateNormal];
-        [self.pPinButton setBackgroundImage:self->m_pAddPinHighlightButtonBackgroundImage forState:UIControlStateHighlighted];
+        [self.pPinButton setImage:self->m_pAddPinButtonImage forState:UIControlStateNormal];
+        [self.pPinButton setImage:self->m_pAddPinButtonHighlightImage forState:UIControlStateHighlighted];
     }
 }
 

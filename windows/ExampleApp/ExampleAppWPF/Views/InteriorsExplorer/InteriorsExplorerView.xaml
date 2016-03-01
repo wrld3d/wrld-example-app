@@ -42,6 +42,7 @@
                                 <ColumnDefinition Width="200"/>
                                 <ColumnDefinition Width="40"/>
                             </Grid.ColumnDefinitions>
+
                             <Grid Grid.Column="0">
                                 <Border Name="Mask" CornerRadius="5,0,0,5" Background="White"/>
                                 <Grid>
@@ -52,6 +53,7 @@
                                     <Grid.OpacityMask>
                                         <VisualBrush Visual="{Binding ElementName=Mask}"/>
                                     </Grid.OpacityMask>
+
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="FloorName" Foreground="{StaticResource DarkGrey}" FontSize="16"/>
                                 </Grid>
                             </Grid>
@@ -78,6 +80,7 @@
                                 </Slider.Background>
                             </Slider>
                             
+
                         </Grid>
                     </Grid>
                 </ControlTemplate>

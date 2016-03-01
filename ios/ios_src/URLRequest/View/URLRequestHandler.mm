@@ -9,8 +9,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            URLRequestHandler::URLRequestHandler(ExampleAppMessaging::TMessageBus& messageBus)
+            URLRequestHandler::URLRequestHandler(ExampleAppMessaging::TMessageBus& messageBus,
+                                                 LinkOutObserver::LinkOutObserver& linkOutObserver)
             : m_messageBus(messageBus)
+            , m_linkOutObserver(linkOutObserver)
             , m_urlRequestedCallback(this, &URLRequestHandler::OnURLRequested)
             , m_deeplinkUrlRequestedCallback(this, &URLRequestHandler::OnDeeplinkURLRequested)
             {
@@ -38,7 +40,12 @@ namespace ExampleApp
             {
                 NSString *urlLink = [NSString stringWithUTF8String:url.c_str()];
                 NSString *escaped = [urlLink stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:escaped]];
+                
+                NSURL* escapedUrl = [NSURL URLWithString:escaped];
+                
+                m_linkOutObserver.OnLinkOut([[escapedUrl host] UTF8String]);
+                
+                [[UIApplication sharedApplication] openURL:escapedUrl];
             }
             
             void URLRequestHandler::RequestDeeplinkURL(const std::string& deeplinkUrl, const std::string& httpFallbackUrl)

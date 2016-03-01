@@ -26,13 +26,11 @@
 #include "EnvironmentFlatteningService.h"
 #include "TtyHandler.h"
 #include "MenuViewModule.h"
-#include "SecondaryMenuModule.h"
 #include "ModalityModule.h"
 #include "ModalBackgroundViewModule.h"
 #include "ModalBackgroundNativeViewModule.h"
 #include "MenuModel.h"
 #include "MenuViewModel.h"
-#include "SearchResultMenuModule.h"
 #include "MenuOptionsModel.h"
 #include "SearchModule.h"
 #include "SearchResultOnMapModule.h"
@@ -49,7 +47,7 @@
 #include "WorldPinOnMapViewModule.h"
 #include "PlaceJumpsModule.h"
 #include "IPlaceJumpController.h"
-#include "SecondaryMenuViewModule.h"
+#include "SettingsMenuViewModule.h"
 #include "SearchMenuViewModule.h"
 #include "CompassViewModule.h"
 #include "CompassModule.h"
@@ -85,6 +83,11 @@
 #include "WindowsPersistentSettingsModel.h"
 #include "IHttpCache.h"
 #include "HttpCache.h"
+#include "SearchMenuViewModule.h"
+#include "SettingsMenuViewModule.h"
+#include "SearchResultSectionViewModule.h"
+#include "SearchResultSectionModule.h"
+#include "SurveyViewModule.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
@@ -107,8 +110,9 @@ AppHost::AppHost(
     , m_WindowsNativeUIFactories(m_WindowsAlertBoxFactory, m_WindowsInputBoxFactory, m_WindowsKeyboardInputFactory)
     , m_pInputProcessor(NULL)
     , m_pWindowsPlatformAbstractionModule(NULL)
-    , m_pSecondaryMenuViewModule(NULL)
-    , m_pSearchResultMenuViewModule(NULL)
+    , m_pSettingsMenuViewModule(NULL)
+    , m_pSearchMenuViewModule(NULL)
+    , m_pSearchResultSectionViewModule(NULL)
     , m_pModalBackgroundViewModule(NULL)
     , m_pFlattenButtonViewModule(NULL)
     , m_pMyPinCreationViewModule(NULL)
@@ -125,6 +129,7 @@ AppHost::AppHost(
     , m_pViewControllerUpdaterModule(NULL)
     , m_pWindowsFlurryMetricsService(NULL)
     , m_pInitialExperienceIntroViewModule(NULL)
+    , m_pSurverysViewModule(NULL)
 	, m_pInteriorsExplorerViewModule(NULL)
     , m_searchServiceModules()
     , m_failAlertHandler(this, &AppHost::HandleStartupFailure)
@@ -136,16 +141,7 @@ AppHost::AppHost(
     Eegeo::TtyHandler::TtyEnabled = true;
     Eegeo::AssertHandler::BreakOnAssert = true;
 
-    
-    static LocationOverride locationOverride;
-    locationOverride.latRadians = Eegeo::Math::Deg2Rad(51.5202688);
-    locationOverride.lonRadians = Eegeo::Math::Deg2Rad(-0.0864312);
-    locationOverride.altitudeMeters = 19.22;
-    locationOverride.horizontalAccuracyMeters = 10.0;
-    locationOverride.headingDegrees = 0.0;
-
-
-    m_pWindowsLocationService = Eegeo_NEW(WindowsLocationService)(&nativeState, &locationOverride);
+    m_pWindowsLocationService = Eegeo_NEW(WindowsLocationService)(&nativeState);
     m_pWindowsConnectivityService = Eegeo_NEW(WindowsConnectivityService)(&nativeState);
 
     m_pJpegLoader = Eegeo_NEW(Eegeo::Helpers::Jpeg::JpegLoader)();
@@ -217,6 +213,8 @@ AppHost::AppHost(
         m_pApp->World().GetRenderingModule(),
         m_messageBus);
 
+    m_pSurverysViewModule = Eegeo_NEW(ExampleApp::Surveys::View::SurveyViewModule)(m_messageBus, *m_pWindowsFlurryMetricsService);
+
     m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_pApp);
     m_inputHandler.AddDelegateInputHandler(m_pAppInputDelegate);
 }
@@ -229,6 +227,9 @@ AppHost::~AppHost()
 
     Eegeo_DELETE m_pAppInputDelegate;
     m_pAppInputDelegate = NULL;
+
+    Eegeo_DELETE m_pSurverysViewModule;
+    m_pSurverysViewModule = NULL;
 
     Eegeo_DELETE m_pApp;
     m_pApp = NULL;
@@ -472,24 +473,30 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_messageBus
         );
 
-    m_pSecondaryMenuViewModule = Eegeo_NEW(ExampleApp::SecondaryMenu::View::SecondaryMenuViewModule)(
-        "ExampleAppWPF.SecondaryMenuView",
+    m_pSettingsMenuViewModule = Eegeo_NEW(ExampleApp::SettingsMenu::View::SettingsMenuViewModule)(
+        "ExampleAppWPF.SettingsMenuView",
         m_nativeState,
-        app.SecondaryMenuModule().GetSecondaryMenuModel(),
-        app.SecondaryMenuModule().GetSecondaryMenuViewModel(),
+        app.SettingsMenuModule().GetSettingsMenuModel(),
+        app.SettingsMenuModule().GetSettingsMenuViewModel(),
+        m_pModalBackgroundViewModule->GetView(),
         m_messageBus
         );
 
-    m_pSearchResultMenuViewModule = Eegeo_NEW(ExampleApp::SearchResultMenu::View::SearchMenuViewModule)(
+    m_pSearchMenuViewModule = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchMenuViewModule)(
         "ExampleAppWPF.SearchMenuView",
         m_nativeState,
-        app.SearchResultMenuModule().GetSearchResultMenuModel(),
-        app.SearchResultMenuModule().GetMenuViewModel(),
+        app.SearchMenuModule().GetSearchMenuModel(),
+        app.SearchMenuModule().GetSearchMenuViewModel(),
+        app.SearchMenuModule().GetSearchSectionViewModel(),
         app.CategorySearchModule().GetCategorySearchRepository(),
-        app.SearchResultMenuModule().GetSearchResultMenuViewModel(),
-        app.SearchResultMenuModule().GetSearchResultMenuOptionsModel(),
-        app.SearchResultMenuModule().GetSearchResultMenuOrder(),
-        app.GetAppModeModel(),
+        m_pModalBackgroundViewModule->GetView(),
+        m_messageBus
+        );
+
+    m_pSearchResultSectionViewModule = Eegeo_NEW(ExampleApp::SearchResultSection::View::SearchResultSectionViewModule)(
+        app.SearchMenuModule().GetSearchMenuViewModel(),
+        app.SearchResultSectionModule().GetSearchResultSectionOptionsModel(),
+        app.SearchResultSectionModule().GetSearchResultSectionOrder(),
         m_messageBus
         );
 
@@ -536,8 +543,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 		app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
 		m_messageBus,
 		app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
-		app.SecondaryMenuModule().GetSecondaryMenuViewModel(),
-		app.SearchResultMenuModule().GetMenuViewModel(),
+		app.SettingsMenuModule().GetSettingsMenuViewModel(),
+		app.SearchMenuModule().GetSearchMenuViewModel(),
 		app.FlattenButtonModule().GetScreenControlViewModel(),
 		app.CompassModule().GetScreenControlViewModel(),
 		app.WatermarkModule().GetScreenControlViewModel(),
@@ -547,8 +554,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
 
-    viewControllerUpdaterModel.AddUpdateableObject(m_pSecondaryMenuViewModule->GetMenuController());
-    viewControllerUpdaterModel.AddUpdateableObject(m_pSearchResultMenuViewModule->GetMenuController());
+    viewControllerUpdaterModel.AddUpdateableObject(m_pSettingsMenuViewModule->GetMenuController());
+    viewControllerUpdaterModel.AddUpdateableObject(m_pSearchMenuViewModule->GetMenuController());
 }
 
 void AppHost::DestroyApplicationViewModulesFromUiThread()
@@ -577,9 +584,11 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
 
             Eegeo_DELETE m_pModalBackgroundViewModule;
 
-            Eegeo_DELETE m_pSearchResultMenuViewModule;
+            Eegeo_DELETE m_pSearchResultSectionViewModule;
 
-            Eegeo_DELETE m_pSecondaryMenuViewModule;
+            Eegeo_DELETE m_pSearchMenuViewModule;
+
+            Eegeo_DELETE m_pSettingsMenuViewModule;
 
             Eegeo_DELETE m_pCompassViewModule;
 

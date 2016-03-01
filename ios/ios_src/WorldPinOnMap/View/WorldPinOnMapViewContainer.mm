@@ -142,4 +142,13 @@
     return false;
 }
 
+
+- (void) updateScreenState:(float)onScreenState
+{
+    if(self.pCurrentHovercard != nil)
+    {
+        [self.pCurrentHovercard setAlpha:onScreenState];
+    }
+}
+
 @end

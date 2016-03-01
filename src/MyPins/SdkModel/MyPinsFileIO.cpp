@@ -31,22 +31,22 @@ namespace ExampleApp
                     rapidjson::Value valueObject(rapidjson::kObjectType);
                     valueObject.AddMember("version", pinModel.Version(), allocator);
                     valueObject.AddMember("id", pinModel.Identifier(), allocator);
-                    valueObject.AddMember("title", pinModel.GetTitle().c_str(), allocator);
-                    valueObject.AddMember("description", pinModel.GetDescription().c_str(), allocator);
-                    valueObject.AddMember("vendor", pinModel.GetVendor().c_str(), allocator);
-                    valueObject.AddMember("ratingsImage", pinModel.GetRatingsImage().c_str(), allocator);
+                    valueObject.AddMember("title", rapidjson::Value(pinModel.GetTitle().c_str(), allocator).Move(), allocator);
+                    valueObject.AddMember("description", rapidjson::Value(pinModel.GetDescription().c_str(), allocator).Move(), allocator);
+                    valueObject.AddMember("vendor", rapidjson::Value(pinModel.GetVendor().c_str(), allocator).Move(), allocator);
+                    valueObject.AddMember("ratingsImage", rapidjson::Value(pinModel.GetRatingsImage().c_str(), allocator).Move(), allocator);
                     valueObject.AddMember("reviewCount", pinModel.GetReviewsCount(), allocator);
                     valueObject.AddMember("icon", pinModel.GetSdkMapPinIconIndexIcon(), allocator);
                     valueObject.AddMember("latitude", latLong.GetLatitudeInDegrees(), allocator);
                     valueObject.AddMember("longitude", latLong.GetLongitudeInDegrees(), allocator);
                     valueObject.AddMember("heightAboveTerrain", pinModel.GetHeightAboveTerrainMetres(), allocator);
                     valueObject.AddMember("interior", pinModel.IsInterior(), allocator);
-                    valueObject.AddMember("building", pinModel.GetBuildingId().Value().c_str(), allocator);
+                    valueObject.AddMember("building", rapidjson::Value(pinModel.GetBuildingId().Value().c_str(), allocator).Move(), allocator);
                     valueObject.AddMember("floor", pinModel.GetFloor(), allocator);
                     
                     IMyPinBoundObject& pinBoundObject(myPinBoundObjectRepository.GetBoundObjectForPin(pinModel));
                     valueObject.AddMember("type", static_cast<int>(pinBoundObject.GetSemanticPinType()), allocator);
-                    valueObject.AddMember("metadata", pinBoundObject.GetSerialized().c_str(), allocator);
+                    valueObject.AddMember("metadata", rapidjson::Value(pinBoundObject.GetSerialized().c_str(), allocator).Move(), allocator);
                     
                     out_value = valueObject;
                 }
@@ -64,7 +64,8 @@ namespace ExampleApp
 
                 rapidjson::Value myArray(rapidjson::kArrayType);
 
-                jsonDoc.AddMember(MyPinsJsonArrayName.c_str(), myArray, jsonDoc.GetAllocator());
+                rapidjson::Document::AllocatorType& allocator = jsonDoc.GetAllocator();
+                jsonDoc.AddMember(rapidjson::Value(MyPinsJsonArrayName.c_str(), allocator).Move(), myArray, allocator);
                 rapidjson::StringBuffer strbuf;
                 rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
                 jsonDoc.Accept(writer);
@@ -188,7 +189,7 @@ namespace ExampleApp
                 pinsArray.SetArray();
                 rapidjson::Document::AllocatorType& allocator = jsonDoc.GetAllocator();
 
-                jsonDoc.AddMember(MyPinsJsonArrayName.c_str(), pinsArray, allocator);
+                jsonDoc.AddMember(rapidjson::Value(MyPinsJsonArrayName.c_str(), allocator).Move(), pinsArray, allocator);
                 rapidjson::Value& myPinsArray = jsonDoc[MyPinsJsonArrayName.c_str()];
 
                 for (std::vector<MyPinModel*>::const_iterator it = pinModels.begin(); it != pinModels.end(); ++it)

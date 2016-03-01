@@ -3,7 +3,6 @@ set(headers ${headers} ../src/InteriorsExplorer
 set(currsources
   ../src/InteriorsExplorer/CMakeLists.txt
   ../src/InteriorsExplorer/InteriorsExplorer.h
-  ../src/InteriorsExplorer/InteriorsExplorerEnteredMessage.h
   ../src/InteriorsExplorer/InteriorsExplorerExitMessage.h
   ../src/InteriorsExplorer/InteriorsExplorerFloorSelectedMessage.h
   ../src/InteriorsExplorer/InteriorsExplorerSelectFloorMessage.h

@@ -35,11 +35,13 @@ namespace ExampleApp
                 jclass m_uiViewClass;
                 jobject m_uiView;
 
+                TSections m_currentSections;
+
             public:
                 MenuView(AndroidNativeState& nativeState,
                          const std::string& viewClassName);
 
-                ~MenuView();
+                virtual ~MenuView();
 
                 void SetTryDragFunc(Eegeo::Helpers::IFunc0<bool>& function);
 
@@ -51,13 +53,19 @@ namespace ExampleApp
 
                 bool IsAnimating() const;
 
+                bool IsTableAnimating() const { return false; } // TODO: IR
+
                 void UpdateAnimation(float dt);
+
+                void UpdateTableAnimation(float dt) {} // TODO: IR
 
                 void UpdateMenuSectionViews(TSections& sections);
 
                 void SetFullyOnScreenOpen();
 
                 void SetFullyOnScreenClosed();
+
+                void SetTableCanInteract(bool canInteract) {} // TODO: IR
 
                 void SetOnScreenStateToIntermediateValue(float value);
 
@@ -105,7 +113,7 @@ namespace ExampleApp
 
                 void HandleDraggingViewCompleted();
 
-                void HandleItemSelected(int sectionIndex, int itemIndex);
+                virtual void HandleItemSelected(int sectionIndex, int itemIndex);
 
                 bool CallBeginDrag();
             };

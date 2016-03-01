@@ -13,9 +13,12 @@ namespace ExampleApp
             namespace TourExplorer
             {
                 TourExplorerCompositeViewController::TourExplorerCompositeViewController(ITourExplorerViewModel& tourExplorerViewModel,
-                                                                                         Menu::View::IMenuViewModel& searchMenuViewModel)
+                                                                                         Menu::View::IMenuViewModel& searchMenuViewModel,
+                                                                                         Menu::View::IMenuViewModel& settingsMenuViewModel,
+                                                                                         ScreenControl::View::IScreenControlViewModel& watermarkViewModel)
                 : m_tourExplorerViewModel(tourExplorerViewModel)
                 , m_searchMenuViewModel(searchMenuViewModel)
+                , m_settingsMenuViewModel(searchMenuViewModel)
                 , m_tourExplorerOpen(false)
                 {
                     
@@ -35,6 +38,7 @@ namespace ExampleApp
                     m_tourExplorerViewModel.AddToScreen();
                    
                     m_searchMenuViewModel.RemoveFromScreen();
+                    m_settingsMenuViewModel.RemoveFromScreen();
                     
                 }
                 
@@ -46,6 +50,7 @@ namespace ExampleApp
                         m_tourExplorerViewModel.RemoveFromScreen();
                         
                         m_searchMenuViewModel.AddToScreen();
+                        m_settingsMenuViewModel.AddToScreen();
                     }
                 }
             }

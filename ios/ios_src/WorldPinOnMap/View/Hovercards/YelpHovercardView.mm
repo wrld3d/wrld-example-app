@@ -29,7 +29,7 @@
         
         // shadow
         self.pMainControlShadowContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pMainControlShadowContainer setBackgroundColor: ExampleApp::Helpers::ColorPalette::GreyTone];
+        [self.pMainControlShadowContainer setBackgroundColor: ExampleApp::Helpers::ColorPalette::UiShadowColor];
         [self addSubview: self.pMainControlShadowContainer];
         
         // main control container
@@ -37,19 +37,19 @@
         [self.pMainControlContainer setBackgroundColor: [UIColor clearColor]];
         [self addSubview: self.pMainControlContainer];
         
-        // gold top strip
+        // top strip
         self.pTopStrip = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pTopStrip setBackgroundColor: ExampleApp::Helpers::ColorPalette::GoldTone];
+        [self.pTopStrip setBackgroundColor: ExampleApp::Helpers::ColorPalette::UiBorderColor];
         [self.pMainControlContainer addSubview: self.pTopStrip];
         
         // label container
         self.pLabelBack = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pLabelBack setBackgroundColor: ExampleApp::Helpers::ColorPalette::MainHudColor];
+        [self.pLabelBack setBackgroundColor: ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
         [self.pMainControlContainer addSubview: self.pLabelBack];
         
         // name label
         self.pNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pNameLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pNameLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextTitleColor;
         self.pNameLabel.textAlignment = NSTextAlignmentCenter;
         self.pNameLabel.font = [UIFont systemFontOfSize:16.0];
         self.pNameLabel.backgroundColor = [UIColor clearColor];
@@ -57,7 +57,7 @@
         
         // address label
         self.pAddressLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pAddressLabel.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+        self.pAddressLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
         self.pAddressLabel.textAlignment = NSTextAlignmentCenter;
         self.pAddressLabel.font = [UIFont systemFontOfSize:12.0];
         self.pAddressLabel.backgroundColor = [UIColor clearColor];
@@ -69,7 +69,7 @@
         
         // review count
         self.pReviewCountLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pReviewCountLabel.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+        self.pReviewCountLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
         self.pReviewCountLabel.textAlignment = NSTextAlignmentLeft;
         self.pReviewCountLabel.font = [UIFont systemFontOfSize:12.0];
         self.pReviewCountLabel.backgroundColor = [UIColor clearColor];

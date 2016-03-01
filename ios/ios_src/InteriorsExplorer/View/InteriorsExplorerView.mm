@@ -9,6 +9,7 @@
 #include "InteriorsExplorerFloorItemView.h"
 
 #import "ImmediatePanGestureRecognizer.h"
+#import "UIButton+DefaultStates.h"
 #import "UIView+TouchExclusivity.h"
 #import <QuartzCore/QuartzCore.h>
 
@@ -56,6 +57,7 @@
         const float upperMargin = isPhone ? 20.0f : 50.0f;
         m_inactiveDetailPaneYPosition = m_screenHeight;
         
+
         self.pFloorPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_inactiveFloorListXPosition, m_screenHeight/2.0f, 80, 200)] autorelease];
         [self addSubview:self.pFloorPanel];
         
@@ -67,6 +69,7 @@
         ImmediatePanGestureRecognizer* buttonDrag = [[ImmediatePanGestureRecognizer alloc] initWithTarget:self action:@selector(dragButton:)];
         [self.pFloorChangeButton addGestureRecognizer:buttonDrag];
         [buttonDrag release];
+
         
         [self.pFloorPanel addSubview:self.pFloorChangeButton];
         
@@ -94,16 +97,16 @@
         
         self.pDetailsPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_screenWidth * 0.5f - totalPanelLength * 0.5f, upperMargin, totalPanelLength, totalPanelHeight)] autorelease];
         
+        UIColor* backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         
-        self.pDismissButtonBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"menu_button")] autorelease];
-        self.pDismissButtonBackground.frame = CGRectMake(totalPanelLength-buttonSize, 0.0f, buttonSize, buttonSize);
-        self.pDismissButtonBackground.transform = CGAffineTransformScale(CGAffineTransformIdentity, -1.f, 1.f);
+        self.pDismissButtonBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(backgroundColor)] autorelease];
+        self.pDismissButtonBackground.frame = CGRectMake(0.0f, 0.0f, buttonSize, buttonSize);
         
         [self.pDetailsPanel addSubview:self.pDismissButtonBackground];
         
-        self.pDismissButton = [[[UIButton alloc] initWithFrame:self.pDismissButtonBackground.frame] autorelease];
-        [self.pDismissButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"interior_exit") forState:UIControlStateNormal];
-        [self.pDismissButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"interior_exit_down") forState:UIControlStateHighlighted];
+        self.pDismissButton = [[[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, buttonSize, buttonSize)] autorelease];
+        [self.pDismissButton setDefaultStatesWithImageNames:@"button_exit_interior_off" :@"button_exit_interior_on"];
+
         [self.pDismissButton addTarget:self action:@selector(onCancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.pDetailsPanel addSubview:self.pDismissButton];
         
@@ -111,25 +114,15 @@
         
         self.pDetailsPanelBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"place_pin_background")] autorelease];
         
-        self.pDetailsPanelBackground.frame = CGRectMake(0, 0, labelLength, detailsPanelHeight);
-        
-        UIBezierPath* roundedShapePath = [UIBezierPath bezierPathWithRoundedRect:self.pDetailsPanelBackground.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerBottomLeft cornerRadii:CGSizeMake(7.0f, 7.0f)];
-        
-        CAShapeLayer* roundedShapeLayer = [CAShapeLayer layer];
-        roundedShapeLayer.frame = self.pDetailsPanelBackground.bounds;
-        roundedShapeLayer.path = roundedShapePath.CGPath;
-        roundedShapeLayer.fillColor = [UIColor blackColor].CGColor;
-        roundedShapeLayer.strokeColor = [UIColor blackColor].CGColor;
-        roundedShapeLayer.lineWidth = 1.0f;
-        
-        self.pDetailsPanelBackground.layer.mask = roundedShapeLayer;
-        
+
+        self.pDetailsPanelBackground.frame = CGRectMake(buttonSize, 0, labelLength, detailsPanelHeight);
+                
         [self.pDetailsPanel addSubview:self.pDetailsPanelBackground];
         
         const float textPadding = 2.f;
         
-        self.pFloorNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake( textPadding, textPadding, labelLength - textPadding, detailsPanelHeight - textPadding)] autorelease];
-        self.pFloorNameLabel.textColor = ExampleApp::Helpers::ColorPalette::DarkGreyTone;
+        self.pFloorNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake( textPadding + buttonSize, textPadding, labelLength - textPadding, detailsPanelHeight - textPadding)] autorelease];
+        self.pFloorNameLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
         self.pFloorNameLabel.textAlignment = NSTextAlignmentCenter;
         [self.pDetailsPanel addSubview:self.pFloorNameLabel];
         
@@ -240,6 +233,7 @@
     for(InteriorsExplorerFloorItemView* item in self.pFloorListViews)
     {
         [item removeFromSuperview];
+
     }
     
     [self.pFloorListViews removeAllObjects];
