@@ -718,6 +718,11 @@
                                                  :Eegeo::v2(m_titleContainerClosedOnScreenWidthWithResults, m_titleContainerClosedOnScreenHeight)
                                                  :m_searchCountLabelClosedOnScreenAlphaWithResults
                                                  :Eegeo::v2(m_searchCountLabelClosedOnScreenX, m_searchCountLabelClosedOnScreenYWithResults)];
+            
+            if(self.pTitleContainer.frame.origin.x != m_titleContainerClosedOnScreenXWithResults)
+            {
+                m_pOnScreenResultsAnimationController->Play();
+            }
         }
         else
         {

@@ -396,11 +396,6 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     
     m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
                                                                                              m_messageBus,
-                                                                                             app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
-                                                                                             app.SettingsMenuModule().GetSettingsMenuViewModel(),
-                                                                                             app.SearchMenuModule().GetSearchMenuViewModel(),
-                                                                                             app.FlattenButtonModule().GetScreenControlViewModel(),
-                                                                                             app.CompassModule().GetScreenControlViewModel(),
                                                                                              screenProperties,
                                                                                              app.GetIdentityProvider());
     

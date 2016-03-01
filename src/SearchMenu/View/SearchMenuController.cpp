@@ -148,32 +148,16 @@ namespace ExampleApp
             
             void SearchMenuController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
             {
-                m_appModeAllowsOpen = message.GetAppMode() != AppModes::SdkModel::InteriorMode;
                 
-                if (!m_appModeAllowsOpen)
-                {
-                    m_viewModel.Close();
-                }
             }
             
             bool SearchMenuController::TryDrag()
             {
-                if (!m_appModeAllowsOpen)
-                {
-                    m_viewModel.Close();
-                    return false;
-                }
-                
                 return MenuController::TryDrag();
             }
             
             void SearchMenuController::OnViewClicked()
             {
-                if (!m_appModeAllowsOpen)
-                {
-                    m_viewModel.Close();
-                    return;
-                }
                 MenuController::OnViewClicked();
             }
             

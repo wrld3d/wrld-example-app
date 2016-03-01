@@ -102,13 +102,6 @@ static NSString *CellIdentifier = @"searchCell";
     {
         cell = [[[CustomTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
         
-        [(CustomTableViewCell*)cell initCell:(CGFloat)[m_pView.pSearchResultsTableView getCellWidth]
-                                            :(CGFloat)[m_pView.pSearchResultsTableView getCellInset]
-                                            :indexPath
-                                            :(CustomTableView*)tableView
-                                            :self];
-        
-        
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
 
         if ([cell respondsToSelector:@selector(layoutMargins)])
@@ -121,6 +114,12 @@ static NSString *CellIdentifier = @"searchCell";
             [cell setSeparatorInset:UIEdgeInsetsZero];
         }
     }
+    
+    [(CustomTableViewCell*)cell initCell:(CGFloat)[m_pView.pSearchResultsTableView getCellWidth]
+                                        :(CGFloat)[m_pView.pSearchResultsTableView getCellInset]
+                                        :indexPath
+                                        :(CustomTableView*)tableView
+                                        :self];
     
     ExampleApp::Menu::View::MenuItemModel item = m_pSearchResultsSection->GetItemAtIndex(static_cast<int>(indexPath.row));
     std::string json = item.SerializeJson();
