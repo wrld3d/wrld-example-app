@@ -37,6 +37,8 @@
 
 - (void) updatePosition:(float)x :(float)y;
 
+- (void) updateScreenState:(float)onScreenState;
+
 @property (nonatomic, retain) YelpHovercardView* pYelpHovercard;
 @property (nonatomic, retain) InteriorsHovercard* pInteriorHovercard;
 @property (nonatomic, retain) TourHovercardView* pTourHovercard;

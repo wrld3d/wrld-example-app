@@ -96,12 +96,13 @@
 	             android:layout_height="wrap_content"
 	             android:layout_alignParentLeft="true"/>
  
-	         <com.eegeo.helpers.TintableImageView
+	         <ImageView
 	             android:id="@+id/search_result_poi_view_close_button"
 	             android:layout_width="wrap_content"
 	             android:layout_height="wrap_content"
 	             android:layout_alignParentRight="true"
-	             android:background="@drawable/button_close_off" />
+	             android:background="@drawable/button_pressed_colour_change"
+		       	 android:src="@drawable/button_pin_close_states" />
          
          </RelativeLayout>
 	        

@@ -14,7 +14,6 @@
 @interface OptionsView : UIView <UIGestureRecognizerDelegate>
 {
     ExampleApp::Options::View::OptionsViewInterop* m_pInterop;
-    UITapGestureRecognizer* m_tapGestureRecogniser;
     float m_stateChangeAnimationTimeSeconds;
 }
 
@@ -49,7 +48,8 @@
 @property (nonatomic, retain) UILabel* pTitleLabel;
 @property (nonatomic, retain) UILabelledCheckboxView* pWifiOnlyCheckbox;
 @property (nonatomic, retain) UILabelledCheckboxView* pCacheEnabledCheckbox;
-@property (nonatomic, retain) UILabelledCheckboxView* pClearCacheButton;
+@property (nonatomic, retain) UIButton* pClearCacheButton;
+@property (nonatomic, retain) UILabel* pClearCacheLabel;
 @property (nonatomic, retain) OptionsCacheClearSubView* pOptionsCacheClearSubView;
 
 @end

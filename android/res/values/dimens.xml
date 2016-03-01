@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="menu_button_margin">28dp</dimen>
+    <dimen name="search_clear_button_size">20dp</dimen>
+    <dimen name="search_results_bar_width">249dp</dimen>
+    <dimen name="search_menu_edit_text_background_width">212dp</dimen>
+    <dimen name="search_menu_result_cell_height">44dp</dimen>
+</resources>

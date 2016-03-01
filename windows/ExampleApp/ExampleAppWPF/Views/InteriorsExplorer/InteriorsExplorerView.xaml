@@ -5,7 +5,6 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../../Colours.xaml" />
-        <ResourceDictionary Source="../../TransparentButtonStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type local:InteriorsExplorerView}">
@@ -15,24 +14,44 @@
                     <Grid>
                         <Grid Name="DetailsPanel" Width="Auto" Height="40" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,40,0,0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="40"/>
                                 <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="40"/>
                             </Grid.ColumnDefinitions>
-                            <Button Name="DismissButton" Width="40" Height="40" Grid.Column="0" Style="{StaticResource TransparentButtonStyle}">
-                                <Grid>
-                                    <Image VerticalAlignment="Center" HorizontalAlignment="Center" Width="40" Height="40" Source="/Assets/menu_button.png"/>
-                                    <Image VerticalAlignment="Center" HorizontalAlignment="Center" Width="14" Height="24" Source="/Assets/arrow.png"/>
-                                </Grid>
+                            <Button Name="DismissButton" Width="40" Height="40" Grid.Column="1">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}">
+                                        <Style.Setters>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                        <Grid Name="ExitButtonGrid" Background="{StaticResource PrimaryBG_colour}">
+                                                            <Image Source="/Assets/button_exit_interior_off.png"  Name="ExitButtonIcon"/>
+                                                        </Grid>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsPressed" Value="True">
+                                                                <Setter TargetName="ExitButtonIcon" Property="Source" Value="/Assets/button_exit_interior_on.png"/>
+                                                                <Setter TargetName="ExitButtonGrid" Property="Background" Value="{StaticResource PrimaryBG_Down_Colour}"/>
+                                                            </Trigger>
+                                                            <MultiTrigger>
+                                                                <MultiTrigger.Conditions>
+                                                                    <Condition  Property="IsMouseOver" Value="True" />
+                                                                    <Condition Property="IsPressed" Value="False"/>
+                                                                </MultiTrigger.Conditions>
+                                                                <MultiTrigger.Setters>
+                                                                    <Setter TargetName="ExitButtonGrid" Property="Background" Value="{StaticResource PrimaryBG_Over_Colour}"/>
+                                                                </MultiTrigger.Setters>
+                                                            </MultiTrigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style.Setters>
+                                    </Style>
+                                </Button.Style>
                             </Button>
-                            <Grid Grid.Column="1">
+                            <Grid Grid.Column="0">
                                 <Border Name="Mask" CornerRadius="0,5,5,0" Background="White"/>
-                                <Grid>
-                                    <Grid.Background>
-                                        <ImageBrush ImageSource="/Assets/place_pin_background.png"/>
-                                    </Grid.Background>
-                                    <Grid.OpacityMask>
-                                        <VisualBrush Visual="{Binding ElementName=Mask}"/>
-                                    </Grid.OpacityMask>
+                                <Grid Background="White">
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="FloorName" Foreground="{StaticResource DarkGrey}" FontSize="16"/>
                                 </Grid>
                             </Grid>
@@ -44,14 +63,11 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <Image Grid.Row="0" Source="/Assets/floor_selection_top.png" Stretch="Uniform" Width="50"/>
+                            <Rectangle Grid.Row="0" Width="50" Fill="{StaticResource Gold}" Height="20"/>
                             <ListBox Name="FloorList" Grid.Row="1" HorizontalContentAlignment="Stretch">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid HorizontalAlignment="Stretch" Height="42" Margin="0,0,0,0">
-                                            <Grid.Background>
-                                                <ImageBrush ImageSource="/Assets/place_pin_background.png" Stretch="Fill"/>
-                                            </Grid.Background>
+                                        <Grid HorizontalAlignment="Stretch" Height="42" Margin="0,0,0,0" Background="White">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="*"/>
                                                 <RowDefinition Height="1"/>
@@ -59,11 +75,12 @@
                                             <Grid HorizontalAlignment="Stretch" Grid.Row="0">
                                                 <TextBlock Text="{Binding}" FontSize="14" Foreground="{StaticResource DarkGrey}" MaxWidth="200" HorizontalAlignment="Center" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
                                             </Grid>
+                                            <Grid Grid.Row="1" Background="{StaticResource LightGrey}"/>
                                         </Grid>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
-                            <Image Grid.Row="2" Source="/Assets/floor_selection_bottom.png" Stretch="Uniform" Width="50"/>
+                            <Rectangle Grid.Row="2" Height="20" Width="50" Fill="{StaticResource Gold}"/>
                         </Grid>
                     </Grid>
                 </ControlTemplate>

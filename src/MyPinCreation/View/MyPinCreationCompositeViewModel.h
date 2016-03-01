@@ -7,7 +7,6 @@
 #include "MyPinCreationStage.h"
 #include "IMyPinCreationCompositeViewModel.h"
 #include "Menu.h"
-#include "SearchResultMenu.h"
 #include "ScreenControlViewModelBase.h"
 #include "Search.h"
 #include "BidirectionalBus.h"
@@ -26,26 +25,26 @@ namespace ExampleApp
                 MyPinCreationCompositeViewModel(ExampleAppMessaging::TMessageBus& messageBus,
                                                 IMyPinCreationInitiationViewModel& initiationViewModel,
                                                 IMyPinCreationConfirmationViewModel& confirmationViewModel,
-                                                ExampleApp::Menu::View::IMenuViewModel& secondaryMenuViewModel,
-                                                ExampleApp::Menu::View::IMenuViewModel& searchResultMenuViewModel,
+                                                ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
+                                                ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
                                                 ScreenControl::View::IScreenControlViewModel& interiorControlViewModel);
 
                 ~MyPinCreationCompositeViewModel();
 
                 void HandlePoiRingStateChanged(MyPinCreationStage& stage);
                 void OnPoiRingStateChangedMessage(const MyPinCreationStateChangedMessage& message);
-                void HandleSearchResultMenuStateChanged(ScreenControl::View::IScreenControlViewModel &viewModel, float& onScreenState);
+                void HandleSettingsMenuStateChanged(ScreenControl::View::IScreenControlViewModel &viewModel, float& onScreenState);
 
             private:
                 Eegeo::Helpers::TCallback1<MyPinCreationCompositeViewModel, const MyPinCreationStateChangedMessage&> m_stateChangeHandler;
-                Eegeo::Helpers::TCallback2<MyPinCreationCompositeViewModel, ScreenControl::View::IScreenControlViewModel&, float> m_searchResultMenuStateChangedCallback;
+                Eegeo::Helpers::TCallback2<MyPinCreationCompositeViewModel, ScreenControl::View::IScreenControlViewModel&, float> m_settingsMenuStateChangedCallback;
 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 IMyPinCreationInitiationViewModel& m_initiationViewModel;
                 IMyPinCreationConfirmationViewModel& m_confirmationViewModel;
-                ExampleApp::Menu::View::IMenuViewModel& m_secondaryMenuViewModel;
-                ExampleApp::Menu::View::IMenuViewModel& m_searchResultMenuViewModel;
                 ScreenControl::View::IScreenControlViewModel& m_interiorControlViewModel;
+                ExampleApp::Menu::View::IMenuViewModel& m_searchMenuViewModel;
+                ExampleApp::Menu::View::IMenuViewModel& m_settingsMenuViewModel;
             };
         }
     }

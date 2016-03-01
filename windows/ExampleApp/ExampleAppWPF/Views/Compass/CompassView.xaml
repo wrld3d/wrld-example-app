@@ -7,8 +7,24 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CompassView}">
                     <Canvas Name="ImageCanvas">
-                        <Image Name="ButtonImage" Source="/Assets/compass.png" Width="120" Height="120"/>
+                        <Image Name="ButtonImage" Source="/Assets/button_compass_off.png" Width="120" Height="120"/>
+                        <Image Name="CompassArrow" Source="/Assets/compass_point_off.png" Width="16" Height="51" Visibility="Collapsed" />
                     </Canvas>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ButtonImage" Property="Source" Value="/Assets/button_compass_on.png"/>
+                            <Setter TargetName="CompassArrow" Property="Source" Value="/Assets/compass_point_on.png" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsPressed" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="ButtonImage" Property="Source" Value="/Assets/button_compass_over.png"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

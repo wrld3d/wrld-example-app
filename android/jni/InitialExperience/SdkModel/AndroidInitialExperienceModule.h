@@ -8,8 +8,6 @@
 #include "Types.h"
 #include "BidirectionalBus.h"
 #include "Menu.h"
-#include "SearchResultMenu.h"
-#include "InitialExperienceSearchResultAttractModeModule.h"
 
 namespace ExampleApp
 {
@@ -29,14 +27,11 @@ namespace ExampleApp
                 ~AndroidInitialExperienceModule();
 
             protected:
-                std::vector<IInitialExperienceStep*> CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel,
-                        Menu::View::IMenuViewModel& searchMenuViewModelControl,
-                        SearchResultMenu::View::ISearchResultMenuViewModel& searchResultMenuViewModel);
+                std::vector<IInitialExperienceStep*> CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel);
 
             private:
                 AndroidNativeState& m_nativeState;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
-                SearchResultAttractMode::InitialExperienceSearchResultAttractModeModule* m_pInitialExperienceSearchResultAttractModeModule;
             };
         }
     }

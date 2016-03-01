@@ -6,79 +6,117 @@
 #include "MenuViewInterop.h"
 #include "CustomTableDataProvider.h"
 #include "CellConstants.h"
+#include "ViewPositionAnimator.h"
+#include "ViewFrameAnimator.h"
+#include "CircleCurve.h"
 
+enum MenuState
+{
+    DRAGGING,
+    OFF_SCREEN,
+    CLOSED_ON_SCREEN,
+    OPEN_ON_SCREEN,
+    ANIMATING
+};
 
 @interface MenuView()<UIGestureRecognizerDelegate>
 {
-    UIPanGestureRecognizer* _panGestureRecognizer;
-    UITapGestureRecognizer* _tapGestureRecogniser;
-    bool _dragging;
-    bool _touchedDownInsideDragTab;
+    ExampleApp::Menu::View::MenuViewInterop* m_pInterop;
+    
+    UIPanGestureRecognizer* m_panGestureRecognizer;
+    UITapGestureRecognizer* m_tapGestureRecogniser;
+    
+    CGPoint m_dragStartPos;
+    
+    bool m_dragStartedClosed;
+    
+    ExampleApp::Helpers::UIAnimation::ViewAnimationController* m_currentAnimationController;
+    
+    MenuState m_menuState;
 }
 
 @end
 
 @implementation MenuView
-- (void)initialiseViews:(size_t)numberOfSections numberOfCells:(size_t)numberOfCells
+
+- (void)initializeViews
 {
 }
 
 - (id) initWithParams:(float)width
-    :(float)height
-    :(float)pixelScale
-    :(bool)rightMenu
-    :(size_t)numberOfSections
-    :(size_t)numberOfCells
-    :(CustomTableDataProvider*)dataProvider
+                     :(float)height
+                     :(float)pixelScale
+                     :(CustomTableDataProvider*)dataProvider
+                     :(int)tableCount
 {
     if(self = [super init])
     {
         m_screenWidth = width/pixelScale;
         m_screenHeight = height/pixelScale;
         m_pixelScale = 1.f;
+        
+        m_stateChangeAnimationTimeSeconds = 0.3f;
+        
+        m_onScreenAnimationController = NULL;
+        m_openAnimationController = NULL;
+        
+        self.pTableViewMap = [[[NSMutableDictionary alloc] init] autorelease];
+        
+        for(int i = 0; i < tableCount; ++i)
+        {
+            CustomTableView* customTableView = [[CustomTableView alloc] autorelease];
+            self.pTableViewMap[@(i)] = [customTableView retain];
+        }
 
-        [self initialiseViews:numberOfSections numberOfCells:numberOfCells];
-
-        _dragging = false;
-        m_animating = false;
+        [self initializeViews];
+        
+        [self initializeAnimators];
+        
         self.hidden = true;
-        m_isFirstAnimationCeremony = true;
-        m_rightMenu = rightMenu;
 
         m_pDataProvider = dataProvider;
-        [m_pDataProvider initWithParams:self];
-        m_pInterop = Eegeo_NEW(ExampleApp::Menu::View::MenuViewInterop)(self, m_pDataProvider);
+        [m_pDataProvider initWithParams:self
+                                       :self.pTableViewMap];
+        
+        m_pInterop = Eegeo_NEW(ExampleApp::Menu::View::MenuViewInterop)(self);
 
-        _panGestureRecognizer = [[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragTabGesture:)] autorelease];
-        [_panGestureRecognizer setDelegate:self];
+        m_panGestureRecognizer = [[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragTabGesture:)] autorelease];
+        [m_panGestureRecognizer setDelegate:self];
 
-        _tapGestureRecogniser = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapTabGesture:)] autorelease];
-        [_tapGestureRecogniser setDelegate:self];
+        m_tapGestureRecogniser = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapTabGesture:)] autorelease];
+        [m_tapGestureRecogniser setDelegate:self];
 
-        [[self pDragTab] addGestureRecognizer: _panGestureRecognizer];
-        [[self pDragTab] addGestureRecognizer: _tapGestureRecogniser];
-
-        if ([self.pTableview respondsToSelector:@selector(layoutMargins)])
-        {
-            self.pTableview.layoutMargins = UIEdgeInsetsZero;
-        }
-
-        if ([self.pTableview respondsToSelector:@selector(separatorInset)])
-        {
-            [self.pTableview setSeparatorInset:UIEdgeInsetsZero];
-        }
+        [[self pDragTab] addGestureRecognizer: m_panGestureRecognizer];
+        [[self pDragTab] addGestureRecognizer: m_tapGestureRecogniser];
+        
+        m_dragStartedClosed = false;
+        
+        m_menuState = OFF_SCREEN;
+        
+        m_currentAnimationController = NULL;
     }
 
     return self;
 }
 
-- (BOOL)isRightMenu
-{
-    return m_rightMenu;
-}
-
 - (void)dealloc
 {
+    Eegeo_DELETE m_openAnimationController;
+    
+    Eegeo_DELETE m_onScreenAnimationController;
+    
+    for(int i = 0; i < [self.pTableViewMap count]; ++i)
+    {
+        CustomTableView* customTableView = (CustomTableView*)self.pTableViewMap[@(i)];
+        
+        self.pTableViewMap[@(i)] = nil;
+        
+        [customTableView removeFromSuperview];
+        [customTableView release];
+    }
+    
+    [self.pTableViewMap release];
+    
     Eegeo_DELETE m_pInterop;
     [super dealloc];
 }
@@ -88,287 +126,362 @@
     return m_pInterop;
 }
 
-- (void)layoutSubviews
-{
-    CGRect f = self.frame;
-    f.origin.x = m_offscreenX;
-    f.origin.y = m_offscreenY;
-    self.frame = f;
-}
-
 - (void) setOffscreenPartsHiddenState:(bool)hidden
 {
-    self.pMenuContainer.hidden = hidden;
-    self.pMenuHeaderStub.hidden = hidden;
-    self.pTableview.hidden = hidden;
+    self.pTableViewContainer.hidden = hidden;
 }
 
 - (void) animateToRemovedFromScreen
 {
-    if(self.frame.origin.x != m_offscreenX || (m_animating && m_animationEndPos.x != m_offscreenX))
-    {
-        [self animateToX:m_offscreenX];
-    }
-
-    if(self.frame.origin.y != m_offscreenY || (m_animating && m_animationEndPos.y != m_offscreenY))
-    {
-        [self animateToY:m_offscreenY];
-    }
+    [self startAnimationForState:OFF_SCREEN
+                normalizedOffset:1.0f - [self onScreenState]
+             animationController:m_onScreenAnimationController
+                isPlayingForward:NO];
 }
 
 - (void) animateToClosedOnScreen
 {
-    if(self.frame.origin.x != m_closedX || (m_animating && m_animationEndPos.x != m_closedX))
+    if(m_menuState == OFF_SCREEN)
     {
-        [self animateToX:m_closedX];
+        [self startAnimationForState:CLOSED_ON_SCREEN
+                    normalizedOffset:[self onScreenState]
+                 animationController:m_onScreenAnimationController
+                    isPlayingForward:YES];
     }
-
-    if(self.frame.origin.y != m_closedY || (m_animating && m_animationEndPos.y != m_closedY))
+    else if(m_menuState == OPEN_ON_SCREEN || m_menuState == DRAGGING)
     {
-        [self animateToY:m_closedY];
+        [self startAnimationForState:CLOSED_ON_SCREEN
+                    normalizedOffset:1.0f - [self openOnScreenState]
+                 animationController:m_openAnimationController
+                    isPlayingForward:NO];
     }
 }
 
 - (void) animateToOpenOnScreen
 {
-    if(self.frame.origin.x != m_openX || (m_animating && m_animationEndPos.x != m_openX))
-    {
-        [self animateToX:m_openX];
-    }
+    [self startAnimationForState:OPEN_ON_SCREEN
+                normalizedOffset:[self openOnScreenState]
+             animationController:m_openAnimationController
+                isPlayingForward:YES];
+}
 
-    if(self.frame.origin.y != m_openY || (m_animating && m_animationEndPos.y != m_openY))
+- (void) startAnimationForState:(MenuState)state
+               normalizedOffset:(float)normalizedOffset
+            animationController:(ExampleApp::Helpers::UIAnimation::ViewAnimationController*)animationController
+               isPlayingForward:(BOOL)isPlayingForward
+{
+    if(m_menuState == state)
     {
-        [self animateToY:m_openY];
+        return;
     }
+    
+    bool overridingAnimation = false;
+    
+    if(m_currentAnimationController != NULL)
+    {
+        m_currentAnimationController->SetToEnd();
+        overridingAnimation = true;
+    }
+    
+    m_menuState = ANIMATING;
+    
+    if(isPlayingForward)
+    {
+        if(overridingAnimation)
+        {
+            animationController->PlayFromCurrent();
+        }
+        else
+        {
+            animationController->PlayWithNormalizedOffset(normalizedOffset);
+        }
+    }
+    else
+    {
+        if(overridingAnimation)
+        {
+            animationController->PlayReverseFromCurrent();
+        }
+        else
+        {
+            animationController->PlayReverseWithNormalizedOffset(normalizedOffset);
+        }
+    }
+    
+    m_currentAnimationController = animationController;
+    
+    self.hidden = NO;
+    [self setOffscreenPartsHiddenState:false];
 }
 
 - (void) setOnScreenStateToIntermediateValue:(float)onScreenState
-{
-    Eegeo_ASSERT(false, "Derived views should implement 'setOnScreenStateToIntermediateValue'.\n");
-}
-
-- (void) setOpenStateToIntermediateValue:(float)openState
 {
     if([self isAnimating])
     {
         return;
     }
-
+    
     self.hidden = false;
     [self setOffscreenPartsHiddenState:false];
-
-    float newX = m_closedX + (std::abs(m_openX - m_closedX) * openState);
-    if(fabs(self.frame.origin.x - newX) < 0.01f)
-    {
-        return;
-    }
-
-    CGRect f = self.frame;
-    f.origin.x = newX;
-    self.frame = f;
+    
+    m_onScreenAnimationController->SetToNormalizedOffset(onScreenState);
 }
 
 - (BOOL)consumesTouch:(UITouch *)touch
 {
     CGPoint touchLocation = [touch locationInView:self];
-    return CGRectContainsPoint(_pDragTab.frame, touchLocation)
-           || CGRectContainsPoint(_pMenuContainer.frame, touchLocation);
+    return CGRectContainsPoint(self.pDragTab.frame, touchLocation)
+           || CGRectContainsPoint(self.pTitleContainer.frame, touchLocation)
+           || CGRectContainsPoint(self.pMenuContainer.frame, touchLocation);
+}
+
+- (void) initializeAnimators
+{
+    // On/off screen animations
+    m_onScreenAnimationController = Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewAnimationController)(self,
+                                                                                                         ^(UIView* menuView)
+                                                                                                         {
+                                                                                                             [(MenuView*)menuView onClosedOnScreenAnimationComplete];
+                                                                                                         },
+                                                                                                         ^(UIView* menuView)
+                                                                                                         {
+                                                                                                             [(MenuView*)menuView onOffScreenAnimationComplete];
+                                                                                                         });
+    
+    m_onScreenAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewPositionAnimator)(self.pDragTab,
+                                                                                                      m_stateChangeAnimationTimeSeconds,
+                                                                                                      0.0,
+                                                                                                      Eegeo::v2(m_dragTabOffScreenX, m_dragTabOffScreenY),
+                                                                                                      Eegeo::v2(m_dragTabClosedOnScreenX, m_dragTabClosedOnScreenY),
+                                                                                                      Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>)()));
+    
+    m_onScreenAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewFrameAnimator)(self.pTitleContainer,
+                                                                                                              m_stateChangeAnimationTimeSeconds,
+                                                                                                              0.0,
+                                                                                                              Eegeo::v2(m_titleContainerOffScreenX, m_titleContainerOffScreenY),
+                                                                                                              Eegeo::v2(m_titleContainerClosedOnScreenX, m_titleContainerClosedOnScreenY),
+                                                                                                              Eegeo::v2(m_titleContainerOffScreenWidth, m_titleContainerOffScreenHeight),
+                                                                                                              Eegeo::v2(m_titleContainerClosedOnScreenWidth, m_titleContainerClosedOnScreenHeight),
+                                                                                                              Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>)()));
+    
+    m_onScreenAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewPositionAnimator)(self.pMenuContainer,
+                                                                                                                 m_stateChangeAnimationTimeSeconds,
+                                                                                                                 0.0,
+                                                                                                                 Eegeo::v2(m_menuContainerOffScreenX, m_menuContainerOffScreenY),
+                                                                                                                 Eegeo::v2(m_menuContainerClosedOnScreenX, m_menuContainerClosedOnScreenY),
+                                                                                                                 Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>)()));
+    
+    // Open/closed on screen animations
+    m_openAnimationController = Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewAnimationController)(self,
+                                                                                                     ^(UIView* menuView)
+                                                                                                     {
+                                                                                                         [(MenuView*)menuView onOpenOnScreenAnimationComplete];
+                                                                                                     },
+                                                                                                     ^(UIView* menuView)
+                                                                                                     {
+                                                                                                         [(MenuView*)menuView onClosedOnScreenAnimationComplete];
+                                                                                                     });
+    
+    m_openAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewPositionAnimator)(self.pDragTab,
+                                                                                                             m_stateChangeAnimationTimeSeconds,
+                                                                                                             0.0,
+                                                                                                             Eegeo::v2(m_dragTabClosedOnScreenX, m_dragTabClosedOnScreenY),
+                                                                                                             Eegeo::v2(m_dragTabOpenOnScreenX, m_dragTabOpenOnScreenY),
+                                                                                                             Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>)()));
+    
+    m_openAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewFrameAnimator)(self.pTitleContainer,
+                                                                                                          m_stateChangeAnimationTimeSeconds,
+                                                                                                          0.0,
+                                                                                                          Eegeo::v2(m_titleContainerClosedOnScreenX, m_titleContainerClosedOnScreenY),
+                                                                                                          Eegeo::v2(m_titleContainerOpenOnScreenX, m_titleContainerOpenOnScreenY),
+                                                                                                          Eegeo::v2(m_titleContainerClosedOnScreenWidth, m_titleContainerClosedOnScreenHeight),
+                                                                                                          Eegeo::v2(m_titleContainerOpenOnScreenWidth, m_titleContainerOpenOnScreenHeight),
+                                                                                                          Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>)()));
+    
+    m_openAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewPositionAnimator)(self.pMenuContainer,
+                                                                                                             m_stateChangeAnimationTimeSeconds,
+                                                                                                             0.0,
+                                                                                                             Eegeo::v2(m_menuContainerClosedOnScreenX, m_menuContainerClosedOnScreenY),
+                                                                                                             Eegeo::v2(m_menuContainerOpenOnScreenX, m_menuContainerOpenOnScreenY),
+                                                                                                             Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>)()));
 }
 
 - (void) updateAnimation:(float)deltaSeconds
 {
-    if (!m_animating)
+    Eegeo_ASSERT(m_currentAnimationController != NULL, "No animator set during updateAnimation, please call isAnimating before calling this function");
+    
+    m_currentAnimationController->Update(deltaSeconds);
+    
+    if(![self isAnimating])
     {
-        return;
+        m_currentAnimationController = NULL;
     }
+}
 
-    bool done = false;
-    CGRect f = self.frame;
-    const Eegeo::v2 totalDelta = (m_animationEndPos - m_animationStartPos);
-    const float totalDeltaLen = totalDelta.Length();
-    if(totalDeltaLen != 0.f)
+- (void) updateTableAnimation:(float)deltaSeconds
+{
+    for(int i = 0; i < [self.pTableViewMap count]; ++i)
     {
-        const float animationUnitsPerSecond = totalDeltaLen / m_stateChangeAnimationTimeSeconds;
-        const float frameDeltaUnits = animationUnitsPerSecond * deltaSeconds;
-        const Eegeo::v2 norm = totalDelta.Norm();
-        const Eegeo::v2 delta = norm * frameDeltaUnits;
-        m_animationCurrentPos += delta;
+        CustomTableView* customTableView = (CustomTableView*)self.pTableViewMap[@(i)];
         
-        f.origin.x = m_animationCurrentPos.x;
-        f.origin.y = m_animationCurrentPos.y;
-        
-        const Eegeo::v2 currentPosDirToEnd = (m_animationEndPos - m_animationCurrentPos).Norm();
-        const float dp = Eegeo::v2::Dot(currentPosDirToEnd, norm);
-        done = dp < 0.f;
-    }
-    else
-    {
-        done = true;
-    }
-
-    if(done)
-    {
-        f.origin.x = m_animationEndPos.x;
-        f.origin.y = m_animationEndPos.y;
-        self.frame = f;
-        m_animationCurrentPos = m_animationEndPos;
-
-        const bool closed =
-            (f.origin.x == m_closedX && m_animationStartPos.x != m_animationEndPos.x) ||
-            (f.origin.y == m_closedY && m_animationStartPos.y != m_animationEndPos.y);
-
-        const bool open =
-            (f.origin.x == m_openX && m_animationStartPos.x != m_animationEndPos.x) ||
-            (f.origin.y == m_openY && m_animationStartPos.y != m_animationEndPos.y);
-
-        const bool offScreen =
-            (f.origin.x == m_offscreenX && m_animationStartPos.x != m_animationEndPos.x) ||
-            (f.origin.y == m_offscreenY && m_animationStartPos.y != m_animationEndPos.y);
-
-        if(closed)
+        if([customTableView isAnimating])
         {
-            m_pInterop->HandleViewCloseCompleted();
-            [self setOffscreenPartsHiddenState:true];
+            [customTableView updateAnimation:deltaSeconds];
         }
-        else if(open)
-        {
-            m_pInterop->HandleViewOpenCompleted();
-        }
-        else if(offScreen)
-        {
-            self.hidden = true;
-        }
+    }
+}
 
-        m_animating = false;
-    }
-    else
-    {
-        self.frame = f;
-    }
+- (void) onTableAnimationUpdated
+{
+    [self refreshTableHeights];
+}
+
+- (void) onOffScreenAnimationComplete
+{
+    m_menuState = OFF_SCREEN;
+    
+    self.hidden = true;
+    
+    [self onMenuStateUpdated];
+}
+
+- (void) onClosedOnScreenAnimationComplete
+{
+    m_menuState = CLOSED_ON_SCREEN;
+    
+    m_pInterop->HandleViewCloseCompleted();
+    [self setOffscreenPartsHiddenState:true];
+    
+    [self onMenuStateUpdated];
+}
+
+- (void) onOpenOnScreenAnimationComplete
+{
+    m_menuState = OPEN_ON_SCREEN;
+    
+    m_pInterop->HandleViewOpenCompleted();
+    
+    [self onMenuStateUpdated];
+}
+
+- (void) onMenuStateUpdated
+{
+    // handled in sub classes
 }
 
 - (BOOL) isAnimating
 {
-    return m_animating;
+    return m_menuState == ANIMATING;
 }
 
-- (float) animationValue
+- (BOOL) isTableAnimating
 {
-    CGFloat totalDistance = (m_animationEndPos - m_animationStartPos).Length();
-    CGFloat currentDistance = (m_animationEndPos - m_animationCurrentPos).Length();
-    float result = currentDistance/totalDistance;
-    result = Eegeo::Math::Clamp(result, 0.f, 1.f);
-
-    if(m_animationEndPos.x != m_animationStartPos.x)
+    for(int i = 0; i < [self.pTableViewMap count]; ++i)
     {
-        if(m_animationEndPos.x == m_openX)
+        CustomTableView* customTableView = (CustomTableView*)self.pTableViewMap[@(i)];
+        
+        if([customTableView isAnimating])
         {
-            return 1.f - result;
-        }
-        else
-        {
-            return result;
+            return true;
         }
     }
-    else if(m_animationEndPos.y != m_animationStartPos.y)
-    {
-        if(m_animationEndPos.y == m_openY)
-        {
-            return 1.f - result;
-        }
-        else
-        {
-            return result;
-        }
-    }
+    
+    return false;
+}
 
-    return 0.f;
+- (float) openOnScreenState
+{
+    return m_openAnimationController->GetNormalizedLinearProgress();
+}
+
+- (float) onScreenState
+{
+    return m_onScreenAnimationController->GetNormalizedLinearProgress();
 }
 
 - (void) beginDrag:(CGPoint)absolutePosition velocity:(CGPoint)absoluteVelocity
 {
-    m_dragStartPos = absolutePosition;
-    m_controlStartPos = self.frame.origin;
-    [self setOffscreenPartsHiddenState:false];
-    m_pInterop->HandleDraggingViewStarted();
-}
-
-- (void) animateToX:(float)x
-{
-    self.hidden = false;
-    [self setOffscreenPartsHiddenState:false];
-    CGRect f = self.frame;
-
-    if(x == m_offscreenX || x == m_closedX)
-    {
-        m_animationStartPos.x = m_isFirstAnimationCeremony && x == m_closedX ? m_offscreenX : m_openX;
-    }
-    else if(x == m_openX)
-    {
-        m_animationStartPos.x = m_closedX;
-    }
-    else
-    {
-        Eegeo_ASSERT(false, "Invalid animation target.\n");
-    }
+    m_dragStartedClosed = (m_menuState != OPEN_ON_SCREEN);
     
-    m_isFirstAnimationCeremony = false;
-
-    m_animationStartPos.y =
-        m_animationCurrentPos.y =
-            m_animationEndPos.y = f.origin.y;
-
-    m_animationCurrentPos.x = f.origin.x;
-    m_animationEndPos.x = x;
-
-    m_animating = true;
-}
-
-- (void) animateToY:(float)y
-{
-    self.hidden = false;
+    m_menuState = DRAGGING;
+    
+    m_dragStartPos = absolutePosition;
+    
     [self setOffscreenPartsHiddenState:false];
-    CGRect f = self.frame;
-
-    if(y == m_offscreenY || y == m_closedY)
-    {
-        m_animationStartPos.y = m_isFirstAnimationCeremony && y == m_closedY ? m_offscreenY : m_openY;
-    }
-    else if(y == m_openY)
-    {
-        m_animationStartPos.y = m_closedY;
-    }
-    else
-    {
-        Eegeo_ASSERT(false, "Invalid animation target.\n");
-    }
-
-
-    m_isFirstAnimationCeremony = false;
-
-    m_animationStartPos.x =
-        m_animationCurrentPos.x =
-            m_animationEndPos.x = f.origin.x;
-
-    m_animationCurrentPos.y = f.origin.y;
-    m_animationEndPos.y = y;
-
-    m_animating = true;
+    
+    m_pInterop->HandleDraggingViewStarted();
 }
 
 - (void) updateDrag:(CGPoint)absolutePosition velocity:(CGPoint)absoluteVelocity
 {
-    Eegeo_ASSERT(false, "Derived views should implement 'updateDrag'.\n");
+    const float deltaX = absolutePosition.x - m_dragStartPos.x;
+    
+    float normalisedDragState;
+    
+    if(m_dragStartedClosed)
+    {
+        normalisedDragState = Eegeo::Math::Clamp(deltaX / (m_dragTabOpenOnScreenX - m_dragTabClosedOnScreenX), 0.0f, 1.0f);
+    }
+    else
+    {
+        normalisedDragState = Eegeo::Math::Clamp(deltaX / (m_dragTabClosedOnScreenX - m_dragTabOpenOnScreenX), 0.0f, 1.0f);
+        normalisedDragState = 1.0f - normalisedDragState;
+    }
+    
+    m_openAnimationController->SetToNormalizedOffset(normalisedDragState);
+    
+    m_pInterop->HandleDraggingViewInProgress(normalisedDragState);
 }
 
 - (void) completeDrag:(CGPoint)absolutePosition velocity:(CGPoint)absoluteVelocity
 {
-    Eegeo_ASSERT(false, "Derived views should implement 'completeDrag'.\n");
-}
-
-- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
-{
-    return NO;
+    const float deltaX = absolutePosition.x - m_dragStartPos.x;
+    
+    float normalisedDragState;
+    
+    if(m_dragStartedClosed)
+    {
+        normalisedDragState = Eegeo::Math::Clamp(deltaX / (m_dragTabOpenOnScreenX - m_dragTabClosedOnScreenX), 0.0f, 1.0f);
+    }
+    else
+    {
+        normalisedDragState = Eegeo::Math::Clamp(deltaX / (m_dragTabClosedOnScreenX - m_dragTabOpenOnScreenX), 0.0f, 1.0f);
+    }
+    
+    const float stateChangeThreshold = 0.35f;
+    
+    bool stateChange = normalisedDragState > stateChangeThreshold;
+    
+    const float velocityThreshold = 200.0f * m_pixelScale;
+    
+    if(!stateChange && fabsf(static_cast<float>(absoluteVelocity.x)) > velocityThreshold)
+    {
+        int stateChangeDirection;
+        
+        if(m_dragStartedClosed)
+        {
+            stateChangeDirection = (m_dragTabOpenOnScreenX - m_dragTabClosedOnScreenX) > 0.0f ? 1 : -1;
+        }
+        else
+        {
+            stateChangeDirection = (m_dragTabOpenOnScreenX - m_dragTabClosedOnScreenX) < 0.0f ? 1 : -1;
+        }
+        
+        int velocityDirection = (absoluteVelocity.x > 0.0f) ? 1 : -1;
+        
+        stateChange = (velocityDirection == stateChangeDirection);
+    }
+    
+    if((stateChange && m_dragStartedClosed) || (!stateChange && !m_dragStartedClosed))
+    {
+        [self animateToOpenOnScreen];
+    }
+    else
+    {
+        [self animateToClosedOnScreen];
+    }
+    
+    m_pInterop->HandleDraggingViewCompleted();
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
@@ -377,22 +490,9 @@
     {
         return nil;
     }
-
-    __block UIView *hitView = nil;
-
-    [self.subviews enumerateObjectsUsingBlock:^(UIView *obj, NSUInteger idx, BOOL *stop)
-    {
-
-        CGPoint thePoint = [self convertPoint:point toView:obj];
-        UIView *theSubHitView = [obj hitTest:thePoint withEvent:event];
-
-        if (theSubHitView != nil)
-        {
-            hitView = theSubHitView;
-            *stop = YES;
-        }
-    }];
-
+    
+    UIView *hitView = [super hitTest:point withEvent:event];
+    if (hitView == self) return nil;
     return hitView;
 }
 
@@ -409,7 +509,6 @@
     switch(recognizer.state)
     {
     case UIGestureRecognizerStateBegan:
-        _dragging = true;
         [self beginDrag:positionAbs velocity:velocity];
         break;
 
@@ -418,34 +517,15 @@
         break;
 
     case UIGestureRecognizerStateEnded:
-        _dragging = false;
-        _touchedDownInsideDragTab = false;
         [self completeDrag:positionAbs velocity:velocity];
         break;
 
     case UIGestureRecognizerStateCancelled:
-        _dragging = false;
-        _touchedDownInsideDragTab = false;
         [self completeDrag:positionAbs velocity:velocity];
         break;
 
     default:
         break;
-    }
-}
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    UITouch *touch = [[event allTouches] anyObject];
-    CGPoint touchLocation = [touch locationInView:self];
-    
-    if(CGRectContainsPoint(_pDragTab.frame, touchLocation))
-    {
-        _touchedDownInsideDragTab = true;
-    }
-    else
-    {
-        _touchedDownInsideDragTab = false;
     }
 }
 
@@ -456,7 +536,7 @@
         return true;
     }
     
-    if(_touchedDownInsideDragTab && [self canInteract])
+    if([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]])
     {
         return m_pInterop->CallBeginDrag();
     }
@@ -471,30 +551,57 @@
     }
 }
 
-- (void) refreshTableHeights: (size_t)numberOfSections numberOfCells:(size_t)numberOfCells
+- (void) refreshTableHeights
 {
-    const float tableScreenY = m_mainContainerY + m_mainContainerOffscreenOffsetY + m_tableY;
-    const float tableScreenSpace = m_screenHeight - tableScreenY;
-    m_tableHeight = fmin(tableScreenSpace, m_tableHeight);
+    float totalTableHeight = 0.0f;
     
-    const float realTableHeight =  (SECTION_HEADER_CELL_HEIGHT * numberOfSections) + (SUB_SECTION_CELL_HEIGHT * (numberOfCells));
-    self.pTableviewContainer.frame = CGRectMake(m_tableX, m_tableY, m_tableWidth, m_tableHeight);
-    self.pTableviewContainer.bounces = NO;
-    self.pTableviewContainer.contentSize = CGSizeMake(m_tableWidth, realTableHeight);
-    self.pTableview.frame = CGRectMake(0.f, 0.f, m_tableWidth, realTableHeight);
+    for(int i = 0; i < [self.pTableViewMap count]; ++i)
+    {
+        CustomTableView* customTableView = self.pTableViewMap[@(i)];
+        
+        const float tableHeight = [customTableView refreshHeight:[m_pDataProvider getRealHeightForTable:customTableView]];
+        
+        CGRect frame = customTableView.frame;
+        frame.origin.y = totalTableHeight;
+        customTableView.frame = frame;
+        
+        totalTableHeight += tableHeight;
+    }
+    
+    const float tableViewContainerHeight = fminf(m_screenHeight - self.pTableViewContainer.frame.origin.y, totalTableHeight);
+    
+    CGRect frame = self.pTableViewContainer.frame;
+    frame.size.height = tableViewContainerHeight;
+    self.pTableViewContainer.frame = frame;
+    
+    [self.pTableViewContainer setContentSize:CGSizeMake(self.pTableViewContainer.frame.size.width, totalTableHeight)];
+    
+    frame = self.pMenuContainer.frame;
+    frame.size.height = tableViewContainerHeight + m_tableSpacing;
+    self.pMenuContainer.frame = frame;
 }
 
-- (void) setCanInteract:(BOOL)canInteract
+- (float) getHeightForTable:(CustomTableView*)tableView
 {
-    [self.pTableview setUserInteractionEnabled:canInteract];
+    return [m_pDataProvider getRealHeightForTable:tableView];
+}
+
+- (void) setTableCanInteract:(BOOL)canInteract
+{
+    for(int i = 0; i < [self.pTableViewMap count]; ++i)
+    {
+        [self.pTableViewMap[@(i)] setUserInteractionEnabled:canInteract];
+    }
 }
 
 - (BOOL) canInteract
 {
-    const bool closed = self.frame.origin.x == m_closedX || self.frame.origin.y == m_closedY;
-    const bool open = self.frame.origin.x == m_openX || self.frame.origin.y == m_openY;
+    return (m_menuState == CLOSED_ON_SCREEN || m_menuState == OPEN_ON_SCREEN);
+}
 
-    return !_dragging && (closed || open);
+- (void) updateMenuSections:(ExampleApp::Menu::View::TSections*)sections
+{
+    [m_pDataProvider updateMenuSections:sections];
 }
 
 @end

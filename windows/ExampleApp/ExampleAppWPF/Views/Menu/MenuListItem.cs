@@ -10,6 +10,8 @@ namespace ExampleAppWPF
         private int m_zIndex;
         private string m_heading;
         private bool m_isExpanded;
+        private bool m_justAdded;
+        private bool m_isExpandable;
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
@@ -31,12 +33,28 @@ namespace ExampleAppWPF
             }
         }
 
+        public bool IsExpandable
+        {
+            get { return m_isExpandable; }
+
+            set
+            {
+                if (value != m_isExpandable)
+                {
+                    m_isExpandable = value;
+                    OnPropertyChanged("IsExpandable");
+                }
+            }
+        }
+
         public MenuListItem(string json, bool isExpanded, int zIndex)
         {
             m_zIndex = zIndex;            
             JObject parsed = JObject.Parse(json);
             m_heading = parsed["name"].Value<string>();
             IsExpanded = isExpanded;
+            JustAdded = m_justAdded = false;
+            IsExpandable = m_isExpandable = true;
         }
 
         public int ZIndex
@@ -57,7 +75,24 @@ namespace ExampleAppWPF
             }
         }
 
-        public bool JustAdded { get; set; }
+        public bool JustAdded
+        {
+            get
+            {
+                 return m_justAdded;
+            }
+
+            set
+            {
+                if (value != m_justAdded)
+                {
+                    m_justAdded = value;
+
+                    OnPropertyChanged("JustAdded");
+                }
+            }
+        }
+
         public bool JustRemoved
         {
             get

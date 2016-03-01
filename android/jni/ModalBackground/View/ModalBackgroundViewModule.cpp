@@ -30,6 +30,11 @@ namespace ExampleApp
                 Eegeo_DELETE(m_pController);
                 Eegeo_DELETE(m_pView);
             }
+
+            Modality::View::IModalBackgroundView& ModalBackgroundViewModule::GetModalBackgroundView() const
+            {
+            	return *m_pView;
+            }
         }
     }
 }

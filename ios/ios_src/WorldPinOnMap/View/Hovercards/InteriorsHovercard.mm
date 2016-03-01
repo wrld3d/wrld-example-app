@@ -28,7 +28,7 @@
         
         // shadow
         self.pMainControlShadowContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pMainControlShadowContainer setBackgroundColor: ExampleApp::Helpers::ColorPalette::GreyTone];
+        [self.pMainControlShadowContainer setBackgroundColor: ExampleApp::Helpers::ColorPalette::UiShadowColor];
         [self addSubview: self.pMainControlShadowContainer];
         
         // main control container
@@ -36,19 +36,19 @@
         [self.pMainControlContainer setBackgroundColor: [UIColor clearColor]];
         [self addSubview: self.pMainControlContainer];
         
-        // gold top strip
+        // top strip
         self.pTopStrip = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pTopStrip setBackgroundColor: ExampleApp::Helpers::ColorPalette::GoldTone];
+        [self.pTopStrip setBackgroundColor: ExampleApp::Helpers::ColorPalette::UiBorderColor];
         [self.pMainControlContainer addSubview: self.pTopStrip];
         
         // label container
         self.pLabelBack = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pLabelBack setBackgroundColor: ExampleApp::Helpers::ColorPalette::MainHudColor];
+        [self.pLabelBack setBackgroundColor: ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
         [self.pMainControlContainer addSubview: self.pLabelBack];
         
         // name label
         self.pNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pNameLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pNameLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextTitleColor;
         self.pNameLabel.textAlignment = NSTextAlignmentCenter;
         self.pNameLabel.numberOfLines = 2;
         self.pNameLabel.lineBreakMode = NSLineBreakByWordWrapping;

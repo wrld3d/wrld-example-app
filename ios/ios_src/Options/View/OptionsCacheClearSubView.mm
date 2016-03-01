@@ -6,8 +6,10 @@
 #include "ImageHelpers.h"
 #include "IconResources.h"
 #include "OptionsCacheClearSubView.h"
-#import "UIView+TouchExclusivity.h"
 #include "UIHelpers.h"
+
+#import "UIButton+DefaultStates.h"
+#import "UIView+TouchExclusivity.h"
 
 @implementation OptionsCacheClearSubView
 
@@ -18,34 +20,34 @@
     if(self)
     {
         self.pDarkBackgroundPanel = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pDarkBackgroundPanel.backgroundColor = ExampleApp::Helpers::ColorPalette::BlackTone;
+        self.pDarkBackgroundPanel.backgroundColor = ExampleApp::Helpers::ColorPalette::ModalBackgroundColor;
         self.pDarkBackgroundPanel.alpha = 0.4f;
         [self addSubview: self.pDarkBackgroundPanel];
         
         self.pControlContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         [self addSubview: self.pControlContainer];
         
         self.pOptionButtonsContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pOptionButtonsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pOptionButtonsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         [self.pControlContainer addSubview: self.pOptionButtonsContainer];
         
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pCloseButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_close_off") forState:UIControlStateNormal];
+        [self.pCloseButton setDefaultStatesWithImageNames:@"button_close_off" :@"button_close_on"];
         [self.pCloseButton addTarget:self action:@selector(handleCloseClicked) forControlEvents:UIControlEventTouchUpInside];
         [self.pOptionButtonsContainer addSubview: self.pCloseButton];
         
         self.pConfirmButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pConfirmButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_ok_off") forState:UIControlStateNormal];
+        [self.pConfirmButton setDefaultStatesWithImageNames:@"button_ok_off" :@"button_ok_on"];
         [self.pConfirmButton addTarget:self action:@selector(handleConfirmClicked) forControlEvents:UIControlEventTouchUpInside];
         [self.pOptionButtonsContainer addSubview: self.pConfirmButton];
         
         self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+        self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pControlContainer addSubview: self.pContentContainer];
         
         self.pMessageContent = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pMessageContent.textColor = ExampleApp::Helpers::ColorPalette::BlackTone;
+        self.pMessageContent.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
         self.pMessageContent.numberOfLines = 0;
         [self.pContentContainer addSubview: self.pMessageContent];
         
@@ -55,11 +57,11 @@
         [self.pContentContainer addSubview: self.pSpinner];
         
         self.pHeadlineContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::WhiteTone;
+        self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pControlContainer addSubview: self.pHeadlineContainer];
         
         self.pTitleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::GoldTone;
+        self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextTitleColor;
         [self.pHeadlineContainer addSubview: self.pTitleLabel];
         
         [self setTouchExclusivity:self];

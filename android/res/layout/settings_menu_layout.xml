@@ -1,0 +1,71 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/settings_menu_view"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:layout_marginTop="50dp" >
+    
+    <RelativeLayout
+        android:id="@+id/settings_menu_title_container"
+        android:layout_width="@dimen/search_results_bar_width"
+        android:layout_height="50dp"
+        android:background="@color/ui_border"
+        android:clipChildren="true" >
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/settings_menu_title_separator"
+        android:layout_width="@dimen/search_results_bar_width"
+        android:layout_height="6dp"
+        android:layout_marginTop="50dp"
+        android:background="@color/menu_header_separator" >
+    </RelativeLayout>
+    
+	<FrameLayout
+	    android:id="@+id/settings_menu_list_container"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="56dp" >
+
+		<ListView
+		    android:id="@+id/settings_menu_item_list"
+		    android:layout_width="@dimen/search_results_bar_width"
+		    android:layout_height="wrap_content"
+		    android:background="@color/ui_border"
+		    android:cacheColorHint="@android:color/transparent"
+		    android:clipChildren="false"
+		    android:clipToPadding="false"
+		    android:divider="@color/ui_border"
+		    android:dividerHeight="1dp"
+		    android:listSelector="@android:color/transparent"
+		    android:overScrollMode="never"
+		    android:paddingBottom="5dp"
+		    android:paddingLeft="5dp"
+		    android:paddingRight="5dp"
+		    android:textColor="@color/table_sub_cell_text" >
+		</ListView>
+
+	</FrameLayout>
+
+	<TextView
+	    android:id="@+id/settings_menu_title"
+	    android:layout_width="wrap_content"
+	    android:layout_height="50dp"
+	    android:paddingLeft="11dp"
+	    android:layout_marginRight="8dp"
+	    android:gravity="center_vertical"
+	    android:maxLines="1"
+	    android:text="@string/settings_header"
+	    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+	<ImageButton
+	    android:id="@+id/settings_menu_drag_button_view"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:background="@drawable/menu_button_color_states"
+	    android:src="@drawable/button_settings_menu_states" />
+
+</RelativeLayout>

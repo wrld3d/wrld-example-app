@@ -10,23 +10,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/top_panel"
     android:layout_width="wrap_content"
-    android:layout_height="40dp" >
-	    <ImageView
-	        android:layout_width="40dp"
-	        android:layout_height="fill_parent"
-	        android:id="@+id/back_button"
-	        android:background="@layout/interiors_floor_back_box"
-			android:src="@drawable/arrow" >
-		</ImageView>
+    android:layout_height="wrap_content" >
+    	<ImageView
+		    android:id="@+id/back_button"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@drawable/button_pressed_colour_change"
+		    android:baselineAlignBottom="true"
+		    android:src="@drawable/button_exit_interior_states" >
 
+		</ImageView>
+        
 		<TextView
 			android:layout_width="200dp"
-	        android:layout_height="fill_parent"
+	        android:layout_height="match_parent"
 	        android:gravity="center"
             android:layout_centerInParent="true"
 	        android:textColor="@color/darkgrey"
 	        android:textSize="18dp"
-	        android:background="@layout/interiors_floor_name_box"
+	        android:background="@color/white"
 	        android:id="@+id/floor_name" >
 		</TextView>
 	</LinearLayout>

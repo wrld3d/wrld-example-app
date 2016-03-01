@@ -17,7 +17,7 @@
                         <StackPanel Name="MainPanel" Background="{StaticResource White}" Orientation="Vertical">
                             <Rectangle Width="350" Height="7" Fill="{StaticResource Gold}" DockPanel.Dock="Top"/>
                             <StackPanel Orientation="Horizontal">
-                                <Image Source="/Assets/button_create_poi.png" Width="60" Height="60" Margin="5, 5, 0, 5"/>
+                                <Image Source="/Assets/button_create_poi_off.png" Width="60" Height="60" Margin="5, 5, 0, 5"/>
                                 <Grid Margin="10, 20, 0, 20">
                                     <TextBox Name="TitleBox" Width="180" Height="30" Foreground="{StaticResource Gold}" FontWeight="Bold" Text="" BorderThickness="0" />
                                     <TextBlock IsHitTestVisible="False" Width="175" Height="28" Text="Name your Report..."  Margin="5,2" Foreground="{StaticResource LightGrey}"

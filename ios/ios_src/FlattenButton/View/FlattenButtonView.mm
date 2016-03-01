@@ -19,11 +19,13 @@
         m_pixelScale = 1.f;
         m_screenWidth = width/pixelScale;
         m_screenHeight = height/pixelScale;
-
+        
         m_pInterop = new ExampleApp::FlattenButton::View::FlattenButtonViewInterop(self);
         [self addTarget:self action:@selector(onClick:) forControlEvents:UIControlEventTouchUpInside];
-        [self setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_streets_off") forState:UIControlStateNormal];
-        [self setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_streets_on") forState:UIControlStateSelected];
+        [self setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_flatten_off") forState:UIControlStateNormal];
+        [self setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_flatten_on") forState:UIControlStateHighlighted];
+        [self setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_unflatten_off") forState:UIControlStateSelected];
+        [self setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_unflatten_on") forState:UIControlStateSelected | UIControlStateHighlighted];
 
         m_width = 64 * m_pixelScale;
         m_height = 64 * m_pixelScale;
@@ -57,6 +59,7 @@
 - (void) onClick:(UIButton *)sender
 {
     [sender setSelected:!sender.selected];
+    
     m_pInterop->OnToggle(sender.selected);
 }
 

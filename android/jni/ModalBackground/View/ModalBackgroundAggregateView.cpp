@@ -25,12 +25,13 @@ namespace ExampleApp
                 env->DeleteLocalRef(strClassName);
 
                 m_uiViewClass = static_cast<jclass>(env->NewGlobalRef(uiClass));
-                jmethodID uiViewCtor = env->GetMethodID(m_uiViewClass, "<init>", "(Lcom/eegeo/entrypointinfrastructure/MainActivity;)V");
+                jmethodID uiViewCtor = env->GetMethodID(m_uiViewClass, "<init>", "(Lcom/eegeo/entrypointinfrastructure/MainActivity;J)V");
 
                 jobject instance = env->NewObject(
                                        m_uiViewClass,
                                        uiViewCtor,
-                                       m_nativeState.activity
+                                       m_nativeState.activity,
+									   (jlong)(this)
                                    );
 
                 m_uiView = env->NewGlobalRef(instance);
@@ -71,6 +72,21 @@ namespace ExampleApp
 
                 // Publish message to native view.
                 m_messageBus.Publish(Modality::UpdateNativeModalBackgroundMessage(modality, false));
+            }
+
+            void ModalBackgroundAggregateView::InsertTappedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+            	m_tappedCallbacks.AddCallback(callback);
+            }
+
+            void ModalBackgroundAggregateView::RemoveTappedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+            	m_tappedCallbacks.RemoveCallback(callback);
+            }
+
+            void ModalBackgroundAggregateView::HandleViewTapped()
+            {
+            	m_tappedCallbacks.ExecuteCallbacks();
             }
         }
     }

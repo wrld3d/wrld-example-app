@@ -1,55 +1,81 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/search_menu_view"
     android:layout_width="wrap_content"
     android:layout_height="fill_parent"
     android:layout_centerHorizontal="true"
     android:clipChildren="false"
-    android:clipToPadding="false" >
+    android:clipToPadding="false"
+    android:descendantFocusability="beforeDescendants"
+    android:layout_marginTop="50dp" 
+    android:layout_marginBottom="50dp" 
+    android:focusableInTouchMode="true" >
     
+    <LinearLayout
+        android:id="@+id/search_menu_list_container"
+        android:layout_width="249dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+         
+		<include
+			android:id="@+id/search_menu_title_bar"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			layout="@layout/search_results_bar_layout" />
+        
+		<ListView
+			android:id="@+id/search_menu_item_list"
+			android:layout_width="fill_parent"
+			android:layout_height="0dp" 
+			android:background="@color/ui_border"
+			android:cacheColorHint="@android:color/transparent"
+			android:listSelector="@android:color/transparent"
+			android:clipChildren="false"
+			android:clipToPadding="false"
+			android:divider="@color/ui_border"
+			android:dividerHeight="1dp"
+			android:overScrollMode="never"
+			android:paddingLeft="32dp"
+			android:paddingRight="5dp" />
+
+		<ListView
+			android:id="@+id/search_menu_options_list_view"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:background="@color/ui_border"
+			android:cacheColorHint="@android:color/transparent"
+			android:listSelector="@android:color/transparent"
+			android:clipChildren="false"
+			android:clipToPadding="false"
+			android:divider="@color/table_divider"
+			android:dividerHeight="1dp"
+			android:overScrollMode="never"
+			android:paddingLeft="32dp"
+			android:paddingRight="5dp" />
+	</LinearLayout>
+
     <RelativeLayout
+        android:id="@+id/search_menu_result_count_container"
+        android:layout_width="@dimen/menu_button_margin"
+        android:layout_height="50dp"
+        android:background="@color/ui_border" >
+		
+        <TextView
+            android:id="@+id/search_menu_result_count"
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center_horizontal"
+            android:text="0"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </RelativeLayout>
+
+	<ImageButton
+	    android:id="@+id/search_menu_drag_button_view"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-        android:layout_marginTop="50dp">
-    
-	    <LinearLayout
-	        android:id="@+id/search_menu_drag_tab_container_view"
-	        android:layout_width="wrap_content"
-	        android:layout_height="50dp" >
-	        
-    	 	<include layout="@layout/search_results_bar_layout"/>
-		
-		    <RelativeLayout
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content">
-		        
-		    	<RelativeLayout
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:id="@+id/search_menu_drag_tab_view"
-				    android:scaleX="-1"
-			        android:background="@drawable/menu_button"/>
-		        
-		        <ProgressBar
-		            android:id="@+id/search_menu_spinner"
-		            android:layout_width="40dp"
-		            android:layout_height="40dp"
-		            android:padding="5dp"
-		            android:layout_centerInParent="true"
-		            android:background="@android:color/transparent" />
-		        
-		        <TextView
-		            android:id="@+id/search_menu_num_results_text"
-		            android:layout_width="40dp"
-		            android:layout_height="40dp"
-		            android:layout_centerInParent="true"
-		            android:textColor="@color/white"
-    				android:gravity="center"
-		        	android:textSize="22dp"
-		            android:background="@android:color/transparent" />
-			</RelativeLayout>
-		</LinearLayout>
-		
-   	 	<include layout="@layout/search_menu_view_list_container_layout"/>
-	</RelativeLayout>
+	    android:contentDescription="Open menu."
+	    android:background="@drawable/menu_button_color_states"
+	    android:src="@drawable/button_search_menu_states" />
+
 </RelativeLayout>

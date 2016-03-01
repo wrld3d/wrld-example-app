@@ -46,8 +46,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, const InteriorsExplorerFloorSelectedMessage&> m_floorSelectedCallback;
                 Eegeo::Helpers::TCallback2<InteriorsExplorerController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
-            
-                AppModes::SdkModel::AppMode m_appMode;
+                
+		AppModes::SdkModel::AppMode m_appMode;
                 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
             };

@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "Modality.h"
+
 namespace ExampleApp
 {
     namespace ModalBackground
@@ -12,6 +14,8 @@ namespace ExampleApp
             {
             public:
                 virtual ~IModalBackgroundViewModule() { }
+
+                virtual Modality::View::IModalBackgroundView& GetModalBackgroundView() const = 0;
             };
         }
     }

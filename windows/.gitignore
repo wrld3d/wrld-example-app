@@ -1,2 +1,4 @@
 /nuget.exe
 /libs
+*.suo
+*.opendb

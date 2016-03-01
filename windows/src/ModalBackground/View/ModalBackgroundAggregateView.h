@@ -22,14 +22,16 @@ namespace ExampleApp
                 void SetFullyInactive();
                 void SetActiveStateToIntermediateValue(float modality);
 
+                void InsertTappedCallback(Eegeo::Helpers::ICallback0& callback);
+                void RemoveTappedCallback(Eegeo::Helpers::ICallback0& callback);
+
+                void HandleViewTapped();
+
             private:
 
                 WindowsNativeState& m_nativeState;
-                /*
-                                jclass m_uiViewClass;
-                                jobject m_uiView;
-                */
                 ExampleAppMessaging::TMessageBus& m_messageBus;
+                Eegeo::Helpers::CallbackCollection0 m_tappedCallbacks;
             };
         }
     }

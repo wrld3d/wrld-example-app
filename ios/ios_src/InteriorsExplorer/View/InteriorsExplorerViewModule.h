@@ -14,6 +14,7 @@
 #include "IMetricsService.h"
 #include "IIdentity.h"
 #include "Interiors.h"
+#include "ScreenControlViewModelIncludes.h"
 #include "IInteriorsExplorerViewModule.h"
 
 namespace ExampleApp

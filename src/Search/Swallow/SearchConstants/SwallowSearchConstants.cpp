@@ -98,6 +98,16 @@ namespace ExampleApp
                     
                     return categories;
                 }
+                
+                bool ShouldShowCategoryAsSearchResult(const std::string& category)
+                {
+                    if(category == TRANSITION_CATEGORY_NAME)
+                    {
+                        return false;
+                    }
+                    
+                    return true;
+                }
             }
         }
     }

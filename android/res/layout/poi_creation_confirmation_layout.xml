@@ -8,33 +8,37 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         
-        <Button
+        <ImageView
             android:id="@+id/poi_creation_confirmation_close_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_pin_close_states" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:clickable="true"
+            android:background="@drawable/button_pressed_colour_change"
+            android:src="@drawable/button_pin_close_states" />
 	        
         <RelativeLayout
 	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-            android:background="@drawable/place_pin_background">
-            
+	        android:layout_height="wrap_content">
+
 		    <TextView
 		        android:layout_width="wrap_content"
-		        android:layout_height="40dp"
+		        android:layout_height="50dp"
 		        android:gravity="center"
 	            android:layout_centerInParent="true"
 		        android:clickable="true"
 		        android:text="@string/pin_confirmation_title"
 		        android:textColor="@color/darkgrey"
-		        android:textSize="14dp" />
+		        android:textSize="14dp"
+		        android:background="@color/white" />
 	    </RelativeLayout>
         
-        <Button
+        <ImageView
             android:id="@+id/poi_creation_confirmation_ok_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_pin_ok_states" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:clickable="true"
+            android:background="@drawable/button_pressed_colour_change"
+            android:src="@drawable/button_pin_ok_states" />
         
     </LinearLayout>
 
