@@ -16,7 +16,7 @@ import com.eegeo.animation.updatelisteners.ViewXAnimatorUpdateListener;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.menu.MenuAnimationHandler;
 import com.eegeo.menu.MenuView;
-import com.eegeo.swallow.R;
+import com.eegeo.ProjectSwallowApp.R;
 
 public class SettingsMenuAnimationHandler extends MenuAnimationHandler
 {

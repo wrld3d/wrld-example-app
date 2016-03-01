@@ -14,7 +14,7 @@ import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.menu.MenuItemSelectedListener;
 import com.eegeo.menu.MenuListAdapter;
 import com.eegeo.menu.MenuView;
-import com.eegeo.swallow.R;
+import com.eegeo.ProjectSwallowApp.R;
 
 public class SettingsMenuView extends MenuView
 {
