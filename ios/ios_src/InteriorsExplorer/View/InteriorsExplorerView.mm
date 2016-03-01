@@ -100,11 +100,11 @@
         UIColor* backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         
         self.pDismissButtonBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(backgroundColor)] autorelease];
-        self.pDismissButtonBackground.frame = CGRectMake(0.0f, 0.0f, buttonSize, buttonSize);
+        self.pDismissButtonBackground.frame = CGRectMake(totalPanelLength-buttonSize, 0.0f, buttonSize, buttonSize);
         
         [self.pDetailsPanel addSubview:self.pDismissButtonBackground];
         
-        self.pDismissButton = [[[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, buttonSize, buttonSize)] autorelease];
+        self.pDismissButton = [[[UIButton alloc] initWithFrame:CGRectMake(totalPanelLength-buttonSize, 0.0f, buttonSize, buttonSize)] autorelease];
         [self.pDismissButton setDefaultStatesWithImageNames:@"button_exit_interior_off" :@"button_exit_interior_on"];
 
         [self.pDismissButton addTarget:self action:@selector(onCancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -115,13 +115,13 @@
         self.pDetailsPanelBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"place_pin_background")] autorelease];
         
 
-        self.pDetailsPanelBackground.frame = CGRectMake(buttonSize, 0, labelLength, detailsPanelHeight);
+        self.pDetailsPanelBackground.frame = CGRectMake(0, 0, labelLength, detailsPanelHeight);
                 
         [self.pDetailsPanel addSubview:self.pDetailsPanelBackground];
         
         const float textPadding = 2.f;
         
-        self.pFloorNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake( textPadding + buttonSize, textPadding, labelLength - textPadding, detailsPanelHeight - textPadding)] autorelease];
+        self.pFloorNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake( textPadding, textPadding, labelLength - textPadding, detailsPanelHeight - textPadding)] autorelease];
         self.pFloorNameLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
         self.pFloorNameLabel.textAlignment = NSTextAlignmentCenter;
         [self.pDetailsPanel addSubview:self.pFloorNameLabel];
