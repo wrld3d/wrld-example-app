@@ -230,9 +230,6 @@ set(resources ${resources}
 		Resources/icon1_winter.png
 		Resources/icon1_winter@2x.png
 		Resources/icon1_winter@3x.png
-		Resources/icon_create_poi.png
-		Resources/icon_create_poi@2x.png
-		Resources/icon_create_poi@3x.png
 		Resources/image_blank.png
 		Resources/image_blank@2x.png
 		Resources/image_blank@3x.png
