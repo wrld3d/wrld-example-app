@@ -114,7 +114,7 @@ namespace ExampleAppWPF
 
             m_closing = false;
             
-            TitleText = m_swallowMeetingRoomModel.Name;
+            TitleText = m_model.Title;
 
             ShowAll();
         }
