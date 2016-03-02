@@ -390,6 +390,43 @@ set(resources ${resources}
 		Resources/Tours/States/Twitter/tweet_bird@2x.png
 		Resources/Tours/States/Twitter/tweet_bird@3x.png
 		Resources/weatherstates.json
-		Resources/Yelp
+        Resources/Yelp
+        Resources/Yelp/reviewsFromYelpRED.png
+        Resources/Yelp/reviewsFromYelpRED@2x.png
+        Resources/Yelp/reviewsFromYelpRED@3x.png
+        Resources/Yelp/stars_0_0.png
+        Resources/Yelp/stars_0_0@2x.png
+        Resources/Yelp/stars_0_0@3x.png
+        Resources/Yelp/stars_1_0.png
+        Resources/Yelp/stars_1_0@2x.png
+        Resources/Yelp/stars_1_0@3x.png
+        Resources/Yelp/stars_1_5.png
+        Resources/Yelp/stars_1_5@2x.png
+        Resources/Yelp/stars_1_5@3x.png
+        Resources/Yelp/stars_2_0.png
+        Resources/Yelp/stars_2_0@2x.png
+        Resources/Yelp/stars_2_0@3x.png
+        Resources/Yelp/stars_2_5.png
+        Resources/Yelp/stars_2_5@2x.png
+        Resources/Yelp/stars_2_5@3x.png
+        Resources/Yelp/stars_3_0.png
+        Resources/Yelp/stars_3_0@2x.png
+        Resources/Yelp/stars_3_0@3x.png
+        Resources/Yelp/stars_3_5.png
+        Resources/Yelp/stars_3_5@2x.png
+        Resources/Yelp/stars_3_5@3x.png
+        Resources/Yelp/stars_4_0.png
+        Resources/Yelp/stars_4_0@2x.png
+        Resources/Yelp/stars_4_0@3x.png
+        Resources/Yelp/stars_4_5.png
+        Resources/Yelp/stars_4_5@2x.png
+        Resources/Yelp/stars_4_5@3x.png
+        Resources/Yelp/stars_5_0.png
+        Resources/Yelp/stars_5_0@2x.png
+        Resources/Yelp/stars_5_0@3x.png
+        Resources/Yelp/yelp_logo.png
+        Resources/Yelp/yelp_logo@2x.png
+        Resources/Yelp/yelp_logo@3x.png
+        Resources/Yelp/yelp_logo_100x50.png
 		ExampleApp/Images.xcassets
 )
