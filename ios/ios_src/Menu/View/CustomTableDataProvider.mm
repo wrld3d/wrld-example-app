@@ -95,7 +95,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
     // We believe the table height calculation is not correctly factoring separate height.
     // This significantly reduces the severity of MPLY-6624 but this should be revisited
     
-    CGFloat separatorHeight     = (2.f / [UIScreen mainScreen].scale);
+    CGFloat separatorHeight     = 2.f;
     CGFloat totalSeparateHeight = separatorHeight * ((numberOfHeaders+numberOfSubSectionCells)-1);
     return ((CellConstants::SectionHeaderCellHeight * numberOfHeaders + CellConstants::SubSectionCellHeight * numberOfSubSectionCells) + totalSeparateHeight);
 }
