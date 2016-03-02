@@ -29,6 +29,8 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
 {
     protected View m_closeButtonView = null;
     protected View m_progressSpinner = null;
+    protected View m_anchorArrow = null;
+    protected View m_searchMenuResultsSeparator = null;
 
     protected int m_totalHeightPx;
 
@@ -89,6 +91,12 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         
         m_searchCountText = (TextView)m_view.findViewById(R.id.search_menu_result_count);
         m_searchCountText.setText("");
+        
+        m_anchorArrow = m_view.findViewById(R.id.search_results_anchor_arrow);
+        m_anchorArrow.setVisibility(View.GONE);
+        
+        m_searchMenuResultsSeparator = m_view.findViewById(R.id.search_menu_results_separator);
+        m_searchMenuResultsSeparator.setVisibility(View.GONE);
         
         final MenuView scopedMenuView = this;
 
@@ -220,12 +228,18 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     	{
     		m_searchCountText.setText("");
     		m_searchMenuAnimationHandler.hideSearchResultsView();
+    		m_closeButtonView.setVisibility(View.GONE);
+    		m_anchorArrow.setVisibility(View.GONE);
+    		m_searchMenuResultsSeparator.setVisibility(View.GONE);
     	}
     	else
     	{
     		Integer searchResultCountWrapp = searchResultCount;
     		m_searchCountText.setText(searchResultCountWrapp.toString());
     		m_searchMenuAnimationHandler.showSearchResultsView();
+    		m_closeButtonView.setVisibility(View.VISIBLE);
+    		m_anchorArrow.setVisibility(View.VISIBLE);
+    		m_searchMenuResultsSeparator.setVisibility(View.VISIBLE);
     	}
     }
 
