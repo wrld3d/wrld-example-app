@@ -43,7 +43,7 @@ namespace ExampleAppWPF
             
             m_closing = false;
 
-            TitleText = m_swallowPersonModel.Name;
+            TitleText = m_model.Title;
             JobTitle = m_swallowPersonModel.JobTitle;
             WorkingGroup = m_swallowPersonModel.WorkingGroup;
             OfficeLocation = m_swallowPersonModel.OfficeLocation;

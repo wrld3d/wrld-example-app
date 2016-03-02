@@ -46,7 +46,7 @@ namespace ExampleAppWPF
 
             m_closing = false;
             
-            TitleText = m_swallowDepartmentModel.Name;
+            TitleText = m_model.Title;
             Description = m_swallowDepartmentModel.Description;
 
             ShowAll();
