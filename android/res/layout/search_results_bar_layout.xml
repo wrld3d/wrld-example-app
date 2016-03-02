@@ -7,13 +7,13 @@
 
     <View
         android:id="@+id/search_menu_result_background_view"
-        android:layout_width="@dimen/search_results_bar_width"
+        android:layout_width="332dp"
         android:layout_height="50dp"
         android:background="@color/ui_border" />
 
     <View
         android:id="@+id/search_menu_edit_text_background"
-        android:layout_width="@dimen/search_menu_edit_text_background_width"
+        android:layout_width="295dp"
         android:layout_height="34dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="32dp"
@@ -22,7 +22,7 @@
 
     <EditText
         android:id="@+id/search_menu_view_edit_text_view"
-        android:layout_width="@dimen/search_menu_edit_text_background_width"
+        android:layout_width="295dp"
         android:layout_height="42dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="32dp"
@@ -50,8 +50,9 @@
         android:id="@+id/search_menu_clear_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_alignRight="@+id/search_menu_view_edit_text_view"
-        android:layout_marginRight="5dp"
+        android:layout_marginRight="10dp"
         android:background="@drawable/buttonsmall_close_states"
         android:clickable="true" />
 
