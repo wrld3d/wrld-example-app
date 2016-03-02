@@ -332,7 +332,7 @@
     self.pSearchResultsTableContainerView = [[[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, m_menuContainerWidth, 0.0f)] autorelease];
     self.pSearchResultsTableContainerView.bounces = NO;
     self.pSearchResultsTableContainerView.contentSize = CGSizeMake(m_menuContainerWidth, 0.0f);
-    self.pSearchResultsTableContainerView.backgroundColor = [UIColor clearColor];
+    self.pSearchResultsTableContainerView.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
     self.pSearchResultsTableContainerView.scrollEnabled = YES;
     self.pSearchResultsTableContainerView.userInteractionEnabled = YES;
     
