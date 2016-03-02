@@ -61,11 +61,15 @@ namespace ExampleApp
                 }
                 if(Contains(category, Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME) || Contains(category, "meeting"))
                 {
-                    return "icon1_meetingroom";
+                    return "icon1_meeting_room";
                 }
-                if(Contains(category, Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME) || Contains(category, Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME) || Contains(category, "working"))
+                if(Contains(category, Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME))
                 {
-                    return "icon1_workinggroup";
+                    return "icon1_department";
+                }
+                if(Contains(category, Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME) || Contains(category, "working"))
+                {
+                    return "icon1_working_group";
                 }
                 if(Contains(category, Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME))
                 {
@@ -81,7 +85,7 @@ namespace ExampleApp
                 }
                 if(Contains(category, Search::Swallow::SearchConstants::PRINT_STATION_CATEGORY_NAME))
                 {
-                    return "icon1_printstation";
+                    return "icon1_print_station";
                 }
                 if(Contains(category, Search::Swallow::SearchConstants::EMERGENCY_EXIT_CATEGORY_NAME))
                 {

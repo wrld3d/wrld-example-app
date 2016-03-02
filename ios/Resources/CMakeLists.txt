@@ -190,6 +190,9 @@ set(resources ${resources}
 		Resources/icon1_day.png
 		Resources/icon1_day@2x.png
 		Resources/icon1_day@3x.png
+		Resources/icon1_department.png
+		Resources/icon1_department@2x.png
+		Resources/icon1_department@3x.png
 		Resources/icon1_dusk.png
 		Resources/icon1_dusk@2x.png
 		Resources/icon1_dusk@3x.png
