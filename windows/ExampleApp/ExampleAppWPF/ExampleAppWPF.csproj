@@ -702,14 +702,6 @@
       <Link>Assets\floor_selection_button_mouse_over.png</Link>
     </Resource>
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="..\..\Resources\button_exit_interior_off.png">
-      <Link>Assets\button_exit_interior_off.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\button_exit_interior_on.png">
-      <Link>Assets\button_exit_interior_on.png</Link>
-    </Resource>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)..\..\Resources" "$(TargetDir)Resources" /e /y /i /r /d
