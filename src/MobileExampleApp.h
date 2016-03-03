@@ -168,7 +168,6 @@ namespace ExampleApp
         InteriorsExplorer::SdkModel::Highlights::InteriorsHighlightVisibilityController* m_pInteriorsHighlightVisibilityController;
         Eegeo::Collision::IRayCaster* m_pRayCaster;
         VisualMap::SdkModel::IVisualMapModule* m_pVisualMapModule;
-        Surveys::SdkModel::ISurveyModule* m_pSurveyModule;
         
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
         Net::SdkModel::ConnectivityChangedObserver* m_pConnectivityChangedObserver;

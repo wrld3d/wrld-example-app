@@ -190,6 +190,9 @@ set(resources ${resources}
 		Resources/icon1_day.png
 		Resources/icon1_day@2x.png
 		Resources/icon1_day@3x.png
+		Resources/icon1_department.png
+		Resources/icon1_department@2x.png
+		Resources/icon1_department@3x.png
 		Resources/icon1_dusk.png
 		Resources/icon1_dusk@2x.png
 		Resources/icon1_dusk@3x.png
@@ -268,9 +271,6 @@ set(resources ${resources}
 		Resources/icon1_working_group.png
 		Resources/icon1_working_group@2x.png
 		Resources/icon1_working_group@3x.png
-		Resources/icon_create_poi.png
-		Resources/icon_create_poi@2x.png
-		Resources/icon_create_poi@3x.png
 		Resources/image_blank.png
 		Resources/image_blank@2x.png
 		Resources/image_blank@3x.png

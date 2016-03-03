@@ -194,8 +194,6 @@ AppHost::AppHost(
 	platformConfig.OptionsConfig.StartMapModuleAutomatically = true;
 	platformConfig.OptionsConfig.EnableInteriors = true;
 	platformConfig.OptionsConfig.InteriorsAffectedByFlattening = false;
-    platformConfig.MapLayersConfig.Interiors.LabelGlyphColor = Eegeo::Helpers::MakeColorRGB(18, 86, 176);
-    platformConfig.MapLayersConfig.Interiors.LabelOutlineColor = Eegeo::Rendering::Colors::WHITE;
 
 	platformConfig.CoverageTreeConfig.ManifestUrl = config.CoverageTreeManifestURL();
 	platformConfig.CityThemesConfig.StreamedManifestUrl = config.ThemeManifestURL();

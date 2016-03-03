@@ -13,15 +13,21 @@
     
     <LinearLayout
         android:id="@+id/search_menu_list_container"
-        android:layout_width="249dp"
+        android:layout_width="332dp"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-         
+        
 		<include
 			android:id="@+id/search_menu_title_bar"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			layout="@layout/search_results_bar_layout" />
+		
+		<View
+        	android:id="@+id/search_menu_title_separator"
+        	android:layout_width="fill_parent"
+        	android:layout_height="6dp"
+        	android:background="@color/menu_header_separator" />
         
 		<ListView
 			android:id="@+id/search_menu_item_list"
@@ -37,6 +43,12 @@
 			android:overScrollMode="never"
 			android:paddingLeft="32dp"
 			android:paddingRight="5dp" />
+		
+		<View
+        	android:id="@+id/search_menu_results_separator"
+        	android:layout_width="fill_parent"
+        	android:layout_height="6dp"
+        	android:background="@color/menu_header_separator" />
 
 		<ListView
 			android:id="@+id/search_menu_options_list_view"
@@ -69,6 +81,15 @@
             android:text="0"
             android:textAppearance="?android:attr/textAppearanceMedium" />
     </RelativeLayout>
+    
+    <ImageView
+	    android:id="@+id/search_results_anchor_arrow"
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:layout_marginTop="42dp"
+		android:layout_marginLeft="50dp"
+		android:src="@drawable/results_anchor_arrow"> 
+    </ImageView>
 
 	<ImageButton
 	    android:id="@+id/search_menu_drag_button_view"

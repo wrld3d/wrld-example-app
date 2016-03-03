@@ -46,6 +46,7 @@ namespace ExampleApp
                                                               Eegeo_NEW(View::SwallowCategoryMenuOption)(Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME,
                                                                                                          false,
                                                                                                          menuViewModel,
+                                                                                                         static_cast<float>(Eegeo::Space::EarthConstants::Radius*2.0),
                                                                                                          messageBus));
                     
                     m_pFacilitiesMenuModel = Eegeo_NEW(Menu::View::MenuModel)();

@@ -221,7 +221,7 @@
 
 
     self.pIconContainer.frame = CGRectMake(0.f, 0.f, headlineHeight, headlineHeight);
-    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pIconContainer, "icon_create_poi", ExampleApp::Helpers::ImageHelpers::Centre);
+    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pIconContainer, "button_create_poi_off", ExampleApp::Helpers::ImageHelpers::Centre);
 
     const float titlePadding = 10.0f;
     self.pTitleLabel.frame = CGRectMake(headlineHeight + titlePadding,

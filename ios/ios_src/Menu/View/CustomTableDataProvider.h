@@ -29,8 +29,6 @@
 
 - (void)updateMenuSections:(ExampleApp::Menu::View::TSections*)sections;
 
-- (float)getRealTableHeight;
-
 - (float)getRealHeightForTable:(CustomTableView*)customTableView;
 
 @property (nonatomic, retain) UIImage* pOpenableMenuArrow;
