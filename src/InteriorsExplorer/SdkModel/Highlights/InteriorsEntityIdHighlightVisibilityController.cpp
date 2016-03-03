@@ -36,7 +36,6 @@ namespace ExampleApp
                 : InteriorsEntityIdHighlightController(instanceRepository, defaultHighlightColor)
                 , m_searchService(searchService)
                 , m_searchQueryPerformer(searchQueryPerformer)
-                , m_searchResultRepository(searchResultRepository)
                 , m_searchResultsHandler(this, &InteriorsEntityIdHighlightVisibilityController::OnSearchResultsLoaded)
                 , m_searchResultsClearedHandler(this, &InteriorsEntityIdHighlightVisibilityController::OnSearchResultCleared)
                 , m_handleSearchResultSectionItemSelectedMessageBinding(this, &InteriorsEntityIdHighlightVisibilityController::OnSearchItemSelected)
@@ -88,7 +87,7 @@ namespace ExampleApp
                     m_lastHighlightedRenderables.clear();
 
                     int i = 0;
-                    for(std::vector<Search::SdkModel::SearchResultModel>::const_iterator it = results.begin(); it != results.end(); ++it, ++i)
+                    for(std::vector<Search::SdkModel::SearchResultModel>::const_iterator it = results.begin(); it != results.end(); ++it)
                     {
                         if((*it).GetCategory() == Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME)
                         {
@@ -106,6 +105,11 @@ namespace ExampleApp
                             desks[0] = person.GetDeskCode();
 
                             m_lastSearchedResults.insert(std::make_pair(i, desks));
+                        }
+                        
+                        if ((*it).GetCategory() != Search::Swallow::SearchConstants::TRANSITION_CATEGORY_NAME)
+                        {
+                            ++i;
                         }
                     }
                 }

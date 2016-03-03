@@ -43,7 +43,6 @@ namespace ExampleApp
                     
                     Search::SdkModel::ISearchService& m_searchService;
                     Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
-                    Search::SdkModel::ISearchResultRepository& m_searchResultRepository;
 
                     ExampleAppMessaging::TMessageBus& m_messageBus;
 
