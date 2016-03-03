@@ -1,9 +1,12 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "TransitionToInteriorPointStage.h"
-#include "InteriorController.h"
 #include "InteriorsExplorerModel.h"
-#include "InteriorsExplorerCameraController.h"
+#include "InteriorsCameraController.h"
+#include "InteriorInteractionModel.h"
+#include "InteriorSelectionModel.h"
+#include "InteriorTransitionModel.h"
+
 
 namespace ExampleApp
 {
@@ -11,17 +14,19 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            TransitionToInteriorPointStage::TransitionToInteriorPointStage(Eegeo::Resources::Interiors::InteriorController& interiorController,
-                                                                           const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+            TransitionToInteriorPointStage::TransitionToInteriorPointStage(Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                                           Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                                                           const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                                                            InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
-                                                                           InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& cameraController,
+                                                                           Eegeo::Resources::Interiors::InteriorsCameraController& cameraController,
                                                                            const Eegeo::dv3& newInterestPoint,
                                                                            float newDistanceToInterest,
                                                                            const Eegeo::Resources::Interiors::InteriorId &interiorId,
                                                                            int targetFloorIndex,
                                                                            bool jumpIfFar)
-            : m_interiorController(interiorController)
+            : m_interiorInteractionModel(interiorInteractionModel)
             , m_interiorSelectionModel(interiorSelectionModel)
+            , m_interiorTransitionModel(interiorTransitionModel)
             , m_interiorsExplorerModel(interiorsExplorerModel)
             , m_cameraController(cameraController)
             , m_newInterestPoint(newInterestPoint)
@@ -41,11 +46,11 @@ namespace ExampleApp
             
             void TransitionToInteriorPointStage::Start()
             {
-                Eegeo_ASSERT(m_interiorController.InteriorInScene(), "Must be inside interior to start this transition");
+                Eegeo_ASSERT(m_interiorInteractionModel.HasInteriorModel(), "Must be inside interior to start this transition");
                 m_startCameraInterestAltitude = m_cameraController.GetFloorOffsetHeight();
                 m_endCameraInterestAltitude = m_startCameraInterestAltitude;
-                m_interiorController.ClearSelectedInterior();
-                m_interiorController.SetSelectedInterior(m_interiorId);
+                m_interiorSelectionModel.ClearSelection();
+                m_interiorSelectionModel.SelectInteriorId(m_interiorId);
                 m_interiorsExplorerModel.HideInteriorExplorer();
                 m_transitionTime = 0.0f;
                 m_startInterestPoint = m_cameraController.GetInterestLocation();
@@ -63,9 +68,9 @@ namespace ExampleApp
                     return;
                 }
                 
-                if(!m_initialisedNextInterior && m_interiorController.InteriorInScene())
+                if(!m_initialisedNextInterior && m_interiorInteractionModel.HasInteriorModel())
                 {
-                    m_interiorController.SetCurrentFloor(m_targetFloorIndex, true);
+                    m_interiorInteractionModel.SetSelectedFloorIndex(m_targetFloorIndex);
                     m_endCameraInterestAltitude = m_cameraController.GetFloorOffsetHeight();
                     m_cameraInterestAltitudeStartTime = m_transitionTime;
                     m_initialisedNextInterior = true;
@@ -112,13 +117,13 @@ namespace ExampleApp
                 m_cameraController.SetCameraInterestAltitude(m_endCameraInterestAltitude);
                 m_cameraController.SetApplyRestrictions(true);
                 m_cameraController.SetApplyFloorOffset(true);
-                m_interiorController.SetCurrentFloor(m_targetFloorIndex, true);
+                m_interiorInteractionModel.SetSelectedFloorIndex(m_targetFloorIndex);
                 m_interiorsExplorerModel.ShowInteriorExplorer(true);
             }
             
             const bool TransitionToInteriorPointStage::StageIsComplete() const
             {
-                return m_transitionTime >= 1.0f && m_interiorController.InteriorIsVisible();
+                return m_transitionTime >= 1.0f && m_interiorTransitionModel.InteriorIsVisible();
             }
             
             bool TransitionToInteriorPointStage::ShouldJumpTo(Eegeo::dv3& newInterestPoint)

@@ -449,5 +449,17 @@ set(resources ${resources}
 		Resources/Yelp/yelp_logo@2x.png
 		Resources/Yelp/yelp_logo@3x.png
 		Resources/Yelp/yelp_logo_100x50.png
+		Resources/interior_exit_down.png
+		Resources/interior_exit_down@2x.png
+		Resources/interior_exit_down@3x.png
+		Resources/interior_exit.png
+		Resources/interior_exit@2x.png
+		Resources/interior_exit@3x.png
+		Resources/floor_selection_button_down.png
+		Resources/floor_selection_button_down@2x.png
+		Resources/floor_selection_button_down@3x.png
+		Resources/floor_selection_button.png
+		Resources/floor_selection_button@2x.png
+		Resources/floor_selection_button@3x.png
 		ExampleApp/Images.xcassets
 )

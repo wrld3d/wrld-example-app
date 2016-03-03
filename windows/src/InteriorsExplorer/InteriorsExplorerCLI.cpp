@@ -16,4 +16,10 @@ namespace ExampleApp
         InteriorsExplorer::View::InteriorsExplorerView* view = reinterpret_cast<InteriorsExplorer::View::InteriorsExplorerView*>(nativeObjectPtr.ToPointer());
         view->SelectFloor(index);
     }
+
+    void InteriorsExplorerCLIMethods::SetFloorSelectionDrag(System::IntPtr nativeObjectPtr, System::Double dragParam)
+    {
+        InteriorsExplorer::View::InteriorsExplorerView* view = reinterpret_cast<InteriorsExplorer::View::InteriorsExplorerView*>(nativeObjectPtr.ToPointer());
+        view->SetFloorSelectionDrag(static_cast<float>(dragParam));
+    }
 }

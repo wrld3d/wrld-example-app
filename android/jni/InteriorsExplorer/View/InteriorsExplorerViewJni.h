@@ -12,4 +12,9 @@ extern "C"
 			JNIEnv* jenv, jobject obj,
 			jlong nativeObjectPtr,
 			jint floor);
+
+	JNIEXPORT void JNICALL Java_com_eegeo_interiorsexplorer_InteriorsExplorerViewJniMethods_OnFloorSelectionDragged(
+				JNIEnv* jenv, jobject obj,
+				jlong nativeObjectPtr,
+				jfloat dragParameter);
 }

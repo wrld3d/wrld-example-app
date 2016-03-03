@@ -6,7 +6,6 @@
 #include "InteriorsEntityModel.h"
 #include "LatLongAltitude.h"
 #include "Pin.h"
-#include "InteriorController.h"
 #include "MathsHelpers.h"
 #include "PinController.h"
 #include "InteriorsModelRepository.h"
@@ -14,6 +13,9 @@
 #include "IInteriorsLabelController.h"
 #include "InteriorsFloorModel.h"
 #include "TerrainHeightProvider.h"
+#include "InteriorInteractionModel.h"
+#include "InteriorsEntitiesRepository.h"
+#include "InteriorTransitionModel.h"
 
 namespace ExampleApp
 {
@@ -21,34 +23,31 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            bool IsViewingInterior(const InteriorViewState& interiorViewState)
-            {
-                return interiorViewState == Viewing || interiorViewState == Exiting;
-            }
-            
             InteriorsEntitiesPinsController::InteriorsEntitiesPinsController(Eegeo::Resources::Interiors::Entities::InteriorsEntitiesRepository& interiorsEntitiesRepostiory,
                                                                              Eegeo::Pins::PinController& pinController,
                                                                              Eegeo::Pins::PinRepository& pinRepository,
-                                                                             Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                                             Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                                             const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                                                              Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& interiorsLabelsController,
                                                                              Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider)
             : m_interiorsEntitiesRepository(interiorsEntitiesRepostiory)
             , m_pinController(pinController)
             , m_pinRepository(pinRepository)
-            , m_interiorController(interiorController)
+            , m_interiorInteractionModel(interiorInteractionModel)
+            , m_interiorTransitionModel(interiorTransitionModel)
             , m_interiorsLabelsController(interiorsLabelsController)
             , m_entitiesAddedCallback(this, &InteriorsEntitiesPinsController::OnEntitiesAdded)
             , m_entitiesRemovedCallback(this, &InteriorsEntitiesPinsController::OnEntitiesRemoved)
-            , m_interiorVisibilityChangedCallback(this, &InteriorsEntitiesPinsController::OnInteriorVisibilityChanged)
+            , m_interiorModelChangedCallback(this, &InteriorsEntitiesPinsController::HandleInteriorModelChanged)
+            , m_interiorInteractionStateChangedCallback(this, &InteriorsEntitiesPinsController::HandleInteriorInteractionStateChanged)
             , m_lastId(0)
-            , m_pCurrentInteriorsModel(NULL)
-            , m_interiorViewState(NotViewing)
             , m_terrainHeightProvider(terrainHeightProvider)
             {
                 m_interiorsEntitiesRepository.RegisterEntitiesAddedCallback(m_entitiesAddedCallback);
                 m_interiorsEntitiesRepository.RegisterEntitiesRemovedCallback(m_entitiesRemovedCallback);
                 
-                m_interiorController.RegisterVisibilityChangedCallback(m_interiorVisibilityChangedCallback);
+                m_interiorInteractionModel.RegisterModelChangedCallback(m_interiorModelChangedCallback);
+                m_interiorInteractionModel.RegisterInteractionStateChangedCallback(m_interiorInteractionStateChangedCallback);
                 
                 // This is same across all interiors right now. If we want different omissions per interior
                 // then we'll need to do a bit of work.
@@ -71,7 +70,8 @@ namespace ExampleApp
                 m_interiorsEntitiesRepository.UnregisterEntitiesAddedCallback(m_entitiesAddedCallback);
                 m_interiorsEntitiesRepository.UnregisterEntitiesRemovedCallback(m_entitiesRemovedCallback);
                 
-                m_interiorController.UnregisterVisibilityChangedCallback(m_interiorVisibilityChangedCallback);
+                m_interiorInteractionModel.UnregisterModelChangedCallback(m_interiorModelChangedCallback);
+                m_interiorInteractionModel.UnregisterInteractionStateChangedCallback(m_interiorInteractionStateChangedCallback);
                 
                 for (std::map<std::string, int>::const_iterator it = m_labelNameToIconIndex.begin(); it != m_labelNameToIconIndex.end(); ++it)
                 {
@@ -84,7 +84,7 @@ namespace ExampleApp
             {
                 const float TransitionTimeInSeconds = 0.75f;
                 
-                if (IsViewingInterior(m_interiorViewState) && m_interiorController.InteriorIsVisible())
+                if (m_interiorInteractionModel.HasInteriorModel() && m_interiorTransitionModel.InteriorIsVisible())
                 {
                     UpdateScaleForPins(dt/TransitionTimeInSeconds);
                 }
@@ -97,9 +97,13 @@ namespace ExampleApp
             
             void InteriorsEntitiesPinsController::AddPinsForEntities(const Eegeo::Resources::Interiors::Entities::TEntityModelVector& entities)
             {
+                Eegeo_ASSERT(m_interiorInteractionModel.HasInteriorModel());
+                
+                const Eegeo::Resources::Interiors::InteriorsModel& interiorModel = *m_interiorInteractionModel.GetInteriorModel();
+                
                 for (Eegeo::Resources::Interiors::Entities::TEntityModelVector::const_iterator it = entities.begin(); it != entities.end(); ++it)
                 {
-                    const Eegeo::Resources::Interiors::Entities::InteriorsEntityMetadata *pMetadata = m_pCurrentInteriorsModel->GetMetadataForEntityFromCategory("labels", (*it)->GetIdentifier());
+                    const Eegeo::Resources::Interiors::Entities::InteriorsEntityMetadata *pMetadata = interiorModel.GetMetadataForEntityFromCategory("labels", (*it)->GetIdentifier());
                     if (pMetadata == NULL)
                     {
                         continue;
@@ -107,17 +111,16 @@ namespace ExampleApp
                     
                     if (m_labelNameToIconIndex.find(pMetadata->name) != m_labelNameToIconIndex.end())
                     {
-                        AddPinForEntity(**it);
+                        AddPinForEntity(**it, interiorModel);
                     }
                 }
             }
             
-            void InteriorsEntitiesPinsController::AddPinForEntity(const Eegeo::Resources::Interiors::Entities::InteriorsEntityModel& model)
+            void InteriorsEntitiesPinsController::AddPinForEntity(const Eegeo::Resources::Interiors::Entities::InteriorsEntityModel& model, const Eegeo::Resources::Interiors::InteriorsModel& interiorModel)
             {
-                Eegeo_ASSERT(m_pCurrentInteriorsModel != NULL, "Can't load entity pins without interior model");
                 Eegeo_ASSERT(m_entityToPinIdMap.find(&model) == m_entityToPinIdMap.end(), "Already has pin for model");
                 
-                const Eegeo::Resources::Interiors::Entities::InteriorsEntityMetadata *pMetadata = m_pCurrentInteriorsModel->GetMetadataForEntityFromCategory("labels", model.GetIdentifier());
+                const Eegeo::Resources::Interiors::Entities::InteriorsEntityMetadata *pMetadata = interiorModel.GetMetadataForEntityFromCategory("labels", model.GetIdentifier());
                 
                 Eegeo_ASSERT(m_labelNameToIconIndex.find(pMetadata->name) != m_labelNameToIconIndex.end(), "Wasn't expecting to generate a pin for this label");
                 Eegeo_ASSERT(pMetadata != NULL, "No metadata to create entity pin");
@@ -175,15 +178,19 @@ namespace ExampleApp
             {
                 std::map<int, float> easedfloorScales;
 
-                const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel = NULL;
-                Eegeo_ASSERT(m_interiorController.TryGetCurrentFloorModel(pFloorModel), "Failed to fetch current floor");
-                int currentFloorNumber = pFloorModel->GetFloorNumber();
+                Eegeo_ASSERT(m_interiorInteractionModel.HasInteriorModel(), "no current interior");
+                
+                const Eegeo::Resources::Interiors::InteriorsFloorModel& floorModel = *m_interiorInteractionModel.GetSelectedFloorModel();
+                
+                int currentFloorNumber = floorModel.GetFloorNumber();
+
+                const bool canShowPins = m_interiorInteractionModel.IsCollapsed() && m_interiorTransitionModel.IsFadingInOrFullyVisible();
                 
                 for (std::map<int, float>::iterator it = m_floorToScaleMap.begin(); it != m_floorToScaleMap.end(); ++it)
                 {
                     const int floorNumber = it->first;
                     float scale = it->second;
-                    float scaleDelta = floorNumber == currentFloorNumber && m_interiorViewState != Exiting ? t : -t;
+                    float scaleDelta = floorNumber == currentFloorNumber && canShowPins ? t : -t;
                     
                     scale += scaleDelta;
                     m_floorToScaleMap[floorNumber] = Eegeo::Math::Clamp01(scale);
@@ -201,9 +208,33 @@ namespace ExampleApp
                 }
             }
             
+            bool InteriorsEntitiesPinsController::CanProcessEntities(const std::string& interiorName, const Eegeo::Resources::Interiors::Entities::TEntityModelVector& entities) const
+            {
+                if (!m_interiorInteractionModel.HasInteriorModel())
+                {
+                    return false;
+                }
+                
+                if (entities.empty())
+                {
+                    return false;
+                }
+                
+                const Eegeo::Resources::Interiors::InteriorsModel& interiorModel = *m_interiorInteractionModel.GetInteriorModel();
+                
+                if (interiorModel.GetName() != interiorName)
+                {
+                    return false;
+                }
+                
+                return true;
+            }
+            
+            
+            
             void InteriorsEntitiesPinsController::OnEntitiesAdded(const std::string& interiorName, const Eegeo::Resources::Interiors::Entities::TEntityModelVector& entities)
             {
-                if (m_pCurrentInteriorsModel == NULL || interiorName != m_pCurrentInteriorsModel->GetName() || entities.empty())
+                if (!CanProcessEntities(interiorName, entities))
                 {
                     return;
                 }
@@ -213,7 +244,7 @@ namespace ExampleApp
             
             void InteriorsEntitiesPinsController::OnEntitiesRemoved(const std::string& interiorName, const Eegeo::Resources::Interiors::Entities::TEntityModelVector& entities)
             {
-                if (m_pCurrentInteriorsModel == NULL || interiorName != m_pCurrentInteriorsModel->GetName() || entities.empty())
+                if (!CanProcessEntities(interiorName, entities))
                 {
                     return;
                 }
@@ -227,27 +258,22 @@ namespace ExampleApp
                 }
             }
             
-            void InteriorsEntitiesPinsController::OnInteriorVisibilityChanged()
+            void InteriorsEntitiesPinsController::HandleInteriorInteractionStateChanged()
             {
-                if (m_interiorController.InteriorIsVisible())
+                
+            }
+            
+            void InteriorsEntitiesPinsController::HandleInteriorModelChanged()
+            {
+                if (m_interiorInteractionModel.HasInteriorModel())
                 {
-                    bool success = m_interiorController.TryGetCurrentModel(m_pCurrentInteriorsModel);
-                    if (!success)
-                    {
-                        return;
-                    }
+                    const Eegeo::Resources::Interiors::InteriorsModel& interiorModel = *m_interiorInteractionModel.GetInteriorModel();
                     
-                    Eegeo_ASSERT(m_pCurrentInteriorsModel != NULL, "Have NULL interior model");
-                    m_interiorViewState = Viewing;
-                    
-                    const Eegeo::Resources::Interiors::Entities::TEntityModelVector& entities = m_interiorsEntitiesRepository.GetAllStreamedEntitiesForInterior(m_pCurrentInteriorsModel->GetName());
+                    const Eegeo::Resources::Interiors::Entities::TEntityModelVector& entities = m_interiorsEntitiesRepository.GetAllStreamedEntitiesForInterior(interiorModel.GetName());
                     AddPinsForEntities(entities);
                 }
                 else
                 {
-                    m_interiorViewState = NotViewing;
-                    m_pCurrentInteriorsModel = NULL;
-                    
                     RemoveAllPins();
                     m_floorToScaleMap.clear();
                 }

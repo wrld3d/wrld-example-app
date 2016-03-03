@@ -2,7 +2,6 @@
 
 #include "InteriorExplorerSetupState.h"
 #include "IAppCameraController.h"
-#include "InteriorController.h"
 #include "InteriorsExplorerModel.h"
 
 namespace ExampleApp

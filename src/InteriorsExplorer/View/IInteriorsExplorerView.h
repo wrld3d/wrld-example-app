@@ -21,6 +21,7 @@ namespace ExampleApp
                 
                 virtual void Dismiss() = 0;
                 virtual void SelectFloor(int floor) = 0;
+                virtual void SetFloorSelectionDrag(float dragParam) = 0;
                 
                 virtual void OnDismissed() = 0;
                 virtual void SetFloorName(const std::string& name) = 0;
@@ -31,6 +32,8 @@ namespace ExampleApp
                 virtual void RemoveDismissedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void InsertFloorSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback) = 0;
                 virtual void RemoveFloorSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback) = 0;
+                virtual void InsertFloorSelectionDraggedCallback(Eegeo::Helpers::ICallback1<float>& callback) = 0;
+                virtual void RemoveFloorSelectionDraggedCallback(Eegeo::Helpers::ICallback1<float>& callback) = 0;
                 
                 virtual void SetTouchEnabled(bool enabled) = 0;
             };

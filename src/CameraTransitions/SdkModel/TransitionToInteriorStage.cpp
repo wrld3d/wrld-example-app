@@ -1,10 +1,12 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "TransitionToInteriorStage.h"
-#include "InteriorController.h"
 #include "InteriorSelectionModel.h"
-#include "InteriorsExplorerCameraController.h"
 #include "InteriorId.h"
+#include "InteriorInteractionModel.h"
+#include "InteriorSelectionModel.h"
+#include "InteriorsCameraController.h"
+#include "InteriorTransitionModel.h"
 
 namespace ExampleApp
 {
@@ -12,15 +14,18 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            TransitionToInteriorStage::TransitionToInteriorStage(Eegeo::Resources::Interiors::InteriorController& interiorController,
-                                                                 const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                                 InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& cameraController,
+            TransitionToInteriorStage::TransitionToInteriorStage(
+                                                                 Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                                 Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                                                 const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
+                                                                 Eegeo::Resources::Interiors::InteriorsCameraController& cameraController,
                                                                  const Eegeo::dv3& newInterestPoint,
                                                                  float newDistanceToInterest,
                                                                  const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                                                  int targetFloorIndex)
-            : m_interiorController(interiorController)
+            : m_interiorInteractionModel(interiorInteractionModel)
             , m_interiorSelectionModel(interiorSelectionModel)
+            , m_interiorTransitionModel(interiorTransitionModel)
             , m_cameraController(cameraController)
             , m_newInterestPoint(newInterestPoint)
             , m_interiorId(interiorId)
@@ -38,7 +43,7 @@ namespace ExampleApp
                 if(m_isAlreadyInInterior)
                 {
                     m_transitionTime = 0.0f;
-                    m_interiorController.SetCurrentFloor(m_targetFloorIndex);
+                    m_interiorInteractionModel.SetSelectedFloorIndex(m_targetFloorIndex);
                     m_startInterestPoint = m_cameraController.GetInterestLocation();
                     m_startDistanceToInterest = m_cameraController.GetDistanceToInterest();
                 }
@@ -46,7 +51,7 @@ namespace ExampleApp
                 {
                     m_cameraController.SetInterestLocation(m_newInterestPoint);
                     m_cameraController.SetDistanceToInterest(m_targetDistanceToInterest);
-                    m_interiorController.SetSelectedInterior(m_interiorId);
+                    m_interiorSelectionModel.SelectInteriorId(m_interiorId);
                 }
             }
             
@@ -63,9 +68,9 @@ namespace ExampleApp
                     float lerpDistance = Eegeo::Math::Lerp(m_startDistanceToInterest, m_targetDistanceToInterest, smoothT);
                     m_cameraController.SetDistanceToInterest(lerpDistance);
                 }
-                else if(m_interiorController.InteriorInScene())
+                else if(m_interiorInteractionModel.HasInteriorModel())
                 {
-                    m_interiorController.SetCurrentFloor(m_targetFloorIndex, true);
+                    m_interiorInteractionModel.SetSelectedFloorIndex(m_targetFloorIndex);
                 }
             }
             
@@ -81,7 +86,7 @@ namespace ExampleApp
                 {
                     return m_transitionTime >= 1.0f;
                 }
-                else return m_interiorController.InteriorIsVisible();
+                else return m_interiorTransitionModel.InteriorIsVisible();
             }
             
             const bool TransitionToInteriorStage::StageHasFailed() const

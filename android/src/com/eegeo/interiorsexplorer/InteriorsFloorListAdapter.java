@@ -27,28 +27,18 @@ public class InteriorsFloorListAdapter extends BaseAdapter
     private int m_itemViewId;
     private List<String> m_nameData;
     private Activity m_context;
-    
-    private int m_currentlySelectedItem;
 
     public InteriorsFloorListAdapter(Activity context, int itemViewId)
     {
         m_context = context;
         m_itemViewId = itemViewId;
         m_nameData = new ArrayList<String>();
-        m_currentlySelectedItem = 0;
     }
 
     public void setData(List<String> nameData)
     {
         m_nameData = nameData;
-        m_currentlySelectedItem = nameData.size() - 1;
         notifyDataSetChanged();
-    }
-    
-    public void updateSelectedItem(int selection)
-    {
-    	m_currentlySelectedItem = m_nameData.size() - 1 - selection;
-    	notifyDataSetChanged();
     }
 
     @Override
@@ -82,18 +72,22 @@ public class InteriorsFloorListAdapter extends BaseAdapter
      
         TextView nameLabel = (TextView)contextView.findViewById(R.id.floor_name);
         
-        if(index == m_currentlySelectedItem)
-        {
-        	nameLabel.setBackgroundColor((255 << 24) | (255 << 16) | (255 << 8) | 255);
-        }
-        else
-        {
-        	nameLabel.setBackgroundResource(R.drawable.place_pin_background);
-        }
         nameLabel.setText(floorName);
         nameLabel.setHorizontallyScrolling(false);
         nameLabel.setSingleLine();
-
+        
+        View upperLine = (View)contextView.findViewById(R.id.interiors_explorer_floor_list_item_topline);
+        if(upperLine != null)
+        {
+        	upperLine.setVisibility(index == 0 ? View.INVISIBLE : View.VISIBLE);
+        }
+        
+        View bottomLine = (View)contextView.findViewById(R.id.interiors_explorer_floor_list_item_bottomline);
+        if(bottomLine != null)
+        {
+        	bottomLine.setVisibility(index == m_nameData.size()-1 ? View.INVISIBLE : View.VISIBLE);
+        }
+        
         return contextView;
     }
 }

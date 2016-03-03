@@ -15,6 +15,7 @@
 #include <queue>
 #include "AppCamera.h"
 #include "CallbackCollection.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -27,14 +28,16 @@ namespace ExampleApp
             public:
 
                 CameraTransitionController(Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
-                                           ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController,
+                                           Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
                                            Eegeo::Location::NavigationService& navigationService,
                                            Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
                                            ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                            ExampleApp::AppCamera::SdkModel::IAppCameraController& appCameraController,
                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                           Eegeo::Resources::Interiors::InteriorController& interiorController,
-                                           InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel);
+                                           Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                           const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
+                                           InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
+                                           ExampleAppMessaging::TMessageBus& messageBus);
 
                 void StartTransitionTo(const Eegeo::dv3& newInterestPoint,
                                        float distanceFromInterest,
@@ -95,13 +98,14 @@ namespace ExampleApp
                 void StartQueuedTransition();
                 
                 Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_cameraController;
-                ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& m_interiorsCameraController;
+                Eegeo::Resources::Interiors::InteriorsCameraController& m_interiorsCameraController;
                 Eegeo::Location::NavigationService& m_navigationService;
                 Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& m_terrainHeightProvider;
                 ExampleApp::AppModes::SdkModel::IAppModeModel& m_appModeModel;
                 ExampleApp::AppCamera::SdkModel::IAppCameraController& m_appCameraController;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
-                Eegeo::Resources::Interiors::InteriorController& m_interiorController;
+                Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
+                const Eegeo::Resources::Interiors::InteriorTransitionModel& m_interiorTransitionModel;
                 InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel;
                
                 Eegeo::Resources::Interiors::InteriorId m_defaultInteriorId;

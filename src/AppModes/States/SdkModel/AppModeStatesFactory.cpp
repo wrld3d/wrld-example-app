@@ -6,9 +6,8 @@
 #include "InteriorExplorerState.h"
 #include "TourState.h"
 #include "AppGlobeCameraWrapper.h"
-#include "InteriorsExplorerCameraController.h"
+#include "AppInteriorCameraWrapper.h"
 #include "IToursCameraController.h"
-#include "AppGlobeCameraWrapper.h"
 
 namespace ExampleApp
 {
@@ -19,9 +18,8 @@ namespace ExampleApp
             namespace SdkModel
             {
                 AppModeStatesFactory::AppModeStatesFactory(AppCamera::SdkModel::IAppCameraController& appCameraController,
-                                                           Eegeo::Resources::Interiors::InteriorController& interiorController,
                                                            AppCamera::SdkModel::AppGlobeCameraWrapper& worldCameraController,
-                                                           InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorCameraController,
+                                                           AppCamera::SdkModel::AppInteriorCameraWrapper& interiorCameraController,
                                                            Tours::SdkModel::Camera::IToursCameraController& toursCameraController,
                                                            Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
                                                            InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdate,
@@ -30,11 +28,11 @@ namespace ExampleApp
                                                            AppModes::SdkModel::IAppModeModel& appModeModel,
                                                            Tours::SdkModel::ITourService& tourService,
                                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                                           Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                            Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                                            MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
                                                            VisualMap::SdkModel::IVisualMapService& visualMapService)
                 : m_appCameraController(appCameraController)
-                , m_interiorController(interiorController)
                 , m_worldCameraController(worldCameraController)
                 , m_interiorCameraController(interiorCameraController)
                 , m_toursCameraController(toursCameraController)
@@ -45,6 +43,7 @@ namespace ExampleApp
                 , m_appModeModel(appModeModel)
                 , m_tourService(tourService)
                 , m_interiorSelectionModel(interiorSelectionModel)
+                , m_interiorInteractionModel(interiorInteractionModel)
                 , m_nativeUIFactories(nativeUIFactories)
                 , m_myPinCreationModel(myPinCreationModel)
                 , m_visualMapService(visualMapService)
@@ -65,10 +64,11 @@ namespace ExampleApp
                                                                              m_tourService,
                                                                              m_interiorSelectionModel,
                                                                              m_appModeModel,
-                                                                             m_interiorCameraController));
+                                                                             m_interiorCameraController.GetInteriorCameraController()));
                     
                     states.push_back(Eegeo_NEW(States::SdkModel::InteriorExplorerState)(m_appCameraController,
-                                                                                        m_interiorController,
+                                                                                        m_interiorSelectionModel,
+                                                                                        m_interiorInteractionModel,
                                                                                         interiorCameraHandle,
                                                                                         m_tourService,
                                                                                         m_cameraFrustumStreamingVolume,
@@ -77,7 +77,7 @@ namespace ExampleApp
                                                                                         m_interiorExplorerUserInteractionModel,
                                                                                         m_appModeModel,
                                                                                         m_worldCameraController.GetGlobeCameraController(),
-                                                                                        m_interiorCameraController,
+                                                                                        m_interiorCameraController.GetInteriorCameraController(),
                                                                                         m_nativeUIFactories,
                                                                                         m_myPinCreationModel));
                     
@@ -87,7 +87,8 @@ namespace ExampleApp
                                                                             m_interiorSelectionModel,
                                                                             m_appModeModel,
                                                                             m_worldCameraController.GetGlobeCameraController(),
-                                                                            m_interiorCameraController,
+                                                                            m_interiorCameraController.GetInteriorCameraController(),
+                                                                            m_interiorsExplorerModel,
                                                                             m_myPinCreationModel,
                                                                             m_visualMapService));
 
