@@ -9,11 +9,13 @@ namespace ExampleApp
         SearchResultSectionItemSelectedMessage::SearchResultSectionItemSelectedMessage(const Eegeo::dv3& searchResultModelLocationEcef,
                                                                                        const bool isInterior,
                                                                                        const Eegeo::Resources::Interiors::InteriorId& interiorId,
-                                                                                       const int floorIndex)
+                                                                                       const int floorIndex,
+                                                                                       int itemIndex)
         : m_searchResultModelLocationEcef(searchResultModelLocationEcef)
         , m_isInterior(isInterior)
         , m_interiorId(interiorId)
         , m_floorIndex(floorIndex)
+        , m_itemIndex(itemIndex)
         {
             
         }
@@ -36,6 +38,11 @@ namespace ExampleApp
         const int SearchResultSectionItemSelectedMessage::FloorIndex() const
         {
             return m_floorIndex;
+        }
+
+        int SearchResultSectionItemSelectedMessage::ItemIndex() const
+        {
+            return m_itemIndex;
         }
     }
 }

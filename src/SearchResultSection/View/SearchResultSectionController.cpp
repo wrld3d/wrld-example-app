@@ -58,6 +58,7 @@ namespace ExampleApp
                                                                            model.GetBuildingId(),
                                                                            model.GetFloor(),
                                                                            m_searchMenuViewModel,
+                                                                           i,
                                                                            m_messageBus));
                 }
             }

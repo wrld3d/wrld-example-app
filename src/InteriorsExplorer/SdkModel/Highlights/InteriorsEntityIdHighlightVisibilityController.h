@@ -9,6 +9,8 @@
 #include "Rendering.h"
 #include "InteriorsEntityIdHighlightController.h"
 #include "VectorMath.h"
+#include "BidirectionalBus.h"
+#include "SearchResultSectionItemSelectedMessage.h"
 
 namespace ExampleApp
 {
@@ -26,6 +28,7 @@ namespace ExampleApp
                                                            Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                                            Search::SdkModel::ISearchResultRepository& searchResultRepository,
                                                            const Eegeo::Resources::Interiors::InteriorsInstanceRepository& instanceRepository,
+                                                           ExampleAppMessaging::TMessageBus& messageBus,
                                                            const Eegeo::v4& defaultHighlightColor);
                     
                     ~InteriorsEntityIdHighlightVisibilityController();
@@ -33,7 +36,7 @@ namespace ExampleApp
                 private:
                     void OnSearchResultsLoaded(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results);
                     void OnSearchResultCleared();
-                    void OnSearchItemSelected(int sectionIndex, int itemIndex);
+                    void OnSearchItemSelected(const SearchResultSection::SearchResultSectionItemSelectedMessage& message);
                     
                     Eegeo::Resources::Interiors::CountPerRenderable m_lastHighlightedRenderables;
                     std::map<int, std::vector<std::string> > m_lastSearchedResults;
@@ -42,6 +45,9 @@ namespace ExampleApp
                     Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
                     Search::SdkModel::ISearchResultRepository& m_searchResultRepository;
 
+                    ExampleAppMessaging::TMessageBus& m_messageBus;
+
+                    Eegeo::Helpers::TCallback1<InteriorsEntityIdHighlightVisibilityController, const SearchResultSection::SearchResultSectionItemSelectedMessage&> m_handleSearchResultSectionItemSelectedMessageBinding;
                     Eegeo::Helpers::TCallback2<InteriorsEntityIdHighlightVisibilityController, const Search::SdkModel::SearchQuery&, const std::vector<Search::SdkModel::SearchResultModel>&> m_searchResultsHandler;
                     Eegeo::Helpers::TCallback0<InteriorsEntityIdHighlightVisibilityController> m_searchResultsClearedHandler;
 

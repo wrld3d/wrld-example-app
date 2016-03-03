@@ -31,6 +31,7 @@ namespace ExampleApp
                                                                                                Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                                                                                Search::SdkModel::ISearchResultRepository& searchResultRepository,
                                                                                                const Eegeo::Resources::Interiors::InteriorsInstanceRepository& instanceRepository,
+                                                                                               ExampleAppMessaging::TMessageBus& messageBus,
                                                                                                const Eegeo::v4& defaultHighlightColor)
                 : InteriorsEntityIdHighlightController(instanceRepository, defaultHighlightColor)
                 , m_searchService(searchService)
@@ -38,15 +39,19 @@ namespace ExampleApp
                 , m_searchResultRepository(searchResultRepository)
                 , m_searchResultsHandler(this, &InteriorsEntityIdHighlightVisibilityController::OnSearchResultsLoaded)
                 , m_searchResultsClearedHandler(this, &InteriorsEntityIdHighlightVisibilityController::OnSearchResultCleared)
+                , m_handleSearchResultSectionItemSelectedMessageBinding(this, &InteriorsEntityIdHighlightVisibilityController::OnSearchItemSelected)
+                , m_messageBus(messageBus)
                 {
                     m_searchService.InsertOnReceivedQueryResultsCallback(m_searchResultsHandler);
                     m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
+                    m_messageBus.SubscribeNative(m_handleSearchResultSectionItemSelectedMessageBinding);
                 }
                 
                 InteriorsEntityIdHighlightVisibilityController::~InteriorsEntityIdHighlightVisibilityController()
                 {
                     m_searchService.RemoveOnReceivedQueryResultsCallback(m_searchResultsHandler);
                     m_searchQueryPerformer.RemoveOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
+                    m_messageBus.UnsubscribeNative(m_handleSearchResultSectionItemSelectedMessageBinding);
                 }
                 
                 void InteriorsEntityIdHighlightVisibilityController::OnSearchResultCleared()
@@ -66,11 +71,11 @@ namespace ExampleApp
                     m_lastHighlightedRenderables.clear();
                 }
 
-                void InteriorsEntityIdHighlightVisibilityController::OnSearchItemSelected(int sectionIndex, int itemIndex)
+                void InteriorsEntityIdHighlightVisibilityController::OnSearchItemSelected(const SearchResultSection::SearchResultSectionItemSelectedMessage& message)
                 {
                     OnSearchResultCleared();
 
-                    std::map<int, std::vector<std::string> >::iterator result = m_lastSearchedResults.find(itemIndex);
+                    std::map<int, std::vector<std::string> >::iterator result = m_lastSearchedResults.find(message.ItemIndex());
                     
                     if (result != m_lastSearchedResults.end())
                     {

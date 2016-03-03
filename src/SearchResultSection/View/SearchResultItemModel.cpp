@@ -16,6 +16,7 @@ namespace ExampleApp
                                                          const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                                          const int floorIndex,
                                                          OpenableControl::View::IOpenableControlViewModel& searchMenuViewModel,
+                                                         int itemIndex,
                                                          ExampleAppMessaging::TMessageBus& messageBus)
             : m_name(name)
             , m_searchResultModelLocationEcef(searchResultModelLocationEcef)
@@ -24,6 +25,7 @@ namespace ExampleApp
             , m_floorIndex(floorIndex)
             , m_searchMenuViewModel(searchMenuViewModel)
             , m_messageBus(messageBus)
+            , m_itemIndex(itemIndex)
             {
 
             }
@@ -40,7 +42,8 @@ namespace ExampleApp
                 m_messageBus.Publish(SearchResultSectionItemSelectedMessage(m_searchResultModelLocationEcef,
                                                                             m_isInterior,
                                                                             m_interiorId,
-                                                                            m_floorIndex));
+                                                                            m_floorIndex,
+                                                                            m_itemIndex));
             }
         }
     }

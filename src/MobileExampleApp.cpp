@@ -377,6 +377,7 @@ namespace ExampleApp
                                                                                                                     m_pSearchModule->GetSearchQueryPerformer(),
                                                                                                                     m_pSearchModule->GetSearchResultRepository(),
                                                                                                                     mapModule.GetInteriorsModelModule().GetInteriorsInstanceRepository(),
+                                                                                                                    m_messageBus,
                                                                                                                     Eegeo::v4(0.0f, 1.0f, 0.0f, 1.0f));
         
         
