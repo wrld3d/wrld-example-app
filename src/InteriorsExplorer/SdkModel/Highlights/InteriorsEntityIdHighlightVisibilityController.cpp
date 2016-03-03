@@ -74,17 +74,25 @@ namespace ExampleApp
                 {
                     OnSearchResultCleared();
 
-                    std::map<int, std::vector<std::string> >::iterator result = m_lastSearchedResults.find(message.ItemIndex());
+                    int itemIndex = message.ItemIndex();
+
+                    std::map<int, std::vector<std::string> >::iterator result = m_lastSearchedResults.find(itemIndex);
                     
                     if (result != m_lastSearchedResults.end())
                     {
                         Super::HighlightEntityIds(result->second, m_lastHighlightedRenderables);
+
+                        std::map<int, std::string>::iterator id = m_lastSearchedResultsId.find(itemIndex);
+
+                        m_lastIdSearched = id->second;
                     }
                 }
 
                 void InteriorsEntityIdHighlightVisibilityController::OnSearchResultsLoaded(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results)
                 {
-                    m_lastHighlightedRenderables.clear();
+                    m_lastSearchedResults.clear();
+
+                    bool lastIdFound = false;
 
                     int i = 0;
                     for(std::vector<Search::SdkModel::SearchResultModel>::const_iterator it = results.begin(); it != results.end(); ++it)
@@ -93,6 +101,14 @@ namespace ExampleApp
                         {
                             const Search::Swallow::SdkModel::SwallowDepartmentResultModel& department = Search::Swallow::SdkModel::SearchParser::TransformToSwallowDepartmentResult(*it);
 
+                            const std::string& id = department.GetName();
+                            m_lastSearchedResultsId.insert(std::make_pair(i, id));
+
+                            if (id == m_lastIdSearched)
+                            {
+                                lastIdFound = true;
+                            }
+
                             const std::vector<std::string>& currentDeskIds = department.GetAllDesks();
                             
                             m_lastSearchedResults.insert(std::make_pair(i, currentDeskIds));
@@ -100,6 +116,14 @@ namespace ExampleApp
                         else if ((*it).GetCategory() == Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
                         {
                             const Search::Swallow::SdkModel::SwallowPersonResultModel& person = Search::Swallow::SdkModel::SearchParser::TransformToSwallowPersonResult(*it);
+
+                            const std::string& id = person.GetDeskCode();
+                            m_lastSearchedResultsId.insert(std::make_pair(i, id));
+
+                            if (id == m_lastIdSearched)
+                            {
+                                lastIdFound = true;
+                            }
 
                             std::vector<std::string> desks(1);
                             desks[0] = person.GetDeskCode();
@@ -111,6 +135,11 @@ namespace ExampleApp
                         {
                             ++i;
                         }
+                    }
+
+                    if (!lastIdFound)
+                    {
+                        OnSearchResultCleared();
                     }
                 }
             }

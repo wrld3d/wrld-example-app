@@ -40,9 +40,12 @@ namespace ExampleApp
                     
                     Eegeo::Resources::Interiors::CountPerRenderable m_lastHighlightedRenderables;
                     std::map<int, std::vector<std::string> > m_lastSearchedResults;
+                    std::map<int, std::string> m_lastSearchedResultsId;
                     
                     Search::SdkModel::ISearchService& m_searchService;
                     Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
+
+                    std::string m_lastIdSearched;
 
                     ExampleAppMessaging::TMessageBus& m_messageBus;
 
