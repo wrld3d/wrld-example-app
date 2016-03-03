@@ -133,6 +133,7 @@ AppHost::AppHost(
     Eegeo::EffectHandler::Initialise();
 
     Eegeo::Config::PlatformConfig platformConfig = Eegeo::iOS::iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion()).Build();
+
     platformConfig.OptionsConfig.InteriorsAffectedByFlattening = false;
     
     platformConfig.CoverageTreeConfig.ManifestUrl = applicationConfiguration.CoverageTreeManifestURL();

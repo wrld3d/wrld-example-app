@@ -3,10 +3,11 @@
 #pragma once
 
 #include "Types.h"
-#include "InteriorController.h"
 #include "IWorldPinsFloorHeightController.h"
 #include "WorldPins.h"
 #include "Pins.h"
+#include "Rendering.h"
+#include "Interiors.h"
 
 namespace ExampleApp
 {
@@ -19,13 +20,13 @@ namespace ExampleApp
             private:
                 IWorldPinsRepository& m_worldPinsRepository;
                 Eegeo::Pins::PinRepository& m_pinRepository;
-                Eegeo::Resources::Interiors::InteriorController& m_interiorController;
+                const Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 const bool m_interiorsAffectedByFlattening;
                 
             public:
                 WorldPinsFloorHeightController(IWorldPinsRepository& worldPinsRepository,
                                                Eegeo::Pins::PinRepository& pinRepository,
-                                               Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                               const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                const bool interiorsAffectedByFlattening);
                 
                 ~WorldPinsFloorHeightController();

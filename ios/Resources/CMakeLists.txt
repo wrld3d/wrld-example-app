@@ -190,6 +190,9 @@ set(resources ${resources}
 		Resources/icon1_day.png
 		Resources/icon1_day@2x.png
 		Resources/icon1_day@3x.png
+		Resources/icon1_department.png
+		Resources/icon1_department@2x.png
+		Resources/icon1_department@3x.png
 		Resources/icon1_dusk.png
 		Resources/icon1_dusk@2x.png
 		Resources/icon1_dusk@3x.png
@@ -268,9 +271,6 @@ set(resources ${resources}
 		Resources/icon1_working_group.png
 		Resources/icon1_working_group@2x.png
 		Resources/icon1_working_group@3x.png
-		Resources/icon_create_poi.png
-		Resources/icon_create_poi@2x.png
-		Resources/icon_create_poi@3x.png
 		Resources/image_blank.png
 		Resources/image_blank@2x.png
 		Resources/image_blank@3x.png
@@ -390,6 +390,55 @@ set(resources ${resources}
 		Resources/Tours/States/Twitter/tweet_bird@2x.png
 		Resources/Tours/States/Twitter/tweet_bird@3x.png
 		Resources/weatherstates.json
-		Resources/Yelp
+		Resources/interior_exit_down.png
+		Resources/interior_exit_down@2x.png
+		Resources/interior_exit_down@3x.png
+		Resources/interior_exit.png
+		Resources/interior_exit@2x.png
+		Resources/interior_exit@3x.png
+		Resources/floor_selection_button_down.png
+		Resources/floor_selection_button_down@2x.png
+		Resources/floor_selection_button_down@3x.png
+		Resources/floor_selection_button.png
+		Resources/floor_selection_button@2x.png
+		Resources/floor_selection_button@3x.png
+        Resources/Yelp
+        Resources/Yelp/reviewsFromYelpRED.png
+        Resources/Yelp/reviewsFromYelpRED@2x.png
+        Resources/Yelp/reviewsFromYelpRED@3x.png
+        Resources/Yelp/stars_0_0.png
+        Resources/Yelp/stars_0_0@2x.png
+        Resources/Yelp/stars_0_0@3x.png
+        Resources/Yelp/stars_1_0.png
+        Resources/Yelp/stars_1_0@2x.png
+        Resources/Yelp/stars_1_0@3x.png
+        Resources/Yelp/stars_1_5.png
+        Resources/Yelp/stars_1_5@2x.png
+        Resources/Yelp/stars_1_5@3x.png
+        Resources/Yelp/stars_2_0.png
+        Resources/Yelp/stars_2_0@2x.png
+        Resources/Yelp/stars_2_0@3x.png
+        Resources/Yelp/stars_2_5.png
+        Resources/Yelp/stars_2_5@2x.png
+        Resources/Yelp/stars_2_5@3x.png
+        Resources/Yelp/stars_3_0.png
+        Resources/Yelp/stars_3_0@2x.png
+        Resources/Yelp/stars_3_0@3x.png
+        Resources/Yelp/stars_3_5.png
+        Resources/Yelp/stars_3_5@2x.png
+        Resources/Yelp/stars_3_5@3x.png
+        Resources/Yelp/stars_4_0.png
+        Resources/Yelp/stars_4_0@2x.png
+        Resources/Yelp/stars_4_0@3x.png
+        Resources/Yelp/stars_4_5.png
+        Resources/Yelp/stars_4_5@2x.png
+        Resources/Yelp/stars_4_5@3x.png
+        Resources/Yelp/stars_5_0.png
+        Resources/Yelp/stars_5_0@2x.png
+        Resources/Yelp/stars_5_0@3x.png
+        Resources/Yelp/yelp_logo.png
+        Resources/Yelp/yelp_logo@2x.png
+        Resources/Yelp/yelp_logo@3x.png
+        Resources/Yelp/yelp_logo_100x50.png
 		ExampleApp/Images.xcassets
 )

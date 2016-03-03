@@ -24,6 +24,7 @@ namespace ExampleApp
             , m_geoNamesUserName("")
             , m_coverageTreeManifestURL("")
             , m_themeManifestURL("")
+            , m_searchServiceUrl("")
             , m_myPinsWebServiceUrl("")
             , m_myPinsWebServiceAuthToken("")
             {
@@ -126,6 +127,12 @@ namespace ExampleApp
                 return *this;
             }
             
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetSearchServiceUrl(const std::string& searchServiceUrl)
+            {
+                m_searchServiceUrl = searchServiceUrl;
+                return *this;
+            }
+            
             IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetMyPinsWebServiceUrl(const std::string& myPinsWebServiceUrl)
             {
                 m_myPinsWebServiceUrl = myPinsWebServiceUrl;
@@ -174,6 +181,7 @@ namespace ExampleApp
                                                 m_coverageTreeManifestURL,
                                                 m_themeManifestURL,
                                                 m_sqliteDbUrl,
+                                                m_searchServiceUrl,
                                                 m_myPinsWebServiceUrl,
                                                 m_myPinsWebServiceAuthToken,
                                                 m_productVersion,

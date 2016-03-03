@@ -20,6 +20,11 @@ namespace ExampleApp
                 m_selectedFloorCallbacks.ExecuteCallbacks(floor);
             }
             
+            void InteriorsExplorerViewInterop::SetFloorSelectionDrag(float floorButtonParameter)
+            {
+                m_floorSelectionDraggedCallbacks.ExecuteCallbacks(floorButtonParameter);
+            }
+            
             void InteriorsExplorerViewInterop::OnDismissed()
             {
             }
@@ -58,6 +63,16 @@ namespace ExampleApp
             void InteriorsExplorerViewInterop::RemoveFloorSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback)
             {
                 m_selectedFloorCallbacks.RemoveCallback(callback);
+            }
+            
+            void InteriorsExplorerViewInterop::InsertFloorSelectionDraggedCallback(Eegeo::Helpers::ICallback1<float>& callback)
+            {
+                m_floorSelectionDraggedCallbacks.AddCallback(callback);
+            }
+            
+            void InteriorsExplorerViewInterop::RemoveFloorSelectionDraggedCallback(Eegeo::Helpers::ICallback1<float>& callback)
+            {
+                m_floorSelectionDraggedCallbacks.RemoveCallback(callback);
             }
             
             void InteriorsExplorerViewInterop::SetOnScreenStateToIntermediateValue(float value)

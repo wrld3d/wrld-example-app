@@ -18,19 +18,14 @@ namespace ExampleApp
             {
             private:
                 MenuView* m_pView;
-                Eegeo::Helpers::IFunc0<bool>* m_pTryDragFunc;
                 Eegeo::Helpers::CallbackCollection0 m_onViewClickedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_onViewOpenedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_onViewClosedCallbacks;
-                Eegeo::Helpers::CallbackCollection0 m_onDragStartedCallbacks;
-                Eegeo::Helpers::CallbackCollection1<float> m_onDragCallbacks;
-                Eegeo::Helpers::CallbackCollection0 m_onDragCompletedCallbacks;
                 Eegeo::Helpers::CallbackCollection2<int, int> m_onItemSelectedCallbacks;
 
             public:
                 MenuViewInterop(MenuView* pView)
                     : m_pView(pView)
-                    , m_pTryDragFunc(NULL)
                 {
                 }
 
@@ -41,13 +36,12 @@ namespace ExampleApp
 
                 void SetTryDragFunc(Eegeo::Helpers::IFunc0<bool>& function)
                 {
-                    Eegeo_ASSERT(m_pTryDragFunc == NULL, "TryDragFunc already set");
-                    m_pTryDragFunc = &function;
+                    
                 }
 
                 void ClearTryDragFunc()
                 {
-                    m_pTryDragFunc = NULL;
+                    
                 }
 
                 float GetAnimationProgress() const
@@ -137,32 +131,32 @@ namespace ExampleApp
 
                 void InsertOnDragStarted(Eegeo::Helpers::ICallback0& callback)
                 {
-                    m_onDragStartedCallbacks.AddCallback(callback);
+                    
                 }
 
                 void RemoveOnDragStarted(Eegeo::Helpers::ICallback0& callback)
                 {
-                    m_onDragStartedCallbacks.RemoveCallback(callback);
+                    
                 }
 
                 void InsertOnDrag(Eegeo::Helpers::ICallback1<float>& callback)
                 {
-                    m_onDragCallbacks.AddCallback(callback);
+                    
                 }
 
                 void RemoveOnDrag(Eegeo::Helpers::ICallback1<float>& callback)
                 {
-                    m_onDragCallbacks.RemoveCallback(callback);
+                    
                 }
 
                 void InsertOnDragCompleted(Eegeo::Helpers::ICallback0& callback)
                 {
-                    m_onDragCompletedCallbacks.AddCallback(callback);
+                    
                 }
 
                 void RemoveOnDragCompleted(Eegeo::Helpers::ICallback0& callback)
                 {
-                    m_onDragCompletedCallbacks.RemoveCallback(callback);
+                    
                 }
 
                 void InsertOnItemSelected(Eegeo::Helpers::ICallback2<int, int>& callback)
@@ -192,17 +186,17 @@ namespace ExampleApp
 
                 void HandleDraggingViewStarted()
                 {
-                    m_onDragStartedCallbacks.ExecuteCallbacks();
+                    
                 }
 
                 void HandleDraggingViewInProgress(float progress)
                 {
-                    m_onDragCallbacks.ExecuteCallbacks(progress);
+                    
                 }
 
                 void HandleDraggingViewCompleted()
                 {
-                    m_onDragCompletedCallbacks.ExecuteCallbacks();
+                    
                 }
 
                 void HandleItemSelected(int sectionIndex, int itemIndex)
@@ -212,8 +206,7 @@ namespace ExampleApp
 
                 bool CallBeginDrag()
                 {
-                    Eegeo_ASSERT(m_pTryDragFunc != NULL, "No drag function registered");
-                    return (*m_pTryDragFunc)();
+                    return false;
                 }
             };
         }

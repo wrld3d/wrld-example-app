@@ -714,7 +714,7 @@ def collect_transition_table(xls_book, sheet_index, src_image_folder_path, verbo
 
 def delete_existing_pois(poi_service_url, dev_auth_token):
 	url = "{0}/pois/?token={1}".format(poi_service_url, dev_auth_token)
-	response = requests.delete(url)
+	response = requests.delete(url, verify=False)
 	print "delete {1}: {0}".format(url, response.status_code)
 
 
@@ -726,7 +726,7 @@ def persist_entities(entities, poi_service_url, dev_auth_token, cdn_base_url):
 				entity['user_data']['image_url'] = "{0}/images/{1}".format(cdn_base_url, original)
 
 		url = "{0}/pois/?token={1}".format(poi_service_url, dev_auth_token)
-		response = requests.post(url, json=entity)
+		response = requests.post(url, json=entity, verify=False)
 		print "post {2}: {0} => {1}".format(url, entity, response.status_code)
 
 

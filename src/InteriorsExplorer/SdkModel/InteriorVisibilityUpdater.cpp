@@ -2,7 +2,9 @@
 
 #include "InteriorVisibilityUpdater.h"
 #include "MathFunc.h"
-#include "InteriorController.h"
+#include "InteriorSelectionModel.h"
+#include "InteriorInteractionModel.h"
+#include "InteriorTransitionModel.h"
 
 namespace ExampleApp
 {
@@ -10,9 +12,13 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            InteriorVisibilityUpdater::InteriorVisibilityUpdater(Eegeo::Resources::Interiors::InteriorController& interiorController,
+            InteriorVisibilityUpdater::InteriorVisibilityUpdater(Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
+                                                                 const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                                                 const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                  float transitionDurationTimeSeconds)
-            : m_interiorController(interiorController)
+            : m_interiorTransitionModel(interiorTransitionModel)
+            , m_interiorSelectionModel(interiorSelectionModel)
+            , m_interiorInteractionModel(interiorInteractionModel)
             , m_interiorShouldDisplay(false)
             , m_interiorTransitionParameter(0.0f)
             , m_interiorTransitionTimeSeconds(Eegeo::Max(transitionDurationTimeSeconds, 0.0f))
@@ -30,56 +36,25 @@ namespace ExampleApp
                 m_interiorShouldDisplay = shouldDisplay;
             }
             
-            const bool InteriorVisibilityUpdater::GetInteriorShouldDisplay() const
-            {
-                return m_interiorShouldDisplay;
-            }
-            
-            void InteriorVisibilityUpdater::SetInteriorTransitionParam(float param)
-            {
-                m_interiorTransitionParameter = Eegeo::Math::Clamp01(param);
-            }
-            
-            const float InteriorVisibilityUpdater::GetInteriorTransitionParam() const
-            {
-                return m_interiorTransitionParameter;
-            }
-            
             void InteriorVisibilityUpdater::Update(float dt)
             {
-                if(!m_interiorController.InteriorInScene())
+                const bool shouldDisplay = m_interiorShouldDisplay && m_interiorSelectionModel.IsInteriorSelected() && m_interiorInteractionModel.HasInteriorModel();
+                const float transitionTarget = shouldDisplay ? 1.f : 0.f;
+                
+                float delta = 0.f;
+                if (m_interiorTransitionParameter < transitionTarget)
                 {
-                    m_interiorTransitionParameter = 0.0f;
-                    return;
+                    delta = dt;
+                }
+                else if (m_interiorTransitionParameter > transitionTarget)
+                {
+                    delta = -dt;
                 }
                 
-                if(m_interiorShouldDisplay && m_interiorTransitionParameter < 1.0f)
-                {
-                    if(m_interiorTransitionTimeSeconds == 0.0f)
-                    {
-                        m_interiorTransitionParameter = 1.0f;
-                    }
-                    else
-                    {
-                        m_interiorTransitionParameter += dt/m_interiorTransitionTimeSeconds;
-                    }
-                }
-                else if(!m_interiorShouldDisplay && m_interiorTransitionParameter > 0.0f)
-                {
-                    if(m_interiorTransitionTimeSeconds == 0.0f)
-                    {
-                        m_interiorTransitionParameter = 0.0f;
-                    }
-                    else
-                    {
-                        m_interiorTransitionParameter -= dt/m_interiorTransitionTimeSeconds;
-                    }
-
-                }
-                
+                m_interiorTransitionParameter += delta / m_interiorTransitionTimeSeconds;
                 m_interiorTransitionParameter = Eegeo::Math::Clamp01(m_interiorTransitionParameter);
                 
-                m_interiorController.SetExteriorToInteriorParam(m_interiorTransitionParameter);
+                m_interiorTransitionModel.SetVisibilityParam(m_interiorTransitionParameter);
             }
         }
     }

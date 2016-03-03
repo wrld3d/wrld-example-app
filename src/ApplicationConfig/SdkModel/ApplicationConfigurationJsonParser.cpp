@@ -76,6 +76,9 @@ namespace ExampleApp
                 Eegeo_ASSERT(document.HasMember("SqliteDbUrl"), "SqliteDbUrl config not found");
                 m_builder.SetSqliteDbUrl(document["SqliteDbUrl"].GetString());
                 
+                Eegeo_ASSERT(document.HasMember("SearchServiceUrl"), "SearchServiceUrl not found");
+                m_builder.SetSearchServiceUrl(document["SearchServiceUrl"].GetString());
+                
                 Eegeo_ASSERT(document.HasMember("MyPinsWebServiceUrl"), "MyPinsWebServiceUrl config not found");
                 m_builder.SetMyPinsWebServiceUrl(document["MyPinsWebServiceUrl"].GetString());
                 

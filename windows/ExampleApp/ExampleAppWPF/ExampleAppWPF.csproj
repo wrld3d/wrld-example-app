@@ -96,6 +96,7 @@
     </Compile>
     <Compile Include="Layout.cs" />
     <Compile Include="PersistentSettings\PersistentSettings.cs" />
+    <Compile Include="TickBarVerticalWithLabels.cs" />
     <Compile Include="ViewHelpers.cs" />
     <Compile Include="Views\ButtonBase.cs" />
     <Compile Include="Views\ControlBase.cs" />
@@ -166,6 +167,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="SimpleSlider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -294,7 +299,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\WinBuild\ExampleApp.vcxproj">
+    <ProjectReference Include="..\..\build\ExampleApp.vcxproj">
       <Project>{6483906b-8db8-4f77-8da7-68865f7a9135}</Project>
       <Name>ExampleApp</Name>
     </ProjectReference>
@@ -549,14 +554,6 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="..\..\Resources\floor_selection_bottom.png">
-      <Link>Assets\floor_selection_bottom.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\floor_selection_top.png">
-      <Link>Assets\floor_selection_top.png</Link>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Assets\place_pin_background.png" />
   </ItemGroup>
   <ItemGroup>
@@ -683,6 +680,19 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="SwallowApp.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\floor_selection_button.png">
+      <Link>Assets\floor_selection_button.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\floor_selection_button_down.png">
+      <Link>Assets\floor_selection_button_down.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\floor_selection_button_mouse_over.png">
+      <Link>Assets\floor_selection_button_mouse_over.png</Link>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

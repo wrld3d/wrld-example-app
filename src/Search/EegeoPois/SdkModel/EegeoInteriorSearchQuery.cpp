@@ -20,6 +20,7 @@ namespace ExampleApp
                 EegeoInteriorSearchQuery::EegeoInteriorSearchQuery(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                                                    Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
                                                                    const Search::SdkModel::SearchQuery& query,
+                                                                   const std::string& serviceUrl,
                                                                    const std::string& apiKey,
                                                                    const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                                                    int floorIdx,
@@ -38,7 +39,7 @@ namespace ExampleApp
                     
                     std::stringstream urlstream;
                     urlstream.setf(std::ios_base::fixed);
-                    urlstream << "https://poi-staging.eegeo.com";
+                    urlstream << serviceUrl;
                     urlstream << "/indoor?c=";
                     urlstream << encodedQuery;
                     urlstream << "&f=";

@@ -25,9 +25,9 @@ namespace ExampleApp
                     TwitterFeedTourObserver::TwitterFeedTourObserver(Camera::IToursCameraTransitionController& toursCameraTransitionController,
                                                                      ITourService& tourService,
                                                                      WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                                                     Eegeo::Resources::Interiors::InteriorController& interiorController,
                                                                      InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
-                                                                     const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                                                     Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                                     Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                      ITourRepository& tourRepository,
                                                                      Social::TwitterFeed::ITwitterFeedService& twitterFeedService,
                                                                      const std::map<std::string, TweetStateData>& tweetStateDataMap,
@@ -36,8 +36,8 @@ namespace ExampleApp
                     : m_toursCameraTransitionController(toursCameraTransitionController)
                     , m_tourService(tourService)
                     , m_worldPinsService(worldPinsService)
-                    , m_interiorController(interiorController)
                     , m_interiorVisibilityUpdater(interiorVisibilityUpdater)
+                    , m_interiorInteractionModel(interiorInteractionModel)
                     , m_interiorSelectionModel(interiorSelectionModel)
                     , m_tourRepository(tourRepository)
                     , m_twitterFeedService(twitterFeedService)
@@ -139,8 +139,8 @@ namespace ExampleApp
                         
                         TwitterFeedTourStateMachineFactory factory(m_toursCameraTransitionController,
                                                                    m_worldPinsService,
-                                                                   m_interiorController,
                                                                    m_interiorVisibilityUpdater,
+                                                                   m_interiorInteractionModel,
                                                                    m_interiorSelectionModel,
                                                                    userId,
                                                                    m_tweetStateDataMap,

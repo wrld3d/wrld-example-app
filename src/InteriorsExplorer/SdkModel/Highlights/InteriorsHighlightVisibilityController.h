@@ -24,7 +24,7 @@ namespace ExampleApp
                 class InteriorsHighlightVisibilityController : protected Eegeo::NonCopyable
                 {
                 public:
-                    InteriorsHighlightVisibilityController(Eegeo::Resources::Interiors::InteriorController& interiorController,
+                    InteriorsHighlightVisibilityController(Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                            Search::SdkModel::ISearchService& searchService,
                                                            Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                                            Search::SdkModel::ISearchResultRepository& searchResultRepository,
@@ -38,7 +38,7 @@ namespace ExampleApp
                     void OnSearchResultsLoaded(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results);
                     void OnSearchResultCleared();
                     
-                    void OnInteriorVisibilityChanged();
+                    void OnInteriorInteractionModelChanged();
                     void OnAvailabilityChanged(const ExampleApp::SearchResultOnMap::SearchResultMeetingAvailabilityChanged& message);
                     
                     void ConfigureRenderableForAvailability(Eegeo::Rendering::Renderables::InteriorHighlightRenderable& renderable, const std::string& availability);
@@ -49,7 +49,7 @@ namespace ExampleApp
                     void ShowLabelsForCurrentResults();
                     void DeactivateLabels();
                     
-                    Eegeo::Resources::Interiors::InteriorController& m_interiorController;
+                    Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                     Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& m_interiorslabelsController;
                     Search::SdkModel::ISearchService& m_searchService;
                     Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
@@ -59,7 +59,7 @@ namespace ExampleApp
                     Eegeo::Helpers::TCallback1<InteriorsHighlightVisibilityController, const Search::SdkModel::SearchQuery&> m_searchPerformedHandler;
                     Eegeo::Helpers::TCallback2<InteriorsHighlightVisibilityController, const Search::SdkModel::SearchQuery&, const std::vector<Search::SdkModel::SearchResultModel>&> m_searchResultsHandler;
                     Eegeo::Helpers::TCallback0<InteriorsHighlightVisibilityController> m_searchResultsClearedHandler;
-                    Eegeo::Helpers::TCallback0<InteriorsHighlightVisibilityController> m_interiorVisibilityChangedHandler;
+                    Eegeo::Helpers::TCallback0<InteriorsHighlightVisibilityController> m_interiorInteractionModelChangedHandler;
                     
                     Eegeo::Helpers::TCallback1<InteriorsHighlightVisibilityController, const SearchResultOnMap::SearchResultMeetingAvailabilityChanged&>m_availabilityChangedHandlerBinding;
                     

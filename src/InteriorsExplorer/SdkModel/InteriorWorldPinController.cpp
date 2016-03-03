@@ -19,13 +19,13 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            InteriorWorldPinController::InteriorWorldPinController(Eegeo::Resources::Interiors::InteriorController& interiorController,
+            InteriorWorldPinController::InteriorWorldPinController(Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                    Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
                                                                    WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                                                   InteriorsExplorerCameraController& cameraController,
+                                                                   Eegeo::Resources::Interiors::InteriorsCameraController& cameraController,
                                                                    ExampleAppMessaging::TMessageBus& messageBus,
                                                                    const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel)
-            : m_interiorController(interiorController)
+            : m_interiorSelectionModel(interiorSelectionModel)
             , m_markerRepository(markerRepository)
             , m_worldPinsService(worldPinsService)
             , m_cameraController(cameraController)
@@ -64,7 +64,7 @@ namespace ExampleApp
             {
                 const bool cameraUnlocked = m_initialExperienceModel.LockedCameraStepsCompleted();
                 return !m_menuIsDragging && cameraUnlocked &&
-                    m_interiorController.GetCurrentState() == Eegeo::Resources::Interiors::InteriorViewState::NoInteriorSelected &&
+                    !m_interiorSelectionModel.IsInteriorSelected() &&
                     m_deferedRemovalMap.find(interiorId) == m_deferedRemovalMap.end();
             }
             
@@ -105,7 +105,7 @@ namespace ExampleApp
                                                                                     markerModel.GetMarkerLatLongAltitude().GetLongitudeInDegrees());
                 
                 InteriorWorldPinSelectionHandler* pSelectionHandler = Eegeo_NEW(InteriorWorldPinSelectionHandler)(markerModel.GetInteriorId(),
-                                                                                                                  m_interiorController,
+                                                                                                                  m_interiorSelectionModel,
                                                                                                                   m_cameraController,
                                                                                                                   markerModel.GetMarkerLatLongAltitude().ToECEF(),
                                                                                                                   *this);

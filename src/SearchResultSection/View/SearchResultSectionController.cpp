@@ -7,6 +7,8 @@
 #include "IAppModeModel.h"
 #include "ISearchResultSectionOrder.h"
 #include "SearchResultItemModel.h"
+#include "SwallowSearchParser.h"
+#include "SwallowSearchConstants.h"
 
 namespace ExampleApp
 {
@@ -48,9 +50,16 @@ namespace ExampleApp
                 for(int i = 0; i < m_lastAddedResults.size(); ++i)
                 {
                     const Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
+                    std::string subtitle = model.GetSubtitle();
+                    if (model.GetCategory() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
+                    {
+                        // Availability is no longer a subtitle as that affects search results.
+                        Search::Swallow::SdkModel::SwallowMeetingRoomResultModel meetingRoomModel = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(model);
+                        subtitle = Search::Swallow::SdkModel::SearchParser::GetFormattedAvailabilityString(meetingRoomModel.GetAvailability());
+                    }
                     m_menuOptions.AddItem(model.GetIdentifier(),
                                           model.GetTitle(),
-                                          model.GetSubtitle(),
+                                          subtitle,
                                           model.GetCategory(),
                                           Eegeo_NEW(SearchResultItemModel)(model.GetTitle(),
                                                                            model.GetLocation().ToECEF(),

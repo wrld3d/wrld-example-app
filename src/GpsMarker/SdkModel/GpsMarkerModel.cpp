@@ -4,7 +4,7 @@
 #include "ILocationService.h"
 #include "LatLongAltitude.h"
 #include "TerrainHeightProvider.h"
-#include "InteriorController.h"
+#include "InteriorInteractionModel.h"
 #include "InteriorHeightHelpers.h"
 #include "EnvironmentFlatteningService.h"
 #include "InteriorsModel.h"
@@ -18,9 +18,11 @@ namespace ExampleApp
         {
             GpsMarkerModel::GpsMarkerModel(Eegeo::Location::ILocationService& locationService,
                                            Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
+                                           const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                            const bool interiorsAffectedByFlattening)
             : m_locationService(locationService)
             , m_terrainHeightProvider(terrainHeightProvider)
+            , m_interiorInteractionModel(interiorInteractionModel)
             , m_hasLocation(false)
             , m_currentLocationEcef(Eegeo::dv3::Zero())
             , m_interiorsAffectedByFlattening(interiorsAffectedByFlattening)
@@ -56,19 +58,17 @@ namespace ExampleApp
             }
             
             void GpsMarkerModel::GetFinalEcefPosition(Eegeo::Rendering::EnvironmentFlatteningService& environmentFlattening,
-                                                      Eegeo::Resources::Interiors::InteriorController& interiorController,
                                                       Eegeo::dv3& out_position)
             {
                 float terrainHeight = 0.0f;
-                const bool inInterior = interiorController.GetCurrentState() == Eegeo::Resources::Interiors::InteriorViewState::InteriorInScene;
+                const bool inInterior = m_interiorInteractionModel.HasInteriorModel();
                 if(inInterior)
                 {
-                    const int currentFloor = interiorController.GetCurrentFloorIndex();
-                    const Eegeo::Resources::Interiors::InteriorsModel* pModel = NULL;
-                    interiorController.TryGetCurrentModel(pModel);
-                    Eegeo_ASSERT(pModel != NULL, "Could not fetch current interior model");
+                    const int currentFloor = m_interiorInteractionModel.GetSelectedFloorIndex();
+                    const Eegeo::Resources::Interiors::InteriorsModel& interiorModel = *m_interiorInteractionModel.GetInteriorModel();
+
                     float floorOffset = Helpers::InteriorHeightHelpers::INTERIOR_FLOOR_HEIGHT*currentFloor;
-                    terrainHeight = pModel->GetTangentSpaceBounds().GetMin().y;
+                    terrainHeight = interiorModel.GetTangentSpaceBounds().GetMin().y;
                     
                     if(m_interiorsAffectedByFlattening)
                     {

@@ -21,7 +21,7 @@ import com.eegeo.ProjectSwallowApp.R;
 
 public class SearchMenuAnimationHandler extends MenuAnimationHandler
 {
-	protected final int m_delayedAnimationsMilliseconds = 0;
+	protected final int m_delayedAnimationsMilliseconds = 200;
 	protected final int m_stateChangeAnimationTimeMilliseconds = 300;
 	
 	private ReversibleAnimatorSet m_searchResultsAnimatorSet;
@@ -40,6 +40,7 @@ public class SearchMenuAnimationHandler extends MenuAnimationHandler
 		View editBoxView = titleContainerView.findViewById(R.id.search_menu_view_edit_text_view);
 		View clearButtonView = titleContainerView.findViewById(R.id.search_menu_clear_button);
 		View searchCountView = m_view.findViewById(R.id.search_menu_result_count_container);
+		View anchorArrowView = m_view.findViewById(R.id.search_results_anchor_arrow);
 			
         int dragTabWidthPx = dragTabView.getWidth();
         int titleContainerWidthPx = titleContainerView.getWidth();
@@ -47,6 +48,7 @@ public class SearchMenuAnimationHandler extends MenuAnimationHandler
         int editTextYEndPx = (int)editBoxView.getY();
         int clearButtonHeightPx =  (int)m_mainActivity.getResources().getDimension(R.dimen.search_clear_button_size);
         int clearButtonYEndPx = (dragTabWidthPx - clearButtonHeightPx) / 2;
+        int anchorArrowMarginPx = (int)m_mainActivity.getResources().getDimension(R.dimen.search_result_anchor_margin);
         
         m_view.setX(0.0f);
         
@@ -54,7 +56,7 @@ public class SearchMenuAnimationHandler extends MenuAnimationHandler
 
         titleContainerView.setPivotX(0.0f);
 		searchCountView.setVisibility(View.GONE);
-		
+	
 		addAnimator(m_onScreenAnimatorSet, -dragTabWidthPx, menuButtonMarginPx, false, new ViewXAnimatorUpdateListener(dragTabView), new CircleInOutTimeInterpolator());
 		addAnimator(m_onScreenAnimatorSet, -menuButtonMarginPx, -menuButtonMarginPx, false, new ViewXAnimatorUpdateListener(titleContainerView), new CircleInOutTimeInterpolator());
 		addAnimator(m_onScreenAnimatorSet, -titleContainerWidthPx, -titleContainerWidthPx, false, new ViewXAnimatorUpdateListener(listContainerView), new CircleInOutTimeInterpolator());
@@ -63,6 +65,7 @@ public class SearchMenuAnimationHandler extends MenuAnimationHandler
 		addAnimator(m_onScreenAnimatorSet, 0.0f, 0.0f, false, new ViewAlphaAnimatorUpdateListener(editBoxView), new CircleInOutTimeInterpolator());
 		addAnimator(m_onScreenAnimatorSet, titleBarControlsYStartPx, titleBarControlsYStartPx, false, new ViewYAnimatorUpdateListener(clearButtonView), new CircleInOutTimeInterpolator());
 		addAnimator(m_onScreenAnimatorSet, 0.0f, 0.0f, false, new ViewAlphaAnimatorUpdateListener(clearButtonView), new CircleInOutTimeInterpolator());
+		addAnimator(m_onScreenAnimatorSet, -titleContainerWidthPx, -titleContainerWidthPx, false, new ViewXAnimatorUpdateListener(anchorArrowView), new CircleInOutTimeInterpolator());
 		
 		addAnimator(m_openAnimatorSet, menuButtonMarginPx, titleContainerWidthPx, false, new ViewXAnimatorUpdateListener(dragTabView), new CircleInOutTimeInterpolator());
 		addAnimator(m_openAnimatorSet, -menuButtonMarginPx, 0, false, new ViewXAnimatorUpdateListener(titleContainerView), new CircleInOutTimeInterpolator());
@@ -72,6 +75,7 @@ public class SearchMenuAnimationHandler extends MenuAnimationHandler
 		addAnimator(m_openAnimatorSet, 0.0f, 1.0f, true, new ViewAlphaAnimatorUpdateListener(editBoxView), new CircleInOutTimeInterpolator());
 		addAnimator(m_openAnimatorSet, titleBarControlsYStartPx, clearButtonYEndPx, true, new ViewYAnimatorUpdateListener(clearButtonView), new CircleInOutTimeInterpolator());
 		addAnimator(m_openAnimatorSet, 0.0f, 1.0f, true, new ViewAlphaAnimatorUpdateListener(clearButtonView), new CircleInOutTimeInterpolator());
+		addAnimator(m_openAnimatorSet, -titleContainerWidthPx, anchorArrowMarginPx, false, new ViewXAnimatorUpdateListener(anchorArrowView), new CircleInOutTimeInterpolator());
 		
 		addAnimator(m_searchResultsAnimatorSet, menuButtonMarginPx, 0, false, new ViewXAnimatorUpdateListener(searchCountView), new CircleInOutTimeInterpolator());
 	}

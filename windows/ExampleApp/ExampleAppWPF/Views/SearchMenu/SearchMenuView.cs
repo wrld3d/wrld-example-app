@@ -33,6 +33,7 @@ namespace ExampleAppWPF
 
         private string m_defaultEditText;
         private bool m_searchInFlight;
+        private bool m_currentSearchIsCategory;
 
         private ControlClickHandler m_menuListClickHandler;
         private ControlClickHandler m_resultsListClickHandler;
@@ -59,6 +60,7 @@ namespace ExampleAppWPF
             Loaded += MainWindow_Loaded;
             mainWindow.SizeChanged += PerformLayout;
             m_searchInFlight = false;
+            m_currentSearchIsCategory = false;
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -221,7 +223,7 @@ namespace ExampleAppWPF
 
         private void OnSearchBoxSelected(object sender, RoutedEventArgs e)
         {
-            if(m_editText.Text == m_defaultEditText)
+            if(m_editText.Text == m_defaultEditText || m_currentSearchIsCategory)
             {
                 m_editText.Text = string.Empty;
             }
@@ -375,6 +377,7 @@ namespace ExampleAppWPF
         public void SetEditText(string text, bool isCategory)
         {
             m_editText.Text = text;
+            m_currentSearchIsCategory = isCategory;
         }
 
         public void SetSearchResultCount(int count)

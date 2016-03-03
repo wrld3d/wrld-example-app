@@ -19,21 +19,22 @@ namespace ExampleApp
             float m_distanceToInterestMetres;
             float m_orientationDegrees;
             bool m_tryStartAtGpsLocation;
-            std::string m_googleAnalyticsReferrerToken;
-            std::string m_flurryAppKey;
-            std::string m_yelpConsumerKey;
-            std::string m_yelpConsumerSecret;
-            std::string m_yelpOAuthToken;
-            std::string m_yelpOAuthTokenSecret;
-            std::string m_geoNamesUserName;
-            std::string m_coverageTreeManifestURL;
-            std::string m_themeManifestURL;
-            std::string m_sqliteDbUrl;
-            std::string m_myPinsWebServiceUrl;
-            std::string m_myPinsWebServiceAuthToken;
-            std::string m_productVersion;
-            std::string m_buildNumber;
-            std::string m_combinedVersionString;
+            const std::string m_googleAnalyticsReferrerToken;
+            const std::string m_flurryAppKey;
+            const std::string m_yelpConsumerKey;
+            const std::string m_yelpConsumerSecret;
+            const std::string m_yelpOAuthToken;
+            const std::string m_yelpOAuthTokenSecret;
+            const std::string m_geoNamesUserName;
+            const std::string m_coverageTreeManifestURL;
+            const std::string m_themeManifestURL;
+            const std::string m_sqliteDbUrl;
+            const std::string m_searchServiceUrl;
+            const std::string m_myPinsWebServiceUrl;
+            const std::string m_myPinsWebServiceAuthToken;
+            const std::string m_productVersion;
+            const std::string m_buildNumber;
+            const std::string m_combinedVersionString;
             
         public:
             
@@ -53,6 +54,7 @@ namespace ExampleApp
                                      const std::string& coverageTreeManifestURL,
                                      const std::string& themeManifestURL,
                                      const std::string& sqliteDbUrl,
+                                     const std::string& searchServiceUrl,
                                      const std::string& myPinsWebServiceUrl,
                                      const std::string& myPinsWebServiceAuthToken,
 									 const std::string& productVersion,
@@ -90,6 +92,8 @@ namespace ExampleApp
             const std::string& ThemeManifestURL() const;
             
             const std::string& SqliteDbUrl() const;
+            
+            const std::string& SearchServiceUrl() const;
             
             const std::string& MyPinsWebServiceUrl() const;
             

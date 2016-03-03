@@ -24,3 +24,14 @@
 	ExampleApp::InteriorsExplorer::View::InteriorsExplorerView* pView = reinterpret_cast<ExampleApp::InteriorsExplorer::View::InteriorsExplorerView*>(nativeObjectPtr);
 	pView->SelectFloor(floor);
 }
+
+JNIEXPORT void JNICALL Java_com_eegeo_interiorsexplorer_InteriorsExplorerViewJniMethods_OnFloorSelectionDragged(
+				JNIEnv* jenv, jobject obj,
+				jlong nativeObjectPtr,
+				jfloat dragParameter)
+{
+	ASSERT_UI_THREAD
+
+	ExampleApp::InteriorsExplorer::View::InteriorsExplorerView* pView = reinterpret_cast<ExampleApp::InteriorsExplorer::View::InteriorsExplorerView*>(nativeObjectPtr);
+	pView->SetFloorSelectionDrag(dragParameter);
+}

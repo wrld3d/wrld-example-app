@@ -25,6 +25,7 @@ namespace ExampleApp
 
                 Eegeo::Helpers::CallbackCollection1<int> m_selectedFloorCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_dismissedCallbacks;
+                Eegeo::Helpers::CallbackCollection1<float> m_floorSelectionDraggedCallbacks;
 
                 Helpers::ReflectionHelpers::Method<array<System::String^>^, int> mUpdateFloors;
                 Helpers::ReflectionHelpers::Method<System::String^> mSetFloorName;
@@ -44,6 +45,8 @@ namespace ExampleApp
                 void UpdateFloors(const std::vector<std::string>& floorShortNames, int currentlySelectedFloorIndex);
 
                 void SetFloorName(const std::string& name);
+
+                void SetFloorSelectionDrag(float dragParam);
 
                 void SetSelectedFloorIndex(int index);
 
@@ -70,6 +73,11 @@ namespace ExampleApp
                 void InsertFloorSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback);
 
                 void RemoveFloorSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback);
+
+                void InsertFloorSelectionDraggedCallback(Eegeo::Helpers::ICallback1<float>& callback);
+                
+                void RemoveFloorSelectionDraggedCallback(Eegeo::Helpers::ICallback1<float>& callback);
+
 
             };
         }

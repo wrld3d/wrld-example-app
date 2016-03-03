@@ -12,7 +12,6 @@
 
 enum MenuState
 {
-    DRAGGING,
     OFF_SCREEN,
     CLOSED_ON_SCREEN,
     OPEN_ON_SCREEN,
@@ -23,12 +22,7 @@ enum MenuState
 {
     ExampleApp::Menu::View::MenuViewInterop* m_pInterop;
     
-    UIPanGestureRecognizer* m_panGestureRecognizer;
     UITapGestureRecognizer* m_tapGestureRecogniser;
-    
-    CGPoint m_dragStartPos;
-    
-    bool m_dragStartedClosed;
     
     ExampleApp::Helpers::UIAnimation::ViewAnimationController* m_currentAnimationController;
     
@@ -79,17 +73,11 @@ enum MenuState
                                        :self.pTableViewMap];
         
         m_pInterop = Eegeo_NEW(ExampleApp::Menu::View::MenuViewInterop)(self);
-
-        m_panGestureRecognizer = [[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragTabGesture:)] autorelease];
-        [m_panGestureRecognizer setDelegate:self];
-
+        
         m_tapGestureRecogniser = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapTabGesture:)] autorelease];
         [m_tapGestureRecogniser setDelegate:self];
-
-        [[self pDragTab] addGestureRecognizer: m_panGestureRecognizer];
-        [[self pDragTab] addGestureRecognizer: m_tapGestureRecogniser];
         
-        m_dragStartedClosed = false;
+        [[self pDragTab] addGestureRecognizer: m_tapGestureRecogniser];
         
         m_menuState = OFF_SCREEN;
         
@@ -148,7 +136,7 @@ enum MenuState
                  animationController:m_onScreenAnimationController
                     isPlayingForward:YES];
     }
-    else if(m_menuState == OPEN_ON_SCREEN || m_menuState == DRAGGING)
+    else if(m_menuState == OPEN_ON_SCREEN)
     {
         [self startAnimationForState:CLOSED_ON_SCREEN
                     normalizedOffset:1.0f - [self openOnScreenState]
@@ -399,91 +387,6 @@ enum MenuState
     return m_onScreenAnimationController->GetNormalizedLinearProgress();
 }
 
-- (void) beginDrag:(CGPoint)absolutePosition velocity:(CGPoint)absoluteVelocity
-{
-    m_dragStartedClosed = (m_menuState != OPEN_ON_SCREEN);
-    
-    m_menuState = DRAGGING;
-    
-    m_dragStartPos = absolutePosition;
-    
-    [self setOffscreenPartsHiddenState:false];
-    
-    m_pInterop->HandleDraggingViewStarted();
-}
-
-- (void) updateDrag:(CGPoint)absolutePosition velocity:(CGPoint)absoluteVelocity
-{
-    const float deltaX = absolutePosition.x - m_dragStartPos.x;
-    
-    float normalisedDragState;
-    
-    if(m_dragStartedClosed)
-    {
-        normalisedDragState = Eegeo::Math::Clamp(deltaX / (m_dragTabOpenOnScreenX - m_dragTabClosedOnScreenX), 0.0f, 1.0f);
-    }
-    else
-    {
-        normalisedDragState = Eegeo::Math::Clamp(deltaX / (m_dragTabClosedOnScreenX - m_dragTabOpenOnScreenX), 0.0f, 1.0f);
-        normalisedDragState = 1.0f - normalisedDragState;
-    }
-    
-    m_openAnimationController->SetToNormalizedOffset(normalisedDragState);
-    
-    m_pInterop->HandleDraggingViewInProgress(normalisedDragState);
-}
-
-- (void) completeDrag:(CGPoint)absolutePosition velocity:(CGPoint)absoluteVelocity
-{
-    const float deltaX = absolutePosition.x - m_dragStartPos.x;
-    
-    float normalisedDragState;
-    
-    if(m_dragStartedClosed)
-    {
-        normalisedDragState = Eegeo::Math::Clamp(deltaX / (m_dragTabOpenOnScreenX - m_dragTabClosedOnScreenX), 0.0f, 1.0f);
-    }
-    else
-    {
-        normalisedDragState = Eegeo::Math::Clamp(deltaX / (m_dragTabClosedOnScreenX - m_dragTabOpenOnScreenX), 0.0f, 1.0f);
-    }
-    
-    const float stateChangeThreshold = 0.35f;
-    
-    bool stateChange = normalisedDragState > stateChangeThreshold;
-    
-    const float velocityThreshold = 200.0f * m_pixelScale;
-    
-    if(!stateChange && fabsf(static_cast<float>(absoluteVelocity.x)) > velocityThreshold)
-    {
-        int stateChangeDirection;
-        
-        if(m_dragStartedClosed)
-        {
-            stateChangeDirection = (m_dragTabOpenOnScreenX - m_dragTabClosedOnScreenX) > 0.0f ? 1 : -1;
-        }
-        else
-        {
-            stateChangeDirection = (m_dragTabOpenOnScreenX - m_dragTabClosedOnScreenX) < 0.0f ? 1 : -1;
-        }
-        
-        int velocityDirection = (absoluteVelocity.x > 0.0f) ? 1 : -1;
-        
-        stateChange = (velocityDirection == stateChangeDirection);
-    }
-    
-    if((stateChange && m_dragStartedClosed) || (!stateChange && !m_dragStartedClosed))
-    {
-        [self animateToOpenOnScreen];
-    }
-    else
-    {
-        [self animateToClosedOnScreen];
-    }
-    
-    m_pInterop->HandleDraggingViewCompleted();
-}
-
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
     if (self.hidden || !self.userInteractionEnabled || self.alpha < 0.01 || ![self canInteract])
@@ -496,39 +399,6 @@ enum MenuState
     return hitView;
 }
 
-- (void)dragTabGesture:(UIPanGestureRecognizer *)recognizer
-{
-    if (!m_pInterop->CallBeginDrag())
-    {
-        return;
-    }
-
-    CGPoint positionAbs = [recognizer locationInView:[self superview]];
-    CGPoint velocity = [recognizer velocityInView:[self superview]];
-
-    switch(recognizer.state)
-    {
-    case UIGestureRecognizerStateBegan:
-        [self beginDrag:positionAbs velocity:velocity];
-        break;
-
-    case UIGestureRecognizerStateChanged:
-        [self updateDrag:positionAbs velocity:velocity];
-        break;
-
-    case UIGestureRecognizerStateEnded:
-        [self completeDrag:positionAbs velocity:velocity];
-        break;
-
-    case UIGestureRecognizerStateCancelled:
-        [self completeDrag:positionAbs velocity:velocity];
-        break;
-
-    default:
-        break;
-    }
-}
-
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
     if([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]])
@@ -536,10 +406,6 @@ enum MenuState
         return true;
     }
     
-    if([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]])
-    {
-        return m_pInterop->CallBeginDrag();
-    }
     return false;
 }
 

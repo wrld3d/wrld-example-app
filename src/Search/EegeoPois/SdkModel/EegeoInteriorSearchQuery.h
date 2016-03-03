@@ -31,11 +31,11 @@ namespace ExampleApp
                     int m_floorIdx;
                     Eegeo::Web::TWebLoadRequestCompletionCallback<EegeoInteriorSearchQuery> m_webRequestCompleteCallback;
                     Eegeo::Web::IWebLoadRequest* m_pWebLoadRequest;
-                    
                 public:
                     EegeoInteriorSearchQuery(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                          Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
                                          const Search::SdkModel::SearchQuery& query,
+                                         const std::string& serviceUrl,
                                          const std::string& apiKey,
                                          const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                          int floorIdx,

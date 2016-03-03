@@ -3,8 +3,9 @@
 #include "EegeoSearchQueryFactory.h"
 #include "EegeoSearchQuery.h"
 #include "EegeoInteriorSearchQuery.h"
-#include "InteriorController.h"
-#include "InteriorSelectionModel.h"
+#include "InteriorInteractionModel.h"
+#include "InteriorsModel.h"
+#include "InteriorId.h"
 
 namespace ExampleApp
 {
@@ -16,13 +17,13 @@ namespace ExampleApp
             {
                 EegeoSearchQueryFactory::EegeoSearchQueryFactory(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                                                  Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
-                                                                 const Eegeo::Resources::Interiors::InteriorController& interiorsController,
-                                                                 const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                                         const std::string& apiKey)
+                                                                 const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                                 const std::string& serviceUrl,
+							         const std::string& apiKey)
                 : m_webRequestFactory(webRequestFactory)
-                , m_interiorsController(interiorsController)
-                , m_interiorSelectionModel(interiorSelectionModel)
+                , m_interiorInteractionModel(interiorInteractionModel)
                 , m_urlEncoder(urlEncoder)
+                , m_serviceUrl(serviceUrl)
                 , m_apiKey(apiKey)
                 {
                     
@@ -36,14 +37,17 @@ namespace ExampleApp
                 IEegeoSearchQuery* EegeoSearchQueryFactory::CreateEegeoSearchForQuery(const Search::SdkModel::SearchQuery& query,
                                                                                                   Eegeo::Helpers::ICallback0& completionCallback)
                 {
-                    if (m_interiorsController.GetCurrentState() == Eegeo::Resources::Interiors::InteriorViewState::InteriorInScene && query.IsCategory() && query.IsInterior())
+                    if (m_interiorInteractionModel.HasInteriorModel() && query.IsCategory() && query.IsInterior())
                     {
+                        
+                        const Eegeo::Resources::Interiors::InteriorsModel& interiorsModel = *m_interiorInteractionModel.GetInteriorModel();
                         return Eegeo_NEW(EegeoInteriorSearchQuery)(m_webRequestFactory,
                                                                    m_urlEncoder,
                                                                    query,
+                                                                   m_serviceUrl,
                                                                    m_apiKey,
-                                                                   m_interiorSelectionModel.GetSelectedInteriorId(),
-                                                                   m_interiorsController.GetCurrentFloorIndex(),
+                                                                   interiorsModel.GetId(),
+                                                                   m_interiorInteractionModel.GetSelectedFloorIndex(),
                                                                    completionCallback);
                     }
                     else
@@ -51,6 +55,7 @@ namespace ExampleApp
                         return Eegeo_NEW(EegeoSearchQuery)(m_webRequestFactory,
                                                            m_urlEncoder,
                                                            query,
+                                                           m_serviceUrl,
                                                            m_apiKey,
                                                            completionCallback);
                     }

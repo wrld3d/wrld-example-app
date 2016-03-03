@@ -97,6 +97,7 @@ namespace ExampleApp
     private:
         Eegeo::Camera::GlobeCamera::GpsGlobeCameraController* m_pGlobeCameraController;
         AppCamera::SdkModel::AppGlobeCameraWrapper* m_pGlobeCameraWrapper;
+        AppCamera::SdkModel::AppInteriorCameraWrapper* m_pInteriorCameraWrapper;
         Eegeo::ITouchController* m_pCameraTouchController;
         Eegeo::ITouchController* m_pCurrentTouchController;
         Eegeo::EegeoWorld* m_pWorld;
@@ -169,7 +170,6 @@ namespace ExampleApp
         InteriorsExplorer::SdkModel::Highlights::InteriorsEntityIdHighlightVisibilityController* m_pInteriorsEntityIdHighlightController;
         Eegeo::Collision::IRayCaster* m_pRayCaster;
         VisualMap::SdkModel::IVisualMapModule* m_pVisualMapModule;
-        Surveys::SdkModel::ISurveyModule* m_pSurveyModule;
         
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
         Net::SdkModel::ConnectivityChangedObserver* m_pConnectivityChangedObserver;

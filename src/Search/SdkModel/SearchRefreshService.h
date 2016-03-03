@@ -28,7 +28,7 @@ namespace ExampleApp
                 
                 ISearchQueryPerformer& m_searchQueryPerformer;
                 CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionsController;
-                Eegeo::Resources::Interiors::InteriorController& m_interiorController;
+                Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 Eegeo::Helpers::TCallback1<SearchRefreshService, const SearchQuery&> m_searchResultQueryIssuedCallback;
                 Eegeo::Helpers::TCallback2<SearchRefreshService, const SearchQuery&, const std::vector<SearchResultModel>&> m_searchResultResponseReceivedCallback;
                 Eegeo::Helpers::TCallback0<SearchRefreshService> m_searchQueryResultsClearedCallback;
@@ -45,7 +45,7 @@ namespace ExampleApp
                 SearchRefreshService(ISearchService& searchService,
                                      ISearchQueryPerformer& searchQueryPerformer,
                                      CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
-                                     Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                     Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                      float minimumSecondsBetweenUpdates,
                                      float minimumMetresBetweenUpdates);
 
