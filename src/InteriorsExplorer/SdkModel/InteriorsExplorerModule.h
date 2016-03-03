@@ -25,13 +25,15 @@ namespace ExampleApp
             class InteriorsExplorerModule : public IInteriorsExplorerModule, private Eegeo::NonCopyable
             {
             public:
-                InteriorsExplorerModule(Eegeo::Resources::Interiors::InteriorController& interiorController,
+                InteriorsExplorerModule(Eegeo::Resources::Interiors::IInteriorFloorAnimator& interiorFloorAnimator,
+                                        Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                         Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                        Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                         Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
                                         WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                         const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                         VisualMap::SdkModel::IVisualMapService& visualMapService,
-                                        Eegeo::Camera::GlobeCamera::GlobeCameraControllerFactory& globeCameraControllerFactory,
+                                        Eegeo::Resources::Interiors::InteriorsCameraControllerFactory& interiorCameraControllerFactory,
                                         const Eegeo::Rendering::ScreenProperties& screenProperties,
                                         Eegeo::Helpers::IIdentityProvider& identityProvider,
                                         ExampleAppMessaging::TMessageBus& messageBus,
@@ -45,7 +47,7 @@ namespace ExampleApp
                 
                 ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel() const;
                 
-                InteriorsExplorerCameraController& GetInteriorsCameraController() const;
+                Eegeo::Resources::Interiors::InteriorsCameraController& GetInteriorsCameraController() const;
                 
                 InteriorVisibilityUpdater& GetInteriorVisibilityUpdater() const;
                 
@@ -65,7 +67,7 @@ namespace ExampleApp
                 InteriorExplorerUserInteractionModel* m_pUserInteractionModel;
                 
                 InteriorWorldPinController* m_pWorldPinController;
-                InteriorsExplorerCameraController* m_pInteriorsCameraController;
+                Eegeo::Resources::Interiors::InteriorsCameraController* m_pInteriorsCameraController;
                 Eegeo::Camera::GlobeCamera::GlobeCameraTouchController* m_pGlobeCameraTouchController;
                 Eegeo::Camera::GlobeCamera::GlobeCameraController* m_pGlobeCameraController;
             };

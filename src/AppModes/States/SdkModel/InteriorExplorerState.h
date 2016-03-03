@@ -42,7 +42,7 @@ namespace ExampleApp
                     Eegeo::Helpers::TCallback0<InteriorExplorerState> m_tourStartedCallback;
                     Tours::SdkModel::ITourService& m_tourService;
                     Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_worldCameraController;
-                    ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& m_interiorsCameraController;
+                    Eegeo::Resources::Interiors::InteriorsCameraController& m_interiorsCameraController;
                     Eegeo::UI::NativeUIFactories& m_nativeUIFactories;
                     Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<InteriorExplorerState> m_failAlertHandler;
                     
@@ -63,7 +63,8 @@ namespace ExampleApp
                 public:
                     
                     InteriorExplorerState(AppCamera::SdkModel::IAppCameraController& cameraController,
-                                          Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                          Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                          Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                           int interiorCameraHandle,
                                           Tours::SdkModel::ITourService& tourService,
                                           Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
@@ -72,7 +73,7 @@ namespace ExampleApp
                                           InteriorsExplorer::SdkModel::InteriorExplorerUserInteractionModel& interiorExplorerUserInteractionModel,
                                           AppModes::SdkModel::IAppModeModel& appModeModel,
                                           Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& worldCameraController,
-                                          ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController,
+                                          Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
                                           Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                           MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel);
                     

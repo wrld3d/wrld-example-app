@@ -2,14 +2,13 @@
 
 #include "InteriorExplorerState.h"
 #include "IAppCameraController.h"
-#include "InteriorController.h"
 #include "InteriorExplorerSetupState.h"
 #include "InteriorExplorerStreamState.h"
 #include "InteriorExplorerViewingState.h"
 #include "InteriorExplorerExitingState.h"
 #include "InteriorSelectionModel.h"
 #include "IAppModeModel.h"
-#include "InteriorsExplorerCameraController.h"
+#include "InteriorsCameraController.h"
 #include "GpsGlobeCameraController.h"
 #include "GlobeCameraController.h"
 #include "CameraHelpers.h"
@@ -31,7 +30,8 @@ namespace ExampleApp
             namespace SdkModel
             {
                 InteriorExplorerState::InteriorExplorerState(AppCamera::SdkModel::IAppCameraController& cameraController,
-                                                             Eegeo::Resources::Interiors::InteriorController& interiorController,
+                                                             Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                                             Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                              int interiorCameraHandle,
                                                              Tours::SdkModel::ITourService& tourService,
                                                              Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
@@ -40,7 +40,7 @@ namespace ExampleApp
                                                              InteriorsExplorer::SdkModel::InteriorExplorerUserInteractionModel& interiorExplorerUserInteractionModel,
                                                              AppModes::SdkModel::IAppModeModel& appModeModel,
                                                              Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& worldCameraController,
-                                                             ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController,
+                                                             Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
                                                              Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                                              MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel)
                 : m_tourService(tourService)
@@ -60,7 +60,7 @@ namespace ExampleApp
                                                                                                                      interiorCameraHandle));
                     
                     m_subStates.push_back(Eegeo_NEW(InteriorsExplorer::SdkModel::States::InteriorExplorerStreamState)(*this,
-                                                                                                                      interiorController,
+                                                                                                                      interiorInteractionModel,
                                                                                                                       cameraFrustumStreamingVolume,
                                                                                                                       interiorVisibilityUpdater));
                     
@@ -70,7 +70,7 @@ namespace ExampleApp
                                                                                                                        cameraFrustumStreamingVolume));
                     
                     m_subStates.push_back(Eegeo_NEW(InteriorsExplorer::SdkModel::States::InteriorExplorerExitingState)(*this,
-                                                                                                                       interiorController,
+                                                                                                                       interiorSelectionModel,
                                                                                                                        cameraFrustumStreamingVolume,
                                                                                                                        interiorVisibilityUpdater,
                                                                                                                        interiorsExplorerModel

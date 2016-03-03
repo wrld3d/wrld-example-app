@@ -61,6 +61,12 @@ namespace ExampleApp
             	m_selectedFloorCallbacks.ExecuteCallbacks(floor);
             }
 
+            void InteriorsExplorerView::SetFloorSelectionDrag(float dragParam)
+            {
+            	ASSERT_UI_THREAD
+				m_floorSelectionDraggedCallbacks.ExecuteCallbacks(dragParam);
+            }
+
             void InteriorsExplorerView::OnDismissed()
             {
             }
@@ -139,6 +145,20 @@ namespace ExampleApp
                 ASSERT_UI_THREAD
 
             	m_selectedFloorCallbacks.RemoveCallback(callback);
+            }
+
+            void InteriorsExplorerView::InsertFloorSelectionDraggedCallback(Eegeo::Helpers::ICallback1<float>& callback)
+            {
+            	ASSERT_UI_THREAD
+
+				m_floorSelectionDraggedCallbacks.AddCallback(callback);
+            }
+
+            void InteriorsExplorerView::RemoveFloorSelectionDraggedCallback(Eegeo::Helpers::ICallback1<float>& callback)
+            {
+            	ASSERT_UI_THREAD
+
+				m_floorSelectionDraggedCallbacks.RemoveCallback(callback);
             }
 
             void InteriorsExplorerView::SetOnScreenStateToIntermediateValue(float value)

@@ -1,3 +1,4 @@
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/interiors_explorer_view"
@@ -6,22 +7,12 @@
     android:clipChildren="false"
     android:clipToPadding="false" >
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout 
     android:id="@+id/top_panel"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" >
-    	<ImageView
-		    android:id="@+id/back_button"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:background="@drawable/button_pressed_colour_change"
-		    android:baselineAlignBottom="true"
-		    android:src="@drawable/button_exit_interior_states" >
 
-		</ImageView>
-        
-		<TextView
+        <TextView
 			android:layout_width="200dp"
 	        android:layout_height="match_parent"
 	        android:gravity="center"
@@ -31,21 +22,20 @@
 	        android:background="@color/white"
 	        android:id="@+id/floor_name" >
 		</TextView>
+		
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_pressed_colour_change"
+            android:baselineAlignBottom="true"
+            android:src="@drawable/button_exit_interior_states">
+        </ImageView>
+        
+
+        
 	</LinearLayout>
 
-		<ImageView
-	    android:layout_width="50dp"
-	    android:layout_height="20dp"
-	    android:id="@+id/floor_selection_top"
-	    android:src="@drawable/floor_selection_top"
-	    android:scaleType="fitEnd"/>
+	<include layout="@layout/interiors_floor_list_container_layout"/>
 
-		<include layout="@layout/interiors_floor_list_container_layout"/>
-
-		<ImageView
-	    android:layout_width="50dp"
-	    android:layout_height="20dp"
-	    android:id="@+id/floor_selection_bottom"
-	    android:src="@drawable/floor_selection_bottom"
-	    android:scaleType="fitEnd"/>
 </RelativeLayout>

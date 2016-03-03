@@ -3,13 +3,14 @@
 #include "InteriorsNavigationService.h"
 #include "GlobeCameraTouchController.h"
 #include "ILocationService.h"
-#include "InteriorsExplorerCameraController.h"
+#include "InteriorsCameraController.h"
 #include "InteriorHeightHelpers.h"
 #include "CameraHelpers.h"
 #include "EcefTangentBasis.h"
 #include "GlobeCameraController.h"
 #include "LatLongAltitude.h"
-#include "InteriorController.h"
+#include "InteriorInteractionModel.h"
+#include "InteriorSelectionModel.h"
 #include "InteriorsModel.h"
 #include "InteriorsFloorModel.h"
 
@@ -21,38 +22,37 @@ namespace ExampleApp
         {
             
             InteriorsNavigationService::InteriorsNavigationService(Eegeo::Location::ILocationService& locationService,
-                                                                   InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsExplorerCameraController,
+                                                                   Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
                                                                    Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& cameraTouchController,
-                                                                   Eegeo::Resources::Interiors::InteriorController& interiorController)
+                                                                   Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                                                   const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel)
             : m_locationService(locationService)
-            , m_interiorsExplorerCameraController(interiorsExplorerCameraController)
+            , m_interiorsCameraController(interiorsCameraController)
             , m_cameraTouchController(cameraTouchController)
             , m_gpsMode(Eegeo::Location::NavigationService::GpsModeOff)
-            , m_interiorController(interiorController)
-            , m_interiorStateChangedHandler(this, &InteriorsNavigationService::HandleInteriorStateChanged)
+            , m_interiorSelectionModel(interiorSelectionModel)
+            , m_interiorInteractionModel(interiorInteractionModel)
+            , m_interiorSelectionModelChangedHandler(this, &InteriorsNavigationService::HandleInteriorSelectionModelChanged)
             {
-                m_interiorController.RegisterStateChangedCallback(m_interiorStateChangedHandler);
+                m_interiorSelectionModel.RegisterSelectionChangedCallback(m_interiorSelectionModelChangedHandler);
             }
             
             InteriorsNavigationService::~InteriorsNavigationService()
             {
-                m_interiorController.UnregisterStateChangedCallback(m_interiorStateChangedHandler);
+                m_interiorSelectionModel.UnregisterSelectionChangedCallback(m_interiorSelectionModelChangedHandler);
             }
                 
             void InteriorsNavigationService::SetGpsMode(Eegeo::Location::NavigationService::GpsMode mode)
             {
                 m_gpsMode = mode;
                 
-                if(m_gpsMode != Eegeo::Location::NavigationService::GpsModeOff)
-                {
-                    m_interiorsExplorerCameraController.SetPanEnabled(false);
-                }
-                else
-                {
-                    m_interiorsExplorerCameraController.SetPanEnabled(true);
-                }
+                Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCam = m_interiorsCameraController.GetGlobeCameraController();
+                Eegeo::Camera::GlobeCamera::GlobeCameraTouchSettings touchSettings = Eegeo::Camera::GlobeCamera::GlobeCameraTouchSettings::CreateDefault();
                 
-                m_interiorsExplorerCameraController.SetRotateEnabled(m_gpsMode != Eegeo::Location::NavigationService::GpsModeCompass);
+                touchSettings.PanEnabled = (m_gpsMode == Eegeo::Location::NavigationService::GpsModeOff);
+                touchSettings.RotateEnabled = (m_gpsMode != Eegeo::Location::NavigationService::GpsModeCompass);
+
+                globeCam.SetTouchSettings(touchSettings);
                 
                 ResetTargetLatLong();
             }
@@ -76,7 +76,7 @@ namespace ExampleApp
                     SetGpsMode(Eegeo::Location::NavigationService::GpsModeOff);
                 }
                 
-                double heading = m_interiorsExplorerCameraController.GetHeadingDegrees();
+                double heading = m_interiorsCameraController.GetHeadingDegrees();
                 const double rotationDampening = (double)Eegeo::Math::Clamp01(dt*3.0f);
                 
                 if(m_gpsMode == Eegeo::Location::NavigationService::GpsModeCompass)
@@ -118,18 +118,18 @@ namespace ExampleApp
                 m_targetLatitude = Eegeo::Math::Lerp(m_targetLatitude, m_currentLatitude, positionDampening);
                 m_targetLongitude = Eegeo::Math::Lerp(m_targetLongitude, m_currentLongitude, positionDampening);
                 
-                const Eegeo::Resources::Interiors::InteriorsModel* pInteriorsModel;
                 float targetAltitude = 0.0f;
                 
-                if(m_interiorController.TryGetCurrentModel(pInteriorsModel))
+                if (m_interiorInteractionModel.HasInteriorModel())
                 {
-                    targetAltitude = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(*pInteriorsModel, m_interiorController.GetCurrentFloorIndex());
+                    const Eegeo::Resources::Interiors::InteriorsModel& interiorModel = *m_interiorInteractionModel.GetInteriorModel();
+                    targetAltitude = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(interiorModel, m_interiorInteractionModel.GetSelectedFloorIndex());
                 }
                 
-                m_interiorsExplorerCameraController.SetInterestLocation(Eegeo::Space::LatLongAltitude::FromDegrees(m_targetLatitude,
+                m_interiorsCameraController.SetInterestLocation(Eegeo::Space::LatLongAltitude::FromDegrees(m_targetLatitude,
                                                                                                                    m_targetLongitude,
                                                                                                                    targetAltitude).ToECEF());
-                m_interiorsExplorerCameraController.SetHeading(static_cast<float>(heading));
+                m_interiorsCameraController.SetHeading(static_cast<float>(heading));
             }
             
             void InteriorsNavigationService::ResetTargetLatLong()
@@ -138,7 +138,7 @@ namespace ExampleApp
                 
                 if(m_locationService.GetLocation(latLong))
                 {
-                    m_currentHeading = m_interiorsExplorerCameraController.GetHeadingDegrees();
+                    m_currentHeading = m_interiorsCameraController.GetHeadingDegrees();
                     
                     m_currentLatitude = latLong.GetLatitudeInDegrees();
                     m_currentLongitude = latLong.GetLongitudeInDegrees();
@@ -151,20 +151,21 @@ namespace ExampleApp
             bool InteriorsNavigationService::IsPositionInInterior()
             {
                 Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong(0.0f, 0.0f);
-                const Eegeo::Resources::Interiors::InteriorsModel* pInteriorsModel;
                 
-                if(m_locationService.GetLocation(latLong) && m_interiorController.TryGetCurrentModel(pInteriorsModel))
+                
+                if(m_locationService.GetLocation(latLong) && m_interiorInteractionModel.HasInteriorModel())
                 {
-                    const Eegeo::Geometry::Bounds3D& tangentBounds = pInteriorsModel->GetTangentSpaceBounds();
-                    const Eegeo::dv3 boundsEcefOrigin = pInteriorsModel->GetTangentBasis().GetPointEcef();
-                    float targetAltitude = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(*pInteriorsModel, m_interiorController.GetCurrentFloorIndex());
+                    const Eegeo::Resources::Interiors::InteriorsModel& interiorsModel = *m_interiorInteractionModel.GetInteriorModel();
+                    const Eegeo::Geometry::Bounds3D& tangentBounds = interiorsModel.GetTangentSpaceBounds();
+                    const Eegeo::dv3& boundsEcefOrigin = interiorsModel.GetTangentBasis().GetPointEcef();
+                    float targetAltitude = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(interiorsModel, m_interiorInteractionModel.GetSelectedFloorIndex());
                     
                     Eegeo::Geometry::SingleSphere toleranceSphere;
                     const Eegeo::v3 reletaivePoint = (Eegeo::Space::LatLongAltitude::FromRadians(latLong.GetLatitude(),
                                                                                                  latLong.GetLongitude(),
                                                                                                  targetAltitude).ToECEF() - boundsEcefOrigin).ToSingle();
                     
-                    toleranceSphere.centre = Eegeo::v3::MulRotate(reletaivePoint, pInteriorsModel->GetTangentBasis().GetEcefToTangentTransform());
+                    toleranceSphere.centre = Eegeo::v3::MulRotate(reletaivePoint, interiorsModel.GetTangentBasis().GetEcefToTangentTransform());
                     
                     toleranceSphere.radius = 10.0f;
                     
@@ -183,9 +184,9 @@ namespace ExampleApp
                 }
             }
             
-            void InteriorsNavigationService::HandleInteriorStateChanged()
+            void InteriorsNavigationService::HandleInteriorSelectionModelChanged(const Eegeo::Resources::Interiors::InteriorId& prevId)
             {
-                if(m_interiorController.GetCurrentState() == Eegeo::Resources::Interiors::InteriorViewState::NoInteriorSelected)
+                if (!m_interiorSelectionModel.IsInteriorSelected())
                 {
                     SetGpsMode(Eegeo::Location::NavigationService::GpsModeOff);
                 }

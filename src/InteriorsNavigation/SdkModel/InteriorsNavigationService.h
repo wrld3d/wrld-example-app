@@ -21,9 +21,10 @@ namespace ExampleApp
             public:
                 
                 InteriorsNavigationService(Eegeo::Location::ILocationService& locationService,
-                                           InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsExplorerCameraController,
+                                           Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
                                            Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& cameraTouchController,
-                                           Eegeo::Resources::Interiors::InteriorController& interiorController);
+                                           Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                           const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel);
                 
                 ~InteriorsNavigationService();
                 
@@ -37,15 +38,16 @@ namespace ExampleApp
                 
             private:
                 
-                void HandleInteriorStateChanged();
+                void HandleInteriorSelectionModelChanged(const Eegeo::Resources::Interiors::InteriorId& prevId);
                 
                 Eegeo::Location::ILocationService& m_locationService;
-                InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& m_interiorsExplorerCameraController;
+                Eegeo::Resources::Interiors::InteriorsCameraController& m_interiorsCameraController;
                 Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& m_cameraTouchController;
                 Eegeo::Location::NavigationService::GpsMode m_gpsMode;
-                Eegeo::Resources::Interiors::InteriorController& m_interiorController;
+                Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
+                const Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 
-                Eegeo::Helpers::TCallback0<InteriorsNavigationService> m_interiorStateChangedHandler;
+                Eegeo::Helpers::TCallback1<InteriorsNavigationService, const Eegeo::Resources::Interiors::InteriorId> m_interiorSelectionModelChangedHandler;
                 
                 double m_targetHeading;
                 double m_currentHeading;

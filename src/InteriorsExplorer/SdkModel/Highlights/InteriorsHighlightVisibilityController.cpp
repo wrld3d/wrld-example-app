@@ -4,7 +4,7 @@
 #include "ISearchService.h"
 #include "ISearchQueryPerformer.h"
 #include "ISearchResultRepository.h"
-#include "InteriorController.h"
+#include "InteriorInteractionModel.h"
 #include "InteriorsModel.h"
 #include "InteriorsFloorModel.h"
 #include "IInteriorsLabelController.h"
@@ -25,13 +25,13 @@ namespace ExampleApp
         {
             namespace Highlights
             {
-                InteriorsHighlightVisibilityController::InteriorsHighlightVisibilityController(Eegeo::Resources::Interiors::InteriorController& interiorController,
+                InteriorsHighlightVisibilityController::InteriorsHighlightVisibilityController(Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                                                Search::SdkModel::ISearchService& searchService,
                                                                                                Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                                                                                Search::SdkModel::ISearchResultRepository& searchResultRepository,
                                                                                                Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& labelController,
                                                                                                ExampleAppMessaging::TMessageBus& messageBus)
-                : m_interiorController(interiorController)
+                : m_interiorInteractionModel(interiorInteractionModel)
                 , m_interiorslabelsController(labelController)
                 , m_searchService(searchService)
                 , m_searchQueryPerformer(searchQueryPerformer)
@@ -40,13 +40,13 @@ namespace ExampleApp
                 , m_searchPerformedHandler(this, &InteriorsHighlightVisibilityController::OnSearchPerformed)
                 , m_searchResultsHandler(this, &InteriorsHighlightVisibilityController::OnSearchResultsLoaded)
                 , m_searchResultsClearedHandler(this, &InteriorsHighlightVisibilityController::OnSearchResultCleared)
-                , m_interiorVisibilityChangedHandler(this, &InteriorsHighlightVisibilityController::OnInteriorVisibilityChanged)
+                , m_interiorInteractionModelChangedHandler(this, &InteriorsHighlightVisibilityController::OnInteriorInteractionModelChanged)
                 , m_availabilityChangedHandlerBinding(this, &InteriorsHighlightVisibilityController::OnAvailabilityChanged)
                 {
                     m_searchService.InsertOnPerformedQueryCallback(m_searchPerformedHandler);
                     m_searchService.InsertOnReceivedQueryResultsCallback(m_searchResultsHandler);
                     m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
-                    m_interiorController.RegisterVisibilityChangedCallback(m_interiorVisibilityChangedHandler);
+                    m_interiorInteractionModel.RegisterModelChangedCallback(m_interiorInteractionModelChangedHandler);
                     
                     m_messageBus.SubscribeNative(m_availabilityChangedHandlerBinding);
                 }
@@ -56,7 +56,7 @@ namespace ExampleApp
                     m_searchService.RemoveOnPerformedQueryCallback(m_searchPerformedHandler);
                     m_searchService.RemoveOnReceivedQueryResultsCallback(m_searchResultsHandler);
                     m_searchQueryPerformer.RemoveOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
-                    m_interiorController.UnregisterVisibilityChangedCallback(m_interiorVisibilityChangedHandler);
+                    m_interiorInteractionModel.UnregisterModelChangedCallback(m_interiorInteractionModelChangedHandler);
                     
                     m_messageBus.UnsubscribeNative(m_availabilityChangedHandlerBinding);
                 }
@@ -103,9 +103,10 @@ namespace ExampleApp
                 {
                     namespace IE = Eegeo::Resources::Interiors::Entities;
                     
-                    const IE::TFloorToModelMap& floorToVectorMap = m_interiorslabelsController.GetFloorsToModels();
                     
-                    for (IE::TFloorToModelMap::const_iterator it = floorToVectorMap.begin(); it != floorToVectorMap.end(); ++it)
+                    const IE::TFloorIndexToModelsMap& floorIndexToModels = m_interiorslabelsController.GetFloorIndexToModels();
+                    
+                    for (IE::TFloorIndexToModelsMap::const_iterator it = floorIndexToModels.begin(); it != floorIndexToModels.end(); ++it)
                     {
                         const IE::TModelVector& modelVector = (*it).second;
                         
@@ -122,37 +123,34 @@ namespace ExampleApp
                     m_highlightAvailabilityData.clear();
                 }
                 
-                void InteriorsHighlightVisibilityController::OnInteriorVisibilityChanged()
+                void InteriorsHighlightVisibilityController::OnInteriorInteractionModelChanged()
                 {
                     namespace EegeoInteriors = Eegeo::Resources::Interiors;
                     namespace EegeoRenderables = Eegeo::Rendering::Renderables;
                     
-                    if(m_interiorController.InteriorIsVisible())
+                    if (m_interiorInteractionModel.HasInteriorModel())
                     {
                         ShowLabelsForCurrentResults();
                         
-                        const EegeoInteriors::InteriorsModel *model = NULL;
+                        const EegeoInteriors::InteriorsModel& model = *m_interiorInteractionModel.GetInteriorModel();
                         
-                        if(m_interiorController.TryGetCurrentModel(model))
+                        for(EegeoInteriors::TFloorModelVector::const_iterator floors = model.GetFloors().begin();
+                            floors != model.GetFloors().end();
+                            ++floors)
                         {
-                            for(EegeoInteriors::TFloorModelVector::const_iterator floors = model->GetFloors().begin();
-                                floors != model->GetFloors().end();
-                                ++floors)
+                            EegeoInteriors::InteriorsFloorCells* floorCells = model.GetFloorCells((*floors)->GetFloorNumber());
+                            
+                            for (int cellIndex = 0; cellIndex < floorCells->GetCellCount(); ++cellIndex)
                             {
-                                EegeoInteriors::InteriorsFloorCells* floorCells = model->GetFloorCells((*floors)->GetFloorNumber());
+                                EegeoInteriors::InteriorsFloorCell* cell = floorCells->GetFloorCells()[cellIndex];
                                 
-                                for (int cellIndex = 0; cellIndex < floorCells->GetCellCount(); ++cellIndex)
+                                std::vector<EegeoRenderables::InteriorHighlightRenderable*> renderables = cell->GetHighlightRenderables();
+                                
+                                for (std::vector<EegeoRenderables::InteriorHighlightRenderable*>::iterator renderableIterator = renderables.begin();
+                                     renderableIterator != renderables.end();
+                                     ++renderableIterator)
                                 {
-                                    EegeoInteriors::InteriorsFloorCell* cell = floorCells->GetFloorCells()[cellIndex];
-                                    
-                                    std::vector<EegeoRenderables::InteriorHighlightRenderable*> renderables = cell->GetHighlightRenderables();
-                                    
-                                    for (std::vector<EegeoRenderables::InteriorHighlightRenderable*>::iterator renderableIterator = renderables.begin();
-                                         renderableIterator != renderables.end();
-                                         ++renderableIterator)
-                                    {
-                                        AddHighlight(**renderableIterator);
-                                    }
+                                    AddHighlight(**renderableIterator);
                                 }
                             }
                         }
@@ -255,9 +253,9 @@ namespace ExampleApp
                 {
                     namespace IE = Eegeo::Resources::Interiors::Entities;
                     
-                    const IE::TFloorToModelMap& floorToVectorMap = m_interiorslabelsController.GetFloorsToModels();
+                    const IE::TFloorIndexToModelsMap& floorIndexToModels = m_interiorslabelsController.GetFloorIndexToModels();
                     
-                    for (IE::TFloorToModelMap::const_iterator it = floorToVectorMap.begin(); it != floorToVectorMap.end(); ++it)
+                    for (IE::TFloorIndexToModelsMap::const_iterator it = floorIndexToModels.begin(); it != floorIndexToModels.end(); ++it)
                     {
                         const IE::TModelVector& modelVector = (*it).second;
                         

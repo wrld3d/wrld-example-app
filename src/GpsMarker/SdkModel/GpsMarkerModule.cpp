@@ -60,9 +60,10 @@ namespace ExampleApp
                                                                                                          renderingModule.GetGlBufferPool(),
                                                                                                          Eegeo::Rendering::Renderables::BatchedSpriteAnchor::Bottom);
                 
-                m_pModel = Eegeo_NEW(GpsMarkerModel)(locationService, terrainModelModule.GetTerrainHeightProvider(), interiorsAffectedByFlattening);
+                const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel = mapModule.GetInteriorsPresentationModule().GetInteriorInteractionModel();
+                m_pModel = Eegeo_NEW(GpsMarkerModel)(locationService, terrainModelModule.GetTerrainHeightProvider(), interiorInteractionModel, interiorsAffectedByFlattening);
                 m_pView = Eegeo_NEW(GpsMarkerView)(*m_pGpsIconRenderable);
-                m_pController = Eegeo_NEW(GpsMarkerController)(*m_pModel, *m_pView, mapModule.GetEnvironmentFlatteningService(), mapModule.GetInteriorsPresentationModule().GetController(), messageBus);
+                m_pController = Eegeo_NEW(GpsMarkerController)(*m_pModel, *m_pView, mapModule.GetEnvironmentFlatteningService(), messageBus);
                 
                 m_renderableFilters.AddRenderableFilter(*m_pView);
 

@@ -6,7 +6,7 @@
 #include "LatLongAltitude.h"
 #include "ICameraTransitionController.h"
 #include "SwallowSearchConstants.h"
-#include "InteriorController.h"
+#include "InteriorInteractionModel.h"
 
 namespace ExampleApp
 {
@@ -17,7 +17,7 @@ namespace ExampleApp
             SearchRefreshService::SearchRefreshService(ISearchService& searchService,
                     ISearchQueryPerformer& searchQueryPerformer,
                     CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
-                    Eegeo::Resources::Interiors::InteriorController& interiorController,
+                    Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                     float minimumSecondsBetweenUpdates,
                     float minimumMetresBetweenUpdates)
                 : m_minimumSecondsBetweenUpdates(minimumSecondsBetweenUpdates)
@@ -25,7 +25,7 @@ namespace ExampleApp
                 , m_searchService(searchService)
                 , m_searchQueryPerformer(searchQueryPerformer)
                 , m_cameraTransitionsController(cameraTransitionsController)
-                , m_interiorController(interiorController)
+                , m_interiorInteractionModel(interiorInteractionModel)
                 , m_searchResultQueryIssuedCallback(this, &SearchRefreshService::HandleSearchQueryIssued)
                 , m_searchResultResponseReceivedCallback(this, &SearchRefreshService::HandleSearchResultsResponseReceived)
                 , m_searchQueryResultsClearedCallback(this, &SearchRefreshService::HandleSearchQueryResultsCleared)
@@ -40,12 +40,12 @@ namespace ExampleApp
                 m_searchService.InsertOnPerformedQueryCallback(m_searchResultQueryIssuedCallback);
                 m_searchService.InsertOnReceivedQueryResultsCallback(m_searchResultResponseReceivedCallback);
                 m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(m_searchQueryResultsClearedCallback);
-                m_interiorController.RegisterStateChangedCallback(m_interiorChangedCallback);
+                m_interiorInteractionModel.RegisterModelChangedCallback(m_interiorChangedCallback);
             }
 
             SearchRefreshService::~SearchRefreshService()
             {
-                m_interiorController.UnregisterStateChangedCallback(m_interiorChangedCallback);
+                m_interiorInteractionModel.UnregisterModelChangedCallback(m_interiorChangedCallback);
                 m_searchQueryPerformer.RemoveOnSearchResultsClearedCallback(m_searchQueryResultsClearedCallback);
                 m_searchService.RemoveOnReceivedQueryResultsCallback(m_searchResultResponseReceivedCallback);
                 m_searchService.RemoveOnPerformedQueryCallback(m_searchResultQueryIssuedCallback);
@@ -114,7 +114,7 @@ namespace ExampleApp
                 if (!m_searchResultsCleared && m_searchResultsExist)
                 {
                     const SearchQuery& previousQuery = m_searchQueryPerformer.GetPreviousSearchQuery();
-                    if (m_interiorController.GetCurrentState() == Eegeo::Resources::Interiors::InteriorViewState::InteriorInScene && previousQuery.IsCategory())
+                    if (m_interiorInteractionModel.HasInteriorModel() && previousQuery.IsCategory())
                     {
                         m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), previousQuery.IsInterior());
                         m_secondsSincePreviousRefresh = 0.f;

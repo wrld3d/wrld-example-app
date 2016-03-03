@@ -10,7 +10,7 @@
 #include "RenderCamera.h"
 #include "GlobeCameraController.h"
 #include "GpsGlobeCameraController.h"
-#include "InteriorsExplorerCameraController.h"
+#include "InteriorsCameraController.h"
 #include "InteriorsExplorerModel.h"
 #include "MathFunc.h"
 #include "MyPinCreationModel.h"
@@ -32,7 +32,8 @@ namespace ExampleApp
                                      Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                      AppModes::SdkModel::IAppModeModel& appModeModel,
                                      Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& worldCameraController,
-                                     ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController,
+                                     Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
+                                     InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                      MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
                                      VisualMap::SdkModel::IVisualMapService& visualMapService)
                 : m_cameraController(cameraController)

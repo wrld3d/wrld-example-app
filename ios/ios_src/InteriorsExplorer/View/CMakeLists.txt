@@ -4,6 +4,8 @@ set(headers ${headers} ios_src/InteriorsExplorer/View
 set(currsources
   ios_src/InteriorsExplorer/View/CMakeLists.txt
   ios_src/InteriorsExplorer/View/IInteriorsExplorerViewModule.h
+  ios_src/InteriorsExplorer/View/InteriorsExplorerFloorItemView.h
+  ios_src/InteriorsExplorer/View/InteriorsExplorerFloorItemView.mm
   ios_src/InteriorsExplorer/View/InteriorsExplorerView.h
   ios_src/InteriorsExplorer/View/InteriorsExplorerView.mm
   ios_src/InteriorsExplorer/View/InteriorsExplorerViewIncludes.h

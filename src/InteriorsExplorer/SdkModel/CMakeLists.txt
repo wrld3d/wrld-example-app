@@ -5,8 +5,6 @@ set(currsources
   ../src/InteriorsExplorer/SdkModel/IInteriorsExplorerModule.h
   ../src/InteriorsExplorer/SdkModel/InteriorExplorerUserInteractionModel.cpp
   ../src/InteriorsExplorer/SdkModel/InteriorExplorerUserInteractionModel.h
-  ../src/InteriorsExplorer/SdkModel/InteriorsExplorerCameraController.cpp
-  ../src/InteriorsExplorer/SdkModel/InteriorsExplorerCameraController.h
   ../src/InteriorsExplorer/SdkModel/InteriorsExplorerModel.cpp
   ../src/InteriorsExplorer/SdkModel/InteriorsExplorerModel.h
   ../src/InteriorsExplorer/SdkModel/InteriorsExplorerModule.cpp

@@ -21,16 +21,14 @@ namespace ExampleApp
                                                                    const std::vector<std::string>& availableCategories,
                                                                    const std::string& serviceUrl,
                                                                    const std::string& apiKey,
-                                                                   Eegeo::Resources::Interiors::InteriorController& interiorsController,
-                                                                   Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel)
+                                                                   const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel)
                 : m_pEegeoSearchQueryFactory(NULL)
                 , m_pEegeoParser(NULL)
                 , m_pSearchService(NULL)
                 {
                     m_pEegeoSearchQueryFactory = Eegeo_NEW(EegeoSearchQueryFactory)(webRequestFactory,
                                                                                     urlEncoder,
-                                                                                    interiorsController,
-                                                                                    interiorSelectionModel,
+                                                                                    interiorInteractionModel,
                                                                                     serviceUrl,
                                                                                     apiKey);
                     m_pEegeoParser = Eegeo_NEW(EegeoJsonParser)();
