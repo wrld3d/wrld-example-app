@@ -19,6 +19,7 @@ namespace ExampleApp
                                                                    Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
                                                                    Net::SdkModel::INetworkCapabilities& networkCapabilities,
                                                                    const std::vector<std::string>& availableCategories,
+                                                                   const std::string& serviceUrl,
                                                                    const std::string& apiKey,
                                                                    Eegeo::Resources::Interiors::InteriorController& interiorsController,
                                                                    Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel)
@@ -30,6 +31,7 @@ namespace ExampleApp
                                                                                     urlEncoder,
                                                                                     interiorsController,
                                                                                     interiorSelectionModel,
+                                                                                    serviceUrl,
                                                                                     apiKey);
                     m_pEegeoParser = Eegeo_NEW(EegeoJsonParser)();
                     

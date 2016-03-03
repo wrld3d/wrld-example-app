@@ -27,11 +27,13 @@ namespace ExampleApp
                     Eegeo::Helpers::UrlHelpers::IUrlEncoder& m_urlEncoder;
                     const Eegeo::Resources::Interiors::InteriorController& m_interiorsController;
                     const Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
+                    const std::string m_serviceUrl;
                 public:
                     EegeoSearchQueryFactory(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                             Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
                                             const Eegeo::Resources::Interiors::InteriorController& interiorsController,
                                             const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                            const std::string& serviceUrl,
                                             const std::string& apiKey);
                     
                     ~EegeoSearchQueryFactory();

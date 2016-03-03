@@ -18,11 +18,13 @@ namespace ExampleApp
                                                                  Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
                                                                  const Eegeo::Resources::Interiors::InteriorController& interiorsController,
                                                                  const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                                         const std::string& apiKey)
+                                                                 const std::string& serviceUrl,
+                                                                 const std::string& apiKey)
                 : m_webRequestFactory(webRequestFactory)
                 , m_interiorsController(interiorsController)
                 , m_interiorSelectionModel(interiorSelectionModel)
                 , m_urlEncoder(urlEncoder)
+                , m_serviceUrl(serviceUrl)
                 , m_apiKey(apiKey)
                 {
                     
@@ -41,6 +43,7 @@ namespace ExampleApp
                         return Eegeo_NEW(EegeoInteriorSearchQuery)(m_webRequestFactory,
                                                                    m_urlEncoder,
                                                                    query,
+                                                                   m_serviceUrl,
                                                                    m_apiKey,
                                                                    m_interiorSelectionModel.GetSelectedInteriorId(),
                                                                    m_interiorsController.GetCurrentFloorIndex(),
@@ -51,6 +54,7 @@ namespace ExampleApp
                         return Eegeo_NEW(EegeoSearchQuery)(m_webRequestFactory,
                                                            m_urlEncoder,
                                                            query,
+                                                           m_serviceUrl,
                                                            m_apiKey,
                                                            completionCallback);
                     }

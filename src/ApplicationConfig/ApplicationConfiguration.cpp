@@ -22,6 +22,7 @@ namespace ExampleApp
                                                            const std::string& coverageTreeManifestURL,
                                                            const std::string& themeManifestURL,
                                                            const std::string& sqliteDbUrl,
+                                                           const std::string& searchServiceUrl,
                                                            const std::string& myPinsWebServiceUrl,
                                                            const std::string& myPinsWebServiceAuthToken,
                                                            const std::string& productVersion,
@@ -43,6 +44,7 @@ namespace ExampleApp
         , m_coverageTreeManifestURL(coverageTreeManifestURL)
         , m_themeManifestURL(themeManifestURL)
         , m_sqliteDbUrl(sqliteDbUrl)
+        , m_searchServiceUrl(searchServiceUrl)
         , m_myPinsWebServiceUrl(myPinsWebServiceUrl)
         , m_myPinsWebServiceAuthToken(myPinsWebServiceAuthToken)
         , m_productVersion(productVersion)
@@ -132,6 +134,11 @@ namespace ExampleApp
             return m_sqliteDbUrl;
         }
         
+        const std::string& ApplicationConfiguration::SearchServiceUrl() const
+        {
+            return m_searchServiceUrl;
+        }
+
         const std::string& ApplicationConfiguration::MyPinsWebServiceUrl() const
         {
             return m_myPinsWebServiceUrl;

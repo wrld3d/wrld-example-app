@@ -19,6 +19,7 @@ namespace ExampleApp
                 EegeoSearchQuery::EegeoSearchQuery(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                                    Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
                                                    const Search::SdkModel::SearchQuery& query,
+                                                   const std::string& serviceUrl,
                                                    const std::string& apiKey,
                                                    Eegeo::Helpers::ICallback0& completionCallback)
                 : m_apiKey(apiKey)
@@ -32,7 +33,7 @@ namespace ExampleApp
                     
                     std::stringstream urlstream;
                     urlstream.setf(std::ios_base::fixed);
-                    urlstream << "https://poi-staging.eegeo.com";
+                    urlstream << serviceUrl;
                     if (query.IsCategory())
                     {
                         urlstream << "/category?c=";

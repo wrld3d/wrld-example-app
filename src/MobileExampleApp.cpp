@@ -485,6 +485,7 @@ namespace ExampleApp
                                                                                                                                m_platformAbstractions.GetUrlEncoder(),
                                                                                                                                m_networkCapabilities,
                                                                                                                                supportedCategories,
+                                                                                                                               m_applicationConfiguration.SearchServiceUrl(),
                                                                                                                                apiKey,
                                                                                                                                world.GetMapModule().GetInteriorsPresentationModule().GetController(),
                                                                                                                                world.GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel());

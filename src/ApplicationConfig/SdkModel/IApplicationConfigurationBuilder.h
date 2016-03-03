@@ -49,6 +49,8 @@ namespace ExampleApp
                 
                 virtual IApplicationConfigurationBuilder& SetSqliteDbUrl(const std::string& SqliteDbUrl) = 0;
                 
+                virtual IApplicationConfigurationBuilder& SetSearchServiceUrl(const std::string& searchServiceUrl) = 0;
+                
                 virtual IApplicationConfigurationBuilder& SetMyPinsWebServiceUrl(const std::string& myPinsWebServiceUrl) = 0;
                 
                 virtual IApplicationConfigurationBuilder& SetMyPinsWebServiceAuthToken(const std::string& myPinsWebServiceAuthToken) = 0;
