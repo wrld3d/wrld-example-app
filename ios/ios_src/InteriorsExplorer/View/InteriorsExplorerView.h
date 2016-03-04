@@ -27,7 +27,7 @@
     float m_stateChangeAnimationTimeSeconds;
     
     float m_detailsPanelHeight;
-    
+    float m_floorDivisionHeight;
     BOOL m_touchEnabled;
     BOOL m_draggingFloorButton;
     BOOL m_floorSelectionEnabled;
