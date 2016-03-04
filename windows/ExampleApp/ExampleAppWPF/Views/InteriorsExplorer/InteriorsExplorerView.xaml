@@ -42,27 +42,26 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:InteriorsExplorerView}">
                     <Grid>
-                        <Grid Name="DetailsPanel" Width="Auto" Height="40" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,40,0,0">
+                        <Grid Name="DetailsPanel" Width="Auto" Height="50" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,50,0,0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="200"/>
-                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="315"/>
+                                <ColumnDefinition Width="11"/>
+                                <ColumnDefinition Width="50"/>
                             </Grid.ColumnDefinitions>
 
                             <Grid Grid.Column="0">
                                 <Border Name="Mask" Background="White"/>
-                                <Grid>
-                                    <Grid.Background>
-                                        <ImageBrush ImageSource="/Assets/place_pin_background.png">
-                                        </ImageBrush>
-                                    </Grid.Background>
+                                <Grid Background="{StaticResource PrimaryBG_colour}">
                                     <Grid.OpacityMask>
                                         <VisualBrush Visual="{Binding ElementName=Mask}"/>
                                     </Grid.OpacityMask>
 
-                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="FloorName" Foreground="{StaticResource DarkGrey}" FontSize="16"/>
+                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Name="FloorName" Foreground="{StaticResource White}" FontSize="16" Padding="14"/>
                                 </Grid>
                             </Grid>
-                            <Button Name="DismissButton" Width="40" Height="40" Grid.Column="1" Style="{StaticResource ExitButtonStyle}"/>
+                            <Grid Grid.Column="1">
+                            </Grid>
+                            <Button Name="DismissButton" Width="50" Height="50" Grid.Column="2" Style="{StaticResource ExitButtonStyle}"/>
                         </Grid>
 
                         <Grid Name="FloorPanel" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="auto">

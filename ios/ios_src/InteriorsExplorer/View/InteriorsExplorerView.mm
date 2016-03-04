@@ -2,6 +2,7 @@
 
 #include "InteriorsExplorerView.h"
 #include "UIColors.h"
+#include "UIHelpers.h"
 #include "ImageHelpers.h"
 #include "InteriorsExplorerViewInterop.h"
 #include "App.h"
@@ -12,6 +13,11 @@
 #import "UIButton+DefaultStates.h"
 #import "UIView+TouchExclusivity.h"
 #import <QuartzCore/QuartzCore.h>
+
+namespace
+{
+    float iPhoneDismissButtonMargin = 28.f;
+}
 
 @implementation InteriorsExplorerView
 
@@ -84,12 +90,12 @@
         [self.pFloorChangeButton addSubview:self.pFloorOnButtonLabel];
         
         
-        
         const float buttonSize = 50.f;
-        const float labelLength = isPhone? 150.f : 200.f;
+        const float labelLength = isPhone ? fminf(200.f, m_screenWidth*0.5f) : 315.f;
+        const float labelSpacing = 11.f;
         
         const float detailsPanelHeight = 50.0f;
-        float totalPanelLength = labelLength + buttonSize;
+        float totalPanelLength = isPhone ? labelLength : labelLength + buttonSize + labelSpacing;
         
         float totalPanelHeight = detailsPanelHeight;
         
@@ -99,35 +105,37 @@
         
         UIColor* backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         
+        const float dismissButtonX = isPhone? m_inactiveFloorListXPosition : totalPanelLength-buttonSize;
+        const float dismissButtonY = isPhone? self.pFloorPanel.frame.origin.y - 10.0f : 0.0f;
+        UIView* dismissButtonParent = isPhone? self : self.pDetailsPanel;
         self.pDismissButtonBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(backgroundColor)] autorelease];
-        self.pDismissButtonBackground.frame = CGRectMake(totalPanelLength-buttonSize, 0.0f, buttonSize, buttonSize);
+        self.pDismissButtonBackground.frame = CGRectMake(dismissButtonX, dismissButtonY, buttonSize, buttonSize);
+        self.pDismissButtonBackground.userInteractionEnabled = YES;
+        [dismissButtonParent addSubview:self.pDismissButtonBackground];
         
-        [self.pDetailsPanel addSubview:self.pDismissButtonBackground];
-        
-        self.pDismissButton = [[[UIButton alloc] initWithFrame:CGRectMake(totalPanelLength-buttonSize, 0.0f, buttonSize, buttonSize)] autorelease];
+        self.pDismissButton = [[[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, buttonSize, buttonSize)] autorelease];
         [self.pDismissButton setDefaultStatesWithImageNames:@"button_exit_interior_off" :@"button_exit_interior_on"];
 
         [self.pDismissButton addTarget:self action:@selector(onCancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [self.pDetailsPanel addSubview:self.pDismissButton];
+        [self.pDismissButtonBackground addSubview:self.pDismissButton];
         
-        self.pDismissButtonBackground.userInteractionEnabled = YES;
         
-        self.pDetailsPanelBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"place_pin_background")] autorelease];
-        
-
+        self.pDetailsPanelBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(backgroundColor)] autorelease];
         self.pDetailsPanelBackground.frame = CGRectMake(0, 0, labelLength, detailsPanelHeight);
                 
         [self.pDetailsPanel addSubview:self.pDetailsPanelBackground];
         
-        const float textPadding = 2.f;
+        const float textPadding = 14.f;
         
-        self.pFloorNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake( textPadding, textPadding, labelLength - textPadding, detailsPanelHeight - textPadding)] autorelease];
-        self.pFloorNameLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
-        self.pFloorNameLabel.textAlignment = NSTextAlignmentCenter;
+        self.pFloorNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake( textPadding, textPadding, labelLength - (2*textPadding), detailsPanelHeight - (2*textPadding))] autorelease];
+        self.pFloorNameLabel.textColor = [UIColor whiteColor];
+        self.pFloorNameLabel.textAlignment = NSTextAlignmentLeft;
         [self.pDetailsPanel addSubview:self.pFloorNameLabel];
         
         
         [self addSubview:self.pDetailsPanel];
+        
+        self.pDetailsPanel.alpha = 0.0f;
         
         m_onScreenParam = 0.f;
         m_touchEnabled = NO;
@@ -195,6 +203,8 @@
         return YES;
     if (CGRectContainsPoint(self.pDetailsPanel.frame, touchLocation))
         return YES;
+    if (CGRectContainsPoint(self.pDismissButtonBackground.frame, touchLocation))
+        return YES;
     return  NO;
 }
 
@@ -238,18 +248,37 @@
     
     [self.pFloorListViews removeAllObjects];
     
-    const float heightPerFloor = 50;
+    
+    const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
+    
+    m_floorDivisionHeight = isPhone ? m_screenHeight*0.0625f : 50;
     const float divisionWidth = 40;
+    float maxHeight = m_screenHeight*0.5f;
     int floorCount = static_cast<int>(m_tableViewFloorNames.size());
-    float verticalPadding = ((float)self.pFloorChangeButton.frame.size.height - heightPerFloor);
-    float totalHeight = heightPerFloor * floorCount + verticalPadding;
+    float verticalPadding = ((float)self.pFloorChangeButton.frame.size.height - m_floorDivisionHeight);
+    float totalHeight = m_floorDivisionHeight * floorCount + verticalPadding;
+    if(totalHeight > maxHeight)
+    {
+        m_floorDivisionHeight = (maxHeight-verticalPadding)/(floorCount);
+        totalHeight = maxHeight;
+        verticalPadding = ((float)self.pFloorChangeButton.frame.size.height - m_floorDivisionHeight);
+    }
     
     CGRect floorPanelFrame = self.pFloorPanel.frame;
-    floorPanelFrame.origin.y = m_screenHeight*0.5f - totalHeight*0.5f;
+    const float floorPanelVerticalCenterline = isPhone ? 0.54f : 0.5f;
+    floorPanelFrame.origin.y = m_screenHeight*floorPanelVerticalCenterline - totalHeight*0.5f;
     floorPanelFrame.size.height = totalHeight;
     self.pFloorPanel.frame = floorPanelFrame;
     
-    float yOffset = ((float)self.pFloorChangeButton.frame.size.height - heightPerFloor)*0.5f;
+    if(isPhone)
+    {
+        CGRect dismissButtonFrame = self.pDismissButtonBackground.frame;
+        const float dismissButtonSpacing = 10.f;
+        dismissButtonFrame.origin.y = (self.pFloorPanel.frame.origin.y - dismissButtonSpacing) - dismissButtonFrame.size.height;
+        self.pDismissButtonBackground.frame = dismissButtonFrame;
+    }
+    
+    float yOffset = ((float)self.pFloorChangeButton.frame.size.height - m_floorDivisionHeight)*0.5f;
     int floorIndex = 0;
     for(std::vector<std::string>::const_iterator it = m_tableViewFloorNames.begin(); it != m_tableViewFloorNames.end(); it++)
     {
@@ -257,7 +286,7 @@
         NSString* nameString = [NSString stringWithCString:name.c_str() encoding:NSUTF8StringEncoding];
         
         InteriorsExplorerFloorItemView* pFloorView = [[[InteriorsExplorerFloorItemView alloc] initWithParams:divisionWidth
-                                                                                                            :heightPerFloor
+                                                                                                            :m_floorDivisionHeight
                                                                                                             :m_pixelScale
                                                                                                             :nameString
                                                                                                             :(floorIndex == 0)
@@ -270,7 +299,7 @@
         [self.pFloorPanel insertSubview:pFloorView belowSubview:self.pFloorChangeButton];
         [self.pFloorListViews addObject:pFloorView];
         
-        yOffset += heightPerFloor;
+        yOffset += m_floorDivisionHeight;
         floorIndex++;
     }
     
@@ -285,6 +314,18 @@
     self.pFloorOnButtonLabel.text = [NSString stringWithCString:m_tableViewFloorNames.at(nameIndex).c_str() encoding:NSUTF8StringEncoding];
 }
 
+- (float) GetXPositionForFloorPanelAt:(float)t
+{
+    float openX = iPhoneDismissButtonMargin + (0.5f * self.pDismissButtonBackground.frame.size.width + 0.5f * self.pFloorChangeButton.frame.size.width);
+    return m_screenWidth - t * openX;
+}
+
+- (float) GetXPositionForDismissButtonAt:(float)t
+{
+    const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
+    return isPhone ? m_screenWidth - t * (iPhoneDismissButtonMargin + self.pDismissButtonBackground.frame.size.width) : 0.0f;
+}
+
 - (void) setFullyOnScreen
 {
     [self animateTo:1.0f];
@@ -297,26 +338,37 @@
 
 - (void) setOnScreenStateToIntermediateValue:(float)onScreenState
 {
-    float newX = m_screenWidth - onScreenState * (float)self.pFloorPanel.frame.size.width;
     
     CGRect floorPanel = self.pFloorPanel.frame;
-    floorPanel.origin.x = newX;
+    floorPanel.origin.x = [self GetXPositionForFloorPanelAt :onScreenState];
+    
+    const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
+    if(isPhone)
+    {
+        CGRect dismissPanel = self.pDismissButtonBackground.frame;
+        dismissPanel.origin.x = [self GetXPositionForDismissButtonAt:onScreenState];
+        
+        self.pDismissButtonBackground.frame = dismissPanel;
+    }
     
     self.hidden = onScreenState == 0.0f;
     self.pFloorPanel.frame = floorPanel;
     
     self.pDetailsPanel.alpha = onScreenState;
     m_onScreenParam = onScreenState;
-    
-    self.pDismissButton.alpha = onScreenState;
 }
 
 - (void) animateTo:(float)t
 {
-    float newX = m_screenWidth - t * (float)self.pFloorPanel.frame.size.width;;
-    
     CGRect floorFrame = self.pFloorPanel.frame;
-    floorFrame.origin.x = newX;
+    floorFrame.origin.x = [self GetXPositionForFloorPanelAt:t];
+    
+    CGRect dismissButtonFrame = self.pDismissButtonBackground.frame;
+    const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
+    if(isPhone)
+    {
+        dismissButtonFrame.origin.x = [self GetXPositionForDismissButtonAt:t];
+    }
     
     if(t > 0.f)
     {
@@ -330,7 +382,10 @@
      {
          self.pFloorPanel.frame = floorFrame;
          self.pDetailsPanel.alpha = t;
-         self.pDismissButton.alpha = t;
+         if(isPhone)
+         {
+             self.pDismissButtonBackground.frame = dismissButtonFrame;
+         }
      }
                      completion:^(BOOL finished)
      {
@@ -412,8 +467,8 @@
     int floorCount = static_cast<int>(self.pFloorListViews.count);
     InteriorsExplorerFloorItemView* topItem = [self.pFloorListViews objectAtIndex:0];
     CGRect topFrame = topItem.frame;
-    CGFloat topY = topFrame.origin.y + 25.0f - self.pFloorChangeButton.frame.size.height*0.5f;
-    CGFloat newY = topY + ((floorCount-1)-floorIndex) * 50;
+    CGFloat topY = topFrame.origin.y + (m_floorDivisionHeight*0.5f) - self.pFloorChangeButton.frame.size.height*0.5f;
+    CGFloat newY = topY + ((floorCount-1)-floorIndex) * m_floorDivisionHeight;
     
     if(shouldAnimate)
     {

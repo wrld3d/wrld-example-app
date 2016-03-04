@@ -167,7 +167,7 @@ namespace ExampleApp
                 const Eegeo::Resources::Interiors::InteriorsModel* pModel = m_interiorInteractionModel.GetInteriorModel();
                 Eegeo_ASSERT(pModel, "Could not fetch current model");
                 
-                const float dragParameter = message.GetDragParam();
+                const float dragParameter = Eegeo::Math::Clamp01(message.GetDragParam());
                 const float floorParam = dragParameter * (pModel->GetFloorCount()-1);
 
                 const bool shouldEnterExpandedMode = m_interiorInteractionModel.IsCollapsed() || m_interiorInteractionModel.IsExitingExpanded();
