@@ -317,13 +317,13 @@ void AppRunner::UpdateNative(float deltaSeconds)
 
         if (m_pNativeState->requiresPBuffer)
         { 
-            glFinish();
+            Eegeo_GL(glFlush());
         }
-
-        if (!m_pNativeState->requiresPBuffer)
+        else
         {
             Eegeo_GL(eglSwapBuffers(m_displayService.GetDisplay(), m_displayService.GetSurface()));
         }
+
         
         Eegeo::Helpers::GLHelpers::ClearBuffers();
 
