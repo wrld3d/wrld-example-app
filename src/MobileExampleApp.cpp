@@ -379,7 +379,7 @@ namespace ExampleApp
                                                                                                                     m_pSearchModule->GetSearchResultRepository(),
                                                                                                                     mapModule.GetInteriorsModelModule().GetInteriorsInstanceRepository(),
                                                                                                                     m_messageBus,
-                                                                                                                    Eegeo::v4(0.0f, 1.0f, 0.0f, 1.0f));
+                                                                                                                    Eegeo::v4(0.0f, 1.0f, 0.0f, 0.6f));
         
         
         m_pCameraTransitionController = Eegeo_NEW(ExampleApp::CameraTransitions::SdkModel::CameraTransitionController)(*m_pGlobeCameraController,
