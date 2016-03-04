@@ -349,10 +349,6 @@ namespace
         
         self.pDismissButtonBackground.frame = dismissPanel;
     }
-    else
-    {
-        self.pDismissButton.alpha = onScreenState;
-    }
     
     self.hidden = onScreenState == 0.0f;
     self.pFloorPanel.frame = floorPanel;
@@ -388,10 +384,6 @@ namespace
          if(isPhone)
          {
              self.pDismissButtonBackground.frame = dismissButtonFrame;
-         }
-         else
-         {
-             self.pDismissButtonBackground.alpha = t;
          }
      }
                      completion:^(BOOL finished)
