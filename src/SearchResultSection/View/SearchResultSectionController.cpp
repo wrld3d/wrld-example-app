@@ -38,7 +38,7 @@ namespace ExampleApp
                 {
                     std::vector<Search::SdkModel::SearchResultModel>::const_iterator it = std::find(unorderedResults.begin(), unorderedResults.end(), result);
                     
-                    return std::distance(unorderedResults.begin(), it);
+                    return static_cast<int>(std::distance(unorderedResults.begin(), it));
                 }
             }
 
