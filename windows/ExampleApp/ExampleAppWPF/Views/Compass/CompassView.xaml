@@ -7,7 +7,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CompassView}">
                     <Canvas Name="ImageCanvas">
-                        <Image Name="ButtonImage" Source="/Assets/button_compass_off.png" Width="120" Height="120"/>
+                        <Image Name="ButtonImage" Source="/Assets/button_compass_off.png" Width="120" Height="120">
+                            <Image.Clip>
+                                <EllipseGeometry Center="60,60" RadiusX="60" RadiusY="60" />
+                            </Image.Clip>
+                        </Image>
                         <Image Name="CompassArrow" Source="/Assets/compass_point_off.png" Width="16" Height="51" Visibility="Collapsed" />
                     </Canvas>
                     <ControlTemplate.Triggers>

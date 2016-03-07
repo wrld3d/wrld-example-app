@@ -6,8 +6,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:FlattenButtonView}" >
-                    <Grid Background="{TemplateBinding Background}">
-                        <Image Name="ButtonImage" Source="/Assets/button_flatten_off.png"/>
+                    <Grid Name="MyGrid" Background="{TemplateBinding Background}">
+                        <Image Name="ButtonImage" Source="/Assets/button_flatten_off.png">
+                            <Image.Clip>
+                                <EllipseGeometry Center="48,48" RadiusX="48" RadiusY="48" />
+                            </Image.Clip>
+                        </Image>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <MultiTrigger>
