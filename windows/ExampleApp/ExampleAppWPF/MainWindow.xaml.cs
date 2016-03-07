@@ -5,7 +5,7 @@ using System.Windows.Media;
 using ExampleApp.CLI;
 using System.Diagnostics;
 using System.Windows.Navigation;
-using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace ExampleAppWPF
 {
@@ -15,8 +15,18 @@ namespace ExampleAppWPF
 	public partial class MainWindow : Window
 	{
 		private MapImage m_mapImage;
-		private TimeSpan m_last = TimeSpan.Zero;
+        private TimeSpan m_currentRenderArgsRenderingTime = TimeSpan.Zero;
+        
+        private Stopwatch m_frameTimer;
         private bool m_isInputActive;
+        private int m_frameCount = 0;
+        private bool m_hasEmptiedEventQueueSinceLastRender = true;
+        private bool m_hasHadRenderEventSinceRender = false;
+        private double m_maxDelta = 0.0;
+        private bool m_logging = false;
+
+        private const float m_maxWaitPercentage = 1.1f;
+        
 
         public MainWindow()
         {
@@ -24,9 +34,13 @@ namespace ExampleAppWPF
 
             StartupResourceLoader.Init();
 
+
             m_mapImage = new MapImage();
             Loaded += MainWindow_Loaded;
             Closed += MainWindow_Closed;
+
+
+            m_frameTimer = Stopwatch.StartNew();
 
             m_isInputActive = true;
         }
@@ -73,6 +87,16 @@ namespace ExampleAppWPF
 
             MouseDown += MainWindow_MouseDown;
             MouseUp += MainWindow_MouseUp;
+
+            Dispatcher.Hooks.DispatcherInactive += new EventHandler(DispatcherInactive);
+
+        }
+
+        private void DispatcherInactive(object sender, EventArgs e)
+        {
+            m_hasEmptiedEventQueueSinceLastRender = true;
+
+            TryDoUpdateAndRender();
         }
 
         public void EnableInput()
@@ -126,18 +150,51 @@ namespace ExampleAppWPF
         private void CompositionTarget_Rendering(object sender, EventArgs e)
         {
             RenderingEventArgs renderArgs = (RenderingEventArgs)e;
-            
-            if (MapHost.Source != null && m_mapImage.IsFrontBufferAvailable && renderArgs.RenderingTime != m_last)
-            {
-                var duration = (renderArgs.RenderingTime - m_last).TotalSeconds;
-                
-                if (m_last != TimeSpan.Zero)
-                {
-                    m_mapImage.Render((float)duration);
-                }
+            if (!m_hasHadRenderEventSinceRender)
+            {                
+                m_maxDelta = m_frameTimer.Elapsed.TotalSeconds * m_maxWaitPercentage;
+                m_hasHadRenderEventSinceRender = true;
             }
 
-            m_last = renderArgs.RenderingTime;
+            if (m_currentRenderArgsRenderingTime == renderArgs.RenderingTime)
+            {
+                return;
+            }
+            m_currentRenderArgsRenderingTime = renderArgs.RenderingTime;
+
+            TryDoUpdateAndRender();
+        }
+
+        private void TryDoUpdateAndRender()
+        {
+            if (MapHost.Source == null)
+                return;
+
+            if (!m_mapImage.IsFrontBufferAvailable)
+                return;
+
+            var dt = m_frameTimer.Elapsed.TotalSeconds;
+
+            if (!m_hasEmptiedEventQueueSinceLastRender && (dt < m_maxDelta))
+            {
+                if (m_logging)
+                {
+                    Debug.WriteLine(string.Format("[{0}] BAIL dt {1}, frameTimer {2}", m_frameCount, dt, m_frameTimer.Elapsed));
+                }
+                return;
+            }
+
+            if (m_logging)
+            {
+                Debug.WriteLine(string.Format("[{0}] BAIL dt {1}, frameTimer {2}", m_frameCount, dt, m_frameTimer.Elapsed));
+            }
+
+            m_hasEmptiedEventQueueSinceLastRender = false;
+            m_hasHadRenderEventSinceRender = false;
+            ++m_frameCount;
+            m_frameTimer.Restart();
+
+            m_mapImage.Render((float)dt);
         }
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
