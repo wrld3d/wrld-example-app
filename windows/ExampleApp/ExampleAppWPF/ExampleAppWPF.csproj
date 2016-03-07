@@ -554,14 +554,6 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="..\..\Resources\floor_selection_bottom.png">
-      <Link>Assets\floor_selection_bottom.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\floor_selection_top.png">
-      <Link>Assets\floor_selection_top.png</Link>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Assets\place_pin_background.png" />
   </ItemGroup>
   <ItemGroup>

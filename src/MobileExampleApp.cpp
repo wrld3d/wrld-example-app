@@ -122,6 +122,7 @@
 #include "AggregateCollisionBvhProvider.h"
 #include "InteriorsHighlightVisibilityController.h"
 #include "InteriorsHighlightPickingController.h"
+#include "InteriorsModelModule.h"
 
 namespace ExampleApp
 {
@@ -276,6 +277,7 @@ namespace ExampleApp
         , m_pRayCaster(NULL)
         , m_pInteriorsPickingController(NULL)
         , m_pInteriorsHighlightVisibilityController(NULL)
+        , m_pInteriorsEntityIdHighlightController(NULL)
     {
         m_metricsService.BeginSession(applicationConfiguration.FlurryAppKey(), EEGEO_PLATFORM_VERSION_NUMBER);
 
@@ -370,7 +372,15 @@ namespace ExampleApp
                                                                                                                      m_pSearchModule->GetSearchResultRepository(),
                                                                                                                      mapModule.GetInteriorsPresentationModule().GetInteriorsLabelsController(),
                                                                                                                      m_messageBus);
-                                                                                                                                               
+        
+        m_pInteriorsEntityIdHighlightController = Eegeo_NEW(InteriorsExplorer::SdkModel::Highlights::InteriorsEntityIdHighlightVisibilityController)(
+                                                                                                                    m_searchServiceModules[Search::EegeoVendorName]->GetSearchService(),
+                                                                                                                    m_pSearchModule->GetSearchQueryPerformer(),
+                                                                                                                    m_pSearchModule->GetSearchResultRepository(),
+                                                                                                                    mapModule.GetInteriorsModelModule().GetInteriorsInstanceRepository(),
+                                                                                                                    m_messageBus,
+                                                                                                                    Eegeo::v4(0.0f, 1.0f, 0.0f, 0.6f));
+        
         
         m_pCameraTransitionController = Eegeo_NEW(ExampleApp::CameraTransitions::SdkModel::CameraTransitionController)(*m_pGlobeCameraController,
                                                                                                                        m_pInteriorsExplorerModule->GetInteriorsCameraController(),
@@ -408,6 +418,7 @@ namespace ExampleApp
         
         Eegeo_DELETE m_pStreamingVolume;
 
+        Eegeo_DELETE m_pInteriorsEntityIdHighlightController;
 		Eegeo_DELETE m_pInteriorsHighlightVisibilityController;
 		Eegeo_DELETE m_pInteriorsPickingController;
 		Eegeo_DELETE m_pRayCaster;
