@@ -51,7 +51,7 @@ namespace ExampleAppWPF
 
         public override void OnApplyTemplate()
         {
-            Button closeButton = (Button)GetTemplateChild("CloseButton");
+            FrameworkElement closeButton = (FrameworkElement)GetTemplateChild("CloseButton");
 
             m_closeButtonClickHandler = new ControlClickHandler(HandleCloseButtonClicked, closeButton);
         }
