@@ -138,5 +138,17 @@ namespace ExampleAppWPF
             }
 
         }
+
+        public override void AnimateToOpenOnScreen()
+        {
+            m_backgroundRectangle.RenderTransformOrigin = new Point(-1.0, 0.0);
+            base.AnimateToOpenOnScreen();
+        }
+
+        public override void AnimateToClosedOnScreen()
+        {
+            m_backgroundRectangle.RenderTransformOrigin = new Point(0.0, 0.0);
+            base.AnimateToClosedOnScreen();
+        }
     }
 }
