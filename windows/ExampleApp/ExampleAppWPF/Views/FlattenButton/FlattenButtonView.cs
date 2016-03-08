@@ -54,7 +54,7 @@ namespace ExampleAppWPF
             m_isFirstLayout = false;
 
             var transform = new TranslateTransform(
-                -(viewWidth * 0.5 + ConversionHelpers.AndroidToWindowsDip(48)),
+                -(viewWidth * 0.5 + ConversionHelpers.AndroidToWindowsDip(32)),
                 layoutY);
 
             RenderTransform = transform;

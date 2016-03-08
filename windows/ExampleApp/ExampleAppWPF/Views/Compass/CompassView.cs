@@ -45,8 +45,8 @@ namespace ExampleAppWPF
             m_compassPoint = (Image)GetTemplateChild("CompassArrow");
             m_compassInner.Visibility = Visibility.Collapsed;
 
-            m_compassInner.Width = 50.0;
-            m_compassInner.Height = 50.0;
+            m_compassInner.Width = 30.0;
+            m_compassInner.Height = 30.0;
             m_compassInner.RenderTransform = new TranslateTransform((Width - m_compassInner.Width) * 0.5, (Height - m_compassInner.Height) * 0.5);
 
             var canvas = (Canvas)GetTemplateChild("ImageCanvas");
@@ -139,7 +139,7 @@ namespace ExampleAppWPF
 
         public void UpdateHeading(float headingAngleRadians)
         {
-            float verticalPointOffsetPx = ((float)m_compassPoint.Height * 0.5f) + 16.0f;
+            float verticalPointOffsetPx = ((float)m_compassPoint.Height * 0.5f) + 11.0f;
             float theta = -headingAngleRadians;
             float sinTheta = (float)Math.Sin(theta);
             float cosTheta = (float)Math.Cos(theta);
