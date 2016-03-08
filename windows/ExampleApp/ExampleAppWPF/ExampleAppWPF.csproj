@@ -595,6 +595,9 @@
     <Resource Include="..\..\Resources\button_clear_search_on.png">
       <Link>Assets\button_clear_search_on.png</Link>
     </Resource>
+    <Resource Include="..\..\Resources\button_clear_search_down.png">
+      <Link>Assets\button_clear_search_down.png</Link>
+    </Resource>
     <Resource Include="..\..\Resources\poi_placeholder.png">
       <Link>Assets\poi_placeholder.png</Link>
     </Resource>

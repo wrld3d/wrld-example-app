@@ -237,11 +237,11 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid Margin="217,0,0,0" Grid.Column="0" Name="SearchResultsSpinner" Visibility="Hidden">
-                                    <Image Style="{StaticResource RotatingAnim}" Source="/Assets/search_results_spinner.png" Width="22" Height="22" RenderTransformOrigin="0.5,0.5"/>
+                                    <Image Style="{StaticResource RotatingAnim}" Source="/Assets/search_results_spinner.png" Width="18" Height="18" RenderTransformOrigin="0.5,0.5"/>
                                 </Grid>
 
                                 <Grid Margin="217,0,0,0" Grid.Column="0">
-                                    <Button Name="SearchClear" Width="22" Height="22" Visibility="Hidden">
+                                    <Button Name="SearchClear" Width="18" Height="18" Visibility="Hidden">
                                         <Button.Style>
                                             <Style TargetType="{x:Type Button}">
                                                 <Style.Setters>
@@ -253,8 +253,20 @@
                                                                 </Grid>
                                                                 <ControlTemplate.Triggers>
                                                                     <Trigger Property="IsPressed" Value="True">
-                                                                        <Setter TargetName="SearchClear" Property="Source" Value="/Assets/button_clear_search_on.png"/>
+                                                                        <Setter TargetName="SearchClear" Property="Source" Value="/Assets/button_clear_search_down.png"/>
                                                                     </Trigger>
+
+                                                                    <MultiTrigger>
+                                                                        <MultiTrigger.Conditions>
+                                                                            <Condition Property="IsPressed" Value="False"/>
+                                                                            <Condition Property="IsMouseOver" Value="True"/>
+                                                                        </MultiTrigger.Conditions>
+                                                                        <MultiTrigger.Setters>
+                                                                            <Setter TargetName="SearchClear" Property="Source" Value="/Assets/button_clear_search_on.png"/>
+                                                                        </MultiTrigger.Setters>
+                                                                    </MultiTrigger>
+                                                                    <!--<Trigger Property="IsMouseOver" Value="True">
+                                                                    </Trigger>-->
                                                                 </ControlTemplate.Triggers>
                                                             </ControlTemplate>
                                                         </Setter.Value>

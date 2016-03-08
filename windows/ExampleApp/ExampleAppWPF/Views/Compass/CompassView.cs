@@ -139,7 +139,7 @@ namespace ExampleAppWPF
 
         public void UpdateHeading(float headingAngleRadians)
         {
-            float verticalPointOffsetPx = ((float)m_compassPoint.Height * 0.5f) + 11.0f;
+            float verticalPointOffsetPx = ((float)m_compassPoint.Height * 0.5f) + 7.0f;
             float theta = -headingAngleRadians;
             float sinTheta = (float)Math.Sin(theta);
             float cosTheta = (float)Math.Cos(theta);
