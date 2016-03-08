@@ -10,7 +10,7 @@ set(currsources
   src/SettingsMenu/View/SettingsMenuViewModule.h
 )
 
-set_source_files_properties(${currsources} PROPERTIES COMPILE_FLAGS "/clr /EHa /Y-")
+set_source_files_properties(${currsources} PROPERTIES COMPILE_FLAGS "${clr_compile_flags}")
 
 set(sources ${sources} ${currsources})
 source_group(\\windows_src\\\\SettingsMenu\\View FILES ${currsources})

@@ -7,8 +7,6 @@ set(currsources
   src/WindowsAppThreadAssertions/WindowsAppThreadAssertions.h
 )
 
-set_source_files_properties(${currsources} PROPERTIES COMPILE_FLAGS "/clr /EHa /Y-")
-
 set(sources ${sources} ${currsources})
 source_group(\\windows_src\\\\WindowsAppThreadAssertions FILES ${currsources})
 endif(${WINDOWS})

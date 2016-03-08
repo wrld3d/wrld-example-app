@@ -14,9 +14,18 @@ set(currsources
   src/main.h
 )
 
-set_source_files_properties(${currsources} PROPERTIES COMPILE_FLAGS "/clr /EHa /Y-")
+
+
+set(clr_compile_flags "/clr /EHa /FpExampleAppClrPch.pch")
+
+set_source_files_properties(${currsources} PROPERTIES COMPILE_FLAGS "${clr_compile_flags}")
+
 set_source_files_properties(src/ExampleAppPch.cpp PROPERTIES COMPILE_FLAGS "/Yc")
 set(currsources ${currsources} src/ExampleAppPch.cpp)
+
+set_source_files_properties(src/ExampleAppClrPch.cpp PROPERTIES COMPILE_FLAGS "/Yc ${clr_compile_flags}")
+set(currsources ${currsources} src/ExampleAppClrPch.cpp)
+
 
 set(sources ${sources} ${currsources})
 

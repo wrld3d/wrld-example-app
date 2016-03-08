@@ -6,7 +6,11 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:MyPinCreationButtonView}">
-                    <Image Name="ButtonImage" Source="/Assets/button_create_poi_off.png"/>
+                    <Image Name="ButtonImage" Source="/Assets/button_create_poi_off.png">
+                        <Image.Clip>
+                            <EllipseGeometry Center="48,48" RadiusX="48" RadiusY="48" />
+                        </Image.Clip>
+                    </Image>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="ButtonImage" Property="Source" Value="/Assets/button_create_poi_on.png"/>

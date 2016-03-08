@@ -59,7 +59,7 @@ namespace ExampleApp
                         i != m_lastHighlightedRenderables.end();
                         ++i)
                     {
-                        Eegeo::Rendering::Renderables::InstancedInteriorFloorRenderable* currentRenderable = dynamic_cast<Eegeo::Rendering::Renderables::InstancedInteriorFloorRenderable*>(i->first);
+                        Eegeo::Rendering::Renderables::InstancedInteriorFloorRenderable* currentRenderable = static_cast<Eegeo::Rendering::Renderables::InstancedInteriorFloorRenderable*>(i->first);
                         Eegeo::Rendering::Renderables::InstancedRenderState currentState = currentRenderable->GetInstancedRenderState();
 
                         currentState.IsHighlightingActive = false;
