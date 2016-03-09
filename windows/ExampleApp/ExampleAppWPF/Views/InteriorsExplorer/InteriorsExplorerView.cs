@@ -104,12 +104,9 @@ namespace ExampleAppWPF
 
             m_sliderTickBar.TickLabels = string.Join(",", floorShortNames);
 
-            m_selectedFloorIndex = currentlySelectedFloorIndex;
-
             m_floorSlider.Minimum = 0;
             m_floorSlider.Maximum = FloorCount - 1;
-            m_floorSlider.Value = m_selectedFloorIndex;
-            UpdateFloorSliderTagFromValue();
+            SetSelectedFloor(currentlySelectedFloorIndex);
         }
         public void SetFloorName(string name)
         {
@@ -122,6 +119,8 @@ namespace ExampleAppWPF
         public void SetSelectedFloor(int floorIndex)
         {
             m_selectedFloorIndex = floorIndex;
+            m_floorSlider.Value = m_selectedFloorIndex;
+            UpdateFloorSliderTagFromValue();
         }
 
         public void SetOnScreenStateToIntermediateValue(float transitionParam)
