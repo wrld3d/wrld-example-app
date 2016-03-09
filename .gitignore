@@ -20,6 +20,5 @@ obj
 **/xcuserdata/
 **/*.vcxproj
 **/*.vcxproj.filters
-**/*.csproj
 **/*.xcodeproj
 **/*.sln
