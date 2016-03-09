@@ -174,6 +174,11 @@ namespace ExampleAppWPF
 
             var yelpButton = (Image)GetTemplateChild("WebVendorLinkStyle");
 
+            m_mainContainer = (FrameworkElement)GetTemplateChild("SearchresultsPoiViewContainer");
+
+            var mainGrid = (Application.Current.MainWindow as MainWindow).MainGrid;
+            var screenWidth = mainGrid.ActualWidth;
+
             m_yelpReviewImageClickHandler = new ControlClickHandler(yelpButton, HandleWebLinkButtonClicked);
         }
         

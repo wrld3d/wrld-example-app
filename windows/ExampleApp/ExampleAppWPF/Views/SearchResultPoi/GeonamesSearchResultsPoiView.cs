@@ -29,6 +29,8 @@ namespace ExampleAppWPF
             Image categoryIcon = (Image)GetTemplateChild("CategoryIcon");
 
             categoryIcon.Source = StartupResourceLoader.GetBitmap(SearchResultCategoryMapper.GetIconImageName(m_model.Category));
+
+            m_mainContainer = (FrameworkElement)GetTemplateChild("GeoNamesResultView");
         }
         
         public override void DisplayPoiInfo(Object modelObject, bool isPinned)
