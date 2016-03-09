@@ -345,11 +345,11 @@ void AppHost::SetViewportOffset(float x, float y)
         m_inputHandler.SetViewportOffset(x, y);
 }
 
-void AppHost::HandleTouchInputEvent(const Eegeo::Windows::Input::TouchInputEvent& event)
+void AppHost::HandleMouseInputEvent(const Eegeo::Windows::Input::MouseInputEvent& event)
 {
     ASSERT_NATIVE_THREAD
 
-        m_pInputProcessor->HandleInput(event, static_cast<float>(m_nativeState.screenWidth), static_cast<float>(m_nativeState.screenHeight));
+    m_pInputProcessor->HandleInput(event, static_cast<float>(m_nativeState.screenWidth), static_cast<float>(m_nativeState.screenHeight));
 }
 
 void AppHost::HandleKeyboardInputEvent(const Eegeo::Windows::Input::KeyboardInputEvent& event)
