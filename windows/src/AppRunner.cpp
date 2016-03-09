@@ -226,11 +226,6 @@ void AppRunner::UpdateNative(float deltaSeconds)
 
         LockGL contextLock;
 
-        if (m_pNativeState->requiresPBuffer)
-        { 
-            glFinish();
-        }
-
         if (!m_pNativeState->requiresPBuffer)
         {
             Eegeo_GL(eglSwapBuffers(m_displayService.GetDisplay(), m_displayService.GetSurface()));
@@ -239,6 +234,11 @@ void AppRunner::UpdateNative(float deltaSeconds)
         Eegeo::Helpers::GLHelpers::ClearBuffers();
 
         m_pAppHost->Draw(deltaSeconds);
+
+        if (m_pNativeState->requiresPBuffer)
+        {
+            glFinish();
+        }
     }
 }
 
