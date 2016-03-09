@@ -23,7 +23,12 @@ namespace ExampleApp
             {
                 const std::string VendorViewClassNames[] = {
                     "ExampleAppWPF.YelpSearchResultsPoiView",
-                    "ExampleAppWPF.GeoNamesSearchResultsPoiView"
+                    "ExampleAppWPF.SwallowWorkingGroupSearchResultsPoiView",
+                    "ExampleAppWPF.SwallowPersonSearchResultsPoiView",
+                    "ExampleAppWPF.SwallowMeetingRoomSearchResultsPoiView",
+                    "ExampleAppWPF.SwallowFacilitySearchResultsPoiView",
+                    "ExampleAppWPF.GeoNamesSearchResultsPoiView",
+                    "ExampleAppWPF.SwallowDepartmentSearchResultsPoiView"
                 };
             }
 
@@ -84,7 +89,7 @@ namespace ExampleApp
 
 			void SearchResultPoiView::HandleAvailabilityChanged(const std::string& availability)
 			{
-				m_availabilityChangedCallbacks.ExecuteCallbacks(m_model, availability);
+                m_availabilityChangedCallbacks.ExecuteCallbacks(m_model, availability);
 			}
 
             void SearchResultPoiView::InsertClosedCallback(Eegeo::Helpers::ICallback0& callback)
@@ -141,15 +146,15 @@ namespace ExampleApp
                 }
 				else if (vendor == ExampleApp::Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
 				{
-					viewClassName = "ExampleAppWPF.SwallowPersonSearchResultsPoiView";
+                    m_currentVendor = SearchVendors::SwallowPerson;
 				}
 				else if (vendor == ExampleApp::Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
 				{
-					viewClassName = "ExampleAppWPF.SwallowMeetingRoomSearchResultsPoiView";
+                    m_currentVendor = SearchVendors::SwallowMeetingRoom;
 				}
 				else if (vendor == ExampleApp::Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME)
 				{
-					viewClassName = "ExampleAppWPF.SwallowWorkingGroupSearchResultsPoiView";
+                    m_currentVendor = SearchVendors::SwallowWorkingGroup;
 				}
 				else if (vendor == ExampleApp::Search::EegeoVendorName && (category == ExampleApp::Search::Swallow::SearchConstants::PRINT_STATION_CATEGORY_NAME
 					|| category == ExampleApp::Search::Swallow::SearchConstants::TOILETS_CATEGORY_NAME
@@ -157,11 +162,11 @@ namespace ExampleApp
 					|| category == ExampleApp::Search::Swallow::SearchConstants::EMERGENCY_EXIT_CATEGORY_NAME
 					|| category == ExampleApp::Search::Swallow::SearchConstants::STATIONERY_CATEGORY_NAME))
 				{
-					viewClassName = "ExampleAppWPF.SwallowFacilitySearchResultsPoiView";
+                    m_currentVendor = SearchVendors::SwallowFacility;
 				}
 				else if (vendor == ExampleApp::Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME)
 				{
-					viewClassName = "ExampleAppWPF.SwallowDepartmentSearchResultsPoiView";
+                    m_currentVendor = SearchVendors::SwallowDepartment;
 				}
                 else
                 {

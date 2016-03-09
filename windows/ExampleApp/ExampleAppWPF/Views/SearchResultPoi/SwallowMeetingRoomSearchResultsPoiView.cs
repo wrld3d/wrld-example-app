@@ -90,7 +90,6 @@ namespace ExampleAppWPF
             base.OnApplyTemplate();
 
             m_categoryIcon = (Image)GetTemplateChild("CategoryIcon");
-            m_categoryIcon.Source = StartupResourceLoader.GetBitmap(SearchResultCategoryMapper.GetIconImageName(m_model.Category));
 
             RadioButton availableButton = (RadioButton)GetTemplateChild("AvailableButton");
             availableButton.Click += OnAvailableSelected;
@@ -101,20 +100,27 @@ namespace ExampleAppWPF
             RadioButton occupiedButton = (RadioButton)GetTemplateChild("OccupiedButton");
             occupiedButton.Click += OnOccupiedSelected;
 
-            Availability = AvailableStringToEnum(m_swallowMeetingRoomModel.Availability);
-
             m_poiImage = (Image)GetTemplateChild("PoiImage");
+
+            m_mainContainer = (FrameworkElement)GetTemplateChild("MeetingRoomPoiContainer");
         }
         
         public override void DisplayPoiInfo(Object modelObject, bool isPinned)
         {
             m_model = modelObject as ExampleApp.SearchResultModelCLI;
+            m_categoryIcon.Source = StartupResourceLoader.GetBitmap(SearchResultCategoryMapper.GetIconImageName(m_model.Category));
             
             m_swallowMeetingRoomModel = SwallowMeetingRoomResultModel.FromJson(m_model.JsonData);
+            Availability = AvailableStringToEnum(m_swallowMeetingRoomModel.Availability);
 
             m_closing = false;
             
             TitleText = m_model.Title;
+
+            m_poiImage.Source = null;
+            m_poiImage.Visibility = Visibility.Hidden;
+
+            OnPropertyChanged("");
 
             ShowAll();
         }
