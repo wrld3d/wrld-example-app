@@ -168,45 +168,64 @@ namespace ExampleApp
             Unlock();
         }
 
-        void MapImage::HandlePanStartEvent(int x, int y)
+        namespace
         {
-            m_appRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MousePrimaryDown, x, y, 0));
+            Eegeo::Windows::Input::MouseInputEvent MakeMouseInputEvent(Eegeo::Windows::Input::MouseInputAction mouseInputAction, int x, int y, int wheelDelta, System::Windows::Input::ModifierKeys modifierKeys)
+            {
+                const u32 modifierKeysU32 = static_cast<u32>(modifierKeys);
+
+                u32 keyboardModifiers = Eegeo::Windows::Input::KeyboardModifierNone;
+                if (modifierKeysU32 & static_cast<u32>(System::Windows::Input::ModifierKeys::Alt))
+                    keyboardModifiers |= Eegeo::Windows::Input::KeyboardModifierAlt;
+
+                if (modifierKeysU32 & static_cast<u32>(System::Windows::Input::ModifierKeys::Shift))
+                    keyboardModifiers |= Eegeo::Windows::Input::KeyboardModifierShift;
+
+                if (modifierKeysU32 & static_cast<u32>(System::Windows::Input::ModifierKeys::Control))
+                    keyboardModifiers |= Eegeo::Windows::Input::KeyboardModifierControl;
+
+                return Eegeo::Windows::Input::MouseInputEvent(mouseInputAction, keyboardModifiers, x, y, wheelDelta);
+            }
         }
 
-        void MapImage::HandlePanEndEvent(int x, int y)
+        void MapImage::HandlePanStartEvent(int x, int y, System::Windows::Input::ModifierKeys modifierKeys)
         {
-            m_appRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MousePrimaryUp, x, y, 0));
+            m_appRunner->HandleMouseEvent(MakeMouseInputEvent(Eegeo::Windows::Input::MousePrimaryDown, x, y, 0, modifierKeys));
         }
 
-        void MapImage::HandleRotateStartEvent(int x, int y)
+        void MapImage::HandlePanEndEvent(int x, int y, System::Windows::Input::ModifierKeys modifierKeys)
         {
-            m_appRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MouseSecondaryDown, x, y, 0));
+            m_appRunner->HandleMouseEvent(MakeMouseInputEvent(Eegeo::Windows::Input::MousePrimaryUp, x, y, 0, modifierKeys));
         }
 
-        void MapImage::HandleRotateEndEvent(int x, int y)
+        void MapImage::HandleRotateStartEvent(int x, int y, System::Windows::Input::ModifierKeys modifierKeys)
         {
-            m_appRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MouseSecondaryUp, x, y, 0));
+            m_appRunner->HandleMouseEvent(MakeMouseInputEvent(Eegeo::Windows::Input::MouseSecondaryDown, x, y, 0, modifierKeys));
         }
 
-        void MapImage::HandleTiltStart(int x, int y)
+        void MapImage::HandleRotateEndEvent(int x, int y, System::Windows::Input::ModifierKeys modifierKeys)
         {
-            m_appRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MouseMiddleDown, x, y, 0));
+            m_appRunner->HandleMouseEvent(MakeMouseInputEvent(Eegeo::Windows::Input::MouseSecondaryUp, x, y, 0, modifierKeys));
         }
 
-        void MapImage::HandleTiltEnd(int x, int y)
+        void MapImage::HandleTiltStart(int x, int y, System::Windows::Input::ModifierKeys modifierKeys)
         {
-            m_appRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MouseMiddleUp, x, y, 0));
+            m_appRunner->HandleMouseEvent(MakeMouseInputEvent(Eegeo::Windows::Input::MouseMiddleDown, x, y, 0, modifierKeys));
         }
 
-        void MapImage::HandleMouseMoveEvent(int x, int y)
+        void MapImage::HandleTiltEnd(int x, int y, System::Windows::Input::ModifierKeys modifierKeys)
         {
-            m_appRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MouseMove, x, y, 0));
+            m_appRunner->HandleMouseEvent(MakeMouseInputEvent(Eegeo::Windows::Input::MouseMiddleUp, x, y, 0, modifierKeys));
         }
 
-        void MapImage::HandleZoomEvent(int delta, int zoomDistance, int x, int y)
+        void MapImage::HandleMouseMoveEvent(int x, int y, System::Windows::Input::ModifierKeys modifierKeys)
         {
-            const float z = (delta >= 0) ? -zoomDistance : zoomDistance;
-            m_appRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MouseWheel, x, y, z));
+            m_appRunner->HandleMouseEvent(MakeMouseInputEvent(Eegeo::Windows::Input::MouseMove, x, y, 0, modifierKeys));
+        }
+
+        void MapImage::HandleZoomEvent(int x, int y, int wheelDelta, System::Windows::Input::ModifierKeys modifierKeys)
+        {
+            m_appRunner->HandleMouseEvent(MakeMouseInputEvent(Eegeo::Windows::Input::MouseWheel, x, y, wheelDelta, modifierKeys));
         }
 
         void MapImage::HandleKeyboardDownEvent(int asciiKeyCode)

@@ -24,16 +24,16 @@ namespace ExampleApp
 			void InitBackBuffer();
             void Render(float dt);
 
-            void HandlePanStartEvent(int x, int y);
-            void HandlePanEndEvent(int x, int y);
-            void HandleRotateStartEvent(int x, int y);
-            void HandleRotateEndEvent(int x, int y);
-            void HandleTiltStart(int x, int y);
-            void HandleTiltEnd(int x, int y);
+            void HandlePanStartEvent(int x, int y, System::Windows::Input::ModifierKeys modifierKeys);
+            void HandlePanEndEvent(int x, int y, System::Windows::Input::ModifierKeys modifierKeys);
+            void HandleRotateStartEvent(int x, int y, System::Windows::Input::ModifierKeys modifierKeys);
+            void HandleRotateEndEvent(int x, int y, System::Windows::Input::ModifierKeys modifierKeys);
+            void HandleTiltStart(int x, int y, System::Windows::Input::ModifierKeys modifierKeys);
+            void HandleTiltEnd(int x, int y, System::Windows::Input::ModifierKeys modifierKeys);
             void HandleKeyboardDownEvent(int asciiKeyCode);
             void HandleKeyboardUpEvent(int asciiKeyCode) {}
-            void HandleMouseMoveEvent(int x, int y);
-            void HandleZoomEvent(int delta, int zoomDistance, int x, int y);
+            void HandleMouseMoveEvent(int x, int y, System::Windows::Input::ModifierKeys modifierKeys);
+            void HandleZoomEvent(int x, int y, int wheelDelta, System::Windows::Input::ModifierKeys modifierKeys);
             void SetAllInputEventsToPointerUp(int x, int y);
             void Pause() {}
             void Resume() {}
