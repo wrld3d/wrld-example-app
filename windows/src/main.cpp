@@ -2,6 +2,7 @@
 
 #include "AppRunner.h"
 #include "main.h"
+#include "MouseInputEvent.h"
 #include <pthread.h>
 
 #include "WindowsNativeState.h"
