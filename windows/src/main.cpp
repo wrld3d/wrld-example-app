@@ -2,20 +2,20 @@
 
 #include "AppRunner.h"
 #include "main.h"
+#include "MouseInputEvent.h"
 #include <pthread.h>
 
 #include "WindowsNativeState.h"
 #include "EegeoWindowsGuard.h"
 
 #include <chrono>
+#include <windowsx.h>
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
 
 WindowsNativeState g_nativeState;
 AppRunner* g_pAppRunner = NULL;
-
-const int ZOOM_DISTANCE = 70;
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage, WPARAM wparam, LPARAM lparam)
 {
@@ -37,38 +37,35 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage, WPARAM wparam, LPARAM lparam)
     }
 
     case WM_LBUTTONDOWN:
-        g_pAppRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MousePrimaryDown, LOWORD(lparam), HIWORD(lparam), 0));
+        g_pAppRunner->HandleMouseEvent(WindowsInputProcessor::MakeMouseInputEvent(Eegeo::Windows::Input::MousePrimaryDown, wparam, lparam, 0));
         break;
 
     case WM_LBUTTONUP:
-        g_pAppRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MousePrimaryUp, LOWORD(lparam), HIWORD(lparam), 0));
+        g_pAppRunner->HandleMouseEvent(WindowsInputProcessor::MakeMouseInputEvent(Eegeo::Windows::Input::MousePrimaryUp, wparam, lparam, 0));
         break;
 
     case WM_RBUTTONDOWN:
-        g_pAppRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MouseSecondaryDown, LOWORD(lparam), HIWORD(lparam), 0));
+        g_pAppRunner->HandleMouseEvent(WindowsInputProcessor::MakeMouseInputEvent(Eegeo::Windows::Input::MouseSecondaryDown, wparam, lparam, 0));
         break;
 
     case WM_RBUTTONUP:
-        g_pAppRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MouseSecondaryUp, LOWORD(lparam), HIWORD(lparam), 0));
+        g_pAppRunner->HandleMouseEvent(WindowsInputProcessor::MakeMouseInputEvent(Eegeo::Windows::Input::MouseSecondaryUp, wparam, lparam, 0));
         break;
 
     case WM_MBUTTONDOWN:
-        g_pAppRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MouseMiddleDown, LOWORD(lparam), HIWORD(lparam), 0));
+        g_pAppRunner->HandleMouseEvent(WindowsInputProcessor::MakeMouseInputEvent(Eegeo::Windows::Input::MouseMiddleDown, wparam, lparam, 0));
         break;
 
     case WM_MBUTTONUP:
-        g_pAppRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MouseMiddleUp, LOWORD(lparam), HIWORD(lparam), 0));
+        g_pAppRunner->HandleMouseEvent(WindowsInputProcessor::MakeMouseInputEvent(Eegeo::Windows::Input::MouseMiddleUp, wparam, lparam, 0));
         break;
 
     case WM_MOUSEMOVE:
-        g_pAppRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MouseMove, LOWORD(lparam), HIWORD(lparam), 0));
+        g_pAppRunner->HandleMouseEvent(WindowsInputProcessor::MakeMouseInputEvent(Eegeo::Windows::Input::MouseMove, wparam, lparam, 0));
         break;
 
     case WM_MOUSEWHEEL:
-        {
-            const int zoom = (GET_WHEEL_DELTA_WPARAM(wparam) >= 0) ? -ZOOM_DISTANCE : ZOOM_DISTANCE;
-            g_pAppRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MouseWheel, LOWORD(lparam), HIWORD(lparam), zoom));
-        }
+        g_pAppRunner->HandleMouseEvent(WindowsInputProcessor::MakeMouseInputEvent(Eegeo::Windows::Input::MouseWheel, wparam, lparam, GET_WHEEL_DELTA_WPARAM(wparam)));
         break;
 
     case WM_KEYDOWN:
@@ -85,7 +82,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage, WPARAM wparam, LPARAM lparam)
     case WM_KILLFOCUS:
         if (g_pAppRunner)
         {
-            g_pAppRunner->SetAllInputEventsToPointerUp(LOWORD(lparam), HIWORD(lparam));
+            g_pAppRunner->SetAllInputEventsToPointerUp(GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam));
         }
         break;
 
