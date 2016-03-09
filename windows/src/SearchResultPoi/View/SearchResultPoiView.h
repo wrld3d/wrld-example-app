@@ -16,6 +16,13 @@ namespace ExampleApp
     {
         namespace View
         {
+            enum SearchVendors
+            {
+                Yelp = 0,
+                GeoNames,
+                Num
+            };
+
             class SearchResultPoiView : public ISearchResultPoiView, Eegeo::NonCopyable
             {
             private:
@@ -26,12 +33,14 @@ namespace ExampleApp
 
                 Search::SdkModel::SearchResultModel m_model;
 
-                gcroot<System::Type^> m_uiViewClass;
-                gcroot<System::Object^> m_uiView;
+                gcroot<System::Type^> m_uiViewClass[SearchVendors::Num];
+                gcroot<System::Object^> m_uiView[SearchVendors::Num];
 				
-				Helpers::ReflectionHelpers::Method<System::Object^, bool> DisplayPoiInfo;
-                Helpers::ReflectionHelpers::Method<void> DismissPoiInfo;
-                Helpers::ReflectionHelpers::Method<System::String^, bool, array<unsigned char, 1>^> UpdateImageData;
+				Helpers::ReflectionHelpers::Method<System::Object^, bool> DisplayPoiInfo[SearchVendors::Num];
+                Helpers::ReflectionHelpers::Method<void> DismissPoiInfo[SearchVendors::Num];
+                Helpers::ReflectionHelpers::Method<System::String^, bool, array<unsigned char, 1>^> UpdateImageData[SearchVendors::Num];
+
+                int m_currentVendor;
 
             public:
                 SearchResultPoiView(WindowsNativeState& nativeState);
