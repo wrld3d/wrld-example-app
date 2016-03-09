@@ -19,14 +19,27 @@ namespace ExampleApp
     {
         namespace View
         {
+            namespace
+            {
+                const std::string VendorViewClassNames[] = {
+                    "ExampleAppWPF.YelpSearchResultsPoiView",
+                    "ExampleAppWPF.GeoNamesSearchResultsPoiView"
+                };
+            }
+
             SearchResultPoiView::SearchResultPoiView(WindowsNativeState& nativeState)
                 : m_nativeState(nativeState)
                 , m_currentVendor(-1)
             {
                 for (int i = 0; i < SearchVendors::Num; ++i)
                 {
-                    m_uiView[i] = nullptr;
-                    m_uiViewClass[i] = nullptr;
+                    m_uiViewClass[i] = GetTypeFromEntryAssembly(Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(VendorViewClassNames[i]));
+                    ConstructorInfo^ ctor = m_uiViewClass[i]->GetConstructor(CreateTypes(IntPtr::typeid));
+                    m_uiView[i] = ctor->Invoke(CreateObjects(gcnew IntPtr(this)));
+
+                    DisplayPoiInfo[i].SetupMethod(m_uiViewClass[i], m_uiView[i], "DisplayPoiInfo");
+                    DismissPoiInfo[i].SetupMethod(m_uiViewClass[i], m_uiView[i], "DismissPoiInfo");
+                    UpdateImageData[i].SetupMethod(m_uiViewClass[i], m_uiView[i], "UpdateImageData");
                 }
             }
 
@@ -120,12 +133,10 @@ namespace ExampleApp
 				
                 if(vendor == ExampleApp::Search::YelpVendorName)
                 {
-					viewClassName = "ExampleAppWPF.YelpSearchResultsPoiView";
                     m_currentVendor = SearchVendors::Yelp;
                 }
                 else if(vendor == ExampleApp::Search::GeoNamesVendorName)
                 {
-					viewClassName = "ExampleAppWPF.GeoNamesSearchResultsPoiView";
                     m_currentVendor = SearchVendors::GeoNames;
                 }
 				else if (vendor == ExampleApp::Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
@@ -155,17 +166,6 @@ namespace ExampleApp
                 else
                 {
                     Eegeo_ASSERT(false, "Unknown POI vendor %s, cannot create view instance.\n", vendor.c_str());
-                }
-
-                if (static_cast<System::Object^>(m_uiView[m_currentVendor]) == nullptr)
-                {
-                    m_uiViewClass[m_currentVendor] = GetTypeFromEntryAssembly(Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(viewClassName));
-                    ConstructorInfo^ ctor = m_uiViewClass[m_currentVendor]->GetConstructor(CreateTypes(IntPtr::typeid));
-                    m_uiView[m_currentVendor] = ctor->Invoke(CreateObjects(gcnew IntPtr(this)));
-
-                    DisplayPoiInfo[m_currentVendor].SetupMethod(m_uiViewClass[m_currentVendor], m_uiView[m_currentVendor], "DisplayPoiInfo");
-                    DismissPoiInfo[m_currentVendor].SetupMethod(m_uiViewClass[m_currentVendor], m_uiView[m_currentVendor], "DismissPoiInfo");
-                    UpdateImageData[m_currentVendor].SetupMethod(m_uiViewClass[m_currentVendor], m_uiView[m_currentVendor], "UpdateImageData");
                 }
             }
         }
