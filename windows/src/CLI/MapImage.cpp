@@ -1,5 +1,5 @@
 #include "MapImage.h"
-
+#include "MouseInputEvent.h"
 #include "AppRunner.h"
 
 #pragma comment(lib, "d3d9.lib")
@@ -170,47 +170,48 @@ namespace ExampleApp
 
         void MapImage::HandlePanStartEvent(int x, int y)
         {
-            m_appRunner->HandlePanStartEvent(x, y);
+            m_appRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MousePrimaryDown, x, y, 0));
         }
 
         void MapImage::HandlePanEndEvent(int x, int y)
         {
-            m_appRunner->HandlePanEndEvent(x, y);
+            m_appRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MousePrimaryUp, x, y, 0));
         }
 
         void MapImage::HandleRotateStartEvent(int x, int y)
         {
-            m_appRunner->HandleRotateStartEvent(x, y);
+            m_appRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MouseSecondaryDown, x, y, 0));
         }
 
         void MapImage::HandleRotateEndEvent(int x, int y)
         {
-            m_appRunner->HandleRotateEndEvent(x, y);
+            m_appRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MouseSecondaryUp, x, y, 0));
         }
 
         void MapImage::HandleTiltStart(int x, int y)
         {
-            m_appRunner->HandleTiltStart(x, y);
+            m_appRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MouseMiddleDown, x, y, 0));
         }
 
         void MapImage::HandleTiltEnd(int x, int y)
         {
-            m_appRunner->HandleTiltEnd(x, y);
+            m_appRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MouseMiddleUp, x, y, 0));
+        }
+
+        void MapImage::HandleMouseMoveEvent(int x, int y)
+        {
+            m_appRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MouseMove, x, y, 0));
+        }
+
+        void MapImage::HandleZoomEvent(int delta, int zoomDistance, int x, int y)
+        {
+            const float z = (delta >= 0) ? -zoomDistance : zoomDistance;
+            m_appRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MouseWheel, x, y, z));
         }
 
         void MapImage::HandleKeyboardDownEvent(int asciiKeyCode)
         {
             m_appRunner->HandleKeyboardDownEvent(asciiKeyCode);
-        }
-
-        void MapImage::HandleMouseMoveEvent(int x, int y)
-        {
-            m_appRunner->HandleMouseMoveEvent(x, y);
-        }
-
-        void MapImage::HandleZoomEvent(int delta, int zoomDistance, int x, int y)
-        {
-            m_appRunner->HandleZoomEvent(delta, zoomDistance, x, y);
         }
 
         void MapImage::SetAllInputEventsToPointerUp(int x, int y)

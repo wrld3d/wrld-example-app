@@ -121,9 +121,16 @@ static NSString *CellIdentifier = @"searchCell";
                                         :(CustomTableView*)tableView
                                         :self];
     
-    ExampleApp::Menu::View::MenuItemModel item = m_pSearchResultsSection->GetItemAtIndex(static_cast<int>(indexPath.row));
-    std::string json = item.SerializeJson();
-    [self populateCellWithJson :json :cell];
+    if(indexPath.row < m_pSearchResultsSection->Size())
+    {
+        ExampleApp::Menu::View::MenuItemModel item = m_pSearchResultsSection->GetItemAtIndex(static_cast<int>(indexPath.row));
+        std::string json = item.SerializeJson();
+        [self populateCellWithJson :json :cell];
+    }
+    else
+    {
+        NSLog(@"Search results table attempting to fetch out of bounds result.");
+    }
     
     return cell;
 }

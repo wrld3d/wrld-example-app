@@ -37,27 +37,38 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage, WPARAM wparam, LPARAM lparam)
     }
 
     case WM_LBUTTONDOWN:
-        g_pAppRunner->HandlePanStartEvent(LOWORD(lparam), HIWORD(lparam));
+        g_pAppRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MousePrimaryDown, LOWORD(lparam), HIWORD(lparam), 0));
         break;
 
     case WM_LBUTTONUP:
-        g_pAppRunner->HandlePanEndEvent(LOWORD(lparam), HIWORD(lparam));
+        g_pAppRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MousePrimaryUp, LOWORD(lparam), HIWORD(lparam), 0));
         break;
 
     case WM_RBUTTONDOWN:
-        g_pAppRunner->HandleRotateStartEvent(LOWORD(lparam), HIWORD(lparam));
+        g_pAppRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MouseSecondaryDown, LOWORD(lparam), HIWORD(lparam), 0));
         break;
 
     case WM_RBUTTONUP:
-        g_pAppRunner->HandleRotateEndEvent(LOWORD(lparam), HIWORD(lparam));
+        g_pAppRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MouseSecondaryUp, LOWORD(lparam), HIWORD(lparam), 0));
         break;
 
     case WM_MBUTTONDOWN:
-        g_pAppRunner->HandleTiltStart(LOWORD(lparam), HIWORD(lparam));
+        g_pAppRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MouseMiddleDown, LOWORD(lparam), HIWORD(lparam), 0));
         break;
 
     case WM_MBUTTONUP:
-        g_pAppRunner->HandleTiltEnd(LOWORD(lparam), HIWORD(lparam));
+        g_pAppRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MouseMiddleUp, LOWORD(lparam), HIWORD(lparam), 0));
+        break;
+
+    case WM_MOUSEMOVE:
+        g_pAppRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MouseMove, LOWORD(lparam), HIWORD(lparam), 0));
+        break;
+
+    case WM_MOUSEWHEEL:
+        {
+            const int zoom = (GET_WHEEL_DELTA_WPARAM(wparam) >= 0) ? -ZOOM_DISTANCE : ZOOM_DISTANCE;
+            g_pAppRunner->HandleMouseEvent(Eegeo::Windows::Input::MouseInputEvent(Eegeo::Windows::Input::MouseWheel, LOWORD(lparam), HIWORD(lparam), zoom));
+        }
         break;
 
     case WM_KEYDOWN:
@@ -68,15 +79,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage, WPARAM wparam, LPARAM lparam)
         g_pAppRunner->HandleKeyboardUpEvent(static_cast<char>(wparam));
         break;
 
-    case WM_MOUSEMOVE:
-        g_pAppRunner->HandleMouseMoveEvent(LOWORD(lparam), HIWORD(lparam));
-        break;
-
     case WM_PAINT:
-        break;
-
-    case WM_MOUSEWHEEL:
-        g_pAppRunner->HandleZoomEvent(GET_WHEEL_DELTA_WPARAM(wparam), ZOOM_DISTANCE, LOWORD(lparam), HIWORD(lparam));
         break;
 
     case WM_KILLFOCUS:
