@@ -40,6 +40,7 @@ namespace ExampleApp
                 bool m_cameraTransitioning;
                 Eegeo::dv3 m_previousQueryLocationEcef;
                 bool m_enabled;
+                int m_previousQueryFloorIndex;
 
             public:
                 SearchRefreshService(ISearchService& searchService,
