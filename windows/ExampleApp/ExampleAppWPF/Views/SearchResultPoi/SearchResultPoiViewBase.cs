@@ -8,7 +8,7 @@ using System.Windows.Media.Imaging;
 
 namespace ExampleAppWPF
 {
-    public abstract class SearchResultPoiViewBase : Control
+    public abstract class SearchResultPoiViewBase : Control, INotifyPropertyChanged
     {
         protected IntPtr m_nativeCallerPointer;
         protected MainWindow m_currentWindow;

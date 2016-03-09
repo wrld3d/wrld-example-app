@@ -203,6 +203,7 @@ namespace ExampleAppWPF
             Url = yelpResultModel.WebUrl;
 
             m_isPinned = isPinned;
+            OnPropertyChanged("IsPinned");
 
             ShowAll();
         }
