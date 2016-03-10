@@ -119,8 +119,11 @@ namespace ExampleAppWPF
         public void SetSelectedFloor(int floorIndex)
         {
             m_selectedFloorIndex = floorIndex;
-            m_floorSlider.Value = m_selectedFloorIndex;
-            UpdateFloorSliderTagFromValue();
+            if (!m_dragInProgress)
+            {
+                m_floorSlider.Value = m_selectedFloorIndex;
+                UpdateFloorSliderTagFromValue();
+            }
         }
 
         public void SetOnScreenStateToIntermediateValue(float transitionParam)
@@ -176,32 +179,6 @@ namespace ExampleAppWPF
             detailsPanelAnimation.Completed += Storyboard_Completed;
 
             m_detailsPanel.BeginAnimation(OpacityProperty, detailsPanelAnimation);
-
-
-            //var testAnim = new DoubleAnimation();
-            //testAnim.From = 1.0;
-            //testAnim.To = 0.0;
-            //testAnim.AutoReverse = true;
-            //testAnim.RepeatBehavior = RepeatBehavior.Forever;
-            //testAnim.Duration = new Duration(TimeSpan.FromSeconds(1.0));
-
-            //m_floorSlider.Background.BeginAnimation(Brush.OpacityProperty, testAnim);
-
-            //testAnim.CurrentTimeInvalidated += delegate (object sender, EventArgs e)
-            //{
-            //    //var value = (double)(testAnim.GetValue(OpacityProperty));
-            //    var test = m_floorSlider.Background.Opacity;
-            //    m_floorSlider.Background.Opacity = test;
-            //    m_floorSlider.Background.InvalidateProperty(OpacityProperty);
-            //    m_floorSlider.InvalidateVisual();
-            //};
-
-
-            //            m_floorSlider.Background = m_testBrush;
-            //m_floorSlider.BeginAnimation(OpacityProperty, testAnim);
-            //m_testBrush.Opacity = 0.3;
-
-
         }
 
         private void Storyboard_Completed(object sender, EventArgs e)
