@@ -35,7 +35,7 @@
     
     [m_pClearButton addTarget:self action:@selector(clearSearch) forControlEvents:UIControlEventTouchUpInside];
     
-    m_pClearButton.hidden = m_pTextField.text.length == 0;
+    [self updateClearButtonVisibility];
     
     m_keyboardActive = false;
     m_returnPressed = false;
@@ -71,7 +71,7 @@
 
 - (void) enableEdit
 {
-    [m_pClearButton setHidden:NO];
+    [self updateClearButtonVisibility];
     [m_pResultsSpinner stopAnimating];
     [m_pTextField setEnabled:YES];
     m_pTextField.textColor = ExampleApp::Helpers::ColorPalette::TextFieldEnabledColor;
