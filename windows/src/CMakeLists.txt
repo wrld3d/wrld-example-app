@@ -15,7 +15,7 @@ set(currsources
 )
 
 set_source_files_properties(${currsources} PROPERTIES COMPILE_FLAGS "/clr /EHa /Y-")
-set_source_files_properties(src/ExampleAppPch.cpp PROPERTIES COMPILE_FLAGS "/Yc")
+set_source_files_properties(src/ExampleAppPch.cpp PROPERTIES COMPILE_FLAGS "/Yc /Fp${precompiled_header_result}")
 set(currsources ${currsources} src/ExampleAppPch.cpp)
 
 set(sources ${sources} ${currsources})
