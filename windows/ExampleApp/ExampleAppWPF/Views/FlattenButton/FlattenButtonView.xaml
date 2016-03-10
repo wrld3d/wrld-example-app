@@ -9,7 +9,7 @@
                     <Grid Name="MyGrid" Background="{TemplateBinding Background}">
                         <Image Name="ButtonImage" Source="/Assets/button_flatten_off.png">
                             <Image.Clip>
-                                <EllipseGeometry Center="48,48" RadiusX="48" RadiusY="48" />
+                                <EllipseGeometry Center="30,30" RadiusX="30" RadiusY="30" />
                             </Image.Clip>
                         </Image>
                     </Grid>
