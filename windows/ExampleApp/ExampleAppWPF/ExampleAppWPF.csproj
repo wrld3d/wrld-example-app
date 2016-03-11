@@ -108,6 +108,7 @@
     <Compile Include="Views\Menu\MenuDelayedSourceUpdateAnimatorListener.cs" />
     <Compile Include="Views\Menu\MenuListAdapter.cs" />
     <Compile Include="Views\Menu\MenuListItem.cs" />
+    <Compile Include="Views\Menu\StoryboardRunner.cs" />
     <Compile Include="Views\Options\OptionsCacheClearSubView.cs" />
     <Compile Include="Views\Options\OptionsView.cs" />
     <Compile Include="Views\SearchMenu\SearchMenuListItem.cs" />

@@ -207,6 +207,8 @@ namespace ExampleAppWPF
             RatingCountVisibility = string.IsNullOrEmpty(yelpResultModel.ImageUrl) && !string.IsNullOrEmpty(yelpResultModel.RatingsImageUrl) && yelpResultModel.ReviewCount > 0 ? Visibility.Visible : Visibility.Collapsed;
             Url = yelpResultModel.WebUrl;
 
+            m_poiImage.Source = new BitmapImage(new Uri("/ExampleAppWPF;component/Assets/poi_placeholder.png", UriKind.Relative));
+
             m_isPinned = isPinned;
             OnPropertyChanged("IsPinned");
 
