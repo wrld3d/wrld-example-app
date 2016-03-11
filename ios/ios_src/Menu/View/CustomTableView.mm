@@ -9,6 +9,7 @@
 #import "ViewAnimationController.h"
 #import "ViewPositionAnimator.h"
 #import "ViewSizeAnimator.h"
+#include "UIView+TouchExclusivity.h"
 
 @interface CustomTableView ()
 
@@ -145,6 +146,8 @@
         frame.size.height = realHeight;
         self.pBackgroundView.frame = frame;
     }
+    
+    [self setTouchExclusivity:self];
     
     return self.pBackgroundView.frame.size.height;
 }
