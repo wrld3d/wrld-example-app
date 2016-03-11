@@ -38,6 +38,8 @@ namespace ExampleAppWPF
             Visibility = Visibility.Hidden;
 
             m_isOpen = false;
+
+            Panel.SetZIndex(this, 100);
         }
 
         private void OnWindowResized(object sender, SizeChangedEventArgs e)
