@@ -17,15 +17,13 @@ namespace ExampleAppWPF
         
         private Dictionary<string, int> m_animatedSizesMap;
         private bool m_shouldAlignIconRight;
-        private int m_runningAnimations;
 
-        Storyboard m_fadeInItemAnimation;
-        Storyboard m_fadeOutItemAnimation;
+        private StoryboardRunner m_fadeInStoryboardRunner;
+        private StoryboardRunner m_fadeOutStoryboardRunner;
+        private StoryboardRunner m_slideInStoryboardRunner;
+        private StoryboardRunner m_slideOutStoryboardRunner;
 
-        Storyboard m_slideInAnimation;
-        Storyboard m_slideOutAnimation;
-
-        ListBox m_list;
+        private ListBox m_list;
 
         private readonly string ControlToAnimate;
 
@@ -43,21 +41,20 @@ namespace ExampleAppWPF
 
             m_list = list;
 
-            m_fadeInItemAnimation = fadeInItemAnimation;
-            m_fadeOutItemAnimation = fadeOutItemAnimation;
-
-            m_slideInAnimation = slideInAnimation;
-            m_slideOutAnimation = slideOutAnimation;
-
-            m_fadeInItemAnimation.Completed += OnAnimationCompleted;
-            m_slideOutAnimation.Completed += OnAnimationCompleted;
+            m_fadeInStoryboardRunner = new StoryboardRunner(fadeInItemAnimation);
+            m_fadeOutStoryboardRunner = new StoryboardRunner(fadeOutItemAnimation);
+            m_slideInStoryboardRunner = new StoryboardRunner(slideInAnimation);
+            m_slideOutStoryboardRunner = new StoryboardRunner(slideOutAnimation);
 
             ControlToAnimate = controlToAnimate;
         }
 
         public bool IsAnimating()
         {
-            return m_runningAnimations > 0;
+            return m_fadeInStoryboardRunner.IsAnimating ||
+                m_fadeOutStoryboardRunner.IsAnimating ||
+                m_slideInStoryboardRunner.IsAnimating ||
+                m_slideOutStoryboardRunner.IsAnimating;
         }
 
         public void ResetData()
@@ -154,43 +151,44 @@ namespace ExampleAppWPF
             }
         }
 
-        public void OnAnimationCompleted(object sender, EventArgs e)
+        private List<FrameworkElement> GetListBoxItemsInRange(int skip, int take)
         {
-            --m_runningAnimations;
+            var items = m_list.Items
+                .Cast<object>()
+                .Skip(skip)
+                .Take(take)
+                .Select(_x => m_list.ItemContainerGenerator.ContainerFromItem(_x) as FrameworkElement)
+                .ToList();
+            return items;
+        }
+
+        private List<FrameworkElement> ChildStackPanelsFor(List<FrameworkElement> parentItems)
+        {
+            var controls = parentItems.Select(_x => FindChildControl<StackPanel>(_x as DependencyObject, ControlToAnimate) as FrameworkElement).ToList();
+            return controls;
         }
 
         public void CollapseAndClearAll()
         {
-            m_runningAnimations = m_list.Items.Count;
+            var items = GetListBoxItemsInRange(0, m_list.Items.Count);
+            var controls = ChildStackPanelsFor(items);
 
-            for (var i = 0; i < m_runningAnimations; ++i)
-            {
-                ListBoxItem item = (ListBoxItem)m_list.ItemContainerGenerator.ContainerFromItem(m_list.Items[i]);
+            m_slideOutStoryboardRunner.AllCompleted += OnClearAllAnimsComplete;
 
-                var control = FindChildControl<StackPanel>(item as DependencyObject, ControlToAnimate);
-
-                m_slideOutAnimation.Completed += OnClearAllAnimsComplete;
-
-                m_fadeOutItemAnimation.Begin(control as FrameworkElement);
-                m_slideOutAnimation.Begin(item);
-            }
+            m_fadeOutStoryboardRunner.Begin(controls);
+            m_slideOutStoryboardRunner.Begin(items);
 
             m_children.Clear();
         }
 
-        private void OnClearAllAnimsComplete(object sender, EventArgs e)
+        private void OnClearAllAnimsComplete()
         {
-            --m_runningAnimations;
+            ResetData();
 
-            if(m_runningAnimations <= 0)
-            {
-                ResetData();
+            m_list.DataContext = null;
+            m_list.ItemsSource = null;
 
-                m_list.DataContext = null;
-                m_list.ItemsSource = null;
-
-                m_runningAnimations = 0;
-            }
+            m_slideOutStoryboardRunner.AllCompleted -= OnClearAllAnimsComplete;
         }
 
         private DependencyObject FindChildControl<T>(DependencyObject control, string name)
@@ -253,21 +251,15 @@ namespace ExampleAppWPF
                 if (targetSize < currentSize)
                 {
                     int groupStart = GetViewIndexForGroupIndex(groupIndex);
-                    int toBeRemovedCount = currentSize - targetSize;
 
-                    m_runningAnimations += toBeRemovedCount;
-                    var listener = new MenuDelayedSourceUpdateAnimatorListener(toBeRemovedCount, groups, groupsExpandable, groupToChildren, this);
-                    m_fadeOutItemAnimation.Completed += listener.FadeOutStoryBoard_Completed;
-                    
-                    for (int itemIndex = groupStart + targetSize; itemIndex < groupStart + currentSize; ++itemIndex)
-                    {
-                        ListBoxItem item = (ListBoxItem)m_list.ItemContainerGenerator.ContainerFromItem(m_list.Items[itemIndex]);
+                    var listener = new MenuDelayedSourceUpdateAnimatorListener(groups, groupsExpandable, groupToChildren, this);
+                    m_fadeOutStoryboardRunner.AllCompleted += listener.OnCompleted;
 
-                        var control = FindChildControl<StackPanel>(item as DependencyObject, ControlToAnimate);
+                    var items = GetListBoxItemsInRange(groupStart + targetSize, currentSize - targetSize);
+                    var controls = ChildStackPanelsFor(items);
 
-                        m_fadeOutItemAnimation.Begin(control as FrameworkElement);
-                        m_slideOutAnimation.Begin(item);
-                    }
+                    m_slideOutStoryboardRunner.Begin(items);
+                    m_fadeOutStoryboardRunner.Begin(controls);                    
                 }
                 else
                 {
@@ -277,18 +269,12 @@ namespace ExampleAppWPF
 
                     m_list.UpdateLayout();
                     int groupStart = GetViewIndexForGroupIndex(groupIndex);
-                    int toBeAddedCount = targetSize - currentSize;
-                    m_runningAnimations += toBeAddedCount;
 
-                    for (int itemIndex = groupStart + currentSize; itemIndex < groupStart + targetSize; ++itemIndex)
-                    {
-                        ListBoxItem item = (ListBoxItem)m_list.ItemContainerGenerator.ContainerFromItem(m_list.Items[itemIndex]);
+                    var items = GetListBoxItemsInRange(groupStart + currentSize, targetSize - currentSize);
+                    var controls = ChildStackPanelsFor(items);
 
-                        var control = FindChildControl<StackPanel>(item as DependencyObject, ControlToAnimate);
-
-                        m_fadeInItemAnimation.Begin(control as FrameworkElement);
-                        m_slideInAnimation.Begin(item);
-                    }
+                    m_slideInStoryboardRunner.Begin(items);
+                    m_fadeInStoryboardRunner.Begin(controls);                    
                 }
             }
 
