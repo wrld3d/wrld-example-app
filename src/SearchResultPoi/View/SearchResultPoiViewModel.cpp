@@ -54,7 +54,7 @@ namespace ExampleApp
                                                 bool isPinned)
             {
                 Eegeo_ASSERT(!IsOpen(), "Cannot open SearchResultPoiViewModel when already open.\n");
-                if(m_openable.Open())
+                if(m_openable.Open(false))
                 {
                     m_searchResultModel = searchResultModel;
                     m_isPinned = isPinned;
@@ -67,7 +67,7 @@ namespace ExampleApp
                 Eegeo_ASSERT(IsOpen(), "Cannot close SearchResultModel when view model when already closed.\n");
 
                 {
-                    const bool closed = m_openable.Close();
+                    const bool closed = m_openable.Close(false);
                     Eegeo_ASSERT(closed, "Failed to close");
                 }
 

@@ -22,9 +22,9 @@ namespace ExampleApp
 
                 virtual void ReleaseReactorControl() = 0;
 
-                virtual bool Open() = 0;
+                virtual bool Open(bool acquireReactor = true) = 0;
 
-                virtual bool Close() = 0;
+                virtual bool Close(bool releaseReactor = true) = 0;
 
                 virtual void UpdateOpenState(float openState) = 0;
 

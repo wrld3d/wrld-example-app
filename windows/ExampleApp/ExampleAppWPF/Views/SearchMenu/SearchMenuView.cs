@@ -336,6 +336,7 @@ namespace ExampleAppWPF
                 }
 
                 base.AnimateToClosedOnScreen();
+                m_mainWindow.EnableInput();
             }
         }
 
@@ -350,6 +351,7 @@ namespace ExampleAppWPF
                 m_searchArrowOpen.Begin(m_searchArrow);
 
                 base.AnimateToOpenOnScreen();
+                m_mainWindow.EnableInput();
             }
         }
 

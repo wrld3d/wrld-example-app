@@ -88,6 +88,7 @@
 #include "SearchResultSectionViewModule.h"
 #include "SearchResultSectionModule.h"
 #include "SurveyViewModule.h"
+#include "SearchResultPoiView.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
@@ -557,6 +558,11 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     viewControllerUpdaterModel.AddUpdateableObject(m_pSettingsMenuViewModule->GetMenuController());
     viewControllerUpdaterModel.AddUpdateableObject(m_pSearchMenuViewModule->GetMenuController());
+
+    Eegeo::Helpers::TIdentity identity = app.SearchResultPoiModule().GetObservableOpenableControl().GetIdentity();
+    
+    static_cast<ExampleApp::Modality::View::ModalityController&>(app.ModalityModule().GetModalityController()).AddIgnoredMenuIdentity(identity);
+    static_cast<ExampleApp::Reaction::View::ReactionModel&>(app.ReactionModelModule().GetReactionModel()).AddIgnoredMenuIdentity(identity);
 }
 
 void AppHost::DestroyApplicationViewModulesFromUiThread()

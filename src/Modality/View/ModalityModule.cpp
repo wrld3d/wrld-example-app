@@ -32,6 +32,11 @@ namespace ExampleApp
             {
                 return *m_pModel;
             }
+
+            IModalityController& ModalityModule::GetModalityController() const
+            {
+                return *m_pController;
+            }
         }
     }
 }

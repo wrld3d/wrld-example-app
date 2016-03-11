@@ -10,6 +10,7 @@
 #include "IOpenableControlViewModel.h"
 #include "BidirectionalBus.h"
 #include "ModalityObserver.h"
+#include "ModalityController.h"
 
 namespace ExampleApp
 {
@@ -31,6 +32,8 @@ namespace ExampleApp
                 ~ModalityModule();
 
                 IModalityModel& GetModalityModel() const;
+
+                IModalityController& GetModalityController() const;
             };
         }
     }

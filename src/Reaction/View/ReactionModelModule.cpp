@@ -21,6 +21,11 @@ namespace ExampleApp
             {
                 Eegeo_DELETE m_pModel;
             }
+
+            IReactionModel& ReactionModelModule::GetReactionModel() const
+            {
+                return *m_pModel;
+            }
         }
     }
 }

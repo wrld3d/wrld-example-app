@@ -84,7 +84,7 @@ namespace ExampleAppWPF
 
         protected void HideAll()
         {
-            m_currentWindow.EnableInput();
+            //m_currentWindow.EnableInput();
 
             var mainGrid = m_currentWindow.MainGrid;
             var screenWidth = mainGrid.ActualWidth;
@@ -101,7 +101,7 @@ namespace ExampleAppWPF
         protected void ShowAll()
         {
             Visibility = Visibility.Visible;
-            m_currentWindow.DisableInput();
+            //m_currentWindow.DisableInput();
 
             var mainGrid = m_currentWindow.MainGrid;
             var screenWidth = mainGrid.ActualWidth;
