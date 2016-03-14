@@ -7,6 +7,7 @@
 #include "CategorySearch.h"
 #include "Modality.h"
 #include "SearchMenu.h"
+#include "IModalityController.h"
 
 namespace ExampleApp
 {
@@ -73,7 +74,7 @@ namespace ExampleApp
                                      Modality::View::IModalBackgroundView& modalBackgroundView,
                                      ExampleAppMessaging::TMessageBus& messageBus);
                 
-                ~SearchMenuController();
+                virtual ~SearchMenuController();
             };
         }
     }

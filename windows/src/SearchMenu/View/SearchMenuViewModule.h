@@ -10,7 +10,7 @@
 #include "MenuController.h"
 #include "Modality.h"
 #include "Rendering.h"
-#include "SearchMenuController.h"
+#include "DesktopSearchMenuController.h"
 #include "Types.h"
 #include "IMenuViewModule.h"
 
@@ -23,7 +23,7 @@ namespace ExampleApp
             class SearchMenuViewModule: public Menu::View::IMenuViewModule, private Eegeo::NonCopyable
             {
             private:
-                SearchMenuController* m_pController;
+                DesktopSearchMenuController* m_pController;
                 SearchMenuView* m_pView;
                 
             public:
@@ -34,6 +34,7 @@ namespace ExampleApp
                                      Menu::View::IMenuSectionViewModel& searchSectionViewModel,
                                      CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                                      Modality::View::IModalBackgroundView& modalBackgroundView,
+                                     Modality::View::IModalityController& modalityController,
                                      ExampleAppMessaging::TMessageBus& messageBus);
                 
                 ~SearchMenuViewModule();

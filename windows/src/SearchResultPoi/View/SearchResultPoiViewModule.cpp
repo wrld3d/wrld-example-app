@@ -21,7 +21,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
                 m_pView = Eegeo_NEW(SearchResultPoiView)(nativeState);
-                m_pController = Eegeo_NEW(SearchResultPoiController)(*m_pView, searchResultPoiViewModel, messageBus, metricsService);
+                m_pController = Eegeo_NEW(DesktopSearchResultPoiController)(*m_pView, searchResultPoiViewModel, messageBus, metricsService);
             }
 
             SearchResultPoiViewModule::~SearchResultPoiViewModule()

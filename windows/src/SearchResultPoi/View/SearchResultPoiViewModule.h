@@ -9,6 +9,7 @@
 #include "ISearchResultPoiViewModule.h"
 #include "BidirectionalBus.h"
 #include "IMetricsService.h"
+#include "DesktopSearchResultPoiController.h"
 
 namespace ExampleApp
 {
@@ -20,7 +21,7 @@ namespace ExampleApp
             {
             private:
                 SearchResultPoiView* m_pView;
-                SearchResultPoiController* m_pController;
+                DesktopSearchResultPoiController* m_pController;
 
             public:
                 SearchResultPoiViewModule(

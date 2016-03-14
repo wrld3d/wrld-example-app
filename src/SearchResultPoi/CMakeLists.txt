@@ -9,6 +9,7 @@ set(currsources
   ../src/SearchResultPoi/SearchResultPoiViewImageDownloadCompletedMessage.h
   ../src/SearchResultPoi/SearchResultPoiViewOpenedMessage.cpp
   ../src/SearchResultPoi/SearchResultPoiViewOpenedMessage.h
+  ../src/SearchResultPoi/SearchResultPoiViewClosedMessage.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\SearchResultPoi FILES ${currsources})

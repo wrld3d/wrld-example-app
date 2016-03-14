@@ -492,6 +492,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         app.SearchMenuModule().GetSearchSectionViewModel(),
         app.CategorySearchModule().GetCategorySearchRepository(),
         m_pModalBackgroundViewModule->GetView(),
+        app.ModalityModule().GetModalityController(),
         m_messageBus
         );
 
