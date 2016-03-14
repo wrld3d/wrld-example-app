@@ -20,7 +20,8 @@ namespace ExampleApp
                                                        CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                                                        Modality::View::IModalBackgroundView& modalBackgroundView,
                                                        Modality::View::IModalityController& modalityController,
-                                                       ExampleAppMessaging::TMessageBus& messageBus)
+                                                       ExampleAppMessaging::TMessageBus& messageBus,
+                                                       Reaction::View::IReactionModel& reactionModel)
             {
                 m_pView = Eegeo_NEW(SearchMenuView)(nativeState, viewName);
 
@@ -32,7 +33,8 @@ namespace ExampleApp
                                                                 categorySearchRepository,
                                                                 modalBackgroundView,
                                                                 modalityController,
-                                                                messageBus);
+                                                                messageBus,
+                                                                reactionModel);
             }
 
             SearchMenuViewModule::~SearchMenuViewModule()

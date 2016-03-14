@@ -23,7 +23,8 @@ namespace ExampleApp
                                                                      CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                                                                      Modality::View::IModalBackgroundView& modalBackgroundView,
                                                                      Modality::View::IModalityController& modalityController,
-                                                                     ExampleAppMessaging::TMessageBus& messageBus) :
+                                                                     ExampleAppMessaging::TMessageBus& messageBus,
+                                                                     Reaction::View::IReactionModel& reactionModel) :
                 SearchMenuController(model,
                                      viewModel,
                                      view,
@@ -34,6 +35,7 @@ namespace ExampleApp
                                      messageBus),
                 m_modalityController(modalityController),
                 m_messageBus(messageBus),
+                m_reactionModel(reactionModel),
                 m_poiClosedHandler(this, &DesktopSearchMenuController::OnSearchResultPoiViewClosedMessage),
                 m_poiOpenedHandler(this, &DesktopSearchMenuController::OnSearchResultPoiViewOpenedMessage)
             {
@@ -52,11 +54,13 @@ namespace ExampleApp
             void DesktopSearchMenuController::OnSearchResultPoiViewOpenedMessage(const ExampleApp::SearchResultPoi::SearchResultPoiViewOpenedMessage& message)
             {
                 m_modalityController.AddIgnoredMenuIdentity(m_menuIdentity);
+                m_reactionModel.AddIgnoredMenuIdentity(m_menuIdentity);
             }
 
             void DesktopSearchMenuController::OnSearchResultPoiViewClosedMessage(const ExampleApp::SearchResultPoi::SearchResultPoiViewClosedMessage& message)
             {
                 m_modalityController.RemoveIgnoredMenuIdentity(m_menuIdentity);
+                m_reactionModel.RemoveIgnoredMenuIdentity(m_menuIdentity);
             }
         }
     }

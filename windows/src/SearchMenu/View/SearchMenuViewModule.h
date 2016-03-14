@@ -35,7 +35,8 @@ namespace ExampleApp
                                      CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                                      Modality::View::IModalBackgroundView& modalBackgroundView,
                                      Modality::View::IModalityController& modalityController,
-                                     ExampleAppMessaging::TMessageBus& messageBus);
+                                     ExampleAppMessaging::TMessageBus& messageBus,
+                                     Reaction::View::IReactionModel& reactionModel);
                 
                 ~SearchMenuViewModule();
                 

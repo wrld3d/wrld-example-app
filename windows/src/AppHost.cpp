@@ -493,7 +493,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         app.CategorySearchModule().GetCategorySearchRepository(),
         m_pModalBackgroundViewModule->GetView(),
         app.ModalityModule().GetModalityController(),
-        m_messageBus
+        m_messageBus,
+        app.ReactionModelModule().GetReactionModel()
         );
 
     m_pSearchResultSectionViewModule = Eegeo_NEW(ExampleApp::SearchResultSection::View::SearchResultSectionViewModule)(
