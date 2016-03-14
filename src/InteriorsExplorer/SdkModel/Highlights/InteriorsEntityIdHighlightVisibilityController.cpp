@@ -27,30 +27,28 @@ namespace ExampleApp
         {
             namespace Highlights
             {
-                InteriorsEntityIdHighlightVisibilityController::InteriorsEntityIdHighlightVisibilityController(Search::SdkModel::ISearchService& searchService,
-                                                                                               Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                InteriorsEntityIdHighlightVisibilityController::InteriorsEntityIdHighlightVisibilityController(Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                                                                                Search::SdkModel::ISearchResultRepository& searchResultRepository,
                                                                                                const Eegeo::Resources::Interiors::InteriorsInstanceRepository& instanceRepository,
                                                                                                ExampleAppMessaging::TMessageBus& messageBus,
                                                                                                const Eegeo::v4& defaultHighlightColor)
                 : InteriorsEntityIdHighlightController(instanceRepository, defaultHighlightColor)
-                , m_searchService(searchService)
                 , m_searchQueryPerformer(searchQueryPerformer)
                 , m_searchResultsHandler(this, &InteriorsEntityIdHighlightVisibilityController::OnSearchResultsLoaded)
                 , m_searchResultsClearedHandler(this, &InteriorsEntityIdHighlightVisibilityController::OnSearchResultCleared)
                 , m_handleSearchResultSectionItemSelectedMessageBinding(this, &InteriorsEntityIdHighlightVisibilityController::OnSearchItemSelected)
                 , m_messageBus(messageBus)
                 {
-                    m_searchService.InsertOnReceivedQueryResultsCallback(m_searchResultsHandler);
                     m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
                     m_messageBus.SubscribeNative(m_handleSearchResultSectionItemSelectedMessageBinding);
+                    m_messageBus.SubscribeUi(m_searchResultsHandler);
                 }
                 
                 InteriorsEntityIdHighlightVisibilityController::~InteriorsEntityIdHighlightVisibilityController()
                 {
-                    m_searchService.RemoveOnReceivedQueryResultsCallback(m_searchResultsHandler);
                     m_searchQueryPerformer.RemoveOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
                     m_messageBus.UnsubscribeNative(m_handleSearchResultSectionItemSelectedMessageBinding);
+                    m_messageBus.UnsubscribeUi(m_searchResultsHandler);
                 }
                 
                 void InteriorsEntityIdHighlightVisibilityController::OnSearchResultCleared()
@@ -88,9 +86,12 @@ namespace ExampleApp
                     }
                 }
 
-                void InteriorsEntityIdHighlightVisibilityController::OnSearchResultsLoaded(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results)
+                void InteriorsEntityIdHighlightVisibilityController::OnSearchResultsLoaded(const Search::SearchQueryResponseReceivedMessage& message)
                 {
+                    const std::vector<Search::SdkModel::SearchResultModel>& results = message.GetResults();
+                    
                     m_lastSearchedResults.clear();
+                    m_lastSearchedResultsId.clear();
 
                     bool lastIdFound = false;
 
