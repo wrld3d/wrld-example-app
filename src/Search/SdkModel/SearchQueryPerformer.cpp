@@ -65,7 +65,7 @@ namespace ExampleApp
             void SearchQueryPerformer::PerformSearchQuery(const std::string& query,
                     bool isCategory,
                     bool isInterior,
-                    Eegeo::Space::LatLongAltitude& location)
+                    const Eegeo::Space::LatLongAltitude& location)
             {
                 const float radius = GetSearchRadius(m_cameraController.GetRenderCamera());
                 PerformSearchQuery(query, isCategory, isInterior, location, radius);
@@ -74,7 +74,7 @@ namespace ExampleApp
             void SearchQueryPerformer::PerformSearchQuery(const std::string& query,
                                                           bool isCategory,
                                                           bool isInterior,
-                                                          Eegeo::Space::LatLongAltitude& location,
+                                                          const Eegeo::Space::LatLongAltitude& location,
                                                           float radius)
             {
                 m_hasQuery = true;
