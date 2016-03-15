@@ -19,9 +19,33 @@ namespace ExampleApp
     {
         namespace View
         {
+            namespace
+            {
+                const std::string VendorViewClassNames[] = {
+                    "ExampleAppWPF.YelpSearchResultsPoiView",
+                    "ExampleAppWPF.SwallowWorkingGroupSearchResultsPoiView",
+                    "ExampleAppWPF.SwallowPersonSearchResultsPoiView",
+                    "ExampleAppWPF.SwallowMeetingRoomSearchResultsPoiView",
+                    "ExampleAppWPF.SwallowFacilitySearchResultsPoiView",
+                    "ExampleAppWPF.GeoNamesSearchResultsPoiView",
+                    "ExampleAppWPF.SwallowDepartmentSearchResultsPoiView"
+                };
+            }
+
             SearchResultPoiView::SearchResultPoiView(WindowsNativeState& nativeState)
                 : m_nativeState(nativeState)
+                , m_currentVendor(-1)
             {
+                for (int i = 0; i < SearchVendors::Num; ++i)
+                {
+                    m_uiViewClass[i] = GetTypeFromEntryAssembly(Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(VendorViewClassNames[i]));
+                    ConstructorInfo^ ctor = m_uiViewClass[i]->GetConstructor(CreateTypes(IntPtr::typeid));
+                    m_uiView[i] = ctor->Invoke(CreateObjects(gcnew IntPtr(this)));
+
+                    DisplayPoiInfo[i].SetupMethod(m_uiViewClass[i], m_uiView[i], "DisplayPoiInfo");
+                    DismissPoiInfo[i].SetupMethod(m_uiViewClass[i], m_uiView[i], "DismissPoiInfo");
+                    UpdateImageData[i].SetupMethod(m_uiViewClass[i], m_uiView[i], "UpdateImageData");
+                }
             }
 
             SearchResultPoiView::~SearchResultPoiView()
@@ -33,12 +57,12 @@ namespace ExampleApp
                 m_model = model;
                 CreateVendorSpecificPoiView(m_model.GetVendor(), m_model.GetCategory());
 
-				DisplayPoiInfo(gcnew SearchResultModelCLI(m_model), isPinned);
+				DisplayPoiInfo[m_currentVendor](gcnew SearchResultModelCLI(m_model), isPinned);
             }
 
             void SearchResultPoiView::Hide()
             {
-                DismissPoiInfo();
+                DismissPoiInfo[m_currentVendor]();
             }
 
             void SearchResultPoiView::UpdateImage(const std::string& url, bool hasImage, const std::vector<unsigned char>* pImageBytes)
@@ -50,7 +74,7 @@ namespace ExampleApp
                     imageDataArray[static_cast<int>(i)] = System::Byte(pImageBytes->at(i));
                 }
 
-                UpdateImageData(gcnew System::String(url.c_str()), hasImage, imageDataArray);
+                UpdateImageData[m_currentVendor](gcnew System::String(url.c_str()), hasImage, imageDataArray);
             }
 
 			void SearchResultPoiView::InsertAvailabilityChangedCallback(Eegeo::Helpers::ICallback2<const Search::SdkModel::SearchResultModel&, const std::string&>& callback)
@@ -65,7 +89,7 @@ namespace ExampleApp
 
 			void SearchResultPoiView::HandleAvailabilityChanged(const std::string& availability)
 			{
-				m_availabilityChangedCallbacks.ExecuteCallbacks(m_model, availability);
+                m_availabilityChangedCallbacks.ExecuteCallbacks(m_model, availability);
 			}
 
             void SearchResultPoiView::InsertClosedCallback(Eegeo::Helpers::ICallback0& callback)
@@ -114,23 +138,23 @@ namespace ExampleApp
 				
                 if(vendor == ExampleApp::Search::YelpVendorName)
                 {
-					viewClassName = "ExampleAppWPF.YelpSearchResultsPoiView";
+                    m_currentVendor = SearchVendors::Yelp;
                 }
                 else if(vendor == ExampleApp::Search::GeoNamesVendorName)
                 {
-					viewClassName = "ExampleAppWPF.GeoNamesSearchResultsPoiView";
+                    m_currentVendor = SearchVendors::GeoNames;
                 }
 				else if (vendor == ExampleApp::Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
 				{
-					viewClassName = "ExampleAppWPF.SwallowPersonSearchResultsPoiView";
+                    m_currentVendor = SearchVendors::SwallowPerson;
 				}
 				else if (vendor == ExampleApp::Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
 				{
-					viewClassName = "ExampleAppWPF.SwallowMeetingRoomSearchResultsPoiView";
+                    m_currentVendor = SearchVendors::SwallowMeetingRoom;
 				}
 				else if (vendor == ExampleApp::Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME)
 				{
-					viewClassName = "ExampleAppWPF.SwallowWorkingGroupSearchResultsPoiView";
+                    m_currentVendor = SearchVendors::SwallowWorkingGroup;
 				}
 				else if (vendor == ExampleApp::Search::EegeoVendorName && (category == ExampleApp::Search::Swallow::SearchConstants::PRINT_STATION_CATEGORY_NAME
 					|| category == ExampleApp::Search::Swallow::SearchConstants::TOILETS_CATEGORY_NAME
@@ -138,24 +162,16 @@ namespace ExampleApp
 					|| category == ExampleApp::Search::Swallow::SearchConstants::EMERGENCY_EXIT_CATEGORY_NAME
 					|| category == ExampleApp::Search::Swallow::SearchConstants::STATIONERY_CATEGORY_NAME))
 				{
-					viewClassName = "ExampleAppWPF.SwallowFacilitySearchResultsPoiView";
+                    m_currentVendor = SearchVendors::SwallowFacility;
 				}
 				else if (vendor == ExampleApp::Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME)
 				{
-					viewClassName = "ExampleAppWPF.SwallowDepartmentSearchResultsPoiView";
+                    m_currentVendor = SearchVendors::SwallowDepartment;
 				}
                 else
                 {
                     Eegeo_ASSERT(false, "Unknown POI vendor %s, cannot create view instance.\n", vendor.c_str());
                 }
-
-				m_uiViewClass = GetTypeFromEntryAssembly(Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(viewClassName));
-				ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid));
-				m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this)));
-
-				DisplayPoiInfo.SetupMethod(m_uiViewClass, m_uiView, "DisplayPoiInfo");
-				DismissPoiInfo.SetupMethod(m_uiViewClass, m_uiView, "DismissPoiInfo");
-				UpdateImageData.SetupMethod(m_uiViewClass, m_uiView, "UpdateImageData");
             }
         }
     }

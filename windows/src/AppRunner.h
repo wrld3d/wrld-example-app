@@ -23,17 +23,9 @@ public:
     void StopUpdatingNativeBeforeTeardown();
     void DestroyApplicationUi();
 
-    void HandleTouchEvent(const Eegeo::Windows::Input::TouchInputEvent& message);
-    void HandlePanStartEvent(int x, int y);
-    void HandlePanEndEvent(int x, int y);
-    void HandleMouseMoveEvent(int x, int y);
-    void HandleRotateStartEvent(int x, int y);
-    void HandleRotateEndEvent(int x, int y);
-    void HandleZoomEvent(short scrollWheelDirection, int zoomDistance, int x, int y);
+    void HandleMouseEvent(const Eegeo::Windows::Input::MouseInputEvent& message);
     void HandleKeyboardDownEvent(char keyCode);
     void HandleKeyboardUpEvent(char keyCode);
-    void HandleTiltStart(int x, int y);
-    void HandleTiltEnd(int x, int y);
 
     void ActivateSharedSurface();
     void* GetMainRenderSurfaceSharePointer();

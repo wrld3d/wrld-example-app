@@ -175,6 +175,8 @@ namespace ExampleAppWPF
             var yelpButton = (Image)GetTemplateChild("WebVendorLinkStyle");
 
             m_yelpReviewImageClickHandler = new ControlClickHandler(yelpButton, HandleWebLinkButtonClicked);
+
+            m_mainContainer = (FrameworkElement)GetTemplateChild("SearchresultsPoiViewContainer");
         }
         
         public override void DisplayPoiInfo(Object modelObject, bool isPinned)
@@ -182,6 +184,8 @@ namespace ExampleAppWPF
             ExampleApp.SearchResultModelCLI model = modelObject as ExampleApp.SearchResultModelCLI;
 
             YelpResultModel yelpResultModel = YelpResultModel.FromResultModel(model);
+            var mainGrid = (Application.Current.MainWindow as MainWindow).MainGrid;
+            var screenWidth = mainGrid.ActualWidth;
 
             m_closing = false;
 
@@ -201,6 +205,9 @@ namespace ExampleAppWPF
 
             RatingCountVisibility = string.IsNullOrEmpty(yelpResultModel.ImageUrl) && !string.IsNullOrEmpty(yelpResultModel.RatingsImageUrl) && yelpResultModel.ReviewCount > 0 ? Visibility.Visible : Visibility.Collapsed;
             Url = yelpResultModel.WebUrl;
+			
+			//m_isPinned = isPinned;
+            OnPropertyChanged("IsPinned");
 
             ShowAll();
         }

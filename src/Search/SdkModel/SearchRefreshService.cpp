@@ -36,6 +36,7 @@ namespace ExampleApp
                 , m_secondsSincePreviousRefresh(0.f)
                 , m_cameraTransitioning(false)
                 , m_enabled(true)
+                , m_previousQueryFloorIndex(0)
             {
                 m_searchService.InsertOnPerformedQueryCallback(m_searchResultQueryIssuedCallback);
                 m_searchService.InsertOnReceivedQueryResultsCallback(m_searchResultResponseReceivedCallback);
@@ -88,8 +89,11 @@ namespace ExampleApp
                         Eegeo::Space::LatLongAltitude currentLocation = Eegeo::Space::LatLongAltitude::FromECEF(ecefLocation);
 
                         double distanceMetresSq = (ecefLocation - m_previousQueryLocationEcef).LengthSq();
+                        
+                        bool hasChangedInteriorFloors = m_interiorInteractionModel.HasInteriorModel() &&
+                            m_previousQueryFloorIndex != m_interiorInteractionModel.GetSelectedFloorIndex();
 
-                        if(distanceMetresSq >= m_minimumMetresSquaredBetweenUpdates)
+                        if(distanceMetresSq >= m_minimumMetresSquaredBetweenUpdates || hasChangedInteriorFloors)
                         {
                             m_previousQueryLocationEcef = ecefLocation;
                             const SearchQuery& previousQuery = m_searchQueryPerformer.GetPreviousSearchQuery();
@@ -103,6 +107,7 @@ namespace ExampleApp
                                 m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), previousQuery.IsInterior(), currentLocation);
                             }
 
+                            m_previousQueryFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
                             m_secondsSincePreviousRefresh = 0.f;
                         }
                     }
@@ -126,6 +131,7 @@ namespace ExampleApp
             {
                 ++ m_queriesPending;
                 m_searchResultsCleared = false;
+                m_previousQueryFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
             }
 
             void SearchRefreshService::HandleSearchResultsResponseReceived(const SearchQuery& query,

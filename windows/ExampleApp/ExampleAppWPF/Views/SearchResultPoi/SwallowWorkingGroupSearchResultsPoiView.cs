@@ -13,8 +13,36 @@ namespace ExampleAppWPF
         private ExampleApp.SearchResultModelCLI m_model;
         private SwallowWorkingGroupResultModel m_swallowWorkingGroupModel;
 
-        public string TitleText { get; set; }
-        public string Description { get; set; }
+        private string m_titleText;
+        private string m_description;
+
+        public string TitleText
+        {
+            get
+            {
+                return m_titleText;
+            }
+
+            set
+            {
+                m_titleText = value;
+                OnPropertyChanged("TitleText");
+            }
+        }
+
+        public string Description
+        {
+            get
+            {
+                return m_description;
+            }
+
+            set
+            {
+                m_description = value;
+                OnPropertyChanged("Description");
+            }
+        }
         
         static SwallowWorkingGroupSearchResultsPoiView()
         {
@@ -32,15 +60,16 @@ namespace ExampleAppWPF
             base.OnApplyTemplate();
 
             m_categoryIcon = (Image)GetTemplateChild("CategoryIcon");
-            
-            m_categoryIcon.Source = StartupResourceLoader.GetBitmap(SearchResultCategoryMapper.GetIconImageName(m_model.Category));
 
             m_poiImage = (Image)GetTemplateChild("PoiImage");
+
+            m_mainContainer = (FrameworkElement)GetTemplateChild("WorkingGroupPoiContainer");
         }
         
         public override void DisplayPoiInfo(Object modelObject, bool isPinned)
         {
             m_model = modelObject as ExampleApp.SearchResultModelCLI;
+            m_categoryIcon.Source = StartupResourceLoader.GetBitmap(SearchResultCategoryMapper.GetIconImageName(m_model.Category));
             
             m_swallowWorkingGroupModel = SwallowWorkingGroupResultModel.FromJson(m_model.JsonData);
 
@@ -48,6 +77,9 @@ namespace ExampleAppWPF
             
             TitleText = m_model.Title;
             Description = m_swallowWorkingGroupModel.Description;
+
+            m_poiImage.Source = null;
+            m_poiImage.Visibility = Visibility.Hidden;
 
             ShowAll();
         }

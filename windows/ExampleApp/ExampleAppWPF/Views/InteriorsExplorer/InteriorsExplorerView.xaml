@@ -42,11 +42,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:InteriorsExplorerView}">
                     <Grid>
-                        <Grid Name="DetailsPanel" Width="Auto" Height="50" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,50,0,0">
+                        <Grid Name="DetailsPanel" Width="Auto" Height="36" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,20,0,0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="315"/>
-                                <ColumnDefinition Width="11"/>
-                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="245"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="36"/>
                             </Grid.ColumnDefinitions>
 
                             <Grid Grid.Column="0">
@@ -56,12 +56,12 @@
                                         <VisualBrush Visual="{Binding ElementName=Mask}"/>
                                     </Grid.OpacityMask>
 
-                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Name="FloorName" Foreground="{StaticResource White}" FontSize="16" Padding="14"/>
+                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Name="FloorName" Foreground="{StaticResource White}" FontSize="14" Padding="14"/>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Column="1">
                             </Grid>
-                            <Button Name="DismissButton" Width="50" Height="50" Grid.Column="2" Style="{StaticResource ExitButtonStyle}"/>
+                            <Button Name="DismissButton" Width="36" Height="36" Grid.Column="2" Style="{StaticResource ExitButtonStyle}"/>
                         </Grid>
 
                         <Grid Name="FloorPanel" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="auto">

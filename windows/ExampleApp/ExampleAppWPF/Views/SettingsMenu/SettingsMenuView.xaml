@@ -42,47 +42,47 @@
 
                         <Storyboard x:Key="OpenSearchViewIcon">
                             <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Duration="0:0:0.2" >
-                                <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="-714,0,0,0" KeySpline="0.0,1.0 0.6,1.0"/>
+                                <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="-536,0,0,0" KeySpline="0.0,1.0 0.6,1.0"/>
                             </ThicknessAnimationUsingKeyFrames>
                         </Storyboard>
 
                         <Storyboard x:Key="CloseSearchViewIcon">
                             <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Duration="0:0:0.2" >
-                                <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="-114,0,0,0" KeySpline="0.0,1.0 1.0,0.8"/>
+                                <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="-76,0,0,0" KeySpline="0.0,1.0 1.0,0.8"/>
                             </ThicknessAnimationUsingKeyFrames>
                         </Storyboard>
 
                         <Storyboard x:Key="OpenSearchContainer">
                             <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Duration="0:0:0.2" >
-                                <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="-332,0,0,0" KeySpline="0.0,1.0 1.0,0.8"/>
+                                <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="-250,0,0,0" KeySpline="0.0,1.0 1.0,0.8"/>
                             </ThicknessAnimationUsingKeyFrames>
                         </Storyboard>
 
                         <Storyboard x:Key="CloseSearchContainer">
                             <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Duration="0:0:0.2" >
-                                <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="332,0,0,0" KeySpline="0.0,1.0 0.6,1.0"/>
+                                <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="250,0,0,0" KeySpline="0.0,1.0 0.6,1.0"/>
                             </ThicknessAnimationUsingKeyFrames>
                         </Storyboard>
 
                         <Storyboard x:Key="OpenBackgroundRect">
                             <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="0" To="1" Duration="0:0:0.2"/>
                             <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Duration="0:0:0.2">
-                                <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="-332,0,0,0"/>
+                                <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="-250,0,0,0"/>
                             </ThicknessAnimationUsingKeyFrames>
                         </Storyboard>
 
                         <Storyboard x:Key="CloseBackgroundRect">
                             <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="1" To="0" Duration="0:0:0.15"/>
                             <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Duration="0:0:0.15" >
-                                <SplineThicknessKeyFrame KeyTime="00:00:00.15" Value="100,0,0,0"/>
+                                <SplineThicknessKeyFrame KeyTime="00:00:00.15" Value="250,0,0,0"/>
                             </ThicknessAnimationUsingKeyFrames>
                         </Storyboard>
                     </ControlTemplate.Resources>
 
-                    <Grid Margin="0,50,0,0" Name="SettingsMenuViewContainer">
+                    <Grid Margin="0,20,0,0" Name="SettingsMenuViewContainer">
                         
                         <!--Closed: -114 Open: -714 -->
-                        <Grid Margin="-114,0,0,0" Width="50" Height="50" VerticalAlignment="Top" DockPanel.Dock="Left" Name="SettingsIconGrid" Background="{StaticResource PrimaryBG_colour}" Panel.ZIndex="99">
+                        <Grid Margin="-114,0,0,0" Width="36" Height="36" VerticalAlignment="Top" DockPanel.Dock="Left" Name="SettingsIconGrid" Background="{StaticResource PrimaryBG_colour}" Panel.ZIndex="99">
                             <Button Width="Auto" Height="Auto" Name="SettingsMenuIconButton" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}">
@@ -91,7 +91,7 @@
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="{x:Type Button}">
                                                         <Grid Name="SearchButtonGrid"  Background="{StaticResource Gold}">
-                                                            <Image Source="/Assets/button_settings_off.png" Width="50" Height="50" Name="SearchButtonIcon" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                            <Image Source="/Assets/button_settings_off.png" Width="36" Height="36" Name="SearchButtonIcon" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                                         </Grid>
                                                         <ControlTemplate.Triggers>
                                                             <Trigger Property="IsPressed" Value="True">
@@ -121,7 +121,7 @@
                         </Grid>
 
                         <!--Closed: 268 Open 332-->
-                        <Rectangle Name="BackgroundRect" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="300,0,0,0" Width="332" Height="50" Fill="{StaticResource PrimaryBG_colour}" RenderTransformOrigin="0.0, 0.0">
+                        <Rectangle Name="BackgroundRect" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="250,0,0,0" Width="250" Height="36" Fill="{StaticResource PrimaryBG_colour}" RenderTransformOrigin="0.0, 0.0">
                             <Rectangle.Resources>
                                 <Style TargetType="{x:Type Rectangle}">
                                     <Setter Property="RenderTransform">
@@ -134,10 +134,10 @@
                         </Rectangle>
                         
                         <!--Closed: 332 Open: -332-->
-                        <Grid Name="SettingsMenuMainContainer" Margin="332,0,0,0" HorizontalAlignment="Center">
+                        <Grid Name="SettingsMenuMainContainer" Margin="250,0,0,0" HorizontalAlignment="Center">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="6"/>
+                                <RowDefinition Height="36"/>
+                                <RowDefinition Height="2"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
@@ -146,15 +146,15 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid Grid.Column="0">
-                                    <TextBlock Text="Settings" Foreground="White" FontSize="22" FontFamily="{StaticResource PrimaryUIFont}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+                                    <TextBlock Text="Settings" Foreground="White" FontSize="18" FontFamily="{StaticResource PrimaryUIFont}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"/>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="1">
-                                <Grid Width="332" Height="6" Background="#002B63" Margin="0, 0, 0, 0"/>
+                                <Rectangle Width="250" Height="2" Fill="{StaticResource PrimaryBG_Over_Colour}" />
                             </Grid>
                             <Grid Grid.Row="2">
                                 <StackPanel  Orientation="Vertical">
-                                    <ScrollViewer Width="332"  Background="{StaticResource PrimaryBG_colour}" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+                                    <ScrollViewer Width="250"  Background="{StaticResource PrimaryBG_colour}" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
                                         <ListBox Margin="5,0,5,0" Name="SettingsMenuItemList" Template="{StaticResource ListBoxControlTemplateNoPadding}" ItemsSource="{Binding Children}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0">
                                             <ListBox.Resources>
                                                 <Style TargetType="ListBoxItem">
@@ -168,7 +168,7 @@
                                                 </Style>
 
                                                 <DataTemplate DataType="{x:Type local:SubMenuListItem}">
-                                                    <Grid Height="38" Background="{StaticResource Gold}">
+                                                    <Grid Height="30" Background="{StaticResource Gold}">
                                                         <Grid>
                                                             <Grid.RowDefinitions>
                                                                 <RowDefinition Height="*"/>
@@ -181,7 +181,7 @@
                                                                     <ColumnDefinition Width="*"/>
                                                                     <ColumnDefinition Width="Auto"/>
                                                                 </Grid.ColumnDefinitions>
-                                                                <StackPanel Name="SettingsMenuItemPanel" Margin="0,0,0,0" Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" Background="{StaticResource SubMenuItemDefaultColour}" Width="330">
+                                                                <StackPanel Name="SettingsMenuItemPanel" Margin="0,0,0,0" Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" Background="{StaticResource SubMenuItemDefaultColour}" Width="250">
                                                                     <StackPanel.Triggers>
                                                                         <EventTrigger RoutedEvent="MouseLeftButtonDown">
                                                                             <BeginStoryboard>
@@ -220,8 +220,8 @@
                                                                             </Setter>
                                                                         </Style>
                                                                     </StackPanel.Resources>
-                                                                    <Image Source="{Binding Path=Icon}" Width="26" Height="26" VerticalAlignment="Center" Margin="6,0,0,0"/>
-                                                                    <Label Content="{Binding Path=Heading}" FontSize="16" Foreground="{StaticResource DarkGrey}" VerticalAlignment="Center"/>
+                                                                    <Image Source="{Binding Path=Icon}" Width="24" Height="24" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                                                    <Label Content="{Binding Path=Heading}" FontSize="14" Foreground="{StaticResource DarkGrey}" VerticalAlignment="Center"/>
                                                                 </StackPanel>
                                                             </Grid>
                                                             <Grid Grid.Row="1" Grid.Column="1" Background="{StaticResource SubMenuSeparator}">

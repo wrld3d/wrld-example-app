@@ -4,18 +4,25 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 
 namespace ExampleAppWPF
 {
-    public abstract class SearchResultPoiViewBase : Control
+    public abstract class SearchResultPoiViewBase : Control, INotifyPropertyChanged
     {
         protected IntPtr m_nativeCallerPointer;
         protected MainWindow m_currentWindow;
+        protected FrameworkElement m_mainContainer;
 
         protected bool m_closing;
 
+        protected bool m_isOpen;
+
         private ControlClickHandler m_closeButtonClickHandler = null;
+
+        private const double m_animationTimeMilliseconds = 250;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -26,7 +33,28 @@ namespace ExampleAppWPF
             m_currentWindow = (MainWindow)Application.Current.MainWindow;
             m_currentWindow.MainGrid.Children.Add(this);
 
-            HideAll();
+            m_currentWindow.SizeChanged += OnWindowResized;
+
+            Visibility = Visibility.Hidden;
+
+            m_isOpen = false;
+
+            Panel.SetZIndex(this, 100);
+        }
+
+        private void OnWindowResized(object sender, SizeChangedEventArgs e)
+        {
+            var mainGrid = m_currentWindow.MainGrid;
+            var screenWidth = mainGrid.ActualWidth;
+
+            if (m_isOpen)
+            {
+                m_mainContainer.RenderTransform = new TranslateTransform((screenWidth / 2) - (m_mainContainer.ActualWidth / 2), 0);
+            }
+            else
+            {
+                m_mainContainer.RenderTransform = new TranslateTransform((screenWidth / 2) + (m_mainContainer.ActualWidth / 2), 0);
+            }
         }
 
         protected virtual void OnPropertyChanged(string propertyName)
@@ -44,14 +72,35 @@ namespace ExampleAppWPF
 
         protected void HideAll()
         {
-            Visibility = Visibility.Hidden;
             m_currentWindow.EnableInput();
+
+            var mainGrid = m_currentWindow.MainGrid;
+            var screenWidth = mainGrid.ActualWidth;
+
+            var db = new DoubleAnimation((screenWidth / 2) + (m_mainContainer.ActualWidth / 2), TimeSpan.FromMilliseconds(m_animationTimeMilliseconds));
+            db.From = (screenWidth / 2) - (m_mainContainer.ActualWidth / 2);
+
+            m_mainContainer.RenderTransform = new TranslateTransform();
+            m_mainContainer.RenderTransform.BeginAnimation(TranslateTransform.XProperty, db);
+
+            m_isOpen = false;
         }
 
         protected void ShowAll()
         {
             Visibility = Visibility.Visible;
             m_currentWindow.DisableInput();
+
+            var mainGrid = m_currentWindow.MainGrid;
+            var screenWidth = mainGrid.ActualWidth;
+
+            var db = new DoubleAnimation((screenWidth / 2) - (m_mainContainer.ActualWidth / 2), TimeSpan.FromMilliseconds(m_animationTimeMilliseconds));
+            db.From = (screenWidth / 2) + (m_mainContainer.ActualWidth / 2);
+
+            m_mainContainer.RenderTransform = new TranslateTransform();
+            m_mainContainer.RenderTransform.BeginAnimation(TranslateTransform.XProperty, db);
+
+            m_isOpen = true;
         }
 
         private void HandleCloseButtonClicked(object sender, MouseButtonEventArgs e)

@@ -32,15 +32,16 @@ namespace ExampleAppWPF
             base.OnApplyTemplate();
 
             m_categoryIcon = (Image)GetTemplateChild("CategoryIcon");
-            
-            m_categoryIcon.Source = StartupResourceLoader.GetBitmap(SearchResultCategoryMapper.GetIconImageName(m_model.Category));
 
             m_poiImage = (Image)GetTemplateChild("PoiImage");
+
+            m_mainContainer = (FrameworkElement)GetTemplateChild("DepartmentPoiContainer");
         }
         
         public override void DisplayPoiInfo(Object modelObject, bool isPinned)
         {
             m_model = modelObject as ExampleApp.SearchResultModelCLI;
+            m_categoryIcon.Source = StartupResourceLoader.GetBitmap(SearchResultCategoryMapper.GetIconImageName(m_model.Category));
             
             m_swallowDepartmentModel = SwallowDepartmentResultModel.FromJson(m_model.JsonData);
 
@@ -48,6 +49,11 @@ namespace ExampleAppWPF
             
             TitleText = m_model.Title;
             Description = m_swallowDepartmentModel.Description;
+
+            m_poiImage.Source = null;
+            m_poiImage.Visibility = Visibility.Hidden;
+
+            OnPropertyChanged("");
 
             ShowAll();
         }

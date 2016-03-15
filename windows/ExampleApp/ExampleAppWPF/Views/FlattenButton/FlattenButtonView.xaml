@@ -9,7 +9,7 @@
                     <Grid Name="MyGrid" Background="{TemplateBinding Background}">
                         <Image Name="ButtonImage" Source="/Assets/button_flatten_off.png">
                             <Image.Clip>
-                                <EllipseGeometry Center="48,48" RadiusX="48" RadiusY="48" />
+                                <EllipseGeometry Center="30,30" RadiusX="30" RadiusY="30" />
                             </Image.Clip>
                         </Image>
                     </Grid>
@@ -69,8 +69,9 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="Height" Value="96"/>
-        <Setter Property="Width" Value="96"/>
+        <Setter Property="Height" Value="60"/>
+        <Setter Property="Width" Value="60"/>
+        <Setter Property="Margin" Value="0,0,0,23"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
     </Style>
     

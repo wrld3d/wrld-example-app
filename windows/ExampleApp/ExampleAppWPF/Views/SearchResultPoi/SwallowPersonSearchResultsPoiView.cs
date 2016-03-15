@@ -33,6 +33,7 @@ namespace ExampleAppWPF
             base.OnApplyTemplate();
             
             m_portraitImage = (Image)GetTemplateChild("PortraitImage");
+            m_mainContainer = (FrameworkElement)GetTemplateChild("PersonPoiContainer");
         }
         
         public override void DisplayPoiInfo(Object modelObject, bool isPinned)
@@ -48,6 +49,8 @@ namespace ExampleAppWPF
             WorkingGroup = m_swallowPersonModel.WorkingGroup;
             OfficeLocation = m_swallowPersonModel.OfficeLocation;
             DeskCode = m_swallowPersonModel.DeskCode;
+
+            OnPropertyChanged("");
 
             ShowAll();
         }

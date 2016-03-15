@@ -106,6 +106,7 @@
     <Compile Include="Views\Menu\MenuDelayedSourceUpdateAnimatorListener.cs" />
     <Compile Include="Views\Menu\MenuListAdapter.cs" />
     <Compile Include="Views\Menu\MenuListItem.cs" />
+    <Compile Include="Views\Menu\StoryboardRunner.cs" />
     <Compile Include="Views\Options\OptionsCacheClearSubView.cs" />
     <Compile Include="Views\Options\OptionsView.cs" />
     <Compile Include="Views\SearchMenu\SearchMenuListItem.cs" />
@@ -622,6 +623,9 @@
     </Resource>
     <Resource Include="..\..\Resources\button_clear_search_on.png">
       <Link>Assets\button_clear_search_on.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_clear_search_down.png">
+      <Link>Assets\button_clear_search_down.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\poi_placeholder.png">
       <Link>Assets\poi_placeholder.png</Link>

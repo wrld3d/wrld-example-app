@@ -6,7 +6,7 @@
 #include "WindowsAppThreadAssertionMacros.h"
 #include "ImagePathHelpers.h"
 #include "WindowsImagePathHelpers.h"
-#include "WindowsActionIdentifiers.h"
+#include "MouseInputEvent.h"
 #include "GLHelpers.h"
 
 using namespace Eegeo::Helpers::GLHelpers;
@@ -105,85 +105,16 @@ bool AppRunner::ActivateSurface()
     return displayBound;
 }
 
-void AppRunner::HandleTouchEvent(const Eegeo::Windows::Input::TouchInputEvent& event)
+void AppRunner::HandleMouseEvent(const Eegeo::Windows::Input::MouseInputEvent& event)
 {
     ASSERT_NATIVE_THREAD
 
-    if(m_pAppHost != NULL)
+    if (m_pAppHost != NULL)
     {
-        m_pAppHost->HandleTouchInputEvent(event);
+        m_pAppHost->HandleMouseInputEvent(event);
     }
 }
 
-void AppRunner::HandlePanStartEvent(int x, int y)
-{
-    Eegeo::Windows::Input::TouchInputEvent panEvent(false, true, 0, Eegeo::Windows::Input::PAN_ACTION_IDENTIFIER);
-    Eegeo::Windows::Input::TouchInputPointerEvent pointerEvent(static_cast<float>(x), static_cast<float>(y), 0, 0);
-
-    panEvent.pointerEvents.emplace_back(pointerEvent);
-
-    HandleTouchEvent(panEvent);
-}
-
-void AppRunner::HandlePanEndEvent(int x, int y)
-{
-    Eegeo::Windows::Input::TouchInputEvent panEvent(true, false, 0, Eegeo::Windows::Input::PAN_ACTION_IDENTIFIER);
-    Eegeo::Windows::Input::TouchInputPointerEvent pointerEvent(static_cast<float>(x), static_cast<float>(y), 0, 0);
-
-    panEvent.pointerEvents.emplace_back(pointerEvent);
-
-    HandleTouchEvent(panEvent);
-}
-
-void AppRunner::HandleMouseMoveEvent(int x, int y)
-{
-    Eegeo::Windows::Input::TouchInputEvent mouseEvent(false, false, 0, 0);
-    Eegeo::Windows::Input::TouchInputPointerEvent pointerEvent(static_cast<float>(x), static_cast<float>(y), 0, 0);
-
-    mouseEvent.pointerEvents.emplace_back(pointerEvent);
-
-    HandleTouchEvent(mouseEvent);
-}
-
-void AppRunner::HandleRotateStartEvent(int x, int y)
-{
-    Eegeo::Windows::Input::TouchInputEvent rotateEvent(false, true, 0, Eegeo::Windows::Input::ROTATE_ACTION_IDENTIFIER);
-    Eegeo::Windows::Input::TouchInputPointerEvent pointerEvent(static_cast<float>(x), static_cast<float>(y), 0, 0);
-
-    rotateEvent.pointerEvents.emplace_back(pointerEvent);
-
-    HandleTouchEvent(rotateEvent);
-}
-
-void AppRunner::HandleRotateEndEvent(int x, int y)
-{
-    Eegeo::Windows::Input::TouchInputEvent rotateEvent(true, false, 0, Eegeo::Windows::Input::ROTATE_ACTION_IDENTIFIER);
-    Eegeo::Windows::Input::TouchInputPointerEvent pointerEvent(static_cast<float>(x), static_cast<float>(y), 0, 0);
-
-	rotateEvent.pointerEvents.emplace_back(pointerEvent);
-
-    HandleTouchEvent(rotateEvent);
-}
-
-void AppRunner::HandleZoomEvent(short scrollWheelDirection, int zoomDistance, int x, int y)
-{
-    Eegeo::Windows::Input::TouchInputEvent zoomEvent(false, false, 0, Eegeo::Windows::Input::ZOOM_ACTION_IDENTIFIER);
-
-    if (scrollWheelDirection >= 0)
-    {
-        Eegeo::Windows::Input::TouchInputPointerEvent pointerEvent(static_cast<float>(x), static_cast<float>(y), -zoomDistance, 0);
-
-        zoomEvent.pointerEvents.emplace_back(pointerEvent);
-    }
-    else
-    {
-        Eegeo::Windows::Input::TouchInputPointerEvent pointerEvent(static_cast<float>(x), static_cast<float>(y), zoomDistance, 0);
-
-        zoomEvent.pointerEvents.emplace_back(pointerEvent);
-    }
-
-    HandleTouchEvent(zoomEvent);
-}
 
 void AppRunner::HandleKeyboardDownEvent(char keyCode)
 {
@@ -209,26 +140,6 @@ void AppRunner::HandleKeyboardUpEvent(char keyCode)
 
         m_pAppHost->HandleKeyboardInputEvent(keyEvent);
     }
-}
-
-void AppRunner::HandleTiltStart(int x, int y)
-{
-    Eegeo::Windows::Input::TouchInputEvent tiltEvent(false, true, 0, Eegeo::Windows::Input::TILT_ACTION_IDENTIFIER);
-    Eegeo::Windows::Input::TouchInputPointerEvent pointerEvent(static_cast<float>(x), static_cast<float>(y), 0, 0);
-
-    tiltEvent.pointerEvents.emplace_back(pointerEvent);
-
-    HandleTouchEvent(tiltEvent);
-}
-
-void AppRunner::HandleTiltEnd(int x, int y)
-{
-    Eegeo::Windows::Input::TouchInputEvent tiltEvent(true, false, 0, Eegeo::Windows::Input::TILT_ACTION_IDENTIFIER);
-    Eegeo::Windows::Input::TouchInputPointerEvent pointerEvent(static_cast<float>(x), static_cast<float>(y), 0, 0);
-
-    tiltEvent.pointerEvents.emplace_back(pointerEvent);
-
-    HandleTouchEvent(tiltEvent);
 }
 
 void AppRunner::ActivateSharedSurface()
@@ -315,11 +226,6 @@ void AppRunner::UpdateNative(float deltaSeconds)
 
         LockGL contextLock;
 
-        if (m_pNativeState->requiresPBuffer)
-        { 
-            glFinish();
-        }
-
         if (!m_pNativeState->requiresPBuffer)
         {
             Eegeo_GL(eglSwapBuffers(m_displayService.GetDisplay(), m_displayService.GetSurface()));
@@ -328,6 +234,11 @@ void AppRunner::UpdateNative(float deltaSeconds)
         Eegeo::Helpers::GLHelpers::ClearBuffers();
 
         m_pAppHost->Draw(deltaSeconds);
+
+        if (m_pNativeState->requiresPBuffer)
+        {
+            glFinish();
+        }
     }
 }
 
