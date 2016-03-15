@@ -5,6 +5,8 @@
 #include "SearchResultModel.h"
 #include "SearchVendorNames.h"
 #include "SwallowSearchConstants.h"
+#include "SwallowSearchParser.h"
+#include "InteriorInteractionModel.h"
 
 namespace ExampleApp
 {
@@ -43,6 +45,63 @@ namespace ExampleApp
                     
                     return Search::SwallowVendorPriority_MAX;
                 }
+                
+                int GetAvailabilityPriority(const Search::Swallow::SdkModel::SwallowMeetingRoomResultModel& meetingroom)
+                {
+                    if(meetingroom.GetAvailability() == Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE)
+                    {
+                        return Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_PRIORITY;
+                    }
+                    else if(meetingroom.GetAvailability() == Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_SOON)
+                    {
+                        return Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_SOON_PRIORITY;
+                    }
+                    else if(meetingroom.GetAvailability() == Search::Swallow::SearchConstants::MEETING_ROOM_OCCUPIED)
+                    {
+                        return Search::Swallow::SearchConstants::MEETING_ROOM_OCCUPIED_PRIORITY;
+                    }
+                    
+                    return Search::Swallow::SearchConstants::MEETING_ROOM_MAX_PRIORITY;
+                }
+                
+                bool GetOrderForMeetingRooms(const Search::SdkModel::SearchResultModel& a, const Search::SdkModel::SearchResultModel& b, int currentFloorIndex)
+                {
+                    // Meeting room order: Current floor first, ordered by Available, Available Soon and Occupied.
+                    // Then Lower floor > Higher floor > 2x Lower floor > ...
+                    
+                    Search::Swallow::SdkModel::SwallowMeetingRoomResultModel roomA = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(a);
+                    Search::Swallow::SdkModel::SwallowMeetingRoomResultModel roomB = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(b);
+                    
+                    if(a.GetFloor() == b.GetFloor())
+                    {
+                        int meetingRoomAvailabilityValueA = GetAvailabilityPriority(roomA);
+                        int meetingRoomAvailabilityValueB = GetAvailabilityPriority(roomB);
+                        
+                        return meetingRoomAvailabilityValueA < meetingRoomAvailabilityValueB;
+                    }
+                    else
+                    {
+                        int floorDistanceA = currentFloorIndex - a.GetFloor();
+                        int floorDistanceB = currentFloorIndex - b.GetFloor();
+                        
+                        int absFloorDistanceA = abs(floorDistanceA);
+                        int absFloorDistanceB = abs(floorDistanceB);
+                        if(absFloorDistanceA == absFloorDistanceB)
+                        {
+                            return floorDistanceA > floorDistanceB;
+                        }
+                        
+                        return absFloorDistanceA < absFloorDistanceB;
+                    }
+                    
+                    return false;
+                }
+            }
+            
+            SearchResultSectionOrder::SearchResultSectionOrder(const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel)
+            : m_interiorInteractionModel(interiorInteractionModel)
+            {
+                
             }
             
             bool SearchResultSectionOrder::operator() (const Search::SdkModel::SearchResultModel& a, const Search::SdkModel::SearchResultModel& b)
@@ -62,6 +121,13 @@ namespace ExampleApp
                 {
                     if (a.GetCategory() == b.GetCategory())
                     {
+                        if(a.GetCategory() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME &&
+                           a.GetVendor() == Search::EegeoVendorName &&
+                           b.GetVendor() == Search::EegeoVendorName)
+                        {
+                            return GetOrderForMeetingRooms(a, b, m_interiorInteractionModel.GetSelectedFloorIndex());
+                        }
+                        
                         return false;
                     }
                     else
@@ -73,6 +139,8 @@ namespace ExampleApp
                 }
                 return a < b;
             }
+            
+            
         }
     }
 }

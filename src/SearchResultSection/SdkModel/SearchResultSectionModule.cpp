@@ -17,6 +17,7 @@ namespace ExampleApp
                                                                  Search::SdkModel::ISearchResultRepository& searchResultRepository,
                                                                  Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                                                  CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                                                 const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                  ExampleAppMessaging::TMessageBus& messageBus)
             {
                 m_pModel = Eegeo_NEW(Menu::View::MenuModel)();
@@ -31,7 +32,7 @@ namespace ExampleApp
                 
                 m_pSearchResultViewClearedObserver = Eegeo_NEW(SearchResultViewClearedObserver)(searchQueryPerformer, messageBus);
                 
-                m_pSearchResultSectionOrder = Eegeo_NEW(View::SearchResultSectionOrder);
+                m_pSearchResultSectionOrder = Eegeo_NEW(View::SearchResultSectionOrder)(interiorInteractionModel);
             }
 
             SearchResultSectionModule::~SearchResultSectionModule()

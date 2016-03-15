@@ -14,6 +14,8 @@ set(currsources
   ../src/InteriorsExplorer/SdkModel/InteriorWorldPinController.cpp
   ../src/InteriorsExplorer/SdkModel/InteriorWorldPinController.h
   ../src/InteriorsExplorer/SdkModel/InteriorWorldPinSelectionHandler.h
+  ../src/InteriorsExplorer/SdkModel/InteriorExpandedModeObserver.cpp
+  ../src/InteriorsExplorer/SdkModel/InteriorExpandedModeObserver.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\InteriorsExplorer\\SdkModel FILES ${currsources})

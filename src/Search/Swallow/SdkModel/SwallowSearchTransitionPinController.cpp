@@ -58,7 +58,7 @@ namespace ExampleApp
                                                                                                           (*it).GetLocation(),
                                                                                                           iconIndex,
                                                                                                           heightOffsetMetres,
-                                                                                                          WorldPins::SdkModel::WorldPinVisibility::All);
+                                                                                                          WorldPins::SdkModel::WorldPinVisibility::Search);
                         pPinItemModel->SetFocusable(false);
                         
                         m_transitionPins.push_back(pPinItemModel);

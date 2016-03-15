@@ -3,6 +3,7 @@
 #pragma once
 
 #include "ISearchResultSectionOrder.h"
+#include "Interiors.h"
 
 namespace ExampleApp
 {
@@ -13,7 +14,14 @@ namespace ExampleApp
             class SearchResultSectionOrder : public ISearchResultSectionOrder
             {
             public:
+                
+                SearchResultSectionOrder(const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel);
+                
                 bool operator() (const Search::SdkModel::SearchResultModel& a, const Search::SdkModel::SearchResultModel& b);
+                
+            private:
+                
+                const Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
             };
         }
     }

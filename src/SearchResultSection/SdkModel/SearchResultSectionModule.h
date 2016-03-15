@@ -10,6 +10,7 @@
 #include "SearchResultSectionItemSelectedMessageHandler.h"
 #include "SearchResultRepositoryObserver.h"
 #include "SearchResultViewClearedObserver.h"
+#include "Interiors.h"
 #include "Types.h"
 
 namespace ExampleApp
@@ -33,6 +34,7 @@ namespace ExampleApp
                                        Search::SdkModel::ISearchResultRepository& searchResultRepository,
                                        Search::SdkModel::ISearchQueryPerformer& queryPerformer,
                                        CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                       const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                        ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~SearchResultSectionModule();

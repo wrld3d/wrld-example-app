@@ -210,7 +210,16 @@ set(resources ${resources}
 		Resources/icon1_hotel@3x.png
 		Resources/icon1_meeting_room.png
 		Resources/icon1_meeting_room@2x.png
-		Resources/icon1_meeting_room@3x.png
+        Resources/icon1_meeting_room@3x.png
+        Resources/icon1_meeting_room_avail.png
+        Resources/icon1_meeting_room_avail@2x.png
+        Resources/icon1_meeting_room_avail@3x.png
+        Resources/icon1_meeting_room_avail_soon.png
+        Resources/icon1_meeting_room_avail_soon@2x.png
+        Resources/icon1_meeting_room_avail_soon@3x.png
+        Resources/icon1_meeting_room_occupied.png
+        Resources/icon1_meeting_room_occupied@2x.png
+        Resources/icon1_meeting_room_occupied@3x.png
 		Resources/icon1_misc.png
 		Resources/icon1_misc@2x.png
 		Resources/icon1_misc@3x.png

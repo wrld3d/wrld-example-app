@@ -602,6 +602,7 @@ namespace ExampleApp
                                                                                                   m_pSearchModule->GetSearchResultRepository(),
                                                                                                   m_pSearchModule->GetSearchQueryPerformer(),
                                                                                                   *m_pCameraTransitionService,
+                                                                                                  world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel(),
                                                                                                   m_messageBus);
         
         m_pSearchResultOnMapModule = Eegeo_NEW(SearchResultOnMap::SdkModel::SearchResultOnMapModule)(m_pSearchModule->GetSearchResultRepository(),
@@ -639,6 +640,7 @@ namespace ExampleApp
                                                                                                      interiorsPresentationModule.GetInteriorTransitionModel(),
                                                                                                      interiorsModelModule.GetInteriorMarkerModelRepository(),
                                                                                                      m_pWorldPinsModule->GetWorldPinsService(),
+                                                                                                     m_pWorldPinsModule->GetWorldPinsScaleController(),
                                                                                                      mapModule.GetEnvironmentFlatteningService(),
                                                                                                      m_pVisualMapModule->GetVisualMapService(),
                                                                                                      interiorsCameraControllerFactory,
@@ -941,6 +943,7 @@ namespace ExampleApp
                                  m_messageBus,
                                  interiorsPresentationModule.GetInteriorInteractionModel(),
                                  interiorsPresentationModule.GetInteriorTransitionModel(),
+                                 interiorsPresentationModule.GetInteriorFloorAnimator(),
                                  m_sdkDomainEventBus,
                                  interiorsAffectedByFlattening);
     }
@@ -1089,10 +1092,8 @@ namespace ExampleApp
                 m_screenProperties);
 
         eegeoWorld.Update(updateParameters);
-
+        
         m_pSearchModule->GetSearchRefreshService().TryRefreshSearch(dt, ecefInterestPoint);
-
-        m_pPinsModule->GetController().Update(dt, renderCamera);
         
         if(!eegeoWorld.Initialising() || (m_pLoadingScreen == NULL && eegeoWorld.Initialising()))
         {
@@ -1100,7 +1101,8 @@ namespace ExampleApp
             WorldPinsModule().GetWorldPinsScaleController().Update(dt, renderCamera);
             WorldPinsModule().GetWorldPinsFloorHeightController().Update(dt);
             
-            CompassModule().GetCompassUpdateController().Update(dt);
+            m_pPinsModule->GetController().Update(dt, renderCamera);
+            
             CompassModule().GetCompassUpdateController().Update(dt);
             m_pGpsMarkerModule->GetGpsMarkerController().Update(dt, renderCamera);
             

@@ -11,6 +11,7 @@
 #include "InteriorVisibilityUpdater.h"
 #include "InteriorExplorerUserInteractionModel.h"
 #include "IInitialExperienceModel.h"
+#include "InteriorExpandedModeObserver.h"
 
 namespace ExampleApp
 {
@@ -24,6 +25,7 @@ namespace ExampleApp
                                                              Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                                              Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
                                                              WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                                             WorldPins::SdkModel::IWorldPinsScaleController& worldPinsScaleController,
                                                              const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                              VisualMap::SdkModel::IVisualMapService& visualMapService,
                                                              Eegeo::Resources::Interiors::InteriorsCameraControllerFactory& interiorCameraControllerFactory,
@@ -68,10 +70,13 @@ namespace ExampleApp
                                                              metricsService);
                 
                 m_pViewModel = Eegeo_NEW(View::InteriorsExplorerViewModel)(false, identityProvider.GetNextIdentity(), messageBus);
+                
+                m_pExpandedModeObserver = Eegeo_NEW(InteriorExpandedModeObserver)(interiorInteractionModel, worldPinsScaleController);
             }
             
             InteriorsExplorerModule::~InteriorsExplorerModule()
             {
+                Eegeo_DELETE m_pExpandedModeObserver;
                 Eegeo_DELETE m_pViewModel;
                 Eegeo_DELETE m_pModel;
                 Eegeo_DELETE m_pWorldPinController;

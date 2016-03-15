@@ -21,12 +21,16 @@ namespace ExampleApp
                 IWorldPinsRepository& m_worldPinsRepository;
                 Eegeo::Pins::PinRepository& m_pinRepository;
                 const Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
+                const Eegeo::Resources::Interiors::IInteriorFloorAnimator& m_interiorFloorAnimator;
+                const Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
                 const bool m_interiorsAffectedByFlattening;
                 
             public:
                 WorldPinsFloorHeightController(IWorldPinsRepository& worldPinsRepository,
                                                Eegeo::Pins::PinRepository& pinRepository,
                                                const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                               const Eegeo::Resources::Interiors::IInteriorFloorAnimator& interiorFloorAnimator,
+                                               const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                const bool interiorsAffectedByFlattening);
                 
                 ~WorldPinsFloorHeightController();

@@ -60,16 +60,30 @@ namespace ExampleApp
                 {
                     const Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
                     std::string subtitle = model.GetSubtitle();
+                    std::string category = model.GetCategory();
                     if (model.GetCategory() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
                     {
                         // Availability is no longer a subtitle as that affects search results.
                         Search::Swallow::SdkModel::SwallowMeetingRoomResultModel meetingRoomModel = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(model);
                         subtitle = Search::Swallow::SdkModel::SearchParser::GetFormattedAvailabilityString(meetingRoomModel.GetAvailability());
+                        
+                        if(meetingRoomModel.GetAvailability().compare(Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE) == 0)
+                        {
+                            category = Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_AVAILABLE;
+                        }
+                        else if(meetingRoomModel.GetAvailability().compare(Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_SOON) == 0)
+                        {
+                            category = Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_AVAILABLE_SOON;
+                        }
+                        else if(meetingRoomModel.GetAvailability().compare(Search::Swallow::SearchConstants::MEETING_ROOM_OCCUPIED) == 0)
+                        {
+                            category = Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_OCCUPIED;
+                        }
                     }
                     m_menuOptions.AddItem(model.GetIdentifier(),
                                           model.GetTitle(),
                                           subtitle,
-                                          model.GetCategory(),
+                                          category,
                                           Eegeo_NEW(SearchResultItemModel)(model.GetTitle(),
                                                                            model.GetLocation().ToECEF(),
                                                                            model.IsInterior(),

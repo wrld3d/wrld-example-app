@@ -145,6 +145,15 @@ namespace ExampleApp
                                                                                             pPin->GetHeightAboveTerrain(),
                                                                                             m_environmentFlatteningService.GetCurrentScale());
                 
+                // TODO: Pull this calculation out into platform helper.
+                // Pin ecef is mutated by flattening then transform. PinViewRenderer does this internally
+                if(!pPin->GetTransform().IsIdentity())
+                {
+                    Eegeo::dv3 transformOffset = ecefLocation - pPin->GetTransformOrigin();
+                    Eegeo::dv3 transformedOffset = Eegeo::dv3::Mul(transformOffset, pPin->GetTransform());
+                    ecefLocation = pPin->GetTransformOrigin() + transformedOffset;
+                }
+                
                 Eegeo::Geometry::Bounds2D outScreenBounds = Eegeo::Geometry::Bounds2D::Empty();
                 m_pinController.GetScreenBoundsForPin(*pPin, outScreenBounds);
                 screenLocation = outScreenBounds.center();

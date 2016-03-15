@@ -48,6 +48,10 @@ namespace ExampleApp
                 extern const std::string MEETING_ROOM_AVAILABLE_SOON;
                 extern const std::string MEETING_ROOM_OCCUPIED;
                 
+                extern const std::string MEETING_ROOM_CATEGORY_AVAILABLE;
+                extern const std::string MEETING_ROOM_CATEGORY_AVAILABLE_SOON;
+                extern const std::string MEETING_ROOM_CATEGORY_OCCUPIED;
+                
                 extern const int MEETING_ROOM_AVAILABLE_PRIORITY;
                 extern const int MEETING_ROOM_AVAILABLE_SOON_PRIORITY;
                 extern const int MEETING_ROOM_OCCUPIED_PRIORITY;

@@ -16,6 +16,7 @@ namespace ExampleApp
                     Search = 0x02,
                     TourPin = 0x04,
                     UserPin = 0x08,
+                    MeetingRoom = 0x10,
                     
                     All = ~0,
                     None = 0

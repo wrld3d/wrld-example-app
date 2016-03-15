@@ -98,7 +98,7 @@ namespace ExampleApp
                                                          const Eegeo::Camera::RenderCamera& renderCamera)
             {
                 const bool showingInterior = m_interiorTransitionModel.InteriorIsVisible();
-                const bool canShowInteriorPins = m_interiorInteractionModel.IsCollapsed();
+                const bool isCollapsed = m_interiorInteractionModel.IsCollapsed();
                 
                 if((m_visibilityMask & worldPinItemModel.VisibilityMask()) == 0)
                 {
@@ -121,8 +121,8 @@ namespace ExampleApp
                     //hide if building and floor of pin not showing
                     const bool isSameBuilding = m_interiorInteractionModel.HasInteriorModel() ? (m_interiorInteractionModel.GetInteriorModel()->GetId() == worldPinItemModel.GetInteriorData().building) : false;
                     const bool isSameFloor = worldPinItemModel.GetInteriorData().floor == m_interiorInteractionModel.GetSelectedFloorIndex();
-
-                    hidePinFromInteriorData = !canShowInteriorPins || !isSameBuilding || !isSameFloor;
+                    
+                    hidePinFromInteriorData = !isSameBuilding || (!isSameFloor && isCollapsed);
                 }
                 
                 // hide when close to edge of screen
