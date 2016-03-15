@@ -10,7 +10,7 @@
 #include "ISettingsMenuViewModule.h"
 #include "Search.h"
 #include "BidirectionalBus.h"
-#include "SettingsMenuController.h"
+#include "DesktopSettingsMenuController.h"
 #include "Modality.h"
 #include "IMenuViewModule.h"
 
@@ -24,7 +24,7 @@ namespace ExampleApp
             {
             private:
                 SettingsMenuView* m_pView;
-                SettingsMenuController* m_pController;
+                DesktopSettingsMenuController* m_pController;
 
             public:
                 SettingsMenuViewModule(

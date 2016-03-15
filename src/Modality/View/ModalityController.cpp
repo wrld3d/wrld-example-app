@@ -44,8 +44,6 @@ namespace ExampleApp
             void ModalityController::AddIgnoredMenuIdentity(Eegeo::Helpers::TIdentity identity)
             {
                 m_ignoredMenuIdentities.push_back(identity);
-
-                Eegeo_TTY("IdentityIgnored: %d", identity);
             }
 
             void ModalityController::RemoveIgnoredMenuIdentity(Eegeo::Helpers::TIdentity identity)

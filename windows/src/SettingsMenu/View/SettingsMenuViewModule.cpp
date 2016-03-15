@@ -24,7 +24,7 @@ namespace ExampleApp
             {
                 m_pView = Eegeo_NEW(SettingsMenuView)(nativeState, viewName);
 
-                m_pController = Eegeo_NEW(SettingsMenuController)(
+                m_pController = Eegeo_NEW(DesktopSettingsMenuController)(
                                     *m_pView,
                                     menuModel,
                                     menuViewModel,

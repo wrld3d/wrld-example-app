@@ -15,6 +15,8 @@ set(currsources
   ../src/SearchResultPoi/View/SearchResultPoiOpenableControl.h
   ../src/SearchResultPoi/View/SearchResultPoiViewModel.cpp
   ../src/SearchResultPoi/View/SearchResultPoiViewModel.h
+  ../src/SearchResultPoi/View/DesktopSearchResultPoiViewModel.cpp
+  ../src/SearchResultPoi/View/DesktopSearchResultPoiViewModel.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\SearchResultPoi\\View FILES ${currsources})

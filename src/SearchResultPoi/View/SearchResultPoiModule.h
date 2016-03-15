@@ -27,7 +27,7 @@ namespace ExampleApp
             {
             private:
                 SdkModel::ISearchResultPoiMyPinService* m_pSearchResultPoiMyPinService;
-                SearchResultPoiViewModel* m_pSearchResultPoiViewModel;
+                ISearchResultPoiViewModel* m_pSearchResultPoiViewModel;
                 SdkModel::SearchResultPoiPinToggledMessageHandler* m_pSearchResultPoiPinToggledMessageHandler;
                 SdkModel::SearchResultPoiViewOpenedMessageHandler* m_pSearchResultPoiViewOpenedMessageHandler;
                 SdkModel::ISearchResultPoiViewImageFetcher* m_pSearchResultPoiViewImageFetcher;

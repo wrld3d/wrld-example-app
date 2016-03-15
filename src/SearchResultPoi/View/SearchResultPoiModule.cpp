@@ -2,6 +2,7 @@
 
 #include "SearchResultPoiModule.h"
 #include "SearchResultPoiViewModel.h"
+#include "DesktopSearchResultPoiViewModel.h"
 #include "SearchResultPoiMyPinService.h"
 #include "SearchResultPoiViewImageFetcher.h"
 
@@ -19,8 +20,13 @@ namespace ExampleApp
                                                          Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                                          ExampleAppMessaging::TMessageBus& messageBus)
             {
-                m_pSearchResultPoiViewModel = Eegeo_NEW(SearchResultPoiViewModel)(identityProvider.GetNextIdentity(),
+#ifdef EEGEO_WIN
+                m_pSearchResultPoiViewModel = Eegeo_NEW(DesktopSearchResultPoiViewModel)(identityProvider.GetNextIdentity(),
                                                                                   reactionControllerModel);
+#else
+                m_pSearchResultPoiViewModel = Eegeo_NEW(SearchResultPoiViewModel)(identityProvider.GetNextIdentity(),
+                    reactionControllerModel);
+#endif
                 
                 m_pSearchResultPoiMyPinService = Eegeo_NEW(SdkModel::SearchResultPoiMyPinService)(myPinsService,
                                                                                                   searchResultMyPinsService,
