@@ -4,7 +4,7 @@
 
 #include "Types.h"
 #include "ISearchService.h"
-#include "ISearchQueryPerformer.h"
+#include "Search.h"
 #include "ICallback.h"
 #include "BidirectionalBus.h"
 #include "SearchQueryPerformedMessage.h"

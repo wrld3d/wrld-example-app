@@ -135,8 +135,7 @@ namespace ExampleApp
                 
                 if (shouldRefresh)
                 {
-                    Eegeo::Space::LatLongAltitude currentLocation = Eegeo::Space::LatLongAltitude::FromECEF(interestPointEcef);
-
+                    const Eegeo::Space::LatLongAltitude& currentLocation = Eegeo::Space::LatLongAltitude::FromECEF(interestPointEcef);
                     const SearchQuery& previousQuery = m_searchQueryPerformer.GetPreviousSearchQuery();
                     if (previousQuery.IsCategory() && previousQuery.Query() == Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME)
                     {
