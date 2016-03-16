@@ -143,6 +143,8 @@ AppHost::AppHost(
     platformConfig.CityThemesConfig.EmbeddedThemeTexturePath = "Textures/EmbeddedTheme";
     platformConfig.CityThemesConfig.EmbeddedThemeNameContains = "Summer";
     platformConfig.CityThemesConfig.EmbeddedThemeStateName = "DayDefault";
+    
+    platformConfig.MapLayersConfig.Interiors.LabelsVisibleWhenExpanded = true;
 
     m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::iOSInitialExperienceModule)(m_iOSPersistentSettingsModel, m_messageBus);
     

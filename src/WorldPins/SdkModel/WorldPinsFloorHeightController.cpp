@@ -85,7 +85,10 @@ namespace ExampleApp
                                     pPin->SetHeightAboveTerrain(heightAboveTerrain);
                                 }
                                 
-                                Eegeo::Resources::Interiors::AttachPinToFloor(*pPin, pinFloorIndex, m_interiorInteractionModel, m_interiorFloorAnimator, m_environmentFlatteningService, m_interiorsAffectedByFlattening);
+                                if(Eegeo::Resources::Interiors::HasValidModelAndFloor(pinFloorIndex, m_interiorInteractionModel))
+                                {
+                                    Eegeo::Resources::Interiors::AttachPinToFloor(*pPin, pinFloorIndex, m_interiorInteractionModel, m_interiorFloorAnimator, m_environmentFlatteningService, m_interiorsAffectedByFlattening);
+                                }
                                 
                                 float alpha = CalculateAlphaForPin(pinFloorIndex, selectedFloorIndex, m_interiorInteractionModel.GetFloorParam(), m_interiorInteractionModel.GetExpandedParam());
                                 pPin->SetColor(Eegeo::v4(1.0f, 1.0f, 1.0f, alpha));
