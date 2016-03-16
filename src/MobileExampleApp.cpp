@@ -975,7 +975,7 @@ namespace ExampleApp
 
         eegeoWorld.Update(updateParameters);
 
-        m_pSearchModule->GetSearchRefreshService().TryRefreshSearch(dt, ecefInterestPoint);
+        m_pSearchModule->GetSearchRefreshService().TryRefreshSearch(dt, ecefInterestPoint, cameraState.LocationEcef());
 
         m_pPinsModule->GetController().Update(dt, renderCamera);
         

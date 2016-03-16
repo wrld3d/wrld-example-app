@@ -21,7 +21,8 @@ namespace ExampleApp
             class SearchRefreshService : public ISearchRefreshService, private Eegeo::NonCopyable
             {
                 const float m_minimumSecondsBetweenUpdates;
-                const float m_minimumMetresSquaredBetweenUpdates;
+                const float m_minimumInterestLateralDeltaAt1km;
+                const float m_maximumInterestLateralSpeedAt1km;
 
                 ISearchService& m_searchService;
                 ISearchQueryPerformer& m_searchQueryPerformer;
@@ -32,8 +33,9 @@ namespace ExampleApp
                 int m_queriesPending;
                 bool m_searchResultsExist;
                 float m_secondsSincePreviousRefresh;
-                bool m_cameraTransitioning;
                 Eegeo::dv3 m_previousQueryLocationEcef;
+                Eegeo::dv3 m_previousInterestEcefLocation;
+                float m_previousQueryInterestDistance;
                 bool m_enabled;
 
             public:
@@ -41,11 +43,12 @@ namespace ExampleApp
                                      ISearchQueryPerformer& searchQueryPerformer,
                                      CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
                                      float minimumSecondsBetweenUpdates,
-                                     float minimumMetresBetweenUpdates);
+                                     float minimumInterestLateralDeltaAt1km,
+                                     float maximumInterestLateralSpeedAt1km);
 
                 ~SearchRefreshService();
 
-                void TryRefreshSearch(float deltaSeconds, const Eegeo::dv3& ecefLocation);
+                void TryRefreshSearch(float deltaSeconds, const Eegeo::dv3& interestPointEcef, const Eegeo::dv3& viewpointEcef);
                 void SetEnabled(bool enabled);
                 const bool IsEnabled() const
                 {
@@ -59,6 +62,8 @@ namespace ExampleApp
                         const std::vector<SearchResultModel>& results);
 
                 void HandleSearchQueryResultsCleared();
+                
+                bool ShouldRefreshSearch(float deltaSeconds, const Eegeo::dv3& interestPointEcef, const Eegeo::dv3& viewpointEcef) const;
             };
         }
     }
