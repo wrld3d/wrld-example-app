@@ -9,6 +9,7 @@ set(currsources
   ../src/Menu/View/IMenuSectionViewModel.h
   ../src/Menu/View/IMenuView.h
   ../src/Menu/View/IMenuViewModel.h
+  ../src/Menu/View/IMenuReactionModel.h
   ../src/Menu/View/MenuController.cpp
   ../src/Menu/View/MenuController.h
   ../src/Menu/View/MenuItemModel.cpp

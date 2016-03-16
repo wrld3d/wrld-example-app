@@ -195,7 +195,8 @@ namespace ExampleApp
         const std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*>& platformImplementedSearchServiceModules,
         ExampleApp::Metrics::IMetricsService& metricsService,
         const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
-        Eegeo::IEegeoErrorHandler& errorHandler)
+        Eegeo::IEegeoErrorHandler& errorHandler,
+        Menu::View::IMenuReactionModel& menuReaction)
         : m_pGlobeCameraController(NULL)
         , m_pCameraTouchController(NULL)
         , m_pCurrentTouchController(NULL)
@@ -256,6 +257,7 @@ namespace ExampleApp
         , m_pConnectivityChangedObserver(NULL)
         , m_toursPinDiameter(48.f)
         , m_enableTours(false)
+        , m_menuReaction(menuReaction)
     {
         m_metricsService.BeginSession(ExampleApp::FlurryApiKey, EEGEO_PLATFORM_VERSION_NUMBER);
 
@@ -474,14 +476,16 @@ namespace ExampleApp
                               CameraTransitionController(),
                               m_pSettingsMenuModule->GetSettingsMenuViewModel(),
                               m_messageBus,
-                              m_metricsService);
+                              m_metricsService,
+                              m_menuReaction);
 
         m_pCategorySearchModule = Eegeo_NEW(ExampleApp::CategorySearch::SdkModel::CategorySearchModule(
                                                 m_pSearchServiceModule->GetCategorySearchModels(),
                                                 SearchModule().GetSearchQueryPerformer(),
                                                 m_pSettingsMenuModule->GetSettingsMenuViewModel(),
                                                 m_messageBus,
-                                                m_metricsService));
+                                                m_metricsService,
+                                                m_menuReaction));
 
         m_pMapModeModule = Eegeo_NEW(MapMode::SdkModel::MapModeModule)(m_pVisualMapModule->GetVisualMapService());
 
@@ -501,7 +505,8 @@ namespace ExampleApp
                                                                                 *m_pCameraTransitionService,
                                                                                 m_pCategorySearchModule->GetCategorySearchRepository(),
                                                                                 m_pSearchModule->GetMyPinsSearchResultRefreshService(),
-                                                                                m_metricsService);
+                                                                                m_metricsService,
+                                                                                m_menuReaction);
         
         m_pSearchResultPoiModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiModule)(m_identityProvider,
                                                                                                        m_pReactionControllerModule->GetReactionControllerModel(),
@@ -530,7 +535,8 @@ namespace ExampleApp
                                                                                                      m_pCategorySearchModule->GetSearchResultIconCategoryMapper(),
                                                                                                      m_pSearchModule->GetSearchResultMyPinsService(),
                                                                                                      m_messageBus,
-                                                                                                     m_metricsService);
+                                                                                                     m_metricsService,
+                                                                                                     m_menuReaction);
 
         m_pMyPinCreationModule = Eegeo_NEW(ExampleApp::MyPinCreation::SdkModel::MyPinCreationModule)(m_pMyPinsModule->GetMyPinsService(),
                                  m_identityProvider,
@@ -559,7 +565,8 @@ namespace ExampleApp
                                                                                                   m_pReactionControllerModule->GetReactionControllerModel(),
                                                                                                   m_pMyPinsModule->GetMyPinsService(),
                                                                                                   m_pSearchResultPoiModule->GetSearchResultPoiViewModel(),
-                                                                                                  m_messageBus);
+                                                                                                  m_messageBus,
+                                                                                                  m_menuReaction);
 
         Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
         Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
@@ -830,7 +837,8 @@ namespace ExampleApp
                                  interiorsPresentationModule.GetInteriorInteractionModel(),
                                  interiorsPresentationModule.GetInteriorTransitionModel(),
                                  m_sdkDomainEventBus,
-                                 interiorsAffectedByFlattening);
+                                 interiorsAffectedByFlattening,
+                                 m_menuReaction);
     }
     
     void MobileExampleApp::InitialiseToursModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world, const bool interiorsAffectedByFlattening)

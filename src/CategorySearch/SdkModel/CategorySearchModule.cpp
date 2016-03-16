@@ -21,7 +21,8 @@ namespace ExampleApp
                                                        Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                                        Menu::View::IMenuViewModel& menuViewModel,
                                                        ExampleAppMessaging::TMessageBus& messageBus,
-                                                       Metrics::IMetricsService& metricsService)
+                                                       Metrics::IMetricsService& metricsService,
+                                                       const Menu::View::IMenuReactionModel& menuReaction)
             {
                 m_pMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                 m_pMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pMenuModel);
@@ -38,7 +39,7 @@ namespace ExampleApp
                                                      categorySearchModel.Name(),
                                                      "",
                                                      categorySearchModel.Icon(),
-                                                     Eegeo_NEW(View::CategorySearchMenuOption)(categorySearchModel, menuViewModel, messageBus));
+                                                     Eegeo_NEW(View::CategorySearchMenuOption)(categorySearchModel, menuViewModel, messageBus, menuReaction));
                     }
                 }
 

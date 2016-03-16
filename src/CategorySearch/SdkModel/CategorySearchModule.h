@@ -10,6 +10,7 @@
 #include "BidirectionalBus.h"
 #include "CategorySearchModel.h"
 #include "IMetricsService.h"
+#include "IMenuReactionModel.h"
 
 namespace ExampleApp
 {
@@ -24,7 +25,8 @@ namespace ExampleApp
                                      Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                      Menu::View::IMenuViewModel& menuViewModel,
                                      ExampleAppMessaging::TMessageBus& messageBus,
-                                     Metrics::IMetricsService& metricsService);
+                                     Metrics::IMetricsService& metricsService,
+                                     const Menu::View::IMenuReactionModel& menuReaction);
 
                 ~CategorySearchModule();
 

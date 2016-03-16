@@ -6,6 +6,7 @@
 #include "IMyPinDetailsDisplayService.h"
 #include "IMyPinDetailsViewModel.h"
 #include "SearchResultPoi.h"
+#include "IMenuReactionModel.h"
 
 namespace ExampleApp
 {
@@ -17,10 +18,12 @@ namespace ExampleApp
             {
                 IMyPinDetailsViewModel& m_myPinDetailsViewModel;
                 SearchResultPoi::View::ISearchResultPoiViewModel& m_searchResultPoiViewModel;
+                const Menu::View::IMenuReactionModel& m_menuReaction;
                 
             public:
                 MyPinDetailsDisplayService(IMyPinDetailsViewModel& myPinDetailsViewModel,
-                                           SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel);
+                                           SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
+                                           const Menu::View::IMenuReactionModel& menuReactionModel);
                 
                 ~MyPinDetailsDisplayService();
                 

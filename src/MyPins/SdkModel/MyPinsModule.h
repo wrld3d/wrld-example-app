@@ -15,6 +15,7 @@
 #include "CategorySearch.h"
 #include "Search.h"
 #include "IMetricsService.h"
+#include "IMenuReactionModel.h"
 
 namespace ExampleApp
 {
@@ -34,7 +35,8 @@ namespace ExampleApp
                              CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                              CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                              Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
-                             Metrics::IMetricsService& metricsService);
+                             Metrics::IMetricsService& metricsService,
+                             const Menu::View::IMenuReactionModel& menuReaction);
 
                 ~MyPinsModule();
 

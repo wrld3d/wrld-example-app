@@ -102,6 +102,11 @@ namespace ExampleAppWPF
 
         protected void ShowAll()
         {
+            if(m_isOpen)
+            {
+                return;
+            }
+
             Visibility = Visibility.Visible;
             //m_currentWindow.DisableInput();
 

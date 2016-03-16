@@ -12,9 +12,11 @@ namespace ExampleApp
         namespace View
         {
             MyPinDetailsDisplayService::MyPinDetailsDisplayService(IMyPinDetailsViewModel& myPinDetailsViewModel,
-                                                                   SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel)
+                                                                   SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
+                                                                   const Menu::View::IMenuReactionModel& menuReactionModel)
             : m_myPinDetailsViewModel(myPinDetailsViewModel)
             , m_searchResultPoiViewModel(searchResultPoiViewModel)
+            , m_menuReaction(menuReactionModel)
             {
                 
             }
@@ -39,7 +41,14 @@ namespace ExampleApp
             
             void MyPinDetailsDisplayService::DisplaySearchResultMyPinDetails(const Search::SdkModel::SearchResultModel& searchResultModel)
             {
-                if (!m_searchResultPoiViewModel.IsOpen())
+                if (m_menuReaction.GetShouldOpenMenu())
+                {
+                    if (!m_searchResultPoiViewModel.IsOpen())
+                    {
+                        m_searchResultPoiViewModel.Open(searchResultModel, true);
+                    }
+                }
+                else
                 {
                     m_searchResultPoiViewModel.Open(searchResultModel, true);
                 }

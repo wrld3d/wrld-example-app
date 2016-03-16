@@ -15,11 +15,13 @@ namespace ExampleApp
         {
             MyPinAddedToMenuObserver::MyPinAddedToMenuObserver(Menu::View::IMenuViewModel& menuViewModel,
                                                                Menu::View::IMenuOptionsModel& menuOptionsModel,
-                                                               ExampleAppMessaging::TMessageBus& messageBus)
+                                                               ExampleAppMessaging::TMessageBus& messageBus,
+                                                               const Menu::View::IMenuReactionModel& menuReaction)
                 : m_menuViewModel(menuViewModel)
                 , m_menuOptionsModel(menuOptionsModel)
                 , m_messageBus(messageBus)
                 , m_handlerBinding(this, &MyPinAddedToMenuObserver::OnMyPinAddedToMenuMessage)
+                , m_menuReaction(menuReaction)
             {
                 m_messageBus.SubscribeUi(m_handlerBinding);
             }
@@ -42,7 +44,8 @@ namespace ExampleApp
                                                                       message.GetMyPinInteriorId(),
                                                                       message.GetMyPinFloorIndex(),
                                                                       m_menuViewModel,
-                                                                      m_messageBus));
+                                                                      m_messageBus,
+                                                                      m_menuReaction));
             }
         }
     }

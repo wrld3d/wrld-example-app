@@ -24,7 +24,8 @@ namespace ExampleApp
                                              const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                              const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                              ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
-                                             const bool interiorsAffectedByFlattening)
+                                             const bool interiorsAffectedByFlattening,
+                                             const Menu::View::IMenuReactionModel& menuReaction)
             {
                 m_pWorldPinsFactory = Eegeo_NEW(WorldPinsFactory);
 
@@ -57,7 +58,8 @@ namespace ExampleApp
 
 
                 m_pWorldPinInFocusObserver = Eegeo_NEW(View::WorldPinInFocusObserver)(*m_pWorldPinsInFocusViewModel,
-                                             messageBus);
+                                             messageBus,
+                                             menuReaction);
 
                 m_pWorldPinsModalityObserver = Eegeo_NEW(WorldPinsModalityObserver)(*m_pWorldPinsScaleController,
                                                messageBus);

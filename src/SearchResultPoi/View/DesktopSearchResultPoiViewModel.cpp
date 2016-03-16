@@ -53,13 +53,10 @@ namespace ExampleApp
             void DesktopSearchResultPoiViewModel::Open(const Search::SdkModel::SearchResultModel& searchResultModel,
                                                 bool isPinned)
             {
-                Eegeo_ASSERT(!IsOpen(), "Cannot open DesktopSearchResultPoiViewModel when already open.\n");
-                if(m_openable.Open(false))
-                {
-                    m_searchResultModel = searchResultModel;
-                    m_isPinned = isPinned;
-                    m_openedCallbacks.ExecuteCallbacks();
-                }
+                m_openable.Open(false);
+                m_searchResultModel = searchResultModel;
+                m_isPinned = isPinned;
+                m_openedCallbacks.ExecuteCallbacks();
             }
 
             void DesktopSearchResultPoiViewModel::Close()

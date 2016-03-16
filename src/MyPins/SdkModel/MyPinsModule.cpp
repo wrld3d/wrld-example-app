@@ -35,7 +35,8 @@ namespace ExampleApp
                                        CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                                        CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                                        Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
-                                       Metrics::IMetricsService& metricsService)
+                                       Metrics::IMetricsService& metricsService,
+                                       const Menu::View::IMenuReactionModel& menuReaction)
                 : m_pMyPinsRepository(NULL)
                 , m_pMyPinsFileIO(NULL)
                 , m_pMyPinsService(NULL)
@@ -71,7 +72,8 @@ namespace ExampleApp
                 
                 m_pMyPinAddedToMenuObserver = Eegeo_NEW(View::MyPinAddedToMenuObserver)(menuViewModel,
                                                                                         *m_pMenuOptionsModel,
-                                                                                        messageBus);
+                                                                                        messageBus,
+                                                                                        menuReaction);
                 
                 m_pMyPinRemovedFromMenuObserver = Eegeo_NEW(View::MyPinRemovedFromMenuObserver)(*m_pMenuOptionsModel,
                                                   messageBus);

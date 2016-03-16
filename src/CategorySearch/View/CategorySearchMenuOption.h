@@ -7,6 +7,7 @@
 #include "Search.h"
 #include "Menu.h"
 #include "BidirectionalBus.h"
+#include "IMenuReactionModel.h"
 
 namespace ExampleApp
 {
@@ -20,10 +21,13 @@ namespace ExampleApp
                 Menu::View::IMenuViewModel& m_menuViewModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 
+                const Menu::View::IMenuReactionModel& m_menuReaction;
+
             public:
                 CategorySearchMenuOption(CategorySearchModel model,
                                          Menu::View::IMenuViewModel& menuViewModel,
-                                         ExampleAppMessaging::TMessageBus& messageBus);
+                                         ExampleAppMessaging::TMessageBus& messageBus,
+                                         const Menu::View::IMenuReactionModel& menuReaction);
 
                 ~CategorySearchMenuOption();
 
