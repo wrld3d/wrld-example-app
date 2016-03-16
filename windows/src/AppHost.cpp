@@ -202,6 +202,8 @@ AppHost::AppHost(
 	platformConfig.CityThemesConfig.EmbeddedThemeNameContains = "Summer";
 	platformConfig.CityThemesConfig.EmbeddedThemeStateName = "DayDefault";
 
+    platformConfig.MapLayersConfig.Interiors.LabelsVisibleWhenExpanded = true;
+
     const Eegeo::Windows::Input::WindowsInputProcessorConfig& windowsInputProcessorConfig = Eegeo::Windows::Input::WindowsInputProcessor::DefaultConfig();
     m_pInputProcessor = Eegeo_NEW(Eegeo::Windows::Input::WindowsInputProcessor)(&m_inputHandler, m_nativeState.window, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), windowsInputProcessorConfig);
 

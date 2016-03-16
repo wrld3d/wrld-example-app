@@ -698,6 +698,17 @@
       <Link>Assets\floor_selection_button_mouse_over.png</Link>
     </Resource>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\icon1_meeting_room_avail.png">
+      <Link>Assets\icon1_meeting_room_avail.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_meeting_room_avail_soon.png">
+      <Link>Assets\icon1_meeting_room_avail_soon.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_meeting_room_occupied.png">
+      <Link>Assets\icon1_meeting_room_occupied.png</Link>
+    </Resource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)..\..\Resources" "$(TargetDir)Resources" /e /y /i /r /d
