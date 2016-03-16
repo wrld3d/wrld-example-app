@@ -8,8 +8,8 @@ Before you begin, ensure you have completed the initial steps as described in th
 
 ### Requirements
 
-- Xcode (7.2 tested)
-- CMake (3.1.1 or higher)
+- [Xcode](https://developer.apple.com/xcode/) (7.2 tested)
+- [CMake](https://cmake.org/) (3.1.1  or higher)
 
 ### Setup
 
