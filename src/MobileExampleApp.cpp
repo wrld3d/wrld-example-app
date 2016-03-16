@@ -461,7 +461,9 @@ namespace ExampleApp
         
         InitialisePinsModules(mapModule, world, interiorsAffectedByFlattening);
         
-        m_pReportPinsVisibilityMaskingModule = Eegeo_NEW(ReportPinsVisibilityMasking::SdkModel::ReportPinsVisibilityMaskingModule)(m_pWorldPinsModule->GetWorldPinsScaleController(), m_messageBus);
+        m_pReportPinsVisibilityMaskingModule = Eegeo_NEW(ReportPinsVisibilityMasking::SdkModel::ReportPinsVisibilityMaskingModule)(m_pWorldPinsModule->GetWorldPinsScaleController(),
+                                                                                                                                   mapModule.GetInteriorsPresentationModule().GetInteriorInteractionModel(),
+                                                                                                                                   m_messageBus);
         
         Eegeo_ASSERT(m_pSwallowPoiDbModule == NULL);
         Eegeo_ASSERT(m_pSQLiteModule != NULL);
