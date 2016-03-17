@@ -20,7 +20,8 @@ Before you begin, ensure you have completed the initial steps as described in th
 
 First, download the latest eeGeo Android SDK by running the following command in the root of the repository:
 
--   `./update.platform.sh -p android`
+*   `./update.platform.sh -p android`
+	*	We recommend you run this step frequently to keep your SDK version up to date.
 
 The following steps will guide you through installing and setting up the Android SDK, and Eclipse. If you already have these installed and setup, you can skip to [here](#setting-up-the-project).
 
