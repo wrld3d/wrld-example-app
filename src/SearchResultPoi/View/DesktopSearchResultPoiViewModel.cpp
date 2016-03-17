@@ -53,7 +53,7 @@ namespace ExampleApp
             void DesktopSearchResultPoiViewModel::Open(const Search::SdkModel::SearchResultModel& searchResultModel,
                                                 bool isPinned)
             {
-                if (m_searchResultModel.GetIdentifier() == searchResultModel.GetIdentifier())
+                if (m_openable.IsFullyOpen() && m_searchResultModel.GetIdentifier() == searchResultModel.GetIdentifier())
                 {
                     return;
                 }

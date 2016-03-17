@@ -61,6 +61,11 @@ namespace ExampleApp
             {
                 m_modalityController.RemoveIgnoredMenuIdentity(m_menuIdentity);
                 m_reactionModel.RemoveIgnoredMenuIdentity(m_menuIdentity);
+
+                if (SearchMenuController::IsFullyOpen())
+                {
+                    SearchMenuController::UpdateOpenState();
+                }
             }
         }
     }

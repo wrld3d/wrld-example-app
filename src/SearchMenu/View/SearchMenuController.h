@@ -63,6 +63,8 @@ namespace ExampleApp
             protected:
                 
                 virtual void RefreshPresentation();
+                bool IsFullyOpen() const;
+                void UpdateOpenState();
                 
             public:
                 SearchMenuController(Menu::View::IMenuModel& model,
