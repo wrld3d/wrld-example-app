@@ -63,6 +63,16 @@ By default, the above steps will build the project with C\+\+11. If you wish to 
 5.  For example: `ndk-build COMPILE_CPP_03=1`
 6.  Run the project as normal.
 
+#### Debug & Release Builds
+
+You can specify whether to build in debug mode or release mode by using the `NDK_DEBUG` option.
+
+For example, to build in debug, follow the steps described [here](#c03-builds) to edit the ndk-build command, and replace it with the following:
+
+-	`ndk-build NDK_DEBUG=1`
+
+This will disable optimizations and generate debug symbols. See the [NDK documentation](http://developer.android.com/ndk/guides/ndk-build.html#dvr) for more details on the `NDK_DEBUG` option and how it interacts with the `android:debuggable` option in the Android manifest.
+
 ### Speeding up build times
 
 1.  Compiling on multiple threads:
