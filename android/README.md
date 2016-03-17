@@ -4,9 +4,11 @@
 
 # eeGeo Example App
 
-Before you begin, ensure you have completed the initial steps as described in the [root of the repository](https://github.com/eegeo/mobile-example-app).
+Android builds of the [eeGeo Example App](https://github.com/eegeo/mobile-example-app) use the Android NDK and JNI to run native code on Android devices.
 
 ## Getting Started on Android
+
+Before you begin, ensure you have completed the initial steps as described in the [root of the repository](https://github.com/eegeo/mobile-example-app).
 
 ### Requirements
 

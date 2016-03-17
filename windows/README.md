@@ -4,11 +4,11 @@
 
 # eeGeo Example App
 
-Before you begin, ensure you have completed the initial steps as described in the [root of the repository](https://github.com/eegeo/mobile-example-app).
+Windows builds of the [eeGeo Example App](https://github.com/eegeo/mobile-example-app) use WPF and C# for the native UI layer.
 
 ## Getting Started on Windows
 
-The Windows builds of the [eeGeo Example App](https://github.com/eegeo/mobile-example-app) use WPF and C# for the native UI layer.
+Before you begin, ensure you have completed the initial steps as described in the [root of the repository](https://github.com/eegeo/mobile-example-app).
 
 ### Requirements
 
