@@ -1091,6 +1091,7 @@ namespace ExampleApp
 
         eegeoWorld.Update(updateParameters);
         
+        m_pSwallowSearchServiceModule->Update();
         m_pSearchModule->GetSearchRefreshService().TryRefreshSearch(dt, ecefInterestPoint);
         
         if(!eegeoWorld.Initialising() || (m_pLoadingScreen == NULL && eegeoWorld.Initialising()))

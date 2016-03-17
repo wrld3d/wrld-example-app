@@ -30,6 +30,7 @@ namespace ExampleApp
                     SwallowOfficeResultMenuOptionSelectedMessageHandler* m_pSwallowOfficeResultMenuOptionSelectedMessageHandler;
                     Search::SdkModel::ISearchService& m_searchService;
                     Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
+                    bool m_clearSearchNextUpdate;
                     
                     Eegeo::Helpers::TCallback2<SwallowSearchServiceModule, const Search::SdkModel::SearchQuery&, const std::vector<Search::SdkModel::SearchResultModel>& > m_transitionCallback;
                     
@@ -43,6 +44,8 @@ namespace ExampleApp
                                                WorldPins::SdkModel::IWorldPinsService& worldPinsService);
                     
                     ~SwallowSearchServiceModule();
+
+                    void Update();
                    
                     std::vector<CategorySearch::View::CategorySearchModel> GetCategorySearchModels() const;
                     

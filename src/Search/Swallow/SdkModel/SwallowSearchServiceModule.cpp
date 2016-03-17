@@ -27,6 +27,7 @@ namespace ExampleApp
                 , m_pSwallowOfficeResultMenuOptionSelectedMessageHandler(NULL)
                 , m_pSwallowSearchTransitionPinController(NULL)
                 , m_transitionCallback(this, &SwallowSearchServiceModule::OnTransitionResult)
+                , m_clearSearchNextUpdate(false)
                 {
                     m_searchService.InsertOnReceivedQueryResultsCallback(m_transitionCallback);
                     
@@ -60,7 +61,19 @@ namespace ExampleApp
                     if (query.IsCategory() && query.Query() == SearchConstants::TRANSITION_CATEGORY_NAME)
                     {
                         (*m_pSwallowSearchTransitionPinController)(results);
+
+                        // Due to multiple callbacks of "ReceivedQueryResultsCallback" happening in undetermined order, clear results
+                        // after they've all been resolved by handlers. Needs better model/schedule support. 
+                        m_clearSearchNextUpdate = true;
+                    }
+                }
+
+                void SwallowSearchServiceModule::Update()
+                {
+                    if (m_clearSearchNextUpdate)
+                    {
                         m_searchQueryPerformer.RemoveSearchQueryResults();
+                        m_clearSearchNextUpdate = false;
                     }
                 }
             }
