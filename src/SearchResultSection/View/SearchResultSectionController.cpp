@@ -102,6 +102,8 @@ namespace ExampleApp
                     const Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
                     m_menuOptions.RemoveItem(model.GetIdentifier());
                 }
+
+                m_lastAddedResults.clear();
             }
 
             SearchResultSectionController::SearchResultSectionController(Menu::View::IMenuViewModel& searchMenuViewModel,
