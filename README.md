@@ -28,9 +28,9 @@ This section will walk you through the process of getting up and running quickly
 
 Platform                                                                    | Languages
 ----------------------------------------------------------------------------|----------
-[Android](https://github.com/eegeo/mobile-example-app/tree/master/android)  | C++, Java
-[iOS](https://github.com/eegeo/mobile-example-app/tree/master/ios)          | C++, Objective-C
-[Windows](https://github.com/eegeo/mobile-example-app/tree/master/windows)  | C++
+[Android](/android)  | C++, Java
+[iOS](/ios)          | C++, Objective-C
+[Windows](/windows)  | C++
 
 ### eeGeo API Key 
 
