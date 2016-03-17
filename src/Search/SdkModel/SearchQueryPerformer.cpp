@@ -58,7 +58,7 @@ namespace ExampleApp
             
             void SearchQueryPerformer::PerformSearchQuery(const std::string& query, bool isCategory, bool isInterior, float radius)
             {
-                Eegeo::Space::LatLongAltitude location = Eegeo::Space::LatLongAltitude::FromECEF(m_cameraController.GetEcefInterestPoint());
+                const Eegeo::Space::LatLongAltitude& location = Eegeo::Space::LatLongAltitude::FromECEF(m_cameraController.GetEcefInterestPoint());
                 PerformSearchQuery(query, isCategory, isInterior, location, radius);
             }
 

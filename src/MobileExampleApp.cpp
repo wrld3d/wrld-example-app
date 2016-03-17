@@ -1093,7 +1093,7 @@ namespace ExampleApp
 
         eegeoWorld.Update(updateParameters);
         
-        m_pSearchModule->GetSearchRefreshService().TryRefreshSearch(dt, ecefInterestPoint);
+        m_pSearchModule->GetSearchRefreshService().TryRefreshSearch(dt, ecefInterestPoint, cameraState.LocationEcef());
         
         if(!eegeoWorld.Initialising() || (m_pLoadingScreen == NULL && eegeoWorld.Initialising()))
         {
