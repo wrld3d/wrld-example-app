@@ -119,9 +119,12 @@ namespace ExampleApp
                 if (!m_searchResultsCleared && m_searchResultsExist)
                 {
                     const SearchQuery& previousQuery = m_searchQueryPerformer.GetPreviousSearchQuery();
-                    if (m_interiorInteractionModel.HasInteriorModel() && previousQuery.IsCategory())
+                    
+                    if (previousQuery.IsCategory())
                     {
-                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), previousQuery.IsInterior());
+                        const bool isInterior = m_interiorInteractionModel.HasInteriorModel();
+
+                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), isInterior);
                         m_secondsSincePreviousRefresh = 0.f;
                     }
                 }

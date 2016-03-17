@@ -7,6 +7,7 @@
 // App includes
 #include "ReportPinsVisibilityMasking.h"
 #include "WorldPins.h"
+#include "Interiors.h"
 
 namespace ExampleApp
 {
@@ -21,6 +22,7 @@ namespace ExampleApp
                 ReportPinsVisibilityMaskingController* m_pReportPinsVisibilityMaskingController;
             public:
                 ReportPinsVisibilityMaskingModule(WorldPins::SdkModel::IWorldPinsScaleController& worldPinsScaleController,
+                                                  Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                   ExampleAppMessaging::TMessageBus& messageBus);
                 
                 ~ReportPinsVisibilityMaskingModule();

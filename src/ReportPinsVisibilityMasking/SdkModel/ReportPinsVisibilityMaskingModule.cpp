@@ -14,10 +14,14 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            ReportPinsVisibilityMaskingModule::ReportPinsVisibilityMaskingModule(WorldPins::SdkModel::IWorldPinsScaleController& worldPinsScaleController, ExampleAppMessaging::TMessageBus& messageBus)
+            ReportPinsVisibilityMaskingModule::ReportPinsVisibilityMaskingModule(WorldPins::SdkModel::IWorldPinsScaleController& worldPinsScaleController,
+                                                                                 Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                                                 ExampleAppMessaging::TMessageBus& messageBus)
             {
                 m_pMenuSectionExpandedChangedObserver = Eegeo_NEW(MenuSectionExpandedChangedObserver)(messageBus);
-                m_pReportPinsVisibilityMaskingController = Eegeo_NEW(ReportPinsVisibilityMaskingController)(worldPinsScaleController, *m_pMenuSectionExpandedChangedObserver);
+                m_pReportPinsVisibilityMaskingController = Eegeo_NEW(ReportPinsVisibilityMaskingController)(worldPinsScaleController,
+                                                                                                            interiorInteractionModel,
+                                                                                                            *m_pMenuSectionExpandedChangedObserver);
             }
             
             ReportPinsVisibilityMaskingModule::~ReportPinsVisibilityMaskingModule()

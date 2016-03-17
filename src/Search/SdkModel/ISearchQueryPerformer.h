@@ -26,9 +26,9 @@ namespace ExampleApp
 
                 virtual void PerformSearchQuery(const std::string& query, bool isCategory, bool isInterior, float radius) = 0;
 
-                virtual void PerformSearchQuery(const std::string& query, bool isCategory, bool isInterior, Eegeo::Space::LatLongAltitude& location) = 0;
+                virtual void PerformSearchQuery(const std::string& query, bool isCategory, bool isInterior, const Eegeo::Space::LatLongAltitude& location) = 0;
                 
-                virtual void PerformSearchQuery(const std::string& query, bool isCategory, bool isInterior, Eegeo::Space::LatLongAltitude& location, float radius) = 0;
+                virtual void PerformSearchQuery(const std::string& query, bool isCategory, bool isInterior, const Eegeo::Space::LatLongAltitude& location, float radius) = 0;
 
                 virtual void RemoveSearchQueryResults() = 0;
 
