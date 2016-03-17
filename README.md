@@ -2,6 +2,13 @@
     <img src="http://cdn2.eegeo.com/wp-content/uploads/2016/03/eegeo_logo_quite_big.png" alt="eeGeo Logo" title="eegeo" align="right" height="80px" />
 </a>
 
+# eeGeo Example App
+The [eeGeo SDK](http://www.eegeo.com/developers/) is a cross-platform, OpenGL-based library for [beautiful and customisable 3D maps](http://www.eegeo.com).
+
+This cross-platform example app demonstrates how a developer can use the eeGeo 3D Maps SDK to display beautiful 3D maps on iOS, Android, and Windows PCs. This app can be used as the basis for your own app, or can be used as a reference when integrating eeGeo's maps into an existing app.
+
+The eeGeo SDK is distributed as a C++ static library with headers. Most of this example application is written in C++ and shared between platforms to reduce code duplication.
+
 * [Getting Started](#getting-started)
     * [eeGeo API Key](#eegeo-api-key)
     * [Optional Steps](#optional-steps)
@@ -9,13 +16,6 @@
 * [SDK Documentation](#sdk-documentation)
 * [Support](#support)
 * [License](#support)
-
-# eeGeo Example App
-The [eeGeo SDK](http://www.eegeo.com/developers/) is a cross-platform, OpenGL-based library for [beautiful and customisable 3D maps](http://www.eegeo.com).
-
-This cross-platform example app demonstrates how a developer can use the eeGeo 3D Maps SDK to display beautiful 3D maps on iOS, Android, and Windows PCs. This app can be used as the basis for your own app, or can be used as a reference when integrating eeGeo's maps into an existing app.
-
-The eeGeo SDK is distributed as a C++ static library with headers. Most of this example application is written in C++ and shared between platforms to reduce code duplication.
 
 ## Getting Started
 
