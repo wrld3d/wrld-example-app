@@ -27,6 +27,13 @@ namespace ExampleAppWPF
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private static bool m_isAnyPOIOpen = false;
+
+        public static bool IsAnyPOIOpen()
+        {
+            return m_isAnyPOIOpen;
+        }
+
         public SearchResultPoiViewBase(IntPtr nativeCallerPointer)
         {
             m_nativeCallerPointer = nativeCallerPointer;
@@ -86,8 +93,6 @@ namespace ExampleAppWPF
 
         protected void HideAll()
         {
-            //m_currentWindow.EnableInput();
-
             var mainGrid = m_currentWindow.MainGrid;
             var screenWidth = mainGrid.ActualWidth;
 
@@ -98,6 +103,7 @@ namespace ExampleAppWPF
             m_mainContainer.RenderTransform.BeginAnimation(TranslateTransform.XProperty, db);
 
             m_isOpen = false;
+            m_isAnyPOIOpen = false;
         }
 
         protected void ShowAll()
@@ -108,7 +114,6 @@ namespace ExampleAppWPF
             }
 
             Visibility = Visibility.Visible;
-            //m_currentWindow.DisableInput();
 
             var mainGrid = m_currentWindow.MainGrid;
             var screenWidth = mainGrid.ActualWidth;
@@ -120,6 +125,7 @@ namespace ExampleAppWPF
             m_mainContainer.RenderTransform.BeginAnimation(TranslateTransform.XProperty, db);
 
             m_isOpen = true;
+            m_isAnyPOIOpen = true;
         }
 
         private void HandleCloseButtonClicked(object sender, MouseButtonEventArgs e)

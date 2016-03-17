@@ -351,7 +351,11 @@ namespace ExampleAppWPF
                 m_searchArrowOpen.Begin(m_searchArrow);
 
                 base.AnimateToOpenOnScreen();
-                m_mainWindow.EnableInput();
+
+                if (SearchResultPoiViewBase.IsAnyPOIOpen())
+                {
+                    m_mainWindow.EnableInput(); 
+                }
             }
         }
 
