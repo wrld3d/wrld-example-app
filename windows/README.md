@@ -1,4 +1,6 @@
-![eeGeo](http://cdn2.eegeo.com/wp-content/uploads/2015/06/wide_eegeo_logo_hero.jpg)
+<a href="http://www.eegeo.com/">
+    <img src="http://cdn2.eegeo.com/wp-content/uploads/2016/03/eegeo_logo_quite_big.png" alt="eeGeo Logo" title="eegeo" align="right" height="80px" />
+</a>
 
 # eeGeo Example App
 
