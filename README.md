@@ -16,7 +16,7 @@ The [eeGeo SDK](http://www.eegeo.com/developers/) is a cross-platform, OpenGL-ba
 
 This cross-platform example app demonstrates how a developer can use the eeGeo 3D Maps SDK to display beautiful 3D maps on iOS, Android, and Windows PCs. This app can be used as the basis for your own app, or can be used as a reference when integrating eeGeo's maps into an existing app.
 
-The eeGeo SDK is distributed as a C++ static library with headers. Most of this example application is written in C++ and shared between platforms to reduce code duplication.
+The eeGeo SDK is distributed as a C++ static library with headers. Most of this example application is written in C++ and shared between platforms to reduce code duplication. A notable exception to this is the UI: the app uses the native UI system on each platform.
 
 ## Getting Started
 
@@ -26,11 +26,11 @@ This section will walk you through the process of getting up and running quickly
 2.  Obtain an [eeGeo API key](https://www.eegeo.com/developers/apikeys) and place it in the [ApiKey.h](https://github.com/eegeo/mobile-example-app/blob/master/src/ApiKey.h#L12) file.
 3.  Choose a platform from the below table to see detailed instructions for building the app.
 
-Platform                                                                    | Languages
-----------------------------------------------------------------------------|----------
+Platform             | Languages
+---------------------|-----------------
 [Android](/android)  | C++, Java
 [iOS](/ios)          | C++, Objective-C
-[Windows](/windows)  | C++
+[Windows](/windows)  | C++, C#
 
 ### eeGeo API Key 
 

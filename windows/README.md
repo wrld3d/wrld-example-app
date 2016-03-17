@@ -8,6 +8,8 @@ Before you begin, ensure you have completed the initial steps as described in th
 
 ## Getting Started on Windows
 
+The Windows builds of the [eeGeo Example App](https://github.com/eegeo/mobile-example-app) use WPF and C# for the native UI layer.
+
 ### Requirements
 
 - [Microsoft Visual Studio 2015](https://www.visualstudio.com/en-us/downloads/download-visual-studio-vs.aspx)
