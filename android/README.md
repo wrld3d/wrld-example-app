@@ -52,7 +52,18 @@ The following steps will guide you through installing and setting up the Android
 8.  To speed up compile times, see [this section below](#speeding-up-build-times) for compiling with multiple threads.
 9.  To run the project, right-click it and select `Run As > Android Application`
 
-#### Speeding up build times
+#### C++03 Builds
+
+By default, the above steps will build the project with C\+\+11. If you wish to build a C\+\+03 only version, follow these additional steps:
+
+1.  Download the latest C\+\+03 version of the eeGeo Android SDK: `./update.platform.sh -p android -c`
+2.  Right-click the project and select `Properties`
+3.  Under C/C\+\+ Build, uncheck "Use default build command".
+4.  Add `COMPILE_CPP_03=1` to the command in the "Build command" field.
+5.  For example: `ndk-build COMPILE_CPP_03=1`
+6.  Run the project as normal.
+
+### Speeding up build times
 
 1.  Compiling on multiple threads:
 
@@ -66,14 +77,3 @@ The following steps will guide you through installing and setting up the Android
     -   By default, the project is compiled for three different architectures: **armeabi**, **armeabi-v7a**, and **arm64-v8a**.
     -   If you do not need all of these, or you wish to quickly test on a single architecture, you can remove some of them from [this line in Application.mk](https://github.com/eegeo/mobile-example-app/blob/master/android/jni/Application.mk#L4).
     -   For example: `APP_ABI := armeabi`
-
-#### C++03 Builds
-
-By default, the above steps will build the project with C\+\+11. If you wish to build a C\+\+03 only version, follow these additional steps:
-
-1.  Download the latest C\+\+03 version of the eeGeo Android SDK: `./update.platform.sh -p android -c`
-2.  Right-click the project and select `Properties`
-3.  Under C/C\+\+ Build, uncheck "Use default build command".
-4.  Add `COMPILE_CPP_03=1` to the command in the "Build command" field.
-5.  For example: `ndk-build COMPILE_CPP_03=1`
-6.  Run the project as normal.

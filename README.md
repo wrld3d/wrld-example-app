@@ -66,7 +66,7 @@ See the [eeGeo API reference](http://cdn1.eegeo.com/docs/mobile-sdk/namespaces.h
 
 ## Support
 
-If you have any questions, bug reports, or feature requests, feel free to submit to the [issue tracker](https://github.com/eegeo/ios-api-example/issues) for this repository. Alternatively, you can contact us at [support@eegeo.com](mailto:support@eegeo.com).
+If you have any questions, bug reports, or feature requests, feel free to submit to the [issue tracker](https://github.com/eegeo/mobile-example-app/issues) for this repository. Alternatively, you can contact us at [support@eegeo.com](mailto:support@eegeo.com).
 
 ## License
 
