@@ -4,9 +4,11 @@
 
 # eeGeo Example App
 
-Before you begin, ensure you have completed the initial steps as described in the [root of the repository](https://github.com/eegeo/mobile-example-app).
+The [eeGeo Example App](https://github.com/eegeo/mobile-example-app) is a cross-platform application predominantly written in C\+\+. For an iOS specific example app, see the eeGeo [iOS API Example](https://github.com/eegeo/ios-api-example) app which makes use of the eeGeo [Objective-C iOS API](https://github.com/eegeo/ios-api).
 
 ## Getting Started on iOS
+
+Before you begin, ensure you have completed the initial steps as described in the [root of the repository](https://github.com/eegeo/mobile-example-app).
 
 ### Requirements
 
@@ -19,7 +21,6 @@ Before you begin, ensure you have completed the initial steps as described in th
 2.  In the `ios` directory, run `mkdir build` to create a build directory.
 3.  In the `ios/build` directory, run `cmake -G Xcode ..` to generate a project file.
 4.  Open the `ExampleApp.xcodeproj` project file in Xcode and run the application.
-5.  If you want to build from the command line, you can run `./build.sh -p ios` from the root of the repository.
 
 ### C++03 Builds
 
@@ -29,4 +30,11 @@ By default, the above steps generate a project using C\+\+11. To build versions 
 2.  In the `ios` directory, run `mkdir build` to create a build directory.
 3.  In the `ios/build` directory, run `cmake -G Xcode -DCOMPILE_CPP_03=1 ..` to generate a project file.
 4.  Open the `ExampleApp.xcodeproj` project file in Xcode and run the application.
-5.  To build from the command line, you can run `./build.sh -p ios -c` from the root of the repository.
+
+### Building from the command line
+
+To build from the command line, you will need to install the Xcode Command Line Tools by running the command: `xcode-select --install`
+
+Then run `./build.sh -p ios` from the root of this repository to build the project.
+
+For C\+\+03 builds, run `./build.sh -p ios -c`.
