@@ -1,4 +1,4 @@
-![eeGeo](http://cdn2.eegeo.com/wp-content/uploads/2015/06/wide_eegeo_logo_hero.jpg)
+![eeGeo Logo](http://cdn2.eegeo.com/wp-content/uploads/2016/03/eegeo_logo_quite_big.png)
 
 # eeGeo Example App
 
