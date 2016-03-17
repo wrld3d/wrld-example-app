@@ -9,6 +9,8 @@ namespace ExampleAppWPF
 {
     public class OptionsView : Control, INotifyPropertyChanged
     {
+        private MainWindow m_currentWindow;
+
         static OptionsView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(OptionsView), new FrameworkPropertyMetadata(typeof(OptionsView)));
@@ -61,8 +63,8 @@ namespace ExampleAppWPF
             m_nativeCallerPointer = nativeCallerPointer;
             Visibility = Visibility.Hidden;
 
-            MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
-            mainWindow.MainGrid.Children.Add(this);
+            m_currentWindow = (MainWindow)Application.Current.MainWindow;
+            m_currentWindow.MainGrid.Children.Add(this);
         }
 
         public override void OnApplyTemplate()
@@ -97,8 +99,7 @@ namespace ExampleAppWPF
         
         public void Destroy()
         {
-            MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
-            mainWindow.MainGrid.Children.Remove(this);
+            m_currentWindow.MainGrid.Children.Remove(this);
         }
 
         public void OpenOptions()
@@ -106,11 +107,14 @@ namespace ExampleAppWPF
             m_closeButton.IsEnabled = true;
             Visibility = Visibility.Visible;
             Focus();
+
+            m_currentWindow.DisableInput();
         }
 
         public void CloseOptions()
         {
             Visibility = Visibility.Hidden;
+            m_currentWindow.EnableInput();
         }
 
         public void ConcludeCacheClearCeremony()
