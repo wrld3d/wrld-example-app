@@ -49,6 +49,8 @@ If you are creating a new app, or integrating eeGeo 3D Maps into an existing app
 
 The [eeGeo Example App](https://github.com/eegeo/mobile-example-app) demonstrates a variety of SDK features and is a good starting point to learn how the SDK works.
 
+![eeGeo Example App features](http://cdn2.eegeo.com/wp-content/uploads/2016/03/eegeo-example-app-features.jpg)
+
 Some of those features include:
 
 *   3D map display
