@@ -21,7 +21,8 @@ Before you begin, ensure you have completed the initial steps as described in th
 	*	We recommend you run this step frequently to keep your SDK version up to date.
 2.  In the `ios` directory, run `mkdir build` to create a build directory.
 3.  In the `ios/build` directory, run `cmake -G Xcode ..` to generate a project file.
-4.  Open the `ExampleApp.xcodeproj` project file in Xcode and run the application.
+4.  Open the `ExampleApp.xcodeproj` project file in Xcode.
+5.  Build and run the ExampleApp target.
 
 ### C++03 Builds
 
@@ -30,7 +31,7 @@ By default, the above steps generate a project using C\+\+11. To build versions 
 1.  In the root of the repo, run the command `./update.platform -p ios -c` to download the latest C\+\+03 version of the eeGeo iOS SDK.
 2.  In the `ios` directory, run `mkdir build` to create a build directory.
 3.  In the `ios/build` directory, run `cmake -G Xcode -DCOMPILE_CPP_03=1 ..` to generate a project file.
-4.  Open the `ExampleApp.xcodeproj` project file in Xcode and run the application.
+4.  Open the `ExampleApp.xcodeproj` project file in Xcode and run the ExampleApp target.
 
 ### Building from the command line
 
