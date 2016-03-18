@@ -11,6 +11,7 @@
 #include "VectorMath.h"
 #include "BidirectionalBus.h"
 #include "SearchResultSectionItemSelectedMessage.h"
+#include "InteriorsCellResourceObserver.h"
 
 namespace ExampleApp
 {
@@ -28,7 +29,8 @@ namespace ExampleApp
                                                            Search::SdkModel::ISearchResultRepository& searchResultRepository,
                                                            const Eegeo::Resources::Interiors::InteriorsInstanceRepository& instanceRepository,
                                                            ExampleAppMessaging::TMessageBus& messageBus,
-                                                           const Eegeo::v4& defaultHighlightColor);
+                                                           const Eegeo::v4& defaultHighlightColor,
+                                                           Eegeo::Resources::Interiors::InteriorsCellResourceObserver& cellResourceObserver);
                     
                     ~InteriorsEntityIdHighlightVisibilityController();
                     
@@ -50,6 +52,11 @@ namespace ExampleApp
                     Eegeo::Helpers::TCallback1<InteriorsEntityIdHighlightVisibilityController, const SearchResultSection::SearchResultSectionItemSelectedMessage&> m_handleSearchResultSectionItemSelectedMessageBinding;
                     Eegeo::Helpers::TCallback1<InteriorsEntityIdHighlightVisibilityController, const Search::SearchQueryResponseReceivedMessage&> m_searchResultsHandler;
                     Eegeo::Helpers::TCallback0<InteriorsEntityIdHighlightVisibilityController> m_searchResultsClearedHandler;
+                    
+                    Eegeo::Resources::Interiors::InteriorsCellResourceObserver& m_cellResourceObserver;
+                    Eegeo::Helpers::TCallback1<InteriorsEntityIdHighlightVisibilityController, const Eegeo::Resources::Interiors::InteriorsCellResource> m_cellResourceDeletedCallback;
+                    
+                    void HandleFloorCellDeleted(const Eegeo::Resources::Interiors::InteriorsCellResource& interiorCellResource);
 
                     typedef Eegeo::Resources::Interiors::InteriorsEntityIdHighlightController Super;
                 };

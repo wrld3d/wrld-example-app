@@ -18,6 +18,7 @@
 #include "PlaceNameModel.h"
 #include "SwallowDepartmentResultModel.h"
 #include "InstancedInteriorFloorRenderable.h"
+#include "InteriorsCellResource.h"
 
 namespace ExampleApp
 {
@@ -27,21 +28,43 @@ namespace ExampleApp
         {
             namespace Highlights
             {
+                namespace
+                {
+                    std::vector<Eegeo::Rendering::Renderables::InteriorRenderable*> TransformToInteriorRenderable(const std::vector<Eegeo::Rendering::Renderables::InstancedInteriorFloorRenderable*>& renderables)
+                    {
+                        std::vector<Eegeo::Rendering::Renderables::InteriorRenderable*> transformedRenderables;
+                        
+                        for (std::vector<Eegeo::Rendering::Renderables::InstancedInteriorFloorRenderable*>::const_iterator i = renderables.begin();
+                             i != renderables.end();
+                             ++i)
+                        {
+                            transformedRenderables.push_back(static_cast<Eegeo::Rendering::Renderables::InteriorRenderable*>(*i));
+                        }
+                        
+                        return transformedRenderables;
+                    }
+                }
+                
                 InteriorsEntityIdHighlightVisibilityController::InteriorsEntityIdHighlightVisibilityController(Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                                                                                Search::SdkModel::ISearchResultRepository& searchResultRepository,
                                                                                                const Eegeo::Resources::Interiors::InteriorsInstanceRepository& instanceRepository,
                                                                                                ExampleAppMessaging::TMessageBus& messageBus,
-                                                                                               const Eegeo::v4& defaultHighlightColor)
+                                                                                               const Eegeo::v4& defaultHighlightColor,
+                                                                                               Eegeo::Resources::Interiors::InteriorsCellResourceObserver& cellResourceObserver)
                 : InteriorsEntityIdHighlightController(instanceRepository, defaultHighlightColor)
                 , m_searchQueryPerformer(searchQueryPerformer)
                 , m_searchResultsHandler(this, &InteriorsEntityIdHighlightVisibilityController::OnSearchResultsLoaded)
                 , m_searchResultsClearedHandler(this, &InteriorsEntityIdHighlightVisibilityController::OnSearchResultCleared)
                 , m_handleSearchResultSectionItemSelectedMessageBinding(this, &InteriorsEntityIdHighlightVisibilityController::OnSearchItemSelected)
                 , m_messageBus(messageBus)
+                , m_cellResourceObserver(cellResourceObserver)
+                , m_cellResourceDeletedCallback(this, &InteriorsEntityIdHighlightVisibilityController::HandleFloorCellDeleted)
                 {
                     m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
                     m_messageBus.SubscribeNative(m_handleSearchResultSectionItemSelectedMessageBinding);
                     m_messageBus.SubscribeUi(m_searchResultsHandler);
+                    
+                    m_cellResourceObserver.RegisterResourceDeletedCallback(m_cellResourceDeletedCallback);
                 }
                 
                 InteriorsEntityIdHighlightVisibilityController::~InteriorsEntityIdHighlightVisibilityController()
@@ -49,6 +72,8 @@ namespace ExampleApp
                     m_searchQueryPerformer.RemoveOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
                     m_messageBus.UnsubscribeNative(m_handleSearchResultSectionItemSelectedMessageBinding);
                     m_messageBus.UnsubscribeUi(m_searchResultsHandler);
+                    
+                    m_cellResourceObserver.UnregisterResourceDeletedCallback(m_cellResourceDeletedCallback);
                 }
                 
                 void InteriorsEntityIdHighlightVisibilityController::OnSearchResultCleared()
@@ -84,6 +109,37 @@ namespace ExampleApp
 
                         m_lastIdSearched = id->second;
                     }
+                }
+                
+                void InteriorsEntityIdHighlightVisibilityController::HandleFloorCellDeleted(const Eegeo::Resources::Interiors::InteriorsCellResource& interiorCellResource)
+                {
+                    std::vector<Eegeo::Resources::Interiors::InteriorsFloorCell*> floorCells = interiorCellResource.GetFloorCells();
+                    
+                    std::vector<Eegeo::Rendering::Renderables::InteriorRenderable*> renderablesToDelete;
+                    
+                    for (std::vector<Eegeo::Resources::Interiors::InteriorsFloorCell*>::const_iterator i = floorCells.begin();
+                         i != floorCells.end();
+                         ++i)
+                    {
+                        std::vector<Eegeo::Rendering::Renderables::InstancedInteriorFloorRenderable*> floorRenderables((*i)->GetInstancedRenderables());
+                        
+                        std::vector<Eegeo::Rendering::Renderables::InteriorRenderable*> transformedRenderables = TransformToInteriorRenderable(floorRenderables);
+                        
+                        renderablesToDelete.insert(renderablesToDelete.end(), transformedRenderables.begin(), transformedRenderables.end());
+                    }
+                    
+                    for (std::vector<Eegeo::Rendering::Renderables::InteriorRenderable*>::iterator i = renderablesToDelete.begin();
+                         i != renderablesToDelete.end();
+                         ++i)
+                    {
+                        Eegeo::Resources::Interiors::CountPerRenderable::iterator result = m_lastHighlightedRenderables.find(*i);
+
+                        if(result != m_lastHighlightedRenderables.end())
+                        {
+                            m_lastHighlightedRenderables.erase(result);
+                        }
+                    }
+
                 }
 
                 void InteriorsEntityIdHighlightVisibilityController::OnSearchResultsLoaded(const Search::SearchQueryResponseReceivedMessage& message)
