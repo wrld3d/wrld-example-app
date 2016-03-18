@@ -4,11 +4,11 @@
 
 # eeGeo Example App
 
-The [eeGeo Example App](https://github.com/eegeo/mobile-example-app) is a cross-platform application predominantly written in C\+\+. For an iOS specific example app, see the eeGeo [iOS API Example](https://github.com/eegeo/ios-api-example) app which makes use of the eeGeo [Objective-C iOS API](https://github.com/eegeo/ios-api).
+The [eeGeo Example App](https://github.com/eegeo/eegeo-example-app) is a cross-platform application predominantly written in C\+\+. For an iOS specific example app, see the eeGeo [iOS API Example](https://github.com/eegeo/ios-api-example) app which makes use of the eeGeo [Objective-C iOS API](https://github.com/eegeo/ios-api).
 
 ## Getting Started on iOS
 
-Before you begin, ensure you have completed the initial steps as described in the [root of the repository](https://github.com/eegeo/mobile-example-app).
+Before you begin, ensure you have completed the initial steps as described in the [root of the repository](https://github.com/eegeo/eegeo-example-app).
 
 ### Requirements
 
@@ -17,7 +17,7 @@ Before you begin, ensure you have completed the initial steps as described in th
 
 ### Setup
 
-1.  In the root of the repo, run the command `./update.platform -p ios` to download the latest eeGeo iOS SDK.
+1.  In the root of the repo, run the command `./update.platform.sh -p ios` to download the latest eeGeo iOS SDK.
 	*	We recommend you run this step frequently to keep your SDK version up to date.
 2.  In the `ios` directory, run `mkdir build` to create a build directory.
 3.  In the `ios/build` directory, run `cmake -G Xcode ..` to generate a project file.
@@ -28,7 +28,7 @@ Before you begin, ensure you have completed the initial steps as described in th
 
 By default, the above steps generate a project using C\+\+11. To build versions of the application which are C\+\+03 only, follow these steps:
 
-1.  In the root of the repo, run the command `./update.platform -p ios -c` to download the latest C\+\+03 version of the eeGeo iOS SDK.
+1.  In the root of the repo, run the command `./update.platform.sh -p ios -c` to download the latest C\+\+03 version of the eeGeo iOS SDK.
 2.  In the `ios` directory, run `mkdir build` to create a build directory.
 3.  In the `ios/build` directory, run `cmake -G Xcode -DCOMPILE_CPP_03=1 ..` to generate a project file.
 4.  Open the `ExampleApp.xcodeproj` project file in Xcode and run the ExampleApp target.

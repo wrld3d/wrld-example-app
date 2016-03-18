@@ -4,11 +4,11 @@
 
 # eeGeo Example App
 
-Android builds of the [eeGeo Example App](https://github.com/eegeo/mobile-example-app) use the Android NDK and JNI to run native code on Android devices.
+Android builds of the [eeGeo Example App](https://github.com/eegeo/eegeo-example-app) use the Android NDK and JNI to run native code on Android devices.
 
 ## Getting Started on Android
 
-Before you begin, ensure you have completed the initial steps as described in the [root of the repository](https://github.com/eegeo/mobile-example-app).
+Before you begin, ensure you have completed the initial steps as described in the [root of the repository](https://github.com/eegeo/eegeo-example-app).
 
 ### Requirements
 
@@ -88,5 +88,5 @@ This will disable optimizations and generate debug symbols. See the [NDK documen
 2.  Reducing the number of architectures:
     
     -   By default, the project is compiled for three different architectures: **armeabi**, **armeabi-v7a**, and **arm64-v8a**.
-    -   If you do not need all of these, or you wish to quickly test on a single architecture, you can remove some of them from [this line in Application.mk](https://github.com/eegeo/mobile-example-app/blob/master/android/jni/Application.mk#L4).
+    -   If you do not need all of these, or you wish to quickly test on a single architecture, you can remove some of them from [this line in Application.mk](https://github.com/eegeo/eegeo-example-app/blob/master/android/jni/Application.mk#L4).
     -   For example: `APP_ABI := armeabi`

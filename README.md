@@ -22,8 +22,8 @@ The eeGeo SDK is distributed as a C++ static library with headers. Most of this 
 
 This section will walk you through the process of getting up and running quickly on each platform.
 
-1.  Clone this repo: `https://github.com/eegeo/mobile-example-app`
-2.  Obtain an [eeGeo API key](https://www.eegeo.com/developers/apikeys) and place it in the [ApiKey.h](https://github.com/eegeo/mobile-example-app/blob/master/src/ApiKey.h#L12) file.
+1.  Clone this repo: `https://github.com/eegeo/eegeo-example-app`
+2.  Obtain an [eeGeo API key](https://www.eegeo.com/developers/apikeys) and place it in the [ApiKey.h](https://github.com/eegeo/eegeo-example-app/blob/master/src/ApiKey.h#L12) file.
 3.  Choose a platform from the below table to see detailed instructions for building the app.
 
 Platform             							| Languages
@@ -36,18 +36,18 @@ Platform             							| Languages
 
 In order to use the eeGeo 3D Maps SDK, you must sign up for a free developer account at https://www.eegeo.com/developers. After signing up, you'll be able to create an [API key](https://www.eegeo.com/developers/apikeys) for your apps. 
 
-To run this example app, you must place the API key in the [ApiKey.h](https://github.com/eegeo/mobile-example-app/blob/master/src/ApiKey.h#L12) file.
+To run this example app, you must place the API key in the [ApiKey.h](https://github.com/eegeo/eegeo-example-app/blob/master/src/ApiKey.h#L12) file.
 
 If you are creating a new app, or integrating eeGeo 3D Maps into an existing app, the API key should be passed as the first argument to the constructor of [EegeoWorld](http://cdn1.eegeo.com/docs/mobile-sdk/class_eegeo_1_1_eegeo_world.html).
 
 ### Optional Steps
 
-1.  Obtain Yelp credentials to enable Yelp search results in the app. Place them in [ApiKey.h](https://github.com/eegeo/mobile-example-app/blob/master/src/ApiKey.h#L15-L18).
-2.  Obtain a GeoNames username to enable GeoNames search results in the app. Place it in [ApiKey.h](https://github.com/eegeo/mobile-example-app/blob/master/src/ApiKey.h#L21).
+1.  Obtain Yelp credentials to enable Yelp search results in the app. Place them in [ApiKey.h](https://github.com/eegeo/eegeo-example-app/blob/master/src/ApiKey.h#L15-L18).
+2.  Obtain a GeoNames username to enable GeoNames search results in the app. Place it in [ApiKey.h](https://github.com/eegeo/eegeo-example-app/blob/master/src/ApiKey.h#L21).
 
 ## Features
 
-The [eeGeo Example App](https://github.com/eegeo/mobile-example-app) demonstrates a variety of SDK features and is a good starting point to learn how the SDK works.
+The [eeGeo Example App](https://github.com/eegeo/eegeo-example-app) demonstrates a variety of SDK features and is a good starting point to learn how the SDK works.
 
 ![eeGeo Example App features](http://cdn2.eegeo.com/wp-content/uploads/2016/03/eegeo-example-app-features.jpg)
 
@@ -68,8 +68,8 @@ See the [eeGeo API reference](http://cdn1.eegeo.com/docs/mobile-sdk/namespaces.h
 
 ## Support
 
-If you have any questions, bug reports, or feature requests, feel free to submit to the [issue tracker](https://github.com/eegeo/mobile-example-app/issues) for this repository. Alternatively, you can contact us at [support@eegeo.com](mailto:support@eegeo.com).
+If you have any questions, bug reports, or feature requests, feel free to submit to the [issue tracker](https://github.com/eegeo/eegeo-example-app/issues) for this repository. Alternatively, you can contact us at [support@eegeo.com](mailto:support@eegeo.com).
 
 ## License
 
-The eeGeo 3D Maps SDK is released under the Eegeo Platform SDK Evaluation license. See the [LICENSE.md](https://github.com/eegeo/mobile-example-app/blob/master/LICENSE.md) file for details.
+The eeGeo 3D Maps SDK is released under the Eegeo Platform SDK Evaluation license. See the [LICENSE.md](https://github.com/eegeo/eegeo-example-app/blob/master/LICENSE.md) file for details.
