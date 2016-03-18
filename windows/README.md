@@ -4,11 +4,11 @@
 
 # eeGeo Example App
 
-Windows builds of the [eeGeo Example App](https://github.com/eegeo/mobile-example-app) use WPF and C# for the native UI layer.
+Windows builds of the [eeGeo Example App](https://github.com/eegeo/eegeo-example-app) use WPF and C# for the native UI layer.
 
 ## Getting Started on Windows
 
-Before you begin, ensure you have completed the initial steps as described in the [root of the repository](https://github.com/eegeo/mobile-example-app).
+Before you begin, ensure you have completed the initial steps as described in the [root of the repository](https://github.com/eegeo/eegeo-example-app).
 
 ### Requirements
 
@@ -19,7 +19,7 @@ Before you begin, ensure you have completed the initial steps as described in th
 ### Setup
 
 1.  Open a Git Bash terminal for the following commands.
-2.  In the root of the repo, run the command `./update.platform -p windows` to download the latest eeGeo Windows SDK.
+2.  In the root of the repo, run the command `./update.platform.sh -p windows` to download the latest eeGeo Windows SDK.
 	*	We recommend you run this step frequently to keep your SDK version up to date.
 3.  In the `windows` directory, run `mkdir build` to create a build directory.
 4.  In the `windows/build` directory, run `cmake -G "Visual Studio 14 Win64" ..` to generate a project file.
@@ -33,7 +33,7 @@ Before you begin, ensure you have completed the initial steps as described in th
 By default, the above steps generate a project using C\+\+11. To build versions of the application which are C\+\+03 only, follow these steps:
 
 1.  Open a Git Bash terminal for the following commands.
-2.  In the root of the repo, run the command `./update.platform -p windows -c` to download the latest eeGeo Windows SDK.
+2.  In the root of the repo, run the command `./update.platform.sh -p windows -c` to download the latest eeGeo Windows SDK.
 3.  In the `windows` directory, run `mkdir build` to create a build directory.
 4.  In the `windows/build` directory, run `cmake -G "Visual Studio 14 Win64" -DCOMPILE_CPP_03=1 ..` to generate a project file.
 5.  Open the `ExampleApp.sln` project file in Visual Studio.
