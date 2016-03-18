@@ -173,6 +173,12 @@ namespace ExampleAppWPF
         public void CollapseAndClearAll()
         {
             var items = GetListBoxItemsInRange(0, m_list.Items.Count);
+
+            if(items.Count <= 0)
+            {
+                return;
+            }
+
             var controls = ChildStackPanelsFor(items);
 
             m_slideOutStoryboardRunner.AllCompleted += OnClearAllAnimsComplete;
