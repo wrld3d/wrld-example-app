@@ -61,7 +61,11 @@ namespace ExampleAppWPF
         
         private Image m_categoryIcon = null;
         private Image m_poiImage = null;
-        
+
+        private RadioButton m_availableButton = null;
+        private RadioButton m_availableSoonButton = null;
+        private RadioButton m_occupiedButton = null;
+
         private ExampleApp.SearchResultModelCLI m_model;
         private SwallowMeetingRoomResultModel m_swallowMeetingRoomModel;
 
@@ -90,17 +94,12 @@ namespace ExampleAppWPF
             base.OnApplyTemplate();
 
             m_categoryIcon = (Image)GetTemplateChild("CategoryIcon");
-
-            RadioButton availableButton = (RadioButton)GetTemplateChild("AvailableButton");
-            availableButton.Click += OnAvailableSelected;
-
-            RadioButton availableSoonButton = (RadioButton)GetTemplateChild("AvailableSoonButton");
-            availableSoonButton.Click += OnAvailableSoonSelected;
-
-            RadioButton occupiedButton = (RadioButton)GetTemplateChild("OccupiedButton");
-            occupiedButton.Click += OnOccupiedSelected;
-
+            
             m_poiImage = (Image)GetTemplateChild("PoiImage");
+
+            m_availableButton = (RadioButton)GetTemplateChild("AvailableButton");
+            m_availableSoonButton = (RadioButton)GetTemplateChild("AvailableSoonButton");
+            m_occupiedButton = (RadioButton)GetTemplateChild("OccupiedButton");
 
             m_mainContainer = (FrameworkElement)GetTemplateChild("MeetingRoomPoiContainer");
         }
@@ -112,6 +111,10 @@ namespace ExampleAppWPF
             
             m_swallowMeetingRoomModel = SwallowMeetingRoomResultModel.FromJson(m_model.JsonData);
             Availability = AvailableStringToEnum(m_swallowMeetingRoomModel.Availability);
+
+            m_availableButton.Click += OnAvailableSelected;
+            m_availableSoonButton.Click += OnAvailableSoonSelected;
+            m_occupiedButton.Click += OnOccupiedSelected;
 
             m_closing = false;
             
@@ -127,14 +130,9 @@ namespace ExampleAppWPF
 
         public override void DismissPoiInfo()
         {
-            RadioButton availableButton = (RadioButton)GetTemplateChild("AvailableButton");
-            availableButton.Click -= OnAvailableSelected;
-
-            RadioButton availableSoonButton = (RadioButton)GetTemplateChild("AvailableSoonButton");
-            availableSoonButton.Click -= OnAvailableSoonSelected;
-
-            RadioButton occupiedButton = (RadioButton)GetTemplateChild("OccupiedButton");
-            occupiedButton.Click -= OnOccupiedSelected;
+            m_availableButton.Click -= OnAvailableSelected;
+            m_availableSoonButton.Click -= OnAvailableSoonSelected;
+            m_occupiedButton.Click -= OnOccupiedSelected;
 
             base.DismissPoiInfo();
         }
