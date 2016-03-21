@@ -2,11 +2,10 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
@@ -279,7 +278,7 @@ namespace ExampleAppWPF
             }
         }
 
-        public void SetSearchSection(string category, string[] searchResults)
+        async Task UpdateResults(string[] searchResults)
         {
             m_resultListAdapter.ResetData();
 
@@ -315,13 +314,18 @@ namespace ExampleAppWPF
             m_resultsList.DataContext = m_resultListAdapter;
 
             m_resultsList.ItemsSource = itemsSource;
+        }
 
+        public async void SetSearchSection(string category, string[] searchResults)
+        {
             m_resultsSpinner.Visibility = Visibility.Hidden;
             m_resultsClearButton.Visibility = Visibility.Visible;
             m_searchArrow.Visibility = Visibility.Visible;
             m_resultsSeparator.Visibility = Visibility.Visible;
 
             m_searchInFlight = false;
+
+            await UpdateResults(searchResults);
         }
 
         public override void AnimateToClosedOnScreen()
