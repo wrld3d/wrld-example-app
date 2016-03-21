@@ -37,13 +37,11 @@ namespace ExampleApp
                 , m_searchQueryPerformer(searchQueryPerformer)
                 , m_searchResultRepository(searchResultRepository)
                 , m_messageBus(messageBus)
-                , m_searchPerformedHandler(this, &InteriorsHighlightVisibilityController::OnSearchPerformed)
                 , m_searchResultsHandler(this, &InteriorsHighlightVisibilityController::OnSearchResultsLoaded)
                 , m_searchResultsClearedHandler(this, &InteriorsHighlightVisibilityController::OnSearchResultCleared)
                 , m_interiorInteractionModelChangedHandler(this, &InteriorsHighlightVisibilityController::OnInteriorInteractionModelChanged)
                 , m_availabilityChangedHandlerBinding(this, &InteriorsHighlightVisibilityController::OnAvailabilityChanged)
                 {
-                    m_searchService.InsertOnPerformedQueryCallback(m_searchPerformedHandler);
                     m_searchService.InsertOnReceivedQueryResultsCallback(m_searchResultsHandler);
                     m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
                     m_interiorInteractionModel.RegisterModelChangedCallback(m_interiorInteractionModelChangedHandler);
@@ -53,21 +51,11 @@ namespace ExampleApp
                 
                 InteriorsHighlightVisibilityController::~InteriorsHighlightVisibilityController()
                 {
-                    m_searchService.RemoveOnPerformedQueryCallback(m_searchPerformedHandler);
                     m_searchService.RemoveOnReceivedQueryResultsCallback(m_searchResultsHandler);
                     m_searchQueryPerformer.RemoveOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
                     m_interiorInteractionModel.UnregisterModelChangedCallback(m_interiorInteractionModelChangedHandler);
                     
                     m_messageBus.UnsubscribeNative(m_availabilityChangedHandlerBinding);
-                }
-                
-                void InteriorsHighlightVisibilityController::OnSearchPerformed(const Search::SdkModel::SearchQuery &query)
-                {
-                    if(!query.IsCategory() || query.Query() != Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
-                    {
-                        DeactivateHighlightRenderables();
-                        m_highlightAvailabilityData.clear();
-                    }
                 }
                 
                 void InteriorsHighlightVisibilityController::OnAvailabilityChanged(const ExampleApp::SearchResultOnMap::SearchResultMeetingAvailabilityChanged& message)
