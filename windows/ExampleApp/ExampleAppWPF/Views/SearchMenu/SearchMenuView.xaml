@@ -475,8 +475,8 @@
                                                                     </Style>
                                                                 </Image.Style>
                                                             </Image>
-                                                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal" Grid.Column="0" Margin="5,0,0,0">
-                                                                <Label Name="MenuItemTitle" Content="{Binding Path=Heading}" FontSize="16" Foreground="{StaticResource LightGrey}"/>
+                                                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal" Grid.Column="0" Margin="5,0,0,-3">
+                                                                <Label Name="MenuItemTitle" Content="{Binding Path=Heading}" FontSize="16.5" Foreground="{StaticResource LightGrey}"/>
                                                             </StackPanel>
                                                         </Grid>
                                                         <Rectangle Grid.Row="1" Grid.Column="0" Fill="{StaticResource MenuSeparator}" HorizontalAlignment="Left" Width="225" Margin="0,0,0,0"  Height="1">
