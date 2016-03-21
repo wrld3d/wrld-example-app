@@ -96,6 +96,11 @@ namespace ExampleApp
                     
                     return false;
                 }
+                
+                bool GetOrderForWorkingGroups(const Search::SdkModel::SearchResultModel& a, const Search::SdkModel::SearchResultModel& b)
+                {
+                    return a.GetTitle() < b.GetTitle();
+                }
             }
             
             SearchResultSectionOrder::SearchResultSectionOrder(const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel)
@@ -119,13 +124,19 @@ namespace ExampleApp
                 //Order eeGeo results as they came in
                 if(a.GetVendor() == Search::EegeoVendorName || b.GetVendor() == Search::EegeoVendorName)
                 {
-                    if (a.GetCategory() == b.GetCategory())
+                    bool matchingCategory = a.GetCategory() == b.GetCategory() &&
+                                            a.GetVendor() == Search::EegeoVendorName &&
+                                            b.GetVendor() == Search::EegeoVendorName;
+                    
+                    if (matchingCategory)
                     {
-                        if(a.GetCategory() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME &&
-                           a.GetVendor() == Search::EegeoVendorName &&
-                           b.GetVendor() == Search::EegeoVendorName)
+                        if(a.GetCategory() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
                         {
                             return GetOrderForMeetingRooms(a, b, m_interiorInteractionModel.GetSelectedFloorIndex());
+                        }
+                        else if(a.GetCategory() == Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME)
+                        {
+                            return GetOrderForWorkingGroups(a, b);
                         }
                         
                         return false;
