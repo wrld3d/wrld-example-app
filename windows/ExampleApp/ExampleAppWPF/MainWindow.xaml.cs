@@ -24,6 +24,7 @@ namespace ExampleAppWPF
         private bool m_hasHadRenderEventSinceRender = false;
         private double m_maxDelta = 0.0;
         private bool m_logging = false;
+        private bool m_firstFrame = true;
 
         private const float m_maxWaitPercentage = 1.1f;
         
@@ -168,6 +169,12 @@ namespace ExampleAppWPF
 
         private void TryDoUpdateAndRender()
         {
+            if (m_firstFrame)
+            {
+                m_firstFrame = false;
+                return;
+            }
+
             if (MapHost.Source == null)
                 return;
 
