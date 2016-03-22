@@ -26,11 +26,11 @@ This section will walk you through the process of getting up and running quickly
 2.  Obtain an [eeGeo API key](https://www.eegeo.com/developers/apikeys) and place it in the [ApiKey.h](https://github.com/eegeo/eegeo-example-app/blob/master/src/ApiKey.h#L12) file.
 3.  Choose a platform from the below table to see detailed instructions for building the app.
 
-Platform             							| Languages
-------------------------------------------------|-----------------
-[Android](/android#getting-started-on-android)  | C++, Java
-[iOS](/ios#getting-started-on-ios)          	| C++, Objective-C
-[Windows](/windows#getting-started-on-windows)  | C++, C#
+Platform                                | Languages
+----------------------------------------|-----------------
+[Getting started on Android](/android)  | C++, Java
+[Getting started on iOS](/ios)          | C++, Objective-C
+[Getting started on Windows](/windows)  | C++, C#
 
 ### eeGeo API Key 
 
