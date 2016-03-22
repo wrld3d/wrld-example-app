@@ -14,7 +14,7 @@
     
 }
 
-- (id) initWithParams:(float)width :(float)height :(float)pixelScale :(NSString*)floorName :(BOOL)isBottom :(BOOL)isTop;
+- (id) initWithParams:(float)labelWidth :(float)labelSpacing :(float)divisionWidth :(float)height :(float)pixelScale :(NSString*)floorName :(BOOL)isBottom :(BOOL)isTop;
 
 - (void) showName;
 
