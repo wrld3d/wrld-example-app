@@ -41,16 +41,20 @@ namespace ExampleApp
                 , m_searchResultsClearedHandler(this, &InteriorsHighlightVisibilityController::OnSearchResultCleared)
                 , m_interiorInteractionModelChangedHandler(this, &InteriorsHighlightVisibilityController::OnInteriorInteractionModelChanged)
                 , m_availabilityChangedHandlerBinding(this, &InteriorsHighlightVisibilityController::OnAvailabilityChanged)
+                , m_interiorLabelsBuiltHandler(this, &InteriorsHighlightVisibilityController::OnInteriorLabelsBuilt)
                 {
                     m_searchService.InsertOnReceivedQueryResultsCallback(m_searchResultsHandler);
                     m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
                     m_interiorInteractionModel.RegisterModelChangedCallback(m_interiorInteractionModelChangedHandler);
+                    m_interiorslabelsController.RegisterLabelsBuiltCallback(m_interiorLabelsBuiltHandler);
                     
                     m_messageBus.SubscribeNative(m_availabilityChangedHandlerBinding);
                 }
                 
                 InteriorsHighlightVisibilityController::~InteriorsHighlightVisibilityController()
                 {
+                    
+                    m_interiorslabelsController.UnregisterLabelsBuiltCallback(m_interiorLabelsBuiltHandler);
                     m_searchService.RemoveOnReceivedQueryResultsCallback(m_searchResultsHandler);
                     m_searchQueryPerformer.RemoveOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
                     m_interiorInteractionModel.UnregisterModelChangedCallback(m_interiorInteractionModelChangedHandler);
@@ -103,6 +107,11 @@ namespace ExampleApp
                             modelIt->second->SetEnabled(false);
                         }
                     }
+                }
+                
+                void InteriorsHighlightVisibilityController::OnInteriorLabelsBuilt()
+                {
+                    ShowLabelsForCurrentResults();
                 }
                 
                 void InteriorsHighlightVisibilityController::OnSearchResultCleared()

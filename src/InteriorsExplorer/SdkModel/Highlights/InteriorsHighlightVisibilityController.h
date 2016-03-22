@@ -38,6 +38,7 @@ namespace ExampleApp
                     void OnSearchResultCleared();
                     
                     void OnInteriorInteractionModelChanged();
+                    void OnInteriorLabelsBuilt();
                     void OnAvailabilityChanged(const ExampleApp::SearchResultOnMap::SearchResultMeetingAvailabilityChanged& message);
                     
                     void ConfigureRenderableForAvailability(Eegeo::Rendering::Renderables::InteriorHighlightRenderable& renderable, const std::string& availability);
@@ -58,6 +59,7 @@ namespace ExampleApp
                     Eegeo::Helpers::TCallback2<InteriorsHighlightVisibilityController, const Search::SdkModel::SearchQuery&, const std::vector<Search::SdkModel::SearchResultModel>&> m_searchResultsHandler;
                     Eegeo::Helpers::TCallback0<InteriorsHighlightVisibilityController> m_searchResultsClearedHandler;
                     Eegeo::Helpers::TCallback0<InteriorsHighlightVisibilityController> m_interiorInteractionModelChangedHandler;
+                    Eegeo::Helpers::TCallback0<InteriorsHighlightVisibilityController> m_interiorLabelsBuiltHandler;
                     
                     Eegeo::Helpers::TCallback1<InteriorsHighlightVisibilityController, const SearchResultOnMap::SearchResultMeetingAvailabilityChanged&>m_availabilityChangedHandlerBinding;
                     
