@@ -2,20 +2,16 @@
     <img src="http://cdn2.eegeo.com/wp-content/uploads/2016/03/eegeo_logo_quite_big.png" alt="eeGeo Logo" title="eegeo" align="right" height="80px" />
 </a>
 
-# eeGeo Example App
-
-The [eeGeo Example App](https://github.com/eegeo/eegeo-example-app) is a cross-platform application predominantly written in C\+\+. For an iOS specific example app, see the eeGeo [iOS API Example](https://github.com/eegeo/ios-api-example) app which makes use of the eeGeo [Objective-C iOS API](https://github.com/eegeo/ios-api).
-
-## Getting Started on iOS
+# Getting Started on iOS
 
 Before you begin, ensure you have completed the initial steps as described in the [root of the repository](https://github.com/eegeo/eegeo-example-app).
 
-### Requirements
+## Requirements
 
 - [Xcode](https://developer.apple.com/xcode/) (7.2 tested)
 - [CMake](https://cmake.org/) (3.1.1  or higher)
 
-### Setup
+## Setup
 
 1.  In the root of the repo, run the command `./update.platform.sh -p ios` to download the latest eeGeo iOS SDK.
 	*	We recommend you run this step frequently to keep your SDK version up to date.
@@ -24,19 +20,10 @@ Before you begin, ensure you have completed the initial steps as described in th
 4.  Open the `ExampleApp.xcodeproj` project file in Xcode.
 5.  Build and run the ExampleApp target.
 
-### C++03 Builds
+## Building from the command line
 
-By default, the above steps generate a project using C\+\+11. To build versions of the application which are C\+\+03 only, follow these steps:
-
-1.  In the root of the repo, run the command `./update.platform.sh -p ios -c` to download the latest C\+\+03 version of the eeGeo iOS SDK.
-2.  In the `ios` directory, run `mkdir build` to create a build directory.
-3.  In the `ios/build` directory, run `cmake -G Xcode -DCOMPILE_CPP_03=1 ..` to generate a project file.
-4.  Open the `ExampleApp.xcodeproj` project file in Xcode and run the ExampleApp target.
-
-### Building from the command line
+There is a script included in the repo to build the app from the command line. You may wish to do this, for example, if you want to have the app building on a Continuous Integration system.
 
 To build from the command line, you will need to install the Xcode Command Line Tools by running the command: `xcode-select --install`
 
 Then run `./build.sh -p ios` from the root of this repository to build the project.
-
-For C\+\+03 builds, run `./build.sh -p ios -c`.
