@@ -64,7 +64,7 @@ namespace
         m_inactiveDetailPaneYPosition = m_screenHeight;
         
 
-        self.pFloorPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_inactiveFloorListXPosition, m_screenHeight/2.0f, 80, 200)] autorelease];
+        self.pFloorPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_inactiveFloorListXPosition, m_screenHeight/2.0f, 120, 200)] autorelease];
         [self addSubview:self.pFloorPanel];
         
         self.pFloorChangeButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 64, 64)] autorelease];
@@ -164,7 +164,10 @@ namespace
     CGFloat panelHeight = self.pFloorPanel.frame.size.height;
     
     CGRect floorButtonFrame = self.pFloorChangeButton.frame;
-    self.pFloorChangeButton.frame = CGRectMake(0, panelHeight - floorButtonFrame.size.height, floorButtonFrame.size.width, floorButtonFrame.size.height);
+    self.pFloorChangeButton.frame = CGRectMake(self.pFloorPanel.frame.size.width*0.5f - floorButtonFrame.size.width*0.5f,
+                                               panelHeight - floorButtonFrame.size.height,
+                                               floorButtonFrame.size.width,
+                                               floorButtonFrame.size.height);
 }
 
 - (void)dealloc
@@ -251,7 +254,9 @@ namespace
     const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     
     m_floorDivisionHeight = isPhone ? m_screenHeight*0.0625f : 50;
-    const float divisionWidth = 40;
+    const float divisionWidth = 30;
+    const float divisionLabelWidth = 25;
+    const float divisionLabelSpacing = 15;
     float maxHeight = m_screenHeight*0.5f;
     int floorCount = static_cast<int>(m_tableViewFloorNames.size());
     float verticalPadding = ((float)self.pFloorChangeButton.frame.size.height - m_floorDivisionHeight);
@@ -284,7 +289,9 @@ namespace
         const std::string& name = *it;
         NSString* nameString = [NSString stringWithCString:name.c_str() encoding:NSUTF8StringEncoding];
         
-        InteriorsExplorerFloorItemView* pFloorView = [[[InteriorsExplorerFloorItemView alloc] initWithParams:divisionWidth
+        InteriorsExplorerFloorItemView* pFloorView = [[[InteriorsExplorerFloorItemView alloc] initWithParams:divisionLabelWidth
+                                                                                                            :divisionLabelSpacing
+                                                                                                            :divisionWidth
                                                                                                             :m_floorDivisionHeight
                                                                                                             :m_pixelScale
                                                                                                             :nameString
@@ -292,7 +299,7 @@ namespace
                                                                                                             :(floorIndex == floorCount-1)] autorelease];
         CGRect viewFrame = pFloorView.frame;
         viewFrame.origin.y = yOffset;
-        viewFrame.origin.x = (self.pFloorChangeButton.frame.size.width / 2.0f) - (0.25 * divisionWidth);
+        viewFrame.origin.x = (self.pFloorPanel.frame.size.width*0.5f) - ((divisionLabelWidth + divisionLabelSpacing) + 0.5 * divisionWidth);
         pFloorView.frame = viewFrame;
         
         [self.pFloorPanel insertSubview:pFloorView belowSubview:self.pFloorChangeButton];
@@ -315,7 +322,7 @@ namespace
 
 - (float) GetXPositionForFloorPanelAt:(float)t
 {
-    float openX = iPhoneDismissButtonMargin + (0.5f * self.pDismissButtonBackground.frame.size.width + 0.5f * self.pFloorChangeButton.frame.size.width);
+    float openX = iPhoneDismissButtonMargin + (0.5f * self.pDismissButtonBackground.frame.size.width + 0.5f * self.pFloorPanel.frame.size.width);
     return m_screenWidth - t * openX;
 }
 

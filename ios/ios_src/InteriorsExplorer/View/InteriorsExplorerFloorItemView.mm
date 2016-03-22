@@ -4,28 +4,29 @@
 
 @implementation InteriorsExplorerFloorItemView
 
-- (id) initWithParams:(float)width :(float)height :(float)pixelScale :(NSString*)floorName :(BOOL)isTop :(BOOL)isBottom
+- (id) initWithParams:(float)labelWidth :(float)labelSpacing :(float)divisionWidth :(float)height :(float)pixelScale :(NSString*)floorName :(BOOL)isTop :(BOOL)isBottom
 {
     if (self = [super init])
     {
-        self.frame = CGRectMake(0, 0, width, height);
+        self.frame = CGRectMake(0, 0, labelWidth+divisionWidth+labelSpacing, height);
         
         UIBezierPath* path = [UIBezierPath bezierPath];
         
         // Horizontal centerline.
-        [path moveToPoint:CGPointMake(0.0f, height*0.5f)];
-        [path addLineToPoint:CGPointMake(width*0.5f, height*0.5f)];
+        [path moveToPoint:CGPointMake(labelWidth+labelSpacing, height*0.5f)];
+        [path addLineToPoint:CGPointMake(labelWidth+labelSpacing+divisionWidth, height*0.5f)];
         
+        float centerlineX = labelWidth + labelSpacing + 0.5f * divisionWidth;
         // Vertical centerline
         if(!isTop)
         {
-            [path moveToPoint:CGPointMake(width*0.25f, 0.0f)];
-            [path addLineToPoint:CGPointMake(width*0.25f, height*0.5f)];
+            [path moveToPoint:CGPointMake(centerlineX, 0.0f)];
+            [path addLineToPoint:CGPointMake(centerlineX, height*0.5f)];
         }
         if(!isBottom)
         {
-            [path moveToPoint:CGPointMake(width*0.25f, height*0.5f)];
-            [path addLineToPoint:CGPointMake(width*0.25f, height)];
+            [path moveToPoint:CGPointMake(centerlineX, height*0.5f)];
+            [path addLineToPoint:CGPointMake(centerlineX, height)];
         }
         
         CAShapeLayer* shapeLayer = [CAShapeLayer layer];
@@ -35,14 +36,13 @@
         
         [self.layer addSublayer:shapeLayer];
         
-        const float textSpacing = 5;
-        self.pFloorNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake(width*0.5f + textSpacing, 0.0f, width*0.5f, height)] autorelease];
+        self.pFloorNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, labelWidth, height)] autorelease];
         self.pFloorNameLabel.lineBreakMode = NSLineBreakByClipping;
         self.pFloorNameLabel.adjustsFontSizeToFitWidth = NO;
         self.pFloorNameLabel.textColor = [UIColor whiteColor];
-        self.pFloorNameLabel.textAlignment = NSTextAlignmentLeft;
+        self.pFloorNameLabel.textAlignment = NSTextAlignmentRight;
         self.pFloorNameLabel.text = floorName;
-        [self.pFloorNameLabel sizeToFit];
+        //[self.pFloorNameLabel sizeToFit];
         CGRect f = self.pFloorNameLabel.frame;
         f.size.height = height;
         self.pFloorNameLabel.frame = f;
