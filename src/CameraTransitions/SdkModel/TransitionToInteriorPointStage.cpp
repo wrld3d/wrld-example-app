@@ -6,7 +6,7 @@
 #include "InteriorInteractionModel.h"
 #include "InteriorSelectionModel.h"
 #include "InteriorTransitionModel.h"
-
+#include "CameraState.h"
 
 namespace ExampleApp
 {
