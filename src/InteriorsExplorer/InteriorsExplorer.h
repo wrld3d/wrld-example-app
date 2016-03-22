@@ -13,7 +13,6 @@ namespace ExampleApp
             class InteriorWorldPinController;
             class InteriorVisibilityUpdater;
             class InteriorExplorerUserInteractionModel;
-            class InteriorExpandedModeObserver;
             
             namespace Highlights
             {

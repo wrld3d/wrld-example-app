@@ -122,7 +122,7 @@ namespace ExampleApp
                     const bool isSameBuilding = m_interiorInteractionModel.HasInteriorModel() ? (m_interiorInteractionModel.GetInteriorModel()->GetId() == worldPinItemModel.GetInteriorData().building) : false;
                     const bool isSameFloor = worldPinItemModel.GetInteriorData().floor == m_interiorInteractionModel.GetSelectedFloorIndex();
                     
-                    hidePinFromInteriorData = !isSameBuilding || (!isSameFloor && isCollapsed);
+                    hidePinFromInteriorData = !isSameBuilding || !isSameFloor || !isCollapsed;
                 }
                 
                 // hide when close to edge of screen
