@@ -16,12 +16,13 @@ namespace ExampleApp
                 WindowsNativeState& nativeState,
                 ISearchResultPoiViewModel& searchResultPoiViewModel,
                 ExampleAppMessaging::TMessageBus& messageBus,
-                Metrics::IMetricsService& metricsService
+                Metrics::IMetricsService& metricsService,
+                MyPinCreation::View::IMyPinCreationInitiationView& pinCreationInitiationView
             )
             {
                 ASSERT_UI_THREAD
                 m_pView = Eegeo_NEW(SearchResultPoiView)(nativeState);
-                m_pController = Eegeo_NEW(DesktopSearchResultPoiController)(*m_pView, searchResultPoiViewModel, messageBus, metricsService);
+                m_pController = Eegeo_NEW(DesktopSearchResultPoiController)(*m_pView, searchResultPoiViewModel, messageBus, metricsService, pinCreationInitiationView);
             }
 
             SearchResultPoiViewModule::~SearchResultPoiViewModule()

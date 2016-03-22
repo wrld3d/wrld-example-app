@@ -90,6 +90,7 @@
 #include "SurveyViewModule.h"
 #include "SearchResultPoiView.h"
 #include "WindowsMenuReactionModel.h"
+#include "IMyPinCreationInitiationViewModel.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
@@ -516,7 +517,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_nativeState,
         app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
         m_messageBus,
-        *m_pWindowsFlurryMetricsService
+        *m_pWindowsFlurryMetricsService,
+        m_pMyPinCreationViewModule->GetMyPinCreationInitiationView()
         );
 
     m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewModule)(

@@ -10,6 +10,7 @@
 #include "SearchResultModel.h"
 #include "IMetricsService.h"
 #include "SearchResultPoiController.h"
+#include "IMyPinCreationInitiationView.h"
 
 namespace ExampleApp
 {
@@ -19,11 +20,18 @@ namespace ExampleApp
         {
             class DesktopSearchResultPoiController : public SearchResultPoiController
             {
+                MyPinCreation::View::IMyPinCreationInitiationView& m_pinCreationInitiationView;
+
+                Eegeo::Helpers::TCallback0<DesktopSearchResultPoiController> m_onPinCreationSelected;
+
+                void OnPinCreationSelected();
+
             public:
                 DesktopSearchResultPoiController(ISearchResultPoiView& view,
                     ISearchResultPoiViewModel& viewModel,
                     ExampleAppMessaging::TMessageBus& messageBus,
-                    Metrics::IMetricsService& metricsService);
+                    Metrics::IMetricsService& metricsService,
+                    MyPinCreation::View::IMyPinCreationInitiationView& pinCreationInitiationView);
 
                 virtual ~DesktopSearchResultPoiController();
 

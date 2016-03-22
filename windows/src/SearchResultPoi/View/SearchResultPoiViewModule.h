@@ -10,6 +10,7 @@
 #include "BidirectionalBus.h"
 #include "IMetricsService.h"
 #include "DesktopSearchResultPoiController.h"
+#include "IMyPinCreationInitiationView.h"
 
 namespace ExampleApp
 {
@@ -28,7 +29,8 @@ namespace ExampleApp
                     WindowsNativeState& nativeState,
                     ISearchResultPoiViewModel& searchResultPoiViewModel,
                     ExampleAppMessaging::TMessageBus& messageBus,
-                    Metrics::IMetricsService& metricsService
+                    Metrics::IMetricsService& metricsService,
+                    MyPinCreation::View::IMyPinCreationInitiationView& pinCreationInitiationView
                 );
 
                 ~SearchResultPoiViewModule();
