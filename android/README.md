@@ -47,13 +47,14 @@ The following steps will guide you through installing and setting up the Android
 
 1.  In Eclipse, go to `File > Switch Workspace > Other...`
 2.  Select an empty folder to use as a Workspace
-3.  Go to `Eclipse > Preferences`, find `NDK Location` under `Android > NDK` and set it to wherever you installed the NDK to.
-4.  Right-click on the Package Explorer sidebar and choose `Import...`
-5.  Select `Android > Existing Android Code Into Workspace`
-6.  Select the `android` folder in the Example App and click `Finish`
-7.  Right click the project, and select `Android Tools > Add Native Support...`
-8.  To speed up compile times, see [this section below](#speeding-up-build-times) for compiling with multiple threads.
-9.  To run the project, right-click it and select `Run As > Android Application`
+3.  Go to `Eclipse > Preferences` on OSX, `Window > Preferences` on Windows.
+4.  Find `NDK Location` under `Android > NDK` and set it to wherever you installed the NDK to.
+5.  Right-click on the Package Explorer sidebar and choose `Import...`
+6.  Select `Android > Existing Android Code Into Workspace`
+7.  Select the `android` folder in the Example App and click `Finish`
+8.  Right click the project, and select `Android Tools > Add Native Support...`
+9.  To speed up compile times, see [this section below](#speeding-up-build-times) for compiling with multiple threads.
+10.  To run the project, right-click it and select `Run As > Android Application`
 
 #### C++03 Builds
 
