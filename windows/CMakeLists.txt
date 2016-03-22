@@ -16,13 +16,10 @@ else(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/libs/eegeo/CMakeLists.txt")
   message(FATAL_ERROR "Couldn't detect platform headers. Have you run update.platform.sh?")
 endif(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/libs/eegeo/CMakeLists.txt")
 
-set(precompiled_header ExampleAppPch.h)
-set(precompiled_header_result WindowsPch_$(Configuration)_$(Platform).pch)
-
-
 include(../src/CMakeLists.txt)
 include(src/CMakeLists.txt)
 
+set(precompiled_header ExampleAppPch.h)
 
 add_definitions(-D__BYTE_ORDER__ -D__ORDER_LITTLE_ENDIAN__ -D_HAS_EXCEPTIONS=0 -DHAVE_STRUCT_TIMESPEC=1 -DNOMINMAX=1 -DCOMPILE_CPP_11=1 -DPTW32_STATIC_LIB -DCURL_STATICLIB)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Zi /EHsc /Oi /GS /Gy /wd4068 /Gd /MP /WX /Yu${precompiled_header} /FI${precompiled_header} /Zm300")

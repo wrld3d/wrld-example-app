@@ -17,7 +17,6 @@ namespace ExampleApp
                                                          const int floorIndex,
                                                          OpenableControl::View::IOpenableControlViewModel& searchMenuViewModel,
                                                          int itemIndex,
-                                                         ExampleAppMessaging::TMessageBus& messageBus)
                                                          ExampleAppMessaging::TMessageBus& messageBus,
                                                          const Menu::View::IMenuReactionModel& menuReaction)
             : m_name(name)

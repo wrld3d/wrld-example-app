@@ -90,16 +90,6 @@ namespace ExampleAppWPF
             m_mainContainer.RenderTransform.BeginAnimation(TranslateTransform.XProperty, db);
 
             m_isOpen = false;
-            var mainGrid = m_currentWindow.MainGrid;
-            var screenWidth = mainGrid.ActualWidth;
-
-            var db = new DoubleAnimation((screenWidth / 2) + (m_mainContainer.ActualWidth / 2), TimeSpan.FromMilliseconds(m_animationTimeMilliseconds));
-            db.From = (screenWidth / 2) - (m_mainContainer.ActualWidth / 2);
-
-            m_mainContainer.RenderTransform = new TranslateTransform();
-            m_mainContainer.RenderTransform.BeginAnimation(TranslateTransform.XProperty, db);
-
-            m_isOpen = false;
             m_isAnyPOIOpen = false;
         }
 

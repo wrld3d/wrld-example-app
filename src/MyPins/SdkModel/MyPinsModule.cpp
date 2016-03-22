@@ -38,7 +38,7 @@ namespace ExampleApp
                                        Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
                                        Metrics::IMetricsService& metricsService,
                                        const std::string& myPinsWebServiceUrl,
-                                       const std::string& myPinsWebServiceAuthToken)
+                                       const std::string& myPinsWebServiceAuthToken,
                                        const Menu::View::IMenuReactionModel& menuReaction)
                 : m_pMyPinsRepository(NULL)
                 , m_pMyPinsFileIO(NULL)
