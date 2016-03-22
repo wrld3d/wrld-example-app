@@ -4,19 +4,25 @@
 
 # eeGeo Example App
 
+* [Support](#support)
 * [Getting Started](#getting-started)
     * [eeGeo API Key](#eegeo-api-key)
     * [Optional Steps](#optional-steps)
 * [Features](#features)
 * [SDK Documentation](#sdk-documentation)
-* [Support](#support)
 * [License](#support)
 
 The [eeGeo SDK](http://www.eegeo.com/developers/) is a cross-platform, OpenGL-based library for [beautiful and customisable 3D maps](http://www.eegeo.com).
 
-This cross-platform example app demonstrates how a developer can use the eeGeo 3D Maps SDK to display beautiful 3D maps on iOS, Android, and Windows PCs. This app can be used as the basis for your own app, or can be used as a reference when integrating eeGeo's maps into an existing app.
+This example app demonstrates how a developer can use the eeGeo 3D Maps SDK to display beautiful 3D maps on iOS, Android, and Windows PCs. It can be used as the basis for your own app, or can be used as a reference when integrating eeGeo's maps into an existing app.
 
-The eeGeo SDK is distributed as a C++ static library with headers. Most of this example application is written in C++ and shared between platforms to reduce code duplication. A notable exception to this is the UI: the app uses the native UI system on each platform.
+The eeGeo SDK is distributed as a C++ static library with headers. Most of this example application is also written in C++ and shared between platforms to reduce code duplication.
+
+If you want to see the app without building it yourself, see [Recce](https://www.eegeo.com/recce/) on Google Play and the App Store to try it out.
+
+## Support
+
+If you have any questions, bug reports, or feature requests, feel free to submit to the [issue tracker](https://github.com/eegeo/eegeo-example-app/issues) for this repository.
 
 ## Getting Started
 
@@ -26,11 +32,11 @@ This section will walk you through the process of getting up and running quickly
 2.  Obtain an [eeGeo API key](https://www.eegeo.com/developers/apikeys) and place it in the [ApiKey.h](https://github.com/eegeo/eegeo-example-app/blob/master/src/ApiKey.h#L12) file.
 3.  Choose a platform from the below table to see detailed instructions for building the app.
 
-Platform                                | Languages
-----------------------------------------|-----------------
-[Getting started on Android](/android)  | C++, Java
-[Getting started on iOS](/ios)          | C++, Objective-C
-[Getting started on Windows](/windows)  | C++, C#
+Platform                                | Languages         | UI 
+----------------------------------------|-------------------|-------------
+[Getting started on Android](/android)  | C++, Java         | Android UI
+[Getting started on iOS](/ios)          | C++, Objective-C  | Cocoa Touch
+[Getting started on Windows](/windows)  | C++, C#           | WPF
 
 ### eeGeo API Key 
 
@@ -42,8 +48,10 @@ If you are creating a new app, or integrating eeGeo 3D Maps into an existing app
 
 ### Optional Steps
 
-1.  Obtain Yelp credentials to enable Yelp search results in the app. Place them in [ApiKey.h](https://github.com/eegeo/eegeo-example-app/blob/master/src/ApiKey.h#L15-L18).
-2.  Obtain a GeoNames username to enable GeoNames search results in the app. Place it in [ApiKey.h](https://github.com/eegeo/eegeo-example-app/blob/master/src/ApiKey.h#L21).
+This app uses third-party search service providers to allow users to search for places like caf&eacute;s, restaurants, and bars and have the results show up on the map. To enable this, you will to supply the credentials for those services.
+
+1.  Obtain [Yelp credentials](https://www.yelp.com/developers) to enable Yelp search results in the app. Place them in [ApiKey.h](https://github.com/eegeo/eegeo-example-app/blob/master/src/ApiKey.h#L15-L18).
+2.  Obtain a [GeoNames username](http://www.geonames.org/login) to enable GeoNames search results in the app. Place it in [ApiKey.h](https://github.com/eegeo/eegeo-example-app/blob/master/src/ApiKey.h#L21).
 
 ## Features
 
@@ -51,24 +59,11 @@ The [eeGeo Example App](https://github.com/eegeo/eegeo-example-app) demonstrates
 
 ![eeGeo Example App features](http://cdn2.eegeo.com/wp-content/uploads/2016/03/eegeo-example-app-features.jpg)
 
-Some of those features include:
-
-*   3D map display
-*   Indoor maps
-*   Tactile UX for controlling the application
-*   Animated camera transitions
-*   Dynamic theming to control weather, season, and time of day
-*   Category and free-text searching using third party search services
-*   In-world display for points of interest
-*   Background preloading of environment resources
+See [here](https://www.eegeo.com/features/) to learn more about what the eeGeo SDK has to offer.
 
 ## SDK Documentation
 
 See the [eeGeo API reference](http://cdn1.eegeo.com/docs/mobile-sdk/namespaces.html) for documentation on the individual SDK types.
-
-## Support
-
-If you have any questions, bug reports, or feature requests, feel free to submit to the [issue tracker](https://github.com/eegeo/eegeo-example-app/issues) for this repository. Alternatively, you can contact us at [support@eegeo.com](mailto:support@eegeo.com).
 
 ## License
 
