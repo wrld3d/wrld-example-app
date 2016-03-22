@@ -29,7 +29,6 @@ namespace ExampleApp
             , m_onViewOpenedCallback(this, &DesktopSettingsMenuController::OnSearchMenuOpened)
             , m_onViewClosedCallback(this, &DesktopSettingsMenuController::OnSearchMenuClosed)
             , m_searchMenuView(searchMenuView)
-            , m_isOtherControlOpen(false)
             {
                 m_modalBackgroundView.InsertTappedCallback(m_onModalBackgroundTappedCallback);
                 
@@ -40,6 +39,9 @@ namespace ExampleApp
 
                 m_searchMenuView.InsertOnViewOpened(m_onViewOpenedCallback);
                 m_searchMenuView.InsertOnViewClosed(m_onViewClosedCallback);
+
+                m_isControlOpen[Control::SearchMenu] = false;
+                m_isControlOpen[Control::POICard] = false;
             }
             
             DesktopSettingsMenuController::~DesktopSettingsMenuController()
@@ -108,38 +110,35 @@ namespace ExampleApp
             void DesktopSettingsMenuController::OnSearchResultPoiViewOpenedMessage(const ExampleApp::SearchResultPoi::SearchResultPoiViewOpenedMessage & message)
             {
                 m_viewModel.RemoveFromScreen();
-                m_isOtherControlOpen = true;
+                
+                m_isControlOpen[Control::POICard] = true;
             }
             
             void DesktopSettingsMenuController::OnSearchResultPoiViewClosedMessage(const ExampleApp::SearchResultPoi::SearchResultPoiViewClosedMessage & message)
             {
-                if (!m_isOtherControlOpen)
+                if (!m_isControlOpen[Control::SearchMenu])
                 {
                     m_viewModel.AddToScreen();
                 }
-                else
-                {
-                    m_isOtherControlOpen = false;
-                }
+                
+                m_isControlOpen[Control::POICard] = false;
 
             }
             
             void DesktopSettingsMenuController::OnSearchMenuOpened()
             {
                 m_viewModel.RemoveFromScreen();
-                m_isOtherControlOpen = true;
+                m_isControlOpen[Control::SearchMenu] = true;
             }
             
             void DesktopSettingsMenuController::OnSearchMenuClosed()
             {
-                if (!m_isOtherControlOpen)
+                if (!m_isControlOpen[Control::POICard])
                 {
                     m_viewModel.AddToScreen();
                 }
-                else
-                {
-                    m_isOtherControlOpen = false;
-                }
+
+                m_isControlOpen[Control::SearchMenu] = false;
             }
         }
     }

@@ -20,11 +20,18 @@ namespace ExampleApp
         {
             class DesktopSettingsMenuController : public Menu::View::MenuController
             {
+                enum Control
+                {
+                    SearchMenu = 0,
+                    POICard,
+                    Num
+                };
+
             private:
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Modality::View::IModalBackgroundView& m_modalBackgroundView;
                 bool m_appModeAllowsOpen;
-                bool m_isOtherControlOpen;
+                bool m_isControlOpen[Control::Num];
                 AppModes::SdkModel::AppMode m_currentAppMode;
                 
                 Eegeo::Helpers::TCallback1<DesktopSettingsMenuController, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
