@@ -2,21 +2,17 @@
     <img src="http://cdn2.eegeo.com/wp-content/uploads/2016/03/eegeo_logo_quite_big.png" alt="eeGeo Logo" title="eegeo" align="right" height="80px" />
 </a>
 
-# eeGeo Example App
-
-Windows builds of the [eeGeo Example App](https://github.com/eegeo/eegeo-example-app) use WPF and C# for the native UI layer.
-
-## Getting Started on Windows
+# Getting Started on Windows
 
 Before you begin, ensure you have completed the initial steps as described in the [root of the repository](https://github.com/eegeo/eegeo-example-app).
 
-### Requirements
+## Requirements
 
 - [Microsoft Visual Studio 2015](https://www.visualstudio.com/en-us/downloads/download-visual-studio-vs.aspx)
 - [CMake](https://cmake.org/) (>= 3.1.1)
 - [Git for Windows](https://git-for-windows.github.io/)
 
-### Setup
+## Setup
 
 1.  Open a Git Bash terminal for the following commands.
 2.  In the root of the repo, run the command `./update.platform.sh -p windows` to download the latest eeGeo Windows SDK.
