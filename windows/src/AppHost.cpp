@@ -480,15 +480,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_messageBus
         );
 
-    m_pSettingsMenuViewModule = Eegeo_NEW(ExampleApp::SettingsMenu::View::SettingsMenuViewModule)(
-        "ExampleAppWPF.SettingsMenuView",
-        m_nativeState,
-        app.SettingsMenuModule().GetSettingsMenuModel(),
-        app.SettingsMenuModule().GetSettingsMenuViewModel(),
-        m_pModalBackgroundViewModule->GetView(),
-        m_messageBus
-        );
-
     m_pSearchMenuViewModule = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchMenuViewModule)(
         "ExampleAppWPF.SearchMenuView",
         m_nativeState,
@@ -502,6 +493,16 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         app.ReactionModelModule().GetReactionModel()
         );
 
+    m_pSettingsMenuViewModule = Eegeo_NEW(ExampleApp::SettingsMenu::View::SettingsMenuViewModule)(
+        "ExampleAppWPF.SettingsMenuView",
+        m_nativeState,
+        app.SettingsMenuModule().GetSettingsMenuModel(),
+        app.SettingsMenuModule().GetSettingsMenuViewModel(),
+        m_pModalBackgroundViewModule->GetView(),
+        m_pSearchMenuViewModule->GetMenuView(),
+        m_messageBus
+        );
+    
     m_pSearchResultSectionViewModule = Eegeo_NEW(ExampleApp::SearchResultSection::View::SearchResultSectionViewModule)(
         app.SearchMenuModule().GetSearchMenuViewModel(),
         app.SearchResultSectionModule().GetSearchResultSectionOptionsModel(),
@@ -574,6 +575,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     app.ReactionModelModule().GetReactionModel().AddIgnoredMenuIdentity(settingsMenuIdentity);
     
     app.ModalityModule().GetModalityController().AddIgnoredMenuIdentity(searchMenuIdentity);
+    app.ReactionModelModule().GetReactionModel().AddIgnoredMenuIdentity(searchMenuIdentity);
 }
 
 void AppHost::DestroyApplicationViewModulesFromUiThread()

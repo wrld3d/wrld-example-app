@@ -53,19 +53,10 @@ namespace ExampleApp
             
             void DesktopSearchMenuController::OnSearchResultPoiViewOpenedMessage(const ExampleApp::SearchResultPoi::SearchResultPoiViewOpenedMessage& message)
             {
-                m_modalityController.AddIgnoredMenuIdentity(m_menuIdentity);
-                m_reactionModel.AddIgnoredMenuIdentity(m_menuIdentity);
             }
 
             void DesktopSearchMenuController::OnSearchResultPoiViewClosedMessage(const ExampleApp::SearchResultPoi::SearchResultPoiViewClosedMessage& message)
             {
-                m_modalityController.RemoveIgnoredMenuIdentity(m_menuIdentity);
-                m_reactionModel.RemoveIgnoredMenuIdentity(m_menuIdentity);
-
-                if (SearchMenuController::IsFullyOpen())
-                {
-                    SearchMenuController::UpdateOpenState();
-                }
             }
         }
     }

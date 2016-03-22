@@ -33,6 +33,7 @@ namespace ExampleApp
                     Menu::View::IMenuModel& menuModelModel,
                     Menu::View::IMenuViewModel& menuViewModel,
                     Modality::View::IModalBackgroundView& modealBackgroundView,
+                    Menu::View::IMenuView& searchMenuView,
                     ExampleAppMessaging::TMessageBus& messageBus
                 );
 
