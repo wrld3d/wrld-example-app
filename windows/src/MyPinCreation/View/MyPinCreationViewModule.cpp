@@ -36,6 +36,11 @@ namespace ExampleApp
                 Eegeo_DELETE m_pInitiationController;
                 Eegeo_DELETE m_pInitiationView;
             }
+
+            IMyPinCreationInitiationView& MyPinCreationViewModule::GetMyPinCreationInitiationView()
+            {
+                return *m_pInitiationView;
+            }
         }
     }
 }

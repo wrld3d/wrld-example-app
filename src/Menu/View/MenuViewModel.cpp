@@ -87,14 +87,14 @@ namespace ExampleApp
                 m_openViewModel.ReleaseReactorControl();
             }
             
-            bool MenuViewModel::Open()
+            bool MenuViewModel::Open(bool acquireReactor)
             {
-                return m_openViewModel.Open();
+                return m_openViewModel.Open(acquireReactor);
             }
             
-            bool MenuViewModel::Close()
+            bool MenuViewModel::Close(bool releaseReactor)
             {
-                return m_openViewModel.Close();
+                return m_openViewModel.Close(releaseReactor);
             }
             
             void MenuViewModel::UpdateOpenState(float openState)

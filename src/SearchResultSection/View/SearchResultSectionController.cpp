@@ -91,7 +91,8 @@ namespace ExampleApp
                                                                            model.GetFloor(),
                                                                            m_searchMenuViewModel,
                                                                            GetOriginalIndexForSearchResult(unorderedResults, model),
-                                                                           m_messageBus));
+                                                                           m_messageBus,
+                                                                           m_menuReaction));
                 }
             }
             
@@ -109,13 +110,15 @@ namespace ExampleApp
             SearchResultSectionController::SearchResultSectionController(Menu::View::IMenuViewModel& searchMenuViewModel,
                                                                          Menu::View::IMenuOptionsModel& menuOptions,
                                                                          ISearchResultSectionOrder& order,
-                                                                         ExampleAppMessaging::TMessageBus& messageBus)
+                                                                         ExampleAppMessaging::TMessageBus& messageBus,
+                                                                         const Menu::View::IMenuReactionModel& menuReaction)
             : m_searchMenuViewModel(searchMenuViewModel)
             , m_menuOptions(menuOptions)
             , m_order(order)
             , m_messageBus(messageBus)
             , m_searchResultReceivedHandler(this, &SearchResultSectionController::OnSearchQueryResponseReceivedMessage)
             , m_searchQueryRemovedHandler(this, &SearchResultSectionController::OnSearchQueryRemovedMessage)
+            , m_menuReaction(menuReaction)
             {
                 m_messageBus.SubscribeUi(m_searchResultReceivedHandler);
                 m_messageBus.SubscribeUi(m_searchQueryRemovedHandler);

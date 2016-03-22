@@ -60,6 +60,9 @@ namespace ExampleApp
                     const Eegeo::Resources::Interiors::InteriorsModel& interiorModel = *m_interiorInteractionModel.GetInteriorModel();
                     const int selectedFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
                     
+                    float altitude = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(interiorModel, selectedFloorIndex);
+                    float heightAboveTerrain = Helpers::InteriorHeightHelpers::INTERIOR_FLOOR_HEIGHT*selectedFloorIndex;
+                    
                     for(size_t i = 0; i < m_worldPinsRepository.GetItemCount(); ++i)
                     {
                         WorldPinItemModel& worldPinItemModel = *m_worldPinsRepository.GetItemAtIndex(i);
@@ -69,7 +72,6 @@ namespace ExampleApp
                             
                             float altitude = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(interiorModel, pinFloorIndex);
                             float heightAboveTerrain = Helpers::InteriorHeightHelpers::INTERIOR_FLOOR_HEIGHT*pinFloorIndex;
-                            
                             if ((!m_interiorInteractionModel.IsCollapsed() || pinFloorIndex == selectedFloorIndex) &&
                                 worldPinItemModel.GetInteriorData().building == interiorModel.GetId())
                             {

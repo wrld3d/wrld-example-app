@@ -20,10 +20,11 @@ set(clr_compile_flags "/clr /EHa /FpExampleAppClrPch.pch")
 
 set_source_files_properties(${currsources} PROPERTIES COMPILE_FLAGS "${clr_compile_flags}")
 
-set_source_files_properties(src/ExampleAppPch.cpp PROPERTIES COMPILE_FLAGS "/Yc")
+set_source_files_properties(src/ExampleAppPch.cpp PROPERTIES COMPILE_FLAGS "/Yc /Fp${precompiled_header_result}")
 set(currsources ${currsources} src/ExampleAppPch.cpp)
 
 set_source_files_properties(src/ExampleAppClrPch.cpp PROPERTIES COMPILE_FLAGS "/Yc ${clr_compile_flags}")
+set_source_files_properties(src/ExampleAppClrPch.cpp PROPERTIES COMPILE_FLAGS "/Yc /clr /EHa /Fp${precompiled_header_clr_result}")
 set(currsources ${currsources} src/ExampleAppClrPch.cpp)
 
 

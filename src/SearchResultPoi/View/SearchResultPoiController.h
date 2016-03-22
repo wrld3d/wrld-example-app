@@ -33,8 +33,6 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<SearchResultPoiController, const SearchResultPoiViewImageDownloadCompletedMessage&> m_imageLoadedHandlerBinding;
                 Eegeo::Helpers::TCallback2<SearchResultPoiController, const Search::SdkModel::SearchResultModel&, const std::string&> m_availabilityChangedCallback;
 
-                void OnViewOpened();
-
                 void OnViewClosed();
 
                 void OnCloseButtonClicked();
@@ -45,13 +43,19 @@ namespace ExampleApp
                 
                 void OnAvailabilityChanged(const Search::SdkModel::SearchResultModel& searchResultModel, const std::string& availability);
 
+            protected:
+                ISearchResultPoiView& GetView() { return m_view; }
+                ISearchResultPoiViewModel& GetViewModel() { return m_viewModel; }
+                ExampleAppMessaging::TMessageBus& GetMessageBus() { return m_messageBus; }
+
+                virtual void OnViewOpened();
             public:
                 SearchResultPoiController(ISearchResultPoiView& view,
                                           ISearchResultPoiViewModel& viewModel,
                                           ExampleAppMessaging::TMessageBus& messageBus,
                                           Metrics::IMetricsService& metricsService);
 
-                ~SearchResultPoiController();
+                virtual ~SearchResultPoiController();
             };
         }
     }

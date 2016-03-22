@@ -29,6 +29,7 @@ namespace ExampleApp
                     "ExampleAppWPF.SwallowFacilitySearchResultsPoiView",
                     "ExampleAppWPF.GeoNamesSearchResultsPoiView",
                     "ExampleAppWPF.SwallowDepartmentSearchResultsPoiView"
+                    "ExampleAppWPF.GeoNamesSearchResultsPoiView"
                 };
             }
 

@@ -7,6 +7,7 @@
 #include "Menu.h"
 #include "BidirectionalBus.h"
 #include "MyPinAddedToMenuMessage.h"
+#include "IMenuReactionModel.h"
 
 namespace ExampleApp
 {
@@ -19,7 +20,8 @@ namespace ExampleApp
             public:
                 MyPinAddedToMenuObserver(Menu::View::IMenuViewModel& menuViewModel,
                                          Menu::View::IMenuOptionsModel& menuOptionsModel,
-                                         ExampleAppMessaging::TMessageBus& messageBus);
+                                         ExampleAppMessaging::TMessageBus& messageBus,
+                                         const Menu::View::IMenuReactionModel& menuReaction);
 
                 ~MyPinAddedToMenuObserver();
 
@@ -27,6 +29,7 @@ namespace ExampleApp
                 Menu::View::IMenuViewModel& m_menuViewModel;
                 Menu::View::IMenuOptionsModel& m_menuOptionsModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
+                const Menu::View::IMenuReactionModel& m_menuReaction;
                 Eegeo::Helpers::TCallback1<MyPinAddedToMenuObserver, const MyPinAddedToMenuMessage&> m_handlerBinding;
 
                 void OnMyPinAddedToMenuMessage(const MyPinAddedToMenuMessage& message);

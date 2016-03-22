@@ -13,6 +13,5 @@ set(currsources
   src/Search/Yelp/OAuth/urlencode.h
 )
 
-
 set(sources ${sources} ${currsources})
 source_group(\\windows_src\\\\Search\\Yelp\\OAuth FILES ${currsources})

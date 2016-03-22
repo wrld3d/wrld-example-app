@@ -65,9 +65,15 @@ namespace ExampleApp
                 return m_reactionControllerModel.ReleaseModalControl(GetIdentity());
             }
 
-            bool OpenableControlViewModelBase::Open()
+            bool OpenableControlViewModelBase::Open(bool acquireReactor)
             {
-                if(TryAcquireReactorControl())
+                if (!acquireReactor)
+                {
+                    m_openState = 1.f;
+                    m_openStateChangedCallbacks.ExecuteCallbacks(*this, m_openState);
+                    return true;
+                }
+                else if(TryAcquireReactorControl())
                 {
                     m_openState = 1.f;
                     m_openStateChangedCallbacks.ExecuteCallbacks(*this, m_openState);
@@ -83,9 +89,15 @@ namespace ExampleApp
                 return false;
             }
 
-            bool OpenableControlViewModelBase::Close()
+            bool OpenableControlViewModelBase::Close(bool releaseReactor)
             {
-                if(TryAcquireReactorControl())
+                if (!releaseReactor)
+                {
+                    m_openState = 0.f;
+                    m_openStateChangedCallbacks.ExecuteCallbacks(*this, m_openState);
+                    return true;
+                }
+                else if(TryAcquireReactorControl())
                 {
                     m_openState = 0.f;
                     m_openStateChangedCallbacks.ExecuteCallbacks(*this, m_openState);

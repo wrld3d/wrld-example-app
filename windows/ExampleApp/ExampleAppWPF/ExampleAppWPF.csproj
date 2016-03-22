@@ -289,6 +289,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -707,6 +708,19 @@
     </Resource>
     <Resource Include="..\..\Resources\icon1_meeting_room_occupied.png">
       <Link>Assets\icon1_meeting_room_occupied.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\floor_selection_button.png">
+      <Link>Assets\floor_selection_button.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\floor_selection_button_down.png">
+      <Link>Assets\floor_selection_button_down.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\floor_selection_button_mouse_over.png">
+      <Link>Assets\floor_selection_button_mouse_over.png</Link>
     </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

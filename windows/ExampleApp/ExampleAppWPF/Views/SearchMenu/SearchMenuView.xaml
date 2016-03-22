@@ -409,6 +409,10 @@
                                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MenuItemGrid" Storyboard.TargetProperty="Background">
                                                                             <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource PrimaryBG_colour}"/>
                                                                         </ObjectAnimationUsingKeyFrames>
+
+                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MenuItemTitle" Storyboard.TargetProperty="Foreground">
+                                                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource LightGrey}"/>
+                                                                        </ObjectAnimationUsingKeyFrames>
                                                                     </Storyboard>
                                                                 </BeginStoryboard>
                                                             </EventTrigger>

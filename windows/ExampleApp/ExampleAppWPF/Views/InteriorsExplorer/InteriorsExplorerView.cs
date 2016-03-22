@@ -104,6 +104,8 @@ namespace ExampleAppWPF
 
             m_sliderTickBar.TickLabels = string.Join(",", floorShortNames);
 
+            m_selectedFloorIndex = currentlySelectedFloorIndex;
+
             m_floorSlider.Minimum = 0;
             m_floorSlider.Maximum = FloorCount - 1;
             SetSelectedFloor(currentlySelectedFloorIndex);
