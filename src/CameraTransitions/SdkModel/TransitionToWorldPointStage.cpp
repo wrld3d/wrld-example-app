@@ -130,8 +130,8 @@ namespace ExampleApp
             bool TransitionToWorldPointStage::ShouldJumpTo(Eegeo::dv3& newInterestPoint)
             {
                 const double MAX_CAMERA_TRANSITION_DISTANCE = 5000;
-                Eegeo::dv3 currentInterestPoint = m_gpsGlobeCameraController.GetEcefInterestPoint();
-                double distance = (newInterestPoint - currentInterestPoint).Length();
+                const Eegeo::dv3& currentCameraLocation = m_gpsGlobeCameraController.GetCameraState().LocationEcef();
+                double distance = (newInterestPoint - currentCameraLocation).Length();
                 return distance > MAX_CAMERA_TRANSITION_DISTANCE;
             }
 
