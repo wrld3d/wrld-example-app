@@ -11,6 +11,8 @@ set(currsources
   ios_src/Helpers/UIColors.mm
   ios_src/Helpers/UIHelpers.h
   ios_src/Helpers/UIHelpers.mm
+  ios_src/Helpers/ImmediatePanGestureRecognizer.h
+  ios_src/Helpers/ImmediatePanGestureRecognizer.mm
 )
 set(sources ${sources} ${currsources})
 source_group(\\ios_src\\Helpers FILES ${currsources})

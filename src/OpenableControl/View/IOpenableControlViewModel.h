@@ -11,7 +11,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            class IOpenableControlViewModel : public Eegeo::Helpers::IIdentity
+            class IOpenableControlViewModel : public virtual Eegeo::Helpers::IIdentity
             {
             public:
                 virtual ~IOpenableControlViewModel() { }

@@ -40,7 +40,8 @@ namespace ExampleApp
                                 const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                 Eegeo::Helpers::IIdentityProvider& identityProvider,
                                 ExampleAppMessaging::TMessageBus& messageBus,
-                                Eegeo::Resources::Interiors::InteriorController& interiorsController,
+                                const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                 ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
                                 const bool interiorsAffectedByFlattening);
 

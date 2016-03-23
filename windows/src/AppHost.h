@@ -23,7 +23,6 @@
 #include "NativeUIFactories.h"
 #include "TerrainHeightRepository.h"
 #include "GlobalShadowing.h"
-#include "TouchEventWrapper.h"
 #include "Blitter.h"
 #include "WindowsNativeState.h"
 #include "AppInputDelegate.h"
@@ -91,7 +90,7 @@ public:
     void HandleNoConnectivityWarning();
     void HandleInvalidConnectivityError();
 
-    void HandleTouchInputEvent(const Eegeo::Windows::Input::TouchInputEvent& event);
+    void HandleMouseInputEvent(const Eegeo::Windows::Input::MouseInputEvent& event);
     void HandleKeyboardInputEvent(const Eegeo::Windows::Input::KeyboardInputEvent& event);
 
     void SetAllInputEventsToPointerUp(int x, int y);

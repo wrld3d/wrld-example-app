@@ -11,5 +11,7 @@ namespace ExampleApp
         static void Dismiss(System::IntPtr nativeObjectPtr);
 
         static void SelectFloor(System::IntPtr nativeObjectPtr, int index);
+
+        static void SetFloorSelectionDrag(System::IntPtr nativeObjectPtr, System::Double dragParam);
     };
 };

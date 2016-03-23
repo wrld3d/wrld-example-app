@@ -3,9 +3,9 @@
 #pragma once
 
 #include "ICameraTransitionStage.h"
-#include "InteriorController.h"
-#include "InteriorSelectionModel.h"
-#include "InteriorsExplorerCameraController.h"
+#include "Interiors.h"
+#include "InteriorsExplorer.h"
+#include "InteriorId.h"
 #include "VectorMath.h"
 
 namespace ExampleApp
@@ -18,9 +18,11 @@ namespace ExampleApp
             {
             public:
                 
-                TransitionToInteriorStage(Eegeo::Resources::Interiors::InteriorController& interiorController,
-                                          const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                          InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& cameraController,
+                TransitionToInteriorStage(
+                                          Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                          Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                          const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
+                                          Eegeo::Resources::Interiors::InteriorsCameraController& cameraController,
                                           const Eegeo::dv3& newInterestPoint,
                                           float newDistanceToInterest,
                                           const Eegeo::Resources::Interiors::InteriorId& interiorId,
@@ -34,9 +36,10 @@ namespace ExampleApp
                 
             private:
                 
-                Eegeo::Resources::Interiors::InteriorController& m_interiorController;
-                const Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
-                InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& m_cameraController;
+                Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
+                Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
+                const Eegeo::Resources::Interiors::InteriorTransitionModel& m_interiorTransitionModel;
+                Eegeo::Resources::Interiors::InteriorsCameraController& m_cameraController;
                 
                 Eegeo::dv3 m_newInterestPoint;
                 Eegeo::dv3 m_startInterestPoint;

@@ -174,6 +174,7 @@ namespace
         bestConfig = configs[bestIndex];
         Eegeo_ARRAY_DELETE configs;
 
+        EXAMPLE_LOG("Found a valid config.");
         return true;
     }
 }
@@ -188,12 +189,17 @@ bool GlDisplayService::TryBindDisplay(ANativeWindow& window)
 
     if (!DefaultEGLChooser(m_display, EGL_WINDOW_BIT, config))
     {
-        Eegeo_ERROR("unable to find a good display type");
+    	EXAMPLE_LOG("Unable to bind display. Couldn't find a good display type. DefaultEGLChooser failed");
         return false;
     }
 
-    eglGetConfigAttrib(m_display, config, EGL_NATIVE_VISUAL_ID, &format);
+    if(!eglGetConfigAttrib(m_display, config, EGL_NATIVE_VISUAL_ID, &format))
+    {
+    	EXAMPLE_LOG("Unable to bind display. Couldn't find a good display type, eglGetConfigAttrib failed");
+    	return false;
+    }
 
+    // no documentation on what return code means. Some other functions return a negative value to indicate failure.
     ANativeWindow_setBuffersGeometry(&window, 0, 0, format);
 
     static const EGLint contextAttribs[] =
@@ -204,15 +210,27 @@ bool GlDisplayService::TryBindDisplay(ANativeWindow& window)
     };
 
     surface = eglCreateWindowSurface(m_display, config, &window, NULL);
+    if(surface == EGL_NO_SURFACE)
+    {
+    	EXAMPLE_LOG("Unable to bind display. eglCreateWindowSurface failed.");
+    	return false;
+    }
 
     if(m_context == EGL_NO_CONTEXT)
     {
-        m_context = eglCreateContext(m_display, config, NULL, contextAttribs);
+		EXAMPLE_LOG("m_context == EGL_NO_CONTEXT. Creating context...");
+        m_context = eglCreateContext(m_display, config, NULL, contextAttribs);     
     }
+	
+	if(m_context == EGL_NO_CONTEXT)
+	{
+		EXAMPLE_LOG("Unable to bind display. eglCreateContext failed");
+		return false;
+	}
 
     if (eglMakeCurrent(m_display, surface, surface, m_context) == EGL_FALSE)
     {
-        Eegeo_ERROR("Unable to eglMakeCurrent");
+    	EXAMPLE_LOG("Unable to eglMakeCurrent");
         return false;
     }
 
@@ -240,15 +258,26 @@ bool GlDisplayService::TryBindDisplay(ANativeWindow& window)
     EGLConfig sharedSurfaceConfig;
     if (!DefaultEGLChooser(m_display, EGL_PBUFFER_BIT, sharedSurfaceConfig))
     {
-        Eegeo_ERROR("unabled to find a good pbuffer surface type");
+    	EXAMPLE_LOG("Unable to bind display. Couldn't find a good pbuffer surface type, called DefaultEGLChoose with EGL_PBUFFER_BIT and it failed.");
+        return false;
     }
 
     if(m_resourceBuildSharedContext == EGL_NO_CONTEXT)
     {
-            m_resourceBuildSharedContext = eglCreateContext(m_display, sharedSurfaceConfig, m_context, contextAttribs);
+        m_resourceBuildSharedContext = eglCreateContext(m_display, sharedSurfaceConfig, m_context, contextAttribs);
+        if(m_resourceBuildSharedContext == EGL_NO_CONTEXT)
+        {
+        	EXAMPLE_LOG("Unable to bind display. eglCreateContext failed for shared surface config.");
+        	return false;
+        }
     }
 
     m_sharedSurface = eglCreatePbufferSurface(m_display, sharedSurfaceConfig, pBufferAttribs);
+    if(m_sharedSurface == EGL_NO_SURFACE)
+    {
+    	EXAMPLE_LOG("Unable to bind display. eglCreatePbufferSurface failed with shared surface config.");
+    	return false;
+    }
 #endif
 
     m_displayWidth = w;

@@ -165,8 +165,7 @@ namespace ExampleAppWPF
                 m_openSearchIconAnim.Completed -= OnAnimCompleted;
                 m_openState = MENU_OPEN;
 
-                MenuViewCLIMethods.ViewOpenCompleted(m_nativeCallerPointer);
-                m_mainWindow.DisableInput();
+                MenuViewCLIMethods.ViewOpenCompleted(m_nativeCallerPointer);                
 
                 m_isOffScreen = false;
             }
@@ -233,6 +232,7 @@ namespace ExampleAppWPF
 
             m_openState = MENU_OPENING;
             m_backgroundRectangle.Visibility = Visibility.Visible;
+            m_mainWindow.DisableInput();
         }
 
         public virtual void AnimateOffScreen()

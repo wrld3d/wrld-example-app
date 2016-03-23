@@ -8,6 +8,8 @@ namespace ExampleAppWPF
     {
         private ExampleApp.SearchResultModelCLI m_model;
 
+        private Image m_categoryIcon;
+
         public string Title { get; set; }
         public string Country { get; set; }
         
@@ -26,15 +28,16 @@ namespace ExampleAppWPF
         {
             base.OnApplyTemplate();
 
-            Image categoryIcon = (Image)GetTemplateChild("CategoryIcon");
+            m_categoryIcon = (Image)GetTemplateChild("CategoryIcon");
 
-            categoryIcon.Source = StartupResourceLoader.GetBitmap(SearchResultCategoryMapper.GetIconImageName(m_model.Category));
+            m_mainContainer = (FrameworkElement)GetTemplateChild("GeoNamesResultView");
         }
         
         public override void DisplayPoiInfo(Object modelObject, bool isPinned)
         {
             m_model = modelObject as ExampleApp.SearchResultModelCLI;
-            
+            m_categoryIcon.Source = StartupResourceLoader.GetBitmap(SearchResultCategoryMapper.GetIconImageName(m_model.Category));
+
             m_closing = false;
 
             Title = m_model.Title;

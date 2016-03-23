@@ -148,7 +148,7 @@
     
     const float upperMargin = (isPhone ? 20.0f : 50.0f) * m_pixelScale;
     const float lowerMargin = (isPhone ? 0.0f : 50.0f) * m_pixelScale;
-    const float searchCountLabelWidth = 32.0f * m_pixelScale;
+    const float searchCountLabelWidth = (isPhone ? 28.f : 32.0f) * m_pixelScale;
     const float dragTabOffsetX = searchCountLabelWidth;
     const float dragTabSize = 50.0f * m_pixelScale;
     const float tableSpacing = 6.0f * m_pixelScale;
@@ -332,7 +332,7 @@
     self.pSearchResultsTableContainerView = [[[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, m_menuContainerWidth, 0.0f)] autorelease];
     self.pSearchResultsTableContainerView.bounces = NO;
     self.pSearchResultsTableContainerView.contentSize = CGSizeMake(m_menuContainerWidth, 0.0f);
-    self.pSearchResultsTableContainerView.backgroundColor = [UIColor clearColor];
+    self.pSearchResultsTableContainerView.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
     self.pSearchResultsTableContainerView.scrollEnabled = YES;
     self.pSearchResultsTableContainerView.userInteractionEnabled = YES;
     

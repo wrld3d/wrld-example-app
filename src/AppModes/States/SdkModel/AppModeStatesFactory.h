@@ -29,9 +29,8 @@ namespace ExampleApp
                 {
                 private:
                     AppCamera::SdkModel::IAppCameraController& m_appCameraController;
-                    Eegeo::Resources::Interiors::InteriorController& m_interiorController;
                     AppCamera::SdkModel::AppGlobeCameraWrapper& m_worldCameraController;
-                    InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& m_interiorCameraController;
+                    AppCamera::SdkModel::AppInteriorCameraWrapper& m_interiorCameraController;
                     Tours::SdkModel::Camera::IToursCameraController& m_toursCameraController;
                     Eegeo::Streaming::CameraFrustumStreamingVolume& m_cameraFrustumStreamingVolume;
                     InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& m_interiorVisibilityUpdate;
@@ -40,6 +39,7 @@ namespace ExampleApp
                     InteriorsExplorer::SdkModel::InteriorExplorerUserInteractionModel& m_interiorExplorerUserInteractionModel;
                     Tours::SdkModel::ITourService& m_tourService;
                     Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
+                    Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                     Eegeo::UI::NativeUIFactories& m_nativeUIFactories;
                     MyPinCreation::SdkModel::IMyPinCreationModel& m_myPinCreationModel;
                     VisualMap::SdkModel::IVisualMapService& m_visualMapService;
@@ -48,9 +48,8 @@ namespace ExampleApp
                 public:
                     
                     AppModeStatesFactory(AppCamera::SdkModel::IAppCameraController& appCameraController,
-                                         Eegeo::Resources::Interiors::InteriorController& interiorController,
                                          AppCamera::SdkModel::AppGlobeCameraWrapper& worldCameraController,
-                                         InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorCameraController,
+                                         AppCamera::SdkModel::AppInteriorCameraWrapper& interiorCameraController,
                                          Tours::SdkModel::Camera::IToursCameraController& toursCameraController,
                                          Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
                                          InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
@@ -59,6 +58,7 @@ namespace ExampleApp
                                          AppModes::SdkModel::IAppModeModel& appModeModel,
                                          Tours::SdkModel::ITourService& tourService,
                                          Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                         Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                          Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                          MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
                                          VisualMap::SdkModel::IVisualMapService& visualMapService);

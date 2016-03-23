@@ -5,82 +5,86 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../../Colours.xaml" />
+        <ResourceDictionary Source="../../TransparentButtonStyle.xaml" />
+        <ResourceDictionary Source="../../SimpleSlider.xaml" />        
     </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="ExitButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid Name="ExitButtonGrid" Background="{StaticResource PrimaryBG_colour}">
+                        <Image Source="/Assets/button_exit_interior_off.png"  Name="ExitButtonIcon"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ExitButtonIcon" Property="Source" Value="/Assets/button_exit_interior_on.png"/>
+                            <Setter TargetName="ExitButtonGrid" Property="Background" Value="{StaticResource PrimaryBG_Down_Colour}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition  Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsPressed" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="ExitButtonGrid" Property="Background" Value="{StaticResource PrimaryBG_Over_Colour}"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 
     <Style TargetType="{x:Type local:InteriorsExplorerView}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:InteriorsExplorerView}">
                     <Grid>
-                        <Grid Name="DetailsPanel" Width="Auto" Height="40" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,40,0,0">
+                        <Grid Name="DetailsPanel" Width="Auto" Height="36" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,20,0,0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="200"/>
-                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="245"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="36"/>
                             </Grid.ColumnDefinitions>
-                            <Button Name="DismissButton" Width="40" Height="40" Grid.Column="1">
-                                <Button.Style>
-                                    <Style TargetType="{x:Type Button}">
-                                        <Style.Setters>
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="{x:Type Button}">
-                                                        <Grid Name="ExitButtonGrid" Background="{StaticResource PrimaryBG_colour}">
-                                                            <Image Source="/Assets/button_exit_interior_off.png"  Name="ExitButtonIcon"/>
-                                                        </Grid>
-                                                        <ControlTemplate.Triggers>
-                                                            <Trigger Property="IsPressed" Value="True">
-                                                                <Setter TargetName="ExitButtonIcon" Property="Source" Value="/Assets/button_exit_interior_on.png"/>
-                                                                <Setter TargetName="ExitButtonGrid" Property="Background" Value="{StaticResource PrimaryBG_Down_Colour}"/>
-                                                            </Trigger>
-                                                            <MultiTrigger>
-                                                                <MultiTrigger.Conditions>
-                                                                    <Condition  Property="IsMouseOver" Value="True" />
-                                                                    <Condition Property="IsPressed" Value="False"/>
-                                                                </MultiTrigger.Conditions>
-                                                                <MultiTrigger.Setters>
-                                                                    <Setter TargetName="ExitButtonGrid" Property="Background" Value="{StaticResource PrimaryBG_Over_Colour}"/>
-                                                                </MultiTrigger.Setters>
-                                                            </MultiTrigger>
-                                                        </ControlTemplate.Triggers>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style.Setters>
-                                    </Style>
-                                </Button.Style>
-                            </Button>
+
                             <Grid Grid.Column="0">
-                                <Border Name="Mask" CornerRadius="0,5,5,0" Background="White"/>
-                                <Grid Background="White">
-                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="FloorName" Foreground="{StaticResource DarkGrey}" FontSize="16"/>
+                                <Border Name="Mask" Background="White"/>
+                                <Grid Background="{StaticResource PrimaryBG_colour}">
+                                    <Grid.OpacityMask>
+                                        <VisualBrush Visual="{Binding ElementName=Mask}"/>
+                                    </Grid.OpacityMask>
+
+                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Name="FloorName" Foreground="{StaticResource White}" FontSize="14" Padding="14"/>
                                 </Grid>
                             </Grid>
+                            <Grid Grid.Column="1">
+                            </Grid>
+                            <Button Name="DismissButton" Width="36" Height="36" Grid.Column="2" Style="{StaticResource ExitButtonStyle}"/>
                         </Grid>
 
-                        <Grid Name="FloorPanel" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Rectangle Grid.Row="0" Width="50" Fill="{StaticResource Gold}" Height="20"/>
-                            <ListBox Name="FloorList" Grid.Row="1" HorizontalContentAlignment="Stretch">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid HorizontalAlignment="Stretch" Height="42" Margin="0,0,0,0" Background="White">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="1"/>
-                                            </Grid.RowDefinitions>
-                                            <Grid HorizontalAlignment="Stretch" Grid.Row="0">
-                                                <TextBlock Text="{Binding}" FontSize="14" Foreground="{StaticResource DarkGrey}" MaxWidth="200" HorizontalAlignment="Center" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
-                                            </Grid>
-                                            <Grid Grid.Row="1" Background="{StaticResource LightGrey}"/>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                            <Rectangle Grid.Row="2" Height="20" Width="50" Fill="{StaticResource Gold}"/>
+                        <Grid Name="FloorPanel" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="auto">
+                            <Slider Name="FloorSlider"
+                                    Grid.Column="0"
+                                    Style="{StaticResource SimpleSlider}"
+                                    Orientation="Vertical"                                    
+                                    VerticalAlignment="Bottom"
+                                    Margin="0,0,20,13"
+                                    MinHeight="300"
+                                    Minimum="0"
+                                    Maximum="1"
+                                    TickFrequency="1"
+                                    TickPlacement="TopLeft"                                    
+                                    IsMoveToPointEnabled="True"
+                                    Tag="0"
+                                    Foreground="{StaticResource LightGrey}">
+                                <Slider.Background>
+                                    <SolidColorBrush Opacity="0.0"/>
+                                </Slider.Background>
+                            </Slider>
+                            
+
                         </Grid>
                     </Grid>
                 </ControlTemplate>

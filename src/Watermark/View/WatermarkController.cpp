@@ -59,11 +59,11 @@ namespace ExampleApp
                 m_appModeAllowsOpen = appMode == AppModes::SdkModel::WorldMode ||
                                       appMode == AppModes::SdkModel::InteriorMode;
                 
-                if(m_appModeAllowsOpen)
+                if(m_appModeAllowsOpen && !m_viewModel.IsFullyOnScreen())
                 {
                     m_viewModel.AddToScreen();
                 }
-                else if(!m_appModeAllowsOpen)
+                else if(!m_appModeAllowsOpen && !m_viewModel.IsFullyOffScreen())
                 {
                     m_viewModel.RemoveFromScreen();
                 }

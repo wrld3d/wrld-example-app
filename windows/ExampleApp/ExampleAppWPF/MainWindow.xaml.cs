@@ -5,7 +5,7 @@ using System.Windows.Media;
 using ExampleApp.CLI;
 using System.Diagnostics;
 using System.Windows.Navigation;
-using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace ExampleAppWPF
 {
@@ -15,8 +15,19 @@ namespace ExampleAppWPF
 	public partial class MainWindow : Window
 	{
 		private MapImage m_mapImage;
-		private TimeSpan m_last = TimeSpan.Zero;
+        private TimeSpan m_currentRenderArgsRenderingTime = TimeSpan.Zero;
+        
+        private Stopwatch m_frameTimer;
         private bool m_isInputActive;
+        private int m_frameCount = 0;
+        private bool m_hasEmptiedEventQueueSinceLastRender = true;
+        private bool m_hasHadRenderEventSinceRender = false;
+        private double m_maxDelta = 0.0;
+        private bool m_logging = false;
+        private bool m_firstFrame = true;
+
+        private const float m_maxWaitPercentage = 1.1f;
+        
 
         public MainWindow()
         {
@@ -24,9 +35,13 @@ namespace ExampleAppWPF
 
             StartupResourceLoader.Init();
 
+
             m_mapImage = new MapImage();
             Loaded += MainWindow_Loaded;
             Closed += MainWindow_Closed;
+
+
+            m_frameTimer = Stopwatch.StartNew();
 
             m_isInputActive = true;
         }
@@ -61,18 +76,29 @@ namespace ExampleAppWPF
             m_mapImage.IsFrontBufferAvailableChanged += OnIsFrontBufferAvailableChanged;
             CompositionTarget.Rendering += CompositionTarget_Rendering;
 
-            PreviewMouseLeftButtonDown += (o, e) => { if(m_isInputActive) m_mapImage.HandlePanStartEvent((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y); };
-            PreviewMouseLeftButtonUp += (o, e) => { if (m_isInputActive) m_mapImage.HandlePanEndEvent((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y); };
-            PreviewMouseRightButtonDown += (o, e) => { if (m_isInputActive) m_mapImage.HandleRotateStartEvent((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y); };
-            PreviewMouseRightButtonUp += (o, e) => { if (m_isInputActive) m_mapImage.HandleRotateEndEvent((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y); };
-            MouseWheel += (o, e) => { if (m_isInputActive) m_mapImage.HandleZoomEvent(e.Delta, 70, (int)e.GetPosition(null).X, (int)e.GetPosition(null).Y); };
+            PreviewMouseLeftButtonDown += (o, e) => { if (m_isInputActive) m_mapImage.HandlePanStartEvent((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y, Keyboard.Modifiers); };
+            PreviewMouseLeftButtonUp += (o, e) => { if (m_isInputActive) m_mapImage.HandlePanEndEvent((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y, Keyboard.Modifiers); };
+            PreviewMouseRightButtonDown += (o, e) => { if (m_isInputActive) m_mapImage.HandleRotateStartEvent((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y, Keyboard.Modifiers); };
+            PreviewMouseRightButtonUp += (o, e) => { if (m_isInputActive) m_mapImage.HandleRotateEndEvent((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y, Keyboard.Modifiers); };
+            MouseWheel += (o, e) => { if (m_isInputActive) m_mapImage.HandleZoomEvent((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y, e.Delta, Keyboard.Modifiers); };
             MouseLeave += (o, e) => { if (m_isInputActive) m_mapImage.SetAllInputEventsToPointerUp((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y); };
-            MouseMove += (o, e) => { if (m_isInputActive) m_mapImage.HandleMouseMoveEvent((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y); };
+            MouseMove += (o, e) => { if (m_isInputActive) m_mapImage.HandleMouseMoveEvent((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y, Keyboard.Modifiers); };
+
 
             KeyDown += (o, e) => { m_mapImage.HandleKeyboardDownEvent((int)KeyInterop.VirtualKeyFromKey(e.Key)); };
 
             MouseDown += MainWindow_MouseDown;
             MouseUp += MainWindow_MouseUp;
+
+            Dispatcher.Hooks.DispatcherInactive += new EventHandler(DispatcherInactive);
+
+        }
+
+        private void DispatcherInactive(object sender, EventArgs e)
+        {
+            m_hasEmptiedEventQueueSinceLastRender = true;
+
+            TryDoUpdateAndRender();
         }
 
         public void EnableInput()
@@ -94,7 +120,7 @@ namespace ExampleAppWPF
         {
             if (e.ChangedButton == MouseButton.Middle && m_isInputActive)
             {
-                m_mapImage.HandleTiltEnd((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y);
+                m_mapImage.HandleTiltEnd((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y, Keyboard.Modifiers);
             }
         }
 
@@ -102,7 +128,7 @@ namespace ExampleAppWPF
         {
             if (e.ChangedButton == MouseButton.Middle && m_isInputActive)
             {
-                m_mapImage.HandleTiltStart((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y);
+                m_mapImage.HandleTiltStart((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y, Keyboard.Modifiers);
             }
         }
 
@@ -126,18 +152,57 @@ namespace ExampleAppWPF
         private void CompositionTarget_Rendering(object sender, EventArgs e)
         {
             RenderingEventArgs renderArgs = (RenderingEventArgs)e;
-            
-            if (MapHost.Source != null && m_mapImage.IsFrontBufferAvailable && renderArgs.RenderingTime != m_last)
-            {
-                var duration = (renderArgs.RenderingTime - m_last).TotalSeconds;
-                
-                if (m_last != TimeSpan.Zero)
-                {
-                    m_mapImage.Render((float)duration);
-                }
+            if (!m_hasHadRenderEventSinceRender)
+            {                
+                m_maxDelta = m_frameTimer.Elapsed.TotalSeconds * m_maxWaitPercentage;
+                m_hasHadRenderEventSinceRender = true;
             }
 
-            m_last = renderArgs.RenderingTime;
+            if (m_currentRenderArgsRenderingTime == renderArgs.RenderingTime)
+            {
+                return;
+            }
+            m_currentRenderArgsRenderingTime = renderArgs.RenderingTime;
+
+            TryDoUpdateAndRender();
+        }
+
+        private void TryDoUpdateAndRender()
+        {
+            if (m_firstFrame)
+            {
+                m_firstFrame = false;
+                return;
+            }
+
+            if (MapHost.Source == null)
+                return;
+
+            if (!m_mapImage.IsFrontBufferAvailable)
+                return;
+
+            var dt = m_frameTimer.Elapsed.TotalSeconds;
+
+            if (!m_hasEmptiedEventQueueSinceLastRender && (dt < m_maxDelta))
+            {
+                if (m_logging)
+                {
+                    Debug.WriteLine(string.Format("[{0}] BAIL dt {1}, frameTimer {2}", m_frameCount, dt, m_frameTimer.Elapsed));
+                }
+                return;
+            }
+
+            if (m_logging)
+            {
+                Debug.WriteLine(string.Format("[{0}] BAIL dt {1}, frameTimer {2}", m_frameCount, dt, m_frameTimer.Elapsed));
+            }
+
+            m_hasEmptiedEventQueueSinceLastRender = false;
+            m_hasHadRenderEventSinceRender = false;
+            ++m_frameCount;
+            m_frameTimer.Restart();
+
+            m_mapImage.Render((float)dt);
         }
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)

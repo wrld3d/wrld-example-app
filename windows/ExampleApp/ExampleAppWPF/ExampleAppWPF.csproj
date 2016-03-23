@@ -54,6 +54,11 @@
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -93,6 +98,7 @@
     </Compile>
     <Compile Include="Layout.cs" />
     <Compile Include="PersistentSettings\PersistentSettings.cs" />
+    <Compile Include="TickBarVerticalWithLabels.cs" />
     <Compile Include="ViewHelpers.cs" />
     <Compile Include="Views\ButtonBase.cs" />
     <Compile Include="Views\ControlBase.cs" />
@@ -102,6 +108,7 @@
     <Compile Include="Views\Menu\MenuDelayedSourceUpdateAnimatorListener.cs" />
     <Compile Include="Views\Menu\MenuListAdapter.cs" />
     <Compile Include="Views\Menu\MenuListItem.cs" />
+    <Compile Include="Views\Menu\StoryboardRunner.cs" />
     <Compile Include="Views\Options\OptionsCacheClearSubView.cs" />
     <Compile Include="Views\Options\OptionsView.cs" />
     <Compile Include="Views\SearchMenu\SearchMenuListItem.cs" />
@@ -153,6 +160,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="SimpleSlider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -250,6 +261,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -590,8 +602,24 @@
     <Resource Include="..\..\Resources\button_clear_search_on.png">
       <Link>Assets\button_clear_search_on.png</Link>
     </Resource>
+    <Resource Include="..\..\Resources\button_clear_search_down.png">
+      <Link>Assets\button_clear_search_down.png</Link>
+    </Resource>
     <Resource Include="..\..\Resources\poi_placeholder.png">
       <Link>Assets\poi_placeholder.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\floor_selection_button.png">
+      <Link>Assets\floor_selection_button.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\floor_selection_button_down.png">
+      <Link>Assets\floor_selection_button_down.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\floor_selection_button_mouse_over.png">
+      <Link>Assets\floor_selection_button_mouse_over.png</Link>
     </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

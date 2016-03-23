@@ -4,7 +4,6 @@
 
 #include "Types.h"
 #include "IModalityModel.h"
-#include "ISearchQueryPerformer.h"
 #include "ICallback.h"
 #include "BidirectionalBus.h"
 #include "ModalityChangedMessage.h"

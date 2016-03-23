@@ -9,7 +9,7 @@
 #include "IAppCameraController.h"
 #include "CameraState.h"
 #include "RenderCamera.h"
-#include "InteriorsExplorerCameraController.h"
+#include "InteriorsCameraController.h"
 
 namespace ExampleApp
 {
@@ -24,7 +24,7 @@ namespace ExampleApp
                                        Tours::SdkModel::ITourService& tourService,
                                        Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                        AppModes::SdkModel::IAppModeModel& appModeModel,
-                                       ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerCameraController& interiorsCameraController)
+                                       Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController)
                 : m_cameraController(cameraController)
                 , m_worldCameraHandle(worldCameraHandle)
                 , m_tourService(tourService)
@@ -60,7 +60,7 @@ namespace ExampleApp
                     if(nextState == AppModes::SdkModel::InteriorMode)
                     {
                         m_interiorsCameraController.SetHeading(m_cameraController.GetHeadingDegrees());
-                        m_interiorsCameraController.SetTilt(0.0f);
+                        //m_interiorsCameraController.SetTilt(0.0f);
                     }
                 }
                 

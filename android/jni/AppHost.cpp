@@ -86,6 +86,8 @@
 #include "InteriorsExplorerViewModule.h"
 #include "SearchResultSectionModule.h"
 #include "SearchResultSectionViewModule.h"
+#include "ConnectivityChangedViewMessage.h"
+#include "WebConnectivityValidator.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -365,6 +367,19 @@ void AppHost::HandleApplicationUiCreatedOnNativeThread()
     ASSERT_NATIVE_THREAD
 
     m_uiCreatedMessageReceivedOnNativeThread = true;
+    PublishNetworkConnectivityStateToUIThread();
+}
+
+void AppHost::PublishNetworkConnectivityStateToUIThread()
+{
+    // Network validation runs before UI is constructed and so it is not notified and assumed there is no connection: MPLY-6584
+    // The state should be passed on opening the UI view, but currently this is done from the UI thread. Pin Creation UI probably needs a refactor.
+
+    ASSERT_NATIVE_THREAD
+    
+    const Eegeo::Web::WebConnectivityValidator& webConnectivityValidator = m_pApp->World().GetWebConnectivityValidator();
+    const bool connectionIsValid = webConnectivityValidator.IsValid();
+    m_messageBus.Publish(ExampleApp::Net::ConnectivityChangedViewMessage(connectionIsValid));
 }
 
 void AppHost::DispatchRevealUiMessageToUiThreadFromNativeThread()

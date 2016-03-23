@@ -9,7 +9,7 @@
 
 @class InteriorsExplorerView;
 
-@interface InteriorsExplorerView : UIView <UITableViewDelegate, UITableViewDataSource>
+@interface InteriorsExplorerView : UIView
 {
     ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewInterop* m_pInterop;
     
@@ -27,8 +27,11 @@
     float m_stateChangeAnimationTimeSeconds;
     
     float m_detailsPanelHeight;
-    
+    float m_floorDivisionHeight;
     BOOL m_touchEnabled;
+    BOOL m_draggingFloorButton;
+    BOOL m_floorSelectionEnabled;
+    float m_floorButtonParameter;
     
     std::vector<std::string> m_tableViewFloorNames;
 }
@@ -57,14 +60,17 @@
 
 - (void) animateTo:(float)t;
 
-- (int) reverseIndex:(int)floorIndex;
-
 - (void) setTouchEnabled:(BOOL)enabled;
 
+- (void) refreshFloorViews;
+
+// NOTE: Replace these once integrated with search ux colour scheme.
+- (UIColor*) textColorNormal;
+- (UIColor*) textColorHighlighted;
+
 @property(nonatomic, retain) UIView* pFloorPanel;
-@property(nonatomic, retain) UIImageView* pFloorPanelTop;
-@property(nonatomic, retain) UIImageView* pFloorPanelBottom;
-@property(nonatomic, retain) UITableView* pFloorList;
+@property(nonatomic, retain) UIButton* pFloorChangeButton;
+@property(nonatomic, retain) UILabel* pFloorOnButtonLabel;
 
 @property(nonatomic, retain) UIView* pDetailsPanel;
 @property(nonatomic, retain) UIImageView* pDetailsPanelBackground;
@@ -73,5 +79,7 @@
 @property(nonatomic, retain) UIButton* pDismissButton;
 @property(nonatomic, retain) UIImageView* pDismissButtonBackground;
 @property(nonatomic, retain) UILabel* pFloorNameLabel;
+
+@property(nonatomic, retain) NSMutableArray* pFloorListViews;
 
 @end
