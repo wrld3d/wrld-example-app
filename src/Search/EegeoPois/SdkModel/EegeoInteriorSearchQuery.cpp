@@ -34,6 +34,8 @@ namespace ExampleApp
                 , m_webRequestCompleteCallback(this, &EegeoInteriorSearchQuery::OnWebResponseReceived)
                 {
                     Eegeo_ASSERT(query.IsCategory(), "Only support category indoor queries");
+                    const int maximumNumberOfResults = 99;
+                    
                     std::string encodedQuery;
                     urlEncoder.UrlEncode(query.Query(), encodedQuery);
                     
@@ -46,7 +48,7 @@ namespace ExampleApp
                     urlstream << m_floorIdx;
                     urlstream << "&i=";
                     urlstream << m_interiorId.Value();
-                    urlstream << "&n=200"; // increased for Swallow
+                    urlstream << "&n=" << maximumNumberOfResults; // increased for Swallow
                     urlstream << "&apikey=" << m_apiKey;
                     
                     std::string url = urlstream.str();

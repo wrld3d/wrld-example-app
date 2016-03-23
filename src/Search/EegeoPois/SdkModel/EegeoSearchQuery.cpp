@@ -28,6 +28,9 @@ namespace ExampleApp
                 , m_isSuccess(false)
                 , m_webRequestCompleteCallback(this, &EegeoSearchQuery::OnWebResponseReceived)
                 {
+                    float minimumScore = 0.25;
+                    const int maximumNumberOfResults = 99;
+
                     std::string encodedQuery;
                     urlEncoder.UrlEncode(query.Query(), encodedQuery);
                     
@@ -41,13 +44,14 @@ namespace ExampleApp
                     else
                     {
                         urlstream << "/search?s=";
+                        minimumScore = 0.6;
                     }
                     urlstream << encodedQuery;
                     urlstream << "&r=" << std::setprecision(4) << (query.Radius() * 1.5f); // increased for Swallow
                     urlstream << "&lat=" << std::setprecision(8) << query.Location().GetLatitudeInDegrees();
                     urlstream << "&lon=" << std::setprecision(8) << query.Location().GetLongitudeInDegrees();
-                    urlstream << "&n=200"; // increased for Swallow
-                    urlstream << "&ms=0.25"; // minimum score filter for Swallow
+                    urlstream << "&n=" << maximumNumberOfResults; // increased for Swallow
+                    urlstream << "&ms=" << std::setprecision(2) << minimumScore; // minimum score filter for Swallow
                     urlstream << "&apikey=" << m_apiKey;
                     
                     std::string url = urlstream.str();
