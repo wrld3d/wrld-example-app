@@ -88,6 +88,7 @@
 #include "SearchResultSectionViewModule.h"
 #include "ConnectivityChangedViewMessage.h"
 #include "WebConnectivityValidator.h"
+#include "AndroidMenuReactionModel.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -223,6 +224,8 @@ AppHost::AppHost(
 
     m_pAndroidFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::AndroidFlurryMetricsService)(&m_nativeState);
 
+    m_pMenuReactionModel = Eegeo_NEW(ExampleApp::Menu::View::AndroidMenuReactionModel)();
+
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
                  *m_pAndroidPlatformAbstractionModule,
                  screenProperties,
@@ -238,7 +241,8 @@ AppHost::AppHost(
                  m_searchServiceModules,
                  *m_pAndroidFlurryMetricsService,
                  config,
-                 *this);
+                 *this,
+                 *m_pMenuReactionModel);
 
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(
             m_pApp->World().GetRenderingModule(),
@@ -531,7 +535,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     		app.SearchMenuModule().GetSearchMenuViewModel(),
 		    app.SearchResultSectionModule().GetSearchResultSectionOptionsModel(),
 		    app.SearchResultSectionModule().GetSearchResultSectionOrder(),
-		    m_messageBus);
+		    m_messageBus,
+			*m_pMenuReactionModel);
 
     // Pop-up layer.
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(
