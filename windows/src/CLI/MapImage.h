@@ -20,7 +20,7 @@ namespace ExampleApp
             ~MapImage();
             !MapImage();
 
-            void Init(int width, int height);
+            void Init(int width, int height, float oversampleScale);
 			void InitBackBuffer();
             void Render(float dt);
 
@@ -40,6 +40,8 @@ namespace ExampleApp
             void RespondToResize(int width, int height);
 
         private:
+
+            int ScaledScreenCoord(int value);
 
             HRESULT InitDirect3D(HWND windowHandle);
             void DestroyDirect3D();

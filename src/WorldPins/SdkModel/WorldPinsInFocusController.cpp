@@ -26,17 +26,18 @@ namespace ExampleApp
         {
             namespace
             {
-                Eegeo::v2 ProjectEcefToScreen(const Eegeo::dv3& ecefPoint, const Eegeo::Camera::RenderCamera& renderCamera)
+                Eegeo::v2 ProjectEcefToScreen(const Eegeo::dv3& ecefPoint, const Eegeo::Camera::RenderCamera& renderCamera, const float screenOversampleScale)
                 {
                     Eegeo::v3 cameraLocal = Eegeo::Camera::CameraHelpers::CameraRelativePoint(ecefPoint, renderCamera.GetEcefLocation());
                     Eegeo::v3 screenPos;
                     renderCamera.Project(cameraLocal, screenPos);
-                    return Eegeo::v2(screenPos.GetX(), screenPos.GetY());
+                    return Eegeo::v2(screenPos.GetX() / screenOversampleScale, screenPos.GetY() / screenOversampleScale);
                 }
             }
             
             WorldPinsInFocusController::WorldPinsInFocusController(IWorldPinsRepository& worldPinsRepository,
                     IWorldPinsService& worldPinsService,
+                    float screenOversampleScale,
                     ExampleAppMessaging::TMessageBus& messageBus)
                 : m_worldPinsRepository(worldPinsRepository)
                 , m_worldPinsService(worldPinsService)
@@ -45,6 +46,7 @@ namespace ExampleApp
                 , m_selectedFocussedMessageHandlerBinding(this, &WorldPinsInFocusController::OnSelectedFocussedMessage)
                 , m_pLastFocussedModel(NULL)
                 , m_focusEnabled(true)
+                , m_screenOversampleScale(screenOversampleScale)
             {
                 m_messageBus.SubscribeNative(m_visibilityMessageHandlerBinding);
                 m_messageBus.SubscribeNative(m_selectedFocussedMessageHandlerBinding);
@@ -61,7 +63,7 @@ namespace ExampleApp
                 const IWorldPinsInFocusModel* pClosest = NULL;
                 double minDistanceSq = std::numeric_limits<double>::max();
                 Eegeo::v2 closestScreenPinLocation;
-                Eegeo::v2 screenInterestPoint = ProjectEcefToScreen(ecefInterestPoint, renderCamera);
+                Eegeo::v2 screenInterestPoint = ProjectEcefToScreen(ecefInterestPoint, renderCamera, m_screenOversampleScale);
 
                 if(m_focusEnabled)
                 {
@@ -92,7 +94,7 @@ namespace ExampleApp
                             continue;
                         }
 
-                        screenPinLocation = ProjectEcefToScreen(ecefPinLocation, renderCamera);
+                        screenPinLocation = ProjectEcefToScreen(ecefPinLocation, renderCamera, m_screenOversampleScale);
 
                         double distanceToFocusSq = (screenInterestPoint - screenPinLocation).LengthSq();
 
