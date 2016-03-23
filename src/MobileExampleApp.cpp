@@ -140,6 +140,7 @@ namespace ExampleApp
             loadingScreenConfig.fadeOutDurationSeconds = 1.5f;
             loadingScreenConfig.screenWidth = screenProperties.GetScreenWidth();
             loadingScreenConfig.screenHeight = screenProperties.GetScreenHeight();
+            loadingScreenConfig.screenOversampleScaling = screenProperties.GetOversampleScale();
             loadingScreenConfig.loadingBarOffset = Eegeo::v2(0.5f, 0.1f);
 
             Eegeo::Rendering::LoadingScreen* loadingScreen = Eegeo::Rendering::LoadingScreen::Create(
@@ -460,7 +461,7 @@ namespace ExampleApp
         
         Eegeo::Modules::Map::MapModule& mapModule = world.GetMapModule();
         
-        InitialisePinsModules(mapModule, world, interiorsAffectedByFlattening);
+        InitialisePinsModules(mapModule, world, interiorsAffectedByFlattening, m_screenProperties.GetOversampleScale());
         
         m_pReportPinsVisibilityMaskingModule = Eegeo_NEW(ReportPinsVisibilityMasking::SdkModel::ReportPinsVisibilityMaskingModule)(m_pWorldPinsModule->GetWorldPinsScaleController(),
                                                                                                                                    mapModule.GetInteriorsPresentationModule().GetInteriorInteractionModel(),
@@ -929,7 +930,8 @@ namespace ExampleApp
     
     void MobileExampleApp::InitialisePinsModules(Eegeo::Modules::Map::MapModule& mapModule,
                                                  Eegeo::EegeoWorld& world,
-                                                 const bool interiorsAffectedByFlattening)
+                                                 const bool interiorsAffectedByFlattening,
+                                                 const float screenOversampleScale)
     {
         
         m_pPinsModule = CreatePlatformPinsModuleInstance(mapModule, world, "SearchResultOnMap/pin_icon_texture_page", m_pinDiameter, 8);
@@ -946,7 +948,8 @@ namespace ExampleApp
                                  interiorsPresentationModule.GetInteriorTransitionModel(),
                                  interiorsPresentationModule.GetInteriorFloorAnimator(),
                                  m_sdkDomainEventBus,
-                                 interiorsAffectedByFlattening);
+                                 interiorsAffectedByFlattening,
+                                 screenOversampleScale);
     }
     
     void MobileExampleApp::InitialiseToursModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world, const bool interiorsAffectedByFlattening)

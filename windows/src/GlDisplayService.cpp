@@ -213,17 +213,17 @@ bool GlDisplayService::TryBindDisplay(const WindowsNativeState& state)
         EGL_NONE
     };
     
-    w = state.screenWidth;
-    h = state.screenHeight;
+    w = state.GetWidth();
+    h = state.GetHeight();
 
-    if (state.requiresPBuffer)
+    if (state.RequiresPBuffer())
     {
         EGLint config_attribs[] = {
             EGL_BUFFER_SIZE, 32,
             EGL_RED_SIZE, 8,
             EGL_GREEN_SIZE, 8,
             EGL_BLUE_SIZE, 8,
-            EGL_SURFACE_TYPE, state.requiresPBuffer ? EGL_PBUFFER_BIT : EGL_WINDOW_BIT,
+            EGL_SURFACE_TYPE, state.RequiresPBuffer() ? EGL_PBUFFER_BIT : EGL_WINDOW_BIT,
             EGL_DEPTH_SIZE, 24,
             EGL_ALPHA_SIZE, 0,
             EGL_NONE
@@ -262,7 +262,7 @@ bool GlDisplayService::TryBindDisplay(const WindowsNativeState& state)
             Eegeo_ERROR("could not find compatible display configuration, error: [0x%08x]", error);
         }
 
-        surface = eglCreateWindowSurface(m_display, config, state.window, NULL);
+        surface = eglCreateWindowSurface(m_display, config, state.GetWindow(), NULL);
     }
 
     if (!surface)
@@ -280,7 +280,7 @@ bool GlDisplayService::TryBindDisplay(const WindowsNativeState& state)
         m_context = eglCreateContext(m_display, config, NULL, contextAttribs);
     }
 
-    if (!state.requiresPBuffer)
+    if (!state.RequiresPBuffer())
     {
         Eegeo_GL(eglQuerySurface(m_display, surface, EGL_WIDTH, &w));
         Eegeo_GL(eglQuerySurface(m_display, surface, EGL_HEIGHT, &h));
@@ -317,7 +317,7 @@ bool GlDisplayService::TryBindDisplay(const WindowsNativeState& state)
     };
     EGLConfig sharedSurfaceConfig;
 
-    if (state.requiresPBuffer)
+    if (state.RequiresPBuffer())
     {
         sharedSurfaceConfig = config;
     }
