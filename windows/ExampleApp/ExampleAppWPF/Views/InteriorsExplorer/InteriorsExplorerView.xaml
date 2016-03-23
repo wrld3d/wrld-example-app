@@ -50,7 +50,7 @@
                             </Grid.ColumnDefinitions>
 
                             <Grid Grid.Column="0">
-                                <Border Name="Mask" Background="White"/>
+                                <Border Name="Mask" Background="{StaticResource PrimaryBG_colour}"/>
                                 <Grid Background="{StaticResource PrimaryBG_colour}">
                                     <Grid.OpacityMask>
                                         <VisualBrush Visual="{Binding ElementName=Mask}"/>
