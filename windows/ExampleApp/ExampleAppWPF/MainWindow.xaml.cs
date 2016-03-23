@@ -27,7 +27,7 @@ namespace ExampleAppWPF
 
         private const float m_maxWaitPercentage = 1.1f;
 
-        private const float m_oversampleScale = 1.0f;
+        private const float m_oversampleScale = 1.5f;
 
         public MainWindow()
         {
