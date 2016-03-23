@@ -99,6 +99,10 @@ namespace ExampleAppWPF
             var db = new DoubleAnimation((screenWidth / 2) + (m_mainContainer.ActualWidth / 2), TimeSpan.FromMilliseconds(m_animationTimeMilliseconds));
             db.From = (screenWidth / 2) - (m_mainContainer.ActualWidth / 2);
 
+            var easingFunction = new CubicEase();
+            easingFunction.EasingMode = EasingMode.EaseInOut;
+            db.EasingFunction = easingFunction;
+
             m_mainContainer.RenderTransform = new TranslateTransform();
             m_mainContainer.RenderTransform.BeginAnimation(TranslateTransform.XProperty, db);
 
@@ -120,6 +124,10 @@ namespace ExampleAppWPF
 
             var db = new DoubleAnimation((screenWidth / 2) - (m_mainContainer.ActualWidth / 2), TimeSpan.FromMilliseconds(m_animationTimeMilliseconds));
             db.From = (screenWidth / 2) + (m_mainContainer.ActualWidth / 2);
+
+            var easingFunction = new CubicEase();
+            easingFunction.EasingMode = EasingMode.EaseInOut;
+            db.EasingFunction = easingFunction;
 
             m_mainContainer.RenderTransform = new TranslateTransform();
             m_mainContainer.RenderTransform.BeginAnimation(TranslateTransform.XProperty, db);
