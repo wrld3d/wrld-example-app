@@ -4,6 +4,8 @@
 
 # eeGeo Example App
 
+![eeGeo](http://cdn2.eegeo.com/wp-content/uploads/2016/03/readme-banner.jpg)
+
 * [Support](#support)
 * [Getting Started](#getting-started)
     * [eeGeo API Key](#eegeo-api-key)
