@@ -32,7 +32,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage, WPARAM wparam, LPARAM lparam)
     case WM_CLOSE:
     {
         g_pAppRunner->Exit();
-        DestroyWindow(g_nativeState.window);
+        DestroyWindow(g_nativeState.GetWindow());
         break;
     }
 
@@ -113,44 +113,37 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage, WPARAM wparam, LPARAM lparam)
 }
 
 //Initialise the platform
-void InitNativeWindow(WindowsNativeState &nativeState)
+EGLNativeWindowType CreateNativeWindow(const std::string& appName, HINSTANCE hinstance, int width, int height, bool fullScreen)
 {
     WNDCLASSEX wc;
     DEVMODE dmScreenSettings;
     int posX, posY;
-
-    // Get the instance of this application.
-    nativeState.hinstance = GetModuleHandle(NULL);
 
     // Setup the windows class with default settings.
     wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
     wc.lpfnWndProc = (WNDPROC)WndProc;
     wc.cbClsExtra = 0;
     wc.cbWndExtra = 0;
-    wc.hInstance = nativeState.hinstance;
+    wc.hInstance = hinstance;
     wc.hIcon = LoadIcon(NULL, IDI_WINLOGO);
     wc.hIconSm = wc.hIcon;
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
     wc.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
     wc.lpszMenuName = NULL;
-    wc.lpszClassName = nativeState.appName;
+    wc.lpszClassName = appName.c_str();
     wc.cbSize = sizeof(WNDCLASSEX);
 
     // Register the window class.
     RegisterClassEx(&wc);
 
     // Setup the screen settings depending on whether it is running in full screen or in windowed mode.
-    if (nativeState.fullScreen)
+    if (fullScreen)
     {
-        // Determine the resolution of the clients desktop screen.
-        nativeState.screenWidth = GetSystemMetrics(SM_CXSCREEN);
-        nativeState.screenHeight = GetSystemMetrics(SM_CYSCREEN);
-
         // If full screen set the screen to maximum size of the users desktop and 32bit.
         memset(&dmScreenSettings, 0, sizeof(dmScreenSettings));
         dmScreenSettings.dmSize = sizeof(dmScreenSettings);
-        dmScreenSettings.dmPelsWidth = (unsigned long)nativeState.screenWidth;
-        dmScreenSettings.dmPelsHeight = (unsigned long)nativeState.screenHeight;
+        dmScreenSettings.dmPelsWidth = (unsigned long)width;
+        dmScreenSettings.dmPelsHeight = (unsigned long)height;
         dmScreenSettings.dmBitsPerPel = 32;
         dmScreenSettings.dmFields = DM_BITSPERPEL | DM_PELSWIDTH | DM_PELSHEIGHT;
 
@@ -163,39 +156,39 @@ void InitNativeWindow(WindowsNativeState &nativeState)
     else
     {
         // Place the window in the middle of the screen.
-        posX = (GetSystemMetrics(SM_CXSCREEN) - nativeState.screenWidth) / 2;
-        posY = (GetSystemMetrics(SM_CYSCREEN) - nativeState.screenHeight) / 2;
+        posX = (GetSystemMetrics(SM_CXSCREEN) - width) / 2;
+        posY = (GetSystemMetrics(SM_CYSCREEN) - height) / 2;
     }
 
     // Create the window with the screen settings and get the handle to it.
-    nativeState.window = CreateWindowEx(WS_EX_APPWINDOW, nativeState.appName, nativeState.appName,
+    EGLNativeWindowType window = CreateWindowEx(WS_EX_APPWINDOW, appName.c_str(), appName.c_str(),
         WS_OVERLAPPEDWINDOW,
-        posX, posY, nativeState.screenWidth, nativeState.screenHeight, NULL, NULL, nativeState.hinstance, NULL);
+        posX, posY, width, height, NULL, NULL, hinstance, NULL);
 
-    // Bring the window up on the screen and set it as main focus.
-    ShowWindow(nativeState.window, SW_SHOW);
-    //SetForegroundWindow(nativeState.window);
-    //SetFocus(nativeState.window);
-
-    ShowCursor(true);
-
-}
-
-void InitNativeState(const char* appName, int width, int height, bool fullScreen)
-{
-    g_nativeState.appName = appName;
-    g_nativeState.screenWidth = width;
-    g_nativeState.screenHeight = height;
-
-    g_nativeState.fullScreen = fullScreen;
-    g_nativeState.requiresPBuffer = false;
+    return window;
 }
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pScmdline, int iCmdshow)
 {
-    InitNativeState("Eegeo", 1366, 768, false);
+    const std::string appName("Eegeo");
+    const int defaultWidth = 1366;
+    const int defaultHeight = 768;
+    const bool fullScreen = false;
+    const int width = fullScreen ? GetSystemMetrics(SM_CXSCREEN) : defaultWidth;
+    const int height = fullScreen ? GetSystemMetrics(SM_CYSCREEN) : defaultHeight;
+    
+    const bool requiresPBuffer = false;
+    const float oversampleScale = 1.f;
+    const std::string deviceModel;
+    const float deviceDpi = 0.f;
 
-    InitNativeWindow(g_nativeState);
+    HINSTANCE hinst = GetModuleHandle(NULL);
+    EGLNativeWindowType window = CreateNativeWindow(appName, hInstance, width, height, fullScreen);
+
+    g_nativeState = WindowsNativeState::Make(appName, hInstance, window, width, height, fullScreen, requiresPBuffer, oversampleScale, deviceModel, deviceDpi);
+
+    ShowWindow(window, SW_SHOW);
+    ShowCursor(true);
 
     g_pAppRunner = Eegeo_NEW(AppRunner)(&g_nativeState);
 

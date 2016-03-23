@@ -26,6 +26,7 @@ namespace ExampleApp
                 const IWorldPinsInFocusModel* m_pLastFocussedModel;
 
                 bool m_focusEnabled;
+                const float m_screenOversampleScale;
 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Helpers::TCallback1<WorldPinsInFocusController, const WorldPinsVisibilityMessage&> m_visibilityMessageHandlerBinding;
@@ -37,6 +38,7 @@ namespace ExampleApp
             public:
                 WorldPinsInFocusController(IWorldPinsRepository& worldPinsRepository,
                                            IWorldPinsService& worldPinsService,
+                                           float screenOversampleScale,
                                            ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~WorldPinsInFocusController();

@@ -27,7 +27,8 @@ namespace ExampleAppWPF
         private bool m_firstFrame = true;
 
         private const float m_maxWaitPercentage = 1.1f;
-        
+
+        private const float m_oversampleScale = 1.0f;
 
         public MainWindow()
         {
@@ -50,7 +51,7 @@ namespace ExampleAppWPF
         {
             m_mapImage.Dispose();
         }
-        
+
         private void OnIsFrontBufferAvailableChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (m_mapImage.IsFrontBufferAvailable)
@@ -67,7 +68,7 @@ namespace ExampleAppWPF
             int pixelWidth = (int)MainGrid.ActualWidth;
             int pixelHeight = (int)MainGrid.ActualHeight;
 
-            m_mapImage.Init(pixelWidth, pixelHeight);
+            m_mapImage.Init(pixelWidth, pixelHeight, m_oversampleScale);
             MapHost.Source = m_mapImage;
             MapHost.Width = pixelWidth;
             MapHost.Height = pixelHeight;
@@ -76,14 +77,13 @@ namespace ExampleAppWPF
             m_mapImage.IsFrontBufferAvailableChanged += OnIsFrontBufferAvailableChanged;
             CompositionTarget.Rendering += CompositionTarget_Rendering;
 
-            PreviewMouseLeftButtonDown += (o, e) => { if (m_isInputActive) m_mapImage.HandlePanStartEvent((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y, Keyboard.Modifiers); };
-            PreviewMouseLeftButtonUp += (o, e) => { if (m_isInputActive) m_mapImage.HandlePanEndEvent((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y, Keyboard.Modifiers); };
-            PreviewMouseRightButtonDown += (o, e) => { if (m_isInputActive) m_mapImage.HandleRotateStartEvent((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y, Keyboard.Modifiers); };
-            PreviewMouseRightButtonUp += (o, e) => { if (m_isInputActive) m_mapImage.HandleRotateEndEvent((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y, Keyboard.Modifiers); };
-            MouseWheel += (o, e) => { if (m_isInputActive) m_mapImage.HandleZoomEvent((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y, e.Delta, Keyboard.Modifiers); };
-            MouseLeave += (o, e) => { if (m_isInputActive) m_mapImage.SetAllInputEventsToPointerUp((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y); };
-            MouseMove += (o, e) => { if (m_isInputActive) m_mapImage.HandleMouseMoveEvent((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y, Keyboard.Modifiers); };
-
+            MouseLeftButtonDown += (o, e) => { if (m_isInputActive) m_mapImage.HandlePanStartEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
+            MouseLeftButtonUp += (o, e) => { if (m_isInputActive) m_mapImage.HandlePanEndEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
+            MouseRightButtonDown += (o, e) => { if (m_isInputActive) m_mapImage.HandleRotateStartEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
+            MouseRightButtonUp += (o, e) => { if (m_isInputActive) m_mapImage.HandleRotateEndEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
+            MouseWheel += (o, e) => { if (m_isInputActive) m_mapImage.HandleZoomEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), e.Delta, Keyboard.Modifiers); };
+            MouseLeave += (o, e) => { if (m_isInputActive) m_mapImage.SetAllInputEventsToPointerUp((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y)); };
+            MouseMove += (o, e) => { if (m_isInputActive) m_mapImage.HandleMouseMoveEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
 
             KeyDown += (o, e) => { m_mapImage.HandleKeyboardDownEvent((int)KeyInterop.VirtualKeyFromKey(e.Key)); };
 
@@ -120,7 +120,7 @@ namespace ExampleAppWPF
         {
             if (e.ChangedButton == MouseButton.Middle && m_isInputActive)
             {
-                m_mapImage.HandleTiltEnd((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y, Keyboard.Modifiers);
+                m_mapImage.HandleTiltEnd((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers);
             }
         }
 
@@ -128,7 +128,7 @@ namespace ExampleAppWPF
         {
             if (e.ChangedButton == MouseButton.Middle && m_isInputActive)
             {
-                m_mapImage.HandleTiltStart((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y, Keyboard.Modifiers);
+                m_mapImage.HandleTiltStart((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers);
             }
         }
 
@@ -136,7 +136,7 @@ namespace ExampleAppWPF
         {
             int pixelWidth = (int)e.NewSize.Width;
             int pixelHeight = (int)e.NewSize.Height;
-            
+
             if (pixelWidth != m_mapImage.PixelWidth || pixelHeight != m_mapImage.PixelHeight)
             {
                 MapHost.Width = pixelWidth;
