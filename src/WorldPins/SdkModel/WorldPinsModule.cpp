@@ -26,7 +26,8 @@ namespace ExampleApp
                                              const Eegeo::Resources::Interiors::IInteriorFloorAnimator& interiorFloorAnimator,
                                              ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
                                              const bool interiorsAffectedByFlattening,
-                                             const Menu::View::IMenuReactionModel& menuReaction)
+                                             const Menu::View::IMenuReactionModel& menuReaction,
+                                             const float screenOversampleScale)
             {
                 m_pWorldPinsFactory = Eegeo_NEW(WorldPinsFactory);
 
@@ -56,6 +57,7 @@ namespace ExampleApp
 
                 m_pWorldPinsInFocusController = Eegeo_NEW(WorldPinsInFocusController)(*m_pWorldPinsRepository,
                                                 *m_pWorldPinsService,
+                                                screenOversampleScale,
                                                 messageBus);
 
 

@@ -34,29 +34,28 @@ namespace ExampleApp
             DestroyDirect3D();
         }
 
-        void MapImage::Init(int width, int height)
+        void MapImage::Init(int width, int height, float oversampleScale)
         {
             System::Windows::Application^ app = System::Windows::Application::Current;
             System::Windows::Interop::WindowInteropHelper^ windowInteropHelper = gcnew System::Windows::Interop::WindowInteropHelper(app->MainWindow);
 
             HWND windowHandle = (HWND)windowInteropHelper->Handle.ToPointer();
 
+            const std::string appName = "WPFControl";
+            // temp change to fix incorrect size of placename labels, pending platform change
+            //const float deviceDpi = static_cast<float>(GetScreenDPI());
+            const float deviceDpi = 0.f;
+            const std::string deviceModel = "WPFControl";
+            const bool fullScreen = false;
+            const HINSTANCE hinstance = GetModuleHandle(NULL);
+            const bool requiresPBuffer = true;
+            const int screenWidth = (int)(width * oversampleScale);
+            const int screenHeight = (int)(height * oversampleScale);
+
             if (m_pState == NULL)
             {
-                m_pState = new WindowsNativeState();
+                m_pState = WindowsNativeState::Create(appName, hinstance, windowHandle, screenWidth, screenHeight, fullScreen, requiresPBuffer, oversampleScale, deviceModel, deviceDpi);
             }
-
-            m_pState->appName = "WPFControl";
-            // temp change to fix incorrect size of placename labels, pending platform change
-            //m_pState->deviceDpi = GetScreenDPI();
-            m_pState->deviceDpi = 0; 
-            m_pState->deviceModel = "WPFControl";
-            m_pState->fullScreen = false;
-            m_pState->hinstance = GetModuleHandle(NULL);
-            m_pState->requiresPBuffer = true;
-            m_pState->screenWidth = width;
-            m_pState->screenHeight = height;
-            m_pState->window = windowHandle;			
 
             m_appRunner = new AppRunner(m_pState);
             m_appRunner->ActivateSurface();
@@ -70,7 +69,7 @@ namespace ExampleApp
 		void MapImage::InitBackBuffer()
 		{
 			void* surfaceSharePointer = m_appRunner->GetMainRenderSurfaceSharePointer();
-			IDirect3DSurface9* surface = GetSurfaceFromShareHandle(surfaceSharePointer, m_pState->screenWidth, m_pState->screenHeight);
+			IDirect3DSurface9* surface = GetSurfaceFromShareHandle(surfaceSharePointer, m_pState->GetWidth(), m_pState->GetHeight());
 			Lock();
 			SetBackBuffer(System::Windows::Interop::D3DResourceType::IDirect3DSurface9, System::IntPtr(surface));
 			Unlock();
@@ -188,44 +187,49 @@ namespace ExampleApp
             }
         }
 
+        int MapImage::ScaledScreenCoord(int value)
+        {
+            return (int)(m_pState->GetOversampleScale() * value);
+        }
+
         void MapImage::HandlePanStartEvent(int x, int y, System::Windows::Input::ModifierKeys modifierKeys)
         {
-            m_appRunner->HandleMouseEvent(MakeMouseInputEvent(Eegeo::Windows::Input::MousePrimaryDown, x, y, 0, modifierKeys));
+            m_appRunner->HandleMouseEvent(MakeMouseInputEvent(Eegeo::Windows::Input::MousePrimaryDown, ScaledScreenCoord(x), ScaledScreenCoord(y), 0, modifierKeys));
         }
 
         void MapImage::HandlePanEndEvent(int x, int y, System::Windows::Input::ModifierKeys modifierKeys)
         {
-            m_appRunner->HandleMouseEvent(MakeMouseInputEvent(Eegeo::Windows::Input::MousePrimaryUp, x, y, 0, modifierKeys));
+            m_appRunner->HandleMouseEvent(MakeMouseInputEvent(Eegeo::Windows::Input::MousePrimaryUp, ScaledScreenCoord(x), ScaledScreenCoord(y), 0, modifierKeys));
         }
 
         void MapImage::HandleRotateStartEvent(int x, int y, System::Windows::Input::ModifierKeys modifierKeys)
         {
-            m_appRunner->HandleMouseEvent(MakeMouseInputEvent(Eegeo::Windows::Input::MouseSecondaryDown, x, y, 0, modifierKeys));
+            m_appRunner->HandleMouseEvent(MakeMouseInputEvent(Eegeo::Windows::Input::MouseSecondaryDown, ScaledScreenCoord(x), ScaledScreenCoord(y), 0, modifierKeys));
         }
 
         void MapImage::HandleRotateEndEvent(int x, int y, System::Windows::Input::ModifierKeys modifierKeys)
         {
-            m_appRunner->HandleMouseEvent(MakeMouseInputEvent(Eegeo::Windows::Input::MouseSecondaryUp, x, y, 0, modifierKeys));
+            m_appRunner->HandleMouseEvent(MakeMouseInputEvent(Eegeo::Windows::Input::MouseSecondaryUp, ScaledScreenCoord(x), ScaledScreenCoord(y), 0, modifierKeys));
         }
 
         void MapImage::HandleTiltStart(int x, int y, System::Windows::Input::ModifierKeys modifierKeys)
         {
-            m_appRunner->HandleMouseEvent(MakeMouseInputEvent(Eegeo::Windows::Input::MouseMiddleDown, x, y, 0, modifierKeys));
+            m_appRunner->HandleMouseEvent(MakeMouseInputEvent(Eegeo::Windows::Input::MouseMiddleDown, ScaledScreenCoord(x), ScaledScreenCoord(y), 0, modifierKeys));
         }
 
         void MapImage::HandleTiltEnd(int x, int y, System::Windows::Input::ModifierKeys modifierKeys)
         {
-            m_appRunner->HandleMouseEvent(MakeMouseInputEvent(Eegeo::Windows::Input::MouseMiddleUp, x, y, 0, modifierKeys));
+            m_appRunner->HandleMouseEvent(MakeMouseInputEvent(Eegeo::Windows::Input::MouseMiddleUp, ScaledScreenCoord(x), ScaledScreenCoord(y), 0, modifierKeys));
         }
 
         void MapImage::HandleMouseMoveEvent(int x, int y, System::Windows::Input::ModifierKeys modifierKeys)
         {
-            m_appRunner->HandleMouseEvent(MakeMouseInputEvent(Eegeo::Windows::Input::MouseMove, x, y, 0, modifierKeys));
+            m_appRunner->HandleMouseEvent(MakeMouseInputEvent(Eegeo::Windows::Input::MouseMove, ScaledScreenCoord(x), ScaledScreenCoord(y), 0, modifierKeys));
         }
 
         void MapImage::HandleZoomEvent(int x, int y, int wheelDelta, System::Windows::Input::ModifierKeys modifierKeys)
         {
-            m_appRunner->HandleMouseEvent(MakeMouseInputEvent(Eegeo::Windows::Input::MouseWheel, x, y, wheelDelta, modifierKeys));
+            m_appRunner->HandleMouseEvent(MakeMouseInputEvent(Eegeo::Windows::Input::MouseWheel, ScaledScreenCoord(x), ScaledScreenCoord(y), wheelDelta, modifierKeys));
         }
 
         void MapImage::HandleKeyboardDownEvent(int asciiKeyCode)
@@ -235,15 +239,18 @@ namespace ExampleApp
 
         void MapImage::SetAllInputEventsToPointerUp(int x, int y)
         {
-            m_appRunner->SetAllInputEventsToPointerUp(x, y);
+            m_appRunner->SetAllInputEventsToPointerUp(ScaledScreenCoord(x), ScaledScreenCoord(y));
         }
 
         void MapImage::RespondToResize(int width, int  height)
         {
-            m_appRunner->RespondToSize(width, height);
+            const int scaledWidth = ScaledScreenCoord(width);
+            const int scaledHeight = ScaledScreenCoord(height);
+
+            m_appRunner->RespondToSize(scaledWidth, scaledHeight);
 
             void* surfaceSharePointer = m_appRunner->GetMainRenderSurfaceSharePointer();
-            IDirect3DSurface9* surface = GetSurfaceFromShareHandle(surfaceSharePointer, width, height);
+            IDirect3DSurface9* surface = GetSurfaceFromShareHandle(surfaceSharePointer, scaledWidth, scaledHeight);
             Lock();            
             UpdateAndRender(0.0f);
             SetBackBuffer(System::Windows::Interop::D3DResourceType::IDirect3DSurface9, System::IntPtr(surface));
@@ -273,3 +280,4 @@ namespace ExampleApp
         }
     }
 }
+

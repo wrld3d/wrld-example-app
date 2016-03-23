@@ -11,6 +11,20 @@
 
 using namespace Eegeo::Helpers::GLHelpers;
 
+
+namespace
+{
+    Eegeo::Rendering::ScreenProperties MakeScreenProperties(const GlDisplayService& displayService, const WindowsNativeState& windowsNativeState)
+    {
+        return Eegeo::Rendering::ScreenProperties::Make(
+            static_cast<float>(displayService.GetDisplayWidth()),
+            static_cast<float>(displayService.GetDisplayHeight()),
+            ExampleApp::Helpers::ImageHelpers::GetPixelScale(),
+            windowsNativeState.GetDeviceDpi(),
+            windowsNativeState.GetOversampleScale());
+    }
+}
+
 AppRunner::AppRunner
 (
     WindowsNativeState* pNativeState
@@ -51,11 +65,7 @@ void AppRunner::CreateAppHost()
     if(m_pAppHost == NULL && m_displayService.IsDisplayAvailable())
     {
         ExampleApp::Helpers::ImageHelpers::SetDeviceDensity(160);
-        const Eegeo::Rendering::ScreenProperties& screenProperties = Eegeo::Rendering::ScreenProperties::Make(
-                    static_cast<float>(m_displayService.GetDisplayWidth()),
-                    static_cast<float>(m_displayService.GetDisplayHeight()),
-                    ExampleApp::Helpers::ImageHelpers::GetPixelScale(),
-                    m_pNativeState->deviceDpi);
+        const Eegeo::Rendering::ScreenProperties& screenProperties = MakeScreenProperties(m_displayService, *m_pNativeState);
         m_pAppHost = Eegeo_NEW(AppHost)
                      (
                          *m_pNativeState,
@@ -149,11 +159,7 @@ void AppRunner::ActivateSharedSurface()
         LockGL contextLock;
         
         m_pAppHost->SetSharedSurface(m_displayService.GetSharedSurface());
-        const Eegeo::Rendering::ScreenProperties& screenProperties = Eegeo::Rendering::ScreenProperties::Make(
-            static_cast<float>(m_displayService.GetDisplayWidth()),
-            static_cast<float>(m_displayService.GetDisplayHeight()),
-            1.f,
-            m_pNativeState->deviceDpi);
+        const Eegeo::Rendering::ScreenProperties& screenProperties = MakeScreenProperties(m_displayService, *m_pNativeState);
         m_pAppHost->NotifyScreenPropertiesChanged(screenProperties);
         m_pAppHost->SetViewportOffset(0, 0);
     }
@@ -202,11 +208,7 @@ bool AppRunner::TryBindDisplay()
         if(m_pAppHost != NULL)
         {
             m_pAppHost->SetSharedSurface(m_displayService.GetSharedSurface());
-            const Eegeo::Rendering::ScreenProperties& screenProperties = Eegeo::Rendering::ScreenProperties::Make(
-                        static_cast<float>(m_displayService.GetDisplayWidth()),
-                        static_cast<float>(m_displayService.GetDisplayHeight()),
-                        ExampleApp::Helpers::ImageHelpers::GetPixelScale(),
-                        m_pNativeState->deviceDpi);
+            const Eegeo::Rendering::ScreenProperties& screenProperties = MakeScreenProperties(m_displayService, *m_pNativeState);
             m_pAppHost->NotifyScreenPropertiesChanged(screenProperties);
             m_pAppHost->SetViewportOffset(0, 0);
         }
@@ -226,7 +228,7 @@ void AppRunner::UpdateNative(float deltaSeconds)
 
         LockGL contextLock;
 
-        if (!m_pNativeState->requiresPBuffer)
+        if (!m_pNativeState->RequiresPBuffer())
         {
             Eegeo_GL(eglSwapBuffers(m_displayService.GetDisplay(), m_displayService.GetSurface()));
         }
@@ -235,7 +237,7 @@ void AppRunner::UpdateNative(float deltaSeconds)
 
         m_pAppHost->Draw(deltaSeconds);
 
-        if (m_pNativeState->requiresPBuffer)
+        if (m_pNativeState->RequiresPBuffer())
         {
             glFinish();
         }
@@ -290,8 +292,7 @@ void AppRunner::RespondToSize(int width, int height)
 {
     LockGL contextLock;
 
-    m_pNativeState->screenWidth = width;
-    m_pNativeState->screenHeight = height;
+    m_pNativeState->SetSize(width, height);
     
     if (m_displayService.IsDisplayAvailable())
     {

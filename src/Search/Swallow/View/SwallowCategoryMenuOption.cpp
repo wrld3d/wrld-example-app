@@ -14,6 +14,7 @@ namespace ExampleApp
             {
                 SwallowCategoryMenuOption::SwallowCategoryMenuOption(std::string category,
                                                                      bool forceInteriorQuery,
+                                                                     bool closeMenuWhenInInterior,
                                                                      Menu::View::IMenuViewModel& menuViewModel,
                                                                      ExampleAppMessaging::TMessageBus& messageBus)
                 : m_category(category)
@@ -22,12 +23,16 @@ namespace ExampleApp
                 , m_messageBus(messageBus)
                 , m_hasRadiusOverride(false)
                 , m_radiusOverride(0.f)
+                , m_inInteriorMode(false)
+                , m_closeMenuInInterior(closeMenuWhenInInterior)
+                , m_appModeChangedHandler(this, &SwallowCategoryMenuOption::OnAppModeChangedMessage)
                 {
-                    
+                    m_messageBus.SubscribeUi(m_appModeChangedHandler);
                 }
                 
                 SwallowCategoryMenuOption::SwallowCategoryMenuOption(std::string category,
                                                                      bool forceInteriorQuery,
+                                                                     bool closeMenuWhenInInterior,
                                                                      Menu::View::IMenuViewModel& menuViewModel,
                                                                      float radius,
                                                                      ExampleAppMessaging::TMessageBus& messageBus)
@@ -37,18 +42,30 @@ namespace ExampleApp
                 , m_messageBus(messageBus)
                 , m_hasRadiusOverride(true)
                 , m_radiusOverride(radius)
+                , m_inInteriorMode(false)
+                , m_closeMenuInInterior(closeMenuWhenInInterior)
+                , m_appModeChangedHandler(this, &SwallowCategoryMenuOption::OnAppModeChangedMessage)
                 {
-                    
+                    m_messageBus.SubscribeUi(m_appModeChangedHandler);
                 }
                 
                 SwallowCategoryMenuOption::~SwallowCategoryMenuOption()
                 {
-                    
+                    m_messageBus.UnsubscribeUi(m_appModeChangedHandler);
+                }
+                
+                void SwallowCategoryMenuOption::OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message)
+                {
+                    m_inInteriorMode = message.GetAppMode() == AppModes::SdkModel::InteriorMode;
                 }
                 
                 void SwallowCategoryMenuOption::Select()
                 {
-                    m_menuViewModel.Close();
+                    if(m_inInteriorMode && m_closeMenuInInterior)
+                    {
+                        m_menuViewModel.Close();
+                    }
+                    
                     if (m_hasRadiusOverride)
                     {
                         m_messageBus.Publish(CategorySearch::CategorySearchSelectedMessage(m_category, m_interior, m_radiusOverride));
