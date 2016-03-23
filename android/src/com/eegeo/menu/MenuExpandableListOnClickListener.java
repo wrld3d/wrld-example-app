@@ -27,14 +27,14 @@ public class MenuExpandableListOnClickListener implements OnGroupClickListener, 
 		{
 			return true;
 		}
-		
-		if (!expandableListView.isGroupExpanded(groupPosition))
+
+		if (expandableListView.isGroupExpanded(groupPosition))
 		{
-			expandableListView.expandGroup(groupPosition);
+			expandableListView.collapseGroup(groupPosition);
 		} 
 		else 
 		{
-			expandableListView.collapseGroup(groupPosition);
+			expandableListView.expandGroup(groupPosition);
 		}
 		
 		MenuViewJniMethods.SelectedItem(m_nativeCallerPointer, groupPosition, 0);

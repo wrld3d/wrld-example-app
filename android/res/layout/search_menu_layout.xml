@@ -2,7 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/search_menu_view"
     android:layout_width="wrap_content"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="50dp"
     android:clipChildren="false"
@@ -63,7 +63,7 @@
 			android:paddingRight="5dp"
 			android:divider="@color/table_divider"
 			android:childDivider="@color/ui_border"
-			android:dividerHeight="1dp"
+			android:dividerHeight="@dimen/menu_item_divider_height"
 			android:groupIndicator="@null"/>
 	</LinearLayout>
 

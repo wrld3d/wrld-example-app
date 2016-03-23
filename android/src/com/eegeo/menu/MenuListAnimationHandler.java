@@ -20,11 +20,6 @@ public class MenuListAnimationHandler extends AnimatorListenerAdapter
 	
 	protected ReversibleAnimatorSet m_itemAnimatorSet;
 	
-	private final int ArrowAnimationRotationSpeedMilliseconds = 300;
-	private final int MenuItemExpandAnimationDelayMilliseconds = 200;
-	private final int MenuItemExpandAnimationSpeedMilliseconds = 300;
-	private final int MenuItemScaleAnimationSpeedMilliseconds = 100;
-	
 	public MenuListAnimationHandler(MainActivity mainActivity, View listContainerView)
 	{
 		m_mainActivity = mainActivity;
@@ -41,7 +36,7 @@ public class MenuListAnimationHandler extends AnimatorListenerAdapter
 		
 		ReversibleValueAnimator arrowRotationAnimator = ReversibleValueAnimator.ofFloat(startValue, endValue);
 		arrowRotationAnimator.addUpdateListener(new ViewRotateAnimatorUpdateListener(view));
-		arrowRotationAnimator.setDuration(ArrowAnimationRotationSpeedMilliseconds);
+		arrowRotationAnimator.setDuration(MenuListAnimationConstants.MenuListTotalAnimationSpeedMilliseconds);
 		arrowRotationAnimator.start();
 	}
 	
@@ -55,7 +50,7 @@ public class MenuListAnimationHandler extends AnimatorListenerAdapter
 
 		ReversibleValueAnimator expandCollapseAnimator = ReversibleValueAnimator.ofInt(startSize, finalSize);	
 		expandCollapseAnimator.addUpdateListener(new ViewHeightAnimatorUpdateListener<AbsListView.LayoutParams>(view));
-		expandCollapseAnimator.setDuration(MenuItemExpandAnimationSpeedMilliseconds);
+		expandCollapseAnimator.setDuration(MenuListAnimationConstants.MenuListTotalAnimationSpeedMilliseconds);
 
 		final float startScale = isExpanding ? 0.0f : 1.0f;
 		final float endScale = 1.0f - startScale;
@@ -65,10 +60,10 @@ public class MenuListAnimationHandler extends AnimatorListenerAdapter
 		
 		if (isExpanding)
 		{
-			viewScaleAnimator.setStartDelay(MenuItemExpandAnimationDelayMilliseconds);
+			viewScaleAnimator.setStartDelay(MenuListAnimationConstants.MenuItemExpandAnimationDelayMilliseconds);
 		}
 		
-		viewScaleAnimator.setDuration(MenuItemScaleAnimationSpeedMilliseconds);
+		viewScaleAnimator.setDuration(MenuListAnimationConstants.MenuItemScaleAnimationSpeedMilliseconds);
 		
 		ReversibleAnimatorSet reversibleAnimatorSet = new ReversibleAnimatorSet();
 		reversibleAnimatorSet.addAnimator(expandCollapseAnimator);
