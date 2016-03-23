@@ -4,6 +4,7 @@
 #include "MathFunc.h"
 #include "IIdentity.h"
 #include "IReactionControllerModel.h"
+#include <algorithm>
 
 namespace ExampleApp
 {

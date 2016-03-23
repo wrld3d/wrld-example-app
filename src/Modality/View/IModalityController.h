@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "IIdentity.h"
+
 namespace ExampleApp
 {
     namespace Modality

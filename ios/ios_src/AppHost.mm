@@ -85,6 +85,7 @@
 #include "SearchVendorNames.h"
 #include "UserInteractionEnabledChangedMessage.h"
 #include "SurveyViewModule.h"
+#include "IOSMenuReactionModel.h"
 
 #import "UIView+TouchExclusivity.h"
 
@@ -119,6 +120,7 @@ AppHost::AppHost(
     ,m_userInteractionEnabledChangedHandler(this, &AppHost::HandleUserInteractionEnabledChanged)
     ,m_pLinkOutObserver(NULL)
     ,m_pURLRequestHandler(NULL)
+    ,m_pMenuReactionModel(NULL)
 {
     Eegeo::TtyHandler::TtyEnabled = true;
     
@@ -143,7 +145,7 @@ AppHost::AppHost(
     platformConfig.CityThemesConfig.EmbeddedThemeTexturePath = "Textures/EmbeddedTheme";
     platformConfig.CityThemesConfig.EmbeddedThemeNameContains = "Summer";
     platformConfig.CityThemesConfig.EmbeddedThemeStateName = "DayDefault";
-    
+
     platformConfig.MapLayersConfig.Interiors.LabelsVisibleWhenExpanded = true;
 
     m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::iOSInitialExperienceModule)(m_iOSPersistentSettingsModel, m_messageBus);
@@ -153,7 +155,7 @@ AppHost::AppHost(
                                                                                        m_iOSPersistentSettingsModel);
     
     m_searchServiceModules[ExampleApp::Search::YelpVendorName] = Eegeo_NEW(ExampleApp::Search::Yelp::iOSYelpSearchServiceModule)(m_piOSPlatformAbstractionModule->GetWebLoadRequestFactory(),
-                                                                                                                                 *m_pNetworkCapabilities,
+                                                                                                 *m_pNetworkCapabilities,
                                                                                                                                  m_piOSPlatformAbstractionModule->GetUrlEncoder(),
                                                                                                                                  applicationConfiguration.YelpConsumerKey(),
                                                                                                                                  applicationConfiguration.YelpConsumerSecret(),
@@ -170,8 +172,10 @@ AppHost::AppHost(
     
     m_pImageStore = [[ImageStore alloc]init];
     
-    m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
-			*m_piOSPlatformAbstractionModule,
+    m_pMenuReactionModel = Eegeo_NEW(ExampleApp::Menu::View::IOSMenuReactionModel)();
+    
+    m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(ExampleApp::ApiKey,
+             *m_piOSPlatformAbstractionModule,
              screenProperties,
              *m_piOSLocationService,
              m_iOSNativeUIFactories,
@@ -185,7 +189,8 @@ AppHost::AppHost(
              m_searchServiceModules,
              m_iOSFlurryMetricsService,
              applicationConfiguration,
-             *this);
+             *this,
+             *m_pMenuReactionModel);
 
     CreateApplicationViewModules(screenProperties);
 
@@ -323,7 +328,8 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     m_pSearchResultSectionViewModule = Eegeo_NEW(ExampleApp::SearchResultSection::View::SearchResultSectionViewModule)(app.SearchMenuModule().GetSearchMenuViewModel(),
                                                                                                                        app.SearchResultSectionModule().GetSearchResultSectionOptionsModel(),
                                                                                                                        app.SearchResultSectionModule().GetSearchResultSectionOrder(),
-                                                                                                                       m_messageBus);
+                                                                                                                       m_messageBus,
+                                                                                                                       *m_pMenuReactionModel);
 
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
                                                                                                            m_messageBus,

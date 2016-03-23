@@ -18,10 +18,10 @@ namespace ExampleApp
         {
             class DesktopSearchMenuController : public SearchMenuController
             {
-                Modality::View::IModalityController& m_modalityController;
+                //Modality::View::IModalityController& m_modalityController;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Helpers::TIdentity m_menuIdentity;
-                Reaction::View::IReactionModel& m_reactionModel;
+                //Reaction::View::IReactionModel& m_reactionModel;
                 
                 Eegeo::Helpers::TCallback1<DesktopSearchMenuController, const ExampleApp::SearchResultPoi::SearchResultPoiViewOpenedMessage&> m_poiOpenedHandler;
                 Eegeo::Helpers::TCallback1<DesktopSearchMenuController, const ExampleApp::SearchResultPoi::SearchResultPoiViewClosedMessage&> m_poiClosedHandler;

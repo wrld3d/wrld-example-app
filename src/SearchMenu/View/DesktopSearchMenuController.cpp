@@ -33,9 +33,9 @@ namespace ExampleApp
                                      categorySearchRepository,
                                      modalBackgroundView,
                                      messageBus),
-                m_modalityController(modalityController),
+                //m_modalityController(modalityController),
                 m_messageBus(messageBus),
-                m_reactionModel(reactionModel),
+                //m_reactionModel(reactionModel),
                 m_poiClosedHandler(this, &DesktopSearchMenuController::OnSearchResultPoiViewClosedMessage),
                 m_poiOpenedHandler(this, &DesktopSearchMenuController::OnSearchResultPoiViewOpenedMessage)
             {
