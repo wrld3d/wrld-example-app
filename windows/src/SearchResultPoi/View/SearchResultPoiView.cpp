@@ -38,7 +38,6 @@ namespace ExampleApp
             {
                 for (int i = 0; i < SearchVendors::Num; ++i)
                 {
-                    Eegeo_TTY("ASDF: %d", i);
                     m_uiViewClass[i] = GetTypeFromEntryAssembly(Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(VendorViewClassNames[i]));
                     ConstructorInfo^ ctor = m_uiViewClass[i]->GetConstructor(CreateTypes(IntPtr::typeid));
                     m_uiView[i] = ctor->Invoke(CreateObjects(gcnew IntPtr(this)));
