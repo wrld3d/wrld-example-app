@@ -2,7 +2,7 @@ package com.eegeo.menu;
 
 import com.eegeo.animation.ReversibleAnimatorSet;
 import com.eegeo.animation.ReversibleValueAnimator;
-import com.eegeo.animation.updatelisteners.AbsListViewHeightAnimatorUpdateListener;
+import com.eegeo.animation.updatelisteners.ViewHeightAnimatorUpdateListener;
 import com.eegeo.animation.updatelisteners.ViewRotateAnimatorUpdateListener;
 import com.eegeo.animation.updatelisteners.ViewScaleYAnimatorUpdateListener;
 import com.eegeo.entrypointinfrastructure.MainActivity;
@@ -10,6 +10,7 @@ import com.eegeo.mobileexampleapp.R;
 
 import android.animation.AnimatorListenerAdapter;
 import android.view.View;
+import android.widget.AbsListView;
 
 
 public class MenuListAnimationHandler extends AnimatorListenerAdapter
@@ -53,7 +54,7 @@ public class MenuListAnimationHandler extends AnimatorListenerAdapter
 		final int finalSize = isExpanding ? itemSize : onePixel;
 
 		ReversibleValueAnimator expandCollapseAnimator = ReversibleValueAnimator.ofInt(startSize, finalSize);	
-		expandCollapseAnimator.addUpdateListener(new AbsListViewHeightAnimatorUpdateListener(view));
+		expandCollapseAnimator.addUpdateListener(new ViewHeightAnimatorUpdateListener<AbsListView.LayoutParams>(view));
 		expandCollapseAnimator.setDuration(MenuItemExpandAnimationSpeedMilliseconds);
 
 		final float startScale = isExpanding ? 0.0f : 1.0f;

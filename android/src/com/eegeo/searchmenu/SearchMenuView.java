@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.eegeo.animation.ReversibleValueAnimator;
-import com.eegeo.animation.updatelisteners.LinearLayoutViewHeightAnimatorUpdateListener;
+import com.eegeo.animation.updatelisteners.ViewHeightAnimatorUpdateListener;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.menu.MenuExpandableListAdapter;
 import com.eegeo.menu.MenuExpandableListOnClickListener;
@@ -18,7 +18,6 @@ import com.eegeo.mobileexampleapp.R;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
@@ -26,6 +25,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -333,7 +333,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     	int oldHeight = params.height;
 
     	ReversibleValueAnimator menuHeightAnimator = ReversibleValueAnimator.ofInt(oldHeight, height);
-    	menuHeightAnimator.addUpdateListener(new LinearLayoutViewHeightAnimatorUpdateListener(m_searchList));
+    	menuHeightAnimator.addUpdateListener(new ViewHeightAnimatorUpdateListener<LinearLayout.LayoutParams>(m_searchList));
     	menuHeightAnimator.setDuration(300);
     	menuHeightAnimator.start();
     	m_searchList.setSelection(0);
