@@ -22,7 +22,6 @@ namespace ExampleApp
                                const std::string& viewClassName)
                 : m_nativeState(nativeState)
                 , m_pTryDragFunc(NULL)
-            	, m_numberOfItemsOnLastRefresh(0)
             {
                 ASSERT_UI_THREAD
 
@@ -102,24 +101,14 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView, updateAnimationMethod, dt);
             }
 
-            void MenuView::UpdateMenuSectionViews(TSections& sections)
+            void MenuView::UpdateMenuSectionViews(TSections& sections, bool contentsChanged)
             {
                 ASSERT_UI_THREAD
 
-				const size_t numSections = sections.size();
-				size_t numItems = 0;
-				for(size_t i = 0; i < numSections; ++ i)
-				{
-					const IMenuSectionViewModel& section = *(sections.at(i));
-					numItems += section.GetTotalItemCount() + 1;
-				}
-
-				if (numItems == m_numberOfItemsOnLastRefresh)
+				if (!contentsChanged)
 				{
 					return;
 				}
-
-				m_numberOfItemsOnLastRefresh = numItems;
 
 				m_currentSections = sections;
 
@@ -129,6 +118,14 @@ namespace ExampleApp
                 jstring strClassName = env->NewStringUTF("java/lang/String");
                 jclass strClass = m_nativeState.LoadClass(env, strClassName);
                 env->DeleteLocalRef(strClassName);
+
+        		const size_t numSections = sections.size();
+				size_t numItems = 0;
+				for(size_t i = 0; i < numSections; ++ i)
+				{
+					const IMenuSectionViewModel& section = *(sections.at(i));
+					numItems += section.GetTotalItemCount() + 1;
+				}
 
                 jobjectArray groupNamesArray = env->NewObjectArray(numSections, strClass, 0);
                 jintArray groupSizesArray = env->NewIntArray(numSections);

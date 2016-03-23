@@ -28,8 +28,6 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_onDragCompletedCallbacks;
                 Eegeo::Helpers::CallbackCollection2<int, int> m_onItemSelectedCallbacks;
 
-                int m_numberOfItemsOnLastRefresh;
-
                 void CallVoidVoidFunction(const char* func);
             protected:
                 AndroidNativeState& m_nativeState;
@@ -61,7 +59,7 @@ namespace ExampleApp
 
                 void UpdateTableAnimation(float dt) {} // TODO: IR
 
-                void UpdateMenuSectionViews(TSections& sections);
+                void UpdateMenuSectionViews(TSections& sections, bool contentsChanged);
 
                 void SetFullyOnScreenOpen();
 
