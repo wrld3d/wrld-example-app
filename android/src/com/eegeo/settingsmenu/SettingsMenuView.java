@@ -5,20 +5,22 @@ package com.eegeo.settingsmenu;
 import java.util.HashMap;
 import java.util.List;
 
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-
 import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.menu.MenuItemSelectedListener;
-import com.eegeo.menu.MenuListAdapter;
+import com.eegeo.menu.MenuExpandableListAdapter;
+import com.eegeo.menu.MenuExpandableListOnClickListener;
+import com.eegeo.menu.MenuExpandableListView;
+import com.eegeo.menu.MenuListAnimationHandler;
 import com.eegeo.menu.MenuView;
 import com.eegeo.ProjectSwallowApp.R;
 
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
+
 public class SettingsMenuView extends MenuView
 {
-    private MenuListAdapter m_listAdapter = null;
+    private MenuExpandableListAdapter m_expandableListAdapter = null;
+    private MenuListAnimationHandler m_menuListAnimationHandler = null;
     
     public SettingsMenuView(MainActivity activity, long nativeCallerPointer)
     {
@@ -31,7 +33,7 @@ public class SettingsMenuView extends MenuView
         final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
         m_view = m_activity.getLayoutInflater().inflate(R.layout.settings_menu_layout, uiRoot, false);
         
-        m_list = (ListView)m_view.findViewById(R.id.settings_menu_item_list);
+        m_list = (MenuExpandableListView)m_view.findViewById(R.id.settings_menu_item_list);
         
         ImageButton dragButtonView = (ImageButton)m_view.findViewById(R.id.settings_menu_drag_button_view);
         dragButtonView.setOnClickListener(this);
@@ -54,21 +56,16 @@ public class SettingsMenuView extends MenuView
 		});
         
         uiRoot.addView(m_view);
-
-        m_listAdapter = new MenuListAdapter(
-        		m_activity, 
-        		R.layout.settings_menu_item, 
-        		R.layout.menu_list_subitem);
         
-        m_list.setAdapter(m_listAdapter);
+        View listContainerView = m_view.findViewById(R.id.settings_menu_list_container);
+        m_menuListAnimationHandler = new MenuListAnimationHandler(m_activity, listContainerView);
+        
+        m_expandableListAdapter = new MenuExpandableListAdapter(m_activity, m_list, m_menuListAnimationHandler, R.layout.settings_menu_item, R.layout.menu_list_subitem);
+        m_list.setAdapter(m_expandableListAdapter);
 
-        m_menuItemSelectedListener = new MenuItemSelectedListener(
-            m_listAdapter,
-            this,
-            m_nativeCallerPointer
-        );
-
-        m_list.setOnItemClickListener(m_menuItemSelectedListener);
+        m_expandableListOnClickListener = new MenuExpandableListOnClickListener(m_activity, m_nativeCallerPointer);
+        m_list.setOnChildClickListener(m_expandableListOnClickListener);
+        m_list.setOnGroupClickListener(m_expandableListOnClickListener);
     }
     
     @Override
@@ -102,9 +99,8 @@ public class SettingsMenuView extends MenuView
 
     @Override
     protected void refreshListData(List<String> groups,
-                                   List<Boolean> groupsExpandable,
                                    HashMap<String, List<String>> groupToChildrenMap)
     {
-        m_listAdapter.setData(groups, groupsExpandable, groupToChildrenMap);
+    	m_expandableListAdapter.setData(groups, groupToChildrenMap);
     }
 }

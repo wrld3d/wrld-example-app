@@ -1,12 +1,12 @@
 <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/search_menu_view"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:descendantFocusability="beforeDescendants"
-    android:layout_marginTop="@dimen/menu_button_top_offset" 
+    android:layout_marginTop="@dimen/menu_button_top_offset"
     android:focusableInTouchMode="true" >
     
     <LinearLayout
@@ -24,7 +24,7 @@
 		<View
         	android:id="@+id/search_menu_title_separator"
         	android:layout_width="fill_parent"
-        	android:layout_height="6dp"
+        	android:layout_height="@dimen/menu_section_divider_height"
         	android:background="@color/menu_header_separator" />
         
 		<RelativeLayout
@@ -72,10 +72,10 @@
 		<View
         	android:id="@+id/search_menu_results_separator"
         	android:layout_width="fill_parent"
-        	android:layout_height="6dp"
+        	android:layout_height="@dimen/menu_section_divider_height"
         	android:background="@color/menu_header_separator" />
 
-		<ListView
+		<com.eegeo.menu.MenuExpandableListView
 			android:id="@+id/search_menu_options_list_view"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
@@ -84,12 +84,12 @@
 			android:listSelector="@android:color/transparent"
 			android:clipChildren="false"
 			android:clipToPadding="false"
-			android:divider="@color/table_divider"
-			android:dividerHeight="1dp"
 			android:overScrollMode="never"
 			android:paddingLeft="32dp"
 			android:paddingRight="5dp"
+			android:divider="@color/table_divider"
 			android:childDivider="@color/ui_border"
+			android:dividerHeight="1dp"
 			android:groupIndicator="@null"/>
 		
 		<View
