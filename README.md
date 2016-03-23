@@ -14,13 +14,19 @@
 * [SDK Documentation](#sdk-documentation)
 * [License](#support)
 
-The [eeGeo SDK](http://www.eegeo.com/developers/) is a cross-platform, OpenGL-based library for [beautiful and customisable 3D maps](http://www.eegeo.com).
+This example app showcases the [eeGeo SDK](http://www.eegeo.com/), a cross-platform, OpenGL-based library for displaying beautiful and engaging 3D maps.
 
-This example app demonstrates how a developer can use the eeGeo 3D Maps SDK to display beautiful 3D maps on iOS, Android, and Windows PCs. It can be used as the basis for your own app, or can be used as a reference when integrating eeGeo's maps into an existing app.
+### What does the eeGeo mapping platform have to offer?
 
-The eeGeo SDK is distributed as a C++ static library with headers. Most of this example application is also written in C++ and shared between platforms to reduce code duplication.
+* Detailed 3D coverage for the whole of Canada, Great Britain, the United States, and more
+* Indoor maps in full 3D
+* Flexible themes, allowing you to change the style of your map
+* Customisable pins and markers
+* Support for custom 3D models and animation
+* Compatibility with iOS, Android, Windows, and OS X
+* Continuous deployment, meaning you get the latest features as they're developed
 
-If you want to see the app without building it yourself, see [Recce](https://www.eegeo.com/recce/) on Google Play and the App Store to try it out.
+Download our app, [Recce](https://www.eegeo.com/recce/), on Google Play or the App Store to see what the eeGeo SDK can do. Or [read on](#getting-started) to build the app yourself.
 
 ## Support
 
@@ -28,17 +34,21 @@ If you have any questions, bug reports, or feature requests, feel free to submit
 
 ## Getting Started
 
+This example app demonstrates the use of the eeGeo SDK to display beautiful 3D maps on iOS, Android, and Windows PCs. It can be used as the basis for your own app, or can be used as a reference when integrating eeGeo's maps into an existing app.
+
+The eeGeo SDK is distributed as a C++ static library with headers. Most of this example application is also written in C++ and shared between platforms to reduce code duplication.
+
 This section will walk you through the process of getting up and running quickly on each platform.
 
-1.  Clone this repo: `https://github.com/eegeo/eegeo-example-app`
+1.  Clone this repo: `git clone https://github.com/eegeo/eegeo-example-app`
 2.  Obtain an [eeGeo API key](https://www.eegeo.com/developers/apikeys) and place it in the [ApiKey.h](https://github.com/eegeo/eegeo-example-app/blob/master/src/ApiKey.h#L12) file.
 3.  Choose a platform from the below table to see detailed instructions for building the app.
 
-Platform                                		| Languages         | UI 
+Platform                                        | Languages         | UI 
 ------------------------------------------------|-------------------|-------------
 [Getting started on Android](/android#readme)   | C++, Java         | Android UI
 [Getting started on iOS](/ios#readme)           | C++, Objective-C  | Cocoa Touch
-[Getting started on Windows](/windows#readme)	| C++, C#           | WPF
+[Getting started on Windows](/windows#readme)   | C++, C#           | WPF
 
 ### eeGeo API Key 
 
