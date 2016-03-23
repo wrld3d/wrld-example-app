@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/menu_list_item"
     android:layout_width="212dp"
-    android:layout_height="39dp" 
+    android:layout_height="39dp"
 	android:background="@drawable/submenu_pressed_states">
 
     <ImageView

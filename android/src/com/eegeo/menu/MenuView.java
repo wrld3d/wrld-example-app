@@ -7,9 +7,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -21,15 +24,16 @@ public abstract class MenuView implements View.OnClickListener, MenuAnimationSta
 	protected MainActivity m_activity = null;
     protected long m_nativeCallerPointer;
     protected View m_view = null;
-    protected ListView m_list = null;
-    protected OnItemClickListener m_menuItemSelectedListener = null;
+    protected MenuExpandableListView m_list = null;
+    protected MenuExpandableListOnClickListener m_expandableListOnClickListener = null;
+    
     protected Boolean m_loggingEnabled = true;
     
     protected boolean m_animating = false;
     
     protected MenuAnimationHandler m_menuAnimationHandler = null;
 
-    protected abstract void refreshListData(List<String> groups, List<Boolean> groupsExpandable, HashMap<String, List<String>> groupToChildrenMap);
+    protected abstract void refreshListData(List<String> groups, HashMap<String, List<String>> groupToChildrenMap);
 
     public MenuView(MainActivity activity, long nativeCallerPointer)
     {
@@ -154,36 +158,46 @@ public abstract class MenuView implements View.OnClickListener, MenuAnimationSta
         final long nativeCallerPointer,
         final String[] groupNames,
         final int[] groupSizes,
-        final boolean[] groupIsExpandable,
         final String[] childJson)
     {
         List<String> groups = Arrays.asList(groupNames);
-        List<Boolean> groupsExpandable = toBooleanList(groupIsExpandable);
         HashMap<String, List<String>> childMap = new HashMap<String,List<String>>();
-        int childIndex = 0;
+        
+        int childIndex = 1;
+        
         for(int groupIndex = 0; groupIndex < groups.size(); groupIndex++)
         {
-            int size = groupSizes[groupIndex];
+            int sizeWithoutHeader = groupSizes[groupIndex] - 1;
+            
             ArrayList<String> children = new ArrayList<String>();
-            for(int i = 0; i < size; i++)
+            for(int i = 0; i < sizeWithoutHeader; ++i)
             {
-                children.add(childJson[childIndex]);
+            	String json = childJson[childIndex];
+                children.add(json);
                 childIndex++;
             }
-            childMap.put(groupNames[groupIndex], children);
+           
+            childIndex++;
+            
+            childMap.put(getNameFromJson(groupNames[groupIndex]), children);
         }
 
-        refreshListData(groups, groupsExpandable, childMap);
+        refreshListData(groups, childMap);
     }
-
-    protected List<Boolean> toBooleanList(boolean[] booleanArray)
+    
+    private String getNameFromJson(String groupJson)
     {
-        ArrayList<Boolean> list = new ArrayList<Boolean>();
-        for(int i = 0; i < booleanArray.length; i++)
-        {
-            list.add(booleanArray[i]);
-        }
-        return list;
+    	try
+		{
+			JSONObject json = new JSONObject(groupJson);
+			String name = json.getString("name");
+			return name;
+		}
+		catch(Exception e)
+		{
+			Log.e("MenuView", String.format("Unable to parse name from group JSON: %s", e.toString()));
+			return null;
+		}
     }
 
     protected void handleDragStart(int xPx, int yPx)

@@ -28,6 +28,8 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_onDragCompletedCallbacks;
                 Eegeo::Helpers::CallbackCollection2<int, int> m_onItemSelectedCallbacks;
 
+                int m_numberOfItemsOnLastRefresh;
+
                 void CallVoidVoidFunction(const char* func);
             protected:
                 AndroidNativeState& m_nativeState;
