@@ -35,6 +35,7 @@ namespace ExampleApp
             SearchResultPoiView::SearchResultPoiView(WindowsNativeState& nativeState)
                 : m_nativeState(nativeState)
                 , m_currentVendor(-1)
+                , m_isAnyPoiOpen(false)
             {
                 for (int i = 0; i < SearchVendors::Num; ++i)
                 {
@@ -54,15 +55,26 @@ namespace ExampleApp
 
             void SearchResultPoiView::Show(const Search::SdkModel::SearchResultModel model, bool isPinned)
             {
+                int previousVendor = m_currentVendor;
+
                 m_model = model;
                 CreateVendorSpecificPoiView(m_model.GetVendor(), m_model.GetCategory());
 
+                if (m_isAnyPoiOpen && previousVendor != m_currentVendor)
+                {
+                    DismissPoiInfo[previousVendor]();
+                }
+                
 				DisplayPoiInfo[m_currentVendor](gcnew SearchResultModelCLI(m_model), isPinned);
+
+                m_isAnyPoiOpen = true;
             }
 
             void SearchResultPoiView::Hide()
             {
                 DismissPoiInfo[m_currentVendor]();
+
+                m_isAnyPoiOpen = false;
             }
 
             void SearchResultPoiView::UpdateImage(const std::string& url, bool hasImage, const std::vector<unsigned char>* pImageBytes)

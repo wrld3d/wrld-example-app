@@ -60,7 +60,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:SwallowWorkingGroupSearchResultsPoiView}">
-                    <Grid Name="WorkingGroupPoiContainer" Width="480" Height="Auto" Background="White" Margin="0,76,0,50">
+                    <Grid Name="WorkingGroupPoiContainer" Width="480" Height="Auto" Background="White" Margin="0,20,0,20">
                         <Grid Width="440"  Margin="20,17,20,20">
                             <Grid Background="White">
                                 <Grid.RowDefinitions>
