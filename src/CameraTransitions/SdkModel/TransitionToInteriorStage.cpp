@@ -40,24 +40,25 @@ namespace ExampleApp
             
             void TransitionToInteriorStage::Start()
             {
-                if(m_isAlreadyInInterior)
+                if(!m_isAlreadyInInterior)
                 {
-                    m_transitionTime = 0.0f;
-                    m_interiorInteractionModel.SetSelectedFloorIndex(m_targetFloorIndex);
-                    m_startInterestPoint = m_cameraController.GetInterestLocation();
-                    m_startDistanceToInterest = m_cameraController.GetDistanceToInterest();
+                    m_cameraController.SetInterestLocation(m_newInterestPoint);
+                    m_cameraController.SetDistanceToInterest(InteriorsExplorer::DefaultInteriorTransitionInterestDistance);
+                    m_interiorSelectionModel.SelectInteriorId(m_interiorId);
                 }
                 else
                 {
-                    m_cameraController.SetInterestLocation(m_newInterestPoint);
-                    m_cameraController.SetDistanceToInterest(m_targetDistanceToInterest);
-                    m_interiorSelectionModel.SelectInteriorId(m_interiorId);
+                    m_interiorInteractionModel.SetSelectedFloorIndex(m_targetFloorIndex);
                 }
+                
+                m_transitionTime = 0.0f;
+                m_startInterestPoint = m_cameraController.GetInterestLocation();
+                m_startDistanceToInterest = m_cameraController.GetDistanceToInterest();
             }
             
             void TransitionToInteriorStage::Update(float dt)
             {
-                if(m_isAlreadyInInterior)
+                if(m_interiorTransitionModel.InteriorIsVisible())
                 {
                     m_transitionTime += dt/m_transitionDuration;
                     float t = Eegeo::Math::Clamp01(m_transitionTime);
@@ -68,7 +69,8 @@ namespace ExampleApp
                     float lerpDistance = Eegeo::Math::Lerp(m_startDistanceToInterest, m_targetDistanceToInterest, smoothT);
                     m_cameraController.SetDistanceToInterest(lerpDistance);
                 }
-                else if(m_interiorInteractionModel.HasInteriorModel())
+                
+                if(m_interiorInteractionModel.HasInteriorModel())
                 {
                     m_interiorInteractionModel.SetSelectedFloorIndex(m_targetFloorIndex);
                 }
@@ -82,11 +84,7 @@ namespace ExampleApp
             
             const bool TransitionToInteriorStage::StageIsComplete() const
             {
-                if(m_isAlreadyInInterior)
-                {
-                    return m_transitionTime >= 1.0f;
-                }
-                else return m_interiorTransitionModel.InteriorIsVisible();
+                return m_interiorTransitionModel.InteriorIsVisible() && m_transitionTime >= 1.0f;
             }
             
             const bool TransitionToInteriorStage::StageHasFailed() const
