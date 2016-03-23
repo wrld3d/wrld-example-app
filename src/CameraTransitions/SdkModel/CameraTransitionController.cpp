@@ -120,9 +120,13 @@ namespace ExampleApp
                     }
                 }
                 
-                EnqueueTransitionToPointStage(newInterestPoint, distanceFromInterest, newHeadingRadians, jumpIfFar);
+                const bool transitioningToNewInterior = interiorId != m_interiorSelectionModel.GetSelectedInteriorId() && interiorId != Eegeo::Resources::Interiors::InteriorId::NullId();
                 
-                if(interiorId != m_interiorSelectionModel.GetSelectedInteriorId() && interiorId != Eegeo::Resources::Interiors::InteriorId::NullId())
+                if(!transitioningToNewInterior)
+                {
+                    EnqueueTransitionToPointStage(newInterestPoint, distanceFromInterest, newHeadingRadians, jumpIfFar);
+                }
+                else
                 {
                     EnqueueTransitionToInteriorStage(newInterestPoint, distanceFromInterest, interiorId, targetFloorIndex);
                 }

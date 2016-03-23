@@ -29,5 +29,6 @@ namespace ExampleApp
         }
         
         static const float DefaultInteriorTransitionInterestDistance = 250.f;
+        static const float DefaultInteriorSearchResultTransitionInterestDistance = 100.f;
     }
 }
