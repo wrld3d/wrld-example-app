@@ -2,10 +2,7 @@ package com.eegeo.menu;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.ExpandableListView;
-
-import com.eegeo.menu.MenuExpandableListAdapter;
 
 public class MenuExpandableListView extends ExpandableListView {
 
@@ -62,5 +59,19 @@ public class MenuExpandableListView extends ExpandableListView {
 	public boolean delayCollapseGroup(int groupPos)
 	{
 		return super.collapseGroup(groupPos);
+	}
+	
+	public void collapseAllGroups()
+	{
+		MenuExpandableListAdapter adapter = (MenuExpandableListAdapter)getExpandableListAdapter();
+		final int groupCount = adapter.getGroupCount();
+		
+		for (int i = 0; i < groupCount; ++i)
+		{
+			if (isGroupExpanded(i))
+			{
+				collapseGroup(i);
+			}
+		}
 	}
 }

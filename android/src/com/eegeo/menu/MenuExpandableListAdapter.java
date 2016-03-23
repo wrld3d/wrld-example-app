@@ -1,19 +1,14 @@
 package com.eegeo.menu;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-
-import org.json.JSONObject;
 
 import com.eegeo.categories.CategoryResources;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.ProjectSwallowApp.R;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +28,9 @@ public class MenuExpandableListAdapter extends BaseExpandableListAdapter
 	MenuExpandableListView m_expandableList;
 	MenuListAnimationHandler m_menuListAnimationHandler;
 
+	// IH: The off-the-shelf view caching does't play well with animators
+	//     Once a view has started animating, it seems to mark it good for reuse.
+	//     Workaround by having our own view caches
 	private HashMap<String, View> m_headerViewCache;
 	private HashMap<String, View> m_childrenViewCache;
 
@@ -147,12 +145,17 @@ public class MenuExpandableListAdapter extends BaseExpandableListAdapter
 			m_childrenViewCache.put(key, itemView);
 		}
 
+		jumpToTopOfMenuIfAnimating();
+		
+		return itemView;
+	}
+
+	private void jumpToTopOfMenuIfAnimating() 
+	{
 		if (m_isAnimating)
 		{
 			m_expandableList.setSelectedGroup(0);
 		}
-		
-		return itemView;
 	}
 
 	@Override

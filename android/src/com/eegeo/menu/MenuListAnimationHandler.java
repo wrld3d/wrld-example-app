@@ -2,7 +2,7 @@ package com.eegeo.menu;
 
 import com.eegeo.animation.ReversibleAnimatorSet;
 import com.eegeo.animation.ReversibleValueAnimator;
-import com.eegeo.animation.updatelisteners.AbsListViewHeightAnimatorUpdateListener;
+import com.eegeo.animation.updatelisteners.ViewHeightAnimatorUpdateListener;
 import com.eegeo.animation.updatelisteners.ViewRotateAnimatorUpdateListener;
 import com.eegeo.animation.updatelisteners.ViewScaleYAnimatorUpdateListener;
 import com.eegeo.entrypointinfrastructure.MainActivity;
@@ -10,6 +10,7 @@ import com.eegeo.ProjectSwallowApp.R;
 
 import android.animation.AnimatorListenerAdapter;
 import android.view.View;
+import android.widget.AbsListView;
 
 
 public class MenuListAnimationHandler extends AnimatorListenerAdapter
@@ -18,11 +19,6 @@ public class MenuListAnimationHandler extends AnimatorListenerAdapter
 	protected View m_listContainerView = null;
 	
 	protected ReversibleAnimatorSet m_itemAnimatorSet;
-	
-	private final int ArrowAnimationRotationSpeedMilliseconds = 300;
-	private final int MenuItemExpandAnimationDelayMilliseconds = 200;
-	private final int MenuItemExpandAnimationSpeedMilliseconds = 300;
-	private final int MenuItemScaleAnimationSpeedMilliseconds = 100;
 	
 	public MenuListAnimationHandler(MainActivity mainActivity, View listContainerView)
 	{
@@ -40,7 +36,7 @@ public class MenuListAnimationHandler extends AnimatorListenerAdapter
 		
 		ReversibleValueAnimator arrowRotationAnimator = ReversibleValueAnimator.ofFloat(startValue, endValue);
 		arrowRotationAnimator.addUpdateListener(new ViewRotateAnimatorUpdateListener(view));
-		arrowRotationAnimator.setDuration(ArrowAnimationRotationSpeedMilliseconds);
+		arrowRotationAnimator.setDuration(MenuListAnimationConstants.MenuListTotalAnimationSpeedMilliseconds);
 		arrowRotationAnimator.start();
 	}
 	
@@ -53,8 +49,8 @@ public class MenuListAnimationHandler extends AnimatorListenerAdapter
 		final int finalSize = isExpanding ? itemSize : onePixel;
 
 		ReversibleValueAnimator expandCollapseAnimator = ReversibleValueAnimator.ofInt(startSize, finalSize);	
-		expandCollapseAnimator.addUpdateListener(new AbsListViewHeightAnimatorUpdateListener(view));
-		expandCollapseAnimator.setDuration(MenuItemExpandAnimationSpeedMilliseconds);
+		expandCollapseAnimator.addUpdateListener(new ViewHeightAnimatorUpdateListener<AbsListView.LayoutParams>(view));
+		expandCollapseAnimator.setDuration(MenuListAnimationConstants.MenuListTotalAnimationSpeedMilliseconds);
 
 		final float startScale = isExpanding ? 0.0f : 1.0f;
 		final float endScale = 1.0f - startScale;
@@ -64,10 +60,10 @@ public class MenuListAnimationHandler extends AnimatorListenerAdapter
 		
 		if (isExpanding)
 		{
-			viewScaleAnimator.setStartDelay(MenuItemExpandAnimationDelayMilliseconds);
+			viewScaleAnimator.setStartDelay(MenuListAnimationConstants.MenuItemExpandAnimationDelayMilliseconds);
 		}
 		
-		viewScaleAnimator.setDuration(MenuItemScaleAnimationSpeedMilliseconds);
+		viewScaleAnimator.setDuration(MenuListAnimationConstants.MenuItemScaleAnimationSpeedMilliseconds);
 		
 		ReversibleAnimatorSet reversibleAnimatorSet = new ReversibleAnimatorSet();
 		reversibleAnimatorSet.addAnimator(expandCollapseAnimator);

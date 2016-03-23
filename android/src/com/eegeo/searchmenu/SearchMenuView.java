@@ -359,11 +359,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         
         if (m_resultsCount > 0)
         {
-        	final int groupCount = m_expandableListAdapter.getGroupCount();
-        	for (int i = 0; i < groupCount; ++i)
-        	{
-        		m_list.collapseGroup(i);
-        	}
+        	m_list.collapseAllGroups();
         }
         
     	updateSearchMenuHeight(m_resultsCount);
@@ -383,9 +379,12 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         
         final int groupCount = m_expandableListAdapter.getGroupCount();
         final int groupHeaderSize = (int)m_activity.getResources().getDimension(R.dimen.menu_item_header_height);
-        final int menuListContainerCollapsedSize = groupCount * groupHeaderSize + ((groupCount - 1) * m_activity.dipAsPx(1));
+        final int menuItemDividerHeightSize = (int)m_activity.getResources().getDimension(R.dimen.menu_item_divider_height);
+        final int menuListContainerCollapsedSize = groupCount * groupHeaderSize + ((groupCount - 1) * menuItemDividerHeightSize);
         
-        final float occupiedHeight = topBar.getHeight() + menuListContainerCollapsedSize + (2 * m_activity.getResources().getDimension(R.dimen.menu_section_divider_height));
+        final int totalMenuSeparatorSize = 2 * (int)m_activity.getResources().getDimension(R.dimen.menu_section_divider_height);
+
+        final float occupiedHeight = topBar.getHeight() + menuListContainerCollapsedSize + totalMenuSeparatorSize;
         final float availableHeight = viewHeight - occupiedHeight;
         
     	final float cellHeight = m_activity.getResources().getDimension(R.dimen.search_menu_result_cell_height);
