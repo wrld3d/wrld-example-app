@@ -103,7 +103,7 @@
                                                 </StackPanel>
                                                 <StackPanel Grid.Column="2" VerticalAlignment="Top" MaxHeight="280">
                                                     <!--Phone-->
-                                                    <Grid Width="Auto" Margin="5,0,0,0">
+                                                    <Grid Width="Auto" Margin="5,15,0,0">
                                                         <Canvas Name="TelephoneIcon" Width="16" Height="16.000" HorizontalAlignment="Left" VerticalAlignment="Center">
                                                             <Path Fill="{StaticResource POIdetailsColour}" Data="F1 M 7.606,11.826 C 6.991,12.379 6.261,12.107 5.727,11.537 C 4.738,10.482 3.555,8.778 2.793,7.053 C 2.533,6.466 2.815,6.136 3.299,5.910 C 3.320,5.900 3.341,5.888 3.361,5.878 L 2.632,0.253 C 2.117,0.235 1.596,0.284 1.309,0.436 C 0.447,0.877 -0.501,2.902 0.306,7.133 C 0.657,8.970 2.725,12.565 5.520,14.352 C 7.579,15.669 9.425,16.039 10.894,15.997 C 11.663,15.974 11.857,15.526 12.191,15.028 C 12.313,14.845 12.415,14.668 12.496,14.490 L 7.642,11.790 C 7.630,11.802 7.619,11.814 7.606,11.826 Z" Margin="1.25,0,0,0"/>
                                                             <Path Fill="{StaticResource POIdetailsColour}" Data="F1 M 13.469,12.752 L 12.985,13.620 L 8.139,10.917 L 8.624,10.049 L 13.469,12.752 Z" Margin="1.25,0,0,0"/>
