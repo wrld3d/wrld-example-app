@@ -121,13 +121,9 @@ namespace ExampleAppWPF
 
             var itemsSource = new List<SubMenuListItem>();
 
-            var detailsList = groupToChildrenMap[groups[0]];
-
-            foreach (var str in detailsList)
+            foreach (var groupToChildren in groupToChildrenMap)
             {
-                var jObject = JObject.Parse(str);
-                var item = new SubMenuListItem(str, 0);
-                itemsSource.Add(item);
+                itemsSource.AddRange(groupToChildren.Value.Select(childListEntry => new SubMenuListItem(childListEntry, 0)));
             }
 
             m_list.ItemsSource = itemsSource;
