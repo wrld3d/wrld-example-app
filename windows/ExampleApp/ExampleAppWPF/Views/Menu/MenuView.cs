@@ -239,9 +239,23 @@ namespace ExampleAppWPF
         {
             Dispatcher.Invoke(() =>
             {
+                var offScreenX = m_offScreenPos;
+
+                if (IsOpen())
+                {
+                    if(m_offScreenPos < 0)
+                    {
+                        offScreenX -= (m_mainContainer.ActualWidth + m_menuIcon.ActualWidth) / 2;
+                    }
+                    else
+                    {
+                        offScreenX += (m_mainContainer.ActualWidth + m_menuIcon.ActualWidth)/ 2;
+                    }
+                }
+
                 m_openState = MENU_OFFSCREENING;
 
-                var db = new DoubleAnimation(m_offScreenPos, TimeSpan.FromMilliseconds(m_animationTimeMilliseconds));
+                var db = new DoubleAnimation(offScreenX, TimeSpan.FromMilliseconds(m_animationTimeMilliseconds));
                 db.Completed += OnAnimCompleted;
 
                 try
