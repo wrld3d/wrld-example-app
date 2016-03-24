@@ -174,7 +174,7 @@ AppHost::AppHost(
     
     m_pMenuReactionModel = Eegeo_NEW(ExampleApp::Menu::View::IOSMenuReactionModel)();
     
-    m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(ExampleApp::ApiKey,
+    m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
              *m_piOSPlatformAbstractionModule,
              screenProperties,
              *m_piOSLocationService,
