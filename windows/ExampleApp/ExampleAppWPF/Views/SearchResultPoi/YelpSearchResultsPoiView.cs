@@ -211,9 +211,8 @@ namespace ExampleAppWPF
             RatingCountVisibility = string.IsNullOrEmpty(yelpResultModel.ImageUrl) && !string.IsNullOrEmpty(yelpResultModel.RatingsImageUrl) && yelpResultModel.ReviewCount > 0 ? Visibility.Visible : Visibility.Collapsed;
             Url = yelpResultModel.WebUrl;
 
-			m_poiImage.Source = new BitmapImage(new Uri("/ExampleAppWPF;component/Assets/poi_placeholder.png", UriKind.Relative));
+			m_poiImage.Source = new BitmapImage(ViewHelpers.MakeUriForImage("poi_placeholder.png"));
 			
-			//m_isPinned = isPinned;
             OnPropertyChanged("IsPinned");
 
             ShowAll();
@@ -221,6 +220,11 @@ namespace ExampleAppWPF
         
         public override void UpdateImageData(string url, bool hasImage, byte[] imgData)
         {
+            if(!hasImage)
+            {
+                return;
+            }
+
             m_poiImage.Source = LoadImageFromByteArray(imgData);
             m_poiImage.Visibility = Visibility.Visible;
         }

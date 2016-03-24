@@ -86,7 +86,7 @@ namespace ExampleApp
                     imageDataArray[static_cast<int>(i)] = System::Byte(pImageBytes->at(i));
                 }
 
-                UpdateImageData[m_currentVendor](gcnew System::String(url.c_str()), hasImage, imageDataArray);
+                UpdateImageData[m_currentVendor](gcnew System::String(url.c_str()), System::Boolean(hasImage), imageDataArray);
             }
 
 			void SearchResultPoiView::InsertAvailabilityChangedCallback(Eegeo::Helpers::ICallback2<const Search::SdkModel::SearchResultModel&, const std::string&>& callback)
