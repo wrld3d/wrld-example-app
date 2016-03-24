@@ -251,7 +251,7 @@ namespace ExampleApp
 
             void* surfaceSharePointer = m_appRunner->GetMainRenderSurfaceSharePointer();
             IDirect3DSurface9* surface = GetSurfaceFromShareHandle(surfaceSharePointer, scaledWidth, scaledHeight);
-            Lock();
+            Lock();            
             UpdateAndRender(0.0f);
             SetBackBuffer(System::Windows::Interop::D3DResourceType::IDirect3DSurface9, System::IntPtr(surface));
             AddDirtyRect(System::Windows::Int32Rect(
@@ -260,7 +260,7 @@ namespace ExampleApp
                 width,
                 height
                 ));
-
+            
             Unlock();
 
             surface->Release();

@@ -7,6 +7,7 @@
 #include "CategorySearch.h"
 #include "Modality.h"
 #include "SearchMenu.h"
+#include "IModalityController.h"
 
 namespace ExampleApp
 {
@@ -62,6 +63,8 @@ namespace ExampleApp
             protected:
                 
                 virtual void RefreshPresentation();
+                bool IsFullyOpen() const;
+                void UpdateOpenState();
                 
             public:
                 SearchMenuController(Menu::View::IMenuModel& model,
@@ -73,7 +76,7 @@ namespace ExampleApp
                                      Modality::View::IModalBackgroundView& modalBackgroundView,
                                      ExampleAppMessaging::TMessageBus& messageBus);
                 
-                ~SearchMenuController();
+                virtual ~SearchMenuController();
             };
         }
     }

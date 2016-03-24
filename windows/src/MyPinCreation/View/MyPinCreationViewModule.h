@@ -37,6 +37,8 @@ namespace ExampleApp
                 );
 
                 ~MyPinCreationViewModule();
+
+                IMyPinCreationInitiationView& GetMyPinCreationInitiationView();
             };
         }
     }

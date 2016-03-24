@@ -8,6 +8,7 @@
 #include "Menu.h"
 #include "SearchResultSection.h"
 #include "Types.h"
+#include "IMenuReactionModel.h"
 
 namespace ExampleApp
 {
@@ -24,7 +25,8 @@ namespace ExampleApp
                 SearchResultSectionViewModule(Menu::View::IMenuViewModel& searchMenuViewModel,
                                               Menu::View::IMenuOptionsModel& menuOptionsModel,
                                               ISearchResultSectionOrder& searchResultSectionOrder,
-                                              ExampleAppMessaging::TMessageBus& messageBus);
+                                              ExampleAppMessaging::TMessageBus& messageBus,
+                                              const Menu::View::IMenuReactionModel& menuReaction);
 
                 ~SearchResultSectionViewModule();
             };

@@ -70,7 +70,7 @@
                                     Style="{StaticResource SimpleSlider}"
                                     Orientation="Vertical"                                    
                                     VerticalAlignment="Bottom"
-                                    Margin="0,0,20,13"
+                                    Margin="0,0,20,20"
                                     MinHeight="300"
                                     Minimum="0"
                                     Maximum="1"

@@ -9,10 +9,12 @@ namespace ExampleApp
         namespace View
         {
             SearchResultOnMapItemModelSelectedObserver::SearchResultOnMapItemModelSelectedObserver(SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
-                    ExampleAppMessaging::TMessageBus& messageBus)
+                    ExampleAppMessaging::TMessageBus& messageBus,
+                    const Menu::View::IMenuReactionModel& menuReaction)
                 : m_searchResultPoiViewModel(searchResultPoiViewModel)
                 , m_messageBus(messageBus)
                 , m_handlerBinding(this, &SearchResultOnMapItemModelSelectedObserver::OnSearchResultOnMapItemModelSelectedMessage)
+                , m_menuReaction(menuReaction)
             {
                 m_messageBus.SubscribeUi(m_handlerBinding);
             }
@@ -24,10 +26,19 @@ namespace ExampleApp
 
             void SearchResultOnMapItemModelSelectedObserver::OnSearchResultOnMapItemModelSelectedMessage(const SearchResultOnMapItemModelSelectedMessage& message)
             {
-                if(!m_searchResultPoiViewModel.IsOpen())
+                if (m_menuReaction.GetShouldOpenMenu())
+                {
+                    if (!m_searchResultPoiViewModel.IsOpen())
+                    {
+                        m_searchResultPoiViewModel.Open(message.GetModel(), false);
+                    }
+                }
+                else
                 {
                     m_searchResultPoiViewModel.Open(message.GetModel(), false);
                 }
+                
+                
             }
         }
     }

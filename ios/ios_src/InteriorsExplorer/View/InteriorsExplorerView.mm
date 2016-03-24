@@ -2,6 +2,7 @@
 
 #include "InteriorsExplorerView.h"
 #include "UIColors.h"
+#include "UIHelpers.h"
 #include "ImageHelpers.h"
 #include "InteriorsExplorerViewInterop.h"
 #include "UIHelpers.h"
@@ -132,6 +133,8 @@ namespace
         self.pFloorNameLabel.textAlignment = NSTextAlignmentLeft;
         [self.pDetailsPanel addSubview:self.pFloorNameLabel];
                 
+        
+        
         [self addSubview:self.pDetailsPanel];
         
         self.pDetailsPanel.alpha = 0.0f;

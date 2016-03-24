@@ -11,6 +11,7 @@
 #include "BidirectionalBus.h"
 #include "MyPinDetailsViewRemovePinHandler.h"
 #include "SearchResultPoi.h"
+#include "IMenuReactionModel.h"
 
 namespace ExampleApp
 {
@@ -31,7 +32,8 @@ namespace ExampleApp
                                    Reaction::View::IReactionControllerModel& reactionControllerModel,
                                    MyPins::SdkModel::IMyPinsService& myPinsService,
                                    SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
-                                   ExampleAppMessaging::TMessageBus& messageBus);
+                                   ExampleAppMessaging::TMessageBus& messageBus,
+                                   const Menu::View::IMenuReactionModel& menuReaction);
 
                 ~MyPinDetailsModule();
 

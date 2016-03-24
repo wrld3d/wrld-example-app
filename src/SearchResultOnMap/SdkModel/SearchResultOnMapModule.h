@@ -18,6 +18,7 @@
 #include "CategorySearch.h"
 #include "MyPins.h"
 #include "IMetricsService.h"
+#include "IMenuReactionModel.h"
 
 namespace ExampleApp
 {
@@ -40,7 +41,8 @@ namespace ExampleApp
                                         CategorySearch::ISearchResultIconCategoryMapper& searchResultOnMapIconCategoryMapper,
                                         Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultMyPinsService,
                                         ExampleAppMessaging::TMessageBus& messageBus,
-                                        Metrics::IMetricsService& metricsService);
+                                        Metrics::IMetricsService& metricsService,
+                                        const Menu::View::IMenuReactionModel& menuReaction);
 
                 ~SearchResultOnMapModule();
 

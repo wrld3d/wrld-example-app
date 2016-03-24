@@ -195,6 +195,16 @@ namespace ExampleApp
                     m_searchMenuView.SetSearchSection(m_searchSectionViewModel);
                 }
             }
+
+            bool SearchMenuController::IsFullyOpen() const
+            {
+                return m_viewModel.IsFullyOpen();
+            }
+
+            void SearchMenuController::UpdateOpenState()
+            {
+                m_viewModel.UpdateOpenState(1.0f);
+            }
         }
     }
 }

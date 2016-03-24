@@ -11,6 +11,7 @@
 #include "IOpenableControlViewModel.h"
 #include "Types.h"
 #include "VectorMath.h"
+#include "IMenuReactionModel.h"
 
 namespace ExampleApp
 {
@@ -33,6 +34,7 @@ namespace ExampleApp
                 
                 int m_itemIndex;
 
+                const Menu::View::IMenuReactionModel& m_menuReaction;
             public:
                 SearchResultItemModel(const std::string& name,
                                       const Eegeo::dv3& searchResultModelLocationEcef,
@@ -41,7 +43,8 @@ namespace ExampleApp
                                       const int floorIndex,
                                       OpenableControl::View::IOpenableControlViewModel& searchMenuViewModel,
                                       int itemIndex,
-                                      ExampleAppMessaging::TMessageBus& messageBus);
+                                      ExampleAppMessaging::TMessageBus& messageBus,
+                                      const Menu::View::IMenuReactionModel& menuReaction);
 
                 ~SearchResultItemModel();
 

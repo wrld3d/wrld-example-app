@@ -17,7 +17,8 @@ namespace ExampleApp
                                                          const int floorIndex,
                                                          OpenableControl::View::IOpenableControlViewModel& searchMenuViewModel,
                                                          int itemIndex,
-                                                         ExampleAppMessaging::TMessageBus& messageBus)
+                                                         ExampleAppMessaging::TMessageBus& messageBus,
+                                                         const Menu::View::IMenuReactionModel& menuReaction)
             : m_name(name)
             , m_searchResultModelLocationEcef(searchResultModelLocationEcef)
             , m_isInterior(isInterior)
@@ -26,6 +27,7 @@ namespace ExampleApp
             , m_searchMenuViewModel(searchMenuViewModel)
             , m_messageBus(messageBus)
             , m_itemIndex(itemIndex)
+            , m_menuReaction(menuReaction)
             {
 
             }
@@ -37,7 +39,10 @@ namespace ExampleApp
 
             void SearchResultItemModel::Select()
             {
-                m_searchMenuViewModel.Close();
+                if (m_menuReaction.GetShouldCloseMenu())
+                {
+                    m_searchMenuViewModel.Close();
+                }
 
                 m_messageBus.Publish(SearchResultSectionItemSelectedMessage(m_searchResultModelLocationEcef,
                                                                             m_isInterior,

@@ -26,6 +26,7 @@
 #include "InitialExperienceIntroDismissedMessage.h"
 #include "SearchResultPoiPinToggledMessage.h"
 #include "SearchResultPoiViewOpenedMessage.h"
+#include "SearchResultPoiViewClosedMessage.h"
 #include "TourActiveStateChangedMessage.h"
 #include "ActiveTourQuitSelectedMessage.h"
 #include "TourChangeRequestMessage.h"
@@ -66,6 +67,7 @@ namespace ExampleApp
         	, public Eegeo::Messaging::CatalogBinding<InitialExperience::InitialExperienceIntroDismissedMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiPinToggledMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiViewOpenedMessage>
+            , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiViewClosedMessage>
             , public Eegeo::Messaging::CatalogBinding<Tours::TourActiveStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Tours::ActiveTourQuitSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<Tours::TourChangeRequestMessage>

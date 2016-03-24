@@ -15,13 +15,15 @@ namespace ExampleApp
                                                    Reaction::View::IReactionControllerModel& reactionControllerModel,
                                                    MyPins::SdkModel::IMyPinsService& myPinsService,
                                                    SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
-                                                   ExampleAppMessaging::TMessageBus& messageBus)
+                                                   ExampleAppMessaging::TMessageBus& messageBus,
+                                                   const Menu::View::IMenuReactionModel& menuReaction)
             {
                 m_pMyPinDetailsViewModel = Eegeo_NEW(MyPinDetails::View::MyPinDetailsViewModel)(identityProvider.GetNextIdentity(),
                                            reactionControllerModel);
                 
                 m_pMyPinDetailsDisplayService = Eegeo_NEW(View::MyPinDetailsDisplayService)(*m_pMyPinDetailsViewModel,
-                                                                                            searchResultPoiViewModel);
+                                                                                            searchResultPoiViewModel,
+                                                                                            menuReaction);
                 
                 m_pMyPinDetailsModelSelectedObserver = Eegeo_NEW(MyPinDetails::View::MyPinDetailsModelSelectedObserver)(*m_pMyPinDetailsDisplayService,
                                                        messageBus);

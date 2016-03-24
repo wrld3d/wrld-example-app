@@ -9,6 +9,7 @@
 #include "WorldPinGainedFocusMessage.h"
 #include "WorldPinLostFocusMessage.h"
 #include "WorldPinInFocusChangedLocationMessage.h"
+#include "IMenuReactionModel.h"
 
 namespace ExampleApp
 {
@@ -30,9 +31,12 @@ namespace ExampleApp
                 void OnWorldPinInFocusChangedLocationMessage(const WorldPinInFocusChangedLocationMessage& message);
                 void OnSelectedFocussedResultEvent();
 
+                const Menu::View::IMenuReactionModel& m_menuReaction;
+
             public:
                 WorldPinInFocusObserver(IWorldPinInFocusViewModel& worldPinInFocusViewModel,
-                                        ExampleAppMessaging::TMessageBus& messageBus);
+                                        ExampleAppMessaging::TMessageBus& messageBus,
+                                        const Menu::View::IMenuReactionModel& menuReaction);
 
                 ~WorldPinInFocusObserver();
             };

@@ -173,6 +173,8 @@ namespace ExampleApp
         
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
         Net::SdkModel::ConnectivityChangedObserver* m_pConnectivityChangedObserver;
+
+        Menu::View::IMenuReactionModel& m_menuReaction;
         
         Tours::IToursModule* m_pToursModule;
         float m_toursPinDiameter;
@@ -235,7 +237,8 @@ namespace ExampleApp
                          const std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*>& platformImplementedSearchServiceModules,
                          ExampleApp::Metrics::IMetricsService& metricsService,
                          ExampleApp::ApplicationConfig::ApplicationConfiguration applicationConfiguration,
-                         Eegeo::IEegeoErrorHandler& errorHandler);
+                         Eegeo::IEegeoErrorHandler& errorHandler,
+                         Menu::View::IMenuReactionModel& menuReaction);
 
         ~MobileExampleApp();
 

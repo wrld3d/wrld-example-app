@@ -21,7 +21,8 @@ namespace ExampleApp
                                                CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                                                Menu::View::IMenuViewModel& menuViewModel,
                                                ExampleAppMessaging::TMessageBus& messageBus,
-                                               Metrics::IMetricsService& metricsService)
+                                               Metrics::IMetricsService& metricsService,
+                                               const Menu::View::IMenuReactionModel& menuReaction)
             {
                 m_pJumpController = Eegeo_NEW(PlaceJumpController)(cameraTransitionController);
 
@@ -51,7 +52,7 @@ namespace ExampleApp
                     View::PlaceJumpModel& jump = *it;
                     m_pMenuOptionsModel->AddItem(jump.GetName(),
                                                  jump.GetName(), "", jump.GetIcon(),
-                                                 Eegeo_NEW(View::PlaceJumpMenuOption)(jump, menuViewModel, messageBus, metricsService));
+                                                 Eegeo_NEW(View::PlaceJumpMenuOption)(jump, menuViewModel, messageBus, metricsService, menuReaction));
                 }
 
                 m_pPlaceJumpSelectedMessageHandler = Eegeo_NEW(PlaceJumpSelectedMessageHandler)(*m_pJumpController, messageBus);

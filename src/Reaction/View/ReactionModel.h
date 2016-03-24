@@ -24,12 +24,17 @@ namespace ExampleApp
 
                 Eegeo::Helpers::ICallback2<OpenableControl::View::IOpenableControlViewModel&, float>* m_pMenuOpenStateChangedCallback;
 
+                std::vector<Eegeo::Helpers::TIdentity> m_ignoredMenuIdentities;
+
             public:
                 ReactionModel(IReactionControllerModel& reactionControllerModel,
                               const std::vector<OpenableControl::View::IOpenableControlViewModel*>& openables,
                               const std::vector<ScreenControl::View::IScreenControlViewModel*>& reactors);
 
                 ~ReactionModel();
+
+                void AddIgnoredMenuIdentity(Eegeo::Helpers::TIdentity identity);
+                void RemoveIgnoredMenuIdentity(Eegeo::Helpers::TIdentity identity);
 
             private:
 

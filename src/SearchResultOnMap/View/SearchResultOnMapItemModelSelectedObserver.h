@@ -7,6 +7,7 @@
 #include "ICallback.h"
 #include "SearchResultOnMapItemModelSelectedMessage.h"
 #include "ISearchResultPoiViewModel.h"
+#include "IMenuReactionModel.h"
 
 namespace ExampleApp
 {
@@ -22,9 +23,12 @@ namespace ExampleApp
 
                 void OnSearchResultOnMapItemModelSelectedMessage(const SearchResultOnMapItemModelSelectedMessage& message);
 
+                const Menu::View::IMenuReactionModel& m_menuReaction;
+
             public:
                 SearchResultOnMapItemModelSelectedObserver(SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
-                        ExampleAppMessaging::TMessageBus& messageBus);
+                        ExampleAppMessaging::TMessageBus& messageBus,
+                        const Menu::View::IMenuReactionModel& menuReaction);
 
                 ~SearchResultOnMapItemModelSelectedObserver();
             };
