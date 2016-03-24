@@ -15,12 +15,14 @@ namespace ExampleApp
             SearchResultSectionViewModule::SearchResultSectionViewModule(Menu::View::IMenuViewModel& searchMenuViewModel,
                                                                          Menu::View::IMenuOptionsModel& menuOptionsModel,
                                                                          ISearchResultSectionOrder& searchResultSectionOrder,
-                                                                         ExampleAppMessaging::TMessageBus& messageBus)
+                                                                         ExampleAppMessaging::TMessageBus& messageBus,
+                                                                         Menu::View::IMenuReactionModel& menuReaction)
             {
                 m_pController =  Eegeo_NEW(SearchResultSectionController)(searchMenuViewModel,
                                                                           menuOptionsModel,
                                                                           searchResultSectionOrder,
-                                                                          messageBus);
+                                                                          messageBus,
+                                                                          menuReaction);
             }
 
             SearchResultSectionViewModule::~SearchResultSectionViewModule()

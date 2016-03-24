@@ -69,7 +69,6 @@ namespace ExampleApp
                             
                             float altitude = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(interiorModel, pinFloorIndex);
                             float heightAboveTerrain = Helpers::InteriorHeightHelpers::INTERIOR_FLOOR_HEIGHT*pinFloorIndex;
-                            
                             if ((!m_interiorInteractionModel.IsCollapsed() || pinFloorIndex == selectedFloorIndex) &&
                                 worldPinItemModel.GetInteriorData().building == interiorModel.GetId())
                             {

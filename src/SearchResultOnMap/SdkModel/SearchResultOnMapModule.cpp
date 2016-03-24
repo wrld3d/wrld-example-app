@@ -22,7 +22,8 @@ namespace ExampleApp
                                                              CategorySearch::ISearchResultIconCategoryMapper& searchResultOnMapIconCategoryMapper,
                                                              Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultMyPinsService,
                                                              ExampleAppMessaging::TMessageBus& messageBus,
-                                                             Metrics::IMetricsService& metricsService)
+                                                             Metrics::IMetricsService& metricsService,
+                                                             const Menu::View::IMenuReactionModel& menuReaction)
             {
                 m_pSearchResultOnMapFactory = Eegeo_NEW(View::SearchResultOnMapFactory)(messageBus, metricsService);
                 
@@ -36,7 +37,8 @@ namespace ExampleApp
                                                                               searchService);
                 
                 m_pSearchResultOnMapItemModelSelectedObserver = Eegeo_NEW(View::SearchResultOnMapItemModelSelectedObserver)(searchResultPoiViewModel,
-                                                                                                                            messageBus);
+                                                                                                                            messageBus,
+                                                                                                                            menuReaction);
             }
 
             SearchResultOnMapModule::~SearchResultOnMapModule()

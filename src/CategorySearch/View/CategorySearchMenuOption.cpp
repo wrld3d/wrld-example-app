@@ -13,10 +13,12 @@ namespace ExampleApp
         {
             CategorySearchMenuOption::CategorySearchMenuOption(CategorySearchModel model,
                     Menu::View::IMenuViewModel& menuViewModel,
-                    ExampleAppMessaging::TMessageBus& messageBus)
+                    ExampleAppMessaging::TMessageBus& messageBus,
+                    const Menu::View::IMenuReactionModel& menuReaction)
                 : m_model(model)
                 , m_menuViewModel(menuViewModel)
                 , m_messageBus(messageBus)
+                , m_menuReaction(menuReaction)
             {
             }
 
@@ -27,7 +29,11 @@ namespace ExampleApp
 
             void CategorySearchMenuOption::Select()
             {
-                m_menuViewModel.Close();
+                if (m_menuReaction.GetShouldCloseMenu())
+                {
+                    m_menuViewModel.Close();
+                }
+
                 m_messageBus.Publish(CategorySearchSelectedMessage(m_model.SearchCategory(), m_model.Interior()));
             }
         }

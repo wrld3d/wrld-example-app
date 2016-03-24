@@ -46,6 +46,8 @@ namespace ExampleApp
                 Helpers::ReflectionHelpers::Method<System::String^, bool, array<unsigned char, 1>^> UpdateImageData[SearchVendors::Num];
 
                 int m_currentVendor;
+                
+                bool m_isAnyPoiOpen;
 
             public:
                 SearchResultPoiView(WindowsNativeState& nativeState);

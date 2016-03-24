@@ -19,18 +19,22 @@ namespace ExampleApp
                                                        Menu::View::IMenuSectionViewModel& searchSectionViewModel,
                                                        CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                                                        Modality::View::IModalBackgroundView& modalBackgroundView,
-                                                       ExampleAppMessaging::TMessageBus& messageBus)
+                                                       Modality::View::IModalityController& modalityController,
+                                                       ExampleAppMessaging::TMessageBus& messageBus,
+                                                       Reaction::View::IReactionModel& reactionModel)
             {
                 m_pView = Eegeo_NEW(SearchMenuView)(nativeState, viewName);
 
-                m_pController = Eegeo_NEW(SearchMenuController)(searchMenuModel,
+                m_pController = Eegeo_NEW(DesktopSearchMenuController)(searchMenuModel,
                                                                 searchMenuViewModel,
                                                                 *m_pView,
                                                                 *m_pView,
                                                                 searchSectionViewModel,
                                                                 categorySearchRepository,
                                                                 modalBackgroundView,
-                                                                messageBus);
+                                                                modalityController,
+                                                                messageBus,
+                                                                reactionModel);
             }
 
             SearchMenuViewModule::~SearchMenuViewModule()

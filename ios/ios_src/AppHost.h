@@ -56,6 +56,7 @@
 #include "LinkOutObserver.h"
 #include "URLRequestHandler.h"
 #include "SurveyViewIncludes.h"
+#include "IMenuReactionModel.h"
 
 @class ViewController;
 class AppInputDelegate;
@@ -135,6 +136,7 @@ private:
     ExampleApp::LinkOutObserver::LinkOutObserver* m_pLinkOutObserver;
     ExampleApp::URLRequest::View::URLRequestHandler* m_pURLRequestHandler;
     ExampleApp::Surveys::View::ISurveyViewModule* m_pSurveyViewModule;
+    ExampleApp::Menu::View::IMenuReactionModel* m_pMenuReactionModel;
     
     ImageStore* m_pImageStore;
     

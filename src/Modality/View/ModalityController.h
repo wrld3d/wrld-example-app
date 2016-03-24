@@ -22,11 +22,16 @@ namespace ExampleApp
                 std::vector<OpenableControl::View::IOpenableControlViewModel*> m_viewModels;
                 Eegeo::Helpers::ICallback2<OpenableControl::View::IOpenableControlViewModel&, float>* m_pMenuOpenStateChangedCallback;
 
+                std::vector<Eegeo::Helpers::TIdentity> m_ignoredMenuIdentities;
+
             public:
                 ModalityController(IModalityModel& modalityModel,
                                    const std::vector<OpenableControl::View::IOpenableControlViewModel*>& viewModels);
 
                 ~ModalityController();
+
+                void AddIgnoredMenuIdentity(Eegeo::Helpers::TIdentity identity);
+                void RemoveIgnoredMenuIdentity(Eegeo::Helpers::TIdentity identity);
 
             private:
 

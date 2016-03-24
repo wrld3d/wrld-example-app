@@ -57,6 +57,7 @@
 #include "SearchMenuModule.h"
 #include "ISearchResultSectionViewModule.h"
 #include "ISurveyViewModule.h"
+#include "IMenuReactionModel.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
@@ -143,6 +144,7 @@ private:
     std::map<std::string, ExampleApp::Search::SdkModel::ISearchServiceModule*> m_searchServiceModules;
     ExampleApp::Metrics::WindowsFlurryMetricsService* m_pWindowsFlurryMetricsService;
 	ExampleApp::InteriorsExplorer::View::IInteriorsExplorerViewModule* m_pInteriorsExplorerViewModule;
+    ExampleApp::Menu::View::IMenuReactionModel* m_pMenuReaction;
 
     ExampleApp::MobileExampleApp* m_pApp;
 

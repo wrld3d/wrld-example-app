@@ -21,6 +21,5 @@ obj
 **/.~lock*
 **/*.vcxproj
 **/*.vcxproj.filters
-**/*.csproj
 **/*.xcodeproj
 **/*.sln

@@ -55,6 +55,7 @@
 #include "UserInteraction.h"
 #include "IInteriorsExplorerViewModule.h"
 #include "SearchResultSectionViewIncludes.h"
+#include "IMenuReactionModel.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
@@ -136,6 +137,8 @@ private:
     std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*> m_searchServiceModules;
     ExampleApp::Metrics::AndroidFlurryMetricsService* m_pAndroidFlurryMetricsService;
 
+    ExampleApp::Menu::View::IMenuReactionModel* m_pMenuReactionModel;
+
     ExampleApp::MobileExampleApp* m_pApp;
 
     ExampleApp::PersistentSettings::AndroidPersistentSettingsModel m_androidPersistentSettingsModel;
@@ -162,4 +165,6 @@ private:
     void HandleUserInteractionEnabledChanged(const ExampleApp::UserInteraction::UserInteractionEnabledChangedMessage& message);
     void HandleNoConnectivityWarning();
     void HandleInvalidConnectivityError();
+
+    void PublishNetworkConnectivityStateToUIThread();
 };

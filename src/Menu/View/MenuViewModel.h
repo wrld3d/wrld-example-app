@@ -59,9 +59,9 @@ namespace ExampleApp
 
                 void ReleaseReactorControl();
 
-                bool Open();
+                bool Open(bool acquireReactor = true);
 
-                bool Close();
+                bool Close(bool releaseReactor = true);
 
                 void UpdateOpenState(float openState);
 

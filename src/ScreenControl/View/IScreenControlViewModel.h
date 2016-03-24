@@ -11,7 +11,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            class IScreenControlViewModel : public Eegeo::Helpers::IIdentity
+            class IScreenControlViewModel : public virtual Eegeo::Helpers::IIdentity
             {
             public:
                 virtual ~IScreenControlViewModel() { }

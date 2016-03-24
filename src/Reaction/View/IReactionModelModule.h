@@ -14,6 +14,8 @@ namespace ExampleApp
             {
             public:
                 virtual ~IReactionModelModule() { }
+                
+                virtual IReactionModel& GetReactionModel() const = 0;
             };
         }
     }

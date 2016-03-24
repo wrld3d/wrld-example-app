@@ -7,4 +7,5 @@ set(currsources
 set(sources ${sources} ${currsources})
 source_group(\\ios_src\\Menu FILES ${currsources})
 include(ios_src/Menu/View/CMakeLists.txt)
+include(ios_src/Menu/SdkModel/CMakeLists.txt)
 endif(${IOS})

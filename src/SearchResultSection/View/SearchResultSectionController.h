@@ -13,6 +13,7 @@
 #include "SearchQueryPerformedMessage.h"
 #include "SearchQueryResponseReceivedMessage.h"
 #include "SearchResultModel.h"
+#include "IMenuReactionModel.h"
 
 namespace ExampleApp
 {
@@ -28,6 +29,7 @@ namespace ExampleApp
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 std::vector<Search::SdkModel::SearchResultModel> m_lastAddedResults;
                 ISearchResultSectionOrder& m_order;
+                const Menu::View::IMenuReactionModel& m_menuReaction;
                 
                 Eegeo::Helpers::TCallback1<SearchResultSectionController, const Search::SearchQueryResponseReceivedMessage&> m_searchResultReceivedHandler;
                 Eegeo::Helpers::TCallback1<SearchResultSectionController, const Search::SearchQueryRemovedMessage&> m_searchQueryRemovedHandler;
@@ -42,9 +44,10 @@ namespace ExampleApp
                 
             public:
                 SearchResultSectionController(Menu::View::IMenuViewModel& searchMenuViewModel,
-                                              Menu::View::IMenuOptionsModel& menuOptionsModel,
-                                              ISearchResultSectionOrder& order,
-                                              ExampleAppMessaging::TMessageBus& messageBus);
+                    Menu::View::IMenuOptionsModel& menuOptionsModel,
+                    ISearchResultSectionOrder& order,
+                    ExampleAppMessaging::TMessageBus& messageBus,
+                    const Menu::View::IMenuReactionModel& menuReaction);
 
                 ~SearchResultSectionController();
             };

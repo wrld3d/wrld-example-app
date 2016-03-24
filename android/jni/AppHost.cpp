@@ -86,6 +86,9 @@
 #include "InteriorsExplorerViewModule.h"
 #include "SearchResultSectionModule.h"
 #include "SearchResultSectionViewModule.h"
+#include "ConnectivityChangedViewMessage.h"
+#include "WebConnectivityValidator.h"
+#include "AndroidMenuReactionModel.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -221,6 +224,8 @@ AppHost::AppHost(
 
     m_pAndroidFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::AndroidFlurryMetricsService)(&m_nativeState);
 
+    m_pMenuReactionModel = Eegeo_NEW(ExampleApp::Menu::View::AndroidMenuReactionModel)();
+
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
                  *m_pAndroidPlatformAbstractionModule,
                  screenProperties,
@@ -236,7 +241,8 @@ AppHost::AppHost(
                  m_searchServiceModules,
                  *m_pAndroidFlurryMetricsService,
                  config,
-                 *this);
+                 *this,
+                 *m_pMenuReactionModel);
 
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(
             m_pApp->World().GetRenderingModule(),
@@ -375,6 +381,19 @@ void AppHost::HandleApplicationUiCreatedOnNativeThread()
     ASSERT_NATIVE_THREAD
 
     m_uiCreatedMessageReceivedOnNativeThread = true;
+    PublishNetworkConnectivityStateToUIThread();
+}
+
+void AppHost::PublishNetworkConnectivityStateToUIThread()
+{
+    // Network validation runs before UI is constructed and so it is not notified and assumed there is no connection: MPLY-6584
+    // The state should be passed on opening the UI view, but currently this is done from the UI thread. Pin Creation UI probably needs a refactor.
+
+    ASSERT_NATIVE_THREAD
+    
+    const Eegeo::Web::WebConnectivityValidator& webConnectivityValidator = m_pApp->World().GetWebConnectivityValidator();
+    const bool connectionIsValid = webConnectivityValidator.IsValid();
+    m_messageBus.Publish(ExampleApp::Net::ConnectivityChangedViewMessage(connectionIsValid));
 }
 
 void AppHost::DispatchRevealUiMessageToUiThreadFromNativeThread()
@@ -516,7 +535,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     		app.SearchMenuModule().GetSearchMenuViewModel(),
 		    app.SearchResultSectionModule().GetSearchResultSectionOptionsModel(),
 		    app.SearchResultSectionModule().GetSearchResultSectionOrder(),
-		    m_messageBus);
+		    m_messageBus,
+			*m_pMenuReactionModel);
 
     // Pop-up layer.
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(

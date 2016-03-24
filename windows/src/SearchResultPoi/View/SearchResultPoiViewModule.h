@@ -9,6 +9,9 @@
 #include "ISearchResultPoiViewModule.h"
 #include "BidirectionalBus.h"
 #include "IMetricsService.h"
+#include "DesktopSearchResultPoiController.h"
+#include "IMyPinCreationInitiationView.h"
+#include "InteriorSelectionModel.h"
 
 namespace ExampleApp
 {
@@ -20,14 +23,16 @@ namespace ExampleApp
             {
             private:
                 SearchResultPoiView* m_pView;
-                SearchResultPoiController* m_pController;
+                DesktopSearchResultPoiController* m_pController;
 
             public:
                 SearchResultPoiViewModule(
                     WindowsNativeState& nativeState,
                     ISearchResultPoiViewModel& searchResultPoiViewModel,
                     ExampleAppMessaging::TMessageBus& messageBus,
-                    Metrics::IMetricsService& metricsService
+                    Metrics::IMetricsService& metricsService,
+                    MyPinCreation::View::IMyPinCreationInitiationView& pinCreationInitiationView,
+                    Eegeo::Resources::Interiors::InteriorSelectionModel& interiorsSelectionModel
                 );
 
                 ~SearchResultPoiViewModule();

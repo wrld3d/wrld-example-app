@@ -16,6 +16,7 @@ namespace ExampleApp
                 virtual ~IModalityModule() { }
 
                 virtual IModalityModel& GetModalityModel() const = 0;
+                virtual IModalityController& GetModalityController() const = 0;
             };
         }
     }

@@ -11,13 +11,15 @@ namespace ExampleApp
         namespace View
         {
             WorldPinInFocusObserver::WorldPinInFocusObserver(IWorldPinInFocusViewModel& worldPinInFocusViewModel,
-                    ExampleAppMessaging::TMessageBus& messageBus)
+                    ExampleAppMessaging::TMessageBus& messageBus,
+                    const Menu::View::IMenuReactionModel& menuReaction)
                 : m_worldPinInFocusViewModel(worldPinInFocusViewModel)
                 , m_messageBus(messageBus)
                 , m_gainedFocusHandler(this, &WorldPinInFocusObserver::OnWorldPinGainedFocusMessage)
                 , m_lostFocusHandler(this, &WorldPinInFocusObserver::OnWorldPinLostFocusMessage)
                 , m_focusScreenLocationUpdatedHandler(this, &WorldPinInFocusObserver::OnWorldPinInFocusChangedLocationMessage)
                 , m_selectedFocussedResultHandler(this, &WorldPinInFocusObserver::OnSelectedFocussedResultEvent)
+                , m_menuReaction(menuReaction)
             {
                 m_messageBus.SubscribeUi(m_gainedFocusHandler);
                 m_messageBus.SubscribeUi(m_lostFocusHandler);
@@ -51,7 +53,15 @@ namespace ExampleApp
             
             void WorldPinInFocusObserver::OnSelectedFocussedResultEvent()
             {
-                if(m_worldPinInFocusViewModel.IsOpen())
+                if (m_menuReaction.GetShouldOpenMenu())
+                {
+                    if (m_worldPinInFocusViewModel.IsOpen())
+                    {
+                        int pinId = m_worldPinInFocusViewModel.GetWorldPinsInFocusModel().GetPinId();
+                        m_messageBus.Publish(WorldPinsSelectedFocussedMessage(pinId));
+                    }
+                }
+                else
                 {
                     int pinId = m_worldPinInFocusViewModel.GetWorldPinsInFocusModel().GetPinId();
                     m_messageBus.Publish(WorldPinsSelectedFocussedMessage(pinId));

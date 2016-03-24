@@ -56,6 +56,7 @@ else
 fi
 
 echo "Updating $p platform..."
+rm -f ./$destPackageName
 rm -rf $includeDestination
 curl $baseUrl$srcPackageName > ./$destPackageName
 
@@ -70,6 +71,12 @@ if [ ! -d `dirname "$includeDestination"` ]; then
 fi
 
 tar -zxvf $destPackageName
+
+if [ $? -ne 0 ] ; then
+    echo "Failed to unzip sdk package ${destPackageName}"
+    exit 1    
+fi
+
 rm -f ./$destPackageName
 platformVersion=`cat ./$sdkDestination/version.txt`
 echo "Platform version --> $platformVersion"

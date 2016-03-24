@@ -13,6 +13,7 @@
 #include "BidirectionalBus.h"
 #include "PlaceJumpSelectedMessageHandler.h"
 #include "IMetricsService.h"
+#include "IMenuReactionModel.h"
 
 namespace ExampleApp
 {
@@ -28,7 +29,8 @@ namespace ExampleApp
                                  CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                                  Menu::View::IMenuViewModel& menuViewModel,
                                  ExampleAppMessaging::TMessageBus& messageBus,
-                                 Metrics::IMetricsService& metricsService);
+                                 Metrics::IMetricsService& metricsService,
+                                 const Menu::View::IMenuReactionModel& menuReaction);
 
                 ~PlaceJumpsModule();
 

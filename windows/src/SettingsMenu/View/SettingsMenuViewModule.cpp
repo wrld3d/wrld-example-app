@@ -19,16 +19,18 @@ namespace ExampleApp
                 Menu::View::IMenuModel& menuModel,
                 Menu::View::IMenuViewModel& menuViewModel,
                 Modality::View::IModalBackgroundView& modealBackgroundView,
+                Menu::View::IMenuView& searchMenuView,
                 ExampleAppMessaging::TMessageBus& messageBus
             )
             {
                 m_pView = Eegeo_NEW(SettingsMenuView)(nativeState, viewName);
 
-                m_pController = Eegeo_NEW(SettingsMenuController)(
+                m_pController = Eegeo_NEW(DesktopSettingsMenuController)(
                                     *m_pView,
                                     menuModel,
                                     menuViewModel,
                                     modealBackgroundView,
+                                    searchMenuView,
                                     messageBus
                                 );
             }

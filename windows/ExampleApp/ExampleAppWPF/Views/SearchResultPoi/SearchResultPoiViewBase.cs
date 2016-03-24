@@ -72,13 +72,15 @@ namespace ExampleAppWPF
 
         protected void HideAll()
         {
-            m_currentWindow.EnableInput();
-
             var mainGrid = m_currentWindow.MainGrid;
             var screenWidth = mainGrid.ActualWidth;
 
             var db = new DoubleAnimation((screenWidth / 2) + (m_mainContainer.ActualWidth / 2), TimeSpan.FromMilliseconds(m_animationTimeMilliseconds));
             db.From = (screenWidth / 2) - (m_mainContainer.ActualWidth / 2);
+
+            var easingFunction = new CubicEase();
+            easingFunction.EasingMode = EasingMode.EaseInOut;
+            db.EasingFunction = easingFunction;
 
             m_mainContainer.RenderTransform = new TranslateTransform();
             m_mainContainer.RenderTransform.BeginAnimation(TranslateTransform.XProperty, db);
@@ -88,14 +90,22 @@ namespace ExampleAppWPF
 
         protected void ShowAll()
         {
+            if(m_isOpen)
+            {
+                return;
+            }
+
             Visibility = Visibility.Visible;
-            m_currentWindow.DisableInput();
 
             var mainGrid = m_currentWindow.MainGrid;
             var screenWidth = mainGrid.ActualWidth;
 
             var db = new DoubleAnimation((screenWidth / 2) - (m_mainContainer.ActualWidth / 2), TimeSpan.FromMilliseconds(m_animationTimeMilliseconds));
             db.From = (screenWidth / 2) + (m_mainContainer.ActualWidth / 2);
+
+            var easingFunction = new CubicEase();
+            easingFunction.EasingMode = EasingMode.EaseInOut;
+            db.EasingFunction = easingFunction;
 
             m_mainContainer.RenderTransform = new TranslateTransform();
             m_mainContainer.RenderTransform.BeginAnimation(TranslateTransform.XProperty, db);
