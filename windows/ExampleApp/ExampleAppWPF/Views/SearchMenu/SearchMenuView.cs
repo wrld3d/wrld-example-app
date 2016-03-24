@@ -341,6 +341,11 @@ namespace ExampleAppWPF
                 if(m_isOffScreen)
                 {
                     m_searchBox.Visibility = Visibility.Hidden;
+
+                    if (m_searchArrow.Visibility == Visibility.Visible)
+                    {
+                        m_searchArrowClosed.Begin(m_searchArrow); 
+                    }
                 }
                 else
                 {
