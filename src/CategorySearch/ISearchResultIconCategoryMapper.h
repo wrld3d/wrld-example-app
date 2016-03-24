@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Search.h"
+#include "SwallowSearch.h"
 
 namespace ExampleApp
 {
@@ -14,6 +15,8 @@ namespace ExampleApp
             virtual ~ISearchResultIconCategoryMapper() { }
             
             virtual int GetIconIndexFromSearchResult(const Search::SdkModel::SearchResultModel& searchResultModel) const = 0;
+            virtual int GetMeetingRoomIconFromAvailability(const Search::Swallow::SdkModel::SwallowMeetingRoomResultModel& meetingRoom) const = 0;
+
         };
     }
 }

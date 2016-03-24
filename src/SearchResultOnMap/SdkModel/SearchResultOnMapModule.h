@@ -34,6 +34,7 @@ namespace ExampleApp
 
             public:
                 SearchResultOnMapModule(Search::SdkModel::ISearchResultRepository& searchResultRepository,
+                                        Search::SdkModel::ISearchService& searchService,
                                         SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
                                         WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                         MyPins::SdkModel::IMyPinsService& myPinsService,

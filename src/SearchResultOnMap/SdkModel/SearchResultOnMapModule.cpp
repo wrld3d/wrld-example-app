@@ -15,6 +15,7 @@ namespace ExampleApp
         namespace SdkModel
         {
             SearchResultOnMapModule::SearchResultOnMapModule(Search::SdkModel::ISearchResultRepository& searchResultRepository,
+                                                             Search::SdkModel::ISearchService& searchService,
                                                              SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
                                                              WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                              MyPins::SdkModel::IMyPinsService& myPinsService,
@@ -31,7 +32,8 @@ namespace ExampleApp
                                                                               searchResultMyPinsService,
                                                                               searchResultOnMapIconCategoryMapper,
                                                                               messageBus,
-                                                                              searchResultRepository);
+                                                                              searchResultRepository,
+                                                                              searchService);
                 
                 m_pSearchResultOnMapItemModelSelectedObserver = Eegeo_NEW(View::SearchResultOnMapItemModelSelectedObserver)(searchResultPoiViewModel,
                                                                                                                             messageBus);

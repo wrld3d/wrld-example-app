@@ -4,6 +4,7 @@
 
 #include <map>
 #include <set>
+#include <vector>
 #include "Types.h"
 #include "ISearchResultOnMapModel.h"
 #include "SearchResultOnMap.h"
@@ -37,12 +38,14 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<SearchResultOnMapModel, Search::SdkModel::SearchResultModel*> m_searchResultRemovedCallback;
                 Eegeo::Helpers::TCallback1<SearchResultOnMapModel, Search::SdkModel::SearchResultModel> m_searchResultPinnedCallback;
                 Eegeo::Helpers::TCallback1<SearchResultOnMapModel, Search::SdkModel::SearchResultModel> m_searchResultUnpinnedCallback;
+                Eegeo::Helpers::TCallback2<SearchResultOnMapModel, const Search::SdkModel::SearchQuery&, const std::vector<Search::SdkModel::SearchResultModel>&> m_searchResultsCallback;
                 
                 Eegeo::Helpers::TCallback1<SearchResultOnMapModel, const SearchResultMeetingAvailabilityChanged&> m_availbilityChangedMessage;
                 
                 Search::SdkModel::MyPins::ISearchResultMyPinsService& m_searchResultOnMapMyPinsService;
                 MyPins::SdkModel::IMyPinsService& m_myPinsService;
                 Search::SdkModel::ISearchResultRepository& m_searchResultRepository;
+                Search::SdkModel::ISearchService& m_searchService;
                 CategorySearch::ISearchResultIconCategoryMapper& m_searchResultIconCategoryMapper;
                 View::ISearchResultOnMapFactory& m_searchResultOnMapFactory;
                 WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
@@ -55,7 +58,8 @@ namespace ExampleApp
                                        Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultOnMapMyPinsService,
                                        CategorySearch::ISearchResultIconCategoryMapper& searchResultIconCategoryMapper,
                                        ExampleAppMessaging::TMessageBus& messageBus,
-                                       Search::SdkModel::ISearchResultRepository& searchResultRepository);
+                                       Search::SdkModel::ISearchResultRepository& searchResultRepository,
+                                       Search::SdkModel::ISearchService& searchService);
 
                 ~SearchResultOnMapModel();
 
@@ -71,6 +75,8 @@ namespace ExampleApp
                 void HandleAddedSearchResult(Search::SdkModel::SearchResultModel*& pSearchResultModel);
 
                 void HandleRemovedSearchResult(Search::SdkModel::SearchResultModel*& pSearchResultModel);
+                
+                void HandleSearchResultsRecieved(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results);
                 
                 void HandleSearchResultPinned(Search::SdkModel::SearchResultModel& searchResultModel);
                 

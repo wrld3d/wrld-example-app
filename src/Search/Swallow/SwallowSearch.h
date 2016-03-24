@@ -16,6 +16,7 @@ namespace ExampleApp
                 class SwallowSearchService;
                 class SwallowOfficeResultMenuOptionSelectedMessageHandler;
                 class SwallowSearchTransitionPinController;
+                class SwallowMeetingRoomResultModel;
             }
         }
     }

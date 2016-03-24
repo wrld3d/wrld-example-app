@@ -20,6 +20,7 @@
 #include "MyPinModel.h"
 #include "WorldPinVisibility.h"
 #include "SwallowSearchConstants.h"
+#include "ISearchService.h"
 
 using ExampleApp::Search::SdkModel::SearchResultModel;
 
@@ -35,8 +36,10 @@ namespace ExampleApp
                                                            Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultOnMapMyPinsService,
                                                            CategorySearch::ISearchResultIconCategoryMapper& searchResultIconCategoryMapper,
                                                            ExampleAppMessaging::TMessageBus& messageBus,
-                                                           Search::SdkModel::ISearchResultRepository& searchResultRepository)
+                                                           Search::SdkModel::ISearchResultRepository& searchResultRepository,
+                                                           Search::SdkModel::ISearchService& searchService)
             : m_searchResultRepository(searchResultRepository)
+            , m_searchService(searchService)
             , m_searchResultIconCategoryMapper(searchResultIconCategoryMapper)
             , m_searchResultOnMapMyPinsService(searchResultOnMapMyPinsService)
             , m_searchResultOnMapFactory(searchResultOnMapFactory)
@@ -45,12 +48,14 @@ namespace ExampleApp
             , m_worldPinsService(worldPinsService)
             , m_searchResultAddedCallback(this, &SearchResultOnMapModel::HandleAddedSearchResult)
             , m_searchResultRemovedCallback(this, &SearchResultOnMapModel::HandleRemovedSearchResult)
+            , m_searchResultsCallback(this, &SearchResultOnMapModel::HandleSearchResultsRecieved)
             , m_searchResultPinnedCallback(this, &SearchResultOnMapModel::HandleSearchResultPinned)
             , m_searchResultUnpinnedCallback(this, &SearchResultOnMapModel::HandleSearchResultUnpinned)
             , m_availbilityChangedMessage(this, &SearchResultOnMapModel::OnSearchResultMeetingAvailbilityChanged)
             {
                 m_searchResultRepository.InsertItemAddedCallback(m_searchResultAddedCallback);
                 m_searchResultRepository.InsertItemRemovedCallback(m_searchResultRemovedCallback);
+                m_searchService.InsertOnReceivedQueryResultsCallback(m_searchResultsCallback);
                 
                 m_searchResultOnMapMyPinsService.InsertSearchResultPinnedCallback(m_searchResultPinnedCallback);
                 m_searchResultOnMapMyPinsService.InsertSearchResultUnpinnedCallback(m_searchResultUnpinnedCallback);
@@ -68,6 +73,8 @@ namespace ExampleApp
             {
                 m_messageBus.UnsubscribeNative(m_availbilityChangedMessage);
 
+                
+                m_searchService.RemoveOnReceivedQueryResultsCallback(m_searchResultsCallback);
                 m_searchResultRepository.RemoveItemAddedCallback(m_searchResultAddedCallback);
                 m_searchResultRepository.RemoveItemRemovedCallback(m_searchResultRemovedCallback);
                 
@@ -141,6 +148,30 @@ namespace ExampleApp
                         && (pSearchResultModel->GetCategory() != Search::Swallow::SearchConstants::TRANSITION_CATEGORY_NAME))
                 {
                     RemoveSearchResultOnMap(*pSearchResultModel);
+                }
+            }
+            
+            void SearchResultOnMapModel::HandleSearchResultsRecieved(const Search::SdkModel::SearchQuery &query,
+                                                                     const std::vector<Search::SdkModel::SearchResultModel> &results)
+            {
+                for(std::vector<Search::SdkModel::SearchResultModel>::const_iterator it = results.begin(); it != results.end(); it++)
+                {
+                    const Search::SdkModel::SearchResultModel& result = (*it);
+                    if(result.GetCategory() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
+                    {
+                        mapIt pinIt = m_searchResultsToPinModel.find(result);
+                        if(pinIt == m_searchResultsToPinModel.end())
+                        {
+                            continue;
+                        }
+                        
+                        Search::Swallow::SdkModel::SwallowMeetingRoomResultModel meetingRoomResult = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(result);
+                        
+                        int availabilityCategory = m_searchResultIconCategoryMapper.GetMeetingRoomIconFromAvailability(meetingRoomResult);
+                        
+                        ExampleApp::WorldPins::SdkModel::WorldPinItemModel* pPinItemModel = pinIt->second;
+                        m_worldPinsService.UpdatePinCategory(*pPinItemModel, availabilityCategory);
+                    }
                 }
             }
             

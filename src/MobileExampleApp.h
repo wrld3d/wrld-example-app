@@ -109,6 +109,7 @@ namespace ExampleApp
         bool m_initialisedApplicationViewState;
         bool m_setMetricsLocation;
         float m_pinDiameter;
+        float m_pinVisualDiameter;
         
         const bool m_enableTours;
 
@@ -251,7 +252,7 @@ namespace ExampleApp
 
         float PinDiameter() const
         {
-            return m_pinDiameter;
+            return m_pinVisualDiameter;
         }
 
         float ToursPinDiameter() const

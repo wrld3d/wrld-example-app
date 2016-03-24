@@ -222,6 +222,7 @@ namespace ExampleApp
         , m_platformAbstractions(platformAbstractions, networkCapabilities)
         , m_pLoadingScreen(NULL)
         , m_pinDiameter(48.f)
+        , m_pinVisualDiameter(36.f)
         , m_initialisedApplicationViewState(false)
         , m_pCameraTransitionController(NULL)
         , m_pSettingsMenuModule(NULL)
@@ -608,6 +609,7 @@ namespace ExampleApp
                                                                                                   m_messageBus);
         
         m_pSearchResultOnMapModule = Eegeo_NEW(SearchResultOnMap::SdkModel::SearchResultOnMapModule)(m_pSearchModule->GetSearchResultRepository(),
+                                                                                                     m_pSearchServiceModule->GetSearchService(),
                                                                                                      m_pSearchResultPoiModule->GetSearchResultPoiViewModel(),
                                                                                                      m_pWorldPinsModule->GetWorldPinsService(),
                                                                                                      m_pMyPinsModule->GetMyPinsService(),
