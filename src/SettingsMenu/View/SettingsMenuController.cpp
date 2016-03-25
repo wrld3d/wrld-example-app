@@ -40,7 +40,7 @@ namespace ExampleApp
                 m_appModeAllowsOpen = message.GetAppMode() != AppModes::SdkModel::InteriorMode;
                 if (!m_appModeAllowsOpen)
                 {
-                    m_viewModel.Close();
+                    m_viewModel.RemoveFromScreen();
                 }
             }
             
