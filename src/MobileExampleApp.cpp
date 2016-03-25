@@ -709,23 +709,6 @@ namespace ExampleApp
                                                                                    *m_pAppModeModel,
                                                                                    m_pWorld->GetNativeUIFactories().AlertBoxFactory());
 
-        m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(interiorsPresentationModule.GetInteriorFloorAnimator(),
-                                                                                                     interiorsPresentationModule.GetInteriorInteractionModel(),
-                                                                                                     interiorsPresentationModule.GetInteriorSelectionModel(),
-                                                                                                     interiorsPresentationModule.GetInteriorTransitionModel(),
-                                                                                                     interiorsModelModule.GetInteriorMarkerModelRepository(),
-                                                                                                     m_pWorldPinsModule->GetWorldPinsService(),
-                                                                                                     m_pWorldPinsModule->GetWorldPinsScaleController(),
-                                                                                                     mapModule.GetEnvironmentFlatteningService(),
-                                                                                                     m_pVisualMapModule->GetVisualMapService(),
-                                                                                                     interiorsCameraControllerFactory,
-                                                                                                     m_screenProperties,
-                                                                                                     m_identityProvider,
-                                                                                                     m_messageBus,
-                                                                                                     m_metricsService,
-                                                                                                     initialExperienceModel,
-                                                                                                     interiorsAffectedByFlattening);
-
         
         m_pInteriorCameraWrapper = Eegeo_NEW(AppCamera::SdkModel::AppInteriorCameraWrapper)(m_pInteriorsExplorerModule->GetInteriorsCameraController());
 
