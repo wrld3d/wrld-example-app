@@ -37,8 +37,7 @@ namespace ExampleApp
 													  targetFloor,
 													  menuViewModel,
 													  messageBus,
-													  menuReaction,
-													  ignoredReactionModel);
+													  menuReaction);
                 }
         }
     }

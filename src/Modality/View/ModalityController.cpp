@@ -71,7 +71,6 @@ namespace ExampleApp
                     return;
                 }
                 
-                float modality = GetModality();
                 m_modalityModel.SetModality(openState);
             }
         }

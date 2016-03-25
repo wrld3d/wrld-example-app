@@ -1,7 +1,7 @@
-set(headers ${headers} src/MyPins/View
+set(headers ${headers} ios_src/MyPins/View
 )
 set(currsources
-  src/MyPins/View/MyPinsMenuOptionFactory.cpp
+  ios_src/MyPins/View/MyPinsMenuOptionFactory.cpp
 )
 
 set(sources ${sources} ${currsources})

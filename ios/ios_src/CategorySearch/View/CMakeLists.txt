@@ -1,7 +1,7 @@
-set(headers ${headers} src/CategorySearch/View
+set(headers ${headers} ios_src/CategorySearch/View
 )
 set(currsources
-  src/CategorySearch/View/CategorySearchMenuOptionsFactory.cpp
+  ios_src/CategorySearch/View/CategorySearchMenuOptionsFactory.cpp
 )
 
 set(sources ${sources} ${currsources})
