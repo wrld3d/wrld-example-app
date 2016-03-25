@@ -92,6 +92,7 @@
 #include "SearchResultPoiView.h"
 #include "WindowsMenuReactionModel.h"
 #include "IMyPinCreationInitiationViewModel.h"
+#include "ModalityIgnoredReactionModel.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
@@ -618,11 +619,11 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     Eegeo::Helpers::TIdentity settingsMenuIdentity = app.SearchResultPoiModule().GetObservableOpenableControl().GetIdentity();
     Eegeo::Helpers::TIdentity searchMenuIdentity= app.SearchMenuModule().GetSearchMenuViewModel().GetIdentity();
     
-    app.ModalityModule().GetModalityController().AddIgnoredMenuIdentity(settingsMenuIdentity);
-    app.ReactionModelModule().GetReactionModel().AddIgnoredMenuIdentity(settingsMenuIdentity);
+    app.ModalityIgnoredReactionModel().AddIgnoredMenuIdentity(settingsMenuIdentity);
+    app.ReactorIgnoredReactionModel().AddIgnoredMenuIdentity(settingsMenuIdentity);
     
-    app.ModalityModule().GetModalityController().AddIgnoredMenuIdentity(searchMenuIdentity);
-    app.ReactionModelModule().GetReactionModel().AddIgnoredMenuIdentity(searchMenuIdentity);
+    app.ModalityIgnoredReactionModel().AddIgnoredMenuIdentity(searchMenuIdentity);
+    app.ReactorIgnoredReactionModel().AddIgnoredMenuIdentity(searchMenuIdentity);
 }
 
 void AppHost::DestroyApplicationViewModulesFromUiThread()

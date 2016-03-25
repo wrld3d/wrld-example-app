@@ -5,6 +5,7 @@
 #include "IReactionControllerModel.h"
 #include "Types.h"
 #include "CallbackCollection.h"
+#include "IMenuIgnoredReactionModel.h"
 
 namespace ExampleApp
 {
@@ -16,13 +17,16 @@ namespace ExampleApp
             {
                 Eegeo::Helpers::TIdentity m_currentExpandedOpenableIdentity;
                 Eegeo::Helpers::TIdentity m_reactorControlIdentity;
+                
+                const Menu::View::IMenuIgnoredReactionModel& m_menuIgnoredReaction;
+                
                 Eegeo::Helpers::CallbackCollection0 m_reactorAcquiredCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_reactorReleasedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_openAcquiredCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_openReleasedCallbacks;
 
             public:
-                ReactionControllerModel();
+                ReactionControllerModel(const Menu::View::IMenuIgnoredReactionModel& menuIgnoredReaction);
 
                 bool IsAnyOpenableOpen() const;
 

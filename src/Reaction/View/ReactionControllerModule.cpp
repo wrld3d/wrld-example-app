@@ -9,9 +9,9 @@ namespace ExampleApp
     {
         namespace View
         {
-            ReactionControllerModule::ReactionControllerModule()
+            ReactionControllerModule::ReactionControllerModule(const Menu::View::IMenuIgnoredReactionModel& menuIgnoredReaction)
             {
-                m_pReactionControllerModel = Eegeo_NEW(ReactionControllerModel)();
+                m_pReactionControllerModel = Eegeo_NEW(ReactionControllerModel)(menuIgnoredReaction);
             }
 
             ReactionControllerModule::~ReactionControllerModule()

@@ -18,6 +18,7 @@
 #include "Helpers.h"
 #include <string>
 #include "IMenuReactionModel.h"
+#include "IMenuIgnoredReactionModel.h"
 
 namespace ExampleApp
 {
@@ -40,7 +41,8 @@ namespace ExampleApp
                              Metrics::IMetricsService& metricsService,
                              const std::string& myPinsWebServiceUrl,
                              const std::string& myPinsWebServiceAuthToken,
-                             const Menu::View::IMenuReactionModel& menuReaction);
+                             const Menu::View::IMenuReactionModel& menuReaction,
+                             Menu::View::IMenuIgnoredReactionModel& ignoredMenuReaction);
 
                 ~MyPinsModule();
 

@@ -8,6 +8,7 @@
 #include "IReactionModel.h"
 #include "IMenuViewModel.h"
 #include "ICallback.h"
+#include "IMenuIgnoredReactionModel.h"
 
 namespace ExampleApp
 {
@@ -22,19 +23,17 @@ namespace ExampleApp
                 std::vector<OpenableControl::View::IOpenableControlViewModel*> m_openables;
                 std::vector<ScreenControl::View::IScreenControlViewModel*> m_reactors;
 
-                Eegeo::Helpers::ICallback2<OpenableControl::View::IOpenableControlViewModel&, float>* m_pMenuOpenStateChangedCallback;
+                Menu::View::IMenuIgnoredReactionModel& m_menuIgnoredReaction;
 
-                std::vector<Eegeo::Helpers::TIdentity> m_ignoredMenuIdentities;
+                Eegeo::Helpers::ICallback2<OpenableControl::View::IOpenableControlViewModel&, float>* m_pMenuOpenStateChangedCallback;
 
             public:
                 ReactionModel(IReactionControllerModel& reactionControllerModel,
                               const std::vector<OpenableControl::View::IOpenableControlViewModel*>& openables,
-                              const std::vector<ScreenControl::View::IScreenControlViewModel*>& reactors);
+                              const std::vector<ScreenControl::View::IScreenControlViewModel*>& reactors,
+                              Menu::View::IMenuIgnoredReactionModel& menuIgnoredReaction);
 
                 ~ReactionModel();
-
-                void AddIgnoredMenuIdentity(Eegeo::Helpers::TIdentity identity);
-                void RemoveIgnoredMenuIdentity(Eegeo::Helpers::TIdentity identity);
 
             private:
 

@@ -15,9 +15,10 @@ namespace ExampleApp
 
         namespace View
         {
-            ReactionControllerModel::ReactionControllerModel()
+            ReactionControllerModel::ReactionControllerModel(const Menu::View::IMenuIgnoredReactionModel& menuIgnoredReaction)
                 : m_currentExpandedOpenableIdentity(Unacquired)
                 , m_reactorControlIdentity(Unacquired)
+                , m_menuIgnoredReaction(menuIgnoredReaction)
             {
 
             }
@@ -34,6 +35,11 @@ namespace ExampleApp
 
             void ReactionControllerModel::AcquireOpenableOpen(Eegeo::Helpers::TIdentity identity)
             {
+                if (m_menuIgnoredReaction.IsIgnored(identity))
+                {
+                    return;
+                }
+
                 Eegeo_ASSERT(!IsAnyOpenableOpen());
                 m_currentExpandedOpenableIdentity = identity;
                 m_openAcquiredCallbacks.ExecuteCallbacks();
@@ -41,6 +47,11 @@ namespace ExampleApp
 
             void ReactionControllerModel::ReleaseOpenableOpen(Eegeo::Helpers::TIdentity identity)
             {
+                if (m_menuIgnoredReaction.IsIgnored(identity))
+                {
+                    return;
+                }
+
                 Eegeo_ASSERT(IsOpenableOpen(identity));
                 m_currentExpandedOpenableIdentity = Unacquired;
                 m_openReleasedCallbacks.ExecuteCallbacks();

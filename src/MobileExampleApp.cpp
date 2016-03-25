@@ -123,6 +123,8 @@
 #include "InteriorsHighlightVisibilityController.h"
 #include "InteriorsHighlightPickingController.h"
 #include "InteriorsModelModule.h"
+#include "ModalityIgnoredReactionModel.h"
+#include "ReactorIgnoredReactionModel.h"
 
 namespace ExampleApp
 {
@@ -282,6 +284,8 @@ namespace ExampleApp
         , m_pInteriorsHighlightVisibilityController(NULL)
         , m_pInteriorsEntityIdHighlightController(NULL)
         , m_menuReaction(menuReaction)
+        , m_pModalityIgnoredReactionModel(NULL)
+        , m_pReactorIgnoredReactionModel(NULL)
     {
         m_metricsService.BeginSession(applicationConfiguration.FlurryAppKey(), EEGEO_PLATFORM_VERSION_NUMBER);
 
@@ -472,8 +476,11 @@ namespace ExampleApp
         
         Eegeo_ASSERT(m_pSwallowPoiDbModule == NULL);
         Eegeo_ASSERT(m_pSQLiteModule != NULL);
+
+        m_pReactorIgnoredReactionModel = Eegeo_NEW(Menu::View::ReactorIgnoredReactionModel)();
+        m_pModalityIgnoredReactionModel = Eegeo_NEW(Menu::View::ModalityIgnoredReactionModel)();
         
-        m_pReactionControllerModule = Eegeo_NEW(Reaction::View::ReactionControllerModule)();
+        m_pReactionControllerModule = Eegeo_NEW(Reaction::View::ReactionControllerModule)(*m_pReactorIgnoredReactionModel);
 
         m_pAboutPageModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageModule)(m_identityProvider,
                                                                                      m_pReactionControllerModule->GetReactionControllerModel(),
@@ -566,13 +573,15 @@ namespace ExampleApp
                                                 m_pSettingsMenuModule->GetSettingsMenuViewModel(),
                                                 m_messageBus,
                                                 m_metricsService,
-                                                m_menuReaction));
+                                                m_menuReaction,
+                                                *m_pModalityIgnoredReactionModel));
         
         m_pMapModeModule = Eegeo_NEW(MapMode::SdkModel::MapModeModule)(m_pVisualMapModule->GetVisualMapService());
 
         m_pFlattenButtonModule = Eegeo_NEW(ExampleApp::FlattenButton::SdkModel::FlattenButtonModule)(m_pMapModeModule->GetMapModeModel(),
                                  m_identityProvider,
                                  m_messageBus);
+
         
         m_pMyPinsModule = Eegeo_NEW(ExampleApp::MyPins::SdkModel::MyPinsModule)(m_pWorldPinsModule->GetWorldPinsService(),
                                                                                 m_platformAbstractions,
@@ -586,7 +595,8 @@ namespace ExampleApp
                                                                                 m_metricsService,
                                                                                 m_applicationConfiguration.MyPinsWebServiceUrl(),
                                                                                 m_applicationConfiguration.MyPinsWebServiceAuthToken(),
-                                                                                m_menuReaction);
+                                                                                m_menuReaction,
+                                                                                *m_pModalityIgnoredReactionModel);
         
         m_pSearchResultPoiModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiModule)(m_identityProvider,
                                                                                                        m_pReactionControllerModule->GetReactionControllerModel(),
@@ -735,11 +745,12 @@ namespace ExampleApp
         std::vector<ScreenControl::View::IScreenControlViewModel*> reactors(GetReactorControls());
         std::vector<ExampleApp::OpenableControl::View::IOpenableControlViewModel*> openables(GetOpenableControls());
 
-        m_pModalityModule = Eegeo_NEW(Modality::View::ModalityModule)(m_messageBus, openables);
+        m_pModalityModule = Eegeo_NEW(Modality::View::ModalityModule)(m_messageBus, openables, *m_pModalityIgnoredReactionModel);
 
         m_pReactionModelModule = Eegeo_NEW(Reaction::View::ReactionModelModule)(m_pReactionControllerModule->GetReactionControllerModel(),
                                  openables,
-                                 reactors);
+                                 reactors,
+                                 *m_pReactorIgnoredReactionModel);
         
         m_pSearchMenuModule->SetSearchSection("Search Results", m_pSearchResultSectionModule->GetSearchResultSectionModel());
         m_pSearchMenuModule->AddMenuSection("Meeting Rooms", m_pSwallowSearchMenuModule->GetMeetingRoomsMenuModel(), false);
@@ -777,6 +788,10 @@ namespace ExampleApp
     void MobileExampleApp::DestroyApplicationModelModules()
     {
         m_initialExperienceModule.TearDown();
+        
+        Eegeo_DELETE m_pModalityIgnoredReactionModel;
+        
+        Eegeo_DELETE m_pReactorIgnoredReactionModel;
         
         Eegeo_DELETE m_pTwitterFeedModule;
 

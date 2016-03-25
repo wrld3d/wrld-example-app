@@ -10,6 +10,7 @@
 #include "MenuOptionsModel.h"
 #include "CategorySearchSelectedMessageHandler.h"
 #include "SearchResultIconCategoryMapper.h"
+#include "CategorySearchMenuOptionFactory.h"
 
 namespace ExampleApp
 {
@@ -22,7 +23,8 @@ namespace ExampleApp
                                                        Menu::View::IMenuViewModel& menuViewModel,
                                                        ExampleAppMessaging::TMessageBus& messageBus,
                                                        Metrics::IMetricsService& metricsService,
-                                                       const Menu::View::IMenuReactionModel& menuReaction)
+                                                       const Menu::View::IMenuReactionModel& menuReaction,
+                                                       Menu::View::IMenuIgnoredReactionModel& menuIgnoredReaction)
             {
                 m_pMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                 m_pMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pMenuModel);
@@ -39,7 +41,13 @@ namespace ExampleApp
                                                      categorySearchModel.Name(),
                                                      "",
                                                      categorySearchModel.Icon(),
-                                                     Eegeo_NEW(View::CategorySearchMenuOption)(categorySearchModel, menuViewModel, messageBus, menuReaction));
+                                                     View::CategorySearchMenuOptionFactory::CreateCategorySearchMenuOption(
+                                                         categorySearchModel,
+                                                         menuViewModel,
+                                                         messageBus,
+                                                         menuReaction,
+                                                         menuIgnoredReaction)
+                                                     );
                     }
                 }
 

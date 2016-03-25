@@ -89,6 +89,7 @@
 #include "VisualMap.h"
 #include "InteriorsEntityIdHighlightVisibilityController.h"
 #include "Surveys.h"
+#include "IMenuIgnoredReactionModel.h"
 
 namespace ExampleApp
 {
@@ -176,6 +177,8 @@ namespace ExampleApp
         Net::SdkModel::ConnectivityChangedObserver* m_pConnectivityChangedObserver;
 
         Menu::View::IMenuReactionModel& m_menuReaction;
+        Menu::View::IMenuIgnoredReactionModel* m_pModalityIgnoredReactionModel;
+        Menu::View::IMenuIgnoredReactionModel* m_pReactorIgnoredReactionModel;
         
         Tours::IToursModule* m_pToursModule;
         float m_toursPinDiameter;
@@ -266,6 +269,16 @@ namespace ExampleApp
         CameraTransitions::SdkModel::ICameraTransitionController& CameraTransitionController() const
         {
             return *m_pCameraTransitionService;
+        }
+
+        Menu::View::IMenuIgnoredReactionModel& ModalityIgnoredReactionModel() const
+        {
+            return *m_pModalityIgnoredReactionModel;
+        }
+
+        Menu::View::IMenuIgnoredReactionModel& ReactorIgnoredReactionModel() const
+        {
+            return *m_pReactorIgnoredReactionModel;
         }
         
         const ExampleApp::SettingsMenu::SdkModel::ISettingsMenuModule& SettingsMenuModule() const

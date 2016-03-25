@@ -11,6 +11,7 @@
 #include "CategorySearchModel.h"
 #include "IMetricsService.h"
 #include "IMenuReactionModel.h"
+#include "IMenuIgnoredReactionModel.h"
 
 namespace ExampleApp
 {
@@ -26,7 +27,8 @@ namespace ExampleApp
                                      Menu::View::IMenuViewModel& menuViewModel,
                                      ExampleAppMessaging::TMessageBus& messageBus,
                                      Metrics::IMetricsService& metricsService,
-                                     const Menu::View::IMenuReactionModel& menuReaction);
+                                     const Menu::View::IMenuReactionModel& menuReaction,
+                                     Menu::View::IMenuIgnoredReactionModel& menuIgnoredReaction);
 
                 ~CategorySearchModule();
 
