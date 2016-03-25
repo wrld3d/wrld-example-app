@@ -31,6 +31,7 @@ namespace ExampleApp
                         
                         const float m_maxTimeout;
                         float m_timeUntilTimeout;
+                        bool m_hasFailed;
                         
                     public:
                         

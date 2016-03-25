@@ -23,6 +23,7 @@ namespace ExampleApp
                 , m_cameraFrustumStreamingVolume(cameraFrustumStreamingVolume)
                 , m_interiorVisibilityUpdater(interiorVisibilityUpdater)
                 , m_maxTimeout(5.0f)
+                , m_hasFailed(false)
                 {
                 }
                 
@@ -32,6 +33,7 @@ namespace ExampleApp
                 
                 void InteriorExplorerStreamState::Enter(int previousState)
                 {
+                    m_hasFailed = false;
                     m_cameraFrustumStreamingVolume.SetForceMaximumRefinement(true);
                     
                     m_timeUntilTimeout = m_maxTimeout;
@@ -40,8 +42,9 @@ namespace ExampleApp
                 void InteriorExplorerStreamState::Update(float dt)
                 {
                     m_timeUntilTimeout -= dt;
-                    if(m_timeUntilTimeout <= 0.0f)
+                    if(m_timeUntilTimeout <= 0.0f && !m_hasFailed)
                     {
+                        m_hasFailed = true;
                         m_parentState.SetLastEntryAttemptSuccessful(false);
                         m_parentState.ShowFailMessage();
                         m_parentState.SetSubState(AppModes::States::SdkModel::InteriorExplorerSubStates::Exit);
