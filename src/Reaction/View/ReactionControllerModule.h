@@ -5,6 +5,7 @@
 #include "Types.h"
 #include "Reaction.h"
 #include "IReactionControllerModule.h"
+#include "IMenuIgnoredReactionModel.h"
 
 namespace ExampleApp
 {
@@ -18,7 +19,7 @@ namespace ExampleApp
                 IReactionControllerModel* m_pReactionControllerModel;
 
             public:
-                ReactionControllerModule();
+                ReactionControllerModule(const Menu::View::IMenuIgnoredReactionModel& menuIgnoredReaction);
 
                 ~ReactionControllerModule();
 

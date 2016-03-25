@@ -12,12 +12,14 @@ namespace ExampleApp
         namespace View
         {
             ModalityModule::ModalityModule(ExampleAppMessaging::TMessageBus& messageBus,
-                                           const std::vector<OpenableControl::View::IOpenableControlViewModel*>& viewModels)
+                                           const std::vector<OpenableControl::View::IOpenableControlViewModel*>& viewModels,
+                                           Menu::View::IMenuIgnoredReactionModel& ignoredReactionModel)
             {
                 m_pModel = Eegeo_NEW(ModalityModel)();
 
                 m_pController = Eegeo_NEW(ModalityController)(*m_pModel,
-                                viewModels);
+                                                              viewModels,
+                                                              ignoredReactionModel);
 
                 m_pModalityObserver = Eegeo_NEW(ModalityObserver)(*m_pModel, messageBus);
             }
