@@ -196,6 +196,8 @@ namespace ExampleAppWPF
                 int sectionIndex = m_adapter.GetSectionIndex(position);
                 int childIndex = m_adapter.GetItemIndex(position);
 
+                m_hasMenuRefreshed = false;
+
                 SearchMenuViewCLIMethods.OnSearchCleared(m_nativeCallerPointer);
                 MenuViewCLIMethods.SelectedItem(m_nativeCallerPointer, sectionIndex, childIndex);
 
@@ -205,8 +207,6 @@ namespace ExampleAppWPF
                 {
                     m_resultsClearButton.Visibility = Visibility.Visible;
                 }
-
-                m_hasMenuRefreshed = false;
             }
         }
 
@@ -358,6 +358,8 @@ namespace ExampleAppWPF
 
                 base.AnimateToClosedOnScreen();
                 m_mainWindow.EnableInput();
+
+                m_hasMenuRefreshed = true;
             }
         }
 
