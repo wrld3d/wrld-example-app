@@ -16,7 +16,7 @@ namespace ExampleAppWPF
         private Image m_poiAccreditationImage;
         private TextBlock m_reviewsCountView;
         private Image m_downArrow;
-        private StackPanel m_reviewsView;
+        private StackPanel m_mainPanel;
         private MainWindow m_currentWindow;
         private StackPanel m_reviewImageAndNumber;
 
@@ -48,13 +48,13 @@ namespace ExampleAppWPF
         {
             base.OnApplyTemplate();
 
+            m_mainPanel = (StackPanel)GetTemplateChild("SearchResultOnMapView");
             m_titleView = (TextBlock)GetTemplateChild("SearchResultOnMapViewTitle");
             m_detailsView = (TextBlock)GetTemplateChild("SearchResultOnMapViewDetails");
             m_poiRatingImage = (Image)GetTemplateChild("SearchResultOnMapViewImage");
             m_downArrow = (Image)GetTemplateChild("DownArrow");
             m_reviewsCountView = (TextBlock)GetTemplateChild("SearchResultOnMapReviewCount");
             m_poiAccreditationImage = (Image)GetTemplateChild("SearchResultOnMapAccreditationLogo");
-            m_reviewsView = (StackPanel)GetTemplateChild("SearchResultOnMapView");
             m_reviewImageAndNumber = (StackPanel)GetTemplateChild("ReviewsPanel");
 
             m_clickHandler = new ControlClickHandler(OnMouseLeftButtonUp, this);
@@ -102,13 +102,10 @@ namespace ExampleAppWPF
 
         public void UpdateScreenLocation(float x, float y)
         {
-            const float xOffset = 8.5f;
-            x += xOffset;
-
-            m_reviewsView.RenderTransform =
+            m_mainPanel.RenderTransform =
                 new TranslateTransform(
-                   x - (0.5 * m_currentWindow.RenderSize.Width),
-                   y - (0.5 * m_currentWindow.RenderSize.Height) - (m_reviewsView.ActualHeight * 0.5));
+                   x - (0.5 * RenderSize.Width),
+                   y - (0.5 * RenderSize.Height) - (m_mainPanel.ActualHeight * 0.5));
         }
 
         public void UpdateScreenVisibility(float onScreenState)
