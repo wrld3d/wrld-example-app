@@ -95,7 +95,7 @@ namespace ExampleApp
                                                                                                       pMyPinModel->GetHeightAboveTerrainMetres(),
                                                                                                       pinVisibilityMask);
 
-                if (m_myPinToWorldPinMap.find(pMyPinModel->Identifier()) != m_myPinToWorldPinMap.end())
+                if (m_myPinToWorldPinMap.find(pMyPinModel->Identifier()) == m_myPinToWorldPinMap.end())
                 {
                     m_myPinToWorldPinMap[pMyPinModel->Identifier()] = std::make_pair(pMyPinModel, pWorldPinItemModel);
                 }
