@@ -4,6 +4,7 @@
 #include "MathFunc.h"
 #include "IIdentity.h"
 #include "IReactionControllerModel.h"
+#include <algorithm>
 
 namespace ExampleApp
 {
@@ -41,6 +42,18 @@ namespace ExampleApp
                 Eegeo_DELETE m_pMenuOpenStateChangedCallback;
             }
 
+            void ReactionModel::AddIgnoredMenuIdentity(Eegeo::Helpers::TIdentity identity)
+            {
+                m_ignoredMenuIdentities.push_back(identity);
+            }
+
+            void ReactionModel::RemoveIgnoredMenuIdentity(Eegeo::Helpers::TIdentity identity)
+            {
+                std::vector<Eegeo::Helpers::TIdentity>::iterator result = std::find(m_ignoredMenuIdentities.begin(), m_ignoredMenuIdentities.end(), identity);
+
+                m_ignoredMenuIdentities.erase(result);
+            }
+
             void ReactionModel::UpdateOnScreenStatesInReactionToMenuOpenStateChange(OpenableControl::View::IOpenableControlViewModel& changingViewModel, float openState)
             {
                 for(std::vector<ScreenControl::View::IScreenControlViewModel*>::const_iterator it = m_reactors.begin();
@@ -58,6 +71,13 @@ namespace ExampleApp
 
             void ReactionModel::MenuOpenStateChangeHandler(OpenableControl::View::IOpenableControlViewModel& viewModel, float& openState)
             {
+                Eegeo::Helpers::TIdentity identity = viewModel.GetIdentity();
+
+                if (std::find(m_ignoredMenuIdentities.begin(), m_ignoredMenuIdentities.end(), identity) != m_ignoredMenuIdentities.end())
+                {
+                    return;
+                }
+                
                 if(m_reactionControllerModel.HasModalControl(viewModel.GetIdentity()))
                 {
                     UpdateOnScreenStatesInReactionToMenuOpenStateChange(viewModel, openState);

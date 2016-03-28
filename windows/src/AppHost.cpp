@@ -88,6 +88,9 @@
 #include "SearchResultSectionViewModule.h"
 #include "SearchResultSectionModule.h"
 #include "SurveyViewModule.h"
+#include "SearchResultPoiView.h"
+#include "WindowsMenuReactionModel.h"
+#include "IMyPinCreationInitiationViewModel.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
@@ -133,6 +136,7 @@ AppHost::AppHost(
 	, m_pInteriorsExplorerViewModule(NULL)
     , m_searchServiceModules()
     , m_failAlertHandler(this, &AppHost::HandleStartupFailure)
+    , m_pMenuReaction(NULL)
 {
     ASSERT_NATIVE_THREAD
          
@@ -161,11 +165,11 @@ AppHost::AppHost(
 
     Eegeo::EffectHandler::Initialise();
 
-    std::string deviceModel = nativeState.deviceModel;
+    const std::string deviceModel = nativeState.GetDeviceModel();
     Eegeo::Config::PlatformConfig platformConfig = Eegeo::Windows::WindowsPlatformConfigBuilder(deviceModel).Build();
 
     const Eegeo::Windows::Input::WindowsInputProcessorConfig& windowsInputProcessorConfig = Eegeo::Windows::Input::WindowsInputProcessor::DefaultConfig();
-    m_pInputProcessor = Eegeo_NEW(Eegeo::Windows::Input::WindowsInputProcessor)(&m_inputHandler, m_nativeState.window, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), windowsInputProcessorConfig);
+    m_pInputProcessor = Eegeo_NEW(Eegeo::Windows::Input::WindowsInputProcessor)(&m_inputHandler, m_nativeState.GetWindow(), screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), windowsInputProcessorConfig);
 
 	m_pWindowsPersistentSettingsModel = Eegeo_NEW(ExampleApp::PersistentSettings::WindowsPersistentSettingsModel)(m_nativeState);
 
@@ -189,6 +193,8 @@ AppHost::AppHost(
 
     m_pWindowsFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::WindowsFlurryMetricsService)(&m_nativeState);
 
+    m_pMenuReaction = Eegeo_NEW(ExampleApp::Menu::View::WindowsMenuReactionModel)(false, false, m_messageBus);
+
     typedef ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule ApplicationConfigurationModule;
     ApplicationConfigurationModule applicationConfigurationModule(m_pWindowsPlatformAbstractionModule->GetFileIO(), "Development Build", "0.0.1");
 
@@ -208,7 +214,8 @@ AppHost::AppHost(
         m_searchServiceModules,
         *m_pWindowsFlurryMetricsService,
         applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration("ApplicationConfigs/standard_config.json"),
-        *this);
+        *this,
+        *m_pMenuReaction);
 
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(
         m_pApp->World().GetRenderingModule(),
@@ -312,7 +319,7 @@ void AppHost::HandleMouseInputEvent(const Eegeo::Windows::Input::MouseInputEvent
 {
     ASSERT_NATIVE_THREAD
 
-    m_pInputProcessor->HandleInput(event, static_cast<float>(m_nativeState.screenWidth), static_cast<float>(m_nativeState.screenHeight));
+    m_pInputProcessor->HandleInput(event, static_cast<float>(m_nativeState.GetWidth()), static_cast<float>(m_nativeState.GetHeight()));
 }
 
 void AppHost::HandleKeyboardInputEvent(const Eegeo::Windows::Input::KeyboardInputEvent& event)
@@ -474,15 +481,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_messageBus
         );
 
-    m_pSettingsMenuViewModule = Eegeo_NEW(ExampleApp::SettingsMenu::View::SettingsMenuViewModule)(
-        "ExampleAppWPF.SettingsMenuView",
-        m_nativeState,
-        app.SettingsMenuModule().GetSettingsMenuModel(),
-        app.SettingsMenuModule().GetSettingsMenuViewModel(),
-        m_pModalBackgroundViewModule->GetView(),
-        m_messageBus
-        );
-
     m_pSearchMenuViewModule = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchMenuViewModule)(
         "ExampleAppWPF.SearchMenuView",
         m_nativeState,
@@ -491,14 +489,27 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         app.SearchMenuModule().GetSearchSectionViewModel(),
         app.CategorySearchModule().GetCategorySearchRepository(),
         m_pModalBackgroundViewModule->GetView(),
-        m_messageBus
+        app.ModalityModule().GetModalityController(),
+        m_messageBus,
+        app.ReactionModelModule().GetReactionModel()
         );
 
+    m_pSettingsMenuViewModule = Eegeo_NEW(ExampleApp::SettingsMenu::View::SettingsMenuViewModule)(
+        "ExampleAppWPF.SettingsMenuView",
+        m_nativeState,
+        app.SettingsMenuModule().GetSettingsMenuModel(),
+        app.SettingsMenuModule().GetSettingsMenuViewModel(),
+        m_pModalBackgroundViewModule->GetView(),
+        m_pSearchMenuViewModule->GetMenuView(),
+        m_messageBus
+        );
+    
     m_pSearchResultSectionViewModule = Eegeo_NEW(ExampleApp::SearchResultSection::View::SearchResultSectionViewModule)(
         app.SearchMenuModule().GetSearchMenuViewModel(),
         app.SearchResultSectionModule().GetSearchResultSectionOptionsModel(),
         app.SearchResultSectionModule().GetSearchResultSectionOrder(),
-        m_messageBus
+        m_messageBus,
+        *m_pMenuReaction
         );
 
     // Pop-up layer.
@@ -506,7 +517,9 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_nativeState,
         app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
         m_messageBus,
-        *m_pWindowsFlurryMetricsService
+        *m_pWindowsFlurryMetricsService,
+        m_pMyPinCreationViewModule->GetMyPinCreationInitiationView(),
+        app.World().GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel()
         );
 
     m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewModule)(
@@ -557,6 +570,15 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     viewControllerUpdaterModel.AddUpdateableObject(m_pSettingsMenuViewModule->GetMenuController());
     viewControllerUpdaterModel.AddUpdateableObject(m_pSearchMenuViewModule->GetMenuController());
+
+    Eegeo::Helpers::TIdentity settingsMenuIdentity = app.SearchResultPoiModule().GetObservableOpenableControl().GetIdentity();
+    Eegeo::Helpers::TIdentity searchMenuIdentity= app.SearchMenuModule().GetSearchMenuViewModel().GetIdentity();
+    
+    app.ModalityModule().GetModalityController().AddIgnoredMenuIdentity(settingsMenuIdentity);
+    app.ReactionModelModule().GetReactionModel().AddIgnoredMenuIdentity(settingsMenuIdentity);
+    
+    app.ModalityModule().GetModalityController().AddIgnoredMenuIdentity(searchMenuIdentity);
+    app.ReactionModelModule().GetReactionModel().AddIgnoredMenuIdentity(searchMenuIdentity);
 }
 
 void AppHost::DestroyApplicationViewModulesFromUiThread()

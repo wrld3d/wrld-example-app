@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "IIdentity.h"
+
 namespace ExampleApp
 {
     namespace Modality
@@ -12,6 +14,9 @@ namespace ExampleApp
             {
             public:
                 virtual ~IModalityController() { }
+
+                virtual void AddIgnoredMenuIdentity(Eegeo::Helpers::TIdentity identity) = 0;
+                virtual void RemoveIgnoredMenuIdentity(Eegeo::Helpers::TIdentity identity) = 0;
             };
         }
     }

@@ -12,6 +12,7 @@
 #include "BidirectionalBus.h"
 #include "PlaceJumpSelectedMessage.h"
 #include "IMetricsService.h"
+#include "IMenuReactionModel.h"
 
 namespace ExampleApp
 {
@@ -25,7 +26,8 @@ namespace ExampleApp
                 PlaceJumpMenuOption(PlaceJumpModel jumpModel,
                                     Menu::View::IMenuViewModel& menuViewModel,
                                     ExampleAppMessaging::TMessageBus& messageBus,
-                                    Metrics::IMetricsService& metricsService);
+                                    Metrics::IMetricsService& metricsService,
+                                    const Menu::View::IMenuReactionModel& menuReaction);
 
                 void Select();
 
@@ -36,6 +38,8 @@ namespace ExampleApp
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 
                 Metrics::IMetricsService& m_metricsService;
+
+                const Menu::View::IMenuReactionModel& m_menuReaction;
             };
         }
     }

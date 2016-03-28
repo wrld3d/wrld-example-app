@@ -63,11 +63,13 @@ namespace ExampleAppWPF
         public void OpenAboutPage()
         {
             Visibility = Visibility.Visible;
+            m_currentWindow.DisableInput();
         }
 
         public void DismissAboutPage()
         {
             Visibility = Visibility.Hidden;
+            m_currentWindow.EnableInput();
         }
     }
 }

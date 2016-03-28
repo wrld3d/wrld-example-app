@@ -55,6 +55,7 @@
 #include "UserInteraction.h"
 #include "IInteriorsExplorerViewModule.h"
 #include "SearchResultSectionViewIncludes.h"
+#include "IMenuReactionModel.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
@@ -135,6 +136,8 @@ private:
     ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
     std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*> m_searchServiceModules;
     ExampleApp::Metrics::AndroidFlurryMetricsService* m_pAndroidFlurryMetricsService;
+
+    ExampleApp::Menu::View::IMenuReactionModel* m_pMenuReactionModel;
 
     ExampleApp::MobileExampleApp* m_pApp;
 

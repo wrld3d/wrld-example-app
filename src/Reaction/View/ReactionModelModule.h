@@ -26,6 +26,8 @@ namespace ExampleApp
                                     const std::vector<ScreenControl::View::IScreenControlViewModel*>& reactors);
 
                 ~ReactionModelModule();
+
+                IReactionModel& GetReactionModel() const;
             };
         }
     }

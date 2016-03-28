@@ -46,6 +46,8 @@ namespace ExampleAppWPF
         private Storyboard m_searchArrowOpen;
         private Storyboard m_searchArrowClosed;
 
+        private bool m_hasMenuRefreshed;
+
         static SearchMenuView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SearchMenuView), new FrameworkPropertyMetadata(typeof(SearchMenuView)));
@@ -58,7 +60,9 @@ namespace ExampleAppWPF
 
             Loaded += MainWindow_Loaded;
             mainWindow.SizeChanged += PerformLayout;
+
             m_searchInFlight = false;
+            m_hasMenuRefreshed = false;
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -177,7 +181,7 @@ namespace ExampleAppWPF
 
         private void OnMenuListItemSelected(object sender, MouseEventArgs e)
         {
-            if (m_searchInFlight || IsAnimating() || m_adapter.IsAnimating())
+            if (!m_hasMenuRefreshed || m_searchInFlight || IsAnimating() || m_adapter.IsAnimating())
             {
                 (sender as ListBox).SelectedItem = null;
                 return;
@@ -190,6 +194,8 @@ namespace ExampleAppWPF
 
                 int sectionIndex = m_adapter.GetSectionIndex(position);
                 int childIndex = m_adapter.GetItemIndex(position);
+
+                m_hasMenuRefreshed = false;
 
                 SearchMenuViewCLIMethods.OnSearchCleared(m_nativeCallerPointer);
                 MenuViewCLIMethods.SelectedItem(m_nativeCallerPointer, sectionIndex, childIndex);
@@ -325,6 +331,11 @@ namespace ExampleAppWPF
                 if(m_isOffScreen)
                 {
                     m_searchBox.Visibility = Visibility.Hidden;
+
+                    if (m_searchArrow.Visibility == Visibility.Visible)
+                    {
+                        m_searchArrowClosed.Begin(m_searchArrow); 
+                    }
                 }
                 else
                 {
@@ -336,6 +347,9 @@ namespace ExampleAppWPF
                 }
 
                 base.AnimateToClosedOnScreen();
+                m_mainWindow.EnableInput();
+
+                m_hasMenuRefreshed = true;
             }
         }
 
@@ -350,6 +364,7 @@ namespace ExampleAppWPF
                 m_searchArrowOpen.Begin(m_searchArrow);
 
                 base.AnimateToOpenOnScreen();
+                m_mainWindow.EnableInput(); 
             }
         }
 
@@ -395,6 +410,8 @@ namespace ExampleAppWPF
             m_adapter.SetData(groups, groupsExpandable, groupToChildrenMap);
 
             m_list.DataContext = m_adapter;
+
+            m_hasMenuRefreshed = true;
         }
     }
 }

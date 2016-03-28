@@ -82,6 +82,7 @@
 #include "TwitterFeedTour.h"
 #include "VisualMap.h"
 #include "Surveys.h"
+#include "IMenuReactionModel.h"
 
 namespace ExampleApp
 {
@@ -163,6 +164,8 @@ namespace ExampleApp
         Tours::SdkModel::TourInstances::TwitterFeed::ITwitterFeedTourModule* m_pTwitterFeedTourModule;
         
         AppCamera::SdkModel::IAppCameraModule* m_pAppCameraModule;
+
+        Menu::View::IMenuReactionModel& m_menuReaction;
         
         const bool m_interiorsEnabled;
 
@@ -187,7 +190,8 @@ namespace ExampleApp
 
         void InitialisePinsModules(Eegeo::Modules::Map::MapModule& mapModule,
                                    Eegeo::EegeoWorld& world,
-                                   const bool interiorsAffectedByFlattening);
+                                   const bool interiorsAffectedByFlattening,
+                                   const float screenOversampleScale);
         
         void InitialiseAppState(Eegeo::UI::NativeUIFactories& nativeUIFactories);
         
@@ -217,7 +221,8 @@ namespace ExampleApp
                          const std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*>& platformImplementedSearchServiceModules,
                          ExampleApp::Metrics::IMetricsService& metricsService,
                          const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
-                         Eegeo::IEegeoErrorHandler& errorHandler);
+                         Eegeo::IEegeoErrorHandler& errorHandler,
+                         Menu::View::IMenuReactionModel& menuReaction);
 
         ~MobileExampleApp();
 

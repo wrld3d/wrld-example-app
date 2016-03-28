@@ -15,6 +15,7 @@
 #include "WorldPinsModalityObserver.h"
 #include "Interiors.h"
 #include "SdkModelDomainEventBus.h"
+#include "IMenuReactionModel.h"
 
 namespace ExampleApp
 {
@@ -43,7 +44,9 @@ namespace ExampleApp
                                 const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                 const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                 ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
-                                const bool interiorsAffectedByFlattening);
+                                const bool interiorsAffectedByFlattening,
+                                const Menu::View::IMenuReactionModel& menuReaction,
+                                const float screenOversampleScale);
 
                 ~WorldPinsModule();
 

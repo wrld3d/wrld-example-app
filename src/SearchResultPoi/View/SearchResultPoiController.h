@@ -32,8 +32,6 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<SearchResultPoiController, Search::SdkModel::SearchResultModel> m_togglePinnedCallback;
                 Eegeo::Helpers::TCallback1<SearchResultPoiController, const SearchResultPoiViewImageDownloadCompletedMessage&> m_imageLoadedHandlerBinding;
 
-                void OnViewOpened();
-
                 void OnViewClosed();
 
                 void OnCloseButtonClicked();
@@ -42,13 +40,19 @@ namespace ExampleApp
                 
                 void OnSearchResultImageLoaded(const SearchResultPoiViewImageDownloadCompletedMessage& message);
 
+            protected:
+                ISearchResultPoiView& GetView() { return m_view; }
+                ISearchResultPoiViewModel& GetViewModel() { return m_viewModel; }
+                ExampleAppMessaging::TMessageBus& GetMessageBus() { return m_messageBus; }
+
+                virtual void OnViewOpened();
             public:
                 SearchResultPoiController(ISearchResultPoiView& view,
                                           ISearchResultPoiViewModel& viewModel,
                                           ExampleAppMessaging::TMessageBus& messageBus,
                                           Metrics::IMetricsService& metricsService);
 
-                ~SearchResultPoiController();
+                virtual ~SearchResultPoiController();
             };
         }
     }

@@ -31,7 +31,7 @@ namespace ExampleApp
                     urlEncoder.UrlEncode(query.Query(), encodedQuery);
                     
                     std::stringstream urlstream;
-                    urlstream << "https://poi-staging.eegeo.com";
+                    urlstream << "https://poi.eegeo.com/v1";
                     if (query.IsCategory())
                     {
                         urlstream << "/category?c=";

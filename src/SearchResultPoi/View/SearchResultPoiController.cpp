@@ -20,7 +20,7 @@ namespace ExampleApp
                     }
                     return;
                 }
-                
+
                 const Search::SdkModel::SearchResultModel& searchResultModel = m_viewModel.GetSearchResultModel();
                 
                 m_metricsService.SetEvent("Opened POI",
@@ -38,6 +38,8 @@ namespace ExampleApp
             void SearchResultPoiController::OnViewClosed()
             {
                 m_view.Hide();
+
+                m_messageBus.Publish(SearchResultPoiViewClosedMessage());
             }
 
             void SearchResultPoiController::OnCloseButtonClicked()
