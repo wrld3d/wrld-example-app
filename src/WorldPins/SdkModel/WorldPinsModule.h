@@ -45,7 +45,8 @@ namespace ExampleApp
                                 const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                 ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
                                 const bool interiorsAffectedByFlattening,
-                                const Menu::View::IMenuReactionModel& menuReaction);
+                                const Menu::View::IMenuReactionModel& menuReaction,
+                                const float screenOversampleScale);
 
                 ~WorldPinsModule();
 

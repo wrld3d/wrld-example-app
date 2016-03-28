@@ -43,6 +43,7 @@ namespace ExampleApp
                 IMenuView& m_view;
                 bool m_dragInProgress;
                 bool m_presentationDirty;
+                bool m_menuContentsChanged;
 
                 virtual void OnOpenableStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& state);
 

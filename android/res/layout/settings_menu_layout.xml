@@ -30,7 +30,7 @@
 	    android:layout_height="wrap_content"
 	    android:layout_marginTop="56dp" >
 
-		<ListView
+		<com.eegeo.menu.MenuExpandableListView
 		    android:id="@+id/settings_menu_item_list"
 		    android:layout_width="@dimen/search_results_bar_width"
 		    android:layout_height="wrap_content"
@@ -39,14 +39,15 @@
 		    android:clipChildren="false"
 		    android:clipToPadding="false"
 		    android:divider="@color/ui_border"
-		    android:dividerHeight="1dp"
+		    android:dividerHeight="@dimen/menu_item_divider_height"
 		    android:listSelector="@android:color/transparent"
 		    android:overScrollMode="never"
 		    android:paddingBottom="5dp"
 		    android:paddingLeft="5dp"
 		    android:paddingRight="5dp"
-		    android:textColor="@color/table_sub_cell_text" >
-		</ListView>
+		    android:textColor="@color/table_sub_cell_text"
+		    android:groupIndicator="@null" >
+		</com.eegeo.menu.MenuExpandableListView>
 
 	</FrameLayout>
 

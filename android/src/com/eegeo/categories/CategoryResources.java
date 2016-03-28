@@ -55,12 +55,13 @@ public class CategoryResources
     public static int getSmallIconForCategory(Activity activity, String category)
     {
         String matchedCategory = getCategoryMatch(category);
-        return getSmallIconForResourceName(activity, matchedCategory);
+        return getIconForResourceName(activity, matchedCategory, false);
     }
 
-    public static int getSmallIconForResourceName(Activity activity, String resourceName)
+    public static int getIconForResourceName(Activity activity, String resourceName, boolean isSmallIcon)
     {
-        String uri = "drawable/icon1_" + resourceName;
+    	String iconPrefix = isSmallIcon ? "icon2_" : "icon1_";
+        String uri = "drawable/" + iconPrefix + resourceName;
         int imageResource = activity.getResources().getIdentifier(uri, null, activity.getPackageName());
         return imageResource;
     }

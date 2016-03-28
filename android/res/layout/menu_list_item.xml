@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/menu_list_item"
     android:layout_width="332dp"
-    android:layout_height="43dp"
+    android:layout_height="wrap_content"
 	android:background="@drawable/menu_header_item_selected_states" >
 
         <TextView
@@ -14,7 +14,8 @@
             android:gravity="left|center_vertical"
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
             android:textColor="@drawable/menu_item_states"
-            android:textSize="22sp" />
+            android:textSize="22sp"
+            android:text=""/>
 
         <ImageView
             android:id="@+id/menu_list_openable_shape"

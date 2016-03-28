@@ -4,6 +4,8 @@
 
 # Getting Started on Android
 
+![eeGeo](http://cdn2.eegeo.com/wp-content/uploads/2016/03/readme-banner.jpg)
+
 * [Requirements](#requirements)
 * [Setup](#setup)
     * [Setting up the Android SDK](#setting-up-the-android-sdk)

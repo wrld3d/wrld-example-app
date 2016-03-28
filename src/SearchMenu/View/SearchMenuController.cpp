@@ -132,7 +132,7 @@ namespace ExampleApp
                 
                 if (!m_appModeAllowsOpen)
                 {
-                    m_viewModel.Close();
+                    m_viewModel.RemoveFromScreen();
                 }
             }
             

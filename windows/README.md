@@ -4,6 +4,8 @@
 
 # Getting Started on Windows
 
+![eeGeo](http://cdn2.eegeo.com/wp-content/uploads/2016/03/readme-banner.jpg)
+
 Before you begin, ensure you have completed the initial steps as described in the [root of the repository](https://github.com/eegeo/eegeo-example-app).
 
 ## Requirements

@@ -165,11 +165,11 @@ AppHost::AppHost(
 
     Eegeo::EffectHandler::Initialise();
 
-    std::string deviceModel = nativeState.deviceModel;
+    const std::string deviceModel = nativeState.GetDeviceModel();
     Eegeo::Config::PlatformConfig platformConfig = Eegeo::Windows::WindowsPlatformConfigBuilder(deviceModel).Build();
 
     const Eegeo::Windows::Input::WindowsInputProcessorConfig& windowsInputProcessorConfig = Eegeo::Windows::Input::WindowsInputProcessor::DefaultConfig();
-    m_pInputProcessor = Eegeo_NEW(Eegeo::Windows::Input::WindowsInputProcessor)(&m_inputHandler, m_nativeState.window, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), windowsInputProcessorConfig);
+    m_pInputProcessor = Eegeo_NEW(Eegeo::Windows::Input::WindowsInputProcessor)(&m_inputHandler, m_nativeState.GetWindow(), screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), windowsInputProcessorConfig);
 
 	m_pWindowsPersistentSettingsModel = Eegeo_NEW(ExampleApp::PersistentSettings::WindowsPersistentSettingsModel)(m_nativeState);
 
@@ -193,7 +193,7 @@ AppHost::AppHost(
 
     m_pWindowsFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::WindowsFlurryMetricsService)(&m_nativeState);
 
-    m_pMenuReaction = Eegeo_NEW(ExampleApp::Menu::View::WindowsMenuReactionModel)(true, true, m_messageBus);
+    m_pMenuReaction = Eegeo_NEW(ExampleApp::Menu::View::WindowsMenuReactionModel)(false, false, m_messageBus);
 
     typedef ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule ApplicationConfigurationModule;
     ApplicationConfigurationModule applicationConfigurationModule(m_pWindowsPlatformAbstractionModule->GetFileIO(), "Development Build", "0.0.1");
@@ -319,7 +319,7 @@ void AppHost::HandleMouseInputEvent(const Eegeo::Windows::Input::MouseInputEvent
 {
     ASSERT_NATIVE_THREAD
 
-    m_pInputProcessor->HandleInput(event, static_cast<float>(m_nativeState.screenWidth), static_cast<float>(m_nativeState.screenHeight));
+    m_pInputProcessor->HandleInput(event, static_cast<float>(m_nativeState.GetWidth()), static_cast<float>(m_nativeState.GetHeight()));
 }
 
 void AppHost::HandleKeyboardInputEvent(const Eegeo::Windows::Input::KeyboardInputEvent& event)

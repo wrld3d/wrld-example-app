@@ -5,6 +5,7 @@
 #include "IOpenableControlViewModel.h"
 #include "MenuDragStateChangedMessage.h"
 
+
 namespace ExampleApp
 {
     namespace Menu
@@ -78,8 +79,9 @@ namespace ExampleApp
 
                 if(!m_viewModel.IsFullyClosed())
                 {
-                    m_view.UpdateMenuSectionViews(sections);
+                    m_view.UpdateMenuSectionViews(sections, m_menuContentsChanged);
                     m_presentationDirty = false;
+                    m_menuContentsChanged = false;
                 }
             }
 
@@ -222,11 +224,13 @@ namespace ExampleApp
             void MenuController::OnItemAdded(MenuItemModel& item)
             {
                 m_presentationDirty = true;
+                m_menuContentsChanged = true;
             }
 
             void MenuController::OnItemRemoved(MenuItemModel& item)
             {
                 m_presentationDirty = true;
+                m_menuContentsChanged = true;
             }
 
             void MenuController::OnItemSelected(int& sectionIndex, int& itemIndex)
@@ -285,6 +289,7 @@ namespace ExampleApp
                 , m_messageBus(messageBus)
                 , m_dragInProgress(false)
                 , m_presentationDirty(false)
+            	, m_menuContentsChanged(true)
             {
                 m_viewModel.InsertOpenStateChangedCallback(m_onOpenableStateChanged);
                 m_viewModel.InsertOnScreenStateChangedCallback(m_onScreenStateChanged);

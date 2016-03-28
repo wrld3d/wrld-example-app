@@ -190,7 +190,8 @@ namespace ExampleApp
 
         void InitialisePinsModules(Eegeo::Modules::Map::MapModule& mapModule,
                                    Eegeo::EegeoWorld& world,
-                                   const bool interiorsAffectedByFlattening);
+                                   const bool interiorsAffectedByFlattening,
+                                   const float screenOversampleScale);
         
         void InitialiseAppState(Eegeo::UI::NativeUIFactories& nativeUIFactories);
         

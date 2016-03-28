@@ -101,9 +101,14 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView, updateAnimationMethod, dt);
             }
 
-            void MenuView::UpdateMenuSectionViews(TSections& sections)
+            void MenuView::UpdateMenuSectionViews(TSections& sections, bool contentsChanged)
             {
                 ASSERT_UI_THREAD
+
+				if (!contentsChanged)
+				{
+					return;
+				}
 
 				m_currentSections = sections;
 
@@ -114,17 +119,16 @@ namespace ExampleApp
                 jclass strClass = m_nativeState.LoadClass(env, strClassName);
                 env->DeleteLocalRef(strClassName);
 
-                const size_t numSections = sections.size();
-                size_t numItems = 0;
-                for(size_t i = 0; i < numSections; ++ i)
-                {
-                    const IMenuSectionViewModel& section = *(sections.at(i));
-                    numItems += section.Size();
-                }
+        		const size_t numSections = sections.size();
+				size_t numItems = 0;
+				for(size_t i = 0; i < numSections; ++ i)
+				{
+					const IMenuSectionViewModel& section = *(sections.at(i));
+					numItems += section.GetTotalItemCount() + 1;
+				}
 
                 jobjectArray groupNamesArray = env->NewObjectArray(numSections, strClass, 0);
                 jintArray groupSizesArray = env->NewIntArray(numSections);
-                jbooleanArray groupIsExpandableArray = env->NewBooleanArray(numSections);
                 jobjectArray childNamesArray = env->NewObjectArray(numItems, strClass, 0);
                 env->DeleteLocalRef(strClass);
 
@@ -132,30 +136,36 @@ namespace ExampleApp
                 for(size_t groupIndex = 0; groupIndex < numSections; groupIndex++)
                 {
                     const IMenuSectionViewModel& section = *(sections.at(groupIndex));
-                    for(size_t childIndex = 0; childIndex < section.Size(); childIndex++)
+                    int totalItems = section.GetTotalItemCount();
+
+                    if (section.IsExpandable())
+                    {
+                    	totalItems++;
+                    }
+
+                    for(size_t childIndex = 0; childIndex < totalItems; childIndex++)
                     {
                         int itemIndex = section.IsExpandable() ? childIndex-1 : childIndex;
+
                         std::string jsonData = section.IsExpandable() && childIndex == 0
                                                ? section.SerializeJson()
                                                : section.GetItemAtIndex(itemIndex).SerializeJson();
+
                         jstring jsonDataStr = env->NewStringUTF(jsonData.c_str());
                         env->SetObjectArrayElement(childNamesArray, currentChildIndex, jsonDataStr);
                         env->DeleteLocalRef(jsonDataStr);
                         currentChildIndex++;
                     }
 
-                    jstring groupNameJni = env->NewStringUTF(section.Name().c_str());
+                    jstring groupNameJni = env->NewStringUTF(section.SerializeJson().c_str());
                     env->SetObjectArrayElement(groupNamesArray, groupIndex, groupNameJni);
                     env->DeleteLocalRef(groupNameJni);
 
-                    jint groupSize = (jint)(section.Size());
+                    jint groupSize = (jint)(totalItems);
                     env->SetIntArrayRegion(groupSizesArray, groupIndex, 1, &groupSize);
-
-                    jboolean groupIsExpandable = (jboolean)(section.IsExpandable());
-                    env->SetBooleanArrayRegion(groupIsExpandableArray, groupIndex, 1, &groupIsExpandable);
                 }
 
-                jmethodID populateData = env->GetMethodID(m_uiViewClass, "populateData", "(J[Ljava/lang/String;[I[Z[Ljava/lang/String;)V");
+                jmethodID populateData = env->GetMethodID(m_uiViewClass, "populateData", "(J[Ljava/lang/String;[I[Ljava/lang/String;)V");
 
                 env->CallVoidMethod(
                     m_uiView,
@@ -163,14 +173,12 @@ namespace ExampleApp
                     (jlong)(this),
                     groupNamesArray,
                     groupSizesArray,
-                    groupIsExpandableArray,
                     childNamesArray
                 );
 
                 env->DeleteLocalRef(groupNamesArray);
                 env->DeleteLocalRef(groupSizesArray);
                 env->DeleteLocalRef(childNamesArray);
-                env->DeleteLocalRef(groupIsExpandableArray);
             }
 
             void MenuView::SetFullyOnScreenOpen()
@@ -334,7 +342,6 @@ namespace ExampleApp
             void MenuView::HandleItemSelected(int sectionIndex, int itemIndex)
             {
                 ASSERT_UI_THREAD
-
                 m_onItemSelectedCallbacks.ExecuteCallbacks(sectionIndex, itemIndex);
             }
 

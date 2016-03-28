@@ -16,6 +16,7 @@ namespace ExampleApp
                 virtual ~ISettingsMenuModule() { }
 
                 virtual void AddMenuSection(const std::string& name,
+                							const std::string& icon,
                                             Menu::View::IMenuModel& menuModel,
                                             bool isExpandable) = 0;
                 
