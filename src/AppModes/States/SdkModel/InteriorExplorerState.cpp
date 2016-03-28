@@ -102,6 +102,7 @@ namespace ExampleApp
                     m_interiorExplorerUserInteractionModel.SetEnabled(false);
                     m_tourService.RegisterTourStartedCallback(m_tourStartedCallback);
                     m_myPinCreationModel.SetCreationStage(MyPinCreation::Inactive);
+                    m_interiorsCameraController.SetTilt(0.0f);
                     m_pSubStateMachine->StartStateMachine(0);
                 }
                 
