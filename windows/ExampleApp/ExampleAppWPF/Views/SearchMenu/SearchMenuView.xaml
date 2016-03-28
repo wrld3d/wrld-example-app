@@ -140,7 +140,7 @@
                     <Grid Margin="0,20,0,0" Name="SearchMenuViewContainer">
                         <!--Mag glass button. Closed Margin: 114, Open Margin: 714-->
                         <Grid Margin="114,0,0,0"  Width="36" Height="36" HorizontalAlignment="Center" VerticalAlignment="Top" Name="SearchIconGrid" Background="{StaticResource Gold}" Visibility="Visible" Panel.ZIndex="98">
-                            <Button Width="Auto" Height="Auto" Name="SecondaryMenuDragTabView" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Button Width="Auto" Height="Auto" Name="SecondaryMenuDragTabView" VerticalAlignment="Center" HorizontalAlignment="Center" Focusable="False">
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}">
                                         <Style.Setters>
@@ -285,7 +285,7 @@
                             <Grid Grid.Row="2">
                                 <StackPanel  Orientation="Vertical" >
                                     <ScrollViewer Width="250" Background="{StaticResource PrimaryBG_colour}" Name="ResultsMenuOptionsView" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="False" >
-                                        <ListBox Name="SearchResultsList" Template="{StaticResource ListBoxControlTemplateNoPadding}" Background="{StaticResource Transparent}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0">
+                                        <ListBox Name="SearchResultsList" Template="{StaticResource ListBoxControlTemplateNoPadding}" Background="{StaticResource Transparent}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0" Focusable="False">
                                             <ListBox.Resources>
                                                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
                                                 <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent"/>
@@ -353,13 +353,21 @@
                                                     </Grid>
                                                 </DataTemplate>
                                             </ListBox.Resources>
+                                            <ListBox.ItemContainerStyle>
+                                                <Style TargetType="{x:Type ListBoxItem}">
+                                                    <Setter Property="IsTabStop" Value="False" />
+                                                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                                    <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="None"/>
+                                                    <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>                                                    
+                                                </Style>
+                                             </ListBox.ItemContainerStyle>
                                         </ListBox>
                                     </ScrollViewer>
                                     
                                     <Grid Name="ResultsListSeparator" Width="250" Height="2" Background="{StaticResource PrimaryBG_Over_Colour}" Visibility="Collapsed"/>
                                     
                                     <ScrollViewer Width="250" Background="{StaticResource PrimaryBG_colour}" Name="MenuOptionsView" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="False" >
-                                        <ListBox Margin="12,0,0,0" Name="SecondaryMenuItemList" Template="{StaticResource ListBoxControlTemplateNoPadding}" ItemsSource="{Binding Children}" Background="{StaticResource PrimaryBG_colour}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0">
+                                        <ListBox Margin="12,0,0,0" Name="SecondaryMenuItemList" Template="{StaticResource ListBoxControlTemplateNoPadding}" ItemsSource="{Binding Children}" Background="{StaticResource PrimaryBG_colour}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0" Focusable="False">
                                             <ListBox.Resources>
                                                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
                                                 <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent"/>

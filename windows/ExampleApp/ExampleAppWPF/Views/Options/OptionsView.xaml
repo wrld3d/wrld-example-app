@@ -24,7 +24,7 @@
                                     <TextBlock Name="OptionsViewTitle" VerticalAlignment="Center" Text="Options" FontSize="18" Foreground="{StaticResource Gold}"/>
                                 </Border>
                                 <Border Height="195" BorderBrush="{x:Null}">
-                                    <ScrollViewer PanningMode="Both" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+                                    <ScrollViewer PanningMode="Both" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True" Focusable="False">
                                         <StackPanel>
 
                                             <StackPanel Orientation="Horizontal" Margin="0,8,0,0" Height="30">

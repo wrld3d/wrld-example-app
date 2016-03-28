@@ -80,10 +80,10 @@
                     </ControlTemplate.Resources>
 
                     <Grid Margin="0,20,0,0" Name="SettingsMenuViewContainer">
-                        
+
                         <!--Closed: -114 Open: -714 -->
                         <Grid Margin="-114,0,0,0" Width="36" Height="36" VerticalAlignment="Top" DockPanel.Dock="Left" Name="SettingsIconGrid" Background="{StaticResource PrimaryBG_colour}" Panel.ZIndex="99">
-                            <Button Width="Auto" Height="Auto" Name="SettingsMenuIconButton" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Button Width="Auto" Height="Auto" Name="SettingsMenuIconButton" VerticalAlignment="Center" HorizontalAlignment="Center" Focusable="False">
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}">
                                         <Style.Setters>
@@ -247,6 +247,7 @@
                                             <ListBox.ItemContainerStyle>
                                                 <Style TargetType="{x:Type ListBoxItem}">
                                                     <Setter Property="Grid.ZIndex" Value="{Binding ZIndex}" />
+                                                    <Setter Property="IsTabStop" Value="False" />
                                                 </Style>
                                             </ListBox.ItemContainerStyle>
                                         </ListBox>
