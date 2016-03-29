@@ -71,9 +71,9 @@ const float arrowWidth = 10;
         self.pPinCreationDialogContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self addSubview: self.pPinCreationDialogContainer];
         self.pPinCreationDialogArrow = ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pPinCreationDialogContainer, "arrow3_down", 0.f, 0.f, 0, 0);
-        self.pPinCreationDialogTitle = [self createDialogTitle:@"My Pin"];
+        self.pPinCreationDialogTitle = [self createDialogTitle:@"My Reports"];
         [self.pPinCreationDialogContainer addSubview:self.pPinCreationDialogTitle];
-        self.pPinCreationDialogDescription = [self createDialogDescription:@"Create your own pins"];
+        self.pPinCreationDialogDescription = [self createDialogDescription:@"Submit your own reports"];
         [self.pPinCreationDialogContainer addSubview:self.pPinCreationDialogDescription];
         
         m_awaitingInput = false;
