@@ -85,6 +85,11 @@ RESOURCE "${allresources}"
 )
 
 # project settings
+set_xcode_property (${executable_name} DEBUG_INFORMATION_FORMAT[variant=Debug] "dwarf")
+set_xcode_property (${executable_name} DEBUG_INFORMATION_FORMAT[variant=MinSizeRel] "dwarf-with-dsym")
+set_xcode_property (${executable_name} DEBUG_INFORMATION_FORMAT[variant=RelWithDebInfo] "dwarf-with-dsym")
+set_xcode_property (${executable_name} DEBUG_INFORMATION_FORMAT[variant=Release] "dwarf-with-dsym")
+
 set_xcode_property (${executable_name} GCC_TREAT_WARNINGS_AS_ERRORS "YES")
 set_xcode_property (${executable_name} CODE_SIGN_IDENTITY "iPhone Developer")
 set_xcode_property (${executable_name} IPHONEOS_DEPLOYMENT_TARGET "6.0")
