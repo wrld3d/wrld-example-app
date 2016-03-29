@@ -69,6 +69,8 @@ namespace ExampleAppWPF
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             PerformLayout(sender, null);
+
+            m_menuViewContainer.SizeChanged += OnMenuContainerSizeChanged;
         }
 
         private new void PerformLayout(object sender, SizeChangedEventArgs e)
@@ -95,13 +97,13 @@ namespace ExampleAppWPF
             var menuOptionsViewDefaultHeight = m_menuOptionsView.ActualHeight;
             var separatorHeight = m_resultsSeparator.ActualHeight;
 
-            return Math.Max(0.0, menuViewHeight - (searchBoxBackgroundDefaultHeight + menuOptionsViewDefaultHeight + 2 * separatorHeight));
+            return menuViewHeight - searchBoxBackgroundDefaultHeight - menuOptionsViewDefaultHeight - 2 * separatorHeight;
         }
 
-        protected override Size MeasureOverride(Size constraint)
+        protected override Size ArrangeOverride(Size arrangeBounds)
         {
             m_resultsOptionsView.MaxHeight = CalcResultOptionsViewMaxHeight();
-            return base.MeasureOverride(constraint);
+            return base.ArrangeOverride(arrangeBounds);
         }
 
         public override void OnApplyTemplate()
