@@ -150,18 +150,6 @@ namespace
     return self;
 }
 
-- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
-{
-    if(!m_touchEnabled)
-    {
-        return nil;
-    }
-    
-    UIView *hitView = [super hitTest:point withEvent:event];
-    if (hitView == self) return nil;
-    return hitView;
-}
-
 - (void)layoutSubviews
 {
     CGFloat panelHeight = self.pFloorPanel.frame.size.height;
@@ -196,21 +184,45 @@ namespace
     m_pInterop->Dismiss();
 }
 
-- (BOOL)consumesTouch:(UITouch *)touch
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+{
+    if(!m_touchEnabled)
+    {
+        return nil;
+    }
+    
+    UIView *hitView = [super hitTest:point withEvent:event];
+    if (hitView == self) return nil;
+    return hitView;
+}
+
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {
     if(!m_touchEnabled)
     {
         return NO;
     }
     
-    CGPoint touchLocation = [touch locationInView:self];
-    if (CGRectContainsPoint(self.pFloorPanel.frame, touchLocation) && m_floorSelectionEnabled)
+    if(m_floorSelectionEnabled && m_draggingFloorButton)
+    {
+        return YES;
+    }
+    
+    CGPoint touchLocation = point;
+    CGPoint floorPanelLocation = [self convertPoint:touchLocation toView:self.pFloorPanel];
+    if (CGRectContainsPoint(self.pFloorChangeButton.frame, floorPanelLocation) && m_floorSelectionEnabled)
         return YES;
     if (CGRectContainsPoint(self.pDetailsPanel.frame, touchLocation))
         return YES;
     if (CGRectContainsPoint(self.pDismissButtonBackground.frame, touchLocation))
         return YES;
     return  NO;
+}
+
+- (BOOL)consumesTouch:(UITouch *)touch
+{
+    CGPoint touchLocation = [touch locationInView:self];
+    return [self pointInside:touchLocation withEvent:nil];
 }
 
 - (void) setFloorName:(const std::string*)name
@@ -503,3 +515,4 @@ namespace
 }
 
 @end
+

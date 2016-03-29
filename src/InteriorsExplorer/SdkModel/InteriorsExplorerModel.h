@@ -46,6 +46,8 @@ namespace ExampleApp
                 void RemoveInteriorExplorerEnteredCallback(Eegeo::Helpers::ICallback0& callback);
                 void InsertInteriorExplorerExitedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveInteriorExplorerExitedCallback(Eegeo::Helpers::ICallback0& callback);
+                void InsertInteriorExplorerFloorSelectionDraggedCallback(Eegeo::Helpers::ICallback0& callback);
+                void RemoveInteriorExplorerFloorSelectionDraggedCallback(Eegeo::Helpers::ICallback0& callback);
 
             private:
                 
@@ -70,10 +72,12 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<InteriorsExplorerModel, const InteriorsExplorerSelectFloorMessage&> m_selectFloorCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerModel, const InteriorsExplorerFloorSelectionDraggedMessage&> m_floorSelectionDraggedCallback;
                 
+                
                 int m_currentInteriorFloorIndex;
                 bool m_interiorExplorerEnabled;
                 Eegeo::Helpers::CallbackCollection0 m_interiorExplorerEnteredCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_interiorExplorerExitedCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_interiorExplorerFloorSelectionDraggedCallbacks;
             };
         }
     }

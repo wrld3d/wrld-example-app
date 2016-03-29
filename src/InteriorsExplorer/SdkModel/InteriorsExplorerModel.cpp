@@ -180,6 +180,8 @@ namespace ExampleApp
                 const int nearestFloorIndex = static_cast<int>(roundf(floorParam));
                 const Eegeo::Resources::Interiors::InteriorsFloorModel& floorModel = pModel->GetFloorAtIndex(nearestFloorIndex);
                 m_messageBus.Publish(InteriorsExplorerFloorSelectedMessage(nearestFloorIndex, floorModel.GetReadableFloorName()));
+                
+                m_interiorExplorerFloorSelectionDraggedCallbacks.ExecuteCallbacks();
             }
 
             void InteriorsExplorerModel::SelectFloor(int floor)
@@ -250,6 +252,16 @@ namespace ExampleApp
             void InteriorsExplorerModel::RemoveInteriorExplorerExitedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 m_interiorExplorerExitedCallbacks.RemoveCallback(callback);
+            }
+            
+            void InteriorsExplorerModel::InsertInteriorExplorerFloorSelectionDraggedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_interiorExplorerFloorSelectionDraggedCallbacks.AddCallback(callback);
+            }
+            
+            void InteriorsExplorerModel::RemoveInteriorExplorerFloorSelectionDraggedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_interiorExplorerFloorSelectionDraggedCallbacks.RemoveCallback(callback);
             }
         }
     }
