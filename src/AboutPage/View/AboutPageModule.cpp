@@ -30,12 +30,12 @@ namespace
                                         "\nVimarsh Raina"
                                         
                                         "\n\nContract Software Engineer"
-                                        "\nTom Haygarth"
-                                        "\nFrancisco Mendonca"
                                         "\nIan Reynolds"
+
+                                        "\n\Lead Artist"
+                                        "\nSteve Morrison"
                                         
-                                        "\n\nSenior Artists"
-                                        "\nJody Gallagher"
+                                        "\n\nSenior Artist"
                                         "\nGary Thomson"
                                         
                                         "\n\nArtist"
@@ -43,6 +43,9 @@ namespace
                                         
                                         "\n\nContract Artist"
                                         "\nAntony Connell"
+
+                                        "\n\nUX Designer"
+                                        "\nMike McKenna"
                                         
                                         "\n\nSystem Test Lead"
                                         "\nDavid Murdoch"
@@ -74,9 +77,12 @@ namespace
                                         "\n\nChief Commercial Officer"
                                         "\nJeremy Copp"
                                         
-                                        "\n\n\nFallen Comrades"
+                                        "\n\n\nAdditional Thanks"
+                                        "\nJody Gallagher"
+                                        "\nTom Haygarth"
                                         "\nSalvador Lopez"
                                         "\nMike McLarty"
+                                        "\nFrancisco Mendonca"
                                         "\nRyan Reid"
                                         
                                         "\n\nSource data courtesy of:"
