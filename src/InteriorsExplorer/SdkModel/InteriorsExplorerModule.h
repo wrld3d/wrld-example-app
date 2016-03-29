@@ -63,6 +63,7 @@ namespace ExampleApp
                 View::InteriorsExplorerViewModel* m_pViewModel;
                 InteriorVisibilityUpdater* m_pVisibilityUpdater;
                 InteriorExplorerUserInteractionModel* m_pUserInteractionModel;
+                InteriorsExplorerFloorDraggedObserver* m_pFloorDraggedObserver;
                 
                 InteriorWorldPinController* m_pWorldPinController;
                 Eegeo::Resources::Interiors::InteriorsCameraController* m_pInteriorsCameraController;
