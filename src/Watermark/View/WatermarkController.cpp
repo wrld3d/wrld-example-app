@@ -40,6 +40,11 @@ namespace ExampleApp
             
             void WatermarkController::OnWatermarkModelChanged(const ExampleApp::Watermark::WatermarkModelChangedMessage& message)
             {
+                if(!m_appModeAllowsOpen)
+                {
+                    return;
+                }
+                
                 if (m_watermarkDataRepository.HasWatermarkDataForKey(message.GetWatermarkId()))
                 {
                     const WatermarkData& watermarkDataForVendor = m_watermarkDataRepository.GetWatermarkDataWithKey(message.GetWatermarkId());
@@ -50,6 +55,11 @@ namespace ExampleApp
             
             void WatermarkController::OnWatermarkAlignmentStateChanged(const WatermarkAlignmentStateChangedMessage& message)
             {
+                if(!m_appModeAllowsOpen)
+                {
+                    return;
+                }
+                
                 m_view.SetWatermarkAlignmentState(message.ShouldAlignBottom());
             }
             
