@@ -45,10 +45,10 @@ namespace ExampleAppWPF
             m_closing = false;
 
             TitleText = m_model.Title;
-            JobTitle = m_swallowPersonModel.JobTitle;
+            JobTitle = m_swallowPersonModel.DeskCode;
             WorkingGroup = m_swallowPersonModel.WorkingGroup;
             OfficeLocation = m_swallowPersonModel.OfficeLocation;
-            DeskCode = m_swallowPersonModel.DeskCode;
+            DeskCode = m_model.Subtitle;
 
             OnPropertyChanged("");
 

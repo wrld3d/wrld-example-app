@@ -8,6 +8,7 @@
 #include "ImagePathHelpers.h"
 #include "ReflectionHelpers.h"
 #include "IWorldPinsInFocusModel.h"
+#include "SearchVendorNames.h"
 
 using namespace ExampleApp::Helpers::ReflectionHelpers;
 
@@ -42,8 +43,19 @@ namespace ExampleApp
             void WorldPinOnMapView::Open(const WorldPins::SdkModel::IWorldPinsInFocusModel& worldPinsInFocusModel,
                     float modality)
             {
-               mShow(ConvertUTF8ToManagedString(worldPinsInFocusModel.GetTitle()),
-                     ConvertUTF8ToManagedString(worldPinsInFocusModel.GetSubtitle()),
+                std::string subtitle;
+
+                if (worldPinsInFocusModel.GetVendor() == ExampleApp::Search::InteriorVendorName)
+                {
+                    subtitle = "";
+                }
+                else
+                {
+                    subtitle = worldPinsInFocusModel.GetSubtitle();
+                }
+                
+                mShow(ConvertUTF8ToManagedString(worldPinsInFocusModel.GetTitle()),
+                     ConvertUTF8ToManagedString(subtitle),
                      ConvertUTF8ToManagedString(worldPinsInFocusModel.GetRatingsImage()),
                      worldPinsInFocusModel.GetReviewCount(),
                      modality);
