@@ -375,27 +375,29 @@ namespace ExampleAppWPF
             }
         }
 
-        public void DisableEditText()
+        public void SetSearchInProgress()
         {
             Dispatcher.Invoke(() =>
             {
-                m_editText.IsEnabled = false;
                 m_resultsSpinner.Visibility = Visibility.Visible;
             });
         }
-        public void EnableEditText()
+        public void SetSearchEnded()
         {
             Dispatcher.Invoke(() =>
             {
-                m_editText.IsEnabled = true;
                 m_resultsSpinner.Visibility = Visibility.Hidden;
             });
         }
 
         public void SetEditText(string text, bool isCategory)
         {
+            if(!m_editText.IsFocused)
+            {
+                m_editText.Text = text;
+            }
             m_hasCategorySearch = isCategory;
-            m_editText.Text = text;
+            
         }
 
         public void SetSearchResultCount(int count)

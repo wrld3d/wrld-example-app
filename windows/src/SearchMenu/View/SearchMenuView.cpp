@@ -22,8 +22,8 @@ namespace ExampleApp
                 m_uiViewClass = GetTypeFromEntryAssembly("ExampleAppWPF.SearchMenuView");
 
                 mSetSearchSection.SetupMethod(m_uiViewClass, m_uiView, "SetSearchSection");
-                mDisableEditText.SetupMethod(m_uiViewClass, m_uiView, "DisableEditText");
-                mEnableEditText.SetupMethod(m_uiViewClass, m_uiView, "EnableEditText");
+                mSetSearchInProgress.SetupMethod(m_uiViewClass, m_uiView, "SetSearchInProgress");
+                mSetSearchEnded.SetupMethod(m_uiViewClass, m_uiView, "SetSearchEnded");
                 mSetEditText.SetupMethod(m_uiViewClass, m_uiView, "SetEditText");
                 mSetSearchResultCount.SetupMethod(m_uiViewClass, m_uiView, "SetSearchResultCount");
             }
@@ -53,14 +53,16 @@ namespace ExampleApp
                 
             }
 
-            void SearchMenuView::DisableEditText()
+            void SearchMenuView::SetSearchInProgress(bool inProgress)
             {
-                mDisableEditText();
-            }
-
-            void SearchMenuView::EnableEditText()
-            {
-                mEnableEditText();
+                if (inProgress)
+                {
+                    mSetSearchInProgress();
+                }
+                else
+                {
+                    mSetSearchEnded();
+                }
             }
 
             void SearchMenuView::SetEditText(const std::string& searchText, bool isCategory)
