@@ -17,7 +17,7 @@ namespace ExampleAppWPF
         private TextBox m_editText;
         private MenuListAdapter m_adapter;
         private Grid m_searchBox;
-
+        
         private ListBox m_resultsList;
         private MenuListAdapter m_resultListAdapter;
         private Grid m_resultsSpinner;
@@ -32,7 +32,8 @@ namespace ExampleAppWPF
 
         private string m_defaultEditText;
         private bool m_searchInFlight;
-        private bool m_currentSearchIsCategory;
+        private bool m_hasResults;
+        private bool m_hasCategorySearch;
 
         private ControlClickHandler m_menuListClickHandler;
         private ControlClickHandler m_resultsListClickHandler;
@@ -62,15 +63,14 @@ namespace ExampleAppWPF
             mainWindow.SizeChanged += PerformLayout;
 
             m_searchInFlight = false;
-            m_currentSearchIsCategory = false;
             m_hasMenuRefreshed = false;
+            m_hasResults = false;
+            m_hasCategorySearch = false;
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             PerformLayout(sender, null);
-
-            m_menuViewContainer.SizeChanged += OnMenuContainerSizeChanged;
         }
 
         private new void PerformLayout(object sender, SizeChangedEventArgs e)
@@ -182,7 +182,7 @@ namespace ExampleAppWPF
                 m_editText.Foreground = Colour.black;
 
             }
-            else
+            else if(!m_hasResults)
             {
                 m_resultsClearButton.Visibility = Visibility.Hidden;
                 m_editText.Foreground = Colour.darkgrey;
@@ -223,11 +223,6 @@ namespace ExampleAppWPF
                 MenuViewCLIMethods.SelectedItem(m_nativeCallerPointer, sectionIndex, childIndex);
 
                 ClearSearchResultsListBox();
-
-                if (m_editText.Text != "" && m_editText.Text != m_defaultEditText)
-                {
-                    m_resultsClearButton.Visibility = Visibility.Visible;
-                }
             }
         }
 
@@ -249,7 +244,7 @@ namespace ExampleAppWPF
 
         private void OnSearchBoxSelected(object sender, RoutedEventArgs e)
         {
-            if(m_editText.Text == m_defaultEditText || m_currentSearchIsCategory)
+            if(m_editText.Text == m_defaultEditText || m_hasCategorySearch)
             {
                 m_editText.Text = string.Empty;
             }
@@ -267,7 +262,15 @@ namespace ExampleAppWPF
 
         private void OnResultsClear(object sender, RoutedEventArgs e)
         {
-            if(m_resultsList.Items?.Count > 0)
+            ClearSearch();
+        }
+
+        private void ClearSearch()
+        {
+            m_hasResults = false;
+            m_hasCategorySearch = false;
+
+            if (m_resultsList.Items?.Count > 0)
             {
                 SearchMenuViewCLIMethods.OnSearchCleared(m_nativeCallerPointer);
             }
@@ -404,6 +407,7 @@ namespace ExampleAppWPF
             Dispatcher.Invoke(() =>
             {
                 m_editText.IsEnabled = false;
+                m_resultsSpinner.Visibility = Visibility.Visible;
             });
         }
         public void EnableEditText()
@@ -411,13 +415,14 @@ namespace ExampleAppWPF
             Dispatcher.Invoke(() =>
             {
                 m_editText.IsEnabled = true;
+                m_resultsSpinner.Visibility = Visibility.Hidden;
             });
         }
 
         public void SetEditText(string text, bool isCategory)
         {
+            m_hasCategorySearch = isCategory;
             m_editText.Text = text;
-            m_currentSearchIsCategory = isCategory;
         }
 
         public void SetSearchResultCount(int count)
@@ -435,6 +440,7 @@ namespace ExampleAppWPF
             }
 
             m_searchInFlight = false;
+            m_hasResults = count > 0;
         }
 
         protected override void RefreshListData(List<string> groups, List<bool> groupsExpandable, Dictionary<string, List<string>> groupToChildrenMap)
