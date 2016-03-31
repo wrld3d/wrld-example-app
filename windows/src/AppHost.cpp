@@ -91,9 +91,29 @@
 #include "SearchResultPoiView.h"
 #include "WindowsMenuReactionModel.h"
 #include "IMyPinCreationInitiationViewModel.h"
+#include "WindowsApplicationConfigurationVersionProvider.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
+
+namespace
+{
+	typedef ExampleApp::ApplicationConfig::ApplicationConfiguration ApplicationConfiguration;
+
+	ApplicationConfiguration LoadConfiguration(WindowsNativeState& state)
+	{
+		std::set<std::string> customAsssetDirectories;
+		customAsssetDirectories.insert("ApplicationConfigs");
+
+		WindowsFileIO tempFileIO(&state, customAsssetDirectories);
+
+        ExampleApp::ApplicationConfig::SdkModel::WindowsApplicationConfigurationVersionProvider versionProvider;
+
+		ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule applicationConfigurationModule(tempFileIO, versionProvider.GetProductVersionString(), versionProvider.GetBuildNumberString());
+
+		return applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration(ExampleApp::ApplicationConfigurationPath);
+	}
+}
 
 AppHost::AppHost(
     WindowsNativeState& nativeState,
@@ -140,10 +160,12 @@ AppHost::AppHost(
 {
     ASSERT_NATIVE_THREAD
          
-        Eegeo_ASSERT(resourceBuildShareContext != EGL_NO_CONTEXT);
+	Eegeo_ASSERT(resourceBuildShareContext != EGL_NO_CONTEXT);
 
     Eegeo::TtyHandler::TtyEnabled = true;
     Eegeo::AssertHandler::BreakOnAssert = true;
+
+	ApplicationConfiguration config(LoadConfiguration(nativeState));
 
     m_pWindowsLocationService = Eegeo_NEW(WindowsLocationService)(&nativeState);
     m_pWindowsConnectivityService = Eegeo_NEW(WindowsConnectivityService)(&nativeState);
@@ -213,7 +235,7 @@ AppHost::AppHost(
         *m_pNetworkCapabilities,
         m_searchServiceModules,
         *m_pWindowsFlurryMetricsService,
-        applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration("ApplicationConfigs/standard_config.json"),
+        config,
         *this,
         *m_pMenuReaction);
 
