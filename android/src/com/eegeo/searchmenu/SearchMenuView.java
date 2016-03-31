@@ -198,20 +198,16 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         m_activity.dismissKeyboard(m_editText.getWindowToken());
     }
 
-    public void disableEditText()
+    public void setSearchInProgress()
     {
     	m_closeButtonView.setVisibility(View.GONE);
     	m_progressSpinner.setVisibility(View.VISIBLE);
-        m_editText.setEnabled(false);
-        m_editText.setTextColor(m_disabledTextColor);
     }
 
-    public void enableEditText()
+    public void setSearchEnded()
     {
     	m_closeButtonView.setVisibility(View.VISIBLE);
     	m_progressSpinner.setVisibility(View.GONE);
-        m_editText.setEnabled(true);
-        m_editText.setTextColor(m_enabledTextColor);
     }
     
     public void setEditText(String searchText, boolean isCategory)
