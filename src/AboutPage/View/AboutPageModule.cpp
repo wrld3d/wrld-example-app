@@ -32,7 +32,7 @@ namespace
                                         "\n\nContract Software Engineer"
                                         "\nIan Reynolds"
 
-                                        "\n\Lead Artist"
+                                        "\n\nLead Artist"
                                         "\nSteve Morrison"
                                         
                                         "\n\nSenior Artist"
