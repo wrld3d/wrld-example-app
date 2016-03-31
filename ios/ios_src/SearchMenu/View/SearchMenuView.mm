@@ -706,6 +706,8 @@
             m_resultsVisible = true;
         }
     }
+    
+    [self.pInputDelegate setHasResults: searchResultCount>0];
 }
 
 - (void) onMenuStateUpdated
