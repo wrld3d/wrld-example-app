@@ -96,6 +96,8 @@ namespace ExampleAppWPF
 
                 if(src != null)
                 {
+                    m_imageHeader.Visibility = Visibility.Visible;
+                    m_imageView.Visibility = Visibility.Visible;
                     m_imageView.Source = src;
                 }
                 else
