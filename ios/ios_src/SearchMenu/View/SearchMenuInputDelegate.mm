@@ -15,6 +15,7 @@
     BOOL m_keyboardActive;
     BOOL m_returnPressed;
     BOOL m_currentSearchIsCategory;
+    BOOL m_hasResults;
 }
 
 @end
@@ -26,6 +27,7 @@
          resultsSpinner:(SearchMenuResultsSpinner*)resultsSpinner
                 interop:(ExampleApp::SearchMenu::View::SearchMenuViewInterop*)interop
 {
+    m_hasResults = NO;
     m_pTextField = textField;
     m_pClearButton = clearButton;
     m_pResultsSpinner = resultsSpinner;
@@ -109,9 +111,15 @@
     [self updateClearButtonVisibility];
 }
 
+- (void) setHasResults :(bool)hasResults
+{
+    m_hasResults = hasResults;
+    [self updateClearButtonVisibility];
+}
+
 - (void)updateClearButtonVisibility
 {
-    m_pClearButton.hidden = m_pTextField.text.length == 0;
+    m_pClearButton.hidden = !m_hasResults;
 }
 
 - (void)textFieldTextDidChange:(NSNotification*)aNotification
