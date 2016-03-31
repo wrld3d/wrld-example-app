@@ -16,6 +16,7 @@
     BOOL m_returnPressed;
     BOOL m_currentSearchIsCategory;
     BOOL m_hasResults;
+    BOOL m_searchInProgress;
 }
 
 @end
@@ -42,6 +43,7 @@
     m_keyboardActive = false;
     m_returnPressed = false;
     m_currentSearchIsCategory = false;
+    m_searchInProgress = false;
     
     [[NSNotificationCenter defaultCenter]addObserver:self
                                             selector:@selector(keyboardDidChangeFrame:)
@@ -71,20 +73,18 @@
     [super dealloc];
 }
 
-- (void) enableEdit
+- (void) setSearchInProgress
 {
+    [m_pResultsSpinner startAnimating];
+    m_searchInProgress = true;
     [self updateClearButtonVisibility];
-    [m_pResultsSpinner stopAnimating];
-    [m_pTextField setEnabled:YES];
-    m_pTextField.textColor = ExampleApp::Helpers::ColorPalette::TextFieldEnabledColor;
 }
 
-- (void) disableEdit
+- (void) setSearchEnded
 {
-    [m_pClearButton setHidden:YES];
-    [m_pResultsSpinner startAnimating];
-    [m_pTextField setEnabled:NO];
-    m_pTextField.textColor = ExampleApp::Helpers::ColorPalette::TextFieldDisabledColor;
+    [m_pResultsSpinner stopAnimating];
+    m_searchInProgress = false;
+    [self updateClearButtonVisibility];
 }
 
 - (void) removeSeachKeyboard
@@ -95,7 +95,10 @@
 - (void) setEditText :(NSString*)searchText
                      :(bool)isCategory
 {
-    [m_pTextField setText:searchText];
+    if(![m_pTextField isEditing])
+    {
+        [m_pTextField setText:searchText];
+    }
     
     m_currentSearchIsCategory = isCategory;
     
@@ -119,7 +122,7 @@
 
 - (void)updateClearButtonVisibility
 {
-    m_pClearButton.hidden = !m_hasResults;
+    m_pClearButton.hidden = !m_hasResults || m_searchInProgress;
 }
 
 - (void)textFieldTextDidChange:(NSNotification*)aNotification

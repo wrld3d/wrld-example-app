@@ -29,9 +29,7 @@ namespace ExampleApp
 
 				void RemoveSeachKeyboard();
 
-				void DisableEditText();
-
-				void EnableEditText();
+				void SetSearchInProgress(bool inProgress);
 
 				void SetEditText(const std::string& searchText, bool isCategory);
 

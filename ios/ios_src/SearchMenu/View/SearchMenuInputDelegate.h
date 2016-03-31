@@ -14,9 +14,9 @@
          resultsSpinner:(SearchMenuResultsSpinner*)resultsSpinner
                 interop:(ExampleApp::SearchMenu::View::SearchMenuViewInterop*)interop;
 
-- (void) enableEdit;
+- (void) setSearchInProgress;
 
-- (void) disableEdit;
+- (void) setSearchEnded;
 
 - (void) removeSeachKeyboard;
 
