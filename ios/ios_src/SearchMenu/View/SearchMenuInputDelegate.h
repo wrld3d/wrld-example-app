@@ -25,4 +25,6 @@
 
 - (void) clearSearch;
 
+- (void) setHasResults :(bool)hasResults;
+
 @end
