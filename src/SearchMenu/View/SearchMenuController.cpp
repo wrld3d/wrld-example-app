@@ -112,13 +112,13 @@ namespace ExampleApp
                 std::string headerString = CategorySearch::View::GetPresentationStringForQuery(m_categorySearchRepository, message.Query());
                 
                 m_searchMenuView.SetEditText(headerString, message.Query().IsCategory());
-                m_searchMenuView.DisableEditText();
+                m_searchMenuView.SetSearchInProgress(true);
             }
             
             void SearchMenuController::OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message)
             {
                 m_searchMenuView.CollapseAll();
-                m_searchMenuView.EnableEditText();
+                m_searchMenuView.SetSearchInProgress(false);
                 
                 int resultCount = static_cast<int>(message.GetResults().size());
                 

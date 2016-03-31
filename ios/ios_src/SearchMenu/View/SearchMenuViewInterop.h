@@ -41,14 +41,16 @@ namespace ExampleApp
                     [m_pView.pInputDelegate removeSeachKeyboard];
                 }
 
-                void DisableEditText()
+                void SetSearchInProgress(bool inProgress)
                 {
-                    [m_pView.pInputDelegate disableEdit];
-                }
-
-                void EnableEditText()
-                {
-                    [m_pView.pInputDelegate enableEdit];
+                    if(inProgress)
+                    {
+                        [m_pView.pInputDelegate setSearchInProgress];
+                    }
+                    else
+                    {
+                        [m_pView.pInputDelegate setSearchEnded];
+                    }
                 }
                 
                 void SetEditText(const std::string& searchText, bool isCategory)

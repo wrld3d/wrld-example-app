@@ -21,9 +21,7 @@ namespace ExampleApp
                 
                 virtual void RemoveSeachKeyboard() = 0;
                 
-                virtual void DisableEditText() = 0;
-                
-                virtual void EnableEditText() = 0;
+                virtual void SetSearchInProgress(bool inProgress) = 0;
                 
                 virtual void SetEditText(const std::string& searchText, bool isCategory) = 0;
                 

@@ -64,16 +64,18 @@ namespace ExampleApp
 				CallVoidVoidMethod("removeSearchKeyboard");
 			}
 
-			void SearchMenuView::DisableEditText()
+			void SearchMenuView::SetSearchInProgress(bool inProgress)
 			{
 				ASSERT_UI_THREAD
-				CallVoidVoidMethod("disableEditText");
-			}
+				if(inProgress)
+				{
 
-			void SearchMenuView::EnableEditText()
-			{
-				ASSERT_UI_THREAD
-				CallVoidVoidMethod("enableEditText");
+					CallVoidVoidMethod("setSearchInProgress");
+				}
+				else
+				{
+					CallVoidVoidMethod("setSearchEnded");
+				}
 			}
 
 			void SearchMenuView::SetEditText(const std::string& searchText, bool isCategory)
