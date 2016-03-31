@@ -31,6 +31,7 @@ set(sources ${sources} ${currsources})
 
 source_group(\\windows_src\\ FILES ${currsources})
 include(src/AboutPage/CMakeLists.txt)
+include(src/ApplicationConfig/CMakeLists.txt)
 include(src/CategorySearch/CMakeLists.txt)
 include(src/CLI/CMakeLists.txt)
 include(src/Compass/CMakeLists.txt)

@@ -59,6 +59,7 @@ set(libs
 	IPHlpApi
 	UserEnv
 	psapi
+	version
 	)
 
 add_library(${executable_name} SHARED ${sources} ${resources})

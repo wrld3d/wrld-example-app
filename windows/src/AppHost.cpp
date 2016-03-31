@@ -93,6 +93,7 @@
 #include "WindowsMenuReactionModel.h"
 #include "IMyPinCreationInitiationViewModel.h"
 #include "ModalityIgnoredReactionModel.h"
+#include "WindowsApplicationConfigurationVersionProvider.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
@@ -108,8 +109,9 @@ namespace
 
 		WindowsFileIO tempFileIO(&state, customAsssetDirectories);
 
-		// TODO: Still need to supply product version and build number, probably via a windows specific IApplicationConfigurationVersionProvider
-		ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule applicationConfigurationModule(tempFileIO, "Development Build", "0.0.1");
+        ExampleApp::ApplicationConfig::SdkModel::WindowsApplicationConfigurationVersionProvider versionProvider;
+
+		ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule applicationConfigurationModule(tempFileIO, versionProvider.GetProductVersionString(), versionProvider.GetBuildNumberString());
 		return applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration(ExampleApp::ApplicationConfigurationPath);
 	}
 }
