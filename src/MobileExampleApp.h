@@ -168,6 +168,7 @@ namespace ExampleApp
         Social::TwitterFeed::ITwitterFeedModule* m_pTwitterFeedModule;
         ReportPinsVisibilityMasking::SdkModel::ReportPinsVisibilityMaskingModule* m_pReportPinsVisibilityMaskingModule;
         Eegeo::Picking::PickingController* m_pInteriorsPickingController;
+        InteriorsExplorer::SdkModel::Highlights::InteriorsHighlightVisibilityController* m_pInteriorsHighlightVisibilityController;
         InteriorsExplorer::SdkModel::Highlights::InteriorsEntityIdHighlightVisibilityController* m_pInteriorsEntityIdHighlightVisibilityController;
         Eegeo::Collision::IRayCaster* m_pRayCaster;
         VisualMap::SdkModel::IVisualMapModule* m_pVisualMapModule;

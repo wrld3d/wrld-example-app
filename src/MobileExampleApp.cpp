@@ -282,6 +282,7 @@ namespace ExampleApp
         , m_pSwallowPoiDbModule(NULL)
         , m_pRayCaster(NULL)
         , m_pInteriorsPickingController(NULL)
+        , m_pInteriorsHighlightVisibilityController(NULL)
         , m_pInteriorsEntityIdHighlightVisibilityController(NULL)
         , m_menuReaction(menuReaction)
         , m_pModalityIgnoredReactionModel(NULL)
@@ -374,6 +375,15 @@ namespace ExampleApp
                                                                                                       mapModule.GetEnvironmentFlatteningService()
                                                                                                       );
         
+        m_pInteriorsHighlightVisibilityController = Eegeo_NEW(IntHighlights::InteriorsHighlightVisibilityController)(
+            mapModule.GetInteriorsPresentationModule().GetInteriorInteractionModel(),
+            m_searchServiceModules[Search::EegeoVendorName]->GetSearchService(),
+            m_pSearchModule->GetSearchQueryPerformer(), 
+            m_pSearchModule->GetSearchResultRepository(), 
+            mapModule.GetInteriorsPresentationModule().GetInteriorsLabelsController(), 
+            m_messageBus);
+
+
         Eegeo::Resources::Interiors::InteriorsEntityIdHighlightController& interiorsEntityIdHighlightController = mapModule.GetInteriorsModelModule().GetInteriorsEntityIdHighlightController();
         interiorsEntityIdHighlightController.SetDefaultHighlightColour(Eegeo::v4(0.0f, 1.0f, 0.0f, 1.0f));
 
@@ -420,7 +430,7 @@ namespace ExampleApp
         Eegeo_DELETE m_pUserInteractionModule;
         
         Eegeo_DELETE m_pStreamingVolume;
-
+        Eegeo_DELETE m_pInteriorsHighlightVisibilityController;
         Eegeo_DELETE m_pInteriorsEntityIdHighlightVisibilityController;
 		Eegeo_DELETE m_pInteriorsPickingController;
 		Eegeo_DELETE m_pRayCaster;
