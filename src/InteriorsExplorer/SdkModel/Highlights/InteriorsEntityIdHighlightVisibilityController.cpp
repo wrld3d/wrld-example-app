@@ -19,6 +19,11 @@
 #include "SwallowDepartmentResultModel.h"
 #include "InstancedInteriorFloorRenderable.h"
 #include "InteriorsCellResource.h"
+#include "InteriorsCellResourceObserver.h"
+#include "SearchResultSectionItemSelectedMessage.h"
+#include "InteriorsEntityIdHighlightController.h"
+
+#include <algorithm>
 
 namespace ExampleApp
 {
@@ -30,31 +35,36 @@ namespace ExampleApp
             {
                 namespace
                 {
-                    std::vector<Eegeo::Rendering::Renderables::InteriorRenderable*> TransformToInteriorRenderable(const std::vector<Eegeo::Rendering::Renderables::InstancedInteriorFloorRenderable*>& renderables)
+                    std::vector<std::string> GetDeskIdsFromSearchResultModel(const Search::SdkModel::SearchResultModel& selectedSearchResult)
                     {
-                        std::vector<Eegeo::Rendering::Renderables::InteriorRenderable*> transformedRenderables;
-                        
-                        for (std::vector<Eegeo::Rendering::Renderables::InstancedInteriorFloorRenderable*>::const_iterator i = renderables.begin();
-                             i != renderables.end();
-                             ++i)
+                        if (selectedSearchResult.GetCategory() == Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME)
                         {
-                            transformedRenderables.push_back(static_cast<Eegeo::Rendering::Renderables::InteriorRenderable*>(*i));
+                            const Search::Swallow::SdkModel::SwallowDepartmentResultModel& department = Search::Swallow::SdkModel::SearchParser::TransformToSwallowDepartmentResult(selectedSearchResult);
+
+                            return department.GetAllDesks();
                         }
-                        
-                        return transformedRenderables;
+                        else if (selectedSearchResult.GetCategory() == Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
+                        {
+                            const Search::Swallow::SdkModel::SwallowPersonResultModel& person = Search::Swallow::SdkModel::SearchParser::TransformToSwallowPersonResult(selectedSearchResult);
+
+                            return std::vector<std::string>(1, person.GetDeskCode());
+                        }
+
+                        return std::vector<std::string>();
                     }
+
                 }
-                
-                InteriorsEntityIdHighlightVisibilityController::InteriorsEntityIdHighlightVisibilityController(Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                                                                                               Search::SdkModel::ISearchResultRepository& searchResultRepository,
-                                                                                               const Eegeo::Resources::Interiors::InteriorsInstanceRepository& instanceRepository,
-                                                                                               ExampleAppMessaging::TMessageBus& messageBus,
-                                                                                               const Eegeo::v4& defaultHighlightColor,
-                                                                                               Eegeo::Resources::Interiors::InteriorsCellResourceObserver& cellResourceObserver)
-                : InteriorsEntityIdHighlightController(instanceRepository, defaultHighlightColor)
+
+                InteriorsEntityIdHighlightVisibilityController::InteriorsEntityIdHighlightVisibilityController(
+                    Eegeo::Resources::Interiors::InteriorsEntityIdHighlightController& interiorsEntityIdHighlightController,
+                    Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                    Search::SdkModel::ISearchResultRepository& searchResultRepository,
+                    ExampleAppMessaging::TMessageBus& messageBus,
+                    Eegeo::Resources::Interiors::InteriorsCellResourceObserver& cellResourceObserver)
+                : m_interiorsEntityIdHighlightController(interiorsEntityIdHighlightController)
                 , m_searchQueryPerformer(searchQueryPerformer)
                 , m_searchResultsHandler(this, &InteriorsEntityIdHighlightVisibilityController::OnSearchResultsLoaded)
-                , m_searchResultsClearedHandler(this, &InteriorsEntityIdHighlightVisibilityController::OnSearchResultCleared)
+                , m_searchResultsClearedHandler(this, &InteriorsEntityIdHighlightVisibilityController::OnSearchResultsCleared)
                 , m_handleSearchResultSectionItemSelectedMessageBinding(this, &InteriorsEntityIdHighlightVisibilityController::OnSearchItemSelected)
                 , m_messageBus(messageBus)
                 , m_cellResourceObserver(cellResourceObserver)
@@ -76,18 +86,22 @@ namespace ExampleApp
                     m_cellResourceObserver.UnregisterResourceDeletedCallback(m_cellResourceDeletedCallback);
                 }
                 
-                void InteriorsEntityIdHighlightVisibilityController::OnSearchResultCleared()
+                void InteriorsEntityIdHighlightVisibilityController::OnSearchResultsCleared()
                 {
-                    for (Eegeo::Resources::Interiors::CountPerRenderable::iterator i = m_lastHighlightedRenderables.begin();
-                        i != m_lastHighlightedRenderables.end();
-                        ++i)
+                    m_searchResults.clear();
+                    ClearHighlights();
+                }
+
+                void InteriorsEntityIdHighlightVisibilityController::ClearHighlights()
+                {
+                    for (InstancedRenderableVector::const_iterator iter = m_lastHighlightedRenderables.begin(); iter != m_lastHighlightedRenderables.end(); ++iter)
                     {
-                        Eegeo::Rendering::Renderables::InstancedInteriorFloorRenderable* currentRenderable = static_cast<Eegeo::Rendering::Renderables::InstancedInteriorFloorRenderable*>(i->first);
-                        Eegeo::Rendering::Renderables::InstancedRenderState currentState = currentRenderable->GetInstancedRenderState();
+                        Eegeo::Rendering::Renderables::InstancedInteriorFloorRenderable& currentRenderable = **iter;
+                        Eegeo::Rendering::Renderables::InstancedRenderState currentState = currentRenderable.GetInstancedRenderState();
 
                         currentState.IsHighlightingActive = false;
 
-                        currentRenderable->SetInstancedRenderState(currentState);
+                        currentRenderable.SetInstancedRenderState(currentState);
                     }
 
                     m_lastHighlightedRenderables.clear();
@@ -95,109 +109,42 @@ namespace ExampleApp
 
                 void InteriorsEntityIdHighlightVisibilityController::OnSearchItemSelected(const SearchResultSection::SearchResultSectionItemSelectedMessage& message)
                 {
-                    OnSearchResultCleared();
+                    ClearHighlights();
 
-                    int itemIndex = message.ItemIndex();
+                    Eegeo_ASSERT(!m_searchResults.empty());
+                    const Search::SdkModel::SearchResultModel& selectedSearchResult = m_searchResults.at(message.ItemIndex());
 
-                    std::map<int, std::vector<std::string> >::iterator result = m_lastSearchedResults.find(itemIndex);
-                    
-                    if (result != m_lastSearchedResults.end())
-                    {
-                        Super::HighlightEntityIds(result->second, m_lastHighlightedRenderables);
+                    const std::vector<std::string>& deskIds = GetDeskIdsFromSearchResultModel(selectedSearchResult);
 
-                        std::map<int, std::string>::iterator id = m_lastSearchedResultsId.find(itemIndex);
-
-                        m_lastIdSearched = id->second;
-                    }
+                    m_interiorsEntityIdHighlightController.HighlightEntityIds(deskIds, m_lastHighlightedRenderables);
                 }
+
                 
                 void InteriorsEntityIdHighlightVisibilityController::HandleFloorCellDeleted(const Eegeo::Resources::Interiors::InteriorsCellResource& interiorCellResource)
                 {
-                    std::vector<Eegeo::Resources::Interiors::InteriorsFloorCell*> floorCells = interiorCellResource.GetFloorCells();
-                    
-                    std::vector<Eegeo::Rendering::Renderables::InteriorRenderable*> renderablesToDelete;
-                    
-                    for (std::vector<Eegeo::Resources::Interiors::InteriorsFloorCell*>::const_iterator i = floorCells.begin();
-                         i != floorCells.end();
-                         ++i)
-                    {
-                        std::vector<Eegeo::Rendering::Renderables::InstancedInteriorFloorRenderable*> floorRenderables((*i)->GetInstancedRenderables());
-                        
-                        std::vector<Eegeo::Rendering::Renderables::InteriorRenderable*> transformedRenderables = TransformToInteriorRenderable(floorRenderables);
-                        
-                        renderablesToDelete.insert(renderablesToDelete.end(), transformedRenderables.begin(), transformedRenderables.end());
-                    }
-                    
-                    for (std::vector<Eegeo::Rendering::Renderables::InteriorRenderable*>::iterator i = renderablesToDelete.begin();
-                         i != renderablesToDelete.end();
-                         ++i)
-                    {
-                        Eegeo::Resources::Interiors::CountPerRenderable::iterator result = m_lastHighlightedRenderables.find(*i);
+                    std::vector<Eegeo::Rendering::Renderables::InstancedInteriorFloorRenderable*> instancedRenderablesToRemove;
 
-                        if(result != m_lastHighlightedRenderables.end())
-                        {
-                            m_lastHighlightedRenderables.erase(result);
-                        }
+                    const std::vector<Eegeo::Resources::Interiors::InteriorsFloorCell*>& floorCells = interiorCellResource.GetFloorCells();
+                    
+                    for (std::vector<Eegeo::Resources::Interiors::InteriorsFloorCell*>::const_iterator floorCellIter = floorCells.begin();
+                         floorCellIter != floorCells.end();
+                         ++floorCellIter)
+                    {
+                        const std::vector<Eegeo::Rendering::Renderables::InstancedInteriorFloorRenderable*>& instancedRenderablesForDeletedFloor = (*floorCellIter)->GetInstancedRenderables();
+                        instancedRenderablesToRemove.insert(instancedRenderablesToRemove.end(), instancedRenderablesForDeletedFloor.begin(), instancedRenderablesForDeletedFloor.end());
                     }
 
+                    std::sort(m_lastHighlightedRenderables.begin(), m_lastHighlightedRenderables.end());
+                    std::sort(instancedRenderablesToRemove.begin(), instancedRenderablesToRemove.end());
+
+                    m_lastHighlightedRenderables.erase(
+                        std::set_difference(m_lastHighlightedRenderables.begin(), m_lastHighlightedRenderables.end(), instancedRenderablesToRemove.begin(), instancedRenderablesToRemove.end(), m_lastHighlightedRenderables.begin()), 
+                        m_lastHighlightedRenderables.end());
                 }
 
                 void InteriorsEntityIdHighlightVisibilityController::OnSearchResultsLoaded(const Search::SearchQueryResponseReceivedMessage& message)
                 {
-                    const std::vector<Search::SdkModel::SearchResultModel>& results = message.GetResults();
-                    
-                    m_lastSearchedResults.clear();
-                    m_lastSearchedResultsId.clear();
-
-                    bool lastIdFound = false;
-
-                    int i = 0;
-                    for(std::vector<Search::SdkModel::SearchResultModel>::const_iterator it = results.begin(); it != results.end(); ++it)
-                    {
-                        if((*it).GetCategory() == Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME)
-                        {
-                            const Search::Swallow::SdkModel::SwallowDepartmentResultModel& department = Search::Swallow::SdkModel::SearchParser::TransformToSwallowDepartmentResult(*it);
-
-                            const std::string& id = department.GetName();
-                            m_lastSearchedResultsId.insert(std::make_pair(i, id));
-
-                            if (id == m_lastIdSearched)
-                            {
-                                lastIdFound = true;
-                            }
-
-                            const std::vector<std::string>& currentDeskIds = department.GetAllDesks();
-                            
-                            m_lastSearchedResults.insert(std::make_pair(i, currentDeskIds));
-                        }
-                        else if ((*it).GetCategory() == Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
-                        {
-                            const Search::Swallow::SdkModel::SwallowPersonResultModel& person = Search::Swallow::SdkModel::SearchParser::TransformToSwallowPersonResult(*it);
-
-                            const std::string& id = person.GetDeskCode();
-                            m_lastSearchedResultsId.insert(std::make_pair(i, id));
-
-                            if (id == m_lastIdSearched)
-                            {
-                                lastIdFound = true;
-                            }
-
-                            std::vector<std::string> desks(1);
-                            desks[0] = person.GetDeskCode();
-
-                            m_lastSearchedResults.insert(std::make_pair(i, desks));
-                        }
-                        
-                        if ((*it).GetCategory() != Search::Swallow::SearchConstants::TRANSITION_CATEGORY_NAME)
-                        {
-                            ++i;
-                        }
-                    }
-
-                    if (!lastIdFound)
-                    {
-                        OnSearchResultCleared();
-                    }
+                    m_searchResults = message.GetResults();
                 }
             }
         }
