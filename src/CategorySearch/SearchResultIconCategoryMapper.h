@@ -22,10 +22,10 @@ namespace ExampleApp
             SearchResultIconCategoryMapper();
             
             ~SearchResultIconCategoryMapper();
-            
+        
             int GetIconIndexFromSearchResult(const Search::SdkModel::SearchResultModel& searchResultModel) const;
+        private:
             int GetMeetingRoomIconFromAvailability(const Search::Swallow::SdkModel::SwallowMeetingRoomResultModel& meetingRoom) const;
-            
         };
     }
 }

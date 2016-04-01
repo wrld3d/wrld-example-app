@@ -87,7 +87,8 @@ namespace ExampleApp
         int SearchResultIconCategoryMapper::GetMeetingRoomIconFromAvailability(const Search::Swallow::SdkModel::SwallowMeetingRoomResultModel& meetingRoom) const
         {
             std::map<std::string, int>::const_iterator it = m_availabilityToIconIndex.find(meetingRoom.GetAvailability());
-            if(it == m_categoryToIconIndex.end())
+            
+            if (it == m_availabilityToIconIndex.end())
             {
                 return 0;
             }
