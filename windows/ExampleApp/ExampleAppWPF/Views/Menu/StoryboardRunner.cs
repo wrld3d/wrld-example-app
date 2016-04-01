@@ -10,6 +10,7 @@ namespace ExampleAppWPF
     {
         private Storyboard m_storyboard;
         private List<FrameworkElement> m_targets = new List<FrameworkElement>();
+        private bool m_playing;
 
         public event Action AllCompleted;
 
@@ -18,10 +19,17 @@ namespace ExampleAppWPF
         public StoryboardRunner(Storyboard storyboard)
         {
             m_storyboard = storyboard;
+            m_playing = false;
         }
 
         public void Begin(List<FrameworkElement> targets)
         {
+            if(m_playing)
+            {
+                Stop();
+            }
+
+            m_playing = true;
             m_targets.AddRange(targets);
             m_storyboard.Completed += OnCompleted;
             foreach (var target in m_targets)
@@ -31,8 +39,26 @@ namespace ExampleAppWPF
             }
         }
 
+        public void Stop()
+        {
+            if(!m_playing)
+            {
+                return;
+            }
+
+            m_playing = false;
+            m_storyboard.SkipToFill();
+            m_storyboard.Stop();
+            m_targets.Clear();
+
+            m_storyboard.Completed -= OnCompleted;
+            if (AllCompleted != null)
+                AllCompleted();
+        }
+
         private void OnCompleted(object sender, EventArgs e)
         {
+            m_playing = false;
             var clock = sender as Clock;
             var target = Storyboard.GetTarget(clock.Timeline) as FrameworkElement;
 
