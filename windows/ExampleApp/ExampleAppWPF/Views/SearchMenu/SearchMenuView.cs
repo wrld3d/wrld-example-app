@@ -47,8 +47,6 @@ namespace ExampleAppWPF
         private Storyboard m_searchArrowOpen;
         private Storyboard m_searchArrowClosed;
 
-        private bool m_hasMenuRefreshed;
-
         static SearchMenuView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SearchMenuView), new FrameworkPropertyMetadata(typeof(SearchMenuView)));
@@ -63,7 +61,6 @@ namespace ExampleAppWPF
             mainWindow.SizeChanged += PerformLayout;
 
             m_searchInFlight = false;
-            m_hasMenuRefreshed = false;
             m_hasResults = false;
             m_hasCategorySearch = false;
         }
@@ -203,7 +200,7 @@ namespace ExampleAppWPF
 
         private void OnMenuListItemSelected(object sender, MouseEventArgs e)
         {
-            if (!m_hasMenuRefreshed || m_searchInFlight || IsAnimating() || m_adapter.IsAnimating())
+            if (m_searchInFlight || IsAnimating() || m_adapter.IsAnimating())
             {
                 (sender as ListBox).SelectedItem = null;
                 return;
@@ -216,8 +213,6 @@ namespace ExampleAppWPF
 
                 int sectionIndex = m_adapter.GetSectionIndex(position);
                 int childIndex = m_adapter.GetItemIndex(position);
-
-                m_hasMenuRefreshed = false;
 
                 SearchMenuViewCLIMethods.OnSearchCleared(m_nativeCallerPointer);
                 MenuViewCLIMethods.SelectedItem(m_nativeCallerPointer, sectionIndex, childIndex);
@@ -382,8 +377,6 @@ namespace ExampleAppWPF
 
                 base.AnimateToClosedOnScreen();
                 m_mainWindow.EnableInput();
-
-                m_hasMenuRefreshed = true;
             }
         }
 
@@ -449,8 +442,6 @@ namespace ExampleAppWPF
             m_adapter.SetData(groups, groupsExpandable, groupToChildrenMap);
 
             m_list.DataContext = m_adapter;
-
-            m_hasMenuRefreshed = true;
         }
     }
 }
