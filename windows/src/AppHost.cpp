@@ -242,9 +242,6 @@ AppHost::AppHost(
 
     m_pMenuReaction = Eegeo_NEW(ExampleApp::Menu::View::WindowsMenuReactionModel)(true, true, m_messageBus);
 
-    typedef ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule ApplicationConfigurationModule;
-    ApplicationConfigurationModule applicationConfigurationModule(m_pWindowsPlatformAbstractionModule->GetFileIO(), "Development Build", "0.0.1");
-
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
         *m_pWindowsPlatformAbstractionModule,
         screenProperties,
