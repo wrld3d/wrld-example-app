@@ -83,9 +83,28 @@ namespace ExampleAppWPF
             m_offScreenPos = -(screenWidth / 2) - (totalWidth / 2);
 
             base.PerformLayout(sender, e);
+        }
 
-            m_menuOptionsView.MaxHeight = m_mainWindow.MainGrid.ActualHeight * 0.75;
-            m_resultsOptionsView.MaxHeight = m_mainWindow.MainGrid.ActualHeight * 0.55;
+
+        private void OnMenuContainerSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            m_resultsOptionsView.MaxHeight = CalcResultOptionsViewMaxHeight();
+        }
+
+        private double CalcResultOptionsViewMaxHeight()
+        {
+            var menuViewHeight = m_menuViewContainer.ActualHeight;
+            var searchBoxBackgroundDefaultHeight = m_backgroundRectangle.ActualHeight;
+            var menuOptionsViewDefaultHeight = m_menuOptionsView.ActualHeight;
+            var separatorHeight = m_resultsSeparator.ActualHeight;
+
+            return Math.Max(0.0, menuViewHeight - (searchBoxBackgroundDefaultHeight + menuOptionsViewDefaultHeight + 2 * separatorHeight));
+        }
+
+        protected override Size MeasureOverride(Size constraint)
+        {
+            m_resultsOptionsView.MaxHeight = CalcResultOptionsViewMaxHeight();
+            return base.MeasureOverride(constraint);
         }
 
         public override void OnApplyTemplate()
