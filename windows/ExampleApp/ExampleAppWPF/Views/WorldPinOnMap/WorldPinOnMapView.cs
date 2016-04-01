@@ -97,7 +97,10 @@ namespace ExampleAppWPF
 
             m_titleView.Text = title;
 
-            AnimateToAlpha(1.0f - modality);
+            var targetAlpha = 1.0f - modality;
+            AnimateToAlpha(targetAlpha);
+
+            IsEnabled = targetAlpha > 0.0f ? true : false;
         }
 
         public void UpdateScreenLocation(float x, float y)
@@ -111,11 +114,14 @@ namespace ExampleAppWPF
         public void UpdateScreenVisibility(float onScreenState)
         {
             AnimateToAlpha(onScreenState);
+
+            IsEnabled = onScreenState > 0.0f ? true : false;
         }
 
         public void Dismiss()
         {
             AnimateToAlpha(0.0f);
+            IsEnabled = false;
         }
 
         private void AnimateToAlpha(float targetAlpha)
