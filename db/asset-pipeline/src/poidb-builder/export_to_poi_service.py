@@ -329,7 +329,7 @@ def collect_employee_table(xls_book, sheet_index, src_image_folder_path, verbose
 def collect_meeting_room_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row):
     xls_sheet = xls_book.sheet_by_index(sheet_index)
 
-    poi_columns = ['name', 'image_filename', 'availability', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees']
+    poi_columns = ['name', 'image_filename', 'availability', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees', 'office_location']
     control_columns = ['available_in_app']
     expected_columns = poi_columns + control_columns
     available_in_app_col_index = len(poi_columns)
@@ -368,10 +368,14 @@ def collect_meeting_room_table(xls_book, sheet_index, src_image_folder_path, ver
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated title longitude_degrees values")
 
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'office_location', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated office_location column values")
+
     if not all_validated:
         raise ValueError("failed validation")
 
-    poi_columns = ['name', 'image_filename', 'availability', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees']
+    poi_columns = ['name', 'image_filename', 'availability', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees', 'office_location']
 
     column_names = ['id'] + poi_columns
     for v in gather_table_with_image(column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename')):
@@ -387,7 +391,8 @@ def collect_meeting_room_table(xls_book, sheet_index, src_image_folder_path, ver
             "user_data":
             {
               "image_url":v[column_names.index('image_filename')],
-              "availability":v[column_names.index('availability')]
+              "availability":v[column_names.index('availability')],
+              "office_location":v[column_names.index('office_location')]
             }
        }
 
