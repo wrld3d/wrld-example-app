@@ -30,7 +30,7 @@ namespace ExampleApp
             , m_newInterestPoint(newInterestPoint)
             , m_interiorId(interiorId)
             , m_targetFloorIndex(targetFloorIndex)
-            , m_isAlreadyInInterior(interiorSelectionModel.GetSelectedInteriorId() == interiorId)
+            , m_alreadySelectedInterior(interiorSelectionModel.GetSelectedInteriorId() == interiorId)
             , m_targetDistanceToInterest(newDistanceToInterest)
             , m_transitionDuration(0.5f)
             , m_transitionTime(0.0f)
@@ -40,13 +40,13 @@ namespace ExampleApp
             
             void TransitionToInteriorStage::Start()
             {
-                if(!m_isAlreadyInInterior)
+                if(!m_alreadySelectedInterior)
                 {
                     m_cameraController.SetInterestLocation(m_newInterestPoint);
                     m_cameraController.SetDistanceToInterest(InteriorsExplorer::DefaultInteriorTransitionInterestDistance);
                     m_interiorSelectionModel.SelectInteriorId(m_interiorId);
                 }
-                else
+                else if(m_interiorInteractionModel.HasInteriorModel())
                 {
                     m_interiorInteractionModel.SetSelectedFloorIndex(m_targetFloorIndex);
                 }

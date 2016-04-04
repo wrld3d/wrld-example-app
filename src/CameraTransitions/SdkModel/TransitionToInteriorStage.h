@@ -50,7 +50,7 @@ namespace ExampleApp
                 Eegeo::Resources::Interiors::InteriorId m_interiorId;
                 const float m_targetDistanceToInterest;
                 int m_targetFloorIndex;
-                const bool m_isAlreadyInInterior;
+                const bool m_alreadySelectedInterior;
             };
         }
     }
