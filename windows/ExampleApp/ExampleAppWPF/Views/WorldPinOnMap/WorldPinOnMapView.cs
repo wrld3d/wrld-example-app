@@ -82,7 +82,7 @@ namespace ExampleAppWPF
                     m_poiAccreditationImage.Visibility = Visibility.Collapsed;
                 }
 
-                m_detailsView.Visibility = Visibility.Visible;
+                m_detailsView.Visibility = string.IsNullOrWhiteSpace(m_detailsView.Text) ? Visibility.Collapsed : Visibility.Visible;
                 m_reviewImageAndNumber.Visibility = Visibility.Collapsed;
             }
             else
