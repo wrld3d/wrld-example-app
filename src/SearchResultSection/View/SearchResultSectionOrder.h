@@ -4,6 +4,7 @@
 
 #include "ISearchResultSectionOrder.h"
 #include "Interiors.h"
+#include "AppCamera.h"
 
 namespace ExampleApp
 {
@@ -15,13 +16,17 @@ namespace ExampleApp
             {
             public:
                 
-                SearchResultSectionOrder(const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel);
+                SearchResultSectionOrder(const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                         const Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& interiorMarkerRepository,
+                                        AppCamera::SdkModel::IAppCameraController& appCameraController);
                 
                 bool operator() (const Search::SdkModel::SearchResultModel& a, const Search::SdkModel::SearchResultModel& b);
                 
             private:
                 
                 const Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
+                const Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& m_interiorMarkerRepository;
+                AppCamera::SdkModel::IAppCameraController& m_appCameraController;
             };
         }
     }

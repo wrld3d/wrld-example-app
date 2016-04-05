@@ -621,11 +621,16 @@ namespace ExampleApp
                                                                                                    m_messageBus);
 
         
+        Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
+        Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
+        
         m_pSearchResultSectionModule = Eegeo_NEW(SearchResultSection::SdkModel::SearchResultSectionModule)(m_pSearchMenuModule->GetSearchMenuViewModel(),
                                                                                                   m_pSearchModule->GetSearchResultRepository(),
                                                                                                   m_pSearchModule->GetSearchQueryPerformer(),
                                                                                                   *m_pCameraTransitionService,
-                                                                                                  world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel(),
+                                                                                                  interiorsPresentationModule.GetInteriorInteractionModel(),
+                                                                                                  interiorsModelModule.GetInteriorMarkerModelRepository(),
+                                                                                                  m_pAppCameraModule->GetController(),
                                                                                                   m_messageBus);
         
         m_pSearchResultOnMapModule = Eegeo_NEW(SearchResultOnMap::SdkModel::SearchResultOnMapModule)(m_pSearchModule->GetSearchResultRepository(),
@@ -639,8 +644,6 @@ namespace ExampleApp
                                                                                                      m_metricsService,
                                                                                                      m_menuReaction);
         
-        Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
-        Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
         Eegeo::Camera::GlobeCamera::GlobeCameraControllerFactory cameraControllerFactory(m_pWorld->GetTerrainModelModule().GetTerrainHeightProvider(),
                                                                                          mapModule.GetEnvironmentFlatteningService(),
                                                                                          mapModule.GetResourceCeilingProvider());

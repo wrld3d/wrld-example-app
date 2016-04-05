@@ -7,6 +7,12 @@
 #include "SwallowSearchConstants.h"
 #include "SwallowSearchParser.h"
 #include "InteriorInteractionModel.h"
+#include "InteriorMarkerModelRepository.h"
+#include "InteriorMarkerModel.h"
+#include "LatLongAltitude.h"
+#include "IAppCameraController.h"
+#include "CameraState.h"
+#include <limits>
 
 namespace ExampleApp
 {
@@ -103,8 +109,52 @@ namespace ExampleApp
                 }
             }
             
-            SearchResultSectionOrder::SearchResultSectionOrder(const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel)
+            
+            bool GetExteriorOrderForMeetingRooms(const Search::SdkModel::SearchResultModel& a,
+                                                 const Search::SdkModel::SearchResultModel& b,
+                                                 const Eegeo::dv3& cameraFocusLocationEcef,
+                                                 const Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository)
+            {
+                // Closest building then ascending floors. If don't have a position for the building, sort by id.
+                bool sameBuilding = a.GetBuildingId() == b.GetBuildingId();
+                if(sameBuilding)
+                {
+                    return GetOrderForMeetingRooms(a, b, 0);
+                }
+                
+                bool hasMarkerForA = markerRepository.Contains(a.GetBuildingId());
+                bool hasMarkerForB = markerRepository.Contains(b.GetBuildingId());
+                
+                if(!hasMarkerForA && !hasMarkerForB)
+                {
+                    return a.GetBuildingId().Value() < b.GetBuildingId().Value();
+                }
+                
+                double distanceToA = std::numeric_limits<double>::max();
+                double distanceToB = std::numeric_limits<double>::max();
+                
+                if(hasMarkerForA)
+                {
+                    Eegeo::dv3 buildingLocationEcef = markerRepository.Get(a.GetBuildingId()).GetMarkerLatLongAltitude().ToECEF();
+                    distanceToA = (buildingLocationEcef - cameraFocusLocationEcef).LengthSq();
+                }
+                
+                if(hasMarkerForB)
+                {
+                    Eegeo::dv3 buildingLocationEcef = markerRepository.Get(b.GetBuildingId()).GetMarkerLatLongAltitude().ToECEF();
+                    distanceToB = (buildingLocationEcef - cameraFocusLocationEcef).LengthSq();
+                }
+                
+                return distanceToA < distanceToB;
+            }
+            
+            SearchResultSectionOrder::SearchResultSectionOrder(const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                               const Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& interiorMarkerRepository,
+                                                               AppCamera::SdkModel::IAppCameraController& appCameraController
+                                                               )
             : m_interiorInteractionModel(interiorInteractionModel)
+            , m_interiorMarkerRepository(interiorMarkerRepository)
+            , m_appCameraController(appCameraController)
             {
                 
             }
@@ -132,7 +182,15 @@ namespace ExampleApp
                     {
                         if(a.GetCategory() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
                         {
-                            return GetOrderForMeetingRooms(a, b, m_interiorInteractionModel.GetSelectedFloorIndex());
+                            if(m_interiorInteractionModel.HasInteriorModel())
+                            {
+                                return GetOrderForMeetingRooms(a, b, m_interiorInteractionModel.GetSelectedFloorIndex());
+                            }
+                            else
+                            {
+                                const Eegeo::dv3 cameraFocusLocation = m_appCameraController.GetCameraState().InterestPointEcef();
+                                return GetExteriorOrderForMeetingRooms(a, b, cameraFocusLocation, m_interiorMarkerRepository);
+                            }
                         }
                         else if(a.GetCategory() == Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME)
                         {
