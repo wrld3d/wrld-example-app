@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content">
+    
+    <RelativeLayout 
+        android:id="@+id/compass_outer_shape"
+        android:layout_height="wrap_content"
+    	android:layout_width="wrap_content"
+    	android:background="@drawable/button_compass_container" >
+    </RelativeLayout>
+    
+    <RelativeLayout
+	    android:id="@+id/compass_arrow_shape"
+	    android:layout_height="wrap_content"
+	    android:layout_width="wrap_content" 
+	    android:layout_centerInParent="true"
+	    android:background="@drawable/button_compass_arrow">
+	</RelativeLayout>
+	
+    <ImageView
+	    android:id="@+id/compass_inner_shape"
+	    android:layout_height="20dp"
+	    android:layout_width="20dp" 
+	    android:contentDescription=""
+	    android:layout_centerInParent="true">
+	</ImageView>
+
+</RelativeLayout>

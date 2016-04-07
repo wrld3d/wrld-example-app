@@ -1,0 +1,169 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/options_view">
+    
+    <LinearLayout
+    	android:id="@+id/options_view_container"
+	    android:layout_width="450dp"
+	    android:layout_height="wrap_content"
+	    android:layout_centerInParent="true"
+	    android:orientation="vertical"
+	    android:paddingTop="10dp">
+	    
+        <!-- Top spacer fill bar -->
+        <RelativeLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="20dp"
+            android:background="@color/gold"/>
+            
+        <!-- Title bar -->
+        <RelativeLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+            
+            <TextView
+                android:id="@+id/options_view_title"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                android:text="@string/options_title"
+                android:textColor="@color/gold"
+                android:textSize="18dp" />
+            
+        </RelativeLayout>
+        
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            
+	        <RelativeLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="195dp"
+	            android:background="@color/white"/>
+        
+            <!--  Scrolling icontent -->
+            
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+	            
+	          	<LinearLayout 
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:padding="10dp"
+	                android:orientation="vertical">
+	               
+	          	    <LinearLayout
+	          	        android:layout_width="wrap_content"
+	          	        android:layout_height="wrap_content"
+	          	        android:orientation="horizontal" >
+	                
+		                <ToggleButton
+			                android:id="@+id/options_view_stream_wifi_only_togglebutton"
+			                android:layout_width="wrap_content"
+			                android:layout_height="wrap_content"
+			                android:layout_marginLeft="10dp"
+			                android:layout_marginTop="5dp"
+			                android:background="@drawable/check_button_states"
+			                android:checked="true"
+			                android:textOff=""
+			                android:textOn="" />
+		                 
+		                 <TextView
+                			android:id="@+id/options_view_stream_wifi_only_label"
+		                     android:layout_width="fill_parent"
+		                     android:layout_height="fill_parent"
+			                 android:layout_marginLeft="6dp"
+			                 android:layout_marginTop="2dp"
+		                     android:layout_gravity="center_vertical"
+		                     android:gravity="center_vertical"
+		                     android:text="@string/options_view_stream_wifi_only_togglebutton_text"
+		                     android:textColor="@color/darkgrey"
+		                     android:textSize="14dp" />
+	            	</LinearLayout>
+	            	
+	          	    <LinearLayout
+	          	        android:layout_width="wrap_content"
+	          	        android:layout_height="wrap_content"
+	          	        android:orientation="horizontal" >
+		               
+	          	        <ToggleButton
+			                android:id="@+id/options_view_cache_enabled_togglebutton"
+			                android:layout_width="wrap_content"
+			                android:layout_height="wrap_content"
+			                android:layout_marginLeft="10dp"
+			                android:layout_marginTop="5dp"
+			                android:background="@drawable/check_button_states"
+			                android:checked="true"
+			                android:textOff=""
+			                android:textOn="" />
+	                
+		                 <TextView
+							android:id="@+id/options_view_cache_enabled_label"
+							android:layout_width="fill_parent"
+							android:layout_height="fill_parent"
+							android:layout_marginLeft="6dp"
+							android:layout_marginTop="2dp"
+							android:layout_gravity="center_vertical"
+							android:gravity="center_vertical"
+							android:text="@string/options_view_cache_enabled_togglebutton_text"
+							android:textColor="@color/darkgrey"
+							android:textSize="14dp" />
+	            	</LinearLayout>
+	            	
+	          	    <LinearLayout
+	          	        android:layout_width="wrap_content"
+	          	        android:layout_height="wrap_content"
+	          	        android:orientation="horizontal" >
+		               
+		                <Button
+							android:id="@+id/options_view_clear_cache_button"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginLeft="10dp"
+							android:layout_marginTop="5dp"
+							android:background="@drawable/buttonsmall_inverse_close_states"  />
+							
+						<TextView
+							android:id="@+id/options_view_clear_cache_label"
+							android:layout_width="fill_parent"
+							android:layout_height="fill_parent"
+							android:layout_marginLeft="6dp"
+							android:layout_marginTop="2dp"
+							android:layout_gravity="center_vertical"
+							android:gravity="center_vertical"
+							android:text="@string/options_view_clear_cache_button_text"
+							android:textColor="@color/darkgrey"
+							android:textSize="14dp" />
+	            	</LinearLayout>
+	              
+	            </LinearLayout>
+            </ScrollView>
+            
+        </RelativeLayout>
+        
+        <!--  Bottom bar with close button -->
+        <RelativeLayout
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+	        android:background="@color/gold">
+ 
+         <ImageView
+             android:id="@+id/options_view_close_button"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignParentRight="true"
+             android:background="@drawable/menu_button_color_states"
+		     android:src="@drawable/button_pin_close_states" />
+         
+         </RelativeLayout>
+	        
+	</LinearLayout>
+	
+</RelativeLayout>

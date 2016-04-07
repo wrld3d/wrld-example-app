@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:drawable="@color/table_sub_cell_press"
+       	  android:state_pressed="true"/>
+    <item android:drawable="@color/table_search_cell"/>
+</selector>

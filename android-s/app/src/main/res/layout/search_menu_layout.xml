@@ -1,0 +1,103 @@
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/search_menu_view"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="50dp"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true" >
+    
+    <LinearLayout
+        android:id="@+id/search_menu_list_container"
+        android:layout_width="332dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        
+		<include
+			android:id="@+id/search_menu_title_bar"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			layout="@layout/search_results_bar_layout" />
+		
+		<View
+        	android:id="@+id/search_menu_title_separator"
+        	android:layout_width="fill_parent"
+        	android:layout_height="@dimen/menu_section_divider_height"
+        	android:background="@color/menu_header_separator" />
+        
+		<ListView
+			android:id="@+id/search_menu_item_list"
+			android:layout_width="fill_parent"
+			android:layout_height="0dp" 
+			android:background="@color/ui_border"
+			android:cacheColorHint="@android:color/transparent"
+			android:listSelector="@android:color/transparent"
+			android:clipChildren="false"
+			android:clipToPadding="false"
+			android:divider="@color/ui_border"
+			android:dividerHeight="1dp"
+			android:overScrollMode="never"
+			android:paddingLeft="32dp"
+			android:paddingRight="5dp" />
+		
+		<View
+        	android:id="@+id/search_menu_results_separator"
+        	android:layout_width="fill_parent"
+        	android:layout_height="@dimen/menu_section_divider_height"
+        	android:background="@color/menu_header_separator" />
+
+		<com.eegeo.menu.MenuExpandableListView
+			android:id="@+id/search_menu_options_list_view"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:background="@color/ui_border"
+			android:cacheColorHint="@android:color/transparent"
+			android:listSelector="@android:color/transparent"
+			android:clipChildren="false"
+			android:clipToPadding="false"
+			android:overScrollMode="never"
+			android:paddingLeft="32dp"
+			android:paddingRight="5dp"
+			android:divider="@color/table_divider"
+			android:childDivider="@color/ui_border"
+			android:dividerHeight="@dimen/menu_item_divider_height"
+			android:groupIndicator="@null"/>
+	</LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/search_menu_result_count_container"
+        android:layout_width="@dimen/menu_button_margin"
+        android:layout_height="50dp"
+        android:background="@color/ui_border" >
+		
+        <TextView
+            android:id="@+id/search_menu_result_count"
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center_horizontal"
+            android:text="0"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </RelativeLayout>
+    
+    <ImageView
+	    android:id="@+id/search_results_anchor_arrow"
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:layout_marginTop="42dp"
+		android:layout_marginLeft="50dp"
+		android:src="@drawable/results_anchor_arrow"> 
+    </ImageView>
+
+	<ImageButton
+	    android:id="@+id/search_menu_drag_button_view"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:contentDescription="Open menu."
+	    android:background="@drawable/menu_button_color_states"
+	    android:src="@drawable/button_search_menu_states" />
+
+</RelativeLayout>
