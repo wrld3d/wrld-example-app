@@ -93,41 +93,43 @@
 
 - (void)layoutSubviews
 {
+    const float minWidth = 120.f;
+    const float maxWidth = 180.f;
+    
+    const float topStripHeight = 5.f;
+    const float labelMarginX = 8.f;
+    const float labelMarginTop = 2.5f;
+    const float labelMarginBottom = 4.0f;
+    const float arrowWidth = 16.f;
+    const float maxLabelWidth = maxWidth - 2*labelMarginX;
     
     self.layer.shouldRasterize = YES;
     self.layer.rasterizationScale = [[UIScreen mainScreen] scale];
     
-    // figures from a proportional size of an iPad2 screen -- use const so not proportional to small screens on iPhones.
-    const float w = 162.f;
-    const float h =  56.f;
-    const float maxH = 85.f;
+    self.pNameLabel.frame = CGRectMake(labelMarginX, labelMarginTop, maxLabelWidth, 0.f);
+    
+    [self.pNameLabel sizeToFit];
+    
+    const float w = Eegeo::Math::Clamp(self.pNameLabel.frame.size.width + 2*labelMarginX, minWidth, maxWidth);
+    const float h = self.pNameLabel.frame.size.height + topStripHeight + labelMarginTop + labelMarginBottom;
+
+    CGRect labelFrame = self.pNameLabel.frame;
+    labelFrame.origin = CGPointMake((w - labelFrame.size.width) / 2, labelMarginTop);
+    self.pNameLabel.frame = labelFrame;
     
     self.pMainControlContainer.frame = CGRectMake(0, 0, w, h);
     self.pMainControlShadowContainer.frame = CGRectMake(2.f, 2.f, w, h);
-    
-    const float labelContainerOffsetY = 6.f;
-    const CGFloat labelContainerHeight = self.pMainControlContainer.frame.size.height - labelContainerOffsetY;
-    
-    self.pTopStrip.frame =  CGRectMake(0.f, 0.f, w, labelContainerOffsetY);
-    self.pLabelBack.frame = CGRectMake(0.f, labelContainerOffsetY, w, labelContainerHeight);
-    
-    const float labelOffsetX = 4.f;
-    const float labelOffsetY = 1.5f;
-    const float nameHeight = h - labelContainerOffsetY;
-    
-    self.pNameLabel.frame = CGRectMake(labelOffsetX,
-                                       labelOffsetY,
-                                       w - (labelOffsetX*2),
-                                       nameHeight);
-    
-    const float arrowWidth = 16.f;
+
+    self.pTopStrip.frame =  CGRectMake(0.f, 0.f, w, topStripHeight);
+    self.pLabelBack.frame = CGRectMake(0.f, topStripHeight, w, h - topStripHeight);
+
     self.pArrowContainer.frame = CGRectMake(w/2.f - arrowWidth/2.f, h, arrowWidth, arrowWidth);
     
     float trueY = m_previousY/m_pixelScale - m_pinOffset/m_pixelScale;
     float trueX = m_previousX/m_pixelScale;
-    self.frame = CGRectMake(trueX - w/2, trueY - (h + arrowWidth), w, maxH + arrowWidth);
+    self.frame = CGRectMake(trueX - w/2, trueY - (h + arrowWidth), w, h + arrowWidth);
     
-    m_cardHeight = h + arrowWidth;
+    m_cardHeight = self.frame.size.height;
 }
 
 - (void) setContent:(const ExampleApp::WorldPins::SdkModel::IWorldPinsInFocusModel&) worldPinsInFocusModel
