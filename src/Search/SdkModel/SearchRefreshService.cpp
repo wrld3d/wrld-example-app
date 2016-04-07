@@ -165,7 +165,7 @@ namespace ExampleApp
                     
                     if (previousQuery.IsCategory())
                     {
-                        const bool isInterior = m_interiorInteractionModel.HasInteriorModel();
+                        const bool isInterior = m_interiorInteractionModel.HasInteriorModel() && previousQuery.IsInterior();
 
                         m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), isInterior);
                         m_secondsSincePreviousRefresh = 0.f;

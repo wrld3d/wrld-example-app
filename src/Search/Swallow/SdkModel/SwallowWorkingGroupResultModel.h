@@ -18,12 +18,14 @@ namespace ExampleApp
                     std::string m_name;
                     std::string m_imageUrl;
                     std::string m_description;
+                    std::string m_officeLocation;
                     
                 public:
                     
                     SwallowWorkingGroupResultModel(const std::string& name,
                                                    const std::string& imageUrl,
-                                                   const std::string& description);
+                                                   const std::string& description,
+                                                   const std::string& officeLocation);
                     
                     SwallowWorkingGroupResultModel();
                     
@@ -34,6 +36,8 @@ namespace ExampleApp
                     const std::string& GetImageUrl() const;
                     
                     const std::string& GetDescription() const;
+                    
+                    const std::string& GetOfficeLocation() const;
                 };
             }
         }

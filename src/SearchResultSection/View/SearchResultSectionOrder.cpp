@@ -9,6 +9,7 @@
 #include "InteriorInteractionModel.h"
 #include "InteriorMarkerModelRepository.h"
 #include "InteriorMarkerModel.h"
+#include "InteriorsModel.h"
 #include "LatLongAltitude.h"
 #include "IAppCameraController.h"
 #include "CameraState.h"
@@ -70,11 +71,56 @@ namespace ExampleApp
                     return Search::Swallow::SearchConstants::MEETING_ROOM_MAX_PRIORITY;
                 }
                 
+                bool GetFloorOrder(int floorA, int floorB, int currentFloorIndex)
+                {
+                    int floorDistanceA = currentFloorIndex - floorA;
+                    int floorDistanceB = currentFloorIndex - floorB;
+                    
+                    int absFloorDistanceA = abs(floorDistanceA);
+                    int absFloorDistanceB = abs(floorDistanceB);
+                    if(absFloorDistanceA == absFloorDistanceB)
+                    {
+                        return floorDistanceA > floorDistanceB;
+                    }
+                    
+                    return absFloorDistanceA < absFloorDistanceB;
+                }
+                
+                bool GetExteriorOrder(const Eegeo::Resources::Interiors::InteriorId& buildingIdA,
+                                      const Eegeo::Resources::Interiors::InteriorId& buildingIdB,
+                                      const Eegeo::dv3& cameraFocusLocationEcef,
+                                      const Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository)
+                {
+                    bool hasMarkerForA = markerRepository.Contains(buildingIdA);
+                    bool hasMarkerForB = markerRepository.Contains(buildingIdB);
+                    
+                    if(!hasMarkerForA && !hasMarkerForB)
+                    {
+                        return buildingIdA.Value() < buildingIdB.Value();
+                    }
+                    
+                    double distanceToA = std::numeric_limits<double>::max();
+                    double distanceToB = std::numeric_limits<double>::max();
+                    
+                    if(hasMarkerForA)
+                    {
+                        Eegeo::dv3 buildingLocationEcef = markerRepository.Get(buildingIdA).GetMarkerLatLongAltitude().ToECEF();
+                        distanceToA = (buildingLocationEcef - cameraFocusLocationEcef).LengthSq();
+                    }
+                    
+                    if(hasMarkerForB)
+                    {
+                        Eegeo::dv3 buildingLocationEcef = markerRepository.Get(buildingIdB).GetMarkerLatLongAltitude().ToECEF();
+                        distanceToB = (buildingLocationEcef - cameraFocusLocationEcef).LengthSq();
+                    }
+                    
+                    return distanceToA < distanceToB;
+                }
+                
                 bool GetOrderForMeetingRooms(const Search::SdkModel::SearchResultModel& a, const Search::SdkModel::SearchResultModel& b, int currentFloorIndex)
                 {
                     // Meeting room order: Current floor first, ordered by Available, Available Soon and Occupied.
                     // Then Lower floor > Higher floor > 2x Lower floor > ...
-                    
                     Search::Swallow::SdkModel::SwallowMeetingRoomResultModel roomA = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(a);
                     Search::Swallow::SdkModel::SwallowMeetingRoomResultModel roomB = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(b);
                     
@@ -87,27 +133,43 @@ namespace ExampleApp
                     }
                     else
                     {
-                        int floorDistanceA = currentFloorIndex - a.GetFloor();
-                        int floorDistanceB = currentFloorIndex - b.GetFloor();
-                        
-                        int absFloorDistanceA = abs(floorDistanceA);
-                        int absFloorDistanceB = abs(floorDistanceB);
-                        if(absFloorDistanceA == absFloorDistanceB)
-                        {
-                            return floorDistanceA > floorDistanceB;
-                        }
-                        
-                        return absFloorDistanceA < absFloorDistanceB;
+                        return GetFloorOrder(a.GetFloor(), b.GetFloor(), currentFloorIndex);
                     }
                     
                     return false;
                 }
                 
-                bool GetOrderForWorkingGroups(const Search::SdkModel::SearchResultModel& a, const Search::SdkModel::SearchResultModel& b)
+                bool GetOrderForWorkingGroups(const Search::SdkModel::SearchResultModel& a,
+                                              const Search::SdkModel::SearchResultModel& b,
+                                              const Eegeo::dv3& cameraFocusLocationEcef,
+                                              const Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markersRepository,
+                                              const Eegeo::Resources::Interiors::InteriorId& currentInteriorId,
+                                              int currentFloorIndex)
                 {
-                    return a.GetTitle() < b.GetTitle();
+                    if(a.GetBuildingId() == b.GetBuildingId())
+                    {
+                        if(a.GetFloor() == b.GetFloor())
+                        {
+                            return a.GetTitle() < b.GetTitle();
+                        }
+                        else
+                        {
+                            return GetFloorOrder(a.GetFloor(), b.GetFloor(), currentFloorIndex);
+                        }
+                    }
+                    else
+                    {
+                        if(currentInteriorId == Eegeo::Resources::Interiors::InteriorId::NullId())
+                        {
+                            return GetExteriorOrder(a.GetBuildingId(), b.GetBuildingId(), cameraFocusLocationEcef, markersRepository);
+                        }
+                        else return currentInteriorId == a.GetBuildingId();
+                    }
+                    
                 }
             }
+            
+        
             
             
             bool GetExteriorOrderForMeetingRooms(const Search::SdkModel::SearchResultModel& a,
@@ -122,30 +184,7 @@ namespace ExampleApp
                     return GetOrderForMeetingRooms(a, b, 0);
                 }
                 
-                bool hasMarkerForA = markerRepository.Contains(a.GetBuildingId());
-                bool hasMarkerForB = markerRepository.Contains(b.GetBuildingId());
-                
-                if(!hasMarkerForA && !hasMarkerForB)
-                {
-                    return a.GetBuildingId().Value() < b.GetBuildingId().Value();
-                }
-                
-                double distanceToA = std::numeric_limits<double>::max();
-                double distanceToB = std::numeric_limits<double>::max();
-                
-                if(hasMarkerForA)
-                {
-                    Eegeo::dv3 buildingLocationEcef = markerRepository.Get(a.GetBuildingId()).GetMarkerLatLongAltitude().ToECEF();
-                    distanceToA = (buildingLocationEcef - cameraFocusLocationEcef).LengthSq();
-                }
-                
-                if(hasMarkerForB)
-                {
-                    Eegeo::dv3 buildingLocationEcef = markerRepository.Get(b.GetBuildingId()).GetMarkerLatLongAltitude().ToECEF();
-                    distanceToB = (buildingLocationEcef - cameraFocusLocationEcef).LengthSq();
-                }
-                
-                return distanceToA < distanceToB;
+                return GetExteriorOrder(a.GetBuildingId(), b.GetBuildingId(), cameraFocusLocationEcef, markerRepository);
             }
             
             SearchResultSectionOrder::SearchResultSectionOrder(const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
@@ -194,7 +233,10 @@ namespace ExampleApp
                         }
                         else if(a.GetCategory() == Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME)
                         {
-                            return GetOrderForWorkingGroups(a, b);
+                            const Eegeo::dv3 cameraFocusLocation = m_appCameraController.GetCameraState().InterestPointEcef();
+                            Eegeo::Resources::Interiors::InteriorId currentInteriorId = m_interiorInteractionModel.HasInteriorModel() ? m_interiorInteractionModel.GetInteriorModel()->GetId() : Eegeo::Resources::Interiors::InteriorId::NullId();
+                            
+                            return GetOrderForWorkingGroups(a, b, cameraFocusLocation, m_interiorMarkerRepository, currentInteriorId, m_interiorInteractionModel.GetSelectedFloorIndex());
                         }
                         
                         return false;

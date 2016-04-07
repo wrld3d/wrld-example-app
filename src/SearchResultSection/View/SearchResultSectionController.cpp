@@ -79,6 +79,12 @@ namespace ExampleApp
                             category = Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_OCCUPIED;
                         }
                     }
+                    else if(model.GetCategory() == Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME)
+                    {
+                        Search::Swallow::SdkModel::SwallowWorkingGroupResultModel workingGroupmodel = Search::Swallow::SdkModel::SearchParser::TransformToSwallowWorkingGroupResult(model);
+                        subtitle = workingGroupmodel.GetOfficeLocation();
+                    }
+                    
                     m_menuOptions.AddItem(model.GetIdentifier(),
                                           model.GetTitle(),
                                           subtitle,
