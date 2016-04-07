@@ -442,7 +442,7 @@ def build_working_group_table(xls_book, sheet_index, db_cursor, connection, src_
 
     print(str(table_name))
 
-    poi_columns = ['name', 'image_filename', 'description', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees']
+    poi_columns = ['name', 'image_filename', 'description', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees', 'office_location']
     control_columns = ['available_in_app']
     expected_columns = poi_columns + control_columns
     available_in_app_col_index = len(poi_columns)
@@ -481,13 +481,17 @@ def build_working_group_table(xls_book, sheet_index, db_cursor, connection, src_
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated title longitude_degrees values")
 
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'office_location', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated office_location column values")
+
     if not all_validated:
         raise ValueError("failed validation")
 
     build_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path, dest_image_dir, verbose)
 
     column_names = ['id'] + poi_columns
-    column_types = ['INTEGER PRIMARY KEY', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'INTEGER', 'REAL', 'REAL']
+    column_types = ['INTEGER PRIMARY KEY', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'INTEGER', 'REAL', 'REAL', 'TEXT']
     create_table(db_cursor, table_name, column_names, column_types)
 
     insert_into_table_with_image_column(db_cursor, table_name, column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename'), dest_image_relative_dir)
