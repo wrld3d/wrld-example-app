@@ -110,7 +110,7 @@
     
     [self.pNameLabel sizeToFit];
     
-    const float w = Eegeo::Math::Clamp(self.pNameLabel.frame.size.width + 2*labelMarginX, minWidth, maxWidth);
+    const float w = Eegeo::Math::Clamp(static_cast<float>(self.pNameLabel.frame.size.width) + 2*labelMarginX, minWidth, maxWidth);
     const float h = self.pNameLabel.frame.size.height + topStripHeight + labelMarginTop + labelMarginBottom;
 
     CGRect labelFrame = self.pNameLabel.frame;
