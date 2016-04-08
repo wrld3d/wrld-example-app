@@ -5,7 +5,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../../Colours.xaml" />
     </ResourceDictionary.MergedDictionaries>
-    
+
     <Style TargetType="{x:Type local:MyPinCreationDetailsView}" >
         <Setter Property="Template">
             <Setter.Value>
@@ -13,48 +13,43 @@
                     <ControlTemplate.Resources>
                         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
                     </ControlTemplate.Resources>
-                    <DockPanel Width="350" Height="460">
-                        <StackPanel Name="MainPanel" Background="{StaticResource White}" Orientation="Vertical">
-                            <Rectangle Width="350" Height="7" Fill="{StaticResource Gold}" DockPanel.Dock="Top"/>
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="/Assets/button_create_poi_off.png" Width="60" Height="60" Margin="5, 5, 0, 5"/>
-                                <Grid Margin="10, 20, 0, 20">
-                                    <TextBox Name="TitleBox" Width="180" Height="30" Foreground="{StaticResource Gold}" FontWeight="Bold" Text="" BorderThickness="0" />
-                                    <TextBlock IsHitTestVisible="False" Width="175" Height="28" Text="Name your pin..."  Margin="5,2" Foreground="{StaticResource LightGrey}"
+
+                    <Grid Height="520" Width="370" Background="{StaticResource White}">
+                    <DockPanel Width="350" Height="500" Margin="0,10,0,-40" HorizontalAlignment="Center" VerticalAlignment="Top">
+                        <StackPanel x:Name="MainPanel" Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal" Margin="0" Width="305" HorizontalAlignment="Left">
+                                <Image Source="/Assets/CreatPIN_dialogue_Icon.png" Width="36" Height="36" Margin="5,5,0,5"/>
+                                <Grid Margin="10,0,0,0">
+                                    <TextBox x:Name="TitleBox" Foreground="{StaticResource Gold}" FontWeight="Bold" BorderThickness="0" FontSize="21.333" TextWrapping="NoWrap"  MaxWidth="240" MaxHeight="43" VerticalAlignment="Center" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" FontFamily="{StaticResource PrimaryUILightFont}"/>
+                                    <TextBlock IsHitTestVisible="False" Text="Name your Pin..."  Margin="5,0" Foreground="{StaticResource LightGrey}" FontSize="21.333" TextWrapping="Wrap" MaxWidth="240" MaxHeight="43" VerticalAlignment="Center" FontFamily="{StaticResource PrimaryUILightFont}" 
                                                Visibility="{Binding ElementName=TitleBox, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                 </Grid>
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-                                <CheckBox Name="ToShare" Margin="20, 0, 10, 0"/>
-                                <TextBlock Foreground="{StaticResource Gold}" FontWeight="Bold">
-                                    Share 
-                                    <Hyperlink  Name="TermsLink" NavigateUri="http://www.eegeo.com/tos/">
-                                        (Terms &amp; Conditions)
-                                    </Hyperlink>
-                                </TextBlock>
-                            </StackPanel>
-                            <Grid Margin="10, 10, 10, 0" >
-                                <TextBox Name="DescBox" Width="330" Height="70" AcceptsReturn="True" Text="" Foreground="{StaticResource Gold}" FontWeight="Bold" DockPanel.Dock="Top"/>
-                                <TextBlock IsHitTestVisible="False" Text="Tell us about your pin..."  Margin="5,2" Foreground="{StaticResource LightGrey}"
+                            <Button x:Name="CloseButton" Content="Button" Height="36" Width="36" Style="{StaticResource Close_CreatePIN}" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Margin="0,-50,5,0"/>
+                                <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,15,0,0">
+                                    <CheckBox x:Name="ToShare" Margin="5,2,10,0"/>
+                                    <TextBlock Foreground="{StaticResource Gold}" FontWeight="Bold"><Run Text="Share "/><Hyperlink  x:Name="TermsLink" NavigateUri="http://www.eegeo.com/tos/"><Run Text="(Terms &amp; Conditions)"/></Hyperlink></TextBlock>
+                                </StackPanel>
+                                <Grid Margin="5,15,5,0" >
+                                <TextBox x:Name="DescBox" Height="70" AcceptsReturn="True" Text="" Foreground="{StaticResource Gold}" FontWeight="Bold" DockPanel.Dock="Top" Width="340" FontSize="13.333"/>
+                                <TextBlock IsHitTestVisible="False" Text="Tell us about your pin..."  Margin="0,2" Foreground="{StaticResource LightGrey}" FontSize="13.333" 
                                            Visibility="{Binding ElementName=DescBox, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
                             </Grid>
-                            <ScrollViewer HorizontalAlignment="Center" VerticalScrollBarVisibility="Auto" Margin="10, 10, 10, 0" Height="200">
-                                <Image Name="SelectedImage" Source="/Assets/image_blank.png" Stretch="UniformToFill" DockPanel.Dock="Top" Width="300"/>
+                            <ScrollViewer HorizontalAlignment="Center" VerticalScrollBarVisibility="Auto" Margin="5,20,5,0" Height="200">
+                                    <Image x:Name="SelectedImage" Source="/Assets/image_blank.png" Stretch="UniformToFill" StretchDirection="Both" HorizontalAlignment="Center" DockPanel.Dock="Top"/>
                             </ScrollViewer>
-                            <StackPanel Orientation="Horizontal" Background="{StaticResource Gold}" Height="60" Margin="0, 20, 0, 0" DockPanel.Dock="Bottom">
-                                <Image Name="CloseButton" Source="/Assets/button_close_off.png" Width="60" Height="Auto" Stretch="Fill" Margin="0, 0, 0, 0"/>
-                                <Image Name="OpenGalleryButton" Source="/Assets/button_gallery_off.png" Width="60" Height="Auto" Stretch="Fill" Margin="85, 0, 0, 0"/>
-                                <Image Name="ConfirmButton" Source="/Assets/button_ok_off.png" Width="60" Height="Auto" Stretch="Fill" Margin="85, 0, 0, 0"/>
+                            <Button x:Name="AddImageButton" Content="Add Image" Width="240" Style="{StaticResource AddGalleryImageButton}"/>
+                            <StackPanel Orientation="Horizontal" Height="50" Margin="0,30,0,0" DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+                                <Button x:Name="ConfirmButton" Content="Create Report" Width="350" Style="{StaticResource ConfirmPINbutton}"/>
                             </StackPanel>
                         </StackPanel>
                     </DockPanel>
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="Width" Value="350"/>
-        <Setter Property="Height" Value="500"/>
+        <Setter Property="Width" Value="370"/>
+        <Setter Property="Height" Value="520"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
     </Style>
-    
-
 </ResourceDictionary>
