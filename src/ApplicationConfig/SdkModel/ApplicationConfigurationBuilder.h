@@ -23,6 +23,8 @@ namespace ExampleApp
                 std::string m_productVersion;
                 std::string m_buildNumber;
                 std::string m_combinedVersionString;
+                std::string m_coverageTreeManifestURL;
+                std::string m_themeManifestURL;
                 
             public:
                 ApplicationConfigurationBuilder();
@@ -44,6 +46,10 @@ namespace ExampleApp
                 IApplicationConfigurationBuilder& SetBuildNumber(const std::string& buildNumber);
                 
                 IApplicationConfigurationBuilder& SetCombinedVersionString(const std::string& combinedVersionString);
+
+                IApplicationConfigurationBuilder& SetCoverageTreeManifestURL(const std::string& coverageTreeManifestURL);
+
+                IApplicationConfigurationBuilder& SetThemeManifestURL(const std::string& themeManifestURL);
                 
                 ApplicationConfiguration Build();
             };

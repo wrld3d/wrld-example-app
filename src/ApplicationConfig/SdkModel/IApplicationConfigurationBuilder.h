@@ -34,6 +34,10 @@ namespace ExampleApp
                 virtual IApplicationConfigurationBuilder& SetBuildNumber(const std::string& buildNumber) = 0;
                 
                 virtual IApplicationConfigurationBuilder& SetCombinedVersionString(const std::string& combinedVersionString) = 0;
+
+                virtual IApplicationConfigurationBuilder& SetCoverageTreeManifestURL(const std::string& coverageTreeManifestUrl) = 0;
+                
+                virtual IApplicationConfigurationBuilder& SetThemeManifestURL(const std::string& themesManifestUrl) = 0;
                 
                 virtual ApplicationConfiguration Build() = 0;
             };
