@@ -34,7 +34,7 @@ namespace ExampleApp
                 AddMenuSection("About", *m_pAboutMenuModel, false);
                 
                 m_pOptionsMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
-                m_pOptionsMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pAboutMenuModel);
+                m_pOptionsMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pOptionsMenuModel);
                 m_pOptionsMenuOptionsModel->AddItem("Options", "Options", "", "options", Eegeo_NEW(View::OptionsMenuOption)(*m_pViewModel, optionsViewModel));
                 
                 AddMenuSection("Options", *m_pOptionsMenuModel, false);
