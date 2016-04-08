@@ -14,6 +14,8 @@ namespace ExampleApp
             , m_distanceToInterestMetres(0.f)
             , m_orientationDegrees(0.f)
             , m_tryStartAtGpsLocation(false)
+            , m_coverageTreeManifestURL(Eegeo::Config::CoverageTreeManifestUrlDefault)
+            , m_themeManifestURL(Eegeo::Config::CityThemesManifestUrlDefault)
             {
                 
             }
@@ -82,7 +84,21 @@ namespace ExampleApp
                                                 m_googleAnalyticsReferrerToken,
                                                 m_productVersion,
                                                 m_buildNumber,
-                                                m_combinedVersionString);
+                                                m_combinedVersionString,
+                                                m_coverageTreeManifestURL,
+                                                m_themeManifestURL);
+            }
+
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetCoverageTreeManifestURL(const std::string& coverageTreeManifestURL)
+            {
+                m_coverageTreeManifestURL = coverageTreeManifestURL;
+                return *this;
+            }
+
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetThemeManifestURL(const std::string& themeManifestURL)
+            {
+                m_themeManifestURL = themeManifestURL;
+                return *this;
             }
         }
     }

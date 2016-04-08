@@ -14,7 +14,9 @@ namespace ExampleApp
                                                            const std::string& googleAnalyticsReferrerToken,
                                                            const std::string& productVersion,
                                                            const std::string& buildNumber,
-                                                           const std::string& combinedVersionString)
+                                                           const std::string& combinedVersionString,
+                                                           const std::string& coverageTreeManifestURL,
+                                                           const std::string& themeManifestURL)
         : m_name(name)
         , m_interestLocation(interestLocation)
         , m_distanceToInterestMetres(distanceToInterestMetres)
@@ -24,6 +26,8 @@ namespace ExampleApp
         , m_productVersion(productVersion)
         , m_buildNumber(buildNumber)
         , m_combinedVersionString(combinedVersionString)
+        , m_coverageTreeManifestURL(coverageTreeManifestURL)
+        , m_themeManifestURL(themeManifestURL)
         {
         }
         
@@ -70,6 +74,16 @@ namespace ExampleApp
         const std::string& ApplicationConfiguration::CombinedVersionString() const
         {
             return m_combinedVersionString;
+        }
+
+        const std::string& ApplicationConfiguration::ThemeManifestURL() const
+        {
+            return m_themeManifestURL;
+        }
+
+        const std::string& ApplicationConfiguration::CoverageTreeManifestURL() const
+        {
+            return m_coverageTreeManifestURL;
         }
     }
 }

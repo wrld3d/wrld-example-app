@@ -190,6 +190,9 @@ AppHost::AppHost(
     const std::string deviceModel = nativeState.GetDeviceModel();
     Eegeo::Config::PlatformConfig platformConfig = Eegeo::Windows::WindowsPlatformConfigBuilder(deviceModel).Build();
 
+    platformConfig.CoverageTreeConfig.ManifestUrl = config.CoverageTreeManifestURL();
+    platformConfig.CityThemesConfig.StreamedManifestUrl = config.ThemeManifestURL();
+
     const Eegeo::Windows::Input::WindowsInputProcessorConfig& windowsInputProcessorConfig = Eegeo::Windows::Input::WindowsInputProcessor::DefaultConfig();
     m_pInputProcessor = Eegeo_NEW(Eegeo::Windows::Input::WindowsInputProcessor)(&m_inputHandler, m_nativeState.GetWindow(), screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), windowsInputProcessorConfig);
 

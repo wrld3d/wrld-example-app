@@ -37,7 +37,9 @@ namespace ExampleApp
                                                 parsedConfig.GoogleAnalyticsReferrerToken(),
                                                 m_productVersion,
                                                 m_buildNumber,
-                                                combinedVersionString);
+                                                combinedVersionString,
+                                                parsedConfig.CoverageTreeManifestURL(),
+                                                parsedConfig.ThemeManifestURL());
             }
         }
     }
