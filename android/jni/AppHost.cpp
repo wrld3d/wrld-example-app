@@ -89,6 +89,7 @@
 #include "ConnectivityChangedViewMessage.h"
 #include "WebConnectivityValidator.h"
 #include "AndroidMenuReactionModel.h"
+#include "PlatformConfigBuilder.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -171,7 +172,7 @@ AppHost::AppHost(
     customApplicationAssetDirectories.insert("SearchResultOnMap");
     customApplicationAssetDirectories.insert("ApplicationConfigs");
 
-    ApplicationConfiguration config(LoadConfiguration(nativeState));
+    const ApplicationConfiguration& applicationConfiguration = LoadConfiguration(nativeState);
 
     m_pAndroidPlatformAbstractionModule = Eegeo_NEW(Eegeo::Android::AndroidPlatformAbstractionModule)(
             nativeState,
@@ -179,23 +180,15 @@ AppHost::AppHost(
             display,
             resourceBuildShareContext,
             shareSurface,
-            config.EegeoApiKey(),
+            applicationConfiguration.EegeoApiKey(),
             customApplicationAssetDirectories);
 
     Eegeo::EffectHandler::Initialise();
 
     std::string deviceModel = std::string(nativeState.deviceModel, strlen(nativeState.deviceModel));
-    Eegeo::Config::PlatformConfig platformConfig = Eegeo::Android::AndroidPlatformConfigBuilder(deviceModel).Build();
 
-    platformConfig.OptionsConfig.InteriorsAffectedByFlattening = false;
-
-    platformConfig.CoverageTreeConfig.ManifestUrl = config.CoverageTreeManifestURL();
-    platformConfig.CityThemesConfig.StreamedManifestUrl = config.ThemeManifestURL();
-    
-    platformConfig.CityThemesConfig.EmbeddedThemeManifestFile = "embedded_manifest.txt";
-    platformConfig.CityThemesConfig.EmbeddedThemeTexturePath = "Textures";
-    platformConfig.CityThemesConfig.EmbeddedThemeNameContains = "Summer";
-    platformConfig.CityThemesConfig.EmbeddedThemeStateName = "DayDefault";
+    const Eegeo::Config::PlatformConfig& defaultConfig = Eegeo::Android::AndroidPlatformConfigBuilder(deviceModel).Build();
+    const Eegeo::Config::PlatformConfig& platformConfig = ExampleApp::PlatformConfigBuilder::Build(defaultConfig, applicationConfiguration, "Textures");
 
     m_pInputProcessor = Eegeo_NEW(Eegeo::Android::Input::AndroidInputProcessor)(&m_inputHandler, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
 
@@ -215,11 +208,11 @@ AppHost::AppHost(
     		m_pAndroidPlatformAbstractionModule->GetWebLoadRequestFactory(),
     		*m_pNetworkCapabilities,
     		m_pAndroidPlatformAbstractionModule->GetUrlEncoder(),
-			config.YelpConsumerKey(),
-			config.YelpConsumerSecret(),
-			config.YelpOAuthToken(),
-			config.YelpOAuthTokenSecret(),
-			config.GeoNamesUserName()
+    		applicationConfiguration.YelpConsumerKey(),
+    		applicationConfiguration.YelpConsumerSecret(),
+    		applicationConfiguration.YelpOAuthToken(),
+    		applicationConfiguration.YelpOAuthTokenSecret(),
+    		applicationConfiguration.GeoNamesUserName()
     );
 
     m_pAndroidFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::AndroidFlurryMetricsService)(&m_nativeState);
@@ -240,7 +233,7 @@ AppHost::AppHost(
                  *m_pNetworkCapabilities,
                  m_searchServiceModules,
                  *m_pAndroidFlurryMetricsService,
-                 config,
+                 applicationConfiguration,
                  *this,
                  *m_pMenuReactionModel);
 

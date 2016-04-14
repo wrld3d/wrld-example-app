@@ -86,6 +86,7 @@
 #include "UserInteractionEnabledChangedMessage.h"
 #include "SurveyViewModule.h"
 #include "IOSMenuReactionModel.h"
+#include "PlatformConfigBuilder.h"
 
 #import "UIView+TouchExclusivity.h"
 
@@ -133,21 +134,12 @@ AppHost::AppHost(
     m_piOSPlatformAbstractionModule = Eegeo_NEW(Eegeo::iOS::iOSPlatformAbstractionModule)(*m_pJpegLoader, applicationConfiguration.EegeoApiKey());
 
     Eegeo::EffectHandler::Initialise();
-
-    Eegeo::Config::PlatformConfig platformConfig = Eegeo::iOS::iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion()).Build();
-
-    platformConfig.OptionsConfig.InteriorsAffectedByFlattening = false;
     
-    platformConfig.CoverageTreeConfig.ManifestUrl = applicationConfiguration.CoverageTreeManifestURL();
-    platformConfig.CityThemesConfig.StreamedManifestUrl = applicationConfiguration.ThemeManifestURL();
+    const Eegeo::Config::PlatformConfig& defaultConfig = Eegeo::iOS::iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion()).Build();
 
-    platformConfig.CityThemesConfig.EmbeddedThemeManifestFile = "embedded_manifest.txt";
-    platformConfig.CityThemesConfig.EmbeddedThemeTexturePath = "Textures/EmbeddedTheme";
-    platformConfig.CityThemesConfig.EmbeddedThemeNameContains = "Summer";
-    platformConfig.CityThemesConfig.EmbeddedThemeStateName = "DayDefault";
+    const Eegeo::Config::PlatformConfig& platformConfig = ExampleApp::PlatformConfigBuilder::Build(defaultConfig, applicationConfiguration, "Textures/EmbeddedTheme");
 
-    platformConfig.MapLayersConfig.Interiors.LabelsVisibleWhenExpanded = true;
-
+    
     m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::iOSInitialExperienceModule)(m_iOSPersistentSettingsModel, m_messageBus);
     
     m_pNetworkCapabilities = Eegeo_NEW(ExampleApp::Net::SdkModel::NetworkCapabilities)(*m_piOSConnectivityService,
