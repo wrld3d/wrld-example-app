@@ -50,6 +50,12 @@ namespace ExampleApp
                 
                 Eegeo::Resources::Interiors::InteriorsCameraConfiguration cameraConfig = Eegeo::Resources::Interiors::InteriorsCameraController::CreateDefaultConfig();
                 
+                cameraConfig.ExpandedLookAtDistanceScale = 1.5f;
+                cameraConfig.UseAnimatorLookAt = true;
+                cameraConfig.ExpandedLookAtRightOffset = 0.02f;
+                cameraConfig.ExpandedLookAtUpOffset = 0.09f;
+                cameraConfig.BuildingHorizontalScreenSpacePercentInLandscape = 0.4f;
+                
                 m_pInteriorsCameraController = interiorCameraControllerFactory.CreateInteriorsCameraController(cameraConfig,
                                                                                                                *m_pGlobeCameraTouchController,
                                                                                                                *m_pGlobeCameraController,
