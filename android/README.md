@@ -21,7 +21,7 @@ Before you begin, ensure you have completed the initial steps as described in th
 
 - [Eclipse IDE for Java Developers](https://eclipse.org/downloads/)   
 - [Android SDK Tools](http://developer.android.com/sdk/index.html#Other) (24.4.1 or higher)
-- [Android NDK](http://developer.android.com/tools/sdk/ndk/index.html) (r10e or higher)
+- [Android NDK](http://developer.android.com/tools/sdk/ndk/index.html) (r10e)
 
 ## Setup
 
