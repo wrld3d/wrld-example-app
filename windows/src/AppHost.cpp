@@ -94,6 +94,7 @@
 #include "IMyPinCreationInitiationViewModel.h"
 #include "ModalityIgnoredReactionModel.h"
 #include "WindowsApplicationConfigurationVersionProvider.h"
+#include "PlatformConfigBuilder.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
@@ -174,7 +175,7 @@ AppHost::AppHost(
     locationOverride.horizontalAccuracyMeters = 10.0;
     locationOverride.headingDegrees = 0.0;
 
-	ApplicationConfiguration config(LoadConfiguration(nativeState));
+	const ApplicationConfiguration& applicationConfiguration = LoadConfiguration(nativeState);
 
     m_pWindowsLocationService = Eegeo_NEW(WindowsLocationService)(&nativeState, &locationOverride);
     m_pWindowsConnectivityService = Eegeo_NEW(WindowsConnectivityService)(&nativeState);
@@ -191,25 +192,10 @@ AppHost::AppHost(
         display,
         resourceBuildShareContext,
         shareSurface,
-        config.EegeoApiKey(),
+        applicationConfiguration.EegeoApiKey(),
         customApplicationAssetDirectories);
 
     Eegeo::EffectHandler::Initialise();
-
-    const std::string deviceModel = nativeState.GetDeviceModel();
-    Eegeo::Config::PlatformConfig platformConfig = Eegeo::Windows::WindowsPlatformConfigBuilder(deviceModel).Build();
-	platformConfig.OptionsConfig.StartMapModuleAutomatically = true;
-	platformConfig.OptionsConfig.EnableInteriors = true;
-	platformConfig.OptionsConfig.InteriorsAffectedByFlattening = false;
-
-	platformConfig.CoverageTreeConfig.ManifestUrl = config.CoverageTreeManifestURL();
-	platformConfig.CityThemesConfig.StreamedManifestUrl = config.ThemeManifestURL();
-	platformConfig.CityThemesConfig.EmbeddedThemeManifestFile = "embedded_manifest.txt";
-	platformConfig.CityThemesConfig.EmbeddedThemeTexturePath = "Textures/EmbeddedTheme";
-	platformConfig.CityThemesConfig.EmbeddedThemeNameContains = "Summer";
-	platformConfig.CityThemesConfig.EmbeddedThemeStateName = "DayDefault";
-
-    platformConfig.MapLayersConfig.Interiors.LabelsVisibleWhenExpanded = true;
 
     const Eegeo::Windows::Input::WindowsInputProcessorConfig& windowsInputProcessorConfig = Eegeo::Windows::Input::WindowsInputProcessor::DefaultConfig();
     m_pInputProcessor = Eegeo_NEW(Eegeo::Windows::Input::WindowsInputProcessor)(&m_inputHandler, m_nativeState.GetWindow(), screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), windowsInputProcessorConfig);
@@ -232,15 +218,19 @@ AppHost::AppHost(
         m_pWindowsPlatformAbstractionModule->GetWebLoadRequestFactory(),
         *m_pNetworkCapabilities,
         m_pWindowsPlatformAbstractionModule->GetUrlEncoder(),
-		config.YelpConsumerKey(),
-		config.YelpConsumerSecret(),
-		config.YelpOAuthToken(),
-		config.YelpOAuthTokenSecret()
+        applicationConfiguration.YelpConsumerKey(),
+        applicationConfiguration.YelpConsumerSecret(),
+        applicationConfiguration.YelpOAuthToken(),
+        applicationConfiguration.YelpOAuthTokenSecret()
         );
 
     m_pWindowsFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::WindowsFlurryMetricsService)(&m_nativeState);
 
     m_pMenuReaction = Eegeo_NEW(ExampleApp::Menu::View::WindowsMenuReactionModel)(true, true, m_messageBus);
+
+    const std::string& deviceModel = nativeState.GetDeviceModel();
+    const Eegeo::Config::PlatformConfig& defaultPlatformConfig = Eegeo::Windows::WindowsPlatformConfigBuilder(deviceModel).Build();
+    const Eegeo::Config::PlatformConfig& platformConfig = ExampleApp::PlatformConfigBuilder::Build(defaultPlatformConfig, applicationConfiguration, "Textures/EmbeddedTheme");
 
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
         *m_pWindowsPlatformAbstractionModule,
@@ -256,7 +246,7 @@ AppHost::AppHost(
         *m_pNetworkCapabilities,
         m_searchServiceModules,
         *m_pWindowsFlurryMetricsService,
-        config,
+        applicationConfiguration,
         *this,
         *m_pMenuReaction);
 
