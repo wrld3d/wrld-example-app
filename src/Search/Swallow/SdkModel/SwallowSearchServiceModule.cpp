@@ -41,6 +41,8 @@ namespace ExampleApp
                     
                 SwallowSearchServiceModule::~SwallowSearchServiceModule()
                 {
+                    m_searchService.RemoveOnReceivedQueryResultsCallback(m_transitionCallback);
+
                     Eegeo_DELETE m_pSwallowSearchTransitionPinController;
                     
                     Eegeo_DELETE m_pSwallowOfficeResultMenuOptionSelectedMessageHandler;
