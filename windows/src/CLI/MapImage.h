@@ -39,6 +39,8 @@ namespace ExampleApp
             void Resume() {}
             void RespondToResize(int width, int height);
 
+            static void DeferToAlreadyRunningInstance();
+
         private:
 
             int ScaledScreenCoord(int value);

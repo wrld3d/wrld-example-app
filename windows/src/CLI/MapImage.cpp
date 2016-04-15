@@ -1,6 +1,7 @@
 #include "MapImage.h"
 #include "MouseInputEvent.h"
 #include "AppRunner.h"
+#include "WindowsProcessHelper.h"
 
 #pragma comment(lib, "d3d9.lib")
 
@@ -11,7 +12,6 @@ namespace ExampleApp
         MapImage::MapImage() 
             : m_pState(NULL)
         {
-            
         } 
 
         MapImage::~MapImage()
@@ -277,6 +277,11 @@ namespace ExampleApp
         {
             m_appRunner->UpdateNative(dt);
             m_appRunner->UpdateUiViews(dt);
+        }
+
+        void MapImage::DeferToAlreadyRunningInstance()
+        {
+            Eegeo::Helpers::ProcessHelpers::DeferToAlreadyRunningInstance();
         }
     }
 }

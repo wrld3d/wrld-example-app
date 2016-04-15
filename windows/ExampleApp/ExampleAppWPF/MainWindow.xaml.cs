@@ -31,19 +31,18 @@ namespace ExampleAppWPF
 
         public MainWindow()
         {
+            MapImage.DeferToAlreadyRunningInstance();
+
             InitializeComponent();
-
             StartupResourceLoader.Init();
-
-
             m_mapImage = new MapImage();
+
             Loaded += MainWindow_Loaded;
             Closed += MainWindow_Closed;
 
-
             m_frameTimer = Stopwatch.StartNew();
-
             m_isInputActive = true;
+            Visibility = Visibility.Visible;
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
@@ -58,7 +57,6 @@ namespace ExampleAppWPF
                 m_mapImage.InitBackBuffer();
             }
         }
-
 
         private void MainWindow_Loaded(object sender, EventArgs loadedEvent)
         {
@@ -91,7 +89,6 @@ namespace ExampleAppWPF
             MouseUp += MainWindow_MouseUp;
 
             Dispatcher.Hooks.DispatcherInactive += new EventHandler(DispatcherInactive);
-
         }
 
         private void DispatcherInactive(object sender, EventArgs e)
