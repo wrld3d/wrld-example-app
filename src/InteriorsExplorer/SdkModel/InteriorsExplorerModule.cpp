@@ -19,8 +19,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            InteriorsExplorerModule::InteriorsExplorerModule(Eegeo::Resources::Interiors::IInteriorFloorAnimator& interiorFloorAnimator,
-                                                             Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+            InteriorsExplorerModule::InteriorsExplorerModule(Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                              Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                              Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                                              Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
@@ -28,7 +27,7 @@ namespace ExampleApp
                                                              WorldPins::SdkModel::IWorldPinsScaleController& worldPinsScaleController,
                                                              const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                              VisualMap::SdkModel::IVisualMapService& visualMapService,
-                                                             Eegeo::Resources::Interiors::InteriorsCameraControllerFactory& interiorCameraControllerFactory,
+                                                             const Eegeo::Resources::Interiors::InteriorsCameraControllerFactory& interiorCameraControllerFactory,
                                                              const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                              Eegeo::Helpers::IIdentityProvider& identityProvider,
                                                              ExampleAppMessaging::TMessageBus& messageBus,
@@ -41,25 +40,12 @@ namespace ExampleApp
                 const float transitionTime = 0.5f;
                 m_pVisibilityUpdater = Eegeo_NEW(InteriorVisibilityUpdater)(interiorTransitionModel, interiorSelectionModel, interiorInteractionModel, transitionTime);
                 
-                m_pGlobeCameraTouchController = interiorCameraControllerFactory.CreateTouchController(screenProperties);
+                m_pGlobeCameraTouchController = interiorCameraControllerFactory.CreateTouchController();
                 
-                m_pGlobeCameraController = interiorCameraControllerFactory.CreateInteriorGlobeCameraController(false,
-                                                                                                               *m_pGlobeCameraTouchController,
-                                                                                                               screenProperties);
+                m_pGlobeCameraController = interiorCameraControllerFactory.CreateInteriorGlobeCameraController(*m_pGlobeCameraTouchController);
 
-                
-                Eegeo::Resources::Interiors::InteriorsCameraConfiguration cameraConfig = Eegeo::Resources::Interiors::InteriorsCameraController::CreateDefaultConfig();
-                
-                cameraConfig.ExpandedLookAtDistanceScale = 1.5f;
-                cameraConfig.UseAnimatorLookAt = true;
-                cameraConfig.ExpandedLookAtRightOffset = 0.02f;
-                cameraConfig.ExpandedLookAtUpOffset = 0.09f;
-                cameraConfig.BuildingHorizontalScreenSpacePercentInLandscape = 0.4f;
-                
-                m_pInteriorsCameraController = interiorCameraControllerFactory.CreateInteriorsCameraController(cameraConfig,
-                                                                                                               *m_pGlobeCameraTouchController,
-                                                                                                               *m_pGlobeCameraController,
-                                                                                                               interiorsAffectedByFlattening);
+                m_pInteriorsCameraController = interiorCameraControllerFactory.CreateInteriorsCameraController(*m_pGlobeCameraTouchController,
+                                                                                                               *m_pGlobeCameraController);
                 
                 
                 m_pWorldPinController = Eegeo_NEW(InteriorWorldPinController)(interiorSelectionModel,

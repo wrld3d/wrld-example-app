@@ -13,7 +13,7 @@
 #include "MathFunc.h"
 #include "EnvironmentFlatteningService.h"
 #include "InteriorHelpers.h"
-
+#include "InteriorViewModel.h"
 #include "InteriorHeightHelpers.h"
 
 namespace ExampleApp
@@ -37,15 +37,13 @@ namespace ExampleApp
             WorldPinsFloorHeightController::WorldPinsFloorHeightController(IWorldPinsRepository& worldPinsRepository,
                                                                            Eegeo::Pins::PinRepository& pinRepository,
                                                                            const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                                                           const Eegeo::Resources::Interiors::IInteriorFloorAnimator& interiorFloorAnimator,
-                                                                           const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
+                                                                           const Eegeo::Resources::Interiors::IImmutableInteriorViewModel& interiorViewModel,
                                                                            const bool interiorsAffectedByFlattening)
                 : m_worldPinsRepository(worldPinsRepository)
                 , m_pinRepository(pinRepository)
                 , m_interiorInteractionModel(interiorInteractionModel)
-                , m_interiorFloorAnimator(interiorFloorAnimator)
+                , m_interiorViewModel(interiorViewModel)
                 , m_interiorsAffectedByFlattening(interiorsAffectedByFlattening)
-                , m_environmentFlatteningService(environmentFlatteningService)
             {
             }
             
@@ -84,9 +82,9 @@ namespace ExampleApp
                                     pPin->SetHeightAboveTerrain(heightAboveTerrain);
                                 }
                                 
-                                if(Eegeo::Resources::Interiors::HasValidModelAndFloor(pinFloorIndex, m_interiorInteractionModel))
+                                if (m_interiorViewModel.IsValidFloorIndex(pinFloorIndex))
                                 {
-                                    Eegeo::Resources::Interiors::AttachPinToFloor(*pPin, pinFloorIndex, m_interiorInteractionModel, m_interiorFloorAnimator, m_environmentFlatteningService, m_interiorsAffectedByFlattening);
+                                    Eegeo::Resources::Interiors::AttachPinToFloor(*pPin, pinFloorIndex, m_interiorViewModel);
                                 }
                                 
                                 float alpha = CalculateAlphaForPin(pinFloorIndex, selectedFloorIndex, m_interiorInteractionModel.GetFloorParam(), m_interiorInteractionModel.GetExpandedParam());

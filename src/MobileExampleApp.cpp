@@ -648,11 +648,26 @@ namespace ExampleApp
                                                                                          mapModule.GetEnvironmentFlatteningService(),
                                                                                          mapModule.GetResourceCeilingProvider());
         
-        Eegeo::Resources::Interiors::InteriorsCameraControllerFactory interiorsCameraControllerFactory(cameraControllerFactory,
-                                                                                                       interiorsPresentationModule.GetInteriorSelectionModel(),
-                                                                                                       interiorsPresentationModule.GetInteriorFloorAnimator(),
+        Eegeo::Resources::Interiors::InteriorsCameraConfiguration interiorsCameraConfig(Eegeo::Resources::Interiors::InteriorsCameraController::CreateDefaultConfig());
+        interiorsCameraConfig.ExpandedLookAtDistanceScale = 1.5f;
+        interiorsCameraConfig.ExpandedLookAtRightOffset = 0.02f;
+        interiorsCameraConfig.ExpandedLookAtUpOffset = 0.09f;
+        interiorsCameraConfig.BuildingHorizontalScreenSpacePercentInLandscape = 0.4f;
+        
+        const Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration& globeCameraConfig = Eegeo::Resources::Interiors::InteriorsCameraControllerFactory::DefaultGlobeCameraControllerConfiguration();
+        const Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration& globeCameraTouchConfig = Eegeo::Resources::Interiors::InteriorsCameraControllerFactory::DefaultGlobeCameraTouchControllerConfiguration();
+        
+        
+        const Eegeo::Resources::Interiors::InteriorsCameraControllerFactory interiorsCameraControllerFactory(
+                                                                                                       interiorsCameraConfig,
+                                                                                                       globeCameraConfig,
+                                                                                                       globeCameraTouchConfig,
+                                                                                                       cameraControllerFactory,
+                                                                                                       m_screenProperties,
                                                                                                        interiorsPresentationModule.GetInteriorInteractionModel(),
-                                                                                                       mapModule.GetEnvironmentFlatteningService());
+                                                                                                       interiorsPresentationModule.GetInteriorViewModel(),
+                                                                                                       mapModule.GetEnvironmentFlatteningService(),
+                                                                                                       interiorsAffectedByFlattening );
         
         
         Eegeo::Modules::Map::StreamingModule& streamingModule = world.GetStreamingModule();
@@ -662,7 +677,7 @@ namespace ExampleApp
         
         const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel = m_initialExperienceModule.GetInitialExperienceModel();
         
-        m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(interiorsPresentationModule.GetInteriorFloorAnimator(),
+        m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(
                                                                                                      interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                      interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                      interiorsPresentationModule.GetInteriorTransitionModel(),
@@ -976,7 +991,7 @@ namespace ExampleApp
                                  m_messageBus,
                                  interiorsPresentationModule.GetInteriorInteractionModel(),
                                  interiorsPresentationModule.GetInteriorTransitionModel(),
-                                 interiorsPresentationModule.GetInteriorFloorAnimator(),
+                                 interiorsPresentationModule.GetInteriorViewModel(),
                                  m_sdkDomainEventBus,
                                  interiorsAffectedByFlattening,
                                  m_menuReaction,

@@ -25,8 +25,7 @@ namespace ExampleApp
             class InteriorsExplorerModule : public IInteriorsExplorerModule, private Eegeo::NonCopyable
             {
             public:
-                InteriorsExplorerModule(Eegeo::Resources::Interiors::IInteriorFloorAnimator& interiorFloorAnimator,
-                                        Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                InteriorsExplorerModule(Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                         Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                         Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                         Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
@@ -34,7 +33,7 @@ namespace ExampleApp
                                         WorldPins::SdkModel::IWorldPinsScaleController& worldPinsScaleController,
                                         const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                         VisualMap::SdkModel::IVisualMapService& visualMapService,
-                                        Eegeo::Resources::Interiors::InteriorsCameraControllerFactory& interiorCameraControllerFactory,
+                                        const Eegeo::Resources::Interiors::InteriorsCameraControllerFactory& interiorCameraControllerFactory,
                                         const Eegeo::Rendering::ScreenProperties& screenProperties,
                                         Eegeo::Helpers::IIdentityProvider& identityProvider,
                                         ExampleAppMessaging::TMessageBus& messageBus,

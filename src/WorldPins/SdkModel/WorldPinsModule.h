@@ -43,7 +43,7 @@ namespace ExampleApp
                                 ExampleAppMessaging::TMessageBus& messageBus,
                                 const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                 const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
-                                const Eegeo::Resources::Interiors::IInteriorFloorAnimator& interiorFloorAnimator,
+                                const Eegeo::Resources::Interiors::IImmutableInteriorViewModel& interiorViewModel,
                                 ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
                                 const bool interiorsAffectedByFlattening,
                                 const Menu::View::IMenuReactionModel& menuReaction,
