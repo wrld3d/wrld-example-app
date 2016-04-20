@@ -48,7 +48,7 @@
 @property (nonatomic, retain) UILabel* pTitleLabel;
 @property (nonatomic, retain) UILabelledCheckboxView* pWifiOnlyCheckbox;
 @property (nonatomic, retain) UILabelledCheckboxView* pCacheEnabledCheckbox;
-@property (nonatomic, retain) UIButton* pClearCacheButton;
+@property (nonatomic, retain) UILabelledCheckboxView* pClearCacheCheckbox;
 @property (nonatomic, retain) UILabel* pClearCacheLabel;
 @property (nonatomic, retain) OptionsCacheClearSubView* pOptionsCacheClearSubView;
 
