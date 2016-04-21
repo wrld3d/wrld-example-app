@@ -47,7 +47,7 @@ exit 1
 fi
 
 # Archive the xcode project.
-(cd $pathToProjectDir && xcodebuild archive -target $targetName -configuration Release -scheme "$targetName" -archivePath "$archivePath"  ONLY_ACTIVE_ARCH='NO' PRODUCT_NAME="$productName" PRODUCT_VERSION="$productVersion" CODE_SIGN_IDENTITY="iPhone Distribution: eeGeo Ltd")
+(cd $pathToProjectDir && xcodebuild archive -target $targetName -configuration Release -archivePath "$archivePath"  ONLY_ACTIVE_ARCH='NO' PRODUCT_NAME="$productName" PRODUCT_VERSION="$productVersion" CODE_SIGN_IDENTITY="iPhone Distribution: eeGeo Ltd")
 resultcode=$?
 
 # Output the result of the operation.
