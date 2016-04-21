@@ -470,6 +470,9 @@
     <Resource Include="..\..\Resources\button_gallery_off.png">
       <Link>Assets\button_gallery_off.png</Link>
     </Resource>
+	<Resource Include="..\..\Resources\button_gallery_on.png">
+      <Link>Assets\button_gallery_on.png</Link>
+    </Resource>
     <Resource Include="..\..\Resources\image_blank.png">
       <Link>Assets\image_blank.png</Link>
     </Resource>
@@ -478,9 +481,6 @@
     </Resource>
     <Resource Include="..\..\Resources\button_close_on.png">
       <Link>Assets\button_close_on.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\button_ok_off.png">
-      <Link>Assets\button_ok_off.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\button_photo_off.png">
       <Link>Assets\button_photo_off.png</Link>

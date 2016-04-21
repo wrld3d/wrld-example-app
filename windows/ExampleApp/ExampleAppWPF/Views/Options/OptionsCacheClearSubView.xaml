@@ -33,7 +33,7 @@
                                     </Grid>
                                     <Grid Grid.Row="2" VerticalAlignment="Bottom" Name="CacheClearCeremonyViewFooter">
                                         <Button Name="CacheClearCeremonyConfirmButton" Style="{StaticResource TransparentButtonStyle}" Width="48" Height="48" HorizontalAlignment="Left">
-                                            <Image Source="/Assets/button_ok_off.png"/>
+                                            <Image Source="/Assets/button_ok_place_pin_off.png"/>
                                         </Button>
                                         <Button Name="CacheClearCeremonyCloseButton" Style="{StaticResource TransparentButtonStyle}" Width="48" Height="48" HorizontalAlignment="Right">
                                             <Image Source="/Assets/button_close_off.png"/>

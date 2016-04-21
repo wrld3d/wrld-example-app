@@ -292,8 +292,8 @@
                         <Rectangle x:Name="BackGround_Over" Fill="{StaticResource PrimaryBG_Over_Colour}" HorizontalAlignment="Stretch" Margin="0" Width="Auto" Visibility="Hidden"/>
                         <Rectangle x:Name="BackGround_Pressed" Fill="{StaticResource PrimaryBG_Down_Colour}" HorizontalAlignment="Stretch" Margin="0" Width="Auto" Visibility="Hidden"/>
                         <Grid x:Name="SaveLocationGrid" HorizontalAlignment="Center">
-                            <Image x:Name="ConfirmButton" Source="Assets/button_ok_off.png" Height="60" Stretch="Fill" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Left" Width="60"/>
-                            <Image x:Name="ConfirmButtonOn" Source="Assets/button_ok_on.png" Height="60" Stretch="Fill" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Left" Width="60" Visibility="Collapsed"/>
+                            <Image x:Name="ConfirmButton" Source="Assets/button_ok_place_pin_off.png" Height="60" Stretch="Fill" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Left" Width="60"/>
+                            <Image x:Name="ConfirmButtonOn" Source="Assets/button_ok_place_pin_on.png" Height="60" Stretch="Fill" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Left" Width="60" Visibility="Collapsed"/>
                             <TextBlock x:Name="CreatePIN" VerticalAlignment="Center" Text="{TemplateBinding Content}" FontSize="28"  Foreground="{StaticResource White}" TextTrimming="CharacterEllipsis" Width="Auto" FontFamily="{StaticResource PrimaryUILightFont}" HorizontalAlignment="Left" Margin="60,0,0,0"/>
                             <TextBlock x:Name="CreatePIN_Down" VerticalAlignment="Center" Text="{TemplateBinding Content}" FontSize="28"  Foreground="{StaticResource PrimaryBG_Over_Colour}" TextTrimming="CharacterEllipsis" Width="Auto" FontFamily="{StaticResource PrimaryUILightFont}" HorizontalAlignment="Left" Margin="60,0,0,0" Visibility="Hidden"/>
                         </Grid>
