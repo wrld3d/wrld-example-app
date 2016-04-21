@@ -63,7 +63,7 @@
                                 </Border>
                                 <Button Name="OptionsViewCloseButton" Style="{StaticResource TransparentButtonStyle}">
                                     <Border BorderBrush="{x:Null}" Background="{StaticResource Gold}">
-                                        <Image Source="/Assets/button_close_off.png" Width="48" Height="48" HorizontalAlignment="Right"/>
+                                        <Button Style="{StaticResource CancelPINbutton}" Width="60" Height="60" HorizontalAlignment="Right"/>
                                     </Border>
                                 </Button>
                             </StackPanel>

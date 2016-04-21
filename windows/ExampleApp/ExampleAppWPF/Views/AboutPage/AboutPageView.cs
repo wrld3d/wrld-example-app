@@ -12,7 +12,7 @@ namespace ExampleAppWPF
         private MainWindow m_currentWindow;
 
         private TextBlock m_aboutTextView;
-        private Image m_closeButton;
+        private Button m_closeButton;
 
         static AboutPageView()
         {
@@ -40,12 +40,12 @@ namespace ExampleAppWPF
         {
             base.OnApplyTemplate();
             m_aboutTextView = CheckAndGetProperty("AppText") as TextBlock;
-            m_closeButton = CheckAndGetProperty("CloseButton") as Image;
+            m_closeButton = CheckAndGetProperty("CloseButton") as Button;
 
-            m_closeButton.MouseDown += OnCloseClicked;
+            m_closeButton.Click += OnCloseClicked;
         }
 
-        private void OnCloseClicked(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void OnCloseClicked(object sender, RoutedEventArgs e)
         {
             AboutPageCLI.CloseButtonClicked(m_nativeCallerPointer);
         }
