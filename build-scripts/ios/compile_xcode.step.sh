@@ -46,8 +46,20 @@ if [ -z "$archivePath" ]; then
 exit 1
 fi
 
+# Manually inject schemes as xcodebuild archive needs them and cmake doesn't generate them
+schemeLocation=$pathToProjectDir/$targetName.xcodeproj/xcuserdata/eegeo.xcuserdatad/xcschemes/
+mkdir -p $schemeLocation
+cp -R ./build-scripts/ios/schemes/. $schemeLocation
+echo
+if [ $? = 0 ] ; then
+  echo "Successful injection of schemes into project at $pathToProjectDir/$targetName.xcodeproj"
+else
+  echo "Failed to inject schemes to $pathToProjectDir/$targetName.xcodeproj"
+  exit $?
+fi
+
 # Archive the xcode project.
-(cd $pathToProjectDir && xcodebuild archive -target $targetName -configuration Release -archivePath "$archivePath"  ONLY_ACTIVE_ARCH='NO' PRODUCT_NAME="$productName" PRODUCT_VERSION="$productVersion" CODE_SIGN_IDENTITY="iPhone Distribution: eeGeo Ltd")
+(cd $pathToProjectDir && xcodebuild archive -target $targetName -scheme "$targetName" -configuration Release -archivePath "$archivePath"  ONLY_ACTIVE_ARCH='NO' PRODUCT_NAME="$productName" PRODUCT_VERSION="$productVersion" CODE_SIGN_IDENTITY="iPhone Distribution: eeGeo Ltd")
 resultcode=$?
 
 # Output the result of the operation.
