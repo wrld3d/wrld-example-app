@@ -32,12 +32,8 @@
                                         </Grid>
                                     </Grid>
                                     <Grid Grid.Row="2" VerticalAlignment="Bottom" Name="CacheClearCeremonyViewFooter">
-                                        <Button Name="CacheClearCeremonyConfirmButton" Style="{StaticResource TransparentButtonStyle}" Width="48" Height="48" HorizontalAlignment="Left">
-                                            <Image Source="/Assets/button_ok_off.png"/>
-                                        </Button>
-                                        <Button Name="CacheClearCeremonyCloseButton" Style="{StaticResource TransparentButtonStyle}" Width="48" Height="48" HorizontalAlignment="Right">
-                                            <Image Source="/Assets/button_close_off.png"/>
-                                        </Button>
+                                        <Button Name="CacheClearCeremonyConfirmButton" Style="{StaticResource ConfirmPINbutton}" Width="60" Height="60" HorizontalAlignment="Left"/>
+                                        <Button Name="CacheClearCeremonyCloseButton" Style="{StaticResource CancelPINbutton}" Width="60" Height="60" HorizontalAlignment="Right"/>
                                     </Grid>
                                 </Grid>
                             </Grid>

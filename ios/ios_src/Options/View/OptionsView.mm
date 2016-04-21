@@ -76,20 +76,16 @@
 
         [self.pOptionsContainer addSubview: self.pCacheEnabledCheckbox];
         
-        self.pClearCacheButton = [[[UIButton alloc] initWithFrame:CGRectMake(0.0, 0.0, buttonSize, buttonSize)] autorelease];
-        [self.pClearCacheButton setImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_clear_cache_off") forState:UIControlStateNormal];
-        [self.pClearCacheButton setImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_clear_cache_on") forState:UIControlStateHighlighted];
-        [self.pClearCacheButton addTarget:self action:@selector(cacheClearSelectionHandler) forControlEvents:UIControlEventTouchUpInside];
         
-        [self.pOptionsContainer addSubview: self.pClearCacheButton];
+        self.pClearCacheCheckbox = [[[UILabelledCheckboxView alloc] initWithParams:buttonSize
+                                                                                    :"button_clear_cache_off"
+                                                                                    :"button_clear_cache_on"
+                                                                                    :"Clear cached map data"
+                                                                                    :false
+                                                                                    :self
+                                                                                    :@selector(cacheClearSelectionHandler)] autorelease];
         
-        self.pClearCacheLabel = [[[UILabel alloc] initWithFrame: CGRectMake(0.0, 0.0, 0.0, buttonSize)] autorelease];
-        self.pClearCacheLabel.font = [UIFont systemFontOfSize: 16.f];
-        self.pClearCacheLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
-        self.pClearCacheLabel.text = @"Clear cached map data";
-        [self.pClearCacheLabel sizeToFit];
-        
-        [self.pOptionsContainer addSubview:self.pClearCacheLabel];
+        [self.pOptionsContainer addSubview: self.pClearCacheCheckbox];
         
         [self setTouchExclusivity:self];
         
@@ -116,8 +112,8 @@
     [self.pClearCacheLabel removeFromSuperview];
     [self.pClearCacheLabel release];
     
-    [self.pClearCacheButton removeFromSuperview];
-    [self.pClearCacheButton release];
+    [self.pClearCacheCheckbox removeFromSuperview];
+    [self.pClearCacheCheckbox release];
     
     [self.pCacheEnabledCheckbox removeFromSuperview];
     [self.pCacheEnabledCheckbox release];
@@ -223,9 +219,9 @@
     cacheEnabledCheckboxFrame.origin.y = optionsContentY + (optionsDeltaY * 1);
     self.pCacheEnabledCheckbox.frame = cacheEnabledCheckboxFrame;
     
-    CGRect clearCacheButtonFrame = self.pClearCacheButton.frame;
+    CGRect clearCacheButtonFrame = self.pClearCacheCheckbox.frame;
     clearCacheButtonFrame.origin.y = optionsContentY + (optionsDeltaY * 2);
-    self.pClearCacheButton.frame = clearCacheButtonFrame;
+    self.pClearCacheCheckbox.frame = clearCacheButtonFrame;
     
     CGRect clearCacheLabelFrame = self.pClearCacheLabel.frame;
     clearCacheLabelFrame.origin.x = clearCacheButtonFrame.origin.x + clearCacheButtonFrame.size.width + 5.0;

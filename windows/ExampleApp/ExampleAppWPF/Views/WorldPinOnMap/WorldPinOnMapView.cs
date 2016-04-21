@@ -20,6 +20,8 @@ namespace ExampleAppWPF
         private MainWindow m_currentWindow;
         private StackPanel m_reviewImageAndNumber;
 
+        private const int MaxSubtitleLength = 22;
+
         private ControlClickHandler m_clickHandler;
 
         static WorldPinOnMapView()
@@ -65,13 +67,28 @@ namespace ExampleAppWPF
             ExampleApp.WorldPinOnMapCLI.OnSelected(m_nativeCallerPointer);
         }
 
+        private string GetSanitizedSubtitle(string subtitle)
+        {
+            var result = subtitle.Replace("\n", "");
+            result = result.Replace("\t", "");
+            result = result.Replace(" ", "");
+            result = result.Replace("\r", "");
+
+            if(result.Length > MaxSubtitleLength)
+            {
+                result = result.Remove(MaxSubtitleLength) + "...";
+            }
+
+            return result;
+        }
+
         public void Show(string title, string subtitle, string ratingsImg, int reviewCount, float modality)
         {
             Visibility = Visibility.Visible;
             
             if (reviewCount == 0)
             {
-                m_detailsView.Text = subtitle;                
+                m_detailsView.Text = GetSanitizedSubtitle(subtitle);
 
                 if (ratingsImg.Length != 0)
                 {

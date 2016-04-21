@@ -205,7 +205,7 @@
                                 </Style>
                             </Grid.Resources>
                             <Border BorderBrush="White" Background="White" BorderThickness="1,1,1,1" CornerRadius="5" Width="225" Height="26" VerticalAlignment="Center">
-                                <TextBox Text="Enter Search Term" Name="SearchInputBox" FontFamily="{StaticResource PrimaryUIFont}" FontSize="16" Foreground="{StaticResource DarkGrey}" Margin="5,0,0,3" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center">
+                                <TextBox Text="Enter Search Term" Name="SearchInputBox" FontFamily="{StaticResource PrimaryUIFont}" FontSize="16" Foreground="{StaticResource DarkGrey}" Margin="5,0,0,0" Background="Transparent" BorderThickness="0">
                                     <TextBox.Resources>
                                         <Style TargetType="{x:Type TextBox}">
                                             <Setter Property="RenderTransform">
@@ -285,10 +285,12 @@
                             <Grid Grid.Row="2">
                                 <StackPanel  Orientation="Vertical" >
                                     <ScrollViewer Width="250" Background="{StaticResource PrimaryBG_colour}" Name="ResultsMenuOptionsView" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="False" >
-                                        <ListBox Name="SearchResultsList" Template="{StaticResource ListBoxControlTemplateNoPadding}" Background="{StaticResource Transparent}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0" Focusable="False">
+                                        <ListBox Name="SearchResultsList" Template="{StaticResource ListBoxControlTemplateNoPadding}" Background="{StaticResource PrimaryBG_colour}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0" Focusable="False">
                                             <ListBox.Resources>
                                                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
                                                 <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent"/>
+                                                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrush}" Color="Transparent"/>
+                                                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="Transparent"/>
                                                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
 
                                                 <DataTemplate DataType="{x:Type local:SearchMenuListItem}">

@@ -21,7 +21,7 @@
                         </ScrollViewer>
                         <StackPanel Orientation="Horizontal" Height="60" Background="{StaticResource Gold}">
                             <Rectangle Fill="{StaticResource Gold}" Width="290"/>
-                            <Image Name="CloseButton" Source="/Assets/button_close_off.png" Stretch="Fill" Width="60"/>
+                            <Button Name="CloseButton" Style="{StaticResource CancelPINbutton}" Width="60" Height="60"/>
                         </StackPanel>
                     </StackPanel>
                 </ControlTemplate>
