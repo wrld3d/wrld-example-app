@@ -47,7 +47,8 @@ exit 1
 fi
 
 # Manually inject schemes as xcodebuild archive needs them and cmake doesn't generate them
-schemeLocation=$pathToProjectDir/$targetName.xcodeproj/xcuserdata/eegeo.xcuserdatad/xcschemes/
+currentuser="${whoami}"
+schemeLocation=$pathToProjectDir/$targetName.xcodeproj/xcuserdata/$currentuser.xcuserdatad/xcschemes/
 mkdir -p $schemeLocation
 cp -R ./build-scripts/ios/schemes/. $schemeLocation
 echo
