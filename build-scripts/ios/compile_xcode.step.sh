@@ -8,6 +8,8 @@ targetName=$1
 productName=$2
 productVersion=$3
 pathToProjectDir=$4
+archivePath=$5
+
 
 if [ -z "$targetName" ]; then
         echo
@@ -37,8 +39,15 @@ if [ -z "$pathToProjectDir" ]; then
         exit 1
 fi
 
-# Compile the xcode project.
-(cd $pathToProjectDir && xcodebuild -target $targetName -configuration Release ONLY_ACTIVE_ARCH='NO' PRODUCT_NAME=$productName PRODUCT_VERSION=$productVersion)
+if [ -z "$archivePath" ]; then
+        echo
+        echo "Error: archivePath must be provided (eg. ./Appname.xcarchive)"
+        echo
+exit 1
+fi
+
+# Archive the xcode project.
+(cd $pathToProjectDir && xcodebuild archive -target $targetName -configuration Release -scheme "$targetName" -archivePath "$archivePath"  ONLY_ACTIVE_ARCH='NO' PRODUCT_NAME="$productName" PRODUCT_VERSION="$productVersion" CODE_SIGN_IDENTITY="iPhone Distribution: eeGeo Ltd")
 resultcode=$?
 
 # Output the result of the operation.
@@ -47,6 +56,7 @@ if [ $resultcode = 0 ] ; then
   echo "COMPILE XCODE PROJECT SUCCEEDED"
 else
   echo "COMPILE XCODE PROJECT FAILED"
+  exit $resultcode
 fi
 echo
 

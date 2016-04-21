@@ -31,7 +31,16 @@ if [ -z "$pathToProjectDir" ]; then
         exit 1
 fi
 
-hockeyAppIdentifier=$4
+ipaName=$4
+
+if [ -z "$ipaName" ]; then
+        echo
+        echo "Error: ipaName must be provided (eg. Appname)"
+        echo
+        exit 1
+fi
+
+hockeyAppIdentifier=$5
 
 if [ -z "$hockeyAppIdentifier" ]; then
         echo
@@ -45,7 +54,7 @@ fi
 apitoken='b93a76258d944864816b7f89a4bd83b6'
 
 # Full path where the app file is located.
-filepath=$pathToProjectDir"/build/Release-iphoneos/Streaming_Test.ipa"
+filepath=$pathToProjectDir"/$ipaName.ipa"
 
 # Release notes for the build.
 notes="Build uploaded automatically from teamcity ($buildUrl) from commit: $sourceControlUrl"

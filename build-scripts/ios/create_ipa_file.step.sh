@@ -6,6 +6,9 @@ echo
 
 appname=$1
 pathToProjectDir=$2
+archivePath=$3
+ipaName=$4
+provisioningProfile=$5
 
 if [ -z "$appname" ]; then
         echo
@@ -21,36 +24,44 @@ if [ -z "$pathToProjectDir" ]; then
         exit 1
 fi
 
-# Go to project path.
-apppath=$pathToProjectDir"/build/Release-iphoneos/"
-cd $apppath
-
-# Folder name where the .app will be inserted.
-foldername="Payload";
-if [ -d $foldername ]
-  then
-    rm -R $foldername
-  fi
-
-outputname="Streaming_Test.ipa";
-
-mkdir $foldername
-cp -R -f $appname $foldername/$appname
-
-# Zip the folder and rename the file created with the file output name.
-zip -r $outputname $foldername
-resultcode=$?
-
-# Finally, delete the temporary folder previously created.
-#rm -R $foldername
-
-# Output the result of the operation.
-echo
-if [ $resultcode = 0 ] ; then
-  echo "CREATE IPA FILE SUCCEEDED"
-else
-  echo "CREATE IPA FILE FAILED"
+if [ -z "$archivePath" ]; then
+        echo
+        echo "Error: archivePath must be provided (eg. ./Appname.xcarchive)"
+        echo
+        exit 1
 fi
-echo
 
-exit $resultcode
+if [ -z "$ipaName" ]; then
+    echo
+    echo "Error: ipaName must be provided (eg. Appname)"
+    echo
+exit 1
+fi
+
+if [ -z "$provisioningProfile" ]; then
+    echo
+    echo "Error: provisioningProfile must be provided and should match installed enterprise distribution provisioning Profile"
+    echo
+    exit 1
+fi
+
+# Delete old ipa if exists
+if [ -e "$pathToProjectDir/$ipaName.ipa" ]; then
+    echo "Removing existing ipa at: $pathToProjectDir/$ipaName.ipa"
+    rm "$pathToProjectDir/$ipaName.ipa"
+
+    if [ $? -ne 0 ]; then
+        echo "Failed to remove existing IPA."
+        exit 1
+    fi
+fi
+
+# Export ipa re-signed with enterprise provisioningProfile
+# TODO: This method is depricated - should use an exportOptionsPlist but currently that option doesn't work (see http://github.com/fastlane/gym/issues/89 for more info)
+(cd $pathToProjectDir && xcodeBuild -exportArchive -exportFormat ipa -exportProvisioningProfile "$provisioningProfile" -archivePath "$archivePath" -exportPath "$ipaName")
+if [ $? -ne 0 ]; then
+    echo "Failed to export IPA."
+    exit 1
+fi
+
+exit 0

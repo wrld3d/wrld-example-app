@@ -8,6 +8,7 @@ githubCommitUrl=$5
 pathToProjectDir=${6}
 hockeyAppIdentifier=${7:-d7b222a21f80e5f429f395652ff06924}
 environment=${8:staging}
+provisioningProfile=$9
 
 # This script executes all the steps to produce an iOS app.
 
@@ -32,7 +33,10 @@ fi
 
 rm -rf $pathToProjectDir"/build"
 
-sh "build-scripts/ios/compile_xcode.step.sh" $xcodeTargetName $productName $productVersion $pathToProjectDir
+archivePath="./Swallow$environment.xcarchive"
+ipaName="Swallow$environment"
+
+sh "build-scripts/ios/compile_xcode.step.sh" $xcodeTargetName $productName $productVersion $pathToProjectDir $archivePath
 
 if [ $? -ne 0 ] ; then
   git checkout $file_to_poke
@@ -41,12 +45,12 @@ fi
 
 git checkout $file_to_poke
 
-sh "build-scripts/ios/create_ipa_file.step.sh" $productName.app $pathToProjectDir
+sh "build-scripts/ios/create_ipa_file.step.sh" $productName.app $pathToProjectDir $archivePath $ipaName $provisioningProfile
 if [ $? -ne 0 ] ; then
   exit 1
 fi
 
-sh "build-scripts/ios/commit_to_hockeyapp.step.sh" $teamcityBuildUrl $githubCommitUrl $pathToProjectDir $hockeyAppIdentifier
+sh "build-scripts/ios/commit_to_hockeyapp.step.sh" $teamcityBuildUrl $githubCommitUrl $pathToProjectDir $ipaName $hockeyAppIdentifier
 if [ $? -ne 0 ] ; then
 exit 1
 fi

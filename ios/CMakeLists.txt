@@ -27,7 +27,7 @@ set(storyboards
 
 # plist settings
 set(EEGEO_PLIST_BUNDLE_EXECUTABLE "\${EXECUTABLE_NAME}")
-set(EEGEO_PLIST_BUNDLE_IDENTIFIER "eegeo.\${PRODUCT_NAME:rfc1034identifier}")
+set(EEGEO_PLIST_BUNDLE_IDENTIFIER "com.eegeo.\${PRODUCT_NAME:rfc1034identifier}")
 set(EEGEO_PLIST_BUNDLE_SHORT_VERSION_STRING "\${PRODUCT_VERSION}")
 set(EEGEO_PLIST_BUNDLE_DISPLAY_NAME "Project Swallow")
 set(EEGEO_PLIST_PRODUCT_NAME "\${PRODUCT_NAME}")
@@ -99,6 +99,7 @@ set_xcode_property (${executable_name} ENABLE_BITCODE "No")
 set_xcode_property (${executable_name} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon")
 set_xcode_property (${executable_name} ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME "LaunchImage")
 set_xcode_property (${executable_name} COMBINE_HIDPI_IMAGES "No")
+set_xcode_property (${executable_name} INSTALL_PATH "/Applications")
 
 set_xcode_property(${executable_name} GCC_PRECOMPILE_PREFIX_HEADER "YES")
 set_xcode_property(${executable_name} GCC_PREFIX_HEADER "ExampleApp/ProjectSwallowApp-Prefix.pch")
