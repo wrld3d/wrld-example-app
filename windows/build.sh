@@ -2,8 +2,9 @@
 
 usage()
 { 
-	echo "Usage: $0 [-n <PRODUCT_NAME> -v <FILE_VERSION> -i <INFORMATIONAL_VERSION>]"; 
+	echo "Usage: $0 [-n <PRODUCT_NAME> -e <ENVIRONMENT> -v <FILE_VERSION> -i <INFORMATIONAL_VERSION>]"; 
 	echo "  -n -> the product name of the app"; 
+    echo "  -e -> environment for deployment (staging or production)"
 	echo "  -v -> file version of executable"; 
 	echo "  -i -> informational version of executable"; 
 	1>&2; 
@@ -18,6 +19,9 @@ while getopts "n:v:i:" o; do
     case "${o}" in
     	n)
             productName=${OPTARG}
+            ;;
+        e) 
+            environment=${OPTARG}
             ;;
     	v)
             fileVersion=${OPTARG}
@@ -44,6 +48,25 @@ fi
 
 if [ ! -z "${informationalVersion}" ]; then
     sed -i "s/string\s*InformationalFileVersion\s*=\s*@\"[^\"]*\"/string InformationalFileVersion = @\"$informationalVersion\"/g" windows/ExampleApp/ExampleAppWPF/Properties/VersionInfo.cs
+fi
+
+if [[ ( $environment != 'production' ) && ( $environment != 'staging' ) ]]; then
+    echo "invalid environment '$environment'. Must be one of [staging|production]"
+    exit 1
+fi
+
+if [ $environment == 'production' ]; then
+    apiKeyFile=./src/ApiKey.h
+    apiKeyFileTemp=./src/ApiKeyTemp.h
+    git checkout $apiKeyFile
+    sed -e "s/project_swallow_config.json/project_swallow_production_config.json/g" $apiKeyFile > $apiKeyFileTemp
+
+    if [ $? -ne 0 ] ; then
+        echo "Failed to poke config file value into ApiKey file"  >&2
+        exit 1
+    fi
+
+    mv $apiKeyFileTemp $apiKeyFile
 fi
 
 if [ ! -f windows/nuget.exe ]; then
