@@ -15,7 +15,7 @@ projectPath=$(pwd)/windows/WinBuild/
 rm -rf $projectPath
 mkdir $projectPath
 
-while getopts "n:v:i:" o; do
+while getopts "n:e:v:i:" o; do
     case "${o}" in
     	n)
             productName=${OPTARG}
