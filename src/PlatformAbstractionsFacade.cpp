@@ -60,19 +60,14 @@ namespace ExampleApp
         return m_wrappedPlatformAbstractions.GetUrlEncoder();
     }
     
-    Eegeo::Concurrency::Tasks::IGlTaskContextFactory& PlatformAbstractionsFacade::GetGlTaskContextFactory() const
-    {
-        return m_wrappedPlatformAbstractions.GetGlTaskContextFactory();
-    }
-    
     Eegeo::Web::IConnectivityService& PlatformAbstractionsFacade::GetConnectivityService() const
     {
         return m_wrappedPlatformAbstractions.GetConnectivityService();
     }
     
-    void PlatformAbstractionsFacade::SetWebIOWorkPool(Eegeo::Concurrency::Tasks::IWorkPool *pWorkPool)
+    Eegeo::Concurrency::Tasks::IWorkPool& PlatformAbstractionsFacade::GetWorkPool() const
     {
-        m_wrappedPlatformAbstractions.SetWebIOWorkPool(pWorkPool);
+        return m_wrappedPlatformAbstractions.GetWorkPool();
     }
     
     void PlatformAbstractionsFacade::OnPause()

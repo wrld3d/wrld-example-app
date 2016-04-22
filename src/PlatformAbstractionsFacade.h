@@ -30,10 +30,8 @@ namespace ExampleApp
         Eegeo::Helpers::IHttpCache& GetHttpCache() const;
         Eegeo::Helpers::IFileIO& GetFileIO() const;
         Eegeo::Helpers::UrlHelpers::IUrlEncoder& GetUrlEncoder() const;
-        Eegeo::Concurrency::Tasks::IGlTaskContextFactory& GetGlTaskContextFactory() const;
         Eegeo::Web::IConnectivityService& GetConnectivityService() const;
-        
-        void SetWebIOWorkPool(Eegeo::Concurrency::Tasks::IWorkPool* pWorkPool);
+        Eegeo::Concurrency::Tasks::IWorkPool& GetWorkPool() const;
        
         void OnPause();
         void Update();
