@@ -26,8 +26,6 @@ namespace ExampleAppWPF
         public void OnCompleted()
         {
             m_adapter.UpdateSources(m_groups, m_groupsExpandable, m_groupToChildren);
-            m_adapter.ForceSetAnimatedSizes();
-            m_adapter.NotifyDataSetChanged();
         }
     }
 }
