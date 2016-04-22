@@ -210,15 +210,19 @@ namespace ExampleAppWPF
             var item = m_list.SelectedItem as MenuListItem;
             if (item != null)
             {
-                int position = m_adapter.Children.IndexOf(item);
+                var sectionChildIndices = m_adapter.GetSectionAndChildIndicesFromSelection(m_list.SelectedIndex);
 
-                int sectionIndex = m_adapter.GetSectionIndex(position);
-                int childIndex = m_adapter.GetItemIndex(position);
-
+                if (item.IsExpandable)
+                {
                 SearchMenuViewCLIMethods.OnSearchCleared(m_nativeCallerPointer);
-                MenuViewCLIMethods.SelectedItem(m_nativeCallerPointer, sectionIndex, childIndex);
+                }
+                else
+                {
+                    // temp - clear out ListBox without anim before repopulating. View doesn't have way of playing the shutter-open anims without collapsing list first
+                    m_resultListAdapter.ResetData();
+                }
 
-                ClearSearchResultsListBox();
+                MenuViewCLIMethods.SelectedItem(m_nativeCallerPointer, sectionChildIndices.Item1, sectionChildIndices.Item2);
             }
         }
 
@@ -306,8 +310,6 @@ namespace ExampleAppWPF
 
         public void SetSearchSection(string category, string[] searchResults)
         {
-            m_resultListAdapter.ResetData();
-
             var groups = new List<string>(searchResults.Length);
             var groupsExpandable = new List<bool>(searchResults.Length);
             var groupToChildren = new Dictionary<string, List<string>>();
@@ -328,14 +330,11 @@ namespace ExampleAppWPF
 
                 groups.Add(str);
                 groupsExpandable.Add(false);
-                groupToChildren.Add(str, new List<string>());
-            }
+                    groupToChildren.Add(str, new List<string>());
+                }
 
-            m_resultListAdapter.SetData(groups, groupsExpandable, groupToChildren);
-
-            m_resultsList.DataContext = m_resultListAdapter;
-
-            m_resultsList.ItemsSource = itemsSource;
+            m_resultListAdapter.SetData(itemsSource, groups, groupsExpandable, groupToChildren);
+        }
 
             m_resultsSpinner.Visibility = Visibility.Hidden;
             m_resultsClearButton.Visibility = Visibility.Visible;
@@ -411,7 +410,7 @@ namespace ExampleAppWPF
             m_hasCategorySearch = isCategory;
             
         }
-
+        
         public void SetSearchResultCount(int count)
         {
             if(count > 0)
@@ -432,9 +431,7 @@ namespace ExampleAppWPF
 
         protected override void RefreshListData(List<string> groups, List<bool> groupsExpandable, Dictionary<string, List<string>> groupToChildrenMap)
         {
-            m_adapter.SetData(groups, groupsExpandable, groupToChildrenMap);
-
-            m_list.DataContext = m_adapter;
+            m_adapter.SetData(m_list.ItemsSource, groups, groupsExpandable, groupToChildrenMap);
         }
     }
 }
