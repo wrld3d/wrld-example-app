@@ -218,7 +218,7 @@ namespace ExampleApp
                         }
                         else
                         {
-                            m_searchResultsIndex = std::distance(newSearchResults.begin(), iter);
+                            m_searchResultsIndex = static_cast<int>(std::distance(newSearchResults.begin(), iter));
                         }
                     }
 
