@@ -24,6 +24,7 @@
 #include "InteriorsEntityIdHighlightController.h"
 
 #include <algorithm>
+#include <iterator>
 
 namespace ExampleApp
 {
