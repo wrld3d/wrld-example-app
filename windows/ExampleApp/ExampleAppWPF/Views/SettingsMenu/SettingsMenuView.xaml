@@ -13,13 +13,13 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:SettingsMenuView}">
                     <ControlTemplate.Resources>
-                        <Storyboard x:Key="FadeInNewItems">
+                        <Storyboard x:Key="ItemShutterOpen">
                             <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Duration="0:0:0.2" >
                                 <SplineThicknessKeyFrame KeyTime="00:00:00.0" Value="0, -42, 0,0" />
                                 <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="0, 0,0,0" />
                             </ThicknessAnimationUsingKeyFrames>
                         </Storyboard>
-                        <Storyboard x:Key="FadeOutOldItems">
+                        <Storyboard x:Key="ItemShutterClose">
                             <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Duration="0:0:0.2" >
                                 <SplineThicknessKeyFrame KeyTime="00:00:00.0" Value="0, 0, 0,0" />
                                 <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="0, -42,0,0" />

@@ -143,8 +143,8 @@ namespace ExampleAppWPF
 
             m_mainContainer = (Grid)GetTemplateChild("SerchMenuMainContainer");
 
-            var fadeInItemStoryboard = ((Storyboard)Template.Resources["FadeInNewItems"]).Clone();
-            var fadeOutItemStoryboard = ((Storyboard)Template.Resources["FadeOutOldItems"]).Clone();
+            var itemShutterOpenStoryboard = ((Storyboard)Template.Resources["ItemShutterOpen"]).Clone();
+            var itemShutterCloseStoryboard = ((Storyboard)Template.Resources["ItemShutterClose"]).Clone();
 
             var slideInItemStoryboard = ((Storyboard)Template.Resources["SlideInNewItems"]).Clone();
             var slideOutItemStoryboard = ((Storyboard)Template.Resources["SlideOutOldItems"]).Clone();
@@ -167,8 +167,8 @@ namespace ExampleAppWPF
             m_searchArrowOpen = ((Storyboard)Template.Resources["OpenSearchArrow"]).Clone();
             m_searchArrowClosed  = ((Storyboard)Template.Resources["CloseSearchArrow"]).Clone();
 
-            m_adapter = new MenuListAdapter(false, m_list, slideInItemStoryboard, slideOutItemStoryboard, fadeInItemStoryboard, fadeOutItemStoryboard, "SubMenuItemPanel");
-            m_resultListAdapter = new MenuListAdapter(false, m_resultsList, slideInItemStoryboard, slideOutItemStoryboard, fadeInItemStoryboard, fadeOutItemStoryboard, "SearchResultPanel");
+            m_adapter = new MenuListAdapter(false, m_list, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SubMenuItemPanel");
+            m_resultListAdapter = new MenuListAdapter(false, m_resultsList, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SearchResultPanel");
         }
 
         private void OnSearchBoxTextChanged(object sender, TextChangedEventArgs e)
@@ -214,11 +214,6 @@ namespace ExampleAppWPF
                 if (item.IsExpandable)
                 {
                     SearchMenuViewCLIMethods.OnSearchCleared(m_nativeCallerPointer);
-                }
-                else
-                {
-                    // temp - clear out ListBox without anim before repopulating. View doesn't have way of playing the shutter-open anims without collapsing list first
-                    m_resultListAdapter.ResetData();
                 }
 
                 MenuViewCLIMethods.SelectedItem(m_nativeCallerPointer, sectionChildIndices.Item1, sectionChildIndices.Item2);
@@ -335,6 +330,7 @@ namespace ExampleAppWPF
                     groupToChildren.Add(str, new List<string>());
                 }
             }
+
 
             m_resultListAdapter.SetData(itemsSource, groups, groupsExpandable, groupToChildren);
         }
