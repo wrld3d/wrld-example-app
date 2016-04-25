@@ -20,8 +20,9 @@ namespace ExampleAppWPF
         private Dictionary<string, int> m_animatedSizesMap;
         private bool m_shouldAlignIconRight;
 
-        private StoryboardRunner m_fadeInStoryboardRunner;
-        private StoryboardRunner m_fadeOutStoryboardRunner;
+        private StoryboardRunner m_itemShutterOpenStoryboardRunner;
+        private StoryboardRunner m_itemShutterCloseStoryboardRunner;
+        
         private StoryboardRunner m_slideInStoryboardRunner;
         private StoryboardRunner m_slideOutStoryboardRunner;
 
@@ -41,7 +42,7 @@ namespace ExampleAppWPF
 
 
         public MenuListAdapter(bool shouldAlignIconRight, ListBox list,
-            Storyboard slideInAnimation, Storyboard slideOutAnimation, Storyboard fadeInItemAnimation, Storyboard fadeOutItemAnimation, string controlToAnimate)
+            Storyboard slideInAnimation, Storyboard slideOutAnimation, Storyboard itemShutterOpenAnimation, Storyboard itemShutterCloseAnimation, string controlToAnimate)
         {   
             m_animatedSizesMap = new Dictionary<string, int>();
 
@@ -54,8 +55,9 @@ namespace ExampleAppWPF
 
             m_list = list;
 
-            m_fadeInStoryboardRunner = new StoryboardRunner(fadeInItemAnimation);
-            m_fadeOutStoryboardRunner = new StoryboardRunner(fadeOutItemAnimation);
+            m_itemShutterOpenStoryboardRunner = new StoryboardRunner(itemShutterOpenAnimation);
+            m_itemShutterCloseStoryboardRunner = new StoryboardRunner(itemShutterCloseAnimation);
+
             m_slideInStoryboardRunner = new StoryboardRunner(slideInAnimation);
             m_slideOutStoryboardRunner = new StoryboardRunner(slideOutAnimation);
 
@@ -64,8 +66,8 @@ namespace ExampleAppWPF
 
         public bool IsAnimating()
         {
-            return m_fadeInStoryboardRunner.IsAnimating ||
-                m_fadeOutStoryboardRunner.IsAnimating ||
+            return m_itemShutterOpenStoryboardRunner.IsAnimating ||
+                m_itemShutterCloseStoryboardRunner.IsAnimating ||
                 m_slideInStoryboardRunner.IsAnimating ||
                 m_slideOutStoryboardRunner.IsAnimating;
         }
@@ -94,11 +96,14 @@ namespace ExampleAppWPF
         {
             if (m_list.ItemsSource != itemsSource)
             {
-                ResetData();
+                ResetData();                
                 m_list.ItemsSource = itemsSource;
+                AnimateItemsInShutterOnly(groups, groupsExpandable, groupToChildren, 0, m_list.Items.Count);
             }
-
-            UpdateAndAnimateSources(groups, groupsExpandable, groupToChildren);
+            else
+            {
+                UpdateAndAnimateSources(groups, groupsExpandable, groupToChildren);
+            }
 
             m_list.DataContext = this;
         }
@@ -324,7 +329,7 @@ namespace ExampleAppWPF
                 var controls = ChildStackPanelsFor(itemsToAnimate);
 
                 m_slideInStoryboardRunner.Begin(itemsToAnimate);
-                m_fadeInStoryboardRunner.Begin(controls);
+                m_itemShutterOpenStoryboardRunner.Begin(controls);
             }
         }
 
@@ -343,9 +348,34 @@ namespace ExampleAppWPF
             {
                 var menuDelayedSourceUpdateAnimatorListener = new MenuDelayedSourceUpdateAnimatorListener(groups, groupsExpandable, groupToChildren, this);
                 var controls = ChildStackPanelsFor(itemsToAnimate);
-                m_fadeOutStoryboardRunner.AllCompleted += menuDelayedSourceUpdateAnimatorListener.OnCompleted;
+                m_slideOutStoryboardRunner.AllCompleted += menuDelayedSourceUpdateAnimatorListener.OnCompleted;
                 m_slideOutStoryboardRunner.Begin(itemsToAnimate);
-                m_fadeOutStoryboardRunner.Begin(controls);
+                m_itemShutterCloseStoryboardRunner.Begin(controls);
+            }
+        }
+
+        private void AnimateItemsInShutterOnly(
+            List<string> groups,
+            List<bool> groupsExpandable,
+            Dictionary<string, List<string>> groupToChildren,
+            int startIndex,
+            int itemCount)
+        {
+            UpdateSources(groups, groupsExpandable, groupToChildren);
+
+            var itemsToAnimate = GetListBoxItemsInRange(startIndex, itemCount);
+
+            if (itemsToAnimate.Any())
+            {
+                var controls = ChildStackPanelsFor(itemsToAnimate);
+
+                foreach (var item in itemsToAnimate)
+                {
+                    var thickness = new Thickness(0, 0, 0, 0);
+                    item.Margin = thickness;
+                }
+
+                m_itemShutterOpenStoryboardRunner.Begin(controls);
             }
         }
 

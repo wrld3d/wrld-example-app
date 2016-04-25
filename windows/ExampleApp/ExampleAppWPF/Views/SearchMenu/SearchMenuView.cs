@@ -30,7 +30,6 @@ namespace ExampleAppWPF
 
         private Grid m_resultsCountContainer;
 
-        private string m_defaultEditText;
         private bool m_searchInFlight;
         private bool m_hasResults;
         private bool m_hasCategorySearch;
@@ -139,12 +138,11 @@ namespace ExampleAppWPF
             m_editText.GotFocus += OnSearchBoxSelected;
             m_editText.LostFocus += OnSearchBoxUnSelected;
             m_editText.TextChanged += OnSearchBoxTextChanged;
-            m_defaultEditText = m_editText.Text;
 
             m_mainContainer = (Grid)GetTemplateChild("SerchMenuMainContainer");
 
-            var fadeInItemStoryboard = ((Storyboard)Template.Resources["FadeInNewItems"]).Clone();
-            var fadeOutItemStoryboard = ((Storyboard)Template.Resources["FadeOutOldItems"]).Clone();
+            var itemShutterOpenStoryboard = ((Storyboard)Template.Resources["ItemShutterOpen"]).Clone();
+            var itemShutterCloseStoryboard = ((Storyboard)Template.Resources["ItemShutterClose"]).Clone();
 
             var slideInItemStoryboard = ((Storyboard)Template.Resources["SlideInNewItems"]).Clone();
             var slideOutItemStoryboard = ((Storyboard)Template.Resources["SlideOutOldItems"]).Clone();
@@ -167,13 +165,13 @@ namespace ExampleAppWPF
             m_searchArrowOpen = ((Storyboard)Template.Resources["OpenSearchArrow"]).Clone();
             m_searchArrowClosed  = ((Storyboard)Template.Resources["CloseSearchArrow"]).Clone();
 
-            m_adapter = new MenuListAdapter(false, m_list, slideInItemStoryboard, slideOutItemStoryboard, fadeInItemStoryboard, fadeOutItemStoryboard, "SubMenuItemPanel");
-            m_resultListAdapter = new MenuListAdapter(false, m_resultsList, slideInItemStoryboard, slideOutItemStoryboard, fadeInItemStoryboard, fadeOutItemStoryboard, "SearchResultPanel");
+            m_adapter = new MenuListAdapter(false, m_list, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SubMenuItemPanel");
+            m_resultListAdapter = new MenuListAdapter(false, m_resultsList, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SearchResultPanel");
         }
 
         private void OnSearchBoxTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (m_editText.Text?.Length > 0 && m_editText.Text != m_defaultEditText)
+            if (m_editText.Text?.Length > 0)
             {
                 m_resultsClearButton.Visibility = Visibility.Visible;
                 m_editText.Foreground = Colour.black;
@@ -215,11 +213,6 @@ namespace ExampleAppWPF
                 {
                     SearchMenuViewCLIMethods.OnSearchCleared(m_nativeCallerPointer);
                 }
-                else
-                {
-                    // temp - clear out ListBox without anim before repopulating. View doesn't have way of playing the shutter-open anims without collapsing list first
-                    m_resultListAdapter.ResetData();
-                }
 
                 MenuViewCLIMethods.SelectedItem(m_nativeCallerPointer, sectionChildIndices.Item1, sectionChildIndices.Item2);
             }
@@ -237,13 +230,13 @@ namespace ExampleAppWPF
         {
             if(m_editText.Text.Replace(" ", null) == string.Empty)
             {
-                m_editText.Text = m_defaultEditText;
+                m_editText.Text = string.Empty;
             }
         }
 
         private void OnSearchBoxSelected(object sender, RoutedEventArgs e)
         {
-            if(m_editText.Text == m_defaultEditText || m_hasCategorySearch)
+            if (m_hasCategorySearch)
             {
                 m_editText.Text = string.Empty;
             }
@@ -280,7 +273,8 @@ namespace ExampleAppWPF
 
             ClearSearchResultsListBox();
 
-            m_editText.Text = m_defaultEditText;
+            //m_editText.Text = m_defaultEditText;
+            m_editText.Text = String.Empty;
             m_editText.Foreground = Colour.darkgrey;
         }
 
@@ -335,6 +329,7 @@ namespace ExampleAppWPF
                     groupToChildren.Add(str, new List<string>());
                 }
             }
+
 
             m_resultListAdapter.SetData(itemsSource, groups, groupsExpandable, groupToChildren);
         }

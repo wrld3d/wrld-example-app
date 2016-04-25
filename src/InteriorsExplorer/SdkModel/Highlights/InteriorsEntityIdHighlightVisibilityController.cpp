@@ -24,6 +24,7 @@
 #include "InteriorsEntityIdHighlightController.h"
 
 #include <algorithm>
+#include <iterator>
 
 namespace ExampleApp
 {
@@ -71,6 +72,7 @@ namespace ExampleApp
                 , m_cellResourceDeletedCallback(this, &InteriorsEntityIdHighlightVisibilityController::HandleFloorCellDeleted)
                 , m_currentlyActiveSwallowInteriors(0)
                 , m_activateHighlightOnInteriorsLoaded(false)
+                , m_searchResultsIndex(-1)
                 {
                     m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
                     m_messageBus.SubscribeNative(m_handleSearchResultSectionItemSelectedMessageBinding);
@@ -104,6 +106,7 @@ namespace ExampleApp
                 
                 void InteriorsEntityIdHighlightVisibilityController::OnSearchResultsCleared()
                 {
+                    m_searchResultsIndex = -1;
                     m_searchResults.clear();
                     ClearHighlights();
                     
@@ -138,12 +141,8 @@ namespace ExampleApp
                         m_activateHighlightOnInteriorsLoaded = true;
                         return;
                     }
-                    
-                    const Search::SdkModel::SearchResultModel& selectedSearchResult = m_searchResults.at(m_searchResultsIndex);
 
-                    const std::vector<std::string>& deskIds = GetDeskIdsFromSearchResultModel(selectedSearchResult);
-
-                    m_interiorsEntityIdHighlightController.HighlightEntityIds(deskIds, m_lastHighlightedRenderables);
+                    RefreshHighlights();
                 }
                 
                 void InteriorsEntityIdHighlightVisibilityController::HandleFloorCellAdded(const Eegeo::Resources::Interiors::InteriorsCellResource& interiorCellResource)
@@ -157,11 +156,7 @@ namespace ExampleApp
                             
                             if(m_activateHighlightOnInteriorsLoaded && m_currentlyActiveSwallowInteriors >= m_validSwallowInteriors.size())
                             {
-                                const Search::SdkModel::SearchResultModel& selectedSearchResult = m_searchResults.at(m_searchResultsIndex);
-                                
-                                const std::vector<std::string>& deskIds = GetDeskIdsFromSearchResultModel(selectedSearchResult);
-                                
-                                m_interiorsEntityIdHighlightController.HighlightEntityIds(deskIds, m_lastHighlightedRenderables);
+                                RefreshHighlights();
                                 
                                 m_activateHighlightOnInteriorsLoaded = false;
                             }
@@ -209,8 +204,42 @@ namespace ExampleApp
                     {
                         return;
                     }
-                    
+
+                    if (m_searchResultsIndex >= 0)
+                    {
+                        const Search::SdkModel::SearchResultModel& selectedSearchResult = m_searchResults.at(m_searchResultsIndex);
+
+                        const std::vector<Search::SdkModel::SearchResultModel>& newSearchResults = message.GetResults();
+
+                        std::vector<Search::SdkModel::SearchResultModel>::const_iterator iter = std::find(newSearchResults.begin(), newSearchResults.end(), selectedSearchResult);
+                        if (iter == newSearchResults.end())
+                        {
+                            m_searchResultsIndex = -1;                            
+                        }
+                        else
+                        {
+                            m_searchResultsIndex = static_cast<int>(std::distance(newSearchResults.begin(), iter));
+                        }
+                    }
+
                     m_searchResults = message.GetResults();
+
+                    RefreshHighlights();
+                }
+
+                void InteriorsEntityIdHighlightVisibilityController::RefreshHighlights()
+                {
+                    ClearHighlights();
+
+                    if (m_searchResultsIndex >= 0)
+                    {
+                        const Search::SdkModel::SearchResultModel& selectedSearchResult = m_searchResults.at(m_searchResultsIndex);
+
+                        const std::vector<std::string>& deskIds = GetDeskIdsFromSearchResultModel(selectedSearchResult);
+
+                        m_interiorsEntityIdHighlightController.HighlightEntityIds(deskIds, m_lastHighlightedRenderables);
+                    }
+
                 }
             }
         }

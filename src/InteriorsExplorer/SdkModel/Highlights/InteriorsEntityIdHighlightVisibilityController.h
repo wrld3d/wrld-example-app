@@ -39,6 +39,7 @@ namespace ExampleApp
                     void HandleFloorCellAdded(const Eegeo::Resources::Interiors::InteriorsCellResource& interiorCellResource);
                     void HandleFloorCellDeleted(const Eegeo::Resources::Interiors::InteriorsCellResource& interiorCellResource);
                     void ClearHighlights();
+                    void RefreshHighlights();
 
                     std::vector<Search::SdkModel::SearchResultModel> m_searchResults;
                     int m_searchResultsIndex;
