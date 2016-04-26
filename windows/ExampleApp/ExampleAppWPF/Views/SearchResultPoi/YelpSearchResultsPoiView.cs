@@ -23,6 +23,7 @@ namespace ExampleAppWPF
         private ImageSource m_ratingsImage;
         private Visibility m_ratingCountVisibility;
         private string m_url;
+        private FrameworkElement m_reviewsIcon;
 
         private ControlClickHandler m_yelpReviewImageClickHandler;
         
@@ -176,6 +177,8 @@ namespace ExampleAppWPF
 
             m_mainContainer = (FrameworkElement)GetTemplateChild("SearchresultsPoiViewContainer");
 
+            m_reviewsIcon = (FrameworkElement)GetTemplateChild("ReviewsIcon");
+
             var mainGrid = (Application.Current.MainWindow as MainWindow).MainGrid;
             var screenWidth = mainGrid.ActualWidth;
 
@@ -211,8 +214,17 @@ namespace ExampleAppWPF
             RatingCountVisibility = string.IsNullOrEmpty(yelpResultModel.ImageUrl) && !string.IsNullOrEmpty(yelpResultModel.RatingsImageUrl) && yelpResultModel.ReviewCount > 0 ? Visibility.Visible : Visibility.Collapsed;
             Url = yelpResultModel.WebUrl;
 
-			m_poiImage.Source = new BitmapImage(ViewHelpers.MakeUriForImage("poi_placeholder.png"));
-			
+            if(string.IsNullOrEmpty(ReviewText))
+            {
+                m_reviewsIcon.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                m_reviewsIcon.Visibility = Visibility.Visible;
+            }
+
+            m_poiImage.Source = new BitmapImage(new Uri("/ExampleAppWPF;component/Assets/poi_placeholder.png", UriKind.Relative));
+
             OnPropertyChanged("IsPinned");
 
             ShowAll();
