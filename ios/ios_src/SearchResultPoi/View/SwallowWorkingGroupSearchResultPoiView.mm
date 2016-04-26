@@ -255,7 +255,7 @@ namespace
     const float titleHeight = headlineHeight * 0.6f;
     
     self.pTitleLabel.frame = CGRectMake(headlineHeight + titlePadding,
-                                        0.f,
+                                        titlePadding,
                                         mainWindowWidth - (headlineHeight + titlePadding),
                                         titleHeight);
     self.pTitleLabel.font = [UIFont systemFontOfSize:24.0f];
