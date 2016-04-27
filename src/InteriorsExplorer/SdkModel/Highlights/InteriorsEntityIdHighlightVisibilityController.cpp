@@ -101,7 +101,7 @@ namespace ExampleApp
                     m_messageBus.UnsubscribeUi(m_searchResultsHandler);
                     
                     m_cellResourceObserver.UnregisterResourceDeletedCallback(m_cellResourceDeletedCallback);
-                    m_cellResourceObserver.UnregisterResourceDeletedCallback(m_cellResourceDeletedCallback);
+                    m_cellResourceObserver.UnregisterAddedToSceneGraphCallback(m_cellResourceAddedCallback);
                 }
                 
                 void InteriorsEntityIdHighlightVisibilityController::OnSearchResultsCleared()
