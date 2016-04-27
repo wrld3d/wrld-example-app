@@ -76,7 +76,7 @@
                                     </Grid.ColumnDefinitions>
 
                                     <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Center" >
-                                        <Image Name="CategoryIcon" Stretch="Uniform" Source="/Assets/icon1_person.png"/>
+                                        <Image Name="CategoryIcon" Source="/Assets/icon1_person_POI.png"/>
                                         <TextBlock Name="Title" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SwallowPersonSearchResultsPoiView}}, Path=TitleText}"  MaxWidth="350" VerticalAlignment="Center" FontSize="28" Margin="4,-4,0,0"  Foreground="{DynamicResource PrimaryBG_Over_Colour}" FontFamily="{DynamicResource PrimaryUIFont}" TextTrimming="CharacterEllipsis"/>
                                     </StackPanel>
                                     <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="Auto"  Background="{StaticResource Gold}" Grid.Column="1">

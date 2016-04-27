@@ -636,6 +636,9 @@
     <Resource Include="..\..\Resources\icon1_person.png">
       <Link>Assets\icon1_person.png</Link>
     </Resource>
+	<Resource Include="..\..\Resources\icon1_person_POI.png">
+      <Link>Assets\icon1_person_POI.png</Link>
+    </Resource>
     <Resource Include="..\..\Resources\icon1_stationery.png">
       <Link>Assets\icon1_stationery.png</Link>
     </Resource>
