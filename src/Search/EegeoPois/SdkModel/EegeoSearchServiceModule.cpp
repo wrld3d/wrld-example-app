@@ -5,6 +5,7 @@
 #include "EegeoJsonParser.h"
 #include "EegeoSearchQueryFactory.h"
 #include "EegeoSearchService.h"
+#include "LaxSearchConstants.h"
 
 namespace ExampleApp
 {
@@ -48,7 +49,9 @@ namespace ExampleApp
                 
                 std::vector<CategorySearch::View::CategorySearchModel> EegeoSearchServiceModule::GetCategorySearchModels() const
                 {
-                    return std::vector<CategorySearch::View::CategorySearchModel>();
+//                    return std::vector<CategorySearch::View::CategorySearchModel>();
+                    return Search::Lax::SearchConstants::GetCategorySearchModels();
+
                 }
             }
         }

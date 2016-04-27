@@ -11,7 +11,16 @@ namespace ExampleApp
             void CategorySearchSelectedMessageHandler::OnCategorySearchSelectedMessage(const CategorySearchSelectedMessage& message)
             {
                 m_metricsService.SetEvent("Category Search", "Category", message.Category());
-                m_searchQueryPerformer.PerformSearchQuery(message.Category(), true);
+//                m_searchQueryPerformer.PerformSearchQuery(message.Category(), true);
+                
+                if (message.HasRadius())
+                {
+                    m_searchQueryPerformer.PerformSearchQuery(message.Category(), true, message.Interior(), message.Radius());
+                }
+                else
+                {
+                    m_searchQueryPerformer.PerformSearchQuery(message.Category(), true, message.Interior());
+                }
             }
 
             CategorySearchSelectedMessageHandler::CategorySearchSelectedMessageHandler(

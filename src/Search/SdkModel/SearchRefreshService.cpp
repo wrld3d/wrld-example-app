@@ -124,9 +124,11 @@ namespace ExampleApp
                 
                 if (shouldRefresh)
                 {
-                    const Eegeo::Space::LatLongAltitude& currentLocation = Eegeo::Space::LatLongAltitude::FromECEF(interestPointEcef);
+//                    const Eegeo::Space::LatLongAltitude& currentLocation = Eegeo::Space::LatLongAltitude::FromECEF(interestPointEcef);
                     const SearchQuery& previousQuery = m_searchQueryPerformer.GetPreviousSearchQuery();
-                    m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), currentLocation);
+//                    m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), currentLocation);
+                    m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(),false);
+                    
                     m_previousQueryLocationEcef = interestPointEcef;
                     m_secondsSincePreviousRefresh = 0.f;
                     m_previousQueryInterestDistance = (viewpointEcef - interestPointEcef).Length();

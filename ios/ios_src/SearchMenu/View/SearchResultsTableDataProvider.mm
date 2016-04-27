@@ -196,7 +196,11 @@ static NSString *CellIdentifier = @"searchCell";
                                       textWidth,
                                       cell.textLabel.frame.size.height);
         
-        std::string details = document["details"].GetString();
+        std::string details = "";
+        if (document.HasMember("details"))
+        {
+            details = document["details"].GetString();
+        }
         
         cell.detailTextLabel.text = [NSString stringWithUTF8String:details.c_str()];
         cell.detailTextLabel.font = [UIFont systemFontOfSize:11.0f];

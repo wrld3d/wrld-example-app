@@ -15,8 +15,8 @@ namespace ExampleApp
                 : SearchServiceBase(std::vector<std::string>())
                 , m_searchServices(searchServices)
                 , m_searchQueryResponseCallback(this, &CombinedSearchService::OnSearchResponseRecieved)
-                , m_pendingResultsLeft(0)
-                , m_currentQueryModel("", false, Eegeo::Space::LatLongAltitude(0, 0, 0), 0.f)
+                , m_pendingResultsLeft(0)                
+                , m_currentQueryModel("", false, false, Eegeo::Space::LatLongAltitude(0, 0, 0), 0.f)
                 , m_hasActiveQuery(false)
                 {
                     std::map<std::string,Search::SdkModel::ISearchService*>::const_iterator iter;
