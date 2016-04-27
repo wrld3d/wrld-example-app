@@ -1,3 +1,7 @@
+#!/bin/sh
+
+pushd windows/Installer
+
 echo
 echo Creating windows installer
 echo
@@ -35,7 +39,7 @@ if [ $? = 0 ] ; then
   echo "Installer compilation step success"
 else
   echo "Installer compilation step FAILED!"
-  exit $?
+  exit 1
 fi
 
 light.exe ./deploy/Product.wixobj -o ./deploy/Swallow.msi
@@ -44,7 +48,7 @@ if [ $? = 0 ] ; then
   echo "Installer linker step success"
 else
   echo "Installer linker step FAILED!"
-  exit $?
+  exit 1
 fi
 
 echo
@@ -58,7 +62,7 @@ if [ $? = 0 ] ; then
   echo "Main Bundle compilation step success"
 else
   echo "Main Bundle compilation step FAILED!"
-  exit $?
+  exit 1
 fi
 
 light.exe -ext WixBalExtension -ext WixUtilExtension ./deploy/Bundle.wixobj -o "./deploy/Swallow Installer.exe"
@@ -67,10 +71,13 @@ if [ $? = 0 ] ; then
   echo "Main Bundle linker step success"
 else
   echo "Main Bundle linker step FAILED!"
-  exit $?
+  exit 1
 fi
 
 echo
 echo "Bundle installer for V$version created!"
 echo
+popd
+
 exit 0
+
