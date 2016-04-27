@@ -430,9 +430,6 @@
       <Component Id="cmpkvaGMsqe9G3OWz4m9YYc3tO8GZc" Directory="RESOURCEFOLDER" Guid="{57A375E9-7759-4B05-B9CA-7F5B1227C97D}">
         <File Id="filng.v_aMc6HHa98Dq10v6P3.hrbA" KeyPath="yes" Source="payload\Resources\micello_logo.png" />
       </Component>
-      <Component Id="cmpuYvQRc1CldEWSVK61GKbiZ1uEVw" Directory="RESOURCEFOLDER" Guid="{1A26FF19-0BED-4371-8FE9-25BA4EDFD8DF}">
-        <File Id="filJZkxhw.yk4r9V.pLBklJ3.2XPIs" KeyPath="yes" Source="payload\Resources\pin_data.json" />
-      </Component>
       <Component Id="cmpCoJA1DOM3xypeAvWokLw9DD4Jsc" Directory="RESOURCEFOLDER" Guid="{13DDC145-48DC-4C59-9E26-627A82E8E1CA}">
         <File Id="filV5gwq82NrL6TpFYSWp6wDRX31p0" KeyPath="yes" Source="payload\Resources\placeholder.dds" />
       </Component>
