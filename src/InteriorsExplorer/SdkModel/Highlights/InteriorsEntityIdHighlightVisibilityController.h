@@ -36,10 +36,13 @@ namespace ExampleApp
                     void OnSearchResultsLoaded(const Search::SearchQueryResponseReceivedMessage& message);
                     void OnSearchResultsCleared();
                     void OnSearchItemSelected(const SearchResultSection::SearchResultSectionItemSelectedMessage& message);
+                    void HandleFloorCellAdded(const Eegeo::Resources::Interiors::InteriorsCellResource& interiorCellResource);
                     void HandleFloorCellDeleted(const Eegeo::Resources::Interiors::InteriorsCellResource& interiorCellResource);
                     void ClearHighlights();
+                    void RefreshHighlights();
 
                     std::vector<Search::SdkModel::SearchResultModel> m_searchResults;
+                    int m_searchResultsIndex;
 
                     typedef std::vector<Eegeo::Rendering::Renderables::InstancedInteriorFloorRenderable*> InstancedRenderableVector;
                     InstancedRenderableVector m_lastHighlightedRenderables;
@@ -47,6 +50,12 @@ namespace ExampleApp
                     Eegeo::Resources::Interiors::InteriorsEntityIdHighlightController& m_interiorsEntityIdHighlightController;
                     Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
                     ExampleAppMessaging::TMessageBus& m_messageBus;
+                    
+                    int m_currentlyActiveSwallowInteriors;
+                    bool m_activateHighlightOnInteriorsLoaded;
+                    
+                    std::vector<std::string> m_validSwallowInteriors;
+                    std::vector<bool> m_hasSwallowInteriorLoaded;
 
                     Eegeo::Helpers::TCallback1<InteriorsEntityIdHighlightVisibilityController, const SearchResultSection::SearchResultSectionItemSelectedMessage&> m_handleSearchResultSectionItemSelectedMessageBinding;
                     Eegeo::Helpers::TCallback1<InteriorsEntityIdHighlightVisibilityController, const Search::SearchQueryResponseReceivedMessage&> m_searchResultsHandler;
@@ -54,6 +63,7 @@ namespace ExampleApp
                     
                     Eegeo::Resources::Interiors::InteriorsCellResourceObserver& m_cellResourceObserver;
                     Eegeo::Helpers::TCallback1<InteriorsEntityIdHighlightVisibilityController, const Eegeo::Resources::Interiors::InteriorsCellResource> m_cellResourceDeletedCallback;
+                    Eegeo::Helpers::TCallback1<InteriorsEntityIdHighlightVisibilityController, const Eegeo::Resources::Interiors::InteriorsCellResource> m_cellResourceAddedCallback;
                 };
             }
         }

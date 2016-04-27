@@ -24,6 +24,7 @@
 #include "InteriorsEntityIdHighlightController.h"
 
 #include <algorithm>
+#include <iterator>
 
 namespace ExampleApp
 {
@@ -52,7 +53,6 @@ namespace ExampleApp
 
                         return std::vector<std::string>();
                     }
-
                 }
 
                 InteriorsEntityIdHighlightVisibilityController::InteriorsEntityIdHighlightVisibilityController(
@@ -68,13 +68,30 @@ namespace ExampleApp
                 , m_handleSearchResultSectionItemSelectedMessageBinding(this, &InteriorsEntityIdHighlightVisibilityController::OnSearchItemSelected)
                 , m_messageBus(messageBus)
                 , m_cellResourceObserver(cellResourceObserver)
+                , m_cellResourceAddedCallback(this, &InteriorsEntityIdHighlightVisibilityController::HandleFloorCellAdded)
                 , m_cellResourceDeletedCallback(this, &InteriorsEntityIdHighlightVisibilityController::HandleFloorCellDeleted)
+                , m_currentlyActiveSwallowInteriors(0)
+                , m_activateHighlightOnInteriorsLoaded(false)
+                , m_searchResultsIndex(-1)
                 {
                     m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
                     m_messageBus.SubscribeNative(m_handleSearchResultSectionItemSelectedMessageBinding);
                     m_messageBus.SubscribeUi(m_searchResultsHandler);
                     
+                    m_cellResourceObserver.RegisterAddedToSceneGraphCallback(m_cellResourceAddedCallback);
                     m_cellResourceObserver.RegisterResourceDeletedCallback(m_cellResourceDeletedCallback);
+                    
+                    m_validSwallowInteriors.push_back("swallow_lon_parkhouse");
+                    m_hasSwallowInteriorLoaded.push_back(false);
+                    
+                    m_validSwallowInteriors.push_back("swallow_lon_38finsbury");
+                    m_hasSwallowInteriorLoaded.push_back(false);
+                    
+                    m_validSwallowInteriors.push_back("swallow_lon_50finsbury");
+                    m_hasSwallowInteriorLoaded.push_back(false);
+                    
+                    m_validSwallowInteriors.push_back("swallow_lon_citygatehouse");
+                    m_hasSwallowInteriorLoaded.push_back(false);
                 }
                 
                 InteriorsEntityIdHighlightVisibilityController::~InteriorsEntityIdHighlightVisibilityController()
@@ -84,12 +101,16 @@ namespace ExampleApp
                     m_messageBus.UnsubscribeUi(m_searchResultsHandler);
                     
                     m_cellResourceObserver.UnregisterResourceDeletedCallback(m_cellResourceDeletedCallback);
+                    m_cellResourceObserver.UnregisterAddedToSceneGraphCallback(m_cellResourceAddedCallback);
                 }
                 
                 void InteriorsEntityIdHighlightVisibilityController::OnSearchResultsCleared()
                 {
+                    m_searchResultsIndex = -1;
                     m_searchResults.clear();
                     ClearHighlights();
+                    
+                    m_activateHighlightOnInteriorsLoaded = false;
                 }
 
                 void InteriorsEntityIdHighlightVisibilityController::ClearHighlights()
@@ -112,16 +133,51 @@ namespace ExampleApp
                     ClearHighlights();
 
                     Eegeo_ASSERT(!m_searchResults.empty());
-                    const Search::SdkModel::SearchResultModel& selectedSearchResult = m_searchResults.at(message.ItemIndex());
+                    
+                    m_searchResultsIndex = message.ItemIndex();
+                    
+                    if(m_currentlyActiveSwallowInteriors < m_validSwallowInteriors.size())
+                    {
+                        m_activateHighlightOnInteriorsLoaded = true;
+                        return;
+                    }
 
-                    const std::vector<std::string>& deskIds = GetDeskIdsFromSearchResultModel(selectedSearchResult);
-
-                    m_interiorsEntityIdHighlightController.HighlightEntityIds(deskIds, m_lastHighlightedRenderables);
+                    RefreshHighlights();
+                }
+                
+                void InteriorsEntityIdHighlightVisibilityController::HandleFloorCellAdded(const Eegeo::Resources::Interiors::InteriorsCellResource& interiorCellResource)
+                {
+                    for(int i = 0; i < m_validSwallowInteriors.size(); ++i)
+                    {
+                        if(m_validSwallowInteriors[i] == interiorCellResource.GetInteriorId().Value() && m_hasSwallowInteriorLoaded[i] == false)
+                        {
+                            ++m_currentlyActiveSwallowInteriors;
+                            m_hasSwallowInteriorLoaded[i] = true;
+                            
+                            if(m_activateHighlightOnInteriorsLoaded && m_currentlyActiveSwallowInteriors >= m_validSwallowInteriors.size())
+                            {
+                                RefreshHighlights();
+                                
+                                m_activateHighlightOnInteriorsLoaded = false;
+                            }
+                            return;
+                        }
+                    }
                 }
 
                 
                 void InteriorsEntityIdHighlightVisibilityController::HandleFloorCellDeleted(const Eegeo::Resources::Interiors::InteriorsCellResource& interiorCellResource)
                 {
+                    for(int i = 0; i < m_validSwallowInteriors.size(); ++i)
+                    {
+                        if(m_validSwallowInteriors[i] == interiorCellResource.GetInteriorId().Value() && m_hasSwallowInteriorLoaded[i] == true)
+                        {
+                            --m_currentlyActiveSwallowInteriors;
+                            m_hasSwallowInteriorLoaded[i] = false;
+                            break;
+                        }
+                    }
+                    
                     std::vector<Eegeo::Rendering::Renderables::InstancedInteriorFloorRenderable*> instancedRenderablesToRemove;
 
                     const std::vector<Eegeo::Resources::Interiors::InteriorsFloorCell*>& floorCells = interiorCellResource.GetFloorCells();
@@ -144,7 +200,46 @@ namespace ExampleApp
 
                 void InteriorsEntityIdHighlightVisibilityController::OnSearchResultsLoaded(const Search::SearchQueryResponseReceivedMessage& message)
                 {
+                    if(m_activateHighlightOnInteriorsLoaded)
+                    {
+                        return;
+                    }
+
+                    if (m_searchResultsIndex >= 0)
+                    {
+                        const Search::SdkModel::SearchResultModel& selectedSearchResult = m_searchResults.at(m_searchResultsIndex);
+
+                        const std::vector<Search::SdkModel::SearchResultModel>& newSearchResults = message.GetResults();
+
+                        std::vector<Search::SdkModel::SearchResultModel>::const_iterator iter = std::find(newSearchResults.begin(), newSearchResults.end(), selectedSearchResult);
+                        if (iter == newSearchResults.end())
+                        {
+                            m_searchResultsIndex = -1;                            
+                        }
+                        else
+                        {
+                            m_searchResultsIndex = static_cast<int>(std::distance(newSearchResults.begin(), iter));
+                        }
+                    }
+
                     m_searchResults = message.GetResults();
+
+                    RefreshHighlights();
+                }
+
+                void InteriorsEntityIdHighlightVisibilityController::RefreshHighlights()
+                {
+                    ClearHighlights();
+
+                    if (m_searchResultsIndex >= 0 && m_currentlyActiveSwallowInteriors >= m_validSwallowInteriors.size())
+                    {
+                        const Search::SdkModel::SearchResultModel& selectedSearchResult = m_searchResults.at(m_searchResultsIndex);
+
+                        const std::vector<std::string>& deskIds = GetDeskIdsFromSearchResultModel(selectedSearchResult);
+
+                        m_interiorsEntityIdHighlightController.HighlightEntityIds(deskIds, m_lastHighlightedRenderables);
+                    }
+
                 }
             }
         }

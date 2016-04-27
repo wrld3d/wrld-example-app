@@ -42,17 +42,17 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:SearchMenuView}">
                     <ControlTemplate.Resources>
-                        <Storyboard x:Key="FadeInNewItems">
+                        <Storyboard x:Key="ItemShutterOpen">
                             <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="0" To="0" Duration="0:0:0.0" BeginTime="0:0:0.0"/>
 
-                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" To="1" Duration="{StaticResource shutterAnimDuration}" BeginTime="0:0:0.2">
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" To="1.0" Duration="{StaticResource shutterAnimDuration}" BeginTime="0:0:0.2">
                                 <DoubleAnimation.EasingFunction>
                                     <CubicEase EasingMode="EaseInOut"/>
                                 </DoubleAnimation.EasingFunction>
                             </DoubleAnimation>
                         </Storyboard>
                         
-                        <Storyboard x:Key="FadeOutOldItems">
+                        <Storyboard x:Key="ItemShutterClose">
                             <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" To="0" Duration="{StaticResource shutterAnimDuration}">
                                 <DoubleAnimation.EasingFunction>
                                     <CubicEase EasingMode="EaseInOut"/>
@@ -216,9 +216,26 @@
                                 </Style>
                             </Grid.Resources>
                             <Border BorderBrush="White" Background="White" BorderThickness="1,1,1,1" CornerRadius="5" Width="225" Height="26" VerticalAlignment="Center">
-                                <TextBox Text="Enter Search Term" Name="SearchInputBox" FontFamily="{StaticResource PrimaryUIFont}" FontSize="16" Foreground="{StaticResource DarkGrey}" Margin="5,0,0,0" Background="Transparent" BorderThickness="0">
+                                <TextBox Name="SearchInputBox" FontFamily="{StaticResource PrimaryUIFont}" FontSize="16" Foreground="{StaticResource DarkGrey}" Margin="5,0,0,0" BorderThickness="0">
                                     <TextBox.Resources>
                                         <Style TargetType="{x:Type TextBox}">
+                                            <Style.Resources>
+                                                <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                                    <VisualBrush.Visual>
+                                                        <Label Content="Enter search term" FontFamily="{StaticResource PrimaryUIFont}" FontSize="16" Foreground="{StaticResource DarkGrey}" Margin="5,0,0,0" BorderThickness="0"/>
+                                                    </VisualBrush.Visual>
+                                                </VisualBrush>
+                                            </Style.Resources>
+                                            <Style.Triggers>
+                                                <Trigger Property="Text" Value="{x:Static System:String.Empty}">
+                                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                                </Trigger>
+                                                <Trigger Property="Text" Value="{x:Null}">
+                                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                            <Setter Property="Background" Value="{StaticResource InputBoxBG_colour}" />
+
                                             <Setter Property="RenderTransform">
                                                 <Setter.Value>
                                                     <ScaleTransform ScaleY="0"/>
@@ -458,20 +475,21 @@
                                                                             </Setter.Value>
                                                                         </Setter>
                                                                         <Style.Triggers>
-                                                                            <DataTrigger Binding="{Binding IsExpanded}" Value="false">
-                                                                                <DataTrigger.EnterActions>
-                                                                                    <BeginStoryboard>
-                                                                                        <Storyboard>
-                                                                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" To="0" Duration="0:0:0.2"/>
-                                                                                        </Storyboard>
-                                                                                    </BeginStoryboard>
-                                                                                </DataTrigger.EnterActions>
-                                                                            </DataTrigger>
                                                                             <DataTrigger Binding="{Binding IsExpanded}" Value="true">
                                                                                 <DataTrigger.EnterActions>
                                                                                     <BeginStoryboard>
                                                                                         <Storyboard>
                                                                                             <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" To="-90" Duration="0:0:0.2"/>
+                                                                                        </Storyboard>
+                                                                                    </BeginStoryboard>
+                                                                                </DataTrigger.EnterActions>
+                                                                            </DataTrigger>
+                                                                            
+                                                                            <DataTrigger Binding="{Binding IsExpanded}" Value="false">
+                                                                                <DataTrigger.EnterActions>
+                                                                                    <BeginStoryboard>
+                                                                                        <Storyboard>
+                                                                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" To="0" Duration="0:0:0.2"/>
                                                                                         </Storyboard>
                                                                                     </BeginStoryboard>
                                                                                 </DataTrigger.EnterActions>

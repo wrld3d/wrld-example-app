@@ -3,7 +3,7 @@
                     xmlns:local="clr-namespace:ExampleAppWPF">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="../../Colours.xaml" />
+        <ResourceDictionary Source="../../Colours.xaml" />        
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="POIcard_CloseButton" TargetType="{x:Type Button}">
@@ -157,16 +157,16 @@
                                                     </Grid>
 
                                                     <!--Address-->
-                                                    <Grid Margin="5,15,0,0">
-                                                        <Canvas Name="HomeAddressIcon" Width="16" HorizontalAlignment="Left" Margin="0,0,0,7.94">
-                                                            <!-- Layer 1/<Group>/<Path> -->
-                                                            <Path Fill="#ff5f5f5f" Data="F1 M 15.867,7.684 L 8.942,0.759 L 8.941,0.758 L 8.313,0.130 C 8.226,0.043 8.112,-0.000 7.998,0.000 C 7.884,-0.000 7.770,0.043 7.684,0.130 L 7.055,0.758 L 7.054,0.759 L 0.130,7.684 C -0.043,7.857 -0.043,8.140 0.130,8.313 L 0.758,8.941 C 0.931,9.114 1.214,9.114 1.387,8.941 L 7.998,2.330 L 14.610,8.941 C 14.783,9.114 15.066,9.114 15.238,8.941 L 15.867,8.313 C 16.040,8.140 16.040,7.857 15.867,7.684 Z"/>
-                                                            <!-- Layer 1/<Group>/<Path> -->
-                                                            <Path Fill="#ff5f5f5f" Data="F1 M 2.665,9.441 L 2.665,14.222 C 2.665,15.200 3.465,16.000 4.443,16.000 L 6.657,16.000 L 6.657,11.621 C 6.657,11.376 6.857,11.176 7.102,11.176 L 8.879,11.176 C 9.124,11.176 9.324,11.376 9.324,11.621 L 9.324,16.000 L 11.554,16.000 C 12.532,16.000 13.332,15.200 13.332,14.222 L 13.332,9.441 L 7.998,4.108 L 2.665,9.441 Z"/>
-                                                        </Canvas>
-                                                        <TextBlock Name="Address" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=AddressText}" FontSize="18" Margin="25,-4,0,0" Foreground="{StaticResource DarkGrey}" FontFamily="{DynamicResource PrimaryUIFont}"/>
-                                                    </Grid>
-                                                </StackPanel>
+                                                        <Grid Margin="5,15,0,0">
+                                                            <Canvas Name="HomeAddressIcon" Width="16" HorizontalAlignment="Left" Margin="0,0,0,7.94">
+                                                                <!-- Layer 1/<Group>/<Path> -->
+                                                                <Path Fill="#ff5f5f5f" Data="F1 M 15.867,7.684 L 8.942,0.759 L 8.941,0.758 L 8.313,0.130 C 8.226,0.043 8.112,-0.000 7.998,0.000 C 7.884,-0.000 7.770,0.043 7.684,0.130 L 7.055,0.758 L 7.054,0.759 L 0.130,7.684 C -0.043,7.857 -0.043,8.140 0.130,8.313 L 0.758,8.941 C 0.931,9.114 1.214,9.114 1.387,8.941 L 7.998,2.330 L 14.610,8.941 C 14.783,9.114 15.066,9.114 15.238,8.941 L 15.867,8.313 C 16.040,8.140 16.040,7.857 15.867,7.684 Z"/>
+                                                                <!-- Layer 1/<Group>/<Path> -->
+                                                                <Path Fill="#ff5f5f5f" Data="F1 M 2.665,9.441 L 2.665,14.222 C 2.665,15.200 3.465,16.000 4.443,16.000 L 6.657,16.000 L 6.657,11.621 C 6.657,11.376 6.857,11.176 7.102,11.176 L 8.879,11.176 C 9.124,11.176 9.324,11.376 9.324,11.621 L 9.324,16.000 L 11.554,16.000 C 12.532,16.000 13.332,15.200 13.332,14.222 L 13.332,9.441 L 7.998,4.108 L 2.665,9.441 Z"/>
+                                                            </Canvas>
+                                                            <TextBlock Name="Address" TextWrapping="WrapWithOverflow" MaxWidth="165" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=AddressText}" FontSize="18" Margin="25,-4,0,0" Foreground="{StaticResource DarkGrey}" FontFamily="{DynamicResource PrimaryUIFont}"/>
+                                                        </Grid>
+                                                    </StackPanel>
 
                                             </Grid>
 
@@ -211,5 +211,5 @@
             </Setter.Value>
         </Setter>
     </Style>
-
+    
 </ResourceDictionary>

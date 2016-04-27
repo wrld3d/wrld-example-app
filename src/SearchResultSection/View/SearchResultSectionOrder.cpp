@@ -146,26 +146,7 @@ namespace ExampleApp
                                               const Eegeo::Resources::Interiors::InteriorId& currentInteriorId,
                                               int currentFloorIndex)
                 {
-                    if(a.GetBuildingId() == b.GetBuildingId())
-                    {
-                        if(a.GetFloor() == b.GetFloor())
-                        {
-                            return a.GetTitle() < b.GetTitle();
-                        }
-                        else
-                        {
-                            return GetFloorOrder(a.GetFloor(), b.GetFloor(), currentFloorIndex);
-                        }
-                    }
-                    else
-                    {
-                        if(currentInteriorId == Eegeo::Resources::Interiors::InteriorId::NullId())
-                        {
-                            return GetExteriorOrder(a.GetBuildingId(), b.GetBuildingId(), cameraFocusLocationEcef, markersRepository);
-                        }
-                        else return currentInteriorId == a.GetBuildingId();
-                    }
-                    
+                    return a.GetTitle() < b.GetTitle();                    
                 }
             }
             
