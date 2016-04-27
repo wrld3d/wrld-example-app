@@ -101,6 +101,8 @@ namespace
         self.pPreviewImageSpinner.center = CGPointZero;
         [self.pPreviewImage addSubview: self.pPreviewImageSpinner];
         
+        self.pPlaceholderImage = [UIImage imageNamed: @"poi_placeholder.png"];
+        
         self.pCategoriesHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pCategoriesHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         [self.pLabelsContainer addSubview: self.pCategoriesHeaderContainer];
@@ -169,6 +171,8 @@ namespace
     
     [self.pCategoriesContent removeFromSuperview];
     [self.pCategoriesContent release];
+    
+    [self.pPlaceholderImage release];
     
     [self.pPreviewImage removeFromSuperview];
     [self.pPreviewImage release];
@@ -341,7 +345,7 @@ namespace
     
     if(!m_workingGroupModel.GetImageUrl().empty())
     {
-        [self.pPreviewImage setImage:nil];
+        [self.pPreviewImage setImage:self.pPlaceholderImage];
         [self.pPreviewImageSpinner startAnimating];
     }
     

@@ -98,6 +98,8 @@ namespace
         self.pPreviewImageSpinner.center = CGPointZero;
         [self.pPreviewImage addSubview: self.pPreviewImageSpinner];
         
+        self.pPlaceholderImage = [UIImage imageNamed: @"poi_placeholder.png"];
+        
         self.pRatingImage = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pLabelsContainer addSubview: self.pRatingImage];
         
@@ -246,6 +248,8 @@ namespace
     
     [self.pReviewsContent removeFromSuperview];
     [self.pReviewsContent release];
+    
+    [self.pPlaceholderImage release];
     
     [self.pPreviewImage removeFromSuperview];
     [self.pPreviewImage release];
@@ -599,7 +603,7 @@ namespace
     
     if(!m_yelpModel.GetImageUrl().empty())
     {
-        [self.pPreviewImage setImage:nil];
+        [self.pPreviewImage setImage:self.pPlaceholderImage];
         [self.pPreviewImageSpinner startAnimating];
     }
     

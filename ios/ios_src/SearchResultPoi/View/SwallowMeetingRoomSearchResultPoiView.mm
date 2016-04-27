@@ -87,6 +87,8 @@ namespace
         self.pPreviewImage.contentMode = UIViewContentModeScaleAspectFill;
         [self.pLabelsContainer addSubview: self.pPreviewImage];
         
+        self.pPlaceholderImage = [UIImage imageNamed: @"poi_placeholder.png"];
+        
         self.pPreviewImageSpinner = [[[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pPreviewImageSpinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
         self.pPreviewImageSpinner.center = CGPointZero;
@@ -190,6 +192,8 @@ namespace
     
     [self.pCategoriesContent removeFromSuperview];
     [self.pCategoriesContent release];
+    
+    [self.pPlaceholderImage release];
     
     [self.pPreviewImage removeFromSuperview];
     [self.pPreviewImage release];
@@ -373,7 +377,7 @@ namespace
     
     if(!m_meetingRoomModel.GetImageUrl().empty())
     {
-        [self.pPreviewImage setImage:nil];
+        [self.pPreviewImage setImage:self.pPlaceholderImage];
         [self.pPreviewImageSpinner startAnimating];
     }
     
