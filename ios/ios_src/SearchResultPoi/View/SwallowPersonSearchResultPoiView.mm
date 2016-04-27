@@ -94,6 +94,8 @@ namespace
         self.pProfileImageActivityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
         [self.pProfileImageContainer addSubview:self.pProfileImageActivityIndicator];
         
+        self.pPlaceholderImage = [UIImage imageNamed: @"poi_placeholder.png"];
+        
         self.pNameLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextCopyColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
         [self.pHeadlineContainer addSubview: self.pNameLabel];
         
@@ -112,6 +114,8 @@ namespace
     
     [self.pProfileImageActivityIndicator removeFromSuperview];
     [self.pProfileImageActivityIndicator release];
+    
+    [self.pPlaceholderImage release];
     
     [self.pProfileImageContainer removeFromSuperview];
     [self.pProfileImageContainer release];
@@ -311,6 +315,8 @@ namespace
     self.pDeskCodeLabel.text = [NSString stringWithUTF8String:(deskCodePrefix + m_swallowPersonModel.GetDeskCode()).c_str()];
     
     [self.pLabelsContainer setContentOffset:CGPointMake(0,0) animated:NO];
+    
+    [self.pProfileImageContainer setImage:self.pPlaceholderImage];
 }
 
 - (void) updateImage:(const std::string&)url :(bool)success bytes:(const std::vector<Byte>*)bytes;

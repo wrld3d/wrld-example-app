@@ -73,5 +73,6 @@
 @property (nonatomic, retain) UILabel* pCategoriesContent;
 
 @property (nonatomic, retain) UIImageView* pPreviewImage;
+@property (nonatomic, retain) UIImage* pPlaceholderImage;
 @property (nonatomic, retain) UIActivityIndicatorView* pPreviewImageSpinner;
 @end

@@ -320,6 +320,9 @@ set(resources ${resources}
 		Resources/poi_marker.png
 		Resources/poi_marker@2x.png
 		Resources/poi_marker@3x.png
+		Resources/poi_placeholder.png
+		Resources/poi_placeholder@2x.png
+		Resources/poi_placeholder@3x.png
 		Resources/results_anchor_arrow.png
 		Resources/results_anchor_arrow@2x.png
 		Resources/results_anchor_arrow@3x.png
