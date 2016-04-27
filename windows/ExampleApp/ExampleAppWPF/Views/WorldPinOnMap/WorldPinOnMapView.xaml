@@ -10,7 +10,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:WorldPinOnMapView}">
-                    <StackPanel Name="SearchResultOnMapView" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <StackPanel Width="183" Name="SearchResultOnMapView" VerticalAlignment="Center" UseLayoutRounding="False">
                         <Grid Width="Auto" Height="Auto">
                             <Border BorderBrush="{x:Null}" Width="Auto" Height="Auto" BorderThickness="0">
                                 <Border.Effect>
@@ -20,20 +20,20 @@
                                     <Grid Height="5" Background="{StaticResource Gold}"/>
                                     <StackPanel Margin="8,0,8,0" Background="{StaticResource Transparent}">
                                         <Border BorderBrush="{x:Null}" Margin="0,2,0,2" HorizontalAlignment="Center" BorderThickness="0">
-                                            <TextBlock Name="SearchResultOnMapViewTitle" Text="SearchResultOnMapViewTitle" FontSize="15" Foreground="{StaticResource Gold}" TextTrimming="CharacterEllipsis" FontWeight="Bold"/>
-                                        </Border>
+                                        <TextBlock Name="SearchResultOnMapViewTitle" Text="SearchResultOnMapViewTitle" FontSize="15" Foreground="{StaticResource Gold}" TextTrimming="CharacterEllipsis" FontWeight="Bold"/>
+                                    </Border>
                                         <Border BorderBrush="{x:Null}" Margin="0,0,0,2" HorizontalAlignment="Center" BorderThickness="0">
-                                            <TextBlock Name="SearchResultOnMapViewDetails" Text="SearchResultOnMapViewDetails" FontSize="12" Foreground="{StaticResource DarkGrey}" TextTrimming="CharacterEllipsis"/>
-                                        </Border>
-                                        <Grid Height="5" Background="{StaticResource Transparent}"/>
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Name="ReviewsPanel">
-                                            <Image Name="SearchResultOnMapViewImage" Width="84"/>
+                                        <TextBlock Name="SearchResultOnMapViewDetails" Text="SearchResultOnMapViewDetails" FontSize="12" Foreground="{StaticResource DarkGrey}" TextTrimming="CharacterEllipsis"/>
+                                    </Border>
+                                    <Grid Height="5" Background="{StaticResource Transparent}"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Name="ReviewsPanel">
+                                        <Image Name="SearchResultOnMapViewImage" Width="84"/>
                                             <Border BorderBrush="{x:Null}" Margin="2,0,2,0" HorizontalAlignment="Center" BorderThickness="0">
-                                                <TextBlock Name="SearchResultOnMapReviewCount" Text="(5555)" FontSize="12" Foreground="{StaticResource DarkGrey}" TextTrimming="CharacterEllipsis"/>
-                                            </Border>
-                                        </StackPanel>
-                                        <Image Name="SearchResultOnMapAccreditationLogo" HorizontalAlignment="Center" Source="/Assets/yelp_logo_small.png" Width="51" Margin="0,3,0,3"/>
+                                            <TextBlock Name="SearchResultOnMapReviewCount" Text="(5555)" FontSize="12" Foreground="{StaticResource DarkGrey}" TextTrimming="CharacterEllipsis"/>
+                                        </Border>
                                     </StackPanel>
+                                    <Image Name="SearchResultOnMapAccreditationLogo" HorizontalAlignment="Center" Source="/Assets/yelp_logo_small.png" Width="51" Margin="0,3,0,3"/>
+                                </StackPanel>
                                 </StackPanel>
                             </Border>
                         </Grid>
