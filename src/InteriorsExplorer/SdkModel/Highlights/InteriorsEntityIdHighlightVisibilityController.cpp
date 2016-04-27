@@ -231,7 +231,7 @@ namespace ExampleApp
                 {
                     ClearHighlights();
 
-                    if (m_searchResultsIndex >= 0)
+                    if (m_searchResultsIndex >= 0 && m_currentlyActiveSwallowInteriors >= m_validSwallowInteriors.size())
                     {
                         const Search::SdkModel::SearchResultModel& selectedSearchResult = m_searchResults.at(m_searchResultsIndex);
 
