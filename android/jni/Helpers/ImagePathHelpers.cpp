@@ -4,6 +4,9 @@
 #include "AndroidImagePathHelpers.h"
 #include "Logger.h"
 
+#include <vector>
+#include <algorithm>
+
 namespace
 {
 	// As defined at http://developer.android.com/reference/android/util/DisplayMetrics.html
@@ -17,6 +20,25 @@ namespace
 
 	std::string g_densitySuffix = "";
 	float g_pixelScale;
+
+	struct DensityPredicate
+	{
+		DensityPredicate(int sourceDensity) : m_sourceDensity(sourceDensity){}
+		bool operator()(const int& lhs, const int& rhs)
+		{
+			return std::abs(lhs - m_sourceDensity) < std::abs(rhs - m_sourceDensity);
+		}
+	private:
+		int m_sourceDensity;
+	};
+
+	int ToNearestDensity(float density)
+	{
+		int densityArray[] = { DensityLow, DensityMedium, DensityTV, DensityHigh, DensityXHigh, DensityXXHigh, DensityXXXHigh };
+		std::vector<int> densities(densityArray, densityArray + 7);
+
+		return *std::min_element(densities.begin(), densities.end(), DensityPredicate(density));
+	}
 }
 
 namespace ExampleApp
@@ -38,6 +60,11 @@ namespace ExampleApp
     				density = DensityXXHigh;
     			}
 
+    			// IH - On Android N, users can switch the density manually.
+    			//      I'm seeing a density value not listed in the above DisplayMetrics link.
+    			//      Get nearest density possible from our expected density values
+    			density = ToNearestDensity(density);
+
     			switch(density)
     			{
 					case DensityLow: 		{ g_densitySuffix = "@0.75x"; g_pixelScale = 0.75f; } break;
@@ -47,9 +74,8 @@ namespace ExampleApp
 					case DensityXHigh: 		{ g_densitySuffix = "@2x"; g_pixelScale = 2.0f; } break;
 					case DensityXXHigh: 	{ g_densitySuffix = "@3x"; g_pixelScale = 3.0f; } break;
 					case DensityXXXHigh: 	{ g_densitySuffix = "@3x"; g_pixelScale = 3.0f; } break;
+					default: 			    { Eegeo_ASSERT(false, "ImageHelpers :: Unknown density value found"); } break;
     			}
-
-
     		}
 
             std::string GetImageNameForDevice(const std::string& name,

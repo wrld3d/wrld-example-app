@@ -27,7 +27,7 @@ set(storyboards
 
 # plist settings
 set(EEGEO_PLIST_BUNDLE_EXECUTABLE "\${EXECUTABLE_NAME}")
-set(EEGEO_PLIST_BUNDLE_IDENTIFIER "eegeo.\${PRODUCT_NAME:rfc1034identifier}")
+set(EEGEO_PLIST_BUNDLE_IDENTIFIER "com.eegeo.\${PRODUCT_NAME:rfc1034identifier}")
 set(EEGEO_PLIST_BUNDLE_SHORT_VERSION_STRING "\${PRODUCT_VERSION}")
 set(EEGEO_PLIST_BUNDLE_DISPLAY_NAME "Eegeo Example")
 
@@ -94,6 +94,7 @@ set_xcode_property (${executable_name} CODE_SIGN_IDENTITY "iPhone Developer")
 set_xcode_property (${executable_name} IPHONEOS_DEPLOYMENT_TARGET "5.0")
 set_xcode_property (${executable_name} TARGETED_DEVICE_FAMILY "1,2")
 set_xcode_property (${executable_name} ENABLE_BITCODE "No")
+set_xcode_property (${executable_name} INSTALL_PATH "/Applications")
 
 set_xcode_property (${executable_name} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon")
 set_xcode_property (${executable_name} ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME "LaunchImage")
