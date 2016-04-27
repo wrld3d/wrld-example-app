@@ -340,7 +340,9 @@ namespace ExampleAppWPF
         {
             m_list.UpdateLayout();
             var itemsToAnimate = GetListBoxItemsInRange(startIndex, itemCount);
-            
+
+            //animate out header for current group
+            m_children[startIndex - 1].IsExpanded = false;
 
             if (itemsToAnimate.Any())
             {

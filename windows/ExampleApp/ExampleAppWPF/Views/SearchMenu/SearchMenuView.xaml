@@ -458,20 +458,21 @@
                                                                             </Setter.Value>
                                                                         </Setter>
                                                                         <Style.Triggers>
-                                                                            <DataTrigger Binding="{Binding IsExpanded}" Value="false">
-                                                                                <DataTrigger.EnterActions>
-                                                                                    <BeginStoryboard>
-                                                                                        <Storyboard>
-                                                                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" To="0" Duration="0:0:0.2"/>
-                                                                                        </Storyboard>
-                                                                                    </BeginStoryboard>
-                                                                                </DataTrigger.EnterActions>
-                                                                            </DataTrigger>
                                                                             <DataTrigger Binding="{Binding IsExpanded}" Value="true">
                                                                                 <DataTrigger.EnterActions>
                                                                                     <BeginStoryboard>
                                                                                         <Storyboard>
                                                                                             <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" To="-90" Duration="0:0:0.2"/>
+                                                                                        </Storyboard>
+                                                                                    </BeginStoryboard>
+                                                                                </DataTrigger.EnterActions>
+                                                                            </DataTrigger>
+                                                                            
+                                                                            <DataTrigger Binding="{Binding IsExpanded}" Value="false">
+                                                                                <DataTrigger.EnterActions>
+                                                                                    <BeginStoryboard>
+                                                                                        <Storyboard>
+                                                                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" To="0" Duration="0:0:0.2"/>
                                                                                         </Storyboard>
                                                                                     </BeginStoryboard>
                                                                                 </DataTrigger.EnterActions>
