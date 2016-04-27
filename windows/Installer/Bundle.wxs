@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:bal="http://schemas.microsoft.com/wix/BalExtension" 
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+
+  <!-- Main bundle definition (TODO: Derive version from command line var) -->
+  <Bundle Name="Project Swallow" Version="$(var.Version)" Manufacturer="eeGeo Ltd" UpgradeCode="da2eb3ec-2734-4d2a-8c6a-c178fbdbf1cb"
+          HelpUrl="http://www.eegeo.com"
+          Copyright="Copyright© 2016, eeGeo Ltd."
+          IconSourceFile="Resource\setup.ico"
+          AboutUrl="http://www.eegeo.com"
+          SplashScreenSourceFile="Resource\splashScreen.bmp">
+    <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense" >
+      <bal:WixStandardBootstrapperApplication LicenseFile="Resource\License.rtf" ThemeFile="Resource\eegeoTheme.xml" SuppressOptionsUI="yes" />
+    </BootstrapperApplicationRef>
+
+    <WixVariable Id="WixStdbaLicenseUrl" Value="" />
+    <WixVariable Id="WixStdbaLogo" Value="Resource\setup.ico" />
+    
+    <!-- Get current .net framework version -->
+    <util:RegistrySearch Root="HKLM" Key="SOFTWARE\Microsoft\Net Framework Setup\NDP\v4\Full" Value="Version" Variable="Net4FullVersion" />
+    <util:RegistrySearch Root="HKLM" Key="SOFTWARE\Microsoft\Net Framework Setup\NDP\v4\Full" Value="Version" Variable="Net4x64FullVersion" Win64="yes" />
+
+    <!-- Get installation of VC++ redist (Taken from http://stackoverflow.com/questions/12206314/detect-if-visual-c-redistributable-for-visual-studio-2012-is-installed )-->
+    <util:RegistrySearch Root="HKLM" Key="SOFTWARE\Classes\Installer\Dependencies\{3ee5e5bb-b7cc-4556-8861-a00a82977d6c}" Value="Version" Variable="VCRedist" />
+    <util:RegistrySearch Root="HKLM" Key="SOFTWARE\Classes\Installer\Dependencies\{23daf363-3020-4059-b3ae-dc4ad39fed19}" Value="Version" Variable="VCRedist64" Win64="yes" />
+    
+    <!-- Installation chain -->
+    <Chain>
+
+      <!-- .Net Framework -->
+      <ExePackage Id="Net45" Name="Microsoft .NET Framework 4.5.2 Setup" Cache="no" Compressed="yes" PerMachine="yes" Permanent="yes" Vital="yes" InstallCommand="/q"
+        SourceFile="Resource\NDP452-KB2901954-Web.exe"
+        DetectCondition="(Net4FullVersion >= &quot;4.6.01055&quot;) AND (NOT VersionNT64 OR (Net4x64FullVersion >= &quot;4.6.01055&quot;))"
+        InstallCondition="(VersionNT >= v6.0 OR VersionNT64 >= v6.0) AND (NOT (Net4FullVersion = &quot;4.6.01055&quot; OR Net4x64FullVersion = &quot;4.6.01055&quot;))"/>
+
+      <!-- VC++ 2015 Redistributable (x64)-->
+      <ExePackage Id="VCRedistx64" Name="Microsoft VC++ 2015 Redistributable (x64)" Cache="no" Compressed="yes" PerMachine="yes" Permanent="yes" Vital="yes" InstallCommand="/q"
+                  SourceFile="Resource\vc_redist.x64.exe"
+                  DetectCondition="(VCRedist >= &quot;14.0.23026.0&quot;) AND (NOT VersionNT64 OR (VCRedist64 >= &quot;14.0.23026.0&quot;))"
+                  InstallCondition="(VersionNT >= v6.0 OR VersionNT64 >= v6.0) AND (NOT (VCRedist >= &quot;14.0.23026.0&quot; OR VCRedist64 >= &quot;14.0.23026.0&quot;))"/>
+      
+      <RollbackBoundary />
+
+      <!-- Main installer -->
+      <MsiPackage
+        Id="Setup"
+        Compressed="yes"
+        SourceFile="$(var.SwallowMsiLocation)"
+        Vital="yes"
+        DisplayInternalUI="yes">
+      </MsiPackage>
+
+    </Chain>
+  </Bundle>
+</Wix>

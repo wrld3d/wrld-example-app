@@ -1,0 +1,848 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <Product Id="*" Name="Project Swallow" Language="1033" Version="$(var.Version)" Manufacturer="eeGeo Ltd" UpgradeCode="{19DAC114-C430-48B2-99BF-A1C907DFE4EA}">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    
+    <MajorUpgrade DowngradeErrorMessage="A newer version of Swallow is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <!-- Define directory structure -->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+
+      <!-- Main application installation path-->
+      <Directory Id="ProgramFilesFolder">
+        <!-- Remove installation folder on uninstallation - TODO: Probably don't want to delete Eegeo folder entirely unelss nothing's installed, check how Wix handles this -->
+        <Directory Id="EEGEOFOLDER" Name="eeGeo">
+          <Component Id="CompanyInstallationPath" Guid="{9933F739-B268-4815-BC98-5DCFBAF9209B}">
+            <RemoveFolder Id="CompanyInstallationPath" On="uninstall"/>
+          </Component>
+          <Directory Id="INSTALLFOLDER" Name="Project Swallow">
+            <Directory Id="RESOURCEFOLDER" Name="Resources">
+              <Directory Id="APPCONFIGFOLDER" Name="ApplicationConfigs"/>
+              <Directory Id="INTERIORSFOLDER" Name="Interiors"/>
+              <Directory Id="PINSFOLDER" Name="SearchResultOnMap">
+                <Directory Id="ICONSFOLDER" Name="Icons"/>
+              </Directory>
+              <Directory Id="TEXTURESFOLDER" Name="Textures">
+                <Directory Id="THEMEFOLDER" Name="EmbeddedTheme"/>
+              </Directory>
+              <Directory Id="YELPFOLDER" Name="Yelp"/>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+
+      <!-- Start menu shortcut path -->
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="STARTMENUPROGRAMFOLDER" Name="Project Swallow"/>
+      </Directory>
+    </Directory>
+
+    <!-- Define directory contents and sources -->
+    <ComponentGroup Id="MainApplication">
+      <ComponentRef Id="CompanyInstallationPath"/>
+      <Component Id="cmpDh5CA9jQyGCJFJb1E7IBlnU3Jsw" Directory="INSTALLFOLDER" Guid="{7430992E-7A5E-4B76-BD3B-B3DADECCB5B9}">
+        <File Id="filVDkuG2L6jVd1DfRF4CQTaODKvE8" KeyPath="yes" Source="payload\d3dcompiler_47.dll" />
+      </Component>
+      <Component Id="cmpe6NeIPcnxNGmXVkdTnD25hsL_Pc" Directory="INSTALLFOLDER" Guid="{0E3F0EC9-0BFD-4D7E-B976-8297DCB11A02}">
+        <File Id="filqNEyJ3cpE.pNpuTgUQIj0U77y4Y" KeyPath="yes" Source="payload\ExampleApp.dll" />
+      </Component>
+      <Component Id="cmp9Dy7Hke21xNAI.nWMBLtVDzLos4" Directory="INSTALLFOLDER" Guid="{5E7427F3-13E7-4650-8186-00CA564C0852}">
+        <File Id="fillMJOITaWpUYqO8YQYfnbcVj_2VU" KeyPath="yes" Source="payload\libeay32.dll" />
+      </Component>
+      <Component Id="cmpQi.YmgJ2pmTX6A__Je.t6tPXnE0" Directory="INSTALLFOLDER" Guid="{EAC33C29-E231-4F07-89D5-4ED9FA6715A4}">
+        <File Id="filIBkG1w_8.6x77ZxgaZ08EGG2gU0" KeyPath="yes" Source="payload\libEGL.dll" />
+      </Component>
+      <Component Id="cmpDhS0c65m6rU.3w7N9tdXdB6cPo0" Directory="INSTALLFOLDER" Guid="{BB90262C-4F0E-479F-972B-501C9774ACBF}">
+        <File Id="filZruIZdXr9gjz6mqtU9T1QpEj5s4" KeyPath="yes" Source="payload\libGLESv2.dll" />
+      </Component>
+      <Component Id="cmpGl0apKv2Arp9Bo83qBbILccG3Sg" Directory="INSTALLFOLDER" Guid="{F64A6F3A-2487-4862-97E5-A0B953F69D17}">
+        <File Id="fillDNyvQK7yp.HnxK8dNLPNkA5WO0" KeyPath="yes" Source="payload\msvcr110.dll" />
+      </Component>
+      <Component Id="cmpPqd9G9lR3NtFglVxwWmBYevC45M" Directory="INSTALLFOLDER" Guid="{0D082EA4-86FC-4739-9302-3634314A868A}">
+        <File Id="fil4VecX1l_7BcKGVFYrlyJWqzXTCk" KeyPath="yes" Source="payload\Newtonsoft.Json.dll" />
+      </Component>
+      <Component Id="cmpiG7JhAXM75v0QUtpT92I20AZtW8" Directory="INSTALLFOLDER" Guid="{4F7B1AE3-FB78-4F08-86E2-F34CD80FBE9A}">
+        <File Id="mainapplication.exe" KeyPath="yes" Source="payload\ProjectSwallow.exe" />
+      </Component>
+      <Component Id="cmp4smKBrWFLyUpPjMI8FO84DoS0hk" Directory="INSTALLFOLDER" Guid="{0F3FC098-3782-4834-8691-B4870F2F8207}">
+        <File Id="filXVdm4akzS5hoZ0GMlE7xyk2c1FI" KeyPath="yes" Source="payload\pthreadVC2.dll" />
+      </Component>
+      <Component Id="cmphN00PgBkrAm1k5v.1a0EgRz2jyA" Directory="INSTALLFOLDER" Guid="{C36A240F-96A7-421F-9045-8B14EA11F8B2}">
+        <File Id="filRoZUgGjBszOs2Xrl0QmwAHxXLWc" KeyPath="yes" Source="payload\SimpleOAuth.dll" />
+      </Component>
+      <Component Id="cmpmSnTNFAcoBjbDTpzGb_2U1LQopA" Directory="INSTALLFOLDER" Guid="{3B1FC339-7DBF-4026-99E5-B449CE933DA3}">
+        <File Id="fil2EkLGX5_AEJPev2oMzzPYt8K8C8" KeyPath="yes" Source="payload\ssleay32.dll" />
+      </Component>
+    </ComponentGroup>
+
+    <!-- Resources directory -->
+    <ComponentGroup Id="MainApplicationResources">
+      <Component Id="cmp99ygn06FVn_0w2VGSj7wyfzcOgI" Directory="RESOURCEFOLDER" Guid="{CCB50F90-2151-4180-B7D0-3EB9F379139E}">
+        <File Id="filAaG0NXxFnSBSd6thtJODmuovApU" KeyPath="yes" Source="payload\Resources\arrow.png" />
+      </Component>
+      <Component Id="cmp3Jm6Tx.lRPVNSX6DnYdSD.nvkrs" Directory="RESOURCEFOLDER" Guid="{75C7935C-DAE6-4508-B498-3BB43131FD59}">
+        <File Id="fil8Q3QAC3Qcded1c707Iy2XRmfMG8" KeyPath="yes" Source="payload\Resources\arrow1.png" />
+      </Component>
+      <Component Id="cmpAUrnuk7wCT2NS3hyJ6LRWkFLOoE" Directory="RESOURCEFOLDER" Guid="{48C4C5B3-4874-4D58-8155-B1341F442FE0}">
+        <File Id="filgYc6jYTF8.svZZeZceMO5iAVxBg" KeyPath="yes" Source="payload\Resources\arrow1_over.png" />
+      </Component>
+      <Component Id="cmpuufpnQ.7nHm2nAAWx89L0GCT62w" Directory="RESOURCEFOLDER" Guid="{E20B1A99-422F-45B0-AE80-3298B9984C2B}">
+        <File Id="filsG5oXlW_Yw2lM3F7iE_WAg2bYHk" KeyPath="yes" Source="payload\Resources\arrow3_down.png" />
+      </Component>
+      <Component Id="cmpb9giO.zc5jhYTTWESNf7nqhmnY0" Directory="RESOURCEFOLDER" Guid="{C4B7D82F-AC66-47FF-A038-EF1D891DF9EB}">
+        <File Id="fil9Fk1ecp7fXgwlm0drz5ZS_EpRuM" KeyPath="yes" Source="payload\Resources\arrow3_left.png" />
+      </Component>
+      <Component Id="cmpO1r_E1IoZp1wKYtfFC.TMc1mM50" Directory="RESOURCEFOLDER" Guid="{32C823F1-5FE6-4416-B97C-86EDFED1396B}">
+        <File Id="filJJFZJtYie3WCCmZOvJ5p7yp5jeM" KeyPath="yes" Source="payload\Resources\arrow3_right.png" />
+      </Component>
+      <Component Id="cmpECUTY1SLOdoRM7RHcYVVkRnAhB0" Directory="RESOURCEFOLDER" Guid="{1BEB3CD0-7A93-4E2E-883C-5B379EF8EA56}">
+        <File Id="filMDTkQxV0KLtvXCO9zUsQufc6U50" KeyPath="yes" Source="payload\Resources\arrow3_up.png" />
+      </Component>
+      <Component Id="cmpuMOKEY4PM1J2CdkQF3oUunndTfY" Directory="RESOURCEFOLDER" Guid="{BD05525E-B056-40FC-8F30-DB2DC1E51AA8}">
+        <File Id="filOdXsVqiOl5NbumJzpqVNB.5ubxM" KeyPath="yes" Source="payload\Resources\buttonsmall_close_off.png" />
+      </Component>
+      <Component Id="cmpK2lJdJn3wKGdsCflGwI0MJom25g" Directory="RESOURCEFOLDER" Guid="{1280CE85-A275-4CEF-B7D5-BD4F4CE46C8E}">
+        <File Id="filGffraUB6g4i8iSmSjQYdLT_PUPg" KeyPath="yes" Source="payload\Resources\buttonsmall_close_on.png" />
+      </Component>
+      <Component Id="cmpntQZezSSFg60MmzDO2Gwd8lDw0A" Directory="RESOURCEFOLDER" Guid="{D01AEBCE-B973-44A1-9E3B-C6E296688977}">
+        <File Id="filkd.6T38PVaZAoGeBlZsNrIncszQ" KeyPath="yes" Source="payload\Resources\button_add_pin_off.png" />
+      </Component>
+      <Component Id="cmpPg6ovnmeaCtDb3EcWpM8RvuNa80" Directory="RESOURCEFOLDER" Guid="{3E4FE25B-18B4-4897-9FB3-AEF0D2D1BDBB}">
+        <File Id="filIH9u4M93dPr3K.DfurbTuFQR5WI" KeyPath="yes" Source="payload\Resources\button_add_pin_on.png" />
+      </Component>
+      <Component Id="cmpR4Iej16BGZsPuZPl5FB0LCp3cE0" Directory="RESOURCEFOLDER" Guid="{0D34111D-EB1E-46DC-BAD0-F8E91094662F}">
+        <File Id="fil0nEfqGPoSlATIJY53oy9TpoW3CM" KeyPath="yes" Source="payload\Resources\button_checkbox_off.png" />
+      </Component>
+      <Component Id="cmpRw1o9WA.z7tZ2jPLZDtATrQCZ9g" Directory="RESOURCEFOLDER" Guid="{992B005C-52DA-431A-8D47-B31D30B623CC}">
+        <File Id="filK_s9axN_fAJu2YtPhhrUhlGz3Rw" KeyPath="yes" Source="payload\Resources\button_checkbox_on.png" />
+      </Component>
+      <Component Id="cmpLw8co2czw9TSBxOZBuUixQECiOA" Directory="RESOURCEFOLDER" Guid="{57B4B60F-EA87-48AE-AAD7-7AE59A76529F}">
+        <File Id="filqKhtEcRoSiOl4M.9OlOzUgpwe4o" KeyPath="yes" Source="payload\Resources\button_clear_search_down.png" />
+      </Component>
+      <Component Id="cmpADgHnu2iCVb4w42fG.st3NUwmj0" Directory="RESOURCEFOLDER" Guid="{509D5351-F871-4FF6-B23A-663B18984EA7}">
+        <File Id="fily1Z0pSHzsoeqgUdo7cZX5Pvp0_0" KeyPath="yes" Source="payload\Resources\button_clear_search_off.png" />
+      </Component>
+      <Component Id="cmpOV1nWpFz9PobRjLok_3kbTNZ_Zw" Directory="RESOURCEFOLDER" Guid="{D4EE86D0-89CB-4483-BC49-AD6DCBDFFC7A}">
+        <File Id="filHjaG2j_N.U7UfAiTjaiX.9JY5IQ" KeyPath="yes" Source="payload\Resources\button_clear_search_on.png" />
+      </Component>
+      <Component Id="cmpdUKvbtZ.HgBCYRi7eauzsajFXds" Directory="RESOURCEFOLDER" Guid="{B5756B22-F9E6-453F-9B8C-D91CCA1F2C30}">
+        <File Id="filTnBfrLAr5K0ULs8nAr457NzRsbY" KeyPath="yes" Source="payload\Resources\button_close_off.png" />
+      </Component>
+      <Component Id="cmpXW6yer6iWfl6bwwVhpdKspS9oiI" Directory="RESOURCEFOLDER" Guid="{B30053D4-B48E-4A00-8FB3-46CC67C2514A}">
+        <File Id="fil6H3bfOBBo6KikoG2WWxQDkjhZqc" KeyPath="yes" Source="payload\Resources\button_close_on.png" />
+      </Component>
+      <Component Id="cmpCShskuUgEpsvPYeo1B8fN.zk9Cg" Directory="RESOURCEFOLDER" Guid="{91AD6582-353A-4DFF-8606-F29431459C8E}">
+        <File Id="filb88rbWvGN1Lt_sHrkS1Lr5OPwIo" KeyPath="yes" Source="payload\Resources\button_close_place_pin_off.png" />
+      </Component>
+      <Component Id="cmp8mBJzoaKemNX1_ppf0Nj7HIK1Q4" Directory="RESOURCEFOLDER" Guid="{E4DFA7D2-E53F-42BA-B15C-C9027774D1D3}">
+        <File Id="filQAnHU4eNWSDbBCWLHoiFes43.U4" KeyPath="yes" Source="payload\Resources\button_close_place_pin_on.png" />
+      </Component>
+      <Component Id="cmp1NBjyD0d1ElexaSwdQIBaQh14KE" Directory="RESOURCEFOLDER" Guid="{DB872A22-D9FB-40F3-8CC3-57C325D88304}">
+        <File Id="filjjIOmGOjkjPErOw0u2HYXHdUwvc" KeyPath="yes" Source="payload\Resources\button_compass_off.png" />
+      </Component>
+      <Component Id="cmp8oa8ZI0Y6Z4tGg7GOZECToU8MGs" Directory="RESOURCEFOLDER" Guid="{8947FDA9-ED42-4DF0-B7EF-74BD97B409B9}">
+        <File Id="fil6SJDL2EnsDELJGiZo6AXEwcbfsU" KeyPath="yes" Source="payload\Resources\button_compass_on.png" />
+      </Component>
+      <Component Id="cmpC6KqsSnugzNUC62v71Ti5iJlCIs" Directory="RESOURCEFOLDER" Guid="{6AE106BB-8858-436F-A5E6-B00D65D89D16}">
+        <File Id="filDoy1sl221AP162eHLHC9H2NEiZw" KeyPath="yes" Source="payload\Resources\button_compass_over.png" />
+      </Component>
+      <Component Id="cmpo0zw6Z18kykzAicLWXnLsgqmtHo" Directory="RESOURCEFOLDER" Guid="{671B42D4-C867-478C-9049-3931874B7FE9}">
+        <File Id="fil1Z2fmjNLSzOeU.p2yfMir11OVbA" KeyPath="yes" Source="payload\Resources\button_create_poi_off.png" />
+      </Component>
+      <Component Id="cmp4KXTCszK9KocqaOmP_7DHvs28JQ" Directory="RESOURCEFOLDER" Guid="{0F4CB466-3602-4EFB-A71D-8AE09190C452}">
+        <File Id="filjvrbZrKkndcuZILJUO2uoOTwgl8" KeyPath="yes" Source="payload\Resources\button_create_poi_on.png" />
+      </Component>
+      <Component Id="cmpMo_Tu3f6ihc9iwajvrVHSRupYI0" Directory="RESOURCEFOLDER" Guid="{93B126D2-9588-4BAC-B1B6-88D85981FE5B}">
+        <File Id="fileAcYbQA0s1bMWJmsPZXv_kVQWG4" KeyPath="yes" Source="payload\Resources\button_create_poi_over.png" />
+      </Component>
+      <Component Id="cmp0kEIch9udn1Z5GWyRyeZz_8X9J4" Directory="RESOURCEFOLDER" Guid="{AC10436B-55FB-414F-83D8-F0DC926AE3D0}">
+        <File Id="filiGBkQET8yei.1puhDc858ZAatVA" KeyPath="yes" Source="payload\Resources\button_exit_interior_off.png" />
+      </Component>
+      <Component Id="cmpMl0vLeMfweeVYY4UulD59tqORcg" Directory="RESOURCEFOLDER" Guid="{394C7B47-4966-4A1D-A941-FDCAB1997C6D}">
+        <File Id="fil5ZvCMR6S0Ob2nO10hDaP7h_9cuY" KeyPath="yes" Source="payload\Resources\button_exit_interior_on.png" />
+      </Component>
+      <Component Id="cmpENAEnj6_dcH0qHoK5cZRXGTCGe8" Directory="RESOURCEFOLDER" Guid="{F8C74AC9-A66B-4073-A3F5-3D0317B901DD}">
+        <File Id="filcVVhrlIUjtCrK5HH.WCMcZsQN3c" KeyPath="yes" Source="payload\Resources\button_flatten_off.png" />
+      </Component>
+      <Component Id="cmpguXBqnkZVLZ4DPrDyVXU.8TspO8" Directory="RESOURCEFOLDER" Guid="{A1E0E2EE-A118-4793-BDA8-E994B8E9DAAF}">
+        <File Id="fillPZnIonb3.UdD8PMzY1GbVuQrIs" KeyPath="yes" Source="payload\Resources\button_flatten_off_over.png" />
+      </Component>
+      <Component Id="cmpByJLkFbNGbEU002ns5Q2g.5Wtcs" Directory="RESOURCEFOLDER" Guid="{CEF53A9E-2901-4F2D-880B-8C4C27EC3643}">
+        <File Id="filNp3XrTJ037AAyHFrm3pijqQKz9A" KeyPath="yes" Source="payload\Resources\button_flatten_on.png" />
+      </Component>
+      <Component Id="cmpVt87LiwVo_20b3ewNH1Ppxbvu_k" Directory="RESOURCEFOLDER" Guid="{86BB32DB-11F8-4E55-B5A4-2A23B3D6B63B}">
+        <File Id="fil06qOfFkBF6j2eq0AlPCRokkkdbk" KeyPath="yes" Source="payload\Resources\button_gallery_off.png" />
+      </Component>
+      <Component Id="cmpW_6BOreEntShvYL86U1OaOdWY1M" Directory="RESOURCEFOLDER" Guid="{A7FA6A92-7799-4934-8B34-7594F885751F}">
+        <File Id="filq7YAOjhdru97zCwgnhXSNcRf_gg" KeyPath="yes" Source="payload\Resources\button_gallery_on.png" />
+      </Component>
+      <Component Id="cmpYWXXxs3UhSfMNYafIBvqXg4irRM" Directory="RESOURCEFOLDER" Guid="{13883701-0605-473A-92F1-50D30EE6948D}">
+        <File Id="filw1zPmzeKGSHGPaPrJ_BDdPevwyY" KeyPath="yes" Source="payload\Resources\button_occupancy_availablesoon_off.png" />
+      </Component>
+      <Component Id="cmpZYJ8YliVrD7BHciGT3MuCo_HrYc" Directory="RESOURCEFOLDER" Guid="{03A88C68-37FB-4D71-A41A-F7670135CF7E}">
+        <File Id="filbn870V2OWLpyURRZozsDH1LenaI" KeyPath="yes" Source="payload\Resources\button_occupancy_availablesoon_on.png" />
+      </Component>
+      <Component Id="cmpu9UUWbPLXm4EuvT0_4akWaMd1mA" Directory="RESOURCEFOLDER" Guid="{468BBEFE-A8A6-4C5C-BC41-A007F4B33558}">
+        <File Id="filqTNERTiFgGfxs4ZUwz2SP.rh4f0" KeyPath="yes" Source="payload\Resources\button_occupancy_available_off.png" />
+      </Component>
+      <Component Id="cmpmQu_W4wJRG.TGqipY8vDa.yg7sM" Directory="RESOURCEFOLDER" Guid="{FD7170B9-7174-454A-B42B-6B8F750E1F19}">
+        <File Id="filPHua8NivjWZ4TvxFNcoxD.N2eyc" KeyPath="yes" Source="payload\Resources\button_occupancy_available_on.png" />
+      </Component>
+      <Component Id="cmpZcwxLANqNSmnNedzg1LuBLCy1OE" Directory="RESOURCEFOLDER" Guid="{20507FD3-FB0C-4206-AF45-234EE820B23B}">
+        <File Id="filDtv57P9MDu9imlabA8eIMFv8orE" KeyPath="yes" Source="payload\Resources\button_occupancy_occupied_off.png" />
+      </Component>
+      <Component Id="cmpa6xyJ6L6.tbM7y0hzy9whZ49nLw" Directory="RESOURCEFOLDER" Guid="{5509CA12-1C96-45AF-AE27-B6E1F5E6192A}">
+        <File Id="filubLhExTRHVK.OppqcsugEseYSgM" KeyPath="yes" Source="payload\Resources\button_occupancy_occupied_on.png" />
+      </Component>
+      <Component Id="cmpzKLmbGTCpSJ49QDgCaT1OziVdK4" Directory="RESOURCEFOLDER" Guid="{9F2B9918-7ADC-4E8C-AD33-B8560A621627}">
+        <File Id="fil75tnvRrVaHMCcLz8kty2m9d57uo" KeyPath="yes" Source="payload\Resources\button_ok_off.png" />
+      </Component>
+      <Component Id="cmp5AcwdSBSCi57ASmGP8EJZwe1c08" Directory="RESOURCEFOLDER" Guid="{8C81875C-30F0-4EBE-B658-371560AAB7AC}">
+        <File Id="filQo2EERh1Zjsw.MuVhAMi1YkTy.g" KeyPath="yes" Source="payload\Resources\button_ok_on.png" />
+      </Component>
+      <Component Id="cmpcIxy8olnhAmzFfilDBrW3QJeSyQ" Directory="RESOURCEFOLDER" Guid="{16729706-3813-4C67-94AA-75DF98274805}">
+        <File Id="fil57vwNk4NEdhKx06Ebbv6OC6Y8ZA" KeyPath="yes" Source="payload\Resources\button_ok_place_pin_off.png" />
+      </Component>
+      <Component Id="cmpno8hGBp6O5P6WorMznoygxXBw38" Directory="RESOURCEFOLDER" Guid="{17565226-595A-4E0D-8E0F-53E1880EABD5}">
+        <File Id="filUDpQNa_hSrSe2TheGvzM_iYFsKI" KeyPath="yes" Source="payload\Resources\button_ok_place_pin_on.png" />
+      </Component>
+      <Component Id="cmpG5bpCqWYFuu1dGYOcsLrH_iU3uU" Directory="RESOURCEFOLDER" Guid="{D333589E-54BB-4DBA-968A-DA1720F5256B}">
+        <File Id="filZFwBa7QtehWaonIr3re0O1jm5OE" KeyPath="yes" Source="payload\Resources\button_photo_off.png" />
+      </Component>
+      <Component Id="cmpGM2pGXQkeO9zWHxFYXdfDmtmxJ4" Directory="RESOURCEFOLDER" Guid="{0865EDC4-CF85-44E5-96DF-5BA5632E2FA4}">
+        <File Id="fil7Hzs6w6UDbzr3pQFIs5n3gputv0" KeyPath="yes" Source="payload\Resources\button_remove_pin_off.png" />
+      </Component>
+      <Component Id="cmpW0RzOxkERrJUxMqESYFFdgzlk5A" Directory="RESOURCEFOLDER" Guid="{84FA3ABB-A64E-4C9D-98E9-997CB3C87EB7}">
+        <File Id="filL5pkDpmTAjGlgdKscMrHLFegZ5U" KeyPath="yes" Source="payload\Resources\button_remove_pin_on.png" />
+      </Component>
+      <Component Id="cmpQCDQ9M0P5g2TioOws5kZtZ2HPsQ" Directory="RESOURCEFOLDER" Guid="{49161B9D-B23A-4609-9349-C3A06FFDB8BB}">
+        <File Id="filw.mG9oSqykwtYQ7_6C2de9qvIW4" KeyPath="yes" Source="payload\Resources\button_search_off.png" />
+      </Component>
+      <Component Id="cmp3yGtfzlSV_uQVMyyZ3HA4_0YKjE" Directory="RESOURCEFOLDER" Guid="{4ED41492-535A-402D-9282-D72EF81A6E2E}">
+        <File Id="fil0QeTx6eaWwqX_ZdH36SRyv00n.4" KeyPath="yes" Source="payload\Resources\button_search_on.png" />
+      </Component>
+      <Component Id="cmpsApNTEycHKwUatFIsxZcbmWEPsg" Directory="RESOURCEFOLDER" Guid="{4196237E-F09D-4961-8DC4-3C26F142D951}">
+        <File Id="filp5VmQ4n_wNGH5Fb2hj7rJ9zfLrg" KeyPath="yes" Source="payload\Resources\button_settings_off.png" />
+      </Component>
+      <Component Id="cmp1xQ1wetv8kfvlLZq6LvwPYQWwmc" Directory="RESOURCEFOLDER" Guid="{EBEA8B53-6AB7-4F7C-8338-677125A9DC64}">
+        <File Id="filGu5635FeTyy5U.5L6HGmSsSkTrc" KeyPath="yes" Source="payload\Resources\button_settings_on.png" />
+      </Component>
+      <Component Id="cmp3AZ5vtYgCpUaa0oqlg2kqZ988B0" Directory="RESOURCEFOLDER" Guid="{C0AA16B6-C2F1-4CD0-80FC-79145E5F4CF0}">
+        <File Id="filYMzmuzV49zxyeBig.e3wrsT8QJM" KeyPath="yes" Source="payload\Resources\button_unflatten_off.png" />
+      </Component>
+      <Component Id="cmpNwnhTXzrm9sGXLZ8r4muxX8E_nA" Directory="RESOURCEFOLDER" Guid="{FD66A94A-4065-4203-9A21-B01D859ECD9C}">
+        <File Id="filvOjTPEX08fTlCzE5Iw6sWa6Jti8" KeyPath="yes" Source="payload\Resources\button_unflatten_on.png" />
+      </Component>
+      <Component Id="cmp2ZnR6Vqgn1b3nsfoC9yZObpFdFM" Directory="RESOURCEFOLDER" Guid="{E3B78573-1B0B-48F8-AF04-40E4190CA008}">
+        <File Id="filxIvfe7HBLBRl9SOSqaxc92cD6KY" KeyPath="yes" Source="payload\Resources\button_unflatten_on_over.png" />
+      </Component>
+      <Component Id="cmpwXU1BgI3t..yAPpVBbKZPq22r3E" Directory="RESOURCEFOLDER" Guid="{BEF235BC-7DD0-4F4F-90EA-84C46F88B607}">
+        <File Id="filoh2bTwf7HwhKMRVrAXiENZjccTA" KeyPath="yes" Source="payload\Resources\cacert.pem" />
+      </Component>
+      <Component Id="cmpIVNzdwW1Q_fz29BvJLCYOFlGKMo" Directory="RESOURCEFOLDER" Guid="{92843C10-8D8B-43DB-B30E-2B4B784DAE96}">
+        <File Id="filto_cZjs9_mp_CoTcwYyllcP.y8k" KeyPath="yes" Source="payload\Resources\compass_point_off.png" />
+      </Component>
+      <Component Id="cmpar9S8REv3jfr3CjA1fq5hkfOO2M" Directory="RESOURCEFOLDER" Guid="{CA952FBA-6FAF-4321-9B9C-4BD6808353A2}">
+        <File Id="filKCoMbYVSyUPpkza1zWazcZoZ7nI" KeyPath="yes" Source="payload\Resources\compass_point_on.png" />
+      </Component>
+      <Component Id="cmpcuFABxmucOrHFpz_DGi..cjNxm8" Directory="RESOURCEFOLDER" Guid="{F5EF6291-5801-42F5-B337-0BD6985E892E}">
+        <File Id="fil4gXO9GVSOORpLQxF9gsmwUsnxxo" KeyPath="yes" Source="payload\Resources\CreatPIN_dialogue_Icon.png" />
+      </Component>
+      <Component Id="cmp9b_WkigeAFHSQKfyc6Xfniv.RXE" Directory="RESOURCEFOLDER" Guid="{16BD6B53-A2E9-4469-8BDF-0A44190695DA}">
+        <File Id="fil57PvGhGmm1jly0.VKvuaxusga1I" KeyPath="yes" Source="payload\Resources\DejaVuSansBold.fnt" />
+      </Component>
+      <Component Id="cmpUJbnYwB3j1v_.tquw_cDVtLA_Uk" Directory="RESOURCEFOLDER" Guid="{360E59D7-5404-44A5-B2E9-3715DA567070}">
+        <File Id="filIitMCKjGgEND0rAs_FRfBiEQZBc" KeyPath="yes" Source="payload\Resources\DejaVuSansBold_0.png" />
+      </Component>
+      <Component Id="cmp0PUoTBXqTp8GqyLXOVBEWKGNnpU" Directory="RESOURCEFOLDER" Guid="{3B2136AA-CFC6-4959-B3A2-15FEFCEB5A9B}">
+        <File Id="filM.TLZ5yMGrw3iDqr9zMrclXzn2w" KeyPath="yes" Source="payload\Resources\eegeo_logo.png" />
+      </Component>
+      <Component Id="cmpnTRxa4Z9ZoKnlX1v2hRg9Tzy9IA" Directory="RESOURCEFOLDER" Guid="{B57E949B-2B9B-4F02-9ADD-0318560D9AAA}">
+        <File Id="filIUQEaB957FVc4IsSgVRzqNa2pqE" KeyPath="yes" Source="payload\Resources\embedded_manifest.txt" />
+      </Component>
+      <Component Id="cmp3JaUFyOXJZINKlT9urrwZXaCVOI" Directory="RESOURCEFOLDER" Guid="{A57DDA0A-4711-4391-9BA8-DAC42BF5439E}">
+        <File Id="filmBaXvMkOr0._TZTLkhGFYwXi3DY" KeyPath="yes" Source="payload\Resources\floor_selection_button.png" />
+      </Component>
+      <Component Id="cmpcgPajb1IDgZMVj4eOg8qj48iTTU" Directory="RESOURCEFOLDER" Guid="{FB3C6061-E1EB-4CA0-B0A2-D6C9AF70474D}">
+        <File Id="filmJHBQdERYurKZEX1nCIRGnPWOpw" KeyPath="yes" Source="payload\Resources\floor_selection_button_down.png" />
+      </Component>
+      <Component Id="cmplJ4Bi9A2k2JICbHhVz3CVgwdkuY" Directory="RESOURCEFOLDER" Guid="{C62232A9-8C90-4BE2-B447-F0F632C3D9DC}">
+        <File Id="filXdTTLG910_LIg.ENsp89RtjxD4s" KeyPath="yes" Source="payload\Resources\floor_selection_button_mouse_over.png" />
+      </Component>
+      <Component Id="cmpRS4vNNICJIrNqdj2rhAE_U2CtRw" Directory="RESOURCEFOLDER" Guid="{C75BAE8C-EEE1-450F-A276-8627A2A0A9D4}">
+        <File Id="filQtC9BvwdgmHV0ZY9_T5tKX07RWo" KeyPath="yes" Source="payload\Resources\FrankBold50_A8_icons.fnt" />
+      </Component>
+      <Component Id="cmpow6_7yBBcuEywN6xIDkVqE5KpG8" Directory="RESOURCEFOLDER" Guid="{7CF13A7D-FBD8-4227-88BE-DC307B1B1A86}">
+        <File Id="filUf3dRPPyRibg8ld4AiMUWWKMR_M" KeyPath="yes" Source="payload\Resources\FrankBold50_A8_icons_0.png" />
+      </Component>
+      <Component Id="cmpswzLZvrf2lDRQ8yfl2mPyBGBUYo" Directory="RESOURCEFOLDER" Guid="{AA555728-7742-448F-923C-4EF52F3A6D87}">
+        <File Id="filQgObopi1Q9ZzavirK29JeMcmQfU" KeyPath="yes" Source="payload\Resources\Geosphere_01.pod" />
+      </Component>
+      <Component Id="cmphPiP56EAGT51YKsx83Kw5kAkJ48" Directory="RESOURCEFOLDER" Guid="{CF211408-3203-4F68-9FE8-3609B81BCE1B}">
+        <File Id="filKfIRM9WOqStFU8Lbf3Y7PfaxqAg" KeyPath="yes" Source="payload\Resources\gps_marker.png" />
+      </Component>
+      <Component Id="cmpwyDjAP1uRXQzRgCq9DvPkBa1MRA" Directory="RESOURCEFOLDER" Guid="{464AB051-AF32-459D-B6D4-AC63E6EA94C3}">
+        <File Id="filtYdl32dSeovlag3agxsjGI1zXn4" KeyPath="yes" Source="payload\Resources\gps_marker@0.75x.png" />
+      </Component>
+      <Component Id="cmpGJtvFmzh6cq0A_19AYKqHEwBess" Directory="RESOURCEFOLDER" Guid="{C51908AD-DE9B-4982-BBE4-7B641F1B58AA}">
+        <File Id="fil6soh_bUunt1xRlxpnn4_nbHy5yE" KeyPath="yes" Source="payload\Resources\gps_marker@1.5x.png" />
+      </Component>
+      <Component Id="cmpOosBucu1.VE7c8zWVTFJhzlbaJE" Directory="RESOURCEFOLDER" Guid="{242BDA11-3E9C-4F07-9D5C-6E81F4151E72}">
+        <File Id="filbY5ysuV6EOHWyzzHT7ac0Z5SO7c" KeyPath="yes" Source="payload\Resources\gps_marker@2x.png" />
+      </Component>
+      <Component Id="cmp.hH39AbNRaCtjd.4ESRUPlUvTqo" Directory="RESOURCEFOLDER" Guid="{1CFF2B70-A3A8-417C-838D-769A658EEAA9}">
+        <File Id="filH0VTv8nsZx8Su.03xm0C5uflBQM" KeyPath="yes" Source="payload\Resources\gps_marker@3x.png" />
+      </Component>
+      <Component Id="cmprV_FEgEL4DZBgxIitznu8q2A9MI" Directory="RESOURCEFOLDER" Guid="{7347AC1E-53C7-4B45-BFFD-DE4D7187DE88}">
+        <File Id="filhYXKITOyf29tGO8HtENjab5V1XI" KeyPath="yes" Source="payload\Resources\icon1_aroundme.png" />
+      </Component>
+      <Component Id="cmpzYQK2vdfjodpUaBRttcdrlCt2UA" Directory="RESOURCEFOLDER" Guid="{EF42178B-586B-497E-BCD2-E80319120699}">
+        <File Id="filZACbfDhpkIA0t1YUe0dKRjq8Row" KeyPath="yes" Source="payload\Resources\icon1_arts.png" />
+      </Component>
+      <Component Id="cmpnqzlBDhJQYcGQbhRYxgpngK1CeU" Directory="RESOURCEFOLDER" Guid="{BB4A681B-709D-48EE-912E-4382C7E25EEB}">
+        <File Id="filzyvpaWAwocF3BnzfmuRHzTTP0So" KeyPath="yes" Source="payload\Resources\icon1_autumn.png" />
+      </Component>
+      <Component Id="cmpUne_Ft4sFiWNrmsPerGWX9JFBic" Directory="RESOURCEFOLDER" Guid="{A02DC94D-24CB-4F01-AD91-6E3EB1CC98C9}">
+        <File Id="filg4ToMWmN03OjVeXOioxicTzhMys" KeyPath="yes" Source="payload\Resources\icon1_bank.png" />
+      </Component>
+      <Component Id="cmp8XdryrQLSrde75q0SdHmEhVGWFg" Directory="RESOURCEFOLDER" Guid="{2C68FDCF-F07F-4650-93D3-AFE3A285CB5F}">
+        <File Id="fil8bPdJOo39zNVfzQNyrs_YGXT9e4" KeyPath="yes" Source="payload\Resources\icon1_coffee.png" />
+      </Component>
+      <Component Id="cmpSq0Ll4MC9X9UUspsOnuUv2iF4B8" Directory="RESOURCEFOLDER" Guid="{8944A405-CA08-4651-B361-8043DEB25307}">
+        <File Id="fil2c_mmJ2oRL2SLdl6ds6q0D8M8fQ" KeyPath="yes" Source="payload\Resources\icon1_dawn.png" />
+      </Component>
+      <Component Id="cmpX9KQanPgOXl0pd.tS13YP.CDcEo" Directory="RESOURCEFOLDER" Guid="{76F93DCE-05EE-4F7F-9650-3F888985F469}">
+        <File Id="filPg1t7NSgtcJy10JYkxuC7JqJogA" KeyPath="yes" Source="payload\Resources\icon1_day.png" />
+      </Component>
+      <Component Id="cmpmhX8Tbo5dcu28gaFtHd.rCZsPhE" Directory="RESOURCEFOLDER" Guid="{B08FF894-9D85-425C-9956-1ADEA951D124}">
+        <File Id="filRq0mybZfRUNgUJRG_Ii2uejdIaU" KeyPath="yes" Source="payload\Resources\icon1_department.png" />
+      </Component>
+      <Component Id="cmp2FJfieJKGidBUPeGKkpOFmHdE4c" Directory="RESOURCEFOLDER" Guid="{490B51EE-33B4-4939-95E6-4053F4FAC8F1}">
+        <File Id="filvmYGjvRolI97yh4uzA6CKThrWac" KeyPath="yes" Source="payload\Resources\icon1_dusk.png" />
+      </Component>
+      <Component Id="cmpJhzzFFWTQLQ_ret.lSFswtEW2kY" Directory="RESOURCEFOLDER" Guid="{35E70430-9C06-4E9B-9304-E5703F23162D}">
+        <File Id="file.NNSDrNQOCzmgpH1_7C7OzwrYg" KeyPath="yes" Source="payload\Resources\icon1_emergency_exit.png" />
+      </Component>
+      <Component Id="cmpfw3UnmCXHwKxVO4W5EBweOxxXUo" Directory="RESOURCEFOLDER" Guid="{5C97D6A9-62D4-4D17-B702-AC38885B3F68}">
+        <File Id="filsMLdnxgq3kM915yaWL3ptzY1s_E" KeyPath="yes" Source="payload\Resources\icon1_foggy.png" />
+      </Component>
+      <Component Id="cmpGc.DXfOQVGY.tVsbDf6Mf2CUsRU" Directory="RESOURCEFOLDER" Guid="{85E3F46D-F661-4280-9E36-FB057DD6B9C7}">
+        <File Id="fil1rUTeJ2icfvhfbNTWGMgxDHW.Cs" KeyPath="yes" Source="payload\Resources\icon1_food.png" />
+      </Component>
+      <Component Id="cmpkPuh5XxdNv_HP5jNt0nr1vj1LAg" Directory="RESOURCEFOLDER" Guid="{BD48D373-5F7B-4AF6-9997-67AC675E0A8B}">
+        <File Id="filWrfv7Gum966oexaEaUGnv9uaJ5Q" KeyPath="yes" Source="payload\Resources\icon1_hotel.png" />
+      </Component>
+      <Component Id="cmpeWHKJqf2VPNzKFRyN6AOad3GvJw" Directory="RESOURCEFOLDER" Guid="{D798A434-BD3F-42C4-BA94-5E15A1728D47}">
+        <File Id="filcBadqlZX8WZKgeEQx0Cee_LGmFs" KeyPath="yes" Source="payload\Resources\icon1_meeting_room.png" />
+      </Component>
+      <Component Id="cmpqU4aFv7iGSdNWzDtewqFuV.r4RM" Directory="RESOURCEFOLDER" Guid="{5CD206DF-14C2-4A5D-84DC-59F341418DAA}">
+        <File Id="filTZgjxRhrO4xa7PHGjrEm.LOy00c" KeyPath="yes" Source="payload\Resources\icon1_meeting_room_avail.png" />
+      </Component>
+      <Component Id="cmp_Q6OzteleP9SCmVstOPrdVduD6Y" Directory="RESOURCEFOLDER" Guid="{7471C90C-93C6-4B6F-9EA8-1A6370A0FA6F}">
+        <File Id="filCN.IkFyb2i9t12eFawcIEivX.CU" KeyPath="yes" Source="payload\Resources\icon1_meeting_room_avail_soon.png" />
+      </Component>
+      <Component Id="cmp9fcfbsLDte2TjywEpb8VUKggI_k" Directory="RESOURCEFOLDER" Guid="{428F47E8-B199-44D6-8491-A28248E36839}">
+        <File Id="filCFY30tlMHM_KjbIabcnJDFiDTpU" KeyPath="yes" Source="payload\Resources\icon1_meeting_room_occupied.png" />
+      </Component>
+      <Component Id="cmpPEUgTHKrlHyhSynH8YDIAXyFggA" Directory="RESOURCEFOLDER" Guid="{A4258389-A49B-4732-BD54-692EDAE8922F}">
+        <File Id="filC5cuveP5K5M.WWyVtDlHAEq4jCk" KeyPath="yes" Source="payload\Resources\icon1_misc.png" />
+      </Component>
+      <Component Id="cmpK6tO9oWD4Y8bx6OWPhBpAt0RRns" Directory="RESOURCEFOLDER" Guid="{1EB48C20-64A6-44B2-831D-A407481146DF}">
+        <File Id="filDqOSR3vVznDqdUHFNaE4HX_xzUs" KeyPath="yes" Source="payload\Resources\icon1_night.png" />
+      </Component>
+      <Component Id="cmpK_1RhaAOO6DShOKwwiJWhlVpERE" Directory="RESOURCEFOLDER" Guid="{0C2D89EB-3CB9-4064-ACD2-C42B14C9CBF1}">
+        <File Id="filzq5ShVxMRvLYQYW3NXHZHoWR9To" KeyPath="yes" Source="payload\Resources\icon1_nightlife.png" />
+      </Component>
+      <Component Id="cmptx2ZTAGZXyrFO58hlfCWuL8aiuw" Directory="RESOURCEFOLDER" Guid="{E1E98B23-7CD1-4E02-A830-1FD30E194764}">
+        <File Id="filGfKG1peNK3yfF.lF1gGAM57v3TE" KeyPath="yes" Source="payload\Resources\icon1_office.png" />
+      </Component>
+      <Component Id="cmp.9zTHlqB2JflnIpRwMpqjcBYUjA" Directory="RESOURCEFOLDER" Guid="{A3B9FADF-18B1-4369-ADDA-EBBFD66F7DBE}">
+        <File Id="filimunM9Sy8cV8L0AH0aI6Flm5VO8" KeyPath="yes" Source="payload\Resources\icon1_options.png" />
+      </Component>
+      <Component Id="cmpkFY9fmagnYmlr6m6a2eUlrx2yoc" Directory="RESOURCEFOLDER" Guid="{A4C28957-D0AD-4B41-8DAD-BDA6DCFE4634}">
+        <File Id="fily9i67ZUG.MdY5pUQS7vZHzIMFjs" KeyPath="yes" Source="payload\Resources\icon1_overcast.png" />
+      </Component>
+      <Component Id="cmpgTsU.1TQ._oZXTB2LYedh3RQx4k" Directory="RESOURCEFOLDER" Guid="{4A831F00-404F-46A5-83A2-3688B2EA4703}">
+        <File Id="filEPvc_cEKhKeiGC.VJExfPVBr8Jw" KeyPath="yes" Source="payload\Resources\icon1_park.png" />
+      </Component>
+      <Component Id="cmpOVBRC8JP_qd4Y2zC2SNbdIuPIWk" Directory="RESOURCEFOLDER" Guid="{1C9410EB-7999-4C3C-A655-F2DEE6A88839}">
+        <File Id="filMAvLdB8I84Qp05WjRbx3htiMHLQ" KeyPath="yes" Source="payload\Resources\icon1_person.png" />
+      </Component>
+      <Component Id="cmpaJS8UzrcymdB.5.XfTIo8ruy2Fc" Directory="RESOURCEFOLDER" Guid="{91491075-14EE-47C4-BAA3-B8E27EC6967D}">
+        <File Id="filvnAlINXFFl51DNLHkTXG9CX2HDA" KeyPath="yes" Source="payload\Resources\icon1_place.png" />
+      </Component>
+      <Component Id="cmpVhu_4RCgEBg.VVB648g.PeY.d2Q" Directory="RESOURCEFOLDER" Guid="{07484E98-8BFB-42BC-BBA6-A0C2945A5066}">
+        <File Id="filw8PpetjMtGtvsUOELVYQZa_Wakk" KeyPath="yes" Source="payload\Resources\icon1_print_station.png" />
+      </Component>
+      <Component Id="cmpa3yR9LsV.J3U4mlUbT.SRL3A3IY" Directory="RESOURCEFOLDER" Guid="{7F4DAFF4-4B49-4D95-9AB1-DCF8A68B1606}">
+        <File Id="filiqln4O64eQ8J4DBzhOm.J4sGeFU" KeyPath="yes" Source="payload\Resources\icon1_rainy.png" />
+      </Component>
+      <Component Id="cmphK_E2FGg.1Tu9Uo0JIaglmYiu24" Directory="RESOURCEFOLDER" Guid="{C955C1F8-675A-4564-8554-525BFEFD0470}">
+        <File Id="filDI1du7WvUsxD0Dxc5fNmp8zzIH0" KeyPath="yes" Source="payload\Resources\icon1_snowy.png" />
+      </Component>
+      <Component Id="cmpZ8QHEwAuE5_O8Kmws42Jo0jhy3g" Directory="RESOURCEFOLDER" Guid="{E26FDF4B-0F0C-4A5E-B493-A43719B30056}">
+        <File Id="filrH.g7.xXn34FccrArXiotYH1zKg" KeyPath="yes" Source="payload\Resources\icon1_spring.png" />
+      </Component>
+      <Component Id="cmp.PRO5VGEAM3CJPl4pUgodgNBWr0" Directory="RESOURCEFOLDER" Guid="{3CA55798-429E-4DA2-AC6F-8936F2403D69}">
+        <File Id="filGRxUhYuO_.ynyxqwgSuVNJHcU8M" KeyPath="yes" Source="payload\Resources\icon1_stationery.png" />
+      </Component>
+      <Component Id="cmpp5bnhEVrU51_P.khsrqmnlie5ik" Directory="RESOURCEFOLDER" Guid="{6800922C-9180-4B73-989A-8A48AE27A672}">
+        <File Id="filCa2KnyBTKS2zQHIol3ltWOmEenQ" KeyPath="yes" Source="payload\Resources\icon1_summer.png" />
+      </Component>
+      <Component Id="cmpH84I469XvU7qubeHVxnWT1y_F7E" Directory="RESOURCEFOLDER" Guid="{AA21456B-8341-4029-8757-ACCCA5986C9D}">
+        <File Id="fil3Q1BpfeFKOzREvLjtBuPVzXqYFM" KeyPath="yes" Source="payload\Resources\icon1_sunny.png" />
+      </Component>
+      <Component Id="cmpEsCvi2rSp93TAP1U2BLbq2eWnzc" Directory="RESOURCEFOLDER" Guid="{3485FD0B-E031-4AB8-860B-5B2673C0BB08}">
+        <File Id="filEU2gWInsIqfwws5cIG_uJZ3O1U0" KeyPath="yes" Source="payload\Resources\icon1_toilets.png" />
+      </Component>
+      <Component Id="cmpGW1_T8iB9.FmHLqIyQI59N6sGjE" Directory="RESOURCEFOLDER" Guid="{147994B0-556E-4EFE-A5D3-C82450B44F34}">
+        <File Id="fillVFKA9.uO0_LQ0vGvpAec_p2rkY" KeyPath="yes" Source="payload\Resources\icon1_transition.png" />
+      </Component>
+      <Component Id="cmpWcge9x.JuAm_ejgXUMBMdufCwp4" Directory="RESOURCEFOLDER" Guid="{D367FBC9-9F0C-4AEA-B247-538BB45D4BEA}">
+        <File Id="filk9VLsl6_xsJ.c4AMMXS6ifRpBY4" KeyPath="yes" Source="payload\Resources\icon1_winter.png" />
+      </Component>
+      <Component Id="cmpePuSvbgFRGzLcsDimvAP59qXpWM" Directory="RESOURCEFOLDER" Guid="{E311F3D6-6B8F-4EB7-889A-1ED43A1DA384}">
+        <File Id="filQH3Qb4g98KqLBY21tH6ctQhI6DM" KeyPath="yes" Source="payload\Resources\icon1_working_group.png" />
+      </Component>
+      <Component Id="cmp8ZXMGQOdrI0fO3UaB487rD.NluY" Directory="RESOURCEFOLDER" Guid="{1B45DA7D-CAFF-44D9-B5AC-2A1131980063}">
+        <File Id="fild8N5dgUX5h.itkrMLeq6j50OTi4" KeyPath="yes" Source="payload\Resources\icon_create_poi.png" />
+      </Component>
+      <Component Id="cmpRNaIhno5QyBra2Fz2dzin1kW3g0" Directory="RESOURCEFOLDER" Guid="{71046200-DD7E-48B4-A45D-31B3B7952E34}">
+        <File Id="fildEb3OqHuh_hoS6wERotHKH6Itdk" KeyPath="yes" Source="payload\Resources\image_blank.png" />
+      </Component>
+      <Component Id="cmpLBK.5GZsS3LVrA0oqhwmEGDVG5w" Directory="RESOURCEFOLDER" Guid="{2EF161BE-AE2C-4D3D-85B7-CFBA41817E20}">
+        <File Id="filqszWIQIqz_bKlsx99P877.Scvek" KeyPath="yes" Source="payload\Resources\menu_background1.png" />
+      </Component>
+      <Component Id="cmp_XRlQlCol52.he5VgiCIc3vLFyI" Directory="RESOURCEFOLDER" Guid="{9781AF90-5112-430A-9228-0CFB2C89E44C}">
+        <File Id="filC5qNgcw6VKCWYDDsd4DqZ.AKfUQ" KeyPath="yes" Source="payload\Resources\menu_background2.png" />
+      </Component>
+      <Component Id="cmpbu5JYWmrfueCIPgqAPNoMQTwVAE" Directory="RESOURCEFOLDER" Guid="{DB5F08FC-1896-4A7A-8E40-4D4FC3345C4F}">
+        <File Id="filJUcg5UQW.jX62csTEKvjvlbdJWk" KeyPath="yes" Source="payload\Resources\menu_bar.png" />
+      </Component>
+      <Component Id="cmpuvTkQZHYMtFdh7E.941mbmSIZKc" Directory="RESOURCEFOLDER" Guid="{0D78CC83-FC75-4D00-B0A6-8C03F198DFF3}">
+        <File Id="fil2kOUATEzH_PysFh3d_ELd6HEIlU" KeyPath="yes" Source="payload\Resources\menu_button.png" />
+      </Component>
+      <Component Id="cmpPYTfzH8N1A3O4RmwhJBah1Uw6bw" Directory="RESOURCEFOLDER" Guid="{134BBACF-FEB1-4B6C-899D-FC2D7393E492}">
+        <File Id="filQoXzsPnl6uXwQ6OIPHCy4..5WPk" KeyPath="yes" Source="payload\Resources\menu_list.png" />
+      </Component>
+      <Component Id="cmpkvaGMsqe9G3OWz4m9YYc3tO8GZc" Directory="RESOURCEFOLDER" Guid="{57A375E9-7759-4B05-B9CA-7F5B1227C97D}">
+        <File Id="filng.v_aMc6HHa98Dq10v6P3.hrbA" KeyPath="yes" Source="payload\Resources\micello_logo.png" />
+      </Component>
+      <Component Id="cmpuYvQRc1CldEWSVK61GKbiZ1uEVw" Directory="RESOURCEFOLDER" Guid="{1A26FF19-0BED-4371-8FE9-25BA4EDFD8DF}">
+        <File Id="filJZkxhw.yk4r9V.pLBklJ3.2XPIs" KeyPath="yes" Source="payload\Resources\pin_data.json" />
+      </Component>
+      <Component Id="cmpCoJA1DOM3xypeAvWokLw9DD4Jsc" Directory="RESOURCEFOLDER" Guid="{13DDC145-48DC-4C59-9E26-627A82E8E1CA}">
+        <File Id="filV5gwq82NrL6TpFYSWp6wDRX31p0" KeyPath="yes" Source="payload\Resources\placeholder.dds" />
+      </Component>
+      <Component Id="cmpVI_LXKjZlhkAwGWbT4_CF1t7rZ8" Directory="RESOURCEFOLDER" Guid="{CE71F12B-A572-4DBA-B636-5D68A7C4BFD8}">
+        <File Id="filZg92hr9Me6taUYiJcdkOj3ufW34" KeyPath="yes" Source="payload\Resources\placeholder.ktx" />
+      </Component>
+      <Component Id="cmpuWFwUnsfedfbk4VRIF_of8PEyrk" Directory="RESOURCEFOLDER" Guid="{1EB1A1CE-F98D-426C-854D-2F0E29705879}">
+        <File Id="filbEmAAcDii8wcfgS7XodEs4vbBeI" KeyPath="yes" Source="payload\Resources\placeholder_cube_negX.png" />
+      </Component>
+      <Component Id="cmpdFVqeUwj3uRWSF9VOtIPAe7Vsp4" Directory="RESOURCEFOLDER" Guid="{0E4F7275-C102-4492-AEBE-F020DA9A13E0}">
+        <File Id="filZVF1.2y3MfofX.d6kCtYokIwurQ" KeyPath="yes" Source="payload\Resources\placeholder_cube_negY.png" />
+      </Component>
+      <Component Id="cmpVy2btfCSpuj9xnIDcqF5sd_HF6E" Directory="RESOURCEFOLDER" Guid="{333C0E3D-6063-490C-B544-479F0CCF8112}">
+        <File Id="filNL_MD8W1MX3CvZppSUm9L06xHyE" KeyPath="yes" Source="payload\Resources\placeholder_cube_negZ.png" />
+      </Component>
+      <Component Id="cmpt.QCC033mRW3TJuH0PxpdUa_6jM" Directory="RESOURCEFOLDER" Guid="{8BDF56B6-5F1C-487C-B4F8-F1E0FB4F96EB}">
+        <File Id="filcPU4yhsbyvx3BaLiEQjPa_bhC.4" KeyPath="yes" Source="payload\Resources\placeholder_cube_posX.png" />
+      </Component>
+      <Component Id="cmpnmSSVnJ_iNkzvJvWKghqZ7j_Qiw" Directory="RESOURCEFOLDER" Guid="{3D607586-52A9-480F-B570-5111FF5850A1}">
+        <File Id="filNl3E6Hhzqx3lVJDxYnrFCzI0aN0" KeyPath="yes" Source="payload\Resources\placeholder_cube_posY.png" />
+      </Component>
+      <Component Id="cmpbzfT_l7y_MqB_DMa849oD.XfDag" Directory="RESOURCEFOLDER" Guid="{A42E99B8-0F6F-4709-B641-9CBB6CA23BAD}">
+        <File Id="filXnHQmAGgnSsjhbuwauoBefbigaY" KeyPath="yes" Source="payload\Resources\placeholder_cube_posZ.png" />
+      </Component>
+      <Component Id="cmpTUg.Hxx_HZ1yWv6dkaRkk5fMQlc" Directory="RESOURCEFOLDER" Guid="{AA25FF48-3B16-4E63-919E-800DBEF98D35}">
+        <File Id="fil8NSzfClrjfVLi7Uf_pdxJWz60Ik" KeyPath="yes" Source="payload\Resources\placejumps.json" />
+      </Component>
+      <Component Id="cmpeTKqrKzzAWKvTMe0GRdGhb0562w" Directory="RESOURCEFOLDER" Guid="{C19CB482-0CBD-42CC-A932-06ECF81A5228}">
+        <File Id="fil.4ZPdlv.NmmYnAeEkeTEa3ldvDA" KeyPath="yes" Source="payload\Resources\place_pin_background.png" />
+      </Component>
+      <Component Id="cmpHvARa1sta67TysnvztmoVpdP75I" Directory="RESOURCEFOLDER" Guid="{8414714E-DF97-43DD-809B-49B548945F42}">
+        <File Id="filDetLL3fFZxG5p8OvNGVh9KFJIso" KeyPath="yes" Source="payload\Resources\poi_marker.png" />
+      </Component>
+      <Component Id="cmpebdgMnhA7oOv8f7D1ohSOsMlY7U" Directory="RESOURCEFOLDER" Guid="{3F35010E-BED3-4468-B981-4FEBED85A1BC}">
+        <File Id="filU_Jv7z1PmgvYzreZARwLUFK7M1Y" KeyPath="yes" Source="payload\Resources\poi_marker@0.75x.png" />
+      </Component>
+      <Component Id="cmpbFMNCTUMfs3V7gxhmkIMMW7U_wg" Directory="RESOURCEFOLDER" Guid="{BB4D9E5B-3AEE-4AD9-A11A-C58662FFAD5F}">
+        <File Id="filKdmewx9lxu3F2amhkD3qGXLzay0" KeyPath="yes" Source="payload\Resources\poi_marker@1.5x.png" />
+      </Component>
+      <Component Id="cmpilHhrhof.17Ou8caGXVhzjksMhc" Directory="RESOURCEFOLDER" Guid="{E7A6D9D9-0378-48E6-A65D-E2E96CCFFC57}">
+        <File Id="filOj97Dddy40kqWtfxkJI0zFbHzfw" KeyPath="yes" Source="payload\Resources\poi_marker@2x.png" />
+      </Component>
+      <Component Id="cmpUQQQbtdrjxYgTjaTmhkr_PgvsnQ" Directory="RESOURCEFOLDER" Guid="{38F924F4-AE30-49A4-8F97-AF22594BC41F}">
+        <File Id="fil46IcDAUBzHfucUC_Uk._OcQNVW4" KeyPath="yes" Source="payload\Resources\poi_marker@3x.png" />
+      </Component>
+      <Component Id="cmpq8dsedIEHTQSdxPyD2bqCbBtSaQ" Directory="RESOURCEFOLDER" Guid="{E1FCB8B1-3BEB-4E07-8C76-BC703149C1D8}">
+        <File Id="filedgd4P8nFF_dCyaopRQ5uC70Fqo" KeyPath="yes" Source="payload\Resources\poi_placeholder.png" />
+      </Component>
+      <Component Id="cmpX2Ta_pVF5bNsYOmJS0dTiGU4i9Y" Directory="RESOURCEFOLDER" Guid="{C2A69412-3FA0-4E92-BD0C-E67156615FC3}">
+        <File Id="fil75xn6VShRWa1JKiwpCF12_xMPWM" KeyPath="yes" Source="payload\Resources\search_magglass.png" />
+      </Component>
+      <Component Id="cmpiyNkOU5BtDD7TyYoQlppIYQ5VlY" Directory="RESOURCEFOLDER" Guid="{AE0E1B59-3DF5-4BA5-8F3E-B695E5AC8A55}">
+        <File Id="filrA.PbHrQxD5y44Y3zygI8p.RuJ8" KeyPath="yes" Source="payload\Resources\search_results_bar_small.png" />
+      </Component>
+      <Component Id="cmp5C8cRnnPJV1jVzfVyGzGgSjrJ1A" Directory="RESOURCEFOLDER" Guid="{E5BE300C-3287-4542-ACFD-EC53E7BA80AC}">
+        <File Id="filesS.6X7ECxuNwbjjFlAhUl7mpjI" KeyPath="yes" Source="payload\Resources\search_results_spinner.png" />
+      </Component>
+      <Component Id="cmpsIESJZEpsGTB0m0MvGKSM4fgbGk" Directory="RESOURCEFOLDER" Guid="{F5445904-20BC-4F10-87D2-FB436A6AA25A}">
+        <File Id="fillvKUwxefwUrryLKonIMLAaUmUv0" KeyPath="yes" Source="payload\Resources\search_result_background.png" />
+      </Component>
+      <Component Id="cmpu4OhjrRm7nbuFzLvwb_lBIo5ltI" Directory="RESOURCEFOLDER" Guid="{0E07B1D4-8ACE-4A4E-921F-C4129F4114EB}">
+        <File Id="filT.9uZFJtOLEMvMu4gb0sM5C8VXc" KeyPath="yes" Source="payload\Resources\settings_gear.png" />
+      </Component>
+      <Component Id="cmpvZRTI7kjk1TjejECQ4IrVJ1mMw4" Directory="RESOURCEFOLDER" Guid="{8154244F-7123-4927-9DBA-67A5A5BBCA9A}">
+        <File Id="filx_TVZivKU9k0J3rI.zRM9bNTfC4" KeyPath="yes" Source="payload\Resources\SplashScreen.png" />
+      </Component>
+      <Component Id="cmpiNNB9MhZYS7NlqYyRQQ5aGfMI3E" Directory="RESOURCEFOLDER" Guid="{D3E04004-D106-42D9-BF63-7B2472839C9F}">
+        <File Id="fil88vpD9vTHs2u_XotKrxxmzVCo8E" KeyPath="yes" Source="payload\Resources\SplashScreen@0.75x.png" />
+      </Component>
+      <Component Id="cmpBVAlxmbJ.LZT9_m_3eXcTpItMBA" Directory="RESOURCEFOLDER" Guid="{666F528C-A23D-4553-AC02-0AC22F626AC8}">
+        <File Id="filcTH7YcENOtsu.3xx11pmOZ0YDos" KeyPath="yes" Source="payload\Resources\SplashScreen@1.5x.png" />
+      </Component>
+      <Component Id="cmpyHSO6Rok_f7vtmXnJsNFp9XlCUs" Directory="RESOURCEFOLDER" Guid="{721C6996-98F3-4070-9376-FA4F3C781810}">
+        <File Id="filHVHOvlPWJIHi1ypDMigYuzABemI" KeyPath="yes" Source="payload\Resources\SplashScreen@2x.png" />
+      </Component>
+      <Component Id="cmpAiwEtv75cYO0UeGBlE35KPumTVk" Directory="RESOURCEFOLDER" Guid="{56930AC2-6D35-4EB8-B7EC-2A99054DEF49}">
+        <File Id="filKHt1VfeR4Z8vSrqHN6vksIJ2SwA" KeyPath="yes" Source="payload\Resources\SplashScreen@3x.png" />
+      </Component>
+      <Component Id="cmp9KqXt_ED6TAMC0ueQDtTKvwE_xQ" Directory="RESOURCEFOLDER" Guid="{0829F13D-CC1C-459D-9A22-32B4C0D08C0F}">
+        <File Id="filclDyVmpKikveP0oK4Fpjki5axRg" KeyPath="yes" Source="payload\Resources\sub_menu_arrow_off.png" />
+      </Component>
+      <Component Id="cmpQF_RJR0elkZTYb7RMtzF9fZR8kI" Directory="RESOURCEFOLDER" Guid="{F34E01FD-1EF2-4159-BE52-1FD76BB54A47}">
+        <File Id="filTs_GX2cGDvO6.I7va_usCXq1NZY" KeyPath="yes" Source="payload\Resources\sub_menu_arrow_on.png" />
+      </Component>
+      <Component Id="cmpigHEKLjRSo6AUymdNCA_oosrYhM" Directory="RESOURCEFOLDER" Guid="{2FE60F45-438D-46F3-950B-610AA6D3E996}">
+        <File Id="filNpAOp9vuNMCJIus.U8zpGxPbgiY" KeyPath="yes" Source="payload\Resources\weatherstates.json" />
+      </Component>
+      <Component Id="cmpn4Igzy5vl8YqkpUxTjSeXtSks80" Directory="RESOURCEFOLDER" Guid="{D485E067-EDE2-42E3-B7F8-7DDBFFCDA547}">
+        <File Id="filOFJL1WZCS9zkJPqxxrtBfslOg5Q" KeyPath="yes" Source="payload\Resources\yelp_logo_small.png" />
+      </Component>
+      <Component Id="cmpv1kRDr7eAOyPqUE5duTGUQ3JQ3w" Directory="RESOURCEFOLDER" Guid="{3E1610A4-F0E0-4E66-A8BB-1AECEDA07D2D}">
+        <File Id="filJ2gVjWpkZstyAi3LCyJsnMLM8bE" KeyPath="yes" Source="payload\Resources\yelp_reviews.png" />
+      </Component>
+      <Component Id="cmpcDEp5FYL5VFTknlqh0P_lbzTx8c" Directory="APPCONFIGFOLDER" Guid="{F11506A4-CC83-4DC9-BFD5-65411DE62887}">
+        <File Id="filtxEhIqjxH2tg7w7A4L.ft.LHvIQ" KeyPath="yes" Source="payload\Resources\ApplicationConfigs\project_swallow_config.json" />
+      </Component>
+      <Component Id="cmpHaABJxo3qR2H80EqNupO4l1Q9B0" Directory="APPCONFIGFOLDER" Guid="{CB4344D1-ACA3-4017-B3CD-99D615E41E5D}">
+        <File Id="filfFDp6MGSdcsQD63FeIKD1mDOhBw" KeyPath="yes" Source="payload\Resources\ApplicationConfigs\project_swallow_production_config.json" />
+      </Component>
+      <Component Id="cmp7PCrACH8VAfwJ8z5aia3uIcMErk" Directory="INTERIORSFOLDER" Guid="{631D9E58-64FA-464A-8448-82D2AC83F660}">
+        <File Id="filth4YExbzzgikr1EByi65tnklt1g" KeyPath="yes" Source="payload\Resources\Interiors\icons_interior_entities.png" />
+      </Component>
+      <Component Id="cmpnXJAtMpuuvzdIIGaUkwkX2FNwdQ" Directory="INTERIORSFOLDER" Guid="{8C124F10-B7E2-4DF2-A13D-8A9B2572079A}">
+        <File Id="filR6pobm.rYOWZGEFA224ZfXdquYU" KeyPath="yes" Source="payload\Resources\Interiors\icons_interior_entities@2x.png" />
+      </Component>
+      <Component Id="cmpsMLN5o1j9bRh78zelMKxdiMCTqA" Directory="INTERIORSFOLDER" Guid="{D61F5BA1-B0C8-4454-97B7-21809731862D}">
+        <File Id="fil.nHUEnMHKTAyj35YI7GFJJlbWv4" KeyPath="yes" Source="payload\Resources\Interiors\icons_interior_entities@3x.png" />
+      </Component>
+      <Component Id="cmpI5btSUvUxJKBvgWRIlywp.K2gE0" Directory="INTERIORSFOLDER" Guid="{E4246D3F-0B20-414B-A8B3-D15A343B32C5}">
+        <File Id="fillZTB.tqscK6fq5m.2uIiWye7p.Y" KeyPath="yes" Source="payload\Resources\Interiors\interiors_pin.png" />
+      </Component>
+      <Component Id="cmp5uTH3dqYgSTKL608L0KJzfDVVzo" Directory="INTERIORSFOLDER" Guid="{41AD150D-B5CF-49D4-875D-504E004903CC}">
+        <File Id="filJ8H3Q56WMmOaYG7woUEWb3aOxNw" KeyPath="yes" Source="payload\Resources\Interiors\interiors_pin@2x.png" />
+      </Component>
+      <Component Id="cmpKDcIdT9uhG0c_U4.7GhY0ci.Nyg" Directory="INTERIORSFOLDER" Guid="{220AE8B2-1AFA-4906-A55C-5D7B86AD1AB8}">
+        <File Id="filTNs_xwzpJc._BgyCpbFtzVkuIIA" KeyPath="yes" Source="payload\Resources\Interiors\interiors_pin@3x.png" />
+      </Component>
+      <Component Id="cmpxzCqX0In8mbESYvDIXOTmKH6D6k" Directory="PINSFOLDER" Guid="{E5320CF2-420A-45D0-8351-2FF95C4498E1}">
+        <File Id="filBtjltKuPljLF4oPbC11WwCuZgyI" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\pin_icon_texture_page.png" />
+      </Component>
+      <Component Id="cmpl5wKI6B.bI0.gE08XB5wSSQGoMU" Directory="ICONSFOLDER" Guid="{3A185179-3FCC-46D1-95CA-3D54D35064F0}">
+        <File Id="fil9oLYNUCSCIpplap2vOt_RctQP5I" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\bank.png" />
+      </Component>
+      <Component Id="cmpBNOIEgDGCwSYTEYSAWBY.LY3MrA" Directory="ICONSFOLDER" Guid="{0CAFE748-1833-4552-9C01-A192ACEBBEA3}">
+        <File Id="filrXaUFgWsSzCIyJ4lBGSzWr6ZGWk" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\coffee.png" />
+      </Component>
+      <Component Id="cmpYqCs3uwYMDEX4szMCi18sKVDs9U" Directory="ICONSFOLDER" Guid="{7B03B50F-397F-451D-84B8-FDF4672B7E7D}">
+        <File Id="filjaUBW6IwlJvTVIHPg241bw.CWkU" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\facebook.png" />
+      </Component>
+      <Component Id="cmpDqjqfA7ZT51wqBTVCgeJ0RlE_SE" Directory="ICONSFOLDER" Guid="{796B598E-0336-442D-BECA-522F3364D3A5}">
+        <File Id="filhwnnLx5adENGVArlQ_cHX5vAb54" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\hotel.png" />
+      </Component>
+      <Component Id="cmpy7FEOgboqxmoNBI73IQDrTpFz9A" Directory="ICONSFOLDER" Guid="{DAD1263D-2EFB-4F8E-99B5-BFC29C8544F9}">
+        <File Id="fild3aWGKmxzYnPskL8.IfFC.2tCHQ" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\instagram.png" />
+      </Component>
+      <Component Id="cmp3_ZassC5R1xDZsZCgdYzx4UYrTQ" Directory="ICONSFOLDER" Guid="{FF87576A-733F-4C46-90A7-3833BFD16911}">
+        <File Id="fild46XRHzWLYygsgizf.E_P.fe2a4" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\meeting_room.png" />
+      </Component>
+      <Component Id="cmpJJm3jbIfBRhsKnzzS3Lbhc_e5m0" Directory="ICONSFOLDER" Guid="{FB63A918-7940-4601-B988-B8220237E3B6}">
+        <File Id="filRIMhj.4d0y.m2lOHo2pq68YkkfI" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\museum.png" />
+      </Component>
+      <Component Id="cmpN6bLC.n0pdBG4gwcfqmc.9OAih8" Directory="ICONSFOLDER" Guid="{919BF892-DE26-4DB1-9247-176E05BE79BB}">
+        <File Id="filqf86mS10VpPG5CQjjpEmgDCojy8" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\nightlife.png" />
+      </Component>
+      <Component Id="cmpqRjxmWd.oJLmORuvBNYw1qWLW5M" Directory="ICONSFOLDER" Guid="{498D05F0-A393-45F2-B9DB-25F42DF22B02}">
+        <File Id="filWpWPVZHj7be5n0HyrqmFbITJZaY" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\none.png" />
+      </Component>
+      <Component Id="cmpNfC2DOCSFgERJjEwYoJ9rOB.5mw" Directory="ICONSFOLDER" Guid="{84FB9C52-4D48-44A5-B46E-99C24EC73D89}">
+        <File Id="filzH7KMBetmjKW0fRm9O.O4DPGRSI" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\park.png" />
+      </Component>
+      <Component Id="cmpL6tk0pkzwumBAoa84DL4Ats2iGI" Directory="ICONSFOLDER" Guid="{D979AF9C-02BA-42BE-9D68-9024C2AF3CFC}">
+        <File Id="filF8qxBv2P6qJvKcDb.rr9e8BATGU" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\pin.png" />
+      </Component>
+      <Component Id="cmpQDICCYfX5pb1mm3axOrnuwyHkxI" Directory="ICONSFOLDER" Guid="{0A839D84-02DF-4E70-B528-93698EE41D94}">
+        <File Id="filV0Ws9SZL1ZGOY3Q.CHIp9FfXfWA" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\print_station.png" />
+      </Component>
+      <Component Id="cmp6RoFPGfdQd1OqxYqOIBVNDxwpfI" Directory="ICONSFOLDER" Guid="{2687E241-D283-4978-93B7-95EEC6591056}">
+        <File Id="fils79hzxEl5mpklXQJXHDuECBdJig" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\restaurant.png" />
+      </Component>
+      <Component Id="cmp5Pd9C4DNnMKy0VpFJ1eD5vOpmss" Directory="ICONSFOLDER" Guid="{38665EF9-73F3-4EB2-BE45-610C2135A6A1}">
+        <File Id="filqXR1tAHiUq708YtrC74kdm_y_ek" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\stationery.png" />
+      </Component>
+      <Component Id="cmpCiJqFhNXUnRD3kP2a6koDIDHIbg" Directory="ICONSFOLDER" Guid="{7961C40F-504B-4B0E-A6DE-DE9758BA081D}">
+        <File Id="fil4V0V3SvCPuyHbiuESVLgDNz1VXc" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\theatre.png" />
+      </Component>
+      <Component Id="cmpozUohssqK.buGxgJd1hV9F8Lbp4" Directory="ICONSFOLDER" Guid="{68DBB4AC-F722-433E-B6A5-2FB97F52CF9B}">
+        <File Id="filY0iQczzJ4KST9tCFpdu1IbOn1GY" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\toilets.png" />
+      </Component>
+      <Component Id="cmpL04f3p8AkeF0nlHkCkYcbJag9D8" Directory="ICONSFOLDER" Guid="{EDE2ADA6-F89D-4F73-A058-22D56CC4E781}">
+        <File Id="fillAjprFybypnDPqPscaWBWVVXLJs" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\twitter.png" />
+      </Component>
+      <Component Id="cmpH0tbiiW8k4.f9WVn8VGSwVtKJhg" Directory="ICONSFOLDER" Guid="{8478C431-7DD3-4079-B3A8-D89144D4ECE2}">
+        <File Id="filYzJUAjPOIYv1a8PB2GOBKIXEIWg" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\weblink.png" />
+      </Component>
+      <Component Id="cmpdoKOTHBaGFNQrBRqJEPy2s6sb2E" Directory="ICONSFOLDER" Guid="{183EF31D-CD3B-4269-8A32-1368BD5EBCE5}">
+        <File Id="fil3qrZuSGQL6Q81GoRjo6dWKdoNmk" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\working_group.png" />
+      </Component>
+      <Component Id="cmpiPZvE5FyZuvRhVH3DVelX7BY4lo" Directory="ICONSFOLDER" Guid="{6A51AAB5-0D5F-4BAC-891B-1142D793C78B}">
+        <File Id="filRcyQ3f9FUto9pPKQUTIzJVE6AGY" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\youtube.png" />
+      </Component>
+      <Component Id="cmpF5OBSoC5fpEJWjx14GiRm.P_eSc" Directory="THEMEFOLDER" Guid="{65A48B0B-5E0F-4E0B-AB44-C0D0A4773940}">
+        <File Id="filmBqIkgjWQJiUdumEpsvv3Zhv454" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\London_London_railDiffuse_repeat.dds" />
+      </Component>
+      <Component Id="cmph1Xsl0iEjTomYFeHHKoyCd73C.g" Directory="THEMEFOLDER" Guid="{1DAFE19D-312C-4D75-BA07-BEE76B686431}">
+        <File Id="fil_uxkEKUTg_u4XsLW0OrYcGrGisg" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\London_London_roadDiffuse_repeat.dds" />
+      </Component>
+      <Component Id="cmpDwrflJwZdFL0_13QLX.jlwAnKww" Directory="THEMEFOLDER" Guid="{E02B2298-6713-4603-8968-0AA86C0380C3}">
+        <File Id="filws8lkd0alaizOV5WoJLcXjUKSys" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\London_London_wallDiffuse.dds" />
+      </Component>
+      <Component Id="cmpC_WlOuY_XeF_lZuQcH7JgY06I_s" Directory="THEMEFOLDER" Guid="{D1A2BDAF-079E-49A8-BD36-40ABBAEBF392}">
+        <File Id="filKnL8oI_5MW1i7IvA7fx61zTMBr8" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_ldn_trains_01.dds" />
+      </Component>
+      <Component Id="cmpvZ0I90jRJWA.pewnjPbdh2UWmus" Directory="THEMEFOLDER" Guid="{C00DD5A3-8430-4973-BABD-7630FD26F76A}">
+        <File Id="fil8MsQmhGG5Crhp737flyJaA0GdxQ" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_placeholder_no_data.dds" />
+      </Component>
+      <Component Id="cmpY5vA16lY6F02zEbsinGgphTDDAg" Directory="THEMEFOLDER" Guid="{7395D0A2-1D6A-46DE-98CB-9DC49E25969C}">
+        <File Id="filLABTZP6Z7HQ6wf7XnXl3taqCaIc" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_sf_planes_01.dds" />
+      </Component>
+      <Component Id="cmp_IbFXUOrM_lbfxw.nOh7TSnRy_M" Directory="THEMEFOLDER" Guid="{0A8E963F-737A-4592-B724-6C4BABC07CAF}">
+        <File Id="filYscrSvI9qLzdQau5a8_Dum3YI0Y" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_sf_vehicles_01.dds" />
+      </Component>
+      <Component Id="cmpOQfxBwRG.RJKtWcJCegfhf._tdc" Directory="THEMEFOLDER" Guid="{425B0B94-7FA2-4E12-82F0-F15671338F62}">
+        <File Id="fil5OMo1_Ui0BRbdFdMXMzU0i.nEo4" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture0.dds" />
+      </Component>
+      <Component Id="cmp8yZuH3qcoYq01W9Zd4GFzUBxixk" Directory="THEMEFOLDER" Guid="{6A675AA7-BDFC-4500-918C-9AE9CC88C981}">
+        <File Id="filaW6jOMCXlO49DkDXoXqs2s4vczE" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture0_LOD.dds" />
+      </Component>
+      <Component Id="cmpFl1kGLUnK.yC_u.4XgEtxGxUSiM" Directory="THEMEFOLDER" Guid="{31B92F52-F67D-4EDA-BD91-E134FB03FDCD}">
+        <File Id="fil3CrYy_.foH_UTxZ31S2Lpckn66A" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture1.dds" />
+      </Component>
+      <Component Id="cmppCPHNF8qKN0lIs1Bd1xx6P9PG_g" Directory="THEMEFOLDER" Guid="{83036521-D343-4FAE-B588-734CDD89E63A}">
+        <File Id="filxffBReUcpQEegQtqBKbEdUXyvto" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture10.dds" />
+      </Component>
+      <Component Id="cmp0qThuRc7gLfz837saJDmGnOcvrY" Directory="THEMEFOLDER" Guid="{6E926EA3-FE67-4199-AAAA-605BDA9FA2F9}">
+        <File Id="filBlk994f1d0eTKWdms3oq9V7kc2w" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture10_LOD.dds" />
+      </Component>
+      <Component Id="cmptVsirIG8cyLAMrldKvKHo6pjlJA" Directory="THEMEFOLDER" Guid="{3E09376C-05E8-4F52-900E-52F3DF50FA1F}">
+        <File Id="filxkNoCJhBboyRuhu12.Lb1q5TV9I" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture11.dds" />
+      </Component>
+      <Component Id="cmprJGG65wUigh3vssOeuiuvkTIaFs" Directory="THEMEFOLDER" Guid="{99CC0A69-6E52-4ACC-AF20-8B2FB13E3174}">
+        <File Id="filaPkZc7kp7.QMTZm5K2vkiQoofB8" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture11_LOD.dds" />
+      </Component>
+      <Component Id="cmpL3Z3bdP97KerhmR4GmBXv7HyRuA" Directory="THEMEFOLDER" Guid="{89696602-EC96-4613-8907-BAF900959075}">
+        <File Id="filDYs.aOeqNSImAGCOYnc8r4BDUPc" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture12.dds" />
+      </Component>
+      <Component Id="cmpgoABwTsyub5dkVU3CpxNDQBT0eQ" Directory="THEMEFOLDER" Guid="{0E3FFD96-8E9E-4448-BD39-883373A5803D}">
+        <File Id="filL3i2v7jzQLeQd7EmL55r6Bt8seY" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture12_LOD.dds" />
+      </Component>
+      <Component Id="cmpYWpawJiDei3msScpd3e07UYCKHE" Directory="THEMEFOLDER" Guid="{203A9EDC-8A2D-4C88-823B-A25A1C9A1612}">
+        <File Id="fil2yfzmOB9LOX7gstZuST9Vbhj._o" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture13.dds" />
+      </Component>
+      <Component Id="cmpX3npD50rbCUP7yjP0hSbVzsCcCg" Directory="THEMEFOLDER" Guid="{2818C076-068B-426F-9D69-05739AD30FDE}">
+        <File Id="filFqGYv2DpP42jQZ0dzEF013Ym1nc" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture13_LOD.dds" />
+      </Component>
+      <Component Id="cmpzYPJZcZGAzzAHMMz7vctHfqxW8k" Directory="THEMEFOLDER" Guid="{F66FEAB0-C94B-456F-B4DD-33151FC48B9C}">
+        <File Id="filkSncEqjBBoUQNU0k5jy9KxhDHYU" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture14.dds" />
+      </Component>
+      <Component Id="cmpiyQEUIiXSDBFgwVdGJYXtMRWIQc" Directory="THEMEFOLDER" Guid="{6024CDA7-19DD-4A03-A617-79F045F6B2A8}">
+        <File Id="filaFE_Q.U05pq61s.hdzkSd8mNCaM" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture14_LOD.dds" />
+      </Component>
+      <Component Id="cmp2cijQkuqelCorfG9P4MzM6tXi3s" Directory="THEMEFOLDER" Guid="{4AEDE83C-3973-4980-B4E1-4470DF910A55}">
+        <File Id="filRj5y9mP279B4uP7ho3_xec26UBQ" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture15.dds" />
+      </Component>
+      <Component Id="cmpi8RDZkQqHvdezQqhVHzO9MLrkMQ" Directory="THEMEFOLDER" Guid="{AA549DE0-8FC6-4B8B-8A8E-E217B605067B}">
+        <File Id="filXCFBF9KJNbYV1R09kFaoZz8wFAM" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture15_LOD.dds" />
+      </Component>
+      <Component Id="cmp8usfwXVvOiL7kd5qTwSsSE_reOY" Directory="THEMEFOLDER" Guid="{2C6BDE6D-99D7-44C8-9CC0-353CFFD5B90B}">
+        <File Id="file887NGbCrP3nnYDHF7TUi6lfwVQ" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture16.dds" />
+      </Component>
+      <Component Id="cmpDUJN6amMHrcaQ9S33OETXqXP.Ew" Directory="THEMEFOLDER" Guid="{A75FC167-B2B3-47DD-9FD6-C31176C9A89B}">
+        <File Id="fil5m4xl0sIGu7c7iUU6nppenUeyKA" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture16_LOD.dds" />
+      </Component>
+      <Component Id="cmphsU7rzZmpvWqdXAAG9lMWIsjDA0" Directory="THEMEFOLDER" Guid="{2EDA2E45-01DD-4FEC-BF65-16A9CCA2E8AE}">
+        <File Id="filQFsnN5E6Yq8mhIa.SCj0k1i5Bq0" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture17.dds" />
+      </Component>
+      <Component Id="cmp3upxRKWtep1Za60aT.HhrJzqMvA" Directory="THEMEFOLDER" Guid="{D0BE2148-405C-4104-8ED2-664D32CA0965}">
+        <File Id="fillyhlrHBF8Z5owR48oDVxpqmVheY" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture17_LOD.dds" />
+      </Component>
+      <Component Id="cmpTws02IbsJj8vMB3hlctLSrn2jl0" Directory="THEMEFOLDER" Guid="{AEF7FC21-938A-460E-8F18-021D027F1641}">
+        <File Id="fill_RQ0ayqe5D2ByzfDubv.IzLayU" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture18.dds" />
+      </Component>
+      <Component Id="cmpAXiY4xaU1nn1KcZjJI1DhPc2MOw" Directory="THEMEFOLDER" Guid="{38EA0842-8AA9-4990-9B66-F0000CC8F120}">
+        <File Id="filY1ZmJ7BgWXb.rapvSRt_2AUrX2U" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture18_LOD.dds" />
+      </Component>
+      <Component Id="cmppuOzYoamcGkIXXYB.vnWuakmzPI" Directory="THEMEFOLDER" Guid="{C741EE87-61D2-42DC-96A9-47ACED897EA2}">
+        <File Id="fildv_yPqZAPOJuKVRK10xXhRos9bE" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture1_LOD.dds" />
+      </Component>
+      <Component Id="cmpna6XXIawDvgoEN6fjL4dUiWAolk" Directory="THEMEFOLDER" Guid="{BC22B207-EC9E-47B2-A031-84E72F3A7120}">
+        <File Id="fil7lAOuPpZcx8JN2n8c57hh9Whhlo" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture2.dds" />
+      </Component>
+      <Component Id="cmpOT2z0A0UOGe_x2Q1hKknByXlivU" Directory="THEMEFOLDER" Guid="{FB4D01FB-72F7-49C4-9054-286C30F21313}">
+        <File Id="filYeRQhaPViXhoPC2Xp2ErkypBBeQ" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture2_LOD.dds" />
+      </Component>
+      <Component Id="cmpK1b2ndo0hv51uyGV6bY6S3guEmE" Directory="THEMEFOLDER" Guid="{4CB0C4AD-A436-4DB1-A64A-230ABCC33886}">
+        <File Id="filDOeLuPS0QrDgdqHDAof3uftaz.8" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture3.dds" />
+      </Component>
+      <Component Id="cmp6rK.B2jyHUkwY_apln_yJfxlBsI" Directory="THEMEFOLDER" Guid="{EB9876A7-6444-4AE8-8DDA-2395DEC1158B}">
+        <File Id="filo9x8ou2K00g9wjf_9cFJb17dgn0" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture3_LOD.dds" />
+      </Component>
+      <Component Id="cmpdl5XmC0L6JIYfgAc6vcZ0ChBCj0" Directory="THEMEFOLDER" Guid="{7E35A912-7857-4AD6-89E5-9AD17B04F66F}">
+        <File Id="filOemCrzLf_4tlOImk8yl0UzW0p10" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture4.dds" />
+      </Component>
+      <Component Id="cmpibXS0IcI3zE44bqQqY.Os25fy44" Directory="THEMEFOLDER" Guid="{E52EB50D-1878-422A-A241-B7F9FA5D7B1E}">
+        <File Id="filLDNeuPlgI0KSwzQSGoemGPdK0Is" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture4_LOD.dds" />
+      </Component>
+      <Component Id="cmpbgCovtAGnrn7KMUzeLCgPTwW3g8" Directory="THEMEFOLDER" Guid="{418B9433-4DA9-40FE-A8D9-2AC6EA9E1D9C}">
+        <File Id="filJLg.MAgokHdLzDZ6ZCQLY1WF2Xs" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture5.dds" />
+      </Component>
+      <Component Id="cmp3_TX_vweCArg3Sas9RY81MO59kY" Directory="THEMEFOLDER" Guid="{FDF966A6-CFFC-4A5C-B452-B9D4065A0032}">
+        <File Id="filqSsygKKdUVid69Y75pP4aV_lIz4" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture5_LOD.dds" />
+      </Component>
+      <Component Id="cmpanJ3NIHt6ZfboIrFqwWKSe80djU" Directory="THEMEFOLDER" Guid="{7B2ED95F-F2D1-4DA4-8578-95B3D3AB5CAD}">
+        <File Id="filZHQHw7_YEuo5RSITDLMWeLEFUoE" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture6.dds" />
+      </Component>
+      <Component Id="cmpSj0v8IFbbad9Q6XlPTqOFlX8L28" Directory="THEMEFOLDER" Guid="{392E907E-A26A-457E-BB43-8F8B82F93A0E}">
+        <File Id="filWevLYMHp13fFG1zDAkftkT0.zRs" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture6_LOD.dds" />
+      </Component>
+      <Component Id="cmpN1WA0.0wWbnuIuH9K3TNNitAiSg" Directory="THEMEFOLDER" Guid="{4B13BC14-6668-446F-8EBC-5A0215904EF1}">
+        <File Id="filYib66opfBXpRJhcZkfDJ9pbRgMc" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture7.dds" />
+      </Component>
+      <Component Id="cmpGvtpUDK3Ra3rVt.mXw0uUnUifoc" Directory="THEMEFOLDER" Guid="{DA9A4E8A-10C8-4BB2-B61B-25E6FF9AF117}">
+        <File Id="filDv6Oiwe7fPCqmIP2BP4Ry9NrUZI" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture7_LOD.dds" />
+      </Component>
+      <Component Id="cmpL1FSGSJ18eH_l..e7ssstEtjSfg" Directory="THEMEFOLDER" Guid="{C93A5ABA-DDC3-4EB5-825E-E18011A83981}">
+        <File Id="filfc0r0vm4AezlgtkQUxFJOOmKlyM" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture8.dds" />
+      </Component>
+      <Component Id="cmpzjybzvB5zjERVPOr2Jg8pWmRE6Q" Directory="THEMEFOLDER" Guid="{13BFFFC2-D1E0-430E-9660-232E83C7267D}">
+        <File Id="fil_rC5TLQBTrU6y0Et8fLJ5ukM2Ng" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture8_LOD.dds" />
+      </Component>
+      <Component Id="cmp4PK_HRjb6lvO3YqDbUkLOU4_FNQ" Directory="THEMEFOLDER" Guid="{AE439DA0-0FBE-40CD-90FE-365277A58C37}">
+        <File Id="filS4CjAGlCMOcleoP_84hH6krUOAU" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture9.dds" />
+      </Component>
+      <Component Id="cmp_Xa3eOKQ5RE_km7swNXzL9GmeuI" Directory="THEMEFOLDER" Guid="{B5314A76-2073-412D-80EB-795C7BDF57CB}">
+        <File Id="filuZqVM8eEbptJkUzHkl.n4PZSsdM" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture9_LOD.dds" />
+      </Component>
+      <Component Id="cmpMARGrKZs9a8iqM5Py__jAxP1iO0" Directory="THEMEFOLDER" Guid="{C94A8500-CEF5-44A2-B46D-95E64787AA8B}">
+        <File Id="filMXc8nj7ZP5z_j1CYngsOyweBM9Y" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_trees_01.dds" />
+      </Component>
+      <Component Id="cmpV3REBkR7SBGuyC6yrF8wmtrsE.g" Directory="THEMEFOLDER" Guid="{9FAC60C1-9073-46A9-B535-C75FC9F513B2}">
+        <File Id="fil8KQg7UkhiL0snwJ.jV0rJSAYcI8" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_trees_top_01.dds" />
+      </Component>
+      <Component Id="cmpbAIAP5Ane0IctUSVg13dvR_BFdY" Directory="THEMEFOLDER" Guid="{B85FBFD1-720E-431A-A7DF-AB9E2891FE89}">
+        <File Id="filGhMV_XAlOCfQJviiaj9DI_IBGqU" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_VehicleModels_recce_trams.dds" />
+      </Component>
+      <Component Id="cmptoLN41uHLuXOgDVyW6Kqwfe6iX4" Directory="THEMEFOLDER" Guid="{C4D4BEBC-FA8B-4739-AE84-C586790BF603}">
+        <File Id="filSNRB8DnnqP3VBsB6zyt4B.h3Eh0" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_Water_01.dds" />
+      </Component>
+      <Component Id="cmpf2esx1GnN2tudb61JEjeFcRsTrw" Directory="THEMEFOLDER" Guid="{7B645636-3ECD-4DDA-AB47-76716DED4F7F}">
+        <File Id="fil588tjSSGiKzPH6q4pxn69K1t7UU" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_Water_01_LOD.dds" />
+      </Component>
+      <Component Id="cmpfmnY3lXFCwxr.cMOPHjcDrDVrLs" Directory="THEMEFOLDER" Guid="{09B46F3D-1907-49F9-B065-9AEF23E3CEB9}">
+        <File Id="filSA9f0T8cBaisObcC7RUOMzB7e90" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_Water_02.dds" />
+      </Component>
+      <Component Id="cmpYuCu9dUC8wxEnS3l9Qr3UCawlSs" Directory="THEMEFOLDER" Guid="{614525B2-9A2A-466B-BD88-7BE4EA44260B}">
+        <File Id="filHvTcqU.TW3CIR94HNanNHY.HN9w" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_Water_02_LOD.dds" />
+      </Component>
+      <Component Id="cmptRctVht2hUemV_d6367Bw.MMLW0" Directory="THEMEFOLDER" Guid="{37B5F4FF-DBA8-4CED-8F2E-ACA9D5396ABE}">
+        <File Id="filcgAyo3v0N6qmUAP5fn_yRmRLTjE" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_Water_03.dds" />
+      </Component>
+      <Component Id="cmpKydwffsRi7ciBuf6Py6TyDcI0Ng" Directory="THEMEFOLDER" Guid="{9DD13D32-1A33-41B2-87AA-F324A115E38C}">
+        <File Id="filBfwRsHU0.f98cqPIZVGzdqOD9.A" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_Water_03_LOD.dds" />
+      </Component>
+      <Component Id="cmpxRqEQ9iD7mX_cWWJ7nSCNl2FzgY" Directory="THEMEFOLDER" Guid="{00744C6A-AD5F-4A4D-8421-A38E85827899}">
+        <File Id="filR6Npa.PkrF3qG6GYKhQ0aWBii5U" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_water_normalmap.dds" />
+      </Component>
+      <Component Id="cmpvhtPOhPzZjgoQAodGPsEWSrCv10" Directory="THEMEFOLDER" Guid="{B1D56CCA-3686-4653-A94D-A31533B26DEA}">
+        <File Id="fil0AOjvAynuoc5V_miHiZtkJjgpYw" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_water_reflectionmap.dds" />
+      </Component>
+      <Component Id="cmpxy4iC7uLgdOW_mRPCLx.VvBS8uA" Directory="YELPFOLDER" Guid="{0BCC3361-67B8-4358-A62B-D70E83167849}">
+        <File Id="fil1w6ZWTazrxu2HCx9WiFnakS05qA" KeyPath="yes" Source="payload\Resources\Yelp\stars_0_0.png" />
+      </Component>
+      <Component Id="cmp9sfU86T.sAETf3diuXdDll71om8" Directory="YELPFOLDER" Guid="{6DA2017F-65DC-4803-9913-B26DBD29C0D8}">
+        <File Id="filC4F3mpRnNlZvPlNKOM6eXhQLBac" KeyPath="yes" Source="payload\Resources\Yelp\stars_1_0.png" />
+      </Component>
+      <Component Id="cmp9FNEIqyjwwdvdKqKXOTfJtzSM5M" Directory="YELPFOLDER" Guid="{A18AD749-E568-4354-BA86-D79E09844BAC}">
+        <File Id="fill0sf1.zAKcYqtq1S0bhLAztz4yk" KeyPath="yes" Source="payload\Resources\Yelp\stars_1_5.png" />
+      </Component>
+      <Component Id="cmpisvCMrMD7kRGeYHlig89CiFYULg" Directory="YELPFOLDER" Guid="{05223443-2240-4043-AF74-F1B8514630A4}">
+        <File Id="filYbV630rr1_dCQGz3oOY3WtE_CHU" KeyPath="yes" Source="payload\Resources\Yelp\stars_2_0.png" />
+      </Component>
+      <Component Id="cmpAp65u9UTpatDnqla8TATzWhpXX4" Directory="YELPFOLDER" Guid="{15E942A1-44AE-4AE3-A474-E31792913265}">
+        <File Id="filrMbijx7ItzqFJxWPoUTw2tClogU" KeyPath="yes" Source="payload\Resources\Yelp\stars_2_5.png" />
+      </Component>
+      <Component Id="cmpjqwYGWpI2iUeXfom7KTFK7JwB8s" Directory="YELPFOLDER" Guid="{94378609-6281-4495-9FCC-4B31765FF361}">
+        <File Id="fileV9CX3o9Ki6DLetJUCI4CdbbUjo" KeyPath="yes" Source="payload\Resources\Yelp\stars_3_0.png" />
+      </Component>
+      <Component Id="cmpXOQSV69x0r3TzwkpGyOIcEFOVkE" Directory="YELPFOLDER" Guid="{E0C30085-C0B1-4F1F-9FC9-07602EDF50F8}">
+        <File Id="filTkZO4Eh.KzftDbD7PVhgaECM3zY" KeyPath="yes" Source="payload\Resources\Yelp\stars_3_5.png" />
+      </Component>
+      <Component Id="cmp2n5h8Ylg7ro_I9pR5.7da2F1yWs" Directory="YELPFOLDER" Guid="{CF8726E6-CEF4-4F51-A5F7-DCF971B2081C}">
+        <File Id="fil9ZSVc4dfK718TvDZy4v7amQoI7A" KeyPath="yes" Source="payload\Resources\Yelp\stars_4_0.png" />
+      </Component>
+      <Component Id="cmpgMjUvqfg415hhQdk25HFAcrdtvY" Directory="YELPFOLDER" Guid="{37D93006-78A1-4B19-8230-FDA7AFA6CAFC}">
+        <File Id="filH44e_aEmDtcxGIbof4kAjwsd6N0" KeyPath="yes" Source="payload\Resources\Yelp\stars_4_5.png" />
+      </Component>
+      <Component Id="cmpBtvRmK0We7hFqCHgRaxl1NDXdTY" Directory="YELPFOLDER" Guid="{9F2D2468-C7B5-45F4-982F-44B3DF1C2C5B}">
+        <File Id="filKF8.uWiGegAz87elO8G._klfDco" KeyPath="yes" Source="payload\Resources\Yelp\stars_5_0.png" />
+      </Component>
+      <Component Id="cmpKedzryo0MyMTXnbVO5v35aBVuzk" Directory="YELPFOLDER" Guid="{1DF73E2F-006A-4195-9EC7-CE7B656459BF}">
+        <File Id="filzMbpNiUEJveOJM469bAaVrUsYVs" KeyPath="yes" Source="payload\Resources\Yelp\yelp_logo.png" />
+      </Component>
+      <Component Id="cmpH0bYktqOmvENEfr9Z3xzgo_TrJk" Directory="YELPFOLDER" Guid="{1B1C6EF8-5325-4BAD-B3BF-86F030DE9BA3}">
+        <File Id="filykC6Z3stLjOcfStfJxZ0hvIHwa0" KeyPath="yes" Source="payload\Resources\Yelp\yelp_reviews.png" />
+      </Component>
+    </ComponentGroup>
+
+    <!-- Start menu definitions-->
+    <DirectoryRef Id="STARTMENUPROGRAMFOLDER">
+      <Component Id="ApplicationShortcuts" Guid="{DF43E3F3-77FE-4B2F-B778-792D000E4C6A}">
+
+        <!-- Application Shortcut -->
+        <Shortcut Id="ApplicationStartMenuShortcut"
+                  Name="Project Swallow"
+                  Target="[#mainapplication.exe]"
+                  WorkingDirectory="INSTALLFOLDER"/>
+
+        <RemoveFolder Id="STARTMENUPROGRAMFOLDER" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\eeGeo\ProjectSwallow" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+
+
+    <!-- Define application -->
+    <Feature Id="MainApplication" Title="Project Swallow" Level="1">
+      <ComponentGroupRef Id="MainApplication" />
+      <ComponentGroupRef Id="MainApplicationResources" />
+
+      <!-- Start menu shortcuts -->
+      <ComponentRef Id="ApplicationShortcuts" />
+    </Feature>
+
+  </Product>
+</Wix>
