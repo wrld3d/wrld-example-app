@@ -10,7 +10,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:WorldPinOnMapView}">
-                    <StackPanel Width="183" Name="SearchResultOnMapView" VerticalAlignment="Center">
+                    <StackPanel Width="183" Name="SearchResultOnMapView" VerticalAlignment="Center" UseLayoutRounding="False">
                         <Grid Width="Auto" Height="Auto">
                             <Border BorderBrush="{x:Null}" Width="180" Height="Auto" BorderThickness="0">
                                 <Border.Effect>
