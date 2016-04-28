@@ -51,7 +51,7 @@
                                 </DoubleAnimation.EasingFunction>
                             </DoubleAnimation>
                         </Storyboard>
-
+                        
                         <Storyboard x:Key="ItemShutterClose">
                             <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" To="0" Duration="{StaticResource shutterAnimDuration}">
                                 <DoubleAnimation.EasingFunction>
@@ -187,7 +187,7 @@
                                 </Button.Style>
                             </Button>
                         </Grid>
-
+                        
                         <!--Search result count. Closed Margin: 32-->
                         <Grid Name="SearchResultCountContainer" Margin="20,0,0,0" VerticalAlignment="Top" Background="{StaticResource PrimaryBG_colour}" Width="20" Height="36" Panel.ZIndex="100" Visibility="Hidden">
                             <TextBlock IsEnabled="False" Margin="0,9,2,0"  Name="SearchResultCount" Text="20" Foreground="{StaticResource LightGrey}" TextAlignment="Center" Width="20" Height="36" FontFamily="{StaticResource PrimaryUIFont}" FontSize="12"/>
@@ -216,7 +216,7 @@
                                 </Style>
                             </Grid.Resources>
                             <Border BorderBrush="White" Background="White" BorderThickness="1,1,1,1" CornerRadius="5" Width="225" Height="26" VerticalAlignment="Center">
-                                <TextBox Text="Enter Search Term" Name="SearchInputBox" FontFamily="{StaticResource PrimaryUIFont}" FontSize="16" Foreground="{StaticResource DarkGrey}" Margin="5,0,0,0" Background="Transparent" BorderThickness="0">
+                                <TextBox Name="SearchInputBox" FontFamily="{StaticResource PrimaryUIFont}" Width="190"  FontSize="16" HorizontalAlignment="Left" Foreground="{StaticResource DarkGrey}" Margin="5,0,0,0" BorderThickness="0">
                                     <TextBox.Resources>
                                         <Style TargetType="{x:Type TextBox}">
                                             <Setter Property="RenderTransform">
@@ -371,14 +371,14 @@
                                                     <Setter Property="IsTabStop" Value="False" />
                                                     <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                                                     <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="None"/>
-                                                    <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+                                                    <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>                                                    
                                                 </Style>
-                                            </ListBox.ItemContainerStyle>
+                                             </ListBox.ItemContainerStyle>
                                         </ListBox>
                                     </ScrollViewer>
-
+                                    
                                     <Grid Name="ResultsListSeparator" Width="250" Height="2" Background="{StaticResource PrimaryBG_Over_Colour}" Visibility="Collapsed"/>
-
+                                    
                                     <ScrollViewer Width="250" Background="{StaticResource PrimaryBG_colour}" Name="MenuOptionsView" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="False" >
                                         <ListBox Margin="12,0,0,0" Name="SecondaryMenuItemList" Template="{StaticResource ListBoxControlTemplateNoPadding}" ItemsSource="{Binding Children}" Background="{StaticResource PrimaryBG_colour}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0" Focusable="False">
                                             <ListBox.Resources>
