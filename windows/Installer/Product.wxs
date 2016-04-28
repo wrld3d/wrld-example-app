@@ -7,6 +7,7 @@
     <MajorUpgrade DowngradeErrorMessage="A newer version of Swallow is already installed." />
     <MediaTemplate EmbedCab="yes" />
 
+
     <!-- Define directory structure -->
     <Directory Id="TARGETDIR" Name="SourceDir">
 
@@ -14,11 +15,25 @@
       <Directory Id="ProgramFilesFolder">
         <!-- Remove installation folder on uninstallation - TODO: Probably don't want to delete Eegeo folder entirely unelss nothing's installed, check how Wix handles this -->
         <Directory Id="EEGEOFOLDER" Name="eeGeo">
-          <Component Id="CompanyInstallationPath" Guid="{9933F739-B268-4815-BC98-5DCFBAF9209B}">
-            <RemoveFolder Id="CompanyInstallationPath" On="uninstall"/>
+          <Component Id="EEGEOFOLDER" Guid="{6F63431F-A0F5-4FC1-9BC6-6440EFB9B636}">
+            <RemoveFolder Id="EEGEOFOLDER" On='uninstall'/>
           </Component>
           <Directory Id="INSTALLFOLDER" Name="Project Swallow">
+            <Component Id="INSTALLFOLDER" Guid="{9933F739-B268-4815-BC98-5DCFBAF9209B}">
+              <RemoveFile Id='PurgeAppFolder' On='uninstall' Name='*.*'/>
+              <RemoveFolder Id="INSTALLFOLDER" On='uninstall'/>
+            </Component>
             <Directory Id="RESOURCEFOLDER" Name="Resources">
+              <Component Id="RESOURCEFOLDER" Guid="{897DC385-3A34-4248-A858-C8B3D6091EC7}">
+                <RemoveFile Id='PurgeResourceFolder' On='uninstall' Name='*.*'/>
+                <RemoveFolder Id="RESOURCEFOLDER" On='uninstall'/>
+              </Component>
+              <Directory Id="CACHEFOLDER" Name="Cache">
+                <Component Id="CACHEFOLDER" Guid="{86AE501A-9F80-4459-9969-79B19D840AFE}">
+                  <RemoveFile Id="PurgeCache" On="uninstall" Name="*.*"/>
+                  <RemoveFolder Id="CACHEFOLDER" On='uninstall'/>
+                </Component>
+              </Directory>
               <Directory Id="APPCONFIGFOLDER" Name="ApplicationConfigs"/>
               <Directory Id="INTERIORSFOLDER" Name="Interiors"/>
               <Directory Id="PINSFOLDER" Name="SearchResultOnMap">
@@ -41,7 +56,8 @@
 
     <!-- Define directory contents and sources -->
     <ComponentGroup Id="MainApplication">
-      <ComponentRef Id="CompanyInstallationPath"/>
+      <ComponentRef Id="EEGEOFOLDER"/>
+      <ComponentRef Id="INSTALLFOLDER"/>
       <Component Id="cmpDh5CA9jQyGCJFJb1E7IBlnU3Jsw" Directory="INSTALLFOLDER" Guid="{7430992E-7A5E-4B76-BD3B-B3DADECCB5B9}">
         <File Id="filVDkuG2L6jVd1DfRF4CQTaODKvE8" KeyPath="yes" Source="payload\d3dcompiler_47.dll" />
       </Component>
@@ -79,6 +95,8 @@
 
     <!-- Resources directory -->
     <ComponentGroup Id="MainApplicationResources">
+      <ComponentRef Id="RESOURCEFOLDER"/>
+      <ComponentRef Id="CACHEFOLDER"/>
       <Component Id="cmp99ygn06FVn_0w2VGSj7wyfzcOgI" Directory="RESOURCEFOLDER" Guid="{CCB50F90-2151-4180-B7D0-3EB9F379139E}">
         <File Id="filAaG0NXxFnSBSd6thtJODmuovApU" KeyPath="yes" Source="payload\Resources\arrow.png" />
       </Component>
