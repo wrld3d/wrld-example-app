@@ -19,6 +19,8 @@
         self.alpha = 0.f;
         m_stateChangeAnimationTimeSeconds = 0.2f;
         
+        m_isAnimating = false;
+        
         m_tapGestureRecogniser = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGesture:)] autorelease];
         [m_tapGestureRecogniser setDelegate:self];
         
@@ -80,16 +82,25 @@
 
 - (void) animateToAlpha:(float)alpha
 {
+    m_isAnimating = true;
+    
     [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds
      animations:^
     {
         self.alpha = alpha;
+    }
+    completion:^(BOOL finished)
+    {
+        if(finished)
+        {
+            m_isAnimating = false;
+        }
     }];
 }
 
 - (void)tapGesture:(UITapGestureRecognizer *)recognizer
 {
-    if([self isVisible])
+    if(!m_isAnimating && [self isVisible])
     {
         m_pInterop->HandleViewTapped();
     }
