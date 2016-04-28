@@ -175,15 +175,12 @@ namespace ExampleAppWPF
                 m_isOffScreen = true;
             }
 
-            if (m_animationCompleteCallback != null)
-            {
-                m_animationCompleteCallback(sender, e);
-            }
+            m_animationCompleteCallback?.Invoke(sender, e);
         }
 
         public virtual void AnimateToClosedOnScreen()
         {
-            if (m_openState == MENU_CLOSED || m_openState == MENU_CLOSING)
+            if (IsAnimating() || m_openState == MENU_CLOSED)
                 return;
 
             m_closeMenuIconAnim.Completed += OnAnimCompleted;
@@ -220,7 +217,7 @@ namespace ExampleAppWPF
 
         public virtual void AnimateToOpenOnScreen()
         {
-            if (m_openState == MENU_OPEN || m_openState == MENU_OPENING)
+            if (IsAnimating() || m_openState == MENU_OPEN)
                 return;
 
             m_openSearchIconAnim.Completed += OnAnimCompleted;
@@ -239,6 +236,11 @@ namespace ExampleAppWPF
         {
             Dispatcher.Invoke(() =>
             {
+                if(IsAnimating())
+                {
+                    return;
+                }
+
                 var offScreenX = m_offScreenPos;
 
                 if (IsOpen())
@@ -257,6 +259,8 @@ namespace ExampleAppWPF
 
                 var db = new DoubleAnimation(offScreenX, TimeSpan.FromMilliseconds(m_animationTimeMilliseconds));
                 db.Completed += OnAnimCompleted;
+
+                m_isAnimating = true;
 
                 try
                 {
