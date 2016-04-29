@@ -218,10 +218,10 @@
     m_searchCountLabelHeight = dragTabSize;
     m_searchCountLabelOffScreenAlpha = 0.0f;
     m_searchCountLabelOffScreenX = 0.0f;
-    m_searchCountLabelOffScreenY = -dragTabSize;
+    m_searchCountLabelOffScreenY = 0.0f;
     m_searchCountLabelClosedOnScreenAlpha = 0.0f;
     m_searchCountLabelClosedOnScreenX = 0.0f;
-    m_searchCountLabelClosedOnScreenY = -dragTabSize;
+    m_searchCountLabelClosedOnScreenY = 0.0f;
     m_searchCountLabelOpenOnScreenAlpha = 1.0f;
     m_searchCountLabelOpenOnScreenX = 0.0f;
     m_searchCountLabelOpenOnScreenY = 0.0f;
