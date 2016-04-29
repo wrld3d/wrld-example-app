@@ -3,6 +3,10 @@
 
   <Product Id="*" Name="Project Swallow" Language="1033" Version="$(var.Version)" Manufacturer="eeGeo Ltd" UpgradeCode="{19DAC114-C430-48B2-99BF-A1C907DFE4EA}">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <Condition Message="This application is only supported on 64-bit Windows Vista, Windows Server 2008, or higher.">
+      <![CDATA[Installed OR (VersionNT64 >= 600)]]>
+    </Condition>
     
     <MajorUpgrade DowngradeErrorMessage="A newer version of Swallow is already installed." />
     <MediaTemplate EmbedCab="yes" />
