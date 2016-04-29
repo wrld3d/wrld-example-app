@@ -42,6 +42,10 @@ namespace ExampleApp
                                       ExampleAppMessaging::TMessageBus& messageBus,
                                       const Menu::View::IMenuReactionModel& menuReaction);
 
+                
+                
+                
+                
                 ~SearchResultItemModel();
 
                 void Select();
