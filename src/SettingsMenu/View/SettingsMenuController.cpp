@@ -37,11 +37,11 @@ namespace ExampleApp
             
             void SettingsMenuController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
             {
-                m_appModeAllowsOpen = message.GetAppMode() != AppModes::SdkModel::InteriorMode;
-                if (!m_appModeAllowsOpen)
-                {
-                    m_viewModel.RemoveFromScreen();
-                }
+//                m_appModeAllowsOpen = message.GetAppMode() != AppModes::SdkModel::InteriorMode;
+//                if (!m_appModeAllowsOpen)
+//                {
+//                    m_viewModel.RemoveFromScreen();
+//                }
             }
             
             bool SettingsMenuController::TryDrag()
