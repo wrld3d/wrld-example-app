@@ -11,6 +11,7 @@ namespace ExampleAppWPF
         private string m_heading;
         private bool m_isExpanded;
         private bool m_justAdded;
+        private bool m_isExpandable;
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
@@ -32,6 +33,20 @@ namespace ExampleAppWPF
             }
         }
 
+        public bool IsExpandable
+        {
+            get { return m_isExpandable; }
+
+            set
+            {
+                if (value != m_isExpandable)
+                {
+                    m_isExpandable = value;
+                    OnPropertyChanged("IsExpandable");
+                }
+            }
+        }
+
         public MenuListItem(string json, bool isExpanded, int zIndex)
         {
             m_zIndex = zIndex;            
@@ -39,6 +54,7 @@ namespace ExampleAppWPF
             m_heading = parsed["name"].Value<string>();
             IsExpanded = isExpanded;
             JustAdded = m_justAdded = false;
+            IsExpandable = m_isExpandable = true;
         }
 
         public int ZIndex

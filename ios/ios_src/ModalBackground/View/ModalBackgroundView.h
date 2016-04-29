@@ -12,6 +12,7 @@
 {
     ExampleApp::ModalBackground::View::ModalBackgroundViewInterop* m_pInterop;
     float m_stateChangeAnimationTimeSeconds;
+    bool m_isAnimating;
     
     UITapGestureRecognizer* m_tapGestureRecogniser;
 }

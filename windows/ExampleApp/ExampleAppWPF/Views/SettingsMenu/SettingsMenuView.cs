@@ -50,8 +50,8 @@ namespace ExampleAppWPF
 
             m_mainContainer = (Grid)GetTemplateChild("SettingsMenuMainContainer");
 
-            var fadeInItemStoryboard = ((Storyboard)Template.Resources["FadeInNewItems"]).Clone();
-            var fadeOutItemStoryboard = ((Storyboard)Template.Resources["FadeOutOldItems"]).Clone();
+            var itemShutterOpenStoryboard = ((Storyboard)Template.Resources["ItemShutterOpen"]).Clone();
+            var itemShutterCloseStoryboard = ((Storyboard)Template.Resources["ItemShutterClose"]).Clone();
 
             var slideInItemStoryboard = ((Storyboard)Template.Resources["SlideInNewItems"]).Clone();
             var slideOutItemStoryboard = ((Storyboard)Template.Resources["SlideOutOldItems"]).Clone();
@@ -70,7 +70,7 @@ namespace ExampleAppWPF
             m_openBackgroundRect = ((Storyboard)Template.Resources["OpenBackgroundRect"]).Clone();
             m_closeBackgroundRect = ((Storyboard)Template.Resources["CloseBackgroundRect"]).Clone();
 
-            m_adapter = new MenuListAdapter(false, m_list,slideInItemStoryboard, slideOutItemStoryboard, fadeInItemStoryboard, fadeOutItemStoryboard, "SettingsMenuItemPanel");
+            m_adapter = new MenuListAdapter(false, m_list,slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SettingsMenuItemPanel");
 
             PerformLayout(null, null);
         }
@@ -91,15 +91,8 @@ namespace ExampleAppWPF
             var item = m_list.SelectedItem as SubMenuListItem;
             if (item != null)
             {
-                var position = m_adapter.Children
-                    .Select((_t, _i) => Tuple.Create(_t, _i))
-                    .Where(_t => _t.Item1.Heading == item.Heading)
-                    .Single().Item2;
-
-                int sectionIndex = m_adapter.GetSectionIndex(position);
-                int childIndex = m_adapter.GetItemIndex(position);
-
-                MenuViewCLIMethods.SelectedItem(m_nativeCallerPointer, sectionIndex, childIndex);
+                var sectionChildIndices = m_adapter.GetSectionAndChildIndicesFromSelection(m_list.SelectedIndex);
+                MenuViewCLIMethods.SelectedItem(m_nativeCallerPointer, sectionChildIndices.Item1, sectionChildIndices.Item2);
             }
         }
 
@@ -117,8 +110,6 @@ namespace ExampleAppWPF
 
         protected override void RefreshListData(List<string> groups, List<bool> groupsExpandable, Dictionary<string, List<string>> groupToChildrenMap)
         {
-            m_adapter.SetData(groups, groupsExpandable, groupToChildrenMap);
-
             var itemsSource = new List<SubMenuListItem>();
 
             foreach (var groupToChildren in groupToChildrenMap)
@@ -126,13 +117,7 @@ namespace ExampleAppWPF
                 itemsSource.AddRange(groupToChildren.Value.Select(childListEntry => new SubMenuListItem(childListEntry, 0)));
             }
 
-            m_list.ItemsSource = itemsSource;
-
-            if (m_list.DataContext != m_adapter)
-            {
-                m_list.DataContext = m_adapter;
-            }
-
+            m_adapter.SetData(itemsSource, groups, groupsExpandable, groupToChildrenMap);
         }
 
         public override void AnimateToOpenOnScreen()

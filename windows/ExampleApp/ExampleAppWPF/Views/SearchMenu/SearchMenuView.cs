@@ -144,8 +144,8 @@ namespace ExampleAppWPF
 
             m_mainContainer = (Grid)GetTemplateChild("SerchMenuMainContainer");
 
-            var fadeInItemStoryboard = ((Storyboard)Template.Resources["FadeInNewItems"]).Clone();
-            var fadeOutItemStoryboard = ((Storyboard)Template.Resources["FadeOutOldItems"]).Clone();
+            var itemShutterOpenStoryboard = ((Storyboard)Template.Resources["ItemShutterOpen"]).Clone();
+            var itemShutterCloseStoryboard = ((Storyboard)Template.Resources["ItemShutterClose"]).Clone();
 
             var slideInItemStoryboard = ((Storyboard)Template.Resources["SlideInNewItems"]).Clone();
             var slideOutItemStoryboard = ((Storyboard)Template.Resources["SlideOutOldItems"]).Clone();
@@ -168,8 +168,8 @@ namespace ExampleAppWPF
             m_searchArrowOpen = ((Storyboard)Template.Resources["OpenSearchArrow"]).Clone();
             m_searchArrowClosed  = ((Storyboard)Template.Resources["CloseSearchArrow"]).Clone();
 
-            m_adapter = new MenuListAdapter(false, m_list, slideInItemStoryboard, slideOutItemStoryboard, fadeInItemStoryboard, fadeOutItemStoryboard, "SubMenuItemPanel");
-            m_resultListAdapter = new MenuListAdapter(false, m_resultsList, slideInItemStoryboard, slideOutItemStoryboard, fadeInItemStoryboard, fadeOutItemStoryboard, "SearchResultPanel");
+            m_adapter = new MenuListAdapter(false, m_list, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SubMenuItemPanel");
+            m_resultListAdapter = new MenuListAdapter(false, m_resultsList, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SearchResultPanel");
         }
 
         private void OnSearchBoxTextChanged(object sender, TextChangedEventArgs e)
@@ -210,15 +210,14 @@ namespace ExampleAppWPF
             var item = m_list.SelectedItem as MenuListItem;
             if (item != null)
             {
-                int position = m_adapter.Children.IndexOf(item);
+                var sectionChildIndices = m_adapter.GetSectionAndChildIndicesFromSelection(m_list.SelectedIndex);
 
-                int sectionIndex = m_adapter.GetSectionIndex(position);
-                int childIndex = m_adapter.GetItemIndex(position);
-
+                if (item.IsExpandable)
+                {
                 SearchMenuViewCLIMethods.OnSearchCleared(m_nativeCallerPointer);
-                MenuViewCLIMethods.SelectedItem(m_nativeCallerPointer, sectionIndex, childIndex);
+                }
 
-                ClearSearchResultsListBox();
+                MenuViewCLIMethods.SelectedItem(m_nativeCallerPointer, sectionChildIndices.Item1, sectionChildIndices.Item2);
             }
         }
 
@@ -306,8 +305,6 @@ namespace ExampleAppWPF
 
         public void SetSearchSection(string category, string[] searchResults)
         {
-            m_resultListAdapter.ResetData();
-
             var groups = new List<string>(searchResults.Length);
             var groupsExpandable = new List<bool>(searchResults.Length);
             var groupToChildren = new Dictionary<string, List<string>>();
@@ -328,14 +325,11 @@ namespace ExampleAppWPF
 
                 groups.Add(str);
                 groupsExpandable.Add(false);
-                groupToChildren.Add(str, new List<string>());
-            }
+                    groupToChildren.Add(str, new List<string>());
+                }
 
-            m_resultListAdapter.SetData(groups, groupsExpandable, groupToChildren);
 
-            m_resultsList.DataContext = m_resultListAdapter;
-
-            m_resultsList.ItemsSource = itemsSource;
+            m_resultListAdapter.SetData(itemsSource, groups, groupsExpandable, groupToChildren);
 
             m_resultsSpinner.Visibility = Visibility.Hidden;
             m_resultsClearButton.Visibility = Visibility.Visible;
@@ -411,7 +405,7 @@ namespace ExampleAppWPF
             m_hasCategorySearch = isCategory;
             
         }
-
+        
         public void SetSearchResultCount(int count)
         {
             if(count > 0)
@@ -432,9 +426,7 @@ namespace ExampleAppWPF
 
         protected override void RefreshListData(List<string> groups, List<bool> groupsExpandable, Dictionary<string, List<string>> groupToChildrenMap)
         {
-            m_adapter.SetData(groups, groupsExpandable, groupToChildrenMap);
-
-            m_list.DataContext = m_adapter;
+            m_adapter.SetData(m_list.ItemsSource, groups, groupsExpandable, groupToChildrenMap);
         }
     }
 }

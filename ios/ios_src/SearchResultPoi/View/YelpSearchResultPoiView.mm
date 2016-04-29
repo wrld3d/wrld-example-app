@@ -55,7 +55,7 @@ const int DeletePinAlertViewTag = 2;
         [self.pControlContainer addSubview: self.pCloseButtonContainer];
         
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pCloseButton setDefaultStatesWithImageNames:@"button_close_off" :@"button_close_off"];
+        [self.pCloseButton setDefaultStatesWithImageNames:@"button_close_off" :@"button_close_on"];
         [self.pCloseButton addTarget:self action:@selector(handleClosedButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
         

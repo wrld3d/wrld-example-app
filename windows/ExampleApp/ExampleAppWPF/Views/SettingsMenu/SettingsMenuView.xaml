@@ -13,13 +13,13 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:SettingsMenuView}">
                     <ControlTemplate.Resources>
-                        <Storyboard x:Key="FadeInNewItems">
+                        <Storyboard x:Key="ItemShutterOpen">
                             <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Duration="0:0:0.2" >
                                 <SplineThicknessKeyFrame KeyTime="00:00:00.0" Value="0, -42, 0,0" />
                                 <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="0, 0,0,0" />
                             </ThicknessAnimationUsingKeyFrames>
                         </Storyboard>
-                        <Storyboard x:Key="FadeOutOldItems">
+                        <Storyboard x:Key="ItemShutterClose">
                             <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Duration="0:0:0.2" >
                                 <SplineThicknessKeyFrame KeyTime="00:00:00.0" Value="0, 0, 0,0" />
                                 <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="0, -42,0,0" />
@@ -80,7 +80,7 @@
                     </ControlTemplate.Resources>
 
                     <Grid Margin="0,20,0,0" Name="SettingsMenuViewContainer">
-                        
+
                         <!--Closed: -114 Open: -714 -->
                         <Grid Margin="-114,0,0,0" Width="36" Height="36" VerticalAlignment="Top" DockPanel.Dock="Left" Name="SettingsIconGrid" Background="{StaticResource PrimaryBG_colour}" Panel.ZIndex="99">
                             <Button Width="Auto" Height="Auto" Name="SettingsMenuIconButton" VerticalAlignment="Center" HorizontalAlignment="Center">

@@ -39,7 +39,7 @@ namespace ExampleAppWPF
             }
         }
 
-        public void Stop()
+        private void Stop()
         {
             if(!m_playing)
             {
