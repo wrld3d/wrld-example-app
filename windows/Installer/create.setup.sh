@@ -56,7 +56,7 @@ echo "Basic installer created"
 echo "Creating bundle..."
 echo
 
-candle.exe -ext WixBalExtension -ext WixUtilExtension Bundle.wxs -o ./deploy/Bundle.wixobj -dSwallowMsiLocation="./deploy/Swallow.msi" -dVersion="$version"
+candle.exe -ext WixBalExtension -ext WixUtilExtension -ext WixNetFxExtension Bundle.wxs -o ./deploy/Bundle.wixobj -dSwallowMsiLocation="./deploy/Swallow.msi" -dVersion="$version"
 
 if [ $? = 0 ] ; then
   echo "Main Bundle compilation step success"
@@ -65,7 +65,7 @@ else
   exit 1
 fi
 
-light.exe -ext WixBalExtension -ext WixUtilExtension ./deploy/Bundle.wixobj -o "./deploy/Swallow Installer.exe"
+light.exe -ext WixBalExtension -ext WixUtilExtension -ext WixNetFxExtension ./deploy/Bundle.wixobj -o "./deploy/Swallow Installer.exe"
 
 if [ $? = 0 ] ; then
   echo "Main Bundle linker step success"
