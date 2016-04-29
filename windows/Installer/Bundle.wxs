@@ -10,6 +10,7 @@
           IconSourceFile="Resource\setup.ico"
           AboutUrl="http://www.eegeo.com"
           SplashScreenSourceFile="Resource\splashScreen.bmp">
+    <util:RegistrySearchRef Id="SearchForVCRedist"/>
     <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense" >
       <bal:WixStandardBootstrapperApplication LicenseFile="Resource\License.rtf" ThemeFile="Resource\eegeoTheme.xml" SuppressOptionsUI="yes" />
     </BootstrapperApplicationRef>
@@ -17,9 +18,8 @@
     <WixVariable Id="WixStdbaLicenseUrl" Value="" />
     <WixVariable Id="WixStdbaLogo" Value="Resource\setup.ico" />
 
-    <!-- Get installation of VC++ redist (Taken from http://stackoverflow.com/questions/12206314/detect-if-visual-c-redistributable-for-visual-studio-2012-is-installed )-->
-    <util:RegistrySearch Root="HKLM" Key="SOFTWARE\Classes\Installer\Dependencies\{3ee5e5bb-b7cc-4556-8861-a00a82977d6c}" Value="Version" Variable="VCRedist64" Win64="yes" />
-    
+
+
     <!-- Installation chain -->
     <Chain>
 
@@ -29,8 +29,8 @@
       <!-- VC++ 2015 Redistributable (x64)-->
       <ExePackage Id="VCRedistx64" Name="Microsoft VC++ 2015 Redistributable (x64)" Cache="no" Compressed="yes" PerMachine="yes" Permanent="yes" Vital="yes"
                   SourceFile="Resource\vc_redist.x64.exe"
-                  DetectCondition="VersionNT64 AND VCRedist64 >= &quot;14.0.23026.0&quot;"
-                  InstallCondition="(VersionNT64 >= v6.0) AND (NOT (VCRedist64 >= &quot;14.0.23026.0&quot;))"/>
+                  DetectCondition="VersionNT64 AND VCRedist64Version >= &quot;14.0.23026.0&quot;"
+                  InstallCondition="(VersionNT64 >= v6.0) AND (NOT (VCRedist64Version >= &quot;14.0.23026.0&quot;))"/>
       
       <RollbackBoundary />
 
@@ -45,4 +45,17 @@
 
     </Chain>
   </Bundle>
+
+  <Fragment>
+    <!-- Get installation of VC++ redist (Taken from http://stackoverflow.com/questions/12206314/detect-if-visual-c-redistributable-for-visual-studio-2012-is-installed )-->
+    <util:RegistrySearch Id="SearchForVCRedist"
+                         Root="HKLM" 
+                         Key="SOFTWARE\Classes\Installer\Dependencies\{3ee5e5bb-b7cc-4556-8861-a00a82977d6c}" 
+                         Value="Version"
+                         Format="raw"
+                         Result="value"
+                         Variable="VCRedist64Version"
+                         Win64="yes"/>
+  </Fragment>
+
 </Wix>
