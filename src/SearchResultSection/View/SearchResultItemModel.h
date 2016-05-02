@@ -12,6 +12,7 @@
 #include "Types.h"
 #include "VectorMath.h"
 #include "IMenuReactionModel.h"
+#include "SearchResultPoi.h"
 
 namespace ExampleApp
 {
@@ -30,6 +31,7 @@ namespace ExampleApp
                 int m_floorIndex;
 
                 OpenableControl::View::IOpenableControlViewModel& m_searchMenuViewModel;
+                SearchResultPoi::View::ISearchResultPoiViewModel& m_searchResultPoiViewModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 
                 int m_itemIndex;
@@ -42,6 +44,7 @@ namespace ExampleApp
                                       const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                       const int floorIndex,
                                       OpenableControl::View::IOpenableControlViewModel& searchMenuViewModel,
+                                      SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
                                       int itemIndex,
                                       ExampleAppMessaging::TMessageBus& messageBus,
                                       const Menu::View::IMenuReactionModel& menuReaction);

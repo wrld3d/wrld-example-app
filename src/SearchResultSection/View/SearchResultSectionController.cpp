@@ -95,6 +95,7 @@ namespace ExampleApp
                                                                            model.GetBuildingId(),
                                                                            model.GetFloor(),
                                                                            m_searchMenuViewModel,
+                                                                           m_searchResultPoiViewModel,
                                                                            GetOriginalIndexForSearchResult(unorderedResults, model),
                                                                            m_messageBus,
                                                                            m_menuReaction));
@@ -116,7 +117,8 @@ namespace ExampleApp
                                                                          Menu::View::IMenuOptionsModel& menuOptions,
                                                                          ISearchResultSectionOrder& order,
                                                                          ExampleAppMessaging::TMessageBus& messageBus,
-                                                                         const Menu::View::IMenuReactionModel& menuReaction)
+                                                                         const Menu::View::IMenuReactionModel& menuReaction,
+                                                                         SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel)
             : m_searchMenuViewModel(searchMenuViewModel)
             , m_menuOptions(menuOptions)
             , m_order(order)
@@ -124,6 +126,7 @@ namespace ExampleApp
             , m_searchResultReceivedHandler(this, &SearchResultSectionController::OnSearchQueryResponseReceivedMessage)
             , m_searchQueryRemovedHandler(this, &SearchResultSectionController::OnSearchQueryRemovedMessage)
             , m_menuReaction(menuReaction)
+            , m_searchResultPoiViewModel(searchResultPoiViewModel)
             {
                 m_messageBus.SubscribeUi(m_searchResultReceivedHandler);
                 m_messageBus.SubscribeUi(m_searchQueryRemovedHandler);

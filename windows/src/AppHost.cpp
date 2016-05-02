@@ -542,7 +542,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         app.SearchResultSectionModule().GetSearchResultSectionOptionsModel(),
         app.SearchResultSectionModule().GetSearchResultSectionOrder(),
         m_messageBus,
-        *m_pMenuReaction
+        *m_pMenuReaction,
+        app.SearchResultPoiModule().GetSearchResultPoiViewModel()
         );
 
     // Pop-up layer.

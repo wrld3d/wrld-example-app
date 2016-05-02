@@ -3,6 +3,7 @@
 #include "SearchResultItemModel.h"
 
 #include "SearchResultSectionItemSelectedMessage.h"
+#include "ISearchResultPoiViewModel.h"
 
 namespace ExampleApp
 {
@@ -16,6 +17,7 @@ namespace ExampleApp
                                                          const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                                          const int floorIndex,
                                                          OpenableControl::View::IOpenableControlViewModel& searchMenuViewModel,
+                                                         SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
                                                          int itemIndex,
                                                          ExampleAppMessaging::TMessageBus& messageBus,
                                                          const Menu::View::IMenuReactionModel& menuReaction)
@@ -25,6 +27,7 @@ namespace ExampleApp
             , m_interiorId(interiorId)
             , m_floorIndex(floorIndex)
             , m_searchMenuViewModel(searchMenuViewModel)
+            , m_searchResultPoiViewModel(searchResultPoiViewModel)
             , m_messageBus(messageBus)
             , m_itemIndex(itemIndex)
             , m_menuReaction(menuReaction)
@@ -42,6 +45,11 @@ namespace ExampleApp
                 if (m_menuReaction.GetShouldCloseMenu())
                 {
                     m_searchMenuViewModel.Close();
+                }
+
+                if (m_searchResultPoiViewModel.IsOpen())
+                {
+                    m_searchResultPoiViewModel.Close();
                 }
 
                 m_messageBus.Publish(SearchResultSectionItemSelectedMessage(m_searchResultModelLocationEcef,
