@@ -27,10 +27,10 @@
       <PackageGroupRef Id="NetFx452Web"/>
 
       <!-- VC++ 2015 Redistributable (x64)-->
-      <ExePackage Id="VCRedistx64" Name="Microsoft VC++ 2015 Redistributable (x64)" Cache="no" Compressed="yes" PerMachine="yes" Permanent="yes" Vital="yes"
+      <ExePackage Id="VCRedistx64" Name="Microsoft VC++ 2015 Redistributable (x64)" Cache="no" Compressed="yes" PerMachine="yes" Permanent="yes" Vital="yes" InstallCommand="/q"
                   SourceFile="Resource\vc_redist.x64.exe"
-                  DetectCondition="VersionNT64 AND VCRedist64Version >= &quot;14.0.23026.0&quot;"
-                  InstallCondition="(VersionNT64 >= v6.0) AND (NOT (VCRedist64Version >= &quot;14.0.23026.0&quot;))"/>
+                  DetectCondition="VersionNT64 AND VCRedist64Version >= &quot;v14.0.23026.0&quot;"
+                  InstallCondition="(VersionNT64 >= v6.0) AND (NOT (VCRedist64Version >= &quot;v14.0.23026.0&quot;))"/>
       
       <RollbackBoundary />
 
@@ -50,7 +50,7 @@
     <!-- Get installation of VC++ redist (Taken from http://stackoverflow.com/questions/12206314/detect-if-visual-c-redistributable-for-visual-studio-2012-is-installed )-->
     <util:RegistrySearch Id="SearchForVCRedist"
                          Root="HKLM" 
-                         Key="SOFTWARE\Classes\Installer\Dependencies\{3ee5e5bb-b7cc-4556-8861-a00a82977d6c}" 
+                         Key="SOFTWARE\Wow6432Node\Microsoft\VisualStudio\14.0\VC\Runtimes\x64" 
                          Value="Version"
                          Format="raw"
                          Result="value"
