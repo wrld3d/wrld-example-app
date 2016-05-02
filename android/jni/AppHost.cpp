@@ -529,7 +529,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 		    app.SearchResultSectionModule().GetSearchResultSectionOptionsModel(),
 		    app.SearchResultSectionModule().GetSearchResultSectionOrder(),
 		    m_messageBus,
-			*m_pMenuReactionModel);
+			*m_pMenuReactionModel,
+            app.SearchResultPoiModule().GetSearchResultPoiViewModel());
 
     // Pop-up layer.
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(
