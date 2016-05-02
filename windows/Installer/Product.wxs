@@ -7,8 +7,17 @@
     <Condition Message="This application is only supported on 64-bit Windows Vista, Windows Server 2008, or higher.">
       <![CDATA[Installed OR (VersionNT64 >= 600)]]>
     </Condition>
-    
-    <MajorUpgrade DowngradeErrorMessage="A newer version of Swallow is already installed." />
+
+    <Upgrade Id='{19DAC114-C430-48B2-99BF-A1C907DFE4EA}'>
+      <UpgradeVersion OnlyDetect='yes' Property='SELFFOUND'
+        Minimum='$(var.Version)' IncludeMinimum='yes' Maximum='$(var.Version)' IncludeMaximum='yes' />
+      <UpgradeVersion OnlyDetect='yes' Property='NEWERFOUND'
+        Minimum='$(var.Version)' IncludeMinimum='no' />
+    </Upgrade>
+
+    <CustomAction Id='AlreadyUpdated' Error='[ProductName] is already installed.' />
+    <CustomAction Id='NoDowngrade' Error='A later version of [ProductName] is already installed.' />
+
     <MediaTemplate EmbedCab="yes" />
 
 
@@ -862,6 +871,11 @@
       <!-- Start menu shortcuts -->
       <ComponentRef Id="ApplicationShortcuts" />
     </Feature>
+
+    <InstallExecuteSequence>
+      <Custom Action='AlreadyUpdated' After='FindRelatedProducts'>SELFFOUND</Custom>
+      <Custom Action='NoDowngrade' After='FindRelatedProducts'>NEWERFOUND</Custom>
+    </InstallExecuteSequence>
 
   </Product>
 </Wix>
