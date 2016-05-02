@@ -26,6 +26,19 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
+        <key>CFBundleURLTypes</key>
+        <array>
+                <dict>
+                        <key>CFBundleTypeRole</key>
+                        <string>Editor</string>
+                        <key>CFBundleURLName</key>
+                        <string>com.eegeo</string>
+                        <key>CFBundleURLSchemes</key>
+                        <array>
+                                <string>eegeo</string>
+                        </array>
+                </dict>
+        </array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>

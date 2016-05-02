@@ -470,6 +470,7 @@ namespace ExampleApp
         void Event_TiltStart(const AppInterface::TiltData& data);
         void Event_TiltEnd(const AppInterface::TiltData& data);
         void Event_Tilt(const AppInterface::TiltData& data);
+        void Event_OpenUrl(const AppInterface::UrlData& data);
     };
 }
 

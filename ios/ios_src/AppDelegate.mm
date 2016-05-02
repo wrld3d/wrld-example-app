@@ -95,12 +95,12 @@ namespace
     [UIApplication sharedApplication].delegate = nil;
 }
 
-
-
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    return false;
+    [[NSNotificationCenter defaultCenter] postNotificationName: @"handleOpenUrl"
+                                                        object: url
+                                                      userInfo: nil];
+    return YES;        
 }
-
 
 @end

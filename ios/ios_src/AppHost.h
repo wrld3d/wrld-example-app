@@ -57,10 +57,12 @@
 #include "URLRequestHandler.h"
 #include "SurveyViewIncludes.h"
 #include "IMenuReactionModel.h"
+#include "AppUrlDelegate.h"
 
 @class ViewController;
 class AppInputDelegate;
 class AppLocationDelegate;
+class AppUrlDelegate;
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
@@ -100,6 +102,7 @@ private:
     Eegeo::iOS::iOSConnectivityService* m_piOSConnectivityService;
     AppInputDelegate* m_pAppInputDelegate;
     AppLocationDelegate* m_pAppLocationDelegate;
+    AppUrlDelegate* m_pAppUrlDelegate;
 
     Eegeo::UI::NativeInput::iOS::iOSInputBoxFactory m_iOSInputBoxFactory;
     Eegeo::UI::NativeInput::iOS::iOSKeyboardInputFactory m_iOSKeyboardInputFactory;
