@@ -83,7 +83,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         
         m_closeButtonView = m_view.findViewById(R.id.search_menu_clear_button);
         m_closeButtonView.setOnClickListener(new SearchMenuCloseButtonClickedHandler(m_nativeCallerPointer, this));
-        m_closeButtonView.setVisibility(View.GONE);
+        m_closeButtonView.setVisibility(View.INVISIBLE);
 
         m_progressSpinner = m_view.findViewById(R.id.search_menu_spinner);
         m_progressSpinner.setVisibility(View.GONE);
@@ -200,7 +200,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
 
     public void setSearchInProgress()
     {
-    	m_closeButtonView.setVisibility(View.GONE);
+    	m_closeButtonView.setVisibility(View.INVISIBLE);
     	m_progressSpinner.setVisibility(View.VISIBLE);
     }
 
@@ -234,7 +234,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     	{
     		m_searchCountText.setText("");
     		m_searchMenuAnimationHandler.hideSearchResultsView();
-    		m_closeButtonView.setVisibility(View.GONE);
+    		m_closeButtonView.setVisibility(View.INVISIBLE);
     		m_anchorArrow.setVisibility(View.GONE);
     		m_searchMenuResultsSeparator.setVisibility(View.GONE);
  
