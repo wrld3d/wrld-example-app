@@ -632,11 +632,6 @@
       <Link>Assets\CreatPIN_dialogue_Icon.png</Link>
     </Resource>
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="..\..\Resources\arrow1_over.png">
-      <Link>Assets\arrow1_over.png</Link>
-    </Resource>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)..\..\Resources" "$(TargetDir)Resources" /e /y /i /r
