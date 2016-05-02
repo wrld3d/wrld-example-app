@@ -8,10 +8,10 @@ namespace ExampleApp
     {
         CategorySearchSelectedMessage::CategorySearchSelectedMessage(
             const std::string& category,
-            bool interior
+            bool allowInteriorSearch
         )
             : m_category(category)
-            , m_interior(interior)
+            , m_allowInteriorSearch(allowInteriorSearch)
             , m_hasRadius(false)
             , m_radius(0.f)
         {
@@ -19,11 +19,11 @@ namespace ExampleApp
         
         CategorySearchSelectedMessage::CategorySearchSelectedMessage(
                                                                      const std::string& category,
-                                                                     bool interior,
+                                                                     bool allowInteriorSearch,
                                                                      float radius
                                                                      )
         : m_category(category)
-        , m_interior(interior)
+        , m_allowInteriorSearch(allowInteriorSearch)
         , m_hasRadius(true)
         , m_radius(radius)
         {
@@ -34,9 +34,9 @@ namespace ExampleApp
             return m_category;
         }
         
-        const bool CategorySearchSelectedMessage::Interior() const
+        const bool CategorySearchSelectedMessage::InteriorSearchAllowed() const
         {
-            return m_interior;
+            return m_allowInteriorSearch;
         }
         
         const bool CategorySearchSelectedMessage::HasRadius() const

@@ -37,7 +37,7 @@ namespace ExampleApp
                 IEegeoSearchQuery* EegeoSearchQueryFactory::CreateEegeoSearchForQuery(const Search::SdkModel::SearchQuery& query,
                                                                                                   Eegeo::Helpers::ICallback0& completionCallback)
                 {
-                    if (m_interiorInteractionModel.HasInteriorModel() && query.IsCategory() && query.IsInterior())
+                    if (m_interiorInteractionModel.HasInteriorModel() && query.IsCategory() && query.ShouldTryInteriorSearch())
                     {
                         
                         const Eegeo::Resources::Interiors::InteriorsModel& interiorsModel = *m_interiorInteractionModel.GetInteriorModel();

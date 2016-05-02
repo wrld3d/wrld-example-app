@@ -13,23 +13,23 @@ namespace ExampleApp
             std::string m_category;
             float m_radius;
             bool m_hasRadius;
-            bool m_interior;
+            bool m_allowInteriorSearch;
 
         public:
             CategorySearchSelectedMessage(
                 const std::string& category,
-                bool interior
+                bool allowInteriorSearch
             );
             
             CategorySearchSelectedMessage(
                  const std::string& category,
-                 bool interior,
+                 bool allowInteriorSearch,
                  float radius
               );
 
             const std::string& Category() const;
             const bool HasRadius() const;
-            const bool Interior() const;
+            const bool InteriorSearchAllowed() const;
             const float Radius() const;
         };
     }

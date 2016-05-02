@@ -10,12 +10,12 @@ namespace ExampleApp
         {
             SearchQuery::SearchQuery(const std::string& query,
                                      bool isCategory,
-                                     bool inInterior,
+                                     bool tryInteriorSearch,
                                      const Eegeo::Space::LatLongAltitude& where,
                                      float radius)
                 : m_query(query)
                 , m_isCategory(isCategory)
-                , m_isInterior(inInterior)
+                , m_tryInteriorSearch(tryInteriorSearch)
                 , m_where(where)
                 , m_radius(radius)
             {
@@ -36,9 +36,9 @@ namespace ExampleApp
                 return m_isCategory;
             }
             
-            bool SearchQuery::IsInterior() const
+            bool SearchQuery::ShouldTryInteriorSearch() const
             {
-                return m_isInterior;
+                return m_tryInteriorSearch;
             }
 
             float SearchQuery::Radius() const

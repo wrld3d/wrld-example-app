@@ -140,11 +140,11 @@ namespace ExampleApp
                     if (previousQuery.IsCategory() && previousQuery.Query() == Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME)
                     {
                         // Bodged for Swallow Office category query.
-                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), previousQuery.IsInterior(), currentLocation, previousQuery.Radius());
+                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), previousQuery.ShouldTryInteriorSearch(), currentLocation, previousQuery.Radius());
                     }
                     else
                     {
-                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), previousQuery.IsInterior(), currentLocation);
+                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), previousQuery.ShouldTryInteriorSearch(), currentLocation);
                     }
                     
                     m_previousQueryFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
@@ -165,9 +165,7 @@ namespace ExampleApp
                     
                     if (previousQuery.IsCategory())
                     {
-                        const bool isInterior = m_interiorInteractionModel.HasInteriorModel() && previousQuery.IsInterior();
-
-                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), isInterior);
+                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), previousQuery.ShouldTryInteriorSearch());
                         m_secondsSincePreviousRefresh = 0.f;
                     }
                 }
