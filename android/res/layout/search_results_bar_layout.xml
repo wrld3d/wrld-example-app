@@ -31,6 +31,7 @@
         android:hint="Enter search term"
         android:inputType="text"
         android:paddingLeft="8dp"
+    	android:imeOptions="actionDone"
         android:textSize="18dp" >
 
         <requestFocus android:layout_width="wrap_content" />
