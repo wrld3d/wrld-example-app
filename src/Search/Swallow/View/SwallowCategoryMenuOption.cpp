@@ -13,12 +13,12 @@ namespace ExampleApp
             namespace View
             {
                 SwallowCategoryMenuOption::SwallowCategoryMenuOption(std::string category,
-                                                                     bool forceInteriorQuery,
+                                                                     bool interiorSearchAllowed,
                                                                      bool closeMenuWhenInInterior,
                                                                      Menu::View::IMenuViewModel& menuViewModel,
                                                                      ExampleAppMessaging::TMessageBus& messageBus)
                 : m_category(category)
-                , m_interior(forceInteriorQuery)
+                , m_interiorSearchAllowed(interiorSearchAllowed)
                 , m_menuViewModel(menuViewModel)
                 , m_messageBus(messageBus)
                 , m_hasRadiusOverride(false)
@@ -31,13 +31,13 @@ namespace ExampleApp
                 }
                 
                 SwallowCategoryMenuOption::SwallowCategoryMenuOption(std::string category,
-                                                                     bool forceInteriorQuery,
+                                                                     bool interiorSearchAllowed,
                                                                      bool closeMenuWhenInInterior,
                                                                      Menu::View::IMenuViewModel& menuViewModel,
                                                                      float radius,
                                                                      ExampleAppMessaging::TMessageBus& messageBus)
                 : m_category(category)
-                , m_interior(forceInteriorQuery)
+                , m_interiorSearchAllowed(interiorSearchAllowed)
                 , m_menuViewModel(menuViewModel)
                 , m_messageBus(messageBus)
                 , m_hasRadiusOverride(true)
@@ -68,11 +68,11 @@ namespace ExampleApp
                     
                     if (m_hasRadiusOverride)
                     {
-                        m_messageBus.Publish(CategorySearch::CategorySearchSelectedMessage(m_category, m_interior, m_radiusOverride));
+                        m_messageBus.Publish(CategorySearch::CategorySearchSelectedMessage(m_category, m_interiorSearchAllowed, m_radiusOverride));
                     }
                     else
                     {
-                        m_messageBus.Publish(CategorySearch::CategorySearchSelectedMessage(m_category, m_interior));
+                        m_messageBus.Publish(CategorySearch::CategorySearchSelectedMessage(m_category, m_interiorSearchAllowed));
                     }
                 }
             }
