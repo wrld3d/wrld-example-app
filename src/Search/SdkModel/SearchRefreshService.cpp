@@ -120,7 +120,12 @@ namespace ExampleApp
             {
                 m_secondsSincePreviousRefresh += deltaSeconds;
                 
-                const bool shouldRefresh = ShouldRefreshSearch(deltaSeconds, interestPointEcef, viewpointEcef);
+                bool shouldRefresh = ShouldRefreshSearch(deltaSeconds, interestPointEcef, viewpointEcef);
+                
+                if(m_previousQueryInterestDistance == 0.0f)
+                {
+                    shouldRefresh = false;
+                }
                 
                 if (shouldRefresh)
                 {
@@ -131,9 +136,9 @@ namespace ExampleApp
                     
                     m_previousQueryLocationEcef = interestPointEcef;
                     m_secondsSincePreviousRefresh = 0.f;
-                    m_previousQueryInterestDistance = (viewpointEcef - interestPointEcef).Length();
                 }
                 
+                m_previousQueryInterestDistance = (viewpointEcef - interestPointEcef).Length();
                 m_previousInterestEcefLocation = interestPointEcef;
             }
 
