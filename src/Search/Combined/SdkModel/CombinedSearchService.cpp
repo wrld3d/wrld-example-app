@@ -72,9 +72,9 @@ namespace ExampleApp
                         bool isIndoor = m_interiorInteractionModel.HasInteriorModel();
                         bool isCategory = query.IsCategory();
                         bool canPerformCategory = isCategory && (*iter).second->CanHandleCategory(query.Query());
-                        bool canPerformIndoor = isIndoor && (*iter).second->CanHandleIndoor();
+                        bool canPerformIndoor = (*iter).second->CanHandleIndoor();
                         
-                        if (isIndoor && query.ShouldTryInteriorSearch())
+                        if (isIndoor || query.ShouldTryInteriorSearch())
                         {
                             if (canPerformIndoor)
                             {
