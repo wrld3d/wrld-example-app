@@ -60,8 +60,11 @@ The following steps will guide you through installing and setting up the Android
 6.  Select `Android > Existing Android Code Into Workspace`
 7.  Select the `android` folder in the Example App and click `Finish`
 8.  Right click the project, and select `Android Tools > Add Native Support...`
-9.  To speed up compile times, see [this section below](#speeding-up-build-times) for compiling with multiple threads.
-10.  To run the project, right-click it and select `Run As > Android Application`
+9.  Add the cross-platform source by right-clicking the `jni` folder and selecting `New > Folder`.
+10. Click `Advanced` and select the `Linked to alternate location` radio button. 
+11. Click `Browse..` and select the [src](https://github.com/eegeo/eegeo-example-app/tree/master/src) directory. 
+12. To speed up compile times, see [this section below](#speeding-up-build-times) for compiling with multiple threads.
+13. To run the project, right-click it and select `Run As > Android Application`
 
 After selecting an Android device from the dialog, the app should then run as normal.
 
