@@ -81,7 +81,8 @@
     {
         self.pCurrentHovercard = self.pYelpHovercard;
     }
-    else if(worldPinsInFocusModel.GetVendor() == ExampleApp::Search::InteriorVendorName)
+    else if(worldPinsInFocusModel.GetVendor() == ExampleApp::Search::InteriorVendorName ||
+            worldPinsInFocusModel.GetVendor() == ExampleApp::Search::EegeoVendorName)
     {
         self.pCurrentHovercard = self.pInteriorHovercard;
     }
@@ -96,6 +97,10 @@
     else if (worldPinsInFocusModel.GetVendor() == ExampleApp::Search::TourTwitterVendorName)
     {
         self.pCurrentHovercard = self.pTwitterTourHovercard;
+    }
+    else
+    {
+        Eegeo_ASSERT(false, "unhandled search vendor: %s", worldPinsInFocusModel.GetVendor().c_str());
     }
     
     [self addSubview:self.pCurrentHovercard];

@@ -180,6 +180,8 @@
                                    mainWindowHeight);
     
     const float headlineHeight = 50.f;
+    const float headlineIconSize = 36.f;
+    const float headlineIconPadding = (headlineHeight - headlineIconSize)/2.0f;
     const float closeButtonSectionHeight = 64.f;
     const float closeButtonSectionOffsetY = mainWindowHeight - closeButtonSectionHeight;
     const float contentSectionHeight = mainWindowHeight - (closeButtonSectionHeight + headlineHeight);
@@ -219,12 +221,12 @@
                                   closeButtonSectionHeight,
                                   closeButtonSectionHeight);
 
-
-    self.pIconContainer.frame = CGRectMake(0.f, 0.f, headlineHeight, headlineHeight);
-    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pIconContainer, "button_create_poi_off", ExampleApp::Helpers::ImageHelpers::Centre);
+    
+    self.pIconContainer.frame = CGRectMake(headlineIconPadding, headlineIconPadding, headlineIconSize, headlineIconSize);
+    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pIconContainer, "icon1_place", ExampleApp::Helpers::ImageHelpers::Centre);
 
     const float titlePadding = 10.0f;
-    self.pTitleLabel.frame = CGRectMake(headlineHeight + titlePadding,
+    self.pTitleLabel.frame = CGRectMake(headlineIconSize + (headlineIconPadding*2.0f) + titlePadding,
                                         0.f,
                                         mainWindowWidth - headlineHeight - titlePadding,
                                         headlineHeight);
