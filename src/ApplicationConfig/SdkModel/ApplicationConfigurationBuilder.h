@@ -37,6 +37,9 @@ namespace ExampleApp
                 std::string m_productVersion;
                 std::string m_buildNumber;
                 std::string m_combinedVersionString;
+                bool m_webProxyEnabled;
+                std::string m_webProxyIpAddress;
+                int m_webProxyPort;
                 
                 
             public:
@@ -85,6 +88,12 @@ namespace ExampleApp
                 IApplicationConfigurationBuilder& SetBuildNumber(const std::string& buildNumber);
                 
                 IApplicationConfigurationBuilder& SetCombinedVersionString(const std::string& combinedVersionString);
+                
+                IApplicationConfigurationBuilder& SetWebProxyEnabled(bool webProxyEnabled);
+                
+                IApplicationConfigurationBuilder& SetWebProxyIpAddress(const std::string& webProxyIpAddress);
+                
+                IApplicationConfigurationBuilder& SetWebProxyPort(int webProxyPort);
                 
                 ApplicationConfiguration Build();
             };

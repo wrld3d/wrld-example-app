@@ -126,6 +126,7 @@
 #include "ModalityIgnoredReactionModel.h"
 #include "ReactorIgnoredReactionModel.h"
 #include "InteriorsEntityIdHighlightController.h"
+#include "IWebProxySettings.h"
 
 namespace ExampleApp
 {
@@ -290,6 +291,12 @@ namespace ExampleApp
     {
         m_metricsService.BeginSession(applicationConfiguration.FlurryAppKey(), EEGEO_PLATFORM_VERSION_NUMBER);
 
+        if(m_applicationConfiguration.WebProxyEnabled())
+        {
+            Eegeo::Web::IWebProxySettings& proxySettings = m_platformAbstractions.GetProxySettings();
+            proxySettings.EnableProxy(m_applicationConfiguration.WebProxyIpAddress(), m_applicationConfiguration.WebProxyPort());
+        }
+        
         m_pWorld = Eegeo_NEW(Eegeo::EegeoWorld)(applicationConfiguration.EegeoApiKey(),
                                                 m_platformAbstractions,
                                                 jpegLoader,

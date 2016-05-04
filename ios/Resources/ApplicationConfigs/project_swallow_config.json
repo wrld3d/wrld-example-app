@@ -19,5 +19,8 @@
     "SqliteDbUrl":"http://cdn1.eegeo.com/swallow-pois/pois_v160.db.gz",
     "SearchServiceUrl":"https://swallowapp.eegeo.com/search/",
     "MyPinsWebServiceUrl":"https://swallowapp.eegeo.com/reports/",
-    "MyPinsWebServiceAuthToken":"f475c578eb4592637314e4a05510993b"
+    "MyPinsWebServiceAuthToken":"f475c578eb4592637314e4a05510993b",
+    "WebProxyEnabled":false,
+    "WebProxyIpAddress":"",
+    "WebProxyPort":0
 }

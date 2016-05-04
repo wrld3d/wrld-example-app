@@ -50,7 +50,10 @@ namespace ExampleApp
                                                 parsedConfig.MyPinsWebServiceAuthToken(),
                                                 m_productVersion,
                                                 m_buildNumber,
-                                                combinedVersionString);
+                                                combinedVersionString,
+                                                parsedConfig.WebProxyEnabled(),
+                                                parsedConfig.WebProxyIpAddress(),
+                                                parsedConfig.WebProxyPort());
             }
         }
     }
