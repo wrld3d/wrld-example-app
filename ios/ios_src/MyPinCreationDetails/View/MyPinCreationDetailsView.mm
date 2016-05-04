@@ -44,7 +44,7 @@
         [self.pControlContainer addSubview: self.pTitleContainer];
 
         self.pTitleImage = [[[UIImageView alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pTitleImage.image = ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_create_poi_off");
+        self.pTitleImage.image = ExampleApp::Helpers::ImageHelpers::LoadImage(@"icon1_place");
         [self.pTitleContainer addSubview: self.pTitleImage];
 
         self.pTitleText = [[[UITextField alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
@@ -178,19 +178,20 @@
 
 - (void) layoutHeader
 {
-    m_yCursor = 10.f;
+    m_yCursor = 0.f;
     const float titleContainerWidth = m_controlContainerWidth;
-    const float titleContainerHeight = 70.f;
+    const float titleContainerHeight = 50.f;
 
     self.pTitleContainer.frame = CGRectMake(0, m_yCursor, titleContainerWidth, titleContainerHeight);
     self.pTitleContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
 
-    const float titleImageSize = static_cast<float>(self.pTitleContainer.frame.size.height);
-    self.pTitleImage.frame = CGRectMake(0, 0, titleImageSize, titleImageSize);
+    const float titleImageSize = 36.f;
+    const float padding = (titleContainerHeight - titleImageSize)/2.0f;
+    self.pTitleImage.frame = CGRectMake(padding, padding, titleImageSize, titleImageSize);
     self.pTitleImage.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
 
     const float textPadding = 10.f;
-    const float titleTextX = titleImageSize + textPadding;
+    const float titleTextX = titleImageSize + (padding * 2.0f) + textPadding;
     self.pTitleText.frame = CGRectMake(titleTextX, 0, titleContainerWidth - titleTextX, titleContainerHeight);
 
     self.pTitleText.font = [UIFont systemFontOfSize:25.0f];
