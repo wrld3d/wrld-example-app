@@ -131,10 +131,11 @@ namespace ExampleApp
                 void InteriorsEntityIdHighlightVisibilityController::OnSearchItemSelected(const SearchResultSection::SearchResultSectionItemSelectedMessage& message)
                 {
                     ClearHighlights();
-
-                    Eegeo_ASSERT(!m_searchResults.empty());
                     
-                    m_searchResultsIndex = message.ItemIndex();
+                    if (message.ItemIndex() >= m_searchResults.size())
+                        m_searchResultsIndex = -1;
+                    else
+                        m_searchResultsIndex = message.ItemIndex();
                     
                     if(m_currentlyActiveSwallowInteriors < m_validSwallowInteriors.size())
                     {
