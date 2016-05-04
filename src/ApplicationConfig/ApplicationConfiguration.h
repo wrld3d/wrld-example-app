@@ -35,6 +35,9 @@ namespace ExampleApp
             const std::string m_productVersion;
             const std::string m_buildNumber;
             const std::string m_combinedVersionString;
+            bool m_webProxyEnabled;
+            const std::string m_webProxyIpAddress;
+            int m_webProxyPort;
             
         public:
             
@@ -59,7 +62,10 @@ namespace ExampleApp
                                      const std::string& myPinsWebServiceAuthToken,
 									 const std::string& productVersion,
                                      const std::string& buildNumber,
-                                     const std::string& combinedVersionString);
+                                     const std::string& combinedVersionString,
+                                     bool webProxyEnabled,
+                                     const std::string& webProxyIpAddress,
+                                     int webProxyPort);
             
             const std::string& Name() const;
             
@@ -104,6 +110,12 @@ namespace ExampleApp
             const std::string& BuildNumber() const;
             
             const std::string& CombinedVersionString() const;
+            
+            bool WebProxyEnabled() const;
+            
+            const std::string& WebProxyIpAddress() const;
+            
+            int WebProxyPort() const;
             
         };
     }

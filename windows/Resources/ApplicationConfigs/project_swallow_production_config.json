@@ -19,5 +19,8 @@
     "SqliteDbUrl":"http://cdn1.eegeo.com/swallow-pois/pois_v95.db.gz",
     "SearchServiceUrl":"http://londWayFApp01/search/",
     "MyPinsWebServiceUrl":"http://londWayFApp01/reports/",
-    "MyPinsWebServiceAuthToken":"f475c578eb4592637314e4a05510993b"
+    "MyPinsWebServiceAuthToken":"f475c578eb4592637314e4a05510993b",
+    "WebProxyEnabled":false,
+    "WebProxyIpAddress":"",
+    "WebProxyPort":0
 }

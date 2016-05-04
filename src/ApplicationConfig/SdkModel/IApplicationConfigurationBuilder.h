@@ -61,6 +61,12 @@ namespace ExampleApp
                 
                 virtual IApplicationConfigurationBuilder& SetCombinedVersionString(const std::string& combinedVersionString) = 0;
                 
+                virtual IApplicationConfigurationBuilder& SetWebProxyEnabled(bool webProxyEnabled) = 0;
+                
+                virtual IApplicationConfigurationBuilder& SetWebProxyIpAddress(const std::string& webProxyIpAddress) = 0;
+                
+                virtual IApplicationConfigurationBuilder& SetWebProxyPort(int webProxyPort) = 0;
+                
                 virtual ApplicationConfiguration Build() = 0;
             };
         }

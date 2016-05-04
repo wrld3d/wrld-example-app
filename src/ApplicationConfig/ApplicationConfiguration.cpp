@@ -27,7 +27,10 @@ namespace ExampleApp
                                                            const std::string& myPinsWebServiceAuthToken,
                                                            const std::string& productVersion,
                                                            const std::string& buildNumber,
-                                                           const std::string& combinedVersionString)
+                                                           const std::string& combinedVersionString,
+                                                           bool webProxyEnabled,
+                                                           const std::string& webProxyIpAddress,
+                                                           int webProxyPort)
         : m_name(name)
         , m_eegeoApiKey(eegeoApiKey)
         , m_interestLocation(interestLocation)
@@ -50,6 +53,9 @@ namespace ExampleApp
         , m_productVersion(productVersion)
         , m_buildNumber(buildNumber)
         , m_combinedVersionString(combinedVersionString)
+        , m_webProxyEnabled(webProxyEnabled)
+        , m_webProxyIpAddress(webProxyIpAddress)
+        , m_webProxyPort(webProxyPort)
         {
             
         }
@@ -162,6 +168,21 @@ namespace ExampleApp
         const std::string& ApplicationConfiguration::CombinedVersionString() const
         {
             return m_combinedVersionString;
+        }
+        
+        bool ApplicationConfiguration::WebProxyEnabled() const
+        {
+            return m_webProxyEnabled;
+        }
+        
+        const std::string& ApplicationConfiguration::WebProxyIpAddress() const
+        {
+            return m_webProxyIpAddress;
+        }
+        
+        int ApplicationConfiguration::WebProxyPort() const
+        {
+            return m_webProxyPort;
         }
     }
 }

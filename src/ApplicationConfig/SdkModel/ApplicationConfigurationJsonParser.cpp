@@ -85,6 +85,14 @@ namespace ExampleApp
                 Eegeo_ASSERT(document.HasMember("MyPinsWebServiceAuthToken"), "MyPinsWebServiceAuthToken config not found");
                 m_builder.SetMyPinsWebServiceAuthToken(document["MyPinsWebServiceAuthToken"].GetString());
                 
+                Eegeo_ASSERT(document.HasMember("WebProxyEnabled"), "WebProxyEnabled config not found");
+                m_builder.SetWebProxyEnabled(document["WebProxyEnabled"].GetBool());
+                
+                Eegeo_ASSERT(document.HasMember("WebProxyIpAddress"), "WebProxyIpAddress config not found");
+                m_builder.SetWebProxyIpAddress(document["WebProxyIpAddress"].GetString());
+                
+                Eegeo_ASSERT(document.HasMember("WebProxyPort"), "WebProxyPort config not found");
+                m_builder.SetWebProxyPort(document["WebProxyPort"].GetInt());
                 return m_builder.Build();
             }
         }

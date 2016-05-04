@@ -163,6 +163,24 @@ namespace ExampleApp
                 return *this;
             }
             
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetWebProxyEnabled(bool webProxyEnabled)
+            {
+                m_webProxyEnabled = webProxyEnabled;
+                return *this;
+            }
+            
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetWebProxyIpAddress(const std::string& webProxyIpAddress)
+            {
+                m_webProxyIpAddress = webProxyIpAddress;
+                return *this;
+            }
+            
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetWebProxyPort(int webProxyPort)
+            {
+                m_webProxyPort = webProxyPort;
+                return *this;
+            }
+            
             ApplicationConfiguration ApplicationConfigurationBuilder::Build()
             {
                 return ApplicationConfiguration(m_name,
@@ -186,7 +204,10 @@ namespace ExampleApp
                                                 m_myPinsWebServiceAuthToken,
                                                 m_productVersion,
                                                 m_buildNumber,
-                                                m_combinedVersionString);
+                                                m_combinedVersionString,
+                                                m_webProxyEnabled,
+                                                m_webProxyIpAddress,
+                                                m_webProxyPort);
             }
         }
     }
