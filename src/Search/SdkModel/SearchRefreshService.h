@@ -12,6 +12,7 @@
 #include "CameraTransitions.h"
 #include "VectorMath.h"
 #include "Interiors.h"
+#include "InteriorId.h"
 
 namespace ExampleApp
 {
