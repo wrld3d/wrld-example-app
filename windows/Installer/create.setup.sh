@@ -8,10 +8,27 @@ echo
 
 applicationOutputDirectory=../ExampleApp/ExampleAppWPF/bin/Release
 version=$1
+certPassword=$2
+timestampUrl=$3
 
 if [ -z "$version" ]; then
         echo
         echo "Error: version must be provided (i.e. create.setup.sh 1.0.15)"
+        echo
+        exit 1
+fi
+
+if [ -z "$certPassword" ]; then
+        echo
+        echo "Error: Certificate password for signing the installer must be provided"
+        echo
+        exit 1
+fi
+
+
+if [ -z "$timestampUrl" ]; then
+        echo
+        echo "Error: Timestamp url must be provided for signing the installer (eg. http://timestamp.digicert.com)"
         echo
         exit 1
 fi
@@ -33,7 +50,7 @@ cp -R "$applicationOutputDirectory/Resources" "./payload"
 echo "Data copied from project output"
 echo "Creating Basic Installer..."
 
-candle.exe Product.wxs -o ./deploy/Product.wixobj -dVersion="$version"
+candle.exe Product.wxs -o ./deploy/Product.wixobj -dVersion="$version" -ext WixUtilExtension 
 
 if [ $? = 0 ] ; then
   echo "Installer compilation step success"
@@ -42,7 +59,7 @@ else
   exit 1
 fi
 
-light.exe ./deploy/Product.wixobj -o ./deploy/Swallow.msi
+light.exe ./deploy/Product.wixobj -o ./deploy/Swallow.msi -ext WixUtilExtension 
 
 if [ $? = 0 ] ; then
   echo "Installer linker step success"
@@ -77,6 +94,58 @@ fi
 echo
 echo "Bundle installer for V$version created!"
 echo
+exit 0
+
+echo "Signing installer..."
+echo "Extracting bootstrapper..."
+echo
+rm ./deploy/engine.exe
+insignia -ib "./deploy/Swallow Installer.exe" -o "./deploy/engine.exe"
+
+if [ $? = 0 ] ; then
+  echo "Bootstrapper extracted!"
+else
+  echo "Bootstrapper extraction failed!"
+  exit 1
+fi
+
+echo
+echo "Signing Bootstrapper"
+echo
+signToolPath="C:/Program Files (x86)/Windows Kits/8.1/bin/x86/SignTool.exe"
+"$signToolPath" sign /f ./Resource/certificate.pfx /p $certPassword /t $timestampUrl ./deploy/engine.exe
+
+if [ $? = 0 ] ; then
+  echo "Bootstrapper Signing success!"
+else
+  echo "Bootstrapper Signing failed!"
+  exit 1
+fi
+
+echo
+echo "Reattach Bootstrapper"
+echo
+insignia -ab "./deploy/engine.exe" "./deploy/Swallow Installer.exe" -o "./deploy/Swallow Installer.exe"
+
+if [ $? = 0 ] ; then
+  echo "Bootstrapper Reattach success!"
+else
+  echo "Bootstrapper Reattach failed!"
+  exit 1
+fi
+
+echo
+echo "Sign package"
+echo
+signToolPath sign /f ./Resource/certificate.pfx /p $certPassword /t $timestampUrl "./deploy/Swallow Installer.exe"
+
+if [ $? = 0 ] ; then
+  echo "Package sign success!"
+else
+  echo "Package sign failed!"
+  exit 1
+fi
+
 popd
 
 exit 0

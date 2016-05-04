@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
 
   <Product Id="*" Name="Project Swallow" Language="1033" Version="$(var.Version)" Manufacturer="eeGeo Ltd" UpgradeCode="{19DAC114-C430-48B2-99BF-A1C907DFE4EA}">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
@@ -93,7 +94,9 @@
         <File Id="fil4VecX1l_7BcKGVFYrlyJWqzXTCk" KeyPath="yes" Source="payload\Newtonsoft.Json.dll" />
       </Component>
       <Component Id="cmpiG7JhAXM75v0QUtpT92I20AZtW8" Directory="INSTALLFOLDER" Guid="{4F7B1AE3-FB78-4F08-86E2-F34CD80FBE9A}">
-        <File Id="mainapplication.exe" KeyPath="yes" Source="payload\ProjectSwallow.exe" />
+        <File Id="mainapplication.exe" KeyPath="yes" Source="payload\ProjectSwallow.exe">
+          <util:PermissionEx User="Users" GenericAll="yes" />
+        </File>
       </Component>
       <Component Id="cmp4smKBrWFLyUpPjMI8FO84DoS0hk" Directory="INSTALLFOLDER" Guid="{0F3FC098-3782-4834-8691-B4870F2F8207}">
         <File Id="filXVdm4akzS5hoZ0GMlE7xyk2c1FI" KeyPath="yes" Source="payload\pthreadVC2.dll" />
