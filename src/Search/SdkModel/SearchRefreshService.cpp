@@ -43,6 +43,8 @@ namespace ExampleApp
                 , m_previousQueryLocationEcef(Eegeo::dv3::Zero())
                 , m_previousInterestEcefLocation(Eegeo::dv3::Zero())
                 , m_previousQueryInterestDistance(0.f)
+                , m_previousQueryInteriorId()
+                , m_interiorHasChanged(false)
             {
                 m_searchService.InsertOnPerformedQueryCallback(m_searchResultQueryIssuedCallback);
                 m_searchService.InsertOnReceivedQueryResultsCallback(m_searchResultResponseReceivedCallback);
@@ -63,7 +65,7 @@ namespace ExampleApp
                 m_enabled = enabled;
             }
             
-            bool SearchRefreshService::ShouldRefreshSearch(float deltaSeconds, const Eegeo::dv3& interestPointEcef, const Eegeo::dv3& viewpointEcef) const
+            bool SearchRefreshService::ShouldRefreshSearch(float deltaSeconds, const Eegeo::dv3& interestPointEcef, const Eegeo::dv3& viewpointEcef)
             {
                 if (!m_enabled)
                 {
@@ -94,38 +96,38 @@ namespace ExampleApp
                 m_previousQueryFloorIndex != m_interiorInteractionModel.GetSelectedFloorIndex();
                 if (hasChangedInteriorFloors)
                 {
+                    if (m_interiorHasChanged)
+                    {
+                        m_interiorHasChanged = false;
+
+                        m_previousQueryFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
+
+                        return false;
+                    }
+
+                    
                     return true;
                 }
                 
-                const float viewpointDistance = (viewpointEcef - interestPointEcef).Length();
-                
-                const float distanceRatio = std::min(viewpointDistance, m_previousQueryInterestDistance) / std::max(viewpointDistance, m_previousQueryInterestDistance);
+                const double viewpointDistance = (viewpointEcef - interestPointEcef).Length();
+
+                const double distanceRatio = std::min(viewpointDistance, m_previousQueryInterestDistance) / std::max(viewpointDistance, m_previousQueryInterestDistance);
                 if (distanceRatio < 0.75)
                 {
                     return true;
                 }
                 
-                
-                const float angularInterestDeltaFromQuery = (interestPointEcef - m_previousQueryLocationEcef).Length() / viewpointDistance;
-                
-                const float minimumInterestLateralDeltaAngle = m_minimumInterestLateralDeltaAt1km * 0.001f;
+                const double angularInterestDeltaFromQuery = (interestPointEcef - m_previousQueryLocationEcef).Length() / viewpointDistance;
+                const double minimumInterestLateralDeltaAngle = m_minimumInterestLateralDeltaAt1km * 0.001;
+
                 const bool belowLateralThreshold = (angularInterestDeltaFromQuery < minimumInterestLateralDeltaAngle);
                 if (belowLateralThreshold)
                 {
                     return false;
                 }
                 
-                const float angularInterestDelta = (interestPointEcef - m_previousInterestEcefLocation).Length() / viewpointDistance;
-                const float maxInterestAngularSpeed = m_maximumInterestLateralSpeedAt1km * 0.001f;
-                const bool aboveSpeedThreshold = angularInterestDelta > maxInterestAngularSpeed*deltaSeconds;
-                if (aboveSpeedThreshold)
-                {
-                    return false;
-                }
-                
                 return true;
             }
-
 
             void SearchRefreshService::TryRefreshSearch(float deltaSeconds, const Eegeo::dv3& interestPointEcef, const Eegeo::dv3& viewpointEcef)
             {
@@ -151,8 +153,12 @@ namespace ExampleApp
                     {
                         m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), previousQuery.ShouldTryInteriorSearch(), currentLocation);
                     }
-                    
-                    m_previousQueryFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
+
+                    if (m_interiorInteractionModel.HasInteriorModel())
+                    {
+                        m_previousQueryInteriorId = m_interiorInteractionModel.GetInteriorModel()->GetId();
+                        m_previousQueryFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
+                    }
 
                     m_previousQueryLocationEcef = interestPointEcef;
                     m_secondsSincePreviousRefresh = 0.f;
@@ -172,6 +178,8 @@ namespace ExampleApp
                     {
                         m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), previousQuery.ShouldTryInteriorSearch());
                         m_secondsSincePreviousRefresh = 0.f;
+
+                        m_interiorHasChanged = true;
                     }
                 }
             }

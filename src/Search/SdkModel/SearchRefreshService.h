@@ -40,9 +40,11 @@ namespace ExampleApp
                 float m_secondsSincePreviousRefresh;
                 Eegeo::dv3 m_previousQueryLocationEcef;
                 Eegeo::dv3 m_previousInterestEcefLocation;
-                float m_previousQueryInterestDistance;
+                double m_previousQueryInterestDistance;
                 bool m_enabled;
                 int m_previousQueryFloorIndex;
+                bool m_interiorHasChanged;
+                Eegeo::Resources::Interiors::InteriorId m_previousQueryInteriorId;
 
             public:
                 SearchRefreshService(ISearchService& searchService,
@@ -73,7 +75,7 @@ namespace ExampleApp
 
                 void HandleSearchQueryResultsCleared();
                 
-                bool ShouldRefreshSearch(float deltaSeconds, const Eegeo::dv3& interestPointEcef, const Eegeo::dv3& viewpointEcef) const;
+                bool ShouldRefreshSearch(float deltaSeconds, const Eegeo::dv3& interestPointEcef, const Eegeo::dv3& viewpointEcef);
             };
         }
     }
