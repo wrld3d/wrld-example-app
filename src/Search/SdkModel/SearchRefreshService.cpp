@@ -7,6 +7,7 @@
 #include "ICameraTransitionController.h"
 #include "SwallowSearchConstants.h"
 #include "InteriorInteractionModel.h"
+#include "InteriorsModel.h"
 
 #include <algorithm>
 
@@ -122,6 +123,15 @@ namespace ExampleApp
 
                 const bool belowLateralThreshold = (angularInterestDeltaFromQuery < minimumInterestLateralDeltaAngle);
                 if (belowLateralThreshold)
+                {
+                    return false;
+                }
+                
+                const float angularInterestDelta = (interestPointEcef - m_previousInterestEcefLocation).Length() / viewpointDistance;
+                const float maxInterestAngularSpeed = m_maximumInterestLateralSpeedAt1km * 0.001f;
+                const bool aboveSpeedThreshold = angularInterestDelta > maxInterestAngularSpeed*deltaSeconds;
+                
+                if (aboveSpeedThreshold)
                 {
                     return false;
                 }
