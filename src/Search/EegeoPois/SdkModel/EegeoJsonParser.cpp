@@ -22,42 +22,86 @@ namespace ExampleApp
             {
                 namespace
                 {
-                    std::string MapCategory(const std::string& category)
-                    {
-                        std::map<std::string, std::string> categoryMap;
-                        categoryMap["coffee"] = "coffee";
-                        categoryMap["restaurants"] = "food";
-                        categoryMap["nightlife"] = "nightlife";
-                        categoryMap["museums"] = "arts";
-                        categoryMap["hotels"] = "hotel";
-                        categoryMap["financialservices"] = "bank";
-                        categoryMap["parks"] = "park";
-                        if (categoryMap.find(category) != categoryMap.end())
-                        {
-                            return categoryMap[category];
-                        }
-                        return "unknown";
-                    }
-                    
-                    std::string MapReadableCategory(const std::string& category)
-                    {
-                        std::map<std::string, std::string> categoryMap;
-                        categoryMap["coffee"] = "Coffee";
-                        categoryMap["restaurants"] = "Restaurants";
-                        categoryMap["nightlife"] = "Nightlife";
-                        categoryMap["museums"] = "Arts";
-                        categoryMap["hotels"] = "Hotels";
-                        categoryMap["financialservices"] = "Banks";
-                        categoryMap["parks"] = "Parks";
-                        if (categoryMap.find(category) != categoryMap.end())
-                        {
-                            return categoryMap[category];
-                        }
-                        return "Unknown";
-                    }
+//                    std::string MapCategory(const std::string& category)
+//                    {
+//                        std::map<std::string, std::string> categoryMap;
+//                        categoryMap["coffee"] = "coffee";
+//                        categoryMap["restaurants"] = "food";
+//                        categoryMap["nightlife"] = "nightlife";
+//                        categoryMap["museums"] = "arts";
+//                        categoryMap["hotels"] = "hotel";
+//                        categoryMap["financialservices"] = "bank";
+//                        categoryMap["parks"] = "park";
+//                        if (categoryMap.find(category) != categoryMap.end())
+//                        {
+//                            return categoryMap[category];
+//                        }
+//                        return "unknown";
+//                    }
+//                    
+//                    std::string MapReadableCategory(const std::string& category)
+//                    {
+//                        std::map<std::string, std::string> categoryMap;
+//                        categoryMap["coffee"] = "Coffee";
+//                        categoryMap["restaurants"] = "Restaurants";
+//                        categoryMap["nightlife"] = "Nightlife";
+//                        categoryMap["museums"] = "Arts";
+//                        categoryMap["hotels"] = "Hotels";
+//                        categoryMap["financialservices"] = "Banks";
+//                        categoryMap["parks"] = "Parks";
+//                        if (categoryMap.find(category) != categoryMap.end())
+//                        {
+//                            return categoryMap[category];
+//                        }
+//                        return "Unknown";
+//                    }
                     
                     Search::SdkModel::SearchResultModel ParseSearchResultFromJsonObject(const rapidjson::Value& json)
                     {
+                        
+                        Eegeo::Space::LatLong location = Eegeo::Space::LatLong::FromDegrees(json["lat"].GetDouble(),
+                                                                                            json["lon"].GetDouble());
+                        
+                        std::stringstream idStream;
+                        idStream << json["id"].GetInt();
+                        
+                        bool indoor = json["indoor"].GetBool();
+                        Eegeo::Resources::Interiors::InteriorId interiorId(json["indoor_id"].GetString());
+                        
+                        std::string category = json["category"].GetString();
+                        std::vector<std::string> categories;
+                        
+                        std::string userData = "";
+                        
+                        if (json.HasMember("user_data"))
+                        {
+                            if (json["user_data"].HasMember("subcategory") && json["user_data"]["subcategory"].IsString())
+                            {
+                                category = json["user_data"]["subcategory"].GetString();
+                            }
+                            rapidjson::StringBuffer strbuf;
+                            rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
+                            json["user_data"].Accept(writer);
+                            userData = strbuf.GetString();
+                        }
+                        
+                        return ExampleApp::Search::SdkModel::SearchResultModel(ExampleApp::Search::SdkModel::SearchResultModel::CurrentVersion,
+                                                                               idStream.str(),
+                                                                               json["title"].GetString(),
+                                                                               json["subtitle"].GetString(),
+                                                                               location,
+                                                                               static_cast<float>(json["height_offset"].GetDouble()),
+                                                                               indoor,
+                                                                               interiorId,
+                                                                               json["floor_id"].GetInt(),
+                                                                               category,
+                                                                               categories,
+                                                                               ExampleApp::Search::EegeoVendorName,
+                                                                               userData,
+                                                                               Eegeo::Helpers::Time::MillisecondsSinceEpoch());
+                    }
+                    /*
+                    
                         Eegeo::Space::LatLong location = Eegeo::Space::LatLong::FromDegrees(json["lat"].GetDouble(),
                                                                                             json["lon"].GetDouble());
                         
@@ -96,6 +140,7 @@ namespace ExampleApp
                                                                                userData,
                                                                                Eegeo::Helpers::Time::MillisecondsSinceEpoch());
                     }
+                     */
                 }
                 
                 void EegeoJsonParser::ParseEegeoQueryResults(const std::string& serialized,

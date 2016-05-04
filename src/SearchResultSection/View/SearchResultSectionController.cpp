@@ -7,6 +7,8 @@
 #include "IAppModeModel.h"
 #include "ISearchResultSectionOrder.h"
 #include "SearchResultItemModel.h"
+#include "LaxSearchConstants.h"
+#include "LaxSearchParser.h"
 
 namespace ExampleApp
 {
@@ -31,6 +33,13 @@ namespace ExampleApp
                         return m_order(a, b);
                     }
                 };
+                
+//                inline int GetOriginalIndexForSearchResult(const std::vector<Search::SdkModel::SearchResultModel>& unorderedResults, const Search::SdkModel::SearchResultModel& result)
+//                {
+//                    std::vector<Search::SdkModel::SearchResultModel>::const_iterator it = std::find(unorderedResults.begin(), unorderedResults.end(), result);
+//                    
+//                    return static_cast<int>(std::distance(unorderedResults.begin(), it));
+//                }
             }
 
             void SearchResultSectionController::OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message)
@@ -42,6 +51,9 @@ namespace ExampleApp
                 }
                 
                 m_lastAddedResults = message.GetResults();
+                
+//                const std::vector<Search::SdkModel::SearchResultModel>& unorderedResults = message.GetResults();
+                
                 OrderWrapper orderWrapper(m_order);
                 std::stable_sort(m_lastAddedResults.begin(), m_lastAddedResults.end(), orderWrapper);
                 
@@ -60,6 +72,29 @@ namespace ExampleApp
                                                                            m_searchMenuViewModel,
                                                                            m_messageBus,
                                                                            m_menuReaction));
+                    
+//                    const Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
+//                    std::string subtitle = model.GetSubtitle();
+////                    if (model.GetCategory() == Search::Lax::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
+////                    {
+////                        // Availability is no longer a subtitle as that affects search results.
+////                        Search::Lax::SdkModel::LaxMeetingRoomResultModel meetingRoomModel = Search::Lax::SdkModel::SearchParser::TransformToLaxMeetingRoomResult(model);
+////                        subtitle = Search::Lax::SdkModel::SearchParser::GetFormattedAvailabilityString(meetingRoomModel.GetAvailability());
+////                    }
+//                    m_menuOptions.AddItem(model.GetIdentifier(),
+//                                          model.GetTitle(),
+//                                          subtitle,
+//                                          model.GetCategory(),
+//                                          Eegeo_NEW(SearchResultItemModel)(model.GetTitle(),
+//                                                                           model.GetLocation().ToECEF(),
+//                                                                           model.IsInterior(),
+//                                                                           model.GetBuildingId(),
+//                                                                           model.GetFloor(),
+//                                                                           m_searchMenuViewModel,
+////                                                                           GetOriginalIndexForSearchResult(unorderedResults, model),
+//                                                                           m_messageBus,
+//                                                                           m_menuReaction));
+//                
                 }
             }
             

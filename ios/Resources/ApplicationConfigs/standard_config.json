@@ -1,7 +1,7 @@
 {
   "Name": "Mobile Example App",
-  "StartLocationLatitude": 56.45989000,
-  "StartLocationLongitude": -2.97751000,
+  "StartLocationLatitude": 56.45989,
+  "StartLocationLongitude": -2.97751,
   "StartLocationAltitude": 2.7,
   "StartLocationDistance": 1781.0,
   "StartLocationOrientationDegrees": 0.0,
