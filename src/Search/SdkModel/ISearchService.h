@@ -37,9 +37,13 @@ namespace ExampleApp
 
                 virtual void RemoveOnPerformedQueryCallback(Eegeo::Helpers::ICallback1<const SearchQuery&>& callback) = 0;
 
-                virtual void InsertOnReceivedQueryResultsCallback(Eegeo::Helpers::ICallback2<const SearchQuery&, const std::vector<SearchResultModel>& >& callback) = 0;
+                virtual void InsertOnReceivedQueryResultsCallback(Eegeo::Helpers::ICallback3<const SearchQuery&, 
+                                                                                             const std::vector<SearchResultModel>&,
+                                                                                             const bool&>& callback) = 0;
 
-                virtual void RemoveOnReceivedQueryResultsCallback(Eegeo::Helpers::ICallback2<const SearchQuery&, const std::vector<SearchResultModel>& >& callback) = 0;
+                virtual void RemoveOnReceivedQueryResultsCallback(Eegeo::Helpers::ICallback3<const SearchQuery&,
+                                                                                             const std::vector<SearchResultModel>&,
+                                                                                             const bool&>& callback) = 0;
             };
         }
     }

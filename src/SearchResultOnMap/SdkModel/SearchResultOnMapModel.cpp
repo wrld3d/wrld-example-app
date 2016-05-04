@@ -152,7 +152,8 @@ namespace ExampleApp
             }
             
             void SearchResultOnMapModel::HandleSearchResultsRecieved(const Search::SdkModel::SearchQuery &query,
-                                                                     const std::vector<Search::SdkModel::SearchResultModel> &results)
+                                                                     const std::vector<Search::SdkModel::SearchResultModel> &results,
+                                                                     const bool& success)
             {
                 for(std::vector<Search::SdkModel::SearchResultModel>::const_iterator it = results.begin(); it != results.end(); it++)
                 {

@@ -34,7 +34,7 @@ namespace ExampleApp
                     ~InteriorsHighlightVisibilityController();
                     
                 private:
-                    void OnSearchResultsLoaded(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results);
+                    void OnSearchResultsLoaded(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results, const bool& success);
                     void OnSearchResultCleared();
                     
                     void OnInteriorInteractionModelChanged();
@@ -56,7 +56,7 @@ namespace ExampleApp
                     Search::SdkModel::ISearchResultRepository& m_searchResultRepository;
                     ExampleAppMessaging::TMessageBus& m_messageBus;
                     
-                    Eegeo::Helpers::TCallback2<InteriorsHighlightVisibilityController, const Search::SdkModel::SearchQuery&, const std::vector<Search::SdkModel::SearchResultModel>&> m_searchResultsHandler;
+                    Eegeo::Helpers::TCallback3<InteriorsHighlightVisibilityController, const Search::SdkModel::SearchQuery&, const std::vector<Search::SdkModel::SearchResultModel>&, const bool&> m_searchResultsHandler;
                     Eegeo::Helpers::TCallback0<InteriorsHighlightVisibilityController> m_searchResultsClearedHandler;
                     Eegeo::Helpers::TCallback0<InteriorsHighlightVisibilityController> m_interiorInteractionModelChangedHandler;
                     Eegeo::Helpers::TCallback0<InteriorsHighlightVisibilityController> m_interiorLabelsBuiltHandler;

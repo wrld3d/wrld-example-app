@@ -30,19 +30,17 @@ namespace ExampleApp
                                                        Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController)
                 : m_searchService(searchService)
                 , m_searchResultsRepository(searchResultRepository)
-                , m_pSearchResultResponseReceivedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<SearchQueryPerformer, const SearchQuery&, const std::vector<SearchResultModel>&>))(this, &SearchQueryPerformer::HandleSearchResultsResponseReceived))
+                , m_searchResultResponseReceivedCallback(this, &SearchQueryPerformer::HandleSearchResultsResponseReceived)
                 , m_previousQuery("", false, false, Eegeo::Space::LatLongAltitude(0.0, 0.0, 0.0), 0.f)
                 , m_hasQuery(false)
                 , m_cameraController(cameraController)
             {
-                m_searchService.InsertOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
+                m_searchService.InsertOnReceivedQueryResultsCallback(m_searchResultResponseReceivedCallback);
             }
 
             SearchQueryPerformer::~SearchQueryPerformer()
             {
-                m_searchService.RemoveOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
-                
-                Eegeo_DELETE m_pSearchResultResponseReceivedCallback;
+                m_searchService.RemoveOnReceivedQueryResultsCallback(m_searchResultResponseReceivedCallback);
             }
 
             bool SearchQueryPerformer::HasQuery() const
@@ -105,7 +103,8 @@ namespace ExampleApp
             }
 
             void SearchQueryPerformer::HandleSearchResultsResponseReceived(const SearchQuery& query,
-                    const std::vector<SearchResultModel>& results)
+                    const std::vector<SearchResultModel>& results,
+                    const bool& success)
             {
                 // Ideally we should keep merge the new results into the old result set in a stable way, so that the
                 // result list doesn't jumble up when we move about and perform new searches.

@@ -53,7 +53,7 @@ namespace ExampleApp
                     {
                         m_hasActiveQuery = false;
                         std::vector<Search::SdkModel::SearchResultModel> results;
-                        ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, results);
+                        ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, results, true);
                     }
                 }
                 
@@ -64,7 +64,7 @@ namespace ExampleApp
                     ExecuteQueryPerformedCallbacks(searchQuery);
                     if(m_networkCapabilities.StreamOverWifiOnly() && !m_networkCapabilities.ConnectedToWifi())
                     {
-                        ExecutQueryResponseReceivedCallbacks(searchQuery, std::vector<Search::SdkModel::SearchResultModel>());
+                        ExecutQueryResponseReceivedCallbacks(searchQuery, std::vector<Search::SdkModel::SearchResultModel>(), false);
                         return;
                     }
                     
@@ -86,16 +86,17 @@ namespace ExampleApp
                     Eegeo_ASSERT(m_pCurrentRequest != NULL, "Yelp search request must have been performed");
                     
                     std::vector<Search::SdkModel::SearchResultModel> results;
-                    
+                    bool success = false;
                     if(m_pCurrentRequest->IsSucceeded())
                     {
+                        success = true;
                         const std::string& response(m_pCurrentRequest->ResponseString());
                         m_searchResultParser.ParseSearchResults(response, results);
                     }
                     
                     m_pCurrentRequest = NULL;
                     m_hasActiveQuery = false;
-                    ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, results);
+                    ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, results, success);
                 }
                 
                 void YelpSearchService::PerformIdentitySearch(const Search::SdkModel::SearchResultModel& outdatedSearchResult,

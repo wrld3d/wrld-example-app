@@ -184,7 +184,8 @@ namespace ExampleApp
             }
 
             void SearchRefreshService::HandleSearchResultsResponseReceived(const SearchQuery& query,
-                    const std::vector<SearchResultModel>& results)
+                    const std::vector<SearchResultModel>& results,
+                    const bool& success)
             {
                 if (!m_searchResultsCleared)
                 {

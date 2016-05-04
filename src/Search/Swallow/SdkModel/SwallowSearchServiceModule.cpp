@@ -58,7 +58,7 @@ namespace ExampleApp
                     return *m_pSwallowSearchTransitionPinController;
                 }
                 
-                void SwallowSearchServiceModule::OnTransitionResult(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results)
+                void SwallowSearchServiceModule::OnTransitionResult(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results, const bool& success)
                 {
                     if (query.IsCategory() && query.Query() == SearchConstants::TRANSITION_CATEGORY_NAME)
                     {

@@ -38,7 +38,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<SearchResultOnMapModel, Search::SdkModel::SearchResultModel*> m_searchResultRemovedCallback;
                 Eegeo::Helpers::TCallback1<SearchResultOnMapModel, Search::SdkModel::SearchResultModel> m_searchResultPinnedCallback;
                 Eegeo::Helpers::TCallback1<SearchResultOnMapModel, Search::SdkModel::SearchResultModel> m_searchResultUnpinnedCallback;
-                Eegeo::Helpers::TCallback2<SearchResultOnMapModel, const Search::SdkModel::SearchQuery&, const std::vector<Search::SdkModel::SearchResultModel>&> m_searchResultsCallback;
+                Eegeo::Helpers::TCallback3<SearchResultOnMapModel, const Search::SdkModel::SearchQuery&, const std::vector<Search::SdkModel::SearchResultModel>&, const bool&> m_searchResultsCallback;
                 
                 Eegeo::Helpers::TCallback1<SearchResultOnMapModel, const SearchResultMeetingAvailabilityChanged&> m_availbilityChangedMessage;
                 
@@ -76,7 +76,7 @@ namespace ExampleApp
 
                 void HandleRemovedSearchResult(Search::SdkModel::SearchResultModel*& pSearchResultModel);
                 
-                void HandleSearchResultsRecieved(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results);
+                void HandleSearchResultsRecieved(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results, const bool& success);
                 
                 void HandleSearchResultPinned(Search::SdkModel::SearchResultModel& searchResultModel);
                 

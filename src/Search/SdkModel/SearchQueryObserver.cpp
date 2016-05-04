@@ -38,7 +38,7 @@ namespace ExampleApp
                 m_messageBus.Publish(SearchQueryPerformedMessage(query));
             }
 
-            void SearchQueryObserver::HandleSearchQueryResponseReceived(const SearchQuery& query, const std::vector<SearchResultModel>& results)
+            void SearchQueryObserver::HandleSearchQueryResponseReceived(const SearchQuery& query, const std::vector<SearchResultModel>& results, const bool& success)
             {
                 m_messageBus.Publish(SearchQueryResponseReceivedMessage(query, results));
             }

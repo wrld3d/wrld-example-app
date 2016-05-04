@@ -11,6 +11,7 @@
 #include "NetIncludes.h"
 #include "Search.h"
 #include "Interiors.h"
+#include "AlertBox.h"
 
 #include <vector>
 #include <string>

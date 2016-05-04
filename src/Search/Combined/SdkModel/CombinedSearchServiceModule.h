@@ -4,6 +4,7 @@
 
 #include "ISearchServiceModule.h"
 #include "Interiors.h"
+#include "AlertBox.h"
 #include <map>
 #include <string>
 
@@ -24,7 +25,8 @@ namespace ExampleApp
                     
                 public:
                     CombinedSearchServiceModule(std::map<std::string, Search::SdkModel::ISearchServiceModule*> searchServiceModules,
-                                                Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel);
+                                                Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory);
                     
                     ~CombinedSearchServiceModule();
                     

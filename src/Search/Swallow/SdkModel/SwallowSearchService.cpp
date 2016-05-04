@@ -49,7 +49,7 @@ namespace ExampleApp
                     }
                     else
                     {
-                        ExecutQueryResponseReceivedCallbacks(query, std::vector<Search::SdkModel::SearchResultModel>());
+                        ExecutQueryResponseReceivedCallbacks(query, std::vector<Search::SdkModel::SearchResultModel>(), false);
                     }
                 }
                     
@@ -68,7 +68,7 @@ namespace ExampleApp
                     swallowPoiDbService.FullTextSearch(query.Query(), results);
                     
                     ExecuteQueryPerformedCallbacks(query);
-                    ExecutQueryResponseReceivedCallbacks(query, results);
+                    ExecutQueryResponseReceivedCallbacks(query, results, true);
                 }
                 
                 void SwallowSearchService::PerformCategorySearch(const Search::SdkModel::SearchQuery& query, SwallowPoiDb::SwallowPoiDbCombinedService& swallowPoiDbService)
@@ -78,7 +78,7 @@ namespace ExampleApp
                     swallowPoiDbService.CategorySearch(query.Query(), results);
                     
                     ExecuteQueryPerformedCallbacks(query);
-                    ExecutQueryResponseReceivedCallbacks(query, results);
+                    ExecutQueryResponseReceivedCallbacks(query, results, true);
                 }
             }
         }

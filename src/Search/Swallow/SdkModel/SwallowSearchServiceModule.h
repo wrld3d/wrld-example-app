@@ -32,9 +32,9 @@ namespace ExampleApp
                     Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
                     bool m_clearSearchNextUpdate;
                     
-                    Eegeo::Helpers::TCallback2<SwallowSearchServiceModule, const Search::SdkModel::SearchQuery&, const std::vector<Search::SdkModel::SearchResultModel>& > m_transitionCallback;
+                    Eegeo::Helpers::TCallback3<SwallowSearchServiceModule, const Search::SdkModel::SearchQuery&, const std::vector<Search::SdkModel::SearchResultModel>&, const bool& > m_transitionCallback;
                     
-                    void OnTransitionResult(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results);
+                    void OnTransitionResult(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results, const bool& success);
                 public:
                     SwallowSearchServiceModule(Search::SdkModel::ISearchService& searchService,
                                                Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,

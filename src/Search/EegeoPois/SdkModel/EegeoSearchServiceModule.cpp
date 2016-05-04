@@ -36,7 +36,7 @@ namespace ExampleApp
                     m_pSearchService = Eegeo_NEW(EegeoSearchService)(*m_pEegeoSearchQueryFactory,
                                                                         *m_pEegeoParser,
                                                                         networkCapabilities,
-                                                                         availableCategories);
+                                                                        availableCategories);
                 }
                 
                 EegeoSearchServiceModule::~EegeoSearchServiceModule()

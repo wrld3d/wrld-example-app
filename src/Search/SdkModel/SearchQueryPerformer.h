@@ -24,7 +24,7 @@ namespace ExampleApp
                 ISearchService& m_searchService;
                 
                 ISearchResultRepository& m_searchResultsRepository;
-                Eegeo::Helpers::ICallback2<const SearchQuery&, const std::vector<SearchResultModel>&>* m_pSearchResultResponseReceivedCallback;
+                Eegeo::Helpers::TCallback3<SearchQueryPerformer, const SearchQuery&, const std::vector<SearchResultModel>&, const bool&> m_searchResultResponseReceivedCallback;
                 Eegeo::Helpers::CallbackCollection0 m_queryResultsClearedCallbacks;
                 SearchQuery m_previousQuery;
                 bool m_hasQuery;
@@ -60,7 +60,8 @@ namespace ExampleApp
                 void RemoveExistingSearchResults();
 
                 void HandleSearchResultsResponseReceived(const SearchQuery& query,
-                        const std::vector<SearchResultModel>& results);
+                        const std::vector<SearchResultModel>& results,
+                        const bool& success);
 
             };
         }

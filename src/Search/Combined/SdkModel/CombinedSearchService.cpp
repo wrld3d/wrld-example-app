@@ -4,6 +4,7 @@
 #include "SearchQuery.h"
 #include "SwallowSearchConstants.h"
 #include "InteriorInteractionModel.h"
+#include "IAlertBoxFactory.h"
 
 namespace ExampleApp
 {
@@ -14,7 +15,8 @@ namespace ExampleApp
             namespace SdkModel
             {
                 CombinedSearchService::CombinedSearchService(const std::map<std::string,Search::SdkModel::ISearchService*>& searchServices,
-                                                             Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel)
+                                                             Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                             Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory)
                 : SearchServiceBase(std::vector<std::string>())
                 , m_searchServices(searchServices)
                 , m_searchQueryResponseCallback(this, &CombinedSearchService::OnSearchResponseRecieved)
@@ -22,6 +24,10 @@ namespace ExampleApp
                 , m_interiorInteractionModel(interiorInteractionModel)
                 , m_currentQueryModel("", false, false, Eegeo::Space::LatLongAltitude(0, 0, 0), 0.f)
                 , m_hasActiveQuery(false)
+                , m_anyRequestsFailed(false)
+                , m_alertBoxHandler(this, &CombinedSearchService::HandleAlertDismissed)
+                , m_showAlertBoxNextFailure(true)
+                , m_alertBoxFactory(alertBoxFactory)
                 {
                     std::map<std::string,Search::SdkModel::ISearchService*>::const_iterator iter;
                     
@@ -67,6 +73,8 @@ namespace ExampleApp
                     
                     std::vector<Search::SdkModel::ISearchService*> queryServices;
                     
+                    m_anyRequestsFailed = false;
+
                     for (std::map<std::string,Search::SdkModel::ISearchService*>::const_iterator iter = m_searchServices.begin(); iter != m_searchServices.end(); ++iter)
                     {
                         bool isIndoor = m_interiorInteractionModel.HasInteriorModel();
@@ -101,7 +109,7 @@ namespace ExampleApp
                     if(queryServices.empty())
                     {
                         Eegeo_TTY("Warning: No valid query dispatched");
-                        ExecutQueryResponseReceivedCallbacks(query, m_combinedResults);
+                        ExecutQueryResponseReceivedCallbacks(query, m_combinedResults, true);
                         return;
                     }
                     
@@ -142,13 +150,20 @@ namespace ExampleApp
                     {
                         m_hasActiveQuery = false;
                         m_combinedResults.clear();
-                        ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, m_combinedResults);
+                        ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, m_combinedResults, true);
                     }
                 }
                 
                 void CombinedSearchService::OnSearchResponseRecieved(const Search::SdkModel::SearchQuery& query,
-                                                                        const std::vector<Search::SdkModel::SearchResultModel>& results)
+                                                                     const std::vector<Search::SdkModel::SearchResultModel>& results,
+                                                                     const bool& success)
                 {
+                    if (!success)
+                    {
+                        ShowFailureDialog();
+                        m_anyRequestsFailed = true;
+                    }
+
                     std::vector<Search::SdkModel::SearchResultModel> filtered;
                     filtered.reserve(results.size());
                     
@@ -170,10 +185,30 @@ namespace ExampleApp
                     {
                         m_hasActiveQuery = false;
                         m_pendingResultsLeft = 0;
-                        ExecutQueryResponseReceivedCallbacks(query, m_combinedResults);
+                        if (!m_anyRequestsFailed)
+                        {
+                            m_showAlertBoxNextFailure = true;
+                        }
+                        ExecutQueryResponseReceivedCallbacks(query, m_combinedResults, !m_anyRequestsFailed);
                         m_combinedResults.clear();
                     }
                 }
+
+                void CombinedSearchService::ShowFailureDialog()
+                {
+                    if (m_showAlertBoxNextFailure)
+                    {
+                        m_showAlertBoxNextFailure = false;
+                        m_alertBoxFactory.CreateSingleOptionAlertBox("Warning", "Search failed. Please check your internet connection.", m_alertBoxHandler);
+                    }
+                }
+
+
+                void CombinedSearchService::HandleAlertDismissed()
+                {
+
+                }
+
             }
         }
     }

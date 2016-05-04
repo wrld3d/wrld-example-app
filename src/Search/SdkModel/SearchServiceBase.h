@@ -17,7 +17,7 @@ namespace ExampleApp
             class SearchServiceBase : public ISearchService
             {
                 Eegeo::Helpers::CallbackCollection1<const SearchQuery&> m_queryPerformedCallbacks;
-                Eegeo::Helpers::CallbackCollection2<const SearchQuery&, const std::vector<SearchResultModel>& > m_queryResponseReceivedCallbacks;
+                Eegeo::Helpers::CallbackCollection3<const SearchQuery&, const std::vector<SearchResultModel>&, const bool& > m_queryResponseReceivedCallbacks;
 
             protected:
                 SearchServiceBase(const std::vector<std::string>& availableCategories);
@@ -26,7 +26,7 @@ namespace ExampleApp
 
                 void ExecuteQueryPerformedCallbacks(const SearchQuery& query);
 
-                void ExecutQueryResponseReceivedCallbacks(const SearchQuery& query, const std::vector<SearchResultModel>& results);
+                void ExecutQueryResponseReceivedCallbacks(const SearchQuery& query, const std::vector<SearchResultModel>& results, const bool success);
                 
                 std::vector<std::string> m_availableCategories;
 
@@ -40,9 +40,9 @@ namespace ExampleApp
 
                 void RemoveOnPerformedQueryCallback(Eegeo::Helpers::ICallback1<const SearchQuery&>& callback);
 
-                void InsertOnReceivedQueryResultsCallback(Eegeo::Helpers::ICallback2<const SearchQuery&, const std::vector<SearchResultModel>& >& callback);
+                void InsertOnReceivedQueryResultsCallback(Eegeo::Helpers::ICallback3<const SearchQuery&, const std::vector<SearchResultModel>&, const bool& >& callback);
 
-                void RemoveOnReceivedQueryResultsCallback(Eegeo::Helpers::ICallback2<const SearchQuery&, const std::vector<SearchResultModel>& >& callback);
+                void RemoveOnReceivedQueryResultsCallback(Eegeo::Helpers::ICallback3<const SearchQuery&, const std::vector<SearchResultModel>&, const bool& >& callback);
             };
         }
     }

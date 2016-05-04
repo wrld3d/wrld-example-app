@@ -202,7 +202,9 @@ namespace ExampleApp
                     }
                 }
                 
-                void InteriorsHighlightVisibilityController::OnSearchResultsLoaded(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results)
+                void InteriorsHighlightVisibilityController::OnSearchResultsLoaded(const Search::SdkModel::SearchQuery& query, 
+                    const std::vector<Search::SdkModel::SearchResultModel>& results,
+                    const bool& success)
                 {
                     DeactivateHighlightRenderables();
                     m_highlightAvailabilityData.clear();
