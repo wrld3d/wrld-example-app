@@ -85,11 +85,12 @@ def collate_desks(reader):
         location_description = ", ".join([FLOOR_IDS_TO_DESCRIPTIONS[floor_id], BUILDING_IDS_TO_NAMES[building_id]])
 
         dest_row = {'name': name,
-                    'job_title': src_row[EXPECTED_INPUT_FIELDS['Occupant Organization']],
+                    'job_title': str(src_row[EXPECTED_INPUT_FIELDS['Occupant Organization']]),
                     'image_filename': "icon_person.png",
-                    'working_group': src_row[EXPECTED_INPUT_FIELDS['Occupant Organization']],
+                    'working_group': str(src_row[EXPECTED_INPUT_FIELDS['Occupant Organization']]),
                     'office_location': location_description,
-                    'desk_code': desk_id}
+                    'desk_code': desk_id,
+                    'available_in_app': 'Yes'}
 
         yield dest_row
 
@@ -112,7 +113,7 @@ def import_employees(input_desks_csv_path, output_csv_path):
         raise ValueError('output already exists: ' + output_csv_path)
 
     with open(output_csv_path, 'wb') as output_csv_file:
-        dest_columns = ['name', 'job_title', 'image_filename', 'working_group', 'office_location', 'desk_code']
+        dest_columns = ['name', 'job_title', 'image_filename', 'working_group', 'office_location', 'desk_code', 'available_in_app']
         writer = csv.DictWriter(output_csv_file, fieldnames=dest_columns)
 
         with open(input_desks_csv_path, 'rb') as input_csv_file:

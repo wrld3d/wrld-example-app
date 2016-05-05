@@ -31,6 +31,26 @@ $ git clone git@github.com:eegeo/interiors-gis.git
 $ python export_desk_positions.py -i interiors-gis/interior-entity-data/private/swallow/gb
 ```
 
+
+### Importing Employee data
+
+The Swallow DB contains a sheet 'EmployeePois' - this is derived from an export of swallow customer's Employee database table (Tririga export pipe-delimited, no header row).
+
+A script is available to convert exported employee table (for example, employee_export.csv) to a .csv, suitable for replacing the EmployeePois worksheet in assets/sawllow-pois.xls:
+
+```sh
+$ python import_employees.py -i employee_export.csv -o employee_pois.csv
+```
+
+Once successfully converted, this can be imported to 'EmployeePois' worksheet in the 'swallow-pois.xls' workbook with:
+
+```sh
+$ python import_csv_to_xls.py -i employee_pois.csv -d assets\swallow-pois.xls -w EmployeePois
+```
+
+During subsequent generation of poi db from this xls (build_poi_db.py), we validate that all foreign keys for desk_code exist as primary key in the 'Desks' sheet.
+
+
 ### Exporting the Excel Sheet to geojson
 
 The Swallow DB can be exported to geojson, which can be in turn loaded and edited in [QGIS](http://www.qgis.org/):

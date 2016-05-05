@@ -182,7 +182,26 @@ def validate_category_text_field(xls_sheet, poi_columns, column_name, first_data
 
     return all_rows_validated
 
-def validate_required_text_field(xls_sheet, poi_columns, column_name, first_data_row_number, available_in_app_col_index):
+
+def validate_foreign_key_exists(xls_sheet, poi_columns, column_name, first_data_row_number, available_in_app_col_index, foreign_keys):
+    column_index = poi_columns.index(column_name)
+    all_rows_validated = True
+    for row_num in range(first_data_row_number, xls_sheet.nrows):
+        if not is_row_available_in_app(xls_sheet, row_num, available_in_app_col_index):
+            continue
+
+        cell_value = str(xls_sheet.cell_value(row_num, column_index).encode('utf-8'))
+
+        if cell_value not in foreign_keys:
+            print ("failed to find foreign key '%s' for field '%s', row %d " % (cell_value, column_name, row_num))
+            all_rows_validated = False
+
+    if not all_rows_validated:
+        print("Failed to validate all foreign keys exist")
+
+    return all_rows_validated
+
+def validate_required_text_field(xls_sheet, poi_columns, column_name, first_data_row_number, available_in_app_col_index, allow_empty=False):
     column_index = poi_columns.index(column_name)
     all_rows_validated = True
     for row_num in range(first_data_row_number, xls_sheet.nrows):
@@ -193,6 +212,8 @@ def validate_required_text_field(xls_sheet, poi_columns, column_name, first_data
         text_value = xls_sheet.cell_value(row_num, column_index).encode('utf-8')
 
         if not text_value:
+            if allow_empty:
+                continue
             print ("empty cell found for required text field '%s', row %d " % (column_name, row_num))
             all_rows_validated = False
 
@@ -307,7 +328,18 @@ def log_result_info(db_cursor, table_name, verbose):
         for row in db_cursor.execute("SELECT * FROM " + table_name):
             print(row)
 
-def build_employee_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir):
+def read_desk_ids(xls_book, desks_sheet_index, first_data_row_number):
+    desk_ids = []
+
+    desks_xls_sheet = xls_book.sheet_by_index(desks_sheet_index)
+    desk_column_index = 0
+    for row_num in range(first_data_row_number, desks_xls_sheet.nrows):
+        desk_id = str(desks_xls_sheet.cell_value(row_num, desk_column_index).encode('utf-8'))
+        desk_ids.append(desk_id)
+
+    return desk_ids
+
+def build_employee_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir, desk_ids):
     xls_sheet = xls_book.sheet_by_index(sheet_index)
 
     table_name = xls_sheet.name
@@ -327,7 +359,7 @@ def build_employee_table(xls_book, sheet_index, db_cursor, connection, src_image
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated name column values")
 
-    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'job_title', first_data_row_number, available_in_app_col_index)
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'job_title', first_data_row_number, available_in_app_col_index, True)
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated job_title column values")
 
@@ -335,7 +367,7 @@ def build_employee_table(xls_book, sheet_index, db_cursor, connection, src_image
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated image_filename column values")
 
-    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'working_group', first_data_row_number, available_in_app_col_index)
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'working_group', first_data_row_number, available_in_app_col_index, True)
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated working_group column values")
 
@@ -346,6 +378,10 @@ def build_employee_table(xls_book, sheet_index, db_cursor, connection, src_image
     all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'desk_code', first_data_row_number, available_in_app_col_index)
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated desk_code column values")
+
+    all_validated &= validate_foreign_key_exists(xls_sheet, poi_columns, 'desk_code', first_data_row_number, available_in_app_col_index, desk_ids)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated desk_code foreign keys")
 
     if not all_validated:
         raise ValueError("failed validation")
@@ -796,9 +832,12 @@ def build_db(src_xls_path, dest_db_path, dest_assets_relative_path, verbose, sto
 
     xls_book =  xlrd.open_workbook(src_xls_path)
 
+    desks_sheet_index = 7
+    desk_ids = read_desk_ids(xls_book, desks_sheet_index, first_data_row_number)
+
     sheet_index = 0
 
-    build_employee_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir)
+    build_employee_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir, desk_ids)
 
     sheet_index = 1
 
