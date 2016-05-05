@@ -22,11 +22,11 @@ namespace ExampleApp
                 {
                     m_pMeetingRoomsMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                     m_pMeetingRoomsMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pMeetingRoomsMenuModel);
-                    m_pMeetingRoomsMenuOptionsModel->AddItem("Meeting Rooms",
-                                                             "Meeting Rooms",
+                    m_pMeetingRoomsMenuOptionsModel->AddItem("Defibrillator",
+                                                             "Defibrillator",
                                                              "",
                                                              "",
-                                                             Eegeo_NEW(View::LaxCategoryMenuOption)(Search::Lax::SearchConstants::MEETING_ROOM_CATEGORY_NAME,
+                                                             Eegeo_NEW(View::LaxCategoryMenuOption)(Search::Lax::SearchConstants::DEFIBRILLATOR_CATEGORY_NAME,
                                                                                                         true,
                                                                                                         menuViewModel,
                                                                                                         messageBus));

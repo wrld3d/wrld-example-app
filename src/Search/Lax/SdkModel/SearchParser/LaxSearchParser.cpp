@@ -77,7 +77,7 @@ namespace ExampleApp
                                                                    true,
                                                                    searchResultModel.GetBuildingId(),
                                                                    searchResultModel.GetFloor(),
-                                                                   Search::Lax::SearchConstants::MEETING_ROOM_CATEGORY_NAME,
+                                                                   Search::Lax::SearchConstants::DEFIBRILLATOR_CATEGORY_NAME,
                                                                    std::vector<std::string>(),
                                                                    Search::EegeoVendorName,
                                                                    strbuf.GetString(),

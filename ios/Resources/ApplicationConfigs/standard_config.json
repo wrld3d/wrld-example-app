@@ -1,10 +1,11 @@
 {
-  "Name": "Mobile Example App",
-  "StartLocationLatitude": 56.45989,
-  "StartLocationLongitude": -2.97751,
-  "StartLocationAltitude": 2.7,
-  "StartLocationDistance": 1781.0,
-  "StartLocationOrientationDegrees": 0.0,
-  "TryStartAtGpsLocation":false,
-  "GoogleAnalyticsReferrerToken":"mea_ios"
+    "Name": "Mobile Example App",
+    "StartLocationLatitude": 33.94357,
+    "StartLocationLongitude": -118.4107,
+    "StartLocationAltitude": 2.7,
+    "StartLocationDistance": 500.0,
+    "StartLocationOrientationDegrees": 0.0,
+    "TryStartAtGpsLocation":false,
+    "GoogleAnalyticsReferrerToken":"mea_ios",
+    "CoverageTreeManifestURL": "http://d2xvsc8j92rfya.cloudfront.net/chunk/indoor_maps/api_requests/8e169ff3-59ca-48a2-b89d-e35a0e482b86_2016_04_29_06_26_30/manifest.bin.gz"
 }

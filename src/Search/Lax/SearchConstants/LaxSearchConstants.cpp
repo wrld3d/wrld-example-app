@@ -30,6 +30,8 @@ namespace ExampleApp
                 
                 const std::string PERSON_CATEGORY_NAME = "person";
                 const std::string MEETING_ROOM_CATEGORY_NAME = "meeting_room";
+                const std::string DEFIBRILLATOR_CATEGORY_NAME = "defibrillator";
+                
                 const std::string WORKING_GROUP_CATEGORY_NAME = "working_group";
                 const std::string FACILITY_CATEGORY_NAME = "facility";
                 const std::string OFFICE_CATEGORY_NAME = "office";
@@ -55,7 +57,10 @@ namespace ExampleApp
                     
                     std::vector<ExampleApp::CategorySearch::View::CategorySearchModel> categories;
                     
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Meeting Rooms", MEETING_ROOM_CATEGORY_NAME, true, "meetingroom", showCategoriesInSearchMenu));
+//                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Meeting Rooms", MEETING_ROOM_CATEGORY_NAME, true, "meetingroom", showCategoriesInSearchMenu));
+                    
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Defribilator", DEFIBRILLATOR_CATEGORY_NAME, true, "defibrillator", showCategoriesInSearchMenu));
+
                     
 //                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Working Groups", WORKING_GROUP_CATEGORY_NAME, false, "workinggroup", showCategoriesInSearchMenu));
 //                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Facilities", FACILITY_CATEGORY_NAME, true, "toilets", showCategoriesInSearchMenu));
@@ -75,6 +80,7 @@ namespace ExampleApp
                     std::vector<std::string> categories;
                     
                     categories.push_back(MEETING_ROOM_CATEGORY_NAME);
+                    categories.push_back(DEFIBRILLATOR_CATEGORY_NAME);
                     categories.push_back(WORKING_GROUP_CATEGORY_NAME);
                     categories.push_back(FACILITY_CATEGORY_NAME);
                     categories.push_back(OFFICE_CATEGORY_NAME);
@@ -93,6 +99,7 @@ namespace ExampleApp
                     std::vector<std::string> categories;
                     
                     categories.push_back(MEETING_ROOM_CATEGORY_NAME);
+                    categories.push_back(DEFIBRILLATOR_CATEGORY_NAME);
                     categories.push_back(WORKING_GROUP_CATEGORY_NAME);
                     categories.push_back(FACILITY_CATEGORY_NAME);
                     categories.push_back(OFFICE_CATEGORY_NAME);
