@@ -13,9 +13,6 @@ CATEGORIES = [u'stationery',
               u'toilets',
               u'print_station',
               u'emergency_exit']
-MEETING_ROOM_STATUSES = [u'available',
-                         u'available_soon',
-                         u'occupied']
 
 # UK bounds
 MIN_LAT = 30.0
@@ -215,7 +212,7 @@ def filename_to_jpg(image_filename):
     return base_image_filename + '.jpg'
 
 
-def collect_defibrilator_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row):
+def collect_defibrilator_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row, category):
     xls_sheet = xls_book.sheet_by_index(sheet_index)
 
     poi_columns = ['name', 'image_filename', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees']
@@ -263,7 +260,7 @@ def collect_defibrilator_table(xls_book, sheet_index, src_image_folder_path, ver
         yield  {
             "title":v[column_names.index('name')],
             "subtitle":"",
-            "category":"defibrillator",
+            "category":category,
             "lat":float(v[column_names.index('latitude_degrees')]),
             "lon":float(v[column_names.index('longitude_degrees')]),
             "indoor":True,
@@ -382,9 +379,80 @@ def build_db(src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, verbos
     departments = {}
 
     sheet_index = 0
+    category = "defibrillator"
 
-    for e in collect_defibrilator_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row):
+    for e in collect_defibrilator_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row,category):
     	entities.append(e)
+
+
+    sheet_index = 1
+    category = "food"
+
+    for e in collect_defibrilator_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row,category):
+        entities.append(e)
+
+
+    sheet_index = 2
+    category = "shopping"
+
+    for e in collect_defibrilator_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row,category):
+        entities.append(e)
+
+
+    sheet_index = 3
+    category = "elevator"
+
+    for e in collect_defibrilator_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row,category):
+        entities.append(e)
+
+
+    sheet_index = 4
+    category = "stairs"
+
+    for e in collect_defibrilator_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row,category):
+        entities.append(e)
+
+
+    sheet_index = 5
+    category = "escalator"
+
+    for e in collect_defibrilator_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row,category):
+        entities.append(e)
+
+
+    sheet_index = 6
+    category = "restroom"
+
+    for e in collect_defibrilator_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row,category):
+        entities.append(e)
+
+
+    sheet_index = 7
+    category = "tdd_pay_phone"
+
+    for e in collect_defibrilator_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row,category):
+        entities.append(e)
+
+
+    sheet_index = 8
+    category = "atm"
+
+    for e in collect_defibrilator_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row,category):
+        entities.append(e)
+
+
+    sheet_index = 9
+    category = "pay_phone"
+
+    for e in collect_defibrilator_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row,category):
+        entities.append(e)
+
+    sheet_index = 10
+    category = "gates"
+
+    for e in collect_defibrilator_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row,category):
+        entities.append(e)
+
 
     delete_existing_pois(poi_service_url, dev_auth_token)
     persist_entities(entities, poi_service_url, dev_auth_token, cdn_base_url)
