@@ -12,9 +12,6 @@ CATEGORIES = [u'stationery',
               u'toilets',
               u'print_station',
               u'emergency_exit']
-MEETING_ROOM_STATUSES = [u'available',
-                         u'available_soon',
-                         u'occupied']
 
 # UK bounds
 MIN_LAT = 30.0
@@ -369,6 +366,67 @@ def build_defibrilator_table(xls_book, sheet_index, db_cursor, connection, src_i
 
     connection.commit()
 
+def build_food_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir):
+    xls_sheet = xls_book.sheet_by_index(sheet_index)
+
+    table_name = xls_sheet.name
+
+    print(str(table_name))
+
+    poi_columns = ['name', 'image_filename', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees']
+    control_columns = ['available_in_app']
+    expected_columns = poi_columns + control_columns
+    available_in_app_col_index = len(poi_columns)
+
+    all_validated = True
+
+    all_validated &= validate_column_names(xls_sheet, column_name_row, expected_columns)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated column names")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'name', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated name column values")
+
+    all_validated &= validate_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated image_filename column values")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'interior_id', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated interior_id column values")
+
+    all_validated &= validate_required_int_field(xls_sheet, poi_columns, 'interior_floor', first_data_row_number, available_in_app_col_index, MIN_FLOOR)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated interior floor number")
+
+    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'latitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LAT, MAX_LAT)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated title latitude_degrees values")
+
+    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'longitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LNG, MAX_LNG)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated title longitude_degrees values")
+
+    if not all_validated:
+        raise ValueError("failed validation")
+
+    build_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path, dest_image_dir, verbose)
+
+    column_names = ['id'] + poi_columns
+    column_types = ['INTEGER PRIMARY KEY', 'TEXT', 'TEXT', 'TEXT', 'TEXT', 'INTEGER', 'REAL', 'REAL']
+    create_table(db_cursor, table_name, column_names, column_types)
+
+    insert_into_table_with_image_column(db_cursor, table_name, column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename'), dest_image_relative_dir)
+
+    connection.commit()
+
+    validate_table_exists(db_cursor, table_name)
+
+    log_result_info(db_cursor, table_name, verbose)
+
+    connection.commit()
+
 def build_transition_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir):
     xls_sheet = xls_book.sheet_by_index(sheet_index)
 
@@ -475,6 +533,57 @@ def build_db(src_xls_path, dest_db_path, dest_assets_relative_path, verbose, sto
     sheet_index = 0
 
     build_defibrilator_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir)
+
+  
+    sheet_index = 1
+
+    build_defibrilator_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir)
+
+   
+    sheet_index = 2
+    
+    build_defibrilator_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir)
+
+   
+    sheet_index = 3
+
+    build_defibrilator_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir)
+
+   
+    sheet_index = 4
+
+    build_defibrilator_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir)
+
+   
+    sheet_index = 5
+
+    build_defibrilator_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir)
+
+   
+    sheet_index = 6
+
+    build_defibrilator_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir)
+
+    
+    sheet_index = 7
+
+    build_defibrilator_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir)
+
+   
+    sheet_index = 8
+
+    build_defibrilator_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir)
+  
+   
+    sheet_index = 9
+
+    build_defibrilator_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir)
+
+    
+    sheet_index = 10
+
+    build_defibrilator_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir)
+    
 
     db_cursor.close()
     connection.close()
