@@ -137,7 +137,7 @@ def validate_category_text_field(xls_sheet, poi_columns, column_name, first_data
 
     return all_rows_validated
 
-def validate_required_text_field(xls_sheet, poi_columns, column_name, first_data_row_number, available_in_app_col_index):
+def validate_required_text_field(xls_sheet, poi_columns, column_name, first_data_row_number, available_in_app_col_index, allow_empty=False):
     column_index = poi_columns.index(column_name)
     all_rows_validated = True
     for row_num in range(first_data_row_number, xls_sheet.nrows):
@@ -148,6 +148,8 @@ def validate_required_text_field(xls_sheet, poi_columns, column_name, first_data
         text_value = xls_sheet.cell_value(row_num, column_index).encode('utf-8')
 
         if not text_value:
+            if allow_empty:
+                continue
             print ("empty cell found for required text field '%s', row %d " % (column_name, row_num))
             all_rows_validated = False
 
@@ -278,7 +280,8 @@ def collect_employee_table(xls_book, sheet_index, src_image_folder_path, verbose
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated name column values")
 
-    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'job_title', first_data_row_number, available_in_app_col_index)
+    allow_empty = True
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'job_title', first_data_row_number, available_in_app_col_index, allow_empty)
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated job_title column values")
 
@@ -286,7 +289,7 @@ def collect_employee_table(xls_book, sheet_index, src_image_folder_path, verbose
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated image_filename column values")
 
-    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'working_group', first_data_row_number, available_in_app_col_index)
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'working_group', first_data_row_number, available_in_app_col_index, allow_empty)
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated working_group column values")
 
