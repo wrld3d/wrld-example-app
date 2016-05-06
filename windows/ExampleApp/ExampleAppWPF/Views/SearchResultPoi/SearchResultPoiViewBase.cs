@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using System.Diagnostics;
 
 namespace ExampleAppWPF
 {
@@ -15,6 +16,7 @@ namespace ExampleAppWPF
         protected IntPtr m_nativeCallerPointer;
         protected MainWindow m_currentWindow;
         protected FrameworkElement m_mainContainer;
+        protected Button m_closeButton;
 
         protected bool m_closing;
 
@@ -65,9 +67,10 @@ namespace ExampleAppWPF
 
         public override void OnApplyTemplate()
         {
-            FrameworkElement closeButton = (FrameworkElement)GetTemplateChild("CloseButton");
+            m_closeButton = GetTemplateChild("CloseButton") as Button;
+            Debug.Assert(m_closeButton != null);
 
-            m_closeButtonClickHandler = new ControlClickHandler(HandleCloseButtonClicked, closeButton);
+            m_closeButton.Click += HandleCloseButtonClicked;
         }
 
         protected void HideAll()
@@ -113,7 +116,7 @@ namespace ExampleAppWPF
             m_isOpen = true;
         }
 
-        private void HandleCloseButtonClicked(object sender, MouseButtonEventArgs e)
+        private void HandleCloseButtonClicked(object sender, RoutedEventArgs e)
         {
             if (!m_closing)
             {
@@ -130,12 +133,7 @@ namespace ExampleAppWPF
         }
 
         public abstract void UpdateImageData(string url, bool hasImage, byte[] imgData);
-
-        private void HandleCloseClicked(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            ExampleApp.SearchResultPoiViewCLI.CloseButtonClicked(m_nativeCallerPointer);
-        }
-
+        
         protected static BitmapImage LoadImageFromByteArray(byte[] imageData)
         {
             if (imageData == null || imageData.Length == 0)
