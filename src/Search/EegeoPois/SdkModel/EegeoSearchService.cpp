@@ -7,7 +7,6 @@
 #include "IEegeoParser.h"
 #include "INetworkCapabilities.h"
 #include "SearchResultModel.h"
-#include "IAlertBoxFactory.h"
 
 namespace ExampleApp
 {
@@ -56,7 +55,7 @@ namespace ExampleApp
                     {
                         m_hasActiveQuery = false;
                         std::vector<Search::SdkModel::SearchResultModel> results;
-                        ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, results, true);
+                        ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, results);
                     }
                 }
                 
@@ -67,17 +66,17 @@ namespace ExampleApp
                     ExecuteQueryPerformedCallbacks(query);
                     if(m_networkCapabilities.StreamOverWifiOnly() && !m_networkCapabilities.ConnectedToWifi())
                     {
-                        ExecutQueryResponseReceivedCallbacks(query, std::vector<Search::SdkModel::SearchResultModel>(), false);
+                        ExecutQueryResponseReceivedCallbacks(query, std::vector<Search::SdkModel::SearchResultModel>());
                         return;
                     }
                     
                     m_currentQueryModel = query;
                     m_hasActiveQuery = true;
-
+                    
                     m_pCurrentRequest = m_eeGeoSearchQueryFactory.CreateEegeoSearchForQuery(m_currentQueryModel,
                                                                                                   m_searchCallback);
                 }
-
+                
                 void EegeoSearchService::PerformIdentitySearch(const Search::SdkModel::SearchResultModel& outdatedSearchResult,
                                                                   Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& callback)
                 {
@@ -93,11 +92,10 @@ namespace ExampleApp
                     {
                         const std::string& response(m_pCurrentRequest->ResponseString());
                         m_eeGeoParser.ParseEegeoQueryResults(response, queryResults);
-                     
                     }
                     
                     m_hasActiveQuery = false;
-                    ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, queryResults, m_pCurrentRequest->IsSucceeded());
+                    ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, queryResults);
                 }
                 
                 void EegeoSearchService::HandleNetworkCapabilitiesChanged()

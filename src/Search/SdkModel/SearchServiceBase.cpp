@@ -30,10 +30,9 @@ namespace ExampleApp
             }
 
             void SearchServiceBase::ExecutQueryResponseReceivedCallbacks(const SearchQuery& query,
-                    const std::vector<SearchResultModel>& results,
-                    const bool success)
+                    const std::vector<SearchResultModel>& results)
             {
-                m_queryResponseReceivedCallbacks.ExecuteCallbacks(query, results, success);
+                m_queryResponseReceivedCallbacks.ExecuteCallbacks(query, results);
             }
 
             void SearchServiceBase::InsertOnPerformedQueryCallback(Eegeo::Helpers::ICallback1<const SearchQuery&>& callback)
@@ -46,14 +45,14 @@ namespace ExampleApp
                 m_queryPerformedCallbacks.RemoveCallback(callback);
             }
 
-            void SearchServiceBase::InsertOnReceivedQueryResultsCallback(Eegeo::Helpers::ICallback3<const SearchQuery&,
-                    const std::vector<SearchResultModel>&, const bool& >& callback)
+            void SearchServiceBase::InsertOnReceivedQueryResultsCallback(Eegeo::Helpers::ICallback2<const SearchQuery&,
+                    const std::vector<SearchResultModel>& >& callback)
             {
                 m_queryResponseReceivedCallbacks.AddCallback(callback);
             }
 
-            void SearchServiceBase::RemoveOnReceivedQueryResultsCallback(Eegeo::Helpers::ICallback3<const SearchQuery&,
-                    const std::vector<SearchResultModel>&, const bool& >& callback)
+            void SearchServiceBase::RemoveOnReceivedQueryResultsCallback(Eegeo::Helpers::ICallback2<const SearchQuery&,
+                    const std::vector<SearchResultModel>& >& callback)
             {
                 m_queryResponseReceivedCallbacks.RemoveCallback(callback);
             }

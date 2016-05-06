@@ -13,8 +13,7 @@ namespace ExampleApp
             namespace SdkModel
             {
                 CombinedSearchServiceModule::CombinedSearchServiceModule(std::map<std::string, Search::SdkModel::ISearchServiceModule*> searchServiceModules,
-                                                                         Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                                                         Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory)
+                                                                         Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel)
                 : m_pSearchService(NULL)
                 {
                     std::map<std::string,Search::SdkModel::ISearchService*> searchServices;
@@ -26,7 +25,7 @@ namespace ExampleApp
                         m_categorySearchModels.insert(m_categorySearchModels.end(), categorySearchModels.begin(), categorySearchModels.end());
                     }
                     
-                    m_pSearchService = Eegeo_NEW(CombinedSearchService)(searchServices, interiorInteractionModel, alertBoxFactory);
+                    m_pSearchService = Eegeo_NEW(CombinedSearchService)(searchServices, interiorInteractionModel);
                 }
                 
                 CombinedSearchServiceModule::~CombinedSearchServiceModule()

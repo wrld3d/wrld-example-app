@@ -12,8 +12,6 @@
 #include "ICallback.h"
 #include "CategorySearchModel.h"
 #include "Interiors.h"
-#include "AlertBox.h"
-#include "ISingleOptionAlertBoxDismissedHandler.h"
 
 namespace ExampleApp
 {
@@ -29,8 +27,7 @@ namespace ExampleApp
                 public:
                     
                     CombinedSearchService(const std::map<std::string, Search::SdkModel::ISearchService*>& searchServices,
-                                          Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                          Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory);
+                                          Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel);
                     
                     ~CombinedSearchService();
                     
@@ -45,28 +42,22 @@ namespace ExampleApp
                     
                 private:
                     
-                    void OnSearchResponseRecieved(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results, const bool& success);
-                    void ShowFailureDialog();
-                    void HandleAlertDismissed();
+                    void OnSearchResponseRecieved(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results);
+                    
                     
                 private:
                     
                     std::map<std::string,Search::SdkModel::ISearchService*> m_searchServices;
                     
-                    Eegeo::Helpers::TCallback3<CombinedSearchService,
+                    Eegeo::Helpers::TCallback2<CombinedSearchService,
                                                const Search::SdkModel::SearchQuery&,
-                                               const std::vector<Search::SdkModel::SearchResultModel>&,
-                                               const bool&> m_searchQueryResponseCallback;
+                                               const std::vector<Search::SdkModel::SearchResultModel>&> m_searchQueryResponseCallback;
                     
                     int m_pendingResultsLeft;
                     std::vector<Search::SdkModel::SearchResultModel> m_combinedResults;
                     Search::SdkModel::SearchQuery m_currentQueryModel;
                     Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
-                    Eegeo::UI::NativeAlerts::IAlertBoxFactory& m_alertBoxFactory;
-                    Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<CombinedSearchService> m_alertBoxHandler;
-                    bool m_showAlertBoxNextFailure;
                     bool m_hasActiveQuery;
-                    bool m_anyRequestsFailed;
                     
                 };
             }

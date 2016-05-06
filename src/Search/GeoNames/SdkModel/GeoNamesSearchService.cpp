@@ -52,7 +52,7 @@ namespace ExampleApp
                     {
                         m_hasActiveQuery = false;
                         std::vector<Search::SdkModel::SearchResultModel> results;
-                        ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, results, true);
+                        ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, results);
                     }
                 }
                 
@@ -63,7 +63,7 @@ namespace ExampleApp
                     ExecuteQueryPerformedCallbacks(query);
                     if(m_currentQueryModel.IsCategory() || (m_networkCapabilities.StreamOverWifiOnly() && !m_networkCapabilities.ConnectedToWifi()))
                     {
-                        ExecutQueryResponseReceivedCallbacks(query, std::vector<Search::SdkModel::SearchResultModel>(), false);
+                        ExecutQueryResponseReceivedCallbacks(query, std::vector<Search::SdkModel::SearchResultModel>());
                         return;
                     }
                     
@@ -85,10 +85,8 @@ namespace ExampleApp
                 void GeoNamesSearchService::HandleSearchResponse()
                 {
                     std::vector<Search::SdkModel::SearchResultModel> queryResults;
-                    bool success = false;
                     if(m_pCurrentRequest != NULL && m_pCurrentRequest->IsSucceeded())  // Needs NULL check because callback can happen before factory returns query
                     {
-                        success = true;
                         const std::string& response(m_pCurrentRequest->ResponseString());
                         std::vector<GeoNamesSearchResultDto> geoNameResultDtos;
                         m_geoNamesParser.ParseGeoNamesQueryResults(response, geoNameResultDtos);
@@ -105,7 +103,7 @@ namespace ExampleApp
                     }
                     
                     m_hasActiveQuery = false;
-                    ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, queryResults, success);
+                    ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, queryResults);
                 }
             }
         }

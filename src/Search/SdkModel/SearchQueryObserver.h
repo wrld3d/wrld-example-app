@@ -23,12 +23,12 @@ namespace ExampleApp
                 ISearchQueryPerformer& m_searchQueryPerformer;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Helpers::TCallback1<SearchQueryObserver, const SearchQuery&> m_searchQueryPerformedCallback;
-                Eegeo::Helpers::TCallback3<SearchQueryObserver, const SearchQuery&, const std::vector<SearchResultModel>&, const bool&> m_searchQueryResponseCallback;
+                Eegeo::Helpers::TCallback2<SearchQueryObserver, const SearchQuery&, const std::vector<SearchResultModel>&> m_searchQueryResponseCallback;
                 Eegeo::Helpers::TCallback0<SearchQueryObserver> m_searchQueryResultsClearedCallback;
 
                 void HandleSearchQueryPerformed(const SearchQuery& query);
 
-                void HandleSearchQueryResponseReceived(const SearchQuery& query, const std::vector<SearchResultModel>& results, const bool& success);
+                void HandleSearchQueryResponseReceived(const SearchQuery& query, const std::vector<SearchResultModel>& results);
 
                 void HandleSearchQueryCleared();
 

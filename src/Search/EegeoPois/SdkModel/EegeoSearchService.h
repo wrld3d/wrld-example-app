@@ -30,7 +30,6 @@ namespace ExampleApp
                     IEegeoSearchQuery* m_pCurrentRequest;
                     bool m_hasActiveQuery;
                     Eegeo::Helpers::TCallback0<EegeoSearchService> m_networkCapabilitiesChangedHandler;
-
                     
                 public:
                     EegeoSearchService(IEegeoSearchQueryFactory& EegeoSearchQueryFactory,
