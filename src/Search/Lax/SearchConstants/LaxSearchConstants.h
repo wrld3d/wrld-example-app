@@ -34,7 +34,20 @@ namespace ExampleApp
                 
                 extern const std::string PERSON_CATEGORY_NAME;
                 extern const std::string MEETING_ROOM_CATEGORY_NAME;
+                
                 extern const std::string DEFIBRILLATOR_CATEGORY_NAME;
+                
+                extern const std::string FOOD_CATEGORY_NAME;
+                extern const std::string SHOPPING_CATEGORY_NAME;
+                extern const std::string ELEVATOR_CATEGORY_NAME;
+                extern const std::string STAIRS_CATEGORY_NAME;
+                extern const std::string ESCALATOR_CATEGORY_NAME;
+                extern const std::string RESTROOM_CATEGORY_NAME;
+                extern const std::string TDD_PAYPHONE_CATEGORY_NAME;
+                extern const std::string ATM_CATEGORY_NAME;
+                extern const std::string PAYPHONE_CATEGORY_NAME;
+                extern const std::string GATES_CATEGORY_NAME;
+                
                 
                 extern const std::string WORKING_GROUP_CATEGORY_NAME;
                 extern const std::string FACILITY_CATEGORY_NAME;
