@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using System.Diagnostics;
 
 namespace ExampleAppWPF
 {
@@ -66,7 +67,8 @@ namespace ExampleAppWPF
 
         public override void OnApplyTemplate()
         {
-            m_closeButton = (Button)GetTemplateChild("CloseButton");
+            m_closeButton = GetTemplateChild("CloseButton") as Button;
+            Debug.Assert(m_closeButton != null);
 
             m_closeButton.Click += HandleCloseButtonClicked;
         }
