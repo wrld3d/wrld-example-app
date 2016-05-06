@@ -151,6 +151,12 @@ set(resources ${resources}
 		Resources/compass_point_on.png
 		Resources/compass_point_on@2x.png
 		Resources/compass_point_on@3x.png
+		Resources/default_water_reflection_cube_map_negX.png
+		Resources/default_water_reflection_cube_map_negY.png
+		Resources/default_water_reflection_cube_map_negZ.png
+		Resources/default_water_reflection_cube_map_posX.png
+		Resources/default_water_reflection_cube_map_posY.png
+		Resources/default_water_reflection_cube_map_posZ.png
 		Resources/DejaVuSansBold.fnt
 		Resources/DejaVuSansBold_0.png
 		Resources/eegeo_logo.png
