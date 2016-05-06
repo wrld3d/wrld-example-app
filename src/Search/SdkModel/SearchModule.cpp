@@ -38,6 +38,7 @@ namespace ExampleApp
                                           interiorInteractionModel,
                                           1.f,
                                           100.f,
+                                          1100.f,
                                           50.f);
 
                 m_pSearchQueryObserver = Eegeo_NEW(SearchQueryObserver)(exteriorSearchService,

@@ -24,6 +24,7 @@ namespace ExampleApp
             {
                 const float m_minimumSecondsBetweenUpdates;
                 const float m_minimumInterestLateralDeltaAt1km;
+                const float m_minimumInteriorInterestLateralDelta;
                 const float m_maximumInterestLateralSpeedAt1km;
 
                 ISearchService& m_searchService;
@@ -54,6 +55,7 @@ namespace ExampleApp
                                      Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                      float minimumSecondsBetweenUpdates,
                                      float minimumInterestLateralDeltaAt1km,
+                                     float minimumInteriorInterestLateralDelta,
                                      float maximumInterestLateralSpeedAt1km);
 
                 ~SearchRefreshService();

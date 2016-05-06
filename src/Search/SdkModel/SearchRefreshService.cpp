@@ -23,9 +23,11 @@ namespace ExampleApp
                     Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                     float minimumSecondsBetweenUpdates,
                     float minimumInterestLateralDeltaAt1km,
+                    float minimumInteriorInterestLateralDelta,
                     float maximumInterestLateralSpeedAt1km)
                 : m_minimumSecondsBetweenUpdates(minimumSecondsBetweenUpdates)
                 , m_minimumInterestLateralDeltaAt1km(minimumInterestLateralDeltaAt1km)
+                , m_minimumInteriorInterestLateralDelta(minimumInteriorInterestLateralDelta)
                 , m_maximumInterestLateralSpeedAt1km(maximumInterestLateralSpeedAt1km)
                 , m_searchService(searchService)
                 , m_searchQueryPerformer(searchQueryPerformer)
@@ -119,7 +121,8 @@ namespace ExampleApp
                 }
                 
                 const double angularInterestDeltaFromQuery = (interestPointEcef - m_previousQueryLocationEcef).Length() / viewpointDistance;
-                const double minimumInterestLateralDeltaAngle = m_minimumInterestLateralDeltaAt1km * 0.001;
+                const double multiplier = 0.001;
+                const double minimumInterestLateralDeltaAngle = m_interiorInteractionModel.HasInteriorModel() ? m_minimumInteriorInterestLateralDelta * m_minimumInteriorInterestLateralDelta : m_minimumInterestLateralDeltaAt1km * multiplier;
 
                 const bool belowLateralThreshold = (angularInterestDeltaFromQuery < minimumInterestLateralDeltaAngle);
                 if (belowLateralThreshold)
