@@ -9,9 +9,42 @@ namespace ExampleAppWPF
         private ExampleApp.SearchResultModelCLI m_model;
 
         private Image m_categoryIcon;
+        private string m_title;
+        private string m_country;
 
-        public string Title { get; set; }
-        public string Country { get; set; }
+        public string Title
+        {
+            get
+            {
+                return m_title;
+            }
+
+            set
+            {
+                if (m_country != value)
+                {
+                    m_title = value;
+                    OnPropertyChanged("Title");
+                }
+            }
+        }
+
+        public string Country
+        {
+            get
+            {
+                return m_country;
+            }
+
+            set
+            {
+                if (m_country != value)
+                {
+                    m_country = value;
+                    OnPropertyChanged("Country");
+                }
+            }
+        }
         
         static GeoNamesSearchResultsPoiView()
         {
