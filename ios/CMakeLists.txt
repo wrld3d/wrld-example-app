@@ -7,8 +7,14 @@ if(NOT ${IOS})
 	message(FATAL_ERROR "Incorrect toolchain set: ${CMAKE_TOOLCHAIN_FILE}")
 endif(NOT ${IOS})
 
-project(ExampleApp)
-set(executable_name ExampleApp)
+if(NOT TARGET_NAME)
+  set(TARGET_NAME "ExampleApp")
+  message("Using default target: ${TARGET_NAME}")
+endif(NOT TARGET_NAME)
+
+
+project(${TARGET_NAME})
+set(executable_name ${TARGET_NAME})
 
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Include/eegeo/CMakeLists.txt")
   include("${CMAKE_CURRENT_SOURCE_DIR}/Include/eegeo/CMakeLists.txt")
