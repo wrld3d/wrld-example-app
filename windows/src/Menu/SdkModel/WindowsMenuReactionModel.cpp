@@ -10,35 +10,15 @@ namespace ExampleApp
         namespace View
         {
             WindowsMenuReactionModel::WindowsMenuReactionModel(bool menuClose,
-                                                               bool menuOpen,
-                                                               ExampleAppMessaging::TMessageBus& messageBus):
+                                                               bool menuOpen):
                   m_shouldCloseMenu(menuClose)
                 , m_shouldOpenMenu(menuOpen)
-                , m_messageBus(messageBus)
-                , m_poiOpenedHandler(this, &WindowsMenuReactionModel::OnSearchResultPoiViewOpenedMessage)
-                , m_poiClosedHandler(this, &WindowsMenuReactionModel::OnSearchResultPoiViewClosedMessage)
             {
-                m_messageBus.SubscribeNative(m_poiClosedHandler);
-                m_messageBus.SubscribeNative(m_poiOpenedHandler);
             }
 
 
             WindowsMenuReactionModel::~WindowsMenuReactionModel()
             {
-                m_messageBus.UnsubscribeNative(m_poiOpenedHandler);
-                m_messageBus.UnsubscribeNative(m_poiClosedHandler);
-            }
-
-            void WindowsMenuReactionModel::OnSearchResultPoiViewOpenedMessage(const ExampleApp::SearchResultPoi::SearchResultPoiViewOpenedMessage & message)
-            {
-                m_shouldCloseMenu = false;
-                m_shouldOpenMenu = false;
-            }
-
-            void WindowsMenuReactionModel::OnSearchResultPoiViewClosedMessage(const ExampleApp::SearchResultPoi::SearchResultPoiViewClosedMessage & message)
-            {
-                m_shouldCloseMenu = true;
-                m_shouldOpenMenu = true;
             }
 
             bool WindowsMenuReactionModel::GetShouldCloseMenu() const
