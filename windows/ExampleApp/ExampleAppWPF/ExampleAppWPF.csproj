@@ -273,7 +273,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\WinBuild\ExampleApp.vcxproj">
+    <ProjectReference Include="..\..\build\ExampleApp.vcxproj">
       <Project>{6483906b-8db8-4f77-8da7-68865f7a9135}</Project>
       <Name>ExampleApp</Name>
     </ProjectReference>
@@ -440,6 +440,9 @@
     <Resource Include="..\..\Resources\button_gallery_off.png">
       <Link>Assets\button_gallery_off.png</Link>
     </Resource>
+	<Resource Include="..\..\Resources\button_gallery_on.png">
+      <Link>Assets\button_gallery_on.png</Link>
+    </Resource>
     <Resource Include="..\..\Resources\image_blank.png">
       <Link>Assets\image_blank.png</Link>
     </Resource>
@@ -448,9 +451,6 @@
     </Resource>
     <Resource Include="..\..\Resources\button_close_on.png">
       <Link>Assets\button_close_on.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\button_ok_off.png">
-      <Link>Assets\button_ok_off.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\button_photo_off.png">
       <Link>Assets\button_photo_off.png</Link>
@@ -620,6 +620,16 @@
   <ItemGroup>
     <Resource Include="..\..\Resources\floor_selection_button_mouse_over.png">
       <Link>Assets\floor_selection_button_mouse_over.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\arrow1_over.png">
+      <Link>Assets\arrow1_over.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\CreatPIN_dialogue_Icon.png">
+      <Link>Assets\CreatPIN_dialogue_Icon.png</Link>
     </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

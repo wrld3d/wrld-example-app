@@ -17,15 +17,8 @@ namespace ExampleAppWPF
         private bool m_active;
         private double m_stateChangeAnimationTimeMilliseconds = 200;
 
-        private Image m_acceptButton;
-        private BitmapImage m_acceptButtonDown;
-        private BitmapImage m_acceptButtonUp;
-        private bool m_isAcceptButtonMouseDown = false;
-
-        private Image m_closeButton;
-        private BitmapImage m_closeButtonDown;
-        private BitmapImage m_closeButtonUp;
-        private bool m_isCloseButtonMouseDown = false;
+        private Button m_acceptButton;
+        private Button m_closeButton;
 
         private MainWindow m_currentWindow;
 
@@ -68,77 +61,25 @@ namespace ExampleAppWPF
 
         public override void OnApplyTemplate()
         {
-            m_acceptButton = GetTemplateChild("Ok") as Image;
+            m_acceptButton = GetTemplateChild("Ok") as Button;
             System.Diagnostics.Debug.Assert(m_acceptButton != null, "Ok Image not found in generic.xaml template");
 
-            m_closeButton = GetTemplateChild("Close") as Image;
+            m_closeButton = GetTemplateChild("Close") as Button;
             System.Diagnostics.Debug.Assert(m_closeButton != null, "Close Image not found in generic.xaml template");
 
-            m_acceptButton.MouseLeftButtonDown += OnAcceptClicked;
-            m_acceptButton.MouseLeftButtonUp += OnAcceptRelease;
-            m_acceptButton.MouseLeave += OnAcceptMouseLeave;
-            m_acceptButtonUp = new BitmapImage(ViewHelpers.MakeUriForImage("button_ok_place_pin_off.png"));
-            m_acceptButtonDown = new BitmapImage(ViewHelpers.MakeUriForImage("button_ok_place_pin_on.png"));
+            m_acceptButton.Click += OnAcceptClicked;
 
-            m_closeButton.MouseLeftButtonDown += OnCloseClicked;
-            m_closeButton.MouseLeftButtonUp += OnCloseRelease;
-            m_closeButton.MouseLeave += OnCloseMouseLeave;
-            m_closeButtonUp = new BitmapImage(ViewHelpers.MakeUriForImage("button_close_place_pin_off.png"));
-            m_closeButtonDown = new BitmapImage(ViewHelpers.MakeUriForImage("button_close_place_pin_on.png"));
+            m_closeButton.Click += OnCloseClicked;
         }
 
-        private void OnAcceptClicked(object sender, MouseButtonEventArgs e)
+        private void OnAcceptClicked(object sender, RoutedEventArgs e)
         {
-            m_isAcceptButtonMouseDown = true;
-            m_acceptButton.Source = m_acceptButtonDown;
+            ExampleApp.MyPinCreationViewCLIMethods.ConfirmationOkButtonPressed(m_nativeCallerPointer);
         }
 
-        private void OnAcceptMouseLeave(object sender, MouseEventArgs e)
+        private void OnCloseClicked(object sender, RoutedEventArgs e)
         {
-            if(m_isAcceptButtonMouseDown)
-            {
-                m_acceptButton.Source = m_acceptButtonUp;
-            }
-
-            m_isAcceptButtonMouseDown = false;
-        }
-
-        private void OnAcceptRelease(object sender, MouseButtonEventArgs e)
-        {
-            if(m_isAcceptButtonMouseDown)
-            {
-                ExampleApp.MyPinCreationViewCLIMethods.ConfirmationOkButtonPressed(m_nativeCallerPointer);
-                m_acceptButton.Source = m_acceptButtonUp;
-            }
-
-            m_isAcceptButtonMouseDown = false;
-        }
-
-        private void OnCloseClicked(object sender, MouseButtonEventArgs e)
-        {
-            m_isCloseButtonMouseDown = true;
-            m_closeButton.Source = m_closeButtonDown;
-        }
-
-        private void OnCloseRelease(object sender, MouseButtonEventArgs e)
-        {
-            if (m_isCloseButtonMouseDown)
-            {
-                ExampleApp.MyPinCreationViewCLIMethods.ConfirmationCancelButtonPressed(m_nativeCallerPointer);
-                m_closeButton.Source = m_closeButtonUp;
-            }
-
-            m_isCloseButtonMouseDown = false;
-        }
-
-        private void OnCloseMouseLeave(object sender, MouseEventArgs e)
-        {
-            if(m_isCloseButtonMouseDown)
-            {
-                m_closeButton.Source = m_closeButtonUp;
-            }
-
-            m_isCloseButtonMouseDown = false;
+            ExampleApp.MyPinCreationViewCLIMethods.ConfirmationCancelButtonPressed(m_nativeCallerPointer);
         }
 
         public void Destroy()

@@ -22,9 +22,8 @@ namespace ExampleAppWPF
         private TextBlock m_descriptHeader = null;
         private TextBlock m_imageHeader = null;
         private Image m_imageView = null;
-
-        private ControlClickHandler m_deleteButtonClickHandler = null;
-        private ControlClickHandler m_closeButtonClickHandler = null;
+        private Button m_closeButton = null;
+        private Button m_removeButton = null;
 
         private float m_imageWidth;
 
@@ -45,6 +44,9 @@ namespace ExampleAppWPF
 
         void Destroy()
         {
+            m_removeButton.Click -= OnDeleteClicked;
+            m_closeButton.Click -= OnCloseClicked;
+
             m_currentWindow.MainGrid.Children.Remove(this);
         }
 
@@ -62,14 +64,14 @@ namespace ExampleAppWPF
             m_imageView = (Image)CheckAndGetProperty("Image");
             m_imageHeader = (TextBlock)CheckAndGetProperty("ImageHeader");
             
-            Image deleteButton = (Image)CheckAndGetProperty("RemovePin");
-            Image closeButton = (Image)CheckAndGetProperty("Close");
-            
-            m_deleteButtonClickHandler = new ControlClickHandler(deleteButton, OnDeleteClicked);
-            m_closeButtonClickHandler = new ControlClickHandler(closeButton, OnCloseClicked);
+            m_removeButton = (Button)CheckAndGetProperty("RemovePIN");
+            m_closeButton = (Button)CheckAndGetProperty("Close");
+
+            m_removeButton.Click += OnDeleteClicked;
+            m_closeButton.Click += OnCloseClicked;
         }
 
-        private void OnDeleteClicked(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void OnDeleteClicked(object sender, RoutedEventArgs e)
         {
             if (ShowRemovePinDialog() == true)
             {
@@ -77,7 +79,7 @@ namespace ExampleAppWPF
             }
         }
 
-        private void OnCloseClicked(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void OnCloseClicked(object sender, RoutedEventArgs e)
         {
             ExampleApp.MyPinDetailsViewCLI.CloseButtonClicked(m_nativeCallerPointer);
         }
@@ -97,6 +99,8 @@ namespace ExampleAppWPF
                 if(src != null)
                 {
                     m_imageView.Source = src;
+                    m_imageHeader.Visibility = Visibility.Visible;
+                    m_imageView.Visibility = Visibility.Visible;
                 }
                 else
                 {

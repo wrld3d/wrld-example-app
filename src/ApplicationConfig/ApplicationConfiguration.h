@@ -21,6 +21,8 @@ namespace ExampleApp
             std::string m_productVersion;
             std::string m_buildNumber;
             std::string m_combinedVersionString;
+            std::string m_coverageTreeManifestURL;
+            std::string m_themeManifestURL;
             
         public:
             
@@ -32,7 +34,9 @@ namespace ExampleApp
                                      const std::string& googleAnalyticsReferrerToken,
                                      const std::string& productVersion,
                                      const std::string& buildNumber,
-                                     const std::string& combinedVersionString);
+                                     const std::string& combinedVersionString,
+                                     const std::string& coverageTreeManifestURL,
+                                     const std::string& themeManifestURL);
             
             const std::string& Name() const;
             
@@ -51,6 +55,10 @@ namespace ExampleApp
             const std::string& BuildNumber() const;
             
             const std::string& CombinedVersionString() const;
+
+            const std::string& ThemeManifestURL() const;
+
+            const std::string& CoverageTreeManifestURL() const;
         };
     }
 }

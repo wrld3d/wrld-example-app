@@ -6,6 +6,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Diagnostics;
+using System.Collections;
 
 namespace ExampleAppWPF
 {
@@ -18,8 +20,9 @@ namespace ExampleAppWPF
         private Dictionary<string, int> m_animatedSizesMap;
         private bool m_shouldAlignIconRight;
 
-        private StoryboardRunner m_fadeInStoryboardRunner;
-        private StoryboardRunner m_fadeOutStoryboardRunner;
+        private StoryboardRunner m_itemShutterOpenStoryboardRunner;
+        private StoryboardRunner m_itemShutterCloseStoryboardRunner;
+        
         private StoryboardRunner m_slideInStoryboardRunner;
         private StoryboardRunner m_slideOutStoryboardRunner;
 
@@ -27,8 +30,19 @@ namespace ExampleAppWPF
 
         private readonly string ControlToAnimate;
 
+        private ObservableCollection<MenuListItem> m_children;
+
+        public ObservableCollection<MenuListItem> Children
+        {
+            get
+            {
+                return m_children;
+            }
+        }
+
+
         public MenuListAdapter(bool shouldAlignIconRight, ListBox list,
-            Storyboard slideInAnimation, Storyboard slideOutAnimation, Storyboard fadeInItemAnimation, Storyboard fadeOutItemAnimation, string controlToAnimate)
+            Storyboard slideInAnimation, Storyboard slideOutAnimation, Storyboard itemShutterOpenAnimation, Storyboard itemShutterCloseAnimation, string controlToAnimate)
         {   
             m_animatedSizesMap = new Dictionary<string, int>();
 
@@ -41,8 +55,9 @@ namespace ExampleAppWPF
 
             m_list = list;
 
-            m_fadeInStoryboardRunner = new StoryboardRunner(fadeInItemAnimation);
-            m_fadeOutStoryboardRunner = new StoryboardRunner(fadeOutItemAnimation);
+            m_itemShutterOpenStoryboardRunner = new StoryboardRunner(itemShutterOpenAnimation);
+            m_itemShutterCloseStoryboardRunner = new StoryboardRunner(itemShutterCloseAnimation);
+
             m_slideInStoryboardRunner = new StoryboardRunner(slideInAnimation);
             m_slideOutStoryboardRunner = new StoryboardRunner(slideOutAnimation);
 
@@ -51,8 +66,8 @@ namespace ExampleAppWPF
 
         public bool IsAnimating()
         {
-            return m_fadeInStoryboardRunner.IsAnimating ||
-                m_fadeOutStoryboardRunner.IsAnimating ||
+            return m_itemShutterOpenStoryboardRunner.IsAnimating ||
+                m_itemShutterCloseStoryboardRunner.IsAnimating ||
                 m_slideInStoryboardRunner.IsAnimating ||
                 m_slideOutStoryboardRunner.IsAnimating;
         }
@@ -66,23 +81,31 @@ namespace ExampleAppWPF
             m_groupToChildrenMap.Clear();
 
             m_children.Clear();
+
+            m_list.DataContext = null;
+            m_list.ItemsSource = null;
+
+            m_list.UpdateLayout();
         }
 
         public void SetData(
+            IEnumerable itemsSource,
             List<string> groups,
             List<bool> groupsExpandable,
             Dictionary<string, List<string>> groupToChildren)
         {
-            if (m_groups.Count != groups.Count)
+            if (m_list.ItemsSource != itemsSource)
             {
-                UpdateSources(groups, groupsExpandable, groupToChildren);
-                ForceSetAnimatedSizes();
-                NotifyDataSetChanged();
+                ResetData();
+                m_list.ItemsSource = itemsSource;
+                AnimateItemsInShutterOnly(groups, groupsExpandable, groupToChildren, 0, m_list.Items.Count);
             }
             else
             {
-                UpdateAndAnimateSources(groups, groupsExpandable, groupToChildren);
+            UpdateAndAnimateSources(groups, groupsExpandable, groupToChildren);
             }
+
+            m_list.DataContext = this;
         }
 
         public void UpdateSources(
@@ -93,17 +116,35 @@ namespace ExampleAppWPF
             m_groups = groups;
             m_groupsExpandable = groupsExpandable;
             m_groupToChildrenMap = groupToChildren;
+
+            ForceSetAnimatedSizes();
+            NotifyDataSetChanged();
+            m_list.UpdateLayout();
         }
 
-        public void ForceSetAnimatedSizes()
+        public Tuple<int, int> GetSectionAndChildIndicesFromSelection(int selectedIndex)
         {
+            int sectionIndex = GetSectionIndex(selectedIndex);
+            int childIndex = GetItemIndex(selectedIndex);
+            return Tuple.Create(sectionIndex, childIndex);
+        }
+
+        public void CollapseAndClearAll()
+        {
+            SetData(m_list.ItemsSource, new List<string>(), new List<bool>(), new Dictionary<string, List<string>>());
+        }
+
+        private void ForceSetAnimatedSizes()
+        {
+            m_animatedSizesMap.Clear();
             for (int groupIndex = 0; groupIndex < m_groups.Count; groupIndex++)
             {
                 var key = m_groups[groupIndex];
                 m_animatedSizesMap[key] = m_groupToChildrenMap[key].Count;
             }
         }
-        public void SetAnimatedGroupSize(string groupName, int size)
+
+        private void SetAnimatedGroupSize(string groupName, int size)
         {
             if (!m_animatedSizesMap.ContainsKey(groupName))
             {
@@ -119,7 +160,7 @@ namespace ExampleAppWPF
                 NotifyDataSetChanged();
             }
         }
-        public void NotifyDataSetChanged()
+        private void NotifyDataSetChanged()
         {
             m_children.Clear();
             int overAllItemIndex = 0;
@@ -168,35 +209,6 @@ namespace ExampleAppWPF
             return controls;
         }
 
-        public void CollapseAndClearAll()
-        {
-            var items = GetListBoxItemsInRange(0, m_list.Items.Count);
-
-            if(items.Count <= 0)
-            {
-                return;
-            }
-
-            var controls = ChildStackPanelsFor(items);
-
-            m_slideOutStoryboardRunner.AllCompleted += OnClearAllAnimsComplete;
-
-            m_fadeOutStoryboardRunner.Begin(controls);
-            m_slideOutStoryboardRunner.Begin(items);
-
-            m_children.Clear();
-        }
-
-        private void OnClearAllAnimsComplete()
-        {
-            ResetData();
-
-            m_list.DataContext = null;
-            m_list.ItemsSource = null;
-
-            m_slideOutStoryboardRunner.AllCompleted -= OnClearAllAnimsComplete;
-        }
-
         private DependencyObject FindChildControl<T>(DependencyObject control, string name)
         {
             var numChildren = VisualTreeHelper.GetChildrenCount(control);
@@ -226,85 +238,154 @@ namespace ExampleAppWPF
             return null;
         }
 
-        public void UpdateAndAnimateSources(
+        private void UpdateAndAnimateSources(
             List<string> groups,
             List<bool> groupsExpandable,
             Dictionary<string, List<string>> groupToChildren)
         {
-            bool anySizeChanges = false;
-
-            // Check each group to see if it has changed in size.
-            for (int i = 0; i < m_groups.Count; i++)
+            if (m_groups.Count == groups.Count)
             {
-                int groupIndex = i;
-                string groupName = m_groups[groupIndex];
-                int currentSize = m_groupToChildrenMap[groupName].Count;
+                var currentChildCounts = CalcChildCountsForGroups(m_groupToChildrenMap);
+                var newChildCounts = CalcChildCountsForGroups(groupToChildren);
+                var groupIndex = IndexOfFirstDifference(currentChildCounts, newChildCounts);
 
-                if (!groupToChildren.ContainsKey(groupName))
+                var differenceFound = groupIndex >= 0;
+
+                if (differenceFound)
                 {
-                    throw new ArgumentException("New data source missing group '" + groupName + "'. Cannot animate sizes!");
-                }
-                int targetSize = groupToChildren[groupName].Count;
+                    var currentChildCount = currentChildCounts[groupIndex];
+                    var newChildCount = newChildCounts[groupIndex];
+                    
+                    var startIndex = CalcFirstChildIndex(groupIndex);
+                    var itemCount = Math.Abs(newChildCount - currentChildCount);
 
-                if (currentSize == targetSize)
-                {
-                    continue;
-                }
-
-                anySizeChanges = true;
-
-                // If contracting, update sources at the end of the animation, otherwise update it at the beginning.
-                if (targetSize < currentSize)
-                {
-                    int groupStart = GetViewIndexForGroupIndex(groupIndex);
-
-                    var listener = new MenuDelayedSourceUpdateAnimatorListener(groups, groupsExpandable, groupToChildren, this);
-                    m_fadeOutStoryboardRunner.AllCompleted += listener.OnCompleted;
-
-                    var items = GetListBoxItemsInRange(groupStart + targetSize, currentSize - targetSize);
-                    var controls = ChildStackPanelsFor(items);
-
-                    m_slideOutStoryboardRunner.Begin(items);
-                    m_fadeOutStoryboardRunner.Begin(controls);                    
-                }
-                else
-                {
-                    UpdateSources(groups, groupsExpandable, groupToChildren);
-                    ForceSetAnimatedSizes();
-                    NotifyDataSetChanged();
-
-                    m_list.UpdateLayout();
-                    int groupStart = GetViewIndexForGroupIndex(groupIndex);
-
-                    var items = GetListBoxItemsInRange(groupStart + currentSize, targetSize - currentSize);
-                    var controls = ChildStackPanelsFor(items);
-
-                    m_slideInStoryboardRunner.Begin(items);
-                    m_fadeInStoryboardRunner.Begin(controls);                    
+                    var expanding = (newChildCount > currentChildCount);
+                    if (expanding)
+                    {
+                        AnimateItemsIn(groups, groupsExpandable, groupToChildren, startIndex, itemCount);
+                    }
+                    else
+                    {
+                        AnimateItemsOut(groups, groupsExpandable, groupToChildren, startIndex, itemCount);
+                    }
+                    return;
                 }
             }
 
-            // If there were no size changes, don't animate anything and just refresh the data sources.
-            if (!anySizeChanges)
+            if (groups.Count >= m_groups.Count)
             {
-                UpdateSources(groups, groupsExpandable, groupToChildren);
-                ForceSetAnimatedSizes();
-                NotifyDataSetChanged();
+                AnimateItemsIn(groups, groupsExpandable, groupToChildren, m_groups.Count, groups.Count - m_groups.Count);
             }
+            else
+            {
+                AnimateItemsOut(groups, groupsExpandable, groupToChildren, groups.Count, m_groups.Count - groups.Count);
+            }
+
         }
 
-        public int GetCount()
+        private List<int> CalcChildCountsForGroups(Dictionary<string, List<string>> groupToChildrenMap)
         {
-            int count = 0;
-            for (int groupIndex = 0; groupIndex < m_groups.Count; groupIndex++)
-            {
-                string key = m_groups[groupIndex];
-                count += m_animatedSizesMap[key];
-            }
-            return count;
+            var childCounts = m_groups
+                .Select(_key => groupToChildrenMap.ContainsKey(_key) ? groupToChildrenMap[_key].Count : 0)
+                .ToList();
+            return childCounts;
         }
 
-        public object GetItem(int index)
+        private int IndexOfFirstDifference(IList<int> a, IList<int> b)
+        {
+            Debug.Assert(a.Count == b.Count);
+            for (var i = 0; i < a.Count; ++i)
+            {
+                if (a[i] != b[i])
+                    return i;
+            }
+            return -1;
+        }
+
+        private int CalcFirstChildIndex(int groupIndex)
+        {
+            var elementIndexOfGroup = m_groups
+                .Take(groupIndex)
+                .Sum(_key => m_groupToChildrenMap[_key].Count);
+
+            return elementIndexOfGroup + 1;
+        }
+
+        private void AnimateItemsIn(
+            List<string> groups,
+            List<bool> groupsExpandable,
+            Dictionary<string, List<string>> groupToChildren,
+            int startIndex,
+            int itemCount)
+        {
+            UpdateSources(groups, groupsExpandable, groupToChildren);
+
+            var itemsToAnimate = GetListBoxItemsInRange(startIndex, itemCount);
+
+            if (itemsToAnimate.Any())
+            {
+                var controls = ChildStackPanelsFor(itemsToAnimate);
+
+                m_slideInStoryboardRunner.Begin(itemsToAnimate);
+                m_itemShutterOpenStoryboardRunner.Begin(controls);
+            }
+        }
+
+        private void AnimateItemsOut(
+            List<string> groups,
+            List<bool> groupsExpandable,
+            Dictionary<string, List<string>> groupToChildren,
+            int startIndex,
+            int itemCount)
+        {
+            m_list.UpdateLayout();
+            var itemsToAnimate = GetListBoxItemsInRange(startIndex, itemCount);
+
+            var parentGroupIndex = startIndex - 1;
+
+            //animate out header for current group
+            if (parentGroupIndex >= 0 && parentGroupIndex < m_children.Count)
+            {
+                m_children[parentGroupIndex].IsExpanded = false;
+            }
+
+            if (itemsToAnimate.Any())
+            {
+                var menuDelayedSourceUpdateAnimatorListener = new MenuDelayedSourceUpdateAnimatorListener(groups, groupsExpandable, groupToChildren, this);
+                var controls = ChildStackPanelsFor(itemsToAnimate);
+                m_slideOutStoryboardRunner.AllCompleted += menuDelayedSourceUpdateAnimatorListener.OnCompleted;
+                m_slideOutStoryboardRunner.Begin(itemsToAnimate);
+                m_itemShutterCloseStoryboardRunner.Begin(controls);
+            }
+        }
+
+        private void AnimateItemsInShutterOnly(
+            List<string> groups,
+            List<bool> groupsExpandable,
+            Dictionary<string, List<string>> groupToChildren,
+            int startIndex,
+            int itemCount)
+        {
+            UpdateSources(groups, groupsExpandable, groupToChildren);
+
+            var itemsToAnimate = GetListBoxItemsInRange(startIndex, itemCount);
+
+            if (itemsToAnimate.Any())
+            {
+                var controls = ChildStackPanelsFor(itemsToAnimate);
+
+                foreach (var item in itemsToAnimate)
+                {
+                    var thickness = new Thickness(0, 0, 0, 0);
+                    item.Margin = thickness;
+                }
+
+                m_itemShutterOpenStoryboardRunner.Begin(controls);
+            }
+        }
+
+
+        private object GetItem(int index)
         {
             int count = 0;
             for (int groupIndex = 0; groupIndex < m_groups.Count; groupIndex++)
@@ -328,11 +409,8 @@ namespace ExampleAppWPF
             }
             return "";
         }
-        public long GetItemId(int index)
-        {
-            return index;
-        }
-        public int GetSectionIndex(int index)
+
+        private int GetSectionIndex(int index)
         {
             int count = 0;
             for (int groupIndex = 0; groupIndex < m_groups.Count; groupIndex++)
@@ -351,7 +429,7 @@ namespace ExampleAppWPF
             return -1;
         }
 
-        public int GetItemIndex(int index)
+        private int GetItemIndex(int index)
         {
             int count = 0;
             for (int groupIndex = 0; groupIndex < m_groups.Count; groupIndex++)
@@ -382,7 +460,7 @@ namespace ExampleAppWPF
             return placeInGroup == 0;
         }
 
-        public MenuListItem GetMenuItem(int index)
+        private MenuListItem GetMenuItem(int index)
         {
             string json = (string)GetItem(index);
             bool isHeader = IsHeader(index);
@@ -434,7 +512,7 @@ namespace ExampleAppWPF
             return -1;
         }
 
-        public int GetPlaceInGroup(int index)
+        private int GetPlaceInGroup(int index)
         {
             int count = 0;
             for (int groupIndex = 0; groupIndex < m_groups.Count; groupIndex++)
@@ -450,16 +528,6 @@ namespace ExampleAppWPF
                 }
             }
             return 0;
-        }
-
-        private ObservableCollection<MenuListItem> m_children;
-
-        public ObservableCollection<MenuListItem> Children
-        {
-            get
-            {
-                return m_children;
-            }
         }
     }
 }

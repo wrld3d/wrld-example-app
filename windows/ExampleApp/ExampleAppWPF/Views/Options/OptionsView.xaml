@@ -61,11 +61,9 @@
                                         </StackPanel>
                                     </ScrollViewer>
                                 </Border>
-                                <Button Name="OptionsViewCloseButton" Style="{StaticResource TransparentButtonStyle}">
-                                    <Border BorderBrush="{x:Null}" Background="{StaticResource Gold}">
-                                        <Image Source="/Assets/button_close_off.png" Width="48" Height="48" HorizontalAlignment="Right"/>
-                                    </Border>
-                                </Button>
+                                <Border BorderBrush="{x:Null}" Background="{StaticResource Gold}">
+                                    <Button Name="OptionsViewCloseButton" Style="{StaticResource CancelPINbutton}" Width="60" Height="60" HorizontalAlignment="Right"/>
+                                </Border>
                             </StackPanel>
                         </Grid>
                     </Grid>

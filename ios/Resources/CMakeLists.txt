@@ -461,5 +461,11 @@ set(resources ${resources}
 		Resources/floor_selection_button.png
 		Resources/floor_selection_button@2x.png
 		Resources/floor_selection_button@3x.png
+		Resources/default_water_reflection_cube_map_negX.png
+		Resources/default_water_reflection_cube_map_negY.png
+		Resources/default_water_reflection_cube_map_negZ.png
+		Resources/default_water_reflection_cube_map_posX.png
+		Resources/default_water_reflection_cube_map_posY.png
+		Resources/default_water_reflection_cube_map_posZ.png
 		ExampleApp/Images.xcassets
 )

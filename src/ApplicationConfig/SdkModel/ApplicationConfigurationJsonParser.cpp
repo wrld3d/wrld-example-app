@@ -4,6 +4,7 @@
 #include "ApplicationConfigurationJsonParser.h"
 #include "IApplicationConfigurationBuilder.h"
 #include "MathFunc.h"
+#include "ConfigSections.h"
 
 namespace ExampleApp
 {
@@ -45,6 +46,16 @@ namespace ExampleApp
                 
                 Eegeo_ASSERT(document.HasMember("GoogleAnalyticsReferrerToken"));
                 m_builder.SetGoogleAnalyticsReferrerToken(document["GoogleAnalyticsReferrerToken"].GetString());
+
+                if (document.HasMember("CoverageTreeManifestURL"))
+                {
+                    m_builder.SetCoverageTreeManifestURL(document["CoverageTreeManifestURL"].GetString());
+                }
+                
+                if (document.HasMember("ThemeManifestURL"))
+                {
+                    m_builder.SetThemeManifestURL(document["ThemeManifestURL"].GetString());
+                }
                 
                 return m_builder.Build();
             }

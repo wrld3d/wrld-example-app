@@ -7,8 +7,14 @@ if(NOT ${IOS})
 	message(FATAL_ERROR "Incorrect toolchain set: ${CMAKE_TOOLCHAIN_FILE}")
 endif(NOT ${IOS})
 
-project(ExampleApp)
-set(executable_name ExampleApp)
+if(NOT TARGET_NAME)
+  set(TARGET_NAME "ExampleApp")
+  message("Using default target: ${TARGET_NAME}")
+endif(NOT TARGET_NAME)
+
+
+project(${TARGET_NAME})
+set(executable_name ${TARGET_NAME})
 
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Include/eegeo/CMakeLists.txt")
   include("${CMAKE_CURRENT_SOURCE_DIR}/Include/eegeo/CMakeLists.txt")
@@ -27,7 +33,7 @@ set(storyboards
 
 # plist settings
 set(EEGEO_PLIST_BUNDLE_EXECUTABLE "\${EXECUTABLE_NAME}")
-set(EEGEO_PLIST_BUNDLE_IDENTIFIER "eegeo.\${PRODUCT_NAME:rfc1034identifier}")
+set(EEGEO_PLIST_BUNDLE_IDENTIFIER "com.eegeo.\${PRODUCT_NAME:rfc1034identifier}")
 set(EEGEO_PLIST_BUNDLE_SHORT_VERSION_STRING "\${PRODUCT_VERSION}")
 set(EEGEO_PLIST_BUNDLE_DISPLAY_NAME "Eegeo Example")
 
@@ -94,6 +100,7 @@ set_xcode_property (${executable_name} CODE_SIGN_IDENTITY "iPhone Developer")
 set_xcode_property (${executable_name} IPHONEOS_DEPLOYMENT_TARGET "5.0")
 set_xcode_property (${executable_name} TARGETED_DEVICE_FAMILY "1,2")
 set_xcode_property (${executable_name} ENABLE_BITCODE "No")
+set_xcode_property (${executable_name} INSTALL_PATH "/Applications")
 
 set_xcode_property (${executable_name} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon")
 set_xcode_property (${executable_name} ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME "LaunchImage")
@@ -112,5 +119,6 @@ else(${COMPILE_CPP_03})
   set_xcode_property(${executable_name} CLANG_CXX_LIBRARY "libc++")
 endif(${COMPILE_CPP_03})
 
-set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH "NO")
+set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH "YES")
 set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/build/Debug-iphoneos/ RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/build/Release-iphoneos/)
+

@@ -20,8 +20,9 @@ namespace ExampleAppWPF
         private MainWindow m_currentWindow;
         
         protected Image m_takePhotoButton = null;
-        protected Image m_selectFromGalleryButton = null;
-        protected Image m_submitButton = null;
+        protected Button m_selectFromGalleryButton = null;
+        protected Button m_submitButton = null;
+        protected Button m_closeButton = null;
         protected Image m_poiImage = null;
         protected TextBox m_title = null;
         protected TextBox m_description = null;
@@ -29,13 +30,8 @@ namespace ExampleAppWPF
         protected TextBlock m_termsAndConditionsLink = null;
         protected ScrollViewer m_scrollSection = null;
 
-        private ControlClickHandler m_closeButtonClickHandler = null;
-        private ControlClickHandler m_uploadButtonClickHandler = null;
-
         private byte[] m_imageBuffer = null;
         private Uri m_currentImageUri = null;
-
-        private bool m_acceptButtonMouseDown = false;
 
         private int JPEG_QUALITY = 90;
         private string TERMS_AND_CONDITIONS_LINK = "http://eegeo.com/tos";
@@ -61,6 +57,11 @@ namespace ExampleAppWPF
 
         void Destroy()
         {
+            m_closeButton.Click -= OnCloseClick;
+            m_selectFromGalleryButton.Click -= OnSelectFromGalleryClick;
+            m_submitButton.Click -= OnSubmitClick;
+            m_tosLink.Click -= OnHyperlinkClick;
+
             m_currentWindow.MainGrid.Children.Remove(this);
         }
 
@@ -76,22 +77,17 @@ namespace ExampleAppWPF
             m_title = CheckAndGetProperty("TitleBox") as TextBox;
             m_description = CheckAndGetProperty("DescBox") as TextBox;
             m_shouldShareButton = CheckAndGetProperty("ToShare") as CheckBox;
-            m_submitButton = CheckAndGetProperty("ConfirmButton") as Image;
-            m_selectFromGalleryButton = CheckAndGetProperty("OpenGalleryButton") as Image;
+            m_submitButton = CheckAndGetProperty("ConfirmButton") as Button;
+            m_selectFromGalleryButton = CheckAndGetProperty("AddImageButton") as Button;
             m_poiImage = CheckAndGetProperty("SelectedImage") as Image;
             m_tosLink = CheckAndGetProperty("TermsLink") as System.Windows.Documents.Hyperlink;
 
             m_prevSource = m_poiImage.Source;
-            m_poiImage.Stretch = Stretch.Uniform;
             
-            m_submitButton.MouseLeftButtonDown += OnSubmitClick;
-            m_submitButton.MouseLeftButtonUp += OnSubmitClick;
-
-            Image closeButton = CheckAndGetProperty("CloseButton") as Image;
-            m_closeButtonClickHandler = new ControlClickHandler(closeButton, OnCloseClick);
-
-            m_uploadButtonClickHandler = new ControlClickHandler(m_selectFromGalleryButton, OnSelectFromGalleryClick);
-
+            m_closeButton = CheckAndGetProperty("CloseButton") as Button;
+            m_closeButton.Click += OnCloseClick;
+            m_selectFromGalleryButton.Click += OnSelectFromGalleryClick;
+            m_submitButton.Click += OnSubmitClick;
             m_tosLink.Click += OnHyperlinkClick;
         }
 
@@ -101,7 +97,7 @@ namespace ExampleAppWPF
             e.Handled = true;
         }
 
-        private void OnSelectFromGalleryClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void OnSelectFromGalleryClick(object sender, RoutedEventArgs e)
         {
             System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
 
@@ -123,25 +119,20 @@ namespace ExampleAppWPF
                     m_imageBuffer = null;
                     return;
                 }
+                catch(NotSupportedException ex)
+                {
+                    m_imageBuffer = null;
+                    return;
+                }
             }
         }
 
-        private void OnSubmitClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void OnSubmitClick(object sender, RoutedEventArgs e)
         {
-            if (e.ButtonState == System.Windows.Input.MouseButtonState.Pressed)
-            {
-                m_acceptButtonMouseDown = true;
-                return;
-            }
-            else if (e.ButtonState == System.Windows.Input.MouseButtonState.Released && m_acceptButtonMouseDown)
-            {
-                ExampleApp.MyPinCreationDetailsViewCLI.SubmitButtonpressed(m_nativeCallerPointer);
-            }
-
-            m_acceptButtonMouseDown = false;
+            ExampleApp.MyPinCreationDetailsViewCLI.SubmitButtonpressed(m_nativeCallerPointer);
         }
 
-        private void OnCloseClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void OnCloseClick(object sender, RoutedEventArgs e)
         {
             ExampleApp.MyPinCreationDetailsViewCLI.CloseButtonPressed(m_nativeCallerPointer);
         }
@@ -155,6 +146,7 @@ namespace ExampleAppWPF
             m_description.Text = string.Empty;
             m_shouldShareButton.IsChecked = false;
             m_poiImage.Source = m_prevSource;
+            m_imageBuffer = null;
         }
 
         public void Dismiss()
