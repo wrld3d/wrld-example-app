@@ -284,6 +284,24 @@
       <Component Id="cmpcuFABxmucOrHFpz_DGi..cjNxm8" Directory="RESOURCEFOLDER" Guid="{F5EF6291-5801-42F5-B337-0BD6985E892E}">
         <File Id="fil4gXO9GVSOORpLQxF9gsmwUsnxxo" KeyPath="yes" Source="payload\Resources\CreatPIN_dialogue_Icon.png" />
       </Component>
+      <Component Id="cmpE8416A615D6190FF0BEEFC1ABCCD5FC4" Directory="RESOURCEFOLDER" Guid="{C7E6173D-4F4C-4632-8FF3-726651554B20}">
+        <File Id="filFE83AC4A270511CAA06BBDD8214CC725" KeyPath="yes" Source="payload\Resources\default_water_reflection_cube_map_negX.png" />
+      </Component>
+      <Component Id="cmpC19C7FF07C16D994313D90F8BAD1E1A1" Directory="RESOURCEFOLDER" Guid="{D6F0797B-1267-4F01-A959-B011FD28654E}">
+        <File Id="fil4C401A648C75D63236EB53A659A5132E" KeyPath="yes" Source="payload\Resources\default_water_reflection_cube_map_negY.png" />
+      </Component>
+      <Component Id="cmpB825BA2BDF9FD5329C9C5BF340952D75" Directory="RESOURCEFOLDER" Guid="{BB5A5526-B884-43A6-817A-F607513291EF}">
+        <File Id="fil1713F3204101DF03A6B19B991E44FA3F" KeyPath="yes" Source="payload\Resources\default_water_reflection_cube_map_negZ.png" />
+      </Component>
+      <Component Id="cmpB64CBB9BBE41C4982047E47E5AF89CEB" Directory="RESOURCEFOLDER" Guid="{3EECE93D-B5C2-440F-B9A2-9BEA0E1BA6AF}">
+        <File Id="fil0C0CFAEB79189AD60EB40E0526869A7F" KeyPath="yes" Source="payload\Resources\default_water_reflection_cube_map_posX.png" />
+      </Component>
+      <Component Id="cmp8F1D6849D5F600603C65EB1BA5743E21" Directory="RESOURCEFOLDER" Guid="{2090D2CC-F4AD-434C-85F2-56C357BAC951}">
+        <File Id="filAD8CCEB1A61C28092AAB591D2955EEFD" KeyPath="yes" Source="payload\Resources\default_water_reflection_cube_map_posY.png" />
+      </Component>
+      <Component Id="cmp2CDB370938C12D054154C5DECC39BEE0" Directory="RESOURCEFOLDER" Guid="{353D2185-0FBF-466E-92A1-72D8F73E929A}">
+        <File Id="filB192A6B0C81DAA33FC48A82CB434FBE5" KeyPath="yes" Source="payload\Resources\default_water_reflection_cube_map_posZ.png" />
+      </Component>	  
       <Component Id="cmp9b_WkigeAFHSQKfyc6Xfniv.RXE" Directory="RESOURCEFOLDER" Guid="{16BD6B53-A2E9-4469-8BDF-0A44190695DA}">
         <File Id="fil57PvGhGmm1jly0.VKvuaxusga1I" KeyPath="yes" Source="payload\Resources\DejaVuSansBold.fnt" />
       </Component>
