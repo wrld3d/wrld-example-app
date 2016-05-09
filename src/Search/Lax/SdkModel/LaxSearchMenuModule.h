@@ -34,11 +34,6 @@ namespace ExampleApp
                     Menu::View::IMenuModel& GetPayphoneMenuModel() const;
                     Menu::View::IMenuModel& GetGateseMenuModel() const;
                     
-//                  Menu::View::IMenuModel& GetWorkingGroupsMenuModel() const;
-//                  Menu::View::IMenuModel& GetFacilitiesMenuModel() const;
-//                  Menu::View::IMenuModel& GetOfficesMenuModel() const;
-//                  Menu::View::IMenuModel& GetPersonMenuModel() const;     // new //
-                    
                 private:
                     Menu::View::IMenuModel* m_pMeetingRoomsMenuModel;
                     Menu::View::IMenuOptionsModel* m_pMeetingRoomsMenuOptionsModel;

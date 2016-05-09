@@ -435,14 +435,21 @@ namespace ExampleApp
         
         m_pSearchServiceModule = Eegeo_NEW(Search::Combined::SdkModel::CombinedSearchServiceModule)(searchServiceModulesForCombinedSearch);
         
+//        m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(m_pSearchServiceModule->GetSearchService(),
+//                                                                    *m_pGlobeCameraController,
+//                                                                    *m_pCameraTransitionService,
+//                                                                    m_messageBus,
+//                                                                    m_sdkDomainEventBus);
+//        
+
         m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(m_pSearchServiceModule->GetSearchService(),
                                                                     *m_pGlobeCameraController,
                                                                     *m_pCameraTransitionService,
+                                                                    m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel(),
                                                                     m_messageBus,
                                                                     m_sdkDomainEventBus);
+
         
-        ////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////
 
         
@@ -1074,7 +1081,7 @@ namespace ExampleApp
 
         eegeoWorld.Update(updateParameters);
 
-        m_pSearchModule->GetSearchRefreshService().TryRefreshSearch(dt, ecefInterestPoint, cameraState.LocationEcef());
+        m_pSearchModule->GetSearchRefreshService().TryRefreshSearch(dt, ecefInterestPoint);
 
         m_pPinsModule->GetController().Update(dt, renderCamera);
         

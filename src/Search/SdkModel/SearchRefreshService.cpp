@@ -6,7 +6,7 @@
 #include "LatLongAltitude.h"
 #include "ICameraTransitionController.h"
 
-#include <algorithm>
+#include "InteriorInteractionModel.h"
 
 namespace ExampleApp
 {
@@ -17,140 +17,116 @@ namespace ExampleApp
             SearchRefreshService::SearchRefreshService(ISearchService& searchService,
                     ISearchQueryPerformer& searchQueryPerformer,
                     CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
+                    Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                     float minimumSecondsBetweenUpdates,
-                    float minimumInterestLateralDeltaAt1km,
-                    float maximumInterestLateralSpeedAt1km)
+                    float minimumMetresBetweenUpdates)
                 : m_minimumSecondsBetweenUpdates(minimumSecondsBetweenUpdates)
-                , m_minimumInterestLateralDeltaAt1km(minimumInterestLateralDeltaAt1km)
-                , m_maximumInterestLateralSpeedAt1km(maximumInterestLateralSpeedAt1km)
+                , m_minimumMetresSquaredBetweenUpdates(minimumMetresBetweenUpdates * minimumMetresBetweenUpdates)
                 , m_searchService(searchService)
                 , m_searchQueryPerformer(searchQueryPerformer)
                 , m_cameraTransitionsController(cameraTransitionsController)
-                , m_pSearchResultQueryIssuedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback1<SearchRefreshService, const SearchQuery&>))(this, &SearchRefreshService::HandleSearchQueryIssued))
-                , m_pSearchResultResponseReceivedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<SearchRefreshService, const SearchQuery&, const std::vector<SearchResultModel>& >))(this, &SearchRefreshService::HandleSearchResultsResponseReceived))
-                , m_pSearchQueryResultsClearedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<SearchRefreshService>)(this, &SearchRefreshService::HandleSearchQueryResultsCleared))
+                , m_interiorInteractionModel(interiorInteractionModel)
+                , m_searchResultQueryIssuedCallback(this, &SearchRefreshService::HandleSearchQueryIssued)
+                , m_searchResultResponseReceivedCallback(this, &SearchRefreshService::HandleSearchResultsResponseReceived)
+                , m_searchQueryResultsClearedCallback(this, &SearchRefreshService::HandleSearchQueryResultsCleared)
+                , m_interiorChangedCallback(this, &SearchRefreshService::HandleInteriorChanged)
                 , m_queriesPending(0)
                 , m_searchResultsExist(false)
+                , m_searchResultsCleared(false)
                 , m_secondsSincePreviousRefresh(0.f)
+                , m_cameraTransitioning(false)
                 , m_enabled(true)
-                , m_previousQueryLocationEcef(Eegeo::dv3::Zero())
-                , m_previousInterestEcefLocation(Eegeo::dv3::Zero())
-                , m_previousQueryInterestDistance(0.f)
             {
-                m_searchService.InsertOnPerformedQueryCallback(*m_pSearchResultQueryIssuedCallback);
-                m_searchService.InsertOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
-                m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(*m_pSearchQueryResultsClearedCallback);
+                m_searchService.InsertOnPerformedQueryCallback(m_searchResultQueryIssuedCallback);
+                m_searchService.InsertOnReceivedQueryResultsCallback(m_searchResultResponseReceivedCallback);
+                m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(m_searchQueryResultsClearedCallback);
+                m_interiorInteractionModel.RegisterModelChangedCallback(m_interiorChangedCallback);
             }
 
             SearchRefreshService::~SearchRefreshService()
             {
-                m_searchQueryPerformer.RemoveOnSearchResultsClearedCallback(*m_pSearchQueryResultsClearedCallback);
-                m_searchService.RemoveOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
-                m_searchService.RemoveOnPerformedQueryCallback(*m_pSearchResultQueryIssuedCallback);
-
-                Eegeo_DELETE m_pSearchResultResponseReceivedCallback;
-                Eegeo_DELETE m_pSearchResultQueryIssuedCallback;
-                Eegeo_DELETE m_pSearchQueryResultsClearedCallback;
+                m_interiorInteractionModel.UnregisterModelChangedCallback(m_interiorChangedCallback);
+                m_searchQueryPerformer.RemoveOnSearchResultsClearedCallback(m_searchQueryResultsClearedCallback);
+                m_searchService.RemoveOnReceivedQueryResultsCallback(m_searchResultResponseReceivedCallback);
+                m_searchService.RemoveOnPerformedQueryCallback(m_searchResultQueryIssuedCallback);
             }
 
             void SearchRefreshService::SetEnabled(bool enabled)
             {
                 m_enabled = enabled;
             }
-            
-            bool SearchRefreshService::ShouldRefreshSearch(float deltaSeconds, const Eegeo::dv3& interestPointEcef, const Eegeo::dv3& viewpointEcef) const
+
+            void SearchRefreshService::TryRefreshSearch(float deltaSeconds, const Eegeo::dv3& ecefLocation)
             {
                 if (!m_enabled)
                 {
-                    return false;
+                    return;
                 }
-                
-                if (!m_searchResultsExist)
+                if(m_searchResultsExist)
                 {
-                    return false;
+                    m_secondsSincePreviousRefresh += deltaSeconds;
                 }
-                
-                if (m_queriesPending != 0)
+                else
                 {
-                    return false;
-                }
-                
-                if (m_cameraTransitionsController.IsTransitioning())
-                {
-                    return false;
-                }
-                
-                if (m_secondsSincePreviousRefresh < m_minimumSecondsBetweenUpdates)
-                {
-                    return false;
-                }
-                
-                
-                const float viewpointDistance = (viewpointEcef - interestPointEcef).Length();
-                
-                const float distanceRatio = std::min(viewpointDistance, m_previousQueryInterestDistance) / std::max(viewpointDistance, m_previousQueryInterestDistance);
-                if (distanceRatio < 0.75)
-                {
-                    return true;
-                }
-                
-                
-                const float angularInterestDeltaFromQuery = (interestPointEcef - m_previousQueryLocationEcef).Length() / viewpointDistance;
-                
-                const float minimumInterestLateralDeltaAngle = m_minimumInterestLateralDeltaAt1km * 0.001f;
-                const bool belowLateralThreshold = (angularInterestDeltaFromQuery < minimumInterestLateralDeltaAngle);
-                if (belowLateralThreshold)
-                {
-                    return false;
-                }
-                
-                const float angularInterestDelta = (interestPointEcef - m_previousInterestEcefLocation).Length() / viewpointDistance;
-                const float maxInterestAngularSpeed = m_maximumInterestLateralSpeedAt1km * 0.001f;
-                const bool aboveSpeedThreshold = angularInterestDelta > maxInterestAngularSpeed*deltaSeconds;
-                if (aboveSpeedThreshold)
-                {
-                    return false;
-                }
-                
-                return true;
-            }
-
-
-            void SearchRefreshService::TryRefreshSearch(float deltaSeconds, const Eegeo::dv3& interestPointEcef, const Eegeo::dv3& viewpointEcef)
-            {
-                m_secondsSincePreviousRefresh += deltaSeconds;
-                
-                bool shouldRefresh = ShouldRefreshSearch(deltaSeconds, interestPointEcef, viewpointEcef);
-                
-                if(m_previousQueryInterestDistance == 0.0f)
-                {
-                    shouldRefresh = false;
-                }
-                
-                if (shouldRefresh)
-                {
-//                    const Eegeo::Space::LatLongAltitude& currentLocation = Eegeo::Space::LatLongAltitude::FromECEF(interestPointEcef);
-                    const SearchQuery& previousQuery = m_searchQueryPerformer.GetPreviousSearchQuery();
-//                    m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), currentLocation);
-                    m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(),false);
-                    
-                    m_previousQueryLocationEcef = interestPointEcef;
                     m_secondsSincePreviousRefresh = 0.f;
                 }
-                
-                m_previousQueryInterestDistance = (viewpointEcef - interestPointEcef).Length();
-                m_previousInterestEcefLocation = interestPointEcef;
+
+                if(m_queriesPending == 0 && m_searchResultsExist)
+                {
+                    if(m_cameraTransitionsController.IsTransitioning())
+                    {
+                        m_cameraTransitioning = true;
+                        return;
+                    }
+                    else if(m_cameraTransitioning)
+                    {
+                        m_cameraTransitioning = false;
+                    }
+
+                    if(m_secondsSincePreviousRefresh >= m_minimumSecondsBetweenUpdates)
+                    {
+                        Eegeo::Space::LatLongAltitude currentLocation = Eegeo::Space::LatLongAltitude::FromECEF(ecefLocation);
+
+                        double distanceMetresSq = (ecefLocation - m_previousQueryLocationEcef).LengthSq();
+
+                        if(distanceMetresSq >= m_minimumMetresSquaredBetweenUpdates)
+                        {
+                            m_previousQueryLocationEcef = ecefLocation;
+                            const SearchQuery& previousQuery = m_searchQueryPerformer.GetPreviousSearchQuery();
+                                m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), previousQuery.IsInterior(), currentLocation);
+
+                            m_secondsSincePreviousRefresh = 0.f;
+                        }
+                    }
+                }
+            }
+
+            void SearchRefreshService::HandleInteriorChanged()
+            {
+                if (!m_searchResultsCleared && m_searchResultsExist)
+                {
+                    const SearchQuery& previousQuery = m_searchQueryPerformer.GetPreviousSearchQuery();
+                    if (m_interiorInteractionModel.HasInteriorModel() && previousQuery.IsCategory())
+                    {
+                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), previousQuery.IsInterior());
+                        m_secondsSincePreviousRefresh = 0.f;
+                    }
+                }
             }
 
             void SearchRefreshService::HandleSearchQueryIssued(const SearchQuery& query)
             {
                 ++ m_queriesPending;
+                m_searchResultsCleared = false;
             }
 
             void SearchRefreshService::HandleSearchResultsResponseReceived(const SearchQuery& query,
                     const std::vector<SearchResultModel>& results)
             {
-                m_searchResultsExist = true;
+                if (!m_searchResultsCleared)
+                {
+                    m_searchResultsExist = true;
+                }
                 m_previousQueryLocationEcef = query.Location().ToECEF();
                 -- m_queriesPending;
                 Eegeo_ASSERT(m_queriesPending >= 0);
@@ -158,6 +134,7 @@ namespace ExampleApp
 
             void SearchRefreshService::HandleSearchQueryResultsCleared()
             {
+                m_searchResultsCleared = true;
                 m_searchResultsExist = false;
             }
         }
