@@ -87,7 +87,11 @@ namespace ExampleApp
                                                           bool isInterior,
                                                           Eegeo::Space::LatLongAltitude& location)
             {
-                const float radius = GetSearchRadius(m_cameraController.GetRenderCamera());
+                float radius = GetSearchRadius(m_cameraController.GetRenderCamera());
+                //#workaround for radius so that all pois can be fetched for interiors
+                if(isInterior && radius < 500.f){
+                    radius = 500.f;
+                }
                 PerformSearchQuery(query, isCategory, isInterior, location, radius);
             }
             void SearchQueryPerformer::PerformSearchQuery(const std::string& query,

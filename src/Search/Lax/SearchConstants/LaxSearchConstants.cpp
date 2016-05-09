@@ -30,7 +30,19 @@ namespace ExampleApp
                 
                 const std::string PERSON_CATEGORY_NAME = "person";
                 const std::string MEETING_ROOM_CATEGORY_NAME = "meeting_room";
+                
+                
                 const std::string DEFIBRILLATOR_CATEGORY_NAME = "defibrillator";
+                const std::string FOOD_CATEGORY_NAME = "food";
+                const std::string SHOPPING_CATEGORY_NAME = "shopping";
+                const std::string ELEVATOR_CATEGORY_NAME = "elevator";
+                const std::string STAIRS_CATEGORY_NAME = "stairs";
+                const std::string ESCALATOR_CATEGORY_NAME = "escalator";
+                const std::string RESTROOM_CATEGORY_NAME = "restroom";
+                const std::string TDD_PAYPHONE_CATEGORY_NAME = "tdd_pay_phone";
+                const std::string ATM_CATEGORY_NAME = "atm";
+                const std::string PAYPHONE_CATEGORY_NAME = "pay_phone";
+                const std::string GATES_CATEGORY_NAME = "gates";
                 
                 const std::string WORKING_GROUP_CATEGORY_NAME = "working_group";
                 const std::string FACILITY_CATEGORY_NAME = "facility";
@@ -61,6 +73,25 @@ namespace ExampleApp
                     
                     categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Defribilator", DEFIBRILLATOR_CATEGORY_NAME, true, "defibrillator", showCategoriesInSearchMenu));
 
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Food", FOOD_CATEGORY_NAME, true, "food", showCategoriesInSearchMenu));
+
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Shopping", SHOPPING_CATEGORY_NAME, true, "shopping", showCategoriesInSearchMenu));
+
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Elevator", ELEVATOR_CATEGORY_NAME, true, "elevator", showCategoriesInSearchMenu));
+
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Stairs", STAIRS_CATEGORY_NAME, true, "stairs", showCategoriesInSearchMenu));
+
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Escalator", ESCALATOR_CATEGORY_NAME, true, "escalator", showCategoriesInSearchMenu));
+
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Restroom", RESTROOM_CATEGORY_NAME, true, "restroom", showCategoriesInSearchMenu));
+                    
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Tddpayphone", TDD_PAYPHONE_CATEGORY_NAME, true, "tddpayphone", showCategoriesInSearchMenu));
+
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Atm", ATM_CATEGORY_NAME, true, "atm", showCategoriesInSearchMenu));
+
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Payphone", PAYPHONE_CATEGORY_NAME, true, "payphone", showCategoriesInSearchMenu));
+                    
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Gates", GATES_CATEGORY_NAME, true, "gates", showCategoriesInSearchMenu));
                     
 //                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Working Groups", WORKING_GROUP_CATEGORY_NAME, false, "workinggroup", showCategoriesInSearchMenu));
 //                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Facilities", FACILITY_CATEGORY_NAME, true, "toilets", showCategoriesInSearchMenu));
@@ -81,6 +112,20 @@ namespace ExampleApp
                     
                     categories.push_back(MEETING_ROOM_CATEGORY_NAME);
                     categories.push_back(DEFIBRILLATOR_CATEGORY_NAME);
+                    
+                    categories.push_back(FOOD_CATEGORY_NAME);
+                    categories.push_back(SHOPPING_CATEGORY_NAME);
+                    categories.push_back(ELEVATOR_CATEGORY_NAME);
+                    categories.push_back(STAIRS_CATEGORY_NAME);
+
+                    categories.push_back(ESCALATOR_CATEGORY_NAME);
+                    categories.push_back(RESTROOM_CATEGORY_NAME);
+                    categories.push_back(TDD_PAYPHONE_CATEGORY_NAME);
+                    categories.push_back(ATM_CATEGORY_NAME);
+                    categories.push_back(PAYPHONE_CATEGORY_NAME);
+                    categories.push_back(GATES_CATEGORY_NAME);
+                    
+                    
                     categories.push_back(WORKING_GROUP_CATEGORY_NAME);
                     categories.push_back(FACILITY_CATEGORY_NAME);
                     categories.push_back(OFFICE_CATEGORY_NAME);
@@ -91,6 +136,8 @@ namespace ExampleApp
                     categories.push_back(PERSON_CATEGORY_NAME);
                     categories.push_back(TRANSITION_CATEGORY_NAME);
                     
+                    
+                    
                     return categories;
                 }
                 
@@ -100,6 +147,18 @@ namespace ExampleApp
                     
                     categories.push_back(MEETING_ROOM_CATEGORY_NAME);
                     categories.push_back(DEFIBRILLATOR_CATEGORY_NAME);
+                    
+                    categories.push_back(FOOD_CATEGORY_NAME);
+                    categories.push_back(SHOPPING_CATEGORY_NAME);
+                    categories.push_back(ELEVATOR_CATEGORY_NAME);
+                    categories.push_back(STAIRS_CATEGORY_NAME);
+                    categories.push_back(ESCALATOR_CATEGORY_NAME);
+                    categories.push_back(RESTROOM_CATEGORY_NAME);
+                    categories.push_back(TDD_PAYPHONE_CATEGORY_NAME);                    
+                    categories.push_back(ATM_CATEGORY_NAME);
+                    categories.push_back(PAYPHONE_CATEGORY_NAME);
+                    categories.push_back(GATES_CATEGORY_NAME);
+                    
                     categories.push_back(WORKING_GROUP_CATEGORY_NAME);
                     categories.push_back(FACILITY_CATEGORY_NAME);
                     categories.push_back(OFFICE_CATEGORY_NAME);

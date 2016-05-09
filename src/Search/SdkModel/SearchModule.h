@@ -33,6 +33,7 @@ namespace ExampleApp
                 SearchModule(ISearchService& searchService,
                              Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
                              CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
+                             Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                              ExampleAppMessaging::TMessageBus& messageBus,
                              ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus);
 

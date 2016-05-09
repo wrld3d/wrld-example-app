@@ -382,10 +382,14 @@
     [self.pMenuContainer addSubview: self.pTableViewContainer];
     [self.pMenuContainer addSubview: self.pAnchorArrowImage];
     
+    ///// Adding Left Menu  //////
+    
     for (int i = 0; i < [self.pTableViewMap count]; ++i)
     {
         [self.pTableViewContainer addSubview:self.pTableViewMap[@(i)]];
     }
+    
+    ///// Adding Result Menu  //////
     
     [self.pTableViewContainer addSubview:self.pSearchResultsTableContainerView];
     [self.pSearchResultsTableContainerView addSubview:self.pSearchResultsTableView];
@@ -806,9 +810,15 @@
     
     if(searchResultsTableContentHeight > 0.0f)
     {
-        const float maxOnScreenSearchResultsTableHeight = fmaxf(0.0f, m_maxScreenSpace - totalTableHeight - m_tableSpacing);
+       // const float maxOnScreenSearchResultsTableHeight = fmaxf(0.0f, totalTableHeight - m_maxScreenSpace - m_tableSpacing);
+//
         
-        onScreenSearchResultsTableHeight = fminf(maxOnScreenSearchResultsTableHeight, searchResultsTableContentHeight);
+//        const float maxOnScreenSearchResultsTableHeight = 200.0f;
+        
+        //onScreenSearchResultsTableHeight = fminf(maxOnScreenSearchResultsTableHeight, searchResultsTableContentHeight);
+        
+        onScreenSearchResultsTableHeight = searchResultsTableContentHeight;
+        
         tableY = (onScreenSearchResultsTableHeight > 0.0f) ? onScreenSearchResultsTableHeight + m_tableSpacing : 0.0f;
     }
     else
@@ -831,6 +841,8 @@
     
     const float tableViewContainerHeight = fminf(m_maxScreenSpace, tableY + totalTableHeight);
     
+//    const float tableViewContainerHeight = tableY + totalTableHeight;//fminf(m_maxScreenSpace, tableY + totalTableHeight);
+    
     CGRect frame = self.pSearchTableSeparator.frame;
     frame.origin.y = tableY;
     self.pSearchTableSeparator.frame = frame;
@@ -845,11 +857,12 @@
     frame.size.height = tableViewContainerHeight;
     self.pTableViewContainer.frame = frame;
     
-    [self.pTableViewContainer setContentSize:CGSizeMake(self.pTableViewContainer.frame.size.width, tableY + totalTableHeight)];
+    [self.pTableViewContainer setContentSize:CGSizeMake(self.pTableViewContainer.frame.size.width, tableY + totalTableHeight)]; // scroll view
     
     frame = self.pMenuContainer.frame;
     frame.size.height = tableViewContainerHeight + m_tableSpacing;
     self.pMenuContainer.frame = frame;
+//    [self.pMenuContainer setBackgroundColor:[UIColor yellowColor]];
 }
 
 - (float) getHeightForTable:(CustomTableView*)tableView

@@ -18,6 +18,19 @@ namespace ExampleApp
                     virtual ~ILaxSearchMenuModule() { }
                     
                     virtual Menu::View::IMenuModel& GetMeetingRoomsMenuModel() const = 0;
+                    
+                    virtual Menu::View::IMenuModel& GetFoodMenuModel() const = 0;
+                    virtual Menu::View::IMenuModel& GetShoppingMenuModel() const = 0;
+                    virtual Menu::View::IMenuModel& GetElevatorMenuModel() const = 0;
+                    virtual Menu::View::IMenuModel& GetStairsMenuModel() const = 0;
+                    virtual Menu::View::IMenuModel& GetEscalatorMenuModel() const = 0;
+                    virtual Menu::View::IMenuModel& GetRestroomMenuModel() const = 0;
+                    virtual Menu::View::IMenuModel& GetTddpayphoneMenuModel() const = 0;
+                    virtual Menu::View::IMenuModel& GetAtmMenuModel() const = 0;
+                    virtual Menu::View::IMenuModel& GetPayphoneMenuModel() const = 0;
+                    virtual Menu::View::IMenuModel& GetGateseMenuModel() const = 0;
+                    
+                    
 //                    virtual Menu::View::IMenuModel& GetWorkingGroupsMenuModel() const = 0;
 //                    virtual Menu::View::IMenuModel& GetFacilitiesMenuModel() const = 0;
 //                    virtual Menu::View::IMenuModel& GetOfficesMenuModel() const = 0;
