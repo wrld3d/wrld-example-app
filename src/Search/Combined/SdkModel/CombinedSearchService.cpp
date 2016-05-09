@@ -2,6 +2,8 @@
 
 #include "CombinedSearchService.h"
 #include "SearchQuery.h"
+#include "IAppModeModel.h"
+#include "LaxSearchConstants.h"
 
 namespace ExampleApp
 {
@@ -11,11 +13,13 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                CombinedSearchService::CombinedSearchService(const std::map<std::string,Search::SdkModel::ISearchService*>& searchServices)
+                CombinedSearchService::CombinedSearchService(const std::map<std::string,Search::SdkModel::ISearchService*>& searchServices,
+                                                             AppModes::SdkModel::IAppModeModel& appModeModel)
                 : SearchServiceBase(std::vector<std::string>())
                 , m_searchServices(searchServices)
                 , m_searchQueryResponseCallback(this, &CombinedSearchService::OnSearchResponseRecieved)
                 , m_pendingResultsLeft(0)                
+                , m_appModeModel(appModeModel)
                 , m_currentQueryModel("", false, false, Eegeo::Space::LatLongAltitude(0, 0, 0), 0.f)
                 , m_hasActiveQuery(false)
                 {
@@ -65,11 +69,28 @@ namespace ExampleApp
                     
                     for (std::map<std::string,Search::SdkModel::ISearchService*>::const_iterator iter = m_searchServices.begin(); iter != m_searchServices.end(); ++iter)
                     {
-                        bool canPerformQuery = !query.IsCategory() || (*iter).second->CanHandleCategory(query.Query());
+                        bool isIndoor = m_appModeModel.GetAppMode() != AppModes::SdkModel::WorldMode;
+                        bool isCategory = query.IsCategory();
+                        bool canPerformCategory = isCategory && (*iter).second->CanHandleCategory(query.Query());
+                        bool canPerformIndoor = isIndoor && (*iter).second->CanHandleIndoor();
                         
-                        if(canPerformQuery)
+                        if (isIndoor)
+                        {
+                            if (canPerformIndoor)
                         {
                             queryServices.push_back((*iter).second);
+                        }
+                    }
+                        else
+                        {
+                            if(canPerformCategory)
+                            {
+                                queryServices.push_back((*iter).second);
+                            }
+                            else if (!isCategory)
+                            {
+                                queryServices.push_back((*iter).second);
+                            }
                         }
                     }
                     

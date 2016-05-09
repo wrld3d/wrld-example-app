@@ -433,7 +433,7 @@ namespace ExampleApp
         
         searchServiceModulesForCombinedSearch.insert(m_searchServiceModules.begin(), m_searchServiceModules.end());
         
-        m_pSearchServiceModule = Eegeo_NEW(Search::Combined::SdkModel::CombinedSearchServiceModule)(searchServiceModulesForCombinedSearch);
+        m_pSearchServiceModule = Eegeo_NEW(Search::Combined::SdkModel::CombinedSearchServiceModule)(searchServiceModulesForCombinedSearch, *m_pAppModeModel);
         
 //        m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(m_pSearchServiceModule->GetSearchService(),
 //                                                                    *m_pGlobeCameraController,
