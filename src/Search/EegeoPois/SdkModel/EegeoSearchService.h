@@ -37,6 +37,8 @@ namespace ExampleApp
                                            const std::vector<std::string>& availableCategories);
                     
                     ~EegeoSearchService();
+                    bool CanHandleIndoor() const { return true; }
+
                     
                     void CancelInFlightQueries();
                     

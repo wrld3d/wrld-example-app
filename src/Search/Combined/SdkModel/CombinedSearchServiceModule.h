@@ -3,6 +3,7 @@
 #pragma once
 
 #include "ISearchServiceModule.h"
+#include "AppModes.h"
 
 #include <map>
 #include <string>
@@ -23,7 +24,8 @@ namespace ExampleApp
                     std::vector<CategorySearch::View::CategorySearchModel> m_categorySearchModels;
                     
                 public:
-                    CombinedSearchServiceModule(std::map<std::string, Search::SdkModel::ISearchServiceModule*> searchServiceModules);
+                    CombinedSearchServiceModule(std::map<std::string, Search::SdkModel::ISearchServiceModule*> searchServiceModules,
+                                                AppModes::SdkModel::IAppModeModel& appModeModel);
                     
                     ~CombinedSearchServiceModule();
                     
