@@ -19,7 +19,6 @@
 #include "SwallowDepartmentResultModel.h"
 #include "InstancedInteriorFloorRenderable.h"
 #include "InteriorsCellResource.h"
-#include "InteriorsCellResourceObserver.h"
 #include "SearchResultSectionItemSelectedMessage.h"
 #include "InteriorsEntityIdHighlightController.h"
 
@@ -53,6 +52,22 @@ namespace ExampleApp
 
                         return std::vector<std::string>();
                     }
+                    
+                    struct IsInteriorInstancePresentForId
+                    {
+                        typedef const std::string& argument_type;
+                        
+                        IsInteriorInstancePresentForId(const Eegeo::Resources::Interiors::InteriorsInstanceRepository& interiorsInstanceRepository)
+                        : m_interiorsInstanceRepository(interiorsInstanceRepository)
+                        {}
+                        
+                        bool operator()(argument_type id) const
+                        {
+                            return m_interiorsInstanceRepository.Contains(id);
+                        }
+                    private:
+                        const Eegeo::Resources::Interiors::InteriorsInstanceRepository& m_interiorsInstanceRepository;
+                    };
                 }
 
                 InteriorsEntityIdHighlightVisibilityController::InteriorsEntityIdHighlightVisibilityController(
@@ -60,38 +75,22 @@ namespace ExampleApp
                     Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                     Search::SdkModel::ISearchResultRepository& searchResultRepository,
                     ExampleAppMessaging::TMessageBus& messageBus,
-                    Eegeo::Resources::Interiors::InteriorsCellResourceObserver& cellResourceObserver)
+                    Eegeo::Resources::Interiors::InteriorsInstanceRepository& interiorsInstanceRepository)
                 : m_interiorsEntityIdHighlightController(interiorsEntityIdHighlightController)
                 , m_searchQueryPerformer(searchQueryPerformer)
                 , m_searchResultsHandler(this, &InteriorsEntityIdHighlightVisibilityController::OnSearchResultsLoaded)
                 , m_searchResultsClearedHandler(this, &InteriorsEntityIdHighlightVisibilityController::OnSearchResultsCleared)
                 , m_handleSearchResultSectionItemSelectedMessageBinding(this, &InteriorsEntityIdHighlightVisibilityController::OnSearchItemSelected)
                 , m_messageBus(messageBus)
-                , m_cellResourceObserver(cellResourceObserver)
-                , m_cellResourceAddedCallback(this, &InteriorsEntityIdHighlightVisibilityController::HandleFloorCellAdded)
-                , m_cellResourceDeletedCallback(this, &InteriorsEntityIdHighlightVisibilityController::HandleFloorCellDeleted)
-                , m_currentlyActiveSwallowInteriors(0)
-                , m_activateHighlightOnInteriorsLoaded(false)
+                , m_interiorsInstanceRepository(interiorsInstanceRepository)
+                , m_interiorsInstanceRepositoryChangedHandler(this, &InteriorsEntityIdHighlightVisibilityController::OnInteriorsInstanceRepositoryChanged)
                 , m_searchResultsIndex(-1)
                 {
                     m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
                     m_messageBus.SubscribeNative(m_handleSearchResultSectionItemSelectedMessageBinding);
                     m_messageBus.SubscribeUi(m_searchResultsHandler);
                     
-                    m_cellResourceObserver.RegisterAddedToSceneGraphCallback(m_cellResourceAddedCallback);
-                    m_cellResourceObserver.RegisterResourceDeletedCallback(m_cellResourceDeletedCallback);
-                    
-                    m_validSwallowInteriors.push_back("swallow_lon_parkhouse");
-                    m_hasSwallowInteriorLoaded.push_back(false);
-                    
-                    m_validSwallowInteriors.push_back("swallow_lon_38finsbury");
-                    m_hasSwallowInteriorLoaded.push_back(false);
-                    
-                    m_validSwallowInteriors.push_back("swallow_lon_50finsbury");
-                    m_hasSwallowInteriorLoaded.push_back(false);
-                    
-                    m_validSwallowInteriors.push_back("swallow_lon_citygatehouse");
-                    m_hasSwallowInteriorLoaded.push_back(false);
+                    m_interiorsInstanceRepository.RegisterChangedCallback(m_interiorsInstanceRepositoryChangedHandler);
                 }
                 
                 InteriorsEntityIdHighlightVisibilityController::~InteriorsEntityIdHighlightVisibilityController()
@@ -100,8 +99,7 @@ namespace ExampleApp
                     m_messageBus.UnsubscribeNative(m_handleSearchResultSectionItemSelectedMessageBinding);
                     m_messageBus.UnsubscribeUi(m_searchResultsHandler);
                     
-                    m_cellResourceObserver.UnregisterResourceDeletedCallback(m_cellResourceDeletedCallback);
-                    m_cellResourceObserver.UnregisterAddedToSceneGraphCallback(m_cellResourceAddedCallback);
+                    m_interiorsInstanceRepository.UnregisterChangedCallback(m_interiorsInstanceRepositoryChangedHandler);
                 }
                 
                 void InteriorsEntityIdHighlightVisibilityController::OnSearchResultsCleared()
@@ -109,8 +107,6 @@ namespace ExampleApp
                     m_searchResultsIndex = -1;
                     m_searchResults.clear();
                     ClearHighlights();
-                    
-                    m_activateHighlightOnInteriorsLoaded = false;
                 }
 
                 void InteriorsEntityIdHighlightVisibilityController::ClearHighlights()
@@ -130,82 +126,22 @@ namespace ExampleApp
 
                 void InteriorsEntityIdHighlightVisibilityController::OnSearchItemSelected(const SearchResultSection::SearchResultSectionItemSelectedMessage& message)
                 {
-                    ClearHighlights();
-                    
                     if (message.ItemIndex() >= m_searchResults.size())
                         m_searchResultsIndex = -1;
                     else
                         m_searchResultsIndex = message.ItemIndex();
                     
-                    if(m_currentlyActiveSwallowInteriors < m_validSwallowInteriors.size())
-                    {
-                        m_activateHighlightOnInteriorsLoaded = true;
-                        return;
-                    }
-
                     RefreshHighlights();
                 }
                 
-                void InteriorsEntityIdHighlightVisibilityController::HandleFloorCellAdded(const Eegeo::Resources::Interiors::InteriorsCellResource& interiorCellResource)
+                void InteriorsEntityIdHighlightVisibilityController::OnInteriorsInstanceRepositoryChanged()
                 {
-                    for(int i = 0; i < m_validSwallowInteriors.size(); ++i)
-                    {
-                        if(m_validSwallowInteriors[i] == interiorCellResource.GetInteriorId().Value() && m_hasSwallowInteriorLoaded[i] == false)
-                        {
-                            ++m_currentlyActiveSwallowInteriors;
-                            m_hasSwallowInteriorLoaded[i] = true;
-                            
-                            if(m_activateHighlightOnInteriorsLoaded && m_currentlyActiveSwallowInteriors >= m_validSwallowInteriors.size())
-                            {
-                                RefreshHighlights();
-                                
-                                m_activateHighlightOnInteriorsLoaded = false;
-                            }
-                            return;
-                        }
-                    }
+                    RefreshHighlights();
                 }
 
-                
-                void InteriorsEntityIdHighlightVisibilityController::HandleFloorCellDeleted(const Eegeo::Resources::Interiors::InteriorsCellResource& interiorCellResource)
-                {
-                    for(int i = 0; i < m_validSwallowInteriors.size(); ++i)
-                    {
-                        if(m_validSwallowInteriors[i] == interiorCellResource.GetInteriorId().Value() && m_hasSwallowInteriorLoaded[i] == true)
-                        {
-                            --m_currentlyActiveSwallowInteriors;
-                            m_hasSwallowInteriorLoaded[i] = false;
-                            break;
-                        }
-                    }
-                    
-                    std::vector<Eegeo::Rendering::Renderables::InstancedInteriorFloorRenderable*> instancedRenderablesToRemove;
-
-                    const std::vector<Eegeo::Resources::Interiors::InteriorsFloorCell*>& floorCells = interiorCellResource.GetFloorCells();
-                    
-                    for (std::vector<Eegeo::Resources::Interiors::InteriorsFloorCell*>::const_iterator floorCellIter = floorCells.begin();
-                         floorCellIter != floorCells.end();
-                         ++floorCellIter)
-                    {
-                        const std::vector<Eegeo::Rendering::Renderables::InstancedInteriorFloorRenderable*>& instancedRenderablesForDeletedFloor = (*floorCellIter)->GetInstancedRenderables();
-                        instancedRenderablesToRemove.insert(instancedRenderablesToRemove.end(), instancedRenderablesForDeletedFloor.begin(), instancedRenderablesForDeletedFloor.end());
-                    }
-
-                    std::sort(m_lastHighlightedRenderables.begin(), m_lastHighlightedRenderables.end());
-                    std::sort(instancedRenderablesToRemove.begin(), instancedRenderablesToRemove.end());
-
-                    m_lastHighlightedRenderables.erase(
-                        std::set_difference(m_lastHighlightedRenderables.begin(), m_lastHighlightedRenderables.end(), instancedRenderablesToRemove.begin(), instancedRenderablesToRemove.end(), m_lastHighlightedRenderables.begin()), 
-                        m_lastHighlightedRenderables.end());
-                }
 
                 void InteriorsEntityIdHighlightVisibilityController::OnSearchResultsLoaded(const Search::SearchQueryResponseReceivedMessage& message)
                 {
-                    if(m_activateHighlightOnInteriorsLoaded)
-                    {
-                        return;
-                    }
-
                     if (m_searchResultsIndex >= 0)
                     {
                         const Search::SdkModel::SearchResultModel& selectedSearchResult = m_searchResults.at(m_searchResultsIndex);
@@ -227,18 +163,22 @@ namespace ExampleApp
 
                     RefreshHighlights();
                 }
-
+                
                 void InteriorsEntityIdHighlightVisibilityController::RefreshHighlights()
                 {
                     ClearHighlights();
 
-                    if (m_searchResultsIndex >= 0 && m_currentlyActiveSwallowInteriors >= m_validSwallowInteriors.size())
+                    if (m_searchResultsIndex >= 0)
                     {
                         const Search::SdkModel::SearchResultModel& selectedSearchResult = m_searchResults.at(m_searchResultsIndex);
 
                         const std::vector<std::string>& deskIds = GetDeskIdsFromSearchResultModel(selectedSearchResult);
+                        
+                        std::vector<std::string> filteredDeskIds;
+                        
+                        std::remove_copy_if(deskIds.begin(), deskIds.end(), std::back_inserter(filteredDeskIds), std::not1(IsInteriorInstancePresentForId(m_interiorsInstanceRepository)));
 
-                        m_interiorsEntityIdHighlightController.HighlightEntityIds(deskIds, m_lastHighlightedRenderables);
+                        m_interiorsEntityIdHighlightController.HighlightEntityIds(filteredDeskIds, m_lastHighlightedRenderables);
                     }
 
                 }
