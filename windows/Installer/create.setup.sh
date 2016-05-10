@@ -112,8 +112,10 @@ fi
 echo
 echo "Signing Bootstrapper"
 echo
-signToolPath="C:/Program Files (x86)/Windows Kits/8.1/bin/x86/SignTool.exe"
-"$signToolPath" sign /f ./Resource/certificate.pfx /p $certPassword /t $timestampUrl ./deploy/engine.exe
+
+signToolPath=/c/Program\ Files\ \(x86\)/Windows\ Kits/8.1/bin/x86/SignTool.exe
+
+"$signToolPath" sign -f ../Certificates/certificate.pfx -p $certPassword -t $timestampUrl deploy/engine.exe
 
 if [ $? = 0 ] ; then
   echo "Bootstrapper Signing success!"
@@ -137,7 +139,8 @@ fi
 echo
 echo "Sign package"
 echo
-signToolPath sign /f ./Resource/certificate.pfx /p $certPassword /t $timestampUrl "./deploy/Swallow Installer.exe"
+
+"$signToolPath" sign -f ../Certificates/certificate.pfx -p $certPassword -t $timestampUrl "./deploy/Swallow Installer.exe"
 
 if [ $? = 0 ] ; then
   echo "Package sign success!"
