@@ -1,2 +1,0 @@
-configurations.create("default")
-artifacts.add("default", file('eegeo-sdk-module-arm64-debug.aar'))

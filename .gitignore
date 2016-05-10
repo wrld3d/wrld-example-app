@@ -22,3 +22,4 @@ obj
 **/*.vcxproj.filters
 **/*.xcodeproj
 **/*.sln
+.gradle

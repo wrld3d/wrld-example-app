@@ -30,6 +30,7 @@ public class BackgroundThreadActivity extends MainActivity
 
     static
     {
+        System.loadLibrary("eegeo-sdk");
         System.loadLibrary("eegeo-mobile-example-app");
     }
 

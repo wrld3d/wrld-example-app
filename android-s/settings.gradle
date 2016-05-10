@@ -1,1 +1,1 @@
-include ':app', ':eegeo-sdk-module-arm64-debug'
+include ':app:arm', 'app:arm64'

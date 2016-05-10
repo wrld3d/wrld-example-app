@@ -1,0 +1,12 @@
+def appendRecursiveHeaderPathsImplementation(String root, Set<String> pathSet)
+{
+    FileTree tree = fileTree(dir: root)
+    tree.include '**/*.h'
+
+    tree.each{ File file ->
+        pathSet.add(file.parent)
+    }
+}
+ext {
+    appendRecursiveHeaderPaths = this.&appendRecursiveHeaderPathsImplementation
+}
