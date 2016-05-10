@@ -732,15 +732,15 @@ def delete_existing_pois(poi_service_url, dev_auth_token):
 
 
 def persist_entities(entities, poi_service_url, dev_auth_token, cdn_base_url):
-	for entity in entities:
-		if 'user_data' in entity:
-			if 'image_url' in entity['user_data']:
-				original = entity['user_data']['image_url']
-				entity['user_data']['image_url'] = "{0}/images/{1}".format(cdn_base_url, original)
+    for entity in entities:
+        if 'user_data' in entity:
+            if 'image_url' in entity['user_data']:
+                original = entity['user_data']['image_url']
+                entity['user_data']['image_url'] = "{0}/images/{1}".format(cdn_base_url, original)
 
-		url = "{0}/pois/?token={1}".format(poi_service_url, dev_auth_token)
-		response = requests.post(url, json=entity, verify=False)
-		print "post {2}: {0} => {1}".format(url, entity, response.status_code)
+    url = "{0}/bulk/?token={1}".format(poi_service_url, dev_auth_token)
+    response = requests.post(url, json={"create":entities}, verify=False)
+    print "post {2}: {0}".format(url, {"create":entities}, response.status_code)
 
 
 def build_db(src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, verbose, stop_on_first_error):
