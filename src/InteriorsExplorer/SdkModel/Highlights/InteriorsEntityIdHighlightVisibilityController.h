@@ -28,7 +28,7 @@ namespace ExampleApp
                         Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                         Search::SdkModel::ISearchResultRepository& searchResultRepository,
                         ExampleAppMessaging::TMessageBus& messageBus,
-                        Eegeo::Resources::Interiors::InteriorsCellResourceObserver& cellResourceObserver);
+                        Eegeo::Resources::Interiors::InteriorsInstanceRepository& interiorsInstanceRepository);
                     
                     ~InteriorsEntityIdHighlightVisibilityController();
                     
@@ -36,10 +36,11 @@ namespace ExampleApp
                     void OnSearchResultsLoaded(const Search::SearchQueryResponseReceivedMessage& message);
                     void OnSearchResultsCleared();
                     void OnSearchItemSelected(const SearchResultSection::SearchResultSectionItemSelectedMessage& message);
-                    void HandleFloorCellAdded(const Eegeo::Resources::Interiors::InteriorsCellResource& interiorCellResource);
-                    void HandleFloorCellDeleted(const Eegeo::Resources::Interiors::InteriorsCellResource& interiorCellResource);
+                    
+                    void OnInteriorsInstanceRepositoryChanged();
                     void ClearHighlights();
                     void RefreshHighlights();
+                    
 
                     std::vector<Search::SdkModel::SearchResultModel> m_searchResults;
                     int m_searchResultsIndex;
@@ -51,19 +52,13 @@ namespace ExampleApp
                     Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
                     ExampleAppMessaging::TMessageBus& m_messageBus;
                     
-                    int m_currentlyActiveSwallowInteriors;
-                    bool m_activateHighlightOnInteriorsLoaded;
-                    
-                    std::vector<std::string> m_validSwallowInteriors;
-                    std::vector<bool> m_hasSwallowInteriorLoaded;
-
                     Eegeo::Helpers::TCallback1<InteriorsEntityIdHighlightVisibilityController, const SearchResultSection::SearchResultSectionItemSelectedMessage&> m_handleSearchResultSectionItemSelectedMessageBinding;
                     Eegeo::Helpers::TCallback1<InteriorsEntityIdHighlightVisibilityController, const Search::SearchQueryResponseReceivedMessage&> m_searchResultsHandler;
                     Eegeo::Helpers::TCallback0<InteriorsEntityIdHighlightVisibilityController> m_searchResultsClearedHandler;
                     
-                    Eegeo::Resources::Interiors::InteriorsCellResourceObserver& m_cellResourceObserver;
-                    Eegeo::Helpers::TCallback1<InteriorsEntityIdHighlightVisibilityController, const Eegeo::Resources::Interiors::InteriorsCellResource> m_cellResourceDeletedCallback;
-                    Eegeo::Helpers::TCallback1<InteriorsEntityIdHighlightVisibilityController, const Eegeo::Resources::Interiors::InteriorsCellResource> m_cellResourceAddedCallback;
+                    Eegeo::Resources::Interiors::InteriorsInstanceRepository& m_interiorsInstanceRepository;
+                    
+                    Eegeo::Helpers::TCallback0<InteriorsEntityIdHighlightVisibilityController> m_interiorsInstanceRepositoryChangedHandler;
                 };
             }
         }

@@ -390,8 +390,9 @@ namespace ExampleApp
             mapModule.GetInteriorsPresentationModule().GetInteriorsLabelsController(), 
             m_messageBus);
 
+        Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
 
-        Eegeo::Resources::Interiors::InteriorsEntityIdHighlightController& interiorsEntityIdHighlightController = mapModule.GetInteriorsModelModule().GetInteriorsEntityIdHighlightController();
+        Eegeo::Resources::Interiors::InteriorsEntityIdHighlightController& interiorsEntityIdHighlightController = interiorsModelModule.GetInteriorsEntityIdHighlightController();
         interiorsEntityIdHighlightController.SetDefaultHighlightColour(Eegeo::v4(0.0f, 1.0f, 0.0f, 1.0f));
 
         m_pInteriorsEntityIdHighlightVisibilityController = Eegeo_NEW(InteriorsExplorer::SdkModel::Highlights::InteriorsEntityIdHighlightVisibilityController)(
@@ -399,7 +400,7 @@ namespace ExampleApp
                                                                                                                     m_pSearchModule->GetSearchQueryPerformer(),
                                                                                                                     m_pSearchModule->GetSearchResultRepository(),
                                                                                                                     m_messageBus,
-                                                                                                                    mapModule.GetInteriorsModelModule().GetInteriorsCellResourceObserver());
+                                                                                                                    interiorsModelModule.GetInteriorsInstanceRepository());
         
         
         m_pCameraTransitionController = Eegeo_NEW(ExampleApp::CameraTransitions::SdkModel::CameraTransitionController)(*m_pGlobeCameraController,
