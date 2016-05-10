@@ -50,6 +50,22 @@ $ python import_csv_to_xls.py -i employee_pois.csv -d assets\swallow-pois.xls -w
 
 During subsequent generation of poi db from this xls (build_poi_db.py), we validate that all foreign keys for desk_code exist as primary key in the 'Desks' sheet.
 
+### Importing Department data
+
+The Swallow DB contains a sheet 'DepartmentPois' - this is derived from an export of swallow customer's Employee database table (Trirega export pipe-delimited, no header row)
+
+A script is available that determines departments from the Trirega export, and determines appropriate building, floor, and lat, long based on the desks comprising that department. These can be overriden if desired.
+
+```sh
+$ python import_departments.py -i employee_export.csv -o departments.csv -d assets\swallow-pois.xls
+```
+
+Once successfully converted, this can be imported to 'DepartmentPois' worksheet in the 'swallow-pois.xls' workbook with:
+
+```sh
+$ python import_csv_to_xls.py -i departments.csv -d assets\swallow-pois.xls -w DepartmentPois
+```
+During subsequent generation of poi db from this xls (build_poi_db.py), we validate that all foreign keys for desk_code exist as primary key in the 'Desks' sheet.
 
 ### Exporting the Excel Sheet to geojson
 
