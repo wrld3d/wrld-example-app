@@ -113,7 +113,7 @@
                                                     <Path Fill="#ff5f5f5f" Data="F1 M 9.000,8.457 L 9.000,15.457 L 16.000,15.457 L 16.000,8.457 L 12.398,8.457 C 12.398,6.457 14.000,4.221 16.000,3.520 L 16.000,3.457 L 16.000,0.457 L 16.000,0.000 C 12.000,0.789 9.000,4.457 9.000,8.457 Z"/>
                                                 </Canvas>
                                                 <TextBlock Name="DescriptionText" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SwallowWorkingGroupSearchResultsPoiView}}, Path=Description}" 
-								FontSize="18" Margin="25,-4,0,0" Foreground="{StaticResource DarkGrey}" FontFamily="{DynamicResource PrimaryUIFont}" TextWrapping="Wrap"/>
+								FontSize="18" Margin="25,-4,0,0" Foreground="{StaticResource DarkGrey}" FontFamily="{DynamicResource PrimaryUIFont}" TextWrapping="WrapWithOverflow"/>
                                             </Grid>
 
                                             <!-- Bottom Spacer -->

@@ -47,7 +47,7 @@ namespace ExampleAppWPF
             TitleText = m_model.Title;
             JobTitle = m_swallowPersonModel.DeskCode;
             WorkingGroup = m_swallowPersonModel.WorkingGroup;
-            OfficeLocation = m_swallowPersonModel.OfficeLocation;
+            OfficeLocation = m_swallowPersonModel.OfficeLocation.Replace(", ", "," + Environment.NewLine);
             DeskCode = m_model.Subtitle;
 
             OnPropertyChanged("");
