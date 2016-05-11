@@ -726,6 +726,9 @@ namespace ExampleApp
 
         m_pSearchMenuModule->AddMenuSection("Gates",    m_pLaxSearchMenuModule->GetGateseMenuModel(), false);
         
+        
+        m_pSearchMenuModule->AddMenuSection("Others",    m_pLaxSearchMenuModule->GetOthersMenuModel(), false);
+        
         m_pSearchMenuModule->AddMenuSection("Find", m_pCategorySearchModule->GetCategorySearchMenuModel(), true);
         m_pSearchMenuModule->AddMenuSection("Weather" , m_pWeatherMenuModule->GetWeatherMenuModel(), true);
         m_pSearchMenuModule->AddMenuSection("Locations", m_pPlaceJumpsModule->GetPlaceJumpsMenuModel(), true);

@@ -144,7 +144,16 @@ namespace ExampleApp
                                                                                                 menuViewModel,
                                                                                                 messageBus));
                     
-                    
+                    m_pOthersMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
+                    m_pOthersMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pGatesMenuModel);
+                    m_pOthersMenuOptionsModel->AddItem("Others",
+                                                      "Others",
+                                                      "",
+                                                      "",
+                                                      Eegeo_NEW(View::LaxCategoryMenuOption)(Search::Lax::SearchConstants::OTHERS_CATEGORY_NAME,
+                                                                                             true,
+                                                                                             menuViewModel,
+                                                                                             messageBus));
 
                 }
                 
@@ -221,6 +230,10 @@ namespace ExampleApp
                     
                 }
                 
+                Menu::View::IMenuModel& LaxSearchMenuModule::GetOthersMenuModel() const
+                {
+                    return *m_pOthersMenuModel;
+                }
 
             }
         }

@@ -33,6 +33,7 @@ namespace ExampleApp
                     Menu::View::IMenuModel& GetAtmMenuModel() const;
                     Menu::View::IMenuModel& GetPayphoneMenuModel() const;
                     Menu::View::IMenuModel& GetGateseMenuModel() const;
+                    Menu::View::IMenuModel& GetOthersMenuModel() const;
                     
                 private:
                     Menu::View::IMenuModel* m_pMeetingRoomsMenuModel;
@@ -68,6 +69,9 @@ namespace ExampleApp
 
                     Menu::View::IMenuModel* m_pGatesMenuModel;
                     Menu::View::IMenuOptionsModel* m_pGatesMenuOptionsModel;
+
+                    Menu::View::IMenuModel* m_pOthersMenuModel;
+                    Menu::View::IMenuOptionsModel* m_pOthersMenuOptionsModel;
                     
 //                  Menu::View::IMenuModel* m_pWorkingGroupsMenuModel;
 //                  Menu::View::IMenuOptionsModel* m_pWorkingGroupsMenuOptionsModel;

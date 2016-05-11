@@ -47,7 +47,7 @@ namespace ExampleApp
                 extern const std::string ATM_CATEGORY_NAME;
                 extern const std::string PAYPHONE_CATEGORY_NAME;
                 extern const std::string GATES_CATEGORY_NAME;
-                
+                extern const std::string OTHERS_CATEGORY_NAME;
                 
                 extern const std::string WORKING_GROUP_CATEGORY_NAME;
                 extern const std::string FACILITY_CATEGORY_NAME;

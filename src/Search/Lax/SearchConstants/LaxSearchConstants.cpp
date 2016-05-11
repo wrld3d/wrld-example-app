@@ -43,6 +43,7 @@ namespace ExampleApp
                 const std::string ATM_CATEGORY_NAME = "atm";
                 const std::string PAYPHONE_CATEGORY_NAME = "pay_phone";
                 const std::string GATES_CATEGORY_NAME = "gates";
+                const std::string OTHERS_CATEGORY_NAME = "others";
                 
                 const std::string WORKING_GROUP_CATEGORY_NAME = "working_group";
                 const std::string FACILITY_CATEGORY_NAME = "facility";
@@ -92,6 +93,7 @@ namespace ExampleApp
                     categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Payphone", PAYPHONE_CATEGORY_NAME, true, "payphone", showCategoriesInSearchMenu));
                     
                     categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Gates", GATES_CATEGORY_NAME, true, "gates", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Others", OTHERS_CATEGORY_NAME, true, "others", showCategoriesInSearchMenu));
                     
 //                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Working Groups", WORKING_GROUP_CATEGORY_NAME, false, "workinggroup", showCategoriesInSearchMenu));
 //                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Facilities", FACILITY_CATEGORY_NAME, true, "toilets", showCategoriesInSearchMenu));
@@ -124,7 +126,7 @@ namespace ExampleApp
                     categories.push_back(ATM_CATEGORY_NAME);
                     categories.push_back(PAYPHONE_CATEGORY_NAME);
                     categories.push_back(GATES_CATEGORY_NAME);
-                    
+                    categories.push_back(OTHERS_CATEGORY_NAME);
                     
                     categories.push_back(WORKING_GROUP_CATEGORY_NAME);
                     categories.push_back(FACILITY_CATEGORY_NAME);
@@ -158,6 +160,7 @@ namespace ExampleApp
                     categories.push_back(ATM_CATEGORY_NAME);
                     categories.push_back(PAYPHONE_CATEGORY_NAME);
                     categories.push_back(GATES_CATEGORY_NAME);
+                    categories.push_back(OTHERS_CATEGORY_NAME);
                     
                     categories.push_back(WORKING_GROUP_CATEGORY_NAME);
                     categories.push_back(FACILITY_CATEGORY_NAME);

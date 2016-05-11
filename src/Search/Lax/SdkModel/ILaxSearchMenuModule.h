@@ -29,7 +29,8 @@ namespace ExampleApp
                     virtual Menu::View::IMenuModel& GetAtmMenuModel() const = 0;
                     virtual Menu::View::IMenuModel& GetPayphoneMenuModel() const = 0;
                     virtual Menu::View::IMenuModel& GetGateseMenuModel() const = 0;
-                    
+                    virtual Menu::View::IMenuModel& GetOthersMenuModel() const = 0;
+
                     
 //                    virtual Menu::View::IMenuModel& GetWorkingGroupsMenuModel() const = 0;
 //                    virtual Menu::View::IMenuModel& GetFacilitiesMenuModel() const = 0;
