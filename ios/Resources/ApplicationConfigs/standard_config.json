@@ -3,9 +3,9 @@
     "StartLocationLatitude": 33.94357,
     "StartLocationLongitude": -118.4107,
     "StartLocationAltitude": 2.7,
-    "StartLocationDistance": 500.0,
+    "StartLocationDistance": 900.0,
     "StartLocationOrientationDegrees": 0.0,
     "TryStartAtGpsLocation":false,
     "GoogleAnalyticsReferrerToken":"mea_ios",
-    "CoverageTreeManifestURL": "http://d2xvsc8j92rfya.cloudfront.net/chunk/indoor_maps/api_requests/8e169ff3-59ca-48a2-b89d-e35a0e482b86_2016_04_29_06_26_30/manifest.bin.gz"
+    "CoverageTreeManifestURL": "http://d2xvsc8j92rfya.cloudfront.net/chunk/indoor_maps/api_requests/98a265e2-b890-4c6b-a28f-948c92e36914_2016_05_11_05_49_06/manifest.bin.gz"
 }
