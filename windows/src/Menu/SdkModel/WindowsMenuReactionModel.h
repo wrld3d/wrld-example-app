@@ -18,18 +18,9 @@ namespace ExampleApp
                 bool m_shouldCloseMenu;
                 bool m_shouldOpenMenu;
 
-                ExampleAppMessaging::TMessageBus& m_messageBus;
-
-                Eegeo::Helpers::TCallback1<WindowsMenuReactionModel, const ExampleApp::SearchResultPoi::SearchResultPoiViewOpenedMessage&> m_poiOpenedHandler;
-                Eegeo::Helpers::TCallback1<WindowsMenuReactionModel, const ExampleApp::SearchResultPoi::SearchResultPoiViewClosedMessage&> m_poiClosedHandler;
-
-                void OnSearchResultPoiViewOpenedMessage(const ExampleApp::SearchResultPoi::SearchResultPoiViewOpenedMessage& message);
-                void OnSearchResultPoiViewClosedMessage(const ExampleApp::SearchResultPoi::SearchResultPoiViewClosedMessage& message);
-
             public:
                 WindowsMenuReactionModel(bool menuClose,
-                                         bool menuOpen,
-                                         ExampleAppMessaging::TMessageBus& mmessageBus);
+                                         bool menuOpen);
 
                 ~WindowsMenuReactionModel();
 

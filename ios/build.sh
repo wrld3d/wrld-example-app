@@ -8,7 +8,7 @@ mkdir $projectPath
 
 targetName="INVALID"
 
-while getopts "p:c" o; do
+while getopts "p:c:f:t:" o; do
     case "${o}" in
         p)
             p=${OPTARG}
@@ -18,6 +18,12 @@ while getopts "p:c" o; do
             ;;
         c)
             c="cpp03"
+            ;;
+        f)
+            cmakeRootDir=${OPTARG}
+            ;;
+        t)
+            xcodeTarget=${OPTARG}
             ;;
         *)
             usage
@@ -30,15 +36,23 @@ if [ -z "${p}" ]; then
     usage
 fi
 
+if [ -z "${cmakeRootDir}" ]; then
+    cmakeRootDir=".."
+fi
+
+if [ -z "${xcodeTarget}" ]; then
+    xcodeTarget="ExampleApp"
+fi
+
 pushd $projectPath
 if [ "$c" == "cpp03" ]; then
-  cmake -G Xcode .. -DCOMPILE_CPP_03=1
+  cmake -G Xcode $cmakeRootDir -DCOMPILE_CPP_03=1
 else
-  cmake -G Xcode ..
+  cmake -G Xcode $cmakeRootDir
 fi
 popd
 
-(cd $projectPath && xcodebuild -target ExampleApp -arch "i386" -sdk "iphonesimulator")
+(cd $projectPath && xcodebuild -target $xcodeTarget -arch "i386" -sdk "iphonesimulator")
 resultcode=$?
 
 echo
