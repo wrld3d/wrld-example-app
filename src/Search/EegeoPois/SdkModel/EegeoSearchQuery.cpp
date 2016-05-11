@@ -44,7 +44,7 @@ namespace ExampleApp
                     else
                     {
                         urlstream << "/search?s=";
-                        minimumScore = 1.2;
+                        minimumScore = 0.6;
                     }
                     urlstream << encodedQuery;
                     urlstream << "&r=" << std::setprecision(4) << (query.Radius() * 1.5f); // increased for Swallow
