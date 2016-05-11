@@ -249,9 +249,7 @@ def collect_defibrilator_table(xls_book, sheet_index, src_image_folder_path, ver
     all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'longitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LNG, MAX_LNG)
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated title longitude_degrees values")
-
-    if not all_validated:
-        raise ValueError("failed validation")
+        
 
     poi_columns = ['name', 'image_filename', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees']
 
@@ -449,6 +447,13 @@ def build_db(src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, verbos
 
     sheet_index = 10
     category = "gates"
+
+    for e in collect_defibrilator_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row,category):
+        entities.append(e)
+
+
+    sheet_index = 11
+    category = "others"
 
     for e in collect_defibrilator_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row,category):
         entities.append(e)

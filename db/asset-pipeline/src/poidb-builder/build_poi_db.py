@@ -347,8 +347,6 @@ def build_defibrilator_table(xls_book, sheet_index, db_cursor, connection, src_i
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated title longitude_degrees values")
 
-    if not all_validated:
-        raise ValueError("failed validation")
 
     build_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path, dest_image_dir, verbose)
 
@@ -581,6 +579,11 @@ def build_db(src_xls_path, dest_db_path, dest_assets_relative_path, verbose, sto
 
     
     sheet_index = 10
+
+    build_defibrilator_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir)
+    
+    
+    sheet_index = 11
 
     build_defibrilator_table(xls_book, sheet_index, db_cursor, connection, src_image_folder_path, dest_image_dir, verbose, first_data_row_number, column_name_row, dest_image_relative_dir)
     
