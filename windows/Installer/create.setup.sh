@@ -94,7 +94,6 @@ fi
 echo
 echo "Bundle installer for V$version created!"
 echo
-exit 0
 
 echo "Signing installer..."
 echo "Extracting bootstrapper..."
