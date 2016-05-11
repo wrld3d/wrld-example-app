@@ -55,7 +55,11 @@ namespace ExampleApp
                     urlstream << "&apikey=" << m_apiKey;
                     
                     std::string url = urlstream.str();
-                    m_pWebLoadRequest = webRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, url, m_webRequestCompleteCallback).Build();
+                    m_pWebLoadRequest = webRequestFactory
+                        .Begin(Eegeo::Web::HttpVerbs::GET, url, m_webRequestCompleteCallback)
+                        .SetShouldCacheAggressively(false)
+                        .SetShouldRequestOnlyFromCache(false)
+                        .Build();
                     m_pWebLoadRequest->Load();
                 }
                 
