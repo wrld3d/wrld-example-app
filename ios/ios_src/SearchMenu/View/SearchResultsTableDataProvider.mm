@@ -98,8 +98,10 @@ static NSString *CellIdentifier = @"searchCell";
 - (UITableViewCell *)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if(cell == nil)
-    {
+
+//#workaround to fix reload issue of large table size cell dealoc issue
+//    if(cell == nil)
+//    {
         cell = [[[CustomTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
         
         [(CustomTableViewCell*)cell initCell:(CGFloat)[m_pView.pSearchResultsTableView getCellWidth]
@@ -120,7 +122,7 @@ static NSString *CellIdentifier = @"searchCell";
         {
             [cell setSeparatorInset:UIEdgeInsetsZero];
         }
-    }
+//    }
     
     ExampleApp::Menu::View::MenuItemModel item = m_pSearchResultsSection->GetItemAtIndex(static_cast<int>(indexPath.row));
     std::string json = item.SerializeJson();
