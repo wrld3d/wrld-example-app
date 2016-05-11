@@ -117,7 +117,7 @@ namespace ExampleApp
                 void InteriorExplorerState::Exit(int nextState)
                 {
                     Eegeo::Space::LatLongAltitude latLong = Eegeo::Space::LatLongAltitude::FromECEF(m_interiorsCameraController.GetCameraState().InterestPointEcef());
-                    const float interestDistance = 500.0f;
+                    const float interestDistance = 1000.0f;
                     m_worldCameraController.SetView(latLong.GetLatitudeInDegrees(), latLong.GetLongitudeInDegrees(),
                                                     m_interiorsCameraController.GetHeadingDegrees(),
                                                     interestDistance);
