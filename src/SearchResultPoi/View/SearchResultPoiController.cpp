@@ -82,11 +82,14 @@ namespace ExampleApp
                     
                     std::string currentFloor;
                     
+                    //search for the second trailing '-' which is consistent across all
+                    //desk codes, skip the first in case it contains a '-'
                     std::size_t floorNumPos = floorDeskCode.find('-', 1);
                     
                     if(floorDeskCode[0] == '-')
                     {
-                        //TODO: WHY SKIPPING EXPLAIN
+                        //Certain desk codes may or may not have a '-' after the building code
+                        //so we need to factor it out if it exists.
                         currentFloor += floorDeskCode.substr(1, floorNumPos - 1);
                     }
                     else
