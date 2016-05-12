@@ -12,7 +12,7 @@ namespace ExampleApp
             {
             }
 
-            void SearchResultPoiViewInterop::Show(const Search::SdkModel::SearchResultModel model,
+            void SearchResultPoiViewInterop::Show(const Search::SdkModel::SearchResultModel& model,
                                                   bool isPinned)
             {
                 [m_pView open:&model :isPinned];

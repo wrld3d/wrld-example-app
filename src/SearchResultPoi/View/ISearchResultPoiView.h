@@ -18,7 +18,7 @@ namespace ExampleApp
             public:
                 virtual ~ISearchResultPoiView() { };
 
-                virtual void Show(const Search::SdkModel::SearchResultModel model,
+                virtual void Show(const Search::SdkModel::SearchResultModel& model,
                                   bool isPinned) = 0;
                 
                 virtual void Hide() = 0;

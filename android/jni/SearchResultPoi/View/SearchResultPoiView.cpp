@@ -25,7 +25,7 @@ namespace ExampleApp
                 ASSERT_UI_THREAD
             }
 
-            void SearchResultPoiView::Show(const Search::SdkModel::SearchResultModel model, bool isPinned)
+            void SearchResultPoiView::Show(const Search::SdkModel::SearchResultModel& model, bool isPinned)
             {
                 ASSERT_UI_THREAD
 

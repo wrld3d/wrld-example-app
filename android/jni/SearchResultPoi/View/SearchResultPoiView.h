@@ -31,7 +31,7 @@ namespace ExampleApp
 
                 ~SearchResultPoiView();
 
-                void Show(const Search::SdkModel::SearchResultModel model, bool isPinned);
+                void Show(const Search::SdkModel::SearchResultModel& model, bool isPinned);
 
                 void Hide();
 

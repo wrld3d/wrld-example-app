@@ -23,7 +23,7 @@ namespace ExampleApp
             public:
                 SearchResultPoiViewInterop(SearchResultPoiViewContainer* pView);
 
-                void Show(const Search::SdkModel::SearchResultModel model,
+                void Show(const Search::SdkModel::SearchResultModel& model,
                           bool isPinned);
 
                 void Hide();

@@ -53,7 +53,7 @@ namespace ExampleApp
             {
             }
 
-            void SearchResultPoiView::Show(const Search::SdkModel::SearchResultModel model, bool isPinned)
+            void SearchResultPoiView::Show(const Search::SdkModel::SearchResultModel& model, bool isPinned)
             {
                 int previousVendor = m_currentVendor;
 

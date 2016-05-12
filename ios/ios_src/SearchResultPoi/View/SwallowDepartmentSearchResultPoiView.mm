@@ -301,7 +301,7 @@ namespace
         currentLabelY += labelYSpacing + self.pDescriptionHeaderContainer.frame.size.height;
         
         self.pDescriptionContent.frame = CGRectMake(headerTextPadding, currentLabelY, m_labelsSectionWidth - headerTextPadding, 32.f);
-        self.pDescriptionContent.text = [NSString stringWithUTF8String:m_departmentModel.GetDescription().c_str()];
+        self.pDescriptionContent.text = [NSString stringWithUTF8String:(m_departmentModel.GetDescription() + m_model.GetSubtitle()).c_str()];
         
         self.pDescriptionContent.numberOfLines = 0;
         self.pDescriptionContent.adjustsFontSizeToFitWidth = NO;
