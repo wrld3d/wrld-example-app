@@ -213,6 +213,7 @@
     
     self.pTitleContainer = [[[UIView alloc] initWithFrame:CGRectMake(m_titleContainerOffScreenX, m_titleContainerOffScreenY, m_titleContainerOffScreenWidth, m_titleContainerOffScreenHeight)] autorelease];
     self.pTitleContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
+
     
     m_searchCountLabelWidth = searchCountLabelWidth;
     m_searchCountLabelHeight = dragTabSize;
@@ -308,14 +309,16 @@
     
     self.pTopTableSeparator = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, m_menuContainerWidth, m_tableSpacing)] autorelease];
     self.pTopTableSeparator.backgroundColor = ExampleApp::Helpers::ColorPalette::TableSeparatorColor;
+//    self.pTopTableSeparator.backgroundColor = [UIColor yellowColor];
     
     self.pSearchTableSeparator = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, m_menuContainerWidth, m_tableSpacing)] autorelease];
     self.pSearchTableSeparator.backgroundColor = ExampleApp::Helpers::ColorPalette::TableSeparatorColor;
-    
+//      self.pSearchTableSeparator.backgroundColor = [UIColor yellowColor];
     self.pTableViewContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, m_tableSpacing, m_menuContainerWidth, 0.0f)] autorelease];
+    self.pTableViewContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::TableSeparatorColor;
     self.pTableViewContainer.bounces = NO;
     self.pTableViewContainer.contentSize = CGSizeMake(m_menuContainerWidth, 0.0f);
-    self.pTableViewContainer.backgroundColor = [UIColor clearColor];
+//    self.pTableViewContainer.backgroundColor = [UIColor clearColor];
     self.pTableViewContainer.scrollEnabled = YES;
     self.pTableViewContainer.userInteractionEnabled = YES;
     
@@ -567,7 +570,6 @@
                                                                                                                  Eegeo::v2(m_searchCountLabelClosedOnScreenX, m_searchCountLabelClosedOnScreenY),
                                                                                                                  Eegeo::v2(m_searchCountLabelClosedOnScreenX, m_searchCountLabelClosedOnScreenYWithResults),
                                                                                                                  Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>())));
-    
     
     // Anchor arrow animations
     m_pAnchorAnimationController = Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewAnimationController)(self,

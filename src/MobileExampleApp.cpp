@@ -702,33 +702,21 @@ namespace ExampleApp
         //////////////////////////////////////////////
         
         
+        
         m_pSearchMenuModule->SetSearchSection("Search Results", m_pSearchResultSectionModule->GetSearchResultSectionModel());
         
         m_pSearchMenuModule->AddMenuSection("Defibrillators",    m_pLaxSearchMenuModule->GetMeetingRoomsMenuModel(), false);
-        
         m_pSearchMenuModule->AddMenuSection("Food",    m_pLaxSearchMenuModule->GetFoodMenuModel(), false);
-
         m_pSearchMenuModule->AddMenuSection("Shopping",    m_pLaxSearchMenuModule->GetShoppingMenuModel(), false);
-        
         m_pSearchMenuModule->AddMenuSection("Elevator",    m_pLaxSearchMenuModule->GetElevatorMenuModel(), false);
-
         m_pSearchMenuModule->AddMenuSection("Stairs",    m_pLaxSearchMenuModule->GetStairsMenuModel(), false);
-
         m_pSearchMenuModule->AddMenuSection("Escalator",    m_pLaxSearchMenuModule->GetEscalatorMenuModel(), false);
-        
         m_pSearchMenuModule->AddMenuSection("Restroom",    m_pLaxSearchMenuModule->GetRestroomMenuModel(), false);
-        
         m_pSearchMenuModule->AddMenuSection("TDD Pay Phone",    m_pLaxSearchMenuModule->GetTddpayphoneMenuModel(), false);
-        
         m_pSearchMenuModule->AddMenuSection("ATM",    m_pLaxSearchMenuModule->GetAtmMenuModel(), false);
-        
         m_pSearchMenuModule->AddMenuSection("Pay Phone",    m_pLaxSearchMenuModule->GetPayphoneMenuModel(), false);
-
         m_pSearchMenuModule->AddMenuSection("Gates",    m_pLaxSearchMenuModule->GetGateseMenuModel(), false);
-        
-        
-        m_pSearchMenuModule->AddMenuSection("Others",    m_pLaxSearchMenuModule->GetOthersMenuModel(), false);
-        
+        m_pSearchMenuModule->AddMenuSection("Others",    m_pLaxSearchMenuModule->GetOthersMenuModel(), false);        
         m_pSearchMenuModule->AddMenuSection("Find", m_pCategorySearchModule->GetCategorySearchMenuModel(), true);
         m_pSearchMenuModule->AddMenuSection("Weather" , m_pWeatherMenuModule->GetWeatherMenuModel(), true);
         m_pSearchMenuModule->AddMenuSection("Locations", m_pPlaceJumpsModule->GetPlaceJumpsMenuModel(), true);

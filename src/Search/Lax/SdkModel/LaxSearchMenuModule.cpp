@@ -145,7 +145,7 @@ namespace ExampleApp
                                                                                                 messageBus));
                     
                     m_pOthersMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
-                    m_pOthersMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pGatesMenuModel);
+                    m_pOthersMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pOthersMenuModel);
                     m_pOthersMenuOptionsModel->AddItem("Others",
                                                       "Others",
                                                       "",
