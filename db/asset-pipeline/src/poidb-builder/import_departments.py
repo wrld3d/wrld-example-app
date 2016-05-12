@@ -1,9 +1,14 @@
 import getopt
 import os
 import csv
+import random
 import sys
 import traceback
+from math import sqrt
+from itertools import groupby
+import operator
 import xlrd
+
 
 EXPECTED_INPUT_FIELDS = {
     'IO #': 0,
@@ -46,20 +51,114 @@ FLOOR_IDS_TO_EEGEO_IDS = {
              'PKH05':('swallow_lon_parkhouse',2)
     }
 
+
+def distance(a, b):
+    v = tuple(map(operator.sub, a, b))
+    v = tuple(map(operator.mul, v, v))
+    dot = sum(v)
+    dist = sqrt(dot)
+    return dist
+
+def cluster_points(points, cluster_centres):
+    clusters = {}
+    for point in points:
+        error_for_centres = []
+        for keyed_centre in enumerate(cluster_centres):
+            delta = distance(point, keyed_centre[1])
+            error_for_centres.append((keyed_centre[0], delta))
+
+        best = min(error_for_centres, key=lambda _x: _x[1])
+        best_cluster_key = best[0]
+
+        if best_cluster_key in clusters:
+            clusters[best_cluster_key].append(point)
+        else:
+            clusters[best_cluster_key] = [point]
+    return clusters
+
+
+def calc_mean(points):
+    summed = tuple(sum(x) for x in zip(*points))
+    mean = tuple((x / len(points)) for x in summed)
+    return mean
+
+def calc_cluster_centers(clusters):
+    cluster_centres = []
+    keys = sorted(clusters.keys())
+    for key in keys:
+        points = clusters[key]
+        mean = calc_mean(points)
+        cluster_centres.append(mean)
+    return cluster_centres
+
+
+def centre_sets_are_equal(a, b):
+    return set([tuple(x) for x in a]) == set([tuple(x) for x in b])
+
+
+def k_means_cluster(points, k):
+    random.seed(1)
+    cluster_centres = random.sample(points, k)
+    clusters = {}
+    has_converged = False
+
+    while not has_converged:
+        prev_cluster_centres = cluster_centres
+        clusters = cluster_points(points, cluster_centres)
+        cluster_centres = calc_cluster_centers(clusters)
+        has_converged = centre_sets_are_equal(cluster_centres, prev_cluster_centres)
+
+    sorted_clusters = sorted(clusters.items(), key=lambda x: len(x[1]), reverse=True)
+    sorted_centres = list(map(lambda cluster: cluster_centres[cluster[0]], sorted_clusters))
+
+    return sorted_centres, sorted_clusters
+
+
+def pick_cluster_centre(cluster_centres, clusters, max_error):
+    primary_cluster_centre = cluster_centres[0]
+    primary_cluster = clusters[0]
+
+    delta_for_points = []
+    points = primary_cluster[1]
+    for point in points:
+        delta = distance(point, primary_cluster_centre)
+        delta_for_points.append((point, delta))
+
+    lowest_delta = min(delta_for_points, key=lambda _x: _x[1])
+    if lowest_delta[1] > max_error:
+        # if distance of closest desk to centre is greater than max_error, just use closest desk position
+        primary_cluster_centre = lowest_delta[0]
+
+    lat = primary_cluster_centre[0]
+    lng = primary_cluster_centre[1]
+    return lat, lng
+
+
 class DepartmentRowAggregator:
     def __init__(self):
         self.__known_departments = {}
 
     def add(self, department, desk):
-        if not department in self.__known_departments:
+        if department not in self.__known_departments:
             self.__known_departments[department] = []
         self.__known_departments[department].append(desk)
 
     def resolve(self, desks):
         for department in self.__known_departments:
             desks_in_department = self.__known_departments[department]
-            latitude_degrees, longitude_degrees = desks.position_from_desk_set(desks_in_department)
-            interior_id, interior_floor = desks.primary_building_and_floor_from_desk_set(desks_in_department)
+
+            if len(desks_in_department) < 1:
+                raise ValueError('No desks in department')
+
+            grouped_by_floor = desk_ids_grouped_by_floor(desks_in_department)
+
+            ordered_by_desk_count_ascending = sorted(grouped_by_floor, key=lambda x: len(x[1]), reverse=True)
+
+            primary_floor_and_desk_ids = ordered_by_desk_count_ascending[0]
+
+            interior_id, interior_floor = FLOOR_IDS_TO_EEGEO_IDS[primary_floor_and_desk_ids[0]]
+
+            latitude_degrees, longitude_degrees = desks.position_from_desk_set(primary_floor_and_desk_ids[1])
 
             dest_row = {'name': department,
                     'image_filename': "icon_person.png",
@@ -76,6 +175,19 @@ def floor_id_from_desk_id(desk_id):
     split = desk_id.split("-")
     return '-'.join(split[0:-1])
 
+def desk_ids_grouped_by_floor(desk_ids):
+    desks_with_floor_id = list(map(lambda x: (x, floor_id_from_desk_id(x)), desk_ids))
+    ordered_by_floor_id = sorted(desks_with_floor_id, key=operator.itemgetter(1))
+    grouped_by_floor_id = groupby(ordered_by_floor_id, key=operator.itemgetter(1))
+
+    grouped_desks = []
+    for key, group in grouped_by_floor_id:
+        desks_for_group = list(map(operator.itemgetter(0), group))
+        grouped_desks.append((key, desks_for_group))
+
+    return grouped_desks
+
+
 class DeskPositions:
     def __init__(self):
         self.__known_desks = {}
@@ -84,39 +196,28 @@ class DeskPositions:
         if not desk in self.__known_desks:
             self.__known_desks[desk] = (latitude_degrees, longitude_degrees)
 
-    def position_from_desk_set(self, desks):
-        if len(desks) < 1:
-            raise ValueError('No desks in deparmtment')
-        count = 0
-        latitude_degrees = 0.0
-        longitude_degrees = 0.0
+    def __build_desk_points(self, desks):
+        desk_points = []
         for d in desks:
-            if not d in self.__known_desks:
+            if d not in self.__known_desks:
                 raise ValueError('Unknown desk: ' + d)
             known_desk_latitude, known_desk_longitude = self.__known_desks[d]
-            latitude_degrees += known_desk_latitude
-            longitude_degrees += known_desk_longitude
-            count += 1
-        return (latitude_degrees / float(count), longitude_degrees / float(count))
+            desk_centre = (known_desk_latitude, known_desk_longitude)
+            desk_points.append(desk_centre)
+        return desk_points
 
-    def primary_building_and_floor_from_desk_set(self, desks):
+    def position_from_desk_set(self, desks):
         if len(desks) < 1:
-            raise ValueError('No desks in deparmtment')
-        counts = {}
-        for d in desks:
-            floor_id = floor_id_from_desk_id(d)
-            if not floor_id in counts:
-                counts[floor_id] = 0
-            counts[floor_id] += 1
+            raise ValueError('desk set is empty')
 
-        max_value = -1
-        max_floor = ''
-        for floor_id in counts:
-            if counts[floor_id] > max_value:
-                max_value = counts[floor_id]
-                max_floor = floor_id
+        desk_points = self.__build_desk_points(desks)
+        cluster_k = max(1, int(sqrt(len(desk_points))))
+        cluster_centres, clusters = k_means_cluster(desk_points, cluster_k)
 
-        return FLOOR_IDS_TO_EEGEO_IDS[floor_id]
+        max_error = 1e-5
+        lat, lng = pick_cluster_centre(cluster_centres, clusters, max_error)
+        return lat, lng
+
 
 def collate_departments(reader):
     for src_row in reader:
@@ -139,6 +240,7 @@ def collate_departments(reader):
 
         yield department, desk_id
 
+
 def gather_table(column_names, 
                  xls_sheet, 
                  first_data_row_number, 
@@ -154,9 +256,11 @@ def gather_table(column_names,
             raise ValueError("mismatched columns for row: " + insert_values)
         yield insert_values
 
+
 def is_row_available_in_app(xls_sheet, row_num, available_in_app_col_index):
     available_in_app = xls_sheet.cell_value(row_num, available_in_app_col_index).encode('utf-8')
     return available_in_app == "Yes"
+
 
 def collate_desks(swallow_xls_db):
     all_desk_positions = DeskPositions()
@@ -186,6 +290,7 @@ def collate_desks(swallow_xls_db):
         all_desk_positions.add(desk['desk'], desk['lat'], desk['lon'])
 
     return all_desk_positions
+
 
 def import_departments(input_desks_csv_path, output_csv_path, swallow_xls_db):
     if input_desks_csv_path == '':
