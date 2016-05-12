@@ -103,3 +103,8 @@ dependencies {
     compile files('../libs/google-play-services.jar')
     compile files('../libs/scribe-1.3.5.jar')
 }
+
+task clean {
+    print "Cleaning arm build\n"
+    delete project.buildDir
+}

@@ -41,12 +41,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/armeabi-v7aDebug/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/armeabi-v7aDebug/jni" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/armeabi-v7aDebug/renderscript" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/androidTest/armeabi-v7a/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/androidTest/armeabi-v7a/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/androidTest/armeabi-v7a/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/androidTest/armeabi-v7a/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/androidTest/armeabi-v7a/debug" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/resValues/androidTest/armeabi-v7a/debug" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/testArmeabi-v7aDebug/res" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/testArmeabi-v7aDebug/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/testArmeabi-v7aDebug/assets" type="java-test-resource" />
@@ -54,6 +48,12 @@
       <sourceFolder url="file://$MODULE_DIR$/src/testArmeabi-v7aDebug/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testArmeabi-v7aDebug/jni" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testArmeabi-v7aDebug/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/androidTest/armeabi-v7a/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/androidTest/armeabi-v7a/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/androidTest/armeabi-v7a/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/androidTest/armeabi-v7a/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/androidTest/armeabi-v7a/debug" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/resValues/androidTest/armeabi-v7a/debug" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/armeabi-v7a/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/armeabi-v7a/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/armeabi-v7a/assets" type="java-resource" />
@@ -61,13 +61,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/armeabi-v7a/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/armeabi-v7a/jni" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/armeabi-v7a/renderscript" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestArmeabi-v7a/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestArmeabi-v7a/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestArmeabi-v7a/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestArmeabi-v7a/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestArmeabi-v7a/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestArmeabi-v7a/jni" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestArmeabi-v7a/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testArmeabi-v7a/res" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/testArmeabi-v7a/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/testArmeabi-v7a/assets" type="java-test-resource" />
@@ -75,6 +68,13 @@
       <sourceFolder url="file://$MODULE_DIR$/src/testArmeabi-v7a/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testArmeabi-v7a/jni" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testArmeabi-v7a/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestArmeabi-v7a/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestArmeabi-v7a/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestArmeabi-v7a/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestArmeabi-v7a/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestArmeabi-v7a/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestArmeabi-v7a/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestArmeabi-v7a/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/assets" type="java-resource" />
@@ -93,13 +93,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/aidl" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/jni" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/renderscript" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/jni" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/renderscript" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/res" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/assets" type="java-test-resource" />
@@ -107,22 +100,13 @@
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/jni" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/renderscript" isTestSource="true" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/assets" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/binaries" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/blame" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/bundles" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/classes" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dependency-cache" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/instant-run-support" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jniLibs" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifests" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/objectFiles" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/pre-dexed" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/res" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/rs" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/symbols" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/transforms" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/renderscript" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
       <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
     </content>
