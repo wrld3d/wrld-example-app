@@ -53,6 +53,11 @@ namespace ExampleApp
             {
                 return *m_pView;
             }
+
+            SearchMenu::View::ISearchMenuView& SearchMenuViewModule::GetSearchMenuView()
+            {
+                return *m_pView;
+            }
         }
     }
 }

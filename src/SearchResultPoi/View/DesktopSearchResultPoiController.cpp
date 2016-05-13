@@ -16,6 +16,7 @@ namespace ExampleApp
         {
             DesktopSearchResultPoiController::DesktopSearchResultPoiController(ISearchResultPoiView& view,
                                                                                ISearchResultPoiViewModel& viewModel,
+                                                                               SearchMenu::View::ISearchMenuView& searchMenuView,
                                                                                ExampleAppMessaging::TMessageBus& messageBus,
                                                                                Metrics::IMetricsService& metricsService,
                                                                                MyPinCreation::View::IMyPinCreationInitiationView& pinCreationInitiationView,
@@ -25,20 +26,26 @@ namespace ExampleApp
                                           messageBus,
                                           metricsService)
                 , m_pinCreationInitiationView(pinCreationInitiationView)
-                , m_onPinCreationSelected(this, &DesktopSearchResultPoiController::OnPinCreationSelected)
+                , m_onPinCreationSelected(this, &DesktopSearchResultPoiController::OnPinCreationSelectedOrSearchCleared)
                 , m_interiorChangedCallback(this, &DesktopSearchResultPoiController::OnInteriorSelectionChanged)
                 , m_interiorSelectionModel(interiorSelectionModel)
+                , m_searchMenuView(searchMenuView)
+                , m_searchClearedCallback(this, &DesktopSearchResultPoiController::OnPinCreationSelectedOrSearchCleared)
             {
                 m_pinCreationInitiationView.InsertSelectedCallback(m_onPinCreationSelected);
                 
                 m_interiorSelectionModel.RegisterSelectionChangedCallback(m_interiorChangedCallback);
+
+                m_searchMenuView.InsertSearchClearedCallback(m_searchClearedCallback);
             }
 
             DesktopSearchResultPoiController::~DesktopSearchResultPoiController()
             {
-                m_pinCreationInitiationView.RemoveSelectedCallback(m_onPinCreationSelected);
+                m_searchMenuView.RemoveSearchClearedCallback(m_searchClearedCallback);
 
                 m_interiorSelectionModel.UnregisterSelectionChangedCallback(m_interiorChangedCallback);
+
+                m_pinCreationInitiationView.RemoveSelectedCallback(m_onPinCreationSelected);
             }
 
             void DesktopSearchResultPoiController::OnInteriorSelectionChanged(const Eegeo::Resources::Interiors::InteriorId& interiorId)
@@ -51,7 +58,7 @@ namespace ExampleApp
                 }
             }
             
-            void DesktopSearchResultPoiController::OnPinCreationSelected()
+            void DesktopSearchResultPoiController::OnPinCreationSelectedOrSearchCleared()
             {
                 ISearchResultPoiViewModel& viewModel = GetViewModel();
 

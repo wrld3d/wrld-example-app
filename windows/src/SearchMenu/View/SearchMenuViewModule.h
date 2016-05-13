@@ -43,6 +43,7 @@ namespace ExampleApp
                 Menu::View::MenuController& GetMenuController();
                 
                 Menu::View::IMenuView& GetMenuView();
+                SearchMenu::View::ISearchMenuView& GetSearchMenuView();
             };
         }
     }

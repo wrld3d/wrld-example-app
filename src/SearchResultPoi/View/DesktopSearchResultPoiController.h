@@ -12,6 +12,7 @@
 #include "SearchResultPoiController.h"
 #include "IMyPinCreationInitiationView.h"
 #include "InteriorSelectionModel.h"
+#include "ISearchMenuView.h"
 
 namespace ExampleApp
 {
@@ -24,16 +25,20 @@ namespace ExampleApp
                 MyPinCreation::View::IMyPinCreationInitiationView& m_pinCreationInitiationView;
 
                 Eegeo::Helpers::TCallback0<DesktopSearchResultPoiController> m_onPinCreationSelected;
-                void OnPinCreationSelected();
+                void OnPinCreationSelectedOrSearchCleared();
 
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                 Eegeo::Helpers::TCallback1<DesktopSearchResultPoiController, const Eegeo::Resources::Interiors::InteriorId> m_interiorChangedCallback;
 
                 void OnInteriorSelectionChanged(const Eegeo::Resources::Interiors::InteriorId& interiorId);
 
+                SearchMenu::View::ISearchMenuView& m_searchMenuView;
+                Eegeo::Helpers::TCallback0<DesktopSearchResultPoiController> m_searchClearedCallback;
+
             public:
                 DesktopSearchResultPoiController(ISearchResultPoiView& view,
                     ISearchResultPoiViewModel& viewModel,
+                    SearchMenu::View::ISearchMenuView& searchMenuView,
                     ExampleAppMessaging::TMessageBus& messageBus,
                     Metrics::IMetricsService& metricsService,
                     MyPinCreation::View::IMyPinCreationInitiationView& pinCreationInitiationView,

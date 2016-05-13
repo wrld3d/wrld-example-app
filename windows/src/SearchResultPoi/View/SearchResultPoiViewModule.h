@@ -29,6 +29,7 @@ namespace ExampleApp
                 SearchResultPoiViewModule(
                     WindowsNativeState& nativeState,
                     ISearchResultPoiViewModel& searchResultPoiViewModel,
+                    SearchMenu::View::ISearchMenuView& searchMenuView,
                     ExampleAppMessaging::TMessageBus& messageBus,
                     Metrics::IMetricsService& metricsService,
                     MyPinCreation::View::IMyPinCreationInitiationView& pinCreationInitiationView,
