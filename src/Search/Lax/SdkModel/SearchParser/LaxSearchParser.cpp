@@ -83,31 +83,7 @@ namespace ExampleApp
                                                                    strbuf.GetString(),
                                                                    searchResultModel.GetCreationTimestamp());
                     }
-                    
-                    LaxMeetingRoomResultModel TransformToLaxMeetingRoomResult(const Search::SdkModel::SearchResultModel& searchResultModel)
-                    {
-                        rapidjson::Document json;
-                        
-//                        std::string imageUrl = "https://www.tscmamerica.com/wp-content/uploads/2015/10/033867392-meeting-room-interior-luxury-h-200x200.png";
-                        std::string imageUrl = "";
-                        std::string availability = "";//AppHost::GetMeetingRoomState(searchResultModel.GetTitle());
-                        
-                        TryParseImageDetails(searchResultModel, imageUrl);
-
-//Using Local Device for persistance [QS]
-//                        if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
-//                        {
-//                            if(json.HasMember(SearchConstants::AVAILABILITY_FIELD_NAME.c_str()) && json[SearchConstants::AVAILABILITY_FIELD_NAME.c_str()].IsString())
-//                            {
-//                                availability = json[SearchConstants::AVAILABILITY_FIELD_NAME.c_str()].GetString();
-//                            }
-//                        }
-                        ///
-
-                        return LaxMeetingRoomResultModel(searchResultModel.GetTitle(),
-                                                             imageUrl,
-                                                             availability);
-                    }                    
+                     
                     
                     LaxTransitionResultModel TransformToLaxTransitionResult(const Search::SdkModel::SearchResultModel& searchResultModel)
                     {

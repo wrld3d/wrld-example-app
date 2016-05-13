@@ -308,10 +308,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                                   screenProperties,
                                                                                                   m_pModalBackgroundViewModule->GetModalBackgroundViewInterop(),
                                                                                                   m_messageBus);
-    
-    //////////////////////////////////
-    
-    // Left Menu also includes Search icon
+
     
     m_pSearchMenuViewModule = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchMenuViewModule)(app.SearchMenuModule().GetSearchMenuModel(),
                                                                                             app.SearchMenuModule().GetSearchMenuViewModel(),
@@ -321,7 +318,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                             m_pModalBackgroundViewModule->GetModalBackgroundViewInterop(),
                                                                                             m_messageBus);
     
-    // Pop up layer for results like meeting rooms etc
+
     
     m_pSearchResultSectionViewModule = Eegeo_NEW(ExampleApp::SearchResultSection::View::SearchResultSectionViewModule)(app.SearchMenuModule().GetSearchMenuViewModel(),
                                                                                                                        app.SearchResultSectionModule().GetSearchResultSectionOptionsModel(),
@@ -329,14 +326,13 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                                                        m_messageBus,
                                                                                                                        *m_pMenuReactionModel);
 
-    // View appearing after POI click
     
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
                                                                                                            m_messageBus,
     
                                                                                                            m_iOSFlurryMetricsService);
     
-    //////////////////////////////////////
+
     
     
     m_pFlattenButtonViewModule = Eegeo_NEW(ExampleApp::FlattenButton::View::FlattenButtonViewModule)(

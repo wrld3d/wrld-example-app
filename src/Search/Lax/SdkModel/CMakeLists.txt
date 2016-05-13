@@ -2,8 +2,6 @@ set(headers ${headers} ../src/Search/Lax/SdkModel
 )
 set(currsources
   ../src/Search/Lax/SdkModel/ILaxSearchMenuModule.h
-  ../src/Search/Lax/SdkModel/LaxMeetingRoomResultModel.cpp
-  ../src/Search/Lax/SdkModel/LaxMeetingRoomResultModel.h
   ../src/Search/Lax/SdkModel/LaxOfficeResultMenuOptionSelectedMessageHandler.cpp
   ../src/Search/Lax/SdkModel/LaxOfficeResultMenuOptionSelectedMessageHandler.h
   ../src/Search/Lax/SdkModel/LaxSearchMenuModule.cpp

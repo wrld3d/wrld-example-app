@@ -9,7 +9,6 @@
 
 #include "Search.h"
 
-#include "LaxMeetingRoomResultModel.h"
 #include "LaxTransitionResultModel.h"
 
 namespace ExampleApp
@@ -23,8 +22,6 @@ namespace ExampleApp
                 namespace SearchParser
                 {
                     ExampleApp::Search::SdkModel::SearchResultModel MutateMeetingRoomAvailability(const Search::SdkModel::SearchResultModel& searchResultModel, const std::string& newAvailability);
-                    
-                    LaxMeetingRoomResultModel TransformToLaxMeetingRoomResult(const Search::SdkModel::SearchResultModel& searchResultModel);
                     
                     LaxTransitionResultModel TransformToLaxTransitionResult(const Search::SdkModel::SearchResultModel& searchResultModel);
                     

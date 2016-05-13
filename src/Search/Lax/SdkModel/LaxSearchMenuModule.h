@@ -22,7 +22,7 @@ namespace ExampleApp
                     
                     ~LaxSearchMenuModule();
                     
-                    Menu::View::IMenuModel& GetMeetingRoomsMenuModel() const;
+                    Menu::View::IMenuModel& GetDefibrillatorMenuModel() const;
                     Menu::View::IMenuModel& GetFoodMenuModel() const;
                     Menu::View::IMenuModel& GetShoppingMenuModel() const;
                     Menu::View::IMenuModel& GetElevatorMenuModel() const;
@@ -36,8 +36,8 @@ namespace ExampleApp
                     Menu::View::IMenuModel& GetOthersMenuModel() const;
                     
                 private:
-                    Menu::View::IMenuModel* m_pMeetingRoomsMenuModel;
-                    Menu::View::IMenuOptionsModel* m_pMeetingRoomsMenuOptionsModel;
+                    Menu::View::IMenuModel* m_pDefibrillatorMenuModel;
+                    Menu::View::IMenuOptionsModel* m_pDefibrillatorMenuOptionsModel;
 
                     Menu::View::IMenuModel* m_pFoodMenuModel;
                     Menu::View::IMenuOptionsModel* m_pFoodMenuOptionsModel;

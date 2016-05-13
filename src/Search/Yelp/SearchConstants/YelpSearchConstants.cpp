@@ -38,9 +38,6 @@ namespace ExampleApp
                 {
                     std::vector<ExampleApp::CategorySearch::View::CategorySearchModel> categories;
                     
-//                  categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Meeting Rooms", MEETING_ROOM_CATEGORY_NAME, true, "meetingroom", showCategoriesInSearchMenu));
-
-                    
                     categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Around Me", "",false, "aroundme", true));
                     categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Coffee", "coffee",false, "coffee", true));
                     categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Food", "restaurants",false, "food", true));

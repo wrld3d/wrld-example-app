@@ -73,28 +73,6 @@ namespace ExampleApp
                                                                            m_messageBus,
                                                                            m_menuReaction));
                     
-//                    const Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
-//                    std::string subtitle = model.GetSubtitle();
-////                    if (model.GetCategory() == Search::Lax::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
-////                    {
-////                        // Availability is no longer a subtitle as that affects search results.
-////                        Search::Lax::SdkModel::LaxMeetingRoomResultModel meetingRoomModel = Search::Lax::SdkModel::SearchParser::TransformToLaxMeetingRoomResult(model);
-////                        subtitle = Search::Lax::SdkModel::SearchParser::GetFormattedAvailabilityString(meetingRoomModel.GetAvailability());
-////                    }
-//                    m_menuOptions.AddItem(model.GetIdentifier(),
-//                                          model.GetTitle(),
-//                                          subtitle,
-//                                          model.GetCategory(),
-//                                          Eegeo_NEW(SearchResultItemModel)(model.GetTitle(),
-//                                                                           model.GetLocation().ToECEF(),
-//                                                                           model.IsInterior(),
-//                                                                           model.GetBuildingId(),
-//                                                                           model.GetFloor(),
-//                                                                           m_searchMenuViewModel,
-////                                                                           GetOriginalIndexForSearchResult(unorderedResults, model),
-//                                                                           m_messageBus,
-//                                                                           m_menuReaction));
-//                
                 }
             }
             

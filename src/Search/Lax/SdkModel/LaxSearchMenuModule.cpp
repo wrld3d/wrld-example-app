@@ -17,12 +17,12 @@ namespace ExampleApp
             {
                 LaxSearchMenuModule::LaxSearchMenuModule(Menu::View::IMenuViewModel& menuViewModel,
                                                                  ExampleAppMessaging::TMessageBus& messageBus)
-                : m_pMeetingRoomsMenuModel(NULL)
-                , m_pMeetingRoomsMenuOptionsModel(NULL)           
+                : m_pDefibrillatorMenuModel(NULL)
+                , m_pDefibrillatorMenuOptionsModel(NULL)
                 {
-                    m_pMeetingRoomsMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
-                    m_pMeetingRoomsMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pMeetingRoomsMenuModel);
-                    m_pMeetingRoomsMenuOptionsModel->AddItem("Defibrillator",
+                    m_pDefibrillatorMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
+                    m_pDefibrillatorMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pDefibrillatorMenuModel);
+                    m_pDefibrillatorMenuOptionsModel->AddItem("Defibrillator",
                                                              "Defibrillator",
                                                              "",
                                                              "",
@@ -160,14 +160,14 @@ namespace ExampleApp
                 LaxSearchMenuModule::~LaxSearchMenuModule()
                 {
                     
-                    Eegeo_DELETE m_pMeetingRoomsMenuOptionsModel;
+                    Eegeo_DELETE m_pDefibrillatorMenuOptionsModel;
                     
-                    Eegeo_DELETE m_pMeetingRoomsMenuModel;
+                    Eegeo_DELETE m_pDefibrillatorMenuModel;
                 }
                 
-                Menu::View::IMenuModel& LaxSearchMenuModule::GetMeetingRoomsMenuModel() const
+                Menu::View::IMenuModel& LaxSearchMenuModule::GetDefibrillatorMenuModel() const
                 {
-                    return *m_pMeetingRoomsMenuModel;
+                    return *m_pDefibrillatorMenuModel;
                 }
 
                 Menu::View::IMenuModel& LaxSearchMenuModule::GetFoodMenuModel() const
