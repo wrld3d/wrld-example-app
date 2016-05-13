@@ -5,6 +5,8 @@
 #include "SearchResultPoiViewClosedMessage.h"
 #include "SearchJsonParser.h"
 #include "DesktopSearchResultPoiViewModel.h"
+#include "SearchResultPoiControllerHelpers.h"
+#include "SwallowSearchConstants.h"
 
 namespace ExampleApp
 {
@@ -14,6 +16,7 @@ namespace ExampleApp
         {
             DesktopSearchResultPoiController::DesktopSearchResultPoiController(ISearchResultPoiView& view,
                                                                                ISearchResultPoiViewModel& viewModel,
+                                                                               SearchMenu::View::ISearchMenuView& searchMenuView,
                                                                                ExampleAppMessaging::TMessageBus& messageBus,
                                                                                Metrics::IMetricsService& metricsService,
                                                                                MyPinCreation::View::IMyPinCreationInitiationView& pinCreationInitiationView,
@@ -23,20 +26,26 @@ namespace ExampleApp
                                           messageBus,
                                           metricsService)
                 , m_pinCreationInitiationView(pinCreationInitiationView)
-                , m_onPinCreationSelected(this, &DesktopSearchResultPoiController::OnPinCreationSelected)
+                , m_onPinCreationSelected(this, &DesktopSearchResultPoiController::OnPinCreationSelectedOrSearchCleared)
                 , m_interiorChangedCallback(this, &DesktopSearchResultPoiController::OnInteriorSelectionChanged)
                 , m_interiorSelectionModel(interiorSelectionModel)
+                , m_searchMenuView(searchMenuView)
+                , m_searchClearedCallback(this, &DesktopSearchResultPoiController::OnPinCreationSelectedOrSearchCleared)
             {
                 m_pinCreationInitiationView.InsertSelectedCallback(m_onPinCreationSelected);
                 
                 m_interiorSelectionModel.RegisterSelectionChangedCallback(m_interiorChangedCallback);
+
+                m_searchMenuView.InsertSearchClearedCallback(m_searchClearedCallback);
             }
 
             DesktopSearchResultPoiController::~DesktopSearchResultPoiController()
             {
-                m_pinCreationInitiationView.RemoveSelectedCallback(m_onPinCreationSelected);
+                m_searchMenuView.RemoveSearchClearedCallback(m_searchClearedCallback);
 
                 m_interiorSelectionModel.UnregisterSelectionChangedCallback(m_interiorChangedCallback);
+
+                m_pinCreationInitiationView.RemoveSelectedCallback(m_onPinCreationSelected);
             }
 
             void DesktopSearchResultPoiController::OnInteriorSelectionChanged(const Eegeo::Resources::Interiors::InteriorId& interiorId)
@@ -49,7 +58,7 @@ namespace ExampleApp
                 }
             }
             
-            void DesktopSearchResultPoiController::OnPinCreationSelected()
+            void DesktopSearchResultPoiController::OnPinCreationSelectedOrSearchCleared()
             {
                 ISearchResultPoiViewModel& viewModel = GetViewModel();
 
@@ -63,7 +72,29 @@ namespace ExampleApp
             {
                 const Search::SdkModel::SearchResultModel& searchResultModel = GetViewModel().GetSearchResultModel();
 
-                GetView().Show(searchResultModel, GetViewModel().IsPinned());
+                std::string floorRanges;
+
+                if (searchResultModel.GetCategory() == Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME)
+                {
+                    floorRanges = "\n\n" + Helpers::GetFormattedFloorRanges(searchResultModel.GetJsonData());
+                }
+
+                Search::SdkModel::SearchResultModel newModel(0.0,
+                    searchResultModel.GetIdentifier(),
+                    searchResultModel.GetTitle(),
+                    searchResultModel.GetSubtitle() + floorRanges,
+                    searchResultModel.GetLocation(),
+                    searchResultModel.GetHeightAboveTerrainMetres(),
+                    searchResultModel.IsInterior(),
+                    searchResultModel.GetBuildingId(),
+                    searchResultModel.GetFloor(),
+                    searchResultModel.GetCategory(),
+                    searchResultModel.GetHumanReadableCategories(),
+                    searchResultModel.GetVendor(),
+                    searchResultModel.GetJsonData(),
+                    Eegeo::Helpers::Time::MillisecondsSinceEpoch());
+                
+                GetView().Show(newModel, GetViewModel().IsPinned());
 
                 std::string imageUrl = "";
                 Search::SdkModel::TryParseImageDetails(searchResultModel, imageUrl);

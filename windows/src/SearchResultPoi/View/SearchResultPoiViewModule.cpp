@@ -5,6 +5,7 @@
 #include "SearchResultPoiView.h"
 #include "SearchResultPoiController.h"
 #include "WindowsAppThreadAssertionMacros.h"
+#include "ISearchMenuView.h"
 
 namespace ExampleApp
 {
@@ -15,6 +16,7 @@ namespace ExampleApp
             SearchResultPoiViewModule::SearchResultPoiViewModule(
                 WindowsNativeState& nativeState,
                 ISearchResultPoiViewModel& searchResultPoiViewModel,
+                SearchMenu::View::ISearchMenuView& searchMenuView,
                 ExampleAppMessaging::TMessageBus& messageBus,
                 Metrics::IMetricsService& metricsService,
                 MyPinCreation::View::IMyPinCreationInitiationView& pinCreationInitiationView,
@@ -23,7 +25,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
                 m_pView = Eegeo_NEW(SearchResultPoiView)(nativeState);
-                m_pController = Eegeo_NEW(DesktopSearchResultPoiController)(*m_pView, searchResultPoiViewModel, messageBus, metricsService, pinCreationInitiationView, interiorsSelectionModel);
+                m_pController = Eegeo_NEW(DesktopSearchResultPoiController)(*m_pView, searchResultPoiViewModel, searchMenuView, messageBus, metricsService, pinCreationInitiationView, interiorsSelectionModel);
             }
 
             SearchResultPoiViewModule::~SearchResultPoiViewModule()

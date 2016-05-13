@@ -550,6 +550,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(
         m_nativeState,
         app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
+        m_pSearchMenuViewModule->GetSearchMenuView(),
         m_messageBus,
         *m_pWindowsFlurryMetricsService,
         m_pMyPinCreationViewModule->GetMyPinCreationInitiationView(),

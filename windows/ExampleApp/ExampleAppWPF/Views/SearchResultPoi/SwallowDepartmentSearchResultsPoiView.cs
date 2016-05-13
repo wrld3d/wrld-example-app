@@ -49,7 +49,7 @@ namespace ExampleAppWPF
             m_closing = false;
             
             TitleText = m_model.Title;
-            Description = m_swallowDepartmentModel.Description;
+            Description = m_swallowDepartmentModel.Description + m_model.Subtitle;
 
             m_poiImage.Source = new BitmapImage(new Uri("/Assets/poi_placeholder.png", UriKind.Relative));
             m_poiImage.Stretch = Stretch.Fill;
