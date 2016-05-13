@@ -48,7 +48,7 @@ namespace ExampleAppWPF
             m_closing = false;
             
             TitleText = m_model.Title;
-            Description = m_swallowDepartmentModel.Description;
+            Description = m_swallowDepartmentModel.Description + m_model.Subtitle;
 
             m_poiImage.Source = null;
             m_poiImage.Visibility = Visibility.Hidden;

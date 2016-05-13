@@ -5,6 +5,8 @@
 #include "SearchResultPoiViewClosedMessage.h"
 #include "SearchJsonParser.h"
 #include "DesktopSearchResultPoiViewModel.h"
+#include "SearchResultPoiControllerHelpers.h"
+#include "SwallowSearchConstants.h"
 
 namespace ExampleApp
 {
@@ -63,7 +65,29 @@ namespace ExampleApp
             {
                 const Search::SdkModel::SearchResultModel& searchResultModel = GetViewModel().GetSearchResultModel();
 
-                GetView().Show(searchResultModel, GetViewModel().IsPinned());
+                std::string floorRanges;
+
+                if (searchResultModel.GetCategory() == Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME)
+                {
+                    floorRanges = "\n\n" + Helpers::GetFormattedFloorRanges(searchResultModel.GetJsonData());
+                }
+
+                Search::SdkModel::SearchResultModel newModel(0.0,
+                    searchResultModel.GetIdentifier(),
+                    searchResultModel.GetTitle(),
+                    searchResultModel.GetSubtitle() + floorRanges,
+                    searchResultModel.GetLocation(),
+                    searchResultModel.GetHeightAboveTerrainMetres(),
+                    searchResultModel.IsInterior(),
+                    searchResultModel.GetBuildingId(),
+                    searchResultModel.GetFloor(),
+                    searchResultModel.GetCategory(),
+                    searchResultModel.GetHumanReadableCategories(),
+                    searchResultModel.GetVendor(),
+                    searchResultModel.GetJsonData(),
+                    Eegeo::Helpers::Time::MillisecondsSinceEpoch());
+                
+                GetView().Show(newModel, GetViewModel().IsPinned());
 
                 std::string imageUrl = "";
                 Search::SdkModel::TryParseImageDetails(searchResultModel, imageUrl);
