@@ -425,7 +425,6 @@ namespace ExampleApp
             // For Mobile Example App purposes, we use the same taxonomy as Yelp
             // You could configure your own taxonomy via the category: attribute of a POI submitted to poi-service
             
-//          std::vector<std::string> supportedCategories = Search::Yelp::SearchConstants::GetCategories();
             std::vector<std::string> supportedCategories = Search::Lax::SearchConstants::GetAllCategories();
             m_searchServiceModules[Search::EegeoVendorName] = Eegeo_NEW(Search::EegeoPois::SdkModel::EegeoSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
                                                                                                                                                                                                                                                     m_platformAbstractions.GetUrlEncoder(),                                                                                                                                                                                                                                                                      m_networkCapabilities,                                                                                                                                                                                                                                                                      supportedCategories,                                                                                                                                                                                                                                                                      apiKey);
@@ -434,13 +433,6 @@ namespace ExampleApp
         searchServiceModulesForCombinedSearch.insert(m_searchServiceModules.begin(), m_searchServiceModules.end());
         
         m_pSearchServiceModule = Eegeo_NEW(Search::Combined::SdkModel::CombinedSearchServiceModule)(searchServiceModulesForCombinedSearch, *m_pAppModeModel);
-        
-//        m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(m_pSearchServiceModule->GetSearchService(),
-//                                                                    *m_pGlobeCameraController,
-//                                                                    *m_pCameraTransitionService,
-//                                                                    m_messageBus,
-//                                                                    m_sdkDomainEventBus);
-//        
 
         m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(m_pSearchServiceModule->GetSearchService(),
                                                                     *m_pGlobeCameraController,

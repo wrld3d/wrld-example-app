@@ -73,18 +73,6 @@ namespace ExampleApp
                     Menu::View::IMenuModel* m_pOthersMenuModel;
                     Menu::View::IMenuOptionsModel* m_pOthersMenuOptionsModel;
                     
-//                  Menu::View::IMenuModel* m_pWorkingGroupsMenuModel;
-//                  Menu::View::IMenuOptionsModel* m_pWorkingGroupsMenuOptionsModel;
-//                    
-//                  Menu::View::IMenuModel* m_pFacilitiesMenuModel;
-//                  Menu::View::IMenuOptionsModel* m_pFacilitiesMenuOptionsModel;
-//                    
-//                  Menu::View::IMenuModel* m_pOfficesMenuModel;
-//                  Menu::View::IMenuOptionsModel* m_pOfficesMenuOptionsModel;
-                    
-//                    // new //
-//                  Menu::View::IMenuModel* m_pPersonMenuModel;
-//                  Menu::View::IMenuOptionsModel* m_pPersonsMenuOptionsModel;
                     
                 };
             }
