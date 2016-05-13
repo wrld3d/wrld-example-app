@@ -197,7 +197,14 @@
                                                         </StackPanel>
                                                         <Grid Margin="0,0,0,0">
                                                             <Image Name="PoiImage" Source="/Assets/poi_placeholder.png"/>
-                                                            <Grid Name="ImageGradient" Height="30" VerticalAlignment="Bottom"/>
+                                                            <Grid Name="ImageGradient" Height="30" VerticalAlignment="Bottom">
+                                                                <Grid.Background>
+                                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                                        <GradientStop Color="#00000000" Offset="0.0"/>
+                                                                        <GradientStop Color="#80000000" Offset="1.0"/>
+                                                                    </LinearGradientBrush>
+                                                                </Grid.Background>
+                                                            </Grid>
                                                         </Grid>
                                                         <Grid HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Bottom" Margin="0,0,0,5">
                                                             <Grid.ColumnDefinitions>
