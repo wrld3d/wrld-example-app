@@ -1,11 +1,11 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-#pragma once
-
 #include <vector>
 #include "Types.h"
 #include "SearchResultModel.h"
 #include "ICallback.h"
+#include "SearchResultPoiControllerHelpers.h"
+#include <sstream>
 
 namespace ExampleApp
 {
