@@ -416,29 +416,29 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
 
 - (void)collapseSectionForTable:(CustomTableView*)tableView
 {
-    size_t sectionIndex = m_tableSectionMap[tableView];
-    
-    ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections[sectionIndex];
-    
-    if(section.IsExpandable() && section.IsExpanded())
-    {
-        NSInteger rows;
-        
-        NSMutableArray *tmpArray = [NSMutableArray array];
-        
-        [self showOpenableArrowClosed:[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]]];
-        
-        rows = section.Size();
-        section.Contract();
-        
-        for(int i = 1; i < rows; ++i)
-        {
-            NSIndexPath *tmpIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
-            [tmpArray addObject:tmpIndexPath];
-        }
-        
-        [tableView deleteRowsAtIndexPaths:tmpArray withRowAnimation:UITableViewRowAnimationNone];
-    }
+//    size_t sectionIndex = m_tableSectionMap[tableView];
+//    
+//    ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections[sectionIndex];
+//    
+//    if(section.IsExpandable() && section.IsExpanded())
+//    {
+//        NSInteger rows;
+//        
+//        NSMutableArray *tmpArray = [NSMutableArray array];
+//        
+//        [self showOpenableArrowClosed:[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]]];
+//        
+//        rows = section.Size();
+//        section.Contract();
+//        
+//        for(int i = 1; i < rows; ++i)
+//        {
+//            NSIndexPath *tmpIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
+//            [tmpArray addObject:tmpIndexPath];
+//        }
+//        
+//        [tableView deleteRowsAtIndexPaths:tmpArray withRowAnimation:UITableViewRowAnimationNone];
+//    }
 }
 
 - (CGAffineTransform)computeOpenableArrowTransform:(float)degrees

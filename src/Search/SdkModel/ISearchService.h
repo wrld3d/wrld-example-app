@@ -23,8 +23,11 @@ namespace ExampleApp
                 virtual bool CanHandleCategory(const std::string& category) const = 0;
 
                 virtual void CancelInFlightQueries() = 0;
+                
+                virtual bool CanHandleIndoor() const = 0;
 
-                // Implementation should call PerFormedQueryCallbacks and ReceivedQueryResultsCallback even if no search is made or falure occurs 
+
+                // Implementation should call PerFormedQueryCallbacks and ReceivedQueryResultsCallback even if no search is made or falure occurs
                 virtual void PerformLocationQuerySearch(const SearchQuery& query) = 0;
                 
                 // Implementation should search for an update for the given SearchResultModel

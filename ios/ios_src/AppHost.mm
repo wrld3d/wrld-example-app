@@ -308,6 +308,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                                   screenProperties,
                                                                                                   m_pModalBackgroundViewModule->GetModalBackgroundViewInterop(),
                                                                                                   m_messageBus);
+
     
     m_pSearchMenuViewModule = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchMenuViewModule)(app.SearchMenuModule().GetSearchMenuModel(),
                                                                                             app.SearchMenuModule().GetSearchMenuViewModel(),
@@ -317,16 +318,23 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                             m_pModalBackgroundViewModule->GetModalBackgroundViewInterop(),
                                                                                             m_messageBus);
     
+
+    
     m_pSearchResultSectionViewModule = Eegeo_NEW(ExampleApp::SearchResultSection::View::SearchResultSectionViewModule)(app.SearchMenuModule().GetSearchMenuViewModel(),
                                                                                                                        app.SearchResultSectionModule().GetSearchResultSectionOptionsModel(),
                                                                                                                        app.SearchResultSectionModule().GetSearchResultSectionOrder(),
                                                                                                                        m_messageBus,
                                                                                                                        *m_pMenuReactionModel);
 
+    
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
                                                                                                            m_messageBus,
+    
                                                                                                            m_iOSFlurryMetricsService);
+    
 
+    
+    
     m_pFlattenButtonViewModule = Eegeo_NEW(ExampleApp::FlattenButton::View::FlattenButtonViewModule)(
                                      app.FlattenButtonModule().GetFlattenButtonViewModel(),
                                      screenProperties,

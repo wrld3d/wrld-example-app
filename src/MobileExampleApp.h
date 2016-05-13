@@ -84,6 +84,10 @@
 #include "Surveys.h"
 #include "IMenuReactionModel.h"
 
+
+#include "LaxSearch.h"
+
+
 namespace ExampleApp
 {
     class MobileExampleApp : private Eegeo::NonCopyable
@@ -158,6 +162,14 @@ namespace ExampleApp
         
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
         Net::SdkModel::ConnectivityChangedObserver* m_pConnectivityChangedObserver;
+        
+        
+        ///////////////////
+        
+        Search::Lax::SdkModel::LaxSearchServiceModule* m_pLaxSearchServiceModule;
+        Search::Lax::SdkModel::ILaxSearchMenuModule* m_pLaxSearchMenuModule;
+        
+        ///////////////////
         
         Tours::IToursModule* m_pToursModule;
         float m_toursPinDiameter;

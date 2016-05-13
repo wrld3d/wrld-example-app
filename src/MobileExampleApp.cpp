@@ -106,6 +106,10 @@
 #include "InteriorsMaterialDto.h"
 #include "InteriorsMaterialParser.h"
 #include "InteriorsMaterialDescriptorLoader.h"
+#include "LaxSearchConstants.h"
+
+#include "LaxSearchMenuModule.h"
+#include "LaxSearchServiceModule.h"
 
 namespace ExampleApp
 {
@@ -408,28 +412,38 @@ namespace ExampleApp
                                                                                                           m_platformAbstractions.GetUrlEncoder(),
                                                                                                           m_networkCapabilities);
         }
-        const bool useEegeoPois = false;
+        
+        
+        ////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////
+        
+        
+        const bool useEegeoPois = true;
         if(useEegeoPois)
         {
             // For Mobile Example App purposes, we use the same taxonomy as Yelp
             // You could configure your own taxonomy via the category: attribute of a POI submitted to poi-service
-            std::vector<std::string> supportedCategories = Search::Yelp::SearchConstants::GetCategories();
+            
+            std::vector<std::string> supportedCategories = Search::Lax::SearchConstants::GetAllCategories();
             m_searchServiceModules[Search::EegeoVendorName] = Eegeo_NEW(Search::EegeoPois::SdkModel::EegeoSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
-                                                                                                                                       m_platformAbstractions.GetUrlEncoder(),
-                                                                                                                                       m_networkCapabilities,
-                                                                                                                                       supportedCategories,
-                                                                                                                                       apiKey);
+                                                                                                                                                                                                                                                    m_platformAbstractions.GetUrlEncoder(),                                                                                                                                                                                                                                                                      m_networkCapabilities,                                                                                                                                                                                                                                                                      supportedCategories,                                                                                                                                                                                                                                                                      apiKey);
         }
         
         searchServiceModulesForCombinedSearch.insert(m_searchServiceModules.begin(), m_searchServiceModules.end());
         
-        m_pSearchServiceModule = Eegeo_NEW(Search::Combined::SdkModel::CombinedSearchServiceModule)(searchServiceModulesForCombinedSearch);
-        
+        m_pSearchServiceModule = Eegeo_NEW(Search::Combined::SdkModel::CombinedSearchServiceModule)(searchServiceModulesForCombinedSearch, *m_pAppModeModel);
+
         m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(m_pSearchServiceModule->GetSearchService(),
                                                                     *m_pGlobeCameraController,
                                                                     *m_pCameraTransitionService,
+                                                                    m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel(),
                                                                     m_messageBus,
                                                                     m_sdkDomainEventBus);
+
+        
+        ////////////////////////////////////////////////////////////////
+
         
         // TODO: Check if this module is still relevant
         m_pAppCameraModule = Eegeo_NEW(AppCamera::SdkModel::AppCameraModule)();
@@ -479,7 +493,7 @@ namespace ExampleApp
                               m_messageBus,
                               m_metricsService,
                               m_menuReaction);
-
+        
         m_pCategorySearchModule = Eegeo_NEW(ExampleApp::CategorySearch::SdkModel::CategorySearchModule(
                                                 m_pSearchServiceModule->GetCategorySearchModels(),
                                                 SearchModule().GetSearchQueryPerformer(),
@@ -488,6 +502,9 @@ namespace ExampleApp
                                                 m_metricsService,
                                                 m_menuReaction));
 
+        
+        
+        
         m_pMapModeModule = Eegeo_NEW(MapMode::SdkModel::MapModeModule)(m_pVisualMapModule->GetVisualMapService());
 
         m_pFlattenButtonModule = Eegeo_NEW(ExampleApp::FlattenButton::SdkModel::FlattenButtonModule)(m_pMapModeModule->GetMapModeModel(),
@@ -508,6 +525,10 @@ namespace ExampleApp
                                                                                 m_pSearchModule->GetMyPinsSearchResultRefreshService(),
                                                                                 m_metricsService,
                                                                                 m_menuReaction);
+        
+        ////////////////////////////////////////////
+        ////////////////////////////////////////////
+        ////////////////////////////////////////////
         
         m_pSearchResultPoiModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiModule)(m_identityProvider,
                                                                                                        m_pReactionControllerModule->GetReactionControllerModel(),
@@ -538,7 +559,20 @@ namespace ExampleApp
                                                                                                      m_messageBus,
                                                                                                      m_metricsService,
                                                                                                      m_menuReaction);
+        
+        m_pLaxSearchServiceModule = Eegeo_NEW(Search::Lax::SdkModel::LaxSearchServiceModule)(m_pSearchServiceModule->GetSearchService(),
+                                                                                                         m_pSearchModule->GetSearchQueryPerformer(),
+                                                                                                         *m_pCameraTransitionService,
+                                                                                                         m_pAppCameraModule->GetController(),
+                                                                                                         m_messageBus,
+                                                                                                         m_pWorldPinsModule->GetWorldPinsService());
 
+        
+        ////////////////////////////////////////
+        ////////////////////////////////////////
+        ////////////////////////////////////////
+        
+        
         m_pMyPinCreationModule = Eegeo_NEW(ExampleApp::MyPinCreation::SdkModel::MyPinCreationModule)(m_pMyPinsModule->GetMyPinsService(),
                                  m_identityProvider,
                                  m_pSettingsMenuModule->GetSettingsMenuViewModel(),
@@ -615,6 +649,12 @@ namespace ExampleApp
                                                                                                      initialExperienceModel,
                                                                                                      interiorsAffectedByFlattening);
         
+        /////////////////////////////////////////
+        
+        m_pLaxSearchMenuModule = Eegeo_NEW(Search::Lax::SdkModel::LaxSearchMenuModule)(m_pSearchMenuModule->GetSearchMenuViewModel(),
+                                                                                                   m_messageBus);
+
+        /////////////////////////////////////////
 
         m_pInteriorCameraWrapper = Eegeo_NEW(AppCamera::SdkModel::AppInteriorCameraWrapper)(m_pInteriorsExplorerModule->GetInteriorsCameraController());
 
@@ -648,11 +688,37 @@ namespace ExampleApp
                                  openables,
                                  reactors);
         
+        
+        //////////////////////////////////////////////
+        //////////////////////////////////////////////
+        //////////////////////////////////////////////
+        
+        
+        
         m_pSearchMenuModule->SetSearchSection("Search Results", m_pSearchResultSectionModule->GetSearchResultSectionModel());
+        
+        m_pSearchMenuModule->AddMenuSection("Defibrillators",    m_pLaxSearchMenuModule->GetDefibrillatorMenuModel(), false);
+        m_pSearchMenuModule->AddMenuSection("Food",    m_pLaxSearchMenuModule->GetFoodMenuModel(), false);
+        m_pSearchMenuModule->AddMenuSection("Shopping",    m_pLaxSearchMenuModule->GetShoppingMenuModel(), false);
+        m_pSearchMenuModule->AddMenuSection("Elevator",    m_pLaxSearchMenuModule->GetElevatorMenuModel(), false);
+        m_pSearchMenuModule->AddMenuSection("Stairs",    m_pLaxSearchMenuModule->GetStairsMenuModel(), false);
+        m_pSearchMenuModule->AddMenuSection("Escalator",    m_pLaxSearchMenuModule->GetEscalatorMenuModel(), false);
+        m_pSearchMenuModule->AddMenuSection("Restroom",    m_pLaxSearchMenuModule->GetRestroomMenuModel(), false);
+        m_pSearchMenuModule->AddMenuSection("TDD Pay Phone",    m_pLaxSearchMenuModule->GetTddpayphoneMenuModel(), false);
+        m_pSearchMenuModule->AddMenuSection("ATM",    m_pLaxSearchMenuModule->GetAtmMenuModel(), false);
+        m_pSearchMenuModule->AddMenuSection("Pay Phone",    m_pLaxSearchMenuModule->GetPayphoneMenuModel(), false);
+        m_pSearchMenuModule->AddMenuSection("Gates",    m_pLaxSearchMenuModule->GetGateseMenuModel(), false);
+        m_pSearchMenuModule->AddMenuSection("Others",    m_pLaxSearchMenuModule->GetOthersMenuModel(), false);        
         m_pSearchMenuModule->AddMenuSection("Find", m_pCategorySearchModule->GetCategorySearchMenuModel(), true);
         m_pSearchMenuModule->AddMenuSection("Weather" , m_pWeatherMenuModule->GetWeatherMenuModel(), true);
         m_pSearchMenuModule->AddMenuSection("Locations", m_pPlaceJumpsModule->GetPlaceJumpsMenuModel(), true);
         m_pSearchMenuModule->AddMenuSection("My Pins", m_pMyPinsModule->GetMyPinsMenuModel(), true);
+
+        //////////////////////////////////////////////
+        //////////////////////////////////////////////
+        //////////////////////////////////////////////
+
+        
     }
     
     void MobileExampleApp::InitialiseAppState(Eegeo::UI::NativeUIFactories& nativeUIFactories)
@@ -998,7 +1064,7 @@ namespace ExampleApp
 
         eegeoWorld.Update(updateParameters);
 
-        m_pSearchModule->GetSearchRefreshService().TryRefreshSearch(dt, ecefInterestPoint, cameraState.LocationEcef());
+        m_pSearchModule->GetSearchRefreshService().TryRefreshSearch(dt, ecefInterestPoint);
 
         m_pPinsModule->GetController().Update(dt, renderCamera);
         

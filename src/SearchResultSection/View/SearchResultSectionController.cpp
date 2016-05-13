@@ -7,6 +7,8 @@
 #include "IAppModeModel.h"
 #include "ISearchResultSectionOrder.h"
 #include "SearchResultItemModel.h"
+#include "LaxSearchConstants.h"
+#include "LaxSearchParser.h"
 
 namespace ExampleApp
 {
@@ -31,6 +33,13 @@ namespace ExampleApp
                         return m_order(a, b);
                     }
                 };
+                
+//                inline int GetOriginalIndexForSearchResult(const std::vector<Search::SdkModel::SearchResultModel>& unorderedResults, const Search::SdkModel::SearchResultModel& result)
+//                {
+//                    std::vector<Search::SdkModel::SearchResultModel>::const_iterator it = std::find(unorderedResults.begin(), unorderedResults.end(), result);
+//                    
+//                    return static_cast<int>(std::distance(unorderedResults.begin(), it));
+//                }
             }
 
             void SearchResultSectionController::OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message)
@@ -42,6 +51,9 @@ namespace ExampleApp
                 }
                 
                 m_lastAddedResults = message.GetResults();
+                
+//                const std::vector<Search::SdkModel::SearchResultModel>& unorderedResults = message.GetResults();
+                
                 OrderWrapper orderWrapper(m_order);
                 std::stable_sort(m_lastAddedResults.begin(), m_lastAddedResults.end(), orderWrapper);
                 
@@ -60,6 +72,7 @@ namespace ExampleApp
                                                                            m_searchMenuViewModel,
                                                                            m_messageBus,
                                                                            m_menuReaction));
+                    
                 }
             }
             

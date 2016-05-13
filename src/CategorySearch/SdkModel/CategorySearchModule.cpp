@@ -24,33 +24,63 @@ namespace ExampleApp
                                                        Metrics::IMetricsService& metricsService,
                                                        const Menu::View::IMenuReactionModel& menuReaction)
             {
-                m_pMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
-                m_pMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pMenuModel);
-
-                m_pCategorySearchRepository = Eegeo_NEW(View::CategorySearchRepository)(categorySearchModels);
-
-                for(std::vector<View::CategorySearchModel>::const_iterator it = categorySearchModels.begin(); it != categorySearchModels.end(); it++)
-                {
-                    const View::CategorySearchModel& categorySearchModel = *it;
-
-                    if (categorySearchModel.InMenu())
-                    {
-                        m_pMenuOptionsModel->AddItem(categorySearchModel.Name(),
-                                                     categorySearchModel.Name(),
-                                                     "",
-                                                     categorySearchModel.Icon(),
-                                                     Eegeo_NEW(View::CategorySearchMenuOption)(categorySearchModel, menuViewModel, messageBus, menuReaction));
-                    }
-                }
-
-
-                m_pCategorySearchSelectedMessageHandler = Eegeo_NEW(CategorySearchSelectedMessageHandler)(
-                            searchQueryPerformer,
-                            messageBus,
-                            metricsService
-                        );
+//                m_pMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
+//                m_pMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pMenuModel);
+//
+//                m_pCategorySearchRepository = Eegeo_NEW(View::CategorySearchRepository)(categorySearchModels);
+//
+//                for(std::vector<View::CategorySearchModel>::const_iterator it = categorySearchModels.begin(); it != categorySearchModels.end(); it++)
+//                {
+//                    const View::CategorySearchModel& categorySearchModel = *it;
+//
+//                    if (categorySearchModel.InMenu())
+//                    {
+//                        m_pMenuOptionsModel->AddItem(categorySearchModel.Name(),
+//                                                     categorySearchModel.Name(),
+//                                                     "",
+//                                                     categorySearchModel.Icon(),
+//                                                     Eegeo_NEW(View::CategorySearchMenuOption)(categorySearchModel, menuViewModel, messageBus, menuReaction));
+//                    }
+//                }
+//
+//
+//                m_pCategorySearchSelectedMessageHandler = Eegeo_NEW(CategorySearchSelectedMessageHandler)(
+//                            searchQueryPerformer,
+//                            messageBus,
+//                            metricsService
+//                        );
+//                
+//                m_pSearchResultIconCategoryMapper = Eegeo_NEW(SearchResultIconCategoryMapper)();
                 
-                m_pSearchResultIconCategoryMapper = Eegeo_NEW(SearchResultIconCategoryMapper)();
+                {
+                    m_pMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
+                    m_pMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pMenuModel);
+                    
+                    m_pCategorySearchRepository = Eegeo_NEW(View::CategorySearchRepository)(categorySearchModels);
+                    
+                    for(std::vector<View::CategorySearchModel>::const_iterator it = categorySearchModels.begin(); it != categorySearchModels.end(); it++)
+                    {
+                        const View::CategorySearchModel& categorySearchModel = *it;
+                        
+                        if(categorySearchModel.IsVisibleInSearchMenu())
+                        {
+                            m_pMenuOptionsModel->AddItem(categorySearchModel.Name(),
+                                                         categorySearchModel.Name(),
+                                                         "",
+                                                         categorySearchModel.Icon(),
+                                                         Eegeo_NEW(View::CategorySearchMenuOption)(categorySearchModel, menuViewModel, messageBus,menuReaction));
+                        }
+                    }
+                    
+                    
+                    m_pCategorySearchSelectedMessageHandler = Eegeo_NEW(CategorySearchSelectedMessageHandler)(
+                                                                                                              searchQueryPerformer,
+                                                                                                              messageBus,
+                                                                                                              metricsService
+                                                                                                              );
+                    
+                    m_pSearchResultIconCategoryMapper = Eegeo_NEW(SearchResultIconCategoryMapper)();
+                }
             }
 
             CategorySearchModule::~CategorySearchModule()

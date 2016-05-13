@@ -103,8 +103,8 @@ namespace ExampleApp
                     m_viewModel.AddToScreen();
                     
                     m_initiationViewModel.RemoveFromScreen();
-                    m_searchMenuViewModel.RemoveFromScreen();
-                    m_settingsMenuViewModel.RemoveFromScreen();
+//                    m_searchMenuViewModel.RemoveFromScreen();
+//                    m_settingsMenuViewModel.RemoveFromScreen();
                     m_flattenViewModel.RemoveFromScreen();
                     m_compassViewModel.RemoveFromScreen();
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(false));

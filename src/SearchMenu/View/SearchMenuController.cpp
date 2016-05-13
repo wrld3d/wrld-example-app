@@ -123,17 +123,17 @@ namespace ExampleApp
             
             void SearchMenuController::OnSearch(const std::string& searchQuery)
             {
-                m_messageBus.Publish(SearchMenuPerformedSearchMessage(searchQuery, false));
+                m_messageBus.Publish(SearchMenuPerformedSearchMessage(searchQuery, false,false));
             }
             
             void SearchMenuController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
             {
-                m_appModeAllowsOpen = message.GetAppMode() != AppModes::SdkModel::InteriorMode;
-                
-                if (!m_appModeAllowsOpen)
-                {
-                    m_viewModel.RemoveFromScreen();
-                }
+//                m_appModeAllowsOpen = message.GetAppMode() != AppModes::SdkModel::InteriorMode;
+//                
+//                if (!m_appModeAllowsOpen)
+//                {
+//                    m_viewModel.RemoveFromScreen();
+//                }
             }
             
             bool SearchMenuController::TryDrag()

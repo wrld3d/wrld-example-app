@@ -16,8 +16,8 @@ namespace ExampleApp
                     ExampleAppMessaging::TMessageBus& messageBus,
                     const Menu::View::IMenuReactionModel& menuReaction)
                 : m_model(model)
-                , m_menuViewModel(menuViewModel)
                 , m_messageBus(messageBus)
+                , m_menuViewModel(menuViewModel)
                 , m_menuReaction(menuReaction)
             {
             }
@@ -34,7 +34,7 @@ namespace ExampleApp
                     m_menuViewModel.Close();
                 }
 
-                m_messageBus.Publish(CategorySearchSelectedMessage(m_model.SearchCategory()));
+                m_messageBus.Publish(CategorySearchSelectedMessage(m_model.SearchCategory(),m_model.Interior()));
             }
         }
     }

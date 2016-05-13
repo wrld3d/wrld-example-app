@@ -213,6 +213,7 @@
     
     self.pTitleContainer = [[[UIView alloc] initWithFrame:CGRectMake(m_titleContainerOffScreenX, m_titleContainerOffScreenY, m_titleContainerOffScreenWidth, m_titleContainerOffScreenHeight)] autorelease];
     self.pTitleContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
+
     
     m_searchCountLabelWidth = searchCountLabelWidth;
     m_searchCountLabelHeight = dragTabSize;
@@ -308,14 +309,16 @@
     
     self.pTopTableSeparator = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, m_menuContainerWidth, m_tableSpacing)] autorelease];
     self.pTopTableSeparator.backgroundColor = ExampleApp::Helpers::ColorPalette::TableSeparatorColor;
+//    self.pTopTableSeparator.backgroundColor = [UIColor yellowColor];
     
     self.pSearchTableSeparator = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, m_menuContainerWidth, m_tableSpacing)] autorelease];
     self.pSearchTableSeparator.backgroundColor = ExampleApp::Helpers::ColorPalette::TableSeparatorColor;
-    
+//      self.pSearchTableSeparator.backgroundColor = [UIColor yellowColor];
     self.pTableViewContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, m_tableSpacing, m_menuContainerWidth, 0.0f)] autorelease];
+    self.pTableViewContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::TableSeparatorColor;
     self.pTableViewContainer.bounces = NO;
     self.pTableViewContainer.contentSize = CGSizeMake(m_menuContainerWidth, 0.0f);
-    self.pTableViewContainer.backgroundColor = [UIColor clearColor];
+//    self.pTableViewContainer.backgroundColor = [UIColor clearColor];
     self.pTableViewContainer.scrollEnabled = YES;
     self.pTableViewContainer.userInteractionEnabled = YES;
     
@@ -382,10 +385,14 @@
     [self.pMenuContainer addSubview: self.pTableViewContainer];
     [self.pMenuContainer addSubview: self.pAnchorArrowImage];
     
+    ///// Adding Left Menu  //////
+    
     for (int i = 0; i < [self.pTableViewMap count]; ++i)
     {
         [self.pTableViewContainer addSubview:self.pTableViewMap[@(i)]];
     }
+    
+    ///// Adding Result Menu  //////
     
     [self.pTableViewContainer addSubview:self.pSearchResultsTableContainerView];
     [self.pSearchResultsTableContainerView addSubview:self.pSearchResultsTableView];
@@ -563,7 +570,6 @@
                                                                                                                  Eegeo::v2(m_searchCountLabelClosedOnScreenX, m_searchCountLabelClosedOnScreenY),
                                                                                                                  Eegeo::v2(m_searchCountLabelClosedOnScreenX, m_searchCountLabelClosedOnScreenYWithResults),
                                                                                                                  Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>())));
-    
     
     // Anchor arrow animations
     m_pAnchorAnimationController = Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewAnimationController)(self,
@@ -806,9 +812,15 @@
     
     if(searchResultsTableContentHeight > 0.0f)
     {
-        const float maxOnScreenSearchResultsTableHeight = fmaxf(0.0f, m_maxScreenSpace - totalTableHeight - m_tableSpacing);
+       // const float maxOnScreenSearchResultsTableHeight = fmaxf(0.0f, totalTableHeight - m_maxScreenSpace - m_tableSpacing);
+//
         
-        onScreenSearchResultsTableHeight = fminf(maxOnScreenSearchResultsTableHeight, searchResultsTableContentHeight);
+//        const float maxOnScreenSearchResultsTableHeight = 200.0f;
+        
+        //onScreenSearchResultsTableHeight = fminf(maxOnScreenSearchResultsTableHeight, searchResultsTableContentHeight);
+        
+        onScreenSearchResultsTableHeight = searchResultsTableContentHeight;
+        
         tableY = (onScreenSearchResultsTableHeight > 0.0f) ? onScreenSearchResultsTableHeight + m_tableSpacing : 0.0f;
     }
     else
@@ -831,6 +843,8 @@
     
     const float tableViewContainerHeight = fminf(m_maxScreenSpace, tableY + totalTableHeight);
     
+//    const float tableViewContainerHeight = tableY + totalTableHeight;//fminf(m_maxScreenSpace, tableY + totalTableHeight);
+    
     CGRect frame = self.pSearchTableSeparator.frame;
     frame.origin.y = tableY;
     self.pSearchTableSeparator.frame = frame;
@@ -845,11 +859,12 @@
     frame.size.height = tableViewContainerHeight;
     self.pTableViewContainer.frame = frame;
     
-    [self.pTableViewContainer setContentSize:CGSizeMake(self.pTableViewContainer.frame.size.width, tableY + totalTableHeight)];
+    [self.pTableViewContainer setContentSize:CGSizeMake(self.pTableViewContainer.frame.size.width, tableY + totalTableHeight)]; // scroll view
     
     frame = self.pMenuContainer.frame;
     frame.size.height = tableViewContainerHeight + m_tableSpacing;
     self.pMenuContainer.frame = frame;
+//    [self.pMenuContainer setBackgroundColor:[UIColor yellowColor]];
 }
 
 - (float) getHeightForTable:(CustomTableView*)tableView

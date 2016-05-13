@@ -23,6 +23,6 @@ namespace ExampleApp
             class InteriorsExplorerController;
         }
         
-        static const float DefaultInteriorTransitionInterestDistance = 80.f;
+        static const float DefaultInteriorTransitionInterestDistance = 250.f;
     }
 }

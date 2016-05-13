@@ -40,7 +40,7 @@ namespace
 {
     if (self = [super init])
     {
-        const bool isPhone = App::IsDeviceSmall();
+        const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
         
         m_pixelScale = 1.f;
         m_screenWidth = width/pixelScale;

@@ -17,6 +17,7 @@ namespace ExampleApp
             SearchModule::SearchModule(ISearchService& searchService,
                                        Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
                                        CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
+                                       Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                        ExampleAppMessaging::TMessageBus& messageBus,
                                        ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus)
             {
@@ -30,14 +31,22 @@ namespace ExampleApp
                 m_pSearchQueryPerformer = Eegeo_NEW(SearchQueryPerformer)(searchService,
                                           *m_pSearchResultRepository,
                                           cameraController);
+//
+//                m_pSearchRefreshService = Eegeo_NEW(SearchRefreshService)(searchService,
+//                                          *m_pSearchQueryPerformer,
+//                                          cameraTransitionsController,
+//                                          1.f,
+//                                          100.f,
+//                                          50.f);
 
+                
                 m_pSearchRefreshService = Eegeo_NEW(SearchRefreshService)(searchService,
-                                          *m_pSearchQueryPerformer,
-                                          cameraTransitionsController,
-                                          1.f,
-                                          100.f,
-                                          50.f);
-
+                                                                          *m_pSearchQueryPerformer,
+                                                                          cameraTransitionsController,
+                                                                          interiorInteractionModel,
+                                                                          1.f,
+                                                                          100.f);
+                
                 m_pSearchQueryObserver = Eegeo_NEW(SearchQueryObserver)(
                                              searchService,
                                              *m_pSearchQueryPerformer,
