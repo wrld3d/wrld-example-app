@@ -142,10 +142,18 @@ namespace ExampleApp
             
             const bool operator< (const SearchResultModel& a, const SearchResultModel& b)
             {
-                if(a.GetTitle() < b.GetTitle())
-                {
+                std::string aStr = a.GetTitle();
+                transform(aStr.begin(), aStr.end(), aStr.begin(),::toupper);
+
+                std::string bStr = b.GetTitle();
+                transform(bStr.begin(), bStr.end(), bStr.begin(),::toupper);
+                if (aStr.compare(bStr) < 0) {
                     return true;
                 }
+//                if(a.GetTitle() < b.GetTitle())
+//                {
+//                    return true;
+//                }
                 else if (a.GetTitle() == b.GetTitle() && a.GetSubtitle() < b.GetSubtitle())
                 {
                     return true;
