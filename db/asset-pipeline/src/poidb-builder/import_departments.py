@@ -52,12 +52,18 @@ FLOOR_IDS_TO_EEGEO_IDS = {
     }
 
 
-def distance(a, b):
+def sqr_distance(a, b):
     v = tuple(map(operator.sub, a, b))
     v = tuple(map(operator.mul, v, v))
     dot = sum(v)
-    dist = sqrt(dot)
+    return dot
+
+
+def distance(a, b):
+    sqr_dist = sqr_distance(a, b)
+    dist = sqrt(sqr_dist)
     return dist
+
 
 def cluster_points(points, cluster_centres):
     clusters = {}
@@ -78,9 +84,27 @@ def cluster_points(points, cluster_centres):
 
 
 def calc_mean(points):
+    num_points = len(points)
+    if num_points < 1:
+        raise ValueError("must have at least one point")
     summed = tuple(sum(x) for x in zip(*points))
-    mean = tuple((x / len(points)) for x in summed)
+    mean = tuple((x / num_points) for x in summed)
     return mean
+
+
+def calc_sum_square_deviations(points):
+    mean = calc_mean(points)
+    ssd = sum(sqr_distance(point, mean) for point in points)
+    return ssd
+
+
+def calc_population_standard_deviation(points):
+    num_points = len(points)
+    ssd = calc_sum_square_deviations(points)
+    variance = ssd / num_points
+    std_dev = sqrt(variance)
+    return std_dev
+
 
 def calc_cluster_centers(clusters):
     cluster_centres = []
@@ -211,10 +235,14 @@ class DeskPositions:
             raise ValueError('desk set is empty')
 
         desk_points = self.__build_desk_points(desks)
-        cluster_k = max(1, int(sqrt(len(desk_points))))
+
+        std_dev = calc_population_standard_deviation(desk_points)
+        cluster_scale = 1e-5
+        cluster_k = int(sqrt(std_dev/cluster_scale))
+        cluster_k = min(max(1, cluster_k), len(desk_points))
         cluster_centres, clusters = k_means_cluster(desk_points, cluster_k)
 
-        max_error = 1e-5
+        max_error = 1e-4
         lat, lng = pick_cluster_centre(cluster_centres, clusters, max_error)
         return lat, lng
 
