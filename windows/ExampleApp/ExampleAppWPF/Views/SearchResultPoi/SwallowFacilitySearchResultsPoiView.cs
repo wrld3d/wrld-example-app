@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace ExampleAppWPF
 {
@@ -50,9 +51,8 @@ namespace ExampleAppWPF
             TitleText = m_model.Title;
             Description = m_swallowFacilityModel.Description;
 
-            m_poiImage.Source = null;
-            m_poiImage.Visibility = Visibility.Hidden;
-
+            m_poiImage.Source = new BitmapImage(new Uri("/Assets/poi_placeholder.png", UriKind.Relative));
+            m_poiImage.Stretch = Stretch.Fill;
             OnPropertyChanged("");
 
             ShowAll();
@@ -60,8 +60,11 @@ namespace ExampleAppWPF
 
         public override void UpdateImageData(string url, bool hasImage, byte[] imgData)
         {
-            m_poiImage.Source = LoadImageFromByteArray(imgData);
-            m_poiImage.Visibility = Visibility.Visible;
+            if (hasImage)
+            {
+                m_poiImage.Source = LoadImageFromByteArray(imgData);
+                m_poiImage.Stretch = Stretch.UniformToFill;
+            }
         }
     }
 }

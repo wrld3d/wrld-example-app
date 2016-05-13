@@ -57,8 +57,10 @@ namespace ExampleAppWPF
 
         public override void UpdateImageData(string url, bool hasImage, byte[] imgData)
         {
-            m_portraitImage.Source = LoadImageFromByteArray(imgData);
-            m_portraitImage.Visibility = Visibility.Visible;
+            if (hasImage)
+            {
+                m_portraitImage.Source = LoadImageFromByteArray(imgData);
+            }
         }
     }
 }

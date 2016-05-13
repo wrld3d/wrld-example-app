@@ -226,7 +226,7 @@ namespace ExampleAppWPF
             HumanReadableCategoriesText = string.Join(Environment.NewLine, model.HumanReadableCategories);
             ReviewText = string.Join(Environment.NewLine, yelpResultModel.Reviews);
             CategoryIcon = StartupResourceLoader.GetBitmap(SearchResultCategoryMapper.GetIconImageName(model.Category));
-            PoiViewRatingCountText = yelpResultModel.ReviewCount.ToString();
+            PoiViewRatingCountText = yelpResultModel.ReviewCount > 0 ? yelpResultModel.ReviewCount.ToString() : string.Empty;
             RatingsImage = null;
 
             if (yelpResultModel.ReviewCount > 0 && !string.IsNullOrEmpty(yelpResultModel.RatingsImageUrl))
@@ -234,7 +234,7 @@ namespace ExampleAppWPF
                 RatingsImage = new BitmapImage(ViewHelpers.MakeUriForImage(string.Format("{0}.png", yelpResultModel.RatingsImageUrl)));
             }
 
-            RatingCountVisibility = string.IsNullOrEmpty(yelpResultModel.ImageUrl) && !string.IsNullOrEmpty(yelpResultModel.RatingsImageUrl) && yelpResultModel.ReviewCount > 0 ? Visibility.Visible : Visibility.Collapsed;
+            RatingCountVisibility = !string.IsNullOrEmpty(yelpResultModel.RatingsImageUrl) && yelpResultModel.ReviewCount > 0 ? Visibility.Visible : Visibility.Collapsed;
             Url = yelpResultModel.WebUrl;
 
             if(string.IsNullOrEmpty(ReviewText))
@@ -246,7 +246,8 @@ namespace ExampleAppWPF
                 m_reviewsIcon.Visibility = Visibility.Visible;
             }
 
-            m_poiImage.Source = new BitmapImage(new Uri("/ExampleAppWPF;component/Assets/poi_placeholder.png", UriKind.Relative));
+            m_poiImage.Source = new BitmapImage(new Uri("/Assets/poi_placeholder.png", UriKind.Relative));
+            m_poiImage.Stretch = Stretch.Fill;
 
             OnPropertyChanged("IsPinned");
 
@@ -255,13 +256,11 @@ namespace ExampleAppWPF
         
         public override void UpdateImageData(string url, bool hasImage, byte[] imgData)
         {
-            if(!hasImage)
+            if(hasImage)
             {
-                return;
+                m_poiImage.Source = LoadImageFromByteArray(imgData);
+                m_poiImage.Stretch = Stretch.UniformToFill;
             }
-
-            m_poiImage.Source = LoadImageFromByteArray(imgData);
-            m_poiImage.Visibility = Visibility.Visible;
         }
         
         public void HandleWebLinkButtonClicked(object sender, MouseEventArgs e)
