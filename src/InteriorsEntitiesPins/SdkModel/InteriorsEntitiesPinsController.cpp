@@ -49,14 +49,13 @@ namespace ExampleApp
                 m_interiorInteractionModel.RegisterModelChangedCallback(m_interiorModelChangedCallback);
                 m_interiorInteractionModel.RegisterInteractionStateChangedCallback(m_interiorInteractionStateChangedCallback);
                 
-                // This is same across all interiors right now. If we want different omissions per interior
-                // then we'll need to do a bit of work.
                 m_labelNameToIconIndex["Restroom"] = 0;
                 m_labelNameToIconIndex["Men's Bathroom"] = 0;
                 m_labelNameToIconIndex["Women's Bathroom"] = 0;
                 m_labelNameToIconIndex["Bathroom"] = 0;
-                m_labelNameToIconIndex["Elevator"] = 1; // Not really an elevator logo, just for testing
+                m_labelNameToIconIndex["Elevator"] = 2;
                 m_labelNameToIconIndex["Escalator"] = 1;
+                m_labelNameToIconIndex["Stairs"] = 4;
                 
                 for (std::map<std::string, int>::const_iterator it = m_labelNameToIconIndex.begin(); it != m_labelNameToIconIndex.end(); ++it)
                 {
@@ -126,7 +125,7 @@ namespace ExampleApp
                 Eegeo_ASSERT(pMetadata != NULL, "No metadata to create entity pin");
                 
                 Eegeo::Space::LatLong pinLocation = Eegeo::Space::LatLong::FromDegrees(pMetadata->latitudeDegrees, pMetadata->longitudeDegrees);
-                const float wallHeight = 5.f;
+                const float wallHeight = 3.f;
                 float terrainHeight = 0.f;
                 m_terrainHeightProvider.TryGetHeight(pinLocation.ToECEF(), 12, terrainHeight);
                 
