@@ -77,6 +77,7 @@
 @property (nonatomic, retain) UILabel* pReviewsHeaderLabel;
 @property (nonatomic, retain) UILabel* pReviewsContent;
 @property (nonatomic, retain) UIImageView* pPreviewImage;
+@property (nonatomic, retain) UIImage* pPlaceholderImage;
 @property (nonatomic, retain) UIActivityIndicatorView* pPreviewImageSpinner;
 @property (nonatomic, retain) UIImageView* pRatingImage;
 @property (nonatomic, retain) UILabel* pReviewCountLabel;

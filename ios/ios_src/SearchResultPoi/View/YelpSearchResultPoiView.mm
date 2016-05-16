@@ -21,10 +21,14 @@
 }
 @end
 
-const float RatingImageWidth = 100.f;
-const float RatingImageHeight = 30.f;
-const int PhoneAlertViewTag = 1;
-const int DeletePinAlertViewTag = 2;
+namespace
+{
+    const bool AllowPinning = true;
+    const float RatingImageWidth = 100.f;
+    const float RatingImageHeight = 30.f;
+    const int PhoneAlertViewTag = 1;
+    const int DeletePinAlertViewTag = 2;
+}
 
 @implementation YelpSearchResultPoiView
 
@@ -59,10 +63,13 @@ const int DeletePinAlertViewTag = 2;
         [self.pCloseButton addTarget:self action:@selector(handleClosedButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
         
-        self.pPinButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pPinButton setDefaultStates];
-        [self.pPinButton addTarget:self action:@selector(handlePinButtonSelected) forControlEvents:UIControlEventTouchUpInside];
-        [self.pCloseButtonContainer addSubview: self.pPinButton];
+        if(AllowPinning)
+        {
+            self.pPinButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+            [self.pPinButton setDefaultStates];
+            [self.pPinButton addTarget:self action:@selector(handlePinButtonSelected) forControlEvents:UIControlEventTouchUpInside];
+            [self.pCloseButtonContainer addSubview: self.pPinButton];
+        }
         
         self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
@@ -86,10 +93,12 @@ const int DeletePinAlertViewTag = 2;
         self.pPreviewImage = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pLabelsContainer addSubview: self.pPreviewImage];
         
-        self.pPreviewImageSpinner = [[[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pPreviewImageSpinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+        self.pPreviewImageSpinner = [[[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 64, 64)] autorelease];
+        self.pPreviewImageSpinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
         self.pPreviewImageSpinner.center = CGPointZero;
         [self.pPreviewImage addSubview: self.pPreviewImageSpinner];
+        
+        self.pPlaceholderImage = [UIImage imageNamed: @"poi_placeholder.png"];
         
         self.pRatingImage = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pLabelsContainer addSubview: self.pRatingImage];
@@ -177,8 +186,11 @@ const int DeletePinAlertViewTag = 2;
     [self.pCloseButton removeFromSuperview];
     [self.pCloseButton release];
     
-    [self.pPinButton removeFromSuperview];
-    [self.pPinButton release];
+    if(AllowPinning)
+    {
+        [self.pPinButton removeFromSuperview];
+        [self.pPinButton release];
+    }
     
     [self.pCloseButtonContainer removeFromSuperview];
     [self.pCloseButtonContainer release];
@@ -236,6 +248,8 @@ const int DeletePinAlertViewTag = 2;
     
     [self.pReviewsContent removeFromSuperview];
     [self.pReviewsContent release];
+    
+    [self.pPlaceholderImage release];
     
     [self.pPreviewImage removeFromSuperview];
     [self.pPreviewImage release];
@@ -310,10 +324,13 @@ const int DeletePinAlertViewTag = 2;
                                          closeButtonSectionHeight,
                                          closeButtonSectionHeight);
     
-    self.pPinButton.frame = CGRectMake(0.f,
-                                       0.f,
-                                       closeButtonSectionHeight,
-                                       closeButtonSectionHeight);
+    if(AllowPinning)
+    {
+        self.pPinButton.frame = CGRectMake(0.f,
+                                           0.f,
+                                           closeButtonSectionHeight,
+                                           closeButtonSectionHeight);
+    }
     
     self.pCategoryIconContainer.frame = CGRectMake(0.f, 0.f, headlineHeight, headlineHeight);
     const float titlePadding = 10.0f;
@@ -343,7 +360,7 @@ const int DeletePinAlertViewTag = 2;
     const bool hasImage = !m_yelpModel.GetImageUrl().empty();
     const bool hasReviewBar = !self.pReviewCountLabel.hidden;
     
-    if(!m_yelpModel.GetImageUrl().empty())
+    if(hasImage)
     {
         currentLabelY = 0.f;
         const CGFloat imageX = (self.frame.size.width * 0.5f - m_imageWidth * 0.5f);
@@ -372,14 +389,14 @@ const int DeletePinAlertViewTag = 2;
     {
         UIImage* image = ExampleApp::Helpers::ImageHelpers::LoadImage(m_yelpModel.GetRatingImageUrl());
         [self.pRatingImage setImage:image];
-
+        
         m_ratingsImageWidth = image.size.width;
         m_ratingsImageHeight = image.size.height;
-
+        
         const CGFloat imageX = hasImage ? (self.frame.size.width * 0.5f) - m_ratingsImageWidth*0.5f : roundf(rateBarOriginX);
         const CGFloat imageY = hasImage
-            ? self.pPreviewImage.frame.origin.y + self.pPreviewImage.frame.size.height - yelpButtonHeight - reviewSpacing
-            : currentLabelY + (yelpButtonHeight*0.5f) - (m_ratingsImageHeight*0.5f);
+        ? self.pPreviewImage.frame.origin.y + self.pPreviewImage.frame.size.height - yelpButtonHeight - reviewSpacing
+        : currentLabelY + (yelpButtonHeight*0.5f) - (m_ratingsImageHeight*0.5f);
         self.pRatingImage.frame = CGRectMake(imageX, imageY, m_ratingsImageWidth, m_ratingsImageHeight);
         
         CGRect frame = self.pRatingImage.frame;
@@ -546,6 +563,11 @@ const int DeletePinAlertViewTag = 2;
     m_isPinned = isPinned;
     [self updatePinnedButtonState];
     
+    if(!AllowPinning && m_isPinned)
+    {
+        [self togglePinState];
+    }
+    
     self.pTitleLabel.text = [NSString stringWithUTF8String:pModel->GetTitle().c_str()];
     
     [self.pCategoryIconContainer.subviews makeObjectsPerformSelector: @selector(removeFromSuperview)];
@@ -556,7 +578,6 @@ const int DeletePinAlertViewTag = 2;
     self.pAddressContent.hidden = true;
     self.pPhoneHeaderContainer.hidden = true;
     self.pPhoneContent.hidden = true;
-    self.pPreviewImage.hidden = true;
     self.pCategoriesHeaderContainer.hidden = true;
     self.pCategoriesContent.hidden = true;
     self.pReviewsHeaderContainer.hidden = true;
@@ -564,8 +585,8 @@ const int DeletePinAlertViewTag = 2;
     self.pVendorWebLinkButton.hidden = true;
     self.pReviewCountLabel.hidden = true;
     
-    const CGFloat previewImagePlaceholderSize = 64.f;
-    m_imageWidth = m_imageHeight = previewImagePlaceholderSize;
+    m_imageWidth = self.pPlaceholderImage.size.width;
+    m_imageHeight = self.pPlaceholderImage.size.height;
     m_ratingsImageWidth = RatingImageWidth;
     m_ratingsImageHeight = RatingImageHeight;
     
@@ -581,7 +602,7 @@ const int DeletePinAlertViewTag = 2;
     
     if(!m_yelpModel.GetImageUrl().empty())
     {
-        [self.pPreviewImage setImage:nil];
+        [self.pPreviewImage setImage:self.pPlaceholderImage];
         [self.pPreviewImageSpinner startAnimating];
     }
     
@@ -605,7 +626,6 @@ const int DeletePinAlertViewTag = 2;
             frame.size = image.size;
             frame.origin.x = self.frame.size.width * 0.5f - frame.size.width * 0.5f;
             self.pPreviewImage.frame = frame;
-            self.pPreviewImage.hidden = false;
             
             
             m_pGradientMask.frame = self.pPreviewImage.bounds;
@@ -695,7 +715,7 @@ const int DeletePinAlertViewTag = 2;
 - (void) handleLinkClicked
 {
     NSString* preFormattedUrlString = [NSString stringWithUTF8String:m_yelpModel.GetWebUrl().c_str()];
-        
+    
     NSString* webUrlString = ([preFormattedUrlString rangeOfString:@"http"].location != NSNotFound)
     ? preFormattedUrlString
     : [NSString stringWithFormat:@"http://%@", preFormattedUrlString];
@@ -770,15 +790,18 @@ const int DeletePinAlertViewTag = 2;
 
 - (void) updatePinnedButtonState
 {
-    if(m_isPinned)
+    if(AllowPinning)
     {
-        [self.pPinButton setImage:self->m_pRemovePinButtonImage forState:UIControlStateNormal];
-        [self.pPinButton setImage:self->m_pRemovePinButtonHighlightImage forState:UIControlStateHighlighted];
-    }
-    else
-    {
-        [self.pPinButton setImage:self->m_pAddPinButtonImage forState:UIControlStateNormal];
-        [self.pPinButton setImage:self->m_pAddPinButtonHighlightImage forState:UIControlStateHighlighted];
+        if(m_isPinned)
+        {
+            [self.pPinButton setImage:self->m_pRemovePinButtonImage forState:UIControlStateNormal];
+            [self.pPinButton setImage:self->m_pRemovePinButtonHighlightImage forState:UIControlStateHighlighted];
+        }
+        else
+        {
+            [self.pPinButton setImage:self->m_pAddPinButtonImage forState:UIControlStateNormal];
+            [self.pPinButton setImage:self->m_pAddPinButtonHighlightImage forState:UIControlStateHighlighted];
+        }
     }
 }
 
