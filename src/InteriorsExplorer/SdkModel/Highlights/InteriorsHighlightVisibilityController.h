@@ -61,7 +61,7 @@ namespace ExampleApp
                     Eegeo::Helpers::TCallback0<InteriorsHighlightVisibilityController> m_interiorInteractionModelChangedHandler;
                     Eegeo::Helpers::TCallback0<InteriorsHighlightVisibilityController> m_interiorLabelsBuiltHandler;
                     
-                    Eegeo::Helpers::TCallback0<InteriorsHighlightVisibilityController>m_availabilityChangedHandlerBinding;
+                    Eegeo::Helpers::TCallback0<InteriorsHighlightVisibilityController> m_availabilityChangedHandlerBinding;
                     
                     std::map<std::string, std::string> m_highlightAvailabilityData;
                     std::map<std::string, Eegeo::Rendering::Renderables::InteriorHighlightRenderable*> m_currentHighlightRenderables;
