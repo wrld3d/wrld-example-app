@@ -32,6 +32,8 @@ set(currsources
   ../src/MyPins/SdkModel/MyPinsSemanticPinType.h
   ../src/MyPins/SdkModel/MyPinsService.cpp
   ../src/MyPins/SdkModel/MyPinsService.h
+  ../src/MyPins/SdkModel/MyPinsWebService.cpp
+  ../src/MyPins/SdkModel/MyPinsWebService.h
   ../src/MyPins/SdkModel/MyPinVisibilityStateChangedHandler.cpp
   ../src/MyPins/SdkModel/MyPinVisibilityStateChangedHandler.h
   ../src/MyPins/SdkModel/MyPinVisibilityStateChangedHandlerFactory.cpp

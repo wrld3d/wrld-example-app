@@ -19,12 +19,14 @@ namespace ExampleApp
                     IMyPinCreationInitiationViewModel& initiationViewModel,
                     IMyPinCreationConfirmationViewModel& confirmationViewModel,
                     ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
-                    ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel)
+                    ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
+                    ScreenControl::View::IScreenControlViewModel& interiorControlViewModel)
                 : m_stateChangeHandler(this, &MyPinCreationCompositeViewModel::OnPoiRingStateChangedMessage)
                 , m_settingsMenuStateChangedCallback(this, &MyPinCreationCompositeViewModel::HandleSettingsMenuStateChanged)
                 , m_messageBus(messageBus)
                 , m_initiationViewModel(initiationViewModel)
                 , m_confirmationViewModel(confirmationViewModel)
+                , m_interiorControlViewModel(interiorControlViewModel)
                 , m_searchMenuViewModel(searchMenuViewModel)
                 , m_settingsMenuViewModel(settingsMenuViewModel)
             {
@@ -45,8 +47,10 @@ namespace ExampleApp
                 case Inactive:
                 {
                     m_initiationViewModel.AddToScreen();
+                    m_interiorControlViewModel.AddToScreen();
                     m_searchMenuViewModel.AddToScreen();
                     m_settingsMenuViewModel.AddToScreen();
+
                     m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::All));
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(true));
 
@@ -56,8 +60,8 @@ namespace ExampleApp
                 case Ring:
                 {
                     m_confirmationViewModel.AddToScreen();
-
                     m_initiationViewModel.RemoveFromScreen();
+                    m_interiorControlViewModel.RemoveFromScreen();
                     m_searchMenuViewModel.RemoveFromScreen();
 
                     m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::None));

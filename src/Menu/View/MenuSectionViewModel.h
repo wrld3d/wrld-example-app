@@ -2,10 +2,13 @@
 
 #pragma once
 
-#include <string>
-#include "Menu.h"
 #include "IMenuSectionViewModel.h"
+
+#include <string>
+#include "CallbackCollection.h"
 #include "Types.h"
+#include "Menu.h"
+
 
 namespace ExampleApp
 {
@@ -59,15 +62,19 @@ namespace ExampleApp
 
                 void Expand();
                 void Contract();
+                
+                void InsertExpandedChangedCallback(Eegeo::Helpers::ICallback2<IMenuSectionViewModel&, bool>& callback);
+                void RemoveExpandedChangedCallback(Eegeo::Helpers::ICallback2<IMenuSectionViewModel&, bool>& callback);
 
             private:
 
                 std::string m_name;
                 std::string m_icon;
                 IMenuModel& m_menuModel;
-
                 const bool m_isExpandable;
                 bool m_expanded;
+                
+                Eegeo::Helpers::CallbackCollection2<IMenuSectionViewModel&, bool> m_expandedChangedCallbacks;
             };
         }
     }

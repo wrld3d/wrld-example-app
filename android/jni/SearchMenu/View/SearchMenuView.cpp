@@ -111,7 +111,7 @@ namespace ExampleApp
 					(*it)->Contract();
 				}
 
-				UpdateMenuSectionViews(m_currentSections, false);
+				UpdateMenuSectionViews(m_currentSections);
 			}
 
             void SearchMenuView::InsertSearchPeformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)

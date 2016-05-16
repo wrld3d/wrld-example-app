@@ -108,6 +108,17 @@ namespace ExampleApp
                 ASSERT_UI_THREAD
                 m_callbacks.RemoveCallback(callback);
             }
+
+            void FlattenButtonView::SetViewEnabled(bool enabled)
+            {
+            	ASSERT_UI_THREAD
+
+				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				JNIEnv* env = attached.envForThread;
+
+				jmethodID setViewEnabledMethod = env->GetMethodID(m_uiViewClass, "setViewEnabled", "(Z)V");
+				env->CallVoidMethod(m_uiView, setViewEnabledMethod, enabled);
+            }
         }
     }
 }

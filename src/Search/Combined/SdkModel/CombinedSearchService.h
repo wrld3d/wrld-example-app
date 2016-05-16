@@ -11,6 +11,7 @@
 #include "SearchServiceBase.h"
 #include "ICallback.h"
 #include "CategorySearchModel.h"
+#include "Interiors.h"
 
 namespace ExampleApp
 {
@@ -25,7 +26,8 @@ namespace ExampleApp
                 {
                 public:
                     
-                    CombinedSearchService(const std::map<std::string, Search::SdkModel::ISearchService*>& searchServices);
+                    CombinedSearchService(const std::map<std::string, Search::SdkModel::ISearchService*>& searchServices,
+                                          Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel);
                     
                     ~CombinedSearchService();
                     
@@ -54,6 +56,7 @@ namespace ExampleApp
                     int m_pendingResultsLeft;
                     std::vector<Search::SdkModel::SearchResultModel> m_combinedResults;
                     Search::SdkModel::SearchQuery m_currentQueryModel;
+                    Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                     bool m_hasActiveQuery;
                     
                 };

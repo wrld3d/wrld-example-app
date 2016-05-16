@@ -21,6 +21,7 @@
         <ResourceDictionary Source="../Views/SearchMenu/SearchMenuView.xaml" />
         <ResourceDictionary Source="../Views/Options/OptionsCacheClearSubView.xaml" />
         <ResourceDictionary Source="../Views/WorldPinOnMap/WorldPinOnMapView.xaml" />
+        <ResourceDictionary Source="../Views/SearchResultPoi/eeGeoSearchResultsPoiView.xaml" />
         <ResourceDictionary Source="../Views/SearchResultPoi/GeoNamesSearchResultsPoiView.xaml" />
         <ResourceDictionary Source="../Views/SearchResultPoi/YelpSearchResultsPoiView.xaml" />
         <ResourceDictionary Source="../Views/InteriorsExplorer/InteriorsExplorerView.xaml" />

@@ -1,0 +1,314 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ExampleAppWPF">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../../Colours.xaml" />        
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="AddRemovePinStyle" TargetType="{x:Type ToggleButton}" x:Shared="false">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="BackGround_Over">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="image">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="image1">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="ForgetLocation">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="ForgetLocationDown">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="BackGround_Pressed">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="BackGround">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="image2">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="image3">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="SaveLocation">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="SaveLocationDown">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled"/>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Checked">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="SaveLocationGrid">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Unchecked">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="SaveLocationGrid">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="ForgetLocation1">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Indeterminate"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Rectangle x:Name="BackGround" Fill="{StaticResource Gold}" HorizontalAlignment="Stretch" Margin="0" Width="Auto"/>
+                        <Rectangle x:Name="BackGround_Over" Fill="{StaticResource PrimaryBG_Over_Colour}" HorizontalAlignment="Stretch" Margin="0" Width="Auto" Visibility="Hidden"/>
+                        <Rectangle x:Name="BackGround_Pressed" Fill="{StaticResource PrimaryBG_Down_Colour}" HorizontalAlignment="Stretch" Margin="0" Width="Auto" Visibility="Hidden"/>
+                        <Grid x:Name="ForgetLocation1">
+                            <Image x:Name="image" Source="/Assets/button_remove_pin_off.png" Width="48" Height="48" HorizontalAlignment="Left" Margin="115,0,0,0"/>
+                            <Image x:Name="image1" Source="/Assets/button_remove_pin_on.png" Width="48" Height="48" HorizontalAlignment="Left" Margin="115,0,0,0" Visibility="Hidden"/>
+                            <TextBlock x:Name="ForgetLocation" VerticalAlignment="Center" Text="Forget Location" FontSize="28"  Foreground="{StaticResource White}" TextTrimming="CharacterEllipsis" Width="Auto" FontFamily="{StaticResource PrimaryUILightFont}" Margin="165,-5,0,0"/>
+                            <TextBlock x:Name="ForgetLocationDown" VerticalAlignment="Center" Text="Forget Location" FontSize="28"  Foreground="{StaticResource PrimaryBG_Over_Colour}" TextTrimming="CharacterEllipsis" Width="Auto" FontFamily="{StaticResource PrimaryUILightFont}" Margin="165,-5,0,0" Visibility="Hidden"/>
+                        </Grid>
+                        <Grid x:Name="SaveLocationGrid">
+                            <Image x:Name="image2" Source="/Assets/button_add_pin_off.png" Width="48" Height="48" HorizontalAlignment="Left" Margin="115,0,0,0"/>
+                            <Image x:Name="image3" Source="/Assets/button_add_pin_on.png" Width="48" Height="48" HorizontalAlignment="Left" Margin="115,0,0,0" Visibility="Hidden"/>
+                            <TextBlock x:Name="SaveLocation" VerticalAlignment="Center" Text="Save Location" FontSize="28"  Foreground="{StaticResource White}" TextTrimming="CharacterEllipsis" Width="Auto" FontFamily="{StaticResource PrimaryUILightFont}" HorizontalAlignment="Left" Margin="165,-5,0,0"/>
+                            <TextBlock x:Name="SaveLocationDown" VerticalAlignment="Center" Text="Save Location" FontSize="28"  Foreground="{StaticResource PrimaryBG_Over_Colour}" TextTrimming="CharacterEllipsis" Width="Auto" FontFamily="{StaticResource PrimaryUILightFont}" HorizontalAlignment="Left" Margin="165,-5,0,0" Visibility="Hidden"/>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+    <Style x:Key="POIcard_CloseButton" TargetType="{x:Type Button}">
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle1">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle1">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle2">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="image">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="image1">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Rectangle x:Name="rectangle1" Fill="{StaticResource PrimaryBG_colour}" Margin="0"/>
+                        <Rectangle x:Name="rectangle" Fill="{StaticResource PrimaryBG_Over_Colour}" Margin="0" Visibility="Hidden"/>
+                        <Rectangle x:Name="rectangle2" Fill="{StaticResource PrimaryBG_Down_Colour}" Margin="0" Visibility="Hidden"/>
+                        <Image x:Name="image" Source="/Assets/button_close_off.png"/>
+                        <Image x:Name="image1" Source="/Assets/button_close_on.png" Visibility="Hidden"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:eeGeoSearchResultsPoiView}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:eeGeoSearchResultsPoiView}">
+                    <Grid Name="SearchresultsPoiViewContainer" Width="480" Height="Auto" Background="White" Margin="0,20,0,90">
+                        <Grid Width="440"  Margin="20,17,20,20">
+                            <Grid Background="White">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="46"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="48"/>
+                                </Grid.RowDefinitions>
+                                <!--Title bar-->
+                                <Grid Margin="0,0,0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="404"/>
+                                        <ColumnDefinition Width="36"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Center" >
+                                        <Image Name="CategoryIcon" Stretch="Uniform" Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=CategoryIcon}"/>
+                                        <TextBlock Name="Title" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=TitleText}"  MaxWidth="350" VerticalAlignment="Center" FontSize="28" Margin="4,-4,0,0"  Foreground="{DynamicResource PrimaryBG_Over_Colour}" FontFamily="{DynamicResource PrimaryUIFont}" TextTrimming="CharacterEllipsis"/>
+                                    </StackPanel>
+                                    <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="Auto"  Background="{StaticResource Gold}" Grid.Column="1">
+                                        <Button Style="{StaticResource POIcard_CloseButton}" Name="CloseButton" HorizontalAlignment="Right" Width="36" Height="36" />
+                                    </Border>
+                                </Grid>
+
+                                <Grid Grid.Row="1" >
+                                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Background="{StaticResource White}" Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}">
+
+                                        <StackPanel VerticalAlignment="Top">
+
+                                            <!-- Details Divider -->
+                                            <Grid Height="250">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="220"/>
+                                                    <ColumnDefinition Width="10"/>
+                                                    <ColumnDefinition Width="210"/>
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel VerticalAlignment="Top">
+                                                    <Grid>
+                                                        <StackPanel HorizontalAlignment="Stretch">
+                                                            <ProgressBar Name="ImageProgress" HorizontalAlignment="Center" Visibility="Hidden"/>
+                                                        </StackPanel>
+                                                        <Grid Margin="0,0,0,0">
+                                                            <Image Name="PoiImage" Source="/Assets/poi_placeholder.png"/>
+                                                            <Grid Name="ImageGradient" Height="30" VerticalAlignment="Bottom"/>
+                                                        </Grid>
+                                                        <Grid HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Bottom" Margin="0,0,0,5">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="Auto"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Image Name="RatingOverImage" Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=RatingsImage}" 
+                    						Grid.Column="1" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform" Height="17">
+                                                                <Image.Style>
+                                                                    <Style>
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=RatingsImage}" Value="{x:Null}">
+                                                                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </Image.Style>
+                                                            </Image>
+
+                                                            <Border BorderBrush="{x:Null}" BorderThickness="0" Width="Auto" Height="15" Margin="3,0,0,0" Grid.Column="2">
+                                                                <TextBlock Name="RatingOverImageReviewCount" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=PoiViewRatingCountText}" FontSize="12" Foreground="{StaticResource White}" />
+                                                            </Border>
+                                                        </Grid>
+                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,-40" VerticalAlignment="Bottom">
+                                                            <Image Name="RatingImage" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                            <Image Name="WebVendorLinkStyle" Margin="5,10,5,5" VerticalAlignment="Center" HorizontalAlignment="Center" Source="/Assets/yelp_reviews.png">
+                                                                <Image.Style>
+                                                                    <Style>
+                                                                        <Setter Property="Image.Visibility" Value="Visible"/>
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=Url}" Value="{x:Null}">
+                                                                                <Setter Property="Image.Visibility" Value="Collapsed"/>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </Image.Style>
+                                                            </Image>
+                                                        </StackPanel>
+                                                    </Grid>
+                                                </StackPanel>
+                                                <!--<StackPanel Grid.Column="2" VerticalAlignment="Top" MaxHeight="280">
+                                                    --><!--Phone--><!--
+                                                    <Grid Width="Auto" Margin="5,0,0,0">
+                                                        <Canvas Name="TelephoneIcon" Width="16" Height="16.000" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                            <Path Fill="{StaticResource POIdetailsColour}" Data="F1 M 7.606,11.826 C 6.991,12.379 6.261,12.107 5.727,11.537 C 4.738,10.482 3.555,8.778 2.793,7.053 C 2.533,6.466 2.815,6.136 3.299,5.910 C 3.320,5.900 3.341,5.888 3.361,5.878 L 2.632,0.253 C 2.117,0.235 1.596,0.284 1.309,0.436 C 0.447,0.877 -0.501,2.902 0.306,7.133 C 0.657,8.970 2.725,12.565 5.520,14.352 C 7.579,15.669 9.425,16.039 10.894,15.997 C 11.663,15.974 11.857,15.526 12.191,15.028 C 12.313,14.845 12.415,14.668 12.496,14.490 L 7.642,11.790 C 7.630,11.802 7.619,11.814 7.606,11.826 Z" Margin="1.25,0,0,0"/>
+                                                            <Path Fill="{StaticResource POIdetailsColour}" Data="F1 M 13.469,12.752 L 12.985,13.620 L 8.139,10.917 L 8.624,10.049 L 13.469,12.752 Z" Margin="1.25,0,0,0"/>
+                                                            <Path Fill="{StaticResource POIdetailsColour}" Data="F1 M 5.343,5.622 L 4.357,5.750 L 3.623,0.129 L 4.609,0.000 L 5.343,5.622 Z" Margin="1.25,0,0,0"/>
+                                                        </Canvas>
+                                                        <TextBlock Name="Phone" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=PhoneText}" FontSize="18" Margin="25,0,0,0" Foreground="{StaticResource DarkGrey}" FontFamily="{DynamicResource PrimaryUIFont}"/>
+                                                    </Grid>
+
+                                                    --><!--Address--><!--
+                                                        <Grid Margin="5,15,0,0">
+                                                            <Canvas Name="HomeAddressIcon" Width="16" HorizontalAlignment="Left" Margin="0,0,0,7.94">
+                                                                --><!-- Layer 1/<Group>/<Path> --><!--
+                                                                <Path Fill="#ff5f5f5f" Data="F1 M 15.867,7.684 L 8.942,0.759 L 8.941,0.758 L 8.313,0.130 C 8.226,0.043 8.112,-0.000 7.998,0.000 C 7.884,-0.000 7.770,0.043 7.684,0.130 L 7.055,0.758 L 7.054,0.759 L 0.130,7.684 C -0.043,7.857 -0.043,8.140 0.130,8.313 L 0.758,8.941 C 0.931,9.114 1.214,9.114 1.387,8.941 L 7.998,2.330 L 14.610,8.941 C 14.783,9.114 15.066,9.114 15.238,8.941 L 15.867,8.313 C 16.040,8.140 16.040,7.857 15.867,7.684 Z"/>
+                                                                --><!-- Layer 1/<Group>/<Path> --><!--
+                                                                <Path Fill="#ff5f5f5f" Data="F1 M 2.665,9.441 L 2.665,14.222 C 2.665,15.200 3.465,16.000 4.443,16.000 L 6.657,16.000 L 6.657,11.621 C 6.657,11.376 6.857,11.176 7.102,11.176 L 8.879,11.176 C 9.124,11.176 9.324,11.376 9.324,11.621 L 9.324,16.000 L 11.554,16.000 C 12.532,16.000 13.332,15.200 13.332,14.222 L 13.332,9.441 L 7.998,4.108 L 2.665,9.441 Z"/>
+                                                            </Canvas>
+                                                            <TextBlock Name="Address" TextWrapping="WrapWithOverflow" MaxWidth="165" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=AddressText}" FontSize="18" Margin="25,-4,0,0" Foreground="{StaticResource DarkGrey}" FontFamily="{DynamicResource PrimaryUIFont}"/>
+                                                        </Grid>
+                                                    </StackPanel>-->
+
+                                            </Grid>
+
+                                            <!-- Details Divider -->
+                                            <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="2" Background="{StaticResource Gold}" Margin="0,20"/>
+
+                                            <!--Categories-->
+                                            <Grid Width="Auto" Height="Auto" Margin="5,0,0,0" >
+                                                <Canvas Name="CategoryLabelIcon" Margin="0,2,0,0">
+                                                    <!-- Layer 3/<Compound Path> -->
+                                                    <Path Fill="#ff5f5f5f" Data="F1 M 12.439,3.558 C 11.854,2.973 11.854,2.023 12.439,1.437 C 13.025,0.851 13.975,0.851 14.561,1.437 C 15.146,2.023 15.146,2.973 14.561,3.558 C 13.975,4.144 13.025,4.144 12.439,3.558 Z M 15.994,7.102 L 16.000,1.552 C 16.000,0.700 15.310,0.010 14.458,0.010 L 8.892,0.000 C 8.259,-0.000 7.465,0.315 7.017,0.763 L 0.463,7.317 C -0.140,7.920 -0.161,8.966 0.441,9.569 L 6.450,15.577 C 6.751,15.878 7.157,15.996 7.553,15.996 C 7.948,15.996 8.355,15.812 8.656,15.511 L 15.211,8.956 C 15.658,8.508 15.994,7.735 15.994,7.102 Z"/>
+                                                </Canvas>
+                                                <TextBlock Name="Categories" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=HumanReadableCategoriesText}" FontSize="18" Margin="25,-4,0,0" Foreground="{StaticResource DarkGrey}" FontFamily="{DynamicResource PrimaryUIFont}"/>
+                                            </Grid>
+
+                                            <!-- Reviews Divider -->
+                                            <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="2" Background="{StaticResource Gold}" Margin="0,20"/>
+
+                                            <!--Reviews-->
+                                            <Grid Width="Auto" Height="Auto" Margin="5,0,0,0" >
+
+                                                <Canvas Name="ReviewsIcon" Margin="0,2,0,0">
+                                                    <!-- Layer 3/<Path> -->
+                                                    <Path Fill="#ff5f5f5f" Data="F1 M 0.000,8.457 L 0.000,15.457 L 7.000,15.457 L 7.000,8.457 L 3.398,8.457 C 3.398,6.457 5.000,4.221 7.000,3.520 L 7.000,3.457 L 7.000,0.457 L 7.000,0.000 C 3.000,0.789 0.000,4.457 0.000,8.457 Z"/>
+                                                    <!-- Layer 3/<Path> -->
+                                                    <Path Fill="#ff5f5f5f" Data="F1 M 9.000,8.457 L 9.000,15.457 L 16.000,15.457 L 16.000,8.457 L 12.398,8.457 C 12.398,6.457 14.000,4.221 16.000,3.520 L 16.000,3.457 L 16.000,0.457 L 16.000,0.000 C 12.000,0.789 9.000,4.457 9.000,8.457 Z"/>
+                                                </Canvas>
+                                                <TextBlock Name="Reviews" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=ReviewText}" 
+								FontSize="18" Margin="25,-4,0,0" Foreground="{StaticResource DarkGrey}" FontFamily="{DynamicResource PrimaryUIFont}" TextWrapping="Wrap"/>
+                                            </Grid>
+
+                                            <!-- Bottom Spacer -->
+                                            <Grid Height="20"/>
+                                        </StackPanel>
+                                    </ScrollViewer>
+
+                                </Grid>
+                            </Grid>
+                            <Grid VerticalAlignment="Bottom" Background="{StaticResource Gold}" HorizontalAlignment="Stretch" Height="Auto" Grid.Row="2">
+                                <WrapPanel HorizontalAlignment="Center">
+                                    <ToggleButton Name="TogglePinnedButton" Style="{StaticResource AddRemovePinStyle}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=IsPinned, Mode=TwoWay}" Height="48" Width="440"/>
+                                </WrapPanel>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+</ResourceDictionary>

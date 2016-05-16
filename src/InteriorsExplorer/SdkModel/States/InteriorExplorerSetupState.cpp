@@ -40,7 +40,6 @@ namespace ExampleApp
                 
                 void InteriorExplorerSetupState::Exit(int nextState)
                 {
-                    
                 }
                 
             }

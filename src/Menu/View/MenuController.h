@@ -32,6 +32,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<MenuController, MenuItemModel> m_onItemRemovedCallback;
                 Eegeo::Helpers::TCallback2<MenuController, ScreenControl::View::IScreenControlViewModel&, float> m_onScreenStateChanged;
                 Eegeo::Helpers::TCallback2<MenuController, OpenableControl::View::IOpenableControlViewModel&, float> m_onOpenableStateChanged;
+                Eegeo::Helpers::TCallback2<MenuController, IMenuSectionViewModel&, bool> m_onMenuSectionExpandedStateChanged;
 
                 Eegeo::Helpers::TFunc0<MenuController, bool> m_tryDragFunc;
                 
@@ -43,8 +44,9 @@ namespace ExampleApp
                 IMenuView& m_view;
                 bool m_dragInProgress;
                 bool m_presentationDirty;
-                bool m_menuContentsChanged;
 
+                virtual void OnMenuSectionExpandeStateChanged(IMenuSectionViewModel& menuSectionViewModel, bool& expanded);
+                
                 virtual void OnOpenableStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& state);
 
                 virtual void OnScreenControlStateChanged(ScreenControl::View::IScreenControlViewModel& viewModel, float& state);

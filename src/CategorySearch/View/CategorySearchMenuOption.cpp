@@ -34,7 +34,7 @@ namespace ExampleApp
                     m_menuViewModel.Close();
                 }
 
-                m_messageBus.Publish(CategorySearchSelectedMessage(m_model.SearchCategory()));
+                m_messageBus.Publish(CategorySearchSelectedMessage(m_model.SearchCategory(), m_model.Interior()));
             }
         }
     }

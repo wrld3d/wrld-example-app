@@ -30,6 +30,7 @@ namespace ExampleApp
                                         Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                         Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
                                         WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                        WorldPins::SdkModel::IWorldPinsScaleController& worldPinsScaleController,
                                         const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                         VisualMap::SdkModel::IVisualMapService& visualMapService,
                                         const Eegeo::Resources::Interiors::InteriorsCameraControllerFactory& interiorCameraControllerFactory,
@@ -54,8 +55,10 @@ namespace ExampleApp
                 
                 InteriorsExplorerModel& GetInteriorsExplorerModel() const;
                 
+                Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& GetTouchController() const;
+                
                 InteriorExplorerUserInteractionModel& GetInteriorsExplorerUserInteractionModel() const;
-
+                
             private:
                 
                 InteriorsExplorerModel* m_pModel;

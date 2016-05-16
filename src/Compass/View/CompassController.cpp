@@ -71,7 +71,7 @@ namespace ExampleApp
             
             void CompassController::OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message)
             {
-                m_appModeAllowsOpen = message.GetAppMode() == AppModes::SdkModel::WorldMode;
+                m_appModeAllowsOpen = message.GetAppMode() != AppModes::SdkModel::TourMode;
                 
                 if(m_appModeAllowsOpen)
                 {
@@ -114,6 +114,7 @@ namespace ExampleApp
             {
                 m_viewModel.RemoveOnScreenStateChangedCallback(m_viewStateCallback);
                 m_view.RemoveCycledCallback(m_viewCycledCallback);
+
                 m_messageBus.UnsubscribeUi(m_appModeChangedHandler);
                 m_messageBus.UnsubscribeUi(m_modeUnauthorizedHandler);
                 m_messageBus.UnsubscribeUi(m_headingChangedHandler);

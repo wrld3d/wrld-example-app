@@ -31,7 +31,8 @@ namespace ExampleApp
                     GeoNamesSearchQuery(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                         Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
                                         const Search::SdkModel::SearchQuery& query,
-                                        Eegeo::Helpers::ICallback0& completionCallback);
+                                        Eegeo::Helpers::ICallback0& completionCallback,
+                                        const std::string& geoNamesUserName);
                     
                     ~GeoNamesSearchQuery();
                     

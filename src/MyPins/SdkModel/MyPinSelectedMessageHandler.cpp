@@ -36,7 +36,7 @@ namespace ExampleApp
                 else
                 {
                     m_cameraTransitionController.StartTransitionTo(message.GetPinLocation().ToECEF(),
-                                                               InteriorsExplorer::DefaultInteriorTransitionInterestDistance,
+                                                               InteriorsExplorer::DefaultInteriorSearchResultTransitionInterestDistance,
                                                                message.GetInteriorId(),
                                                                message.GetFloorIndex());
                 }

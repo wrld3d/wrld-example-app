@@ -21,6 +21,10 @@ namespace ExampleApp
             : m_connectivityService(connectivityService)
             , m_httpCache(httpCache)
             , m_persistentSettings(persistentSettings)
+            , m_streamOverWifiOnly(false)
+            , m_networkAvailable(QueryIsNetworkAvailable())
+            , m_connectedToWifi(QueryIsConnectedToWifi())
+            , m_connectionChangedCallback(this, &NetworkCapabilities::HandleConnectionChanged)
             {
                 if(!m_persistentSettings.TryGetValue(NetworkCapabilities_OnlyStreamOverWifi_Key, m_streamOverWifiOnly))
                 {
@@ -32,6 +36,14 @@ namespace ExampleApp
                 {
                     SetHttpCachingEnabled(httpCachingEnabled);
                 }
+                
+                m_connectivityService.RegisterConnectivityChangedCallback(m_connectionChangedCallback);
+                
+            }
+            
+            NetworkCapabilities::~NetworkCapabilities()
+            {
+                m_connectivityService.UnregisterConnectivityChangedCallback(m_connectionChangedCallback);
             }
             
             bool NetworkCapabilities::StreamOverWifiOnly() const
@@ -41,18 +53,25 @@ namespace ExampleApp
             
             bool NetworkCapabilities::ConnectedToWifi() const
             {
-                return m_connectivityService.GetConnectivityType() == Eegeo::Web::Wifi;
+                return m_connectedToWifi;
             }
             
             bool NetworkCapabilities::NetworkAvailable() const
             {
-                return m_connectivityService.HasConnectivity();
+                return m_networkAvailable;
             }
             
             void NetworkCapabilities::SetStreamOverWifiOnlyMode(bool streamOverWifiOnlyEnabled)
             {
+                const bool changed = streamOverWifiOnlyEnabled != m_streamOverWifiOnly;
+                
                 m_streamOverWifiOnly = streamOverWifiOnlyEnabled;
                 m_persistentSettings.SetValue(NetworkCapabilities_OnlyStreamOverWifi_Key, m_streamOverWifiOnly);
+                
+                if (changed)
+                {
+                    m_notifyChangedCallbacks.ExecuteCallbacks();
+                }
             }
             
             bool NetworkCapabilities::HttpCachingEnabled() const
@@ -62,8 +81,56 @@ namespace ExampleApp
             
             void NetworkCapabilities::SetHttpCachingEnabled(bool httpCachingEnabled)
             {
+                const bool changed = httpCachingEnabled != HttpCachingEnabled();
+                
                 m_httpCache.SetEnabled(httpCachingEnabled);
                 m_persistentSettings.SetValue(NetworkCapabilities_HttpCacheEnabled_Key, httpCachingEnabled);
+                
+                if (changed)
+                {
+                    m_notifyChangedCallbacks.ExecuteCallbacks();
+                }
+            }
+            
+            void NetworkCapabilities::RegisterChangedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_notifyChangedCallbacks.AddCallback(callback);
+            }
+            
+            void NetworkCapabilities::UnregisterChangedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_notifyChangedCallbacks.RemoveCallback(callback);
+            }
+            
+            void NetworkCapabilities::HandleConnectionChanged(const bool &connected)
+            {
+                RefreshConnectivity();
+            }
+            
+            void NetworkCapabilities::RefreshConnectivity()
+            {
+                const bool networkAvailable = QueryIsNetworkAvailable();
+                const bool connectedToWifi = QueryIsConnectedToWifi();
+                
+                
+                const bool changed = (networkAvailable != m_networkAvailable) || (connectedToWifi != m_connectedToWifi);
+                m_networkAvailable = networkAvailable;
+                m_connectedToWifi = connectedToWifi;
+                
+                if (changed)
+                {
+                    m_notifyChangedCallbacks.ExecuteCallbacks();
+                }
+            }
+            
+            bool NetworkCapabilities::QueryIsNetworkAvailable() const
+            {
+                return m_connectivityService.HasConnectivity();
+            }
+            
+            bool NetworkCapabilities::QueryIsConnectedToWifi() const
+            {
+                return (m_connectivityService.GetConnectivityType() == Eegeo::Web::Wifi);
             }
         }
     }

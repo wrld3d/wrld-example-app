@@ -22,15 +22,16 @@ namespace ExampleApp
             class SearchQueryPerformer : public ISearchQueryPerformer, private Eegeo::NonCopyable
             {
                 ISearchService& m_searchService;
+                
                 ISearchResultRepository& m_searchResultsRepository;
                 Eegeo::Helpers::ICallback2<const SearchQuery&, const std::vector<SearchResultModel>&>* m_pSearchResultResponseReceivedCallback;
                 Eegeo::Helpers::CallbackCollection0 m_queryResultsClearedCallbacks;
                 SearchQuery m_previousQuery;
                 bool m_hasQuery;
-                Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_cameraController;
+                Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_cameraController;                
 
             public:
-                SearchQueryPerformer(ISearchService& searchService,
+                SearchQueryPerformer(ISearchService& exteriorSearchService,
                                      ISearchResultRepository& searchResultRepository,
                                      Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController);
 
@@ -43,9 +44,10 @@ namespace ExampleApp
                     return m_previousQuery;
                 }
 
-                void PerformSearchQuery(const std::string& query, bool isCategory);
-                void PerformSearchQuery(const std::string& query, bool isCategory, const Eegeo::Space::LatLongAltitude& location);
-                void PerformSearchQuery(const std::string& query, bool isCategory, const Eegeo::Space::LatLongAltitude& location, float radius);
+                void PerformSearchQuery(const std::string& query, bool isCategory, bool tryInteriorSearch);
+                void PerformSearchQuery(const std::string& query, bool isCategory, bool tryInteriorSearch, float radius);
+                void PerformSearchQuery(const std::string& query, bool isCategory, bool tryInteriorSearch, const Eegeo::Space::LatLongAltitude& location);
+                void PerformSearchQuery(const std::string& query, bool isCategory, bool tryInteriorSearch, const Eegeo::Space::LatLongAltitude& location, float radius);
 
                 void RemoveSearchQueryResults();
 

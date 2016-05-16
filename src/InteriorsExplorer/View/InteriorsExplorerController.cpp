@@ -18,20 +18,10 @@ namespace ExampleApp
         {
             InteriorsExplorerController::InteriorsExplorerController(IInteriorsExplorerView& view,
                                                                      InteriorsExplorerViewModel& viewModel,
-                                                                     ExampleAppMessaging::TMessageBus& messageBus,
-                                                                     MyPinCreation::View::IMyPinCreationInitiationViewModel& initiationViewModel,
-                                                                     ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
-                                                                     ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
-                                                                     ScreenControl::View::IScreenControlViewModel& flattenViewModel,
-                                                                     ScreenControl::View::IScreenControlViewModel& compassViewModel)
+                                                                     ExampleAppMessaging::TMessageBus& messageBus)
             : m_view(view)
             , m_viewModel(viewModel)
             , m_messageBus(messageBus)
-            , m_initiationViewModel(initiationViewModel)
-            , m_searchMenuViewModel(searchMenuViewModel)
-            , m_settingsMenuViewModel(settingsMenuViewModel)
-            , m_flattenViewModel(flattenViewModel)
-            , m_compassViewModel(compassViewModel)
             , m_appMode(AppModes::SdkModel::WorldMode)
             , m_dismissedCallback(this, &InteriorsExplorerController::OnDismiss)
             , m_selectFloorCallback(this, &InteriorsExplorerController::OnSelectFloor)
@@ -101,27 +91,10 @@ namespace ExampleApp
                     OnFloorSelected(InteriorsExplorerFloorSelectedMessage(message.GetSelectedFloorIndex(), message.GetSelectedFloorName()));
                     
                     m_viewModel.AddToScreen();
-                    
-                    m_initiationViewModel.RemoveFromScreen();
-                    m_searchMenuViewModel.RemoveFromScreen();
-                    m_settingsMenuViewModel.RemoveFromScreen();
-                    m_flattenViewModel.RemoveFromScreen();
-                    m_compassViewModel.RemoveFromScreen();
-                    m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(false));
                 }
                 else
                 {
                     m_viewModel.RemoveFromScreen();
-                    
-                    if(m_appMode != AppModes::SdkModel::TourMode)
-                    {
-                        m_initiationViewModel.AddToScreen();
-                        m_searchMenuViewModel.AddToScreen();
-                        m_settingsMenuViewModel.AddToScreen();
-                        m_flattenViewModel.AddToScreen();
-                        m_compassViewModel.AddToScreen();
-                        m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(true));
-                    }
                 }
             }
             

@@ -54,11 +54,19 @@ namespace ExampleApp
             
             void FlattenButtonController::OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message)
             {
-                m_appModeAllowsOpen = message.GetAppMode() == AppModes::SdkModel::WorldMode;
+                m_appModeAllowsOpen = message.GetAppMode() != AppModes::SdkModel::TourMode;
                 
                 if(m_appModeAllowsOpen)
                 {
                     m_viewModel.AddToScreen();
+                    if(message.GetAppMode() == AppModes::SdkModel::InteriorMode)
+                    {
+                        m_view.SetViewEnabled(false);
+                    }
+                    else
+                    {
+                        m_view.SetViewEnabled(true);
+                    }
                 }
                 else
                 {
@@ -72,6 +80,7 @@ namespace ExampleApp
                 ExampleAppMessaging::TMessageBus& messageBus,
                 Metrics::IMetricsService& metricsService
             )
+
                 : m_viewModel(viewModel)
                 , m_view(view)
                 , m_messageBus(messageBus)

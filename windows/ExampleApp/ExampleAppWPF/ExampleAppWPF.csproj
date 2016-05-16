@@ -113,6 +113,7 @@
     <Compile Include="Views\Options\OptionsView.cs" />
     <Compile Include="Views\SearchMenu\SearchMenuListItem.cs" />
     <Compile Include="StartupResourceLoader.cs" />
+    <Compile Include="Views\SearchResultPoi\eeGeoSearchResultsPoiView.cs" />
     <Compile Include="Views\SearchResultPoi\GeonamesSearchResultsPoiView.cs" />
     <Compile Include="Views\SearchResultPoi\ResultModels\YelpResultModel.cs" />
     <Compile Include="Views\SearchResultPoi\SearchResultCategoryMapper.cs" />
@@ -215,6 +216,10 @@
     <Page Include="Views\Options\OptionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SearchResultPoi\eeGeoSearchResultsPoiView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SettingsMenu\SettingsMenuView.xaml">
       <SubType>Designer</SubType>
@@ -353,14 +358,14 @@
     <Resource Include="..\..\Resources\icon1_aroundme.png">
       <Link>Assets\icon1_aroundme.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\icon1_arts.png">
-      <Link>Assets\icon1_arts.png</Link>
+    <Resource Include="..\..\Resources\icon1_museums.png">
+      <Link>Assets\icon1_museums.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\icon1_autumn.png">
       <Link>Assets\icon1_autumn.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\icon1_bank.png">
-      <Link>Assets\icon1_bank.png</Link>
+    <Resource Include="..\..\Resources\icon1_financialservices.png">
+      <Link>Assets\icon1_financialservices.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\icon1_coffee.png">
       <Link>Assets\icon1_coffee.png</Link>
@@ -377,11 +382,11 @@
     <Resource Include="..\..\Resources\icon1_foggy.png">
       <Link>Assets\icon1_foggy.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\icon1_food.png">
-      <Link>Assets\icon1_food.png</Link>
+    <Resource Include="..\..\Resources\icon1_restaurants.png">
+      <Link>Assets\icon1_restaurants.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\icon1_hotel.png">
-      <Link>Assets\icon1_hotel.png</Link>
+    <Resource Include="..\..\Resources\icon1_hotels.png">
+      <Link>Assets\icon1_hotels.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\icon1_misc.png">
       <Link>Assets\icon1_misc.png</Link>
@@ -398,8 +403,8 @@
     <Resource Include="..\..\Resources\icon1_overcast.png">
       <Link>Assets\icon1_overcast.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\icon1_park.png">
-      <Link>Assets\icon1_park.png</Link>
+    <Resource Include="..\..\Resources\icon1_parks.png">
+      <Link>Assets\icon1_parks.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\icon1_place.png">
       <Link>Assets\icon1_place.png</Link>
@@ -440,7 +445,7 @@
     <Resource Include="..\..\Resources\button_gallery_off.png">
       <Link>Assets\button_gallery_off.png</Link>
     </Resource>
-	<Resource Include="..\..\Resources\button_gallery_on.png">
+    <Resource Include="..\..\Resources\button_gallery_on.png">
       <Link>Assets\button_gallery_on.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\image_blank.png">

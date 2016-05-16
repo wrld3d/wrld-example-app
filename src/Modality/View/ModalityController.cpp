@@ -11,10 +11,12 @@ namespace ExampleApp
         namespace View
         {
             ModalityController::ModalityController(IModalityModel& modalityModel,
-                                                   const std::vector<OpenableControl::View::IOpenableControlViewModel*>& viewModels)
+                                                   const std::vector<OpenableControl::View::IOpenableControlViewModel*>& viewModels,
+                                                   Menu::View::IMenuIgnoredReactionModel& ignoredReactionModel)
                 : m_modalityModel(modalityModel)
                 , m_pMenuOpenStateChangedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<ModalityController, OpenableControl::View::IOpenableControlViewModel&, float>))(this, &ModalityController::MenuOpenStateChangeHandler))
                 , m_viewModels(viewModels)
+                , m_ignoredReactionModel(ignoredReactionModel)
             {
 
                 for(std::vector<OpenableControl::View::IOpenableControlViewModel*>::iterator it = m_viewModels.begin();
@@ -41,18 +43,6 @@ namespace ExampleApp
                 Eegeo_DELETE m_pMenuOpenStateChangedCallback;
             }
 
-            void ModalityController::AddIgnoredMenuIdentity(Eegeo::Helpers::TIdentity identity)
-            {
-                m_ignoredMenuIdentities.push_back(identity);
-            }
-
-            void ModalityController::RemoveIgnoredMenuIdentity(Eegeo::Helpers::TIdentity identity)
-            {
-                std::vector<Eegeo::Helpers::TIdentity>::iterator result = std::find(m_ignoredMenuIdentities.begin(), m_ignoredMenuIdentities.end(), identity);
-                
-                m_ignoredMenuIdentities.erase(result);
-            }
-
             float ModalityController::GetModality() const
             {
                 float max = 0.f;
@@ -76,13 +66,12 @@ namespace ExampleApp
             {
                 Eegeo::Helpers::TIdentity identity = viewModel.GetIdentity();
 
-                if (std::find(m_ignoredMenuIdentities.begin(), m_ignoredMenuIdentities.end(), identity) != m_ignoredMenuIdentities.end())
+                if (m_ignoredReactionModel.IsIgnored(identity))
                 {
                     return;
                 }
                 
-                float modality = GetModality();
-                m_modalityModel.SetModality(modality);
+                m_modalityModel.SetModality(openState);
             }
         }
     }

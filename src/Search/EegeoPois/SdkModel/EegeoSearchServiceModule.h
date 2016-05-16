@@ -10,6 +10,7 @@
 #include "EegeoPois.h"
 #include "NetIncludes.h"
 #include "Search.h"
+#include "Interiors.h"
 
 #include <vector>
 #include <string>
@@ -30,10 +31,12 @@ namespace ExampleApp
                     Search::SdkModel::ISearchService* m_pSearchService;
                 public:
                     EegeoSearchServiceModule(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
-                                                 Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
-                                                 Net::SdkModel::INetworkCapabilities& networkCapabilities,
-                                                 const std::vector<std::string>& availableCategories,
-                                                 const std::string& apiKey);
+                                             Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
+                                             Net::SdkModel::INetworkCapabilities& networkCapabilities,
+                                             const std::vector<std::string>& availableCategories,
+                                             const std::string& serviceUrl,
+                                             const std::string& apiKey,
+                                             const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel);
                     
                     ~EegeoSearchServiceModule();
                     

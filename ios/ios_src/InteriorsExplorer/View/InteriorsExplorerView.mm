@@ -5,6 +5,7 @@
 #include "UIHelpers.h"
 #include "ImageHelpers.h"
 #include "InteriorsExplorerViewInterop.h"
+#include "UIHelpers.h"
 #include "App.h"
 #include "MathFunc.h"
 #include "InteriorsExplorerFloorItemView.h"
@@ -40,7 +41,7 @@ namespace
 {
     if (self = [super init])
     {
-        const bool isPhone = App::IsDeviceSmall();
+        const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
         
         m_pixelScale = 1.f;
         m_screenWidth = width/pixelScale;
@@ -131,6 +132,7 @@ namespace
         self.pFloorNameLabel.textColor = [UIColor whiteColor];
         self.pFloorNameLabel.textAlignment = NSTextAlignmentLeft;
         [self.pDetailsPanel addSubview:self.pFloorNameLabel];
+                
         
         
         [self addSubview:self.pDetailsPanel];
@@ -513,3 +515,4 @@ namespace
 }
 
 @end
+

@@ -31,13 +31,13 @@ namespace ExampleApp
                 m_pAboutMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pAboutMenuModel);
                 m_pAboutMenuOptionsModel->AddItem("About", "About", "", "misc", Eegeo_NEW(View::AboutPageMenuOption)(*m_pViewModel,aboutPageViewModel));
                 
-                AddMenuSection("About", "misc", *m_pAboutMenuModel, false);
+                AddMenuSection("About", *m_pAboutMenuModel, false);
                 
                 m_pOptionsMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                 m_pOptionsMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pOptionsMenuModel);
                 m_pOptionsMenuOptionsModel->AddItem("Options", "Options", "", "options", Eegeo_NEW(View::OptionsMenuOption)(*m_pViewModel, optionsViewModel));
                 
-                AddMenuSection("Options", "options", *m_pOptionsMenuModel, false);
+                AddMenuSection("Options", *m_pOptionsMenuModel, false);
             }
             
             SettingsMenuModule::~SettingsMenuModule()
@@ -59,11 +59,10 @@ namespace ExampleApp
             }
             
             void SettingsMenuModule::AddMenuSection(const std::string& name,
-            										const std::string& icon,
                                                     Menu::View::IMenuModel& menuModel,
                                                     bool isExpandable)
             {
-                Menu::View::MenuSectionViewModel* pMenuSection = Eegeo_NEW(Menu::View::MenuSectionViewModel)(name, icon, menuModel, isExpandable);
+                Menu::View::MenuSectionViewModel* pMenuSection = Eegeo_NEW(Menu::View::MenuSectionViewModel)(name, "", menuModel, isExpandable);
                 m_pViewModel->AddSection(*pMenuSection);
                 m_sections.push_back(pMenuSection);
             }

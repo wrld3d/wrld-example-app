@@ -9,6 +9,8 @@
 #include "IEegeoSearchQuery.h"
 #include "Web.h"
 #include "UrlHelpers.h"
+#include "Interiors.h"
+#include "IAppModeModel.h"
 #include <string>
 
 namespace ExampleApp
@@ -23,11 +25,14 @@ namespace ExampleApp
                 {
                     Eegeo::Web::IWebLoadRequestFactory& m_webRequestFactory;
                     Eegeo::Helpers::UrlHelpers::IUrlEncoder& m_urlEncoder;
-                    
+                    const Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
+                    const std::string m_serviceUrl;
                 public:
                     EegeoSearchQueryFactory(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
-                                                Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
-                                                const std::string& apiKey);
+                                            Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
+                                            const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                            const std::string& serviceUrl,
+					    const std::string& apiKey);
                     
                     ~EegeoSearchQueryFactory();
                     

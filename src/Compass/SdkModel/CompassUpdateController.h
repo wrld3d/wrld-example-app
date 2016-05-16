@@ -9,6 +9,8 @@
 #include "CompassGpsMode.h"
 #include "NavigationService.h"
 #include "BidirectionalBus.h"
+#include "InteriorsNavigation.h"
+#include "AppModes.h"
 
 namespace ExampleApp
 {
@@ -22,14 +24,18 @@ namespace ExampleApp
 
                 CompassUpdateController(ICompassModel& model,
                                         Eegeo::Location::NavigationService& navigationService,
-                                        ExampleAppMessaging::TMessageBus& messageBus);
+                                        InteriorsNavigation::SdkModel::IInteriorsNavigationService& interiorsNavigationService,
+                                        ExampleAppMessaging::TMessageBus& messageBus,
+                                        AppModes::SdkModel::IAppModeModel& appModeModel);
 
                 void Update(float deltaSeconds);
 
             private:
                 ICompassModel& m_model;
                 Eegeo::Location::NavigationService& m_navigationService;
+                InteriorsNavigation::SdkModel::IInteriorsNavigationService& m_interiorsNavigationService;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
+                AppModes::SdkModel::IAppModeModel& m_appModeModel;
             };
         }
     }

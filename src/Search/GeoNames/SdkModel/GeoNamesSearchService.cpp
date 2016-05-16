@@ -24,7 +24,7 @@ namespace ExampleApp
                 , m_geoNamesSearchQueryFactory(geoNamesSearchQueryFactory)
                 , m_geoNamesParser(geoNamesParser)
                 , m_networkCapabilities(networkCapabilities)
-                , m_currentQueryModel("", false, Eegeo::Space::LatLongAltitude(0, 0, 0), 0.f)
+                , m_currentQueryModel("", false, false, Eegeo::Space::LatLongAltitude(0, 0, 0), 0.f)
                 , m_searchCallback(this,&GeoNamesSearchService::HandleSearchResponse)
                 , m_pCurrentRequest(NULL)
                 , m_hasActiveQuery(false)

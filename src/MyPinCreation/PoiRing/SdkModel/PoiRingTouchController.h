@@ -37,6 +37,17 @@ namespace ExampleApp
                     bool IsDragging() const;
 
                 private:
+                    
+                    bool TouchDownRaycast(const AppInterface::TouchData &data,
+                                          const Eegeo::Camera::RenderCamera &renderCamera,
+                                          const Eegeo::dv3 &rayOrigin);
+                    
+                    bool TouchMoveRaycast(const AppInterface::TouchData &data,
+                                          const Eegeo::Camera::RenderCamera &renderCamera,
+                                          const Eegeo::dv3 &rayOrigin);
+                    
+                    
+                    
                     MyPinCreation::SdkModel::IMyPinCreationModel& m_myPinCreationModel;
                     Eegeo::Collision::IRayPicker& m_rayPicker;
                     const IPoiRingController& m_poiRingController;

@@ -15,17 +15,21 @@ namespace ExampleApp
             namespace SdkModel
             {
                 EegeoSearchServiceModule::EegeoSearchServiceModule(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
-                                                                           Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
-                                                                           Net::SdkModel::INetworkCapabilities& networkCapabilities,
-                                                                           const std::vector<std::string>& availableCategories,
-                                                                           const std::string& apiKey)
+                                                                   Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
+                                                                   Net::SdkModel::INetworkCapabilities& networkCapabilities,
+                                                                   const std::vector<std::string>& availableCategories,
+                                                                   const std::string& serviceUrl,
+                                                                   const std::string& apiKey,
+                                                                   const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel)
                 : m_pEegeoSearchQueryFactory(NULL)
                 , m_pEegeoParser(NULL)
                 , m_pSearchService(NULL)
                 {
                     m_pEegeoSearchQueryFactory = Eegeo_NEW(EegeoSearchQueryFactory)(webRequestFactory,
-                                                                                            urlEncoder,
-                                                                                            apiKey);
+                                                                                    urlEncoder,
+                                                                                    interiorInteractionModel,
+                                                                                    serviceUrl,
+                                                                                    apiKey);
                     m_pEegeoParser = Eegeo_NEW(EegeoJsonParser)();
                     
                     m_pSearchService = Eegeo_NEW(EegeoSearchService)(*m_pEegeoSearchQueryFactory,
