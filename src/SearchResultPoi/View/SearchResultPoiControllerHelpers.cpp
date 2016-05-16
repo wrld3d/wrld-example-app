@@ -95,6 +95,11 @@ namespace ExampleApp
                         currentFloor += floorDeskCode.substr(0, floorNumPos);
                     }
 
+                    if (currentFloor.length() == 2 && currentFloor[0] == '0')
+                    {
+                        return currentFloor.substr(1);
+                    }
+
                     return currentFloor;
                 }
 
