@@ -23,7 +23,7 @@
 
 namespace
 {
-    const bool AllowPinning = false;
+    const bool AllowPinning = true;
     const float RatingImageWidth = 100.f;
     const float RatingImageHeight = 30.f;
     const int PhoneAlertViewTag = 1;
@@ -63,12 +63,12 @@ namespace
         [self.pCloseButton addTarget:self action:@selector(handleClosedButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
         
-	if(AllowPinning)
+        if(AllowPinning)
         {
-          self.pPinButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-          [self.pPinButton setDefaultStates];
-          [self.pPinButton addTarget:self action:@selector(handlePinButtonSelected) forControlEvents:UIControlEventTouchUpInside];
-          [self.pCloseButtonContainer addSubview: self.pPinButton];
+            self.pPinButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+            [self.pPinButton setDefaultStates];
+            [self.pPinButton addTarget:self action:@selector(handlePinButtonSelected) forControlEvents:UIControlEventTouchUpInside];
+            [self.pCloseButtonContainer addSubview: self.pPinButton];
         }
         
         self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -93,8 +93,8 @@ namespace
         self.pPreviewImage = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pLabelsContainer addSubview: self.pPreviewImage];
         
-        self.pPreviewImageSpinner = [[[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pPreviewImageSpinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+        self.pPreviewImageSpinner = [[[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 64, 64)] autorelease];
+        self.pPreviewImageSpinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
         self.pPreviewImageSpinner.center = CGPointZero;
         [self.pPreviewImage addSubview: self.pPreviewImageSpinner];
         
@@ -360,7 +360,7 @@ namespace
     const bool hasImage = !m_yelpModel.GetImageUrl().empty();
     const bool hasReviewBar = !self.pReviewCountLabel.hidden;
     
-    if(!m_yelpModel.GetImageUrl().empty())
+    if(hasImage)
     {
         currentLabelY = 0.f;
         const CGFloat imageX = (self.frame.size.width * 0.5f - m_imageWidth * 0.5f);
@@ -389,14 +389,14 @@ namespace
     {
         UIImage* image = ExampleApp::Helpers::ImageHelpers::LoadImage(m_yelpModel.GetRatingImageUrl());
         [self.pRatingImage setImage:image];
-
+        
         m_ratingsImageWidth = image.size.width;
         m_ratingsImageHeight = image.size.height;
-
+        
         const CGFloat imageX = hasImage ? (self.frame.size.width * 0.5f) - m_ratingsImageWidth*0.5f : roundf(rateBarOriginX);
         const CGFloat imageY = hasImage
-            ? self.pPreviewImage.frame.origin.y + self.pPreviewImage.frame.size.height - yelpButtonHeight - reviewSpacing
-            : currentLabelY + (yelpButtonHeight*0.5f) - (m_ratingsImageHeight*0.5f);
+        ? self.pPreviewImage.frame.origin.y + self.pPreviewImage.frame.size.height - yelpButtonHeight - reviewSpacing
+        : currentLabelY + (yelpButtonHeight*0.5f) - (m_ratingsImageHeight*0.5f);
         self.pRatingImage.frame = CGRectMake(imageX, imageY, m_ratingsImageWidth, m_ratingsImageHeight);
         
         CGRect frame = self.pRatingImage.frame;
@@ -578,7 +578,6 @@ namespace
     self.pAddressContent.hidden = true;
     self.pPhoneHeaderContainer.hidden = true;
     self.pPhoneContent.hidden = true;
-    self.pPreviewImage.hidden = true;
     self.pCategoriesHeaderContainer.hidden = true;
     self.pCategoriesContent.hidden = true;
     self.pReviewsHeaderContainer.hidden = true;
@@ -586,8 +585,8 @@ namespace
     self.pVendorWebLinkButton.hidden = true;
     self.pReviewCountLabel.hidden = true;
     
-    const CGFloat previewImagePlaceholderSize = 64.f;
-    m_imageWidth = m_imageHeight = previewImagePlaceholderSize;
+    m_imageWidth = self.pPlaceholderImage.size.width;
+    m_imageHeight = self.pPlaceholderImage.size.height;
     m_ratingsImageWidth = RatingImageWidth;
     m_ratingsImageHeight = RatingImageHeight;
     
@@ -627,7 +626,6 @@ namespace
             frame.size = image.size;
             frame.origin.x = self.frame.size.width * 0.5f - frame.size.width * 0.5f;
             self.pPreviewImage.frame = frame;
-            self.pPreviewImage.hidden = false;
             
             
             m_pGradientMask.frame = self.pPreviewImage.bounds;
@@ -717,7 +715,7 @@ namespace
 - (void) handleLinkClicked
 {
     NSString* preFormattedUrlString = [NSString stringWithUTF8String:m_yelpModel.GetWebUrl().c_str()];
-        
+    
     NSString* webUrlString = ([preFormattedUrlString rangeOfString:@"http"].location != NSNotFound)
     ? preFormattedUrlString
     : [NSString stringWithFormat:@"http://%@", preFormattedUrlString];
@@ -794,16 +792,16 @@ namespace
 {
     if(AllowPinning)
     {
-      if(m_isPinned)
-      {
-        [self.pPinButton setImage:self->m_pRemovePinButtonImage forState:UIControlStateNormal];
-        [self.pPinButton setImage:self->m_pRemovePinButtonHighlightImage forState:UIControlStateHighlighted];
-      }
-      else
-      {
-        [self.pPinButton setImage:self->m_pAddPinButtonImage forState:UIControlStateNormal];
-        [self.pPinButton setImage:self->m_pAddPinButtonHighlightImage forState:UIControlStateHighlighted];
-      }
+        if(m_isPinned)
+        {
+            [self.pPinButton setImage:self->m_pRemovePinButtonImage forState:UIControlStateNormal];
+            [self.pPinButton setImage:self->m_pRemovePinButtonHighlightImage forState:UIControlStateHighlighted];
+        }
+        else
+        {
+            [self.pPinButton setImage:self->m_pAddPinButtonImage forState:UIControlStateNormal];
+            [self.pPinButton setImage:self->m_pAddPinButtonHighlightImage forState:UIControlStateHighlighted];
+        }
     }
 }
 
