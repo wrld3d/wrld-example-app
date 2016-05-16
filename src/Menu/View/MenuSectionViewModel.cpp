@@ -50,6 +50,7 @@ namespace ExampleApp
 
             MenuItemModel MenuSectionViewModel::GetItemAtIndex(int index) const
             {
+                Eegeo_ASSERT(IsExpanded(), "Cannot access internal items of menu when menu section is not expanded.");
                 return m_menuModel.GetItemAtIndex(index);
             }
 
@@ -58,6 +59,7 @@ namespace ExampleApp
                 if(m_isExpandable && !m_expanded)
                 {
                     m_expanded = true;
+                    m_expandedChangedCallbacks.ExecuteCallbacks(*this, m_expanded);
                 }
             }
 
@@ -66,7 +68,17 @@ namespace ExampleApp
                 if(m_isExpandable && m_expanded)
                 {
                     m_expanded = false;
+                    m_expandedChangedCallbacks.ExecuteCallbacks(*this, m_expanded);
                 }
+            }
+            
+            void MenuSectionViewModel::InsertExpandedChangedCallback(Eegeo::Helpers::ICallback2<IMenuSectionViewModel&, bool>& callback)
+            {
+                m_expandedChangedCallbacks.AddCallback(callback);
+            }
+            void MenuSectionViewModel::RemoveExpandedChangedCallback(Eegeo::Helpers::ICallback2<IMenuSectionViewModel&, bool>& callback)
+            {
+                m_expandedChangedCallbacks.RemoveCallback(callback);
             }
         }
     }

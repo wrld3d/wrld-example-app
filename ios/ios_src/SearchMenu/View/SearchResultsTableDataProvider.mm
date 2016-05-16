@@ -102,13 +102,6 @@ static NSString *CellIdentifier = @"searchCell";
     {
         cell = [[[CustomTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
         
-        [(CustomTableViewCell*)cell initCell:(CGFloat)[m_pView.pSearchResultsTableView getCellWidth]
-                                            :(CGFloat)[m_pView.pSearchResultsTableView getCellInset]
-                                            :indexPath
-                                            :(CustomTableView*)tableView
-                                            :self];
-        
-        
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
 
         if ([cell respondsToSelector:@selector(layoutMargins)])
@@ -122,9 +115,22 @@ static NSString *CellIdentifier = @"searchCell";
         }
     }
     
-    ExampleApp::Menu::View::MenuItemModel item = m_pSearchResultsSection->GetItemAtIndex(static_cast<int>(indexPath.row));
-    std::string json = item.SerializeJson();
-    [self populateCellWithJson :json :cell];
+    [(CustomTableViewCell*)cell initCell:(CGFloat)[m_pView.pSearchResultsTableView getCellWidth]
+                                        :(CGFloat)[m_pView.pSearchResultsTableView getCellInset]
+                                        :indexPath
+                                        :(CustomTableView*)tableView
+                                        :self];
+    
+    if(indexPath.row < m_pSearchResultsSection->Size())
+    {
+        ExampleApp::Menu::View::MenuItemModel item = m_pSearchResultsSection->GetItemAtIndex(static_cast<int>(indexPath.row));
+        std::string json = item.SerializeJson();
+        [self populateCellWithJson :json :cell];
+    }
+    else
+    {
+        NSLog(@"Search results table attempting to fetch out of bounds result.");
+    }
     
     return cell;
 }
@@ -196,7 +202,11 @@ static NSString *CellIdentifier = @"searchCell";
                                       textWidth,
                                       cell.textLabel.frame.size.height);
         
-        std::string details = document["details"].GetString();
+        std::string details = "";
+        if (document.HasMember("details"))
+        {
+            details = document["details"].GetString();
+        }
         
         cell.detailTextLabel.text = [NSString stringWithUTF8String:details.c_str()];
         cell.detailTextLabel.font = [UIFont systemFontOfSize:11.0f];

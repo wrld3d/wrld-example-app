@@ -534,7 +534,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         app.SearchResultSectionModule().GetSearchResultSectionOptionsModel(),
         app.SearchResultSectionModule().GetSearchResultSectionOrder(),
         m_messageBus,
-        *m_pMenuReaction
+        *m_pMenuReaction,
+        app.SearchResultPoiModule().GetSearchResultPoiViewModel()
         );
 
     // Pop-up layer.
@@ -580,14 +581,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
 	m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(
 		app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
-		m_messageBus,
-		app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
-		app.SettingsMenuModule().GetSettingsMenuViewModel(),
-		app.SearchMenuModule().GetSearchMenuViewModel(),
-		app.FlattenButtonModule().GetScreenControlViewModel(),
-		app.CompassModule().GetScreenControlViewModel(),
-		app.WatermarkModule().GetScreenControlViewModel(),
-		app.GetIdentityProvider());
+		m_messageBus);
 
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
 
@@ -599,11 +593,11 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     Eegeo::Helpers::TIdentity settingsMenuIdentity = app.SearchResultPoiModule().GetObservableOpenableControl().GetIdentity();
     Eegeo::Helpers::TIdentity searchMenuIdentity= app.SearchMenuModule().GetSearchMenuViewModel().GetIdentity();
     
-    app.ModalityModule().GetModalityController().AddIgnoredMenuIdentity(settingsMenuIdentity);
-    app.ReactionModelModule().GetReactionModel().AddIgnoredMenuIdentity(settingsMenuIdentity);
+    app.ModalityIgnoredReactionModel().AddIgnoredMenuIdentity(settingsMenuIdentity);
+    app.ReactorIgnoredReactionModel().AddIgnoredMenuIdentity(settingsMenuIdentity);
     
-    app.ModalityModule().GetModalityController().AddIgnoredMenuIdentity(searchMenuIdentity);
-    app.ReactionModelModule().GetReactionModel().AddIgnoredMenuIdentity(searchMenuIdentity);
+    app.ModalityIgnoredReactionModel().AddIgnoredMenuIdentity(searchMenuIdentity);
+    app.ReactorIgnoredReactionModel().AddIgnoredMenuIdentity(searchMenuIdentity);
 }
 
 void AppHost::DestroyApplicationViewModulesFromUiThread()

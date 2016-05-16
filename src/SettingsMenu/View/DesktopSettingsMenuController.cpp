@@ -60,9 +60,8 @@ namespace ExampleApp
             void DesktopSettingsMenuController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
             {
                 m_currentAppMode = message.GetAppMode();
-                m_appModeAllowsOpen =  m_currentAppMode != AppModes::SdkModel::InteriorMode;
-                
-                if (!m_appModeAllowsOpen)
+
+                if (!m_viewModel.IsFullyClosed())
                 {
                     m_viewModel.Close();
                 }

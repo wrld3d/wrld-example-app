@@ -23,7 +23,6 @@ namespace ExampleApp
             private:
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Modality::View::IModalBackgroundView& m_modalBackgroundView;
-                bool m_appModeAllowsOpen;
                 
                 Eegeo::Helpers::TCallback1<SettingsMenuController, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
                 Eegeo::Helpers::TCallback0<SettingsMenuController> m_onModalBackgroundTappedCallback;

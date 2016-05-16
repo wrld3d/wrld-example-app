@@ -137,8 +137,6 @@ AppHost::AppHost(
     Eegeo::Config::PlatformConfig platformConfig = Eegeo::iOS::iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion()).Build();
 
     platformConfig.CoverageTreeConfig.ManifestUrl = applicationConfiguration.CoverageTreeManifestURL();
-    platformConfig.CityThemesConfig.StreamedManifestUrl = applicationConfiguration.ThemeManifestURL();
-
     platformConfig.CityThemesConfig.EmbeddedThemeManifestFile = "embedded_manifest.txt";
     platformConfig.CityThemesConfig.EmbeddedThemeTexturePath = "Textures/EmbeddedTheme";
     platformConfig.CityThemesConfig.EmbeddedThemeNameContains = "Summer";
@@ -321,7 +319,8 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                                                        app.SearchResultSectionModule().GetSearchResultSectionOptionsModel(),
                                                                                                                        app.SearchResultSectionModule().GetSearchResultSectionOrder(),
                                                                                                                        m_messageBus,
-                                                                                                                       *m_pMenuReactionModel);
+                                                                                                                       *m_pMenuReactionModel,
+                                                                                                                       app.SearchResultPoiModule().GetSearchResultPoiViewModel());
 
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
                                                                                                            m_messageBus,
@@ -396,14 +395,9 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     
     
     m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
-                                                                                             m_messageBus,
-                                                                                             app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
-                                                                                             app.SettingsMenuModule().GetSettingsMenuViewModel(),
-                                                                                             app.SearchMenuModule().GetSearchMenuViewModel(),
-                                                                                             app.FlattenButtonModule().GetScreenControlViewModel(),
-                                                                                             app.CompassModule().GetScreenControlViewModel(),
-                                                                                             screenProperties,
-                                                                                             app.GetIdentityProvider());
+                                                                                                                 m_messageBus,
+                                                                                                                 screenProperties,
+                                                                                                                 app.GetIdentityProvider());
     
     m_pSurveyViewModule = Eegeo_NEW(ExampleApp::Surveys::View::SurveyViewModule)(m_messageBus,
                                                                                  m_iOSFlurryMetricsService,

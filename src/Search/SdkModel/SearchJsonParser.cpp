@@ -23,7 +23,6 @@ namespace ExampleApp
                 {
                     return EegeoPois::SdkModel::TryParseImageDetails(searchResultModel, out_imageUrl);
                 }
-                
                 return false;
             }
         }

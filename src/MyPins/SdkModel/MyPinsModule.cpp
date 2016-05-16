@@ -19,6 +19,7 @@
 #include "MyPinRemovedFromMenuObserver.h"
 #include "MyPinSelectedMessageHandler.h"
 #include "MyPinVisibilityStateChangedHandlerFactory.h"
+#include "MyPinsWebService.h"
 
 namespace ExampleApp
 {
@@ -36,7 +37,10 @@ namespace ExampleApp
                                        CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                                        Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
                                        Metrics::IMetricsService& metricsService,
-                                       const Menu::View::IMenuReactionModel& menuReaction)
+                                       const std::string& myPinsWebServiceUrl,
+                                       const std::string& myPinsWebServiceAuthToken,
+                                       const Menu::View::IMenuReactionModel& menuReaction,
+                                       Menu::View::IMenuIgnoredReactionModel& ignoredMenuReaction)
                 : m_pMyPinsRepository(NULL)
                 , m_pMyPinsFileIO(NULL)
                 , m_pMyPinsService(NULL)
@@ -49,12 +53,18 @@ namespace ExampleApp
 
                 m_pMyPinsRepository = Eegeo_NEW(MyPinsRepository)();
                 
+                m_pMyPinsWebService = Eegeo_NEW(MyPinsWebService)(myPinsWebServiceUrl,
+                                                                  myPinsWebServiceAuthToken,
+                                                                  platformAbstractions.GetWebLoadRequestFactory(),
+                                                                  platformAbstractions.GetFileIO());
+                
                 m_pMyPinBoundObjectRepository = Eegeo_NEW(MyPinBoundObjectRepository);
                 
                 m_pMyPinBoundObjectFactory = Eegeo_NEW(MyPinBoundObjectFactory)(messageBus,
                                                                                 sdkModelDomainEventBus,
                                                                                 categorySearchRepository,
-                                                                                myPinsSearchResultRefreshService);
+                                                                                myPinsSearchResultRefreshService,
+                                                                                *m_pMyPinsWebService);
 
                 m_pMyPinsSelectionHandlerFactory = Eegeo_NEW(MyPinSelectionHandlerFactory)(*m_pMyPinBoundObjectRepository, metricsService);
                 
@@ -73,7 +83,8 @@ namespace ExampleApp
                 m_pMyPinAddedToMenuObserver = Eegeo_NEW(View::MyPinAddedToMenuObserver)(menuViewModel,
                                                                                         *m_pMenuOptionsModel,
                                                                                         messageBus,
-                                                                                        menuReaction);
+                                                                                        menuReaction,
+                                                                                        ignoredMenuReaction);
                 
                 m_pMyPinRemovedFromMenuObserver = Eegeo_NEW(View::MyPinRemovedFromMenuObserver)(*m_pMenuOptionsModel,
                                                   messageBus);

@@ -21,7 +21,6 @@ namespace ExampleApp
             , m_modalBackgroundView(modalBackgroundView)
             , m_appModeChangedCallback(this, &SettingsMenuController::OnAppModeChanged)
             , m_onModalBackgroundTappedCallback(this, & SettingsMenuController::OnModalBackgroundTapped)
-            , m_appModeAllowsOpen(true)
             {
                 m_modalBackgroundView.InsertTappedCallback(m_onModalBackgroundTappedCallback);
                 
@@ -37,42 +36,20 @@ namespace ExampleApp
             
             void SettingsMenuController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
             {
-                m_appModeAllowsOpen = message.GetAppMode() != AppModes::SdkModel::InteriorMode;
-                if (!m_appModeAllowsOpen)
-                {
-                    m_viewModel.RemoveFromScreen();
-                }
             }
             
             bool SettingsMenuController::TryDrag()
             {
-                if (!m_appModeAllowsOpen)
-                {
-                    m_viewModel.Close();
-                    return false;
-                }
-                
                 return MenuController::TryDrag();
             }
             
             void SettingsMenuController::OnViewClicked()
             {
-                if (!m_appModeAllowsOpen)
-                {
-                    m_viewModel.Close();
-                    return;
-                }
-                
                 MenuController::OnViewClicked();
             }
             
             void SettingsMenuController::OnModalBackgroundTapped()
             {
-                if(!m_appModeAllowsOpen)
-                {
-                    return;
-                }
-                
                 if(m_viewModel.IsFullyOpen())
                 {
                     m_viewModel.Close();

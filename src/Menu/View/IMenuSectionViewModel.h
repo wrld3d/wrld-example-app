@@ -5,6 +5,7 @@
 #include <string>
 #include "Menu.h"
 #include "Types.h"
+#include "ICallback.h"
 
 namespace ExampleApp
 {
@@ -38,6 +39,9 @@ namespace ExampleApp
 
                 virtual void Expand() = 0;
                 virtual void Contract() = 0;
+                
+                virtual void InsertExpandedChangedCallback(Eegeo::Helpers::ICallback2<IMenuSectionViewModel&, bool>& callback) = 0;
+                virtual void RemoveExpandedChangedCallback(Eegeo::Helpers::ICallback2<IMenuSectionViewModel&, bool>& callback) = 0;
             };
         }
     }

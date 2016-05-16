@@ -19,6 +19,7 @@ namespace ExampleApp
 
             class IMyPinsService;
             class MyPinsService;
+            class MyPinsWebService;
 
             class MyPinsFileIO;
 

@@ -6,6 +6,7 @@
 #include "IMenuOptionsModel.h"
 #include "MyPinModel.h"
 #include "MyPinMenuOption.h"
+#include "MyPinMenuOptionFactory.h"
 
 namespace ExampleApp
 {
@@ -16,12 +17,14 @@ namespace ExampleApp
             MyPinAddedToMenuObserver::MyPinAddedToMenuObserver(Menu::View::IMenuViewModel& menuViewModel,
                                                                Menu::View::IMenuOptionsModel& menuOptionsModel,
                                                                ExampleAppMessaging::TMessageBus& messageBus,
-                                                               const Menu::View::IMenuReactionModel& menuReaction)
+                                                               const Menu::View::IMenuReactionModel& menuReaction,
+                                                               Menu::View::IMenuIgnoredReactionModel& ignoredMenuReaction)
                 : m_menuViewModel(menuViewModel)
                 , m_menuOptionsModel(menuOptionsModel)
                 , m_messageBus(messageBus)
                 , m_handlerBinding(this, &MyPinAddedToMenuObserver::OnMyPinAddedToMenuMessage)
                 , m_menuReaction(menuReaction)
+                , m_ignoredMenuReaction(ignoredMenuReaction)
             {
                 m_messageBus.SubscribeUi(m_handlerBinding);
             }
@@ -39,13 +42,14 @@ namespace ExampleApp
                                            message.GetMyPinTitle(),
                                            "",
                                            myPinIcon,
-                                           Eegeo_NEW(MyPinMenuOption)(message.GetMyPinId(),
+                                           MyPinMenuOptionFactory::CreateMyPinMenuOption(message.GetMyPinId(),
                                                                       message.GetMyPinLocation(),
                                                                       message.GetMyPinInteriorId(),
                                                                       message.GetMyPinFloorIndex(),
                                                                       m_menuViewModel,
                                                                       m_messageBus,
-                                                                      m_menuReaction));
+                                                                      m_menuReaction,
+                                                                      m_ignoredMenuReaction));
             }
         }
     }

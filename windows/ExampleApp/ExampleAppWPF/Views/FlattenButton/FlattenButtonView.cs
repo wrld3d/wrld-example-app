@@ -107,6 +107,13 @@ namespace ExampleAppWPF
             }
         }
 
+        public void SetViewEnabled(bool enabled)
+        {
+            Opacity = enabled ? 1.0 : 0.5;
+
+            IsEnabled = enabled;
+        }
+
         private void FlattenButton_Click(object sender, RoutedEventArgs e)
         {
             FlattenButtonViewCLIMethods.OnToggle(m_nativeCallerPointer, IsChecked.Value);

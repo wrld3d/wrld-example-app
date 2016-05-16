@@ -21,6 +21,7 @@ namespace ExampleApp
             {
                 const std::string VendorViewClassNames[] = {
                     "ExampleAppWPF.YelpSearchResultsPoiView",
+                    "ExampleAppWPF.eeGeoSearchResultsPoiView",
                     "ExampleAppWPF.GeoNamesSearchResultsPoiView"
                 };
             }
@@ -45,7 +46,7 @@ namespace ExampleApp
             {
             }
 
-            void SearchResultPoiView::Show(const Search::SdkModel::SearchResultModel model, bool isPinned)
+            void SearchResultPoiView::Show(const Search::SdkModel::SearchResultModel& model, bool isPinned)
             {
                 m_model = model;
                 CreateVendorSpecificPoiView(m_model.GetVendor());
@@ -121,6 +122,10 @@ namespace ExampleApp
                 else if(vendor == "GeoNames")
                 {
                     m_currentVendor = SearchVendors::GeoNames;
+                }
+                else if (vendor == "eeGeo")
+                {
+                    m_currentVendor = SearchVendors::eeGeo;
                 }
                 else
                 {

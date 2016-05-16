@@ -15,7 +15,10 @@
 #include "CategorySearch.h"
 #include "Search.h"
 #include "IMetricsService.h"
+#include "Helpers.h"
+#include <string>
 #include "IMenuReactionModel.h"
+#include "IMenuIgnoredReactionModel.h"
 
 namespace ExampleApp
 {
@@ -36,7 +39,10 @@ namespace ExampleApp
                              CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                              Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
                              Metrics::IMetricsService& metricsService,
-                             const Menu::View::IMenuReactionModel& menuReaction);
+                             const std::string& myPinsWebServiceUrl,
+                             const std::string& myPinsWebServiceAuthToken,
+                             const Menu::View::IMenuReactionModel& menuReaction,
+                             Menu::View::IMenuIgnoredReactionModel& ignoredMenuReaction);
 
                 ~MyPinsModule();
 
@@ -51,6 +57,7 @@ namespace ExampleApp
                 MyPinsRepository* m_pMyPinsRepository;
                 MyPinsFileIO* m_pMyPinsFileIO;
                 MyPinsService* m_pMyPinsService;
+                MyPinsWebService* m_pMyPinsWebService;
                 MyPinsRepositoryObserver* m_pMyPinsRepositoryObserver;
                 IMyPinBoundObjectFactory* m_pMyPinBoundObjectFactory;
                 IMyPinBoundObjectRepository* m_pMyPinBoundObjectRepository;

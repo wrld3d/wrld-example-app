@@ -39,6 +39,8 @@ namespace ExampleApp
                 void InsertToggleCallback(Eegeo::Helpers::ICallback1<bool>& callback);
 
                 void RemoveToggleCallback(Eegeo::Helpers::ICallback1<bool>& callback);
+
+                void SetViewEnabled(bool enabled);
             };
         }
     }

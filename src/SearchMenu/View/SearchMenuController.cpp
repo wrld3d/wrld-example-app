@@ -7,6 +7,7 @@
 #include "IModalBackgroundView.h"
 #include "ISearchMenuView.h"
 #include "SearchQuery.h"
+#include "SearchResultModel.h"
 #include "SearchResultViewClearedMessage.h"
 
 namespace ExampleApp
@@ -123,37 +124,21 @@ namespace ExampleApp
             
             void SearchMenuController::OnSearch(const std::string& searchQuery)
             {
-                m_messageBus.Publish(SearchMenuPerformedSearchMessage(searchQuery, false));
+                m_messageBus.Publish(SearchMenuPerformedSearchMessage(searchQuery, false, false));
             }
             
             void SearchMenuController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
             {
-                m_appModeAllowsOpen = message.GetAppMode() != AppModes::SdkModel::InteriorMode;
                 
-                if (!m_appModeAllowsOpen)
-                {
-                    m_viewModel.RemoveFromScreen();
-                }
             }
             
             bool SearchMenuController::TryDrag()
             {
-                if (!m_appModeAllowsOpen)
-                {
-                    m_viewModel.Close();
-                    return false;
-                }
-                
                 return MenuController::TryDrag();
             }
             
             void SearchMenuController::OnViewClicked()
             {
-                if (!m_appModeAllowsOpen)
-                {
-                    m_viewModel.Close();
-                    return;
-                }
                 MenuController::OnViewClicked();
             }
             

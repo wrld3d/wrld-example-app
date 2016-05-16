@@ -14,9 +14,6 @@ namespace ExampleApp
             {
             public:
                 virtual ~IReactionModel() { }
-
-                virtual void AddIgnoredMenuIdentity(Eegeo::Helpers::TIdentity identity) = 0;
-                virtual void RemoveIgnoredMenuIdentity(Eegeo::Helpers::TIdentity identity) = 0;
             };
         }
     }

@@ -10,8 +10,8 @@ namespace ExampleApp
     {
         extern const std::string YelpVendorName;
         extern const std::string GeoNamesVendorName;
+	    extern const std::string ExampleTourVendorName;
         extern const std::string EegeoVendorName;
-        
         extern const std::string ExampleTourVendorName;
         
         extern const std::string InteriorVendorName;

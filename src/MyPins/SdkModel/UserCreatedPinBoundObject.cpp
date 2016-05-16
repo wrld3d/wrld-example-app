@@ -3,7 +3,7 @@
 #include "UserCreatedPinBoundObject.h"
 #include "MyPinsFileIO.h"
 #include "UserCreatedMyPinDetailsModelSelectedMessage.h"
-#include "IWebLoadRequest.h"
+#include "MyPinsWebService.h"
 
 namespace ExampleApp
 {
@@ -14,9 +14,10 @@ namespace ExampleApp
             UserCreatedPinBoundObject* UserCreatedPinBoundObject::FromSerializedData(MyPinModel::TPinIdType pinId,
                                                                                      const std::string& serializedData,
                                                                                      MyPinsFileIO& myPinsFileIO,
-                                                                                     ExampleAppMessaging::TMessageBus& messageBus)
+                                                                                     ExampleAppMessaging::TMessageBus& messageBus,
+                                                                                     MyPins::SdkModel::MyPinsWebService& webService)
             {
-                return Eegeo_NEW(UserCreatedPinBoundObject)(pinId, serializedData, myPinsFileIO, messageBus);
+                return Eegeo_NEW(UserCreatedPinBoundObject)(pinId, serializedData, myPinsFileIO, messageBus, webService);
             }
             
             UserCreatedPinBoundObject::UserCreatedPinBoundObject(MyPinModel::TPinIdType pinId,
@@ -24,7 +25,8 @@ namespace ExampleApp
                                                                  size_t imageSize,
                                                                  bool share,
                                                                  MyPinsFileIO& myPinsFileIO,
-                                                                 ExampleAppMessaging::TMessageBus& messageBus)
+                                                                 ExampleAppMessaging::TMessageBus& messageBus,
+                                                                 MyPins::SdkModel::MyPinsWebService& webService)
             : m_pinId(pinId)
             , m_pImageData(pImageData)
             , m_imageSize(imageSize)
@@ -32,6 +34,7 @@ namespace ExampleApp
             , m_imagePath("")
             , m_myPinsFileIO(myPinsFileIO)
             , m_messageBus(messageBus)
+            , m_webService(webService)
             {
                 
             }
@@ -39,7 +42,8 @@ namespace ExampleApp
             UserCreatedPinBoundObject::UserCreatedPinBoundObject(MyPinModel::TPinIdType pinId,
                                                                  const std::string& imagePath,
                                                                  MyPinsFileIO& myPinsFileIO,
-                                                                 ExampleAppMessaging::TMessageBus& messageBus)
+                                                                 ExampleAppMessaging::TMessageBus& messageBus,
+                                                                 MyPins::SdkModel::MyPinsWebService& webService)
             : m_pinId(pinId)
             , m_pImageData(NULL)
             , m_imageSize(0)
@@ -47,6 +51,7 @@ namespace ExampleApp
             , m_imagePath(imagePath)
             , m_myPinsFileIO(myPinsFileIO)
             , m_messageBus(messageBus)
+            , m_webService(webService)
             {
                 
             }
@@ -124,7 +129,7 @@ namespace ExampleApp
             
             void UserCreatedPinBoundObject::SubmitPinToWebService(const MyPinModel& pinModel)
             {
-                Eegeo_TTY("Here is where you submit pin to web service\n");
+                m_webService.SubmitUserCreatedPin(pinModel, m_imagePath);
             }
         }
     }

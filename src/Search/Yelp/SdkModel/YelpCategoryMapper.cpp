@@ -100,8 +100,8 @@ namespace ExampleApp
                 {
                     Eegeo_ASSERT(!m_hasDownloadedTaxonomy);
                     m_isDownloadingTaxonomy = true;
-                    
-                    m_webRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, YelpCategoryTaxonomyUrl, m_yelpTaxonomyRequestCompletedCallback).Build()->Load();
+                    m_webRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, YelpCategoryTaxonomyUrl, m_yelpTaxonomyRequestCompletedCallback)
+                        .Build()->Load();
                 }
                 
                 void YelpCategoryMapper::OnYelpTaxonomyRequestCompleted(Eegeo::Web::IWebResponse& webResponse)

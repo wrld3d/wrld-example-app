@@ -527,10 +527,11 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     m_pSearchResultSectionViewModule = Eegeo_NEW(ExampleApp::SearchResultSection::View::SearchResultSectionViewModule)(
     		app.SearchMenuModule().GetSearchMenuViewModel(),
-		    app.SearchResultSectionModule().GetSearchResultSectionOptionsModel(),
-		    app.SearchResultSectionModule().GetSearchResultSectionOrder(),
-		    m_messageBus,
-			*m_pMenuReactionModel);
+    				    app.SearchResultSectionModule().GetSearchResultSectionOptionsModel(),
+    				    app.SearchResultSectionModule().GetSearchResultSectionOrder(),
+    				    m_messageBus,
+    					*m_pMenuReactionModel,
+    		            app.SearchResultPoiModule().GetSearchResultPoiViewModel());
 
     // Pop-up layer.
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(
@@ -573,15 +574,9 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 								);
 
     m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(
-    																							 app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
-                                                                                                 m_messageBus,
-                                                                                                 app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
-																								 app.SettingsMenuModule().GetSettingsMenuViewModel(),
-                                                                                                 app.SearchMenuModule().GetSearchMenuViewModel(),
-                                                                                                 app.FlattenButtonModule().GetScreenControlViewModel(),
-                                                                                                 app.CompassModule().GetScreenControlViewModel(),
-                                                                                                 app.GetIdentityProvider(),
-																								 m_nativeState);
+			 app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
+            m_messageBus,
+            m_nativeState);
 
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
 

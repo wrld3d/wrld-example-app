@@ -69,7 +69,7 @@ namespace ExampleApp
                 UpdateAnimationCSharp(dt);
             }
 
-            void MenuView::UpdateMenuSectionViews(TSections& sections, bool contentsChanged)
+            void MenuView::UpdateMenuSectionViews(TSections& sections)
             {
                 const size_t numSections = sections.size();
                 size_t numItems = 0;

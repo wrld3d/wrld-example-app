@@ -11,6 +11,7 @@
 #include "BidirectionalBus.h"
 #include "ModalityObserver.h"
 #include "ModalityController.h"
+#include "IMenuIgnoredReactionModel.h"
 
 namespace ExampleApp
 {
@@ -27,7 +28,8 @@ namespace ExampleApp
 
             public:
                 ModalityModule(ExampleAppMessaging::TMessageBus& messageBus,
-                               const std::vector<OpenableControl::View::IOpenableControlViewModel*>& viewModels);
+                               const std::vector<OpenableControl::View::IOpenableControlViewModel*>& viewModels,
+                               Menu::View::IMenuIgnoredReactionModel& ignoredReactionModel);
 
                 ~ModalityModule();
 

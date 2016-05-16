@@ -20,7 +20,11 @@
 }
 @end
 
-const int DeletePinAlertViewTag = 1;
+namespace
+{
+    const bool AllowPinning = false;
+    const int DeletePinAlertViewTag = 1;
+}
 
 @implementation GeoNamesSearchResultPoiView
 
@@ -55,10 +59,13 @@ const int DeletePinAlertViewTag = 1;
         [self.pCloseButton addTarget:self action:@selector(handleClosedButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
         
-        self.pPinButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pPinButton setDefaultStates];
-        [self.pPinButton addTarget:self action:@selector(handlePinButtonSelected) forControlEvents:UIControlEventTouchUpInside];
-        [self.pCloseButtonContainer addSubview: self.pPinButton];
+        if(AllowPinning)
+	{
+	    self.pPinButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+            [self.pPinButton setDefaultStates];
+            [self.pPinButton addTarget:self action:@selector(handlePinButtonSelected) forControlEvents:UIControlEventTouchUpInside];
+            [self.pCloseButtonContainer addSubview: self.pPinButton];
+	}
         
         self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
@@ -101,8 +108,11 @@ const int DeletePinAlertViewTag = 1;
     [self.pCloseButton removeFromSuperview];
     [self.pCloseButton release];
     
-    [self.pPinButton removeFromSuperview];
-    [self.pPinButton release];
+    if(AllowPinning)
+    {
+        [self.pPinButton removeFromSuperview];
+        [self.pPinButton release];
+    }
     
     [self.pCloseButtonContainer removeFromSuperview];
     [self.pCloseButtonContainer release];
@@ -199,10 +209,13 @@ const int DeletePinAlertViewTag = 1;
                                          closeButtonSectionHeight,
                                          closeButtonSectionHeight);
     
-    self.pPinButton.frame = CGRectMake(0.f,
-                                       0.f,
-                                       closeButtonSectionHeight,
-                                       closeButtonSectionHeight);
+    if(AllowPinning)
+    {
+        self.pPinButton.frame = CGRectMake(0.f,
+                                           0.f,
+                                           closeButtonSectionHeight,
+                                           closeButtonSectionHeight);
+    }
     
     self.pCategoryIconContainer.frame = CGRectMake(0.f, 0.f, headlineHeight, headlineHeight);
     const float titlePadding = 10.0f;
@@ -256,6 +269,11 @@ const int DeletePinAlertViewTag = 1;
     m_model = *pModel;
     m_isPinned = isPinned;
     [self updatePinnedButtonState];
+    
+    if(!AllowPinning && m_isPinned)
+    {
+        [self handlePinButtonSelected];
+    }
     
     self.pTitleLabel.text = [NSString stringWithUTF8String:pModel->GetTitle().c_str()];
     
@@ -374,15 +392,18 @@ const int DeletePinAlertViewTag = 1;
 
 - (void) updatePinnedButtonState
 {
-    if(m_isPinned)
+    if (AllowPinning)
     {
-        [self.pPinButton setImage:self->m_pRemovePinButtonImage forState:UIControlStateNormal];
-        [self.pPinButton setImage:self->m_pRemovePinButtonHighlightImage forState:UIControlStateHighlighted];
-    }
-    else
-    {
-        [self.pPinButton setImage:self->m_pAddPinButtonImage forState:UIControlStateNormal];
-        [self.pPinButton setImage:self->m_pAddPinButtonHighlightImage forState:UIControlStateHighlighted];
+       if(m_isPinned)
+       {
+          [self.pPinButton setImage:self->m_pRemovePinButtonImage forState:UIControlStateNormal];
+          [self.pPinButton setImage:self->m_pRemovePinButtonHighlightImage forState:UIControlStateHighlighted];
+       }
+       else
+       {
+          [self.pPinButton setImage:self->m_pAddPinButtonImage forState:UIControlStateNormal];
+          [self.pPinButton setImage:self->m_pAddPinButtonHighlightImage forState:UIControlStateHighlighted];
+       }
     }
 }
 

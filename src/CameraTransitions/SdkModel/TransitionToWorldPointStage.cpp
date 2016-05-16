@@ -61,7 +61,7 @@ namespace ExampleApp
                 
                 m_transitionTime = 0.0f;
                 
-                const float CAMERA_TRANSITION_SPEED_IN_METERS_PER_SECOND = 1000.0f;
+                const float CAMERA_TRANSITION_SPEED_IN_METERS_PER_SECOND = 250.0f;
                 const float MIN_TRANSITION_TIME = 0.5f;
                 const float MAX_TRANSITION_TIME = 2.0f;
                 float distance = (m_endTransitionInterestPointEcef - m_startTransitionInterestPointEcef).ToSingle().Length();
@@ -130,8 +130,8 @@ namespace ExampleApp
             bool TransitionToWorldPointStage::ShouldJumpTo(Eegeo::dv3& newInterestPoint)
             {
                 const double MAX_CAMERA_TRANSITION_DISTANCE = 5000;
-                const Eegeo::dv3& currentCameraLocation = m_gpsGlobeCameraController.GetCameraState().LocationEcef();
-                double distance = (newInterestPoint - currentCameraLocation).Length();
+                Eegeo::dv3 currentInterestPoint = m_gpsGlobeCameraController.GetEcefInterestPoint();
+                double distance = (newInterestPoint - currentInterestPoint).Length();
                 return distance > MAX_CAMERA_TRANSITION_DISTANCE;
             }
 

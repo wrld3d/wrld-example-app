@@ -35,6 +35,7 @@ namespace ExampleApp
                                     Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                     ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
                                     Search::SdkModel::ISearchRefreshService& searchRefreshService,
+                                    ScreenControl::View::IScreenControlViewModel& interiorControlViewModel,
                                     ExampleAppMessaging::TMessageBus& messageBus,
                                     Reaction::View::IReactionControllerModel& reactionControllerModel);
 

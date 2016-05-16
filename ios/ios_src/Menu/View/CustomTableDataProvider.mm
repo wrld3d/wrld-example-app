@@ -418,26 +418,29 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
 {
     size_t sectionIndex = m_tableSectionMap[tableView];
     
-    ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections[sectionIndex];
-    
-    if(section.IsExpandable() && section.IsExpanded())
+    if (sectionIndex < m_currentSections.size())
     {
-        NSInteger rows;
+        ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections[sectionIndex];
         
-        NSMutableArray *tmpArray = [NSMutableArray array];
-        
-        [self showOpenableArrowClosed:[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]]];
-        
-        rows = section.Size();
-        section.Contract();
-        
-        for(int i = 1; i < rows; ++i)
+        if(section.IsExpandable() && section.IsExpanded())
         {
-            NSIndexPath *tmpIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
-            [tmpArray addObject:tmpIndexPath];
+            NSInteger rows;
+            
+            NSMutableArray *tmpArray = [NSMutableArray array];
+            
+            [self showOpenableArrowClosed:[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]]];
+            
+            rows = section.Size();
+            section.Contract();
+            
+            for(int i = 1; i < rows; ++i)
+            {
+                NSIndexPath *tmpIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
+                [tmpArray addObject:tmpIndexPath];
+            }
+            
+            [tableView deleteRowsAtIndexPaths:tmpArray withRowAnimation:UITableViewRowAnimationNone];
         }
-        
-        [tableView deleteRowsAtIndexPaths:tmpArray withRowAnimation:UITableViewRowAnimationNone];
     }
 }
 

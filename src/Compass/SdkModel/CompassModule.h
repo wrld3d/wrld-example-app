@@ -14,8 +14,10 @@
 #include "IMetricsService.h"
 #include "AppModes.h"
 #include "AlertBox.h"
+#include "InteriorsNavigation.h"
 #include "Interiors.h"
 #include "AppCamera.h"
+#include "InteriorsExplorer.h"
 
 namespace ExampleApp
 {
@@ -34,11 +36,13 @@ namespace ExampleApp
 
             public:
                 CompassModule(Eegeo::Location::NavigationService& navigationService,
+                              InteriorsNavigation::SdkModel::IInteriorsNavigationService& interiorsNavigationService,
                               Eegeo::Location::ILocationService& locationService,
                               ExampleApp::AppCamera::SdkModel::IAppCameraController& cameraController,
                               Eegeo::Helpers::IIdentityProvider& identityProvider,
                               ExampleAppMessaging::TMessageBus& messageBus,
                               Metrics::IMetricsService& metricsService,
+                              InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorExplorerModel,
                               AppModes::SdkModel::IAppModeModel& appModeModel,
                               Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory);
 

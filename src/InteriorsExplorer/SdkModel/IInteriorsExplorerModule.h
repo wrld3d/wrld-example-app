@@ -30,6 +30,8 @@ namespace ExampleApp
                 
                 virtual InteriorsExplorerModel& GetInteriorsExplorerModel() const = 0;
                 
+                virtual Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& GetTouchController() const = 0;
+                
                 virtual InteriorExplorerUserInteractionModel& GetInteriorsExplorerUserInteractionModel() const = 0;
             };
         }

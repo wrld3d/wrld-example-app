@@ -24,16 +24,19 @@ namespace ExampleApp
                 , m_eeGeoSearchQueryFactory(EegeoSearchQueryFactory)
                 , m_eeGeoParser(EegeoParser)
                 , m_networkCapabilities(networkCapabilities)
-                , m_currentQueryModel("", false, Eegeo::Space::LatLongAltitude(0, 0, 0), 0.f)
+                , m_currentQueryModel("", false, false, Eegeo::Space::LatLongAltitude(0, 0, 0), 0.f)
                 , m_searchCallback(this,&EegeoSearchService::HandleSearchResponse)
                 , m_pCurrentRequest(NULL)
                 , m_hasActiveQuery(false)
+                , m_networkCapabilitiesChangedHandler(this, &EegeoSearchService::HandleNetworkCapabilitiesChanged)
                 {
+                    m_networkCapabilities.RegisterChangedCallback(m_networkCapabilitiesChangedHandler);
                 }
                 
                 EegeoSearchService::~EegeoSearchService()
                 {
                     CancelInFlightQueries();
+                    m_networkCapabilities.UnregisterChangedCallback(m_networkCapabilitiesChangedHandler);
                 }
                 
                 void EegeoSearchService::CancelInFlightQueries()
@@ -93,6 +96,14 @@ namespace ExampleApp
                     
                     m_hasActiveQuery = false;
                     ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, queryResults);
+                }
+                
+                void EegeoSearchService::HandleNetworkCapabilitiesChanged()
+                {
+                    if (!m_networkCapabilities.NetworkAvailable())
+                    {
+                        CancelInFlightQueries();
+                    }
                 }
             }
         }

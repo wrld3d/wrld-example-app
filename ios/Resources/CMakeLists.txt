@@ -158,15 +158,15 @@ set(resources ${resources}
 		Resources/icon1_aroundme.png
 		Resources/icon1_aroundme@2x.png
 		Resources/icon1_aroundme@3x.png
-		Resources/icon1_arts.png
-		Resources/icon1_arts@2x.png
-		Resources/icon1_arts@3x.png
+		Resources/icon1_museums.png
+		Resources/icon1_museums@2x.png
+		Resources/icon1_museums@3x.png
 		Resources/icon1_autumn.png
 		Resources/icon1_autumn@2x.png
 		Resources/icon1_autumn@3x.png
-		Resources/icon1_bank.png
-		Resources/icon1_bank@2x.png
-		Resources/icon1_bank@3x.png
+		Resources/icon1_financialservices.png
+		Resources/icon1_financialservices@2x.png
+		Resources/icon1_financialservices@3x.png
 		Resources/icon1_coffee.png
 		Resources/icon1_coffee@2x.png
 		Resources/icon1_coffee@3x.png
@@ -182,12 +182,12 @@ set(resources ${resources}
 		Resources/icon1_foggy.png
 		Resources/icon1_foggy@2x.png
 		Resources/icon1_foggy@3x.png
-		Resources/icon1_food.png
-		Resources/icon1_food@2x.png
-		Resources/icon1_food@3x.png
-		Resources/icon1_hotel.png
-		Resources/icon1_hotel@2x.png
-		Resources/icon1_hotel@3x.png
+		Resources/icon1_restaurants.png
+		Resources/icon1_restaurants@2x.png
+		Resources/icon1_restaurants@3x.png
+		Resources/icon1_hotels.png
+		Resources/icon1_hotels@2x.png
+		Resources/icon1_hotels@3x.png
 		Resources/icon1_misc.png
 		Resources/icon1_misc@2x.png
 		Resources/icon1_misc@3x.png
@@ -203,9 +203,9 @@ set(resources ${resources}
 		Resources/icon1_overcast.png
 		Resources/icon1_overcast@2x.png
 		Resources/icon1_overcast@3x.png
-		Resources/icon1_park.png
-		Resources/icon1_park@2x.png
-		Resources/icon1_park@3x.png
+		Resources/icon1_parks.png
+		Resources/icon1_parks@2x.png
+		Resources/icon1_parks@3x.png
 		Resources/icon1_place.png
 		Resources/icon1_place@2x.png
 		Resources/icon1_place@3x.png
