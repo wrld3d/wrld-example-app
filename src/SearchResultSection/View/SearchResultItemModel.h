@@ -22,6 +22,7 @@ namespace ExampleApp
         {
             class SearchResultItemModel: public Menu::View::IMenuOption, private Eegeo::NonCopyable
             {
+                const std::string m_searchResultModelIdentifier;
                 std::string m_name;
 
                 Eegeo::dv3 m_searchResultModelLocationEcef;
@@ -38,7 +39,8 @@ namespace ExampleApp
 
                 const Menu::View::IMenuReactionModel& m_menuReaction;
             public:
-                SearchResultItemModel(const std::string& name,
+                SearchResultItemModel(const std::string& searchResultModelIdentifier,
+                                      const std::string& name,
                                       const Eegeo::dv3& searchResultModelLocationEcef,
                                       const bool isInterior,
                                       const Eegeo::Resources::Interiors::InteriorId& interiorId,

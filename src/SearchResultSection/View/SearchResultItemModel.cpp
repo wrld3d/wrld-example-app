@@ -11,7 +11,8 @@ namespace ExampleApp
     {
         namespace View
         {
-            SearchResultItemModel::SearchResultItemModel(const std::string& name,
+            SearchResultItemModel::SearchResultItemModel(const std::string& searchResultModelIdentifier,
+                                                         const std::string& name,
                                                          const Eegeo::dv3& searchResultModelLocationEcef,
                                                          const bool isInterior,
                                                          const Eegeo::Resources::Interiors::InteriorId& interiorId,
@@ -21,7 +22,8 @@ namespace ExampleApp
                                                          int itemIndex,
                                                          ExampleAppMessaging::TMessageBus& messageBus,
                                                          const Menu::View::IMenuReactionModel& menuReaction)
-            : m_name(name)
+            : m_searchResultModelIdentifier(searchResultModelIdentifier)
+            , m_name(name)
             , m_searchResultModelLocationEcef(searchResultModelLocationEcef)
             , m_isInterior(isInterior)
             , m_interiorId(interiorId)
@@ -52,7 +54,8 @@ namespace ExampleApp
                     m_searchResultPoiViewModel.Close();
                 }
 
-                m_messageBus.Publish(SearchResultSectionItemSelectedMessage(m_searchResultModelLocationEcef,
+                m_messageBus.Publish(SearchResultSectionItemSelectedMessage(m_searchResultModelIdentifier,
+                                                                            m_searchResultModelLocationEcef,
                                                                             m_isInterior,
                                                                             m_interiorId,
                                                                             m_floorIndex,

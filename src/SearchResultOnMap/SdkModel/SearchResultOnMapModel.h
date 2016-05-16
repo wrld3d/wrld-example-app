@@ -34,6 +34,8 @@ namespace ExampleApp
                 std::set<Search::SdkModel::SearchResultModel> m_activeSearchResults;
                 std::set<Search::SdkModel::SearchResultModel> m_hiddenSearchResultsDueToMyPins;
                 
+                std::string m_currentSelectedId;
+                
                 Eegeo::Helpers::TCallback1<SearchResultOnMapModel, Search::SdkModel::SearchResultModel*> m_searchResultAddedCallback;
                 Eegeo::Helpers::TCallback1<SearchResultOnMapModel, Search::SdkModel::SearchResultModel*> m_searchResultRemovedCallback;
                 Eegeo::Helpers::TCallback1<SearchResultOnMapModel, Search::SdkModel::SearchResultModel> m_searchResultPinnedCallback;
@@ -41,6 +43,9 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback2<SearchResultOnMapModel, const Search::SdkModel::SearchQuery&, const std::vector<Search::SdkModel::SearchResultModel>&> m_searchResultsCallback;
                 
                 Eegeo::Helpers::TCallback1<SearchResultOnMapModel, const SearchResultMeetingAvailabilityChanged&> m_availbilityChangedMessage;
+                
+                Eegeo::Helpers::TCallback1<SearchResultOnMapModel, const SearchResultSection::SearchResultSectionItemSelectedMessage&> m_searchResultSectionItemSelectedMessageHandler;
+                
                 
                 Search::SdkModel::MyPins::ISearchResultMyPinsService& m_searchResultOnMapMyPinsService;
                 MyPins::SdkModel::IMyPinsService& m_myPinsService;
@@ -63,9 +68,6 @@ namespace ExampleApp
 
                 ~SearchResultOnMapModel();
 
-                mapIt begin();
-
-                mapIt end();
 
             private:
                 void AddSearchResultOnMap(Search::SdkModel::SearchResultModel& searchResultModel);
@@ -83,6 +85,12 @@ namespace ExampleApp
                 void HandleSearchResultUnpinned(Search::SdkModel::SearchResultModel& searchResultModel);
                 
                 void OnSearchResultMeetingAvailbilityChanged(const SearchResultMeetingAvailabilityChanged& meetingAvailbilityChangedMessage);
+                
+                void OnSearchResultSectionItemSelected(const SearchResultSection::SearchResultSectionItemSelectedMessage& searchesultSectionItemSelectedMessage);
+                
+                const Search::SdkModel::SearchResultModel* GetSelectedSearchResultModelOrNull() const;
+                
+                void RefreshPinsForSelection();
             };
         }
     }

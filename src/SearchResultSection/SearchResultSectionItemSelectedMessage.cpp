@@ -6,18 +6,25 @@ namespace ExampleApp
 {
     namespace SearchResultSection
     {
-        SearchResultSectionItemSelectedMessage::SearchResultSectionItemSelectedMessage(const Eegeo::dv3& searchResultModelLocationEcef,
+        SearchResultSectionItemSelectedMessage::SearchResultSectionItemSelectedMessage(const std::string& searchResultModelIdentifier,
+                                                                                       const Eegeo::dv3& searchResultModelLocationEcef,
                                                                                        const bool isInterior,
                                                                                        const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                                                                        const int floorIndex,
                                                                                        int itemIndex)
-        : m_searchResultModelLocationEcef(searchResultModelLocationEcef)
+        : m_searchResultModelIdentifier(searchResultModelIdentifier)
+        , m_searchResultModelLocationEcef(searchResultModelLocationEcef)
         , m_isInterior(isInterior)
         , m_interiorId(interiorId)
         , m_floorIndex(floorIndex)
         , m_itemIndex(itemIndex)
         {
             
+        }
+        
+        std::string SearchResultSectionItemSelectedMessage::Identifier() const
+        {
+            return m_searchResultModelIdentifier;
         }
 
         const Eegeo::dv3& SearchResultSectionItemSelectedMessage::SearchResultLocationEcef() const

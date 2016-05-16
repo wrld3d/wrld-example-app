@@ -21,6 +21,9 @@
 #include "WorldPinVisibility.h"
 #include "SwallowSearchConstants.h"
 #include "ISearchService.h"
+#include "SearchResultSectionItemSelectedMessage.h"
+
+#include <algorithm>
 
 using ExampleApp::Search::SdkModel::SearchResultModel;
 
@@ -30,6 +33,117 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+            namespace
+            {
+                struct IsMatchingIdentifier
+                {
+                    IsMatchingIdentifier(const std::string& identifier)
+                    : m_identifier(identifier)
+                    {}
+                    
+                    bool operator()(const Search::SdkModel::SearchResultModel& searchResultModel) const
+                    {
+                        return m_identifier == searchResultModel.GetIdentifier();
+                    }
+                private:
+                    const std::string m_identifier;
+                };
+                
+                struct IsFocusable
+                {
+                    bool operator()(const Search::SdkModel::SearchResultModel& searchResultModel) const
+                    {
+                        return searchResultModel.GetCategory() != Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME;
+                    }
+                };
+                
+                std::string GetDepartmentFromSearchResultModel(const Search::SdkModel::SearchResultModel& searchResultModel)
+                {
+                    if (searchResultModel.GetCategory() == Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME)
+                    {
+                        return searchResultModel.GetTitle();
+                    }
+                    else if (searchResultModel.GetCategory() == Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
+                    {
+                        const Search::Swallow::SdkModel::SwallowPersonResultModel& person = Search::Swallow::SdkModel::SearchParser::TransformToSwallowPersonResult(searchResultModel);
+                        return person.GetWorkingGroup();
+                    }
+                    return std::string();
+                }
+                
+                struct VisibilityMaskGenerator
+                {
+                    typedef const Search::SdkModel::SearchResultModel argument_type;
+                    
+                    static inline VisibilityMaskGenerator Build(const Search::SdkModel::SearchResultModel* pCurrentSelection)
+                    {
+                        const bool isDepartment = (pCurrentSelection != NULL)
+                            ? (pCurrentSelection->GetCategory() == Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME)
+                            : false;
+
+                        const std::string& selectedDepartment = isDepartment
+                            ? GetDepartmentFromSearchResultModel(*pCurrentSelection)
+                            : std::string();
+                        
+                        return VisibilityMaskGenerator(isDepartment, selectedDepartment);
+                    }
+                    
+                    int operator()(const Search::SdkModel::SearchResultModel& searchResultModel, const ExampleApp::WorldPins::SdkModel::WorldPinItemModel& worldPinItemModel) const
+                    {
+                        int visibilityMask = worldPinItemModel.VisibilityMask();
+                        if (IsSearchVisible(searchResultModel))
+                        {
+                            visibilityMask |= WorldPins::SdkModel::WorldPinVisibility::Search;
+                        }
+                        else
+                        {
+                            visibilityMask &= ~WorldPins::SdkModel::WorldPinVisibility::Search;
+                        }
+                        
+                        if (IsMeetingRoomVisible(searchResultModel))
+                        {
+                            visibilityMask |= WorldPins::SdkModel::WorldPinVisibility::MeetingRoom;
+                        }
+                        else
+                        {
+                            visibilityMask &= ~WorldPins::SdkModel::WorldPinVisibility::MeetingRoom;
+                        }
+
+                        return visibilityMask;
+                    }
+                    
+                private:
+                    VisibilityMaskGenerator(bool isDepartment,
+                                            const std::string& categoryId)
+                    : m_isDepartment(isDepartment)
+                    , m_categoryId(categoryId)
+                    {
+                        
+                    }
+                    
+                    bool IsSearchVisible(const Search::SdkModel::SearchResultModel& searchResultModel) const
+                    {
+                        if (m_isDepartment)
+                        {
+                            const std::string& department = GetDepartmentFromSearchResultModel(searchResultModel);
+                            return m_categoryId == department;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
+                    
+                    bool IsMeetingRoomVisible(const Search::SdkModel::SearchResultModel& searchResultModel) const
+                    {
+                        return searchResultModel.GetCategory() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME;
+                    }
+                    
+                    const bool m_isDepartment;
+                    const std::string m_categoryId;
+                };
+            }
+
             SearchResultOnMapModel::SearchResultOnMapModel(WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                            MyPins::SdkModel::IMyPinsService& myPinsService,
                                                            View::ISearchResultOnMapFactory& searchResultOnMapFactory,
@@ -52,6 +166,7 @@ namespace ExampleApp
             , m_searchResultPinnedCallback(this, &SearchResultOnMapModel::HandleSearchResultPinned)
             , m_searchResultUnpinnedCallback(this, &SearchResultOnMapModel::HandleSearchResultUnpinned)
             , m_availbilityChangedMessage(this, &SearchResultOnMapModel::OnSearchResultMeetingAvailbilityChanged)
+            , m_searchResultSectionItemSelectedMessageHandler(this, &SearchResultOnMapModel::OnSearchResultSectionItemSelected)
             {
                 m_searchResultRepository.InsertItemAddedCallback(m_searchResultAddedCallback);
                 m_searchResultRepository.InsertItemRemovedCallback(m_searchResultRemovedCallback);
@@ -67,12 +182,13 @@ namespace ExampleApp
                 }
                 
                 m_messageBus.SubscribeNative(m_availbilityChangedMessage);
+                m_messageBus.SubscribeNative(m_searchResultSectionItemSelectedMessageHandler);
             }
 
             SearchResultOnMapModel::~SearchResultOnMapModel()
             {
                 m_messageBus.UnsubscribeNative(m_availbilityChangedMessage);
-
+                m_messageBus.UnsubscribeNative(m_searchResultSectionItemSelectedMessageHandler);
                 
                 m_searchService.RemoveOnReceivedQueryResultsCallback(m_searchResultsCallback);
                 m_searchResultRepository.RemoveItemAddedCallback(m_searchResultAddedCallback);
@@ -173,7 +289,58 @@ namespace ExampleApp
                         m_worldPinsService.UpdatePinCategory(*pPinItemModel, availabilityCategory);
                     }
                 }
+                
+                RefreshPinsForSelection();
             }
+            
+            void SearchResultOnMapModel::OnSearchResultSectionItemSelected(const SearchResultSection::SearchResultSectionItemSelectedMessage& message)
+            {
+                m_currentSelectedId = message.Identifier();
+                RefreshPinsForSelection();
+            }
+            
+            const Search::SdkModel::SearchResultModel* SearchResultOnMapModel::GetSelectedSearchResultModelOrNull() const
+            {
+                const Search::SdkModel::SearchResultModel* pCurrentSelection = NULL;
+                if (!m_currentSelectedId.empty())
+                {
+                    std::set<Search::SdkModel::SearchResultModel>::iterator iter = std::find_if(m_activeSearchResults.begin(), m_activeSearchResults.end(), IsMatchingIdentifier(m_currentSelectedId));
+                
+                
+                    if (iter != m_activeSearchResults.end())
+                    {
+                        const Search::SdkModel::SearchResultModel& result = *iter;
+                        pCurrentSelection = &result;
+                    }
+                }
+                
+                return pCurrentSelection;
+            }
+            
+            void SearchResultOnMapModel::RefreshPinsForSelection()
+            {
+                typedef std::map<Search::SdkModel::SearchResultModel, ExampleApp::WorldPins::SdkModel::WorldPinItemModel*> SearchResultToPin;
+                
+                const Search::SdkModel::SearchResultModel* pCurrentSelection = GetSelectedSearchResultModelOrNull();
+                const VisibilityMaskGenerator& visibilityMaskGenerator = VisibilityMaskGenerator::Build(pCurrentSelection);
+                
+                IsFocusable focusablePredicate;
+                
+                for (SearchResultToPin::iterator iter = m_searchResultsToPinModel.begin(); iter != m_searchResultsToPinModel.end(); ++iter)
+                {
+                    const Search::SdkModel::SearchResultModel& searchResultModel = iter->first;
+                    ExampleApp::WorldPins::SdkModel::WorldPinItemModel* pWorldPinItemModel = iter->second;
+
+                    const int visibilityMask = visibilityMaskGenerator(searchResultModel, *pWorldPinItemModel);
+
+                    pWorldPinItemModel->SetVisibilityMask(visibilityMask);
+                    
+                    const bool isFocusable = focusablePredicate(searchResultModel);
+                    
+                    pWorldPinItemModel->SetFocusable(isFocusable);
+               }
+            }
+            
             
             void SearchResultOnMapModel::HandleSearchResultPinned(SearchResultModel& searchResultModel)
             {
@@ -257,14 +424,10 @@ namespace ExampleApp
                                                                                                              pinIconIndex,
                                                                                                              searchResultModel.GetHeightAboveTerrainMetres(),
                                                                                                              WorldPins::SdkModel::WorldPinVisibility::Search);
-                // TODO: Handle this more sensibly
-                if(searchResultModel.GetCategory() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
-                {
-                    pinItemModel->SetFocusable(false);
-                    pinItemModel->SetVisibilityMask(pinItemModel->VisibilityMask() | WorldPins::SdkModel::WorldPinVisibility::MeetingRoom);
-                }
                 
                 m_searchResultsToPinModel.insert(std::make_pair(searchResultModel, pinItemModel));
+                
+                RefreshPinsForSelection();
             }
             
             void SearchResultOnMapModel::RemoveSearchResultOnMap(SearchResultModel& searchResultModel)
@@ -276,17 +439,10 @@ namespace ExampleApp
                 ExampleApp::WorldPins::SdkModel::WorldPinItemModel* pinItemModel = it->second;
                 m_worldPinsService.RemovePin(pinItemModel);
                 m_searchResultsToPinModel.erase(it);
+                
+                RefreshPinsForSelection();
             }
 
-            SearchResultOnMapModel::mapIt SearchResultOnMapModel::begin()
-            {
-                return m_searchResultsToPinModel.begin();
-            }
-
-            SearchResultOnMapModel::mapIt SearchResultOnMapModel::end()
-            {
-                return m_searchResultsToPinModel.end();
-            }
         }
     }
 }
