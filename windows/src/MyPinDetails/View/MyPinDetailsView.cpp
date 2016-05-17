@@ -62,7 +62,10 @@ namespace ExampleApp
                     const std::string& description,
                     const std::string& imagePath)
             {
-                mDisplay(gcnew System::String(title.c_str()), gcnew System::String(description.c_str()), gcnew System::String(imagePath.c_str()));
+                System::String^ titleUTF16 = ExampleApp::Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(title);
+                System::String^ descriptionUTF16 = ExampleApp::Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(description);
+
+                mDisplay(titleUTF16, descriptionUTF16, gcnew System::String(imagePath.c_str()));
             }
 
             void MyPinDetailsView::Close()
