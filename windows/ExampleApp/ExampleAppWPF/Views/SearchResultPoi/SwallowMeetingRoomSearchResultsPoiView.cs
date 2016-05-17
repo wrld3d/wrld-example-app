@@ -93,8 +93,6 @@ namespace ExampleAppWPF
 
         public override void OnApplyTemplate()
         {
-            base.OnApplyTemplate();
-
             m_categoryIcon = (Image)GetTemplateChild("CategoryIcon");
             
             m_poiImage = (Image)GetTemplateChild("PoiImage");
@@ -104,6 +102,8 @@ namespace ExampleAppWPF
             m_occupiedButton = (RadioButton)GetTemplateChild("OccupiedButton");
 
             m_mainContainer = (FrameworkElement)GetTemplateChild("MeetingRoomPoiContainer");
+
+            base.OnApplyTemplate();
         }
         
         public override void DisplayPoiInfo(Object modelObject, bool isPinned)

@@ -168,8 +168,6 @@ namespace ExampleAppWPF
 
         public override void OnApplyTemplate()
         {
-            base.OnApplyTemplate();
-
             m_titleView = (TextBlock)GetTemplateChild("Title");
             
             m_poiImage = (Image)GetTemplateChild("PoiImage");
@@ -185,29 +183,7 @@ namespace ExampleAppWPF
 
             m_yelpReviewImageClickHandler = new ControlClickHandler(m_yelpButton, HandleWebLinkButtonClicked);
 
-            m_mainContainer.PreviewMouseDown += OnContainerMouseDown;
-        }
-
-        private void OnContainerMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (m_closeButton.IsMouseOver)
-            {
-                m_closeButton.RaiseEvent(new MouseButtonEventArgs(e.MouseDevice, e.Timestamp, e.ChangedButton)
-                {
-                    RoutedEvent = Mouse.MouseDownEvent,
-                    Source = this
-                });
-            }
-            else if (m_yelpButton.IsMouseOver)
-            {
-                m_yelpButton.RaiseEvent(new MouseButtonEventArgs(e.MouseDevice, e.Timestamp, e.ChangedButton)
-                {
-                    RoutedEvent = Mouse.MouseDownEvent,
-                    Source = this
-                });
-            }
-
-            e.Handled = true;
+            base.OnApplyTemplate();
         }
 
         public override void DisplayPoiInfo(Object modelObject, bool isPinned)

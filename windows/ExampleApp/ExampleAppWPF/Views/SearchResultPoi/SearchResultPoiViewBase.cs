@@ -70,7 +70,14 @@ namespace ExampleAppWPF
             m_closeButton = GetTemplateChild("CloseButton") as Button;
             Debug.Assert(m_closeButton != null);
 
+            m_mainContainer.MouseDown += OnContainerMouseDown;
+
             m_closeButton.Click += HandleCloseButtonClicked;
+        }
+
+        private void OnContainerMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
         }
 
         protected void HideAll()

@@ -30,10 +30,10 @@ namespace ExampleAppWPF
 
         public override void OnApplyTemplate()
         {
-            base.OnApplyTemplate();
-            
             m_portraitImage = (Image)GetTemplateChild("PortraitImage");
             m_mainContainer = (FrameworkElement)GetTemplateChild("PersonPoiContainer");
+
+            base.OnApplyTemplate();
         }
         
         public override void DisplayPoiInfo(Object modelObject, bool isPinned)
