@@ -37,7 +37,7 @@ model {
         appendRecursiveHeaderPaths('../../../src', includePaths)
         appendRecursiveHeaderPaths('../src/main/jni', includePaths)
 
-        includePaths.add(file('../../../libs/eegeo/rapidjson').absolutePath)
+	includePaths.add(file('../../../libs/rapidjson').absolutePath)
 
         includePaths.each{ String path ->
             String fullPath = new String("-I" + path)
