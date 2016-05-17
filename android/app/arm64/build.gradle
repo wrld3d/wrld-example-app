@@ -99,8 +99,3 @@ dependencies {
     compile files('../libs/google-play-services.jar')
     compile files('../libs/scribe-1.3.5.jar')
 }
-
-task clean {
-    print "Cleaning arm64 build\n"
-    delete project.buildDir
-}
