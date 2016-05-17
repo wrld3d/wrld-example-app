@@ -12,8 +12,8 @@ namespace ExampleApp
             {
                 class IYelpCategoryMapper;
                 class IYelpSearchQuery;
-                class IYelpSearchQueryFactory;
-		class YelpSearchResultModel;
+                class YelpSearchQueryFactory;
+                class YelpSearchResultModel;
             }
         }
     }

@@ -74,7 +74,6 @@
 #include "WatermarkViewModule.h"
 #include "WatermarkView.h"
 #include "NetworkCapabilities.h"
-#include "WindowsYelpSearchServiceModule.h"
 #include "ApplicationConfigurationModule.h"
 #include "IApplicationConfigurationService.h"
 #include "SearchVendorNames.h"
@@ -156,7 +155,6 @@ AppHost::AppHost(
     , m_pInitialExperienceIntroViewModule(NULL)
     , m_pSurverysViewModule(NULL)
 	, m_pInteriorsExplorerViewModule(NULL)
-    , m_searchServiceModules()
     , m_failAlertHandler(this, &AppHost::HandleStartupFailure)
     , m_pMenuReaction(NULL)
 {
@@ -213,17 +211,6 @@ AppHost::AppHost(
         m_pWindowsPlatformAbstractionModule->GetHttpCache(),
         *m_pWindowsPersistentSettingsModel);
 
-    m_searchServiceModules[ExampleApp::Search::YelpVendorName] = Eegeo_NEW(ExampleApp::Search::Yelp::WindowsYelpSearchServiceModule)(
-        nativeState,
-        m_pWindowsPlatformAbstractionModule->GetWebLoadRequestFactory(),
-        *m_pNetworkCapabilities,
-        m_pWindowsPlatformAbstractionModule->GetUrlEncoder(),
-        applicationConfiguration.YelpConsumerKey(),
-        applicationConfiguration.YelpConsumerSecret(),
-        applicationConfiguration.YelpOAuthToken(),
-        applicationConfiguration.YelpOAuthTokenSecret()
-        );
-
     m_pWindowsFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::WindowsFlurryMetricsService)(&m_nativeState);
 
     m_pMenuReaction = Eegeo_NEW(ExampleApp::Menu::View::WindowsMenuReactionModel)(true, true, m_messageBus);
@@ -244,7 +231,6 @@ AppHost::AppHost(
         m_messageBus,
         m_sdkDomainEventBus,
         *m_pNetworkCapabilities,
-        m_searchServiceModules,
         *m_pWindowsFlurryMetricsService,
         applicationConfiguration,
         *this,
@@ -277,12 +263,6 @@ AppHost::~AppHost()
 
     Eegeo_DELETE m_pWindowsFlurryMetricsService;
     m_pWindowsFlurryMetricsService = NULL;
-
-    for (std::map<std::string, ExampleApp::Search::SdkModel::ISearchServiceModule*>::iterator it = m_searchServiceModules.begin(); it != m_searchServiceModules.end(); ++it)
-    {
-        Eegeo_DELETE(*it).second;
-    }
-    m_searchServiceModules.clear();
 
     Eegeo_DELETE m_pNetworkCapabilities;
     m_pNetworkCapabilities = NULL;
