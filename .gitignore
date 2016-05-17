@@ -24,3 +24,4 @@ obj
 **/*.sln
 .gradle
 local.properties
+android/apks
