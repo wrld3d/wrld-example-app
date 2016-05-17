@@ -91,6 +91,8 @@ namespace
         [self.pHeadlineContainer addSubview: self.pCategoryIconContainer];
         
         self.pTitleLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiBackgroundColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
+        self.pTitleLabel.numberOfLines = 2;
+        self.pTitleLabel.lineBreakMode = NSLineBreakByWordWrapping;
         self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         [self.pHeadlineContainer addSubview: self.pTitleLabel];
         
@@ -258,10 +260,10 @@ namespace
     
     const float titlePadding = 10.0f;
     
-    const float titleHeight = headlineHeight * 0.6f;
+    const float titleHeight = headlineHeight;
     
     self.pTitleLabel.frame = CGRectMake(headlineHeight + titlePadding,
-                                        titlePadding,
+                                        0,
                                         mainWindowWidth - (headlineHeight + titlePadding),
                                         titleHeight);
     self.pTitleLabel.font = [UIFont systemFontOfSize:24.0f];

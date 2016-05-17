@@ -97,6 +97,8 @@ namespace
         self.pPlaceholderImage = [UIImage imageNamed: @"poi_placeholder.png"];
         
         self.pNameLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextCopyColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
+        self.pNameLabel.numberOfLines = 2;
+        self.pNameLabel.lineBreakMode = NSLineBreakByWordWrapping;
         [self.pHeadlineContainer addSubview: self.pNameLabel];
         
         [self setTouchExclusivity: self];
@@ -188,7 +190,7 @@ namespace
                                               mainWindowWidth,
                                               mainWindowHeight);
     
-    const float headlineHeight = 50.f;
+    const float headlineHeight = 60.f;
     const float closeButtonSectionHeight = 64.f;
     const float closeButtonSectionOffsetY = mainWindowHeight - closeButtonSectionHeight;
     const float contentSeparatorHeight = 32.0f;

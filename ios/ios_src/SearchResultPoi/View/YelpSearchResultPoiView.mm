@@ -88,6 +88,8 @@ namespace
         [self.pHeadlineContainer addSubview: self.pCategoryIconContainer];
         
         self.pTitleLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextTitleColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
+        self.pTitleLabel.numberOfLines = 2;
+        self.pTitleLabel.lineBreakMode = NSLineBreakByWordWrapping;
         [self.pHeadlineContainer addSubview: self.pTitleLabel];
         
         self.pPreviewImage = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -290,7 +292,7 @@ namespace
                                               mainWindowWidth,
                                               mainWindowHeight);
     
-    const float headlineHeight = 50.f;
+    const float headlineHeight = 60.f;
     const float closeButtonSectionHeight = 64.f;
     const float closeButtonSectionOffsetY = mainWindowHeight - closeButtonSectionHeight;
     const float contentSectionHeight = mainWindowHeight - (closeButtonSectionHeight + headlineHeight);
