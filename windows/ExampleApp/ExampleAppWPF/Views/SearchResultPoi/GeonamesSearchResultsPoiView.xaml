@@ -73,7 +73,21 @@
                             <!--Bottom Bar-->
                             <Grid VerticalAlignment="Bottom" Background="{StaticResource Gold}" HorizontalAlignment="Stretch" Height="Auto" Grid.Row="2">
                                 <ToggleButton Name="TogglePinnedButton" Style="{StaticResource AddRemovePinStyle}" HorizontalAlignment="Left" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:GeoNamesSearchResultsPoiView}}, Path=IsPinned, Mode=TwoWay}"/>
-                                <Image Name="CloseButton" HorizontalAlignment="Right" Source="/Assets/button_close_off.png" Width="48" Height="48"/>
+                                <Button Name="CloseButton" HorizontalAlignment="Right">
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}">
+                                            <Style.Setters>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type Button}">
+                                                            <Image Source="/Assets/button_close_off.png" Width="48" Height="48"/>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style.Setters>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
                             </Grid>
 
                         </Grid>

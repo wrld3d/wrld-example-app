@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -26,7 +27,8 @@ namespace ExampleAppWPF
         private FrameworkElement m_reviewsIcon;
 
         private ControlClickHandler m_yelpReviewImageClickHandler;
-        
+        private Image m_yelpButton;
+
         public string PhoneText
         {
             get
@@ -167,13 +169,11 @@ namespace ExampleAppWPF
 
         public override void OnApplyTemplate()
         {
-            base.OnApplyTemplate();
-
             m_titleView = (TextBlock)GetTemplateChild("Title");
             
             m_poiImage = (Image)GetTemplateChild("PoiImage");
 
-            var yelpButton = (Image)GetTemplateChild("WebVendorLinkStyle");
+            m_yelpButton = (Image)GetTemplateChild("WebVendorLinkStyle");
 
             m_mainContainer = (FrameworkElement)GetTemplateChild("SearchresultsPoiViewContainer");
 
@@ -182,24 +182,28 @@ namespace ExampleAppWPF
             var mainGrid = (Application.Current.MainWindow as MainWindow).MainGrid;
             var screenWidth = mainGrid.ActualWidth;
 
-            m_yelpReviewImageClickHandler = new ControlClickHandler(yelpButton, HandleWebLinkButtonClicked);
+            m_yelpReviewImageClickHandler = new ControlClickHandler(m_yelpButton, HandleWebLinkButtonClicked);
+
+            base.OnApplyTemplate();
         }
-        
+
         public override void DisplayPoiInfo(Object modelObject, bool isPinned)
         {
             ExampleApp.SearchResultModelCLI model = modelObject as ExampleApp.SearchResultModelCLI;
 
             YelpResultModel yelpResultModel = YelpResultModel.FromResultModel(model);
+            var mainGrid = (Application.Current.MainWindow as MainWindow).MainGrid;
+            var screenWidth = mainGrid.ActualWidth;
 
             m_closing = false;
 
             TitleText = model.Title;
-            AddressText = model.Subtitle.Replace(", ", Environment.NewLine);
+            AddressText = model.Subtitle.Replace(", ", "," + Environment.NewLine);
             PhoneText = yelpResultModel.Phone;
             HumanReadableCategoriesText = string.Join(Environment.NewLine, model.HumanReadableCategories);
             ReviewText = string.Join(Environment.NewLine, yelpResultModel.Reviews);
             CategoryIcon = SearchResultPoiViewIconProvider.GetIconForCategory(model.Category);
-            PoiViewRatingCountText = yelpResultModel.ReviewCount.ToString();
+            PoiViewRatingCountText = yelpResultModel.ReviewCount > 0 ? yelpResultModel.ReviewCount.ToString() : string.Empty;
             RatingsImage = null;
 
             if (yelpResultModel.ReviewCount > 0 && !string.IsNullOrEmpty(yelpResultModel.RatingsImageUrl))
@@ -207,9 +211,9 @@ namespace ExampleAppWPF
                 RatingsImage = new BitmapImage(ViewHelpers.MakeUriForImage(string.Format("{0}.png", yelpResultModel.RatingsImageUrl)));
             }
 
-            RatingCountVisibility = string.IsNullOrEmpty(yelpResultModel.ImageUrl) && !string.IsNullOrEmpty(yelpResultModel.RatingsImageUrl) && yelpResultModel.ReviewCount > 0 ? Visibility.Visible : Visibility.Collapsed;
+            RatingCountVisibility = !string.IsNullOrEmpty(yelpResultModel.RatingsImageUrl) && yelpResultModel.ReviewCount > 0 ? Visibility.Visible : Visibility.Collapsed;
             Url = yelpResultModel.WebUrl;
-
+            
             if(string.IsNullOrEmpty(ReviewText))
             {
                 m_reviewsIcon.Visibility = Visibility.Hidden;

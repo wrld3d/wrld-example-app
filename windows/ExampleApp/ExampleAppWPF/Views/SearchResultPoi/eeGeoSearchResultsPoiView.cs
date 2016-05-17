@@ -114,7 +114,6 @@ namespace ExampleAppWPF
 
         public override void OnApplyTemplate()
         {
-            base.OnApplyTemplate();
 
             m_titleView = (TextBlock)GetTemplateChild("Title");
             
@@ -130,6 +129,8 @@ namespace ExampleAppWPF
             var screenWidth = mainGrid.ActualWidth;
 
             m_yelpReviewImageClickHandler = new ControlClickHandler(yelpButton, HandleWebLinkButtonClicked);
+            
+            base.OnApplyTemplate();
         }
         
         public override void DisplayPoiInfo(Object modelObject, bool isPinned)

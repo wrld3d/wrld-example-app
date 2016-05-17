@@ -59,11 +59,11 @@ namespace ExampleAppWPF
 
         public override void OnApplyTemplate()
         {
-            base.OnApplyTemplate();
-
             m_categoryIcon = (Image)GetTemplateChild("CategoryIcon");
 
             m_mainContainer = (FrameworkElement)GetTemplateChild("GeoNamesResultView");
+
+            base.OnApplyTemplate();
         }
         
         public override void DisplayPoiInfo(Object modelObject, bool isPinned)

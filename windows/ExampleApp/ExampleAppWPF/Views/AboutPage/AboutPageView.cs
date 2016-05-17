@@ -3,6 +3,7 @@ using System.Windows;
 using ExampleApp;
 using System.Windows.Controls;
 using System.Diagnostics;
+using System.Windows.Input;
 
 namespace ExampleAppWPF
 {
@@ -13,6 +14,8 @@ namespace ExampleAppWPF
 
         private TextBlock m_aboutTextView;
         private Button m_closeButton;
+        private FrameworkElement m_mainContainer;
+
 
         static AboutPageView()
         {
@@ -43,6 +46,14 @@ namespace ExampleAppWPF
             m_closeButton = CheckAndGetProperty("CloseButton") as Button;
 
             m_closeButton.Click += OnCloseClicked;
+            m_mainContainer = (FrameworkElement)GetTemplateChild("MainContainer");
+
+            m_mainContainer.MouseDown += OnContainerMouseDown;
+        }
+
+        private void OnContainerMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
         }
 
         private void OnCloseClicked(object sender, RoutedEventArgs e)

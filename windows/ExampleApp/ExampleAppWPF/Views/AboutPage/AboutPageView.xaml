@@ -10,7 +10,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:AboutPageView}">
-                    <StackPanel Background="{StaticResource White}">
+                    <StackPanel Name="MainContainer" Background="{StaticResource White}">
                         <Rectangle Fill="{StaticResource Gold}" Height="10"/>
                         <TextBlock Text="About this app..." Foreground="{StaticResource Gold}" FontWeight="Bold" Margin="5, 10, 0, 10" FontSize="20"/>
                         <ScrollViewer Height="390" VerticalScrollBarVisibility="Auto">

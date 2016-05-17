@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,6 +16,7 @@ namespace ExampleAppWPF
         protected IntPtr m_nativeCallerPointer;
         protected MainWindow m_currentWindow;
         protected FrameworkElement m_mainContainer;
+        protected Button m_closeButton;
 
         protected bool m_closing;
         protected bool m_isPinned;
@@ -70,25 +72,20 @@ namespace ExampleAppWPF
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
-        
-        public bool IsPinned
-        {
-            get
-            {
-                return m_isPinned;
-            }
-            set
-            {
-                HandleTogglePinnedClicked(ref m_isPinned, ref value);
-                OnPropertyChanged("IsPinned");
-            }
-        }
 
         public override void OnApplyTemplate()
         {
-            FrameworkElement closeButton = (FrameworkElement)GetTemplateChild("CloseButton");
+            m_closeButton = GetTemplateChild("CloseButton") as Button;
+            Debug.Assert(m_closeButton != null);
 
-            m_closeButtonClickHandler = new ControlClickHandler(HandleCloseButtonClicked, closeButton);
+            m_mainContainer.MouseDown += OnContainerMouseDown;
+
+            m_closeButton.Click += HandleCloseButtonClicked;
+        }
+
+        private void OnContainerMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
         }
 
         protected void HideAll()
@@ -136,7 +133,7 @@ namespace ExampleAppWPF
             m_isAnyPOIOpen = true;
         }
 
-        private void HandleCloseButtonClicked(object sender, MouseButtonEventArgs e)
+        private void HandleCloseButtonClicked(object sender, RoutedEventArgs e)
         {
             if (!m_closing)
             {
