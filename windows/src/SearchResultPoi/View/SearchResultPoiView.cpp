@@ -5,6 +5,7 @@
 #include "WindowsAppThreadAssertionMacros.h"
 #include "SearchResultModelCLI.h"
 #include "ReflectionHelpers.h"
+#include "SearchVendorNames.h"
 
 using namespace ExampleApp::Helpers::ReflectionHelpers;
 
@@ -113,23 +114,27 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-				std::string viewClassName = "";
-
-                if(vendor == "Yelp")
+                if(vendor == Search::YelpVendorName)
                 {
                     m_currentVendor = SearchVendors::Yelp;
                 }
-                else if(vendor == "GeoNames")
+                else if(vendor == Search::GeoNamesVendorName)
                 {
                     m_currentVendor = SearchVendors::GeoNames;
                 }
-                else if (vendor == "eeGeo")
+                else if (vendor == Search::EegeoVendorName)
                 {
                     m_currentVendor = SearchVendors::eeGeo;
+                }
+                else if (vendor == Search::ExampleTourVendorName)
+                {
+                    Eegeo_ASSERT(false, "Unable to creaate view instance for %s. Tour views are not yet implemented on Windows - please refer to iOS example.\n", vendor.c_str());
+                    m_currentVendor = -1;
                 }
                 else
                 {
                     Eegeo_ASSERT(false, "Unknown POI vendor %s, cannot create view instance.\n", vendor.c_str());
+                    m_currentVendor = -1;
                 }
             }
         }
