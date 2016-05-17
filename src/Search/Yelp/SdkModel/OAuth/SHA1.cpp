@@ -186,15 +186,13 @@ bool CSHA1::HashFile(char *szFileName)
 
 	for(i = 0; i < ulBlocks; i++)
 	{
-		size_t nread = fread(uData, 1, SHA1_MAX_FILE_BUFFER, fIn);
-                assert(nread == SHA1_MAX_FILE_BUFFER);
+        assert(fread(uData, 1, SHA1_MAX_FILE_BUFFER, fIn) == SHA1_MAX_FILE_BUFFER);
 		Update((UINT_8 *)uData, SHA1_MAX_FILE_BUFFER);
 	}
 
 	if(ulRest != 0)
 	{
-		size_t nread = fread(uData, 1, ulRest, fIn);
-                assert(nread == ulRest);
+		assert(fread(uData, 1, ulRest, fIn) == ulRest);
 		Update((UINT_8 *)uData, (UINT_32)ulRest);
 	}
 
