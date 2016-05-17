@@ -22,7 +22,7 @@ namespace ExampleAppWPF
         private double m_panelOffscreenOffsetX;
         private double m_stateChangeAnimationTimeMilliseconds = 200.0;
         private bool m_dragInProgress = false;
-        private string[] m_floorShortNames;
+        private string[] m_floorShortNames = new string[] {};
 
         private const float DefaultOffscreenOffsetX = 100.0f;
 
@@ -100,6 +100,7 @@ namespace ExampleAppWPF
         }
         public void UpdateFloors(string[] floorShortNames, int currentlySelectedFloorIndex)
         {
+            System.Diagnostics.Debug.Assert(floorShortNames != null, "floorShortNames cannot be null");
             m_floorShortNames = floorShortNames;
 
             m_sliderTickBar.TickLabels = string.Join(",", floorShortNames);
