@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 
 namespace ExampleAppWPF
 {
@@ -53,6 +54,7 @@ namespace ExampleAppWPF
         private ToggleButton m_streamOverWifiButton;
         private ToggleButton m_dataCachingButton;
         private Button m_clearCacheButton = null;
+        protected FrameworkElement m_mainContainer;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -80,7 +82,17 @@ namespace ExampleAppWPF
             var clearCacheLabel = (TextBlock)GetTemplateChild("OptionsViewClearCacheLabel");
             clearCacheLabel.PreviewMouseLeftButtonDown += (s, e) => OnClearCacheButtonClick(s, e);
             m_clearCacheButton.Click += OnClearCacheButtonClick;
+
+            m_mainContainer = (FrameworkElement)GetTemplateChild("MainContainer");
+
+            m_mainContainer.MouseDown += OnContainerMouseDown;
         }
+
+        private void OnContainerMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+        }
+
 
         private void OnCloseButtonClick(object sender, RoutedEventArgs e)
         {

@@ -58,13 +58,13 @@ namespace ExampleAppWPF
 
         public override void OnApplyTemplate()
         {
-            base.OnApplyTemplate();
-
             m_categoryIcon = (Image)GetTemplateChild("CategoryIcon");
 
             m_poiImage = (Image)GetTemplateChild("PoiImage");
 
             m_mainContainer = (FrameworkElement)GetTemplateChild("WorkingGroupPoiContainer");
+
+            base.OnApplyTemplate();
         }
         
         public override void DisplayPoiInfo(Object modelObject, bool isPinned)
