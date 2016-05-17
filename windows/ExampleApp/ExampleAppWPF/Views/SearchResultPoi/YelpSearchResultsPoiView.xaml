@@ -69,22 +69,30 @@
                                     <RowDefinition Height="48"/>
                                 </Grid.RowDefinitions>
                                 <!--Title bar-->
-                                <Grid Margin="0,0,0,10">
+                                <Grid Margin="0,0,0,0">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="404"/>
                                         <ColumnDefinition Width="36"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Center" >
-                                        <Image Name="CategoryIcon" Stretch="Uniform" Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=CategoryIcon}"/>
-                                        <TextBlock Name="Title" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=TitleText}"  MaxWidth="350" VerticalAlignment="Center" FontSize="28" Margin="4,-4,0,0"  Foreground="{DynamicResource PrimaryBG_Over_Colour}" FontFamily="{DynamicResource PrimaryUIFont}" TextTrimming="CharacterEllipsis"/>
+                                    <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Center">
+                                        <Image Name="CategoryIcon" Stretch="Uniform" Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=CategoryIcon}" Height="36"/>
+                                        <TextBlock Name="Title" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=TitleText}"  
+                                                   MaxWidth="350" VerticalAlignment="Center" FontSize="22" Margin="4,1,0,0" 
+                                                   Foreground="{DynamicResource PrimaryBG_Over_Colour}" 
+                                                   FontFamily="{DynamicResource PrimaryUIFont}"
+                                                   TextTrimming="CharacterEllipsis" 
+                                                   TextWrapping="Wrap" 
+                                                   LineStackingStrategy="BlockLineHeight" 
+                                                   LineHeight="21" 
+                                                   TextOptions.TextFormattingMode="Display"/>
                                     </StackPanel>
-                                    <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="Auto"  Background="{StaticResource Gold}" Grid.Column="1">
+                                    <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="36"  Background="{StaticResource Gold}" Grid.Column="1">
                                         <Button Style="{StaticResource POIcard_CloseButton}" Name="CloseButton" HorizontalAlignment="Right" Width="36" Height="36" />
                                     </Border>
                                 </Grid>
 
-                                <Grid Grid.Row="1" >
+                                <Grid Grid.Row="1" Margin="0,10,0,0" >
                                     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Background="{StaticResource White}" Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}">
 
                                         <StackPanel VerticalAlignment="Top">
