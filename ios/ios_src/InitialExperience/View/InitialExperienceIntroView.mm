@@ -241,17 +241,28 @@ const float arrowWidth = 10;
                                                           dialogWidth,
                                                           dialogHeight)];
     [self.pPinCreationDialogArrow setFrame:CGRectMake(dialogWidth*rightDialogArrowOffset - arrowWidth/2, dialogHeight, arrowWidth, arrowLength)];
+
     
-    [self.pSettingsMenuDialogTitle setFrame:CGRectMake(textPadding, textPadding, dialogWidth-(2*textPadding), 18.0f )];
-    [self.pSettingsMenuDialogDescription setFrame:CGRectMake(textPadding, 18.0f + textPadding, dialogWidth-(2*textPadding), dialogHeight-18.0f -2*textPadding)];
-    [self.pSearchMenuDialogTitle setFrame:CGRectMake(textPadding, textPadding, dialogWidth-(2*textPadding), 18.0f )];
-    [self.pSearchMenuDialogDescription setFrame:CGRectMake(textPadding, 18.0f + textPadding, dialogWidth-(2*textPadding), dialogHeight-18.0f -2*textPadding)];
-    [self.pCompassDialogTitle setFrame:CGRectMake(textPadding, textPadding, dialogWidth-(2*textPadding), 18.0f )];
-    [self.pCompassDialogDescription setFrame:CGRectMake(textPadding, 18.0f + textPadding, dialogWidth-(2*textPadding), dialogHeight-18.0f -2*textPadding)];
-    [self.pMapModeDialogTitle setFrame:CGRectMake(textPadding, textPadding, dialogWidth-(2*textPadding), 18.0f )];
-    [self.pMapModeDialogDescription setFrame:CGRectMake(textPadding, 18.0f + textPadding, dialogWidth-(2*textPadding), dialogHeight-18.0f -2*textPadding)];
-    [self.pPinCreationDialogTitle setFrame:CGRectMake(textPadding, textPadding, dialogWidth-(2*textPadding), 18.0f )];
-    [self.pPinCreationDialogDescription setFrame:CGRectMake(textPadding, 18.0f + textPadding, dialogWidth-(2*textPadding), dialogHeight-18.0f -2*textPadding)];
+    CGSize titleTextSize = [self.pSettingsMenuDialogTitle sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+    float titleHeight = titleTextSize.height + textPadding;
+    float titleWidth = dialogWidth-(2*textPadding);
+    float descriptionHeight = dialogHeight - titleHeight - textPadding;
+    float descriptonWidth = titleWidth;
+    
+    CGRect titleRect = CGRectMake(textPadding, 0, titleWidth, titleHeight);
+    CGRect descriptonRect = CGRectMake(textPadding, titleHeight, descriptonWidth, descriptionHeight);
+    
+    
+    [self.pSettingsMenuDialogTitle setFrame:titleRect];
+    [self.pSettingsMenuDialogDescription setFrame:descriptonRect];
+    [self.pSearchMenuDialogTitle setFrame:titleRect];
+    [self.pSearchMenuDialogDescription setFrame:descriptonRect];
+    [self.pCompassDialogTitle setFrame:titleRect];
+    [self.pCompassDialogDescription setFrame:descriptonRect];
+    [self.pMapModeDialogTitle setFrame:titleRect];
+    [self.pMapModeDialogDescription setFrame:descriptonRect];
+    [self.pPinCreationDialogTitle setFrame:titleRect];
+    [self.pPinCreationDialogDescription setFrame:descriptonRect];
 }
 
 - (BOOL) consumesTouch:(UITouch *)touch
