@@ -44,9 +44,9 @@ if [ $p == "ios" ]; then
     popd
 elif [ $p == "android" ]; then
     echo "Building Android examples..."
-    rm -rf "./android/libs/eegeo"
-    rm -rf "./android/obj"
-    rm -rf "./android/bin"
+    rm -rf "./android/app/arm/build"
+    rm -rf "./android/app/arm64/build"
+    
     ./update.platform.sh $allArguments
 
     if [ $? -ne 0 ] ; then
