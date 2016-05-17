@@ -80,14 +80,16 @@ namespace ExampleApp
 
             std::string MyPinCreationDetailsView::GetTitle() const
             {
-                System::String^ str = mGetTitle.Call<System::String^>();
-                return msclr::interop::marshal_as<std::string>(str);
+                System::String^ managedUnicodeString = mGetTitle.Call<System::String^>();
+                const std::string& stringUtf8 = ExampleApp::Helpers::ReflectionHelpers::ConvertManagedStringToUTF8(managedUnicodeString);
+                return stringUtf8;
             }
 
             std::string MyPinCreationDetailsView::GetDescription() const
             {
-                System::String^ str = mGetDescription.Call<System::String^>();
-                return msclr::interop::marshal_as<std::string>(str);
+                System::String^ managedUnicodeString = mGetDescription.Call<System::String^>();
+                const std::string& stringUtf8 = ExampleApp::Helpers::ReflectionHelpers::ConvertManagedStringToUTF8(managedUnicodeString);
+                return stringUtf8;
             }
 
             bool MyPinCreationDetailsView::ShareSelected() const
