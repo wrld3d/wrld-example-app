@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id=":app:arm64" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$/../.." external.system.id="GRADLE" external.system.module.group="android.app" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="android-gradle" name="Android-Gradle">
+      <configuration>
+        <option name="GRADLE_PROJECT_PATH" value=":app:arm64" />
+      </configuration>
+    </facet>
+    <facet type="java-gradle" name="Java-Gradle">
+      <configuration>
+        <option name="BUILD_FOLDER_PATH" value="$MODULE_DIR$/build" />
+        <option name="BUILDABLE" value="false" />
+      </configuration>
+    </facet>
+    <facet type="android" name="Android">
+      <configuration>
+        <option name="SELECTED_BUILD_VARIANT" value="arm64-v8aDebug" />
+        <option name="SELECTED_TEST_ARTIFACT" value="_android_test_" />
+        <option name="ASSEMBLE_TASK_NAME" value="assembleArm64-v8aDebug" />
+        <option name="COMPILE_JAVA_TASK_NAME" value="compileArm64-v8aDebugSources" />
+        <afterSyncTasks>
+          <task>generateArm64-v8aDebugSources</task>
+        </afterSyncTasks>
+        <option name="ALLOW_USER_CONFIGURATION" value="false" />
+        <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
+        <option name="RES_FOLDER_RELATIVE_PATH" value="/../src/main/res" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/../src/main/res" />
+        <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/../src/main/assets" />
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/build/intermediates/classes/arm64-v8a/debug" />
+    <output-test url="file://$MODULE_DIR$/build/intermediates/classes/test/arm64-v8a/debug" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/arm64-v8a/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/arm64-v8a/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/arm64-v8a/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/arm64-v8a/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/arm64-v8a/debug" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/resValues/arm64-v8a/debug" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/arm64-v8aDebug/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/arm64-v8aDebug/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/arm64-v8aDebug/assets" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/arm64-v8aDebug/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/arm64-v8aDebug/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/arm64-v8aDebug/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/arm64-v8aDebug/renderscript" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/arm64-v8aDebug/shaders" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testArm64-v8aDebug/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testArm64-v8aDebug/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testArm64-v8aDebug/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testArm64-v8aDebug/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testArm64-v8aDebug/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testArm64-v8aDebug/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testArm64-v8aDebug/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testArm64-v8aDebug/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/androidTest/arm64-v8a/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/androidTest/arm64-v8a/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/androidTest/arm64-v8a/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/androidTest/arm64-v8a/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/androidTest/arm64-v8a/debug" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/resValues/androidTest/arm64-v8a/debug" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/arm64-v8a/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/arm64-v8a/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/arm64-v8a/assets" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/arm64-v8a/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/arm64-v8a/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/arm64-v8a/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/arm64-v8a/renderscript" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/arm64-v8a/shaders" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testArm64-v8a/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testArm64-v8a/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testArm64-v8a/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testArm64-v8a/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testArm64-v8a/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testArm64-v8a/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testArm64-v8a/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testArm64-v8a/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestArm64-v8a/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestArm64-v8a/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestArm64-v8a/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestArm64-v8a/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestArm64-v8a/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestArm64-v8a/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestArm64-v8a/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestArm64-v8a/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/debug/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/debug/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/debug/assets" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/debug/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/debug/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/debug/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/debug/renderscript" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/debug/shaders" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/renderscript" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/shaders" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/renderscript" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/renderscript" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/shaders" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.1/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
+      <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
+    </content>
+    <content url="file://$MODULE_DIR$/../src/main/assets">
+      <sourceFolder url="file://$MODULE_DIR$/../src/main/assets" type="java-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../src/main/java">
+      <sourceFolder url="file://$MODULE_DIR$/../src/main/java" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../src/main/jni">
+      <sourceFolder url="file://$MODULE_DIR$/../src/main/jni" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../src/main/res">
+      <sourceFolder url="file://$MODULE_DIR$/../src/main/res" type="java-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../../src">
+      <sourceFolder url="file://$MODULE_DIR$/../../../src" isTestSource="false" />
+    </content>
+    <orderEntry type="jdk" jdkName="Android API 17 Platform" jdkType="Android SDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="scribe-1.3.5" level="project" />
+    <orderEntry type="library" exported="" name="FlurryAnalytics-5.1.0" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-23.2.1" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-23.2.1" level="project" />
+    <orderEntry type="library" exported="" name="google-play-services" level="project" />
+  </component>
+</module>
