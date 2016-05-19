@@ -62,6 +62,11 @@ namespace ExampleApp
 
             void SearchResultPoiView::UpdateImage(const std::string& url, bool hasImage, const std::vector<unsigned char>* pImageBytes)
             {
+                if (!hasImage || pImageBytes->empty())
+                {
+                    return;
+                }
+                
                 array<System::Byte>^ imageDataArray = gcnew array<System::Byte>(static_cast<int>(pImageBytes->size()));
 
                 for (size_t i = 0; i < pImageBytes->size(); ++i)
