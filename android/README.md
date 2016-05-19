@@ -20,8 +20,6 @@ First, download the latest eeGeo Android SDK by running the following command in
 *   `./update.platform.sh -p android`
     *   We recommend you run this step frequently to keep your SDK version up to date.
 
-The following steps will guide you through installing and setting up the Android SDK, and Eclipse. If you already have these installed and setup, you can skip to [here](#setting-up-the-project).
-
 ### Setting up Android Studio
 If you followed the standard Android Studio setup, you should be equipped with SDK v23 and Build Tools v23.0.3.
 
