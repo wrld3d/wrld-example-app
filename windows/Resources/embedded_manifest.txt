@@ -3,10 +3,10 @@
     "AssetExtension_OSX": ".png", 
     "AssetExtension_Windows": ".dds", 
     "AssetExtension_iOS": ".pvr", 
-    "AssetRoot_Android": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v511/", 
-    "AssetRoot_OSX": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v511/", 
-    "AssetRoot_Windows": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v511/", 
-    "AssetRoot_iOS": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v511/", 
+    "AssetRoot_Android": "https://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v511/", 
+    "AssetRoot_OSX": "https://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v511/", 
+    "AssetRoot_Windows": "https://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v511/", 
+    "AssetRoot_iOS": "https://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v511/", 
     "GlobeViewAltitude": 15000, 
     "GlobeViewThemeState": "GlobeView", 
     "InteriorMaterials": {
@@ -250,12 +250,12 @@
             }
         ]
     }, 
-    "InteriorMaterialsRoot": "http://d2xvsc8j92rfya.cloudfront.net/interior-materials/v34/", 
+    "InteriorMaterialsRoot": "https://d2xvsc8j92rfya.cloudfront.net/interior-materials/v34/", 
     "LandmarkTexturePostfixes": [
         "", 
         "night"
     ], 
-    "LandmarkTextureRoot": "http://d2xvsc8j92rfya.cloudfront.net/landmark_textures/test_builds/v541/", 
+    "LandmarkTextureRoot": "https://d2xvsc8j92rfya.cloudfront.net/landmark_textures/test_builds/v541/", 
     "Themes": [
         {
             "BaseAltitude": 0, 
