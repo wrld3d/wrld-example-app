@@ -274,7 +274,7 @@ namespace ExampleApp
                                                 screenProperties,
                                                 locationService,
                                                 nativeUIFactories,
-                                                Eegeo::EnvironmentCharacterSet::Latin,
+                                                Eegeo::EnvironmentCharacterSet::JapanPlaceNames,
                                                 platformConfig,
                                                 NULL,
                                                 &errorHandler

@@ -240,6 +240,14 @@ set(resources ${resources}
 		Resources/Interiors/interiors_pin.png
 		Resources/Interiors/interiors_pin@2x.png
 		Resources/Interiors/interiors_pin@3x.png
+        Resources/IPAexGothic32_A8_icons_0.png
+        Resources/IPAexGothic32_A8_icons_1.png
+        Resources/IPAexGothic32_A8_icons_2.png
+        Resources/IPAexGothic32_A8_icons_3.png
+        Resources/IPAexGothic32_A8_icons_4.png
+        Resources/IPAexGothic32_A8_icons_5.png
+        Resources/IPAexGothic32_A8_icons_6.png
+        Resources/IPAexGothic32_A8_icons.fnt
 		Resources/menu_background1.png
 		Resources/menu_background1@2x.png
 		Resources/menu_background1@3x.png
