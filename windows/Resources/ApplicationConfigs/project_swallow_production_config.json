@@ -15,7 +15,7 @@
     "YelpOAuthTokenSecret":"FOU6tqR69K4d-gJRkXo_DOrkLCM",
     "GeoNamesUserName":"eegeo_swallow_win",
     "CoverageTreeManifestURL":"https://cdn1.eegeo.com/coverage-trees/vswallow-production/v803/manifest.bin.gz",
-    "ThemeManifestURL":"https://webgl-cdn1.eegeo.com/mobile-themes-new/v617/web.manifest.txt.gz",	
+    "ThemeManifestURL":"https://webgl-cdn1.eegeo.com/mobile-themes-new/v619/web.manifest.txt.gz",	
     "SqliteDbUrl":"https://cdn1.eegeo.com/swallow-pois/pois_v168.db.gz",
     "SearchServiceUrl":"http://londWayFApp01/search/",
     "MyPinsWebServiceUrl":"http://londWayFApp01/reports/",
