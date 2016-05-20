@@ -23,7 +23,23 @@ namespace ExampleApp
                 
                 const bool hasParseError(document.Parse<0>(serialized.c_str()).HasParseError());
                 Eegeo_ASSERT(!hasParseError);
-                
+
+                if (document.HasMember("Encrypted"))
+                {
+                    Eegeo_ASSERT(document.HasMember("HMAC_SHA1"), "must have HMAC_SHA1 digest field if Encrypted field is present");
+                    
+                    const std::string& encryptedValue = document["Encrypted"].GetString();
+                    const std::string& digest = document["HMAC_SHA1"].GetString();
+
+                    const std::string& decrypted = m_builder.Decrypt(encryptedValue);
+                    const bool validHMAC = m_builder.ValidateHMAC(decrypted, digest);
+                    Eegeo_ASSERT(validHMAC, "HMAC_SHA1 digest does not match, check that app secret matches that used to encrypt app config");
+
+                    document.Parse<0>(decrypted.c_str());
+
+                    Eegeo_ASSERT(!document.HasParseError(), "unable to parse Encrypted config field");
+                }
+
                 Eegeo_ASSERT(document.HasMember("Name"));
                 m_builder.SetApplicationName(document["Name"].GetString());
                 

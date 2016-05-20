@@ -66,6 +66,10 @@ namespace ExampleApp
                 virtual IApplicationConfigurationBuilder& SetWebProxyIpAddress(const std::string& webProxyIpAddress) = 0;
                 
                 virtual IApplicationConfigurationBuilder& SetWebProxyPort(int webProxyPort) = 0;
+
+                virtual std::string Decrypt(const std::string& value) const = 0;
+
+                virtual bool ValidateHMAC(const std::string& message, const std::string& hmac) const = 0;
                 
                 virtual ApplicationConfiguration Build() = 0;
             };

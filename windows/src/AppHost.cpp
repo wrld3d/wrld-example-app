@@ -111,7 +111,7 @@ namespace
 
         ExampleApp::ApplicationConfig::SdkModel::WindowsApplicationConfigurationVersionProvider versionProvider;
 
-		ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule applicationConfigurationModule(tempFileIO, versionProvider.GetProductVersionString(), versionProvider.GetBuildNumberString());
+		ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule applicationConfigurationModule(tempFileIO, versionProvider.GetProductVersionString(), versionProvider.GetBuildNumberString(), ExampleApp::ApplicationConfigurationSecret);
 		return applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration(ExampleApp::ApplicationConfigurationPath);
 	}
 }

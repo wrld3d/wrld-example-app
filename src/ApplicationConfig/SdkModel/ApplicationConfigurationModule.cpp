@@ -5,6 +5,9 @@
 #include "ApplicationConfigurationBuilder.h"
 #include "ApplicationConfigurationJsonParser.h"
 #include "ApplicationConfigurationReader.h"
+#include "ApplicationConfigurationXorCipher.h"
+
+#include "base64.h"
 
 namespace ExampleApp
 {
@@ -14,9 +17,12 @@ namespace ExampleApp
         {
             ApplicationConfigurationModule::ApplicationConfigurationModule(Eegeo::Helpers::IFileIO& fileIO,
                                                                            const std::string& productVersion,
-                                                                           const std::string& buildNumber)
+                                                                           const std::string& buildNumber,
+                                                                           const std::string& configKeyBase64)
             {
-                m_pApplicationConfigurationBuilder = Eegeo_NEW(ApplicationConfigurationBuilder);
+                const std::string& configKey = base64_decode(configKeyBase64);
+                m_pApplicationConfigurationEncryption = Eegeo_NEW(ApplicationConfigurationXorCipher)(configKey);
+                m_pApplicationConfigurationBuilder = Eegeo_NEW(ApplicationConfigurationBuilder)(*m_pApplicationConfigurationEncryption, configKey);
                 m_pApplicationConfigurationReader = Eegeo_NEW(ApplicationConfigurationReader)(fileIO);
                 m_pApplicationConfigurationParser = Eegeo_NEW(ApplicationConfigurationJsonParser)(*m_pApplicationConfigurationBuilder);
                 m_pApplicationConfigurationService = Eegeo_NEW(ApplicationConfigurationService)(*m_pApplicationConfigurationParser,
@@ -31,6 +37,7 @@ namespace ExampleApp
                 Eegeo_DELETE m_pApplicationConfigurationParser;
                 Eegeo_DELETE m_pApplicationConfigurationReader;
                 Eegeo_DELETE m_pApplicationConfigurationBuilder;
+                Eegeo_DELETE m_pApplicationConfigurationEncryption;
             }
             
             IApplicationConfigurationService& ApplicationConfigurationModule::GetApplicationConfigurationService()

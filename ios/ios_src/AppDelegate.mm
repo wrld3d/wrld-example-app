@@ -24,7 +24,8 @@ namespace
         
         ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule applicationConfigurationModule(tempFileIO,
                                                                                                                iOSVersionProvider.GetProductVersionString(),
-                                                                                                               iOSVersionProvider.GetBuildNumberString());
+                                                                                                               iOSVersionProvider.GetBuildNumberString(),
+																											   ExampleApp::ApplicationConfigurationSecret);
         return applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration(ExampleApp::ApplicationConfigurationPath);
     }
 }

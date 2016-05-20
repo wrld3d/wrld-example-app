@@ -11,6 +11,8 @@ set(currsources
   ../src/ApplicationConfig/SdkModel/ApplicationConfigurationReader.h
   ../src/ApplicationConfig/SdkModel/ApplicationConfigurationService.cpp
   ../src/ApplicationConfig/SdkModel/ApplicationConfigurationService.h
+  ../src/ApplicationConfig/SdkModel/ApplicationConfigurationXorCipher.cpp
+  ../src/ApplicationConfig/SdkModel/ApplicationConfigurationXorCipher.h
   ../src/ApplicationConfig/SdkModel/CMakeLists.txt
   ../src/ApplicationConfig/SdkModel/IApplicationConfigurationBuilder.h
   ../src/ApplicationConfig/SdkModel/IApplicationConfigurationModule.h
@@ -18,6 +20,7 @@ set(currsources
   ../src/ApplicationConfig/SdkModel/IApplicationConfigurationReader.h
   ../src/ApplicationConfig/SdkModel/IApplicationConfigurationService.h
   ../src/ApplicationConfig/SdkModel/IApplicationConfigurationVersionProvider.h
+  ../src/ApplicationConfig/SdkModel/IApplicationConfigurationCipher.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\ApplicationConfig\\SdkModel FILES ${currsources})

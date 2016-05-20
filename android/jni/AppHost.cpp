@@ -109,7 +109,8 @@ namespace
         ExampleApp::ApplicationConfig::SdkModel::AndroidApplicationConfigurationVersionProvider versionProvider(state);
         ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule applicationConfigurationModule(tempFileIO,
         		versionProvider.GetProductVersionString(),
-        		versionProvider.GetBuildNumberString());
+        		versionProvider.GetBuildNumberString(),
+				ExampleApp::ApplicationConfigurationSecret);
         return applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration(ExampleApp::ApplicationConfigurationPath);
     }
 }

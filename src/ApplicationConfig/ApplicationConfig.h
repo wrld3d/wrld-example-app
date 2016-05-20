@@ -15,6 +15,8 @@ namespace ExampleApp
             class IApplicationConfigurationReader;
             class IApplicationConfigurationParser;
             class IApplicationConfigurationService;
+            class IApplicationConfigurationCipher;
+            class ApplicationConfigurationXorCipher;
         }
     }
 }

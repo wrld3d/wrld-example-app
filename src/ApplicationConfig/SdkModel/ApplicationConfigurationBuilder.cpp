@@ -1,6 +1,13 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "ApplicationConfigurationBuilder.h"
+#include "IApplicationConfigurationCipher.h"
+
+#include "HMAC_SHA1.h"
+
+#include <iostream>
+#include <iomanip>
+
 
 namespace ExampleApp
 {
@@ -8,8 +15,11 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            ApplicationConfigurationBuilder::ApplicationConfigurationBuilder()
-            : m_name("")
+            ApplicationConfigurationBuilder::ApplicationConfigurationBuilder(const IApplicationConfigurationCipher& cipher,
+                                                                            const std::string& configKey)
+            : m_cipher(cipher)
+            , m_configKey(configKey)
+            , m_name("")
             , m_eegeoApiKey("")
             , m_interestLocation(0.0, 0.0, 0.0)
             , m_distanceToInterestMetres(0.f)
@@ -179,6 +189,27 @@ namespace ExampleApp
             {
                 m_webProxyPort = webProxyPort;
                 return *this;
+            }
+
+            std::string ApplicationConfigurationBuilder::Decrypt(const std::string& value) const
+            {
+                return m_cipher.Decrypt(value);
+            }
+
+            bool ApplicationConfigurationBuilder::ValidateHMAC(const std::string& message, const std::string& hmac) const
+            {
+                BYTE digest[CHMAC_SHA1::SHA1_DIGEST_LENGTH];
+                CHMAC_SHA1().HMAC_SHA1((BYTE*)message.data(), message.size(), (BYTE*)m_configKey.data(), m_configKey.size(), digest);
+
+                std::stringstream hexDigestSS;
+                hexDigestSS << std::hex << std::setfill('0');
+
+                for (int i = 0; i < CHMAC_SHA1::SHA1_DIGEST_LENGTH; i++)
+                {
+                    hexDigestSS << std::setw(2) << static_cast<unsigned>(digest[i]);
+                }
+
+                return (hexDigestSS.str() == hmac);
             }
             
             ApplicationConfiguration ApplicationConfigurationBuilder::Build()

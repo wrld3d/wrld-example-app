@@ -15,6 +15,9 @@ namespace ExampleApp
             class ApplicationConfigurationBuilder : public IApplicationConfigurationBuilder, private Eegeo::NonCopyable
             {
             private:
+                const IApplicationConfigurationCipher& m_cipher;
+                const std::string m_configKey;
+
                 std::string m_name;
                 std::string m_eegeoApiKey;
                 Eegeo::Space::LatLongAltitude m_interestLocation;
@@ -43,7 +46,8 @@ namespace ExampleApp
                 
                 
             public:
-                ApplicationConfigurationBuilder();
+                ApplicationConfigurationBuilder(const IApplicationConfigurationCipher& applicationConfigurationEncryption,
+                                                const std::string& configKey);
                 
                 IApplicationConfigurationBuilder& SetApplicationName(const std::string& name);
                 
@@ -94,6 +98,10 @@ namespace ExampleApp
                 IApplicationConfigurationBuilder& SetWebProxyIpAddress(const std::string& webProxyIpAddress);
                 
                 IApplicationConfigurationBuilder& SetWebProxyPort(int webProxyPort);
+
+                std::string Decrypt(const std::string& message) const;
+
+                bool ValidateHMAC(const std::string& message, const std::string& hmac) const;
                 
                 ApplicationConfiguration Build();
             };
