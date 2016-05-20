@@ -3,15 +3,49 @@
     "AssetExtension_OSX": ".png", 
     "AssetExtension_Windows": ".dds", 
     "AssetExtension_iOS": ".pvr", 
-    "AssetRoot_Android": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v511/", 
-    "AssetRoot_OSX": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v511/", 
-    "AssetRoot_Windows": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v511/", 
-    "AssetRoot_iOS": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v511/", 
+    "AssetRoot_Android": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v619/", 
+    "AssetRoot_OSX": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v619/", 
+    "AssetRoot_Windows": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v619/", 
+    "AssetRoot_iOS": "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v619/", 
     "GlobeViewAltitude": 15000, 
     "GlobeViewThemeState": "GlobeView", 
     "InteriorMaterials": {
         "id": "common", 
         "materials": [
+            {
+                "DiffuseColor": [
+                    0.80000000000000004, 
+                    0.80000000000000004, 
+                    0.80000000000000004, 
+                    1.0
+                ], 
+                "DiffuseTexturePath": "common/textures/marblefloor-interior", 
+                "MaterialName": "bathroomtiles", 
+                "MaterialType": "InteriorsSpecularMaterial", 
+                "SpecularColor": [
+                    0.29999999999999999, 
+                    0.29999999999999999, 
+                    0.29999999999999999, 
+                    1.0
+                ], 
+                "SpecularPower": 100.0, 
+                "SpecularityFromTextureLuminance": 1.0
+            }, 
+            {
+                "DiffuseTexturePath": "common/textures/carpetcircles", 
+                "MaterialName": "carpetcircles", 
+                "MaterialType": "InteriorsDiffuseTexturedMaterial"
+            }, 
+            {
+                "DiffuseTexturePath": "common/textures/hotelcarpet_02", 
+                "MaterialName": "hotelcarpet_02", 
+                "MaterialType": "InteriorsDiffuseTexturedMaterial"
+            }, 
+            {
+                "DiffuseTexturePath": "common/textures/hotel_carpet", 
+                "MaterialName": "hotel_carpet", 
+                "MaterialType": "InteriorsDiffuseTexturedMaterial"
+            }, 
             {
                 "DiffuseTexturePath": "common/textures/flooring-interior", 
                 "MaterialName": "InteriorMaterial_CiscoCarpet", 
@@ -22,9 +56,9 @@
                 "MaterialName": "InteriorMaterial_CiscoFloorChrome", 
                 "MaterialType": "InteriorsChromeMaterial", 
                 "SpecularColor": [
-                    0.6, 
-                    0.6, 
-                    0.6, 
+                    0.59999999999999998, 
+                    0.59999999999999998, 
+                    0.59999999999999998, 
                     1.0
                 ], 
                 "SpecularPower": 100.0, 
@@ -33,9 +67,9 @@
             {
                 "CubeMapTexturePath": "common/textures/interior_ciscobedfont_Floor_0", 
                 "DiffuseColor": [
-                    0.647, 
+                    0.64700000000000002, 
                     1.0, 
-                    0.961, 
+                    0.96099999999999997, 
                     0.5
                 ], 
                 "DiffuseTexturePath": "common/textures/white", 
@@ -51,18 +85,18 @@
             }, 
             {
                 "DiffuseColor": [
-                    0.8, 
-                    0.8, 
-                    0.8, 
+                    0.80000000000000004, 
+                    0.80000000000000004, 
+                    0.80000000000000004, 
                     1.0
                 ], 
                 "DiffuseTexturePath": "common/textures/marblefloor-interior", 
                 "MaterialName": "InteriorMaterial_CiscoFloorMarble", 
                 "MaterialType": "InteriorsSpecularMaterial", 
                 "SpecularColor": [
-                    0.3, 
-                    0.3, 
-                    0.3, 
+                    0.29999999999999999, 
+                    0.29999999999999999, 
+                    0.29999999999999999, 
                     1.0
                 ], 
                 "SpecularPower": 100.0, 
@@ -74,17 +108,30 @@
                 "MaterialType": "InteriorsDiffuseTexturedMaterial"
             }, 
             {
+                "CubeMapTexturePath": "common/textures/interior_ciscobedfont_Floor_0", 
+                "DiffuseTexturePath": "common/textures/shinycars", 
+                "MaterialName": "shinycars", 
+                "MaterialType": "InteriorsCubeMappedMaterial", 
+                "ReflectionColor": [
+                    0.20000000000000001, 
+                    0.20000000000000001, 
+                    0.20000000000000001, 
+                    0.5
+                ], 
+                "ViewOffsetScale": 0.80000000000000004
+            }, 
+            {
                 "CubeMapTexturePath": "common/textures/interior_swallow", 
                 "DiffuseTexturePath": "common/textures/chrome", 
                 "MaterialName": "swallowchrome-interior", 
                 "MaterialType": "InteriorsCubeMappedMaterial", 
                 "ReflectionColor": [
-                    0.1, 
-                    0.1, 
-                    0.1, 
+                    0.10000000000000001, 
+                    0.10000000000000001, 
+                    0.10000000000000001, 
                     1.0
                 ], 
-                "ViewOffsetScale": 0.8
+                "ViewOffsetScale": 0.80000000000000004
             }, 
             {
                 "DiffuseTexturePath": "common/textures/swallowdecalexit-interior", 
@@ -102,12 +149,12 @@
                 "MaterialName": "swallowfishtank-interior", 
                 "MaterialType": "InteriorsCubeMappedMaterial", 
                 "ReflectionColor": [
-                    0.8, 
-                    0.8, 
-                    0.8, 
+                    0.80000000000000004, 
+                    0.80000000000000004, 
+                    0.80000000000000004, 
                     1.0
                 ], 
-                "ViewOffsetScale": 0.8
+                "ViewOffsetScale": 0.80000000000000004
             }, 
             {
                 "DiffuseTexturePath": "common/textures/swallowfloorcarpet01-interior", 
@@ -122,9 +169,9 @@
             {
                 "CubeMapTexturePath": "common/textures/interior_swallow", 
                 "DiffuseColor": [
-                    0.647, 
+                    0.64700000000000002, 
                     1.0, 
-                    0.961, 
+                    0.96099999999999997, 
                     0.5
                 ], 
                 "DiffuseTexturePath": "common/textures/swallowglass01-interior", 
@@ -137,15 +184,15 @@
                     0.5, 
                     1.0
                 ], 
-                "ViewOffsetScale": 0.8
+                "ViewOffsetScale": 0.80000000000000004
             }, 
             {
                 "CubeMapTexturePath": "common/textures/interior_swallow", 
                 "DiffuseColor": [
-                    0.647, 
+                    0.64700000000000002, 
                     1.0, 
-                    0.961, 
-                    0.9
+                    0.96099999999999997, 
+                    0.90000000000000002
                 ], 
                 "DiffuseTexturePath": "common/textures/swallowglass01-interior", 
                 "IsTranslucent": true, 
@@ -157,7 +204,7 @@
                     0.5, 
                     1.0
                 ], 
-                "ViewOffsetScale": 0.8
+                "ViewOffsetScale": 0.80000000000000004
             }, 
             {
                 "DiffuseTexturePath": "common/textures/swallownoise01-interior", 
@@ -166,9 +213,9 @@
             }, 
             {
                 "DiffuseColor": [
-                    0.4, 
-                    0.4, 
-                    0.4, 
+                    0.40000000000000002, 
+                    0.40000000000000002, 
+                    0.40000000000000002, 
                     1.0
                 ], 
                 "DiffuseTexturePath": "common/textures/swallowplaingray-interior", 
@@ -182,7 +229,7 @@
                 ], 
                 "SpecularPower": 1.0, 
                 "SpecularityFromTextureLuminance": 1.0, 
-                "ViewOffsetScale": 0.8
+                "ViewOffsetScale": 0.80000000000000004
             }, 
             {
                 "DiffuseTexturePath": "common/textures/swallowplaingray-interior", 
@@ -200,12 +247,12 @@
                 "MaterialName": "swallowshiny-interior", 
                 "MaterialType": "InteriorsCubeMappedMaterial", 
                 "ReflectionColor": [
-                    0.15, 
-                    0.15, 
-                    0.15, 
+                    0.14999999999999999, 
+                    0.14999999999999999, 
+                    0.14999999999999999, 
                     1.0
                 ], 
-                "ViewOffsetScale": 0.8
+                "ViewOffsetScale": 0.80000000000000004
             }, 
             {
                 "DiffuseTexturePath": "common/textures/swallowfloortiles01-interior", 
@@ -220,49 +267,81 @@
                     1.0
                 ], 
                 "DiffuseTexturePath": "common/textures/swallowfloortiles01-interior", 
-                "FresnelBias": 0.1, 
+                "FresnelBias": 0.10000000000000001, 
                 "FresnelPower": 2.0, 
                 "FresnelScale": 1.0, 
                 "MaterialName": "swallowwall01-interior", 
                 "MaterialType": "InteriorsStencilMirrorMaterial", 
                 "MirrorClearColor": [
-                    0.3, 
-                    0.3, 
-                    0.3, 
+                    0.29999999999999999, 
+                    0.29999999999999999, 
+                    0.29999999999999999, 
                     1.0
                 ], 
                 "SpecularityFromTextureLuminance": 1.0, 
-                "ViewOffsetScale": 0.8
+                "ViewOffsetScale": 0.80000000000000004
             }, 
             {
                 "DiffuseTexturePath": "common/textures/swallowwood01-interior", 
                 "MaterialName": "swallowwood01-interior", 
                 "MaterialType": "InteriorsSpecularMaterial", 
                 "SpecularColor": [
-                    0.6, 
-                    0.6, 
-                    0.6, 
+                    0.59999999999999998, 
+                    0.59999999999999998, 
+                    0.59999999999999998, 
                     1.0
                 ], 
                 "SpecularPower": 100.0, 
                 "SpecularityFromTextureLuminance": 1.0, 
-                "ViewOffsetScale": 0.8
+                "ViewOffsetScale": 0.80000000000000004
+            }, 
+            {
+                "DiffuseColor": [
+                    0.5, 
+                    0.5, 
+                    0.5, 
+                    1.0
+                ], 
+                "DiffuseTexturePath": "common/textures/retailsquaretile", 
+                "FresnelBias": 0.10000000000000001, 
+                "FresnelPower": 2.0, 
+                "FresnelScale": 1.0, 
+                "MaterialName": "tilefloorreflection", 
+                "MaterialType": "InteriorsStencilMirrorMaterial", 
+                "MirrorClearColor": [
+                    0.29999999999999999, 
+                    0.29999999999999999, 
+                    0.29999999999999999, 
+                    1.0
+                ], 
+                "SpecularityFromTextureLuminance": 1.0, 
+                "ViewOffsetScale": 0.80000000000000004
+            }, 
+            {
+                "DiffuseTexturePath": "common/textures/wallaperhotel-01", 
+                "MaterialName": "wallaperhotel-01", 
+                "MaterialType": "InteriorsDiffuseTexturedMaterial"
+            }, 
+            {
+                "DiffuseTexturePath": "common/textures/woodtexture", 
+                "MaterialName": "woodtexture", 
+                "MaterialType": "InteriorsDiffuseTexturedMaterial"
             }
         ]
     }, 
-    "InteriorMaterialsRoot": "http://d2xvsc8j92rfya.cloudfront.net/interior-materials/v34/", 
+    "InteriorMaterialsRoot": "http://d2xvsc8j92rfya.cloudfront.net/interior-materials/v77/", 
     "LandmarkTexturePostfixes": [
         "", 
         "night"
     ], 
-    "LandmarkTextureRoot": "http://d2xvsc8j92rfya.cloudfront.net/landmark_textures/test_builds/v541/", 
+    "LandmarkTextureRoot": "http://d2xvsc8j92rfya.cloudfront.net/landmark_textures/test_builds/v604/", 
     "Themes": [
         {
             "BaseAltitude": 0, 
             "DriveOnRight": false, 
             "LocationLatLong": [
-                51.508636, 
-                -0.128059
+                51.508636000000003, 
+                -0.12805900000000001
             ], 
             "Name": "SummerLondon", 
             "PlaceNameStyles": [
@@ -278,74 +357,74 @@
                 {
                     "Category": "stat", 
                     "Color": [
-                        0.91, 
-                        0.906, 
-                        0.726
+                        0.91000000000000003, 
+                        0.90600000000000003, 
+                        0.72599999999999998
                     ], 
                     "Scale": 1.0
                 }, 
                 {
                     "Category": "coun", 
                     "Color": [
-                        0.91, 
-                        0.906, 
-                        0.726
+                        0.91000000000000003, 
+                        0.90600000000000003, 
+                        0.72599999999999998
                     ], 
                     "Scale": 1.0
                 }, 
                 {
                     "Category": "ccty", 
                     "Color": [
-                        0.94, 
-                        0.94, 
-                        0.94
+                        0.93999999999999995, 
+                        0.93999999999999995, 
+                        0.93999999999999995
                     ], 
-                    "Scale": 0.83
+                    "Scale": 0.82999999999999996
                 }, 
                 {
                     "Category": "city", 
                     "Color": [
-                        0.94, 
-                        0.94, 
-                        0.94
+                        0.93999999999999995, 
+                        0.93999999999999995, 
+                        0.93999999999999995
                     ], 
-                    "Scale": 0.83
+                    "Scale": 0.82999999999999996
                 }, 
                 {
                     "Category": "poin", 
                     "Color": [
-                        0.54, 
-                        0.9, 
+                        0.54000000000000004, 
+                        0.90000000000000002, 
                         1.0
                     ], 
-                    "Scale": 0.8
+                    "Scale": 0.80000000000000004
                 }, 
                 {
                     "Category": "dist", 
                     "Color": [
-                        0.94, 
-                        0.94, 
-                        0.94
+                        0.93999999999999995, 
+                        0.93999999999999995, 
+                        0.93999999999999995
                     ], 
                     "Scale": 1.0
                 }, 
                 {
                     "Category": "airp", 
                     "Color": [
-                        0.762, 
-                        0.732, 
-                        0.91
+                        0.76200000000000001, 
+                        0.73199999999999998, 
+                        0.91000000000000003
                     ], 
                     "Scale": 1.0
                 }, 
                 {
                     "Category": "park", 
                     "Color": [
-                        0.8, 
+                        0.80000000000000004, 
                         1.0, 
-                        0.66
+                        0.66000000000000003
                     ], 
-                    "Scale": 0.83
+                    "Scale": 0.82999999999999996
                 }, 
                 {
                     "Category": "golf", 
@@ -354,7 +433,7 @@
                         1.0, 
                         0.0
                     ], 
-                    "Scale": 0.8
+                    "Scale": 0.80000000000000004
                 }
             ], 
             "States": [
@@ -362,17 +441,17 @@
                     "AlternativeAmbientLight": [
                         0.43137254901960786, 
                         0.5490196078431373, 
-                        0.6274509803921569
+                        0.62745098039215685
                     ], 
                     "AmbientLight": [
                         0.43137254901960786, 
                         0.5490196078431373, 
-                        0.6274509803921569
+                        0.62745098039215685
                     ], 
                     "BackLight": [
                         0.43137254901960786, 
                         0.43137254901960786, 
-                        0.1568627450980392
+                        0.15686274509803921
                     ], 
                     "FillLight": [
                         0.19607843137254902, 
@@ -386,9 +465,9 @@
                     ], 
                     "FogIntensity": 0.0, 
                     "KeyLight": [
-                        0.7058823529411765, 
-                        0.6274509803921569, 
-                        0.3137254901960784
+                        0.70588235294117652, 
+                        0.62745098039215685, 
+                        0.31372549019607843
                     ], 
                     "LandmarkPostfix": "", 
                     "LightMapColor": [
@@ -400,8 +479,8 @@
                     "Name": "DayDefault", 
                     "ShadowColor": [
                         0.45098039215686275, 
-                        0.5686274509803921, 
-                        0.7058823529411765
+                        0.56862745098039214, 
+                        0.70588235294117652
                     ], 
                     "Textures": {
                         "AsyncPlaceholderDiffuse": "SanFrancisco_TerrainTexture3", 
@@ -464,7 +543,8 @@
                         "TreeTopDiffuse": "SanFrancisco_trees_top_01", 
                         "VehicleDiffuse": "SanFrancisco_sf_vehicles_01", 
                         "WaterNormal": "SanFrancisco_water_normalmap", 
-                        "WaterReflection": "SanFrancisco_water_reflectionmap"
+                        "WaterReflection": "SanFrancisco_water_reflectionmap", 
+                        "WaterReflectionCubeMap": "Default_water_reflection_cube_map"
                     }
                 }
             ]
