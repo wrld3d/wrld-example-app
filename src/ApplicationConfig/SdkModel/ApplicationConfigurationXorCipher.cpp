@@ -19,7 +19,7 @@ namespace ExampleApp
                     const std::string::size_type keyLength = key.size();
                     Eegeo_ASSERT(keyLength > 0);
 
-                    Eegeo_STATIC_ASSERT(sizeof(char) == 1);
+                    Eegeo_STATIC_ASSERT(sizeof(char) == 1, sizeof_char_not_one);
 
                     for (int i = 0; i < message.size(); ++i)
                     {
@@ -40,7 +40,7 @@ namespace ExampleApp
             std::string ApplicationConfigurationXorCipher::Encrypt(const std::string& message) const
             {
                 const std::string& encrypted = EncryptDecrypt(message, m_key);
-                return base64_encode((unsigned char const*)encrypted.data(), message.size());
+                return base64_encode((unsigned char const*)encrypted.data(), (int)message.size());
             }
 
             std::string ApplicationConfigurationXorCipher::Decrypt(const std::string& base64) const

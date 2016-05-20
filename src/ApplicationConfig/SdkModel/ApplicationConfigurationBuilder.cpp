@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <iomanip>
+#include <sstream>
 
 
 namespace ExampleApp
@@ -199,7 +200,7 @@ namespace ExampleApp
             bool ApplicationConfigurationBuilder::ValidateHMAC(const std::string& message, const std::string& hmac) const
             {
                 BYTE digest[CHMAC_SHA1::SHA1_DIGEST_LENGTH];
-                CHMAC_SHA1().HMAC_SHA1((BYTE*)message.data(), message.size(), (BYTE*)m_configKey.data(), m_configKey.size(), digest);
+                CHMAC_SHA1().HMAC_SHA1((BYTE*)message.data(), (int)message.size(), (BYTE*)m_configKey.data(), (int)m_configKey.size(), digest);
 
                 std::stringstream hexDigestSS;
                 hexDigestSS << std::hex << std::setfill('0');
