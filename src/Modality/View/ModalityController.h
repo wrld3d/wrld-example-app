@@ -9,6 +9,7 @@
 #include "IMenuViewModel.h"
 #include "IOpenableControlViewModel.h"
 #include "CallbackCollection.h"
+#include "IMenuIgnoredReactionModel.h"
 
 namespace ExampleApp
 {
@@ -22,16 +23,14 @@ namespace ExampleApp
                 std::vector<OpenableControl::View::IOpenableControlViewModel*> m_viewModels;
                 Eegeo::Helpers::ICallback2<OpenableControl::View::IOpenableControlViewModel&, float>* m_pMenuOpenStateChangedCallback;
 
-                std::vector<Eegeo::Helpers::TIdentity> m_ignoredMenuIdentities;
+                Menu::View::IMenuIgnoredReactionModel& m_ignoredReactionModel;
 
             public:
                 ModalityController(IModalityModel& modalityModel,
-                                   const std::vector<OpenableControl::View::IOpenableControlViewModel*>& viewModels);
+                                   const std::vector<OpenableControl::View::IOpenableControlViewModel*>& viewModels,
+                                   Menu::View::IMenuIgnoredReactionModel& ignoredReactionModel);
 
                 ~ModalityController();
-
-                void AddIgnoredMenuIdentity(Eegeo::Helpers::TIdentity identity);
-                void RemoveIgnoredMenuIdentity(Eegeo::Helpers::TIdentity identity);
 
             private:
 

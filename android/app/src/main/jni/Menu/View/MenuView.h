@@ -59,7 +59,7 @@ namespace ExampleApp
 
                 void UpdateTableAnimation(float dt) {} // TODO: IR
 
-                void UpdateMenuSectionViews(TSections& sections, bool contentsChanged);
+                void UpdateMenuSectionViews(TSections& sections);
 
                 void SetFullyOnScreenOpen();
 

@@ -12,6 +12,8 @@
 #include "BidirectionalBus.h"
 #include "SdkModelDomainEventBus.h"
 #include "SearchQueryObserver.h"
+#include "AppModes.h"
+#include "Interiors.h"
 
 namespace ExampleApp
 {
@@ -33,6 +35,7 @@ namespace ExampleApp
                 SearchModule(ISearchService& searchService,
                              Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
                              CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
+                             Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                              ExampleAppMessaging::TMessageBus& messageBus,
                              ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus);
 

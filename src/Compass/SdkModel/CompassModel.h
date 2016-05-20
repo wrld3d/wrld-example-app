@@ -13,6 +13,8 @@
 #include "AppModes.h"
 #include "AlertBox.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
+#include "InteriorsNavigation.h"
+#include "InteriorsExplorer.h"
 
 namespace ExampleApp
 {
@@ -23,12 +25,14 @@ namespace ExampleApp
             class CompassModel : public ICompassModel, private Eegeo::NonCopyable
             {
                 Eegeo::Location::NavigationService& m_navigationService;
+                InteriorsNavigation::SdkModel::IInteriorsNavigationService& m_interiorsNavigationService;
                 Eegeo::Location::ILocationService& m_locationService;
                 ExampleApp::AppCamera::SdkModel::IAppCameraController& m_cameraController;
                 Eegeo::Helpers::CallbackCollection0 m_compassAllowedChangedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_gpsModeChangedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_gpsModeUnauthorizedCallbacks;
                 GpsMode::Values m_gpsMode;
+                bool m_exitInteriorTriggered;
                 std::map<Eegeo::Location::NavigationService::GpsMode, GpsMode::Values> m_compassGpsModeToNavigationGpsMode;
                 std::map<GpsMode::Values, Eegeo::Location::NavigationService::GpsMode> m_navigationGpsModeToCompassGpsMode;
                 std::map<GpsMode::Values, const char*> m_gpsModeToString;
@@ -36,6 +40,7 @@ namespace ExampleApp
                 Metrics::IMetricsService& m_metricsService;
 
                 AppModes::SdkModel::IAppModeModel& m_appModeModel;
+                InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorExplorerModel;
                 Eegeo::Helpers::TCallback0<CompassModel> m_appModeChangedCallback;
                 
                 Eegeo::UI::NativeAlerts::IAlertBoxFactory& m_alertBoxFactory;
@@ -44,9 +49,11 @@ namespace ExampleApp
             public:
 
                 CompassModel(Eegeo::Location::NavigationService& navigationService,
+                             InteriorsNavigation::SdkModel::IInteriorsNavigationService& interiorsNavigationService,
                              Eegeo::Location::ILocationService& locationService,
                              ExampleApp::AppCamera::SdkModel::IAppCameraController& Cameracontroller,
                              Metrics::IMetricsService& metricsService,
+                             InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorExplorerModel,
                              AppModes::SdkModel::IAppModeModel& appModeModel,
                              Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory);
 
@@ -80,6 +87,8 @@ namespace ExampleApp
                 void OnAppModeChanged();
                 
                 void OnFailedToGetLocation();
+                
+                bool NeedsToExitInterior(GpsMode::Values gpsMode);
             };
         }
     }

@@ -31,6 +31,13 @@ namespace ExampleApp
                         return m_order(a, b);
                     }
                 };
+                
+                inline int GetOriginalIndexForSearchResult(const std::vector<Search::SdkModel::SearchResultModel>& unorderedResults, const Search::SdkModel::SearchResultModel& result)
+                {
+                    std::vector<Search::SdkModel::SearchResultModel>::const_iterator it = std::find(unorderedResults.begin(), unorderedResults.end(), result);
+                    
+                    return static_cast<int>(std::distance(unorderedResults.begin(), it));
+                }
             }
 
             void SearchResultSectionController::OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message)
@@ -42,22 +49,28 @@ namespace ExampleApp
                 }
                 
                 m_lastAddedResults = message.GetResults();
+                const std::vector<Search::SdkModel::SearchResultModel>& unorderedResults = message.GetResults();
+                
                 OrderWrapper orderWrapper(m_order);
                 std::stable_sort(m_lastAddedResults.begin(), m_lastAddedResults.end(), orderWrapper);
                 
                 for(int i = 0; i < m_lastAddedResults.size(); ++i)
                 {
                     const Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
+                    std::string subtitle = model.GetSubtitle();
+                    std::string category = model.GetCategory();                    
                     m_menuOptions.AddItem(model.GetIdentifier(),
                                           model.GetTitle(),
-                                          model.GetSubtitle(),
-                                          model.GetCategory(),
+                                          subtitle,
+                                          category,
                                           Eegeo_NEW(SearchResultItemModel)(model.GetTitle(),
                                                                            model.GetLocation().ToECEF(),
                                                                            model.IsInterior(),
                                                                            model.GetBuildingId(),
                                                                            model.GetFloor(),
                                                                            m_searchMenuViewModel,
+                                                                           m_searchResultPoiViewModel,
+                                                                           GetOriginalIndexForSearchResult(unorderedResults, model),
                                                                            m_messageBus,
                                                                            m_menuReaction));
                 }
@@ -70,13 +83,16 @@ namespace ExampleApp
                     const Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
                     m_menuOptions.RemoveItem(model.GetIdentifier());
                 }
-            }
 
+                m_lastAddedResults.clear();
+            }
+            
             SearchResultSectionController::SearchResultSectionController(Menu::View::IMenuViewModel& searchMenuViewModel,
                                                                          Menu::View::IMenuOptionsModel& menuOptions,
                                                                          ISearchResultSectionOrder& order,
                                                                          ExampleAppMessaging::TMessageBus& messageBus,
-                                                                         const Menu::View::IMenuReactionModel& menuReaction)
+                                                                         const Menu::View::IMenuReactionModel& menuReaction,
+                                                                         SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel)
             : m_searchMenuViewModel(searchMenuViewModel)
             , m_menuOptions(menuOptions)
             , m_order(order)
@@ -84,6 +100,7 @@ namespace ExampleApp
             , m_searchResultReceivedHandler(this, &SearchResultSectionController::OnSearchQueryResponseReceivedMessage)
             , m_searchQueryRemovedHandler(this, &SearchResultSectionController::OnSearchQueryRemovedMessage)
             , m_menuReaction(menuReaction)
+            , m_searchResultPoiViewModel(searchResultPoiViewModel)
             {
                 m_messageBus.SubscribeUi(m_searchResultReceivedHandler);
                 m_messageBus.SubscribeUi(m_searchQueryRemovedHandler);

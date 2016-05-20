@@ -55,10 +55,8 @@ namespace
                                         
                                         "\n\nSystem Tester"
                                         "\nKyle Welsh"
-                                        
-                                        "\n\nContract System Testers"
                                         "\nMatthew Ross"
-                                        "\nRyan Smith"
+                                        "\nRyan Smith"                  
                                         
                                         "\n\nProducer"
                                         "\nPiers Duplock"

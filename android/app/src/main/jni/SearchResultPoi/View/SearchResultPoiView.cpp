@@ -25,7 +25,7 @@ namespace ExampleApp
                 ASSERT_UI_THREAD
             }
 
-            void SearchResultPoiView::Show(const Search::SdkModel::SearchResultModel model, bool isPinned)
+            void SearchResultPoiView::Show(const Search::SdkModel::SearchResultModel& model, bool isPinned)
             {
                 ASSERT_UI_THREAD
 
@@ -85,6 +85,16 @@ namespace ExampleApp
 
                 env->DeleteLocalRef(urlStr);
     			env->DeleteLocalRef(imgArr);
+            }
+
+            void SearchResultPoiView::InsertAvailabilityChangedCallback(Eegeo::Helpers::ICallback2<const Search::SdkModel::SearchResultModel&, const std::string&>& callback)
+            {
+            	// TJ: Stubbed for Droid implementation
+            }
+
+            void SearchResultPoiView::RemoveAvailabilityChangedCallback(Eegeo::Helpers::ICallback2<const Search::SdkModel::SearchResultModel&, const std::string&>& callback)
+            {
+            	// TJ: Stubbed for Droid implementation
             }
 
             void SearchResultPoiView::InsertClosedCallback(Eegeo::Helpers::ICallback0& callback)

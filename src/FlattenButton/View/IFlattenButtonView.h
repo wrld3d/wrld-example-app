@@ -19,6 +19,8 @@ namespace ExampleApp
                 virtual void SetToggled(bool toggled) = 0;
                 virtual void InsertToggleCallback(Eegeo::Helpers::ICallback1<bool>& callback) = 0;
                 virtual void RemoveToggleCallback(Eegeo::Helpers::ICallback1<bool>& callback) = 0;
+                
+                virtual void SetViewEnabled(bool enabled) = 0;
             };
         }
     }

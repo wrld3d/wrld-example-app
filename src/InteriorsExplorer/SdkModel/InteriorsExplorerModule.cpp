@@ -24,6 +24,7 @@ namespace ExampleApp
                                                              Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                                              Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
                                                              WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                                             WorldPins::SdkModel::IWorldPinsScaleController& worldPinsScaleController,
                                                              const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                              VisualMap::SdkModel::IVisualMapService& visualMapService,
                                                              const Eegeo::Resources::Interiors::InteriorsCameraControllerFactory& interiorCameraControllerFactory,
@@ -60,8 +61,7 @@ namespace ExampleApp
                                                              messageBus,
                                                              metricsService);
                 
-                m_pViewModel = Eegeo_NEW(View::InteriorsExplorerViewModel)(false, identityProvider.GetNextIdentity());
-                
+                m_pViewModel = Eegeo_NEW(View::InteriorsExplorerViewModel)(false, identityProvider.GetNextIdentity(), messageBus);
                 
                 m_pFloorDraggedObserver = Eegeo_NEW(InteriorsExplorerFloorDraggedObserver)(*m_pModel, m_pInteriorsCameraController->GetTouchController());
             }
@@ -105,10 +105,14 @@ namespace ExampleApp
                 m_pWorldPinController->Update(dt);
             }
             
-            
             InteriorsExplorerModel& InteriorsExplorerModule::GetInteriorsExplorerModel() const
             {
                 return *m_pModel;
+            }
+            
+            Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& InteriorsExplorerModule::GetTouchController() const
+            {
+                return *m_pGlobeCameraTouchController;
             }
             
             InteriorExplorerUserInteractionModel& InteriorsExplorerModule::GetInteriorsExplorerUserInteractionModel() const

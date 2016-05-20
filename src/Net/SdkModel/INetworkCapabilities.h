@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "ICallback.h"
+
 namespace ExampleApp
 {
     namespace Net
@@ -24,6 +26,10 @@ namespace ExampleApp
                 virtual bool HttpCachingEnabled() const = 0;
                 
                 virtual void SetHttpCachingEnabled(bool httpCachingEnabled) = 0;
+                
+                virtual void RegisterChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                
+                virtual void UnregisterChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
             };
         }
     }

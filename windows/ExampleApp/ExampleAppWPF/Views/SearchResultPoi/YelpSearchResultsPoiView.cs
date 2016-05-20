@@ -194,7 +194,7 @@ namespace ExampleAppWPF
             m_closing = false;
 
             TitleText = model.Title;
-            AddressText = model.Subtitle.Replace(",", Environment.NewLine);
+            AddressText = model.Subtitle.Replace(", ", Environment.NewLine);
             PhoneText = yelpResultModel.Phone;
             HumanReadableCategoriesText = string.Join(Environment.NewLine, model.HumanReadableCategories);
             ReviewText = string.Join(Environment.NewLine, yelpResultModel.Reviews);

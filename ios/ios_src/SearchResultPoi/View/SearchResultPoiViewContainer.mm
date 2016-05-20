@@ -49,7 +49,7 @@
 {
     Eegeo_ASSERT(m_pCurrentActiveVendorView == NULL);
 
-    self->m_pCurrentActiveVendorView = [self createSearchResultPoiViewForVendor:pModel->GetVendor()];
+    self->m_pCurrentActiveVendorView = [self createSearchResultPoiViewForVendor:pModel->GetVendor() :pModel->GetCategory()];
     [[self superview] addSubview: self->m_pCurrentActiveVendorView];
     [self->m_pCurrentActiveVendorView layoutSubviews];
     [self->m_pCurrentActiveVendorView setContent:pModel :isPinned];
@@ -79,7 +79,7 @@
     return m_pInterop;
 }
 
-- (UIView<SearchResultPoiView>*) createSearchResultPoiViewForVendor:(const std::string&)vendor
+- (UIView<SearchResultPoiView>*) createSearchResultPoiViewForVendor:(const std::string&)vendor :(const std::string&)category
 {
     if(vendor == ExampleApp::Search::YelpVendorName)
     {
@@ -96,7 +96,8 @@
     else if(vendor == ExampleApp::Search::ExampleTourVendorName)
     {
         return [[ExampleTourSearchResultPoiView alloc] initWithInterop:m_pInterop];
-    }    
+    }
+    
     Eegeo_ASSERT(false, "Unknown POI vendor %s, cannot create view instance.\n", vendor.c_str());
     return NULL; // This is just to avoid warning for no return value after assert.
 }

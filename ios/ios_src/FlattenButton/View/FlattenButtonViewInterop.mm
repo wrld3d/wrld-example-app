@@ -42,6 +42,11 @@ namespace ExampleApp
             {
                 m_callbacks.RemoveCallback(callback);
             }
+            
+            void FlattenButtonViewInterop::SetViewEnabled(bool enabled)
+            {
+                m_pView.enabled = enabled;
+            }
         }
     }
 }

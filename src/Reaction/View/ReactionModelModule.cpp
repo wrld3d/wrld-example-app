@@ -12,9 +12,10 @@ namespace ExampleApp
         {
             ReactionModelModule::ReactionModelModule(IReactionControllerModel& reactionControllerModel,
                     const std::vector<OpenableControl::View::IOpenableControlViewModel*>& openables,
-                    const std::vector<ScreenControl::View::IScreenControlViewModel*>& reactors)
+                    const std::vector<ScreenControl::View::IScreenControlViewModel*>& reactors,
+                    Menu::View::IMenuIgnoredReactionModel& menuIgnoredReaction)
             {
-                m_pModel = Eegeo_NEW(ReactionModel)(reactionControllerModel, openables, reactors);
+                m_pModel = Eegeo_NEW(ReactionModel)(reactionControllerModel, openables, reactors, menuIgnoredReaction);
             }
 
             ReactionModelModule::~ReactionModelModule()

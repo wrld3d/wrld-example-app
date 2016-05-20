@@ -9,6 +9,7 @@
 #include "SearchResultSection.h"
 #include "Types.h"
 #include "IMenuReactionModel.h"
+#include "SearchResultPoi.h"
 
 namespace ExampleApp
 {
@@ -26,7 +27,8 @@ namespace ExampleApp
                 							  Menu::View::IMenuOptionsModel& menuOptionsModel,
                                               ISearchResultSectionOrder& searchResultSectionOrder,
                                               ExampleAppMessaging::TMessageBus& messageBus,
-											  Menu::View::IMenuReactionModel& menuReaction);
+											  Menu::View::IMenuReactionModel& menuReaction,
+                                              SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel);
 
                 ~SearchResultSectionViewModule();
             };

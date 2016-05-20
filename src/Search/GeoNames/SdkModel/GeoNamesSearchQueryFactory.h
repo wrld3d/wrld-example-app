@@ -23,9 +23,12 @@ namespace ExampleApp
                     Eegeo::Web::IWebLoadRequestFactory& m_webRequestFactory;
                     Eegeo::Helpers::UrlHelpers::IUrlEncoder& m_urlEncoder;
                     
+                    std::string m_geoNamesUserName;
+                    
                 public:
                     GeoNamesSearchQueryFactory(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
-                                               Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder);
+                                               Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
+                                               const std::string& geoNamesUserName);
                     
                     ~GeoNamesSearchQueryFactory();
                     

@@ -13,17 +13,27 @@ namespace ExampleApp
         namespace SdkModel
         {
             CompassModule::CompassModule(Eegeo::Location::NavigationService& navigationService,
+                                         InteriorsNavigation::SdkModel::IInteriorsNavigationService& interiorsNavigationService,
                                          Eegeo::Location::ILocationService& locationService,
                                          ExampleApp::AppCamera::SdkModel::IAppCameraController& cameraController,
                                          Eegeo::Helpers::IIdentityProvider& identityProvider,
                                          ExampleAppMessaging::TMessageBus& messageBus,
                                          Metrics::IMetricsService& metricsService,
+                                         InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorExplorerModel,
                                          AppModes::SdkModel::IAppModeModel& appModeModel,
                                          Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory)
             {
-                m_pModel = Eegeo_NEW(CompassModel)(navigationService, locationService, cameraController, metricsService, appModeModel, alertBoxFactory);
+                m_pModel = Eegeo_NEW(CompassModel)(navigationService,
+                                                   interiorsNavigationService,
+                                                   locationService,
+                                                   cameraController,
+                                                   metricsService,
+                                                   interiorExplorerModel,
+                                                   appModeModel,
+                                                   alertBoxFactory);
+                
                 m_pViewModel = Eegeo_NEW(View::CompassViewModel)(identityProvider.GetNextIdentity(), false);
-                m_pCompassUpdateController = Eegeo_NEW(CompassUpdateController)(*m_pModel, navigationService, messageBus);
+                m_pCompassUpdateController = Eegeo_NEW(CompassUpdateController)(*m_pModel, navigationService, interiorsNavigationService, messageBus, appModeModel);
                 m_pCompassModeObserver = Eegeo_NEW(CompassModeObserver)(*m_pModel, messageBus);
                 m_pCompassViewCycledObserver = Eegeo_NEW(CompassViewCycledObserver)(*m_pModel, messageBus);
             }

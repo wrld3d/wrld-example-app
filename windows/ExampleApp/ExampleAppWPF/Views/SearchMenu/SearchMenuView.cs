@@ -31,7 +31,6 @@ namespace ExampleAppWPF
 
         private Grid m_resultsCountContainer;
 
-        private string m_defaultEditText;
         private bool m_searchInFlight;
         private bool m_hasResults;
         private bool m_hasCategorySearch;
@@ -142,7 +141,6 @@ namespace ExampleAppWPF
             m_editText.GotFocus += OnSearchBoxSelected;
             m_editText.LostFocus += OnSearchBoxUnSelected;
             m_editText.TextChanged += OnSearchBoxTextChanged;
-            m_defaultEditText = m_editText.Text;
 
             m_mainContainer = (Grid)GetTemplateChild("SerchMenuMainContainer");
 
@@ -176,7 +174,7 @@ namespace ExampleAppWPF
 
         private void OnSearchBoxTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (m_editText.Text?.Length > 0 && m_editText.Text != m_defaultEditText)
+            if (m_editText.Text?.Length > 0)
             {
                 m_resultsClearButton.Visibility = Visibility.Visible;
                 m_editText.Foreground = Colour.black;
@@ -235,13 +233,13 @@ namespace ExampleAppWPF
         {
             if(m_editText.Text.Replace(" ", null) == string.Empty)
             {
-                m_editText.Text = m_defaultEditText;
+                m_editText.Text = string.Empty;
             }
         }
 
         private void OnSearchBoxSelected(object sender, RoutedEventArgs e)
         {
-            if(m_editText.Text == m_defaultEditText || m_hasCategorySearch)
+            if (m_hasCategorySearch)
             {
                 m_editText.Text = string.Empty;
             }
@@ -278,7 +276,8 @@ namespace ExampleAppWPF
 
             ClearSearchResultsListBox();
 
-            m_editText.Text = m_defaultEditText;
+            //m_editText.Text = m_defaultEditText;
+            m_editText.Text = String.Empty;
             m_editText.Foreground = Colour.darkgrey;
         }
 

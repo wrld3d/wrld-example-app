@@ -28,7 +28,8 @@ namespace ExampleApp
                 public:
                     GeoNamesSearchServiceModule(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                                 Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
-                                                Net::SdkModel::INetworkCapabilities& networkCapabilities);
+                                                Net::SdkModel::INetworkCapabilities& networkCapabilities,
+                                                const std::string& geoNamesUserName);
                     
                     ~GeoNamesSearchServiceModule();
                     

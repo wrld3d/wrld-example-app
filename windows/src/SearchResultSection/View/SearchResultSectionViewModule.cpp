@@ -16,13 +16,15 @@ namespace ExampleApp
                                                                          Menu::View::IMenuOptionsModel& menuOptionsModel,
                                                                          ISearchResultSectionOrder& searchResultSectionOrder,
                                                                          ExampleAppMessaging::TMessageBus& messageBus,
-                                                                         const Menu::View::IMenuReactionModel& menuReaction)
+                                                                         const Menu::View::IMenuReactionModel& menuReaction,
+                                                                         SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel)
             {
                 m_pController =  Eegeo_NEW(SearchResultSectionController)(searchMenuViewModel,
                                                                           menuOptionsModel,
                                                                           searchResultSectionOrder,
                                                                           messageBus,
-                                                                          menuReaction);
+                                                                          menuReaction,
+                                                                          searchResultPoiViewModel);
             }
 
             SearchResultSectionViewModule::~SearchResultSectionViewModule()

@@ -31,11 +31,15 @@ namespace ExampleApp
 
                 ~SearchResultPoiView();
 
-                void Show(const Search::SdkModel::SearchResultModel model, bool isPinned);
+                void Show(const Search::SdkModel::SearchResultModel& model, bool isPinned);
 
                 void Hide();
 
                 void UpdateImage(const std::string& url, bool hasImage, const std::vector<Byte>* pImageBytes);
+
+                void InsertAvailabilityChangedCallback(Eegeo::Helpers::ICallback2<const Search::SdkModel::SearchResultModel&, const std::string&>& callback);
+
+                void RemoveAvailabilityChangedCallback(Eegeo::Helpers::ICallback2<const Search::SdkModel::SearchResultModel&, const std::string&>& callback);
 
                 void InsertClosedCallback(Eegeo::Helpers::ICallback0& callback);
 

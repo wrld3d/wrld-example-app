@@ -31,7 +31,7 @@ namespace ExampleApp
                 virtual void UpdateAnimation(float dt) = 0;
                 virtual void UpdateTableAnimation(float dt) = 0;
 
-                virtual void UpdateMenuSectionViews(TSections& sections, bool contentsChanged) = 0;
+                virtual void UpdateMenuSectionViews(TSections& sections) = 0;
 
                 virtual void SetFullyOnScreenOpen() = 0;
                 virtual void SetFullyOnScreenClosed() = 0;

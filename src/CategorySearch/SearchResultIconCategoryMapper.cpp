@@ -33,6 +33,7 @@ namespace ExampleApp
             
             m_categoryToIconIndex["bank"] = 7;
             m_categoryToIconIndex["banks"] = 7;
+            m_categoryToIconIndex["financialservices"] = 7;
             
             m_categoryToIconIndex["museum"] = 8;
             m_categoryToIconIndex["museums"] = 8;

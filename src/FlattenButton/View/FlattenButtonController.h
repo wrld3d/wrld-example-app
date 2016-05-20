@@ -41,9 +41,9 @@ namespace ExampleApp
                 void OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel& viewModel, float& state);
                 
                 void OnMyPinCreationStateChangedMessage(const MyPinCreation::MyPinCreationStateChangedMessage& message);
-                
+
                 void OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message);
-                
+
             public:
                 FlattenButtonController(
                     IFlattenButtonViewModel& viewModel,

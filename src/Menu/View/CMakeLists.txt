@@ -2,6 +2,7 @@ set(headers ${headers} ../src/Menu/View
 )
 set(currsources
   ../src/Menu/View/CMakeLists.txt
+  ../src/Menu/View/IMenuIgnoredReactionModel.h
   ../src/Menu/View/IMenuModel.h
   ../src/Menu/View/IMenuOption.h
   ../src/Menu/View/IMenuOptionsModel.h
@@ -28,6 +29,10 @@ set(currsources
   ../src/Menu/View/MenuSectionViewModel.h
   ../src/Menu/View/MenuViewModel.cpp
   ../src/Menu/View/MenuViewModel.h
+  ../src/Menu/View/ModalityIgnoredReactionModel.cpp
+  ../src/Menu/View/ModalityIgnoredReactionModel.h
+  ../src/Menu/View/ReactorIgnoredReactionModel.cpp
+  ../src/Menu/View/ReactorIgnoredReactionModel.h
   ../src/Menu/View/SortedMenuComparisonFunctions.cpp
   ../src/Menu/View/SortedMenuComparisonFunctions.h
   ../src/Menu/View/SortedMenuModel.cpp

@@ -65,7 +65,7 @@ namespace ExampleApp
 
                 void UpdateAnimation(float dt);
 
-                void UpdateMenuSectionViews(TSections& sections, bool contentsChanged);
+                void UpdateMenuSectionViews(TSections& sections);
 
                 void SetFullyOnScreenOpen();
 

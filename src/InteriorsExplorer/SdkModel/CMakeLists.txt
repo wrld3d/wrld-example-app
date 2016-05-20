@@ -19,4 +19,5 @@ set(currsources
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\InteriorsExplorer\\SdkModel FILES ${currsources})
+include(../src/InteriorsExplorer/SdkModel/Highlights/CMakeLists.txt)
 include(../src/InteriorsExplorer/SdkModel/States/CMakeLists.txt)

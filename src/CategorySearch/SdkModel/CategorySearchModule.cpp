@@ -10,6 +10,7 @@
 #include "MenuOptionsModel.h"
 #include "CategorySearchSelectedMessageHandler.h"
 #include "SearchResultIconCategoryMapper.h"
+#include "CategorySearchMenuOptionFactory.h"
 
 namespace ExampleApp
 {
@@ -33,13 +34,18 @@ namespace ExampleApp
                 {
                     const View::CategorySearchModel& categorySearchModel = *it;
 
-                    if (categorySearchModel.InMenu())
+                    if(categorySearchModel.IsVisibleInSearchMenu())
                     {
                         m_pMenuOptionsModel->AddItem(categorySearchModel.Name(),
                                                      categorySearchModel.Name(),
                                                      "",
                                                      categorySearchModel.Icon(),
-                                                     Eegeo_NEW(View::CategorySearchMenuOption)(categorySearchModel, menuViewModel, messageBus, menuReaction));
+                                                     View::CategorySearchMenuOptionFactory::CreateCategorySearchMenuOption(
+                                                         categorySearchModel,
+                                                         menuViewModel,
+                                                         messageBus,
+                                                         menuReaction)
+                                                     );
                     }
                 }
 

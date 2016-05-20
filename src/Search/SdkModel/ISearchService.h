@@ -21,6 +21,8 @@ namespace ExampleApp
                 virtual ~ISearchService() { }
                 
                 virtual bool CanHandleCategory(const std::string& category) const = 0;
+                
+                virtual bool CanHandleIndoor() const = 0;
 
                 virtual void CancelInFlightQueries() = 0;
 

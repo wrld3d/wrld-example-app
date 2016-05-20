@@ -21,6 +21,7 @@ namespace ExampleApp
             {
                 m_searchService.InsertOnPerformedQueryCallback(m_searchQueryPerformedCallback);
                 m_searchService.InsertOnReceivedQueryResultsCallback(m_searchQueryResponseCallback);
+                
                 m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(m_searchQueryResultsClearedCallback);
             }
 
@@ -28,6 +29,7 @@ namespace ExampleApp
             {
                 m_searchService.RemoveOnPerformedQueryCallback(m_searchQueryPerformedCallback);
                 m_searchService.RemoveOnReceivedQueryResultsCallback(m_searchQueryResponseCallback);
+                
                 m_searchQueryPerformer.RemoveOnSearchResultsClearedCallback(m_searchQueryResultsClearedCallback);
             }
 

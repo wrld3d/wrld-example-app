@@ -19,6 +19,7 @@ namespace ExampleApp
             enum SearchVendors
             {
                 Yelp = 0,
+                eeGeo,
                 GeoNames,
                 Num
             };
@@ -46,7 +47,7 @@ namespace ExampleApp
 
                 ~SearchResultPoiView();
 
-                void Show(const Search::SdkModel::SearchResultModel model, bool isPinned);
+                void Show(const Search::SdkModel::SearchResultModel& model, bool isPinned);
 
                 void Hide();
 

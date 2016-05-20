@@ -35,6 +35,7 @@
 #include "InteriorsExplorerExitMessage.h"
 #include "MenuDragStateChangedMessage.h"
 #include "CurrentTourCardTappedMessage.h"
+#include "MenuSectionExpandedChangedMessage.h"
 #include "WorldPinsSelectedFocussedMessage.h"
 
 namespace ExampleApp
@@ -73,6 +74,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerExitMessage>
             , public Eegeo::Messaging::CatalogBinding<Menu::MenuDragStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Tours::CurrentTourCardTappedMessage>
+            , public Eegeo::Messaging::CatalogBinding<Menu::MenuSectionExpandedChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<WorldPins::WorldPinsSelectedFocussedMessage>
             , private Eegeo::NonCopyable
         {

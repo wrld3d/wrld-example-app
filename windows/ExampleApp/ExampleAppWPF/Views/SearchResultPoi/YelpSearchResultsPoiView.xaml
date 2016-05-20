@@ -197,7 +197,14 @@
                                                         </StackPanel>
                                                         <Grid Margin="0,0,0,0">
                                                             <Image Name="PoiImage" Source="/Assets/poi_placeholder.png"/>
-                                                            <Grid Name="ImageGradient" Height="30" VerticalAlignment="Bottom"/>
+                                                            <Grid Name="ImageGradient" Height="30" VerticalAlignment="Bottom">
+                                                                <Grid.Background>
+                                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                                        <GradientStop Color="#00000000" Offset="0.0"/>
+                                                                        <GradientStop Color="#80000000" Offset="1.0"/>
+                                                                    </LinearGradientBrush>
+                                                                </Grid.Background>
+                                                            </Grid>
                                                         </Grid>
                                                         <Grid HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Bottom" Margin="0,0,0,5">
                                                             <Grid.ColumnDefinitions>
@@ -258,7 +265,7 @@
                                                                 <!-- Layer 1/<Group>/<Path> -->
                                                                 <Path Fill="#ff5f5f5f" Data="F1 M 2.665,9.441 L 2.665,14.222 C 2.665,15.200 3.465,16.000 4.443,16.000 L 6.657,16.000 L 6.657,11.621 C 6.657,11.376 6.857,11.176 7.102,11.176 L 8.879,11.176 C 9.124,11.176 9.324,11.376 9.324,11.621 L 9.324,16.000 L 11.554,16.000 C 12.532,16.000 13.332,15.200 13.332,14.222 L 13.332,9.441 L 7.998,4.108 L 2.665,9.441 Z"/>
                                                             </Canvas>
-                                                            <TextBlock Name="Address" TextWrapping="WrapWithOverflow" MaxWidth="165" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=AddressText}" FontSize="18" Margin="25,-4,0,0" Foreground="{StaticResource DarkGrey}" FontFamily="{DynamicResource PrimaryUIFont}"/>
+                                                            <TextBlock Name="Address" TextWrapping="WrapWithOverflow" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=AddressText}" FontSize="18" Margin="25,-4,0,0" Foreground="{StaticResource DarkGrey}" FontFamily="{DynamicResource PrimaryUIFont}"/>
                                                         </Grid>
                                                     </StackPanel>
 

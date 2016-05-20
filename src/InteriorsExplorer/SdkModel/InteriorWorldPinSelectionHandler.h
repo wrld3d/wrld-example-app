@@ -43,9 +43,8 @@ namespace ExampleApp
                     
                     m_interiorSelectionModel.SelectInteriorId(m_interiorId);
                     
-                    const float defaultDistance = 400.0f;
                     m_cameraController.SetInterestLocation(m_ecefInterestPoint);
-                    m_cameraController.SetDistanceToInterest(defaultDistance);
+                    m_cameraController.SetDistanceToInterest(InteriorsExplorer::DefaultInteriorTransitionInterestDistance);
                 }
                 
             private:

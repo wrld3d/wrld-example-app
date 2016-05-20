@@ -19,6 +19,7 @@ namespace ExampleApp
                 EegeoSearchQuery::EegeoSearchQuery(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                                    Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
                                                    const Search::SdkModel::SearchQuery& query,
+                                                   const std::string& serviceUrl,
                                                    const std::string& apiKey,
                                                    Eegeo::Helpers::ICallback0& completionCallback)
                 : m_apiKey(apiKey)
@@ -27,11 +28,15 @@ namespace ExampleApp
                 , m_isSuccess(false)
                 , m_webRequestCompleteCallback(this, &EegeoSearchQuery::OnWebResponseReceived)
                 {
+                    float minimumScore = 0.25;
+                    const int maximumNumberOfResults = 99;
+
                     std::string encodedQuery;
                     urlEncoder.UrlEncode(query.Query(), encodedQuery);
                     
                     std::stringstream urlstream;
-                    urlstream << "https://poi.eegeo.com/v1";
+                    urlstream.setf(std::ios_base::fixed);
+                    urlstream << serviceUrl;
                     if (query.IsCategory())
                     {
                         urlstream << "/category?c=";
@@ -39,15 +44,22 @@ namespace ExampleApp
                     else
                     {
                         urlstream << "/search?s=";
+                        minimumScore = 0.6;
                     }
                     urlstream << encodedQuery;
-                    urlstream << "&r=" << std::setprecision(4) << query.Radius();
+                    urlstream << "&r=" << std::setprecision(4) << (query.Radius() * 1.5f);
                     urlstream << "&lat=" << std::setprecision(8) << query.Location().GetLatitudeInDegrees();
                     urlstream << "&lon=" << std::setprecision(8) << query.Location().GetLongitudeInDegrees();
+                    urlstream << "&n=" << maximumNumberOfResults;
+                    urlstream << "&ms=" << std::setprecision(2) << minimumScore;
                     urlstream << "&apikey=" << m_apiKey;
                     
                     std::string url = urlstream.str();
-                    m_pWebLoadRequest = webRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, url, m_webRequestCompleteCallback).Build();
+                    m_pWebLoadRequest = webRequestFactory
+                        .Begin(Eegeo::Web::HttpVerbs::GET, url, m_webRequestCompleteCallback)
+                        .SetShouldCacheAggressively(false)
+                        .SetShouldRequestOnlyFromCache(false)
+                        .Build();
                     m_pWebLoadRequest->Load();
                 }
                 

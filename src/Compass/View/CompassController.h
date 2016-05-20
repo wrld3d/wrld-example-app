@@ -48,9 +48,9 @@ namespace ExampleApp
                 bool m_appModeAllowsOpen;
                 
             public:
-                CompassController(  ICompassView& view,
-                                    ICompassViewModel& viewModel,
-                                    ExampleAppMessaging::TMessageBus& messageBus);
+                CompassController(ICompassView& view,
+                                  ICompassViewModel& viewModel,
+                                  ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~CompassController();
             };

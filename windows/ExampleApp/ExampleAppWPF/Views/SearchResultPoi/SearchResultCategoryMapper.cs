@@ -13,30 +13,30 @@ namespace ExampleAppWPF
             CategoryToIconIndex.Add("caf\u00E9/pub", "coffee.png");
             CategoryToIconIndex.Add("coffee", "coffee.png");
 
-            CategoryToIconIndex.Add("restaurant", "restaurant.png");
-            CategoryToIconIndex.Add("restaurants", "restaurant.png");
-            CategoryToIconIndex.Add("fast food", "restaurant.png");
-            CategoryToIconIndex.Add("food", "restaurant.png");
+            CategoryToIconIndex.Add("restaurant", "restaurants.png");
+            CategoryToIconIndex.Add("restaurants", "restaurants.png");
+            CategoryToIconIndex.Add("fast food", "restaurants.png");
+            CategoryToIconIndex.Add("food", "restaurants.png");
 
             CategoryToIconIndex.Add("nightlife", "nightlife.png");
             CategoryToIconIndex.Add("night life", "nightlife.png");
 
-            CategoryToIconIndex.Add("park", "park.png");
-            CategoryToIconIndex.Add("parks", "park.png");
+            CategoryToIconIndex.Add("park", "parks.png");
+            CategoryToIconIndex.Add("parks", "parks.png");
 
             CategoryToIconIndex.Add("theatre", "theatre.png");
             CategoryToIconIndex.Add("theater", "theatre.png");
 
-            CategoryToIconIndex.Add("hotel", "hotel.png");
-            CategoryToIconIndex.Add("hotels", "hotel.png");
-            CategoryToIconIndex.Add("hotel/motel", "hotel.png");
+            CategoryToIconIndex.Add("hotel", "hotels.png");
+            CategoryToIconIndex.Add("hotels", "hotels.png");
+            CategoryToIconIndex.Add("hotel/motel", "hotels.png");
 
-            CategoryToIconIndex.Add("bank", "bank.png");
-            CategoryToIconIndex.Add("banks", "bank.png");
+            CategoryToIconIndex.Add("bank", "financialservices.png");
+            CategoryToIconIndex.Add("banks", "financialservices.png");
 
-            CategoryToIconIndex.Add("museum", "museum.png");
-            CategoryToIconIndex.Add("museums", "museum.png");
-            CategoryToIconIndex.Add("arts", "museum.png");
+            CategoryToIconIndex.Add("museum", "museums.png");
+            CategoryToIconIndex.Add("museums", "museums.png");
+            CategoryToIconIndex.Add("arts", "museums.png");
         }
 
         public static string GetIconImageName(string categoryName)

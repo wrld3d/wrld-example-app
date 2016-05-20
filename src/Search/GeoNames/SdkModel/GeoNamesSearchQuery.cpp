@@ -16,7 +16,8 @@ namespace ExampleApp
                 GeoNamesSearchQuery::GeoNamesSearchQuery(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                                          Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
                                                          const Search::SdkModel::SearchQuery& query,
-                                                         Eegeo::Helpers::ICallback0& completionCallback)
+                                                         Eegeo::Helpers::ICallback0& completionCallback,
+                                                         const std::string& geoNamesUserName)
                 : m_completionCallback(completionCallback)
                 , m_responseString("")
                 , m_isSuccess(false)
@@ -28,7 +29,7 @@ namespace ExampleApp
                     std::string url = "http://api.geonames.org/searchJSON?q="
                     + encodedQuery
                     + "&maxRows=1&featureClass=A&featureClass=P&orderby=relevance&username="
-                    + ExampleApp::GeoNamesUserName;
+                    + geoNamesUserName;
                     
                     m_pWebLoadRequest = webRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, url, m_webRequestCompleteCallback).Build();
                     m_pWebLoadRequest->Load();

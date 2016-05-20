@@ -14,6 +14,7 @@
 #include "SearchQueryResponseReceivedMessage.h"
 #include "SearchResultModel.h"
 #include "IMenuReactionModel.h"
+#include "SearchResultPoi.h"
 
 namespace ExampleApp
 {
@@ -30,6 +31,7 @@ namespace ExampleApp
                 std::vector<Search::SdkModel::SearchResultModel> m_lastAddedResults;
                 ISearchResultSectionOrder& m_order;
                 const Menu::View::IMenuReactionModel& m_menuReaction;
+                SearchResultPoi::View::ISearchResultPoiViewModel& m_searchResultPoiViewModel;
                 
                 Eegeo::Helpers::TCallback1<SearchResultSectionController, const Search::SearchQueryResponseReceivedMessage&> m_searchResultReceivedHandler;
                 Eegeo::Helpers::TCallback1<SearchResultSectionController, const Search::SearchQueryRemovedMessage&> m_searchQueryRemovedHandler;
@@ -47,7 +49,8 @@ namespace ExampleApp
                     Menu::View::IMenuOptionsModel& menuOptionsModel,
                     ISearchResultSectionOrder& order,
                     ExampleAppMessaging::TMessageBus& messageBus,
-                    const Menu::View::IMenuReactionModel& menuReaction);
+                    const Menu::View::IMenuReactionModel& menuReaction,
+                    SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel);
 
                 ~SearchResultSectionController();
             };

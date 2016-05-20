@@ -25,26 +25,30 @@ namespace ExampleApp
                 std::string m_imagePath;
                 MyPinsFileIO& m_myPinsFileIO;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
-                
+                MyPins::SdkModel::MyPinsWebService& m_webService;
+
                 void SubmitPinToWebService(const MyPinModel& pinModel);
                 
             public:
                 static UserCreatedPinBoundObject* FromSerializedData(MyPinModel::TPinIdType pinId,
                                                                      const std::string& serializedData,
                                                                      MyPinsFileIO& myPinsFileIO,
-                                                                     ExampleAppMessaging::TMessageBus& messageBus);
+                                                                     ExampleAppMessaging::TMessageBus& messageBus,
+                                                                     MyPins::SdkModel::MyPinsWebService& webService);
                 
                 UserCreatedPinBoundObject(MyPinModel::TPinIdType pinId,
                                           Byte* imageData,
                                           size_t imageSize,
                                           bool share,
                                           MyPinsFileIO& myPinsFileIO,
-                                          ExampleAppMessaging::TMessageBus& messageBus);
+                                          ExampleAppMessaging::TMessageBus& messageBus,
+                                          MyPins::SdkModel::MyPinsWebService& webService);
                 
                 UserCreatedPinBoundObject(MyPinModel::TPinIdType pinId,
                                           const std::string& imagePath,
                                           MyPinsFileIO& myPinsFileIO,
-                                          ExampleAppMessaging::TMessageBus& messageBus);
+                                          ExampleAppMessaging::TMessageBus& messageBus,
+                                          MyPins::SdkModel::MyPinsWebService& webService);
                 
                 ~UserCreatedPinBoundObject();
                 

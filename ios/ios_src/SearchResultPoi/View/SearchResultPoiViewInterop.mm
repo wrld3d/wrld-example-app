@@ -12,7 +12,7 @@ namespace ExampleApp
             {
             }
 
-            void SearchResultPoiViewInterop::Show(const Search::SdkModel::SearchResultModel model,
+            void SearchResultPoiViewInterop::Show(const Search::SdkModel::SearchResultModel& model,
                                                   bool isPinned)
             {
                 [m_pView open:&model :isPinned];
@@ -30,6 +30,21 @@ namespace ExampleApp
                 [m_pView updateImage :url :hasImage bytes:imageBytes];
             }
 
+            void SearchResultPoiViewInterop::InsertAvailabilityChangedCallback(Eegeo::Helpers::ICallback2<const Search::SdkModel::SearchResultModel&, const std::string&>& callback)
+            {
+                m_availabilityChangedCallbacks.AddCallback(callback);
+            }
+            
+            void SearchResultPoiViewInterop::RemoveAvailabilityChangedCallback(Eegeo::Helpers::ICallback2<const Search::SdkModel::SearchResultModel&, const std::string&>& callback)
+            {
+                m_availabilityChangedCallbacks.RemoveCallback(callback);
+            }
+            
+            void SearchResultPoiViewInterop::HandleAvailabilityChanged(const Search::SdkModel::SearchResultModel& searchResultModel, const std::string& availability)
+            {
+                m_availabilityChangedCallbacks.ExecuteCallbacks(searchResultModel, availability);
+            }
+            
             void SearchResultPoiViewInterop::InsertClosedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 m_closeClickedCallbacks.AddCallback(callback);

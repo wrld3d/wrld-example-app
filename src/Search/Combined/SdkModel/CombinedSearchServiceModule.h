@@ -3,7 +3,7 @@
 #pragma once
 
 #include "ISearchServiceModule.h"
-
+#include "Interiors.h"
 #include <map>
 #include <string>
 
@@ -23,7 +23,8 @@ namespace ExampleApp
                     std::vector<CategorySearch::View::CategorySearchModel> m_categorySearchModels;
                     
                 public:
-                    CombinedSearchServiceModule(std::map<std::string, Search::SdkModel::ISearchServiceModule*> searchServiceModules);
+                    CombinedSearchServiceModule(std::map<std::string, Search::SdkModel::ISearchServiceModule*> searchServiceModules,
+                                                Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel);
                     
                     ~CombinedSearchServiceModule();
                     

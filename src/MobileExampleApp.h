@@ -83,6 +83,8 @@
 #include "VisualMap.h"
 #include "Surveys.h"
 #include "IMenuReactionModel.h"
+#include "InteriorsNavigation.h"
+#include "IMenuIgnoredReactionModel.h"
 
 namespace ExampleApp
 {
@@ -96,6 +98,7 @@ namespace ExampleApp
         Eegeo::ITouchController* m_pCurrentTouchController;
         Eegeo::EegeoWorld* m_pWorld;
         Eegeo::Location::NavigationService* m_pNavigationService;
+        InteriorsNavigation::SdkModel::IInteriorsNavigationService* m_pInteriorsNavigationService;
         PlatformAbstractionsFacade m_platformAbstractions;
         Eegeo::Rendering::LoadingScreen* m_pLoadingScreen;
         Eegeo::Rendering::ScreenProperties m_screenProperties;
@@ -166,6 +169,8 @@ namespace ExampleApp
         AppCamera::SdkModel::IAppCameraModule* m_pAppCameraModule;
 
         Menu::View::IMenuReactionModel& m_menuReaction;
+        Menu::View::IMenuIgnoredReactionModel* m_pModalityIgnoredReactionModel;
+        Menu::View::IMenuIgnoredReactionModel* m_pReactorIgnoredReactionModel;
         
         const bool m_interiorsEnabled;
 
@@ -249,6 +254,16 @@ namespace ExampleApp
         CameraTransitions::SdkModel::ICameraTransitionController& CameraTransitionController() const
         {
             return *m_pCameraTransitionService;
+        }
+
+        Menu::View::IMenuIgnoredReactionModel& ModalityIgnoredReactionModel() const
+        {
+            return *m_pModalityIgnoredReactionModel;
+        }
+
+        Menu::View::IMenuIgnoredReactionModel& ReactorIgnoredReactionModel() const
+        {
+            return *m_pReactorIgnoredReactionModel;
         }
         
         const ExampleApp::SettingsMenu::SdkModel::ISettingsMenuModule& SettingsMenuModule() const

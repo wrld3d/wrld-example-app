@@ -6,7 +6,7 @@
 #include "InteriorInteractionModel.h"
 #include "InteriorSelectionModel.h"
 #include "InteriorTransitionModel.h"
-#include "CameraState.h"
+
 
 namespace ExampleApp
 {
@@ -129,8 +129,8 @@ namespace ExampleApp
             bool TransitionToInteriorPointStage::ShouldJumpTo(Eegeo::dv3& newInterestPoint)
             {
                 const double MAX_CAMERA_TRANSITION_DISTANCE = 500;
-                const Eegeo::dv3& currentCameraLocation = m_cameraController.GetCameraState().LocationEcef();
-                double distance = (newInterestPoint - currentCameraLocation).Length();
+                Eegeo::dv3 currentInterestPoint = m_cameraController.GetInterestLocation();
+                double distance = (newInterestPoint - currentInterestPoint).Length();
                 return distance > MAX_CAMERA_TRANSITION_DISTANCE;
             }
             

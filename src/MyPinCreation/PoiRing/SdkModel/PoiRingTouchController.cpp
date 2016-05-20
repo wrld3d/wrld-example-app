@@ -48,14 +48,33 @@ namespace ExampleApp
                     {
                         return false;
                     }
-
+                    
+                    return TouchDownRaycast(data, renderCamera, nonFlattenedCameraPosition);
+                }
+                
+                bool PoiRingTouchController::HandleTouchUp(const AppInterface::TouchData& data)
+                {
+                    m_isDragging = false;
+                    
+                    if (m_myPinCreationModel.GetCreationStage() != Ring)
+                    {
+                        return false;
+                    }
+                    
+                    return true;
+                }
+            
+                
+                bool PoiRingTouchController::TouchDownRaycast(const AppInterface::TouchData &data,
+                                                              const Eegeo::Camera::RenderCamera &renderCamera,
+                                                              const Eegeo::dv3 &rayOrigin)
+                {
                     float screenPixelX = data.point.GetX();
                     float screenPixelY = data.point.GetY();
-
+                    
                     Eegeo::dv3 rayDirection;
                     Eegeo::Camera::CameraHelpers::GetScreenPickRay(renderCamera, screenPixelX, screenPixelY, rayDirection);
 
-                    Eegeo::dv3 rayOrigin = nonFlattenedCameraPosition;
                     Eegeo::dv3 rayIntersectionPoint;
                     double intersectionParam;
                     float terrainHeight;
@@ -73,7 +92,7 @@ namespace ExampleApp
                         m_poiRingController.GetSpherePositionAndRadius(spherePosition, sphereRadius);
                         
                         m_initialCameraAltitiude =  renderCamera.GetAltitude();
-
+                        
                         bool hitIcon = Eegeo::Geometry::IntersectionTests::TestRaySphere(rayOrigin, rayDirection, iconPosition, iconSize/2.0f);
                         if ((rayIntersectionPoint - spherePosition).Length() < sphereRadius || hitIcon)
                         {
@@ -82,11 +101,13 @@ namespace ExampleApp
                             return true;
                         }
                     }
-
+                    
                     return false;
                 }
-
-                bool PoiRingTouchController::HandleTouchUp(const AppInterface::TouchData& data)
+                
+                bool PoiRingTouchController::TouchMoveRaycast(const AppInterface::TouchData &data,
+                                                              const Eegeo::Camera::RenderCamera &renderCamera,
+                                                              const Eegeo::dv3 &rayOrigin)
                 {
                     m_isDragging = false;
                     m_dragOffset = Eegeo::dv3();
@@ -110,7 +131,7 @@ namespace ExampleApp
                     {
                         float screenPixelX = data.point.GetX();
                         float screenPixelY = data.point.GetY();
-
+                        
                         Eegeo::dv3 rayDirection;
                         Eegeo::Camera::CameraHelpers::GetScreenPickRay(renderCamera, screenPixelX, screenPixelY, rayDirection);
 
@@ -136,13 +157,13 @@ namespace ExampleApp
                             m_myPinCreationModel.SetTerrainHeight(terrainHeight);
                             m_myPinCreationModel.SetHeightAboveTerrain(heightAboveTerrain);
                         }
-
+                        
                         return true;
                     }
-
+                    
                     return false;
                 }
-
+                
                 bool PoiRingTouchController::IsDragging() const
                 {
                     return m_isDragging && m_myPinCreationModel.GetCreationStage() == Ring;

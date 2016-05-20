@@ -6,6 +6,8 @@ namespace ExampleApp
 {
     namespace SearchResultSection
     {
+        class SearchResultSectionItemSelectedMessage;
+
         namespace SdkModel
         {
             class ISearchResultSectionModule;

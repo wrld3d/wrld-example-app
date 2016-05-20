@@ -29,6 +29,7 @@ namespace ExampleApp
                     Eegeo::Helpers::TCallback0<EegeoSearchService> m_searchCallback;
                     IEegeoSearchQuery* m_pCurrentRequest;
                     bool m_hasActiveQuery;
+                    Eegeo::Helpers::TCallback0<EegeoSearchService> m_networkCapabilitiesChangedHandler;
                     
                 public:
                     EegeoSearchService(IEegeoSearchQueryFactory& EegeoSearchQueryFactory,
@@ -38,6 +39,8 @@ namespace ExampleApp
                     
                     ~EegeoSearchService();
                     
+                    bool CanHandleIndoor() const { return true; }
+
                     void CancelInFlightQueries();
                     
                     void PerformLocationQuerySearch(const Search::SdkModel::SearchQuery& query);
@@ -47,6 +50,7 @@ namespace ExampleApp
                     
                 private:
                     void HandleSearchResponse();
+                    void HandleNetworkCapabilitiesChanged();
                 };
             }
         }

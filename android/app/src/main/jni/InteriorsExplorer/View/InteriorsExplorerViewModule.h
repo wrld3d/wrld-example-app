@@ -33,12 +33,6 @@ namespace ExampleApp
             public:
                 InteriorsExplorerViewModule(InteriorsExplorerViewModel& viewModel,
                                             ExampleAppMessaging::TMessageBus& messageBus,
-                                            MyPinCreation::View::IMyPinCreationInitiationViewModel& initiationViewModel,
-                                            ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
-                                            ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
-                                            ScreenControl::View::IScreenControlViewModel& flattenViewModel,
-                                            ScreenControl::View::IScreenControlViewModel& compassViewModel,
-                                            Eegeo::Helpers::IdentityProvider& identityProvider,
 											AndroidNativeState &nativeState);
                 
                 ~InteriorsExplorerViewModule();

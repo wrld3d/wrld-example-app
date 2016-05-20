@@ -33,25 +33,25 @@ namespace ExampleApp
                 {
                     return "icon1_nightlife";
                 }
-                if(Contains(category, "museum") || category == "arts")
+                if(Contains(category, "museums") || Contains(category, "museum") || category == "arts")
                 {
-                    return "icon1_arts";
+                    return "icon1_museums";
                 }
                 if(Contains(category, "park"))
                 {
-                    return "icon1_park";
+                    return "icon1_parks";
                 }
-                if(Contains(category, "bank"))
+                if(Contains(category, "bank") || Contains(category, "financialservices"))
                 {
-                    return "icon1_bank";
+                    return "icon1_financialservices";
                 }
                 if(Contains(category, "hotel"))
                 {
-                    return "icon1_hotel";
+                    return "icon1_hotels";
                 }
                 if(Contains(category, "restaurant") || Contains(category, "food"))
                 {
-                    return "icon1_food";
+                    return "icon1_restaurants";
                 }
                 if(Contains(category, "tours"))
                 {

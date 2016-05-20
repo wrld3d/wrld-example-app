@@ -9,6 +9,7 @@
 #include "OpenableControlViewModelIncludes.h"
 #include "ScreenControlViewModelIncludes.h"
 #include "IReactionModelModule.h"
+#include "IMenuIgnoredReactionModel.h"
 
 namespace ExampleApp
 {
@@ -23,7 +24,8 @@ namespace ExampleApp
             public:
                 ReactionModelModule(IReactionControllerModel& reactionControllerModel,
                                     const std::vector<OpenableControl::View::IOpenableControlViewModel*>& openables,
-                                    const std::vector<ScreenControl::View::IScreenControlViewModel*>& reactors);
+                                    const std::vector<ScreenControl::View::IScreenControlViewModel*>& reactors,
+                                    Menu::View::IMenuIgnoredReactionModel& menuIgnoredReaction);
 
                 ~ReactionModelModule();
 
