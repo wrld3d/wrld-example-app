@@ -29,7 +29,7 @@ using namespace Eegeo::iOS;
     }
 
     m_previousTimestamp = CFAbsoluteTimeGetCurrent();
-    self.preferredFramesPerSecond = 30;
+    self.preferredFramesPerSecond = 60;
     m_pAppRunner = NULL;
 }
 
