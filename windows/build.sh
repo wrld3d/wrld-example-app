@@ -71,10 +71,12 @@ else
 fi
 
 
+config_folder=windows/Resources/ApplicationConfigs
+
 if [ $environment == 'production' ]; then
-	src_config_path=windows/Resources/ApplicationConfigs/project_swallow_production_config.json
+	src_config_file=project_swallow_production_config.json
 else
-	src_config_path=windows/Resources/ApplicationConfigs/project_swallow_config.json
+	src_config_file=project_swallow_config.json
 fi
 
 apiKeyFile=./src/ApiKey.h
@@ -90,12 +92,18 @@ fi
 
 mv $apiKeyFileTemp $apiKeyFile
 
+temp_config_folder=
+
 if [ ! -z "${secret_key}" ]; then
 
-	dest_config_path=windows/Resources/ApplicationConfigs/encrypted_config.json
-	rm $dest_config_path
+	temp_config_folder=temp_config
+	rm -vr ${temp_config_folder}/
+	mv -v ${config_folder}/ ${temp_config_folder}/
+	mkdir ${config_folder}/
+	
+	dest_config_file=encrypted_config.json
 
-	python "./build-scripts/encrypt_config.py" -i ${src_config_path} -o ${dest_config_path} -s ${secret_key}
+	python "./build-scripts/encrypt_config.py" -i ${temp_config_folder}/${src_config_file} -o ${config_folder}/${dest_config_file} -s ${secret_key}	
 
 	if [ $? -ne 0 ] ; then
 		echo "Failed to encrypt config file"  >&2
@@ -115,10 +123,24 @@ popd
 cmd //C windows\\build.bat
 resultcode=$?
 
-if [ $resultcode = 0 ] ; then
+if [ resultcode = 0 ] ; then
 	echo "COMPILE WINDOWS PROJECT SUCCEEDED" >&2
 else
 	echo "COMPILE WINDOWS PROJECT FAILED" >&2
+fi
+
+if [ ! -z ${temp_config_folder} ]; then	
+
+	rm -vr ${config_folder}/
+	mv -fv ${temp_config_folder}/ ${config_folder}/
+	
+	if [ $? -ne 0 ] ; then
+		echo "failed to restore config folder" >&2
+		exit 1
+	fi
+	
+	rm -rf ${temp_config_folder}
+
 fi
 
 exit $resultcode
