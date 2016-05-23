@@ -7,7 +7,7 @@
 #include "SearchResultModel.h"
 #include "SearchQuery.h"
 #include "Logger.h"
-#include "IYelpSearchQueryFactory.h"
+#include "YelpSearchQueryFactory.h"
 #include "IYelpSearchQuery.h"
 #include "IGeoNamesSearchQueryFactory.h"
 #include "IGeoNamesParser.h"
@@ -21,7 +21,7 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                YelpSearchService::YelpSearchService(IYelpSearchQueryFactory& searchQueryFactory,
+                YelpSearchService::YelpSearchService(YelpSearchQueryFactory& searchQueryFactory,
                                                      Search::SdkModel::ISearchResultParser& searchResultParser,
                                                      Net::SdkModel::INetworkCapabilities& networkCapabilities,
                                                      const std::vector<std::string>& availableCategories)

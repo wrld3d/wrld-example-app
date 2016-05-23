@@ -174,8 +174,7 @@ namespace ExampleApp
         
         const bool m_interiorsEnabled;
 
-        void CreateApplicationModelModules(const std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*>& platformImplementedSearchServiceModules,
-                                           Eegeo::UI::NativeUIFactories& nativeUIFactories,
+        void CreateApplicationModelModules(Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                            const bool interiorsAffectedByFlattening,
                                            const std::string& apiKey);
 
@@ -223,7 +222,6 @@ namespace ExampleApp
                          ExampleAppMessaging::TMessageBus& messageBus,
                          ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                          ExampleApp::Net::SdkModel::INetworkCapabilities& networkCapabilities,
-                         const std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*>& platformImplementedSearchServiceModules,
                          ExampleApp::Metrics::IMetricsService& metricsService,
                          const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
                          Eegeo::IEegeoErrorHandler& errorHandler,

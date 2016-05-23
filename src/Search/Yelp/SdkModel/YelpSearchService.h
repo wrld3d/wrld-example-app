@@ -26,7 +26,7 @@ namespace ExampleApp
             class YelpSearchService : public Search::SdkModel::SearchServiceBase, private Eegeo::NonCopyable
             {
             private:
-                IYelpSearchQueryFactory& m_searchQueryFactory;
+                YelpSearchQueryFactory& m_searchQueryFactory;
                 Search::SdkModel::ISearchResultParser& m_searchResultParser;
                 Net::SdkModel::INetworkCapabilities& m_networkCapabilities;
                 
@@ -36,7 +36,7 @@ namespace ExampleApp
                 bool m_hasActiveQuery;
                 
             public:
-                YelpSearchService(IYelpSearchQueryFactory& searchQueryFactory,
+                YelpSearchService(YelpSearchQueryFactory& searchQueryFactory,
                                   Search::SdkModel::ISearchResultParser& searchResultParser,
                                   Net::SdkModel::INetworkCapabilities& networkCapabilities,
                                   const std::vector<std::string>& availableCategories);

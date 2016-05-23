@@ -111,7 +111,6 @@ AppHost::AppHost(
     ,m_piOSPlatformAbstractionModule(NULL)
     ,m_pApp(NULL)
     ,m_requestedApplicationInitialiseViewState(false)
-    ,m_searchServiceModules()
     ,m_iOSFlurryMetricsService(metricsService)
     ,m_failAlertHandler(this, &AppHost::HandleStartupFailure)
     ,m_pTourWebViewModule(NULL)
@@ -148,10 +147,6 @@ AppHost::AppHost(
                                                                                        m_piOSPlatformAbstractionModule->GetHttpCache(),
                                                                                        m_iOSPersistentSettingsModel);
     
-    m_searchServiceModules[ExampleApp::Search::YelpVendorName] = Eegeo_NEW(ExampleApp::Search::Yelp::iOSYelpSearchServiceModule)(m_piOSPlatformAbstractionModule->GetWebLoadRequestFactory(),
-                                                                                                 *m_pNetworkCapabilities,
-                                                                                                 m_piOSPlatformAbstractionModule->GetUrlEncoder());
-    
     m_pLinkOutObserver = Eegeo_NEW(ExampleApp::LinkOutObserver::LinkOutObserver)(m_iOSFlurryMetricsService,
                                                                                  m_iOSPersistentSettingsModel);
     
@@ -176,7 +171,6 @@ AppHost::AppHost(
              m_messageBus,
              m_sdkModelDomainEventBus,
              *m_pNetworkCapabilities,
-             m_searchServiceModules,
              m_iOSFlurryMetricsService,
              applicationConfiguration,
              *this,
@@ -213,12 +207,6 @@ AppHost::~AppHost()
     
     Eegeo_DELETE m_pLinkOutObserver;
     m_pLinkOutObserver = NULL;
-    
-    for(std::map<std::string, ExampleApp::Search::SdkModel::ISearchServiceModule*>::iterator it = m_searchServiceModules.begin(); it != m_searchServiceModules.end(); ++it)
-    {
-        Eegeo_DELETE (*it).second;
-    }
-    m_searchServiceModules.clear();
     
     Eegeo_DELETE m_pNetworkCapabilities;
     m_pNetworkCapabilities = NULL;
