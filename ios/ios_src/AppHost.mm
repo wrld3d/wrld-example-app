@@ -67,7 +67,6 @@
 #include "TourExplorerViewModule.h"
 #include "TourExplorerView.h"
 #include "NetworkCapabilities.h"
-#include "iOSYelpSearchServiceModule.h"
 #include "InitialExperienceIntroViewModule.h"
 #include "InitialExperienceIntroView.h"
 #include "InitialExperienceIntroBackgroundView.h"
