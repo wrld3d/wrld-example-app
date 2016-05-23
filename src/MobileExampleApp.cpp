@@ -79,6 +79,7 @@
 #include "EegeoSearchServiceModule.h"
 #include "SearchVendorNames.h"
 #include "YelpSearchConstants.h"
+#include "YelpSearchServiceModule.h"
 #include "AppCameraModule.h"
 #include "AppCameraController.h"
 #include "AppModeStatesFactory.h"
@@ -196,7 +197,6 @@ namespace ExampleApp
         ExampleAppMessaging::TMessageBus& messageBus,
         ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
         Net::SdkModel::INetworkCapabilities& networkCapabilities,
-        const std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*>& platformImplementedSearchServiceModules,
         ExampleApp::Metrics::IMetricsService& metricsService,
         const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
         Eegeo::IEegeoErrorHandler& errorHandler,
@@ -335,7 +335,7 @@ namespace ExampleApp
                                                                                        Eegeo::Streaming::QuadTreeCube::MAX_DEPTH_TO_VISIT,
                                                                                        mapModule.GetEnvironmentFlatteningService());
         
-        CreateApplicationModelModules(platformImplementedSearchServiceModules, nativeUIFactories, platformConfig.OptionsConfig.InteriorsAffectedByFlattening, apiKey);
+        CreateApplicationModelModules(nativeUIFactories, platformConfig.OptionsConfig.InteriorsAffectedByFlattening, apiKey);
         
         m_pCameraTransitionController = Eegeo_NEW(ExampleApp::CameraTransitions::SdkModel::CameraTransitionController)(*m_pGlobeCameraController,
                                                                                                                        m_pInteriorsExplorerModule->GetInteriorsCameraController(),
@@ -389,8 +389,7 @@ namespace ExampleApp
         Eegeo_DELETE m_pWorld;
     }
 
-    void MobileExampleApp::CreateApplicationModelModules(const std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*>& platformImplementedSearchServiceModules,
-                                                         Eegeo::UI::NativeUIFactories& nativeUIFactories,
+    void MobileExampleApp::CreateApplicationModelModules(Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                                          const bool interiorsAffectedByFlattening,
                                                          const std::string& apiKey)
     {
@@ -409,8 +408,7 @@ namespace ExampleApp
                                                                          m_pReactionControllerModule->GetReactionControllerModel(),
                                                                          m_messageBus,
                                                                          m_networkCapabilities);
-        
-        std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*> searchServiceModulesForCombinedSearch = platformImplementedSearchServiceModules;
+
         const bool useGeoName = true;
         if(useGeoName)
         {
@@ -433,11 +431,22 @@ namespace ExampleApp
                                                                                                                                world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel()
                                                                                                                                );
         }
+		
+		const bool useYelpSearch = true;
+        if (useYelpSearch)
+        {
+            m_searchServiceModules[ExampleApp::Search::YelpVendorName] = Eegeo_NEW(ExampleApp::Search::Yelp::YelpSearchServiceModule)(
+                m_platformAbstractions.GetWebLoadRequestFactory(),
+                m_networkCapabilities,
+                m_platformAbstractions.GetUrlEncoder(),
+                YelpConsumerKey,
+                YelpConsumerSecret,
+                YelpOAuthToken,
+                YelpOAuthTokenSecret
+                );
+        }
         
-        
-        searchServiceModulesForCombinedSearch.insert(m_searchServiceModules.begin(), m_searchServiceModules.end());
-        
-        m_pSearchServiceModule = Eegeo_NEW(Search::Combined::SdkModel::CombinedSearchServiceModule)(searchServiceModulesForCombinedSearch, m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel());
+        m_pSearchServiceModule = Eegeo_NEW(Search::Combined::SdkModel::CombinedSearchServiceModule)(m_searchServiceModules, m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel());
         
         m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(m_pSearchServiceModule->GetSearchService(),
                                                                     *m_pGlobeCameraController,
