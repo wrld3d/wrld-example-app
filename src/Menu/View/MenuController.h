@@ -44,6 +44,7 @@ namespace ExampleApp
                 IMenuView& m_view;
                 bool m_dragInProgress;
                 bool m_presentationDirty;
+                bool m_menuContentsChanged;
 
                 virtual void OnMenuSectionExpandeStateChanged(IMenuSectionViewModel& menuSectionViewModel, bool& expanded);
                 

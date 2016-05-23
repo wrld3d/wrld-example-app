@@ -20,8 +20,8 @@ namespace ExampleApp
 
             MenuView::MenuView(AndroidNativeState& nativeState,
                                const std::string& viewClassName)
-                : m_nativeState(nativeState)
-                , m_pTryDragFunc(NULL)
+                    : m_nativeState(nativeState)
+                    , m_pTryDragFunc(NULL)
             {
                 ASSERT_UI_THREAD
 
@@ -37,11 +37,11 @@ namespace ExampleApp
                 jmethodID uiViewCtor = env->GetMethodID(m_uiViewClass, "<init>", "(Lcom/eegeo/entrypointinfrastructure/MainActivity;J)V");
 
                 jobject instance = env->NewObject(
-                                       m_uiViewClass,
-                                       uiViewCtor,
-                                       m_nativeState.activity,
-                                       (jlong)(this)
-                                   );
+                        m_uiViewClass,
+                        uiViewCtor,
+                        m_nativeState.activity,
+                        (jlong)(this)
+                );
 
                 m_uiView = env->NewGlobalRef(instance);
                 env->DeleteLocalRef(instance);
@@ -101,11 +101,16 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView, updateAnimationMethod, dt);
             }
 
-            void MenuView::UpdateMenuSectionViews(TSections& sections)
+            void MenuView::UpdateMenuSectionViews(TSections& sections, bool contentsChanged)
             {
                 ASSERT_UI_THREAD
 
-				m_currentSections = sections;
+                if (!contentsChanged)
+                {
+                    return;
+                }
+
+                m_currentSections = sections;
 
                 AndroidSafeNativeThreadAttachment attached(m_nativeState);
                 JNIEnv* env = attached.envForThread;
@@ -119,12 +124,11 @@ namespace ExampleApp
                 for(size_t i = 0; i < numSections; ++ i)
                 {
                     const IMenuSectionViewModel& section = *(sections.at(i));
-                    numItems += section.Size();
+                    numItems += section.GetTotalItemCount() + 1;
                 }
 
                 jobjectArray groupNamesArray = env->NewObjectArray(numSections, strClass, 0);
                 jintArray groupSizesArray = env->NewIntArray(numSections);
-                jbooleanArray groupIsExpandableArray = env->NewBooleanArray(numSections);
                 jobjectArray childNamesArray = env->NewObjectArray(numItems, strClass, 0);
                 env->DeleteLocalRef(strClass);
 
@@ -132,58 +136,62 @@ namespace ExampleApp
                 for(size_t groupIndex = 0; groupIndex < numSections; groupIndex++)
                 {
                     const IMenuSectionViewModel& section = *(sections.at(groupIndex));
-                    for(size_t childIndex = 0; childIndex < section.Size(); childIndex++)
+                    int totalItems = section.GetTotalItemCount();
+
+                    if (section.IsExpandable())
+                    {
+                        totalItems++;
+                    }
+
+                    for(size_t childIndex = 0; childIndex < totalItems; childIndex++)
                     {
                         int itemIndex = section.IsExpandable() ? childIndex-1 : childIndex;
+
                         std::string jsonData = section.IsExpandable() && childIndex == 0
                                                ? section.SerializeJson()
                                                : section.GetItemAtIndex(itemIndex).SerializeJson();
+
                         jstring jsonDataStr = env->NewStringUTF(jsonData.c_str());
                         env->SetObjectArrayElement(childNamesArray, currentChildIndex, jsonDataStr);
                         env->DeleteLocalRef(jsonDataStr);
                         currentChildIndex++;
                     }
 
-                    jstring groupNameJni = env->NewStringUTF(section.Name().c_str());
+                    jstring groupNameJni = env->NewStringUTF(section.SerializeJson().c_str());
                     env->SetObjectArrayElement(groupNamesArray, groupIndex, groupNameJni);
                     env->DeleteLocalRef(groupNameJni);
 
-                    jint groupSize = (jint)(section.Size());
+                    jint groupSize = (jint)(totalItems);
                     env->SetIntArrayRegion(groupSizesArray, groupIndex, 1, &groupSize);
-
-                    jboolean groupIsExpandable = (jboolean)(section.IsExpandable());
-                    env->SetBooleanArrayRegion(groupIsExpandableArray, groupIndex, 1, &groupIsExpandable);
                 }
 
-                jmethodID populateData = env->GetMethodID(m_uiViewClass, "populateData", "(J[Ljava/lang/String;[I[Z[Ljava/lang/String;)V");
+                jmethodID populateData = env->GetMethodID(m_uiViewClass, "populateData", "(J[Ljava/lang/String;[I[Ljava/lang/String;)V");
 
                 env->CallVoidMethod(
-                    m_uiView,
-                    populateData,
-                    (jlong)(this),
-                    groupNamesArray,
-                    groupSizesArray,
-                    groupIsExpandableArray,
-                    childNamesArray
+                        m_uiView,
+                        populateData,
+                        (jlong)(this),
+                        groupNamesArray,
+                        groupSizesArray,
+                        childNamesArray
                 );
 
                 env->DeleteLocalRef(groupNamesArray);
                 env->DeleteLocalRef(groupSizesArray);
                 env->DeleteLocalRef(childNamesArray);
-                env->DeleteLocalRef(groupIsExpandableArray);
             }
 
             void MenuView::SetFullyOnScreenOpen()
             {
                 ASSERT_UI_THREAD
-                CallVoidVoidFunction("animateToOpenOnScreen");
+                        CallVoidVoidFunction("animateToOpenOnScreen");
             }
 
             void MenuView::SetFullyOnScreenClosed()
             {
                 ASSERT_UI_THREAD
 
-                CallVoidVoidFunction("animateToClosedOnScreen");
+                        CallVoidVoidFunction("animateToClosedOnScreen");
             }
 
             void MenuView::SetOnScreenStateToIntermediateValue(float value)
@@ -199,14 +207,14 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                CallVoidVoidFunction("animateToClosedOnScreen");
+                        CallVoidVoidFunction("animateToClosedOnScreen");
             }
 
             void MenuView::SetFullyOffScreen()
             {
                 ASSERT_UI_THREAD
 
-                CallVoidVoidFunction("animateOffScreen");
+                        CallVoidVoidFunction("animateOffScreen");
             }
 
             void MenuView::InsertOnViewClicked(Eegeo::Helpers::ICallback0& callback)
@@ -334,14 +342,13 @@ namespace ExampleApp
             void MenuView::HandleItemSelected(int sectionIndex, int itemIndex)
             {
                 ASSERT_UI_THREAD
-
                 m_onItemSelectedCallbacks.ExecuteCallbacks(sectionIndex, itemIndex);
             }
 
             bool MenuView::CallBeginDrag()
             {
                 ASSERT_UI_THREAD
-				return false;
+                return false;
             }
 
             void MenuView::SetCanInteract(bool canInteract)

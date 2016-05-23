@@ -50,7 +50,6 @@ namespace ExampleApp
 
             MenuItemModel MenuSectionViewModel::GetItemAtIndex(int index) const
             {
-                Eegeo_ASSERT(IsExpanded(), "Cannot access internal items of menu when menu section is not expanded.");
                 return m_menuModel.GetItemAtIndex(index);
             }
 

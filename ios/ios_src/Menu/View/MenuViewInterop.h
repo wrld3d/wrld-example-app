@@ -69,7 +69,7 @@ namespace ExampleApp
                     [m_pView updateTableAnimation:dt];
                 }
                 
-                void UpdateMenuSectionViews(TSections& sections)
+                void UpdateMenuSectionViews(TSections& sections, bool contentsChanged)
                 {
                     [m_pView updateMenuSections:&sections];
                 }
