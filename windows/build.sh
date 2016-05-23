@@ -123,7 +123,7 @@ popd
 cmd //C windows\\build.bat
 resultcode=$?
 
-if [ resultcode = 0 ] ; then
+if [ $resultcode = 0 ] ; then
 	echo "COMPILE WINDOWS PROJECT SUCCEEDED" >&2
 else
 	echo "COMPILE WINDOWS PROJECT FAILED" >&2

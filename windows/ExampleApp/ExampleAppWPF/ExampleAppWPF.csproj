@@ -727,7 +727,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(ProjectDir)..\..\Resources" "$(TargetDir)Resources" /e /y /i /r /d /exclude:$(ProjectDir)ExcludedResourceFiles.txt
+    <PostBuildEvent>rd "$(TargetDir)Resources" /S /Q
+xcopy "$(ProjectDir)..\..\Resources" "$(TargetDir)Resources" /e /y /i /r /d /exclude:$(ProjectDir)ExcludedResourceFiles.txt
 xcopy "$(ProjectDir)..\..\libs\eegeo\ANGLE\x64\$(ConfigurationName)\libEGL.dll" "$(TargetDir)" /d /r /y
 xcopy "$(ProjectDir)..\..\libs\eegeo\ANGLE\x64\$(ConfigurationName)\libGLESv2.dll" "$(TargetDir)" /d /r /y
 xcopy "$(ProjectDir)..\..\libs\eegeo\openssl\x64\libeay32.dll" "$(TargetDir)" /d /r /y
