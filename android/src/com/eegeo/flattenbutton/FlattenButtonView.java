@@ -99,4 +99,9 @@ public class FlattenButtonView implements View.OnClickListener
             m_view.setY(newYPx);
         }
     }
+    
+    public void setViewEnabled(final boolean enabled)
+    {
+    	m_view.setEnabled(enabled);
+    }
 }
