@@ -64,10 +64,8 @@ fi
 if [ ! -z "${config_password}" ]; then
 	secret_key=$((python "./build-scripts/generate_key.py" ${config_password}) 2>&1)
     sed_pattern="s#project_swallow_config.json#encrypted_config.json#g;s#APP_CONFIG_SECRET_HERE#${secret_key}#g"
-elif [ $environment == 'production' ]; then
-	sed_pattern="s#project_swallow_config.json#project_swallow_production_config.json#g"
 else
-	sed_pattern="s#project_swallow_config.json#project_swallow_config.json#g"
+	sed_pattern="s#project_swallow_config.json#encrypted_config.json#g"
 fi
 
 
@@ -92,6 +90,7 @@ fi
 
 mv $apiKeyFileTemp $apiKeyFile
 
+dest_config_file=encrypted_config.json
 temp_config_folder=
 
 if [ ! -z "${secret_key}" ]; then
@@ -101,15 +100,14 @@ if [ ! -z "${secret_key}" ]; then
 	mv -v ${config_folder}/ ${temp_config_folder}/
 	mkdir ${config_folder}/
 	
-	dest_config_file=encrypted_config.json
-
 	python "./build-scripts/encrypt_config.py" -i ${temp_config_folder}/${src_config_file} -o ${config_folder}/${dest_config_file} -s ${secret_key}	
 
 	if [ $? -ne 0 ] ; then
 		echo "Failed to encrypt config file"  >&2
 		exit 1
 	fi
-
+else
+	cp -f ${config_folder}/${src_config_file} ${config_folder}/${dest_config_file}
 fi
 
 if [ ! -f windows/nuget.exe ]; then
