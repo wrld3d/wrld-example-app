@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     android:clipChildren="false"
     android:clipToPadding="false"
-    android:layout_marginTop="50dp" >
+    android:layout_marginTop="@dimen/menu_button_top_offset" >
     
     <RelativeLayout
         android:id="@+id/settings_menu_title_container"

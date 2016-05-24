@@ -4,7 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="fill_parent"
     android:layout_centerHorizontal="true"
-    android:layout_marginTop="50dp"
+    android:layout_marginTop="@dimen/menu_button_top_offset"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:descendantFocusability="beforeDescendants"
