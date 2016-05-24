@@ -15,6 +15,7 @@ if __name__ == '__main__':
         sys.exit(-1)
 
     password = sys.argv[1]
-    salt = os.urandom(24)
+    #salt = os.urandom(24)
+    salt = '12345'
     derived_key = base64.standard_b64encode(kdf(password, salt))
     print derived_key
