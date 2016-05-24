@@ -43,6 +43,7 @@ namespace ExampleApp
                 bool m_webProxyEnabled;
                 std::string m_webProxyIpAddress;
                 int m_webProxyPort;
+                std::string m_webProxyIgnorePattern;
                 
                 
             public:
@@ -98,6 +99,8 @@ namespace ExampleApp
                 IApplicationConfigurationBuilder& SetWebProxyIpAddress(const std::string& webProxyIpAddress);
                 
                 IApplicationConfigurationBuilder& SetWebProxyPort(int webProxyPort);
+
+                IApplicationConfigurationBuilder& SetWebProxyIgnorePattern(const std::string& webProxyIgnorePattern);
 
                 std::string Decrypt(const std::string& message) const;
 

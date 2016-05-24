@@ -38,6 +38,7 @@ namespace ExampleApp
             bool m_webProxyEnabled;
             const std::string m_webProxyIpAddress;
             int m_webProxyPort;
+            const std::string m_webProxyIgnorePattern;
             
         public:
             
@@ -60,12 +61,13 @@ namespace ExampleApp
                                      const std::string& searchServiceUrl,
                                      const std::string& myPinsWebServiceUrl,
                                      const std::string& myPinsWebServiceAuthToken,
-									 const std::string& productVersion,
+                                     const std::string& productVersion,
                                      const std::string& buildNumber,
                                      const std::string& combinedVersionString,
                                      bool webProxyEnabled,
                                      const std::string& webProxyIpAddress,
-                                     int webProxyPort);
+                                     int webProxyPort,
+                                     const std::string& webProxyIgnorePattern);
             
             const std::string& Name() const;
             
@@ -104,7 +106,7 @@ namespace ExampleApp
             const std::string& MyPinsWebServiceUrl() const;
             
             const std::string& MyPinsWebServiceAuthToken() const;
-			
+            
             const std::string& ProductVersion() const;
             
             const std::string& BuildNumber() const;
@@ -117,6 +119,7 @@ namespace ExampleApp
             
             int WebProxyPort() const;
             
+            const std::string& WebProxyIgnorePattern() const;
         };
     }
 }

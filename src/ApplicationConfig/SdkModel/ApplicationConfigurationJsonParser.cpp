@@ -109,6 +109,11 @@ namespace ExampleApp
                 
                 Eegeo_ASSERT(document.HasMember("WebProxyPort"), "WebProxyPort config not found");
                 m_builder.SetWebProxyPort(document["WebProxyPort"].GetInt());
+
+                if (document.HasMember("WebProxyIgnorePattern"))
+                {
+                    m_builder.SetWebProxyIgnorePattern(document["WebProxyIgnorePattern"].GetString());
+                }
                 return m_builder.Build();
             }
         }

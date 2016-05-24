@@ -38,6 +38,10 @@ namespace ExampleApp
             , m_searchServiceUrl("")
             , m_myPinsWebServiceUrl("")
             , m_myPinsWebServiceAuthToken("")
+            , m_webProxyEnabled(false)
+            , m_webProxyIpAddress("")
+            , m_webProxyPort(0)
+            , m_webProxyIgnorePattern("")
             {
                 
             }
@@ -192,6 +196,12 @@ namespace ExampleApp
                 return *this;
             }
 
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetWebProxyIgnorePattern(const std::string& webProxyIgnorePattern)
+            {
+                m_webProxyIgnorePattern = webProxyIgnorePattern;
+                return *this;
+            }
+
             std::string ApplicationConfigurationBuilder::Decrypt(const std::string& value) const
             {
                 return m_cipher.Decrypt(value);
@@ -239,7 +249,8 @@ namespace ExampleApp
                                                 m_combinedVersionString,
                                                 m_webProxyEnabled,
                                                 m_webProxyIpAddress,
-                                                m_webProxyPort);
+                                                m_webProxyPort,
+                                                m_webProxyIgnorePattern);
             }
         }
     }

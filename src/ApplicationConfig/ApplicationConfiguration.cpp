@@ -30,7 +30,8 @@ namespace ExampleApp
                                                            const std::string& combinedVersionString,
                                                            bool webProxyEnabled,
                                                            const std::string& webProxyIpAddress,
-                                                           int webProxyPort)
+                                                           int webProxyPort,
+                                                           const std::string& webProxyIgnorePattern)
         : m_name(name)
         , m_eegeoApiKey(eegeoApiKey)
         , m_interestLocation(interestLocation)
@@ -56,6 +57,7 @@ namespace ExampleApp
         , m_webProxyEnabled(webProxyEnabled)
         , m_webProxyIpAddress(webProxyIpAddress)
         , m_webProxyPort(webProxyPort)
+        , m_webProxyIgnorePattern(webProxyIgnorePattern)
         {
             
         }
@@ -183,6 +185,11 @@ namespace ExampleApp
         int ApplicationConfiguration::WebProxyPort() const
         {
             return m_webProxyPort;
+        }
+
+        const std::string& ApplicationConfiguration::WebProxyIgnorePattern() const
+        {
+            return m_webProxyIgnorePattern;
         }
     }
 }

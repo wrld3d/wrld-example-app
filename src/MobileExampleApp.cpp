@@ -149,7 +149,7 @@ namespace ExampleApp
             loadingScreenConfig.loadingBarOffset = Eegeo::v2(0.5f, 0.1f);
 
             Eegeo::Rendering::LoadingScreen* loadingScreen = Eegeo::Rendering::LoadingScreen::Create(
-            			Helpers::ImageHelpers::GetImageNameForDevice("SplashScreen", ".png"),
+                        Helpers::ImageHelpers::GetImageNameForDevice("SplashScreen", ".png"),
                         loadingScreenConfig,
                         renderingModule.GetShaderIdGenerator(),
                         renderingModule.GetMaterialIdGenerator(),
@@ -290,11 +290,11 @@ namespace ExampleApp
         , m_pReactorIgnoredReactionModel(NULL)
     {
         m_metricsService.BeginSession(applicationConfiguration.FlurryAppKey(), EEGEO_PLATFORM_VERSION_NUMBER);
-
         if(m_applicationConfiguration.WebProxyEnabled())
         {
             Eegeo::Web::IWebProxySettings& proxySettings = m_platformAbstractions.GetProxySettings();
             proxySettings.EnableProxy(m_applicationConfiguration.WebProxyIpAddress(), m_applicationConfiguration.WebProxyPort());
+            proxySettings.AddProxyIgnorePattern(m_applicationConfiguration.WebProxyIgnorePattern());
         }
         
         m_pWorld = Eegeo_NEW(Eegeo::EegeoWorld)(applicationConfiguration.EegeoApiKey(),
@@ -368,7 +368,7 @@ namespace ExampleApp
                                                                                        Eegeo::Streaming::QuadTreeCube::MAX_DEPTH_TO_VISIT,
                                                                                        mapModule.GetEnvironmentFlatteningService());
 
-		CreateSQLiteModule(nativeUIFactories);
+        CreateSQLiteModule(nativeUIFactories);
         
         CreateApplicationModelModules(nativeUIFactories, platformConfig.OptionsConfig.InteriorsAffectedByFlattening, applicationConfiguration.EegeoApiKey());
         
@@ -433,15 +433,15 @@ namespace ExampleApp
     {
         OnPause();
 
-		m_pAppModeModel->DestroyStateMachine();
+        m_pAppModeModel->DestroyStateMachine();
 
         Eegeo_DELETE m_pUserInteractionModule;
         
         Eegeo_DELETE m_pStreamingVolume;
         Eegeo_DELETE m_pInteriorsHighlightVisibilityController;
         Eegeo_DELETE m_pInteriorsEntityIdHighlightVisibilityController;
-		Eegeo_DELETE m_pInteriorsPickingController;
-		Eegeo_DELETE m_pRayCaster;
+        Eegeo_DELETE m_pInteriorsPickingController;
+        Eegeo_DELETE m_pRayCaster;
 
         DestroyApplicationModelModules();
         
@@ -867,7 +867,7 @@ namespace ExampleApp
         
         Eegeo_DELETE m_pPlaceJumpsModule;
 
-		Eegeo_DELETE m_pFlattenButtonModule;
+        Eegeo_DELETE m_pFlattenButtonModule;
 
         Eegeo_DELETE m_pMapModeModule;
         
@@ -887,7 +887,7 @@ namespace ExampleApp
 
         Eegeo_DELETE m_pWatermarkModule;
         
-		Eegeo_DELETE m_pInteriorsExplorerModule;
+        Eegeo_DELETE m_pInteriorsExplorerModule;
 
         Eegeo_DELETE m_pSearchModule;
         
@@ -899,13 +899,13 @@ namespace ExampleApp
         }
         m_searchServiceModules.clear();
 
-		Eegeo_DELETE m_pReportPinsVisibilityMaskingModule;
+        Eegeo_DELETE m_pReportPinsVisibilityMaskingModule;
 
-		Eegeo_DELETE m_pMyPinsModule;
+        Eegeo_DELETE m_pMyPinsModule;
 
-		Eegeo_DELETE m_pWorldPinsModule;
+        Eegeo_DELETE m_pWorldPinsModule;
 
-		Eegeo_DELETE m_pPinsModule;
+        Eegeo_DELETE m_pPinsModule;
 
         Eegeo_DELETE m_pAppCameraModule;
         
@@ -1247,11 +1247,11 @@ namespace ExampleApp
             m_pLoadingScreen->NotifyScreenDimensionsChanged(screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
         }
 
-		m_pPinsModule->UpdateScreenProperties(m_screenProperties);
+        m_pPinsModule->UpdateScreenProperties(m_screenProperties);
 
         m_pGlobeCameraController->UpdateScreenProperties(m_screenProperties);
 
-		m_pInteriorsExplorerModule->GetInteriorsCameraController().UpdateScreenProperties(m_screenProperties);
+        m_pInteriorsExplorerModule->GetInteriorsCameraController().UpdateScreenProperties(m_screenProperties);
     }
 
     void MobileExampleApp::InitialiseApplicationViewState()
@@ -1448,10 +1448,10 @@ namespace ExampleApp
             return;
         }
 
-		if (m_pWorldPinsModule->GetWorldPinsService().HandleTouchDoubleTap(data.point))
-		{
-			return;
-		}
+        if (m_pWorldPinsModule->GetWorldPinsService().HandleTouchDoubleTap(data.point))
+        {
+            return;
+        }
 
         m_pCurrentTouchController->Event_TouchDoubleTap(data);
     }
@@ -1502,10 +1502,10 @@ namespace ExampleApp
 
     void MobileExampleApp::Event_Zoom(const AppInterface::ZoomData& data)
     {
-		if (!CanAcceptTouch())
-		{
-			return;
-		}
+        if (!CanAcceptTouch())
+        {
+            return;
+        }
 
         m_pCurrentTouchController->Event_Zoom(data);
     }
@@ -1520,30 +1520,30 @@ namespace ExampleApp
 
     void MobileExampleApp::Event_TiltStart(const AppInterface::TiltData& data)
     {
-		if (!CanAcceptTouch())
-		{
-			return;
-		}
+        if (!CanAcceptTouch())
+        {
+            return;
+        }
 
         m_pCurrentTouchController->Event_TiltStart(data);
     }
 
     void MobileExampleApp::Event_TiltEnd(const AppInterface::TiltData& data)
     {
-		if (!CanAcceptTouch())
-		{
-			return;
-		}
+        if (!CanAcceptTouch())
+        {
+            return;
+        }
 
         m_pCurrentTouchController->Event_TiltEnd(data);
     }
 
     void MobileExampleApp::Event_Tilt(const AppInterface::TiltData& data)
     {
-		if (!CanAcceptTouch())
-		{
-			return;
-		}
+        if (!CanAcceptTouch())
+        {
+            return;
+        }
 
         m_pCurrentTouchController->Event_Tilt(data);
     }
