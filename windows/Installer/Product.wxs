@@ -284,24 +284,6 @@
       <Component Id="cmpcuFABxmucOrHFpz_DGi..cjNxm8" Directory="RESOURCEFOLDER" Guid="{F5EF6291-5801-42F5-B337-0BD6985E892E}">
         <File Id="fil4gXO9GVSOORpLQxF9gsmwUsnxxo" KeyPath="yes" Source="payload\Resources\CreatPIN_dialogue_Icon.png" />
       </Component>
-      <Component Id="cmpE8416A615D6190FF0BEEFC1ABCCD5FC4" Directory="RESOURCEFOLDER" Guid="{C7E6173D-4F4C-4632-8FF3-726651554B20}">
-        <File Id="filFE83AC4A270511CAA06BBDD8214CC725" KeyPath="yes" Source="payload\Resources\default_water_reflection_cube_map_negX.png" />
-      </Component>
-      <Component Id="cmpC19C7FF07C16D994313D90F8BAD1E1A1" Directory="RESOURCEFOLDER" Guid="{D6F0797B-1267-4F01-A959-B011FD28654E}">
-        <File Id="fil4C401A648C75D63236EB53A659A5132E" KeyPath="yes" Source="payload\Resources\default_water_reflection_cube_map_negY.png" />
-      </Component>
-      <Component Id="cmpB825BA2BDF9FD5329C9C5BF340952D75" Directory="RESOURCEFOLDER" Guid="{BB5A5526-B884-43A6-817A-F607513291EF}">
-        <File Id="fil1713F3204101DF03A6B19B991E44FA3F" KeyPath="yes" Source="payload\Resources\default_water_reflection_cube_map_negZ.png" />
-      </Component>
-      <Component Id="cmpB64CBB9BBE41C4982047E47E5AF89CEB" Directory="RESOURCEFOLDER" Guid="{3EECE93D-B5C2-440F-B9A2-9BEA0E1BA6AF}">
-        <File Id="fil0C0CFAEB79189AD60EB40E0526869A7F" KeyPath="yes" Source="payload\Resources\default_water_reflection_cube_map_posX.png" />
-      </Component>
-      <Component Id="cmp8F1D6849D5F600603C65EB1BA5743E21" Directory="RESOURCEFOLDER" Guid="{2090D2CC-F4AD-434C-85F2-56C357BAC951}">
-        <File Id="filAD8CCEB1A61C28092AAB591D2955EEFD" KeyPath="yes" Source="payload\Resources\default_water_reflection_cube_map_posY.png" />
-      </Component>
-      <Component Id="cmp2CDB370938C12D054154C5DECC39BEE0" Directory="RESOURCEFOLDER" Guid="{353D2185-0FBF-466E-92A1-72D8F73E929A}">
-        <File Id="filB192A6B0C81DAA33FC48A82CB434FBE5" KeyPath="yes" Source="payload\Resources\default_water_reflection_cube_map_posZ.png" />
-      </Component>	  
       <Component Id="cmp9b_WkigeAFHSQKfyc6Xfniv.RXE" Directory="RESOURCEFOLDER" Guid="{16BD6B53-A2E9-4469-8BDF-0A44190695DA}">
         <File Id="fil57PvGhGmm1jly0.VKvuaxusga1I" KeyPath="yes" Source="payload\Resources\DejaVuSansBold.fnt" />
       </Component>
@@ -575,11 +557,8 @@
       <Component Id="cmpv1kRDr7eAOyPqUE5duTGUQ3JQ3w" Directory="RESOURCEFOLDER" Guid="{3E1610A4-F0E0-4E66-A8BB-1AECEDA07D2D}">
         <File Id="filJ2gVjWpkZstyAi3LCyJsnMLM8bE" KeyPath="yes" Source="payload\Resources\yelp_reviews.png" />
       </Component>
-      <Component Id="cmpcDEp5FYL5VFTknlqh0P_lbzTx8c" Directory="APPCONFIGFOLDER" Guid="{F11506A4-CC83-4DC9-BFD5-65411DE62887}">
-        <File Id="filtxEhIqjxH2tg7w7A4L.ft.LHvIQ" KeyPath="yes" Source="payload\Resources\ApplicationConfigs\project_swallow_config.json" />
-      </Component>
-      <Component Id="cmpHaABJxo3qR2H80EqNupO4l1Q9B0" Directory="APPCONFIGFOLDER" Guid="{CB4344D1-ACA3-4017-B3CD-99D615E41E5D}">
-        <File Id="filfFDp6MGSdcsQD63FeIKD1mDOhBw" KeyPath="yes" Source="payload\Resources\ApplicationConfigs\project_swallow_production_config.json" />
+      <Component Id="cmp524CBE567AD8069759874A8E02F30357" Directory="APPCONFIGFOLDER" Guid="{7A789439-8928-47B4-B3AB-5957A50907E3}">
+        <File Id="fil9574A5EC37417ABB0113D376A4D4B1FC" KeyPath="yes" Source="payload\Resources\ApplicationConfigs\encrypted_config.json" />
       </Component>
       <Component Id="cmp7PCrACH8VAfwJ8z5aia3uIcMErk" Directory="INTERIORSFOLDER" Guid="{631D9E58-64FA-464A-8448-82D2AC83F660}">
         <File Id="filth4YExbzzgikr1EByi65tnklt1g" KeyPath="yes" Source="payload\Resources\Interiors\icons_interior_entities.png" />
@@ -662,6 +641,24 @@
       <Component Id="cmpiPZvE5FyZuvRhVH3DVelX7BY4lo" Directory="ICONSFOLDER" Guid="{6A51AAB5-0D5F-4BAC-891B-1142D793C78B}">
         <File Id="filRcyQ3f9FUto9pPKQUTIzJVE6AGY" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\youtube.png" />
       </Component>
+      <Component Id="cmpD9F8ADD33F7E807FD4F99A016565C721" Directory="THEMEFOLDER" Guid="{A7642B48-F459-47B4-8AB1-B638846FA241}">
+		<File Id="fil5B337BC21611277A2F4FE7E5F3D0B665" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\Default_water_reflection_cube_map_negX.png" />
+	  </Component>
+	  <Component Id="cmpA1702BD5BDEB47EEC66C8E71FF22548E" Directory="THEMEFOLDER" Guid="{9B3FE085-C248-4DA1-9C3C-069C0ABB2C00}">
+		<File Id="fil56B60B8D4247A8288E77B6EFC96755EE" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\Default_water_reflection_cube_map_negY.png" />
+	  </Component>
+	  <Component Id="cmp7EFE547DCE997B3BF3978F97E30034E2" Directory="THEMEFOLDER" Guid="{91A9281B-77C9-4669-8490-1ED9116EDE05}">
+		<File Id="filB58471CE4BFCB07244EEBFC13D2BCBE6" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\Default_water_reflection_cube_map_negZ.png" />
+	  </Component>
+	  <Component Id="cmpD37D937407FFC485485CB472F30BE5D4" Directory="THEMEFOLDER" Guid="{9B21BB79-60FE-48F0-8BF3-1C907D6836D1}">
+		<File Id="fil2170D329A5CB6ADFD7C274E9E9DBB2F9" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\Default_water_reflection_cube_map_posX.png" />
+	  </Component>
+	  <Component Id="cmp1E704EA634855989BD74B9B37BA2E05B" Directory="THEMEFOLDER" Guid="{7C147449-F77C-4F96-8FE7-92076F5B057C}">
+		<File Id="filA817C42BB5107C36B20D5E46AF3866A5" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\Default_water_reflection_cube_map_posY.png" />
+	  </Component>
+	  <Component Id="cmp0C44E88324A8EFA167D6D19289FB333D" Directory="THEMEFOLDER" Guid="{4CF8A01B-BF71-4BE9-B5DC-7F8712F51AAC}">
+		<File Id="fil3A62819D88CFF99795D7DEFCCB7A53D4" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\Default_water_reflection_cube_map_posZ.png" />
+	  </Component>
       <Component Id="cmpF5OBSoC5fpEJWjx14GiRm.P_eSc" Directory="THEMEFOLDER" Guid="{65A48B0B-5E0F-4E0B-AB44-C0D0A4773940}">
         <File Id="filmBqIkgjWQJiUdumEpsvv3Zhv454" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\London_London_railDiffuse_repeat.dds" />
       </Component>
