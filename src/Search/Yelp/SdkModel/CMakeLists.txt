@@ -23,4 +23,3 @@ set(currsources
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\Search\\Yelp\\SdkModel FILES ${currsources})
-include(../src/Search/Yelp/SdkModel/OAuth/CMakeLists.txt)
