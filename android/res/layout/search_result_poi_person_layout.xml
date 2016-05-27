@@ -1,0 +1,141 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/search_result_poi_view"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <RelativeLayout
+        android:id="@+id/search_result_poi_view_container"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp" >
+
+        <!-- Title bar -->
+
+        <RelativeLayout
+            android:id="@+id/search_result_poi_view_header"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white" >
+
+            <RelativeLayout
+                android:id="@+id/search_result_poi_view_category_icon_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <ImageView
+                    android:id="@+id/search_result_poi_view_category_icon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:contentDescription=""
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/icon1_coffee"
+                    android:visibility="invisible" />
+
+                <ProgressBar
+                    android:id="@+id/search_result_poi_view_image_progress"
+                    style="@android:style/Widget.ProgressBar.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/search_result_poi_view_title"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/search_result_poi_view_category_icon_container"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="Eden"
+                android:textColor="@color/darkgrey"
+                android:textSize="14dp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/search_result_poi_view_header_seperator"
+            android:layout_width="fill_parent"
+            android:layout_height="25dp"
+            android:layout_below="@+id/search_result_poi_view_header"
+            android:background="@color/gold" />
+
+        <!-- Person's Content -->
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/search_result_poi_view_header_seperator"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:padding="10dp" >
+
+            <!-- Job title -->
+            <TextView
+                android:id="@+id/search_result_poi_view_job_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/darkgrey"
+                android:textSize="12dp" />
+
+            <!-- Working group -->
+            <TextView
+                android:id="@+id/search_result_poi_view_working_group"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/darkgrey"
+                android:textSize="12dp" />
+
+            <!-- Location -->
+            <TextView
+                android:id="@+id/search_result_poi_view_location"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/darkgrey"
+                android:textSize="12dp" />
+
+            <!-- Desk code -->
+            <TextView
+                android:id="@+id/search_result_poi_view_desk"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/darkgrey"
+                android:textSize="12dp" />
+        </LinearLayout>
+
+        <!-- Bottom bar with close button -->
+
+        <RelativeLayout
+            android:id="@+id/search_result_poi_view_footer"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gold" >
+
+            <include
+                android:id="@+id/search_result_poi_view_toggle_pinned_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                layout="@layout/toggle_pinned_control" />
+
+            <ImageView
+                android:id="@+id/search_result_poi_view_close_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/button_pressed_colour_change"
+                android:src="@drawable/button_pin_close_states" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -7,4 +7,6 @@ public class SearchResultPoiViewJniMethods
     public static native void CloseButtonClicked(long nativeCallerPointer);
 
     public static native void TogglePinnedButtonClicked(long nativeCallerPointer);
+    
+    public static native void AvailabilityChanged(long nativeCallerPointer, String availability);
 }

@@ -43,6 +43,10 @@ public class CategoryResources
         {
             return "food";
         }
+        if(category.contains("meeting_room"))
+        {
+        	return "meeting_room";
+        }
 
         return "misc";
     }
