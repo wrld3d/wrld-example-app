@@ -14,6 +14,8 @@
 * [Optional Steps](#optional-steps)
     * [Build for debugging](#build-for-debugging)
     * [Speeding up build times](#speeding-up-build-times)
+* [Troubleshooting](#troubleshooting)
+    * [Eclipse hangs adding native support](#eclipse-hangs-adding-native-support)
 
 Before you begin, ensure you have completed the initial steps as described in the [root of the repository](https://github.com/eegeo/eegeo-example-app).
 
@@ -94,3 +96,19 @@ See the [NDK documentation](http://developer.android.com/ndk/guides/ndk-build.ht
     -   By default, the project is compiled for three different architectures: **armeabi**, **armeabi-v7a**, and **arm64-v8a**.
     -   If you do not need all of these, or you wish to quickly test on a single architecture, you can remove some of them from [Application.mk](/android/jni/Application.mk#L4).
     -   For example: `APP_ABI := armeabi`
+
+## Troubleshooting
+
+### Eclipse hangs adding native support  
+
+Some developers have experienced a deadlock when adding native support to the project. The IDE hangs, and the project is left in a corrupted and unrecoverable state. The following steps mitigate this issue:
+
+- Destroy the corrupted Eclipse workspace by deleting the metadata Eclipse creates in android directory. The metadata are:
+    - .classpath file
+    - .project file
+    - .cproject file
+    - .settings directory
+- Create the workspace again as described in [Setting up the project](#setting-up-the-project)
+- Delete the contents of [Android.mk](/android/jni/Android.mk#L4).
+- Add native support to the project
+- Revert the change to Android.mk
