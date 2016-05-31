@@ -124,7 +124,6 @@ AppHost::AppHost(
     :m_isPaused(false)
     , m_pJpegLoader(NULL)
     , m_pWindowsLocationService(NULL)
-    , m_pWindowsConnectivityService(NULL)
     , m_nativeState(nativeState)
     , m_WindowsInputBoxFactory(&nativeState)
     , m_WindowsKeyboardInputFactory(&nativeState, m_inputHandler)
@@ -166,7 +165,6 @@ AppHost::AppHost(
 	ApplicationConfiguration config(LoadConfiguration(nativeState));
 
     m_pWindowsLocationService = Eegeo_NEW(WindowsLocationService)(&nativeState);
-    m_pWindowsConnectivityService = Eegeo_NEW(WindowsConnectivityService)(&nativeState);
 
     m_pJpegLoader = Eegeo_NEW(Eegeo::Helpers::Jpeg::JpegLoader)();
 
@@ -203,7 +201,7 @@ AppHost::AppHost(
         );
 
     m_pNetworkCapabilities = Eegeo_NEW(ExampleApp::Net::SdkModel::NetworkCapabilities)(
-        *m_pWindowsConnectivityService,
+        m_pWindowsPlatformAbstractionModule->GetConnectivityService(),
         m_pWindowsPlatformAbstractionModule->GetHttpCache(),
         *m_pWindowsPersistentSettingsModel);
 
@@ -280,9 +278,6 @@ AppHost::~AppHost()
 
     Eegeo_DELETE m_pJpegLoader;
     m_pJpegLoader = NULL;
-
-    Eegeo_DELETE m_pWindowsConnectivityService;
-    m_pWindowsConnectivityService = NULL;
 
     Eegeo_DELETE m_pWindowsLocationService;
     m_pWindowsLocationService = NULL;

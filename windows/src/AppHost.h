@@ -107,7 +107,6 @@ private:
     bool m_isPaused;
     Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;
     Eegeo::Windows::WindowsLocationService* m_pWindowsLocationService;
-    Eegeo::Windows::WindowsConnectivityService* m_pWindowsConnectivityService;
 
     WindowsNativeState& m_nativeState;
     AppInputDelegate* m_pAppInputDelegate;
