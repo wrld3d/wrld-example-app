@@ -14,6 +14,7 @@
 #include "WorldPins.h"
 #include "SearchQuery.h"
 #include "SearchResultModel.h"
+#include "NetIncludes.h"
 
 namespace ExampleApp
 {
@@ -30,20 +31,33 @@ namespace ExampleApp
                     SwallowOfficeResultMenuOptionSelectedMessageHandler* m_pSwallowOfficeResultMenuOptionSelectedMessageHandler;
                     Search::SdkModel::ISearchService& m_searchService;
                     Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
+                    Net::SdkModel::INetworkCapabilities& m_networkCapabilities;
+
+                    bool m_hasPerformedFirstSearch;
                     bool m_clearSearchNextUpdate;
+                    bool m_hasTransitionPoiResults;
                     
-                    Eegeo::Helpers::TCallback2<SwallowSearchServiceModule, const Search::SdkModel::SearchQuery&, const std::vector<Search::SdkModel::SearchResultModel>& > m_transitionCallback;
+                    Eegeo::Helpers::TCallback2<SwallowSearchServiceModule, const Search::SdkModel::SearchQuery&, const std::vector<Search::SdkModel::SearchResultModel>&> m_handleSearchServiceReceivedQueryResults;
+                    Eegeo::Helpers::TCallback0<SwallowSearchServiceModule> m_handleNetworkCapabilitiesChanged;
                     
-                    void OnTransitionResult(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results);
+                    void OnSearchServiceReceivedQueryResults(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results);
+
+                    void OnNetworkCapabilitiesChanged();
+
+                    void PerformTransitionPoiSearch();
+
                 public:
                     SwallowSearchServiceModule(Search::SdkModel::ISearchService& searchService,
                                                Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                                CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                                                AppCamera::SdkModel::IAppCameraController& appCameraController,
                                                ExampleAppMessaging::TMessageBus& messageBus,
-                                               WorldPins::SdkModel::IWorldPinsService& worldPinsService);
+                                               WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                               Net::SdkModel::INetworkCapabilities& networkCapabilities);
                     
                     ~SwallowSearchServiceModule();
+
+                    void Start();
 
                     void Update();
                    

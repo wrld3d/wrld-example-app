@@ -21,15 +21,18 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                class SwallowSearchTransitionPinController : public Eegeo::Helpers::TCallback1<SwallowSearchTransitionPinController, const std::vector<Search::SdkModel::SearchResultModel>&>, Eegeo::NonCopyable
+                class SwallowSearchTransitionPinController : private Eegeo::NonCopyable
                 {
                 public:
                     SwallowSearchTransitionPinController(WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                          CameraTransitions::SdkModel::ICameraTransitionController& transitionController,
-                                                         AppCamera::SdkModel::IAppCameraController& appCameraController);
+                                                         AppCamera::SdkModel::IAppCameraController& appCameraController,
+                                                         Search::SdkModel::ISearchService& searchService);
                     
                     ~SwallowSearchTransitionPinController();
-                    
+
+                    void OnSearchServiceReceivedQueryResults(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results);
+                                        
                 private:
                     void OnTransitionsLoaded(const std::vector<Search::SdkModel::SearchResultModel>& transitionResults);
                     
@@ -38,9 +41,12 @@ namespace ExampleApp
                     CategorySearch::SearchResultIconCategoryMapper m_searchResultIconCategoryMapper;
                     WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
                     CameraTransitions::SdkModel::ICameraTransitionController& m_transitionController;
+                    Search::SdkModel::ISearchService& m_searchService;
                     AppCamera::SdkModel::IAppCameraController& m_appCameraController;
                     
                     std::vector<WorldPins::SdkModel::WorldPinItemModel*> m_transitionPins;
+                    
+                    Eegeo::Helpers::TCallback2<SwallowSearchTransitionPinController, const Search::SdkModel::SearchQuery&, const std::vector<Search::SdkModel::SearchResultModel>&> m_handleSearchServiceReceivedQueryResults;
                 };
             }
         }

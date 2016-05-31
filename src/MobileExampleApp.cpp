@@ -556,7 +556,9 @@ namespace ExampleApp
                                                                                                          *m_pCameraTransitionService,
                                                                                                          m_pAppCameraModule->GetController(),
                                                                                                          m_messageBus,
-                                                                                                         m_pWorldPinsModule->GetWorldPinsService());
+                                                                                                         m_pWorldPinsModule->GetWorldPinsService(),
+                                                                                                         m_networkCapabilities);
+        m_pSwallowSearchServiceModule->Start();
         
         m_pGpsMarkerModule = Eegeo_NEW(ExampleApp::GpsMarker::SdkModel::GpsMarkerModule)(m_pWorld->GetRenderingModule(),
                                                                                          m_platformAbstractions,

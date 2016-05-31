@@ -6,6 +6,9 @@
 #include "SwallowSearchParser.h"
 #include "SwallowSearchTransitionPinSelectionHandler.h"
 #include "WorldPinVisibility.h"
+#include "SearchQuery.h"
+#include "SwallowSearchConstants.h"
+#include "ISearchService.h"
 
 namespace ExampleApp
 {
@@ -17,18 +20,31 @@ namespace ExampleApp
             {
                 SwallowSearchTransitionPinController::SwallowSearchTransitionPinController(WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                                                            CameraTransitions::SdkModel::ICameraTransitionController& transitionController,
-                                                                                           AppCamera::SdkModel::IAppCameraController& appCameraController)
+                                                                                           AppCamera::SdkModel::IAppCameraController& appCameraController,
+                                                                                           Search::SdkModel::ISearchService& searchService)
                 : m_worldPinsService(worldPinsService)
                 , m_transitionController(transitionController)
                 , m_appCameraController(appCameraController)
-                , Eegeo::Helpers::TCallback1<SwallowSearchTransitionPinController, const std::vector<Search::SdkModel::SearchResultModel>&>(this, &SwallowSearchTransitionPinController::OnTransitionsLoaded)
+                , m_searchService(searchService)
+                , m_handleSearchServiceReceivedQueryResults(this, &SwallowSearchTransitionPinController::OnSearchServiceReceivedQueryResults)
                 {
-                    
+                    m_searchService.InsertOnReceivedQueryResultsCallback(m_handleSearchServiceReceivedQueryResults);
                 }
                 
                 SwallowSearchTransitionPinController::~SwallowSearchTransitionPinController()
                 {
                     ClearResults();
+
+                    m_searchService.RemoveOnReceivedQueryResultsCallback(m_handleSearchServiceReceivedQueryResults);
+                }
+
+                
+                void SwallowSearchTransitionPinController::OnSearchServiceReceivedQueryResults(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results)
+                {
+                    if (query.IsCategory() && query.Query() == SearchConstants::TRANSITION_CATEGORY_NAME)
+                    {
+                        OnTransitionsLoaded(results);
+                    }
                 }
                 
                 void SwallowSearchTransitionPinController::OnTransitionsLoaded(const std::vector<Search::SdkModel::SearchResultModel>& transitionResults)
