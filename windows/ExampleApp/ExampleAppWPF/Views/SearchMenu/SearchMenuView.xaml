@@ -373,9 +373,9 @@
                                                                     </Style>
                                                                 </StackPanel.Resources>
                                                                 <Image Source="{Binding Path=Icon}" Width="24" Height="24" VerticalAlignment="Center" Margin="7,0,0,0"/>
-                                                                <StackPanel HorizontalAlignment="Stretch" Width="175">
+                                                                <StackPanel HorizontalAlignment="Stretch" Width="175" VerticalAlignment="Center">
                                                                     <TextBlock Text="{Binding Path=Name}" FontSize="13" Foreground="Black" MaxWidth="{Binding RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}, Path=Width}" Margin="5,1,0,0" TextTrimming="CharacterEllipsis"/>
-                                                                    <TextBlock Text="{Binding Path=Details}" FontSize="11" Foreground="{StaticResource DarkGrey}" MaxWidth="{Binding RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}, Path=Width}" Margin="5,-3,0,0" TextTrimming="CharacterEllipsis"/>
+                                                                    <TextBlock Text="{Binding Path=Details}" Visibility="{Binding Path=DetailVisibility}" FontSize="11" Foreground="{StaticResource DarkGrey}" MaxWidth="{Binding RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}, Path=Width}" Margin="5,-3,0,0" TextTrimming="CharacterEllipsis"/>
                                                                 </StackPanel>
                                                             </StackPanel>
                                                         </Grid>

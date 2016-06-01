@@ -7,5 +7,6 @@ namespace ExampleAppWPF
         public string Name { get; set; }
         public string Details { get; set; }
         public BitmapImage Icon { get; set; }
+        public string DetailVisibility { get; set; }
     }
 }

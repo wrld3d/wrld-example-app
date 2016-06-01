@@ -315,8 +315,10 @@ namespace ExampleAppWPF
                 var item = new SearchMenuListItem();
                 item.Name = jObject["name"].Value<string>();
 
-                item.Details = jObject["details"]?.Value<string>();
-
+                var detailsString = jObject["details"]?.Value<string>();
+                item.Details = detailsString;
+                item.DetailVisibility = detailsString == null ? "Collapsed" : "Visible";
+              
                 JToken iconStringToken;
                 var iconString = jObject.TryGetValue("icon", out iconStringToken) ? iconStringToken.Value<string>() : "misc";
                 item.Icon = new System.Windows.Media.Imaging.BitmapImage(ViewHelpers.MakeUriForImage(string.Format("icon1_{0}.png", iconString)));
