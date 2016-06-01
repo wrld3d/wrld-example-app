@@ -187,9 +187,10 @@ static NSString *CellIdentifier = @"searchCell";
                                        imageSize,
                                        imageSize);
         
+        const bool hasDetails = document.HasMember("details");
         const float textInsetX = 48.0f;
-        const float textY = 4.0f;
-        const float detailTextY = 24.0f;
+        const float textY = hasDetails ? 4.0f : 1.0f;
+        
         const float textWidth = [m_pView.pSearchResultsTableView getCellWidth] - textInsetX;
         
         cell.textLabel.text = [NSString stringWithUTF8String:name.c_str()];
@@ -197,26 +198,27 @@ static NSString *CellIdentifier = @"searchCell";
         cell.textLabel.textColor = ExampleApp::Helpers::ColorPalette::TableSearchTextColor;
         [cell.textLabel sizeToFit];
         
+        const float textHeight = hasDetails ? cell.textLabel.frame.size.height : CellConstants::SubSectionCellHeight;
+        
         CGRect textFrame = CGRectMake(textInsetX,
                                       textY,
                                       textWidth,
-                                      cell.textLabel.frame.size.height);
+                                      textHeight);
         
-        std::string details = "";
-        if (document.HasMember("details"))
+        if (hasDetails)
         {
-            details = document["details"].GetString();
+            const std::string details = document["details"].GetString();
+            cell.detailTextLabel.text = [NSString stringWithUTF8String:details.c_str()];
+            cell.detailTextLabel.font = [UIFont systemFontOfSize:11.0f];
+            cell.detailTextLabel.textColor = ExampleApp::Helpers::ColorPalette::TableSearchDetailTextColor;
+            [cell.detailTextLabel sizeToFit];
         }
-        
-        cell.detailTextLabel.text = [NSString stringWithUTF8String:details.c_str()];
-        cell.detailTextLabel.font = [UIFont systemFontOfSize:11.0f];
-        cell.detailTextLabel.textColor = ExampleApp::Helpers::ColorPalette::TableSearchDetailTextColor;
-        [cell.detailTextLabel sizeToFit];
-        
-        CGRect detailTextFrame = CGRectMake(textInsetX,
-                                            detailTextY,
-                                            textWidth,
-                                            cell.detailTextLabel.frame.size.height);
+
+        const float detailTextY = 24.0f;
+        CGRect detailTextFrame = hasDetails ? CGRectMake(textInsetX,
+                                                         detailTextY,
+                                                         textWidth,
+                                                         cell.detailTextLabel.frame.size.height) : CGRectZero;
         
         [(CustomTableViewCell*)cell setContentFrames:imageFrame
                                                     :textFrame
