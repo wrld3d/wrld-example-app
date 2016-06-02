@@ -3,7 +3,7 @@
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
 
   <Product Id="*" Name="Project Swallow" Language="1033" Version="$(var.Version)" Manufacturer="eeGeo Ltd" UpgradeCode="{19DAC114-C430-48B2-99BF-A1C907DFE4EA}">
-    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Platform="x64"/>
 
     <Condition Message="This application is only supported on 64-bit Windows Vista, Windows Server 2008, or higher.">
       <![CDATA[Installed OR (VersionNT64 >= 600)]]>
@@ -26,7 +26,7 @@
     <Directory Id="TARGETDIR" Name="SourceDir">
 
       <!-- Main application installation path-->
-      <Directory Id="ProgramFilesFolder">
+      <Directory Id="ProgramFiles64Folder">
         <!-- Remove installation folder on uninstallation - TODO: Probably don't want to delete Eegeo folder entirely unelss nothing's installed, check how Wix handles this -->
         <Directory Id="EEGEOFOLDER" Name="eeGeo">
           <Component Id="EEGEOFOLDER" Guid="{6F63431F-A0F5-4FC1-9BC6-6440EFB9B636}">

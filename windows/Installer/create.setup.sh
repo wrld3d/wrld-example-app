@@ -50,7 +50,7 @@ cp -R "$applicationOutputDirectory/Resources" "./payload"
 echo "Data copied from project output"
 echo "Creating Basic Installer..."
 
-candle.exe Product.wxs -o ./deploy/Product.wixobj -dVersion="$version" -ext WixUtilExtension 
+candle.exe Product.wxs -o ./deploy/Product.wixobj -dVersion="$version" -ext WixUtilExtension -arch "x64"
 
 if [ $? = 0 ] ; then
   echo "Installer compilation step success"
@@ -73,7 +73,7 @@ echo "Basic installer created"
 echo "Creating bundle..."
 echo
 
-candle.exe -ext WixBalExtension -ext WixUtilExtension -ext WixNetFxExtension Bundle.wxs -o ./deploy/Bundle.wixobj -dSwallowMsiLocation="./deploy/Swallow.msi" -dVersion="$version"
+candle.exe -ext WixBalExtension -ext WixUtilExtension -ext WixNetFxExtension Bundle.wxs -o ./deploy/Bundle.wixobj -dSwallowMsiLocation="./deploy/Swallow.msi" -dVersion="$version" -arch "x64"
 
 if [ $? = 0 ] ; then
   echo "Main Bundle compilation step success"
