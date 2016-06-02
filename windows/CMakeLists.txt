@@ -61,6 +61,7 @@ set(libs
 	UserEnv
 	psapi
 	version
+	wininet
 	)
 
 add_library(${executable_name} SHARED ${sources} ${resources})
