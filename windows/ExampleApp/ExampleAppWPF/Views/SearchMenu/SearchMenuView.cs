@@ -96,7 +96,7 @@ namespace ExampleAppWPF
             var menuOptionsViewDefaultHeight = m_menuOptionsView.ActualHeight;
             var separatorHeight = m_resultsSeparator.ActualHeight;
 
-            return menuViewHeight - searchBoxBackgroundDefaultHeight - menuOptionsViewDefaultHeight - 2 * separatorHeight;
+            return Math.Max(0.0, menuViewHeight - searchBoxBackgroundDefaultHeight - menuOptionsViewDefaultHeight + 2 * separatorHeight);
         }
 
         protected override Size ArrangeOverride(Size arrangeBounds)
