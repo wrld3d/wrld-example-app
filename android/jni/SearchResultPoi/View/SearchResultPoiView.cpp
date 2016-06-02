@@ -46,7 +46,7 @@ namespace ExampleApp
                 }
                 else if(vendor == Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
                 {
-                	CreateAndShowYelpPoiView(model, isPinned);
+                	CreateAndShowPersonSearchResultPoiView(model, isPinned);
                 }
                 else if(vendor == Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
 				{
@@ -333,164 +333,104 @@ namespace ExampleApp
 
 			void SearchResultPoiView::CreateAndShowWorkingGroupSearchResultPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned)
 			{
-				const std::string viewClass = "com/eegeo/searchresultpoiview/YelpSearchResultPoiView";
+				const std::string viewClass = "com/eegeo/searchresultpoiview/DepartmentSearchResultPoiView";
 				m_uiViewClass = CreateJavaClass(viewClass);
 				m_uiView = CreateJavaObject(m_uiViewClass);
 
-				Search::Yelp::SdkModel::YelpSearchResultModel yelpModel;
-				yelpModel = Search::Yelp::SdkModel::TransformToYelpSearchResult(model);
+				ExampleApp::Search::Swallow::SdkModel::SwallowDepartmentResultModel departmentModel;
+				departmentModel = ExampleApp::Search::Swallow::SdkModel::SearchParser::TransformToSwallowDepartmentResult(model);
 
 				AndroidSafeNativeThreadAttachment attached(m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
-				jobjectArray humanReadableCategoriesArray = CreateJavaArray(model.GetHumanReadableCategories());
-				jobjectArray reviewsArray = CreateJavaArray(yelpModel.GetReviews());
-
 				jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
-				jstring addressStr = env->NewStringUTF(model.GetSubtitle().c_str());
-				jstring phoneStr = env->NewStringUTF(yelpModel.GetPhone().c_str());
-				jstring urlStr = env->NewStringUTF(yelpModel.GetWebUrl().c_str());
+				jstring descriptionStr = env->NewStringUTF(departmentModel.GetDescription().c_str());
 				jstring categoryStr = env->NewStringUTF(model.GetCategory().c_str());
-				jstring imageUrlStr = env->NewStringUTF(yelpModel.GetImageUrl().c_str());
-				jstring ratingImageUrlStr = env->NewStringUTF(yelpModel.GetRatingImageUrl().c_str());
-				jstring vendorStr = env->NewStringUTF(model.GetVendor().c_str());
+				jstring imageUrlStr = env->NewStringUTF(departmentModel.GetImageUrl().c_str());
 
-				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;IZ)V");
+				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
 				env->CallVoidMethod(
 						m_uiView,
 						displayPoiInfoMethod,
 						titleStr,
-						addressStr,
-						phoneStr,
-						urlStr,
+						descriptionStr,
 						categoryStr,
-						humanReadableCategoriesArray,
 						imageUrlStr,
-						ratingImageUrlStr,
-						vendorStr,
-						reviewsArray,
-						yelpModel.GetReviewCount(),
 						isPinned
 				);
 
-				env->DeleteLocalRef(vendorStr);
-				env->DeleteLocalRef(ratingImageUrlStr);
-				env->DeleteLocalRef(imageUrlStr);
-				env->DeleteLocalRef(categoryStr);
-				env->DeleteLocalRef(urlStr);
-				env->DeleteLocalRef(phoneStr);
-				env->DeleteLocalRef(addressStr);
 				env->DeleteLocalRef(titleStr);
-				env->DeleteLocalRef(reviewsArray);
-				env->DeleteLocalRef(humanReadableCategoriesArray);
+				env->DeleteLocalRef(descriptionStr);
+				env->DeleteLocalRef(categoryStr);
+				env->DeleteLocalRef(imageUrlStr);
 			}
 
 			void SearchResultPoiView::CreateAndShowFacilitySearchResultPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned)
 			{
-				const std::string viewClass = "com/eegeo/searchresultpoiview/YelpSearchResultPoiView";
+				const std::string viewClass = "com/eegeo/searchresultpoiview/FacilitySearchResultPoiView";
 				m_uiViewClass = CreateJavaClass(viewClass);
 				m_uiView = CreateJavaObject(m_uiViewClass);
 
-				Search::Yelp::SdkModel::YelpSearchResultModel yelpModel;
-				yelpModel = Search::Yelp::SdkModel::TransformToYelpSearchResult(model);
+				ExampleApp::Search::Swallow::SdkModel::SwallowDepartmentResultModel departmentModel;
+				departmentModel = ExampleApp::Search::Swallow::SdkModel::SearchParser::TransformToSwallowDepartmentResult(model);
 
 				AndroidSafeNativeThreadAttachment attached(m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
-				jobjectArray humanReadableCategoriesArray = CreateJavaArray(model.GetHumanReadableCategories());
-				jobjectArray reviewsArray = CreateJavaArray(yelpModel.GetReviews());
-
 				jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
-				jstring addressStr = env->NewStringUTF(model.GetSubtitle().c_str());
-				jstring phoneStr = env->NewStringUTF(yelpModel.GetPhone().c_str());
-				jstring urlStr = env->NewStringUTF(yelpModel.GetWebUrl().c_str());
+				jstring descriptionStr = env->NewStringUTF(departmentModel.GetDescription().c_str());
 				jstring categoryStr = env->NewStringUTF(model.GetCategory().c_str());
-				jstring imageUrlStr = env->NewStringUTF(yelpModel.GetImageUrl().c_str());
-				jstring ratingImageUrlStr = env->NewStringUTF(yelpModel.GetRatingImageUrl().c_str());
-				jstring vendorStr = env->NewStringUTF(model.GetVendor().c_str());
+				jstring imageUrlStr = env->NewStringUTF(departmentModel.GetImageUrl().c_str());
 
-				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;IZ)V");
+				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
 				env->CallVoidMethod(
 						m_uiView,
 						displayPoiInfoMethod,
 						titleStr,
-						addressStr,
-						phoneStr,
-						urlStr,
+						descriptionStr,
 						categoryStr,
-						humanReadableCategoriesArray,
 						imageUrlStr,
-						ratingImageUrlStr,
-						vendorStr,
-						reviewsArray,
-						yelpModel.GetReviewCount(),
 						isPinned
 				);
 
-				env->DeleteLocalRef(vendorStr);
-				env->DeleteLocalRef(ratingImageUrlStr);
-				env->DeleteLocalRef(imageUrlStr);
-				env->DeleteLocalRef(categoryStr);
-				env->DeleteLocalRef(urlStr);
-				env->DeleteLocalRef(phoneStr);
-				env->DeleteLocalRef(addressStr);
 				env->DeleteLocalRef(titleStr);
-				env->DeleteLocalRef(reviewsArray);
-				env->DeleteLocalRef(humanReadableCategoriesArray);
+				env->DeleteLocalRef(descriptionStr);
+				env->DeleteLocalRef(categoryStr);
+				env->DeleteLocalRef(imageUrlStr);
 			}
 
 			void SearchResultPoiView::CreateAndShowDepartmentSearchResultPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned)
 			{
-				const std::string viewClass = "com/eegeo/searchresultpoiview/YelpSearchResultPoiView";
+				const std::string viewClass = "com/eegeo/searchresultpoiview/DepartmentSearchResultPoiView";
 				m_uiViewClass = CreateJavaClass(viewClass);
 				m_uiView = CreateJavaObject(m_uiViewClass);
 
-				Search::Yelp::SdkModel::YelpSearchResultModel yelpModel;
-				yelpModel = Search::Yelp::SdkModel::TransformToYelpSearchResult(model);
+				ExampleApp::Search::Swallow::SdkModel::SwallowDepartmentResultModel departmentModel;
+				departmentModel = ExampleApp::Search::Swallow::SdkModel::SearchParser::TransformToSwallowDepartmentResult(model);
 
 				AndroidSafeNativeThreadAttachment attached(m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
-				jobjectArray humanReadableCategoriesArray = CreateJavaArray(model.GetHumanReadableCategories());
-				jobjectArray reviewsArray = CreateJavaArray(yelpModel.GetReviews());
-
 				jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
-				jstring addressStr = env->NewStringUTF(model.GetSubtitle().c_str());
-				jstring phoneStr = env->NewStringUTF(yelpModel.GetPhone().c_str());
-				jstring urlStr = env->NewStringUTF(yelpModel.GetWebUrl().c_str());
+				jstring descriptionStr = env->NewStringUTF(departmentModel.GetDescription().c_str());
 				jstring categoryStr = env->NewStringUTF(model.GetCategory().c_str());
-				jstring imageUrlStr = env->NewStringUTF(yelpModel.GetImageUrl().c_str());
-				jstring ratingImageUrlStr = env->NewStringUTF(yelpModel.GetRatingImageUrl().c_str());
-				jstring vendorStr = env->NewStringUTF(model.GetVendor().c_str());
+				jstring imageUrlStr = env->NewStringUTF(departmentModel.GetImageUrl().c_str());
 
-				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;IZ)V");
+				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
 				env->CallVoidMethod(
 						m_uiView,
 						displayPoiInfoMethod,
 						titleStr,
-						addressStr,
-						phoneStr,
-						urlStr,
+						descriptionStr,
 						categoryStr,
-						humanReadableCategoriesArray,
 						imageUrlStr,
-						ratingImageUrlStr,
-						vendorStr,
-						reviewsArray,
-						yelpModel.GetReviewCount(),
 						isPinned
 				);
 
-				env->DeleteLocalRef(vendorStr);
-				env->DeleteLocalRef(ratingImageUrlStr);
-				env->DeleteLocalRef(imageUrlStr);
-				env->DeleteLocalRef(categoryStr);
-				env->DeleteLocalRef(urlStr);
-				env->DeleteLocalRef(phoneStr);
-				env->DeleteLocalRef(addressStr);
 				env->DeleteLocalRef(titleStr);
-				env->DeleteLocalRef(reviewsArray);
-				env->DeleteLocalRef(humanReadableCategoriesArray);
+				env->DeleteLocalRef(descriptionStr);
+				env->DeleteLocalRef(categoryStr);
+				env->DeleteLocalRef(imageUrlStr);
 			}
 
             jclass SearchResultPoiView::CreateJavaClass(const std::string& viewClass)
