@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:ExampleAppWPF">
+                    xmlns:local="clr-namespace:ExampleAppWPF"
+                    xmlns:Animation="clr-namespace:System.Windows.Media.Animation;assembly=PresentationCore">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../../Colours.xaml" />
@@ -8,35 +9,45 @@
         <ResourceDictionary Source="../../ListBoxControlTemplateNoPadding.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <!-- TODO: Get some of the DRY fail out into reusable components! -->
+    
+    <Animation:KeyTime x:Key="shutterAnimEndKeyTime">0:0:0.2</Animation:KeyTime>
+    <Animation:KeyTime x:Key="itemCollapseEndKeyTime">0:0:0.4</Animation:KeyTime>
+    
     <Style TargetType="{x:Type local:SettingsMenuView}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:SettingsMenuView}">
                     <ControlTemplate.Resources>
                         <Storyboard x:Key="ItemShutterOpen">
-                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Duration="0:0:0.2" >
-                                <SplineThicknessKeyFrame KeyTime="00:00:00.0" Value="0, -42, 0,0" />
-                                <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="0, 0,0,0" />
-                            </ThicknessAnimationUsingKeyFrames>
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="0" To="0" Duration="0:0:0.0" BeginTime="0:0:0.0"/>
+
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" To="1.0" Duration="0:0:0.2" BeginTime="0:0:0.2">
+                                <DoubleAnimation.EasingFunction>
+                                    <CubicEase EasingMode="EaseInOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
                         </Storyboard>
                         <Storyboard x:Key="ItemShutterClose">
-                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Duration="0:0:0.2" >
-                                <SplineThicknessKeyFrame KeyTime="00:00:00.0" Value="0, 0, 0,0" />
-                                <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="0, -42,0,0" />
-                            </ThicknessAnimationUsingKeyFrames>
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" To="0" Duration="0:0:0.2">
+                                <DoubleAnimation.EasingFunction>
+                                    <CubicEase EasingMode="EaseInOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
                         </Storyboard>
 
                         <Storyboard x:Key="SlideInNewItems">
-                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Duration="0:0:0.2" >
-                                <SplineThicknessKeyFrame KeyTime="00:00:00.0" Value="0, -42, 0,0" />
-                                <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="0, 0,0,0" />
+                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin">
+                                <SplineThicknessKeyFrame KeyTime="00:00:00.0" Value="0,-42,0,0" />
+                                <SplineThicknessKeyFrame KeyTime="{StaticResource shutterAnimEndKeyTime}" Value="0,0,0,0" />
                             </ThicknessAnimationUsingKeyFrames>
                         </Storyboard>
 
                         <Storyboard x:Key="SlideOutOldItems">
-                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Duration="0:0:0.2" >
+                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin">
                                 <SplineThicknessKeyFrame KeyTime="00:00:00.0" Value="0,0,0,0" />
-                                <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="0,-42,0,0" />
+                                <SplineThicknessKeyFrame KeyTime="{StaticResource shutterAnimEndKeyTime}" Value="0,0,0,0" />
+                                <SplineThicknessKeyFrame KeyTime="{StaticResource itemCollapseEndKeyTime}" Value="0,-42,0,0" />
                             </ThicknessAnimationUsingKeyFrames>
                         </Storyboard>
 
@@ -155,17 +166,144 @@
                             <Grid Grid.Row="2">
                                 <StackPanel  Orientation="Vertical">
                                     <ScrollViewer Width="250"  Background="{StaticResource PrimaryBG_colour}" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
-                                        <ListBox Margin="5,0,5,0" Name="SettingsMenuItemList" Template="{StaticResource ListBoxControlTemplateNoPadding}" ItemsSource="{Binding Children}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0">
+                                        <ListBox Margin="5,0,5,0" Name="SettingsMenuItemList" Template="{StaticResource ListBoxControlTemplateNoPadding}" ItemsSource="{Binding Children}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0" Background="{StaticResource PrimaryBG_colour}" Focusable="False">
                                             <ListBox.Resources>
-                                                <Style TargetType="ListBoxItem">
-                                                    <Style.Resources>
-                                                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
-                                                        <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent"/>
-                                                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
-                                                    </Style.Resources>
-                                                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-                                                    <Setter Property="Padding" Value="0"/>
-                                                </Style>
+                                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
+                                                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="Transparent"/>
+                                                <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent"/>
+                                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
+
+                                                <!-- Massive copy from SearcgMenuView-->
+                                                <DataTemplate DataType="{x:Type local:MenuListItem}">
+                                                    <Grid Name="MenuItemGrid" HorizontalAlignment="Stretch" Height="30" Background="{StaticResource Gold}" Width="250">
+                                                        <Grid.Triggers>
+                                                            <EventTrigger RoutedEvent="MouseLeftButtonDown">
+                                                                <BeginStoryboard>
+                                                                    <Storyboard>
+                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MenuItemGrid" Storyboard.TargetProperty="Background">
+                                                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource PrimaryBG_Down_Colour}"/>
+                                                                        </ObjectAnimationUsingKeyFrames>
+
+                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MenuItemTitle" Storyboard.TargetProperty="Foreground">
+                                                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource PrimaryBG_colour}"/>
+                                                                        </ObjectAnimationUsingKeyFrames>
+                                                                    </Storyboard>
+                                                                </BeginStoryboard>
+                                                            </EventTrigger>
+                                                            <EventTrigger RoutedEvent="MouseLeftButtonUp">
+                                                                <BeginStoryboard>
+                                                                    <Storyboard>
+                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MenuItemGrid" Storyboard.TargetProperty="Background">
+                                                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource PrimaryBG_Over_Colour}"/>
+                                                                        </ObjectAnimationUsingKeyFrames>
+
+                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MenuItemTitle" Storyboard.TargetProperty="Foreground">
+                                                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource LightGrey}"/>
+                                                                        </ObjectAnimationUsingKeyFrames>
+                                                                    </Storyboard>
+                                                                </BeginStoryboard>
+                                                            </EventTrigger>
+                                                            <EventTrigger RoutedEvent="MouseEnter">
+                                                                <BeginStoryboard>
+                                                                    <Storyboard>
+                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MenuItemGrid" Storyboard.TargetProperty="Background">
+                                                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource PrimaryBG_Over_Colour}"/>
+                                                                        </ObjectAnimationUsingKeyFrames>
+                                                                    </Storyboard>
+                                                                </BeginStoryboard>
+                                                            </EventTrigger>
+                                                            <EventTrigger RoutedEvent="MouseLeave">
+                                                                <BeginStoryboard>
+                                                                    <Storyboard>
+                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MenuItemGrid" Storyboard.TargetProperty="Background">
+                                                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource PrimaryBG_colour}"/>
+                                                                        </ObjectAnimationUsingKeyFrames>
+
+                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MenuItemTitle" Storyboard.TargetProperty="Foreground">
+                                                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource LightGrey}"/>
+                                                                        </ObjectAnimationUsingKeyFrames>
+                                                                    </Storyboard>
+                                                                </BeginStoryboard>
+                                                            </EventTrigger>
+                                                        </Grid.Triggers>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="*"/>
+                                                            <RowDefinition Height="1"/>
+                                                        </Grid.RowDefinitions>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="0">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Image Name="MenuListOpenableShape" Grid.Column="0" Margin="0,0,23,0" HorizontalAlignment="Right" VerticalAlignment="Center" RenderTransformOrigin=".5,.5" Source="/Assets/sub_menu_arrow_off.png" Width="14" Height="14">
+                                                                <Image.Style>
+                                                                    <Style TargetType="{x:Type Image}">
+                                                                        <Setter Property="RenderTransform">
+                                                                            <Setter.Value>
+                                                                                <RotateTransform Angle="0"/>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding IsExpanded}" Value="true">
+                                                                                <DataTrigger.EnterActions>
+                                                                                    <BeginStoryboard>
+                                                                                        <Storyboard>
+                                                                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" To="-90" Duration="0:0:0.2"/>
+                                                                                        </Storyboard>
+                                                                                    </BeginStoryboard>
+                                                                                </DataTrigger.EnterActions>
+                                                                            </DataTrigger>
+
+                                                                            <DataTrigger Binding="{Binding IsExpanded}" Value="false">
+                                                                                <DataTrigger.EnterActions>
+                                                                                    <BeginStoryboard>
+                                                                                        <Storyboard>
+                                                                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" To="0" Duration="0:0:0.2"/>
+                                                                                        </Storyboard>
+                                                                                    </BeginStoryboard>
+                                                                                </DataTrigger.EnterActions>
+                                                                            </DataTrigger>
+
+                                                                            <DataTrigger Binding="{Binding IsExpandable}" Value="false">
+                                                                                <Setter Property="Visibility" Value="Hidden"/>
+                                                                            </DataTrigger>
+
+                                                                            <DataTrigger Binding="{Binding IsExpandable}" Value="true">
+                                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </Image.Style>
+                                                            </Image>
+                                                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal" Grid.Column="0" Margin="5,0,0,-3">
+                                                                <Label Name="MenuItemTitle" Content="{Binding Path=Heading}" FontSize="16.5" Foreground="{StaticResource LightGrey}"/>
+                                                            </StackPanel>
+                                                        </Grid>
+                                                        <Rectangle Grid.Row="1" Grid.Column="0" Fill="{StaticResource MenuSeparator}" HorizontalAlignment="Left" Width="238" Margin="0,0,0,0"  Height="1">
+                                                            <Rectangle.Style>
+                                                                <Style TargetType="{x:Type Rectangle}">
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding IsExpanded}" Value="false">
+                                                                            <Setter Property="Visibility" Value="Visible">
+                                                                            </Setter>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding IsExpanded}" Value="true">
+                                                                            <Setter Property="Visibility" Value="Hidden">
+                                                                            </Setter>
+                                                                        </DataTrigger>
+
+                                                                        <DataTrigger Binding="{Binding JustAdded}" Value="true">
+                                                                            <Setter Property="Visibility" Value="Hidden">
+                                                                            </Setter>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Rectangle.Style>
+                                                        </Rectangle>
+                                                    </Grid>
+                                                </DataTemplate>
 
                                                 <DataTemplate DataType="{x:Type local:SubMenuListItem}">
                                                     <Grid Height="30" Background="{StaticResource Gold}">
@@ -223,22 +361,6 @@
                                                                     <Image Source="{Binding Path=Icon}" Width="24" Height="24" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                                                     <Label Content="{Binding Path=Heading}" FontSize="14" Foreground="{StaticResource DarkGrey}" VerticalAlignment="Center"/>
                                                                 </StackPanel>
-                                                            </Grid>
-                                                            <Grid Grid.Row="1" Grid.Column="1" Background="{StaticResource SubMenuSeparator}">
-                                                                <Grid.Style>
-                                                                    <Style TargetType="{x:Type Grid}">
-                                                                        <Style.Triggers>
-                                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SubMenuListItem}}, Path=IsExpanded}" Value="false">
-                                                                                <Setter Property="Visibility" Value="Visible">
-                                                                                </Setter>
-                                                                            </DataTrigger>
-                                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SubMenuListItem}}, Path=IsExpanded}" Value="true">
-                                                                                <Setter Property="Visibility" Value="Hidden">
-                                                                                </Setter>
-                                                                            </DataTrigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </Grid.Style>
                                                             </Grid>
                                                         </Grid>
                                                     </Grid>

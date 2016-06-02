@@ -181,6 +181,7 @@ namespace ExampleAppWPF
                 for (int itemIndex = 0; itemIndex < currentSize; ++itemIndex)
                 {
                     var menuItem = GetMenuItem(overAllItemIndex);
+                    menuItem.IsExpandable = m_groupsExpandable[i];
                     m_children.Add(menuItem);
                     ++overAllItemIndex;
                 }

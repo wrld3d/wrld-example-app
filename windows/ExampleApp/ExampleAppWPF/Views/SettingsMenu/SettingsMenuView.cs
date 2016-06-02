@@ -88,7 +88,7 @@ namespace ExampleAppWPF
                 return;
             }
 
-            var item = m_list.SelectedItem as SubMenuListItem;
+            var item = m_list.SelectedItem as MenuListItem;
             if (item != null)
             {
                 var sectionChildIndices = m_adapter.GetSectionAndChildIndicesFromSelection(m_list.SelectedIndex);
@@ -110,14 +110,7 @@ namespace ExampleAppWPF
 
         protected override void RefreshListData(List<string> groups, List<bool> groupsExpandable, Dictionary<string, List<string>> groupToChildrenMap)
         {
-            var itemsSource = new List<SubMenuListItem>();
-
-            foreach (var groupToChildren in groupToChildrenMap)
-            {
-                itemsSource.AddRange(groupToChildren.Value.Select(childListEntry => new SubMenuListItem(childListEntry, 0)));
-            }
-
-            m_adapter.SetData(itemsSource, groups, groupsExpandable, groupToChildrenMap);
+            m_adapter.SetData(m_list.ItemsSource, groups, groupsExpandable, groupToChildrenMap);
         }
 
         public override void AnimateToOpenOnScreen()

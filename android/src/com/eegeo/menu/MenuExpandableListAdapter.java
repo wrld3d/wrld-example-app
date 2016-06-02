@@ -188,6 +188,7 @@ public class MenuExpandableListAdapter extends BaseExpandableListAdapter
 	public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) 
 	{
 		View itemView;
+		MenuItemData menuItemData = (MenuItemData)getGroup(groupPosition);
 		
 		String key = m_headerData.get(groupPosition).getText();
 		if (m_headerViewCache.containsKey(key))
@@ -196,11 +197,18 @@ public class MenuExpandableListAdapter extends BaseExpandableListAdapter
 		}
 		else
 		{
-			MenuItemData menuItemData = (MenuItemData)getGroup(groupPosition);
 			itemView = inflateView(m_groupViewId, menuItemData, false);		
 			m_headerViewCache.put(key, itemView);
 		}
-
+		
+		List<MenuItemData> children = m_childData.get(menuItemData.getText());
+		Boolean isExpandable = children != null && children.size() > 0;
+		View arrowView = itemView.findViewById(R.id.menu_list_openable_shape);
+		if(arrowView != null)
+		{
+			arrowView.setVisibility(isExpandable ? View.VISIBLE : View.GONE);
+		}
+		
 		return itemView;
 	}
 
@@ -322,6 +330,7 @@ public class MenuExpandableListAdapter extends BaseExpandableListAdapter
 		{
 			itemIcon.setImageResource(CategoryResources.getIconForResourceName(m_context, itemData.getIcon(), isSmallIcon));
 		}
+		
 		
 		return itemView;
 	}

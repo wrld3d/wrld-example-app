@@ -15,6 +15,7 @@
 #include "Reaction.h"
 #include "Search.h"
 #include "Types.h"
+#include "Weather.h"
 
 namespace ExampleApp
 {
@@ -38,7 +39,8 @@ namespace ExampleApp
                 SettingsMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
                                    Reaction::View::IReactionControllerModel& reactionControllerModel,
                                    AboutPage::View::IAboutPageViewModel& aboutPageViewModel,
-                                   Options::View::IOptionsViewModel& optionsViewModel);
+                                   Options::View::IOptionsViewModel& optionsViewModel,
+                                   Menu::View::IMenuModel& weatherMenuModel);
 
                 ~SettingsMenuModule();
 

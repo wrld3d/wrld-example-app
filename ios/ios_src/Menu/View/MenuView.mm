@@ -419,13 +419,13 @@ enum MenuState
 
 - (void) refreshTableHeights
 {
-    float totalTableHeight = 0.0f;
+    CGFloat totalTableHeight = 0.0f;
     
     for(int i = 0; i < [self.pTableViewMap count]; ++i)
     {
         CustomTableView* customTableView = self.pTableViewMap[@(i)];
         
-        const float tableHeight = [customTableView refreshHeight:[m_pDataProvider getRealHeightForTable:customTableView]];
+        const CGFloat tableHeight = [customTableView refreshHeight:[m_pDataProvider getRealHeightForTable:customTableView]];
         
         CGRect frame = customTableView.frame;
         frame.origin.y = totalTableHeight;
@@ -433,8 +433,9 @@ enum MenuState
         
         totalTableHeight += tableHeight;
     }
-    
-    const float tableViewContainerHeight = fminf(m_screenHeight - self.pTableViewContainer.frame.origin.y, totalTableHeight);
+
+    const CGFloat tableY = self.pTableViewContainer.frame.origin.y + self.pMenuContainer.frame.origin.y;
+    const CGFloat tableViewContainerHeight = MIN(m_screenHeight - tableY, totalTableHeight);
     
     CGRect frame = self.pTableViewContainer.frame;
     frame.size.height = tableViewContainerHeight;

@@ -486,7 +486,8 @@ namespace ExampleApp
         m_pSettingsMenuModule = Eegeo_NEW(ExampleApp::SettingsMenu::SdkModel::SettingsMenuModule)(m_identityProvider,
                                                                                                   m_pReactionControllerModule->GetReactionControllerModel(),
                                                                                                   m_pAboutPageModule->GetAboutPageViewModel(),
-                                                                                                  m_pOptionsModule->GetOptionsViewModel());
+                                                                                                  m_pOptionsModule->GetOptionsViewModel(),
+                                                                                                  m_pWeatherMenuModule->GetWeatherMenuModel());
         
         m_pPlaceJumpsModule = Eegeo_NEW(PlaceJumps::SdkModel::PlaceJumpsModule)(m_platformAbstractions.GetFileIO(),
                               CameraTransitionController(),
@@ -692,7 +693,6 @@ namespace ExampleApp
         
         m_pSearchMenuModule->SetSearchSection("Search Results", m_pSearchResultSectionModule->GetSearchResultSectionModel());
         m_pSearchMenuModule->AddMenuSection("Find", m_pCategorySearchModule->GetCategorySearchMenuModel(), true);
-        m_pSearchMenuModule->AddMenuSection("Weather" , m_pWeatherMenuModule->GetWeatherMenuModel(), true);
         m_pSearchMenuModule->AddMenuSection("Locations", m_pPlaceJumpsModule->GetPlaceJumpsMenuModel(), true);
         m_pSearchMenuModule->AddMenuSection("My Pins", m_pMyPinsModule->GetMyPinsMenuModel(), true);
     }

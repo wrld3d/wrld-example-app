@@ -60,7 +60,11 @@ public class SettingsMenuView extends MenuView
         View listContainerView = m_view.findViewById(R.id.settings_menu_list_container);
         m_menuListAnimationHandler = new MenuListAnimationHandler(m_activity, listContainerView);
         
-        m_expandableListAdapter = new MenuExpandableListAdapter(m_activity, m_list, m_menuListAnimationHandler, R.layout.settings_menu_item, R.layout.menu_list_subitem);
+        m_expandableListAdapter = new MenuExpandableListAdapter(m_activity, 
+        		m_list,
+        		m_menuListAnimationHandler, 
+        		R.layout.menu_list_item, 
+				R.layout.menu_list_subitem);
         m_list.setAdapter(m_expandableListAdapter);
 
         m_expandableListOnClickListener = new MenuExpandableListOnClickListener(m_activity, m_nativeCallerPointer);
