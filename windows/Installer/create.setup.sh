@@ -34,7 +34,7 @@ if [ -z "$timestampUrl" ]; then
 fi
 
 # Check if exists and if it doesn't bail and inform them to build project first.
-if [ ! -d "$applicationOutputDirectory" -o ! -e "$applicationOutputDirectory/ProjectSwallow.exe" ]; then
+if [ ! -d "$applicationOutputDirectory" -o ! -e "$applicationOutputDirectory/BWAY.exe" ]; then
 	echo "ExampleApp has not been built. Please ensure a Release build of ExampleAppWPF has been built first"
 	exit 1
 fi
@@ -59,7 +59,7 @@ else
   exit 1
 fi
 
-light.exe ./deploy/Product.wixobj -o ./deploy/Swallow.msi -ext WixUtilExtension 
+light.exe ./deploy/Product.wixobj -o ./deploy/BWAY.msi -ext WixUtilExtension 
 
 if [ $? = 0 ] ; then
   echo "Installer linker step success"
@@ -73,7 +73,7 @@ echo "Basic installer created"
 echo "Creating bundle..."
 echo
 
-candle.exe -ext WixBalExtension -ext WixUtilExtension -ext WixNetFxExtension Bundle.wxs -o ./deploy/Bundle.wixobj -dSwallowMsiLocation="./deploy/Swallow.msi" -dVersion="$version" -arch "x64"
+candle.exe -ext WixBalExtension -ext WixUtilExtension -ext WixNetFxExtension Bundle.wxs -o ./deploy/Bundle.wixobj -dSwallowMsiLocation="./deploy/BWAY.msi" -dVersion="$version" -arch "x64"
 
 if [ $? = 0 ] ; then
   echo "Main Bundle compilation step success"
@@ -82,7 +82,7 @@ else
   exit 1
 fi
 
-light.exe -ext WixBalExtension -ext WixUtilExtension -ext WixNetFxExtension ./deploy/Bundle.wixobj -o "./deploy/Swallow Installer.exe"
+light.exe -ext WixBalExtension -ext WixUtilExtension -ext WixNetFxExtension ./deploy/Bundle.wixobj -o "./deploy/BWAY Installer.exe"
 
 if [ $? = 0 ] ; then
   echo "Main Bundle linker step success"
@@ -99,7 +99,7 @@ echo "Signing installer..."
 echo "Extracting bootstrapper..."
 echo
 rm ./deploy/engine.exe
-insignia -ib "./deploy/Swallow Installer.exe" -o "./deploy/engine.exe"
+insignia -ib "./deploy/BWAY Installer.exe" -o "./deploy/engine.exe"
 
 if [ $? = 0 ] ; then
   echo "Bootstrapper extracted!"
@@ -126,7 +126,7 @@ fi
 echo
 echo "Reattach Bootstrapper"
 echo
-insignia -ab "./deploy/engine.exe" "./deploy/Swallow Installer.exe" -o "./deploy/Swallow Installer.exe"
+insignia -ab "./deploy/engine.exe" "./deploy/BWAY Installer.exe" -o "./deploy/BWAY Installer.exe"
 
 if [ $? = 0 ] ; then
   echo "Bootstrapper Reattach success!"
@@ -139,7 +139,7 @@ echo
 echo "Sign package"
 echo
 
-"$signToolPath" sign -f ../Certificates/certificate.pfx -p $certPassword -t $timestampUrl "./deploy/Swallow Installer.exe"
+"$signToolPath" sign -f ../Certificates/certificate.pfx -p $certPassword -t $timestampUrl "./deploy/BWAY Installer.exe"
 
 if [ $? = 0 ] ; then
   echo "Package sign success!"

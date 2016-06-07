@@ -639,7 +639,7 @@
     <Resource Include="..\..\Resources\icon1_person.png">
       <Link>Assets\icon1_person.png</Link>
     </Resource>
-	<Resource Include="..\..\Resources\icon1_person_POI.png">
+    <Resource Include="..\..\Resources\icon1_person_POI.png">
       <Link>Assets\icon1_person_POI.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\icon1_stationery.png">
@@ -727,8 +727,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>rd "$(TargetDir)Resources" /S /Q
-xcopy "$(ProjectDir)..\..\Resources" "$(TargetDir)Resources" /e /y /i /r /d /exclude:$(ProjectDir)ExcludedResourceFiles.txt
+    <PostBuildEvent>xcopy "$(ProjectDir)..\..\Resources" "$(TargetDir)Resources" /e /y /i /r /d
 xcopy "$(ProjectDir)..\..\libs\eegeo\ANGLE\x64\$(ConfigurationName)\libEGL.dll" "$(TargetDir)" /d /r /y
 xcopy "$(ProjectDir)..\..\libs\eegeo\ANGLE\x64\$(ConfigurationName)\libGLESv2.dll" "$(TargetDir)" /d /r /y
 xcopy "$(ProjectDir)..\..\libs\eegeo\openssl\x64\libeay32.dll" "$(TargetDir)" /d /r /y
