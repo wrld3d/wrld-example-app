@@ -2,11 +2,9 @@
 
 #include "Search.h"
 #include "ICallback.h"
-#include "IdentitySearchCallbackData.h"
 #include "SearchResultModel.h"
 #include "YelpSearchQueryFactory.h"
 #include "YelpSearchQuery.h"
-#include "YelpBusinessQuery.h"
 
 namespace ExampleApp
 {
@@ -21,13 +19,11 @@ namespace ExampleApp
                     const std::string& yelpConsumerSecret,
                     const std::string& yelpOAuthToken,
                     const std::string& yelpOAuthTokenSecret,
-                    SdkModel::IYelpCategoryMapper& yelpCategoryMapper,
                     Eegeo::Web::IWebLoadRequestFactory& webRequestFactory)
                     : m_yelpConsumerKey(yelpConsumerKey)
                     , m_yelpConsumerSecret(yelpConsumerSecret)
                     , m_yelpOAuthToken(yelpOAuthToken)
                     , m_yelpOAuthTokenSecret(yelpOAuthTokenSecret)
-                    //, m_yelpCategoryMapper(yelpCategoryMapper)
                     , m_webRequestFactory(webRequestFactory)
                 {
                 }
@@ -50,21 +46,7 @@ namespace ExampleApp
                         m_webRequestFactory);
                 }
 
-                SdkModel::IYelpSearchQuery* YelpSearchQueryFactory::CreateYelpSearchForSpecificLocation(
-                    const Search::SdkModel::SearchResultModel& outdatedSearchResult,
-                    Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& callback)
-                {
-                    return nullptr;
-                    
-                    /*return Eegeo_NEW(YelpBusinessQuery)(
-                        m_yelpConsumerKey,
-                        m_yelpConsumerSecret,
-                        m_yelpOAuthToken,
-                        m_yelpOAuthTokenSecret,
-                        query,
-                        completionCallback,
-                        m_webRequestFactory);*/
-                }
+
             }
         }
     }

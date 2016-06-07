@@ -4,7 +4,7 @@
 #include "AndroidAppThreadAssertionMacros.h"
 #include "SearchVendorNames.h"
 #include "YelpSearchResultModel.h"
-#include "YelpSearchJsonParser.h"
+#include "YelpParsingHelpers.h"
 
 namespace ExampleApp
 {
@@ -146,7 +146,7 @@ namespace ExampleApp
             	m_uiView = CreateJavaObject(m_uiViewClass);
 
             	Search::Yelp::SdkModel::YelpSearchResultModel yelpModel;
-            	yelpModel = Search::Yelp::SdkModel::TransformToYelpSearchResult(model);
+            	yelpModel = Search::Yelp::SdkModel::Helpers::TransformToYelpSearchResult(model);
 
             	AndroidSafeNativeThreadAttachment attached(m_nativeState);
             	JNIEnv* env = attached.envForThread;

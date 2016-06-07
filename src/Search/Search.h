@@ -23,6 +23,7 @@ namespace ExampleApp
             class SearchQuery;
             class ISearchResultRepository;
             class SearchResultModel;
+            class IdentitySearchCallbackData;
         }
     }
 }

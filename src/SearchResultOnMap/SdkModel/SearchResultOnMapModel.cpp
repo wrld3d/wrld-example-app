@@ -16,6 +16,7 @@
 #include "WorldPinItemModel.h"
 #include "IMyPinsService.h"
 #include "MyPinModel.h"
+#include "YelpParsingHelpers.h"
 #include "WorldPinVisibility.h"
 
 using ExampleApp::Search::SdkModel::SearchResultModel;
@@ -181,7 +182,7 @@ namespace ExampleApp
                 std::string ratingsImage = "";
                 int reviewCount = 0;
                 
-                Search::Yelp::SdkModel::TryParseReviewDetails(searchResultModel, ratingsImage, reviewCount);
+                Search::Yelp::SdkModel::Helpers::TryParseReviewDetails(searchResultModel, ratingsImage, reviewCount);
                 
                 WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(searchResultModel.GetTitle(),
                                                                          searchResultModel.GetSubtitle(),

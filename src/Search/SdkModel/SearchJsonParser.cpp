@@ -3,7 +3,7 @@
 #include "SearchJsonParser.h"
 #include "SearchResultModel.h"
 #include "SearchVendorNames.h"
-#include "YelpSearchJsonParser.h"
+#include "YelpParsingHelpers.h"
 #include "EegeoJsonParser.h"
 
 namespace ExampleApp
@@ -17,7 +17,7 @@ namespace ExampleApp
                 const std::string& vendor = searchResultModel.GetVendor();
                 if(vendor == YelpVendorName)
                 {
-                    return Yelp::SdkModel::TryParseImageDetails(searchResultModel, out_imageUrl);
+                    return Yelp::SdkModel::Helpers::TryParseImageDetails(searchResultModel, out_imageUrl);
                 }
                 else if(vendor == EegeoVendorName)
                 {

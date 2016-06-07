@@ -20,9 +20,9 @@
 #include "IMyPinBoundObject.h"
 #include <string>
 #include <sstream>
-#include "YelpSearchJsonParser.h"
 #include "WorldPinVisibility.h"
 #include "SearchVendorNames.h"
+#include "YelpParsingHelpers.h"
 
 namespace ExampleApp
 {
@@ -145,7 +145,7 @@ namespace ExampleApp
                     std::string ratingImageUrl = "";
                     int reviewCount = 0;
                         
-                    Search::Yelp::SdkModel::TryParseReviewDetails(result, ratingImageUrl, reviewCount);
+                    Search::Yelp::SdkModel::Helpers::TryParseReviewDetails(result, ratingImageUrl, reviewCount);
                         
                     pPinModel->Update(result.GetTitle(), result.GetSubtitle(), ratingImageUrl, reviewCount);
                     pWorldPinItemModel->Refresh(result.GetTitle(), result.GetSubtitle(), ratingImageUrl, reviewCount);
@@ -228,7 +228,7 @@ namespace ExampleApp
                 std::string ratingImageUrl = "";
                 int reviewCount = 0;
                 
-                Search::Yelp::SdkModel::TryParseReviewDetails(searchResult, ratingImageUrl, reviewCount);
+                Search::Yelp::SdkModel::Helpers::TryParseReviewDetails(searchResult, ratingImageUrl, reviewCount);
                 
                 MyPinModel *pinModel = Eegeo_NEW(MyPinModel)(MyPinModel::CurrentVersion,
                                                              idForThisPin,

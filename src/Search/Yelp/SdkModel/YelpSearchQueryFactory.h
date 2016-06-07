@@ -23,7 +23,6 @@ namespace ExampleApp
                     std::string m_yelpConsumerSecret;
                     std::string m_yelpOAuthToken;
                     std::string m_yelpOAuthTokenSecret;
-                    //SdkModel::IYelpCategoryMapper& m_yelpCategoryMapper;
                     Eegeo::Web::IWebLoadRequestFactory& m_webRequestFactory;
 
                 public:
@@ -32,7 +31,6 @@ namespace ExampleApp
                         const std::string& yelpConsumerSecret,
                         const std::string& yelpOAuthToken,
                         const std::string& yelpOAuthTokenSecret,
-                        SdkModel::IYelpCategoryMapper& yelpCategoryMapper,
                         Eegeo::Web::IWebLoadRequestFactory& webRequestFactory);
                     
                     ~YelpSearchQueryFactory();
@@ -40,8 +38,6 @@ namespace ExampleApp
                     IYelpSearchQuery* CreateYelpSearchForQuery(const Search::SdkModel::SearchQuery& query,
                                                                        Eegeo::Helpers::ICallback0& completionCallback);
                     
-                    IYelpSearchQuery* CreateYelpSearchForSpecificLocation(const Search::SdkModel::SearchResultModel& outdatedSearchResult,
-                                                                                  Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& callback);
                 };
             }
         }

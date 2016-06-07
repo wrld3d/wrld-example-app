@@ -116,9 +116,11 @@ namespace ExampleApp
                 void CombinedSearchService::PerformIdentitySearch(const Search::SdkModel::SearchResultModel& outdatedSearchResult,
                                                                      Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& callback)
                 {
-                    if(m_searchServices.find(outdatedSearchResult.GetVendor()) != m_searchServices.end())
+                    std::map<std::string,Search::SdkModel::ISearchService*>::iterator iter = m_searchServices.find(outdatedSearchResult.GetVendor());
+                    if (iter != m_searchServices.end())
                     {
-                        m_searchServices[outdatedSearchResult.GetVendor()]->PerformIdentitySearch(outdatedSearchResult,callback);
+                        Search::SdkModel::ISearchService* pSearchService = iter->second;
+                        pSearchService->PerformIdentitySearch(outdatedSearchResult,callback);
                     }
                     else
                     {
