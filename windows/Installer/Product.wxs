@@ -871,7 +871,7 @@
 
         <!-- Application Shortcut -->
         <Shortcut Id="ApplicationStartMenuShortcut"
-                  Name="Project Swallow"
+                  Name="BWAY"
                   Target="[#mainapplication.exe]"
                   WorkingDirectory="INSTALLFOLDER"/>
 
@@ -882,7 +882,7 @@
 
 
     <!-- Define application -->
-    <Feature Id="MainApplication" Title="Project Swallow" Level="1">
+    <Feature Id="MainApplication" Title="BWAY" Level="1">
       <ComponentGroupRef Id="MainApplication" />
       <ComponentGroupRef Id="MainApplicationResources" />
 
