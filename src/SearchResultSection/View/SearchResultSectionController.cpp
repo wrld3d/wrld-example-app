@@ -84,6 +84,11 @@ namespace ExampleApp
                         Search::Swallow::SdkModel::SwallowWorkingGroupResultModel workingGroupmodel = Search::Swallow::SdkModel::SearchParser::TransformToSwallowWorkingGroupResult(model);
                         subtitle = workingGroupmodel.GetOfficeLocation();
                     }
+                    else if(model.GetCategory() == Search::Swallow::SearchConstants::TOILETS_CATEGORY_NAME || model.GetCategory() == Search::Swallow::SearchConstants::PRINT_STATION_CATEGORY_NAME)
+                    {
+                        Search::Swallow::SdkModel::SwallowFacilityResultModel facilityModel = Search::Swallow::SdkModel::SearchParser::TransformToSwallowFacilityResult(model);
+                        subtitle = facilityModel.GetOfficeLocation();
+                    }
                     
                     m_menuOptions.AddItem(model.GetIdentifier(),
                                           model.GetTitle(),
