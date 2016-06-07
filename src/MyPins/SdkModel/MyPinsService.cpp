@@ -91,7 +91,7 @@ namespace ExampleApp
                                                                                                       pMyPinModel->IsInterior(),
                                                                                                       worldPinInteriorData,
                                                                                                       pMyPinModel->GetLatLong(),
-                                                                                                      pMyPinModel->GetSdkMapPinIconIndexIcon(),
+                                                                                                      pMyPinModel->GetPinIconKey(),
                                                                                                       pMyPinModel->GetHeightAboveTerrainMetres(),
                                                                                                       pinVisibilityMask);
 
@@ -181,13 +181,14 @@ namespace ExampleApp
                                                       bool shouldShare)
             {
                 MyPinModel::TPinIdType idForThisPin = ++m_lastIdUsed;
-                const int myPinIconIndex = 9;
+                const std::string pinIconKey = "my_pins";
                 
                 IMyPinBoundObject& boundObject = *m_myPinBoundObjectFactory.CreateUserCreatedPinBoundObject(m_myPinsFileIO,
                                                                                                             idForThisPin,
                                                                                                             imageData,
                                                                                                             imageSize,
-                                                                                                            shouldShare);
+                                                                                                            shouldShare,
+                                                                                                            pinIconKey);
                 m_myPinBoundObjectRepository.AddBoundItemForPin(idForThisPin, boundObject);
                 
                 MyPinModel *pinModel = Eegeo_NEW(MyPinModel)(MyPinModel::CurrentVersion,
@@ -196,8 +197,8 @@ namespace ExampleApp
                                                              description,
                                                              Search::MyPinVendorName,
                                                              ratingsImage,
+                                                             pinIconKey,
                                                              reviewCount,
-                                                             myPinIconIndex,
                                                              latLong,
                                                              heightAboveTerrainMetres,
                                                              interior,
@@ -212,7 +213,7 @@ namespace ExampleApp
             }
             
             void MyPinsService::SaveSearchResultPoiPin(const Search::SdkModel::SearchResultModel& searchResult,
-                                                       int pinIconIndex)
+                                                       const std::string& pinIconKey)
             {
                 
                 
@@ -221,6 +222,7 @@ namespace ExampleApp
                 IMyPinBoundObject& boundObject = *m_myPinBoundObjectFactory.CreateSearchResultPinBoundObject(m_myPinsFileIO,
                                                                                                              idForThisPin,
                                                                                                              searchResult,
+                                                                                                             pinIconKey,
                                                                                                              *this);
                 m_myPinBoundObjectRepository.AddBoundItemForPin(idForThisPin, boundObject);
                 
@@ -236,8 +238,8 @@ namespace ExampleApp
                                                              searchResult.GetSubtitle(),
                                                              searchResult.GetVendor(),
                                                              ratingImageUrl,
+                                                             pinIconKey,
                                                              reviewCount,
-                                                             pinIconIndex,
                                                              searchResult.GetLocation(),
                                                              searchResult.GetHeightAboveTerrainMetres(),
                                                              searchResult.IsInterior(),

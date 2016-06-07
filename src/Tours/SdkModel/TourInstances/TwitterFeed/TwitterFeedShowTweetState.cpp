@@ -128,7 +128,7 @@ namespace ExampleApp
                                                                                                  Search::TourTwitterVendorName);
                             
                             Eegeo::Space::LatLong location = m_pinLocation;
-                            const int twitterIconIndex = 13;
+                            const std::string twitterPinIconKey = "feed_twitter";
                             const float heightOffsetAboveTerrainMetres = 0.f;
                             
                             m_pPinModel = m_worldPinsService.AddPin(Eegeo_NEW(TwitterFeedPinSelectionHandler)(m_stateModel,
@@ -138,7 +138,7 @@ namespace ExampleApp
                                                                     m_isInterior,
                                                                     m_worldPinInteriorData,
                                                                     location,
-                                                                    twitterIconIndex,
+                                                                    twitterPinIconKey,
                                                                     heightOffsetAboveTerrainMetres,
                                                                     WorldPins::SdkModel::WorldPinVisibility::TourPin);
                             // Hide hovercard if no image to show

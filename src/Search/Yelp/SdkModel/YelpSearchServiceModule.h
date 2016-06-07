@@ -9,6 +9,7 @@
 #include "NetIncludes.h"
 #include "UrlHelpers.h"
 #include "ISearchServiceModule.h"
+#include "IFileIO.h"
 
 namespace ExampleApp
 {
@@ -33,7 +34,8 @@ namespace ExampleApp
 					const std::string& yelpConsumerKey,
 					const std::string& yelpConsumerSecret,
 					const std::string& yelpOAuthToken,
-					const std::string& yelpOAuthTokenSecret);
+					const std::string& yelpOAuthTokenSecret,
+                    Eegeo::Helpers::IFileIO& fileIO);
 
                 ~YelpSearchServiceModule();
 

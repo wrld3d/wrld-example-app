@@ -5,6 +5,8 @@
 #include "SearchResultModel.h"
 #include "YelpSearchQueryFactory.h"
 #include "YelpSearchQuery.h"
+#include "YelpSearchConstants.h"
+
 
 #include "urlencode.h"
 #include <sstream>
@@ -54,6 +56,8 @@ namespace ExampleApp
                 , m_client(&m_consumer, &m_token)
                 , m_apiUrl("https://api.yelp.com/v2/search")
                 {
+
+                    m_applicationToYelpCategoryMap = Yelp::SearchConstants::GetApplicationToYelpCategoryMap();
                 }
 
                 YelpSearchQueryFactory::~YelpSearchQueryFactory()
@@ -69,7 +73,12 @@ namespace ExampleApp
                     
                     if (searchQuery.IsCategory())
                     {
-                        categoryFilter = searchQuery.Query();
+                        std::map<std::string, std::string>::const_iterator category = m_applicationToYelpCategoryMap.find(searchQuery.Query());
+                        
+                        if (category != m_applicationToYelpCategoryMap.end())
+                        {
+                            categoryFilter = category->second;
+                        }
                     }
                     else
                     {

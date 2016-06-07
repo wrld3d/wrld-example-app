@@ -33,6 +33,7 @@ namespace ExampleApp
                 Eegeo::Pins::PinRepository& m_pinRepository;
                 Eegeo::Pins::PinController& m_pinController;
                 const Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
+                const IWorldPinIconMapping& m_worldPinIconMapping;
                 bool m_pinAlreadySelected;
 
             public:
@@ -40,7 +41,8 @@ namespace ExampleApp
                                  IWorldPinsFactory& worldPinsFactory,
                                  Eegeo::Pins::PinRepository& pinRepository,
                                  Eegeo::Pins::PinController& pinController,
-                                 const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService);
+                                 const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
+                                 const IWorldPinIconMapping& worldPinIconMapping);
 
                 ~WorldPinsService();
 
@@ -50,7 +52,7 @@ namespace ExampleApp
                                           bool interior,
                                           const WorldPinInteriorData& worldPinInteriorData,
                                           const Eegeo::Space::LatLong& location,
-                                          int iconIndex,
+                                          const std::string& pinIconKey,
                                           float heightAboveTerrainMetres,
                                           int visibilityMask);
 

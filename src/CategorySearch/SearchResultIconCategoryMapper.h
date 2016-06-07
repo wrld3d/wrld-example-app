@@ -14,14 +14,10 @@ namespace ExampleApp
     {
         class SearchResultIconCategoryMapper : public ISearchResultIconCategoryMapper, private Eegeo::NonCopyable
         {
-            std::map<std::string, int> m_categoryToIconIndex;
-            
         public:
-            SearchResultIconCategoryMapper();
-            
             ~SearchResultIconCategoryMapper();
             
-            int GetIconIndexFromSearchResult(const Search::SdkModel::SearchResultModel& searchResultModel) const;
-        };
+            std::string GetIconKeyFromSearchResult(const Search::SdkModel::SearchResultModel& searchResultModel) const;
+       };
     }
 }

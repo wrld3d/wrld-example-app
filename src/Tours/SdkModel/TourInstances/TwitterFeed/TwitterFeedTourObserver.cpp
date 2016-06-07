@@ -31,7 +31,7 @@ namespace ExampleApp
                                                                      ITourRepository& tourRepository,
                                                                      Social::TwitterFeed::ITwitterFeedService& twitterFeedService,
                                                                      const std::map<std::string, TweetStateData>& tweetStateDataMap,
-                                                                     const std::map<std::string, int>& twitterTourIconOverrideMap,
+                                                                     const std::map<std::string, std::string>& twitterTourIconOverrideMap,
                                                                      ExampleAppMessaging::TMessageBus& messageBus)
                     : m_toursCameraTransitionController(toursCameraTransitionController)
                     , m_tourService(tourService)
@@ -112,17 +112,12 @@ namespace ExampleApp
                         const bool isInterior = tweetStateData.isInterior;
                         ExampleApp::WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData = tweetStateData.interiorData;
                         
-                        const int twitterIcon = 13;
-                        int iconIndex = twitterIcon;
-                        
-                        if(m_twitterTourIconOverrideMap.find(userId) != m_twitterTourIconOverrideMap.end())
-                        {
-                            iconIndex = m_twitterTourIconOverrideMap[userId];
-                        }
+                        const std::string& pinIconKey = PinIconKeyForTwitterUser(userId);
+
                         
                         ExampleApp::Tours::SdkModel::TourModel tourModel(tourName,
                                                                          "@"+userId,
-                                                                         iconIndex,
+                                                                         pinIconKey,
                                                                          tourLocation,
                                                                          tweetStateData.visibleOnMap,
                                                                          isInterior,
@@ -152,6 +147,18 @@ namespace ExampleApp
                         m_setOfTourTwitterBaseUserNames.insert(twitterBaseUserName);
                         
                         UpadateTweetLinksOut();
+                    }
+                    
+                    std::string TwitterFeedTourObserver::PinIconKeyForTwitterUser(const std::string twitterUserId) const
+                    {
+                        if(m_twitterTourIconOverrideMap.find(twitterUserId) != m_twitterTourIconOverrideMap.end())
+                        {
+                            return m_twitterTourIconOverrideMap.at(twitterUserId);
+                        }
+                        else
+                        {
+                            return "feed_twitter";
+                        }
                     }
                     
                     void TwitterFeedTourObserver::UpadateTweetLinksOut()

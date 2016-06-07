@@ -42,6 +42,7 @@ namespace ExampleApp
                     OAuth::Token m_token;
                     
                     Eegeo::Web::IWebLoadRequestFactory& m_webRequestFactory;
+                    std::map<std::string, std::string> m_applicationToYelpCategoryMap;
                 };
             }
         }

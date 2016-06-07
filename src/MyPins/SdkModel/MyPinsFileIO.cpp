@@ -22,6 +22,64 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+            namespace Legacy
+            {
+                const int legacyIconCount = 25;
+                const std::string iconIndexToKey[legacyIconCount] = {
+                    "tourism",    // 0
+                    "food_drink",
+                    "food_drink",
+                    "entertainment",
+                    "sports_leisure",
+                    
+                    "entertainment",    // 5
+                    "accommodation",
+                    "art_museums",
+                    "art_museums",
+                    "my_pins",
+                    
+                    "tour_entry",    //10
+                    "indoor_map_entry",
+                    "default",             // (guidekick)
+                    "feed_twitter",
+                    "feed_youtube",
+                    
+                    "default",    //15   (instagram)
+                    "feed_facebook",
+                    "feed_weblink",
+                    "feed_wikipedia",
+                    "default",      // (blank icon)
+                    
+                    "feed_vimeo",    // 20
+                    "feed_google_plus",
+                    "feed_picasa",
+                    "default",      // (blank icon)
+                    "default"       // (blank icon)
+                };
+                
+                std::string PinIconKeyFromLegacyIconIndex(const rapidjson::Value& entry)
+                {
+                    if (entry.HasMember("icon"))
+                    {
+                        const int legacyIconIndex = entry["icon"].GetInt();
+                        
+                        if (legacyIconIndex >= 0 && legacyIconIndex < legacyIconCount)
+                        {
+                            return iconIndexToKey[legacyIconIndex];
+                        }
+                        else
+                        {
+                            return "default";
+                        }
+                    }
+                    else
+                    {
+                        return "my_pins";
+                    }
+                }
+                
+            }
+            
             namespace
             {
                 void MyPinModelToJson(const MyPinModel& pinModel, rapidjson::Document::AllocatorType& allocator, IMyPinBoundObjectRepository& myPinBoundObjectRepository, rapidjson::Value& out_value)
@@ -36,7 +94,7 @@ namespace ExampleApp
                     valueObject.AddMember("vendor", rapidjson::Value(pinModel.GetVendor().c_str(), allocator).Move(), allocator);
                     valueObject.AddMember("ratingsImage", rapidjson::Value(pinModel.GetRatingsImage().c_str(), allocator).Move(), allocator);
                     valueObject.AddMember("reviewCount", pinModel.GetReviewsCount(), allocator);
-                    valueObject.AddMember("icon", pinModel.GetSdkMapPinIconIndexIcon(), allocator);
+                    valueObject.AddMember("pinIconKey", rapidjson::Value(pinModel.GetPinIconKey().c_str(), allocator).Move(), allocator);
                     valueObject.AddMember("latitude", latLong.GetLatitudeInDegrees(), allocator);
                     valueObject.AddMember("longitude", latLong.GetLongitudeInDegrees(), allocator);
                     valueObject.AddMember("heightAboveTerrain", pinModel.GetHeightAboveTerrainMetres(), allocator);
@@ -49,6 +107,21 @@ namespace ExampleApp
                     valueObject.AddMember("metadata", rapidjson::Value(pinBoundObject.GetSerialized().c_str(), allocator).Move(), allocator);
                     
                     out_value = valueObject;
+                }
+                
+                std::string ParsePinIconKey(const rapidjson::Value& entry)
+                {
+                    const int version = entry["version"].GetInt();
+                    
+                    const int earliestVersionWithPinIconKey = 4;
+                    if (version >= earliestVersionWithPinIconKey)
+                    {
+                        return entry["pinIconKey"].GetString();
+                    }
+                    else
+                    {
+                        return Legacy::PinIconKeyFromLegacyIconIndex(entry);
+                    }
                 }
             }
             
@@ -251,11 +324,13 @@ namespace ExampleApp
                         MyPinModel::TPinIdType pinId = entry["id"].GetInt();
                         std::string title = entry["title"].GetString();
                         std::string description = entry["description"].GetString();
-                        int sdkMapPinIconIndex = entry["icon"].GetInt();
+                        
+                        const std::string& pinIconKey = ParsePinIconKey(entry);
+                        
                         double latitude = entry["latitude"].GetDouble();
                         double longitude = entry["longitude"].GetDouble();
                         MyPinsSemanticPinType semanticPinType = static_cast<MyPinsSemanticPinType>(entry["type"].GetInt());
-                        std::string pinTypeMetadata = entry["metadata"].GetString();
+                        std::string pinMetadataJson = entry["metadata"].GetString();
                         
                         std::string ratingsImage = "";
                         int reviewCount = 0;
@@ -307,7 +382,8 @@ namespace ExampleApp
                         IMyPinBoundObject* pPinBoundObject(m_myPinBoundObjectFactory.CreatePinBoundObjectFromSerialized(*this,
                                                                                                                         pinId,
                                                                                                                         semanticPinType,
-                                                                                                                        pinTypeMetadata,
+                                                                                                                        pinMetadataJson,
+                                                                                                                        pinIconKey,
                                                                                                                         myPinService));
                         
                         if(pPinBoundObject == NULL)
@@ -322,8 +398,8 @@ namespace ExampleApp
                                                                  description,
                                                                  vendor,
                                                                  ratingsImage,
+                                                                 pinIconKey,
                                                                  reviewCount,
-                                                                 sdkMapPinIconIndex,
                                                                  Eegeo::Space::LatLong::FromDegrees(latitude, longitude),
                                                                  heightAboveTerrainMetres,
                                                                  interior,

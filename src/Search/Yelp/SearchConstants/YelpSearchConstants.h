@@ -7,6 +7,7 @@
 #include <map>
 #include "Search.h"
 #include "CategorySearchModel.h"
+#include "IFileIO.h"
 
 namespace ExampleApp
 {
@@ -18,11 +19,13 @@ namespace ExampleApp
             {
                 std::string GetDefaultCategory();
                 
-                std::map<std::string, std::string> GetYelpFoundationCategoryToApplicationCategoryMap();
+                std::map<std::string, std::string> GetYelpFoundationCategoryToApplicationCategoryMap(Eegeo::Helpers::IFileIO& fileIO);
                 
                 std::vector<CategorySearch::View::CategorySearchModel> GetCategorySearchModels();
                 
                 std::vector<std::string> GetCategories();
+
+                std::map<std::string, std::string> GetApplicationToYelpCategoryMap();
             }
         }
     }

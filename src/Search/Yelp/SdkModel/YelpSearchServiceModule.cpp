@@ -23,7 +23,8 @@ namespace ExampleApp
 				const std::string& yelpConsumerKey,
 				const std::string& yelpConsumerSecret,
 				const std::string& yelpOAuthToken,
-				const std::string& yelpOAuthTokenSecret)
+				const std::string& yelpOAuthTokenSecret,
+                Eegeo::Helpers::IFileIO& fileIO)
             : m_pSearchService(NULL)
             , m_pSearchQueryFactory(NULL)
             , m_pYelpBusinessQueryFactory(NULL)
@@ -32,7 +33,7 @@ namespace ExampleApp
             , m_pYelpCategoryMapper(NULL)
             {
                 m_pYelpCategoryMapper = Eegeo_NEW(Yelp::SdkModel::YelpCategoryMapper)(webRequestFactory,
-                    Yelp::SearchConstants::GetYelpFoundationCategoryToApplicationCategoryMap(),
+                    Yelp::SearchConstants::GetYelpFoundationCategoryToApplicationCategoryMap(fileIO),
                     Yelp::SearchConstants::GetDefaultCategory());
 
                 m_pYelpSearchJsonParser = Eegeo_NEW(Yelp::SdkModel::YelpSearchJsonParser)(*m_pYelpCategoryMapper);

@@ -29,6 +29,8 @@ namespace ExampleApp
                 virtual IWorldPinsInFocusController& GetWorldPinsInFocusController() const = 0;
 
                 virtual ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel() const = 0;
+                
+                virtual IWorldPinIconMapping& GetWorldPinIconMapping() const = 0;
             };
         }
     }

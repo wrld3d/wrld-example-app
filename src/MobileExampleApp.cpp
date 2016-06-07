@@ -110,6 +110,7 @@
 #include "InteriorsNavigationService.h"
 #include "ModalityIgnoredReactionModel.h"
 #include "ReactorIgnoredReactionModel.h"
+#include "WorldPinIconMappingFactory.h"
 
 namespace ExampleApp
 {
@@ -442,7 +443,8 @@ namespace ExampleApp
                 YelpConsumerKey,
                 YelpConsumerSecret,
                 YelpOAuthToken,
-                YelpOAuthTokenSecret
+                YelpOAuthTokenSecret,
+                m_platformAbstractions.GetFileIO()
                 );
         }
         
@@ -520,7 +522,6 @@ namespace ExampleApp
                                                                                 m_messageBus,
                                                                                 m_sdkDomainEventBus,
                                                                                 *m_pCameraTransitionService,
-                                                                                m_pCategorySearchModule->GetCategorySearchRepository(),
                                                                                 m_pSearchModule->GetMyPinsSearchResultRefreshService(),
                                                                                 m_metricsService,
                                                                                 "",
@@ -885,10 +886,13 @@ namespace ExampleApp
                                                  const bool interiorsAffectedByFlattening,
                                                  const float screenOversampleScale)
     {
-        
-        m_pPinsModule = CreatePlatformPinsModuleInstance(mapModule, world, "SearchResultOnMap/pin_icon_texture_page", m_pinDiameter, 5);
+        const int iconsPerRowColum = 10;
 
+        m_pPinsModule = CreatePlatformPinsModuleInstance(mapModule, world, "SearchResultOnMap/pin_icon_texture_page", m_pinDiameter, iconsPerRowColum);
+        
         Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
+        
+        ExampleApp::WorldPins::SdkModel::WorldPinIconMappingFactory worldPinIconMappingFactory;
         
         m_pWorldPinsModule = Eegeo_NEW(ExampleApp::WorldPins::SdkModel::WorldPinsModule)(
                                  m_pPinsModule->GetRepository(),
@@ -901,7 +905,8 @@ namespace ExampleApp
                                  m_sdkDomainEventBus,
                                  interiorsAffectedByFlattening,
                                  m_menuReaction,
-                                 screenOversampleScale);
+                                 screenOversampleScale,
+                                 worldPinIconMappingFactory);
     }
     
     void MobileExampleApp::InitialiseToursModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world, const bool interiorsAffectedByFlattening)
@@ -942,10 +947,10 @@ namespace ExampleApp
                                                              "Some more example text",
                                                              "Tours/page",
                                                              "tours"));
-        const int tourIconIndex = 10;
+        const std::string tourPinIconKey = "tour_entry";
         ExampleApp::Tours::SdkModel::TourModel tourModel("Example",
                                                          "Take the tour",
-                                                         tourIconIndex,
+                                                         tourPinIconKey,
                                                          Eegeo::Space::LatLong::FromDegrees(37.784783, -122.402659),
                                                          true,
                                                          false,

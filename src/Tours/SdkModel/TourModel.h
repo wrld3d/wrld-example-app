@@ -24,7 +24,7 @@ namespace ExampleApp
                 std::string m_name;
                 std::string m_introText;
                 Eegeo::Space::LatLong m_location;
-                int m_iconIndex;
+                std::string m_pinIconKey;
                 bool m_isInterior;
                 bool m_showGradientBase;
                 bool m_visibleOnMap;
@@ -47,7 +47,7 @@ namespace ExampleApp
                 
                 TourModel(const std::string& name,
                           const std::string& introText,
-                          int iconIndex,
+                          const std::string& pinIconKey,
                           const Eegeo::Space::LatLong& location,
                           bool visibleOnMap,
                           bool isInterior,
@@ -68,7 +68,7 @@ namespace ExampleApp
                 
                 bool IsVisibleOnMap() const;
                 
-                int IconIndex() const;
+                std::string PinIconKey() const;
                 
                 const Eegeo::Space::LatLong& Location() const;
                 

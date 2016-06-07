@@ -9,6 +9,8 @@
 #include "WorldPinFocusData.h"
 #include "WorldPinInteriorData.h"
 
+#include <string>
+
 namespace ExampleApp
 {
     namespace WorldPins
@@ -26,7 +28,7 @@ namespace ExampleApp
                                                   bool interior,
                                                   const WorldPinInteriorData& worldPinInteriorData,
                                                   const Eegeo::Space::LatLong& location,
-                                                  int iconIndex,
+                                                  const std::string& pinIconKey,
                                                   float heightAboveTerrainMetres,
                                                   int visibilityMask) = 0;
 

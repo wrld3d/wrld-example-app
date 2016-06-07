@@ -39,8 +39,8 @@ namespace ExampleApp
                 else
                 {
                     // The pin doesn't exist, so we must add it...
-                    const int pinIconIndex = m_searchResultIconCategoryMapper.GetIconIndexFromSearchResult(searchResult);
-                    m_myPinsService.SaveSearchResultPoiPin(searchResult, pinIconIndex);
+                    const std::string& pinIconKey = m_searchResultIconCategoryMapper.GetIconKeyFromSearchResult(searchResult);
+                    m_myPinsService.SaveSearchResultPoiPin(searchResult, pinIconKey);
                 }
             }
         }

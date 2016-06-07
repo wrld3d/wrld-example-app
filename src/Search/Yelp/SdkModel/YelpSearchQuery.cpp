@@ -45,6 +45,7 @@ namespace ExampleApp
                 {
                     Eegeo_ASSERT(!m_dispatched, "Cannot dispatch YelpSearchQuery if query has already been dispatched.\n");
                     m_dispatched = true;
+
                     m_pWebLoadRequest->Load();
                 }
 

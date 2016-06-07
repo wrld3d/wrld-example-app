@@ -94,7 +94,7 @@ namespace ExampleApp
                 
                 const float heightOffsetMetres = 0.0f;
                 const bool isInterior = false;
-                const int iconIndex = 11;
+                const std::string indoorMapEntryIconKey = "indoor_map_entry";
                 WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData;
                 
                 ExampleApp::WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(markerModel.GetInteriorName(),
@@ -116,7 +116,7 @@ namespace ExampleApp
                                                                                                isInterior,
                                                                                                worldPinInteriorData,
                                                                                                location,
-                                                                                               iconIndex,
+                                                                                               indoorMapEntryIconKey,
                                                                                                heightOffsetMetres,
                                                                                                WorldPins::SdkModel::WorldPinVisibility::World);
                 m_interiorIdToWorldPinMap[markerModel.GetInteriorId().Value()] = pItemModel;

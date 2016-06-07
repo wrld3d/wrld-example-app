@@ -40,7 +40,7 @@ namespace ExampleApp
                                                               false,
                                                               Eegeo::Resources::Interiors::InteriorId(""),
                                                               0,
-                                                              "",
+                                                              "place",
                                                               std::vector<std::string>(),
                                                               Search::GeoNamesVendorName,
                                                               "",

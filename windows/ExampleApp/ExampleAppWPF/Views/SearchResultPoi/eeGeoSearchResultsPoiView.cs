@@ -143,7 +143,7 @@ namespace ExampleAppWPF
             //PhoneText = ;
             HumanReadableCategoriesText = string.Join(Environment.NewLine, model.HumanReadableCategories) + model.Category;
             ReviewText = model.Subtitle;
-            CategoryIcon = StartupResourceLoader.GetBitmap(SearchResultCategoryMapper.GetIconImageName(model.Category));
+            CategoryIcon = SearchResultPoiViewIconProvider.GetIconForCategory(model.Category);
 
             m_isPinned = isPinned;
             OnPropertyChanged("IsPinned");

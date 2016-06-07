@@ -34,7 +34,6 @@ namespace ExampleApp
                                        ExampleAppMessaging::TMessageBus& messageBus,
                                        ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                        CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
-                                       CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                                        Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
                                        Metrics::IMetricsService& metricsService,
                                        const std::string& myPinsWebServiceUrl,
@@ -62,7 +61,6 @@ namespace ExampleApp
                 
                 m_pMyPinBoundObjectFactory = Eegeo_NEW(MyPinBoundObjectFactory)(messageBus,
                                                                                 sdkModelDomainEventBus,
-                                                                                categorySearchRepository,
                                                                                 myPinsSearchResultRefreshService,
                                                                                 *m_pMyPinsWebService);
 

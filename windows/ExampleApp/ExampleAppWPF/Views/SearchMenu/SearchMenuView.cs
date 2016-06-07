@@ -1,4 +1,5 @@
 ﻿using ExampleApp;
+using ExampleAppWPF.Views.SearchMenu;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -320,8 +321,8 @@ namespace ExampleAppWPF
                 item.Details = jObject["details"].Value<string>();
 
                 JToken iconStringToken;
-                var iconString = jObject.TryGetValue("icon", out iconStringToken) ? iconStringToken.Value<string>() : "misc";
-                item.Icon = new System.Windows.Media.Imaging.BitmapImage(ViewHelpers.MakeUriForImage(string.Format("icon1_{0}.png", iconString)));
+                var iconCategoryName = jObject.TryGetValue("icon", out iconStringToken) ? iconStringToken.Value<string>() : "";
+                item.Icon = SearchMenuResultIconProvider.GetIconForCategory(iconCategoryName);
                 itemsSource.Add(item);
 
                 groups.Add(str);

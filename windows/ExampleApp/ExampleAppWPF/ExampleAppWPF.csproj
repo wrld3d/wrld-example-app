@@ -113,10 +113,11 @@
     <Compile Include="Views\Options\OptionsView.cs" />
     <Compile Include="Views\SearchMenu\SearchMenuListItem.cs" />
     <Compile Include="StartupResourceLoader.cs" />
+    <Compile Include="Views\SearchMenu\SearchMenuResultIconProvider.cs" />
     <Compile Include="Views\SearchResultPoi\eeGeoSearchResultsPoiView.cs" />
     <Compile Include="Views\SearchResultPoi\GeonamesSearchResultsPoiView.cs" />
     <Compile Include="Views\SearchResultPoi\ResultModels\YelpResultModel.cs" />
-    <Compile Include="Views\SearchResultPoi\SearchResultCategoryMapper.cs" />
+    <Compile Include="Views\SearchResultPoi\SearchResultPoiViewIconProvider.cs" />
     <Compile Include="Views\SearchResultPoi\SearchResultPoiViewBase.cs" />
     <Compile Include="Views\SearchResultPoi\YelpSearchResultsPoiView.cs" />
     <Compile Include="Views\SearchMenu\SubMenuListItem.cs" />
@@ -357,17 +358,17 @@
     <Resource Include="..\..\Resources\icon1_aroundme.png">
       <Link>Assets\icon1_aroundme.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\icon1_museums.png">
-      <Link>Assets\icon1_museums.png</Link>
+    <Resource Include="..\..\Resources\icon1_art_museums.png">
+      <Link>Assets\icon1_art_museums.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\icon1_autumn.png">
       <Link>Assets\icon1_autumn.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\icon1_financialservices.png">
-      <Link>Assets\icon1_financialservices.png</Link>
+    <Resource Include="..\..\Resources\icon1_accommodation.png">
+      <Link>Assets\icon1_accommodation.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\icon1_coffee.png">
-      <Link>Assets\icon1_coffee.png</Link>
+    <Resource Include="..\..\Resources\icon1_business.png">
+      <Link>Assets\icon1_business.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\icon1_dawn.png">
       <Link>Assets\icon1_dawn.png</Link>
@@ -381,11 +382,11 @@
     <Resource Include="..\..\Resources\icon1_foggy.png">
       <Link>Assets\icon1_foggy.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\icon1_restaurants.png">
-      <Link>Assets\icon1_restaurants.png</Link>
+    <Resource Include="..\..\Resources\icon1_food_drink.png">
+      <Link>Assets\icon1_food_drink.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\icon1_hotels.png">
-      <Link>Assets\icon1_hotels.png</Link>
+    <Resource Include="..\..\Resources\icon1_entertainment.png">
+      <Link>Assets\icon1_entertainment.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\icon1_misc.png">
       <Link>Assets\icon1_misc.png</Link>
@@ -393,8 +394,8 @@
     <Resource Include="..\..\Resources\icon1_night.png">
       <Link>Assets\icon1_night.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\icon1_nightlife.png">
-      <Link>Assets\icon1_nightlife.png</Link>
+    <Resource Include="..\..\Resources\icon1_amenities.png">
+      <Link>Assets\icon1_amenities.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\icon1_options.png">
       <Link>Assets\icon1_options.png</Link>
@@ -402,8 +403,8 @@
     <Resource Include="..\..\Resources\icon1_overcast.png">
       <Link>Assets\icon1_overcast.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\icon1_parks.png">
-      <Link>Assets\icon1_parks.png</Link>
+    <Resource Include="..\..\Resources\icon1_health.png">
+      <Link>Assets\icon1_health.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\icon1_place.png">
       <Link>Assets\icon1_place.png</Link>
@@ -426,8 +427,20 @@
     <Resource Include="..\..\Resources\icon1_winter.png">
       <Link>Assets\icon1_winter.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\icon_create_poi.png">
-      <Link>Assets\icon_create_poi.png</Link>
+    <Resource Include="..\..\Resources\icon1_my_pins.png">
+      <Link>Assets\icon_my_pins.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_shopping.png">
+      <Link>Assets\icon1_shopping.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_sports_leisure.png">
+      <Link>Assets\icon1_sports_leisure.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_tourism.png">
+      <Link>Assets\icon1_tourism.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_transport.png">
+      <Link>Assets\icon1_transport.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\button_close_place_pin_off.png">
       <Link>Assets\button_close_place_pin_off.png</Link>

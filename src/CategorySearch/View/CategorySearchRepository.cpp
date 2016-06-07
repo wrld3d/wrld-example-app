@@ -30,22 +30,6 @@ namespace ExampleApp
                 return false;
             }
             
-            bool CategorySearchRepository::TryGetCategorySearchIconByCategory(const std::string& category, std::string& out_icon) const
-            {
-                for(std::vector<CategorySearchModel>::const_iterator it = m_models.begin(); it != m_models.end(); ++ it)
-                {
-                    const CategorySearchModel& categorySearchModel = *it;
-                    if(categorySearchModel.SearchCategory() == category
-                    || categorySearchModel.Icon() == category)
-                    {
-                        out_icon = categorySearchModel.Icon();
-                        return true;
-                    }
-                }
-                
-                return false;
-            }
-            
             std::string GetPresentationStringForQuery(const ICategorySearchRepository& categorySearchRepository, const Search::SdkModel::SearchQuery& query)
             {
                 if(query.IsCategory())

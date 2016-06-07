@@ -62,7 +62,11 @@ namespace ExampleApp
             , m_vendor(vendor)
             , m_jsonData(jsonData)
             , m_searchResultCreationTimeStamp(searchResultCreationTimeStamp)
-            {
+            {                
+                Eegeo_ASSERT(!identifier.empty(), "identifier must not be empty");
+                Eegeo_ASSERT(!title.empty(), "name must not be empty");
+                Eegeo_ASSERT(!applicationCategory.empty(), "applicationCategory must not be empty");
+                Eegeo_ASSERT(!vendor.empty(), "vendor must not be empty");
             }
             
             SearchResultModel::~SearchResultModel()

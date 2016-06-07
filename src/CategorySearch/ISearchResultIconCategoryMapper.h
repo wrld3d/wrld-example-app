@@ -13,7 +13,7 @@ namespace ExampleApp
         public:
             virtual ~ISearchResultIconCategoryMapper() { }
             
-            virtual int GetIconIndexFromSearchResult(const Search::SdkModel::SearchResultModel& searchResultModel) const = 0;
+            virtual std::string GetIconKeyFromSearchResult(const Search::SdkModel::SearchResultModel& searchResultModel) const = 0;
         };
     }
 }

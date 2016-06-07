@@ -34,17 +34,6 @@ namespace ExampleAppWPF
             LoadImage("button_remove_pin_off.png");
 
             LoadImage("arrow3_down.png");
-
-            LoadImage("SearchResultOnMap", "Icons", "financialservices.png");
-            LoadImage("SearchResultOnMap", "Icons", "coffee.png");
-            LoadImage("SearchResultOnMap", "Icons", "hotels.png");
-            LoadImage("SearchResultOnMap", "Icons", "museums.png");
-            LoadImage("SearchResultOnMap", "Icons", "nightlife.png");
-            LoadImage("SearchResultOnMap", "Icons", "none.png");
-            LoadImage("SearchResultOnMap", "Icons", "parks.png");
-            LoadImage("SearchResultOnMap", "Icons", "pin.png");
-            LoadImage("SearchResultOnMap", "Icons", "restaurants.png");
-            LoadImage("SearchResultOnMap", "Icons", "theatre.png");
         }
 
         public static void Init()

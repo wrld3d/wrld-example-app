@@ -24,7 +24,7 @@ namespace ExampleApp
                                                                  Social::TwitterFeed::ITwitterFeedService& twitterFeedService,
                                                                  ExampleAppMessaging::TMessageBus& messageBus)
                     {
-                        std::map<std::string, int> twitterTourIconOverrideMap;
+                        std::map<std::string, std::string> twitterTourIconOverrideMap;
 
                         const bool isInterior = false;
                         const WorldPins::SdkModel::WorldPinInteriorData noInteirorData;

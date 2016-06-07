@@ -13,12 +13,10 @@ namespace ExampleApp
         {
             MyPinBoundObjectFactory::MyPinBoundObjectFactory(ExampleAppMessaging::TMessageBus& messageBus,
                                                              ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
-                                                             CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                                                              Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
                                                              MyPinsWebService& webService)
             : m_messageBus(messageBus)
             , m_sdkModelDomainEventBus(sdkModelDomainEventBus)
-            , m_categorySearchRepository(categorySearchRepository)
             , m_myPinsSearchResultRefreshService(myPinsSearchResultRefreshService)
             , m_webService(webService)
             {
@@ -34,12 +32,14 @@ namespace ExampleApp
                                                                                         MyPinModel::TPinIdType pinId,
                                                                                         Byte* imageData,
                                                                                         size_t imageSize,
-                                                                                        bool share)
+                                                                                        bool share,
+                                                                                        const std::string& pinIconKey)
             {
                 return Eegeo_NEW(UserCreatedPinBoundObject)(pinId,
                                                             imageData,
                                                             imageSize,
                                                             share,
+                                                            pinIconKey,
                                                             myPinsFileIO,
                                                             m_messageBus,
                                                             m_webService);
@@ -48,12 +48,13 @@ namespace ExampleApp
             IMyPinBoundObject* MyPinBoundObjectFactory::CreateSearchResultPinBoundObject(MyPinsFileIO& myPinsFileIO,
                                                                                          MyPinModel::TPinIdType pinId,
                                                                                          const Search::SdkModel::SearchResultModel& searchResult,
+                                                                                         const std::string& pinIconKey,
                                                                                          ExampleApp::MyPins::SdkModel::IMyPinsService& myPinsService)
             {
                 return Eegeo_NEW(SearchResultPinBoundObject)(pinId,
                                                              searchResult,
+                                                             pinIconKey,
                                                              myPinsFileIO,
-                                                             m_categorySearchRepository,
                                                              m_myPinsSearchResultRefreshService,
                                                              m_messageBus,
                                                              m_sdkModelDomainEventBus,
@@ -63,7 +64,8 @@ namespace ExampleApp
             IMyPinBoundObject* MyPinBoundObjectFactory::CreatePinBoundObjectFromSerialized(MyPinsFileIO& myPinsFileIO,
                                                                                            MyPinModel::TPinIdType pinId,
                                                                                            const MyPinsSemanticPinType& semanticPinType,
-                                                                                           const std::string& serializedData,
+                                                                                           const std::string& pinMetadataJson,
+                                                                                           const std::string& pinIconKey,
                                                                                            ExampleApp::MyPins::SdkModel::IMyPinsService& myPinsService)
             {
                 switch (semanticPinType)
@@ -71,7 +73,8 @@ namespace ExampleApp
                     case UserCreatedPoi:
                     {
                         return UserCreatedPinBoundObject::FromSerializedData(pinId,
-                                                                             serializedData,
+                                                                             pinMetadataJson,
+                           													 pinIconKey,
                                                                              myPinsFileIO,
                                                                              m_messageBus,
                                                                              m_webService);
@@ -80,9 +83,9 @@ namespace ExampleApp
                     case SearchResultPoi:
                     {
                         return SearchResultPinBoundObject::FromSerializedData(pinId,
-                                                                              serializedData,
+                                                                              pinMetadataJson,
+                                                                              pinIconKey,
                                                                               myPinsFileIO,
-                                                                              m_categorySearchRepository,
                                                                               m_myPinsSearchResultRefreshService,
                                                                               m_messageBus,
                                                                               m_sdkModelDomainEventBus,

@@ -177,7 +177,7 @@ namespace ExampleApp
                 
                 View::SearchResultOnMapItemModel* pSearchResultOnMapItemModel = m_searchResultOnMapFactory.CreateSearchResultOnMapItemModel(searchResultModel);
                 
-                const int pinIconIndex = m_searchResultIconCategoryMapper.GetIconIndexFromSearchResult(searchResultModel);
+                const std::string& pinIconKey = m_searchResultIconCategoryMapper.GetIconKeyFromSearchResult(searchResultModel);
                 
                 std::string ratingsImage = "";
                 int reviewCount = 0;
@@ -199,7 +199,7 @@ namespace ExampleApp
                                                                                                              searchResultModel.IsInterior(),
                                                                                                              worldPinInteriorData,
                                                                                                              searchResultModel.GetLocation(),
-                                                                                                             pinIconIndex,
+                                                                                                             pinIconKey,
                                                                                                              searchResultModel.GetHeightAboveTerrainMetres(),
                                                                                                              WorldPins::SdkModel::WorldPinVisibility::Search);
                 

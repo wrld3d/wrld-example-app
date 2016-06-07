@@ -17,8 +17,6 @@ namespace ExampleApp
                 virtual ~ICategorySearchRepository() { }
 
                 virtual bool TryGetCategorySearchNameByQuery(const std::string& query, std::string& out_name) const = 0;
-                
-                virtual bool TryGetCategorySearchIconByCategory(const std::string& category, std::string& out_icon) const = 0;
             };
 
             std::string GetPresentationStringForQuery(const ICategorySearchRepository& categorySearchRepository, const Search::SdkModel::SearchQuery& query);

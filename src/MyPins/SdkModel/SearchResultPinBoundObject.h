@@ -23,9 +23,8 @@ namespace ExampleApp
             class SearchResultPinBoundObject : public IMyPinBoundObject, private Eegeo::NonCopyable
             {
                 Search::SdkModel::SearchResultModel m_searchResult;
-                std::string m_serialized;
+                std::string m_pinIconKey;
                 MyPinsFileIO& m_myPinsFileIO;
-                CategorySearch::View::ICategorySearchRepository& m_categorySearchRepository;
                 Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& m_myPinsSearchResultRefreshService;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkModelDomainEventBus;
@@ -38,8 +37,8 @@ namespace ExampleApp
             public:
                 static SearchResultPinBoundObject* FromSerializedData(MyPinModel::TPinIdType pinId,
                                                                       const std::string& serializedData,
+                                                                      const std::string& pinIconKey,
                                                                       MyPinsFileIO& myPinsFileIO,
-                                                                      CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                                                                       Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
                                                                       ExampleAppMessaging::TMessageBus& messageBus,
                                                                       ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
@@ -47,8 +46,8 @@ namespace ExampleApp
                 
                 SearchResultPinBoundObject(MyPinModel::TPinIdType pinId,
                                            const Search::SdkModel::SearchResultModel& searchResult,
+                                           const std::string& pinIconKey,
                                            MyPinsFileIO& myPinsFileIO,
-                                           CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                                            Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
                                            ExampleAppMessaging::TMessageBus& messageBus,
                                            ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
@@ -74,7 +73,7 @@ namespace ExampleApp
                 
                 std::string GetIconForPin() const;
                 
-                const std::string& GetSerialized() const;
+                std::string GetSerialized() const;
                 
                 void FinishRefreshingSearchResult(bool success,
                                                   const ExampleApp::MyPins::SdkModel::MyPinModel::TPinIdType pinId,

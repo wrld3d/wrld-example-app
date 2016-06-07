@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
-                android:src="@drawable/icon1_coffee" />
+                android:src="@drawable/icon1_aroundme" />
             
             <TextView
                 android:id="@+id/search_result_poi_view_title"

@@ -20,25 +20,27 @@ namespace ExampleApp
         namespace SdkModel
         {
             SearchResultPinBoundObject* SearchResultPinBoundObject::FromSerializedData(MyPinModel::TPinIdType pinId,
-                                                                                       const std::string& serializedData,
+                                                                                       const std::string& pinMetadataJson,
+                                                                                       const std::string& pinIconKey,
                                                                                        MyPinsFileIO& myPinsFileIO,
-                                                                                       CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                                                                                        Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
                                                                                        ExampleAppMessaging::TMessageBus& messageBus,
                                                                                        ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                                                                        ExampleApp::MyPins::SdkModel::IMyPinsService& myPinsService)
             {
+                Eegeo_ASSERT(!pinIconKey.empty());
+
                 Search::SdkModel::SearchResultModel searchResultModel;
                 
-                if(!Search::SdkModel::TryDeserializeFromJson(serializedData, searchResultModel))
+                if(!Search::SdkModel::TryDeserializeFromJson(pinMetadataJson, searchResultModel))
                 {
                     return NULL;
                 }
-                
+
                 return Eegeo_NEW(SearchResultPinBoundObject)(pinId,
                                                              searchResultModel,
+                                                             pinIconKey,
                                                              myPinsFileIO,
-                                                             categorySearchRepository,
                                                              myPinsSearchResultRefreshService,
                                                              messageBus,
                                                              sdkModelDomainEventBus,
@@ -47,16 +49,15 @@ namespace ExampleApp
             
             SearchResultPinBoundObject::SearchResultPinBoundObject(MyPinModel::TPinIdType pinId,
                                                                    const Search::SdkModel::SearchResultModel& searchResult,
+                                                                   const std::string& pinIconKey,
                                                                    MyPinsFileIO& myPinsFileIO,
-                                                                   CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                                                                    Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
                                                                    ExampleAppMessaging::TMessageBus& messageBus,
                                                                    ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                                                    ExampleApp::MyPins::SdkModel::IMyPinsService& myPinsService)
             : m_searchResult(searchResult)
-            , m_serialized(Search::SdkModel::SerializeToJson(m_searchResult))
+            , m_pinIconKey(pinIconKey)
             , m_myPinsFileIO(myPinsFileIO)
-            , m_categorySearchRepository(categorySearchRepository)
             , m_myPinsSearchResultRefreshService(myPinsSearchResultRefreshService)
             , m_messageBus(messageBus)
             , m_sdkModelDomainEventBus(sdkModelDomainEventBus)
@@ -130,20 +131,12 @@ namespace ExampleApp
             
             std::string SearchResultPinBoundObject::GetIconForPin() const
             {
-                const std::string& category(m_searchResult.GetCategory());
-                
-                std::string icon;
-                if(!m_categorySearchRepository.TryGetCategorySearchIconByCategory(category, icon))
-                {
-                    icon = "misc";
-                }
-                
-                return icon;
+                return m_pinIconKey;
             }
             
-            const std::string& SearchResultPinBoundObject::GetSerialized() const
+            std::string SearchResultPinBoundObject::GetSerialized() const
             {
-                return m_serialized;
+                return Search::SdkModel::SerializeToJson(m_searchResult);
             }
             
             void SearchResultPinBoundObject::SubmitPinToWebService(const MyPinModel& pinModel)
@@ -160,7 +153,6 @@ namespace ExampleApp
                 if(success)
                 {
                     m_searchResult = result;
-                    m_serialized = Search::SdkModel::SerializeToJson(m_searchResult);
                     
                     m_myPinsService.UpdatePinWithResult(pinId, result);
                 }

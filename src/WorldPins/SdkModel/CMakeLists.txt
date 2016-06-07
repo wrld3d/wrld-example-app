@@ -34,6 +34,12 @@ set(currsources
   ../src/WorldPins/SdkModel/WorldPinsService.cpp
   ../src/WorldPins/SdkModel/WorldPinsService.h
   ../src/WorldPins/SdkModel/WorldPinVisibility.h
+  ../src/WorldPins/SdkModel/IWorldPinIconMapping.h
+  ../src/WorldPins/SdkModel/WorldPinIconMapping.h
+  ../src/WorldPins/SdkModel/WorldPinIconMapping.cpp
+  ../src/WorldPins/SdkModel/IWorldPinIconMappingFactory.h
+  ../src/WorldPins/SdkModel/WorldPinIconMappingFactory.h
+  ../src/WorldPins/SdkModel/WorldPinIconMappingFactory.cpp
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\WorldPins\\SdkModel FILES ${currsources})

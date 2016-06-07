@@ -1,3 +1,4 @@
+using ExampleAppWPF.Views.SearchMenu;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Windows.Media;
@@ -7,7 +8,6 @@ namespace ExampleAppWPF
 {
     public class SubMenuListItem : MenuListItem
     {
-        string m_iconString;
         ImageSource m_icon;
 
         public ImageSource Icon
@@ -23,8 +23,8 @@ namespace ExampleAppWPF
 
             if (parsed.TryGetValue("icon", out iconField))
             {
-                m_iconString = iconField.Value<string>();
-                m_icon = new BitmapImage(ViewHelpers.MakeUriForImage(string.Format("icon1_{0}.png", m_iconString)));
+                var iconCategoryName = iconField.Value<string>();
+                m_icon = SearchMenuResultIconProvider.GetIconForCategory(iconCategoryName);
             }
         }
     }

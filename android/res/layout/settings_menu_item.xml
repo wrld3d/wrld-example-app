@@ -13,7 +13,7 @@
 	        android:contentDescription="@string/content_desc_category_icon"
 	        android:scaleType="fitCenter"
 	        android:layout_centerVertical="true"
-	        android:src="@drawable/icon1_coffee" />
+	        android:src="@drawable/icon1_aroundme" />
 
         <TextView
             android:id="@+id/menu_list_item_name"

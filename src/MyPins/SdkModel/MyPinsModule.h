@@ -36,7 +36,6 @@ namespace ExampleApp
                              ExampleAppMessaging::TMessageBus& messageBus,
                              ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                              CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
-                             CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
                              Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
                              Metrics::IMetricsService& metricsService,
                              const std::string& myPinsWebServiceUrl,

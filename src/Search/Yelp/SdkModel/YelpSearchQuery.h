@@ -40,6 +40,7 @@ namespace ExampleApp
                     const std::string& ResponseString();
 
                 private:
+
                     void HandleWebResponseComplete(Eegeo::Web::IWebResponse& webResponse);
                     
                     Eegeo::Web::IWebLoadRequest* m_pWebLoadRequest;

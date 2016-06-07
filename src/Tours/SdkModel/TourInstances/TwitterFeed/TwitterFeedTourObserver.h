@@ -35,7 +35,7 @@ namespace ExampleApp
                         Social::TwitterFeed::ITwitterFeedService& m_twitterFeedService;
                         
                         const std::map<std::string, TweetStateData>& m_tweetStateDataMap;
-                        std::map<std::string, int> m_twitterTourIconOverrideMap;
+                        std::map<std::string, std::string> m_twitterTourIconOverrideMap;
                         
                         std::set<std::string> m_setOfTourTwitterBaseUserNames;
                         
@@ -47,6 +47,8 @@ namespace ExampleApp
                                                  Social::TwitterFeed::TweetRepository& tweetRepository);
                         
                         void UpadateTweetLinksOut();
+                        
+                        std::string PinIconKeyForTwitterUser(const std::string twitterUserId) const;
                     public:
                         TwitterFeedTourObserver(Camera::IToursCameraTransitionController& toursCameraTransitionController,
                                                 ITourService& tourService,
@@ -57,7 +59,7 @@ namespace ExampleApp
                                                 ITourRepository& tourRepository,
                                                 Social::TwitterFeed::ITwitterFeedService& twitterFeedService,
                                                 const std::map<std::string, TweetStateData>& tweetStateDataMap,
-                                                const std::map<std::string, int>& twitterTourIconOverrideMap,
+                                                const std::map<std::string, std::string>& twitterTourIconOverrideMap,
                                                 ExampleAppMessaging::TMessageBus& messageBus);
                         ~TwitterFeedTourObserver();
                     };
