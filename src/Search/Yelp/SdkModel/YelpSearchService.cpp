@@ -38,7 +38,6 @@ namespace ExampleApp
                 , m_poiSearchCallback(this, &YelpSearchService::HandleSearchResponse)
                 , m_pCurrentRequest(NULL)
                 , m_hasActiveQuery(false)
-                , m_yelpBusinessQueryDestroyHandler(this, &YelpSearchService::HandleYelpBusinessQueryDestroy)
                 {
                 }
                 
@@ -50,13 +49,6 @@ namespace ExampleApp
                 
                 
                 void YelpSearchService::CancelInFlightQueries()
-                {
-                    CancelInFlightSearchQueries();
-                    
-                    CancelInFlightBusinessQueries();
-                }
-                
-                void YelpSearchService::CancelInFlightSearchQueries()
                 {
                     if(m_pCurrentRequest != NULL)
                     {
@@ -72,19 +64,10 @@ namespace ExampleApp
                     }
                 }
                 
-                void YelpSearchService::CancelInFlightBusinessQueries()
-                {
-                    for (std::deque<YelpBusinessQuery*>::const_iterator iter = m_inFlightBusinessQueries.begin(); iter != m_inFlightBusinessQueries.end(); ++iter)
-                    {
-                        YelpBusinessQuery* pYelpBusinessQuery = *iter;
-                        pYelpBusinessQuery->Cancel();
-                    }
-                    
-                }
                 
                 void YelpSearchService::PerformLocationQuerySearch(const Search::SdkModel::SearchQuery& searchQuery)
                 {
-                    CancelInFlightSearchQueries();
+                    CancelInFlightQueries();
                     
                     ExecuteQueryPerformedCallbacks(searchQuery);
                     if(m_networkCapabilities.StreamOverWifiOnly() && !m_networkCapabilities.ConnectedToWifi())
@@ -108,8 +91,7 @@ namespace ExampleApp
                 void YelpSearchService::PerformIdentitySearch(const Search::SdkModel::SearchResultModel& outdatedSearchResult,
                                                               Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& completionCallback)
                 {
-                    YelpBusinessQuery* pYelpBusinessQuery = m_yelpBusinessQueryFactory.Create(outdatedSearchResult.GetIdentifier(), completionCallback,m_yelpBusinessQueryDestroyHandler);
-                    m_inFlightBusinessQueries.push_back(pYelpBusinessQuery);
+                    YelpBusinessQuery* pYelpBusinessQuery = m_yelpBusinessQueryFactory.Create(outdatedSearchResult.GetIdentifier(), completionCallback);
                     pYelpBusinessQuery->Dispatch();
                 }
                 
@@ -133,11 +115,7 @@ namespace ExampleApp
                 
                 void YelpSearchService::HandleYelpBusinessQueryDestroy(YelpBusinessQuery& yelpBusinessQuery)
                 {
-                    YelpBusinessQuery* pYelpBusinessQuery = &yelpBusinessQuery;
-                    
-                    m_inFlightBusinessQueries.erase(std::remove(m_inFlightBusinessQueries.begin(), m_inFlightBusinessQueries.end(), pYelpBusinessQuery));
-                    
-                    Eegeo_DELETE pYelpBusinessQuery;
+                    Eegeo_DELETE &yelpBusinessQuery;
                 }
                 
             }

@@ -31,8 +31,7 @@ namespace ExampleApp
                     virtual ~YelpBusinessQueryFactory() {;}
                     
                     virtual YelpBusinessQuery* Create(const std::string& searchEntityId,
-                                                      Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& completionCallback,
-                                                      Eegeo::Helpers::ICallback1<YelpBusinessQuery>& destructionCallback);
+                                                      Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& completionCallback);
                     
                 private:
                     const std::string m_apiUrl;

@@ -25,7 +25,6 @@ namespace ExampleApp
                     YelpBusinessQuery(
                                       const std::string& requestUrl,
                                       Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& completionCallback,
-                                      Eegeo::Helpers::ICallback1<YelpBusinessQuery>& destructionCallback,
                                       Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                       const YelpBusinessJsonParser& yelpBusinessParser);
                     
@@ -41,7 +40,6 @@ namespace ExampleApp
 
                     Eegeo::Web::IWebLoadRequest* m_pWebLoadRequest;
                     Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& m_completionCallback;
-                    Eegeo::Helpers::ICallback1<YelpBusinessQuery>& m_destructionCallback;
                     const YelpBusinessJsonParser& m_yelpBusinessParser;
                     
                     bool m_dispatched;

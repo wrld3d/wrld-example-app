@@ -15,7 +15,6 @@
 #include "SearchResultModel.h"
 #include "NetIncludes.h"
 
-#include <deque>
 
 namespace ExampleApp
 {
@@ -39,10 +38,6 @@ namespace ExampleApp
                 IYelpSearchQuery* m_pCurrentRequest;
                 bool m_hasActiveQuery;
                 
-                std::deque<YelpBusinessQuery*> m_inFlightBusinessQueries;
-                
-                Eegeo::Helpers::TCallback1<YelpSearchService, YelpBusinessQuery> m_yelpBusinessQueryDestroyHandler;
-                
             public:
                 YelpSearchService(YelpSearchQueryFactory& searchQueryFactory,
                                   YelpBusinessQueryFactory& yelpBusinessQueryFactory,
@@ -61,9 +56,6 @@ namespace ExampleApp
                 
             private:
             
-                void CancelInFlightSearchQueries();
-                
-                void CancelInFlightBusinessQueries();
                 
                 void HandleSearchResponse();
                 

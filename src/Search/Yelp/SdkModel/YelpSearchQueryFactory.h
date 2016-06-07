@@ -9,6 +9,8 @@
 #include "Yelp.h"
 #include "IWebLoadRequestFactory.h"
 
+#include "liboauthcpp.h"
+
 namespace ExampleApp
 {
     namespace Search
@@ -19,12 +21,6 @@ namespace ExampleApp
             {
                 class YelpSearchQueryFactory
                 {
-                    std::string m_yelpConsumerKey;
-                    std::string m_yelpConsumerSecret;
-                    std::string m_yelpOAuthToken;
-                    std::string m_yelpOAuthTokenSecret;
-                    Eegeo::Web::IWebLoadRequestFactory& m_webRequestFactory;
-
                 public:
                     YelpSearchQueryFactory(
                         const std::string& yelpConsumerKey,
@@ -38,6 +34,14 @@ namespace ExampleApp
                     IYelpSearchQuery* CreateYelpSearchForQuery(const Search::SdkModel::SearchQuery& query,
                                                                        Eegeo::Helpers::ICallback0& completionCallback);
                     
+                private:
+                    const std::string m_apiUrl;
+                    
+                    OAuth::Consumer m_consumer;
+                    OAuth::Client m_client;
+                    OAuth::Token m_token;
+                    
+                    Eegeo::Web::IWebLoadRequestFactory& m_webRequestFactory;
                 };
             }
         }

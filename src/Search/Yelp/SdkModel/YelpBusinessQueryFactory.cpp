@@ -32,8 +32,7 @@ namespace ExampleApp
 
                 
                 SdkModel::YelpBusinessQuery* YelpBusinessQueryFactory::Create(const std::string& searchEntityId,
-                                                                              Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& completionCallback,
-                                                                              Eegeo::Helpers::ICallback1<YelpBusinessQuery>& destructionCallback)
+                                                                              Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& completionCallback)
                 {
                     std::stringstream ss;
                     ss << m_apiUrl << searchEntityId << "?";
@@ -42,7 +41,7 @@ namespace ExampleApp
 
                     ss << oauthParams;
                     
-                    return Eegeo_NEW(YelpBusinessQuery)(ss.str(), completionCallback, destructionCallback, m_webRequestFactory, m_yelpBusinessParser);
+                    return Eegeo_NEW(YelpBusinessQuery)(ss.str(), completionCallback, m_webRequestFactory, m_yelpBusinessParser);
                 }
             }
         }
