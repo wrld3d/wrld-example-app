@@ -12,10 +12,12 @@ namespace ExampleApp
             {
                 SwallowFacilityResultModel::SwallowFacilityResultModel(const std::string& name,
                                                                        const std::string& imageUrl,
-                                                                       const std::string& description)
+                                                                       const std::string& description,
+                                                                       const std::string& officeLocation)
                 : m_name(name)
                 , m_imageUrl(imageUrl)
                 , m_description(description)
+                , m_officeLocation(officeLocation)
                 {
                     
                 }
@@ -43,6 +45,11 @@ namespace ExampleApp
                 const std::string& SwallowFacilityResultModel::GetDescription() const
                 {
                     return m_description;
+                }
+                
+                const std::string& SwallowFacilityResultModel::GetOfficeLocation() const
+                {
+                    return m_officeLocation;
                 }
             }
         }

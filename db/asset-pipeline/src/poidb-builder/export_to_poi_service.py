@@ -518,6 +518,9 @@ def collect_facility_table(xls_book, sheet_index, src_image_folder_path, verbose
 
     column_names = ['id'] + poi_columns
     for v in gather_table_with_image(column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename')):
+        indoor_id = v[column_names.index('interior_id')]
+        floor_id = int(v[column_names.index('interior_floor')])
+        office_location = get_office_location_from_interior_and_floor(indoor_id, floor_id)
     	yield {
             "title":v[column_names.index('name')],
             "subtitle":"",
@@ -525,15 +528,31 @@ def collect_facility_table(xls_book, sheet_index, src_image_folder_path, verbose
             "lat":float(v[column_names.index('latitude_degrees')]),
             "lon":float(v[column_names.index('longitude_degrees')]),
             "indoor":True,
-  			"indoor_id":v[column_names.index('interior_id')],
-  			"floor_id":int(v[column_names.index('interior_floor')]),
+  			"indoor_id":indoor_id,
+  			"floor_id":floor_id,
             "user_data":
             {
               "image_url":v[column_names.index('image_filename')],
               "subcategory":v[column_names.index('category')],
-              "description":v[column_names.index('description')]
+              "description":v[column_names.index('description')],
+              "office_location":office_location
             }
        }
+
+def get_office_location_from_interior_and_floor(interior_id, floor_id):
+    interior_ids_to_names = {}
+    interior_ids_to_names["swallow_lon_38finsbury"] = "38 Finsbury"
+    interior_ids_to_names["swallow_lon_citygatehouse"] = "City Gate House"
+    interior_ids_to_names["swallow_lon_50finsbury"] = "50 Finsbury"
+    interior_ids_to_names["swallow_lon_parkhouse"] = "Park House"
+
+    interior_floor_to_name = {}
+    interior_floor_to_name["swallow_lon_38finsbury"] = ["Lower Ground Floor", "Ground Floor", "1st Floor", "2nd Floor", "3rd Floor", "4th Floor", "5th Floor", "6th Floor"]
+    interior_floor_to_name["swallow_lon_citygatehouse"] = ["Lower Ground Floor", "Ground Floor", "1st Floor", "2nd Floor", "3rd Floor"]
+    interior_floor_to_name["swallow_lon_50finsbury"] = ["Lower Ground Floor", "1st Floor", "2nd Floor", "3rd Floor", "4th Floor", "5th Floor", "6th Floor", "7th Floor"]
+    interior_floor_to_name["swallow_lon_parkhouse"] = ["3rd Floor", "4th Floor", "5th Floor"]
+
+    return interior_floor_to_name[interior_id][floor_id] + ", " + interior_ids_to_names[interior_id];
 
 def collect_department_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row, departments):
     xls_sheet = xls_book.sheet_by_index(sheet_index)
