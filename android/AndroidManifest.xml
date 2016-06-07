@@ -20,7 +20,7 @@
     <application android:icon="@mipmap/icon" android:label="Project Swallow App" android:theme="@android:style/Theme.NoTitleBar">
        
         <activity android:name="com.eegeo.ProjectSwallowApp.BackgroundThreadActivity"
-                  android:label="Project Swallow App"
+                  android:label="BWAY"
                   android:configChanges="orientation|keyboardHidden|screenSize|fontScale"
                   android:windowSoftInputMode="adjustPan"
               	  android:launchMode="standard"
