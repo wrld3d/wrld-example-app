@@ -29,8 +29,9 @@ namespace ExampleApp
                 }
             }
             
-            WeatherController::WeatherController(VisualMap::SdkModel::IVisualMapService& visualMapService)
+            WeatherController::WeatherController(VisualMap::SdkModel::IVisualMapService& visualMapService, const AppModes::SdkModel::IAppModeModel& appModeModel)
             : m_visualMapService(visualMapService)
+            , m_appModeModel(appModeModel)
             {
             }
 
@@ -50,12 +51,18 @@ namespace ExampleApp
 
             void WeatherController::SetTheme(const std::string& theme)
             {
-                m_visualMapService.SetVisualMapTheme(theme);
+                if (m_appModeModel.GetAppMode() == AppModes::SdkModel::WorldMode)
+                {
+                    m_visualMapService.SetVisualMapTheme(theme);
+                }
             }
             
             void WeatherController::SetState(const std::string& state)
             {
-                m_visualMapService.SetVisualMapThemeState(state);
+                if (m_appModeModel.GetAppMode() == AppModes::SdkModel::WorldMode)
+                {
+                    m_visualMapService.SetVisualMapThemeState(state);
+                }
             }
         }
     }

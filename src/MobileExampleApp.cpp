@@ -483,7 +483,8 @@ namespace ExampleApp
         m_pWeatherMenuModule = Eegeo_NEW(ExampleApp::WeatherMenu::SdkModel::WeatherMenuModule)(m_platformAbstractions.GetFileIO(),
                                                                                                m_pVisualMapModule->GetVisualMapService(),
                                                                                                m_messageBus,
-                                                                                               m_metricsService);
+                                                                                               m_metricsService,
+                                                                                               *m_pAppModeModel);
         
         m_pSettingsMenuModule = Eegeo_NEW(ExampleApp::SettingsMenu::SdkModel::SettingsMenuModule)(m_identityProvider,
                                                                                                   m_pReactionControllerModule->GetReactionControllerModel(),

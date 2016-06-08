@@ -5,6 +5,7 @@
 #include "Types.h"
 #include "IWeatherController.h"
 #include "VisualMap.h"
+#include "IAppModeModel.h"
 
 #include <string>
 
@@ -18,7 +19,7 @@ namespace ExampleApp
             {
             public:
 
-                WeatherController(VisualMap::SdkModel::IVisualMapService& visualMapService);
+                WeatherController(VisualMap::SdkModel::IVisualMapService& visualMapService, const AppModes::SdkModel::IAppModeModel& appModeModel);
 
                 void SetWeather(const std::string& weather);
                 void SetTime(const std::string& time);
@@ -27,6 +28,7 @@ namespace ExampleApp
 
             private:
                 VisualMap::SdkModel::IVisualMapService& m_visualMapService;
+                const AppModes::SdkModel::IAppModeModel& m_appModeModel;
             };
         }
     }
