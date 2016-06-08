@@ -16,7 +16,9 @@ namespace ExampleApp
                                                            const std::string& buildNumber,
                                                            const std::string& combinedVersionString,
                                                            const std::string& coverageTreeManifestURL,
-                                                           const std::string& themeManifestURL)
+                                                           const std::string& themeManifestURL,
+                                                           const std::string& embeddedThemeTexturePath
+                                                           )
         : m_name(name)
         , m_interestLocation(interestLocation)
         , m_distanceToInterestMetres(distanceToInterestMetres)
@@ -28,6 +30,7 @@ namespace ExampleApp
         , m_combinedVersionString(combinedVersionString)
         , m_coverageTreeManifestURL(coverageTreeManifestURL)
         , m_themeManifestURL(themeManifestURL)
+        , m_embeddedThemeTexturePath(embeddedThemeTexturePath)
         {
         }
         
@@ -84,6 +87,11 @@ namespace ExampleApp
         std::string ApplicationConfiguration::CoverageTreeManifestURL() const
         {
             return m_coverageTreeManifestURL;
+        }
+        
+        std::string ApplicationConfiguration::EmbeddedThemeTexturePath() const
+        {
+            return m_embeddedThemeTexturePath;
         }
     }
 }

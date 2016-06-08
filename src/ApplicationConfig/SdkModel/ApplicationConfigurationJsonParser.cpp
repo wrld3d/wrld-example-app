@@ -54,6 +54,8 @@ namespace ExampleApp
                 const std::string& googleAnalyticsReferrerToken = ParseStringOrDefault(document, "GoogleAnalyticsReferrerToken", m_defaultConfig.GoogleAnalyticsReferrerToken());
                 const std::string& coverageTreeManifestURL = ParseStringOrDefault(document, "CoverageTreeManifestURL", m_defaultConfig.CoverageTreeManifestURL());
                 const std::string& themeManifestURL = ParseStringOrDefault(document, "ThemeManifestURL", m_defaultConfig.ThemeManifestURL());
+                const std::string& embeddedThemeTexturePath = ParseStringOrDefault(document, "EmbeddedThemeTexturePath", m_defaultConfig.EmbeddedThemeTexturePath());
+                
 
                 return ApplicationConfiguration(
                     name,
@@ -66,7 +68,8 @@ namespace ExampleApp
                     m_defaultConfig.BuildNumber(),
                     m_defaultConfig.CombinedVersionString(),
                     coverageTreeManifestURL,
-                    themeManifestURL
+                    themeManifestURL,
+                    embeddedThemeTexturePath
                 );
             }
         }

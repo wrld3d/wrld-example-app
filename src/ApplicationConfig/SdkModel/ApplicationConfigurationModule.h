@@ -6,6 +6,7 @@
 #include "IApplicationConfigurationModule.h"
 #include "ApplicationConfig.h"
 #include "IFileIO.h"
+#include "Config.h"
 
 namespace ExampleApp
 {
@@ -27,6 +28,14 @@ namespace ExampleApp
                 
                 IApplicationConfigurationService& GetApplicationConfigurationService();
             };
+            
+            ApplicationConfig::ApplicationConfiguration LoadAppConfig(Eegeo::Helpers::IFileIO& fileIO,
+                                                                      ApplicationConfig::SdkModel::IApplicationConfigurationVersionProvider& applicationConfigurationVersionProvider,
+                                                                      const std::string& configFilePath
+                                                                      );
+            
+            Eegeo::Config::PlatformConfig BuildPlatformConfig(Eegeo::Config::IPlatformConfigBuilder& platformConfigBuilder,
+                                                              const ApplicationConfiguration& appConfig);
         }
     }
 }

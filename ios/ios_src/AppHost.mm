@@ -132,14 +132,10 @@ AppHost::AppHost(
 
     Eegeo::EffectHandler::Initialise();
 
-    Eegeo::Config::PlatformConfig platformConfig = Eegeo::iOS::iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion()).Build();
-
-    platformConfig.CoverageTreeConfig.ManifestUrl = applicationConfiguration.CoverageTreeManifestURL();
-    platformConfig.CityThemesConfig.EmbeddedThemeManifestFile = "embedded_manifest.txt";
-    platformConfig.CityThemesConfig.EmbeddedThemeTexturePath = "Textures/EmbeddedTheme";
-    platformConfig.CityThemesConfig.EmbeddedThemeNameContains = "Summer";
-    platformConfig.CityThemesConfig.EmbeddedThemeStateName = "DayDefault";
-
+    Eegeo::iOS::iOSPlatformConfigBuilder iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion());
+    
+    const Eegeo::Config::PlatformConfig& platformConfiguration = ExampleApp::ApplicationConfig::SdkModel::BuildPlatformConfig(iOSPlatformConfigBuilder, applicationConfiguration);
+    
     m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::iOSInitialExperienceModule)(m_iOSPersistentSettingsModel, m_messageBus);
     
     m_pNetworkCapabilities = Eegeo_NEW(ExampleApp::Net::SdkModel::NetworkCapabilities)(*m_piOSConnectivityService,
@@ -163,7 +159,7 @@ AppHost::AppHost(
              screenProperties,
              *m_piOSLocationService,
              m_iOSNativeUIFactories,
-             platformConfig,
+             platformConfiguration,
              *m_pJpegLoader,
              *m_pInitialExperienceModule,
              m_iOSPersistentSettingsModel,

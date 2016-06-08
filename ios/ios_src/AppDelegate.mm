@@ -22,10 +22,7 @@ namespace
         
         ExampleApp::ApplicationConfig::SdkModel::iOSApplicationConfigurationVersionProvider iOSVersionProvider;
         
-        ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule applicationConfigurationModule(tempFileIO,
-                                                                                                               iOSVersionProvider.GetProductVersionString(),
-                                                                                                               iOSVersionProvider.GetBuildNumberString());
-        return applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration(ExampleApp::ApplicationConfigurationPath);
+        return ExampleApp::ApplicationConfig::SdkModel::LoadAppConfig(tempFileIO, iOSVersionProvider, ExampleApp::ApplicationConfigurationPath);
     }
 }
 

@@ -5,6 +5,8 @@
 #include "ApplicationConfigurationJsonParser.h"
 #include "ApplicationConfigurationReader.h"
 #include "IApplicationConfigurationVersionProvider.h"
+#include "ConfigSections.h"
+#include "IPlatformConfigBuilder.h"
 
 namespace ExampleApp
 {
@@ -30,10 +32,34 @@ namespace ExampleApp
                         buildNumber,
                         combinedVersionString,
                         Eegeo::Config::CoverageTreeManifestUrlDefault,
-                        Eegeo::Config::CityThemesManifestUrlDefault);
+                        Eegeo::Config::CityThemesManifestUrlDefault,
+                        "Textures/EmbeddedTheme");
                 }
             }
+            
+            ApplicationConfig::ApplicationConfiguration LoadAppConfig(Eegeo::Helpers::IFileIO& fileIO,
+                                                                      ApplicationConfig::SdkModel::IApplicationConfigurationVersionProvider& applicationConfigurationVersionProvider,
+                                                                      const std::string& configFilePath
+                                                                      )
+            {
+                
+                ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule applicationConfigurationModule(fileIO,
+                                                                                                                       applicationConfigurationVersionProvider
+                                                                                                                       );
+                return applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration(configFilePath);
+            }
+            
+            Eegeo::Config::PlatformConfig BuildPlatformConfig(Eegeo::Config::IPlatformConfigBuilder& platformConfigBuilder,
+                                                              const ApplicationConfiguration& appConfig)
+            {
+                Eegeo::Config::PlatformConfig platformConfig = platformConfigBuilder.Build();
+                platformConfig.CoverageTreeConfig.ManifestUrl = appConfig.CoverageTreeManifestURL();
+                platformConfig.CityThemesConfig.StreamedManifestUrl = appConfig.ThemeManifestURL();
+                platformConfig.CityThemesConfig.EmbeddedThemeTexturePath = appConfig.EmbeddedThemeTexturePath();
 
+                return platformConfig;
+            }
+            
             ApplicationConfigurationModule::ApplicationConfigurationModule(
                 Eegeo::Helpers::IFileIO& fileIO,
                 const IApplicationConfigurationVersionProvider& applicationConfigurationVersionProvider)

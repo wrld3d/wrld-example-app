@@ -23,6 +23,7 @@ namespace ExampleApp
             std::string m_combinedVersionString;
             std::string m_coverageTreeManifestURL;
             std::string m_themeManifestURL;
+            std::string m_embeddedThemeTexturePath;
             
         public:
             
@@ -36,7 +37,8 @@ namespace ExampleApp
                                      const std::string& buildNumber,
                                      const std::string& combinedVersionString,
                                      const std::string& coverageTreeManifestURL,
-                                     const std::string& themeManifestURL);
+                                     const std::string& themeManifestURL,
+                                     const std::string& embeddedThemeTexturePath);
             
             std::string Name() const;
             
@@ -59,6 +61,8 @@ namespace ExampleApp
             std::string ThemeManifestURL() const;
 
             std::string CoverageTreeManifestURL() const;
+            
+            std::string EmbeddedThemeTexturePath() const;
         };
     }
 }

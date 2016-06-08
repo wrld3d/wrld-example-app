@@ -6,5 +6,6 @@
   "StartLocationDistance": 1781.0,
   "StartLocationOrientationDegrees": 0.0,
   "TryStartAtGpsLocation": false,
-  "GoogleAnalyticsReferrerToken":"mea_android"
+  "GoogleAnalyticsReferrerToken":"mea_android",
+  "EmbeddedThemeTexturePath":"Textures"
 }
