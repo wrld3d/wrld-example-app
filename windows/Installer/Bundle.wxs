@@ -4,7 +4,7 @@
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
 
   <!-- Main bundle definition (TODO: Derive version from command line var) -->
-  <Bundle Name="Project Swallow" Version="$(var.Version)" Manufacturer="eeGeo Ltd" UpgradeCode="da2eb3ec-2734-4d2a-8c6a-c178fbdbf1cb"
+  <Bundle Name="BWAY" Version="$(var.Version)" Manufacturer="eeGeo Ltd" UpgradeCode="da2eb3ec-2734-4d2a-8c6a-c178fbdbf1cb"
           HelpUrl="http://www.eegeo.com"
           Copyright="Copyright© 2016, eeGeo Ltd."
           IconSourceFile="Resource\setup.ico"
