@@ -38,7 +38,7 @@ namespace ExampleApp
                                      const std::string& coverageTreeManifestURL,
                                      const std::string& themeManifestURL);
             
-            const std::string& Name() const;
+            std::string Name() const;
             
             const Eegeo::Space::LatLongAltitude& InterestLocation() const;
             
@@ -48,17 +48,17 @@ namespace ExampleApp
             
             bool TryStartAtGpsLocation() const;
             
-            const std::string& GoogleAnalyticsReferrerToken() const;
+            std::string GoogleAnalyticsReferrerToken() const;
             
-            const std::string& ProductVersion() const;
+            std::string ProductVersion() const;
             
-            const std::string& BuildNumber() const;
+            std::string BuildNumber() const;
             
-            const std::string& CombinedVersionString() const;
+            std::string CombinedVersionString() const;
 
-            const std::string& ThemeManifestURL() const;
+            std::string ThemeManifestURL() const;
 
-            const std::string& CoverageTreeManifestURL() const;
+            std::string CoverageTreeManifestURL() const;
         };
     }
 }

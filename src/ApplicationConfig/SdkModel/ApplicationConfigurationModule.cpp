@@ -2,9 +2,9 @@
 
 #include "ApplicationConfigurationModule.h"
 #include "ApplicationConfigurationService.h"
-#include "ApplicationConfigurationBuilder.h"
 #include "ApplicationConfigurationJsonParser.h"
 #include "ApplicationConfigurationReader.h"
+#include "IApplicationConfigurationVersionProvider.h"
 
 namespace ExampleApp
 {
@@ -12,17 +12,38 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            ApplicationConfigurationModule::ApplicationConfigurationModule(Eegeo::Helpers::IFileIO& fileIO,
-                                                                           const std::string& productVersion,
-                                                                           const std::string& buildNumber)
+            namespace
             {
-                m_pApplicationConfigurationBuilder = Eegeo_NEW(ApplicationConfigurationBuilder);
+                ApplicationConfiguration BuildDefaultConfig(const IApplicationConfigurationVersionProvider& applicationConfigurationVersionProvider)
+                {
+                    const std::string& productVersion = applicationConfigurationVersionProvider.GetProductVersionString();
+                    const std::string& buildNumber = applicationConfigurationVersionProvider.GetProductVersionString();
+                    const std::string& combinedVersionString = productVersion + "." + buildNumber;
+
+                    return ApplicationConfiguration ("Eegeo Example App", 
+                        Eegeo::Space::LatLongAltitude(0.0f, 0.0f, 0.0f),
+                        1000.f,
+                        0.f,
+                        false,
+                        "",
+                        productVersion,
+                        buildNumber,
+                        combinedVersionString,
+                        Eegeo::Config::CoverageTreeManifestUrlDefault,
+                        Eegeo::Config::CityThemesManifestUrlDefault);
+                }
+            }
+
+            ApplicationConfigurationModule::ApplicationConfigurationModule(
+                Eegeo::Helpers::IFileIO& fileIO,
+                const IApplicationConfigurationVersionProvider& applicationConfigurationVersionProvider)
+            {
+                const ApplicationConfiguration& defaultConfig = BuildDefaultConfig(applicationConfigurationVersionProvider);
+
                 m_pApplicationConfigurationReader = Eegeo_NEW(ApplicationConfigurationReader)(fileIO);
-                m_pApplicationConfigurationParser = Eegeo_NEW(ApplicationConfigurationJsonParser)(*m_pApplicationConfigurationBuilder);
+                m_pApplicationConfigurationParser = Eegeo_NEW(ApplicationConfigurationJsonParser)(defaultConfig);
                 m_pApplicationConfigurationService = Eegeo_NEW(ApplicationConfigurationService)(*m_pApplicationConfigurationParser,
-                                                                                                *m_pApplicationConfigurationReader,
-                                                                                                productVersion,
-                                                                                                buildNumber);
+																								*m_pApplicationConfigurationReader);                    
             }
             
             ApplicationConfigurationModule::~ApplicationConfigurationModule()
@@ -30,7 +51,6 @@ namespace ExampleApp
                 Eegeo_DELETE m_pApplicationConfigurationService;
                 Eegeo_DELETE m_pApplicationConfigurationParser;
                 Eegeo_DELETE m_pApplicationConfigurationReader;
-                Eegeo_DELETE m_pApplicationConfigurationBuilder;
             }
             
             IApplicationConfigurationService& ApplicationConfigurationModule::GetApplicationConfigurationService()

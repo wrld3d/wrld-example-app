@@ -31,7 +31,7 @@ namespace ExampleApp
         {
         }
         
-        const std::string& ApplicationConfiguration::Name() const
+        std::string ApplicationConfiguration::Name() const
         {
             return m_name;
         }
@@ -56,32 +56,32 @@ namespace ExampleApp
             return m_tryStartAtGpsLocation;
         }
         
-        const std::string& ApplicationConfiguration::GoogleAnalyticsReferrerToken() const
+        std::string ApplicationConfiguration::GoogleAnalyticsReferrerToken() const
         {
             return m_googleAnalyticsReferrerToken;
         }
         
-        const std::string& ApplicationConfiguration::ProductVersion() const
+        std::string ApplicationConfiguration::ProductVersion() const
         {
             return m_productVersion;
         }
         
-        const std::string& ApplicationConfiguration::BuildNumber() const
+        std::string ApplicationConfiguration::BuildNumber() const
         {
             return m_buildNumber;
         }
         
-        const std::string& ApplicationConfiguration::CombinedVersionString() const
+        std::string ApplicationConfiguration::CombinedVersionString() const
         {
             return m_combinedVersionString;
         }
 
-        const std::string& ApplicationConfiguration::ThemeManifestURL() const
+        std::string ApplicationConfiguration::ThemeManifestURL() const
         {
             return m_themeManifestURL;
         }
 
-        const std::string& ApplicationConfiguration::CoverageTreeManifestURL() const
+        std::string ApplicationConfiguration::CoverageTreeManifestURL() const
         {
             return m_coverageTreeManifestURL;
         }

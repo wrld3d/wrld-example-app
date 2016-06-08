@@ -2,7 +2,6 @@
 
 #include "document.h"
 #include "ApplicationConfigurationJsonParser.h"
-#include "IApplicationConfigurationBuilder.h"
 #include "MathFunc.h"
 #include "ConfigSections.h"
 
@@ -12,8 +11,18 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            ApplicationConfigurationJsonParser::ApplicationConfigurationJsonParser(IApplicationConfigurationBuilder& builder)
-            : m_builder(builder)
+            namespace
+            {
+                std::string ParseStringOrDefault(rapidjson::Document& document, const std::string& key, const std::string& defaultValue)
+                {
+                    return (document.HasMember(key.c_str()))
+                        ? document[key.c_str()].GetString()
+                        : defaultValue;
+                }
+            }
+
+            ApplicationConfigurationJsonParser::ApplicationConfigurationJsonParser(const ApplicationConfiguration& defaultConfig)
+            : m_defaultConfig(defaultConfig)
             {
                 
             }
@@ -25,39 +34,40 @@ namespace ExampleApp
                 const bool hasParseError(document.Parse<0>(serialized.c_str()).HasParseError());
                 Eegeo_ASSERT(!hasParseError);
                 
-                Eegeo_ASSERT(document.HasMember("Name"));
-                m_builder.SetApplicationName(document["Name"].GetString());
-                
                 Eegeo_ASSERT(document.HasMember("StartLocationLatitude"));
                 Eegeo_ASSERT(document.HasMember("StartLocationLongitude"));
                 Eegeo_ASSERT(document.HasMember("StartLocationAltitude"));
-                m_builder.SetStartInterestPointLocation(Eegeo::Space::LatLongAltitude::FromDegrees(document["StartLocationLatitude"].GetDouble(),
-                                                                                                   document["StartLocationLongitude"].GetDouble(),
-                                                                                                   document["StartLocationAltitude"].GetDouble()));
-                
                 Eegeo_ASSERT(document.HasMember("StartLocationDistance"));
-                m_builder.SetStartDistanceFromInterestPoint(static_cast<float>(document["StartLocationDistance"].GetDouble()));
-                
                 Eegeo_ASSERT(document.HasMember("StartLocationOrientationDegrees"));
-                m_builder.SetStartOrientationAboutInterestPoint(static_cast<float>(document["StartLocationOrientationDegrees"].GetDouble()));
-                
                 Eegeo_ASSERT(document.HasMember("TryStartAtGpsLocation"));
-                m_builder.SetTryStartAtGpsLocation(document["TryStartAtGpsLocation"].GetBool());
-                
-                Eegeo_ASSERT(document.HasMember("GoogleAnalyticsReferrerToken"));
-                m_builder.SetGoogleAnalyticsReferrerToken(document["GoogleAnalyticsReferrerToken"].GetString());
 
-                if (document.HasMember("CoverageTreeManifestURL"))
-                {
-                    m_builder.SetCoverageTreeManifestURL(document["CoverageTreeManifestURL"].GetString());
-                }
                 
-                if (document.HasMember("ThemeManifestURL"))
-                {
-                    m_builder.SetThemeManifestURL(document["ThemeManifestURL"].GetString());
-                }
+                const Eegeo::Space::LatLongAltitude& lla = Eegeo::Space::LatLongAltitude::FromDegrees(document["StartLocationLatitude"].GetDouble(),
+                                                                                                   document["StartLocationLongitude"].GetDouble(),
+                                                                                                   document["StartLocationAltitude"].GetDouble());
                 
-                return m_builder.Build();
+                const float startDistanceFromInterestPoint = static_cast<float>(document["StartLocationDistance"].GetDouble());
+                const float startOrientationAboutInterestPoint = static_cast<float>(document["StartLocationOrientationDegrees"].GetDouble());
+                const bool tryStartAtGpsLocation = document["TryStartAtGpsLocation"].GetBool();
+
+                const std::string& name = ParseStringOrDefault(document, "Name", m_defaultConfig.Name());
+                const std::string& googleAnalyticsReferrerToken = ParseStringOrDefault(document, "GoogleAnalyticsReferrerToken", m_defaultConfig.GoogleAnalyticsReferrerToken());
+                const std::string& coverageTreeManifestURL = ParseStringOrDefault(document, "CoverageTreeManifestURL", m_defaultConfig.CoverageTreeManifestURL());
+                const std::string& themeManifestURL = ParseStringOrDefault(document, "ThemeManifestURL", m_defaultConfig.ThemeManifestURL());
+
+                return ApplicationConfiguration(
+                    name,
+                    lla,
+                    startDistanceFromInterestPoint,
+                    startOrientationAboutInterestPoint,
+                    tryStartAtGpsLocation,
+                    googleAnalyticsReferrerToken,
+                    m_defaultConfig.ProductVersion(),
+                    m_defaultConfig.BuildNumber(),
+                    m_defaultConfig.CombinedVersionString(),
+                    coverageTreeManifestURL,
+                    themeManifestURL
+                );
             }
         }
     }

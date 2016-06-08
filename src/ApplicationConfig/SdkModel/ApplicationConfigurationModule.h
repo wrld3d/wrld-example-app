@@ -18,12 +18,10 @@ namespace ExampleApp
                 IApplicationConfigurationService* m_pApplicationConfigurationService;
                 IApplicationConfigurationReader* m_pApplicationConfigurationReader;
                 IApplicationConfigurationParser* m_pApplicationConfigurationParser;
-                IApplicationConfigurationBuilder* m_pApplicationConfigurationBuilder;
                 
             public:
                 ApplicationConfigurationModule(Eegeo::Helpers::IFileIO& fileIO,
-                                               const std::string& productVersion,
-                                               const std::string& buildNumber);
+                                               const IApplicationConfigurationVersionProvider& applicationConfigurationVersionProvider);
                 
                 ~ApplicationConfigurationModule();
                 

@@ -108,7 +108,7 @@ namespace
 
         ExampleApp::ApplicationConfig::SdkModel::WindowsApplicationConfigurationVersionProvider versionProvider;
 
-		ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule applicationConfigurationModule(tempFileIO, versionProvider.GetProductVersionString(), versionProvider.GetBuildNumberString());
+		ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule applicationConfigurationModule(tempFileIO, versionProvider);
 
 		return applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration(ExampleApp::ApplicationConfigurationPath);
 	}
@@ -162,7 +162,7 @@ AppHost::AppHost(
     Eegeo::TtyHandler::TtyEnabled = true;
     Eegeo::AssertHandler::BreakOnAssert = true;
 
-	ApplicationConfiguration config(LoadConfiguration(nativeState));
+	const ApplicationConfiguration& applicationConfig = LoadConfiguration(nativeState);
 
     m_pWindowsLocationService = Eegeo_NEW(WindowsLocationService)(&nativeState);
 
@@ -186,8 +186,8 @@ AppHost::AppHost(
     const std::string deviceModel = nativeState.GetDeviceModel();
     Eegeo::Config::PlatformConfig platformConfig = Eegeo::Windows::WindowsPlatformConfigBuilder(deviceModel).Build();
 
-    platformConfig.CoverageTreeConfig.ManifestUrl = config.CoverageTreeManifestURL();
-    platformConfig.CityThemesConfig.StreamedManifestUrl = config.ThemeManifestURL();
+    platformConfig.CoverageTreeConfig.ManifestUrl = applicationConfig.CoverageTreeManifestURL();
+    platformConfig.CityThemesConfig.StreamedManifestUrl = applicationConfig.ThemeManifestURL();
 
     const Eegeo::Windows::Input::WindowsInputProcessorConfig& windowsInputProcessorConfig = Eegeo::Windows::Input::WindowsInputProcessor::DefaultConfig();
     m_pInputProcessor = Eegeo_NEW(Eegeo::Windows::Input::WindowsInputProcessor)(&m_inputHandler, m_nativeState.GetWindow(), screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), windowsInputProcessorConfig);
@@ -209,8 +209,6 @@ AppHost::AppHost(
 
     m_pMenuReaction = Eegeo_NEW(ExampleApp::Menu::View::WindowsMenuReactionModel)(false, false);
 
-    typedef ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule ApplicationConfigurationModule;
-    ApplicationConfigurationModule applicationConfigurationModule(m_pWindowsPlatformAbstractionModule->GetFileIO(), "Development Build", "0.0.1");
 
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
         ExampleApp::ApiKey,
@@ -226,7 +224,7 @@ AppHost::AppHost(
         m_sdkDomainEventBus,
         *m_pNetworkCapabilities,
         *m_pWindowsFlurryMetricsService,
-        config,
+        applicationConfig,
         *this,
         *m_pMenuReaction);
 
