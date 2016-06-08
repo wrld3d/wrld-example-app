@@ -530,18 +530,6 @@
       <Component Id="cmpvZRTI7kjk1TjejECQ4IrVJ1mMw4" Directory="RESOURCEFOLDER" Guid="{8154244F-7123-4927-9DBA-67A5A5BBCA9A}">
         <File Id="filx_TVZivKU9k0J3rI.zRM9bNTfC4" KeyPath="yes" Source="payload\Resources\SplashScreen.png" />
       </Component>
-      <Component Id="cmpiNNB9MhZYS7NlqYyRQQ5aGfMI3E" Directory="RESOURCEFOLDER" Guid="{D3E04004-D106-42D9-BF63-7B2472839C9F}">
-        <File Id="fil88vpD9vTHs2u_XotKrxxmzVCo8E" KeyPath="yes" Source="payload\Resources\SplashScreen@0.75x.png" />
-      </Component>
-      <Component Id="cmpBVAlxmbJ.LZT9_m_3eXcTpItMBA" Directory="RESOURCEFOLDER" Guid="{666F528C-A23D-4553-AC02-0AC22F626AC8}">
-        <File Id="filcTH7YcENOtsu.3xx11pmOZ0YDos" KeyPath="yes" Source="payload\Resources\SplashScreen@1.5x.png" />
-      </Component>
-      <Component Id="cmpyHSO6Rok_f7vtmXnJsNFp9XlCUs" Directory="RESOURCEFOLDER" Guid="{721C6996-98F3-4070-9376-FA4F3C781810}">
-        <File Id="filHVHOvlPWJIHi1ypDMigYuzABemI" KeyPath="yes" Source="payload\Resources\SplashScreen@2x.png" />
-      </Component>
-      <Component Id="cmpAiwEtv75cYO0UeGBlE35KPumTVk" Directory="RESOURCEFOLDER" Guid="{56930AC2-6D35-4EB8-B7EC-2A99054DEF49}">
-        <File Id="filKHt1VfeR4Z8vSrqHN6vksIJ2SwA" KeyPath="yes" Source="payload\Resources\SplashScreen@3x.png" />
-      </Component>
       <Component Id="cmp9KqXt_ED6TAMC0ueQDtTKvwE_xQ" Directory="RESOURCEFOLDER" Guid="{0829F13D-CC1C-459D-9A22-32B4C0D08C0F}">
         <File Id="filclDyVmpKikveP0oK4Fpjki5axRg" KeyPath="yes" Source="payload\Resources\sub_menu_arrow_off.png" />
       </Component>
