@@ -4,6 +4,7 @@
 
 #include "ICategoryIconMapper.h"
 #include <map>
+#include "Types.h"
 
 namespace ExampleApp
 {
