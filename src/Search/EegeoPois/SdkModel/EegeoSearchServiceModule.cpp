@@ -5,6 +5,7 @@
 #include "EegeoJsonParser.h"
 #include "EegeoSearchQueryFactory.h"
 #include "EegeoSearchService.h"
+#include "EegeoCategoryIconMapper.h"
 
 namespace ExampleApp
 {
@@ -24,13 +25,17 @@ namespace ExampleApp
                 : m_pEegeoSearchQueryFactory(NULL)
                 , m_pEegeoParser(NULL)
                 , m_pSearchService(NULL)
+                , m_pCategoryIconMapper(NULL)
                 {
                     m_pEegeoSearchQueryFactory = Eegeo_NEW(EegeoSearchQueryFactory)(webRequestFactory,
                                                                                     urlEncoder,
                                                                                     interiorInteractionModel,
                                                                                     serviceUrl,
                                                                                     apiKey);
-                    m_pEegeoParser = Eegeo_NEW(EegeoJsonParser)();
+
+                    m_pCategoryIconMapper = Eegeo_NEW(EegeoCategoryIconMapper)();
+
+                    m_pEegeoParser = Eegeo_NEW(EegeoJsonParser)(*m_pCategoryIconMapper);
                     
                     m_pSearchService = Eegeo_NEW(EegeoSearchService)(*m_pEegeoSearchQueryFactory,
                                                                         *m_pEegeoParser,
@@ -41,6 +46,7 @@ namespace ExampleApp
                 EegeoSearchServiceModule::~EegeoSearchServiceModule()
                 {
                     Eegeo_DELETE m_pSearchService;
+                    Eegeo_DELETE m_pCategoryIconMapper;
                     Eegeo_DELETE m_pEegeoParser;
                     Eegeo_DELETE m_pEegeoSearchQueryFactory;
                 }
