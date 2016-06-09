@@ -15,14 +15,10 @@ namespace ExampleApp
             {
                 IApplicationConfigurationParser& m_parser;
                 IApplicationConfigurationReader& m_reader;
-                const std::string m_productVersion;
-                const std::string m_buildNumber;
                 
             public:
                 ApplicationConfigurationService(IApplicationConfigurationParser& parser,
-                                                IApplicationConfigurationReader& reader,
-                                                const std::string& productVersion,
-                                                const std::string& buildNumber);
+                                                IApplicationConfigurationReader& reader);
                 
                 ApplicationConfiguration LoadConfiguration(const std::string& path);
             };

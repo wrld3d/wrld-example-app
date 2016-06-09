@@ -10,10 +10,12 @@ namespace ExampleApp
     {
         namespace TwitterFeed
         {
-            TwitterFeedModule::TwitterFeedModule(Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory)
+            TwitterFeedModule::TwitterFeedModule(
+                const std::string& twitterAuthCode,
+                Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory)
             : m_pTwitterFeedService(NULL)
             {
-                m_pTwitterFeedService = Eegeo_NEW(TwitterFeedService)(webLoadRequestFactory);
+                m_pTwitterFeedService = Eegeo_NEW(TwitterFeedService)(twitterAuthCode, webLoadRequestFactory);
             }
             
             TwitterFeedModule::~TwitterFeedModule()

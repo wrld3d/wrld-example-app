@@ -51,7 +51,6 @@
 #include "StreamingVolumeController.h"
 #include "GpsMarkerModule.h"
 #include "IGpsMarkerController.h"
-#include "ApiKey.h"
 #include "INetworkCapabilities.h"
 #include "ISearchServiceModule.h"
 #include "IMyPinsService.h"
@@ -186,7 +185,7 @@ namespace ExampleApp
     }
 
     MobileExampleApp::MobileExampleApp(
-        const std::string& apiKey,
+        const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
         Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
         Eegeo::Rendering::ScreenProperties& screenProperties,
         Eegeo::Location::ILocationService& locationService,
@@ -198,8 +197,7 @@ namespace ExampleApp
         ExampleAppMessaging::TMessageBus& messageBus,
         ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
         Net::SdkModel::INetworkCapabilities& networkCapabilities,
-        ExampleApp::Metrics::IMetricsService& metricsService,
-        const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
+        ExampleApp::Metrics::IMetricsService& metricsService,        
         Eegeo::IEegeoErrorHandler& errorHandler,
         Menu::View::IMenuReactionModel& menuReaction)
         : m_pGlobeCameraController(NULL)
@@ -267,9 +265,9 @@ namespace ExampleApp
         , m_pModalityIgnoredReactionModel(NULL)
         , m_pReactorIgnoredReactionModel(NULL)
     {
-        m_metricsService.BeginSession(ExampleApp::FlurryApiKey, EEGEO_PLATFORM_VERSION_NUMBER);
+        m_metricsService.BeginSession(m_applicationConfiguration.FlurryAppKey(), EEGEO_PLATFORM_VERSION_NUMBER);
 
-        m_pWorld = Eegeo_NEW(Eegeo::EegeoWorld)(apiKey,
+        m_pWorld = Eegeo_NEW(Eegeo::EegeoWorld)(applicationConfiguration.EegeoApiKey(),
                                                 m_platformAbstractions,
                                                 jpegLoader,
                                                 screenProperties,
@@ -336,7 +334,7 @@ namespace ExampleApp
                                                                                        Eegeo::Streaming::QuadTreeCube::MAX_DEPTH_TO_VISIT,
                                                                                        mapModule.GetEnvironmentFlatteningService());
         
-        CreateApplicationModelModules(nativeUIFactories, platformConfig.OptionsConfig.InteriorsAffectedByFlattening, apiKey);
+        CreateApplicationModelModules(nativeUIFactories, platformConfig.OptionsConfig.InteriorsAffectedByFlattening);
         
         m_pCameraTransitionController = Eegeo_NEW(ExampleApp::CameraTransitions::SdkModel::CameraTransitionController)(*m_pGlobeCameraController,
                                                                                                                        m_pInteriorsExplorerModule->GetInteriorsCameraController(),
@@ -391,8 +389,7 @@ namespace ExampleApp
     }
 
     void MobileExampleApp::CreateApplicationModelModules(Eegeo::UI::NativeUIFactories& nativeUIFactories,
-                                                         const bool interiorsAffectedByFlattening,
-                                                         const std::string& apiKey)
+                                                         const bool interiorsAffectedByFlattening)
     {
         Eegeo::EegeoWorld& world = *m_pWorld;
         
@@ -416,19 +413,18 @@ namespace ExampleApp
             m_searchServiceModules[Search::GeoNamesVendorName] = Eegeo_NEW(Search::GeoNames::SdkModel::GeoNamesSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
                                                                                                                                     m_platformAbstractions.GetUrlEncoder(),
                                                                                                                                     m_networkCapabilities,
-                                                                                                                                    ExampleApp::GeoNamesUserName);
+                                                                                                                                    m_applicationConfiguration.GeoNamesUserName());
         }
         const bool useEegeoPois = true;
         if(useEegeoPois)
         {
             std::vector<std::string> supportedCategories = Search::Yelp::SearchConstants::GetCategories();
-            const std::string eeGeoSearchServiceUrl = "http://poi.eegeo.com/v1";
             m_searchServiceModules[Search::EegeoVendorName] = Eegeo_NEW(Search::EegeoPois::SdkModel::EegeoSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
                                                                                                                                m_platformAbstractions.GetUrlEncoder(),
                                                                                                                                m_networkCapabilities,
                                                                                                                                supportedCategories,
-                                                                                                                               eeGeoSearchServiceUrl,
-                                                                                                                               apiKey,
+                                                                                                                               m_applicationConfiguration.EegeoSearchServiceUrl(),
+                                                                                                                               m_applicationConfiguration.EegeoApiKey(),
                                                                                                                                world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel()
                                                                                                                                );
         }
@@ -440,10 +436,10 @@ namespace ExampleApp
                 m_platformAbstractions.GetWebLoadRequestFactory(),
                 m_networkCapabilities,
                 m_platformAbstractions.GetUrlEncoder(),
-                YelpConsumerKey,
-                YelpConsumerSecret,
-                YelpOAuthToken,
-                YelpOAuthTokenSecret,
+                m_applicationConfiguration.YelpConsumerKey(),
+                m_applicationConfiguration.YelpConsumerSecret(),
+                m_applicationConfiguration.YelpOAuthToken(),
+                m_applicationConfiguration.YelpOAuthTokenSecret(),
                 m_platformAbstractions.GetFileIO()
                 );
         }
@@ -672,7 +668,8 @@ namespace ExampleApp
         
         InitialiseToursModules(mapModule, world, interiorsAffectedByFlattening);
         
-        m_pTwitterFeedModule = Eegeo_NEW(Social::TwitterFeed::TwitterFeedModule)(World().GetPlatformAbstractionModule().GetWebLoadRequestFactory());
+        m_pTwitterFeedModule = Eegeo_NEW(Social::TwitterFeed::TwitterFeedModule)(m_applicationConfiguration.TwitterAuthCode(),
+                                                                                 World().GetPlatformAbstractionModule().GetWebLoadRequestFactory());
         
         if (m_interiorsEnabled)
         {
