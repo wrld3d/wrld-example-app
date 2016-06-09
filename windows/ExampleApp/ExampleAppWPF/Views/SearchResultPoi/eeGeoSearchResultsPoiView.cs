@@ -27,31 +27,6 @@ namespace ExampleAppWPF
 
         private ControlClickHandler m_yelpReviewImageClickHandler;
         
-        //public string PhoneText
-        //{
-        //    get
-        //    {
-        //        return m_phoneText;
-        //    }
-        //    set
-        //    {
-        //        m_phoneText = value;
-        //        OnPropertyChanged("PhoneText");
-        //    }
-        //}
-        //public string AddressText
-        //{
-        //    get
-        //    {
-        //        return m_addressText;
-        //    }
-        //    set
-        //    {
-        //        m_addressText = value;
-        //        OnPropertyChanged("AddressText");
-        //    }
-        //}
-
         public string TitleText
         {
             get
@@ -139,9 +114,7 @@ namespace ExampleAppWPF
             m_closing = false;
 
             TitleText = model.Title;
-            //AddressText = model.Subtitle.Replace(",", Environment.NewLine);
-            //PhoneText = ;
-            HumanReadableCategoriesText = string.Join(Environment.NewLine, model.HumanReadableCategories) + model.Category;
+            HumanReadableCategoriesText = string.Join(Environment.NewLine, model.HumanReadableCategories);
             ReviewText = model.Subtitle;
             CategoryIcon = SearchResultPoiViewIconProvider.GetIconForCategory(model.Category);
 

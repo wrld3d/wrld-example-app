@@ -22,6 +22,28 @@ namespace ExampleApp
             {
                 namespace
                 {   
+                    auto SplitIntoTags(const std::string& str, char c)
+                    {
+                        std::vector<std::string> tags;
+                        unsigned previous_start = -1;
+
+                        for (unsigned i = 0; i < str.length(); ++i)
+                        {
+                            if (str[i] == c)
+                            {
+                                tags.push_back(str.substr(previous_start + 1, i - previous_start));
+                                previous_start = i;
+                            }
+                        }
+
+                        if (previous_start != str.length() - 1)
+                        {
+                            tags.push_back(str.substr(previous_start + 1));
+                        }
+
+                        return tags;
+                    }
+
                     Search::SdkModel::SearchResultModel ParseSearchResultFromJsonObject(const rapidjson::Value& json)
                     {
                         Eegeo::Space::LatLong location = Eegeo::Space::LatLong::FromDegrees(json["lat"].GetDouble(),
@@ -33,8 +55,9 @@ namespace ExampleApp
                         bool indoor = json["indoor"].GetBool();
                         Eegeo::Resources::Interiors::InteriorId interiorId(json["indoor_id"].GetString());
                         
-                        std::string category = json["category"].GetString();
-                        std::vector<std::string> categories;
+                        //TODO: Remove once model supports only tags
+                        std::string category = "misc";
+                        std::vector<std::string> tags = SplitIntoTags(json["tags"].GetString(), ' ');
                         
                         std::string userData = "";
                         
@@ -60,7 +83,7 @@ namespace ExampleApp
                                                                                interiorId,
                                                                                json["floor_id"].GetInt(),
                                                                                category,
-                                                                               categories,
+                                                                               tags,
                                                                                ExampleApp::Search::EegeoVendorName,
                                                                                userData,
                                                                                Eegeo::Helpers::Time::MillisecondsSinceEpoch());

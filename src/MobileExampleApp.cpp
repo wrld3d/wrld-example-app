@@ -422,7 +422,7 @@ namespace ExampleApp
         if(useEegeoPois)
         {
             std::vector<std::string> supportedCategories = Search::Yelp::SearchConstants::GetCategories();
-            const std::string eeGeoSearchServiceUrl = "http://poi.eegeo.com/v1";
+            const std::string eeGeoSearchServiceUrl = "http://poi-staging.eegeo.com/v1.1";
             m_searchServiceModules[Search::EegeoVendorName] = Eegeo_NEW(Search::EegeoPois::SdkModel::EegeoSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
                                                                                                                                m_platformAbstractions.GetUrlEncoder(),
                                                                                                                                m_networkCapabilities,
