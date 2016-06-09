@@ -21,7 +21,8 @@ namespace ExampleApp
             WeatherMenuModule::WeatherMenuModule(Eegeo::Helpers::IFileIO& fileIO,
                                                  VisualMap::SdkModel::IVisualMapService& visualMapService,
                                                  ExampleAppMessaging::TMessageBus& messageBus,
-                                                 Metrics::IMetricsService& metricsService)
+                                                 Metrics::IMetricsService& metricsService,
+                                                 const AppModes::SdkModel::IAppModeModel& appModeModel)
             {
                 m_pMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                 m_pMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pMenuModel);
@@ -43,7 +44,7 @@ namespace ExampleApp
                     Eegeo_ASSERT(false, "Failed to parse weatherstates.json definitions file.");
                 }
 
-                m_pWeatherController = Eegeo_NEW(WeatherController)(visualMapService);
+                m_pWeatherController = Eegeo_NEW(WeatherController)(visualMapService, appModeModel);
 
                 for(std::vector<WeatherMenuStateModel>::iterator it = weatherStates.begin(); it != weatherStates.end(); it++)
                 {
