@@ -40,7 +40,7 @@
                             </ScrollViewer>
                             <Button x:Name="AddImageButton" Content="Add Image" Width="240" Style="{StaticResource AddGalleryImageButton}"/>
                             <StackPanel Orientation="Horizontal" Height="50" Margin="0,30,0,0" DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
-                                <Button x:Name="ConfirmButton" Content="Create Report" Width="350" Style="{StaticResource ConfirmPINbutton}"/>
+                                <Button x:Name="ConfirmButton" Content="Create Pin" Width="350" Style="{StaticResource ConfirmPINbutton}"/>
                             </StackPanel>
                         </StackPanel>
                     </DockPanel>
