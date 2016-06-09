@@ -320,11 +320,13 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         
         float textInsetX;
         
+        const float textHeight = isHeader ? CellConstants::SectionHeaderCellHeight : CellConstants::SubSectionCellHeight;
+        
         if(document.HasMember("icon") && !isHeader)
         {
             const float imageSize = isHeader ? 36.0f : 26.0f;
             const float imageInsetX = isHeader? 4.0f : 6.0f;
-            const float imageInsetY = isHeader ? 2.0f : 8.0f;
+            const float imageInsetY = (textHeight*0.5f) - (imageSize*0.5f);
             
             textInsetX = imageSize + imageInsetX * 2.0f;
             
@@ -347,7 +349,6 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         
         const float textY = 0.0f;
         const float textWidth = [tableView getCellWidth] - textInsetX;
-        const float textHeight = isHeader ? CellConstants::SectionHeaderCellHeight : CellConstants::SubSectionCellHeight;
         
         cell.textLabel.text = [NSString stringWithUTF8String:name.c_str()];
         cell.textLabel.font = [UIFont systemFontOfSize: [self getTextLabelFontSize:isHeader]];
