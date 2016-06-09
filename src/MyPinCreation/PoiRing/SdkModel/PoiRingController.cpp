@@ -150,7 +150,7 @@ namespace ExampleApp
                         }
                     }
                     Eegeo::m44 sphereTransformMatrix; // Why is the controller constructing a transform matrix to pass it through to the renderable via the view?
-                    sphereTransformMatrix.Scale(m_ringRadius*2.0f); // This is a bit arse.
+                    sphereTransformMatrix.Scale(m_ringRadius*2.0f);
 
                     Eegeo::dv3 scaledPoint;
                     if(m_interiorsAffectedByFlattening)
