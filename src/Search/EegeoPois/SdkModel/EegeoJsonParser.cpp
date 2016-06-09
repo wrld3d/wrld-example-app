@@ -22,7 +22,29 @@ namespace ExampleApp
             {
                 namespace
                 {   
-                    Search::SdkModel::SearchResultModel ParseSearchResultFromJsonObject(const rapidjson::Value& json)
+                    std::vector<std::string> SplitIntoTags(const std::string& str, char c)
+                    {
+                        std::vector<std::string> tags;
+                        unsigned previous_start = -1;
+
+                        for (unsigned i = 0; i < str.length(); ++i)
+                        {
+                            if (str[i] == c)
+                            {
+                                tags.push_back(str.substr(previous_start + 1, i - previous_start));
+                                previous_start = i;
+                            }
+                        }
+
+                        if (previous_start != str.length() - 1)
+                        {
+                            tags.push_back(str.substr(previous_start + 1));
+                        }
+
+                        return tags;
+                    }
+
+                    Search::SdkModel::SearchResultModel ParseSearchResultFromJsonObject(const rapidjson::Value& json, const SearchResultPoi::SdkModel::ICategoryIconMapper& tagIconMapper)
                     {
                         Eegeo::Space::LatLong location = Eegeo::Space::LatLong::FromDegrees(json["lat"].GetDouble(),
                                                                                             json["lon"].GetDouble());
@@ -33,8 +55,9 @@ namespace ExampleApp
                         bool indoor = json["indoor"].GetBool();
                         Eegeo::Resources::Interiors::InteriorId interiorId(json["indoor_id"].GetString());
                         
-                        std::string category = json["category"].GetString();
-                        std::vector<std::string> categories;
+                        std::vector<std::string> tags = SplitIntoTags(json["tags"].GetString(), ' ');
+
+                        std::string category = tagIconMapper.GetIconForCategories(tags);
                         
                         std::string userData = "";
                         
@@ -60,13 +83,19 @@ namespace ExampleApp
                                                                                interiorId,
                                                                                json["floor_id"].GetInt(),
                                                                                category,
-                                                                               categories,
+                                                                               tags,
                                                                                ExampleApp::Search::EegeoVendorName,
                                                                                userData,
                                                                                Eegeo::Helpers::Time::MillisecondsSinceEpoch());
                     }
                 }
                 
+                EegeoJsonParser::EegeoJsonParser(const SearchResultPoi::SdkModel::ICategoryIconMapper &categoryIconMapper)
+                :m_categoryIconMapper(categoryIconMapper)
+                {
+
+                }
+
                 void EegeoJsonParser::ParseEegeoQueryResults(const std::string& serialized,
                                                                  std::vector<Search::SdkModel::SearchResultModel>& out_results)
                 {
@@ -79,7 +108,7 @@ namespace ExampleApp
                         for(int i = 0; i < numEntries; ++i)
                         {
                             const rapidjson::Value& json = document[i];
-                            Search::SdkModel::SearchResultModel result(ParseSearchResultFromJsonObject(json));
+                            Search::SdkModel::SearchResultModel result(ParseSearchResultFromJsonObject(json, m_categoryIconMapper));
                             out_results.push_back(result);
                         }
                     }
