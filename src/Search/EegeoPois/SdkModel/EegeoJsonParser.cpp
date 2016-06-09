@@ -22,7 +22,7 @@ namespace ExampleApp
             {
                 namespace
                 {   
-                    auto SplitIntoTags(const std::string& str, char c)
+                    std::vector<std::string> SplitIntoTags(const std::string& str, char c)
                     {
                         std::vector<std::string> tags;
                         unsigned previous_start = -1;
