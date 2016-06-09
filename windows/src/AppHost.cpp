@@ -95,25 +95,6 @@
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
 
-namespace
-{
-	typedef ExampleApp::ApplicationConfig::ApplicationConfiguration ApplicationConfiguration;
-
-	ApplicationConfiguration LoadConfiguration(WindowsNativeState& state)
-	{
-		std::set<std::string> customAsssetDirectories;
-		customAsssetDirectories.insert("ApplicationConfigs");
-
-		WindowsFileIO tempFileIO(&state, customAsssetDirectories);
-
-        ExampleApp::ApplicationConfig::SdkModel::WindowsApplicationConfigurationVersionProvider versionProvider;
-
-		ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule applicationConfigurationModule(tempFileIO, versionProvider);
-
-		return applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration(ExampleApp::ApplicationConfigurationPath);
-	}
-}
-
 AppHost::AppHost(
     WindowsNativeState& nativeState,
     Eegeo::Rendering::ScreenProperties screenProperties,
@@ -162,7 +143,6 @@ AppHost::AppHost(
     Eegeo::TtyHandler::TtyEnabled = true;
     Eegeo::AssertHandler::BreakOnAssert = true;
 
-	const ApplicationConfiguration& applicationConfig = LoadConfiguration(nativeState);
 
     m_pWindowsLocationService = Eegeo_NEW(WindowsLocationService)(&nativeState);
 
@@ -172,22 +152,26 @@ AppHost::AppHost(
     customApplicationAssetDirectories.insert("SearchResultOnMap");
     customApplicationAssetDirectories.insert("ApplicationConfigs");
 
+    const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration = ExampleApp::ApplicationConfig::SdkModel::LoadAppConfig(
+        WindowsFileIO(&nativeState, customApplicationAssetDirectories),
+        ExampleApp::ApplicationConfig::SdkModel::WindowsApplicationConfigurationVersionProvider(),
+        ExampleApp::ApplicationConfigurationPath);
+
+
     m_pWindowsPlatformAbstractionModule = Eegeo_NEW(Eegeo::Windows::WindowsPlatformAbstractionModule)(
         nativeState,
         *m_pJpegLoader,
         display,
         resourceBuildShareContext,
         shareSurface,
-        ExampleApp::ApiKey,
+        applicationConfiguration.EegeoApiKey(),
         customApplicationAssetDirectories);
 
     Eegeo::EffectHandler::Initialise();
 
-    const std::string deviceModel = nativeState.GetDeviceModel();
-    Eegeo::Config::PlatformConfig platformConfig = Eegeo::Windows::WindowsPlatformConfigBuilder(deviceModel).Build();
+    Eegeo::Windows::WindowsPlatformConfigBuilder windowsPlatformConfigBuilder(nativeState.GetDeviceModel());
 
-    platformConfig.CoverageTreeConfig.ManifestUrl = applicationConfig.CoverageTreeManifestURL();
-    platformConfig.CityThemesConfig.StreamedManifestUrl = applicationConfig.ThemeManifestURL();
+    const Eegeo::Config::PlatformConfig& platformConfiguration = ExampleApp::ApplicationConfig::SdkModel::BuildPlatformConfig(windowsPlatformConfigBuilder, applicationConfiguration);
 
     const Eegeo::Windows::Input::WindowsInputProcessorConfig& windowsInputProcessorConfig = Eegeo::Windows::Input::WindowsInputProcessor::DefaultConfig();
     m_pInputProcessor = Eegeo_NEW(Eegeo::Windows::Input::WindowsInputProcessor)(&m_inputHandler, m_nativeState.GetWindow(), screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), windowsInputProcessorConfig);
@@ -211,20 +195,19 @@ AppHost::AppHost(
 
 
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
-        ExampleApp::ApiKey,
+        applicationConfiguration,
         *m_pWindowsPlatformAbstractionModule,
         screenProperties,
         *m_pWindowsLocationService,
         m_WindowsNativeUIFactories,
-        platformConfig,
+        platformConfiguration,
         *m_pJpegLoader,
         *m_pInitialExperienceModule,
         *m_pWindowsPersistentSettingsModel,
         m_messageBus,
         m_sdkDomainEventBus,
         *m_pNetworkCapabilities,
-        *m_pWindowsFlurryMetricsService,
-        applicationConfig,
+        *m_pWindowsFlurryMetricsService,        
         *this,
         *m_pMenuReaction);
 

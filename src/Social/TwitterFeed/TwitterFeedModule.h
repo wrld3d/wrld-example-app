@@ -18,7 +18,7 @@ namespace ExampleApp
             private:
                 ITwitterFeedService* m_pTwitterFeedService;
             public:
-                TwitterFeedModule(Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory);
+                TwitterFeedModule(const std::string& twitterAuthCode, Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory);
                 ~TwitterFeedModule();
                 
                 ITwitterFeedService& GetTwitterFeedService() const;

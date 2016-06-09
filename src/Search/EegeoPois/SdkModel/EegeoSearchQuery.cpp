@@ -3,7 +3,6 @@
 #include "EegeoSearchQuery.h"
 #include "IWebLoadRequestFactory.h"
 #include "IWebLoadRequest.h"
-#include "ApiKey.h"
 
 #include <sstream>
 #include <iomanip>

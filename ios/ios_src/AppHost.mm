@@ -154,7 +154,8 @@ AppHost::AppHost(
     
     m_pMenuReactionModel = Eegeo_NEW(ExampleApp::Menu::View::IOSMenuReactionModel)();
     
-    m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(ExampleApp::ApiKey,
+    m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
+			 applicationConfiguration,
              *m_piOSPlatformAbstractionModule,
              screenProperties,
              *m_piOSLocationService,
@@ -166,8 +167,7 @@ AppHost::AppHost(
              m_messageBus,
              m_sdkModelDomainEventBus,
              *m_pNetworkCapabilities,
-             m_iOSFlurryMetricsService,
-             applicationConfiguration,
+             m_iOSFlurryMetricsService,             
              *this,
              *m_pMenuReactionModel);
 

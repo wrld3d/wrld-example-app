@@ -7,6 +7,7 @@
 #include "IApplicationConfigurationVersionProvider.h"
 #include "ConfigSections.h"
 #include "IPlatformConfigBuilder.h"
+#include "ApiKey.h"
 
 namespace ExampleApp
 {
@@ -21,19 +22,34 @@ namespace ExampleApp
                     const std::string& productVersion = applicationConfigurationVersionProvider.GetProductVersionString();
                     const std::string& buildNumber = applicationConfigurationVersionProvider.GetProductVersionString();
                     const std::string& combinedVersionString = productVersion + "." + buildNumber;
+                    const std::string emptyGoogleAnalyticsReferrerToken;
+                    const std::string eegeoSearchServiceUrl = "http://poi.eegeo.com/v1";
+                    const std::string emptyMyPinsWebServiceUrl;
+                    const std::string emptyMyPinsWebServiceAuthToken;
 
                     return ApplicationConfiguration ("Eegeo Example App", 
-                        Eegeo::Space::LatLongAltitude(0.0f, 0.0f, 0.0f),
-                        1000.f,
-                        0.f,
-                        false,
-                        "",
+                        ExampleApp::ApiKey,
                         productVersion,
                         buildNumber,
                         combinedVersionString,
                         Eegeo::Config::CoverageTreeManifestUrlDefault,
                         Eegeo::Config::CityThemesManifestUrlDefault,
-                        "Textures/EmbeddedTheme");
+                        "Textures/EmbeddedTheme",
+                        Eegeo::Space::LatLongAltitude(0.0f, 0.0f, 0.0f),
+                        1000.f,
+                        0.f,
+                        false,
+                        emptyGoogleAnalyticsReferrerToken,
+                        ExampleApp::FlurryApiKey,
+                        ExampleApp::YelpConsumerKey,
+                        ExampleApp::YelpConsumerSecret,
+                        ExampleApp::YelpOAuthToken,
+                        ExampleApp::YelpOAuthTokenSecret,
+                        ExampleApp::GeoNamesUserName,
+                        eegeoSearchServiceUrl,
+                        emptyMyPinsWebServiceUrl,
+                        emptyMyPinsWebServiceAuthToken,
+                        ExampleApp::TwitterAuthCode);
                 }
             }
             

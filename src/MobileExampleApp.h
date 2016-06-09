@@ -175,8 +175,7 @@ namespace ExampleApp
         const bool m_interiorsEnabled;
 
         void CreateApplicationModelModules(Eegeo::UI::NativeUIFactories& nativeUIFactories,
-                                           const bool interiorsAffectedByFlattening,
-                                           const std::string& apiKey);
+                                           const bool interiorsAffectedByFlattening);
 
         void DestroyApplicationModelModules();
 
@@ -210,7 +209,7 @@ namespace ExampleApp
         const bool IsTourCameraActive() const;
 
     public:
-        MobileExampleApp(const std::string& apiKey,
+        MobileExampleApp(const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
                          Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
                          Eegeo::Rendering::ScreenProperties& screenProperties,
                          Eegeo::Location::ILocationService& locationService,
@@ -222,8 +221,7 @@ namespace ExampleApp
                          ExampleAppMessaging::TMessageBus& messageBus,
                          ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                          ExampleApp::Net::SdkModel::INetworkCapabilities& networkCapabilities,
-                         ExampleApp::Metrics::IMetricsService& metricsService,
-                         const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
+                         ExampleApp::Metrics::IMetricsService& metricsService,                         
                          Eegeo::IEegeoErrorHandler& errorHandler,
                          Menu::View::IMenuReactionModel& menuReaction);
 

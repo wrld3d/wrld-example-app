@@ -148,6 +148,11 @@ AppHost::AppHost(
     std::set<std::string> customApplicationAssetDirectories;
     customApplicationAssetDirectories.insert("SearchResultOnMap");
     customApplicationAssetDirectories.insert("ApplicationConfigs");
+	
+    const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration = ExampleApp::ApplicationConfig::SdkModel::LoadAppConfig(
+    		AndroidFileIO(&nativeState, customApplicationAssetDirectories),
+    		ExampleApp::ApplicationConfig::SdkModel::AndroidApplicationConfigurationVersionProvider(nativeState),
+    		ExampleApp::ApplicationConfigurationPath);
 
     m_pAndroidPlatformAbstractionModule = Eegeo_NEW(Eegeo::Android::AndroidPlatformAbstractionModule)(
             nativeState,
@@ -159,13 +164,6 @@ AppHost::AppHost(
             customApplicationAssetDirectories);
 
     Eegeo::EffectHandler::Initialise();
-
-    ExampleApp::ApplicationConfig::SdkModel::AndroidApplicationConfigurationVersionProvider androidVersionProvider(nativeState);
-
-    const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration = ExampleApp::ApplicationConfig::SdkModel::LoadAppConfig(
-    		m_pAndroidPlatformAbstractionModule->GetFileIO(),
-    		androidVersionProvider,
-    		ExampleApp::ApplicationConfigurationPath);
 
     std::string deviceModel = std::string(nativeState.deviceModel, strlen(nativeState.deviceModel));
     Eegeo::Android::AndroidPlatformConfigBuilder androidPlatformConfigBuilder(deviceModel);
