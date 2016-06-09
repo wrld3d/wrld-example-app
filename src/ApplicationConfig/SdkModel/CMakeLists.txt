@@ -1,8 +1,6 @@
 set(headers ${headers} ../src/ApplicationConfig/SdkModel
 )
 set(currsources
-  ../src/ApplicationConfig/SdkModel/ApplicationConfigurationBuilder.cpp
-  ../src/ApplicationConfig/SdkModel/ApplicationConfigurationBuilder.h
   ../src/ApplicationConfig/SdkModel/ApplicationConfigurationJsonParser.cpp
   ../src/ApplicationConfig/SdkModel/ApplicationConfigurationJsonParser.h
   ../src/ApplicationConfig/SdkModel/ApplicationConfigurationModule.cpp
@@ -12,7 +10,6 @@ set(currsources
   ../src/ApplicationConfig/SdkModel/ApplicationConfigurationService.cpp
   ../src/ApplicationConfig/SdkModel/ApplicationConfigurationService.h
   ../src/ApplicationConfig/SdkModel/CMakeLists.txt
-  ../src/ApplicationConfig/SdkModel/IApplicationConfigurationBuilder.h
   ../src/ApplicationConfig/SdkModel/IApplicationConfigurationModule.h
   ../src/ApplicationConfig/SdkModel/IApplicationConfigurationParser.h
   ../src/ApplicationConfig/SdkModel/IApplicationConfigurationReader.h

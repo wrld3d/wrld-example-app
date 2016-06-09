@@ -9,7 +9,6 @@
 #include "IWebLoadRequestFactory.h"
 #include "IWebLoadRequest.h"
 #include "WebLoadRequestCompletionCallback.h"
-#include "ApiKey.h"
 
 namespace ExampleApp
 {
@@ -33,8 +32,11 @@ namespace ExampleApp
             const std::string TwitterFeedService::CountParameter = "count";
             const std::string TwitterFeedService::ScreenNameParameter = "screen_name";
             
-            TwitterFeedService::TwitterFeedService(Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory)
-            : m_accessToken("")
+            TwitterFeedService::TwitterFeedService(
+                const std::string& twitterAuthCode, 
+                Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory)
+            : m_twitterAuthCode(twitterAuthCode)
+            , m_accessToken("")
             , m_webLoadRequestFactory(webLoadRequestFactory)
             , m_pCurrentAuthRequest(NULL)
             , m_pCurrentTimeLineRequest(NULL)
@@ -72,7 +74,7 @@ namespace ExampleApp
             {
                 m_pCurrentAuthRequest = m_webLoadRequestFactory.Begin(Eegeo::Web::HttpVerbs::POST, TwitterAuthUrl, *m_pAuthCallback)
                         .AddFormData(GrantTypeKey, GrantTypeValue)
-                        .AddHeader(TwitterAuthKey, TwitterAuthValue + TwitterAuthCode)
+                        .AddHeader(TwitterAuthKey, TwitterAuthValue + m_twitterAuthCode)
                         .AddHeader(ContentTypeKey, ContentTypeValue).Build();
                 
                 m_pCurrentAuthRequest->Load();

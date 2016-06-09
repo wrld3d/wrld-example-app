@@ -6,6 +6,7 @@
 #include "IApplicationConfigurationModule.h"
 #include "ApplicationConfig.h"
 #include "IFileIO.h"
+#include "Config.h"
 
 namespace ExampleApp
 {
@@ -18,17 +19,23 @@ namespace ExampleApp
                 IApplicationConfigurationService* m_pApplicationConfigurationService;
                 IApplicationConfigurationReader* m_pApplicationConfigurationReader;
                 IApplicationConfigurationParser* m_pApplicationConfigurationParser;
-                IApplicationConfigurationBuilder* m_pApplicationConfigurationBuilder;
                 
             public:
                 ApplicationConfigurationModule(Eegeo::Helpers::IFileIO& fileIO,
-                                               const std::string& productVersion,
-                                               const std::string& buildNumber);
+                                               const IApplicationConfigurationVersionProvider& applicationConfigurationVersionProvider);
                 
                 ~ApplicationConfigurationModule();
                 
                 IApplicationConfigurationService& GetApplicationConfigurationService();
             };
+            
+            ApplicationConfig::ApplicationConfiguration LoadAppConfig(Eegeo::Helpers::IFileIO& fileIO,
+                                                                      ApplicationConfig::SdkModel::IApplicationConfigurationVersionProvider& applicationConfigurationVersionProvider,
+                                                                      const std::string& configFilePath
+                                                                      );
+            
+            Eegeo::Config::PlatformConfig BuildPlatformConfig(Eegeo::Config::IPlatformConfigBuilder& platformConfigBuilder,
+                                                              const ApplicationConfiguration& appConfig);
         }
     }
 }

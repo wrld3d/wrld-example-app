@@ -53,6 +53,7 @@ namespace ExampleApp
                 
                 std::map<std::string, TweetRepository*> m_repositoryMap;
                 
+                const std::string m_twitterAuthCode;
                 std::string m_accessToken;
                 
                 Eegeo::Web::IWebLoadRequestFactory& m_webLoadRequestFactory;
@@ -74,7 +75,7 @@ namespace ExampleApp
                 void ClearAccountNameQueue();
                 
             public:
-                TwitterFeedService(Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory);
+                TwitterFeedService(const std::string& twitterAuthCode, Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory);
                 ~TwitterFeedService();
                 
                 void LoadTimeline(const std::string& userId);

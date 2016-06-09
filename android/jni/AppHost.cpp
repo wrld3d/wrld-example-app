@@ -88,29 +88,23 @@
 #include "ConnectivityChangedViewMessage.h"
 #include "WebConnectivityValidator.h"
 #include "AndroidMenuReactionModel.h"
+#include "ApplicationConfigurationModule.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
 
 namespace
 {
-    typedef ExampleApp::ApplicationConfig::ApplicationConfiguration ApplicationConfiguration;
+	ExampleApp::ApplicationConfig::ApplicationConfiguration LoadApplicationConfiguration(AndroidNativeState& nativeState, const std::set<std::string>& customApplicationAssetDirectories)
+	{
+	    AndroidFileIO tempFileIO(&nativeState, customApplicationAssetDirectories);
+	    ExampleApp::ApplicationConfig::SdkModel::AndroidApplicationConfigurationVersionProvider versionProvider(nativeState);
 
-    ApplicationConfiguration LoadConfiguration(AndroidNativeState& state)
-    {
-        // SJM -- this is kinda fail, we would like to get the platform file IO to load the API key but need the API key
-        // to create a file IO instance (due to coarseness of AndroidPlatformAbstractionModule).
-        std::set<std::string> customApplicationAssetDirectories;
-        customApplicationAssetDirectories.insert("ApplicationConfigs");
-
-        AndroidFileIO tempFileIO(&state, customApplicationAssetDirectories);
-
-        ExampleApp::ApplicationConfig::SdkModel::AndroidApplicationConfigurationVersionProvider versionProvider(state);
-        ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule applicationConfigurationModule(tempFileIO,
-        		versionProvider.GetProductVersionString(),
-        		versionProvider.GetBuildNumberString());
-        return applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration(ExampleApp::ApplicationConfigurationPath);
-    }
+	    return ExampleApp::ApplicationConfig::SdkModel::LoadAppConfig(
+	    		tempFileIO,
+	    		versionProvider,
+	    		ExampleApp::ApplicationConfigurationPath);
+	}
 }
 
 AppHost::AppHost(
@@ -169,29 +163,23 @@ AppHost::AppHost(
     customApplicationAssetDirectories.insert("SearchResultOnMap");
     customApplicationAssetDirectories.insert("ApplicationConfigs");
 
-    ApplicationConfiguration config(LoadConfiguration(nativeState));
-
+    const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration = LoadApplicationConfiguration(nativeState, customApplicationAssetDirectories);
+	
     m_pAndroidPlatformAbstractionModule = Eegeo_NEW(Eegeo::Android::AndroidPlatformAbstractionModule)(
             nativeState,
             *m_pJpegLoader,
             display,
             resourceBuildShareContext,
             shareSurface,
-            ExampleApp::ApiKey,
+            applicationConfiguration.EegeoApiKey(),
             customApplicationAssetDirectories);
 
     Eegeo::EffectHandler::Initialise();
 
     std::string deviceModel = std::string(nativeState.deviceModel, strlen(nativeState.deviceModel));
-    Eegeo::Config::PlatformConfig platformConfig = Eegeo::Android::AndroidPlatformConfigBuilder(deviceModel).Build();
+    Eegeo::Android::AndroidPlatformConfigBuilder androidPlatformConfigBuilder(deviceModel);
 
-    platformConfig.CoverageTreeConfig.ManifestUrl = config.CoverageTreeManifestURL();
-    platformConfig.CityThemesConfig.StreamedManifestUrl = config.ThemeManifestURL();
-
-    platformConfig.CityThemesConfig.EmbeddedThemeManifestFile = "embedded_manifest.txt";
-    platformConfig.CityThemesConfig.EmbeddedThemeTexturePath = "Textures";
-    platformConfig.CityThemesConfig.EmbeddedThemeNameContains = "Summer";
-    platformConfig.CityThemesConfig.EmbeddedThemeStateName = "DayDefault";
+    const Eegeo::Config::PlatformConfig& platformConfiguration = ExampleApp::ApplicationConfig::SdkModel::BuildPlatformConfig(androidPlatformConfigBuilder, applicationConfiguration);
 
     m_pInputProcessor = Eegeo_NEW(Eegeo::Android::Input::AndroidInputProcessor)(&m_inputHandler, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
 
@@ -211,12 +199,12 @@ AppHost::AppHost(
     m_pMenuReactionModel = Eegeo_NEW(ExampleApp::Menu::View::AndroidMenuReactionModel)();
 
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
-                 ExampleApp::ApiKey,
+    			 applicationConfiguration,
                  *m_pAndroidPlatformAbstractionModule,
                  screenProperties,
                  *m_pAndroidLocationService,
                  m_androidNativeUIFactories,
-                 platformConfig,
+                 platformConfiguration,
                  *m_pJpegLoader,
                  *m_pInitialExperienceModule,
                  m_androidPersistentSettingsModel,
@@ -224,7 +212,6 @@ AppHost::AppHost(
                  m_sdkDomainEventBus,
                  *m_pNetworkCapabilities,
                  *m_pAndroidFlurryMetricsService,
-                 config,
                  *this,
                  *m_pMenuReactionModel);
 

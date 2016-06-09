@@ -6,7 +6,6 @@
 #include "YelpSearchService.h"
 #include "YelpCategoryMapper.h"
 #include "YelpSearchConstants.h"
-#include "ApiKey.h"
 #include "YelpSearchQueryFactory.h"
 #include "YelpBusinessQueryFactory.h"
 

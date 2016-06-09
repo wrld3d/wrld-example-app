@@ -2,7 +2,6 @@
 
 #include "document.h"
 #include "ApplicationConfigurationJsonParser.h"
-#include "IApplicationConfigurationBuilder.h"
 #include "MathFunc.h"
 #include "ConfigSections.h"
 
@@ -12,8 +11,24 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            ApplicationConfigurationJsonParser::ApplicationConfigurationJsonParser(IApplicationConfigurationBuilder& builder)
-            : m_builder(builder)
+            namespace
+            {
+                std::string ParseStringOrDefault(rapidjson::Document& document, const std::string& key, const std::string& defaultValue)
+                {
+                    if (document.HasMember(key.c_str()))
+                    {
+                        const std::string& value = document[key.c_str()].GetString();
+                        if (!value.empty())
+                        {
+                            return value;
+                        }
+                    }
+                    return defaultValue;
+                }
+            }
+
+            ApplicationConfigurationJsonParser::ApplicationConfigurationJsonParser(const ApplicationConfiguration& defaultConfig)
+            : m_defaultConfig(defaultConfig)
             {
                 
             }
@@ -23,41 +38,65 @@ namespace ExampleApp
                 rapidjson::Document document;
                 
                 const bool hasParseError(document.Parse<0>(serialized.c_str()).HasParseError());
-                Eegeo_ASSERT(!hasParseError);
-                
-                Eegeo_ASSERT(document.HasMember("Name"));
-                m_builder.SetApplicationName(document["Name"].GetString());
-                
+                Eegeo_ASSERT(!hasParseError, "unable to parse app configuration");
+
                 Eegeo_ASSERT(document.HasMember("StartLocationLatitude"));
                 Eegeo_ASSERT(document.HasMember("StartLocationLongitude"));
                 Eegeo_ASSERT(document.HasMember("StartLocationAltitude"));
-                m_builder.SetStartInterestPointLocation(Eegeo::Space::LatLongAltitude::FromDegrees(document["StartLocationLatitude"].GetDouble(),
-                                                                                                   document["StartLocationLongitude"].GetDouble(),
-                                                                                                   document["StartLocationAltitude"].GetDouble()));
-                
                 Eegeo_ASSERT(document.HasMember("StartLocationDistance"));
-                m_builder.SetStartDistanceFromInterestPoint(static_cast<float>(document["StartLocationDistance"].GetDouble()));
-                
                 Eegeo_ASSERT(document.HasMember("StartLocationOrientationDegrees"));
-                m_builder.SetStartOrientationAboutInterestPoint(static_cast<float>(document["StartLocationOrientationDegrees"].GetDouble()));
-                
                 Eegeo_ASSERT(document.HasMember("TryStartAtGpsLocation"));
-                m_builder.SetTryStartAtGpsLocation(document["TryStartAtGpsLocation"].GetBool());
                 
-                Eegeo_ASSERT(document.HasMember("GoogleAnalyticsReferrerToken"));
-                m_builder.SetGoogleAnalyticsReferrerToken(document["GoogleAnalyticsReferrerToken"].GetString());
+                const Eegeo::Space::LatLongAltitude& lla = Eegeo::Space::LatLongAltitude::FromDegrees(document["StartLocationLatitude"].GetDouble(),
+                                                                                                   document["StartLocationLongitude"].GetDouble(),
+                                                                                                   document["StartLocationAltitude"].GetDouble());
+                
+                const float startDistanceFromInterestPoint = static_cast<float>(document["StartLocationDistance"].GetDouble());
+                const float startOrientationAboutInterestPoint = static_cast<float>(document["StartLocationOrientationDegrees"].GetDouble());
+                const bool tryStartAtGpsLocation = document["TryStartAtGpsLocation"].GetBool();
 
-                if (document.HasMember("CoverageTreeManifestURL"))
-                {
-                    m_builder.SetCoverageTreeManifestURL(document["CoverageTreeManifestURL"].GetString());
-                }
-                
-                if (document.HasMember("ThemeManifestURL"))
-                {
-                    m_builder.SetThemeManifestURL(document["ThemeManifestURL"].GetString());
-                }
-                
-                return m_builder.Build();
+                const std::string& name = ParseStringOrDefault(document, "Name", m_defaultConfig.Name());
+                const std::string& eegeoApiKey = ParseStringOrDefault(document, "EegeoApiKey", m_defaultConfig.EegeoApiKey());                
+                const std::string& coverageTreeManifestURL = ParseStringOrDefault(document, "CoverageTreeManifestURL", m_defaultConfig.CoverageTreeManifestURL());
+                const std::string& themeManifestURL = ParseStringOrDefault(document, "ThemeManifestURL", m_defaultConfig.ThemeManifestURL());
+                const std::string& embeddedThemeTexturePath = ParseStringOrDefault(document, "EmbeddedThemeTexturePath", m_defaultConfig.EmbeddedThemeTexturePath());
+                const std::string& googleAnalyticsReferrerToken = ParseStringOrDefault(document, "GoogleAnalyticsReferrerToken", m_defaultConfig.GoogleAnalyticsReferrerToken());
+                const std::string& flurryAppKey = ParseStringOrDefault(document, "FlurryAppKey", m_defaultConfig.FlurryAppKey());
+                const std::string& yelpConsumerKey = ParseStringOrDefault(document, "YelpConsumerKey", m_defaultConfig.YelpConsumerKey());
+                const std::string& yelpConsumerSecret = ParseStringOrDefault(document, "YelpConsumerSecret", m_defaultConfig.YelpConsumerSecret());
+                const std::string& yelpOAuthToken = ParseStringOrDefault(document, "YelpOAuthToken", m_defaultConfig.YelpOAuthToken());
+                const std::string& yelpOAuthTokenSecret = ParseStringOrDefault(document, "YelpOAuthTokenSecret", m_defaultConfig.YelpOAuthTokenSecret());
+                const std::string& geoNamesUserName = ParseStringOrDefault(document, "GeoNamesUserName", m_defaultConfig.GeoNamesUserName());
+                const std::string& eegeoSearchServiceUrl = ParseStringOrDefault(document, "EegeoSearchServiceUrl", m_defaultConfig.EegeoSearchServiceUrl());
+                const std::string& myPinsWebServiceUrl = ParseStringOrDefault(document, "MyPinsWebServiceUrl", m_defaultConfig.MyPinsWebServiceUrl());
+                const std::string& myPinsWebServiceAuthToken = ParseStringOrDefault(document, "MyPinsWebServiceAuthToken", m_defaultConfig.MyPinsWebServiceAuthToken());
+                const std::string& twitterAuthCode = ParseStringOrDefault(document, "TwitterAuthCode", m_defaultConfig.TwitterAuthCode());
+
+                return ApplicationConfiguration(
+                    name,
+                    eegeoApiKey,
+                    m_defaultConfig.ProductVersion(),
+                    m_defaultConfig.BuildNumber(),
+                    m_defaultConfig.CombinedVersionString(),
+                    coverageTreeManifestURL,
+                    themeManifestURL,
+                    embeddedThemeTexturePath,
+                    lla,
+                    startDistanceFromInterestPoint,
+                    startOrientationAboutInterestPoint,
+                    tryStartAtGpsLocation,
+                    googleAnalyticsReferrerToken,
+                    flurryAppKey,
+                    yelpConsumerKey,
+                    yelpConsumerSecret,
+                    yelpOAuthToken,
+                    yelpOAuthTokenSecret,
+                    geoNamesUserName,
+                    eegeoSearchServiceUrl,
+                    myPinsWebServiceUrl,
+                    myPinsWebServiceAuthToken,
+                    twitterAuthCode
+                );
             }
         }
     }

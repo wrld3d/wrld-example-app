@@ -3,7 +3,6 @@
 #include "EegeoInteriorSearchQuery.h"
 #include "IWebLoadRequestFactory.h"
 #include "IWebLoadRequest.h"
-#include "ApiKey.h"
 #include "InteriorId.h"
 
 #include <sstream>
