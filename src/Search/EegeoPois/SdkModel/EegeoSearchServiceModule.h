@@ -11,6 +11,7 @@
 #include "NetIncludes.h"
 #include "Search.h"
 #include "Interiors.h"
+#include "ICategoryIconMapper.h"
 
 #include <vector>
 #include <string>
@@ -29,6 +30,8 @@ namespace ExampleApp
                     IEegeoSearchQueryFactory* m_pEegeoSearchQueryFactory;
                     IEegeoParser* m_pEegeoParser;
                     Search::SdkModel::ISearchService* m_pSearchService;
+
+                    SearchResultPoi::SdkModel::ICategoryIconMapper *m_pCategoryIconMapper;
                 public:
                     EegeoSearchServiceModule(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                              Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,

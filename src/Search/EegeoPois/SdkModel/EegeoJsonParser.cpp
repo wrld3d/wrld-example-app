@@ -44,7 +44,7 @@ namespace ExampleApp
                         return tags;
                     }
 
-                    Search::SdkModel::SearchResultModel ParseSearchResultFromJsonObject(const rapidjson::Value& json)
+                    Search::SdkModel::SearchResultModel ParseSearchResultFromJsonObject(const rapidjson::Value& json, const SearchResultPoi::SdkModel::ICategoryIconMapper& tagIconMapper)
                     {
                         Eegeo::Space::LatLong location = Eegeo::Space::LatLong::FromDegrees(json["lat"].GetDouble(),
                                                                                             json["lon"].GetDouble());
@@ -55,9 +55,9 @@ namespace ExampleApp
                         bool indoor = json["indoor"].GetBool();
                         Eegeo::Resources::Interiors::InteriorId interiorId(json["indoor_id"].GetString());
                         
-                        //TODO: Remove once model supports only tags
-                        std::string category = "misc";
                         std::vector<std::string> tags = SplitIntoTags(json["tags"].GetString(), ' ');
+
+                        std::string category = tagIconMapper.GetIconForCategories(tags);
                         
                         std::string userData = "";
                         
@@ -90,6 +90,12 @@ namespace ExampleApp
                     }
                 }
                 
+                EegeoJsonParser::EegeoJsonParser(const SearchResultPoi::SdkModel::ICategoryIconMapper &categoryIconMapper)
+                :m_categoryIconMapper(categoryIconMapper)
+                {
+
+                }
+
                 void EegeoJsonParser::ParseEegeoQueryResults(const std::string& serialized,
                                                                  std::vector<Search::SdkModel::SearchResultModel>& out_results)
                 {
@@ -102,7 +108,7 @@ namespace ExampleApp
                         for(int i = 0; i < numEntries; ++i)
                         {
                             const rapidjson::Value& json = document[i];
-                            Search::SdkModel::SearchResultModel result(ParseSearchResultFromJsonObject(json));
+                            Search::SdkModel::SearchResultModel result(ParseSearchResultFromJsonObject(json, m_categoryIconMapper));
                             out_results.push_back(result);
                         }
                     }
