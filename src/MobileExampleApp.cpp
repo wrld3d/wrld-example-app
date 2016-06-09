@@ -1091,6 +1091,7 @@ namespace ExampleApp
         }
 
         m_pNavigationService->Update(dt);
+        m_pInteriorsNavigationService->Update(dt);
         
         if(ToursEnabled())
         {
