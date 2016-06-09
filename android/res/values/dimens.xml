@@ -11,4 +11,6 @@
     <dimen name="menu_section_divider_height">6dp</dimen>
     <dimen name="menu_item_divider_height">1dp</dimen>
     <dimen name="menu_button_top_offset">20dp</dimen>
+    <dimen name="about_dialog_margin_vertical">20dp</dimen>
+    <dimen name="about_dialog_margin_horizontal">20dp</dimen>
 </resources>
