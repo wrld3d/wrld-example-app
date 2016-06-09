@@ -11,6 +11,7 @@
 #include "GLHelpers.h"
 #include "AppModes.h"
 #include "Rendering.h"
+#include "SceneModel.h"
 
 namespace ExampleApp
 {
@@ -24,15 +25,16 @@ namespace ExampleApp
                 {
                 public:
                     PoiRingModule(MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
-                                  Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
-                                  Eegeo::Modules::Core::RenderingModule& renderingModule,
-                                  Eegeo::Modules::Core::AsyncLoadersModule& asyncLoadersModule,
-                                  Eegeo::Modules::Core::LightingModule& lightingModule,
-                                  Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
-                                  Eegeo::Modules::Map::MapModule& mapModule,
-                                  ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
-                                  Eegeo::Rendering::ScreenProperties& screenProperties,
-                                  const bool interiorsAffectedByFlattening);
+                                             Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
+                                             Eegeo::Modules::Core::RenderingModule& renderingModule,
+                                             Eegeo::Modules::Core::SceneModelsModule& sceneModelsModule,
+                                             Eegeo::Modules::Core::AsyncLoadersModule& asyncLoadersModule,
+                                             Eegeo::Modules::Core::LightingModule& lightingModule,
+                                             Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
+                                             Eegeo::Modules::Map::MapModule& mapModule,
+                                             ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
+                                             Eegeo::Rendering::ScreenProperties& screenProperties,
+                                             const bool interiorsAffectedByFlattening);
 
                     ~PoiRingModule();
 

@@ -149,8 +149,8 @@ namespace ExampleApp
                             m_myPinCreationModel.SetHeightAboveTerrain(0.0f);
                         }
                     }
-                    Eegeo::m44 sphereTransformMatrix;
-                    sphereTransformMatrix.Scale(m_ringRadius);
+                    Eegeo::m44 sphereTransformMatrix; // Why is the controller constructing a transform matrix to pass it through to the renderable via the view?
+                    sphereTransformMatrix.Scale(m_ringRadius*2.0f); // This is a bit arse.
 
                     Eegeo::dv3 scaledPoint;
                     if(m_interiorsAffectedByFlattening)
@@ -176,7 +176,7 @@ namespace ExampleApp
                     Eegeo::dv3 cameraRelativePosition = scaledPoint - renderCamera.GetEcefLocation();
                     sphereTransformMatrix.SetRow(3, Eegeo::v4(cameraRelativePosition.ToSingle(), 1.f));
 
-                    m_poiRingView.SetRingTransforms(sphereTransformMatrix);
+                    m_poiRingView.SetRingTransforms(sphereTransformMatrix, renderCamera.GetViewProjectionMatrix());
 
 					const float interiorInnerRingScale = showingInterior ? 1.05f : 1.0f;
                     float altitudeBasedScale = CalculateAltitudeBasedSphereScale(altitude, m_ringRadius);

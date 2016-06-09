@@ -31,9 +31,11 @@ namespace ExampleApp
                 {
                 }
 
-                void PoiRingView::SetRingTransforms(const Eegeo::m44& sphereMvp) const
+                void PoiRingView::SetRingTransforms(const Eegeo::m44& sphereTransform, const Eegeo::m44& viewProjection) const
                 {
-                    m_poiRingRenderable.SetSphereMvp(sphereMvp);
+                    // Set Position and Scale(s)?
+                    // Set ViewProjection?
+                    m_poiRingRenderable.SetSphereTransforms(sphereTransform, viewProjection);
                 }
 
                 void PoiRingView::EnqueueRenderables(const Eegeo::Rendering::RenderContext& renderContext, Eegeo::Rendering::RenderQueue& renderQueue)

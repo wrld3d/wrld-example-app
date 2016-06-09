@@ -621,6 +621,7 @@ namespace ExampleApp
         m_pPoiRingModule = Eegeo_NEW(ExampleApp::MyPinCreation::PoiRing::SdkModel::PoiRingModule)(m_pMyPinCreationModule->GetMyPinCreationModel(),
                                                                                                   m_platformAbstractions,
                                                                                                   m_pWorld->GetRenderingModule(),
+                                                                                                  m_pWorld->GetSceneModelsModule(),
                                                                                                   m_pWorld->GetAsyncLoadersModule(),
                                                                                                   m_pWorld->GetLightingModule(),
                                                                                                   m_pWorld->GetTerrainModelModule(),

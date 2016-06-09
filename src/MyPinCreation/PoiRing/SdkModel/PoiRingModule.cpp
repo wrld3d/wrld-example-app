@@ -26,12 +26,16 @@
 
 #include "IPlatformAbstractionModule.h"
 #include "RenderingModule.h"
+#include "SceneModelsModule.h"
 #include "AsyncLoadersModule.h"
 #include "LightingModule.h"
 #include "TerrainModelModule.h"
 #include "MapModule.h"
 #include "ImagePathHelpers.h"
 #include "InteriorsPresentationModule.h"
+#include "SceneModelFactory.h"
+#include "SceneModelLoader.h"
+#include "SceneModelMeshRenderable.h"
 
 namespace ExampleApp
 {
@@ -44,6 +48,7 @@ namespace ExampleApp
                 PoiRingModule::PoiRingModule(MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
                                              Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
                                              Eegeo::Modules::Core::RenderingModule& renderingModule,
+                                             Eegeo::Modules::Core::SceneModelsModule& sceneModelsModule,
                                              Eegeo::Modules::Core::AsyncLoadersModule& asyncLoadersModule,
                                              Eegeo::Modules::Core::LightingModule& lightingModule,
                                              Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
@@ -53,11 +58,10 @@ namespace ExampleApp
                                              const bool interiorsAffectedByFlattening)
                     : m_renderableFilters(renderingModule.GetRenderableFilters())
                 {
-                    m_pPoiRingRenderable = Eegeo_NEW(PoiRingRenderable)(renderingModule,
-                                           platformAbstractions.GetFileIO(),
-                                           asyncLoadersModule.GetLocalAsyncTextureLoader(),
-                                           lightingModule.GetGlobalFogging());
+                    Eegeo::Rendering::VertexLayouts::VertexLayoutPool& vertexLayoutPool = renderingModule.GetVertexLayoutPool();
+                    Eegeo::Rendering::VertexLayouts::VertexBindingPool& vertexBindingPool = renderingModule.GetVertexBindingPool();
 
+                    m_pPoiRingRenderable = Eegeo_NEW(PoiRingRenderable)(renderingModule);
 
                     Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator = renderingModule.GetShaderIdGenerator();
                     m_pSpriteShader = Eegeo::Rendering::Shaders::BatchedSpriteShader::Create(shaderIdGenerator.GetNextId());
@@ -73,8 +77,7 @@ namespace ExampleApp
                                              m_poiRingIconTexture.textureId,
                                                                                                            Eegeo::Rendering::TextureMinify_Nearest);
 
-                    Eegeo::Rendering::VertexLayouts::VertexLayoutPool& vertexLayoutPool = renderingModule.GetVertexLayoutPool();
-                    Eegeo::Rendering::VertexLayouts::VertexBindingPool& vertexBindingPool = renderingModule.GetVertexBindingPool();
+                    
                     const Eegeo::Rendering::VertexLayouts::VertexBinding& iconVertexBinding = vertexBindingPool.GetVertexBinding(vertexLayoutPool.GetForTexturedColoredVertex(),
                             m_pSpriteShader->GetVertexAttributes());
 

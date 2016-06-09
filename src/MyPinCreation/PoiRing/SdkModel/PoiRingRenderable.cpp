@@ -14,6 +14,7 @@
 #include "VertexBindingPool.h"
 #include "Mesh.h"
 #include "WorldMeshRenderable.h"
+#include "SpherePrimitive.h"
 
 namespace ExampleApp
 {
@@ -23,17 +24,14 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                PoiRingRenderable::PoiRingRenderable(Eegeo::Modules::Core::RenderingModule& renderingModule,
-                                                     Eegeo::Helpers::IFileIO& fileIO,
-                                                     Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor,
-                                                     Eegeo::Lighting::GlobalFogging& globalFogging)
+                PoiRingRenderable::PoiRingRenderable(Eegeo::Modules::Core::RenderingModule& renderingModule)
                     : Eegeo::Rendering::RenderableBase(Eegeo::Rendering::LayerIds::AfterAll,
                                                        Eegeo::dv3::Zero(),
                                                        &renderingModule.GetNullMaterial())
-                    , m_fogging(globalFogging)
                     , m_innerSphereScale(165.f)
                 {
-                    m_pSphere = Eegeo::Model::CreateFromPODFile("Geosphere_01.pod", fileIO, &textureRequestor, "");
+                    // Don't take in rendering module:
+                    // Needs: ShaderIDGenerator, MaterialIDGenerator, GLBufferPool, VertexLayoutPool, VertexBindingPool, PositionMeshFactory, NullMaterial
 
                     Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator = renderingModule.GetShaderIdGenerator();
                     m_pColorShader = Eegeo::Rendering::Shaders::ColorShader::Create(shaderIdGenerator.GetNextId());
@@ -58,14 +56,30 @@ namespace ExampleApp
                                         Eegeo::dv3::Zero());
                     m_pQuadRenderable->SetModelViewProjection(Eegeo::m44::CreateIdentity());
 
+                    std::vector<Eegeo::v3> sphereVerts;
+                    std::vector<u16> sphereIndices;
+                    Eegeo::Rendering::Geometry::BuildUnitSphere(sphereVerts, sphereIndices, 8);
+                    
+                    Eegeo::Rendering::MeshFactories::PositionMeshFactory& meshFactory = renderingModule.GetPositionMeshFactory();
+                    Eegeo::Rendering::Mesh* pSphereMesh = meshFactory.CreateMesh(sphereVerts, sphereIndices, "sphere");
+
+                    const Eegeo::Rendering::VertexLayouts::VertexBinding& sphereVertexBinding = vertexBindingPool.GetVertexBinding(pSphereMesh->GetVertexLayout(),
+                        m_pColorShader->GetVertexAttributes());
+                    m_pSphereRenderable = Eegeo_NEW(Eegeo::Rendering::Renderables::WorldMeshRenderable)(Eegeo::Rendering::LayerIds::AfterWorld,
+                        m_pColorMaterial,
+                        sphereVertexBinding,
+                        pSphereMesh,
+                        Eegeo::dv3::Zero());
+                    m_pSphereRenderable->SetModelViewProjection(Eegeo::m44::CreateIdentity());
+
                 }
 
                 PoiRingRenderable::~PoiRingRenderable()
                 {
+                    Eegeo_DELETE m_pSphereRenderable;
                     Eegeo_DELETE m_pQuadRenderable;
                     Eegeo_DELETE m_pColorMaterial;
                     Eegeo_DELETE m_pColorShader;
-                    Eegeo_DELETE m_pSphere;
                 }
 
                 void PoiRingRenderable::Render(Eegeo::Rendering::GLState &glState) const
@@ -111,18 +125,16 @@ namespace ExampleApp
                     glState.StencilOpSeparate(GL_FRONT, GL_KEEP, GL_KEEP, GL_INCR_WRAP);
                     glState.StencilOpSeparate(GL_BACK, GL_KEEP, GL_KEEP, GL_DECR_WRAP);
 
-                    m_pSphere->Draw(glState, m_fogging);
+                    m_pSphereRenderable->Render(glState);
 
-                    Eegeo::Node* pRoot = m_pSphere->GetRootNode();
-                    const Eegeo::m44& originalLocalMatrix = pRoot->GetLocalMatrix();
-                    const Eegeo::v4& originalCameraRelativePosition = originalLocalMatrix.GetRow(3);
-
+                    const Eegeo::v4 originalCameraRelativePosition = m_modelTransform.GetRow(3);
                     Eegeo::m44 transform;
+                    Eegeo::m44 mvp;
                     transform.Scale(m_innerSphereScale);
                     transform.SetRow(3, originalCameraRelativePosition);
-
-                    SetSphereMvp(transform);
-                    m_pSphere->Draw(glState, m_fogging);
+                    Eegeo::m44::Mul(mvp, m_viewProjection, transform);
+                    m_pSphereRenderable->SetModelViewProjection(mvp);
+                    m_pSphereRenderable->Render(glState);
                 }
 
                 void PoiRingRenderable::RenderRingEffects(Eegeo::Rendering::GLState &glState) const
@@ -150,16 +162,18 @@ namespace ExampleApp
                     m_pQuadRenderable->Render(glState);
                 }
 
-                void PoiRingRenderable::SetSphereMvp(const Eegeo::m44& mvp) const
+                void PoiRingRenderable::SetSphereTransforms(const Eegeo::m44& transform, const Eegeo::m44& viewProjection)
                 {
-                    Eegeo::Node* pRootNode = m_pSphere->GetRootNode();
-                    pRootNode->SetLocalMatrix(mvp);
-                    m_pSphere->Update();
+                    m_modelTransform = transform;
+                    m_viewProjection = viewProjection;
+                    Eegeo::m44 mvp;
+                    Eegeo::m44::Mul(mvp, m_viewProjection, m_modelTransform);
+                    m_pSphereRenderable->SetModelViewProjection(mvp);
                 }
 
                 void PoiRingRenderable::SetInnerSphereScale(const float scale)
                 {
-                    m_innerSphereScale = scale;
+                    m_innerSphereScale = scale*2.0f; // Because it's actually Radius now.
                 }
             }
         }

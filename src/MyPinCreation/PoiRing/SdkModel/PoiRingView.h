@@ -24,7 +24,7 @@ namespace ExampleApp
 
                     ~PoiRingView();
 
-                    void SetRingTransforms(const Eegeo::m44& sphereMvp) const;
+                    void SetRingTransforms(const Eegeo::m44& sphereTransform, const Eegeo::m44& viewProjection) const;
                     void SetInnerSphereScale(const float scale);
 
                     void EnqueueRenderables(const Eegeo::Rendering::RenderContext& renderContext, Eegeo::Rendering::RenderQueue& renderQueue);
