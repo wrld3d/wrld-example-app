@@ -1,7 +1,7 @@
 {
     "Name": "Mobile Example App",
     "EegeoApiKey": "",
-    "EmbeddedThemeTexturePath":"Textures"
+    "EmbeddedThemeTexturePath":"Textures",
     "StartLocationLatitude": 37.7858,
     "StartLocationLongitude": -122.401,
     "StartLocationAltitude": 2.7,

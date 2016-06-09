@@ -7,6 +7,8 @@
 #include "TwitterFeed.h"
 #include "Web.h"
 
+#include <string>
+
 namespace ExampleApp
 {
     namespace Social
