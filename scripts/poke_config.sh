@@ -50,6 +50,8 @@ fi
 
 json_to_poke="${json_to_poke%\"}"
 json_to_poke="${json_to_poke#\"}"
+json_to_poke="${json_to_poke%\'}"
+json_to_poke="${json_to_poke#\'}"
 
 echo "json_to_poke is ${json_to_poke}"
 
