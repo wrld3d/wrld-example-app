@@ -7,9 +7,9 @@
     <Font Id="3" Height="-12" Weight="500" Foreground="000000" Background="FFFFFF">Segoe UI</Font>
     <Font Id="4" Height="-12" Weight="500" Foreground="ff0000" Background="FFFFFF" Underline="yes">Segoe UI</Font>
 
-    <Image X="11" Y="11" Width="64" Height="64" ImageFile="logo.png" Visible="yes"/>
-    <Text X="80" Y="11" Width="-11" Height="64" FontId="1" Visible="yes" DisablePrefix="yes">#(loc.Title)</Text>
-    <Text X="80" Y="40" Width="-11" Height="64" FontId="2" Visible="yes" DisablePrefix="yes">#(loc.InstallVersion)</Text>
+    <Image X="11" Y="11" Width="150" Height="64" ImageFile="logo.png" Visible="yes"/>
+    <Text X="170" Y="11" Width="-11" Height="64" FontId="1" Visible="yes" DisablePrefix="yes">#(loc.Title)</Text>
+    <Text X="170" Y="40" Width="-11" Height="64" FontId="2" Visible="yes" DisablePrefix="yes">#(loc.InstallVersion)</Text>
 
     <Page Name="Help">
         <Text X="11" Y="80" Width="-11" Height="30" FontId="2" DisablePrefix="yes">#(loc.HelpHeader)</Text>

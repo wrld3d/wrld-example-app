@@ -16,7 +16,7 @@
     </BootstrapperApplicationRef>
 
     <WixVariable Id="WixStdbaLicenseUrl" Value="" />
-    <WixVariable Id="WixStdbaLogo" Value="Resource\setup.ico" />
+    <WixVariable Id="WixStdbaLogo" Value="Resource\logo.png" />
 
 
 
