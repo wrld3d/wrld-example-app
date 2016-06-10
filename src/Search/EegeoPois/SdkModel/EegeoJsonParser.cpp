@@ -31,7 +31,7 @@ namespace ExampleApp
                         {
                             if (str[i] == c)
                             {
-                                tags.push_back(str.substr(previous_start + 1, i - previous_start));
+                                tags.push_back(str.substr(previous_start + 1, i - previous_start - 1));
                                 previous_start = i;
                             }
                         }
@@ -63,10 +63,6 @@ namespace ExampleApp
                         
                         if (json.HasMember("user_data"))
                         {
-                            if (json["user_data"].HasMember("subcategory") && json["user_data"]["subcategory"].IsString())
-                            {
-                                category = json["user_data"]["subcategory"].GetString();
-                            }
                             rapidjson::StringBuffer strbuf;
                             rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
                             json["user_data"].Accept(writer);

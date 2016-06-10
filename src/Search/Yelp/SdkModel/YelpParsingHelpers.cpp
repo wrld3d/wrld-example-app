@@ -58,12 +58,13 @@ namespace ExampleApp
                         entry.name = name.GetString();
                         
                         std::vector<std::string> humanCategories;
+                        std::vector<std::string> allCategories;
                         
                         if(json.HasMember("categories"))
                         {
                             const Value& categoryEntries = json["categories"];
                             const size_t numYelpCategoryEntries(categoryEntries.Size());
-                            std::vector<std::string> allCategories;
+                            
                             
                             for(rapidjson::SizeType categoryEntryIndex = 0; categoryEntryIndex < numYelpCategoryEntries; ++categoryEntryIndex)
                             {
@@ -80,9 +81,9 @@ namespace ExampleApp
                                     allCategories.push_back(categoryEntry[categoryStringIndex].GetString());
                                 }
                             }
-                            
-                            yelpCategoryMapper.TryGetBestMatchingApplicationCategoryForYelpCategories(allCategories, entry.category);
                         }
+                        
+                        yelpCategoryMapper.TryGetBestMatchingApplicationCategoryForYelpCategories(allCategories, entry.category);
                         
                         if(json.HasMember("location"))
                         {
