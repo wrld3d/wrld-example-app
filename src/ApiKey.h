@@ -6,23 +6,23 @@
 
 namespace ExampleApp
 {
+    //! defines a path to the app config file, which is used to provide the EegeoApiKey and other credentials
     static const std::string ApplicationConfigurationPath = "ApplicationConfigs/standard_config.json";
-    
-    //! REQUIRED: You must obtain an API key for the eeGeo SDK from https://www.eegeo.com/developers/
-    static const std::string ApiKey = "OBTAIN API_KEY FROM https://www.eegeo.com/developers/ AND INSERT IT HERE";
-    
-    //! Optional: If 'useYelp' is true in AppHost you may wish to obtain a Yelp API key from https://www.yelp.com/developers for POI search provision
-    static const std::string YelpConsumerKey = "OBTAIN YELP CONSUMER KEY AND INSERT IT HERE";
-    static const std::string YelpConsumerSecret = "OBTAIN YELP CONSUMER SECRET AND INSERT IT HERE";
-    static const std::string YelpOAuthToken = "OBTAIN YELP OAUTH TOKEN AND INSERT IT HERE";
-    static const std::string YelpOAuthTokenSecret = "OBTAIN YELP OAUTH TOKEN SECRET AND INSERT IT HERE";
-    
-    //! Optional: You may wish to obtain a geonames account key from http://www.geonames.org/export/web-services.html for address/place search provision
-    static const std::string GeoNamesUserName = "OBTAIN GEONAMES USERNAME AND INSERT IT HERE";
- 
-    //! Optional: You may wish to obtain an API key for Flurry from https://developer.yahoo.com/analytics/ for metrics
-    static const std::string FlurryApiKey = "OBTAIN FLURRY KEY AND INSERT IT HERE";
 
-    //! Optional: You may wish to obtain twitter bearer token. Check https://dev.twitter.com/oauth/application-only for instructions
-    static const std::string TwitterAuthCode = "INSERT TWITTER AUTH CODE HERE";
+    //! REQUIRED: You must obtain an API key for the eeGeo SDK from https://www.eegeo.com/developers/ and set is as the value of "EegeoApiKey" in the config file
+    
+    //! Optional: If 'useYelp' is true in AppHost you may wish to obtain a Yelp API key from https://www.yelp.com/developers for POI search provision.
+    //! If so, set credentials using the following keys in the app config file:
+    //! YelpConsumerKey
+    //! YelpConsumerSecret
+    //! YelpOAuthToken
+    //! YelpOAuthTokenSecret
+    //! Optional: You may wish to obtain a geonames account key from http://www.geonames.org/export/web-services.html for address/place search provision.
+    //! Set it as the value of 'GeoNamesUserName' in the app config file:
+ 
+    //! Optional: You may wish to obtain an API key for Flurry from https://developer.yahoo.com/analytics/ for metrics.
+    //! Set it as the value of 'FlurryApiKey' in the app config file:
+
+    //! Optional: You may wish to obtain a Twitter bearer token. Check https://dev.twitter.com/oauth/application-only for instructions.
+    //! Set it as the value of 'TwitterAuthCode ' in the app config file:
 }

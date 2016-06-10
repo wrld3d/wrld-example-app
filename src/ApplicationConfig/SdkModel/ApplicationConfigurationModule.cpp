@@ -19,16 +19,25 @@ namespace ExampleApp
             {
                 ApplicationConfiguration BuildDefaultConfig(const IApplicationConfigurationVersionProvider& applicationConfigurationVersionProvider)
                 {
+                    // please see ./README.md and comments in ./src/ApiKey.h for instructions on how to obtain an EegeoApiKey and set via the app config file
+                    const std::string emptyEegeoApiKey;
                     const std::string& productVersion = applicationConfigurationVersionProvider.GetProductVersionString();
                     const std::string& buildNumber = applicationConfigurationVersionProvider.GetProductVersionString();
                     const std::string& combinedVersionString = productVersion + "." + buildNumber;
                     const std::string emptyGoogleAnalyticsReferrerToken;
+                    const std::string emptyFlurryApiKey;
+                    const std::string emptyYelpConsumerKey;
+                    const std::string emptyYelpConsumerSecret;
+                    const std::string emptyYelpOAuthToken;
+                    const std::string emptyYelpOAuthTokenSecret;
+                    const std::string emptyGeoNamesUserName;
                     const std::string eegeoSearchServiceUrl = "http://poi.eegeo.com/v1";
                     const std::string emptyMyPinsWebServiceUrl;
                     const std::string emptyMyPinsWebServiceAuthToken;
+                    const std::string emptyTwitterAuthCode;
 
                     return ApplicationConfiguration ("Eegeo Example App", 
-                        ExampleApp::ApiKey,
+                        emptyEegeoApiKey,
                         productVersion,
                         buildNumber,
                         combinedVersionString,
@@ -40,16 +49,16 @@ namespace ExampleApp
                         0.f,
                         false,
                         emptyGoogleAnalyticsReferrerToken,
-                        ExampleApp::FlurryApiKey,
-                        ExampleApp::YelpConsumerKey,
-                        ExampleApp::YelpConsumerSecret,
-                        ExampleApp::YelpOAuthToken,
-                        ExampleApp::YelpOAuthTokenSecret,
-                        ExampleApp::GeoNamesUserName,
+                        emptyFlurryApiKey,
+                        emptyYelpConsumerKey,
+                        emptyYelpConsumerSecret,
+                        emptyYelpOAuthToken,
+                        emptyYelpOAuthTokenSecret,
+                        emptyGeoNamesUserName,
                         eegeoSearchServiceUrl,
                         emptyMyPinsWebServiceUrl,
                         emptyMyPinsWebServiceAuthToken,
-                        ExampleApp::TwitterAuthCode);
+                        emptyTwitterAuthCode);
                 }
             }
             

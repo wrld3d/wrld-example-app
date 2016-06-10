@@ -41,8 +41,11 @@ The eeGeo SDK is distributed as a C++ static library with headers. Most of this 
 This section will walk you through the process of getting up and running quickly on each platform.
 
 1.  Clone this repo: `git clone https://github.com/eegeo/eegeo-example-app`
-2.  Obtain an [eeGeo API key](https://www.eegeo.com/developers/apikeys) and place it in the [ApiKey.h](https://github.com/eegeo/eegeo-example-app/blob/master/src/ApiKey.h#L12) file.
-3.  Choose a platform from the below table to see detailed instructions for building the app.
+2.  Obtain an [eeGeo API key](https://www.eegeo.com/developers/apikeys) and place it in the configuration file for the platform you are building:
+    * [iOS app config](https://github.com/eegeo/eegeo-example-app/blob/master/ios/Resources/ApplicationConfigs/standard_config.json#L3).
+    * [Android app config](https://github.com/eegeo/eegeo-example-app/blob/master/android/assets/ApplicationConfigs/standard_config.json#L3).
+    * [Windows app config](https://github.com/eegeo/eegeo-example-app/blob/master/windows/Resources/ApplicationConfigs/standard_config.json#L3).
+3.  Choose a platform from the table below to see detailed instructions for building the app.
 
 Platform                                        | Languages         | UI 
 ------------------------------------------------|-------------------|-------------
@@ -54,7 +57,11 @@ Platform                                        | Languages         | UI
 
 In order to use the eeGeo 3D Maps SDK, you must sign up for a free developer account at https://www.eegeo.com/developers. After signing up, you'll be able to create an [API key](https://www.eegeo.com/developers/apikeys) for your apps. 
 
-To run this example app, you must place the API key in the [ApiKey.h](https://github.com/eegeo/eegeo-example-app/blob/master/src/ApiKey.h#L12) file.
+To run this example app, you must place the API key in the application configuration file for each of the platforms you are building, specifying the value of "EegeoApiKey":
+* [iOS app config](https://github.com/eegeo/eegeo-example-app/blob/master/ios/Resources/ApplicationConfigs/standard_config.json#L3).
+* [Android app config](https://github.com/eegeo/eegeo-example-app/blob/master/android/assets/ApplicationConfigs/standard_config.json#L3).
+* [Windows app config](https://github.com/eegeo/eegeo-example-app/blob/master/windows/Resources/ApplicationConfigs/standard_config.json#L3).
+
 
 If you are creating a new app, or integrating eeGeo 3D Maps into an existing app, the API key should be passed as the first argument to the constructor of [EegeoWorld](http://cdn1.eegeo.com/docs/mobile-sdk/class_eegeo_1_1_eegeo_world.html).
 
@@ -62,8 +69,14 @@ If you are creating a new app, or integrating eeGeo 3D Maps into an existing app
 
 This app uses third-party search service providers to allow users to search for places like caf&eacute;s, restaurants, and bars and have the results show up on the map. To enable this, you will to supply the credentials for those services.
 
-1.  Obtain [Yelp credentials](https://www.yelp.com/developers) to enable Yelp search results in the app. Place them in [ApiKey.h](https://github.com/eegeo/eegeo-example-app/blob/master/src/ApiKey.h#L15-L18).
-2.  Obtain a [GeoNames username](http://www.geonames.org/login) to enable GeoNames search results in the app. Place it in [ApiKey.h](https://github.com/eegeo/eegeo-example-app/blob/master/src/ApiKey.h#L21).
+1.  Obtain [Yelp credentials](https://www.yelp.com/developers) to enable Yelp search results in the app. Place them in the application config file appropriate for the platform you are building:
+    * [iOS app config](https://github.com/eegeo/eegeo-example-app/blob/master/ios/Resources/ApplicationConfigs/standard_config.json#L12-L15).
+    * [Android app config](https://github.com/eegeo/eegeo-example-app/blob/master/android/assets/ApplicationConfigs/standard_config.json#L12-L15).
+    * [Windows app config](https://github.com/eegeo/eegeo-example-app/blob/master/windows/Resources/ApplicationConfigs/standard_config.json#L12-L15).
+2.  Obtain a [GeoNames username](http://www.geonames.org/login) to enable GeoNames search results in the app. Place it in the application config file appropriate for the platform you are building:
+    * [iOS app config](https://github.com/eegeo/eegeo-example-app/blob/master/ios/Resources/ApplicationConfigs/standard_config.json#L16).
+    * [Android app config](https://github.com/eegeo/eegeo-example-app/blob/master/android/assets/ApplicationConfigs/standard_config.json#L16).
+    * [Windows app config](https://github.com/eegeo/eegeo-example-app/blob/master/windows/Resources/ApplicationConfigs/standard_config.json#L16).
 
 ## Features
 
