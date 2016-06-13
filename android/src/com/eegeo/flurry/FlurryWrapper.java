@@ -10,6 +10,8 @@ public class FlurryWrapper
 {
 	public static void begin(MainActivity activity, String apiKey, String appVersion)
 	{
+		if (apiKey.isEmpty())
+			return;
 		FlurryAgent.setCaptureUncaughtExceptions(true);
 		FlurryAgent.init(activity, apiKey);
 		FlurryAgent.setVersionName(appVersion);
