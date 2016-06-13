@@ -1,30 +1,35 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_pin_details_view"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:id="@+id/my_pin_details_view">
-      
+    android:layout_height="fill_parent" >
+
     <RelativeLayout
-    	android:id="@+id/my_pin_details_view_container"
-	    android:layout_width="250dip"
-	    android:layout_height="295dip"
-	    android:layout_centerInParent="true">
-		    
+        android:id="@+id/my_pin_details_view_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="@dimen/about_dialog_margin_vertical"
+        android:layout_marginLeft="@dimen/about_dialog_margin_horizontal"
+        android:layout_marginRight="@dimen/about_dialog_margin_horizontal"
+        android:layout_marginTop="@dimen/about_dialog_margin_vertical" >
+
         <!-- Title bar -->
-        <LinearLayout 
+
+        <LinearLayout
+            android:id="@+id/my_pin_details_view_header"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:id="@+id/my_pin_details_view_header">
-            
+            android:background="@color/white" >
+
             <ImageView
                 android:id="@+id/my_pin_details_icon"
-                android:contentDescription="@string/my_pin_details_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/my_pin_details_icon"
                 android:scaleType="center"
                 android:src="@drawable/icon_create_poi" />
-            
+
             <TextView
                 android:id="@+id/my_pin_details_view_title"
                 android:layout_width="fill_parent"
@@ -37,36 +42,36 @@
                 android:textColor="@color/gold"
                 android:textSize="15sp"
                 android:textStyle="bold" />
-            
         </LinearLayout>
-            
-        <!--  Scrolling icontent -->
-        
+
+        <!-- Scrolling icontent -->
+
         <ScrollView
             android:id="@+id/my_pin_details_scroll_section"
-			android:layout_width="fill_parent"
-			android:layout_height="fill_parent"
-            android:background="@color/white"
-			android:layout_above="@+id/my_pin_details_view_footer"
-			android:layout_below="@+id/my_pin_details_view_header">
-            
-            <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@+id/my_pin_details_view_footer"
+            android:layout_below="@+id/my_pin_details_view_header"
+            android:background="@color/white" >
+
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:orientation="vertical">
-                
-                <!--  Description  -->
+                android:orientation="vertical"
+                android:padding="10dp" >
+
+                <!-- Description -->
+
                 <TextView
                     android:id="@+id/my_pin_details_view_description_header"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textSize="12dp"
-                    android:paddingLeft="3dp"
                     android:background="@color/gold"
-                    android:text="@string/header_description"/>
-                
+                    android:paddingLeft="3dp"
+                    android:text="@string/header_description"
+                    android:textColor="@color/white"
+                    android:textSize="12dp" />
+
                 <TextView
                     android:id="@+id/my_pin_details_view_description"
                     android:layout_width="fill_parent"
@@ -76,18 +81,19 @@
                     android:paddingLeft="3dp"
                     android:textColor="@color/darkgrey"
                     android:textSize="12dp" />
-                
-                 <!--  Image  -->
+
+                <!-- Image -->
+
                 <TextView
                     android:id="@+id/my_pin_details_view_image_header"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textSize="12dp"
-                    android:paddingLeft="3dp"
                     android:background="@color/gold"
-                    android:text="@string/header_image"/>
-                
+                    android:paddingLeft="3dp"
+                    android:text="@string/header_image"
+                    android:textColor="@color/white"
+                    android:textSize="12dp" />
+
                 <ImageView
                     android:id="@+id/my_pin_details_view_image"
                     android:layout_width="230dp"
@@ -98,36 +104,34 @@
                     android:contentDescription="@string/poi_creation_details_image"
                     android:scaleType="fitCenter"
                     android:src="@drawable/image_blank" />
-                
             </LinearLayout>
         </ScrollView>
-        
-        <!--  Bottom bar with close button -->
+
+        <!-- Bottom bar with close button -->
 
         <RelativeLayout
+            android:id="@+id/my_pin_details_view_footer"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/my_pin_details_view_footer"
-        	android:layout_alignParentBottom="true"
-        	android:background="@color/gold">
- 
-         <ImageView
-             android:id="@+id/my_pin_details_view_delete_button"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_alignParentLeft="true"
-    		 android:background="@drawable/button_pressed_colour_change"
-             android:src="@drawable/pin_remove_states" />
-            
-         <ImageView
-             android:id="@+id/my_pin_details_view_close_button"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_alignParentRight="true"
-    		 android:background="@drawable/button_pressed_colour_change"
-		     android:src="@drawable/button_pin_close_states" />
-         
-         </RelativeLayout>
-	        
-	</RelativeLayout>
+            android:layout_alignParentBottom="true"
+            android:background="@color/gold" >
+
+            <ImageView
+                android:id="@+id/my_pin_details_view_delete_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:background="@drawable/button_pressed_colour_change"
+                android:src="@drawable/pin_remove_states" />
+
+            <ImageView
+                android:id="@+id/my_pin_details_view_close_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/button_pressed_colour_change"
+                android:src="@drawable/button_pin_close_states" />
+        </RelativeLayout>
+    </RelativeLayout>
+
 </RelativeLayout>
