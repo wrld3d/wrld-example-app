@@ -47,7 +47,6 @@ namespace ExampleApp
                 , m_previousInterestEcefLocation(Eegeo::dv3::Zero())
                 , m_previousQueryInterestDistance(0.f)
                 , m_previousQueryInteriorId()
-                , m_interiorHasChanged(false)
             {
                 m_searchService.InsertOnPerformedQueryCallback(m_searchResultQueryIssuedCallback);
                 m_searchService.InsertOnReceivedQueryResultsCallback(m_searchResultResponseReceivedCallback);
@@ -99,16 +98,6 @@ namespace ExampleApp
                 m_previousQueryFloorIndex != m_interiorInteractionModel.GetSelectedFloorIndex();
                 if (hasChangedInteriorFloors)
                 {
-                    if (m_interiorHasChanged)
-                    {
-                        m_interiorHasChanged = false;
-
-                        m_previousQueryFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
-
-                        return false;
-                    }
-
-                    
                     return true;
                 }
                 
@@ -191,8 +180,6 @@ namespace ExampleApp
                     {
                         m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), previousQuery.ShouldTryInteriorSearch());
                         m_secondsSincePreviousRefresh = 0.f;
-
-                        m_interiorHasChanged = true;
                     }
                 }
             }
