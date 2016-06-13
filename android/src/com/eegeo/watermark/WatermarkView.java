@@ -33,7 +33,7 @@ public class WatermarkView implements View.OnClickListener
  private float m_yPosInactive;
 
  private boolean m_shouldShow;
- private final long m_stateChangeAnimationTimeMilliseconds = 200;
+ private final long m_stateChangeAnimationTimeMilliseconds = 300;
  private AnimatorListener m_transitionOffListener;
 
  public WatermarkView(MainActivity activity, 
