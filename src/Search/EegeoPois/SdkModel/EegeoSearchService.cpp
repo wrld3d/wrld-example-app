@@ -64,7 +64,7 @@ namespace ExampleApp
                     CancelInFlightQueries();
                     
                     ExecuteQueryPerformedCallbacks(query);
-                    if(m_networkCapabilities.StreamOverWifiOnly() && !m_networkCapabilities.ConnectedToWifi())
+                    if((m_networkCapabilities.StreamOverWifiOnly() && !m_networkCapabilities.ConnectedToWifi()) || !m_networkCapabilities.NetworkAvailable())
                     {
                         ExecutQueryResponseReceivedCallbacks(query, std::vector<Search::SdkModel::SearchResultModel>());
                         return;
