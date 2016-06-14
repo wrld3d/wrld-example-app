@@ -41,9 +41,12 @@ namespace ExampleApp
                     std::stringstream urlstream;
                     urlstream.setf(std::ios_base::fixed);
                     urlstream << serviceUrl;
-                    urlstream << "/indoor?c=";
-                    urlstream << encodedQuery;
-                    urlstream << "&f=";
+                    urlstream << "/indoor?";
+                    if (!encodedQuery.empty())
+                    {
+                        urlstream << "t=" << encodedQuery << "&";
+                    }
+                    urlstream << "f=";
                     urlstream << m_floorIdx;
                     urlstream << "&i=";
                     urlstream << m_interiorId.Value();
