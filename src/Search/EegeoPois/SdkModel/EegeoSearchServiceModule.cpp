@@ -6,6 +6,7 @@
 #include "EegeoSearchQueryFactory.h"
 #include "EegeoSearchService.h"
 #include "EegeoCategoryIconMapper.h"
+#include "EegeoReadableTagMapper.h"
 
 namespace ExampleApp
 {
@@ -34,8 +35,9 @@ namespace ExampleApp
                                                                                     apiKey);
 
                     m_pCategoryIconMapper = Eegeo_NEW(EegeoCategoryIconMapper)();
+                    m_pReadableTagMapper = Eegeo_NEW(EegeoReadableTagMapper)();
 
-                    m_pEegeoParser = Eegeo_NEW(EegeoJsonParser)(*m_pCategoryIconMapper);
+                    m_pEegeoParser = Eegeo_NEW(EegeoJsonParser)(*m_pCategoryIconMapper, *m_pReadableTagMapper);
                     
                     m_pSearchService = Eegeo_NEW(EegeoSearchService)(*m_pEegeoSearchQueryFactory,
                                                                         *m_pEegeoParser,
@@ -46,8 +48,9 @@ namespace ExampleApp
                 EegeoSearchServiceModule::~EegeoSearchServiceModule()
                 {
                     Eegeo_DELETE m_pSearchService;
-                    Eegeo_DELETE m_pCategoryIconMapper;
                     Eegeo_DELETE m_pEegeoParser;
+                    Eegeo_DELETE m_pCategoryIconMapper;
+                    Eegeo_DELETE m_pReadableTagMapper;
                     Eegeo_DELETE m_pEegeoSearchQueryFactory;
                 }
                 

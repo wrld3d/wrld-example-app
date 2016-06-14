@@ -7,6 +7,7 @@
 #include "SearchResultModel.h"
 #include "EegeoSearchResultModel.h"
 #include "ICategoryIconMapper.h"
+#include "EegeoPois.h"
 
 namespace ExampleApp
 {
@@ -19,8 +20,10 @@ namespace ExampleApp
                 class EegeoJsonParser : public IEegeoParser, private Eegeo::NonCopyable
                 {
                     const SearchResultPoi::SdkModel::ICategoryIconMapper& m_categoryIconMapper;
+                    const EegeoReadableTagMapper& m_tagReadableNameMapper;
                 public:
-                    EegeoJsonParser(const SearchResultPoi::SdkModel::ICategoryIconMapper& tagIconMapper);
+                    EegeoJsonParser(const SearchResultPoi::SdkModel::ICategoryIconMapper& tagIconMapper,
+                                    const EegeoReadableTagMapper& tagReadableNameMapper);
                     
                     void ParseEegeoQueryResults(const std::string& serialized,
                                                 std::vector<Search::SdkModel::SearchResultModel>& out_results);

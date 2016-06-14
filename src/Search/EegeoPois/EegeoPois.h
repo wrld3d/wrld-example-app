@@ -13,6 +13,7 @@ namespace ExampleApp
                 class IEegeoSearchQuery;
                 class IEegeoSearchQueryFactory;
                 class IEegeoParser;
+                class EegeoReadableTagMapper;
             }
         }
     }
