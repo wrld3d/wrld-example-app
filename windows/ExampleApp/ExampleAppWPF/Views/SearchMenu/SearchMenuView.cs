@@ -317,8 +317,8 @@ namespace ExampleAppWPF
             {
                 var jObject = JObject.Parse(str);
                 var item = new SearchMenuListItem();
-                item.Name = jObject["name"].Value<string>();
-                item.Details = jObject["details"].Value<string>();
+                item.Name = jObject["name"] != null ? jObject["name"].Value<string>() : string.Empty;
+                item.Details = jObject["details"] != null ? jObject["details"].Value<string>() : string.Empty;
 
                 JToken iconStringToken;
                 var iconCategoryName = jObject.TryGetValue("icon", out iconStringToken) ? iconStringToken.Value<string>() : "";
