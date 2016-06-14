@@ -48,7 +48,6 @@ namespace ExampleApp
                                                                                                          false,
                                                                                                          true,
                                                                                                          menuViewModel,
-                                                                                                         static_cast<float>(Eegeo::Space::EarthConstants::Radius*2.0),
                                                                                                          messageBus));
                     
                     m_pFacilitiesMenuModel = Eegeo_NEW(Menu::View::MenuModel)();

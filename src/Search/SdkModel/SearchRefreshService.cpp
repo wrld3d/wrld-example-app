@@ -176,7 +176,7 @@ namespace ExampleApp
                 {
                     const SearchQuery& previousQuery = m_searchQueryPerformer.GetPreviousSearchQuery();
                     
-                    if (previousQuery.IsCategory())
+                    if ((previousQuery.IsCategory()) && (previousQuery.Query() != Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME))
                     {
                         m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), previousQuery.ShouldTryInteriorSearch());
                         m_secondsSincePreviousRefresh = 0.f;
