@@ -55,7 +55,7 @@ namespace ExampleApp
                     {
                         m_hasActiveQuery = false;
                         std::vector<Search::SdkModel::SearchResultModel> results;
-                        ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, results);
+                        ExecuteQueryResponseReceivedCallbacks(m_currentQueryModel, results);
                     }
                 }
                 
@@ -66,7 +66,7 @@ namespace ExampleApp
                     ExecuteQueryPerformedCallbacks(query);
                     if((m_networkCapabilities.StreamOverWifiOnly() && !m_networkCapabilities.ConnectedToWifi()) || !m_networkCapabilities.NetworkAvailable())
                     {
-                        ExecutQueryResponseReceivedCallbacks(query, std::vector<Search::SdkModel::SearchResultModel>());
+                        ExecuteQueryResponseReceivedCallbacks(query, std::vector<Search::SdkModel::SearchResultModel>());
                         return;
                     }
                     
@@ -95,7 +95,7 @@ namespace ExampleApp
                     }
                     
                     m_hasActiveQuery = false;
-                    ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, queryResults);
+                    ExecuteQueryResponseReceivedCallbacks(m_currentQueryModel, queryResults);
                 }
                 
                 void EegeoSearchService::HandleNetworkCapabilitiesChanged()

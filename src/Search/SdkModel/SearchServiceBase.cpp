@@ -29,7 +29,7 @@ namespace ExampleApp
                 m_queryPerformedCallbacks.ExecuteCallbacks(query);
             }
 
-            void SearchServiceBase::ExecutQueryResponseReceivedCallbacks(const SearchQuery& query,
+            void SearchServiceBase::ExecuteQueryResponseReceivedCallbacks(const SearchQuery& query,
                     const std::vector<SearchResultModel>& results)
             {
                 m_queryResponseReceivedCallbacks.ExecuteCallbacks(query, results);

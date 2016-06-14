@@ -101,7 +101,7 @@ namespace ExampleApp
                     if(queryServices.empty())
                     {
                         Eegeo_TTY("Warning: No valid query dispatched");
-                        ExecutQueryResponseReceivedCallbacks(query, m_combinedResults);
+                        ExecuteQueryResponseReceivedCallbacks(query, m_combinedResults);
                         return;
                     }
                     
@@ -142,7 +142,7 @@ namespace ExampleApp
                     {
                         m_hasActiveQuery = false;
                         m_combinedResults.clear();
-                        ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, m_combinedResults);
+                        ExecuteQueryResponseReceivedCallbacks(m_currentQueryModel, m_combinedResults);
                     }
                 }
                 
@@ -170,7 +170,7 @@ namespace ExampleApp
                     {
                         m_hasActiveQuery = false;
                         m_pendingResultsLeft = 0;
-                        ExecutQueryResponseReceivedCallbacks(query, m_combinedResults);
+                        ExecuteQueryResponseReceivedCallbacks(query, m_combinedResults);
                         m_combinedResults.clear();
                     }
                 }

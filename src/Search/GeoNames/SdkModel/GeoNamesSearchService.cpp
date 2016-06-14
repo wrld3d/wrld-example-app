@@ -52,7 +52,7 @@ namespace ExampleApp
                     {
                         m_hasActiveQuery = false;
                         std::vector<Search::SdkModel::SearchResultModel> results;
-                        ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, results);
+                        ExecuteQueryResponseReceivedCallbacks(m_currentQueryModel, results);
                     }
                 }
                 
@@ -63,7 +63,7 @@ namespace ExampleApp
                     ExecuteQueryPerformedCallbacks(query);
                     if(m_currentQueryModel.IsCategory() || (m_networkCapabilities.StreamOverWifiOnly() && !m_networkCapabilities.ConnectedToWifi()))
                     {
-                        ExecutQueryResponseReceivedCallbacks(query, std::vector<Search::SdkModel::SearchResultModel>());
+                        ExecuteQueryResponseReceivedCallbacks(query, std::vector<Search::SdkModel::SearchResultModel>());
                         return;
                     }
                     
@@ -103,7 +103,7 @@ namespace ExampleApp
                     }
                     
                     m_hasActiveQuery = false;
-                    ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, queryResults);
+                    ExecuteQueryResponseReceivedCallbacks(m_currentQueryModel, queryResults);
                 }
             }
         }

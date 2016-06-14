@@ -53,7 +53,7 @@ namespace ExampleApp
                     {
                         m_hasActiveQuery = false;
                         std::vector<Search::SdkModel::SearchResultModel> results;
-                        ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, results);
+                        ExecuteQueryResponseReceivedCallbacks(m_currentQueryModel, results);
                     }
                 }
                 
@@ -64,7 +64,7 @@ namespace ExampleApp
                     ExecuteQueryPerformedCallbacks(searchQuery);
                     if(m_networkCapabilities.StreamOverWifiOnly() && !m_networkCapabilities.ConnectedToWifi())
                     {
-                        ExecutQueryResponseReceivedCallbacks(searchQuery, std::vector<Search::SdkModel::SearchResultModel>());
+                        ExecuteQueryResponseReceivedCallbacks(searchQuery, std::vector<Search::SdkModel::SearchResultModel>());
                         return;
                     }
                     
@@ -95,7 +95,7 @@ namespace ExampleApp
                     
                     m_pCurrentRequest = NULL;
                     m_hasActiveQuery = false;
-                    ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, results);
+                    ExecuteQueryResponseReceivedCallbacks(m_currentQueryModel, results);
                 }
                 
                 void YelpSearchService::PerformIdentitySearch(const Search::SdkModel::SearchResultModel& outdatedSearchResult,

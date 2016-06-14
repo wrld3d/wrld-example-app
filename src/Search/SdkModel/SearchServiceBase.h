@@ -26,7 +26,7 @@ namespace ExampleApp
 
                 void ExecuteQueryPerformedCallbacks(const SearchQuery& query);
 
-                void ExecutQueryResponseReceivedCallbacks(const SearchQuery& query, const std::vector<SearchResultModel>& results);
+                void ExecuteQueryResponseReceivedCallbacks(const SearchQuery& query, const std::vector<SearchResultModel>& results);
                 
                 std::vector<std::string> m_availableCategories;
 
