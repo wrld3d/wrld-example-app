@@ -32,6 +32,7 @@ namespace ExampleApp
                     Search::SdkModel::ISearchService* m_pSearchService;
 
                     SearchResultPoi::SdkModel::ICategoryIconMapper *m_pCategoryIconMapper;
+                    EegeoReadableTagMapper *m_pReadableTagMapper;
                 public:
                     EegeoSearchServiceModule(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                              Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,

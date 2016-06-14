@@ -4,6 +4,7 @@
 #include "SearchVendorNames.h"
 #include "TimeHelpers.h"
 #include "InteriorId.h"
+#include "EegeoReadableTagMapper.h"
 
 #include "document.h"
 #include "writer.h"
@@ -43,8 +44,24 @@ namespace ExampleApp
 
                         return tags;
                     }
+                    
+                    std::vector<std::string> GetNamesForTags(const std::vector<std::string>& tags, const EegeoReadableTagMapper& tagNameMapper)
+                    {
+                        std::vector<std::string> readableTags;
+                        
+                        for(std::vector<std::string>::const_iterator it = tags.begin(); it != tags.end(); ++it)
+                        {
+                            const std::string& tag = *it;
+                            
+                            readableTags.push_back(tagNameMapper.GetNameForTag(tag));
+                        }
+                        
+                        return readableTags;
+                     }
 
-                    Search::SdkModel::SearchResultModel ParseSearchResultFromJsonObject(const rapidjson::Value& json, const SearchResultPoi::SdkModel::ICategoryIconMapper& tagIconMapper)
+                    Search::SdkModel::SearchResultModel ParseSearchResultFromJsonObject(const rapidjson::Value& json,
+                                                                                        const SearchResultPoi::SdkModel::ICategoryIconMapper& tagIconMapper,
+                                                                                        const EegeoReadableTagMapper& tagNameMapper)
                     {
                         Eegeo::Space::LatLong location = Eegeo::Space::LatLong::FromDegrees(json["lat"].GetDouble(),
                                                                                             json["lon"].GetDouble());
@@ -56,6 +73,7 @@ namespace ExampleApp
                         Eegeo::Resources::Interiors::InteriorId interiorId(json["indoor_id"].GetString());
                         
                         std::vector<std::string> tags = SplitIntoTags(json["tags"].GetString(), ' ');
+                        std::vector<std::string> readableTags = GetNamesForTags(tags, tagNameMapper);
 
                         std::string category = tagIconMapper.GetIconForCategories(tags);
                         
@@ -79,15 +97,16 @@ namespace ExampleApp
                                                                                interiorId,
                                                                                json["floor_id"].GetInt(),
                                                                                category,
-                                                                               tags,
+                                                                               readableTags,
                                                                                ExampleApp::Search::EegeoVendorName,
                                                                                userData,
                                                                                Eegeo::Helpers::Time::MillisecondsSinceEpoch());
                     }
                 }
                 
-                EegeoJsonParser::EegeoJsonParser(const SearchResultPoi::SdkModel::ICategoryIconMapper &categoryIconMapper)
+                EegeoJsonParser::EegeoJsonParser(const SearchResultPoi::SdkModel::ICategoryIconMapper &categoryIconMapper, const EegeoReadableTagMapper& tagReadableNameMapper)
                 :m_categoryIconMapper(categoryIconMapper)
+                ,m_tagReadableNameMapper(tagReadableNameMapper)
                 {
 
                 }
@@ -104,7 +123,7 @@ namespace ExampleApp
                         for(int i = 0; i < numEntries; ++i)
                         {
                             const rapidjson::Value& json = document[i];
-                            Search::SdkModel::SearchResultModel result(ParseSearchResultFromJsonObject(json, m_categoryIconMapper));
+                            Search::SdkModel::SearchResultModel result(ParseSearchResultFromJsonObject(json, m_categoryIconMapper, m_tagReadableNameMapper));
                             out_results.push_back(result);
                         }
                     }
