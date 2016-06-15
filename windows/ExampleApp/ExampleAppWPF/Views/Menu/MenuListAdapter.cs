@@ -194,7 +194,7 @@ namespace ExampleAppWPF
             }
         }
 
-        private List<FrameworkElement> GetListBoxItemsInRange(int skip, int take)
+        public List<FrameworkElement> GetListBoxItemsInRange(int skip, int take)
         {
             var items = m_list.Items
                 .Cast<object>()
@@ -205,7 +205,7 @@ namespace ExampleAppWPF
             return items;
         }
 
-        private List<FrameworkElement> ChildStackPanelsFor(List<FrameworkElement> parentItems)
+        public List<FrameworkElement> ChildStackPanelsFor(List<FrameworkElement> parentItems)
         {
             var controls = parentItems.Select(_x => FindChildControl<StackPanel>(_x as DependencyObject, ControlToAnimate) as FrameworkElement).ToList();
             return controls;
@@ -249,29 +249,73 @@ namespace ExampleAppWPF
             {
                 var currentChildCounts = CalcChildCountsForGroups(m_groupToChildrenMap);
                 var newChildCounts = CalcChildCountsForGroups(groupToChildren);
-                var groupIndex = IndexOfFirstDifference(currentChildCounts, newChildCounts);
 
-                var differenceFound = groupIndex >= 0;
-
-                if (differenceFound)
+                var numDifferences = 0;
+                for (var groupIndex = 0; groupIndex < currentChildCounts.Count; groupIndex++)
                 {
-                    var currentChildCount = currentChildCounts[groupIndex];
-                    var newChildCount = newChildCounts[groupIndex];
-                    
-                    var startIndex = CalcFirstChildIndex(groupIndex);
-                    var itemCount = Math.Abs(newChildCount - currentChildCount);
-
-                    var expanding = (newChildCount > currentChildCount);
-                    if (expanding)
+                    if (currentChildCounts[groupIndex] != newChildCounts[groupIndex])
                     {
-                        AnimateItemsIn(groups, groupsExpandable, groupToChildren, startIndex, itemCount);
+                        numDifferences++;
+                    }
+                }
+
+                if (numDifferences > 0)
+                {
+                    if (numDifferences == 1)
+                    {
+                        var groupIndex = IndexOfFirstDifference(currentChildCounts, newChildCounts);
+
+                        var currentChildCount = currentChildCounts[groupIndex];
+                        var newChildCount = newChildCounts[groupIndex];
+
+                        var startIndex = CalcFirstChildIndex(groupIndex);
+                        var itemCount = Math.Abs(newChildCount - currentChildCount);
+
+                        var expanding = (newChildCount > currentChildCount);
+                        if (expanding)
+                        {
+                            AnimateItemsIn(groups, groupsExpandable, groupToChildren, startIndex, itemCount);
+                        }
+                        else
+                        {
+                            AnimateItemsOut(groups, groupsExpandable, groupToChildren, startIndex, itemCount);
+                        }
                     }
                     else
                     {
-                        AnimateItemsOut(groups, groupsExpandable, groupToChildren, startIndex, itemCount);
+                        var outStartIndex = 0;
+                        var outItemCount = 0;
+                        var inGroupIndex = 0;
+                        var inItemCount = 0;
+
+                        for (var groupIndex = 0; groupIndex < currentChildCounts.Count; groupIndex++)
+                        {
+                            if (currentChildCounts[groupIndex] != newChildCounts[groupIndex])
+                            {
+                                var currentChildCount = currentChildCounts[groupIndex];
+                                var newChildCount = newChildCounts[groupIndex];
+
+                                var expanding = (newChildCount > currentChildCount);
+                                if (expanding)
+                                {
+                                    inGroupIndex = groupIndex;
+                                    inItemCount = Math.Abs(newChildCount - currentChildCount);
+                                }
+                                else
+                                {
+                                    outStartIndex = CalcFirstChildIndex(groupIndex);
+                                    outItemCount = Math.Abs(newChildCount - currentChildCount);
+                                }
+                            }
+                        }
+
+                        AnimateItemsOutAndIn(groups, groupsExpandable, groupToChildren, outStartIndex, outItemCount, inGroupIndex, inItemCount);
                     }
+
                     return;
                 }
+
+
             }
 
             if (groups.Count >= m_groups.Count)
@@ -304,7 +348,7 @@ namespace ExampleAppWPF
             return -1;
         }
 
-        private int CalcFirstChildIndex(int groupIndex)
+        public int CalcFirstChildIndex(int groupIndex)
         {
             var elementIndexOfGroup = m_groups
                 .Take(groupIndex)
@@ -354,6 +398,35 @@ namespace ExampleAppWPF
             if (itemsToAnimate.Any())
             {
                 var menuDelayedSourceUpdateAnimatorListener = new MenuDelayedSourceUpdateAnimatorListener(groups, groupsExpandable, groupToChildren, this);
+                var controls = ChildStackPanelsFor(itemsToAnimate);
+                m_slideOutStoryboardRunner.AllCompleted += menuDelayedSourceUpdateAnimatorListener.OnCompleted;
+                m_slideOutStoryboardRunner.Begin(itemsToAnimate);
+                m_itemShutterCloseStoryboardRunner.Begin(controls);
+            }
+        }
+
+        private void AnimateItemsOutAndIn(
+            List<string> groups,
+            List<bool> groupsExpandable,
+            Dictionary<string, List<string>> groupToChildren,
+            int outStartIndex,
+            int outItemCount,
+            int inGroupIndex,
+            int inItemCount)
+        {
+            m_list.UpdateLayout();
+            var itemsToAnimate = GetListBoxItemsInRange(outStartIndex, outItemCount);
+
+            var parentGroupIndex = outStartIndex - 1;
+
+            if (parentGroupIndex >= 0 && parentGroupIndex < m_children.Count)
+            {
+                m_children[parentGroupIndex].IsExpanded = false;
+            }
+
+            if (itemsToAnimate.Any())
+            {
+                var menuDelayedSourceUpdateAnimatorListener = new MenuDelayedSourceUpdateAnimatorListener(groups, groupsExpandable, groupToChildren, this, inGroupIndex, inItemCount);
                 var controls = ChildStackPanelsFor(itemsToAnimate);
                 m_slideOutStoryboardRunner.AllCompleted += menuDelayedSourceUpdateAnimatorListener.OnCompleted;
                 m_slideOutStoryboardRunner.Begin(itemsToAnimate);
@@ -530,6 +603,21 @@ namespace ExampleAppWPF
                 }
             }
             return 0;
+        }
+
+        public StoryboardRunner GetSlideInStoryboardRunner()
+        {
+            return m_slideInStoryboardRunner;
+        }
+
+        public StoryboardRunner GetSlideOutStoryboardRunner()
+        {
+            return m_slideOutStoryboardRunner;
+        }
+
+        public StoryboardRunner GetItemShutterOpenStoryboardRunner()
+        {
+            return m_itemShutterOpenStoryboardRunner;
         }
     }
 }
