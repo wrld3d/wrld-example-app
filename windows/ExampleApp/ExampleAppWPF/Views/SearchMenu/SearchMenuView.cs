@@ -215,7 +215,7 @@ namespace ExampleAppWPF
 
                 if (item.IsExpandable)
                 {
-                SearchMenuViewCLIMethods.OnSearchCleared(m_nativeCallerPointer);
+                    SearchMenuViewCLIMethods.OnSearchCleared(m_nativeCallerPointer);
                 }
 
                 MenuViewCLIMethods.SelectedItem(m_nativeCallerPointer, sectionChildIndices.Item1, sectionChildIndices.Item2);
