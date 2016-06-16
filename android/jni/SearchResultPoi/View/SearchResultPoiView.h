@@ -58,6 +58,8 @@ namespace ExampleApp
 
                 void CreateAndShowGeoNamesPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned);
 
+                void CreateAndShowEegeoPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned);
+
                 jclass CreateJavaClass(const std::string& viewClass);
 
                 jobject CreateJavaObject(jclass uiViewClass);

@@ -5,6 +5,8 @@
 #include "SearchVendorNames.h"
 #include "YelpSearchResultModel.h"
 #include "YelpParsingHelpers.h"
+#include "EegeoJsonParser.h"
+#include "EegeoSearchResultModel.h"
 
 namespace ExampleApp
 {
@@ -38,6 +40,10 @@ namespace ExampleApp
                 else if(vendor == Search::GeoNamesVendorName)
                 {
                 	CreateAndShowGeoNamesPoiView(model, isPinned);
+                }
+                else if (vendor == Search::EegeoVendorName)
+                {
+                	CreateAndShowEegeoPoiView(model, isPinned);
                 }
                 else
                 {
@@ -219,6 +225,54 @@ namespace ExampleApp
             	env->DeleteLocalRef(categoryStr);
             	env->DeleteLocalRef(addressStr);
             	env->DeleteLocalRef(titleStr);
+            }
+
+            void SearchResultPoiView::CreateAndShowEegeoPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned)
+            {
+            	const std::string viewClass = "com/eegeo/searchresultpoiview/EegeoSearchResultPoiView";
+            	m_uiViewClass = CreateJavaClass(viewClass);
+            	Eegeo_ASSERT(m_uiViewClass != NULL, "failed to create viewClass EegeoSearchResultPoiView");
+            	m_uiView = CreateJavaObject(m_uiViewClass);
+            	Eegeo_ASSERT(m_uiView != NULL, "failed to create view EegeoSearchResultPoiView");
+
+            	const Search::EegeoPois::SdkModel::EegeoSearchResultModel& eegeoSearchResultModel = Search::EegeoPois::SdkModel::TransformToEegeoSearchResult(model);
+
+            	AndroidSafeNativeThreadAttachment attached(m_nativeState);
+            	JNIEnv* env = attached.envForThread;
+
+            	jobjectArray humanReadableCategoriesArray = CreateJavaArray(model.GetHumanReadableCategories());
+
+            	jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
+            	jstring addressStr = env->NewStringUTF(model.GetSubtitle().c_str());
+            	jstring phoneStr = env->NewStringUTF(eegeoSearchResultModel.GetPhone().c_str());
+            	jstring urlStr = env->NewStringUTF(eegeoSearchResultModel.GetWebUrl().c_str());
+            	jstring categoryStr = env->NewStringUTF(model.GetCategory().c_str());
+            	jstring imageUrlStr = env->NewStringUTF(eegeoSearchResultModel.GetImageUrl().c_str());
+            	jstring vendorStr = env->NewStringUTF(model.GetVendor().c_str());
+
+            	jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
+            	env->CallVoidMethod(
+            			m_uiView,
+						displayPoiInfoMethod,
+						titleStr,
+						addressStr,
+						phoneStr,
+						urlStr,
+						categoryStr,
+						humanReadableCategoriesArray,
+						imageUrlStr,
+						vendorStr,
+						isPinned
+            	);
+
+            	env->DeleteLocalRef(vendorStr);
+            	env->DeleteLocalRef(imageUrlStr);
+            	env->DeleteLocalRef(categoryStr);
+            	env->DeleteLocalRef(urlStr);
+            	env->DeleteLocalRef(phoneStr);
+            	env->DeleteLocalRef(addressStr);
+            	env->DeleteLocalRef(titleStr);
+            	env->DeleteLocalRef(humanReadableCategoriesArray);
             }
 
             jclass SearchResultPoiView::CreateJavaClass(const std::string& viewClass)
