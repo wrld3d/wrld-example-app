@@ -43,9 +43,10 @@ public class MenuExpandableListOnClickListener implements OnGroupClickListener, 
 	}
 
 	@Override
-	public boolean onChildClick(ExpandableListView parent, View view, int groupPosition, int childPosition, long id) 
+	public boolean onChildClick(ExpandableListView parent, View view, final int groupPosition, final int childPosition, long id) 
 	{
 		MenuViewJniMethods.SelectedItem(m_nativeCallerPointer, groupPosition, childPosition + 1);
+		parent.invalidate();
 		return true;
 	}
 }
