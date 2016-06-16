@@ -27,19 +27,26 @@ public class SettingsMenuAnimationHandler extends MenuAnimationHandler
 		super(mainActivity, view, menuView);
 		
 		View dragTabView = m_view.findViewById(R.id.settings_menu_drag_button_view);
-		View titleContainerView = m_view.findViewById(R.id.settings_menu_title_container);
+		View titleContainerView =  m_view.findViewById(R.id.settings_menu_title_container);
 		View listItemContainerView = m_view.findViewById(R.id.settings_menu_list_container);
 		View settingsMenuTitleView = m_view.findViewById(R.id.settings_menu_title);
 		View settingsMenuSeparatorView = m_view.findViewById(R.id.settings_menu_title_separator);
 		
+      
 		final RelativeLayout uiRoot = (RelativeLayout)m_mainActivity.findViewById(R.id.ui_container);
+		int screenWidthPx = uiRoot.getWidth();	
 		
-		int screenWidthPx = uiRoot.getWidth();
-		
+		int dragTabWidthPx = dragTabView.getWidth();
 		int menuButtonMarginPx = (int) m_mainActivity.getResources().getDimension(R.dimen.menu_button_margin);
-		
-		int titleContainerWidthPx = titleContainerView.getWidth();
-        int dragTabWidthPx = dragTabView.getWidth();
+		int titleContainerWidthPx = 0;
+		if(!mainActivity.getResources().getBoolean(R.bool.isPhone)){
+			titleContainerView.getLayoutParams().width = (int) (mainActivity.getResources().getDimension(R.dimen.search_results_bar_width) - (dragTabWidthPx + menuButtonMarginPx));
+			titleContainerWidthPx = (int) (mainActivity.getResources().getDimension(R.dimen.search_results_bar_width) - (dragTabWidthPx + menuButtonMarginPx));
+		}else{
+			titleContainerView.getLayoutParams().width = screenWidthPx - (dragTabWidthPx + menuButtonMarginPx);
+			titleContainerWidthPx = screenWidthPx - (dragTabWidthPx + menuButtonMarginPx);	
+		}
+        
         
         titleContainerView.setPivotX(0.0f);
         titleContainerView.setX(dragTabWidthPx);

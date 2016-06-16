@@ -5,6 +5,9 @@ package com.eegeo.searchmenu;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.view.View;
+import android.webkit.WebView.FindListener;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.eegeo.animation.BackOutTimeInterpolator;
 import com.eegeo.animation.CircleInOutTimeInterpolator;
@@ -33,7 +36,7 @@ public class SearchMenuAnimationHandler extends MenuAnimationHandler
 		
 		m_searchResultsAnimatorSet = new ReversibleAnimatorSet();
 
-		View listContainerView = m_view.findViewById(R.id.search_menu_list_container);
+		View listContainerView =  m_view.findViewById(R.id.search_menu_list_container);
 		View dragTabView = m_view.findViewById(R.id.search_menu_drag_button_view);
 		View titleContainerView = m_view.findViewById(R.id.search_menu_title_bar);
 		View editBoxBackgroundView = titleContainerView.findViewById(R.id.search_menu_edit_text_background);
@@ -41,24 +44,41 @@ public class SearchMenuAnimationHandler extends MenuAnimationHandler
 		View clearButtonView = titleContainerView.findViewById(R.id.search_menu_clear_button);
 		View searchCountView = m_view.findViewById(R.id.search_menu_result_count_container);
 		View anchorArrowView = m_view.findViewById(R.id.search_results_anchor_arrow);
-			
-        int dragTabWidthPx = dragTabView.getWidth();
-        int titleContainerWidthPx = titleContainerView.getWidth();
+		View searchMenuSeparatorView = m_view.findViewById(R.id.search_menu_title_separator);
+		View searchMenuResultSeparatorView = m_view.findViewById(R.id.search_menu_results_separator);
+
+		
+        int menuButtonMarginPx = (int)m_mainActivity.getResources().getDimension(R.dimen.menu_button_margin);
+        
+        int screenWidthPx = 0;
+        
+		if(!mainActivity.getResources().getBoolean(R.bool.isPhone)){
+			screenWidthPx = (int) mainActivity.getResources().getDimension(R.dimen.search_results_bar_width);
+		}else{
+			final RelativeLayout uiRoot = (RelativeLayout)m_mainActivity.findViewById(R.id.ui_container);
+			screenWidthPx = uiRoot.getWidth();	
+		}
+		
+		int dragTabWidthPx = dragTabView.getWidth();
+		
+		titleContainerView.getLayoutParams().width = screenWidthPx - (dragTabWidthPx + menuButtonMarginPx);
+		listContainerView.getLayoutParams().width = screenWidthPx - (dragTabWidthPx + menuButtonMarginPx);
+		int titleContainerWidthPx = screenWidthPx - (dragTabWidthPx + menuButtonMarginPx);
+
         int titleBarControlsYStartPx = -dragTabWidthPx / 2;
         int editTextYEndPx = (int)editBoxView.getY();
-        int clearButtonHeightPx =  (int)m_mainActivity.getResources().getDimension(R.dimen.search_clear_button_size);
+        int clearButtonHeightPx =  clearButtonView.getHeight();
         int clearButtonYEndPx = (dragTabWidthPx - clearButtonHeightPx) / 2;
         int anchorArrowMarginPx = (int)m_mainActivity.getResources().getDimension(R.dimen.search_result_anchor_margin);
         
-        m_view.setX(0.0f);
         
-        int menuButtonMarginPx = (int)m_mainActivity.getResources().getDimension(R.dimen.menu_button_margin);
-
-        titleContainerView.setPivotX(0.0f);
+        m_view.setX(0.0f);
 		searchCountView.setVisibility(View.GONE);
 	
 		addAnimator(m_onScreenAnimatorSet, -dragTabWidthPx, menuButtonMarginPx, false, new ViewXAnimatorUpdateListener(dragTabView), new CircleInOutTimeInterpolator());
-		addAnimator(m_onScreenAnimatorSet, -menuButtonMarginPx, -menuButtonMarginPx, false, new ViewXAnimatorUpdateListener(titleContainerView), new CircleInOutTimeInterpolator());
+		addAnimator(m_onScreenAnimatorSet, -titleContainerWidthPx, -titleContainerWidthPx, false, new ViewXAnimatorUpdateListener(titleContainerView), new CircleInOutTimeInterpolator());
+		addAnimator(m_onScreenAnimatorSet, -titleContainerWidthPx, -titleContainerWidthPx, false, new ViewXAnimatorUpdateListener(searchMenuSeparatorView), new CircleInOutTimeInterpolator());
+		addAnimator(m_onScreenAnimatorSet, -titleContainerWidthPx, -titleContainerWidthPx, false, new ViewXAnimatorUpdateListener(searchMenuResultSeparatorView), new CircleInOutTimeInterpolator());
 		addAnimator(m_onScreenAnimatorSet, -titleContainerWidthPx, -titleContainerWidthPx, false, new ViewXAnimatorUpdateListener(listContainerView), new CircleInOutTimeInterpolator());
 		addAnimator(m_onScreenAnimatorSet, 0.0f, 0.0f, false, new ViewScaleYAnimatorUpdateListener(editBoxBackgroundView), new BackOutTimeInterpolator());
 		addAnimator(m_onScreenAnimatorSet, titleBarControlsYStartPx, titleBarControlsYStartPx, false, new ViewYAnimatorUpdateListener(editBoxView), new CircleInOutTimeInterpolator());
@@ -69,13 +89,15 @@ public class SearchMenuAnimationHandler extends MenuAnimationHandler
 		addAnimator(m_onScreenAnimatorSet, -menuButtonMarginPx, 0, false, new ViewXAnimatorUpdateListener(searchCountView), new CircleInOutTimeInterpolator());
 		
 		addAnimator(m_openAnimatorSet, menuButtonMarginPx, titleContainerWidthPx, false, new ViewXAnimatorUpdateListener(dragTabView), new CircleInOutTimeInterpolator());
-		addAnimator(m_openAnimatorSet, -menuButtonMarginPx, 0, false, new ViewXAnimatorUpdateListener(titleContainerView), new CircleInOutTimeInterpolator());
+		addAnimator(m_openAnimatorSet, -titleContainerWidthPx, 0, false, new ViewXAnimatorUpdateListener(titleContainerView), new CircleInOutTimeInterpolator());
+		addAnimator(m_openAnimatorSet, -titleContainerWidthPx, 0, false, new ViewXAnimatorUpdateListener(searchMenuSeparatorView), new CircleInOutTimeInterpolator());
+		addAnimator(m_openAnimatorSet, -titleContainerWidthPx, 0, false, new ViewXAnimatorUpdateListener(searchMenuResultSeparatorView), new CircleInOutTimeInterpolator());
 		addAnimator(m_openAnimatorSet, -titleContainerWidthPx, 0, false, new ViewXAnimatorUpdateListener(listContainerView), new CircleInOutTimeInterpolator());
 		addAnimator(m_openAnimatorSet, 0.0f, 1.0f, true, new ViewScaleYAnimatorUpdateListener(editBoxBackgroundView), new BackOutTimeInterpolator());
 		addAnimator(m_openAnimatorSet, titleBarControlsYStartPx, editTextYEndPx, true, new ViewYAnimatorUpdateListener(editBoxView), new CircleInOutTimeInterpolator());
 		addAnimator(m_openAnimatorSet, 0.0f, 1.0f, true, new ViewAlphaAnimatorUpdateListener(editBoxView), new CircleInOutTimeInterpolator());
 		addAnimator(m_openAnimatorSet, titleBarControlsYStartPx, clearButtonYEndPx, true, new ViewYAnimatorUpdateListener(clearButtonView), new CircleInOutTimeInterpolator());
-		addAnimator(m_openAnimatorSet, 0.0f, 1.0f, true, new ViewAlphaAnimatorUpdateListener(clearButtonView), new CircleInOutTimeInterpolator());
+	    addAnimator(m_openAnimatorSet, 0.0f, 1.0f, true, new ViewAlphaAnimatorUpdateListener(clearButtonView), new CircleInOutTimeInterpolator());
 		addAnimator(m_openAnimatorSet, -titleContainerWidthPx, anchorArrowMarginPx, false, new ViewXAnimatorUpdateListener(anchorArrowView), new CircleInOutTimeInterpolator());
 		
 		addAnimator(m_searchResultsAnimatorSet, menuButtonMarginPx, 0, false, new ViewXAnimatorUpdateListener(searchCountView), new CircleInOutTimeInterpolator());

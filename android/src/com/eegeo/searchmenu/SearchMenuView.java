@@ -6,6 +6,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.eegeo.ProjectSwallowApp.R;
+import com.eegeo.entrypointinfrastructure.MainActivity;
+import com.eegeo.menu.MenuItemSelectedListener;
+import com.eegeo.menu.MenuListAdapter;
+import com.eegeo.menu.MenuView;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -18,13 +24,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.ProjectSwallowApp.R;
-import com.eegeo.categories.CategoryResources;
-import com.eegeo.menu.MenuItemSelectedListener;
-import com.eegeo.menu.MenuListAdapter;
-import com.eegeo.menu.MenuView;
 
 public class SearchMenuView extends MenuView implements TextView.OnEditorActionListener, OnFocusChangeListener, TextWatcher
 {
@@ -69,13 +68,14 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
 
         m_list = (ListView)m_view.findViewById(R.id.search_menu_options_list_view);
         m_searchList = (ListView)m_view.findViewById(R.id.search_menu_item_list);
+         
         
         View dragButtonView = m_view.findViewById(R.id.search_menu_drag_button_view);
         dragButtonView.setOnClickListener(this);
         
         m_closeButtonView = m_view.findViewById(R.id.search_menu_clear_button);
         m_closeButtonView.setOnClickListener(new SearchMenuCloseButtonClickedHandler(m_nativeCallerPointer, this));
-        m_closeButtonView.setVisibility(View.GONE);
+        m_closeButtonView.setVisibility(View.INVISIBLE);
 
         m_progressSpinner = m_view.findViewById(R.id.search_menu_spinner);
         m_progressSpinner.setVisibility(View.GONE);
@@ -138,8 +138,8 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         m_searchMenuItemSelectedListener = new SearchMenuItemSelectedListener(m_nativeCallerPointer, this);
         m_searchList.setOnItemClickListener(m_searchMenuItemSelectedListener);
         
-        ViewGroup vg = (ViewGroup)m_view;
-        m_activity.recursiveDisableSplitMotionEvents(vg);
+//        ViewGroup vg = (ViewGroup)m_view;
+//        m_activity.recursiveDisableSplitMotionEvents(vg);
         
         m_isCategory = false;
     }
@@ -191,7 +191,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
 
     public void setSearchInProgress()
     {
-    	m_closeButtonView.setVisibility(View.GONE);
+    	m_closeButtonView.setVisibility(View.INVISIBLE);
     	m_progressSpinner.setVisibility(View.VISIBLE);
     }
 
@@ -225,7 +225,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     	{
     		m_searchCountText.setText("");
     		m_searchMenuAnimationHandler.hideSearchResultsView();
-    		m_closeButtonView.setVisibility(View.GONE);
+    		m_closeButtonView.setVisibility(View.INVISIBLE);
     		m_anchorArrow.setVisibility(View.GONE);
     		m_searchMenuResultsSeparator.setVisibility(View.GONE);
     	}
@@ -304,10 +304,11 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         final RelativeLayout mainSearchSubview = (RelativeLayout)m_view.findViewById(R.id.search_menu_view);
 
         final View topBar = (View)m_view.findViewById(R.id.search_menu_title_bar);
+        final View seperatorBars = (View)m_view.findViewById(R.id.search_menu_results_separator);
         final View menuListContainer = (View)m_view.findViewById(R.id.search_menu_options_list_view);
         
         final float viewHeight = mainSearchSubview.getHeight();
-        final float occupiedHeight = topBar.getHeight() + menuListContainer.getHeight();    
+        final float occupiedHeight = topBar.getHeight() + menuListContainer.getHeight() + seperatorBars.getHeight() * 2.0f;    
         final float availableHeight = viewHeight - occupiedHeight;
         
     	final float cellHeight = m_activity.getResources().getDimension(R.dimen.search_menu_result_cell_height);
