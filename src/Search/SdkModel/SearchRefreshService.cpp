@@ -167,6 +167,11 @@ namespace ExampleApp
                     m_previousQueryLocationEcef = interestPointEcef;
                     m_secondsSincePreviousRefresh = 0.f;
                 }
+                
+                if (!m_enabled)
+                {
+                    m_searchService.CancelInFlightQueries();
+                }
 
                 m_previousQueryInterestDistance = (viewpointEcef - interestPointEcef).Length();
                 m_previousInterestEcefLocation = interestPointEcef;
