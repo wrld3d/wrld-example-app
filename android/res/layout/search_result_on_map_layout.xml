@@ -21,27 +21,25 @@
 		    android:id="@+id/search_result_on_map_view_title"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
-		    android:layout_marginLeft="3dp"
-		    android:layout_marginTop="1dp"
+		    android:layout_marginTop="3dp"
+		    android:layout_marginBottom="3dp"
 		    android:ellipsize="end"
 		    android:gravity="center_horizontal"
 		    android:singleLine="true"
 		    android:textColor="@color/gold"
-		    android:textSize="15.0dp"
-		    android:textStyle="bold" />
+		    android:textSize="15.0dp" />
 		
 		<!--  Description -->
 		<TextView
-			     android:id="@+id/search_result_on_map_view_details"
-			     android:layout_width="fill_parent"
-			     android:layout_height="15dp"
-			     android:layout_marginBottom="2dp"
-			     android:layout_marginLeft="3dp"
-			     android:ellipsize="end"
-			     android:gravity="center_horizontal"
-			     android:singleLine="true"
-			     android:textColor="@color/darkgrey"
-			     android:textSize="12.0dp" />
+		    android:id="@+id/search_result_on_map_view_details"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_marginBottom="4dp"
+		    android:ellipsize="end"
+		    android:gravity="center_horizontal"
+		    android:singleLine="true"
+		    android:textColor="@color/darkgrey"
+		    android:textSize="12.0dp" />
 		
 		<!--  Ratings -->
 
@@ -50,6 +48,7 @@
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:layout_gravity="center_horizontal"
+		    android:layout_marginTop="3dp"
 		    android:orientation="horizontal" >
 
 			<ImageView
@@ -78,6 +77,8 @@
             android:id="@+id/search_result_on_map_accreditation_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/yelp_logo_small" />
 		
