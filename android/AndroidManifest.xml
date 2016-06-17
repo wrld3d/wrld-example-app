@@ -22,7 +22,6 @@
         <activity android:name=".BackgroundThreadActivity"
                   android:label="eeGeo Example"
                   android:configChanges="orientation|keyboardHidden|screenSize|fontScale"
-                  android:windowSoftInputMode="adjustPan"
               	  android:launchMode="standard"
               	  android:hardwareAccelerated="true">
             <intent-filter>
