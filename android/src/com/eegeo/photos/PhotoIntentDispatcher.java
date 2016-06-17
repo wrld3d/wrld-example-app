@@ -32,7 +32,7 @@ public class PhotoIntentDispatcher
         m_activity = activity;
     }
 
-    public void takePhoto()
+    public boolean takePhoto()
     {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if(takePictureIntent.resolveActivity(m_activity.getPackageManager()) != null)
@@ -43,7 +43,9 @@ public class PhotoIntentDispatcher
             m_currentPhotoPath = Uri.fromFile(file);
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, m_currentPhotoPath);
             m_activity.startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            return true;
         }
+        return false;
     }
 
     public void selectPhotoFromGallery()
