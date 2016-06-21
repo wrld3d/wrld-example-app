@@ -1,19 +1,23 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/poi_creation_details_main"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_marginBottom="@dimen/about_dialog_margin_vertical"
-    android:layout_marginLeft="@dimen/about_dialog_margin_horizontal"
-    android:layout_marginRight="@dimen/about_dialog_margin_horizontal"
-    android:layout_marginTop="@dimen/about_dialog_margin_vertical"
-    android:fillViewport="true" >
+    android:layout_height="fill_parent" >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="vertical" >
+        android:layout_height="fill_parent"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="@dimen/about_dialog_margin_vertical"
+        android:layout_marginLeft="@dimen/about_dialog_margin_horizontal"
+        android:layout_marginRight="@dimen/about_dialog_margin_horizontal"
+        android:layout_marginTop="@dimen/about_dialog_margin_vertical" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_centerInParent="true"
+            android:background="@color/gold" />
 
         <!-- header -->
 
@@ -21,6 +25,7 @@
             android:id="@+id/header"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:orientation="vertical" >
 
             <!-- title bar and name box -->
@@ -102,110 +107,128 @@
 
         <!-- Scrolling details section -->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="vertical" >
-
-            <EditText
-                android:id="@+id/poi_creation_details_description"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:gravity="top|left"
-                android:hint="@string/poi_creation_details_description_hint"
-                android:imeOptions="actionDone"
-                android:inputType="text|textMultiLine"
-                android:maxLength="10000"
-                android:textColorHint="@color/lightgrey"
-                android:textSize="15.0dp" />
-
-            <ImageView
-                android:id="@+id/poi_creation_details_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/poi_creation_details_image"
-                android:scaleType="fitCenter"
-                android:src="@drawable/image_blank" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <!-- Button bar -->
+        <ScrollView
+            android:id="@+id/poi_creation_details_scroll_section"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@+id/footer"
+            android:layout_below="@+id/header"
+            android:background="@color/white" >
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/gold"
-                android:baselineAligned="false"
-                android:gravity="bottom"
-                android:orientation="horizontal" >
+                android:orientation="vertical" >
 
-                <RelativeLayout
-                    android:layout_width="0dp"
+                <EditText
+                    android:id="@+id/poi_creation_details_description"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.25" >
+                    android:layout_margin="10dp"
+                    android:gravity="top|left"
+                    android:hint="@string/poi_creation_details_description_hint"
+                    android:imeOptions="actionDone"
+                    android:inputType="text|textMultiLine"
+                    android:maxLength="10000"
+                    android:textColorHint="@color/lightgrey"
+                    android:textSize="15.0dp" />
 
-                    <ImageView
-                        android:id="@+id/poi_creation_details_button_close"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:background="@drawable/menu_button_color_states"
-                        android:src="@drawable/button_pin_close_states" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
+                <ImageView
+                    android:id="@+id/poi_creation_details_image"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.25" >
-
-                    <ImageView
-                        android:id="@+id/poi_creation_details_button_photo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:background="@drawable/menu_button_color_states"
-                        android:src="@drawable/button_photo_states" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.25" >
-
-                    <ImageView
-                        android:id="@+id/poi_creation_details_button_gallery"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:background="@drawable/menu_button_color_states"
-                        android:src="@drawable/button_gallery_states" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.25" >
-
-                    <ImageView
-                        android:id="@+id/poi_creation_details_button_submit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:background="@drawable/menu_button_color_states"
-                        android:src="@drawable/button_pin_ok_states" />
-                </RelativeLayout>
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/poi_creation_details_image"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/image_blank" />
             </LinearLayout>
-        </LinearLayout>
+        </ScrollView>
         <!-- end scrolling details section -->
 
-    </LinearLayout>
 
-</ScrollView>
+        <!-- footer -->
+
+        <LinearLayout
+            android:id="@+id/footer"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical" >
+
+            <!-- Button bar -->
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal" >
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.25" >
+
+                        <ImageView
+                            android:id="@+id/poi_creation_details_button_close"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:background="@drawable/menu_button_color_states"
+                            android:src="@drawable/button_pin_close_states" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.25" >
+
+                        <ImageView
+                            android:id="@+id/poi_creation_details_button_photo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:background="@drawable/menu_button_color_states"
+                            android:src="@drawable/button_photo_states" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.25" >
+
+                        <ImageView
+                            android:id="@+id/poi_creation_details_button_gallery"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:background="@drawable/menu_button_color_states"
+                            android:src="@drawable/button_gallery_states" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.25" >
+
+                        <ImageView
+                            android:id="@+id/poi_creation_details_button_submit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:background="@drawable/menu_button_color_states"
+                            android:src="@drawable/button_pin_ok_states" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+        <!-- end footer -->
+
+    </RelativeLayout>
+
+</RelativeLayout>
