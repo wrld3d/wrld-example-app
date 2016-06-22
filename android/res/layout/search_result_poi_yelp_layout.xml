@@ -3,14 +3,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:id="@+id/search_result_poi_view">
-
-    <RelativeLayout
-	    android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-	    android:id="@+id/search_result_poi_view_container"
-        android:layout_centerInParent="true">
             
         <!-- Title bar -->
         <RelativeLayout 
@@ -36,7 +28,6 @@
                 android:singleLine="true"
                 android:ellipsize="end"
                 android:textColor="@color/gold"
-                android:textSize="12dp"
                 android:textStyle="bold"/>
         </RelativeLayout>
 	        
@@ -72,6 +63,7 @@
 	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content">
 		            <ImageView
+		                android:adjustViewBounds="true"
 		                android:id="@+id/search_result_poi_view_image"
 		                android:layout_width="fill_parent"
 		                android:layout_height="wrap_content"/>
@@ -166,8 +158,7 @@
 	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content"
 	                android:textColor="@color/white"
-	                android:textSize="12dp"
-	                android:paddingLeft="3dp"
+	                android:padding="3dp"
 	                android:background="@color/gold"
 	                android:text="@string/header_phone"/>
 	            
@@ -187,8 +178,7 @@
 	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content"
 	                android:textColor="@color/white"
-	                android:textSize="12dp"
-	                android:paddingLeft="3dp"
+	                android:padding="3dp"
 	                android:background="@color/gold"
 	                android:text="@string/header_address"/>
 	            
@@ -208,8 +198,7 @@
 	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content"
 	                android:textColor="@color/white"
-	                android:textSize="12dp"
-	                android:paddingLeft="3dp"
+	                android:padding="3dp"
 	                android:background="@color/gold"
 	                android:text="@string/header_categories"/>
 	            
@@ -229,8 +218,7 @@
 	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content"
 	                android:textColor="@color/white"
-	                android:textSize="12dp"
-	                android:paddingLeft="3dp"
+	                android:padding="3dp"
 	                android:background="@color/gold"
 	                android:text="@string/header_reviews"/>
 	            
@@ -272,5 +260,4 @@
 		     	android:src="@drawable/button_pin_close_states" />
 
          </RelativeLayout>
-	</RelativeLayout>
 </RelativeLayout>

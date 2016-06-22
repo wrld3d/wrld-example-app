@@ -4,14 +4,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <RelativeLayout
-        android:id="@+id/search_result_poi_view_container"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp" >
-
         <!-- Title bar -->
 
         <RelativeLayout
@@ -39,7 +31,6 @@
                 android:gravity="center_vertical"
                 android:singleLine="true"
                 android:textColor="@color/gold"
-                android:textSize="12dp"
                 android:textStyle="bold" />
         </RelativeLayout>
 
@@ -74,6 +65,7 @@
 
                 <ImageView
                     android:id="@+id/search_result_poi_view_image"
+                    android:adjustViewBounds="true"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content" />
 
@@ -85,10 +77,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@color/gold"
-                    android:paddingLeft="3dp"
+                    android:padding="3dp"
                     android:text="@string/header_description"
-                    android:textColor="@color/white"
-                    android:textSize="12dp" />
+                    android:textColor="@color/white"/>
 
                 <TextView
 	                android:id="@+id/search_result_poi_view_description"
@@ -126,6 +117,4 @@
                 android:background="@drawable/button_pressed_colour_change"
                 android:src="@drawable/button_pin_close_states" />
         </RelativeLayout>
-    </RelativeLayout>
-
 </RelativeLayout>

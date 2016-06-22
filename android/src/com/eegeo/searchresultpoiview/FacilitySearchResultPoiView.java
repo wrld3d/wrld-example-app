@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.RelativeLayout.LayoutParams;
 
 public class FacilitySearchResultPoiView implements View.OnClickListener 
 {
@@ -42,7 +43,14 @@ public class FacilitySearchResultPoiView implements View.OnClickListener
 
         m_uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
         m_view = m_activity.getLayoutInflater().inflate(R.layout.search_result_poi_facility_layout, m_uiRoot, false);
-
+        RelativeLayout.LayoutParams layoutParams = (LayoutParams) m_view.getLayoutParams();
+		if (m_activity.getResources().getBoolean(R.bool.isPhone)) {
+			layoutParams.topMargin = layoutParams.bottomMargin = layoutParams.leftMargin = layoutParams.rightMargin = m_activity
+					.dipAsPx(20);
+		} else {
+			layoutParams.topMargin = layoutParams.bottomMargin = m_activity.dipAsPx(40);
+			layoutParams.leftMargin = layoutParams.rightMargin = (int) (m_uiRoot.getWidth() * 0.3f);
+		}
         m_closeButton = m_view.findViewById(R.id.search_result_poi_view_close_button);
         m_togglePinnedButton = m_view.findViewById(R.id.search_result_poi_view_toggle_pinned_button);
         m_togglePinnedWrapper = new TintablePinToggleButton(m_togglePinnedButton);
@@ -129,7 +137,7 @@ public class FacilitySearchResultPoiView implements View.OnClickListener
 			    bmOptions.inJustDecodeBounds = false;
 			    bmOptions.inPurgeable = true;
 				
-				int size = m_activity.dipAsPx(280);
+				int size = m_uiRoot.getWidth();
 				Bitmap poiBitmap = BitmapFactory.decodeByteArray(imgData, 0, imgData.length, bmOptions);
 				m_poiImage.setImageBitmap(Bitmap.createScaledBitmap(poiBitmap, size, size, false));
 			}

@@ -4,14 +4,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <RelativeLayout
-        android:id="@+id/search_result_poi_view_container"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp" >
-
         <!-- Title bar -->
 
         <RelativeLayout
@@ -136,6 +128,5 @@
                 android:background="@drawable/button_pressed_colour_change"
                 android:src="@drawable/button_pin_close_states" />
         </RelativeLayout>
-    </RelativeLayout>
 
 </RelativeLayout>
