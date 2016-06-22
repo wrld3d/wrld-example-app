@@ -35,11 +35,14 @@ public class ReversibleAnimatorSet
 		
 		ArrayList<Animator> valueAnimators = m_animatorSet.getChildAnimations();
 		
+		float animatedFractions = 0.0f;
 		for(Animator animator : valueAnimators)
 		{
-			animatedFraction = Math.min(animatedFraction, ((ValueAnimator)animator).getAnimatedFraction());
+			animatedFractions +=((ValueAnimator)animator).getAnimatedFraction();
 		}
 		
+		animatedFraction = Math.min(animatedFraction, animatedFractions/(float)valueAnimators.size());
+
 		return animatedFraction;
 	}
 	
