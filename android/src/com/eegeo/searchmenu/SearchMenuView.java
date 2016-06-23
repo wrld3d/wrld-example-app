@@ -221,6 +221,11 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     
     public void setSearchResultCount(final int searchResultCount)
     {
+    	if(m_searchMenuAnimationHandler==null)
+    	{ 
+    		return;
+    	}
+    	
     	if(searchResultCount == 0)
     	{
     		m_searchCountText.setText("");
