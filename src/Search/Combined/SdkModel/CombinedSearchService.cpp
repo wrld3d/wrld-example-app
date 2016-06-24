@@ -55,6 +55,34 @@ namespace ExampleApp
                     return false;
                 }
                 
+                
+                bool CombinedSearchService::CanPerformLocationQuerySearch(const Search::SdkModel::SearchQuery& query, const Search::SdkModel::ISearchService& searchService) const
+                {
+                    if (searchService.CanHandleIndoor())
+                    {
+                        const bool isIndoor = m_interiorInteractionModel.HasInteriorModel();
+                        
+                        if (isIndoor || query.ShouldTryInteriorSearch())
+                        {
+                            return true;
+                        }
+                    }
+                    
+                    const bool isCategory = query.IsCategory();
+                    const bool canPerformCategory = isCategory && searchService.CanHandleCategory(query.Query());
+                    
+                    if (canPerformCategory)
+                    {
+                        return true;
+                    }
+                    else if (!isCategory)
+                    {
+                        return true;
+                    }
+                    
+                    return false;
+                }
+                
                 void CombinedSearchService::PerformLocationQuerySearch(const Search::SdkModel::SearchQuery& query)
                 {
                     
@@ -68,29 +96,11 @@ namespace ExampleApp
                     
                     for (std::map<std::string,Search::SdkModel::ISearchService*>::const_iterator iter = m_searchServices.begin(); iter != m_searchServices.end(); ++iter)
                     {
-                        bool isIndoor = m_interiorInteractionModel.HasInteriorModel();
-                        bool isCategory = query.IsCategory();
-                        bool canPerformCategory = isCategory && (*iter).second->CanHandleCategory(query.Query());
-                        bool canPerformIndoor = (*iter).second->CanHandleIndoor();
-                        
-                        if (isIndoor || query.ShouldTryInteriorSearch())
+                        if (CanPerformLocationQuerySearch(query, *(iter->second)))
                         {
-                            if (canPerformIndoor)
-                            {
-                                queryServices.push_back((*iter).second);
-                            }
+                            queryServices.push_back((*iter).second);
                         }
-                        else
-                        {
-                            if(canPerformCategory)
-                            {
-                                queryServices.push_back((*iter).second);
-                            }
-                            else if (!isCategory)
-                            {
-                                queryServices.push_back((*iter).second);
-                            }
-                        }
+
                     }
                     
                     ExecuteQueryPerformedCallbacks(query);

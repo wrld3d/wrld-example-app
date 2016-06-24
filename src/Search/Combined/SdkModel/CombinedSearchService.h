@@ -44,6 +44,8 @@ namespace ExampleApp
                     
                     void OnSearchResponseRecieved(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results);
                     
+                    bool CanPerformLocationQuerySearch(const Search::SdkModel::SearchQuery& query, const Search::SdkModel::ISearchService& searchService) const;
+                    
                     
                 private:
                     
