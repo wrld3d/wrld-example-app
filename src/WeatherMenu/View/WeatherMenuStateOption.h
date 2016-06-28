@@ -20,7 +20,8 @@ namespace ExampleApp
                 WeatherMenuStateOption(
                     SdkModel::WeatherMenuStateModel& weatherStateModel,
                     ExampleAppMessaging::TMessageBus& messageBus,
-                                       Metrics::IMetricsService& metricsService);
+                    Metrics::IMetricsService& metricsService,
+                    const AppModes::SdkModel::IAppModeModel& appModeModel);
 
                 void Select();
 
@@ -30,6 +31,7 @@ namespace ExampleApp
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 
                 Metrics::IMetricsService& m_metricsService;
+                const AppModes::SdkModel::IAppModeModel& m_appModeModel;
             };
         }
     }

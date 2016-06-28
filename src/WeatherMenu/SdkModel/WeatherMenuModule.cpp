@@ -44,14 +44,14 @@ namespace ExampleApp
                     Eegeo_ASSERT(false, "Failed to parse weatherstates.json definitions file.");
                 }
 
-                m_pWeatherController = Eegeo_NEW(WeatherController)(visualMapService, appModeModel);
+                m_pWeatherController = Eegeo_NEW(WeatherController)(visualMapService);
 
                 for(std::vector<WeatherMenuStateModel>::iterator it = weatherStates.begin(); it != weatherStates.end(); it++)
                 {
                     WeatherMenuStateModel& weatherState = *it;
                     m_pMenuOptionsModel->AddItem(weatherState.GetName(),
                                                  weatherState.GetName(), "", weatherState.GetIcon(),
-                                                 Eegeo_NEW(View::WeatherMenuStateOption)(weatherState, messageBus, metricsService));
+                                                 Eegeo_NEW(View::WeatherMenuStateOption)(weatherState, messageBus, metricsService, appModeModel));
                 }
 
                 m_pWeatherSelectedMessageHandler = Eegeo_NEW(WeatherSelectedMessageHandler)(*m_pWeatherController, messageBus);
