@@ -27,6 +27,7 @@ namespace ExampleAppWPF
         private FrameworkElement m_reviewsIcon;
 
         private ControlClickHandler m_yelpReviewImageClickHandler;
+        private ControlClickHandler m_pinToggledButtonClickHandler;
         private Image m_yelpButton;
 
         public string PhoneText
@@ -155,6 +156,23 @@ namespace ExampleAppWPF
                 OnPropertyChanged("Url");
             }
         }
+
+        public bool IsPinned
+        {
+            get
+            {
+                return m_isPinned;
+            }
+
+            set
+            {
+                if (m_isPinned != value)
+                {
+                    m_isPinned = value;
+                    OnPropertyChanged("IsPinned");
+                }
+            }
+        }
                 
         static YelpSearchResultsPoiView()
         {
@@ -178,6 +196,9 @@ namespace ExampleAppWPF
             m_mainContainer = (FrameworkElement)GetTemplateChild("SearchresultsPoiViewContainer");
 
             m_reviewsIcon = (FrameworkElement)GetTemplateChild("ReviewsIcon");
+
+            var pinToggleButton = (FrameworkElement)GetTemplateChild("TogglePinnedButton");
+            m_pinToggledButtonClickHandler = new ControlClickHandler(HandlePinToggleButtonClicked, pinToggleButton);
 
             var mainGrid = (Application.Current.MainWindow as MainWindow).MainGrid;
             var screenWidth = mainGrid.ActualWidth;
@@ -225,8 +246,7 @@ namespace ExampleAppWPF
 
             m_poiImage.Source = new BitmapImage(new Uri("/ExampleAppWPF;component/Assets/poi_placeholder.png", UriKind.Relative));
 
-            m_isPinned = isPinned;
-            OnPropertyChanged("IsPinned");
+            IsPinned = isPinned;
 
             ShowAll();
         }
@@ -243,6 +263,11 @@ namespace ExampleAppWPF
             {
                 Process.Start(m_url);
             }
+        }
+
+        public void HandlePinToggleButtonClicked(object sender, MouseEventArgs e)
+        {
+            ExampleApp.SearchResultPoiViewCLI.TogglePinnedButtonClicked(m_nativeCallerPointer);
         }
     }
 }
