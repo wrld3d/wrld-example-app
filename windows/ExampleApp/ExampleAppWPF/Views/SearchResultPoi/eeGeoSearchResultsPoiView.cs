@@ -103,6 +103,9 @@ namespace ExampleAppWPF
             var mainGrid = (Application.Current.MainWindow as MainWindow).MainGrid;
             var screenWidth = mainGrid.ActualWidth;
 
+            var pinToggleButton = (FrameworkElement)GetTemplateChild("TogglePinnedButton");
+            m_pinToggledButtonClickHandler = new ControlClickHandler(HandlePinToggleButtonClicked, pinToggleButton);
+
             m_yelpReviewImageClickHandler = new ControlClickHandler(yelpButton, HandleWebLinkButtonClicked);
             
             base.OnApplyTemplate();
@@ -119,8 +122,7 @@ namespace ExampleAppWPF
             ReviewText = model.Subtitle;
             CategoryIcon = SearchResultPoiViewIconProvider.GetIconForCategory(model.Category);
 
-            m_isPinned = isPinned;
-            OnPropertyChanged("IsPinned");
+            IsPinned = isPinned;
 
             ShowAll();
         }
