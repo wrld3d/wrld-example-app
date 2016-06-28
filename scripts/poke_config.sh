@@ -7,7 +7,7 @@ usage() {
 	echo "  -r -> path to root folder containing ApplicationConfigs (required)"; 1>&2; 
 	echo "  -i -> relative path to input config file (required)"; 1>&2; 
 	echo "  -o -> relative path to output config file (required)"; 1>&2; 	
-	echo "  -j -> json to merge into input config file to produce output config file"; 1>&2; 
+	echo "  -j -> relative path to json file to merge with input config file to produce output config file"; 1>&2; 
 	exit 1; 
 }
 
@@ -48,11 +48,6 @@ if [ -z "${output_config_file_path}" ]; then
 	exit 1
 fi
 
-json_to_poke="${json_to_poke%\"}"
-json_to_poke="${json_to_poke#\"}"
-json_to_poke="${json_to_poke%\'}"
-json_to_poke="${json_to_poke#\'}"
-
 echo "json_to_poke is ${json_to_poke}"
 
 script_dir=$(dirname $0)
@@ -73,7 +68,9 @@ mv $apiKeyFileTemp $apiKeyFile
 src_path="${root_path}/${input_config_file_path}"
 dest_path="${root_path}/${output_config_file_path}"
 
-src_path_temp="${src_path}.bak"
+git checkout $src_path
+
+src_path_temp="src_config.bak"
 cp -f $src_path $src_path_temp
 rm -f $dest_path
 
