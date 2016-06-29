@@ -5,11 +5,13 @@ import org.json.JSONObject;
 public class MenuItemData
 {
 	private String m_text;
+	private String m_details;
 	private String m_icon;
 	
-	public MenuItemData(String text, String icon)
+	public MenuItemData(String text, String details, String icon)
 	{
 		m_text = text;
+		m_details = details;
 		m_icon = icon;
 	}
 	
@@ -18,9 +20,19 @@ public class MenuItemData
 		return m_text;
 	}
 	
+	public String getDetails()
+	{
+		return m_details;
+	}
+	
 	public String getIcon()
 	{
 		return m_icon;
+	}
+	
+	public boolean hasDetails()
+	{
+		return m_details != "";
 	}
 	
 	public static MenuItemData fromJson(String serialisedJson)
@@ -36,7 +48,13 @@ public class MenuItemData
 				itemIcon = json.getString("icon");
 			}
 			
-			return new MenuItemData(itemText, itemIcon);
+			String itemDetails = "";
+			if (json.has("details"))
+			{
+				itemDetails = json.getString("details");
+			}
+			
+			return new MenuItemData(itemText, itemDetails, itemIcon);
 		}
 		catch (Exception e)
 		{

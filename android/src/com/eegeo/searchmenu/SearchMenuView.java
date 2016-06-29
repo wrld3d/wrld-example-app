@@ -135,7 +135,8 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         														m_list, 
         														m_menuListAnimationHandler, 
         														R.layout.menu_list_item, 
-        														R.layout.menu_list_subitem);
+        														R.layout.menu_list_subitem,
+        														R.layout.menu_list_subitem_with_details);
 
         m_list.setAdapter(m_expandableListAdapter);
         
