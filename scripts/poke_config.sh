@@ -71,7 +71,7 @@ dest_path="${root_path}/${output_config_file_path}"
 git checkout $src_path
 
 src_path_temp="src_config.bak"
-mv -f $src_path $src_path_temp
+cp -f $src_path $src_path_temp
 rm -f $dest_path
 
 

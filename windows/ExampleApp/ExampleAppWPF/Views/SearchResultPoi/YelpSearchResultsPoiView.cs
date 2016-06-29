@@ -27,7 +27,6 @@ namespace ExampleAppWPF
         private FrameworkElement m_reviewsIcon;
 
         private ControlClickHandler m_yelpReviewImageClickHandler;
-        private ControlClickHandler m_pinToggledButtonClickHandler;
         private Image m_yelpButton;
 
         public string PhoneText
@@ -157,23 +156,6 @@ namespace ExampleAppWPF
             }
         }
 
-        public bool IsPinned
-        {
-            get
-            {
-                return m_isPinned;
-            }
-
-            set
-            {
-                if (m_isPinned != value)
-                {
-                    m_isPinned = value;
-                    OnPropertyChanged("IsPinned");
-                }
-            }
-        }
-                
         static YelpSearchResultsPoiView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(YelpSearchResultsPoiView), new FrameworkPropertyMetadata(typeof(YelpSearchResultsPoiView)));
@@ -263,11 +245,6 @@ namespace ExampleAppWPF
             {
                 Process.Start(m_url);
             }
-        }
-
-        public void HandlePinToggleButtonClicked(object sender, MouseEventArgs e)
-        {
-            ExampleApp.SearchResultPoiViewCLI.TogglePinnedButtonClicked(m_nativeCallerPointer);
         }
     }
 }

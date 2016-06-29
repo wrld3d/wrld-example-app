@@ -19,7 +19,7 @@ namespace ExampleApp
             {
             public:
 
-                WeatherController(VisualMap::SdkModel::IVisualMapService& visualMapService, const AppModes::SdkModel::IAppModeModel& appModeModel);
+                WeatherController(VisualMap::SdkModel::IVisualMapService& visualMapService);
 
                 void SetWeather(const std::string& weather);
                 void SetTime(const std::string& time);
@@ -28,7 +28,6 @@ namespace ExampleApp
 
             private:
                 VisualMap::SdkModel::IVisualMapService& m_visualMapService;
-                const AppModes::SdkModel::IAppModeModel& m_appModeModel;
             };
         }
     }

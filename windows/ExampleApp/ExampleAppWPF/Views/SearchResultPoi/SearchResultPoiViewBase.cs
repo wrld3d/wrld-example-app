@@ -18,6 +18,8 @@ namespace ExampleAppWPF
         protected FrameworkElement m_mainContainer;
         protected Button m_closeButton;
 
+        protected ControlClickHandler m_pinToggledButtonClickHandler;
+
         protected bool m_closing;
         protected bool m_isPinned;
 
@@ -30,6 +32,23 @@ namespace ExampleAppWPF
         public event PropertyChangedEventHandler PropertyChanged;
 
         private static bool m_isAnyPOIOpen = false;
+
+        public bool IsPinned
+        {
+            get
+            {
+                return m_isPinned;
+            }
+
+            set
+            {
+                if (m_isPinned != value)
+                {
+                    m_isPinned = value;
+                    OnPropertyChanged("IsPinned");
+                }
+            }
+        }
 
         public static bool IsAnyPOIOpen()
         {
@@ -50,6 +69,11 @@ namespace ExampleAppWPF
             m_isOpen = false;
 
             Panel.SetZIndex(this, 100);
+        }
+
+        protected void HandlePinToggleButtonClicked(object sender, MouseEventArgs e)
+        {
+            ExampleApp.SearchResultPoiViewCLI.TogglePinnedButtonClicked(m_nativeCallerPointer);
         }
 
         private void OnWindowResized(object sender, SizeChangedEventArgs e)

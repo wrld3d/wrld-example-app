@@ -63,6 +63,9 @@ namespace ExampleAppWPF
 
             m_mainContainer = (FrameworkElement)GetTemplateChild("GeoNamesResultView");
 
+            var pinToggleButton = (FrameworkElement)GetTemplateChild("TogglePinnedButton");
+            m_pinToggledButtonClickHandler = new ControlClickHandler(HandlePinToggleButtonClicked, pinToggleButton);
+
             base.OnApplyTemplate();
         }
         
@@ -76,7 +79,7 @@ namespace ExampleAppWPF
             Title = m_model.Title;
             Country = m_model.Subtitle;
 
-            m_isPinned = isPinned;
+            IsPinned = isPinned;
 
             ShowAll();
         }
