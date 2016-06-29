@@ -131,6 +131,7 @@
     m_highlighted = false;
     m_turningHighlightOff = false;
     m_customContentFramesSet = false;
+    m_hasDetails = false;
     
     m_row = static_cast<int>(indexPath.row);
     m_section = static_cast<int>(indexPath.section);
@@ -293,6 +294,16 @@
         
         [self->pCustomSeparatorContainer addSubview: topSeparator];
     }
+}
+
+- (void)setHasDetails: (bool) hasDetails
+{
+    m_hasDetails = hasDetails;
+}
+
+- (BOOL) hasDetails
+{
+    return m_hasDetails;
 }
 
 @end

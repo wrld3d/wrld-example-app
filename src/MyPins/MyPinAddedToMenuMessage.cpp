@@ -8,12 +8,14 @@ namespace ExampleApp
     {
         MyPinAddedToMenuMessage::MyPinAddedToMenuMessage(SdkModel::MyPinModel::TPinIdType myPinId,
                                                          const std::string& myPinTitle,
+                                                         const std::string& myPinDetails,
                                                          const std::string& myPinIcon,
                                                          const Eegeo::Space::LatLong& myPinLocation,
                                                          const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                                          int floorIndex)
             : m_myPinId(myPinId)
             , m_myPinTitle(myPinTitle)
+        , m_myPinDetails(myPinDetails)
             , m_myPinIcon(myPinIcon)
             , m_pinLocation(myPinLocation)
             , m_interiorId(interiorId)
@@ -30,6 +32,11 @@ namespace ExampleApp
         const std::string& MyPinAddedToMenuMessage::GetMyPinTitle() const
         {
             return m_myPinTitle;
+        }
+        
+        const std::string& MyPinAddedToMenuMessage::GetMyPinDetails() const
+        {
+            return m_myPinDetails;
         }
         
         const std::string& MyPinAddedToMenuMessage::GetMyPinIcon() const
