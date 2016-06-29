@@ -9,10 +9,19 @@ namespace ExampleAppWPF
     public class SubMenuListItem : MenuListItem
     {
         ImageSource m_icon;
+        private string m_details;
+
+        public string DetailVisibility { get; private set; } = "Collapsed";
+        public SolidColorBrush TitleTextColor { get; private set; } = Colour.darkgrey;
 
         public ImageSource Icon
         {
             get { return m_icon; }
+        }
+
+        public string Details
+        {
+            get { return m_details; }
         }
 
         public SubMenuListItem(string json, int zIndex)
@@ -25,6 +34,14 @@ namespace ExampleAppWPF
             {
                 var iconCategoryName = iconField.Value<string>();
                 m_icon = SearchMenuResultIconProvider.GetIconForCategory(iconCategoryName);
+            }
+
+            JToken detailsField;
+            if (parsed.TryGetValue("details", out detailsField))
+            {
+                m_details = detailsField.Value<string>();
+                DetailVisibility = "Visible";
+                TitleTextColor = Colour.black;
             }
         }
     }

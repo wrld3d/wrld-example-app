@@ -347,7 +347,8 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
             cell.imageView.image = nil;
         }
         
-        const float textY = 0.0f;
+        const bool hasDetails = document.HasMember("details");
+        const float textY = hasDetails ? 4.0f : 0.f;
         const float textWidth = [tableView getCellWidth] - textInsetX;
         
         cell.textLabel.text = [NSString stringWithUTF8String:name.c_str()];
@@ -355,14 +356,37 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         cell.textLabel.textColor = isHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderTextColor : ExampleApp::Helpers::ColorPalette::TableSubCellTextColor;
         [cell.textLabel sizeToFit];
         
+        const float titleTextHeight = hasDetails ? cell.textLabel.frame.size.height : textHeight;
+        
         CGRect textFrame = CGRectMake(textInsetX,
                                       textY,
                                       textWidth,
-                                      textHeight);
+                                      titleTextHeight);
         
+        CGRect detailTextFrame = CGRectZero;
+        
+        std::string details = "";
+        if (hasDetails)
+        {
+            details = document["details"].GetString();
+            cell.detailTextLabel.text = [NSString stringWithUTF8String:details.c_str()];
+            cell.detailTextLabel.font = [UIFont systemFontOfSize:11.0f];
+            cell.detailTextLabel.textColor = ExampleApp::Helpers::ColorPalette::TableSearchDetailTextColor;
+            [cell.detailTextLabel sizeToFit];
+            
+            const float detailTextY = 24.0f;
+            detailTextFrame = CGRectMake(textInsetX,
+                                         detailTextY,
+                                         textWidth,
+                                         cell.detailTextLabel.frame.size.height);
+            
+            
+        }
+
+        [(CustomTableViewCell*)cell setHasDetails: hasDetails];
         [(CustomTableViewCell*)cell setContentFrames:imageFrame
                                                     :textFrame
-                                                    :CGRectZero];
+                                                    :detailTextFrame];
     }
 }
 
@@ -373,11 +397,14 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
 
 - (void) setCellInfo:(CustomTableViewCell*)cell :(bool)isHeader :(bool)hasSeparator
 {
+    UIColor* titleTextColor = isHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderTextColor : ExampleApp::Helpers::ColorPalette::TableSubCellTextColor;
+    titleTextColor = [cell hasDetails] ? ExampleApp::Helpers::ColorPalette::TableSearchTextColor: titleTextColor;
+    
     [cell setInfo :hasSeparator
                   :ExampleApp::Helpers::ColorPalette::UiBorderColor
                   :isHeader ? ExampleApp::Helpers::ColorPalette::UiBorderColor : ExampleApp::Helpers::ColorPalette::TableSubCellColor
                   :isHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderPressColor : ExampleApp::Helpers::ColorPalette::TableSubCellPressColor
-                  :isHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderTextColor : ExampleApp::Helpers::ColorPalette::TableSubCellTextColor
+                  :titleTextColor
                   :isHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderTextHighlightColor : ExampleApp::Helpers::ColorPalette::TableSubCellTextColor
                   :(UIImageView*)[cell.contentView viewWithTag:SubItemCellOpenableMenuArrowTag]];
 }

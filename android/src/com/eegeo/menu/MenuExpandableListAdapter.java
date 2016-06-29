@@ -39,10 +39,16 @@ public class MenuExpandableListAdapter extends BaseExpandableListAdapter
 	private LayoutInflater m_inflater;
 	final private int m_groupViewId;
 	final private int m_childViewId; 
+	final private int m_childViewWithDetailsId;
 	
 	boolean m_isAnimating = false;
 	
-	public MenuExpandableListAdapter(MainActivity context, MenuExpandableListView expandableList, MenuListAnimationHandler menuListAnimationHandler, final int groupViewId, final int childViewId)
+	public MenuExpandableListAdapter(MainActivity context, 
+									 MenuExpandableListView expandableList, 
+									 MenuListAnimationHandler menuListAnimationHandler, 
+									 final int groupViewId, 
+									 final int childViewId,
+									 final int childViewWithDetailsId)
 	{
 		m_context = context;
 		m_expandableList = expandableList;
@@ -54,6 +60,7 @@ public class MenuExpandableListAdapter extends BaseExpandableListAdapter
 		m_inflater = LayoutInflater.from(m_context);
 		m_groupViewId = groupViewId;
 		m_childViewId = childViewId;
+		m_childViewWithDetailsId = childViewWithDetailsId;
 		
 		m_headerViewCache = new HashMap<String, View>();
 		m_childrenViewCache = new HashMap<String, View>();
@@ -130,7 +137,8 @@ public class MenuExpandableListAdapter extends BaseExpandableListAdapter
 		else
 		{
 			MenuItemData menuItemData = (MenuItemData) getChild(groupPosition, childPosition);
-			itemView = inflateView(m_childViewId, menuItemData);
+			final int viewToInflate = menuItemData.hasDetails() ? m_childViewWithDetailsId : m_childViewId;
+			itemView = inflateView(viewToInflate, menuItemData);
 			
 			// IH: In order for animator to operate, layout params can't be null. So explicitly assign here.
 			//     If this isn't done, layout param setting is deferred until view is rendered, meaning animator 
@@ -325,12 +333,17 @@ public class MenuExpandableListAdapter extends BaseExpandableListAdapter
 		TextView itemText = (TextView)itemView.findViewById(R.id.menu_list_item_name);
 		itemText.setText(itemData.getText());
 		
+		if (itemData.hasDetails())
+		{
+			TextView detailsText = (TextView)itemView.findViewById(R.id.menu_list_item_detail);
+			detailsText.setText(itemData.getDetails());
+		}
+		
 		ImageView itemIcon = (ImageView)itemView.findViewById(R.id.menu_list_item_icon);
 		if (itemIcon != null)
 		{
 			itemIcon.setImageResource(CategoryResources.getIconForResourceName(m_context, itemData.getIcon()));
 		}
-		
 		
 		return itemView;
 	}

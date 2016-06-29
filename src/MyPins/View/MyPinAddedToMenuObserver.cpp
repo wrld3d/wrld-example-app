@@ -40,7 +40,7 @@ namespace ExampleApp
 
                 m_menuOptionsModel.AddItem(ConvertModelDetailToString(message.GetMyPinId()),
                                            message.GetMyPinTitle(),
-                                           "",
+                                           message.GetMyPinDetails(),
                                            myPinIcon,
                                            MyPinMenuOptionFactory::CreateMyPinMenuOption(message.GetMyPinId(),
                                                                       message.GetMyPinLocation(),

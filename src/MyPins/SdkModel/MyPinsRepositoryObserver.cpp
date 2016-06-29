@@ -45,6 +45,7 @@ namespace ExampleApp
                 
                 m_messageBus.Publish(MyPinAddedToMenuMessage(myPinModel->Identifier(),
                                                              myPinModel->GetTitle(),
+                                                             myPinModel->GetDescription(),
                                                              pinBoundObject.GetIconForPin(),
                                                              myPinModel->GetLatLong(),
                                                              myPinModel->GetBuildingId(),
