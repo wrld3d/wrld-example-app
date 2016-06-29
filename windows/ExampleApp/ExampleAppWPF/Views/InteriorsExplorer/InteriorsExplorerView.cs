@@ -71,6 +71,9 @@ namespace ExampleAppWPF
             m_detailsPanel.Opacity = 0.0f;
             var currentPosition = m_floorPanel.RenderTransform.Transform(new Point(0.0, 0.0));
             m_floorPanel.RenderTransform = new TranslateTransform(m_panelOffscreenOffsetX, currentPosition.Y);
+
+            SetTouchEnabled(false);
+            Hide();
         }
 
         private static Thumb GetThumb(Slider slider)
