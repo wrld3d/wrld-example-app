@@ -67,6 +67,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     private int m_enabledTextColor;
     
     private TextView m_searchCountText;
+    private Integer m_searchCount;
     
     private boolean m_isCategory;
     
@@ -122,6 +123,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         
         m_searchCountText = (TextView)m_view.findViewById(R.id.search_menu_result_count);
         m_searchCountText.setText("");
+        m_searchCount = new Integer(0);
         
         m_anchorArrow = m_view.findViewById(R.id.search_results_anchor_arrow);
         m_anchorArrow.setVisibility(View.GONE);
@@ -156,10 +158,11 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         m_menuListAnimationHandler = new MenuListAnimationHandler(m_activity, listContainerView);
         
         m_expandableListAdapter = new MenuExpandableListAdapter(m_activity,
-				m_list, 
-				m_menuListAnimationHandler, 
-				R.layout.menu_list_item, 
-				R.layout.menu_list_subitem);
+        														m_list, 
+        														m_menuListAnimationHandler, 
+        														R.layout.menu_list_item, 
+        														R.layout.menu_list_subitem,
+        														R.layout.menu_list_subitem_with_details);
 
         m_list.setAdapter(m_expandableListAdapter);
         
@@ -285,6 +288,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     	
     	if(searchResultCount == 0)
     	{
+    		m_searchCount = 0;
     		m_searchCountText.setText("");
     		m_searchMenuAnimationHandler.hideSearchResultsView();
     		m_closeButtonView.setVisibility(View.INVISIBLE);
@@ -293,8 +297,8 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     	}
     	else
     	{
-    		Integer searchResultCountWrapp = searchResultCount;
-    		m_searchCountText.setText(searchResultCountWrapp.toString());
+    		m_searchCount = searchResultCount;
+    		m_searchCountText.setText(m_searchCount.toString());
     		m_searchMenuAnimationHandler.showSearchResultsView();
     		m_closeButtonView.setVisibility(View.VISIBLE);
     		m_anchorArrow.setVisibility(View.VISIBLE);
@@ -305,13 +309,20 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     @Override
     public void animateOffScreen()
     {
-    	super.animateOffScreen();    	
+    	super.animateOffScreen();
+    	
+    	m_searchMenuAnimationHandler.hideSearchResultsView();
     }
     
     @Override
     public void animateToClosedOnScreen()
     {
     	super.animateToClosedOnScreen();
+
+		if(m_searchCount > 0)
+		{
+    		m_searchMenuAnimationHandler.showSearchResultsView();
+		}
     }
 
     @Override
