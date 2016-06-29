@@ -67,6 +67,8 @@ namespace ExampleAppWPF
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             PerformLayout(sender, null);
+
+            m_menuViewContainer.SizeChanged += OnMenuContainerSizeChanged;
         }
 
         private new void PerformLayout(object sender, SizeChangedEventArgs e)
@@ -84,6 +86,7 @@ namespace ExampleAppWPF
         private void OnMenuContainerSizeChanged(object sender, SizeChangedEventArgs e)
         {
             m_resultsOptionsView.MaxHeight = CalcResultOptionsViewMaxHeight();
+            m_menuOptionsView.MaxHeight = CalcMenuOptionsViewMaxHeight();
         }
 
         private double CalcResultOptionsViewMaxHeight()
@@ -96,9 +99,19 @@ namespace ExampleAppWPF
             return Math.Max(0.0, menuViewHeight - (searchBoxBackgroundDefaultHeight + menuOptionsViewDefaultHeight + 2 * separatorHeight));
         }
 
+        private double CalcMenuOptionsViewMaxHeight()
+        {
+            var menuViewHeight = m_menuViewContainer.ActualHeight;
+            var searchBoxBackgroundDefaultHeight = m_backgroundRectangle.ActualHeight;
+            var separatorHeight = m_resultsSeparator.ActualHeight;
+
+            return Math.Max(0.0, menuViewHeight - searchBoxBackgroundDefaultHeight + 2 * separatorHeight);
+        }
+
         protected override Size MeasureOverride(Size constraint)
         {
             m_resultsOptionsView.MaxHeight = CalcResultOptionsViewMaxHeight();
+            m_menuOptionsView.MaxHeight = CalcMenuOptionsViewMaxHeight();
             return base.MeasureOverride(constraint);
         }
 
