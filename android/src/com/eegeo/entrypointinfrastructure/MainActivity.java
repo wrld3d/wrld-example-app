@@ -16,21 +16,29 @@ import android.widget.RelativeLayout;
 
 import com.eegeo.mobileexampleapp.R;
 import com.eegeo.photos.PhotoIntentDispatcher;
+import com.eegeo.runtimepermissions.RuntimePermissionDispatcher;
 
 public abstract class MainActivity extends Activity implements SurfaceHolder.Callback, INativeMessageRunner
 {
     private PhotoIntentDispatcher m_photoIntentDispatcher;
+    private RuntimePermissionDispatcher m_runtimePermissionDispatcher;
     private boolean m_touchEnabled;
 
     public MainActivity()
     {
         m_photoIntentDispatcher = new PhotoIntentDispatcher(this);
+        m_runtimePermissionDispatcher = new RuntimePermissionDispatcher(this);
         m_touchEnabled = true;
     }
 
     public PhotoIntentDispatcher getPhotoIntentDispatcher()
     {
         return m_photoIntentDispatcher;
+    }
+    
+    public RuntimePermissionDispatcher getRuntimePermissionDispatcher()
+    {
+        return m_runtimePermissionDispatcher;
     }
 
     // http://developer.android.com/guide/practices/screens_support.html#dips-pels
@@ -96,6 +104,12 @@ public abstract class MainActivity extends Activity implements SurfaceHolder.Cal
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         m_photoIntentDispatcher.onActivityResult(requestCode, resultCode, data);
+    }
+    
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
+    {
+       m_runtimePermissionDispatcher.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     public abstract void dispatchRevealUiMessageToUiThreadFromNativeThread(final long nativeCallerPointer);

@@ -3,20 +3,25 @@
 package com.eegeo.compass;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
+import com.eegeo.helpers.IRuntimePermissionResultHandler;
 import com.eegeo.mobileexampleapp.R;
+import com.eegeo.runtimepermissions.RuntimePermissionDispatcher;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-public class CompassView implements View.OnClickListener
+public class CompassView implements View.OnClickListener, IRuntimePermissionResultHandler
 {
     private MainActivity m_activity = null;
     private long m_nativeCallerPointer;
@@ -44,6 +49,7 @@ public class CompassView implements View.OnClickListener
         final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
         uiRoot.removeView(m_view);
         m_view = null;
+        m_activity.getRuntimePermissionDispatcher().removeIRuntimePermissionResultHandler(this);
     }
 
     private void createView()
@@ -55,6 +61,8 @@ public class CompassView implements View.OnClickListener
         m_compassPoint = m_view.findViewById(R.id.compass_arrow_shape);
         m_compassInner = (ImageView)m_view.findViewById(R.id.compass_inner_shape);
     	m_compassInner.setVisibility(View.GONE);
+    	
+    	m_activity.getRuntimePermissionDispatcher().addRuntimePermissionResultHandler(this);
 
         m_view.addOnLayoutChangeListener(new View.OnLayoutChangeListener() 
         {
@@ -138,7 +146,10 @@ public class CompassView implements View.OnClickListener
     @Override
     public void onClick(View view)
     {
-        CompassViewJniMethods.HandleClick(m_nativeCallerPointer);
+    	if(m_activity.getRuntimePermissionDispatcher().hasLocationPermissions())
+    	{
+    		CompassViewJniMethods.HandleClick(m_nativeCallerPointer);
+    	}
     }
 
     public void animateToActive()
@@ -184,4 +195,55 @@ public class CompassView implements View.OnClickListener
         m_compassInner.setImageBitmap(bmp);  
         m_compassInner.invalidate();
     }
+    
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) 
+    {
+        if (requestCode != RuntimePermissionDispatcher.GPS_PERMISSION_REQUEST_CODE)
+            return;
+		// If request is cancelled, the result arrays are empty.
+		if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) 
+		{
+			CompassViewJniMethods.HandleClick(m_nativeCallerPointer);
+		}
+		else
+		{
+			// If any of the permission is denied, we can't use the camera
+			// properly, so we will show the dialog with agree or cancel dialog
+			showPermissionRequiredDialog(m_activity);
+		}
+		return;
+	}
+    
+    private void showPermissionRequiredDialog(final Activity context) 
+    {
+		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener()
+		{
+			@Override
+			public void onClick(DialogInterface dialog, int which) 
+			{
+				dialog.dismiss();
+				switch (which)
+				{
+				case DialogInterface.BUTTON_POSITIVE:
+					if(ActivityCompat.shouldShowRequestPermissionRationale(context, Manifest.permission.ACCESS_FINE_LOCATION))
+					{
+						// Checking Permissions again
+						m_activity.getRuntimePermissionDispatcher().hasLocationPermissions();
+					}
+					else
+					{
+						// Open App's Settings Page for user to grand permission manually
+						m_activity.getRuntimePermissionDispatcher().startAppSettings(context);
+					}
+					break;
+				}
+			}
+		};
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		builder.setMessage(context.getResources().getString(R.string.required_location_permission_text))
+				.setPositiveButton(context.getResources().getString(R.string.ok_text), dialogClickListener)
+				.setNegativeButton(context.getResources().getString(R.string.cancel_text), dialogClickListener).show();
+	}
 }
