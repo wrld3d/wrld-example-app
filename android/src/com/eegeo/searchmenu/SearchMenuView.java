@@ -257,19 +257,12 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     public void animateOffScreen()
     {
     	super.animateOffScreen();
-    	
-//    	m_searchMenuAnimationHandler.hideSearchResultsView();
     }
     
     @Override
     public void animateToClosedOnScreen()
     {
     	super.animateToClosedOnScreen();
-
-//		if(m_searchCount > 0)
-//		{
-//    		m_searchMenuAnimationHandler.showSearchResultsView();
-//		}
     }
 
     @Override
