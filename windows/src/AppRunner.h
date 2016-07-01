@@ -11,7 +11,8 @@ class AppRunner : Eegeo::NonCopyable
 {
 public:
     AppRunner(
-        WindowsNativeState* pNativeState
+        WindowsNativeState* pNativeState,
+        bool hasNativeTouchInput
     );
     ~AppRunner();
 
@@ -26,6 +27,7 @@ public:
     void HandleMouseEvent(const Eegeo::Windows::Input::MouseInputEvent& message);
     void HandleKeyboardDownEvent(char keyCode);
     void HandleKeyboardUpEvent(char keyCode);
+    void HandleTouchEvent(const Eegeo::Windows::Input::TouchScreenInputEvent& message);
 
     void ActivateSharedSurface();
     void* GetMainRenderSurfaceSharePointer();
@@ -43,6 +45,7 @@ private:
     bool m_updatingNative;
     bool m_isPaused;
     bool m_appRunning;
+    bool m_hasNativeTouch;
 
     GlDisplayService m_displayService;
     void ReleaseDisplay();

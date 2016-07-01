@@ -18,7 +18,8 @@ namespace ExampleAppWPF
         private TimeSpan m_currentRenderArgsRenderingTime = TimeSpan.Zero;
         
         private Stopwatch m_frameTimer;
-        private bool m_isInputActive;
+        private bool m_isMouseInputActive;
+        private bool m_isTouchInputActive;
         private int m_frameCount = 0;
         private bool m_hasEmptiedEventQueueSinceLastRender = true;
         private bool m_hasHadRenderEventSinceRender = false;
@@ -44,7 +45,8 @@ namespace ExampleAppWPF
 
             m_frameTimer = Stopwatch.StartNew();
 
-            m_isInputActive = true;
+            m_isMouseInputActive = true;
+            m_isTouchInputActive = true;
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
@@ -60,6 +62,17 @@ namespace ExampleAppWPF
             }
         }
 
+        public bool HasTouchInput()
+        {
+            foreach (TabletDevice tabletDevice in Tablet.TabletDevices)
+            {
+                //Only detect if it is a touch Screen not how many touches (i.e. Single touch or Multi-touch)
+                if (tabletDevice.Type == TabletDeviceType.Touch)
+                    return true;
+            }
+
+            return false;
+        }
 
         private void MainWindow_Loaded(object sender, EventArgs loadedEvent)
         {
@@ -68,7 +81,9 @@ namespace ExampleAppWPF
             int pixelWidth = (int)MainGrid.ActualWidth;
             int pixelHeight = (int)MainGrid.ActualHeight;
 
-            m_mapImage.Init(pixelWidth, pixelHeight, m_oversampleScale);
+            bool hasNativeTouchInput = HasTouchInput();
+
+            m_mapImage.Init(pixelWidth, pixelHeight, m_oversampleScale, hasNativeTouchInput);
             MapHost.Source = m_mapImage;
             MapHost.Width = pixelWidth;
             MapHost.Height = pixelHeight;
@@ -77,18 +92,22 @@ namespace ExampleAppWPF
             m_mapImage.IsFrontBufferAvailableChanged += OnIsFrontBufferAvailableChanged;
             CompositionTarget.Rendering += CompositionTarget_Rendering;
 
-            MouseLeftButtonDown += (o, e) => { if (m_isInputActive) m_mapImage.HandlePanStartEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
-            PreviewMouseLeftButtonUp += (o, e) => { if (m_isInputActive) m_mapImage.HandlePanEndEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
-            MouseRightButtonDown += (o, e) => { if (m_isInputActive) m_mapImage.HandleRotateStartEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
-            PreviewMouseRightButtonUp += (o, e) => { if (m_isInputActive) m_mapImage.HandleRotateEndEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
-            MouseWheel += (o, e) => { if (m_isInputActive) m_mapImage.HandleZoomEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), e.Delta, Keyboard.Modifiers); };
-            MouseLeave += (o, e) => { if (m_isInputActive) m_mapImage.SetAllInputEventsToPointerUp((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y)); };
-            MouseMove += (o, e) => { if (m_isInputActive) m_mapImage.HandleMouseMoveEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
+            MouseLeftButtonDown += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandlePanStartEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
+            PreviewMouseLeftButtonUp += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandlePanEndEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
+            MouseRightButtonDown += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandleRotateStartEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
+            PreviewMouseRightButtonUp += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandleRotateEndEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
+            MouseWheel += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandleZoomEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), e.Delta, Keyboard.Modifiers); };
+            MouseLeave += (o, e) => { if (m_isMouseInputActive) m_mapImage.SetAllInputEventsToPointerUp((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y)); };
+            MouseMove += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandleMouseMoveEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
 
             KeyDown += (o, e) => { m_mapImage.HandleKeyboardDownEvent((int)KeyInterop.VirtualKeyFromKey(e.Key)); };
 
             MouseDown += MainWindow_MouseDown;
             MouseUp += MainWindow_MouseUp;
+
+            // Passing in 0.0f to Touch events since there is currently no pressure support.
+            TouchDown += (o, e) => { if (m_isTouchInputActive) m_mapImage.HandleTouchDownEvent((float)e.TouchDevice.GetTouchPoint(this).Position.X, (float)e.TouchDevice.GetTouchPoint(this).Position.Y, 0.0f, e.TouchDevice.Id); };
+            TouchUp += (o, e) => { if (m_isTouchInputActive) m_mapImage.HandleTouchUpEvent((float)e.TouchDevice.GetTouchPoint(this).Position.X, (float)e.TouchDevice.GetTouchPoint(this).Position.Y, 0.0f, e.TouchDevice.Id); };
 
             Dispatcher.Hooks.DispatcherInactive += new EventHandler(DispatcherInactive);
 
@@ -113,12 +132,12 @@ namespace ExampleAppWPF
 
         public void SetInputActive(bool input)
         {
-            m_isInputActive = input;
+            m_isMouseInputActive = input;
         }
 
         private void MainWindow_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Middle && m_isInputActive)
+            if (e.ChangedButton == MouseButton.Middle && m_isMouseInputActive)
             {
                 m_mapImage.HandleTiltEnd((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers);
             }
@@ -126,7 +145,7 @@ namespace ExampleAppWPF
 
         private void MainWindow_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Middle && m_isInputActive)
+            if (e.ChangedButton == MouseButton.Middle && m_isMouseInputActive)
             {
                 m_mapImage.HandleTiltStart((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers);
             }

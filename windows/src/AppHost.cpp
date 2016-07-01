@@ -312,6 +312,11 @@ void AppHost::HandleKeyboardInputEvent(const Eegeo::Windows::Input::KeyboardInpu
     m_pInputProcessor->HandleInput(event);
 }
 
+void AppHost::HandleTouchScreenInputEvent(const Eegeo::Windows::Input::TouchScreenInputEvent& event)
+{
+    m_pInputProcessor->HandleTouchScreenInput(event);
+}
+
 void AppHost::SetAllInputEventsToPointerUp(int x, int y)
 {
     m_pInputProcessor->SetAllInputEventsToPointerUp(x, y);
