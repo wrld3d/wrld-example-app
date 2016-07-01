@@ -182,9 +182,19 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
                 return;
             }
 
-            m_activity.getPhotoIntentDispatcher().takePhoto();
-
-            m_awaitingIntentResponse = true;
+            if(m_activity.getPhotoIntentDispatcher().takePhoto())
+            {
+            	m_awaitingIntentResponse = true;	
+            } 
+            else 
+            {
+            	AlertDialog.Builder builder = new AlertDialog.Builder(m_activity);
+                builder.setTitle("Error");
+                builder.setMessage("Error opening camera. Make sure device camera is not 'disabled'");
+                builder.setNegativeButton("Ok", null);
+                builder.setCancelable(false);
+                builder.show();	
+            }
         }
         else if(view == m_selectFromGalleryButton)
         {
