@@ -15,6 +15,7 @@ import com.eegeo.animation.updatelisteners.ViewScaleXAnimatorUpdateListener;
 import com.eegeo.animation.updatelisteners.ViewXAnimatorUpdateListener;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.menu.MenuAnimationHandler;
+import com.eegeo.menu.MenuOffScreenAnimatorListener;
 import com.eegeo.menu.MenuView;
 import com.eegeo.ProjectSwallowApp.R;
 
@@ -22,9 +23,13 @@ public class SettingsMenuAnimationHandler extends MenuAnimationHandler
 {
 	protected final int m_stateChangeAnimationTimeMilliseconds = 300;
 	
+	private ReversibleAnimatorSet m_closedToOffScreenAnimatorSet;
+	
 	public SettingsMenuAnimationHandler(MainActivity mainActivity, View view, MenuView menuView)
 	{
 		super(mainActivity, view, menuView);
+		
+		m_closedToOffScreenAnimatorSet = new ReversibleAnimatorSet();
 		
 		View dragTabView = m_view.findViewById(R.id.settings_menu_drag_button_view);
 		View titleContainerView =  m_view.findViewById(R.id.settings_menu_title_container);
@@ -64,6 +69,12 @@ public class SettingsMenuAnimationHandler extends MenuAnimationHandler
 		addAnimator(m_openAnimatorSet, dragTabWidthPx + menuButtonMarginPx, dragTabWidthPx, new ViewXAnimatorUpdateListener(listItemContainerView), new CircleInOutTimeInterpolator());
 		addAnimator(m_openAnimatorSet, 0.0f, 1.0f, new ViewAlphaAnimatorUpdateListener(settingsMenuTitleView), new CircleInOutTimeInterpolator());
 		addAnimator(m_openAnimatorSet, dragTabWidthPx + menuButtonMarginPx, dragTabWidthPx, new ViewXAnimatorUpdateListener(settingsMenuSeparatorView), new CircleInOutTimeInterpolator());
+	
+		addAnimator(m_closedToOffScreenAnimatorSet, screenWidthPx - (dragTabWidthPx + titleContainerWidthPx), screenWidthPx, new ViewXAnimatorUpdateListener(m_view), new CircleInOutTimeInterpolator());
+		addAnimator(m_closedToOffScreenAnimatorSet, 1.0f, 0.0f, new ViewScaleXAnimatorUpdateListener(titleContainerView), new CircleInOutTimeInterpolator());
+		addAnimator(m_closedToOffScreenAnimatorSet, dragTabWidthPx, dragTabWidthPx + menuButtonMarginPx, new ViewXAnimatorUpdateListener(listItemContainerView), new CircleInOutTimeInterpolator());
+		addAnimator(m_closedToOffScreenAnimatorSet, 1.0f, 0.0f, new ViewAlphaAnimatorUpdateListener(settingsMenuTitleView), new CircleInOutTimeInterpolator());
+		addAnimator(m_closedToOffScreenAnimatorSet, dragTabWidthPx, dragTabWidthPx + menuButtonMarginPx, new ViewXAnimatorUpdateListener(settingsMenuSeparatorView), new CircleInOutTimeInterpolator());
 	}
 	
 	protected void addAnimator(ReversibleAnimatorSet animatorSet, float startVal, float endVal, AnimatorUpdateListener updateListener, TimeInterpolator interpolator)
@@ -88,5 +99,10 @@ public class SettingsMenuAnimationHandler extends MenuAnimationHandler
 		valueAnimator.setInterpolator(interpolator);
 		
 		animatorSet.addAnimator(valueAnimator);
+	}
+	
+	public void playToClosedOffScreen()
+	{
+		m_closedToOffScreenAnimatorSet.start(new MenuOffScreenAnimatorListener(m_menuView), false);
 	}
 }

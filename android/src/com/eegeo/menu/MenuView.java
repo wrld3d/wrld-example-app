@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
@@ -19,6 +18,13 @@ import com.eegeo.menu.MenuViewJniMethods;
 
 public abstract class MenuView implements View.OnClickListener, MenuAnimationStateCallback
 {
+	protected enum MenuState
+	{
+	    OFF_SCREEN,
+	    CLOSED_ON_SCREEN,
+	    OPEN_ON_SCREEN
+	};
+	
 	protected MainActivity m_activity = null;
     protected long m_nativeCallerPointer;
     protected View m_view = null;
@@ -26,6 +32,7 @@ public abstract class MenuView implements View.OnClickListener, MenuAnimationSta
     protected OnItemClickListener m_menuItemSelectedListener = null;
     protected Boolean m_loggingEnabled = true;
     
+    protected MenuState m_menuState = MenuState.OFF_SCREEN;
     protected boolean m_animating = false;
     
     protected MenuAnimationHandler m_menuAnimationHandler = null;
@@ -103,6 +110,8 @@ public abstract class MenuView implements View.OnClickListener, MenuAnimationSta
     	m_menuAnimationHandler.playToClosedOnScreen();
     	
     	m_list.setEnabled(false);
+    	
+    	m_menuState = MenuState.CLOSED_ON_SCREEN;
     }
 
     public void animateToOpenOnScreen()
@@ -115,10 +124,26 @@ public abstract class MenuView implements View.OnClickListener, MenuAnimationSta
     	m_animating = true;
     	
     	m_menuAnimationHandler.playToOpenOnScreen();
+    	
+    	m_menuState = MenuState.OPEN_ON_SCREEN;
     }
 
     public void animateOffScreen()
     {
+    	if(m_animating) 
+    	{
+    		if(m_menuAnimationHandler.isOffScreen()) 
+    		{
+				m_menuAnimationHandler.cancelAnimation();
+				
+				m_animating = false;
+    		} 
+    	} 
+    	else if(m_menuAnimationHandler.isOffScreen())
+    	{
+    		m_menuState = MenuState.OFF_SCREEN;
+    	}
+    	
     	if(m_animating || m_menuAnimationHandler.isOffScreen())
     	{
     		return;
@@ -129,8 +154,10 @@ public abstract class MenuView implements View.OnClickListener, MenuAnimationSta
     	m_menuAnimationHandler.playToOffScreen();
     	
     	m_list.setEnabled(false);
+    	
+    	m_menuState = MenuState.OFF_SCREEN;
     }
-
+    
     public void animateToIntermediateOnScreenState(final float onScreenState)
     {
     	if(m_animating)
