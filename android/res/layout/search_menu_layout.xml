@@ -65,6 +65,12 @@
 			android:childDivider="@color/ui_border"
 			android:dividerHeight="@dimen/menu_item_divider_height"
 			android:groupIndicator="@null"/>
+		
+		<View
+        	android:id="@+id/search_menu_results_footer"
+        	android:layout_width="fill_parent"
+        	android:layout_height="@dimen/menu_item_footer_padding_height"
+        	android:background="@color/ui_border" />
 	</LinearLayout>
 
     <RelativeLayout
