@@ -77,7 +77,7 @@ public class SearchMenuAnimationHandler extends MenuAnimationHandler
 		addAnimator(m_openAnimatorSet, 0.0f, 1.0f, true, new ViewAlphaAnimatorUpdateListener(clearButtonView), new CircleInOutTimeInterpolator());
 		addAnimator(m_openAnimatorSet, -titleContainerWidthPx, anchorArrowMarginPx, false, new ViewXAnimatorUpdateListener(anchorArrowView), new CircleInOutTimeInterpolator());
 		
-		addAnimator(m_searchResultsAnimatorSet, menuButtonMarginPx, 0, false, new ViewXAnimatorUpdateListener(searchCountView), new CircleInOutTimeInterpolator());
+		addAnimator(m_searchResultsAnimatorSet, -menuButtonMarginPx, 0, false, new ViewXAnimatorUpdateListener(searchCountView), new CircleInOutTimeInterpolator());
 	}
 	
 	protected void addAnimator(ReversibleAnimatorSet animatorSet, float startVal, float endVal, boolean useStartDelay, AnimatorUpdateListener updateListener, TimeInterpolator interpolator)
