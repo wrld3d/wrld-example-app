@@ -41,7 +41,7 @@ public class ReversibleAnimatorSet
 			animatedFractions +=((ValueAnimator)animator).getAnimatedFraction();
 		}
 		
-		animatedFraction = Math.min(animatedFraction, animatedFractions/(float)valueAnimators.size());
+		animatedFraction = animatedFractions/(Math.max(animatedFraction, (float)valueAnimators.size()));
 
 		return animatedFraction;
 	}
@@ -89,4 +89,13 @@ public class ReversibleAnimatorSet
 		
 		return durationMilliseconds;
 	}
+	
+	public void cancel() 
+	{
+		if(m_animatorSet.isRunning()) 
+		{
+			m_animatorSet.cancel();
+		}
+	}
+	
 }
