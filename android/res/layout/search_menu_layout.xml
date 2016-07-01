@@ -63,7 +63,15 @@
 			android:dividerHeight="1dp"
 			android:overScrollMode="never"
 			android:paddingLeft="32dp"
-			android:paddingRight="5dp" />
+			android:paddingRight="5dp"
+			android:childDivider="@color/ui_border"
+			android:groupIndicator="@null"/>
+		
+		<View
+        	android:id="@+id/search_menu_results_footer"
+        	android:layout_width="fill_parent"
+        	android:layout_height="@dimen/menu_item_footer_padding_height"
+        	android:background="@color/ui_border" />
 	</LinearLayout>
 
     <RelativeLayout
