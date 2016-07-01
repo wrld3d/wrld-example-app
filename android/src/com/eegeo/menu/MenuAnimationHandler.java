@@ -2,6 +2,7 @@
 
 package com.eegeo.menu;
 
+import android.util.Log;
 import android.view.View;
 
 import com.eegeo.animation.ReversibleAnimatorSet;
@@ -88,5 +89,11 @@ public abstract class MenuAnimationHandler
 	public boolean isOpenOnScreen()
 	{
 		return getOpenOnScreenState() > m_highEndThreshold;
+	}
+	
+	public void cancelAnimation()
+	{
+		m_onScreenAnimatorSet.cancel();
+		m_openAnimatorSet.cancel();
 	}
 }
