@@ -239,6 +239,18 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     		m_searchMenuResultsSeparator.setVisibility(View.VISIBLE);
     	}
     }
+    
+    @Override
+    public void animateOffScreen()
+    {
+    	super.animateOffScreen();    	
+    }
+    
+    @Override
+    public void animateToClosedOnScreen()
+    {
+    	super.animateToClosedOnScreen();
+    }
 
     @Override
     protected void handleDragFinish(int xPx, int yPx)
