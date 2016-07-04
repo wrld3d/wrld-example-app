@@ -9,8 +9,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build.VERSION_CODES;
 import android.os.Environment;
 import android.provider.MediaStore;
 
@@ -32,18 +34,38 @@ public class PhotoIntentDispatcher
         m_activity = activity;
     }
 
-    public void takePhoto()
+    public boolean takePhoto()
     {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if(takePictureIntent.resolveActivity(m_activity.getPackageManager()) != null)
         {
-            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-            String filePath = timeStamp + ".jpg";
-            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), filePath);
-            m_currentPhotoPath = Uri.fromFile(file);
+        	// Due to FileUriExposedException on Android N and above, we will use content uri
+        	if(android.os.Build.VERSION.SDK_INT >= VERSION_CODES.N)
+        	{
+        		try 
+        		{
+    		        ContentValues values = new ContentValues(1);
+    		        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpg");
+    		        m_currentPhotoPath = m_activity.getContentResolver()
+    		                .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+    		    }
+        		catch (Exception e) 
+        		{
+    		        e.printStackTrace();
+    		    }
+        	}
+        	else
+        	{
+	            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+	            String filePath = timeStamp + ".jpg";
+	            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), filePath);
+	            m_currentPhotoPath = Uri.fromFile(file);
+        	}
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, m_currentPhotoPath);
             m_activity.startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            return true;
         }
+        return false;
     }
 
     public void selectPhotoFromGallery()
