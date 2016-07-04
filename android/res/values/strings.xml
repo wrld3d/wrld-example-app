@@ -38,4 +38,8 @@
     
     <string name="placeholder">Lorem ipsum dolor sit amet.</string>
     <string name="settings_header">Settings</string>
+    <string name="required_camera_permission_text">Please provide access to both Camera and Storage permissions for this functionality to work.</string>
+    <string name="required_location_permission_text">Please provide access to Location permission for this functionality to work.</string>
+    <string name="ok_text">Ok</string>
+    <string name="cancel_text">Cancel</string>
 </resources>

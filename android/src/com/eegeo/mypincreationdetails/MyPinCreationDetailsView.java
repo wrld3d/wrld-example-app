@@ -9,6 +9,7 @@ import java.io.InputStream;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,6 +17,7 @@ import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.provider.MediaStore.Images;
+import android.support.v4.app.ActivityCompat;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -30,11 +32,16 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.eegeo.helpers.IActivityIntentResultHandler;
+import com.eegeo.helpers.IRuntimePermissionResultHandler;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.mobileexampleapp.R;
 import com.eegeo.photos.PhotoIntentDispatcher;
+import com.eegeo.runtimepermissions.RuntimePermissionDispatcher;
 
-public class MyPinCreationDetailsView implements View.OnClickListener, IActivityIntentResultHandler
+import android.Manifest;
+import android.app.Activity;
+
+public class MyPinCreationDetailsView implements View.OnClickListener, IActivityIntentResultHandler, IRuntimePermissionResultHandler
 {
     protected MainActivity m_activity = null;
     protected long m_nativeCallerPointer;
@@ -76,6 +83,7 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
         m_view = null;
 
         m_activity.getPhotoIntentDispatcher().removeActivityIntentResultHandler(thisHandler);
+        m_activity.getRuntimePermissionDispatcher().removeIRuntimePermissionResultHandler(this);
     }
 
     private void createView()
@@ -116,6 +124,7 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
         m_termsAndConditionsLink.setText(Html.fromHtml(linkText));
 
         m_activity.getPhotoIntentDispatcher().addActivityIntentResultHandler(this);
+        m_activity.getRuntimePermissionDispatcher().addRuntimePermissionResultHandler(this);
 
         uiRoot.addView(m_view);
     }
@@ -181,10 +190,22 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
             {
                 return;
             }
-
-            m_activity.getPhotoIntentDispatcher().takePhoto();
-
-            m_awaitingIntentResponse = true;
+            if(m_activity.getRuntimePermissionDispatcher().hasCameraAndStoragePermissions(this))
+            {
+                if (m_activity.getPhotoIntentDispatcher().takePhoto())
+                {
+                    m_awaitingIntentResponse = true;
+                }
+                else
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(m_activity);
+                    builder.setTitle("Error");
+                    builder.setMessage("Error opening camera. Make sure device camera is not 'disabled'");
+                    builder.setNegativeButton("Ok", null);
+                    builder.setCancelable(false);
+                    builder.show();
+                }
+            }
         }
         else if(view == m_selectFromGalleryButton)
         {
@@ -397,4 +418,61 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
             m_shouldShareButton.setChecked(m_hasNetworkConnectivity);
         }
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
+    {
+        if (requestCode != RuntimePermissionDispatcher.CAMERA_PERMISSION_REQUEST_CODE)
+            return;
+        
+        // If request is cancelled, the result arrays are empty.
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                && grantResults[1] == PackageManager.PERMISSION_GRANTED)
+        {
+            m_activity.getPhotoIntentDispatcher().takePhoto();
+            m_awaitingIntentResponse = true;
+        }
+        else
+        {
+            // If any of the permission is denied, we can't use the camera
+            // properly, so we will show the dialog with agree or cancel dialog
+            showPermissionRequiredDialog(m_activity);
+        }
+        return;
+    }
+
+    private void showPermissionRequiredDialog(final Activity context)
+    {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                dialog.dismiss();
+                switch(which)
+                {
+                case DialogInterface.BUTTON_POSITIVE:
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(context, Manifest.permission.CAMERA)
+                            || ActivityCompat.shouldShowRequestPermissionRationale(context,
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE))
+                    {
+                        // Checking Permissions again
+                        m_activity.getRuntimePermissionDispatcher().hasCameraAndStoragePermissions(MyPinCreationDetailsView.this);
+                    }
+                    else
+                    {
+                        // Open App Settings Page
+                        m_activity.getRuntimePermissionDispatcher().startAppSettings(context);
+                    }
+                    break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(context.getResources().getString(R.string.required_camera_permission_text))
+                .setPositiveButton(context.getResources().getString(R.string.ok_text), dialogClickListener)
+                .setNegativeButton(context.getResources().getString(R.string.cancel_text), dialogClickListener).show();
+    }
+
 }
