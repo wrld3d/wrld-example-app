@@ -178,10 +178,7 @@ namespace ExampleAppWPF
             m_mainContainer = (FrameworkElement)GetTemplateChild("SearchresultsPoiViewContainer");
 
             m_reviewsIcon = (FrameworkElement)GetTemplateChild("ReviewsIcon");
-
-            var pinToggleButton = (FrameworkElement)GetTemplateChild("TogglePinnedButton");
-            m_pinToggledButtonClickHandler = new ControlClickHandler(HandlePinToggleButtonClicked, pinToggleButton);
-
+            
             var mainGrid = (Application.Current.MainWindow as MainWindow).MainGrid;
             var screenWidth = mainGrid.ActualWidth;
 
@@ -190,7 +187,7 @@ namespace ExampleAppWPF
             base.OnApplyTemplate();
         }
 
-        public override void DisplayPoiInfo(Object modelObject, bool isPinned)
+        protected override void DisplayCustomPoiInfo(Object modelObject)
         {
             ExampleApp.SearchResultModelCLI model = modelObject as ExampleApp.SearchResultModelCLI;
 
@@ -227,8 +224,6 @@ namespace ExampleAppWPF
             }
 
             m_poiImage.Source = new BitmapImage(new Uri("/ExampleAppWPF;component/Assets/poi_placeholder.png", UriKind.Relative));
-
-            IsPinned = isPinned;
 
             ShowAll();
         }

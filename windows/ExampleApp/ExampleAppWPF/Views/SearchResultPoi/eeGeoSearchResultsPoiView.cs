@@ -89,7 +89,6 @@ namespace ExampleAppWPF
 
         public override void OnApplyTemplate()
         {
-
             m_titleView = (TextBlock)GetTemplateChild("Title");
             
             m_poiImage = (Image)GetTemplateChild("PoiImage");
@@ -103,15 +102,12 @@ namespace ExampleAppWPF
             var mainGrid = (Application.Current.MainWindow as MainWindow).MainGrid;
             var screenWidth = mainGrid.ActualWidth;
 
-            var pinToggleButton = (FrameworkElement)GetTemplateChild("TogglePinnedButton");
-            m_pinToggledButtonClickHandler = new ControlClickHandler(HandlePinToggleButtonClicked, pinToggleButton);
-
             m_yelpReviewImageClickHandler = new ControlClickHandler(yelpButton, HandleWebLinkButtonClicked);
             
             base.OnApplyTemplate();
         }
-        
-        public override void DisplayPoiInfo(Object modelObject, bool isPinned)
+
+        protected override void DisplayCustomPoiInfo(Object modelObject)
         {
             ExampleApp.SearchResultModelCLI model = modelObject as ExampleApp.SearchResultModelCLI;
 
@@ -121,8 +117,6 @@ namespace ExampleAppWPF
             HumanReadableCategoriesText = string.Join(Environment.NewLine, model.HumanReadableCategories);
             ReviewText = model.Subtitle;
             CategoryIcon = SearchResultPoiViewIconProvider.GetIconForCategory(model.Category);
-
-            IsPinned = isPinned;
 
             ShowAll();
         }

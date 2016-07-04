@@ -18,8 +18,6 @@ namespace ExampleAppWPF
         protected FrameworkElement m_mainContainer;
         protected Button m_closeButton;
 
-        protected ControlClickHandler m_pinToggledButtonClickHandler;
-
         protected bool m_closing;
         protected bool m_isPinned;
 
@@ -42,9 +40,8 @@ namespace ExampleAppWPF
 
             set
             {
-                if (m_isPinned != value)
+                if (HandleTogglePinnedClicked(ref m_isPinned, !m_isPinned))
                 {
-                    m_isPinned = value;
                     OnPropertyChanged("IsPinned");
                 }
             }
@@ -69,11 +66,6 @@ namespace ExampleAppWPF
             m_isOpen = false;
 
             Panel.SetZIndex(this, 100);
-        }
-
-        protected void HandlePinToggleButtonClicked(object sender, MouseEventArgs e)
-        {
-            ExampleApp.SearchResultPoiViewCLI.TogglePinnedButtonClicked(m_nativeCallerPointer);
         }
 
         private void OnWindowResized(object sender, SizeChangedEventArgs e)
@@ -165,8 +157,19 @@ namespace ExampleAppWPF
                 ExampleApp.SearchResultPoiViewCLI.CloseButtonClicked(m_nativeCallerPointer);
             }
         }
+        protected abstract void DisplayCustomPoiInfo(Object modelObject);
 
-        public abstract void DisplayPoiInfo(Object modelObject, bool isPinned);
+        public void DisplayPoiInfo(Object modelObject, bool isPinned)
+        {
+            // set the pinned state from the native model without feeding back into the native model
+            if (m_isPinned != isPinned)
+            {
+                m_isPinned = isPinned;
+                OnPropertyChanged("IsPinned");
+            }
+
+            DisplayCustomPoiInfo(modelObject);
+        }
 
         public virtual void DismissPoiInfo()
         {
@@ -180,7 +183,7 @@ namespace ExampleAppWPF
             ExampleApp.SearchResultPoiViewCLI.CloseButtonClicked(m_nativeCallerPointer);
         }
 
-        private void HandleTogglePinnedClicked(ref bool oldValue, ref bool newValue)
+        private bool HandleTogglePinnedClicked(ref bool oldValue, bool newValue)
         {
             if (oldValue != newValue)
             {
@@ -190,14 +193,20 @@ namespace ExampleAppWPF
                     {
                         ExampleApp.SearchResultPoiViewCLI.TogglePinnedButtonClicked(m_nativeCallerPointer);
                         oldValue = newValue;
+
+                        return true;
                     }
                 }
                 else
                 {
                     ExampleApp.SearchResultPoiViewCLI.TogglePinnedButtonClicked(m_nativeCallerPointer);
                     oldValue = newValue;
+
+                    return true;
                 }
             }
+
+            return false;
         }
 
         private bool ShowRemovePinDialog()
