@@ -6,6 +6,7 @@ using ExampleApp.CLI;
 using System.Diagnostics;
 using System.Windows.Navigation;
 using System.Windows.Threading;
+using System.Collections.Generic;
 
 namespace ExampleAppWPF
 {
@@ -31,6 +32,8 @@ namespace ExampleAppWPF
 
         private const float m_oversampleScale = 1.0f;
 
+        List<int> m_zeroIndexedTouchIds;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -47,6 +50,8 @@ namespace ExampleAppWPF
 
             m_isMouseInputActive = true;
             m_isTouchInputActive = true;
+
+            m_zeroIndexedTouchIds = new List<int>();
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
@@ -105,12 +110,52 @@ namespace ExampleAppWPF
             MouseDown += MainWindow_MouseDown;
             MouseUp += MainWindow_MouseUp;
 
-            // Passing in 0.0f to Touch events since there is currently no pressure support.
-            TouchDown += (o, e) => { if (m_isTouchInputActive) m_mapImage.HandleTouchDownEvent((float)e.TouchDevice.GetTouchPoint(this).Position.X, (float)e.TouchDevice.GetTouchPoint(this).Position.Y, 0.0f, e.TouchDevice.Id); };
-            TouchUp += (o, e) => { if (m_isTouchInputActive) m_mapImage.HandleTouchUpEvent((float)e.TouchDevice.GetTouchPoint(this).Position.X, (float)e.TouchDevice.GetTouchPoint(this).Position.Y, 0.0f, e.TouchDevice.Id); };
+            TouchDown += OnTouchDown;
+            TouchUp += OnTouchUp;
+            TouchMove += OnTouchMove;
 
             Dispatcher.Hooks.DispatcherInactive += new EventHandler(DispatcherInactive);
 
+        }
+
+        private int CheckAndGetZeroIndexedId(int systemId)
+        {
+            int result =  m_zeroIndexedTouchIds.IndexOf(systemId);
+
+            if(result != -1)
+            {
+                return result;
+            }
+
+            m_zeroIndexedTouchIds.Add(systemId);
+
+            return m_zeroIndexedTouchIds.Count - 1;
+        }
+
+        private void OnTouchMove(object sender, TouchEventArgs e)
+        {
+            if (m_isTouchInputActive)
+            {
+                m_mapImage.HandleTouchMoveEvent((float)e.TouchDevice.GetTouchPoint(this).Position.X, (float)e.TouchDevice.GetTouchPoint(this).Position.Y, 0.0f, CheckAndGetZeroIndexedId(e.TouchDevice.Id));
+            }
+        }
+
+        private void OnTouchUp(object sender, TouchEventArgs e)
+        {
+            if (m_isTouchInputActive)
+            {
+                m_mapImage.HandleTouchUpEvent((float)e.TouchDevice.GetTouchPoint(this).Position.X, (float)e.TouchDevice.GetTouchPoint(this).Position.Y, 0.0f, CheckAndGetZeroIndexedId(e.TouchDevice.Id));
+            }
+        }
+
+        private void OnTouchDown(object sender, TouchEventArgs e)
+        {
+
+
+            if (m_isTouchInputActive)
+            {
+                m_mapImage.HandleTouchDownEvent((float)e.TouchDevice.GetTouchPoint(this).Position.X, (float)e.TouchDevice.GetTouchPoint(this).Position.Y, 0.0f, CheckAndGetZeroIndexedId(e.TouchDevice.Id));
+            }
         }
 
         private void DispatcherInactive(object sender, EventArgs e)
@@ -133,6 +178,7 @@ namespace ExampleAppWPF
         public void SetInputActive(bool input)
         {
             m_isMouseInputActive = input;
+            m_isTouchInputActive = input;
         }
 
         private void MainWindow_MouseUp(object sender, MouseButtonEventArgs e)

@@ -46,6 +46,7 @@ namespace ExampleApp
                 Eegeo_ASSERT(document.HasMember("StartLocationDistance"));
                 Eegeo_ASSERT(document.HasMember("StartLocationOrientationDegrees"));
                 Eegeo_ASSERT(document.HasMember("TryStartAtGpsLocation"));
+
                 
                 const Eegeo::Space::LatLongAltitude& lla = Eegeo::Space::LatLongAltitude::FromDegrees(document["StartLocationLatitude"].GetDouble(),
                                                                                                    document["StartLocationLongitude"].GetDouble(),
@@ -72,6 +73,12 @@ namespace ExampleApp
                 const std::string& myPinsWebServiceAuthToken = ParseStringOrDefault(document, "MyPinsWebServiceAuthToken", m_defaultConfig.MyPinsWebServiceAuthToken());
                 const std::string& twitterAuthCode = ParseStringOrDefault(document, "TwitterAuthCode", m_defaultConfig.TwitterAuthCode());
 
+                bool isKioskTouchInputEnabled = false;
+                if (document.HasMember("IsKioskTouchInputEnabled") && !document["IsKioskTouchInputEnabled"].IsNull())
+                {
+                    isKioskTouchInputEnabled = document["IsKioskTouchInputEnabled"].GetBool();
+                }
+
                 return ApplicationConfiguration(
                     name,
                     eegeoApiKey,
@@ -95,7 +102,8 @@ namespace ExampleApp
                     eegeoSearchServiceUrl,
                     myPinsWebServiceUrl,
                     myPinsWebServiceAuthToken,
-                    twitterAuthCode
+                    twitterAuthCode,
+                    isKioskTouchInputEnabled
                 );
             }
         }
