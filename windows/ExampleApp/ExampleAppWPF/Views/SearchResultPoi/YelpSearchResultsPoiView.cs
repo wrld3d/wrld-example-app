@@ -197,6 +197,10 @@ namespace ExampleAppWPF
 
             m_reviewsIcon = (FrameworkElement)GetTemplateChild("ReviewsIcon");
 
+            var scrollViewr = (ScrollViewer)GetTemplateChild("MainScrollViewr");
+
+            scrollViewr.ManipulationBoundaryFeedback += OnBoundaryFeedback;
+
             var pinToggleButton = (FrameworkElement)GetTemplateChild("TogglePinnedButton");
             m_pinToggledButtonClickHandler = new ControlClickHandler(HandlePinToggleButtonClicked, pinToggleButton);
 
@@ -206,6 +210,11 @@ namespace ExampleAppWPF
             m_yelpReviewImageClickHandler = new ControlClickHandler(m_yelpButton, HandleWebLinkButtonClicked);
 
             base.OnApplyTemplate();
+        }
+
+        private void OnBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
+        {
+            e.Handled = true;
         }
 
         public override void DisplayPoiInfo(Object modelObject, bool isPinned)
