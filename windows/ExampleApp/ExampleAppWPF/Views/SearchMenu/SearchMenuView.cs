@@ -171,6 +171,13 @@ namespace ExampleAppWPF
 
             m_adapter = new MenuListAdapter(false, m_list, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SubMenuItemPanel");
             m_resultListAdapter = new MenuListAdapter(false, m_resultsList, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SearchResultPanel");
+
+            TouchMove += OnTouchMove;
+        }
+
+        private void OnTouchMove(object sender, TouchEventArgs e)
+        {
+            e.Handled = true;
         }
 
         private void OnSearchBoxTextChanged(object sender, TextChangedEventArgs e)
