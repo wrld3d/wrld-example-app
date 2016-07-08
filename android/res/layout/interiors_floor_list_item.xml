@@ -1,36 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="50dp">
-    
+    android:layout_width="wrap_content"
+    android:layout_height="50dp" >
+
     <View
+        android:id="@+id/interiors_explorer_floor_list_item_centerline"
         android:layout_width="25dp"
         android:layout_height="1dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
         android:background="@color/white" />
-    
+
     <View
         android:id="@+id/interiors_explorer_floor_list_item_topline"
         android:layout_width="1dp"
         android:layout_height="25dp"
-        android:layout_marginLeft="12dp"
+        android:layout_centerHorizontal="true"
         android:background="@color/white" />
-    
+
     <View
         android:id="@+id/interiors_explorer_floor_list_item_bottomline"
         android:layout_width="1dp"
         android:layout_height="25dp"
-        android:layout_marginLeft="12dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
         android:background="@color/white" />
-    
+
     <TextView
         android:id="@+id/floor_name"
-        android:alpha="0"
         android:layout_width="30dp"
-        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="25dp"
+        android:layout_toRightOf="@+id/interiors_explorer_floor_list_item_centerline"
+        android:layout_height="wrap_content"
+        android:alpha="0"
         android:gravity="left|center_vertical"
         android:maxLength="2"
         android:maxLines="1"
