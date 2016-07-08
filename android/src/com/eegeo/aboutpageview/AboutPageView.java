@@ -5,6 +5,7 @@ package com.eegeo.aboutpageview;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
@@ -33,6 +34,17 @@ public class AboutPageView implements View.OnClickListener
         m_aboutTextView = (TextView)m_view.findViewById(R.id.about_page_view_about_text);
         m_eulaLink = (TextView)m_view.findViewById(R.id.about_page_view_about_text_eula_link);
         m_privacyLink = (TextView)m_view.findViewById(R.id.about_page_view_privacy_link);
+        
+        RelativeLayout.LayoutParams layoutParams = (LayoutParams) m_view.getLayoutParams();
+        if (m_activity.getResources().getBoolean(R.bool.isPhone)) 
+        {
+            layoutParams.topMargin = layoutParams.bottomMargin = layoutParams.leftMargin = layoutParams.rightMargin = m_activity.dipAsPx(20);
+        }
+        else 
+        {
+            layoutParams.topMargin = layoutParams.bottomMargin = m_activity.dipAsPx(80);
+            layoutParams.leftMargin = layoutParams.rightMargin = (int) (m_uiRoot.getWidth() * 0.3f);
+        }
 
         m_closeButton.setOnClickListener(this);
         m_view.setVisibility(View.GONE);

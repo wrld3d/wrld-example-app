@@ -6,8 +6,8 @@
     
     <LinearLayout
    		android:id="@+id/about_page_view_container"
-    	android:layout_width="450dp"
-	    android:layout_height="wrap_content"
+    	android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
     	android:layout_centerInParent="true"
 	    android:orientation="vertical"
 	    android:paddingTop="10dp"
@@ -35,7 +35,8 @@
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="195dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:background="@color/white">
             
             <!--  Scrolling icontent -->
