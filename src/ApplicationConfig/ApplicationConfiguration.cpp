@@ -19,6 +19,7 @@ namespace ExampleApp
             float distanceToInterestMetres,
             float orientationDegrees,
             bool tryStartAtGpsLocation,
+            bool startFullscreen,
             const std::string& googleAnalyticsReferrerToken,
             const std::string& flurryAppKey,
             const std::string& yelpConsumerKey,
@@ -44,6 +45,7 @@ namespace ExampleApp
         , m_distanceToInterestMetres(distanceToInterestMetres)
         , m_orientationDegrees(orientationDegrees)
         , m_tryStartAtGpsLocation(tryStartAtGpsLocation)
+        , m_shouldStartFullscreen(startFullscreen)
         , m_googleAnalyticsReferrerToken(googleAnalyticsReferrerToken)
         , m_flurryAppKey(flurryAppKey)
         , m_yelpConsumerKey(yelpConsumerKey)
@@ -179,5 +181,9 @@ namespace ExampleApp
             return m_isKioskTouchInputEnabled;
         }
 
+        bool ApplicationConfiguration::ShouldStartFullscreen() const
+        {
+            return m_shouldStartFullscreen;
+        }
     }
 }

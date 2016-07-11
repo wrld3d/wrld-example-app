@@ -65,8 +65,8 @@ namespace ExampleAppWPF
 
             base.OnApplyTemplate();
         }
-        
-        public override void DisplayPoiInfo(Object modelObject, bool isPinned)
+
+        protected override void DisplayCustomPoiInfo(Object modelObject)
         {
             m_model = modelObject as ExampleApp.SearchResultModelCLI;
             m_categoryIcon.Source = SearchResultPoiViewIconProvider.GetIconForCategory(m_model.Category);
@@ -75,8 +75,6 @@ namespace ExampleAppWPF
 
             Title = m_model.Title;
             Country = m_model.Subtitle;
-
-            m_isPinned = isPinned;
 
             ShowAll();
         }

@@ -31,6 +31,22 @@ namespace ExampleAppWPF
 
         private static bool m_isAnyPOIOpen = false;
 
+        public bool IsPinned
+        {
+            get
+            {
+                return m_isPinned;
+            }
+
+            set
+            {
+                if (HandleTogglePinnedClicked(ref m_isPinned, !m_isPinned))
+                {
+                    OnPropertyChanged("IsPinned");
+                }
+            }
+        }
+
         public static bool IsAnyPOIOpen()
         {
             return m_isAnyPOIOpen;
@@ -148,8 +164,19 @@ namespace ExampleAppWPF
                 ExampleApp.SearchResultPoiViewCLI.CloseButtonClicked(m_nativeCallerPointer);
             }
         }
+        protected abstract void DisplayCustomPoiInfo(Object modelObject);
 
-        public abstract void DisplayPoiInfo(Object modelObject, bool isPinned);
+        public void DisplayCustomPoiInfo(Object modelObject, bool isPinned)
+        {
+            // set the pinned state from the native model without feeding back into the native model
+            if (m_isPinned != isPinned)
+            {
+                m_isPinned = isPinned;
+                OnPropertyChanged("IsPinned");
+            }
+
+            DisplayCustomPoiInfo(modelObject);
+        }
 
         public virtual void DismissPoiInfo()
         {
@@ -163,7 +190,7 @@ namespace ExampleAppWPF
             ExampleApp.SearchResultPoiViewCLI.CloseButtonClicked(m_nativeCallerPointer);
         }
 
-        private void HandleTogglePinnedClicked(ref bool oldValue, ref bool newValue)
+        private bool HandleTogglePinnedClicked(ref bool oldValue, bool newValue)
         {
             if (oldValue != newValue)
             {
@@ -173,14 +200,20 @@ namespace ExampleAppWPF
                     {
                         ExampleApp.SearchResultPoiViewCLI.TogglePinnedButtonClicked(m_nativeCallerPointer);
                         oldValue = newValue;
+
+                        return true;
                     }
                 }
                 else
                 {
                     ExampleApp.SearchResultPoiViewCLI.TogglePinnedButtonClicked(m_nativeCallerPointer);
                     oldValue = newValue;
+
+                    return true;
                 }
             }
+
+            return false;
         }
 
         private bool ShowRemovePinDialog()
@@ -188,7 +221,11 @@ namespace ExampleAppWPF
             DialogBox dialogBox = new DialogBox("Remove Pin", "Are you sure you want to remove this pin?", "Yes", "No");
             dialogBox.Owner = m_currentWindow;
 
+            m_currentWindow.SetOpacity(MainWindow.OpacityOnPopup);
+
             bool? result = dialogBox.ShowDialog();
+
+            m_currentWindow.SetOpacity(1.0f);
 
             if (result == null)
             {

@@ -48,6 +48,7 @@ namespace ExampleApp
                         1000.f,
                         0.f,
                         false,
+                        false,
                         emptyGoogleAnalyticsReferrerToken,
                         emptyFlurryApiKey,
                         emptyYelpConsumerKey,

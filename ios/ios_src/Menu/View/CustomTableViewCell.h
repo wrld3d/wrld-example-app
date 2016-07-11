@@ -8,6 +8,7 @@
 @interface CustomTableViewCell : UITableViewCell
 {
     bool m_hasSeparator;
+    bool m_hasDetails;
     CGFloat m_initialWidth;
     CGFloat m_leftInset;
     UIColor* m_pBackgroundColor;
@@ -50,5 +51,9 @@
 - (bool)requiresVisualRefresh;
 
 - (CGRect)getContentViewRect;
+
+- (void)setHasDetails: (bool) hasDetails;
+
+- (BOOL) hasDetails;
 
 @end

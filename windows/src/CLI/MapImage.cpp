@@ -279,6 +279,11 @@ namespace ExampleApp
             surface->Release();
         }
 
+        bool MapImage::ShouldStartFullscreen()
+        {
+            return m_appRunner->ShouldStartFullscreen();
+        }
+
         int MapImage::GetScreenDPI()
         {
             SetProcessDPIAware();

@@ -89,7 +89,6 @@ namespace ExampleAppWPF
 
         public override void OnApplyTemplate()
         {
-
             m_titleView = (TextBlock)GetTemplateChild("Title");
             
             m_poiImage = (Image)GetTemplateChild("PoiImage");
@@ -107,8 +106,8 @@ namespace ExampleAppWPF
             
             base.OnApplyTemplate();
         }
-        
-        public override void DisplayPoiInfo(Object modelObject, bool isPinned)
+
+        protected override void DisplayCustomPoiInfo(Object modelObject)
         {
             ExampleApp.SearchResultModelCLI model = modelObject as ExampleApp.SearchResultModelCLI;
 
@@ -118,9 +117,6 @@ namespace ExampleAppWPF
             HumanReadableCategoriesText = string.Join(Environment.NewLine, model.HumanReadableCategories);
             ReviewText = model.Subtitle;
             CategoryIcon = SearchResultPoiViewIconProvider.GetIconForCategory(model.Category);
-
-            m_isPinned = isPinned;
-            OnPropertyChanged("IsPinned");
 
             ShowAll();
         }

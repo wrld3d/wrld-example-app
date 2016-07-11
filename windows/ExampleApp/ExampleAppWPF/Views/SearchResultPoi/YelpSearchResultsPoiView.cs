@@ -27,7 +27,6 @@ namespace ExampleAppWPF
         private FrameworkElement m_reviewsIcon;
 
         private ControlClickHandler m_yelpReviewImageClickHandler;
-        private ControlClickHandler m_pinToggledButtonClickHandler;
         private Image m_yelpButton;
 
         public string PhoneText
@@ -157,23 +156,6 @@ namespace ExampleAppWPF
             }
         }
 
-        public bool IsPinned
-        {
-            get
-            {
-                return m_isPinned;
-            }
-
-            set
-            {
-                if (m_isPinned != value)
-                {
-                    m_isPinned = value;
-                    OnPropertyChanged("IsPinned");
-                }
-            }
-        }
-                
         static YelpSearchResultsPoiView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(YelpSearchResultsPoiView), new FrameworkPropertyMetadata(typeof(YelpSearchResultsPoiView)));
@@ -201,9 +183,6 @@ namespace ExampleAppWPF
 
             scrollViewr.ManipulationBoundaryFeedback += OnBoundaryFeedback;
 
-            var pinToggleButton = (FrameworkElement)GetTemplateChild("TogglePinnedButton");
-            m_pinToggledButtonClickHandler = new ControlClickHandler(HandlePinToggleButtonClicked, pinToggleButton);
-
             var mainGrid = (Application.Current.MainWindow as MainWindow).MainGrid;
             var screenWidth = mainGrid.ActualWidth;
 
@@ -217,7 +196,7 @@ namespace ExampleAppWPF
             e.Handled = true;
         }
 
-        public override void DisplayPoiInfo(Object modelObject, bool isPinned)
+        protected override void DisplayCustomPoiInfo(Object modelObject)
         {
             ExampleApp.SearchResultModelCLI model = modelObject as ExampleApp.SearchResultModelCLI;
 
@@ -255,8 +234,6 @@ namespace ExampleAppWPF
 
             m_poiImage.Source = new BitmapImage(new Uri("/ExampleAppWPF;component/Assets/poi_placeholder.png", UriKind.Relative));
 
-            IsPinned = isPinned;
-
             ShowAll();
         }
         
@@ -272,11 +249,6 @@ namespace ExampleAppWPF
             {
                 Process.Start(m_url);
             }
-        }
-
-        public void HandlePinToggleButtonClicked(object sender, MouseEventArgs e)
-        {
-            ExampleApp.SearchResultPoiViewCLI.TogglePinnedButtonClicked(m_nativeCallerPointer);
         }
     }
 }

@@ -15,6 +15,8 @@ namespace ExampleAppWPF
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+        public const float OpacityOnPopup = 0.46f;
+
 		private MapImage m_mapImage;
         private TimeSpan m_currentRenderArgsRenderingTime = TimeSpan.Zero;
         
@@ -33,6 +35,7 @@ namespace ExampleAppWPF
         private const float m_oversampleScale = 1.0f;
 
         List<int> m_zeroIndexedTouchIds;
+        private bool m_isFullscreen;
 
         public MainWindow()
         {
@@ -52,6 +55,8 @@ namespace ExampleAppWPF
             m_isTouchInputActive = true;
 
             m_zeroIndexedTouchIds = new List<int>();
+            m_isMouseInputActive = true;
+            m_isFullscreen = false;
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
@@ -97,6 +102,14 @@ namespace ExampleAppWPF
             m_mapImage.IsFrontBufferAvailableChanged += OnIsFrontBufferAvailableChanged;
             CompositionTarget.Rendering += CompositionTarget_Rendering;
 
+            if(m_mapImage.ShouldStartFullscreen())
+            {
+                WindowStyle = WindowStyle.None;
+                WindowState = WindowState.Maximized;
+
+                m_isFullscreen = true;
+            }
+
             MouseLeftButtonDown += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandlePanStartEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
             PreviewMouseLeftButtonUp += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandlePanEndEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
             MouseRightButtonDown += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandleRotateStartEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
@@ -105,7 +118,7 @@ namespace ExampleAppWPF
             MouseLeave += (o, e) => { if (m_isMouseInputActive) m_mapImage.SetAllInputEventsToPointerUp((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y)); };
             MouseMove += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandleMouseMoveEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
 
-            KeyDown += (o, e) => { m_mapImage.HandleKeyboardDownEvent((int)KeyInterop.VirtualKeyFromKey(e.Key)); };
+            KeyDown += OnKeyDown;
 
             MouseDown += MainWindow_MouseDown;
             MouseUp += MainWindow_MouseUp;
@@ -158,6 +171,29 @@ namespace ExampleAppWPF
             }
         }
 
+        private void OnKeyDown(object sender, KeyEventArgs e)
+        {
+            m_mapImage.HandleKeyboardDownEvent((int)KeyInterop.VirtualKeyFromKey(e.Key));
+
+            if (Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.LeftShift) && Keyboard.IsKeyDown(Key.F))
+            {
+                if(m_isFullscreen)
+                {
+                    WindowState = WindowState.Normal;
+                    WindowStyle = WindowStyle.SingleBorderWindow;
+
+                    m_isFullscreen = false;
+                }
+                else
+                {
+                    WindowStyle = WindowStyle.None;
+                    WindowState = WindowState.Maximized;
+
+                    m_isFullscreen = true;
+                }
+            }
+        }
+
         private void DispatcherInactive(object sender, EventArgs e)
         {
             m_hasEmptiedEventQueueSinceLastRender = true;
@@ -179,6 +215,11 @@ namespace ExampleAppWPF
         {
             m_isMouseInputActive = input;
             m_isTouchInputActive = input;
+        }
+
+        public void SetOpacity(double opacity)
+        {
+            Opacity = opacity;
         }
 
         private void MainWindow_MouseUp(object sender, MouseButtonEventArgs e)

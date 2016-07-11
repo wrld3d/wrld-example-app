@@ -25,6 +25,7 @@ namespace ExampleApp
             float m_distanceToInterestMetres;
             float m_orientationDegrees;
             bool m_tryStartAtGpsLocation;
+            bool m_shouldStartFullscreen;
             std::string m_googleAnalyticsReferrerToken;
             std::string m_flurryAppKey;
             std::string m_yelpConsumerKey;
@@ -53,6 +54,7 @@ namespace ExampleApp
                 float distanceToInterestMetres,
                 float orientationDegrees,
                 bool tryStartAtGpsLocation,
+                bool startFullscreen,
                 const std::string& googleAnalyticsReferrerToken,
                 const std::string& flurryAppKey,
                 const std::string& yelpConsumerKey,
@@ -90,6 +92,8 @@ namespace ExampleApp
             float OrientationDegrees() const;
             
             bool TryStartAtGpsLocation() const;
+
+            bool ShouldStartFullscreen() const;
             
             std::string GoogleAnalyticsReferrerToken() const;
 

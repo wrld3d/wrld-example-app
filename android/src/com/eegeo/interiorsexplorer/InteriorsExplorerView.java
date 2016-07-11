@@ -1,25 +1,20 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 package com.eegeo.interiorsexplorer;
 
-import com.eegeo.mobileexampleapp.R;
-
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.RelativeLayout;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.view.View.MeasureSpec;
-import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
-import android.graphics.Color;
-import android.util.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
+import com.eegeo.mobileexampleapp.R;
+
+import android.graphics.Color;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class InteriorsExplorerView implements View.OnClickListener, View.OnTouchListener
 {
@@ -95,13 +90,12 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
 					int bottom, int oldLeft, int oldTop, int oldRight,
 					int oldBottom) 
 			{				
-				final float screenHeight = uiRoot.getHeight();
 		    	final float screenWidth = uiRoot.getWidth();
 		    	
 		    	float controlWidth = m_topPanel.getWidth();
 		    	float controlHeight = m_topPanel.getHeight();
 		    	
-		    	m_topYPosActive = controlHeight;
+		    	m_topYPosActive = m_activity.dipAsPx(20);
 		    	m_topYPosInactive = -controlHeight;
 		    	
 		    	m_topPanel.setX((screenWidth * 0.5f) - (controlWidth * 0.5f));
@@ -110,11 +104,10 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
 		    	controlWidth = m_floorListContainer.getWidth();
 		    	controlHeight = m_floorListContainer.getHeight();
 		    	
-		    	m_leftXPosActive = screenWidth - (controlWidth + m_activity.dipAsPx(5));
+		    	m_leftXPosActive = screenWidth - (m_backButton.getWidth() / 2.0f  + m_activity.getResources().getDimension(R.dimen.menu_button_margin) + controlWidth / 2.0f);
 		    	m_leftXPosInactive = screenWidth;
 		    	
 		    	m_floorListContainer.setX(m_leftXPosInactive);
-		    	m_floorListContainer.setY((screenHeight * 0.5f) - (controlHeight * 0.5f));
 		    	
 		    	m_uiRootView.removeOnLayoutChangeListener(this);
 			}
@@ -146,13 +139,10 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     	}
     	
     	m_floorListAdapter.setData(temp);
-    	
-    	final float screenHeight = m_uiRootView.getHeight();
     	float controlHeight = getListViewHeight(m_floorList);
     	RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams)m_floorListContainer.getLayoutParams();
     	layoutParams.height = (int)controlHeight;
     	m_floorListContainer.setLayoutParams(layoutParams);
-    	m_floorListContainer.setY((screenHeight * 0.5f) - (controlHeight * 0.5f));
     	
     	refreshFloorIndicator(currentlySelectedFloorIndex);
     	moveButtonToFloorIndex(currentlySelectedFloorIndex, false);
@@ -164,7 +154,6 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     private void moveButtonToFloorIndex(int floorIndex, Boolean shouldAnimate)
     {
     	int floorCount = m_floorListAdapter.getCount();
-    	m_floorButton.setX(0.0f);
     	float topY = (m_floorList.getY()) + (ListItemHeight*0.5f) - m_floorButton.getWidth()*0.5f;
     	float newY = topY + ((floorCount-1)-floorIndex) * ListItemHeight;
     	newY = Math.max(0.0f, Math.min(getListViewHeight(m_floorList)-m_floorButton.getHeight(), newY));

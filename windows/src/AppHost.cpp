@@ -135,6 +135,7 @@ AppHost::AppHost(
 	, m_pInteriorsExplorerViewModule(NULL)
     , m_failAlertHandler(this, &AppHost::HandleStartupFailure)
     , m_pMenuReaction(NULL)
+    , m_shouldStartFullscreen(false)
 {
     ASSERT_NATIVE_THREAD
          
@@ -157,6 +158,7 @@ AppHost::AppHost(
         ExampleApp::ApplicationConfig::SdkModel::WindowsApplicationConfigurationVersionProvider(),
         ExampleApp::ApplicationConfigurationPath);
 
+    m_shouldStartFullscreen = applicationConfiguration.ShouldStartFullscreen();
 
     m_pWindowsPlatformAbstractionModule = Eegeo_NEW(Eegeo::Windows::WindowsPlatformAbstractionModule)(
         nativeState,
@@ -262,6 +264,11 @@ AppHost::~AppHost()
 
     Eegeo_DELETE m_pWindowsLocationService;
     m_pWindowsLocationService = NULL;
+}
+
+bool AppHost::ShouldStartFullscreen()
+{
+    return m_shouldStartFullscreen;
 }
 
 void AppHost::OnResume()

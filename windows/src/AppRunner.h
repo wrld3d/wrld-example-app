@@ -39,6 +39,8 @@ public:
     void RespondToResize();
     void RespondToSize(int width, int height);
 
+    bool ShouldStartFullscreen() const;
+
 private:
     WindowsNativeState* m_pNativeState;
     AppHost* m_pAppHost;

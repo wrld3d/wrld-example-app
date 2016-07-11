@@ -42,6 +42,8 @@ namespace ExampleApp
             void Resume() {}
             void RespondToResize(int width, int height);
 
+            bool ShouldStartFullscreen();
+
         private:
 
             int ScaledScreenCoord(int value);
