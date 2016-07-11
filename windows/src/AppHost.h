@@ -103,10 +103,14 @@ public:
     void SetSharedSurface(EGLSurface sharedSurface);
     void SetViewportOffset(float x, float y);
 
+    bool ShouldStartFullscreen();
+
 private:
     bool m_isPaused;
     Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;
     Eegeo::Windows::WindowsLocationService* m_pWindowsLocationService;
+
+    bool m_shouldStartFullscreen;
 
     WindowsNativeState& m_nativeState;
     AppInputDelegate* m_pAppInputDelegate;

@@ -72,6 +72,13 @@ namespace ExampleApp
                 const std::string& myPinsWebServiceAuthToken = ParseStringOrDefault(document, "MyPinsWebServiceAuthToken", m_defaultConfig.MyPinsWebServiceAuthToken());
                 const std::string& twitterAuthCode = ParseStringOrDefault(document, "TwitterAuthCode", m_defaultConfig.TwitterAuthCode());
 
+                bool startFullscreen = false;
+
+                if (document.HasMember("StartAppInFullscreen") && !document["StartAppInFullscreen"].IsNull())
+                {
+                    startFullscreen = document["StartAppInFullscreen"].GetBool();
+                }
+
                 return ApplicationConfiguration(
                     name,
                     eegeoApiKey,
@@ -85,6 +92,7 @@ namespace ExampleApp
                     startDistanceFromInterestPoint,
                     startOrientationAboutInterestPoint,
                     tryStartAtGpsLocation,
+                    startFullscreen,
                     googleAnalyticsReferrerToken,
                     flurryAppKey,
                     yelpConsumerKey,

@@ -309,3 +309,8 @@ void* AppRunner::GetMainRenderSurfaceSharePointer()
 {
     return m_displayService.GetMainRenderSurfaceSharePointer();
 }
+
+bool AppRunner::ShouldStartFullscreen() const
+{
+    return m_pAppHost->ShouldStartFullscreen();
+}
