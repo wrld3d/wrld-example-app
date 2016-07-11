@@ -14,6 +14,8 @@ namespace ExampleAppWPF
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+        public const float OpacityOnPopup = 0.46f;
+
 		private MapImage m_mapImage;
         private TimeSpan m_currentRenderArgsRenderingTime = TimeSpan.Zero;
         
@@ -114,6 +116,11 @@ namespace ExampleAppWPF
         public void SetInputActive(bool input)
         {
             m_isInputActive = input;
+        }
+
+        public void SetOpacity(double opacity)
+        {
+            Opacity = opacity;
         }
 
         private void MainWindow_MouseUp(object sender, MouseButtonEventArgs e)

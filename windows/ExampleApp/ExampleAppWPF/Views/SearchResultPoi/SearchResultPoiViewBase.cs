@@ -214,7 +214,11 @@ namespace ExampleAppWPF
             DialogBox dialogBox = new DialogBox("Remove Pin", "Are you sure you want to remove this pin?", "Yes", "No");
             dialogBox.Owner = m_currentWindow;
 
+            m_currentWindow.SetOpacity(MainWindow.OpacityOnPopup);
+
             bool? result = dialogBox.ShowDialog();
+
+            m_currentWindow.SetOpacity(1.0f);
 
             if (result == null)
             {
