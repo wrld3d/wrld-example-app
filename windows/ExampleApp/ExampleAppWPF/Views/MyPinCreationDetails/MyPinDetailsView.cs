@@ -130,9 +130,13 @@ namespace ExampleAppWPF
             DialogBox dialogBox = new DialogBox("Remove Report", "Are you sure you want to remove this report?", "Yes", "No");
             dialogBox.Owner = m_currentWindow;
 
+            m_currentWindow.SetOpacity(MainWindow.OpacityOnPopup);
+
             bool? result = dialogBox.ShowDialog();
 
-            if(result == null)
+            m_currentWindow.SetOpacity(1.0f);
+
+            if (result == null)
             {
                 return false;
             }
