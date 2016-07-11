@@ -32,6 +32,8 @@ namespace ExampleAppWPF
 
         private const float m_oversampleScale = 1.0f;
 
+        private bool m_isFullscreen;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -47,6 +49,7 @@ namespace ExampleAppWPF
             m_frameTimer = Stopwatch.StartNew();
 
             m_isInputActive = true;
+            m_isFullscreen = false;
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
@@ -87,13 +90,36 @@ namespace ExampleAppWPF
             MouseLeave += (o, e) => { if (m_isInputActive) m_mapImage.SetAllInputEventsToPointerUp((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y)); };
             MouseMove += (o, e) => { if (m_isInputActive) m_mapImage.HandleMouseMoveEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
 
-            KeyDown += (o, e) => { m_mapImage.HandleKeyboardDownEvent((int)KeyInterop.VirtualKeyFromKey(e.Key)); };
+            KeyDown += OnKeyDown;
 
             MouseDown += MainWindow_MouseDown;
             MouseUp += MainWindow_MouseUp;
 
             Dispatcher.Hooks.DispatcherInactive += new EventHandler(DispatcherInactive);
 
+        }
+
+        private void OnKeyDown(object sender, KeyEventArgs e)
+        {
+            m_mapImage.HandleKeyboardDownEvent((int)KeyInterop.VirtualKeyFromKey(e.Key));
+
+            if (Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.LeftShift) && Keyboard.IsKeyDown(Key.F))
+            {
+                if(m_isFullscreen)
+                {
+                    WindowState = WindowState.Normal;
+                    WindowStyle = WindowStyle.SingleBorderWindow;
+
+                    m_isFullscreen = false;
+                }
+                else
+                {
+                    WindowStyle = WindowStyle.None;
+                    WindowState = WindowState.Maximized;
+
+                    m_isFullscreen = true;
+                }
+            }
         }
 
         private void DispatcherInactive(object sender, EventArgs e)
