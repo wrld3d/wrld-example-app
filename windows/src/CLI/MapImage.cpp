@@ -35,7 +35,7 @@ namespace ExampleApp
             DestroyDirect3D();
         }
 
-        void MapImage::Init(int width, int height, float oversampleScale, bool hasNativeTouchInput)
+        void MapImage::Init(int width, int height, float oversampleScale, bool hasNativeTouchInput, int maxDeviceTouchCount)
         {
             System::Windows::Application^ app = System::Windows::Application::Current;
             System::Windows::Interop::WindowInteropHelper^ windowInteropHelper = gcnew System::Windows::Interop::WindowInteropHelper(app->MainWindow);
@@ -56,7 +56,7 @@ namespace ExampleApp
                 m_pState = WindowsNativeState::Create(appName, hinstance, windowHandle, screenWidth, screenHeight, fullScreen, requiresPBuffer, oversampleScale, deviceModel, deviceDpi);
             }
 
-            m_appRunner = new AppRunner(m_pState, hasNativeTouchInput);
+            m_appRunner = new AppRunner(m_pState, hasNativeTouchInput, maxDeviceTouchCount);
             m_appRunner->ActivateSurface();
             m_appRunner->ActivateSharedSurface();
 

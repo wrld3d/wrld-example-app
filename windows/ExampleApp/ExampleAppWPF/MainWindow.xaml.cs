@@ -80,8 +80,16 @@ namespace ExampleAppWPF
                 if (tabletDevice.Type == TabletDeviceType.Touch)
                     return true;
             }
-
             return false;
+        }
+
+        public int GetMaxDeviceTouchCount()
+        {
+            foreach (TabletDevice tabletDevice in Tablet.TabletDevices)
+            {
+                return tabletDevice.StylusDevices.Count;
+            }
+            return 0;
         }
 
         private void MainWindow_Loaded(object sender, EventArgs loadedEvent)
@@ -92,8 +100,9 @@ namespace ExampleAppWPF
             int pixelHeight = (int)MainGrid.ActualHeight;
 
             bool hasNativeTouchInput = HasTouchInput();
+            int maxDeviceTouchCount = GetMaxDeviceTouchCount();
 
-            m_mapImage.Init(pixelWidth, pixelHeight, m_oversampleScale, hasNativeTouchInput);
+            m_mapImage.Init(pixelWidth, pixelHeight, m_oversampleScale, hasNativeTouchInput, maxDeviceTouchCount);
             MapHost.Source = m_mapImage;
             MapHost.Width = pixelWidth;
             MapHost.Height = pixelHeight;

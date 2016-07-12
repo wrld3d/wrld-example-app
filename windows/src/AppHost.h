@@ -67,7 +67,8 @@ public:
         Eegeo::Rendering::ScreenProperties screenProperties,
         EGLDisplay display,
         EGLSurface shareSurface,
-        EGLContext resourceBuildShareContext
+        EGLContext resourceBuildShareContext,
+        int maxDeviceTouchCount
         );
     ~AppHost();
 
@@ -169,4 +170,6 @@ private:
     void DestroyApplicationViewModulesFromUiThread();
 
     void HandleStartupFailure();
+
+    int m_maxDeviceTouchCount;
 };

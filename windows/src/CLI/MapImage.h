@@ -20,7 +20,7 @@ namespace ExampleApp
             ~MapImage();
             !MapImage();
 
-            void Init(int width, int height, float oversampleScale, bool hasNativeTouchInput);
+            void Init(int width, int height, float oversampleScale, bool hasNativeTouchInput, int maxDeviceTouchCount);
             void InitBackBuffer();
             void Render(float dt);
 

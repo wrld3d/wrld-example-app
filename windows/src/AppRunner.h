@@ -12,7 +12,8 @@ class AppRunner : Eegeo::NonCopyable
 public:
     AppRunner(
         WindowsNativeState* pNativeState,
-        bool hasNativeTouchInput
+        bool hasNativeTouchInput,
+        int maxDeviceTouchCount
     );
     ~AppRunner();
 
@@ -48,6 +49,7 @@ private:
     bool m_isPaused;
     bool m_appRunning;
     bool m_hasNativeTouch;
+    int m_maxDeviceTouchCount;
 
     GlDisplayService m_displayService;
     void ReleaseDisplay();

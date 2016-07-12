@@ -28,14 +28,16 @@ namespace
 AppRunner::AppRunner
 (
     WindowsNativeState* pNativeState,
-    bool hasNativeTouchInput
+    bool hasNativeTouchInput,
+    int maxDeviceTouchCount
 )
     : m_pNativeState(pNativeState)
     , m_pAppHost(NULL)
     , m_updatingNative(true)
     , m_isPaused(false)
     , m_appRunning(true)
-    , m_hasNativeTouch(false)
+    , m_hasNativeTouch(hasNativeTouchInput)
+    , m_maxDeviceTouchCount(maxDeviceTouchCount)
 {
     ASSERT_NATIVE_THREAD
 
@@ -74,7 +76,8 @@ void AppRunner::CreateAppHost()
                          screenProperties,
                          m_displayService.GetDisplay(),
                          m_displayService.GetSharedSurface(),
-                         m_displayService.GetResourceBuildSharedContext()
+                         m_displayService.GetResourceBuildSharedContext(),
+                         m_maxDeviceTouchCount
                      );
     }
 }
