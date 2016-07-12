@@ -23,7 +23,7 @@ Before you begin, ensure you have completed the initial steps as described in th
 
 - [Eclipse IDE for Java Developers](https://eclipse.org/downloads/)   
 - [Android SDK Tools](http://developer.android.com/sdk/index.html#Other) (24.4.1 or higher)
-- [Android NDK](http://developer.android.com/tools/sdk/ndk/index.html)
+- [Android NDK](http://developer.android.com/tools/sdk/ndk/index.html) (r11c or Higher)
 
 ## Setup
 
@@ -39,7 +39,7 @@ The following steps will guide you through installing and setting up the Android
 1.  Open Android's SDK Manager, which was installed with the Android SDK Tools
 2.  Install the Android SDK Build-tools (23.0.2)
 3.  Install the Android SDK Platfrorm-tools (23.1)
-4.  Install the SDK platform for the API version to be developed
+4.  Install the SDK platform for the API version to be developed (Min API 24)
 
 ### Setting up Eclipse
 
