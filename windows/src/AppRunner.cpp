@@ -77,6 +77,7 @@ void AppRunner::CreateAppHost()
                          m_displayService.GetDisplay(),
                          m_displayService.GetSharedSurface(),
                          m_displayService.GetResourceBuildSharedContext(),
+                         m_hasNativeTouch,
                          m_maxDeviceTouchCount
                      );
     }

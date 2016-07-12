@@ -68,6 +68,7 @@ public:
         EGLDisplay display,
         EGLSurface shareSurface,
         EGLContext resourceBuildShareContext,
+        bool hasNativeTouchInput,
         int maxDeviceTouchCount
         );
     ~AppHost();
