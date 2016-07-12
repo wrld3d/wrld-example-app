@@ -82,7 +82,7 @@ public class SearchMenuAdapter extends BaseAdapter
             nameLabel.setSingleLine();
 
             TextView detailLabel = (TextView)contextView.findViewById(R.id.menu_list_item_detail);
-            detailLabel.setText(data.getString("details"));
+            detailLabel.setText(data.optString("details"));
 
             ImageView categoryIcon = (ImageView)contextView.findViewById(R.id.menu_list_item_icon);
             String categoryIconString = data.has("icon") ? data.getString("icon") : m_defaultIconString;
