@@ -1,5 +1,6 @@
 #include "MapImage.h"
 #include "MouseInputEvent.h"
+#include "TouchScreenInputEvent.h"
 #include "AppRunner.h"
 
 #pragma comment(lib, "d3d9.lib")
@@ -34,7 +35,7 @@ namespace ExampleApp
             DestroyDirect3D();
         }
 
-        void MapImage::Init(int width, int height, float oversampleScale)
+        void MapImage::Init(int width, int height, float oversampleScale, bool hasNativeTouchInput, int maxDeviceTouchCount)
         {
             System::Windows::Application^ app = System::Windows::Application::Current;
             System::Windows::Interop::WindowInteropHelper^ windowInteropHelper = gcnew System::Windows::Interop::WindowInteropHelper(app->MainWindow);
@@ -55,7 +56,7 @@ namespace ExampleApp
                 m_pState = WindowsNativeState::Create(appName, hinstance, windowHandle, screenWidth, screenHeight, fullScreen, requiresPBuffer, oversampleScale, deviceModel, deviceDpi);
             }
 
-            m_appRunner = new AppRunner(m_pState);
+            m_appRunner = new AppRunner(m_pState, hasNativeTouchInput, maxDeviceTouchCount);
             m_appRunner->ActivateSurface();
             m_appRunner->ActivateSharedSurface();
 
@@ -185,6 +186,11 @@ namespace ExampleApp
 
                 return Eegeo::Windows::Input::MouseInputEvent(mouseInputAction, keyboardModifiers, x, y, wheelDelta);
             }
+
+            Eegeo::Windows::Input::TouchScreenInputEvent MakeTouchScreenInputEvent(float x, float y, float z, int id, Eegeo::Windows::Input::TouchScreenInputAction touchScreenInputAction)
+            {
+                return Eegeo::Windows::Input::TouchScreenInputEvent(x, y, z, id, touchScreenInputAction);
+            }
         }
 
         int MapImage::ScaledScreenCoord(int value)
@@ -235,6 +241,21 @@ namespace ExampleApp
         void MapImage::HandleKeyboardDownEvent(int asciiKeyCode)
         {
             m_appRunner->HandleKeyboardDownEvent(asciiKeyCode);
+        }
+
+        void MapImage::HandleTouchDownEvent(float x, float y, float z, int id)
+        {
+            m_appRunner->HandleTouchEvent(MakeTouchScreenInputEvent(x, y, z, id, Eegeo::Windows::Input::TouchScreenInputAction::TouchScreenDown));
+        }
+        
+        void MapImage::HandleTouchUpEvent(float x, float y, float z, int id)
+        {
+            m_appRunner->HandleTouchEvent(MakeTouchScreenInputEvent(x, y, z, id, Eegeo::Windows::Input::TouchScreenInputAction::TouchScreenUp));
+        }
+
+        void MapImage::HandleTouchMoveEvent(float x, float y, float z, int id)
+        {
+            m_appRunner->HandleTouchEvent(MakeTouchScreenInputEvent(x, y, z, id, Eegeo::Windows::Input::TouchScreenInputAction::TouchScreenMove));
         }
 
         void MapImage::SetAllInputEventsToPointerUp(int x, int y)

@@ -30,7 +30,8 @@ namespace ExampleApp
             const std::string& eegeoSearchServiceUrl,
             const std::string& myPinsWebServiceUrl,
             const std::string& myPinsWebServiceAuthToken,
-            const std::string& twitterAuthCode
+            const std::string& twitterAuthCode,
+            const bool isKioskTouchInputEnabled
             )
         : m_name(name)
         , m_eegeoApiKey(eegeoApiKey)
@@ -56,6 +57,7 @@ namespace ExampleApp
         , m_myPinsWebServiceUrl(myPinsWebServiceUrl)
         , m_myPinsWebServiceAuthToken(myPinsWebServiceAuthToken)
         , m_twitterAuthCode(twitterAuthCode)
+        , m_isKioskTouchInputEnabled(isKioskTouchInputEnabled)
         {
         }
         
@@ -172,6 +174,11 @@ namespace ExampleApp
         std::string ApplicationConfiguration::TwitterAuthCode() const
         {
             return m_twitterAuthCode;
+        }
+
+        bool ApplicationConfiguration::IsKioskTouchInputEnabled() const
+        {
+            return m_isKioskTouchInputEnabled;
         }
 
         bool ApplicationConfiguration::ShouldStartFullscreen() const

@@ -312,7 +312,7 @@
 
                             <Grid Grid.Row="2">
                                 <StackPanel  Orientation="Vertical" >
-                                    <ScrollViewer Width="250" Background="{StaticResource PrimaryBG_colour}" Name="ResultsMenuOptionsView" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="False" >
+                                    <ScrollViewer Width="250" Background="{StaticResource PrimaryBG_colour}" Name="ResultsMenuOptionsView" PanningRatio="3" PanningDeceleration="0" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
                                         <ListBox Name="SearchResultsList" Template="{StaticResource ListBoxControlTemplateNoPadding}" Background="{StaticResource PrimaryBG_colour}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0" Focusable="False">
                                             <ListBox.Resources>
                                                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>

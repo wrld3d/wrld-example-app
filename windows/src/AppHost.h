@@ -67,7 +67,9 @@ public:
         Eegeo::Rendering::ScreenProperties screenProperties,
         EGLDisplay display,
         EGLSurface shareSurface,
-        EGLContext resourceBuildShareContext
+        EGLContext resourceBuildShareContext,
+        bool hasNativeTouchInput,
+        int maxDeviceTouchCount
         );
     ~AppHost();
 
@@ -93,6 +95,7 @@ public:
 
     void HandleMouseInputEvent(const Eegeo::Windows::Input::MouseInputEvent& event);
     void HandleKeyboardInputEvent(const Eegeo::Windows::Input::KeyboardInputEvent& event);
+    void HandleTouchScreenInputEvent(const Eegeo::Windows::Input::TouchScreenInputEvent& event);
 
     void SetAllInputEventsToPointerUp(int x, int y);
 
@@ -168,4 +171,6 @@ private:
     void DestroyApplicationViewModulesFromUiThread();
 
     void HandleStartupFailure();
+
+    int m_maxDeviceTouchCount;
 };

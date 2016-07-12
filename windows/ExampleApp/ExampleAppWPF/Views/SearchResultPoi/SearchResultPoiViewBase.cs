@@ -97,6 +97,13 @@ namespace ExampleAppWPF
             m_mainContainer.MouseDown += OnContainerMouseDown;
 
             m_closeButton.Click += HandleCloseButtonClicked;
+
+            TouchMove += OnTouchMove;
+        }
+
+        private void OnTouchMove(object sender, TouchEventArgs e)
+        {
+            e.Handled = true;
         }
 
         private void OnContainerMouseDown(object sender, MouseButtonEventArgs e)
@@ -159,7 +166,7 @@ namespace ExampleAppWPF
         }
         protected abstract void DisplayCustomPoiInfo(Object modelObject);
 
-        public void DisplayPoiInfo(Object modelObject, bool isPinned)
+        public void DisplayCustomPoiInfo(Object modelObject, bool isPinned)
         {
             // set the pinned state from the native model without feeding back into the native model
             if (m_isPinned != isPinned)

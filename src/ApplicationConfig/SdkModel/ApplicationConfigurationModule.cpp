@@ -59,7 +59,8 @@ namespace ExampleApp
                         eegeoSearchServiceUrl,
                         emptyMyPinsWebServiceUrl,
                         emptyMyPinsWebServiceAuthToken,
-                        emptyTwitterAuthCode);
+                        emptyTwitterAuthCode,
+                        false);
                 }
             }
             

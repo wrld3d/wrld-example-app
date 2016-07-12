@@ -20,8 +20,8 @@ namespace ExampleApp
             ~MapImage();
             !MapImage();
 
-            void Init(int width, int height, float oversampleScale);
-			void InitBackBuffer();
+            void Init(int width, int height, float oversampleScale, bool hasNativeTouchInput, int maxDeviceTouchCount);
+            void InitBackBuffer();
             void Render(float dt);
 
             void HandlePanStartEvent(int x, int y, System::Windows::Input::ModifierKeys modifierKeys);
@@ -32,6 +32,9 @@ namespace ExampleApp
             void HandleTiltEnd(int x, int y, System::Windows::Input::ModifierKeys modifierKeys);
             void HandleKeyboardDownEvent(int asciiKeyCode);
             void HandleKeyboardUpEvent(int asciiKeyCode) {}
+            void HandleTouchDownEvent(float x, float y, float z, int id);
+            void HandleTouchUpEvent(float x, float y, float z, int id);
+            void HandleTouchMoveEvent(float x, float y, float z, int id);
             void HandleMouseMoveEvent(int x, int y, System::Windows::Input::ModifierKeys modifierKeys);
             void HandleZoomEvent(int x, int y, int wheelDelta, System::Windows::Input::ModifierKeys modifierKeys);
             void SetAllInputEventsToPointerUp(int x, int y);

@@ -178,13 +178,22 @@ namespace ExampleAppWPF
             m_mainContainer = (FrameworkElement)GetTemplateChild("SearchresultsPoiViewContainer");
 
             m_reviewsIcon = (FrameworkElement)GetTemplateChild("ReviewsIcon");
-            
+
+            var scrollViewr = (ScrollViewer)GetTemplateChild("MainScrollViewr");
+
+            scrollViewr.ManipulationBoundaryFeedback += OnBoundaryFeedback;
+
             var mainGrid = (Application.Current.MainWindow as MainWindow).MainGrid;
             var screenWidth = mainGrid.ActualWidth;
 
             m_yelpReviewImageClickHandler = new ControlClickHandler(m_yelpButton, HandleWebLinkButtonClicked);
 
             base.OnApplyTemplate();
+        }
+
+        private void OnBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
+        {
+            e.Handled = true;
         }
 
         protected override void DisplayCustomPoiInfo(Object modelObject)

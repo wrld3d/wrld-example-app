@@ -27,13 +27,17 @@ namespace
 
 AppRunner::AppRunner
 (
-    WindowsNativeState* pNativeState
+    WindowsNativeState* pNativeState,
+    bool hasNativeTouchInput,
+    int maxDeviceTouchCount
 )
     : m_pNativeState(pNativeState)
     , m_pAppHost(NULL)
     , m_updatingNative(true)
     , m_isPaused(false)
     , m_appRunning(true)
+    , m_hasNativeTouch(hasNativeTouchInput)
+    , m_maxDeviceTouchCount(maxDeviceTouchCount)
 {
     ASSERT_NATIVE_THREAD
 
@@ -72,7 +76,9 @@ void AppRunner::CreateAppHost()
                          screenProperties,
                          m_displayService.GetDisplay(),
                          m_displayService.GetSharedSurface(),
-                         m_displayService.GetResourceBuildSharedContext()
+                         m_displayService.GetResourceBuildSharedContext(),
+                         m_hasNativeTouch,
+                         m_maxDeviceTouchCount
                      );
     }
 }
@@ -149,6 +155,14 @@ void AppRunner::HandleKeyboardUpEvent(char keyCode)
         keyEvent.keyDownEvent = false;
 
         m_pAppHost->HandleKeyboardInputEvent(keyEvent);
+    }
+}
+
+void AppRunner::HandleTouchEvent(const Eegeo::Windows::Input::TouchScreenInputEvent& event)
+{
+    if (m_pAppHost)
+    {
+    	m_pAppHost->HandleTouchScreenInputEvent(event);
     }
 }
 

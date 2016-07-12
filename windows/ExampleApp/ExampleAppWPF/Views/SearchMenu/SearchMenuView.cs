@@ -122,7 +122,12 @@ namespace ExampleAppWPF
             base.OnApplyTemplate();
 
             m_menuOptionsView = (ScrollViewer)GetTemplateChild("MenuOptionsView");
+
             m_resultsOptionsView = (ScrollViewer)GetTemplateChild("ResultsMenuOptionsView");
+            m_resultsOptionsView.TouchDown += OnResultsListTouchDown;
+            m_resultsOptionsView.TouchUp += OnResultsListTouchUp;
+            m_resultsOptionsView.ManipulationBoundaryFeedback += OnResultsListBoundaryFeedback;
+
             m_resultsSpinner = (Grid)GetTemplateChild("SearchResultsSpinner");
             m_resultsCount = (TextBlock)GetTemplateChild("SearchResultCount");
             m_resultsCountContainer = (Grid)GetTemplateChild("SearchResultCountContainer");
@@ -182,6 +187,29 @@ namespace ExampleAppWPF
 
             m_adapter = new MenuListAdapter(false, m_list, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SubMenuItemPanel");
             m_resultListAdapter = new MenuListAdapter(false, m_resultsList, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SearchResultPanel");
+
+            TouchMove += OnTouchMove;
+
+        }
+
+        private void OnResultsListBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void OnResultsListTouchUp(object sender, TouchEventArgs e)
+        {
+            m_resultsOptionsView.ReleaseTouchCapture(e.TouchDevice);
+        }
+
+        private void OnResultsListTouchDown(object sender, TouchEventArgs e)
+        {
+            m_resultsOptionsView.CaptureTouch(e.TouchDevice);
+        }
+
+        private void OnTouchMove(object sender, TouchEventArgs e)
+        {
+            e.Handled = true;
         }
 
         private void OnSearchBoxTextChanged(object sender, TextChangedEventArgs e)

@@ -100,8 +100,10 @@ AppHost::AppHost(
     Eegeo::Rendering::ScreenProperties screenProperties,
     EGLDisplay display,
     EGLSurface shareSurface,
-    EGLContext resourceBuildShareContext
-    )
+    EGLContext resourceBuildShareContext,
+    bool hasNativeTouchInput,
+    int maxDeviceTouchCount
+)
     :m_isPaused(false)
     , m_pJpegLoader(NULL)
     , m_pWindowsLocationService(NULL)
@@ -132,10 +134,11 @@ AppHost::AppHost(
     , m_pWindowsFlurryMetricsService(NULL)
     , m_pInitialExperienceIntroViewModule(NULL)
     , m_pSurverysViewModule(NULL)
-	, m_pInteriorsExplorerViewModule(NULL)
+    , m_pInteriorsExplorerViewModule(NULL)
     , m_failAlertHandler(this, &AppHost::HandleStartupFailure)
     , m_pMenuReaction(NULL)
     , m_shouldStartFullscreen(false)
+    , m_maxDeviceTouchCount(maxDeviceTouchCount)
 {
     ASSERT_NATIVE_THREAD
          
@@ -175,8 +178,10 @@ AppHost::AppHost(
 
     const Eegeo::Config::PlatformConfig& platformConfiguration = ExampleApp::ApplicationConfig::SdkModel::BuildPlatformConfig(windowsPlatformConfigBuilder, applicationConfiguration);
 
+    bool enableTouchControls =  hasNativeTouchInput ? applicationConfiguration.IsKioskTouchInputEnabled() : false;
+
     const Eegeo::Windows::Input::WindowsInputProcessorConfig& windowsInputProcessorConfig = Eegeo::Windows::Input::WindowsInputProcessor::DefaultConfig();
-    m_pInputProcessor = Eegeo_NEW(Eegeo::Windows::Input::WindowsInputProcessor)(&m_inputHandler, m_nativeState.GetWindow(), screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), windowsInputProcessorConfig);
+    m_pInputProcessor = Eegeo_NEW(Eegeo::Windows::Input::WindowsInputProcessor)(&m_inputHandler, m_nativeState.GetWindow(), screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), windowsInputProcessorConfig, enableTouchControls, m_maxDeviceTouchCount);
 
 	m_pWindowsPersistentSettingsModel = Eegeo_NEW(ExampleApp::PersistentSettings::WindowsPersistentSettingsModel)(m_nativeState);
 
@@ -311,12 +316,17 @@ void AppHost::HandleMouseInputEvent(const Eegeo::Windows::Input::MouseInputEvent
 {
     ASSERT_NATIVE_THREAD
 
-    m_pInputProcessor->HandleInput(event, static_cast<float>(m_nativeState.GetWidth()), static_cast<float>(m_nativeState.GetHeight()));
+    m_pInputProcessor->HandleMouseInput(event, static_cast<float>(m_nativeState.GetWidth()), static_cast<float>(m_nativeState.GetHeight()));
 }
 
 void AppHost::HandleKeyboardInputEvent(const Eegeo::Windows::Input::KeyboardInputEvent& event)
 {
-    m_pInputProcessor->HandleInput(event);
+    m_pInputProcessor->HandleMouseInput(event);
+}
+
+void AppHost::HandleTouchScreenInputEvent(const Eegeo::Windows::Input::TouchScreenInputEvent& event)
+{
+    m_pInputProcessor->HandleTouchScreenInput(event, static_cast<float>(m_nativeState.GetWidth()), static_cast<float>(m_nativeState.GetHeight()));
 }
 
 void AppHost::SetAllInputEventsToPointerUp(int x, int y)

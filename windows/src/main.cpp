@@ -190,7 +190,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pScmdline,
     ShowWindow(window, SW_SHOW);
     ShowCursor(true);
 
-    g_pAppRunner = Eegeo_NEW(AppRunner)(&g_nativeState);
+    g_pAppRunner = Eegeo_NEW(AppRunner)(&g_nativeState, false, 0);
 
     if (!g_pAppRunner->ActivateSurface())
         return -1;
