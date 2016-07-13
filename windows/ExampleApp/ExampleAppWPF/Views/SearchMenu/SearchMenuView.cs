@@ -366,8 +366,12 @@ namespace ExampleAppWPF
 
                 groups.Add(str);
                 groupsExpandable.Add(false);
+
+                if (!groupToChildren.ContainsKey(str))
+                {
                     groupToChildren.Add(str, new List<string>());
                 }
+            }
 
 
             m_resultListAdapter.SetData(itemsSource, groups, groupsExpandable, groupToChildren);
