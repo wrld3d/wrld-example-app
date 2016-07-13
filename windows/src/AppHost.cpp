@@ -194,7 +194,7 @@ AppHost::AppHost(
     Eegeo::EffectHandler::Initialise();
 
     const bool enableTouch = false;
-    const int maxTouches = -1;
+    const int maxTouches = 0;
 
     const Eegeo::Windows::Input::WindowsInputProcessorConfig& windowsInputProcessorConfig = Eegeo::Windows::Input::WindowsInputProcessor::DefaultConfig();
     m_pInputProcessor = Eegeo_NEW(Eegeo::Windows::Input::WindowsInputProcessor)(&m_inputHandler, m_nativeState.GetWindow(), screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), windowsInputProcessorConfig, enableTouch, maxTouches);
