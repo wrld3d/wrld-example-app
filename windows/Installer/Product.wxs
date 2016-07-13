@@ -95,7 +95,6 @@
       </Component>
       <Component Id="cmpiG7JhAXM75v0QUtpT92I20AZtW8" Directory="INSTALLFOLDER" Guid="{4F7B1AE3-FB78-4F08-86E2-F34CD80FBE9A}">
         <File Id="mainapplication.exe" KeyPath="yes" Source="payload\BWAY.exe">
-          <util:PermissionEx User="Users" GenericAll="yes" />
         </File>
       </Component>
       <Component Id="cmp4smKBrWFLyUpPjMI8FO84DoS0hk" Directory="INSTALLFOLDER" Guid="{0F3FC098-3782-4834-8691-B4870F2F8207}">
