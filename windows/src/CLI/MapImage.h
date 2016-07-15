@@ -44,6 +44,8 @@ namespace ExampleApp
 
             bool ShouldStartFullscreen();
 
+            void SetFullscreen(bool fullscreen);
+
         private:
 
             int ScaledScreenCoord(int value);

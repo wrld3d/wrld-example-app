@@ -41,6 +41,8 @@ AppRunner::AppRunner
 {
     ASSERT_NATIVE_THREAD
 
+    m_wpPrev.length = sizeof(m_wpPrev);
+
     Eegeo::Helpers::ThreadHelpers::SetThisThreadAsMainThread();
 }
 
@@ -327,4 +329,32 @@ void* AppRunner::GetMainRenderSurfaceSharePointer()
 bool AppRunner::ShouldStartFullscreen() const
 {
     return m_pAppHost->ShouldStartFullscreen();
+}
+
+void AppRunner::SetFullscreen(bool fullscreen)
+{
+    DWORD dwStyle = GetWindowLong(m_pNativeState->GetWindow(), GWL_STYLE);
+    
+    if (fullscreen)
+    {
+        MONITORINFO mi;
+        mi.cbSize = sizeof(mi);
+        
+        if (GetWindowPlacement(m_pNativeState->GetWindow(), &m_wpPrev) &&
+            GetMonitorInfo(MonitorFromWindow(m_pNativeState->GetWindow(), MONITOR_DEFAULTTOPRIMARY), &mi))
+        {
+            SetWindowLong(m_pNativeState->GetWindow(), GWL_STYLE, dwStyle & ~WS_OVERLAPPEDWINDOW);
+            SetWindowPos(m_pNativeState->GetWindow(), HWND_TOP,
+                         mi.rcMonitor.left, mi.rcMonitor.top,
+                         mi.rcMonitor.right - mi.rcMonitor.left,
+                         mi.rcMonitor.bottom - mi.rcMonitor.top,
+                         SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
+        }
+    }
+    else
+    {
+        SetWindowLong(m_pNativeState->GetWindow(), GWL_STYLE, dwStyle | WS_OVERLAPPEDWINDOW);
+        SetWindowPlacement(m_pNativeState->GetWindow(), &m_wpPrev);
+        SetWindowPos(m_pNativeState->GetWindow(), NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
+    }
 }

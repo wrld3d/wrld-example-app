@@ -284,6 +284,11 @@ namespace ExampleApp
             return m_appRunner->ShouldStartFullscreen();
         }
 
+        void MapImage::SetFullscreen(bool fullscreen)
+        {
+            m_appRunner->SetFullscreen(fullscreen);
+        }
+
         int MapImage::GetScreenDPI()
         {
             SetProcessDPIAware();

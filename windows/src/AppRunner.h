@@ -42,6 +42,8 @@ public:
 
     bool ShouldStartFullscreen() const;
 
+    void SetFullscreen(bool fullscreen);
+
 private:
     WindowsNativeState* m_pNativeState;
     AppHost* m_pAppHost;
@@ -55,4 +57,6 @@ private:
     void ReleaseDisplay();
     bool TryBindDisplay();
     void CreateAppHost();
+
+    WINDOWPLACEMENT m_wpPrev;
 };
