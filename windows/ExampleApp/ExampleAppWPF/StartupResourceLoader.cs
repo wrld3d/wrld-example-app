@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
@@ -11,6 +9,7 @@ namespace ExampleAppWPF
     public static class StartupResourceLoader
     {
         private static Dictionary<string, BitmapImage> m_resources;
+        private static string ProgramDataPath;
 
         static StartupResourceLoader()
         {
@@ -34,6 +33,8 @@ namespace ExampleAppWPF
             LoadImage("button_remove_pin_off.png");
 
             LoadImage("arrow3_down.png");
+
+            ProgramDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "eeGeo_Ltd", System.Diagnostics.Process.GetCurrentProcess().ProcessName, "Resources");
         }
 
         public static void Init()
@@ -57,6 +58,22 @@ namespace ExampleAppWPF
             return bitmap;
         }
 
+        private static bool CanOpenPath(string filePath, out Uri uri)
+        {
+            uri = null;
+
+            try
+            {
+                uri = new Uri(filePath);
+            }
+            catch(UriFormatException)
+            {
+                return false;
+            }
+
+            return File.Exists(filePath);
+        }
+
         public static void LoadImage(params string[] pathAndName)
         {
             BitmapImage key = null;
@@ -65,31 +82,17 @@ namespace ExampleAppWPF
             if (key != null)
                 return;
 
-            var path = System.IO.Path.Combine(pathAndName);
-            path = System.IO.Path.Combine(Environment.CurrentDirectory, "Resources", path);
-
+            var filePath = Path.Combine(pathAndName);
             Uri uri = null;
-            try
+
+            if (!CanOpenPath(Path.Combine(Environment.CurrentDirectory, "Resources", filePath), out uri) && 
+                !CanOpenPath(Path.Combine(ProgramDataPath, filePath), out uri))
             {
-                uri = new Uri(path);
-            }
-            catch(System.Exception)
-            {
-                System.Windows.MessageBox.Show("Cannot find Path: " + path, "Path Not Found", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                System.Windows.MessageBox.Show("Cannot find Path: " + filePath, "Path Not Found", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 return;
             }
 
-            BitmapImage bitmap = null;
-
-            try
-            {
-                bitmap = new BitmapImage(uri);
-            }
-            catch (System.IO.IOException e)
-            {
-                System.Windows.MessageBox.Show("Cannot find file: " + path, "File Not Found", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                return;
-            }
+            BitmapImage bitmap = new BitmapImage(uri);
 
             m_resources.Add(pathAndName[pathAndName.Length - 1], bitmap);
         }
