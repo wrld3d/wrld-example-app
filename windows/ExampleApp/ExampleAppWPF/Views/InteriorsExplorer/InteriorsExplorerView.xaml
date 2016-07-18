@@ -50,22 +50,19 @@
                             </Grid.ColumnDefinitions>
 
                             <Grid Grid.Column="0">
-                                <Border Name="Mask" Background="{StaticResource PrimaryBG_colour}"/>
-                                <Grid Background="{StaticResource PrimaryBG_colour}">
-                                    <Grid.OpacityMask>
-                                        <VisualBrush Visual="{Binding ElementName=Mask}"/>
-                                    </Grid.OpacityMask>
-
-                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Name="FloorName" Foreground="{StaticResource White}" FontSize="14" Padding="14"/>
-                                </Grid>
+                                <Grid.Background>
+                                    <SolidColorBrush Color="Black" Opacity="0.5" />
+                                </Grid.Background>
+                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="FloorName" Foreground="{StaticResource White}" FontSize="14" Padding="14"/>
                             </Grid>
                             <Grid Grid.Column="1">
                             </Grid>
-                            <Button Name="DismissButton" Width="36" Height="36" Grid.Column="2" Style="{StaticResource ExitButtonStyle}"/>
                         </Grid>
 
                         <Grid Name="FloorPanel" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="auto">
-                            <Slider Name="FloorSlider"
+                            <StackPanel Orientation="Vertical">
+                                <Button Name="DismissButton" Width="36" Height="36" Grid.Column="2" Style="{StaticResource ExitButtonStyle}" Margin="0,0,0,15"/>
+                                <Slider Name="FloorSlider"
                                     Grid.Column="0"
                                     Style="{StaticResource SimpleSlider}"
                                     Orientation="Vertical"                                    
@@ -79,11 +76,12 @@
                                     IsMoveToPointEnabled="True"
                                     Tag="0"
                                     Foreground="{StaticResource LightGrey}">
-                                <Slider.Background>
-                                    <SolidColorBrush Opacity="0.0"/>
-                                </Slider.Background>
-                            </Slider>
-                            
+                                    <Slider.Background>
+                                        <SolidColorBrush Opacity="0.4"/>
+                                    </Slider.Background>
+                                </Slider>
+                            </StackPanel>
+
 
                         </Grid>
                     </Grid>

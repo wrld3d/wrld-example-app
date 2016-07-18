@@ -139,7 +139,7 @@
                 <BeginStoryboard>
                     <Storyboard>
                         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Background.Opacity">
-                            <EasingDoubleKeyFrame KeyTime="0" Value="0.0"/>
+                            <EasingDoubleKeyFrame KeyTime="0" Value="0.4"/>
                             <EasingDoubleKeyFrame KeyTime="0:0:0.15" Value="1.0"/>
                         </DoubleAnimationUsingKeyFrames>
                     </Storyboard>
@@ -150,7 +150,7 @@
                     <Storyboard>
                         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Background.Opacity">
                             <EasingDoubleKeyFrame KeyTime="0" Value="1.0"/>
-                            <EasingDoubleKeyFrame KeyTime="0:0:0.15" Value="0.0"/>
+                            <EasingDoubleKeyFrame KeyTime="0:0:0.15" Value="0.4"/>
                         </DoubleAnimationUsingKeyFrames>
                     </Storyboard>
                 </BeginStoryboard>
