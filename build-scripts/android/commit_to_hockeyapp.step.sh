@@ -51,10 +51,27 @@ script_dir=`dirname $0`
 . ./$script_dir/is_windows.sh
 is_windows=$(is_windows)
 
+
 if [ "$is_windows" == true ]; then
-    # when running on windows, we need to translate the unix-style path to a windows path or curl will reject it.
-    # http://stackoverflow.com/a/13701495/83891
+	echo "Converting unix-style path to windows format."
+	echo "Original: "$filepath
+    # when running on windows, we need to translate the unix-style path to a windows path or curl will reject it.    		
+	# Note: mingw actually does convert paths, but doesn't account for all formats (e.g. some/path)
+	# http://www.mingw.org/wiki/Posix_path_conversion	
+	
+	# http://stackoverflow.com/a/21188136	
+	get_abs_filename() {
+		# $1 : relative filename
+		echo "$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"
+	}
+
+	# first, convert to a full unix-style path /c/some/path/dude.txt
+	filepath=$(get_abs_filename $filepath)	
+	
+	# secondly, transform it into a c:\some\path\dude.txt
+	# http://stackoverflow.com/a/13701495/83891
     filepath=$(echo $filepath | sed 's/^\///' | sed 's/\//\\/g' | sed 's/^./\0:/')
+	echo "Modified: "$filepath
 fi
 
 # Release notes for the build.
