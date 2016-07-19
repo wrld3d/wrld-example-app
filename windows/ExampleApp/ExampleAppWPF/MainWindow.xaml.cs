@@ -113,10 +113,7 @@ namespace ExampleAppWPF
 
             if(m_mapImage.ShouldStartFullscreen())
             {
-                WindowStyle = WindowStyle.None;
-                WindowState = WindowState.Maximized;
-
-                m_isFullscreen = true;
+                SetFullScreen(true);
             }
 
             MouseLeftButtonDown += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandlePanStartEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
@@ -139,6 +136,12 @@ namespace ExampleAppWPF
 
             Dispatcher.Hooks.DispatcherInactive += new EventHandler(DispatcherInactive);
 
+        }
+
+        private void SetFullScreen(bool isFullScreen)
+        {
+            m_mapImage.SetFullscreen(isFullScreen);
+            m_isFullscreen = isFullScreen;
         }
 
         private int CheckAndGetZeroIndexedId(int systemId)
@@ -185,20 +188,7 @@ namespace ExampleAppWPF
 
             if (Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.LeftShift) && Keyboard.IsKeyDown(Key.F))
             {
-                if(m_isFullscreen)
-                {
-                    WindowState = WindowState.Normal;
-                    WindowStyle = WindowStyle.SingleBorderWindow;
-
-                    m_isFullscreen = false;
-                }
-                else
-                {
-                    WindowStyle = WindowStyle.None;
-                    WindowState = WindowState.Maximized;
-
-                    m_isFullscreen = true;
-                }
+                SetFullScreen(!m_isFullscreen);
             }
         }
 

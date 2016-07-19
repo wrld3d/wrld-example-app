@@ -166,7 +166,7 @@ namespace ExampleAppWPF
         }
         protected abstract void DisplayCustomPoiInfo(Object modelObject);
 
-        public void DisplayCustomPoiInfo(Object modelObject, bool isPinned)
+        public void DisplayPoiInfo(Object modelObject, bool isPinned)
         {
             // set the pinned state from the native model without feeding back into the native model
             if (m_isPinned != isPinned)
