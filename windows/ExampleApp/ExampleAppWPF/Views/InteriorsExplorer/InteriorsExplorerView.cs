@@ -197,9 +197,14 @@ namespace ExampleAppWPF
             floorPanelAnimation.To = CalcPanelX(FloorSelectionEnabled ? t : 0.0f);
             floorPanelAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(m_stateChangeAnimationTimeMilliseconds));
 
-            var transform = new TranslateTransform(currentPosition.X, currentPosition.Y);
-            m_floorPanel.RenderTransform = transform;
-            transform.BeginAnimation(TranslateTransform.XProperty, floorPanelAnimation);
+            var floorPanelTransform = new TranslateTransform(currentPosition.X, currentPosition.Y);
+            m_floorPanel.RenderTransform = floorPanelTransform;
+            floorPanelTransform.BeginAnimation(TranslateTransform.XProperty, floorPanelAnimation);
+
+            var dismissButtonTransform = new TranslateTransform(CalcPanelX(1.0 - t), 0);
+            m_dismissButton.RenderTransform = dismissButtonTransform;
+            floorPanelAnimation.To = t;
+            dismissButtonTransform.BeginAnimation(TranslateTransform.XProperty, floorPanelAnimation);
 
             var detailsPanelAnimation = new DoubleAnimation();
             detailsPanelAnimation.From = m_detailsPanel.Opacity;
@@ -276,6 +281,8 @@ namespace ExampleAppWPF
             m_floorSlider.Value = floorIndex;
 
             InteriorsExplorerCLIMethods.SelectFloor(m_nativeCallerPointer, floorIndex);
+
+            ShakeSliderButton();
         }
 
         private void OnSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
