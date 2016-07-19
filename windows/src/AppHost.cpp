@@ -334,6 +334,11 @@ void AppHost::SetAllInputEventsToPointerUp(int x, int y)
     m_pInputProcessor->SetAllInputEventsToPointerUp(x, y);
 }
 
+void AppHost::SetAllTouchInputEventsToPointerUp(int touchId)
+{
+    m_pInputProcessor->SetAllTouchInputEventsToPointerUp(touchId);
+}
+
 void AppHost::Update(float dt)
 {
     ASSERT_NATIVE_THREAD
