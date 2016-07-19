@@ -93,10 +93,9 @@ namespace
         
         const float buttonSize = 50.f;
         const float labelLength = isPhone ? fminf(200.f, m_screenWidth*0.5f) : 315.f;
-        const float labelSpacing = 11.f;
         
         const float detailsPanelHeight = 50.0f;
-        float totalPanelLength = isPhone ? labelLength : labelLength + buttonSize + labelSpacing;
+        float totalPanelLength = labelLength;
         
         float totalPanelHeight = detailsPanelHeight;
         
@@ -106,9 +105,9 @@ namespace
         
         UIColor* backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         
-        const float dismissButtonX = isPhone? m_inactiveFloorListXPosition : totalPanelLength-buttonSize;
-        const float dismissButtonY = isPhone? self.pFloorPanel.frame.origin.y - 10.0f : 0.0f;
-        UIView* dismissButtonParent = isPhone? self : self.pDetailsPanel;
+        const float dismissButtonX = m_inactiveFloorListXPosition;
+        const float dismissButtonY = self.pFloorPanel.frame.origin.y - 10.0f;
+        UIView* dismissButtonParent = self;
         self.pDismissButtonBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(backgroundColor)] autorelease];
         self.pDismissButtonBackground.frame = CGRectMake(dismissButtonX, dismissButtonY, buttonSize, buttonSize);
         self.pDismissButtonBackground.userInteractionEnabled = YES;
@@ -266,9 +265,7 @@ namespace
     [self.pFloorListViews removeAllObjects];
     
     
-    const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
-    
-    m_floorDivisionHeight = isPhone ? m_screenHeight*0.0625f : 50;
+    m_floorDivisionHeight = m_screenHeight*0.0625f;
     const float divisionWidth = 30;
     const float divisionLabelWidth = 25;
     const float divisionLabelSpacing = 15;
@@ -284,18 +281,15 @@ namespace
     }
     
     CGRect floorPanelFrame = self.pFloorPanel.frame;
-    const float floorPanelVerticalCenterline = isPhone ? 0.54f : 0.5f;
+    const float floorPanelVerticalCenterline = 0.54f;
     floorPanelFrame.origin.y = m_screenHeight*floorPanelVerticalCenterline - totalHeight*0.5f;
     floorPanelFrame.size.height = totalHeight;
     self.pFloorPanel.frame = floorPanelFrame;
     
-    if(isPhone)
-    {
-        CGRect dismissButtonFrame = self.pDismissButtonBackground.frame;
-        const float dismissButtonSpacing = 10.f;
-        dismissButtonFrame.origin.y = (self.pFloorPanel.frame.origin.y - dismissButtonSpacing) - dismissButtonFrame.size.height;
-        self.pDismissButtonBackground.frame = dismissButtonFrame;
-    }
+    CGRect dismissButtonFrame = self.pDismissButtonBackground.frame;
+    const float dismissButtonSpacing = 10.f;
+    dismissButtonFrame.origin.y = (self.pFloorPanel.frame.origin.y - dismissButtonSpacing) - dismissButtonFrame.size.height;
+    self.pDismissButtonBackground.frame = dismissButtonFrame;
     
     float yOffset = ((float)self.pFloorChangeButton.frame.size.height - m_floorDivisionHeight)*0.5f;
     int floorIndex = 0;
@@ -343,8 +337,7 @@ namespace
 
 - (float) GetXPositionForDismissButtonAt:(float)t
 {
-    const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
-    return isPhone ? m_screenWidth - t * (iPhoneDismissButtonMargin + self.pDismissButtonBackground.frame.size.width) : 0.0f;
+    return m_screenWidth - t * (iPhoneDismissButtonMargin + self.pDismissButtonBackground.frame.size.width);
 }
 
 - (void) setFullyOnScreen
@@ -363,14 +356,10 @@ namespace
     CGRect floorPanel = self.pFloorPanel.frame;
     floorPanel.origin.x = [self GetXPositionForFloorPanelAt :onScreenState];
     
-    const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
-    if(isPhone)
-    {
-        CGRect dismissPanel = self.pDismissButtonBackground.frame;
-        dismissPanel.origin.x = [self GetXPositionForDismissButtonAt:onScreenState];
-        
-        self.pDismissButtonBackground.frame = dismissPanel;
-    }
+    CGRect dismissPanel = self.pDismissButtonBackground.frame;
+    dismissPanel.origin.x = [self GetXPositionForDismissButtonAt:onScreenState];
+    
+    self.pDismissButtonBackground.frame = dismissPanel;
     
     self.hidden = onScreenState == 0.0f;
     self.pFloorPanel.frame = floorPanel;
@@ -385,11 +374,8 @@ namespace
     floorFrame.origin.x = [self GetXPositionForFloorPanelAt:t];
     
     CGRect dismissButtonFrame = self.pDismissButtonBackground.frame;
-    const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
-    if(isPhone)
-    {
-        dismissButtonFrame.origin.x = [self GetXPositionForDismissButtonAt:t];
-    }
+
+    dismissButtonFrame.origin.x = [self GetXPositionForDismissButtonAt:t];
     
     if(t > 0.f)
     {
@@ -403,10 +389,7 @@ namespace
      {
          self.pFloorPanel.frame = floorFrame;
          self.pDetailsPanel.alpha = t;
-         if(isPhone)
-         {
-             self.pDismissButtonBackground.frame = dismissButtonFrame;
-         }
+         self.pDismissButtonBackground.frame = dismissButtonFrame;
      }
                      completion:^(BOOL finished)
      {
