@@ -59,11 +59,10 @@
                             </Grid>
                         </Grid>
 
-                        <Grid Name="FloorPanel" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="auto">
-                            <StackPanel Orientation="Vertical">
-                                <Button Name="DismissButton" Width="36" Height="36" Grid.Column="2" Style="{StaticResource ExitButtonStyle}" Margin="0,0,0,15"/>
+                        <StackPanel Orientation="Vertical" Grid.Column="0"  HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                            <Button Name="DismissButton" Width="36" Height="36" Grid.Column="2" Style="{StaticResource ExitButtonStyle}" Margin="0,0,0,15"/>
+                            <Grid Name="FloorPanel" Width="auto">
                                 <Slider Name="FloorSlider"
-                                    Grid.Column="0"
                                     Style="{StaticResource SimpleSlider}"
                                     Orientation="Vertical"                                    
                                     VerticalAlignment="Bottom"
@@ -80,10 +79,10 @@
                                         <SolidColorBrush Opacity="0.4"/>
                                     </Slider.Background>
                                 </Slider>
-                            </StackPanel>
 
 
-                        </Grid>
+                            </Grid>
+                        </StackPanel>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

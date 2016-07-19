@@ -80,16 +80,17 @@ namespace ExampleAppWPF
         {
             var button = GetThumb(m_floorSlider);
 
-            var currentPosition = button.RenderTransform.Transform(new Point(0.0, 0.0));
+            const double posLeft = -5;
+            const double posRight = 10;
 
             var anim = new DoubleAnimationUsingKeyFrames();
-            anim.KeyFrames.Add(new EasingDoubleKeyFrame(-5, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(0))));
-            anim.KeyFrames.Add(new EasingDoubleKeyFrame(10, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(100))));
-            anim.KeyFrames.Add(new EasingDoubleKeyFrame(-5, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(200))));
-            anim.KeyFrames.Add(new EasingDoubleKeyFrame(10, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(350))));
-            anim.KeyFrames.Add(new EasingDoubleKeyFrame(-5, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(550))));
-            anim.KeyFrames.Add(new EasingDoubleKeyFrame(10, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(800))));
-            anim.KeyFrames.Add(new EasingDoubleKeyFrame(-5, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(1100))));
+            anim.KeyFrames.Add(new EasingDoubleKeyFrame(posLeft, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(0))));
+            anim.KeyFrames.Add(new EasingDoubleKeyFrame(posRight, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(100))));
+            anim.KeyFrames.Add(new EasingDoubleKeyFrame(posLeft, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(200))));
+            anim.KeyFrames.Add(new EasingDoubleKeyFrame(posRight, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(350))));
+            anim.KeyFrames.Add(new EasingDoubleKeyFrame(posLeft, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(550))));
+            anim.KeyFrames.Add(new EasingDoubleKeyFrame(posRight, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(800))));
+            anim.KeyFrames.Add(new EasingDoubleKeyFrame(posLeft, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(1100))));
 
             var transform = new TranslateTransform(0, 0);
 
