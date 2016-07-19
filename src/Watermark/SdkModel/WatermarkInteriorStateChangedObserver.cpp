@@ -50,7 +50,7 @@ namespace ExampleApp
                     
                     m_watermarkModel.SetId(sourceVendor);
                     
-                    m_messageBus.Publish(WatermarkAlignmentStateChangedMessage(true));
+                    m_messageBus.Publish(WatermarkAlignmentStateChangedMessage(false));
                     m_messageBus.Publish(WatermarkModelChangedMessage(m_watermarkModel.GetId()));
                 }
             }

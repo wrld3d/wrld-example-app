@@ -36,7 +36,7 @@
         float xPosition = 0.0f;
         if(ExampleApp::Helpers::UIHelpers::UsePhoneLayout())
         {
-            m_yPosActive = (20 * m_pixelScale);
+            m_yPosActive = m_height + (18 * m_pixelScale);
             m_yPosInactive = (-m_height);
             
             xPosition = ((m_screenWidth * 0.5f) - (m_width * 0.5f));
@@ -236,10 +236,7 @@
         [self transitionToNewImage];
     }
     
-    if((self.frame.origin.y != m_yPosActive && self.frame.origin.y != m_yPosInactive) && !self.hidden)
-    {
-        [self transitionToNewPosition];
-    }
+    [self transitionToNewPosition];
 }
 
 - (void) transitionToNewImage
@@ -285,7 +282,16 @@
 
 - (void) transitionToNewPosition
 {
-    const float inactivePos = !m_alignAlongBottom ? (m_screenHeight + m_height) : (-m_height);
+    float inactivePos = !m_alignAlongBottom ? (m_screenHeight + m_height) : (-m_height);
+    
+    if(self.frame.origin.y >= m_screenHeight * 0.5f && inactivePos < m_screenHeight * 0.5f)
+    {
+        inactivePos = (m_screenHeight + m_height);
+    }
+    else if(self.frame.origin.y < m_screenHeight * 0.5f && inactivePos >= m_screenHeight * 0.5f)
+    {
+        inactivePos = (-m_height);
+    }
     
     CGRect f = self.frame;
     f.origin.y = inactivePos;
@@ -317,7 +323,7 @@
     
     if (!alignAlongBottom)
     {
-        m_yPosActive = (20 * m_pixelScale);
+        m_yPosActive = m_height + (18 * m_pixelScale);
         m_yPosInactive = (-m_height);
     }
     else
