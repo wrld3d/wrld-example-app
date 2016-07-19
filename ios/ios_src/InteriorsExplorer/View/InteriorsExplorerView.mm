@@ -103,12 +103,12 @@ namespace
         
         self.pDetailsPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_screenWidth * 0.5f - totalPanelLength * 0.5f, upperMargin, totalPanelLength, totalPanelHeight)] autorelease];
         
-        UIColor* backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
+        UIColor* dismissButtonBackgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         
         const float dismissButtonX = m_inactiveFloorListXPosition;
         const float dismissButtonY = self.pFloorPanel.frame.origin.y - 10.0f;
         UIView* dismissButtonParent = self;
-        self.pDismissButtonBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(backgroundColor)] autorelease];
+        self.pDismissButtonBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(dismissButtonBackgroundColor)] autorelease];
         self.pDismissButtonBackground.frame = CGRectMake(dismissButtonX, dismissButtonY, buttonSize, buttonSize);
         self.pDismissButtonBackground.userInteractionEnabled = YES;
         [dismissButtonParent addSubview:self.pDismissButtonBackground];
@@ -119,9 +119,11 @@ namespace
         [self.pDismissButton addTarget:self action:@selector(onCancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.pDismissButtonBackground addSubview:self.pDismissButton];
         
+        UIColor* detailsPanelBackgroundColor = [UIColor blackColor];
         
-        self.pDetailsPanelBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(backgroundColor)] autorelease];
+        self.pDetailsPanelBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(detailsPanelBackgroundColor)] autorelease];
         self.pDetailsPanelBackground.frame = CGRectMake(0, 0, labelLength, detailsPanelHeight);
+        self.pDetailsPanelBackground.alpha = 0.5f;
                 
         [self.pDetailsPanel addSubview:self.pDetailsPanelBackground];
         
@@ -129,7 +131,7 @@ namespace
         
         self.pFloorNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake( textPadding, textPadding, labelLength - (2*textPadding), detailsPanelHeight - (2*textPadding))] autorelease];
         self.pFloorNameLabel.textColor = [UIColor whiteColor];
-        self.pFloorNameLabel.textAlignment = NSTextAlignmentLeft;
+        self.pFloorNameLabel.textAlignment = NSTextAlignmentCenter;
         [self.pDetailsPanel addSubview:self.pFloorNameLabel];
                 
         
