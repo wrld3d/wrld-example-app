@@ -379,9 +379,12 @@ namespace
 
     dismissButtonFrame.origin.x = [self GetXPositionForDismissButtonAt:t];
     
+    bool isOnScreenAnim = false;
+    
     if(t > 0.f)
     {
         self.hidden = false;
+        isOnScreenAnim = true;
     }
     
     [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds
@@ -389,9 +392,7 @@ namespace
                         options:UIViewAnimationOptionBeginFromCurrentState
                      animations:^
      {
-         self.pFloorPanel.frame = floorFrame;
          self.pDetailsPanel.alpha = t;
-         self.pDismissButtonBackground.frame = dismissButtonFrame;
      }
                      completion:^(BOOL finished)
      {
@@ -399,6 +400,16 @@ namespace
          m_onScreenParam = t;
      }
      ];
+    
+    [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds
+                          delay:isOnScreenAnim ? 1.0f : 0.0f
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:^
+     {
+         self.pFloorPanel.frame = floorFrame;
+         self.pDismissButtonBackground.frame = dismissButtonFrame;
+     }
+                     completion:nil];
 }
 
 - (void) setTouchEnabled:(BOOL)enabled
