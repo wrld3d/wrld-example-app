@@ -4,6 +4,10 @@ package com.eegeo.location;
 
 import java.util.List;
 
+import com.eegeo.location.FusedLocationApiService.FusedLocationUpdateListener;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+
 import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
@@ -21,7 +25,8 @@ class LocationService
     static boolean isAuthorized = false;
 
     static Activity activity;
-
+    static FusedLocationApiService m_fusedLocationApiService;
+    
     public static double lat()
     {
         if (bestLocation == null)
@@ -126,7 +131,12 @@ class LocationService
 
     public static void stopListeningToUpdates(Activity a)
     {
-        if( isListening )
+        if(m_fusedLocationApiService != null)
+        {
+            m_fusedLocationApiService.stopLocationUpdates();
+            isListening = false;
+        }
+        else if(isListening)
         {
             LocationService.locationManager.removeUpdates(LocationService.locationListener);
             tearDownListener();
@@ -135,7 +145,34 @@ class LocationService
 
     public static void updateLocation(Activity a)
     {
-        LocationService.startListeningToUpdates(a);
+        if(GooglePlayServicesUtil.isGooglePlayServicesAvailable(a) == ConnectionResult.SUCCESS)
+        {
+            LocationService.locationManager = (LocationManager) a.getSystemService(Context.LOCATION_SERVICE);
+            LocationService.isListening = LocationService.isAuthorized = isAnyProviderEnabled(LocationService.locationManager);
+            if(m_fusedLocationApiService == null)
+            {
+                m_fusedLocationApiService = new FusedLocationApiService(a, new FusedLocationUpdateListener()
+                {
+                    @Override
+                    public void onFusedLocationChanged(Location location)
+                    {
+                        LocationService.bestLocation = location;
+                    }
+                });
+            }
+            else
+            {
+                m_fusedLocationApiService.startListeningToUpdates();
+            }
+            if(LocationService.bestLocation == null)
+            {
+                forceLocationFromCachedProviders(LocationService.locationManager);
+            }
+        }
+        else
+        {
+            LocationService.startListeningToUpdates(a);
+        }
     }
 
     private static void forceLocationFromCachedProviders(LocationManager locationManager)
