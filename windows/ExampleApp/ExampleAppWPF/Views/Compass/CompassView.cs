@@ -20,7 +20,8 @@ namespace ExampleAppWPF
         private double m_yPosInactive;
         private double m_compassPointOffsetX;
         private double m_compassPointOffsetY;
-        private bool m_isFirstLayout = true;
+
+        bool m_isActive = false;
 
         static CompassView()
         {
@@ -61,11 +62,10 @@ namespace ExampleAppWPF
         private void PerformLayout(object sender, RoutedEventArgs e)
         {
             Point currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
-            double onScreenState = (currentPosition.Y - m_yPosInactive) / (m_yPosActive - m_yPosInactive);
 
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
-            double screenHeight = mainWindow.ActualHeight;
-            double screenWidth = mainWindow.ActualWidth;
+            double screenHeight = mainWindow.MainGrid.ActualHeight;
+            double screenWidth = mainWindow.MainGrid.ActualWidth;
 
             double viewHeight = ActualHeight;
             double viewWidth = ActualWidth;
@@ -76,19 +76,11 @@ namespace ExampleAppWPF
             m_compassPointOffsetX = (viewWidth) * 0.5;
             m_compassPointOffsetY = (viewHeight) * 0.5;
 
-            m_yPosActive = screenHeight * 0.5 - (viewHeight * 0.5 + ConversionHelpers.AndroidToWindowsDip(16));
+            const double margin = 23.0;
+            m_yPosActive = screenHeight * 0.5 - (viewHeight * 0.5) - (margin);
             m_yPosInactive = screenHeight * 0.5 + viewHeight * 0.5;
 
-            double layoutY = m_yPosInactive;
-
-            if (!m_isFirstLayout)
-            {
-                layoutY = onScreenState * (m_yPosActive - m_yPosInactive) + m_yPosInactive;
-            }
-
-            m_isFirstLayout = false;
-
-            var transform = new TranslateTransform(0.0, layoutY);
+            var transform = new TranslateTransform(currentPosition.X, m_isActive ? m_yPosActive : m_yPosInactive);
 
             RenderTransform = transform;
         }
@@ -103,11 +95,13 @@ namespace ExampleAppWPF
         public void AnimateToInactive()
         {
             AnimateViewToY(m_yPosInactive);
+            m_isActive = false;
         }
 
         public void AnimateToActive()
         {
             AnimateViewToY(m_yPosActive);
+            m_isActive = true;
         }
 
         public void AnimateViewToY(double y)
