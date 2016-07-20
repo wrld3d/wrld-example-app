@@ -325,6 +325,36 @@ namespace
     self.pFloorPanel.userInteractionEnabled = self.pFloorChangeButton.userInteractionEnabled = m_floorSelectionEnabled;
 }
 
+- (void) shakeSliderButton
+{
+    CGFloat xPos = [self GetXPositionForFloorPanelAt:1.0];
+    
+    CGFloat posLeft = xPos - 5.0f;
+    CGFloat posRight = xPos + 10.0f;
+
+    [UIView animateWithDuration:1.1 delay:0.0 usingSpringWithDamping:0.3 initialSpringVelocity:0.2 options:UIViewKeyframeAnimationOptionCalculationModeCubicPaced animations:^{
+        
+        [UIView animateKeyframesWithDuration:0.1 delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubicPaced animations:^{
+            CGRect floorFrame = self.pFloorPanel.frame;
+            floorFrame.origin.x = posLeft;
+            self.pFloorPanel.frame = floorFrame;
+        } completion:nil];
+        
+        [UIView animateKeyframesWithDuration:0.1 delay:0.1 options:UIViewKeyframeAnimationOptionCalculationModeCubicPaced animations:^{
+            CGRect floorFrame = self.pFloorPanel.frame;
+            floorFrame.origin.x = posRight;
+            self.pFloorPanel.frame = floorFrame;
+        } completion:nil];
+        
+        [UIView animateKeyframesWithDuration:0.15 delay:0.2 options:UIViewKeyframeAnimationOptionCalculationModeCubicPaced animations:^{
+            CGRect floorFrame = self.pFloorPanel.frame;
+            floorFrame.origin.x = xPos;
+            self.pFloorPanel.frame = floorFrame;
+        } completion:nil];
+        
+    } completion:nil];
+}
+
 - (void) refreshFloorIndicator:(int)floorIndex
 {
     int nameIndex = static_cast<int>(m_tableViewFloorNames.size()-1) - floorIndex;
