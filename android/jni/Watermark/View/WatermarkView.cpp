@@ -143,7 +143,7 @@ namespace ExampleApp
                 env->DeleteLocalRef(jniWebUrlString);
             }
 
-            void  WatermarkView::SetWatermarkAlignmentState(bool alignAlongBottom)
+            void  WatermarkView::SetWatermarkAlignmentState(bool alignAlongBottom, bool alignBelowFloorDisplay)
             {
             	ASSERT_UI_THREAD
 
@@ -151,8 +151,9 @@ namespace ExampleApp
 				JNIEnv* env = attached.envForThread;
 
 				jboolean jniAlignAlongBottom = alignAlongBottom;
-				jmethodID setAlignmentMethod = env->GetMethodID(m_uiViewClass, "setAlignmentState", "(Z)V");
-				env->CallVoidMethod(m_uiView, setAlignmentMethod, jniAlignAlongBottom);
+				jboolean jniAlignBelowFloorDisplay = alignBelowFloorDisplay;
+				jmethodID setAlignmentMethod = env->GetMethodID(m_uiViewClass, "setAlignmentState", "(ZZ)V");
+				env->CallVoidMethod(m_uiView, setAlignmentMethod, jniAlignAlongBottom, jniAlignBelowFloorDisplay);
             }
         }
     }

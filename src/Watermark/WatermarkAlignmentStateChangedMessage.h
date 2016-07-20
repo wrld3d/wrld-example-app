@@ -11,16 +11,17 @@ namespace ExampleApp
         class WatermarkAlignmentStateChangedMessage
         {
         public:
-            WatermarkAlignmentStateChangedMessage(bool shouldAlignBottom)
-            : m_shouldAlignBottom(shouldAlignBottom)
+            WatermarkAlignmentStateChangedMessage(bool shouldAlignBottom, bool shouldAlignBelowFloorDisplay)
+            : m_shouldAlignBottom(shouldAlignBottom), m_shouldAlignBelowFloorDisplay(shouldAlignBelowFloorDisplay)
             {
             }
             
             bool ShouldAlignBottom() const {return m_shouldAlignBottom;}
+            bool ShouldAlignBelowFloorDisplay() const {return m_shouldAlignBelowFloorDisplay;}
             
         private:
             const bool m_shouldAlignBottom;
-            
+            const bool m_shouldAlignBelowFloorDisplay;
         };
     }
 }

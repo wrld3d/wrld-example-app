@@ -28,6 +28,7 @@ public class WatermarkView implements View.OnClickListener
  private String m_webUrl;
  private boolean m_shouldShowShadow;
  private boolean m_alignAlongBottom;
+ private boolean m_alignBelowFloorDisplay;
 
  private float m_yPosActive;
  private float m_yPosInactive;
@@ -238,9 +239,10 @@ public class WatermarkView implements View.OnClickListener
      m_options = null;
  }
  
- public void setAlignmentState(final boolean alignAlongBottom)
+ public void setAlignmentState(final boolean alignAlongBottom, final boolean alignBelowFloorDisplay)
  {
 	 m_alignAlongBottom = alignAlongBottom;
+	 m_alignBelowFloorDisplay = alignBelowFloorDisplay;
  }
 
     private void refreshPositions()
@@ -261,7 +263,15 @@ public class WatermarkView implements View.OnClickListener
             }
             else
             {
-                m_yPosActive = m_activity.dipAsPx(20);
+            	if(m_alignBelowFloorDisplay)
+            	{
+            		m_yPosActive = viewHeight + m_activity.dipAsPx(18);
+            	}
+            	else
+            	{
+            		m_yPosActive = m_activity.dipAsPx(20);
+            	}
+            	
                 m_yPosInactive = (-viewHeight);
             }
             

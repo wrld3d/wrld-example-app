@@ -75,7 +75,7 @@ namespace ExampleApp
                                                                                                   "3D Interiors",
                                                                                                   "Our 3D Interior maps are built automatically from map data provided by our partner Micello.\nThis partnership gives us access to over 25,000 maps globally",
                                                                                                   "https://www.micello.com",
-                                                                                                  true);
+                                                                                                  false);
                 m_pWatermarkDataRepository->AddWatermarkData("micello", micelloWatermarkData);
             }
         }

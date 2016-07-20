@@ -50,7 +50,7 @@ namespace ExampleApp
             
             void WatermarkController::OnWatermarkAlignmentStateChanged(const WatermarkAlignmentStateChangedMessage& message)
             {
-                m_view.SetWatermarkAlignmentState(message.ShouldAlignBottom());
+                m_view.SetWatermarkAlignmentState(message.ShouldAlignBottom(), message.ShouldAlignBelowFloorDisplay());
             }
             
             void WatermarkController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
