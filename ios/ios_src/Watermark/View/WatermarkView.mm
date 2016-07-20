@@ -36,7 +36,7 @@
         float xPosition = 0.0f;
         if(ExampleApp::Helpers::UIHelpers::UsePhoneLayout())
         {
-            m_yPosActive = m_height + (18 * m_pixelScale);
+            m_yPosActive = (20 * m_pixelScale);
             m_yPosInactive = (-m_height);
             
             xPosition = ((m_screenWidth * 0.5f) - (m_width * 0.5f));
@@ -236,7 +236,10 @@
         [self transitionToNewImage];
     }
     
-    [self transitionToNewPosition];
+    if((self.frame.origin.y != m_yPosActive && self.frame.origin.y != m_yPosInactive) && !self.hidden)
+    {
+        [self transitionToNewPosition];
+    }
 }
 
 - (void) transitionToNewImage
@@ -313,6 +316,7 @@
 }
 
 - (void) setWatermarkAlignmentState: (bool) alignAlongBottom
+                                   : (bool) alignBelowFloorDisplay
 {
     if (!ExampleApp::Helpers::UIHelpers::UsePhoneLayout())
     {
@@ -323,7 +327,15 @@
     
     if (!alignAlongBottom)
     {
-        m_yPosActive = m_height + (18 * m_pixelScale);
+        if(alignBelowFloorDisplay)
+        {
+            m_yPosActive = m_height + (18 * m_pixelScale);
+        }
+        else
+        {
+            m_yPosActive = (20 * m_pixelScale);
+        }
+        
         m_yPosInactive = (-m_height);
     }
     else

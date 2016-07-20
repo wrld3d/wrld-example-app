@@ -56,7 +56,8 @@
 
 - (void) updateWatermarkData: (const ExampleApp::Watermark::View::WatermarkData&) watermarkData;
 
-- (void) setWatermarkAlignmentState: (bool) alignAlongBottom;
+- (void) setWatermarkAlignmentState: (bool) alignAlongBottom
+                                   : (bool) alignBelowFloorDisplay;
 
 @property(nonatomic, retain) UIView* pShadowGradient;
 
