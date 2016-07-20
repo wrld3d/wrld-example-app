@@ -18,6 +18,7 @@
 
     <CustomAction Id='AlreadyUpdated' Error='[ProductName] is already installed.' />
     <CustomAction Id='NoDowngrade' Error='A later version of [ProductName] is already installed.' />
+	<CustomAction Id='RemoveProgramData' Directory='TARGETDIR' ExeCommand='cmd /c rmdir /S /Q %PROGRAMDATA%\eeGeo_Ltd' Execute='deferred' Return='ignore' HideTarget='no' Impersonate='no'/>
 
     <MediaTemplate EmbedCab="yes" />
 
@@ -95,7 +96,6 @@
       </Component>
       <Component Id="cmpiG7JhAXM75v0QUtpT92I20AZtW8" Directory="INSTALLFOLDER" Guid="{4F7B1AE3-FB78-4F08-86E2-F34CD80FBE9A}">
         <File Id="mainapplication.exe" KeyPath="yes" Source="payload\BWAY.exe">
-          <util:PermissionEx User="Users" GenericAll="yes" />
         </File>
       </Component>
       <Component Id="cmp4smKBrWFLyUpPjMI8FO84DoS0hk" Directory="INSTALLFOLDER" Guid="{0F3FC098-3782-4834-8691-B4870F2F8207}">
@@ -881,6 +881,7 @@
     <InstallExecuteSequence>
       <Custom Action='AlreadyUpdated' After='FindRelatedProducts'>SELFFOUND</Custom>
       <Custom Action='NoDowngrade' After='FindRelatedProducts'>NEWERFOUND</Custom>
+	  <Custom Action='RemoveProgramData' After='RemoveFiles'>(NOT UPGRADINGPRODUCTCODE) AND (REMOVE="ALL")</Custom>
     </InstallExecuteSequence>
 
   </Product>

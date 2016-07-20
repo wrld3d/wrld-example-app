@@ -236,11 +236,6 @@ namespace ExampleAppWPF
         {
             Dispatcher.Invoke(() =>
             {
-                if(IsAnimating())
-                {
-                    return;
-                }
-
                 var offScreenX = m_offScreenPos;
 
                 if (IsOpen())

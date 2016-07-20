@@ -65,8 +65,12 @@ namespace ExampleAppWPF
             DialogBox dialogBox = new DialogBox(m_popupTitle, m_popupBody, "Find Out More", "Later");
             dialogBox.Owner = m_currentWindow;
 
+            m_currentWindow.SetOpacity(MainWindow.OpacityOnPopup);
+
             bool? result = dialogBox.ShowDialog();
-            
+
+            m_currentWindow.SetOpacity(1.0f);
+
             WatermarkCLI.OnSelected(m_nativeCallerPointer);
 
             if (result != null && result == true)
