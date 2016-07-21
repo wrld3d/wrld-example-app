@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -58,6 +59,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     private Integer m_searchCount;
     
     private boolean m_isCategory;
+    private boolean m_isFindMenuChildItemClicked;
     
     private ArrayList<String> m_pendingResults = null;
     private int m_resultsCount = 0;
@@ -140,7 +142,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
 
         m_list.setAdapter(m_expandableListAdapter);
         
-        m_expandableListOnClickListener = new MenuExpandableListOnClickListener(m_activity, m_nativeCallerPointer);
+        m_expandableListOnClickListener = new MenuExpandableListOnClickListener(m_activity, m_nativeCallerPointer, this);
         m_list.setOnChildClickListener(m_expandableListOnClickListener);
         m_list.setOnGroupClickListener(m_expandableListOnClickListener);
         
@@ -385,6 +387,16 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
 		
         m_list.setVisibility(View.GONE);
         m_searchList.setVisibility(View.GONE);
+        if(m_isFindMenuChildItemClicked)
+        {
+        	m_list.collapseAllGroups();
+        }
+        m_isFindMenuChildItemClicked = false;
+	}
+
+	@Override
+	protected void onMenuChildItemClick(ExpandableListView parent, View view, int groupPosition, int childPosition, long id) {
+		m_isFindMenuChildItemClicked = groupPosition == 0 ? true : false;
 	}
 }
 

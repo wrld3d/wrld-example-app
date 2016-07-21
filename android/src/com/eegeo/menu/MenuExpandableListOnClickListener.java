@@ -11,11 +11,13 @@ public class MenuExpandableListOnClickListener implements OnGroupClickListener, 
 {
 	private final long m_nativeCallerPointer;
 	private MainActivity m_mainActivity;
+	private MenuView m_menuView;
 	
-	public MenuExpandableListOnClickListener(MainActivity mainActivity, long nativeCallerPointer)
+	public MenuExpandableListOnClickListener(MainActivity mainActivity, long nativeCallerPointer, MenuView menuView)
 	{
 		m_mainActivity = mainActivity;
 		m_nativeCallerPointer = nativeCallerPointer;
+		m_menuView = menuView;
 	}
 	
 	@Override
@@ -46,6 +48,7 @@ public class MenuExpandableListOnClickListener implements OnGroupClickListener, 
 	public boolean onChildClick(ExpandableListView parent, View view, int groupPosition, int childPosition, long id) 
 	{
 		MenuViewJniMethods.SelectedItem(m_nativeCallerPointer, groupPosition, childPosition + 1);
+		m_menuView.onMenuChildItemClick(parent, view, groupPosition, childPosition, id);
 		return true;
 	}
 }
