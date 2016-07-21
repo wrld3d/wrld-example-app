@@ -78,21 +78,20 @@ namespace ExampleAppWPF
 
         void ShakeSliderButton()
         {
-            var button = GetThumb(m_floorSlider);
+            var position = m_floorSlider.RenderTransform.Transform(new Point());
+            var offset = m_floorSlider.ActualWidth / 3.0;
 
-            const double posLeft = -5;
-            const double posRight = 10;
+            var anim = new DoubleAnimation();
+            anim.From = position.X - offset;
+            anim.To = position.X;
+            anim.EasingFunction = new ElasticEase()
+            {
+                EasingMode = EasingMode.EaseOut,
+                Springiness = 2
+            };
+            anim.Duration = new Duration(TimeSpan.FromMilliseconds(1100));
 
-            var anim = new DoubleAnimationUsingKeyFrames();
-            anim.KeyFrames.Add(new EasingDoubleKeyFrame(posLeft, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(0))));
-            anim.KeyFrames.Add(new EasingDoubleKeyFrame(posRight, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(100))));
-            anim.KeyFrames.Add(new EasingDoubleKeyFrame(posLeft, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(200))));
-            anim.KeyFrames.Add(new EasingDoubleKeyFrame(posRight, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(350))));
-            anim.KeyFrames.Add(new EasingDoubleKeyFrame(posLeft, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(550))));
-            anim.KeyFrames.Add(new EasingDoubleKeyFrame(posRight, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(800))));
-            anim.KeyFrames.Add(new EasingDoubleKeyFrame(posLeft, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(1100))));
-
-            var transform = new TranslateTransform(0, 0);
+            var transform = new TranslateTransform(position.X - offset, position.Y);
 
             m_floorSlider.RenderTransform = transform;
             transform.BeginAnimation(TranslateTransform.XProperty, anim);
@@ -281,8 +280,6 @@ namespace ExampleAppWPF
             m_floorSlider.Value = floorIndex;
 
             InteriorsExplorerCLIMethods.SelectFloor(m_nativeCallerPointer, floorIndex);
-
-            ShakeSliderButton();
         }
 
         private void OnSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
