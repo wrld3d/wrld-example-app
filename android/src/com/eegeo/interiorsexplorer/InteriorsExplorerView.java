@@ -308,7 +308,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
         	ViewGroup child = (ViewGroup)m_floorList.getChildAt(i);
         	TextView text = (TextView)child.findViewById(R.id.floor_name);
         	
-        	text.animate().alpha(0.0f).setDuration(m_stateChangeAnimationTimeMilliseconds);
+        	text.animate().alpha(0.5f).setDuration(m_stateChangeAnimationTimeMilliseconds);
         }
     }
     
