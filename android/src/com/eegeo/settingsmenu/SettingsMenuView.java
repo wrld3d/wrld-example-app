@@ -68,7 +68,7 @@ public class SettingsMenuView extends MenuView
 				R.layout.menu_list_subitem_with_details);
         m_list.setAdapter(m_expandableListAdapter);
 
-        m_expandableListOnClickListener = new MenuExpandableListOnClickListener(m_activity, m_nativeCallerPointer);
+        m_expandableListOnClickListener = new MenuExpandableListOnClickListener(m_activity, m_expandableListAdapter, m_nativeCallerPointer);
         m_list.setOnChildClickListener(m_expandableListOnClickListener);
         m_list.setOnGroupClickListener(m_expandableListOnClickListener);
     }

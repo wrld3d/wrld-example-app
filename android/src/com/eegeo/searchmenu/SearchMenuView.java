@@ -140,7 +140,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
 
         m_list.setAdapter(m_expandableListAdapter);
         
-        m_expandableListOnClickListener = new MenuExpandableListOnClickListener(m_activity, m_nativeCallerPointer);
+        m_expandableListOnClickListener = new MenuExpandableListOnClickListener(m_activity, m_expandableListAdapter, m_nativeCallerPointer);
         m_list.setOnChildClickListener(m_expandableListOnClickListener);
         m_list.setOnGroupClickListener(m_expandableListOnClickListener);
         
