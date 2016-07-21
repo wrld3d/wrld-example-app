@@ -11,6 +11,10 @@ import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -130,6 +134,25 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
         final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
         uiRoot.removeView(m_uiRootView);
         m_uiRootView = null;
+    }
+    
+    public void shakeSlider()
+    {
+    	final long offset = m_floorListContainer.getWidth() / 3;
+    	
+    	Animation moveLeft = new TranslateAnimation(0, -offset, 0, 0);
+    	moveLeft.setDuration(100);
+    	
+    	Animation bounceRight = new TranslateAnimation(0, offset, 0, 0);
+    	bounceRight.setDuration(1000);
+    	bounceRight.setInterpolator(new BounceInterpolator());
+    	
+    	AnimationSet set = new AnimationSet(false);
+    	
+    	set.addAnimation(moveLeft);
+    	set.addAnimation(bounceRight);
+    	
+    	 m_floorListContainer.startAnimation(set);
     }
     
     public void updateFloors(String[] floorShortNames, int currentlySelectedFloorIndex)
