@@ -324,8 +324,8 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         
         if(document.HasMember("icon") && !isHeader)
         {
-            const float imageSize = isHeader ? 36.0f : 26.0f;
-            const float imageInsetX = isHeader? 4.0f : 6.0f;
+            const float imageSize = 36.0f;
+            const float imageInsetX = 4.0f;
             const float imageInsetY = (textHeight*0.5f) - (imageSize*0.5f);
             
             textInsetX = imageSize + imageInsetX * 2.0f;

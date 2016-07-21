@@ -208,7 +208,7 @@ namespace ExampleApp
         , m_pWorld(NULL)
         , m_platformAbstractions(platformAbstractions, networkCapabilities)
         , m_pLoadingScreen(NULL)
-        , m_pinDiameter(48.f)
+        , m_pinDiameter(28.f)
         , m_initialisedApplicationViewState(false)
         , m_pCameraTransitionController(NULL)
         , m_pSettingsMenuModule(NULL)
@@ -890,7 +890,7 @@ namespace ExampleApp
         
         Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
         
-        ExampleApp::WorldPins::SdkModel::WorldPinIconMappingFactory worldPinIconMappingFactory;
+        ExampleApp::WorldPins::SdkModel::WorldPinIconMappingFactory worldPinIconMappingFactory(m_platformAbstractions.GetFileIO(), "SearchResultOnMap/pin_sheet.json");
         
         m_pWorldPinsModule = Eegeo_NEW(ExampleApp::WorldPins::SdkModel::WorldPinsModule)(
                                  m_pPinsModule->GetRepository(),

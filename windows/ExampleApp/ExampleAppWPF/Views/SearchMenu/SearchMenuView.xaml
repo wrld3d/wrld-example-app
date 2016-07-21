@@ -71,7 +71,7 @@
                             <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin">
                                 <SplineThicknessKeyFrame KeyTime="00:00:00.0" Value="0,0,0,0" />
                                 <SplineThicknessKeyFrame KeyTime="{StaticResource shutterAnimEndKeyTime}" Value="0,0,0,0" />
-                                <SplineThicknessKeyFrame KeyTime="{StaticResource itemCollapseEndKeyTime}" Value="0,-42,0,0" />
+                                <SplineThicknessKeyFrame KeyTime="{StaticResource itemCollapseEndKeyTime}" Value="0,-43,0,0" />
                             </ThicknessAnimationUsingKeyFrames>
                         </Storyboard>
 
@@ -322,7 +322,7 @@
                                                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
 
                                                 <DataTemplate DataType="{x:Type local:SearchMenuListItem}">
-                                                    <Grid HorizontalAlignment="Stretch" Height="31" Background="{StaticResource Gold}">
+                                                    <Grid HorizontalAlignment="Stretch" Height="43" Background="{StaticResource Gold}">
                                                         <Grid.RowDefinitions>
                                                             <RowDefinition Height="*"/>
                                                             <RowDefinition Height="1"/>
@@ -372,10 +372,10 @@
                                                                         </Setter>
                                                                     </Style>
                                                                 </StackPanel.Resources>
-                                                                <Image Source="{Binding Path=Icon}" Width="24" Height="24" VerticalAlignment="Center" Margin="7,0,0,0"/>
-                                                                <StackPanel HorizontalAlignment="Stretch" Width="175">
+                                                                <Image Source="{Binding Path=Icon}" Width="36" Height="36" VerticalAlignment="Center" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                                                                <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="175">
                                                                     <TextBlock Text="{Binding Path=Name}" FontSize="13" Foreground="Black" MaxWidth="{Binding RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}, Path=Width}" Margin="5,1,0,0" TextTrimming="CharacterEllipsis"/>
-                                                                    <TextBlock Text="{Binding Path=Details}" FontSize="11" Foreground="{StaticResource DarkGrey}" MaxWidth="{Binding RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}, Path=Width}" Margin="5,-3,0,0" TextTrimming="CharacterEllipsis"/>
+                                                                    <TextBlock Text="{Binding Path=Details}" FontSize="11" Foreground="{StaticResource DarkGrey}" MaxWidth="{Binding RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}, Path=Width}" Margin="5,0,0,0" TextTrimming="CharacterEllipsis"/>
                                                                 </StackPanel>
                                                             </StackPanel>
                                                         </Grid>
@@ -404,7 +404,7 @@
                                                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
 
                                                 <DataTemplate DataType="{x:Type local:MenuListItem}">
-                                                    <Grid Name="MenuItemGrid" HorizontalAlignment="Stretch" Height="30" Background="{StaticResource Gold}" Width="225">
+                                                    <Grid Name="MenuItemGrid" HorizontalAlignment="Stretch" Height="41" Background="{StaticResource Gold}" Width="225">
                                                         <Grid.Triggers>
                                                             <EventTrigger RoutedEvent="MouseLeftButtonDown">
                                                                 <BeginStoryboard>
@@ -535,7 +535,7 @@
                                                 </DataTemplate>
 
                                                 <DataTemplate DataType="{x:Type local:SubMenuListItem}">
-                                                    <Grid Margin="5,0,0,0" Height="30" Background="{StaticResource Gold}">
+                                                    <Grid Margin="5,0,0,0" Height="39" Background="{StaticResource Gold}">
                                                         <Grid>
                                                             <Grid.RowDefinitions>
                                                                 <RowDefinition Height="*"/>
@@ -595,7 +595,7 @@
                                                                             </Setter>
                                                                         </Style>
                                                                     </StackPanel.Resources>
-                                                                    <Image Source="{Binding Path=Icon}" Width="24" Height="24" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                                                    <Image Source="{Binding Path=Icon}" Width="36" Height="36" VerticalAlignment="Center" Margin="1,0,0,0" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
                                                                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="175">
                                                                         <TextBlock Text="{Binding Path=Heading}" FontSize="14" Foreground="{Binding Path=TitleTextColor}" MaxWidth="{Binding RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}, Path=Width}" Margin="5,1,0,0" TextTrimming="CharacterEllipsis"/>
                                                                         <TextBlock Text="{Binding Path=Details}" Visibility="{Binding Path=DetailVisibility}" FontSize="11" Foreground="{StaticResource DarkGrey}" MaxWidth="{Binding RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}, Path=Width}" Margin="5,-3,0,0" TextTrimming="CharacterEllipsis"/>

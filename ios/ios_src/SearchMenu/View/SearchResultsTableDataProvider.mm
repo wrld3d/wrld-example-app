@@ -174,7 +174,7 @@ static NSString *CellIdentifier = @"searchCell";
     {
         std::string name = document["name"].GetString();
         
-        const float imageSize = 30.0f;
+        const float imageSize = 36.0f;
         const float imageInset = 6.0f;
         
         const std::string icon = document.HasMember("icon") ? document["icon"].GetString() : "misc";

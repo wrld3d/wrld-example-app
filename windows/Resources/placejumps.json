@@ -5,7 +5,7 @@
         "Longitude": -87.629798,
         "HeadingDegrees":0,
         "Distance": 1781,
-        "Icon": "place"
+        "Icon": "misc"
     },
     {
         "Name": "Dundee",
@@ -13,7 +13,7 @@
         "Longitude": -2.977959,
         "Distance": 1000,
         "HeadingDegrees": 0,
-        "Icon": "place"
+        "Icon": "misc"
     },
     {
         "Name": "Edinburgh",
@@ -21,7 +21,7 @@
         "Longitude": -3.20994,
         "HeadingDegrees": 77,
         "Distance": 1700,
-        "Icon": "place"
+        "Icon": "misc"
     },
     {
         "Name": "London",
@@ -29,7 +29,7 @@
         "Longitude": -0.118915,
         "Distance": 2731,
         "HeadingDegrees": 351.0,
-        "Icon": "place"
+        "Icon": "misc"
     },
     {
         "Name": "Los Angeles",
@@ -37,7 +37,7 @@
         "Longitude": -118.260048,
         "Distance": 1800,
         "HeadingDegrees": 0,
-        "Icon": "place"
+        "Icon": "misc"
     },
     {
         "Name": "New York",
@@ -45,7 +45,7 @@
         "Longitude": -74.013733,
         "Distance": 1800,
         "HeadingDegrees": 240,
-        "Icon": "place"
+        "Icon": "misc"
     },
     {
         "Name": "Phoenix",
@@ -53,7 +53,7 @@
         "Longitude": -112.074475,
         "Distance": 1500,
         "HeadingDegrees": 0,
-        "Icon": "place"
+        "Icon": "misc"
     },
     {
         "Name": "Portland",
@@ -61,7 +61,7 @@
         "Longitude": -122.676859,
         "Distance": 1500,
         "HeadingDegrees": 0,
-        "Icon": "place"
+        "Icon": "misc"
     },
     {
         "Name": "San Francisco",
@@ -69,7 +69,7 @@
         "Longitude": -122.401,
         "Distance": 1781,
         "HeadingDegrees": 0,
-        "Icon": "place"
+        "Icon": "misc"
     },
     {
         "Name": "Seattle",
@@ -77,7 +77,7 @@
         "Longitude": -122.334744,
         "Distance": 1781,
         "HeadingDegrees": 0,
-        "Icon": "place"
+        "Icon": "misc"
     },
     {
         "Name": "Toronto",
@@ -85,6 +85,6 @@
         "Longitude": -79.382401,
         "Distance": 1500,
         "HeadingDegrees": 0,
-        "Icon": "place"
+        "Icon": "misc"
     }
 ]

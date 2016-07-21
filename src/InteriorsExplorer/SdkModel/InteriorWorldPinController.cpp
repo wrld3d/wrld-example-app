@@ -94,7 +94,7 @@ namespace ExampleApp
                 
                 const float heightOffsetMetres = 0.0f;
                 const bool isInterior = false;
-                const std::string indoorMapEntryIconKey = "indoor_map_entry";
+                const std::string indoorMapEntryIconKey = "indoor_map";
                 WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData;
                 
                 ExampleApp::WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(markerModel.GetInteriorName(),

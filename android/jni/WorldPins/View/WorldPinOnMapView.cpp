@@ -13,7 +13,7 @@ namespace ExampleApp
         {
             WorldPinOnMapView::WorldPinOnMapView(AndroidNativeState& nativeState, float pinDiameter)
                 : m_nativeState(nativeState)
-                , m_pinOffset((pinDiameter * Helpers::ImageHelpers::GetPixelScale()) * 0.75f)
+                , m_pinOffset((pinDiameter * Helpers::ImageHelpers::GetPixelScale()))
             {
                 ASSERT_UI_THREAD
 
