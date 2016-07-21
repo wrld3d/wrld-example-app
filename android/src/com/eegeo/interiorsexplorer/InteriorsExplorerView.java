@@ -104,10 +104,12 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
 		    	controlWidth = m_floorListContainer.getWidth();
 		    	controlHeight = m_floorListContainer.getHeight();
 		    	
-		    	m_leftXPosActive = screenWidth - (m_backButton.getWidth() / 2.0f  + m_activity.getResources().getDimension(R.dimen.menu_button_margin) + controlWidth / 2.0f);
+		    	m_leftXPosActive = screenWidth - (m_backButton.getWidth() + m_backButton.getWidth() / 2.0f);
 		    	m_leftXPosInactive = screenWidth;
 		    	
 		    	m_floorListContainer.setX(m_leftXPosInactive);
+		    	m_backButton.setX(m_leftXPosInactive);
+		    	m_backButton.setY(m_topYPosActive + m_topPanel.getHeight() * 1.5f);
 		    	
 		    	m_uiRootView.removeOnLayoutChangeListener(this);
 			}
@@ -256,13 +258,13 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     public void animateToActive()
     {
     	animateViewToY((int)m_topYPosActive);
-        animateViewToX((int)m_leftXPosActive);
+        animateViewToX((int)m_leftXPosActive, true);
     }
 
     public void animateToInactive()
     {
         animateViewToY((int)m_topYPosInactive);
-        animateViewToX((int)m_leftXPosInactive);
+        animateViewToX((int)m_leftXPosInactive, false);
     }
 
     protected void animateViewToY(final int yAsPx)
@@ -272,11 +274,19 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
         .setDuration(m_stateChangeAnimationTimeMilliseconds);
     }
     
-    protected void animateViewToX(final int xAsPx)
+    protected void animateViewToX(final int xAsPx, final boolean addDelay)
     {
+    	long delay = addDelay ? m_stateChangeAnimationTimeMilliseconds * 5 : 0;
+    	
     	m_floorListContainer.animate()
         .x(xAsPx)
-        .setDuration(m_stateChangeAnimationTimeMilliseconds);
+        .setDuration(m_stateChangeAnimationTimeMilliseconds)
+        .setStartDelay(delay);
+    	
+    	m_backButton.animate()
+    	.x(xAsPx)
+        .setDuration(m_stateChangeAnimationTimeMilliseconds)
+        .setStartDelay(delay);
     }
 
     public void animateToIntermediateOnScreenState(final float onScreenState)
