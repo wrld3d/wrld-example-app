@@ -49,7 +49,7 @@ namespace ExampleApp
 
 				void UpdateWatermarkData(const WatermarkData& watermarkData);
 
-				void SetWatermarkAlignmentState(bool alignAlongBottom);
+				void SetWatermarkAlignmentState(bool alignAlongBottom, bool alignBelowFloorDisplay);
             };
         }
     }
