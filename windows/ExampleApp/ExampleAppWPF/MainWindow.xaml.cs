@@ -132,6 +132,7 @@ namespace ExampleAppWPF
             TouchDown += OnTouchDown;
             TouchUp += OnTouchUp;
             TouchMove += OnTouchMove;
+            TouchLeave += (o, e) => { if (m_isTouchInputActive) m_mapImage.SetAllTouchInputEventsToPointerUp(CheckAndGetZeroIndexedId(e.TouchDevice.Id)); };
 
             Dispatcher.Hooks.DispatcherInactive += new EventHandler(DispatcherInactive);
 
@@ -175,8 +176,6 @@ namespace ExampleAppWPF
 
         private void OnTouchDown(object sender, TouchEventArgs e)
         {
-
-
             if (m_isTouchInputActive)
             {
                 m_mapImage.HandleTouchDownEvent((float)e.TouchDevice.GetTouchPoint(this).Position.X, (float)e.TouchDevice.GetTouchPoint(this).Position.Y, 0.0f, CheckAndGetZeroIndexedId(e.TouchDevice.Id));

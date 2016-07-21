@@ -37,6 +37,7 @@ public:
     void Exit();
 
     void SetAllInputEventsToPointerUp(int x, int y);
+    void SetAllTouchInputEventsToPointerUp(int touchId);
     void RespondToResize();
     void RespondToSize(int width, int height);
 

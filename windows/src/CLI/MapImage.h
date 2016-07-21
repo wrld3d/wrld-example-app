@@ -38,6 +38,7 @@ namespace ExampleApp
             void HandleMouseMoveEvent(int x, int y, System::Windows::Input::ModifierKeys modifierKeys);
             void HandleZoomEvent(int x, int y, int wheelDelta, System::Windows::Input::ModifierKeys modifierKeys);
             void SetAllInputEventsToPointerUp(int x, int y);
+            void SetAllTouchInputEventsToPointerUp(int touchId);
             void Pause() {}
             void Resume() {}
             void RespondToResize(int width, int height);

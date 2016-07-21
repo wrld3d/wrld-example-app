@@ -199,6 +199,14 @@ void AppRunner::SetAllInputEventsToPointerUp(int x, int y)
     }
 }
 
+void AppRunner::SetAllTouchInputEventsToPointerUp(int touchId)
+{
+    if (m_pAppHost)
+    {
+        m_pAppHost->SetAllTouchInputEventsToPointerUp(touchId);
+    }
+}
+
 void AppRunner::ReleaseDisplay()
 {
     ASSERT_NATIVE_THREAD
