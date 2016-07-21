@@ -34,6 +34,8 @@ public abstract class MenuView implements View.OnClickListener, MenuAnimationSta
     protected MenuAnimationHandler m_menuAnimationHandler = null;
 
     protected abstract void refreshListData(List<String> groups, HashMap<String, List<String>> groupToChildrenMap);
+    
+    protected abstract void onMenuChildItemClick(ExpandableListView parent, View view, int groupPosition, int childPosition, long id);
 
     public MenuView(MainActivity activity, long nativeCallerPointer)
     {

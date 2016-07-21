@@ -14,6 +14,7 @@ import com.eegeo.menu.MenuView;
 import com.eegeo.mobileexampleapp.R;
 
 import android.view.View;
+import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
@@ -68,7 +69,7 @@ public class SettingsMenuView extends MenuView
 				R.layout.menu_list_subitem_with_details);
         m_list.setAdapter(m_expandableListAdapter);
 
-        m_expandableListOnClickListener = new MenuExpandableListOnClickListener(m_activity, m_nativeCallerPointer);
+        m_expandableListOnClickListener = new MenuExpandableListOnClickListener(m_activity, m_nativeCallerPointer, this);
         m_list.setOnChildClickListener(m_expandableListOnClickListener);
         m_list.setOnGroupClickListener(m_expandableListOnClickListener);
     }
@@ -91,4 +92,8 @@ public class SettingsMenuView extends MenuView
     {
     	m_expandableListAdapter.setData(groups, groupToChildrenMap);
     }
+
+	@Override
+	protected void onMenuChildItemClick(ExpandableListView parent, View view, int groupPosition, int childPosition, long id) {
+	}
 }
