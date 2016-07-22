@@ -190,6 +190,12 @@ namespace ExampleAppWPF
 
             TouchMove += OnTouchMove;
 
+            PreviewMouseMove += OnMouseMove;
+        }
+
+        private void OnMouseMove(object sender, MouseEventArgs e)
+        {
+            e.Handled = true;
         }
 
         private void OnResultsListBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
