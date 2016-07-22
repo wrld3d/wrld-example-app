@@ -74,9 +74,9 @@ public abstract class MenuView implements View.OnClickListener, MenuAnimationSta
     @Override
     public void onClosedOnScreenAnimationComplete()
     {
-    	m_animating = false;
-    	
     	MenuViewJniMethods.ViewCloseCompleted(m_nativeCallerPointer);
+    	
+    	m_animating = false;
     	
         m_list.setVisibility(View.GONE);
     }
@@ -84,11 +84,11 @@ public abstract class MenuView implements View.OnClickListener, MenuAnimationSta
     @Override
 	public void onOpenOnScreenAnimationComplete()
 	{
+    	MenuViewJniMethods.ViewOpenCompleted(m_nativeCallerPointer);
+    	
     	m_animating = false;
     	
     	m_list.setEnabled(true);
-    	
-    	MenuViewJniMethods.ViewOpenCompleted(m_nativeCallerPointer);
 	}
 
     public float normalisedAnimationProgress()
