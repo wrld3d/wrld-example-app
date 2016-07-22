@@ -858,25 +858,17 @@ namespace ExampleApp
         float spriteHeight = pinDiameter;
         
         Eegeo::Modules::Core::RenderingModule& renderingModule = world.GetRenderingModule();
-        Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule = world.GetTerrainModelModule();
         
-        return Eegeo_NEW(Eegeo::Pins::PinsModule)(
-                                                  m_pinIconsTexture.textureId,
-                                                  *m_pPinIconsTexturePageLayout,
-                                                  renderingModule.GetGlBufferPool(),
-                                                  renderingModule.GetShaderIdGenerator(),
-                                                  renderingModule.GetMaterialIdGenerator(),
-                                                  renderingModule.GetVertexBindingPool(),
-                                                  renderingModule.GetVertexLayoutPool(),
-                                                  renderingModule.GetRenderableFilters(),
-                                                  terrainModelModule.GetTerrainHeightProvider(),
-                                                  spriteWidth,
-                                                  spriteHeight,
-                                                  Eegeo::Rendering::LayerIds::InteriorEntities,
-                                                  mapModule.GetEnvironmentFlatteningService(),
-                                                  m_screenProperties,
-                                                  false
-                                                  );
+        return Eegeo::Pins::PinsModule::Create(renderingModule,
+                                               world.GetPlatformAbstractionModule(),
+                                               mapModule,
+                                               m_pinIconsTexture.textureId,
+                                               *m_pPinIconsTexturePageLayout,
+                                               Eegeo::Rendering::LayerIds::InteriorEntities,
+                                               spriteWidth,
+                                               spriteHeight,
+                                               m_screenProperties,
+                                               false);
     }
     
     void MobileExampleApp::InitialisePinsModules(Eegeo::Modules::Map::MapModule& mapModule,

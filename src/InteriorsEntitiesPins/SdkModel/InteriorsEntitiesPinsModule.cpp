@@ -41,23 +41,17 @@ namespace ExampleApp
                 m_pEntityPinIconsTexturePageLayout = Eegeo_NEW(Eegeo::Rendering::RegularTexturePageLayout)(iconsPerAxisInTpage);
 
                 Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule = mapModule.GetTerrainModelModule();
-                
-                m_pEntityPinsModule = Eegeo_NEW(Eegeo::Pins::PinsModule)(m_entityPinsTextureInfo.textureId,
-                                                                         *m_pEntityPinIconsTexturePageLayout,
-                                                                         renderingModule.GetGlBufferPool(),
-                                                                         renderingModule.GetShaderIdGenerator(),
-                                                                         renderingModule.GetMaterialIdGenerator(),
-                                                                         renderingModule.GetVertexBindingPool(),
-                                                                         renderingModule.GetVertexLayoutPool(),
-                                                                         renderingModule.GetRenderableFilters(),
-                                                                         terrainModelModule.GetTerrainHeightProvider(),
-                                                                         entityPinSpriteWidth,
-                                                                         entityPinSpriteHeight,
-                                                                         Eegeo::Rendering::LayerIds::AfterWorld,
-                                                                         mapModule.GetEnvironmentFlatteningService(),
-                                                                         screenProperties,
-                                                                         false
-                                                                         );
+
+                m_pEntityPinsModule = Eegeo::Pins::PinsModule::Create(renderingModule,
+                                                                      platformAbstractionModule,
+                                                                      mapModule,
+                                                                      m_entityPinsTextureInfo.textureId,
+                                                                      *m_pEntityPinIconsTexturePageLayout,
+                                                                      Eegeo::Rendering::LayerIds::AfterWorld,
+                                                                      entityPinSpriteWidth,
+                                                                      entityPinSpriteHeight,
+                                                                      screenProperties,
+                                                                      false);
 
                 Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
                 Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
