@@ -95,5 +95,6 @@ public class SettingsMenuView extends MenuView
 
 	@Override
 	protected void onMenuChildItemClick(ExpandableListView parent, View view, int groupPosition, int childPosition, long id) {
+		m_expandableListAdapter.notifyDataSetChanged();
 	}
 }
