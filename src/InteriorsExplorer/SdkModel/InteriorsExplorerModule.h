@@ -15,6 +15,8 @@
 #include "IIdentity.h"
 #include "VisualMap.h"
 #include "InitialExperience.h"
+#include "InteriorsUINotificationService.h"
+#include "IInteriorsEntitiesPinsController.h"
 
 namespace ExampleApp
 {
@@ -39,7 +41,8 @@ namespace ExampleApp
                                         ExampleAppMessaging::TMessageBus& messageBus,
                                         Metrics::IMetricsService& metricsService,
                                         const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel,
-                                        const bool interiorsAffectedByFlattening);
+                                        const bool interiorsAffectedByFlattening,
+                                        InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsEntitiesPinsController);
 
                 ~InteriorsExplorerModule();
                 
@@ -58,9 +61,10 @@ namespace ExampleApp
                 Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& GetTouchController() const;
                 
                 InteriorExplorerUserInteractionModel& GetInteriorsExplorerUserInteractionModel() const;
+
+                InteriorsUINotificationService& GetInteriorsUINotificationService() const;
                 
             private:
-                
                 InteriorsExplorerModel* m_pModel;
                 View::InteriorsExplorerViewModel* m_pViewModel;
                 InteriorVisibilityUpdater* m_pVisibilityUpdater;
@@ -71,6 +75,8 @@ namespace ExampleApp
                 Eegeo::Resources::Interiors::InteriorsCameraController* m_pInteriorsCameraController;
                 Eegeo::Camera::GlobeCamera::GlobeCameraTouchController* m_pGlobeCameraTouchController;
                 Eegeo::Camera::GlobeCamera::GlobeCameraController* m_pGlobeCameraController;
+
+                InteriorsUINotificationService* m_pUINotificationService;
             };
         }
     }

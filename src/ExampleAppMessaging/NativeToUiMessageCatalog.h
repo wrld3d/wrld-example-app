@@ -40,6 +40,7 @@
 #include "ConnectivityChangedViewMessage.h"
 #include "StartSearchSurveyMessage.h"
 #include "StartUxSurveyMessage.h"
+#include "InteriorsExplorerUINotifyMessage.h"
 
 namespace ExampleApp
 {
@@ -82,6 +83,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Net::ConnectivityChangedViewMessage>
             , public Eegeo::Messaging::CatalogBinding<Surveys::StartSearchSurveyMessage>
             , public Eegeo::Messaging::CatalogBinding<Surveys::StartUxSurveyMessage>
+            , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerUINotifyMessage>
             , private Eegeo::NonCopyable
         {
 

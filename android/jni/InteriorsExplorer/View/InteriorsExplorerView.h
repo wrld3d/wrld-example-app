@@ -46,6 +46,8 @@ namespace ExampleApp
 
                 void SetTouchEnabled(bool enabled);
 
+                void PlaySliderAnim();
+
             private:
                 jclass m_uiViewClass;
                 jobject m_uiView;

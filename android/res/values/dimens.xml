@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="menu_button_margin">28dp</dimen>
+    <dimen name="menu_button_margin">25dp</dimen>
     <dimen name="search_result_anchor_margin">50dp</dimen>
     <dimen name="search_clear_button_size">20dp</dimen>
     <dimen name="search_results_bar_width">282dp</dimen>

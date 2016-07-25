@@ -10,6 +10,7 @@
 #include "GlobeCamera.h"
 #include "InteriorsEntitiesRepository.h"
 #include "Terrain.h"
+#include "CallbackCollection.h"
 
 #include <map>
 #include <string>
@@ -21,6 +22,14 @@ namespace ExampleApp
         namespace SdkModel
         {
             typedef std::map<const Eegeo::Resources::Interiors::Entities::InteriorsEntityModel*, Eegeo::Pins::TPinId> TEntityToPinIdMap;
+
+            enum InteriorsPinIconType
+            {
+                Bathroom = 0,
+                Escalator = 1,
+                Elevator = 2,
+                Stairs = 4
+            };
             
             class InteriorsEntitiesPinsController : public IInteriorsEntitiesPinsController
             {
@@ -38,7 +47,10 @@ namespace ExampleApp
                 
                 void Update(float dt);
                 
-                void Event_TouchTap(const AppInterface::TapData& data, Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& globeCameraController);
+                void Event_TouchTap(const AppInterface::TapData& data);
+
+                void RegisterInteriorsPinSelected(Eegeo::Helpers::ICallback1<const std::vector<Eegeo::Pins::Pin*>&>& callback);
+                void UnregisterInteriorsPinSelected(Eegeo::Helpers::ICallback1<const std::vector<Eegeo::Pins::Pin*>&>& callback);
                 
             private:
                 void AddPinsForEntities(const Eegeo::Resources::Interiors::Entities::TEntityModelVector& entities);
@@ -70,6 +82,8 @@ namespace ExampleApp
                 std::map<std::string, int> m_labelNameToIconIndex;
                 std::map<int, float> m_floorToScaleMap;
                 TEntityToPinIdMap m_entityToPinIdMap;
+
+                Eegeo::Helpers::CallbackCollection1<const std::vector<Eegeo::Pins::Pin*>&> m_interiorPinSelectedCallbacks;
                 
                 Eegeo::Pins::TPinId m_lastId;
                 
