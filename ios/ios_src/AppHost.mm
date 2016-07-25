@@ -89,6 +89,13 @@
 
 #import "UIView+TouchExclusivity.h"
 
+#import "IIndoorLocationDeviceModel.h"
+#include "IndoorLocation.h"
+#include "IIndoorLocationModule.h"
+
+#include "AvatarModule.h"
+
+
 using namespace Eegeo::iOS;
 
 AppHost::AppHost(
@@ -173,7 +180,7 @@ AppHost::AppHost(
              *this,
              *m_pMenuReactionModel);
 
-    CreateApplicationViewModules(screenProperties);
+    CreateApplicationViewModules(screenProperties,applicationConfiguration);
 
     m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_pApp, m_viewController, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), screenProperties.GetPixelScale());
     m_pAppLocationDelegate = Eegeo_NEW(AppLocationDelegate)(*m_piOSLocationService, m_viewController);
@@ -274,7 +281,7 @@ bool AppHost::IsRunning()
     return m_pApp->IsRunning();
 }
 
-void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenProperties& screenProperties)
+void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenProperties& screenProperties,const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration)
 {
     ExampleApp::MobileExampleApp& app = *m_pApp;
     
@@ -387,6 +394,12 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     m_pSurveyViewModule = Eegeo_NEW(ExampleApp::Surveys::View::SurveyViewModule)(m_messageBus,
                                                                                  m_iOSFlurryMetricsService,
                                                                                  *m_pURLRequestHandler);
+    
+    ExampleApp::IndoorLocation::SdkModel::IIndoorLocationModule &tempModule = app.GetIndoorLocationModule();
+    
+    
+    m_pSenionLabModule = Eegeo_NEW(ExampleApp::SenionLab::SenionLabModule)(&(tempModule.GetDeviceModel()),app.GetAppModeModel(),app.World().GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel(),applicationConfiguration.BuildingsInfo());
+
     
     // 3d map view layer.
     [m_pView addSubview: &m_pWorldPinOnMapViewModule->GetWorldPinOnMapView()];

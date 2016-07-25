@@ -13,6 +13,8 @@
 #include "IAlertBoxFactory.h"
 #include "IInteriorsNavigationService.h"
 #include "InteriorsExplorerModel.h"
+#include "ISenionLocationService.h"
+
 
 namespace ExampleApp
 {
@@ -22,7 +24,7 @@ namespace ExampleApp
         {
             CompassModel::CompassModel(Eegeo::Location::NavigationService& navigationService,
                                        InteriorsNavigation::SdkModel::IInteriorsNavigationService& interiorsNavigationService,
-                                       Eegeo::Location::ILocationService& locationService,
+                                       ExampleApp::SenionLocation::SdkModel::ISenionLocationService& locationService,
                                        ExampleApp::AppCamera::SdkModel::IAppCameraController& cameraController,
                                        Metrics::IMetricsService& metricsService,
                                        InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorExplorerModel,
@@ -73,27 +75,32 @@ namespace ExampleApp
 
             void CompassModel::CycleToNextGpsMode()
             {
-                if(!m_locationService.GetIsAuthorized())
-                {
-                    DisableGpsMode();
-                    m_gpsModeUnauthorizedCallbacks.ExecuteCallbacks();
-                    return;
-                }
                 
-                Eegeo::Space::LatLong latlong = Eegeo::Space::LatLong::FromDegrees(0.0, 0.0);
-                if(!m_locationService.GetLocation(latlong))
+                
+                if(m_locationService.isSenionMode() != true)
                 {
-                    m_alertBoxFactory.CreateSingleOptionAlertBox("Failed to obtain location",
-                                                                 "Could not get the device location. Please ensure you have GPS enabled",
-                                                                 m_failAlertHandler);
-                    DisableGpsMode();
-                    return;
+                    if(!m_locationService.GetIsAuthorized())
+                    {
+                        DisableGpsMode();
+                        m_gpsModeUnauthorizedCallbacks.ExecuteCallbacks();
+                        return;
+                    }
+                    
+                    Eegeo::Space::LatLong latlong = Eegeo::Space::LatLong::FromDegrees(0.0, 0.0);
+                    if(!m_locationService.GetLocation(latlong))
+                    {
+                        m_alertBoxFactory.CreateSingleOptionAlertBox("Failed to obtain location",
+                                                                     "Could not get the device location. Please ensure you have GPS enabled",
+                                                                     m_failAlertHandler);
+                        DisableGpsMode();
+                        return;
+                    }
                 }
                 
                 int gpsMode = static_cast<int>(m_gpsMode);
                 gpsMode = (gpsMode + 1) % static_cast<int>(GpsMode::GpsMode_Max);
                 GpsMode::Values newGpsMode = static_cast<GpsMode::Values>(gpsMode);
-
+                
                 if(GetGpsModeActive() && newGpsMode == GpsMode::GpsDisabled)
                 {
                     m_gpsMode = newGpsMode;
@@ -116,10 +123,15 @@ namespace ExampleApp
 
             void CompassModel::TryUpdateToNavigationServiceGpsMode(Eegeo::Location::NavigationService::GpsMode value)
             {
-                if(!m_locationService.GetIsAuthorized())
+                
+                if(m_locationService.isSenionMode() != true)
                 {
-                    DisableGpsMode();
-                    return;
+                    
+                    if(!m_locationService.GetIsAuthorized())
+                    {
+                        DisableGpsMode();
+                        return;
+                    }
                 }
                 
                 GpsMode::Values gpsModeValueFromNavigationService = m_compassGpsModeToNavigationGpsMode[value];

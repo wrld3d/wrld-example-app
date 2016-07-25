@@ -129,6 +129,19 @@
 #include "InteriorsEntityIdHighlightController.h"
 #include "IWebProxySettings.h"
 
+#include "RenderingTransformMesh.h"
+#include "RenderingTransformMeshModule.h"
+#include "IndoorLocationModule.h"
+#include "LocationServiceFacade.h"
+//#include "DoubleTapIndoorInteractionController.h"
+//#include "IDoubleTapIndoorInteractionController.h"
+
+#ifndef ANDROID
+#include "IAvatarController.h"
+#include "AvatarModule.h"
+
+#endif
+
 namespace ExampleApp
 {
     namespace
@@ -288,6 +301,7 @@ namespace ExampleApp
         , m_menuReaction(menuReaction)
         , m_pModalityIgnoredReactionModel(NULL)
         , m_pReactorIgnoredReactionModel(NULL)
+        , m_pRenderingTransformMeshModule(NULL)
     {
         m_metricsService.BeginSession(applicationConfiguration.FlurryAppKey(), EEGEO_PLATFORM_VERSION_NUMBER);
         if(m_applicationConfiguration.WebProxyEnabled())
@@ -297,18 +311,19 @@ namespace ExampleApp
             proxySettings.AddProxyIgnorePattern(m_applicationConfiguration.WebProxyIgnorePattern());
         }
         
+        m_pLocationServiceFacade = Eegeo_NEW(SenionLocation::SdkModel::LocationServiceFacade)(locationService);
+        
         m_pWorld = Eegeo_NEW(Eegeo::EegeoWorld)(applicationConfiguration.EegeoApiKey(),
                                                 m_platformAbstractions,
                                                 jpegLoader,
                                                 screenProperties,
-                                                locationService,
+                                                * m_pLocationServiceFacade,
                                                 nativeUIFactories,
                                                 Eegeo::EnvironmentCharacterSet::Latin,
                                                 platformConfig,
                                                 NULL,
                                                 &errorHandler
                                                 );
-        
         m_pWorld->GetMapModule().GetEnvironmentFlatteningService().SetFlattenedScale(0.1f);
         m_pWorld->GetMapModule().GetEnvironmentFlatteningService().SetEasingType(Eegeo::Rendering::EnvironmentFlatteningService::SmoothStep);
         m_pWorld->GetMapModule().GetEnvironmentFlatteningService().SetEaseDuration(0.5f);
@@ -457,6 +472,7 @@ namespace ExampleApp
         Eegeo_DELETE m_pAppModeModel;
 
         Eegeo_DELETE m_pConnectivityChangedObserver;
+        Eegeo_DELETE m_pLocationServiceFacade;
         
         Eegeo_DELETE m_pWorld;
     }
@@ -562,7 +578,7 @@ namespace ExampleApp
         
         m_pGpsMarkerModule = Eegeo_NEW(ExampleApp::GpsMarker::SdkModel::GpsMarkerModule)(m_pWorld->GetRenderingModule(),
                                                                                          m_platformAbstractions,
-                                                                                         m_pWorld->GetLocationService(),
+                                                                                         *m_pLocationServiceFacade,
                                                                                          m_pWorld->GetTerrainModelModule(),
                                                                                          m_pWorld->GetMapModule(),
                                                                                          m_messageBus,
@@ -752,7 +768,7 @@ namespace ExampleApp
         
         m_pCompassModule = Eegeo_NEW(ExampleApp::Compass::SdkModel::CompassModule)(*m_pNavigationService,
                                                                                    *m_pInteriorsNavigationService,
-                                                                                   world.GetLocationService(),
+                                                                                   *m_pLocationServiceFacade,
                                                                                    m_pAppCameraModule->GetController(),
                                                                                    m_identityProvider,
                                                                                    m_messageBus,
@@ -771,6 +787,30 @@ namespace ExampleApp
                                                                                          world.GetMapModule().GetInteriorsModelModule().GetInteriorsModelRepository(),
                                                                                          m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
                                                                                          m_messageBus);
+        
+        m_pRenderingTransformMeshModule = Eegeo_NEW(RenderingTransformMesh::SdkModel::RenderingTransformMeshModule)(m_pWorld->GetRenderingModule(),
+                                                                                                                    m_platformAbstractions.GetTextureFileLoader());
+        
+        
+        
+        
+        // Interior Location Module for Senion based locations
+        m_pIndoorLocationModule = Eegeo_NEW(ExampleApp::IndoorLocation::SdkModel::IndoorLocationModule)();
+#ifndef ANDROID
+        m_pAvatarModule = Eegeo_NEW(ExampleApp::Avatar::AvatarModule::AvatarModule)(m_pWorld->GetSceneModelsModule(),
+                                                                                    *m_pRenderingTransformMeshModule,
+                                                                                    m_platformAbstractions.GetFileIO(),
+                                                                                    m_pWorld->GetDebugRenderingModule(),
+                                                                                    m_pIndoorLocationModule->GetDeviceModel(),
+                                                                                    interiorsPresentationModule.GetInteriorInteractionModel(),
+                                                                                    *m_pAppModeModel,
+                                                                                    m_pWorld->GetMapModule().GetEnvironmentFlatteningService());
+        
+        
+        
+        m_pAvatarVisiblityChangedObserver = Eegeo_NEW(SenionLocation::AvatarVisibilityObserver)(m_pAvatarModule->GetAvatarModel(),*m_pLocationServiceFacade);
+#endif
+
         
         InitialiseToursModules(mapModule, world, interiorsAffectedByFlattening);
         
@@ -894,6 +934,10 @@ namespace ExampleApp
         Eegeo_DELETE m_pSearchModule;
         
         Eegeo_DELETE m_pSwallowSearchServiceModule;
+        
+#ifndef ANDROID
+        Eegeo_DELETE m_pAvatarModule;
+#endif
         
         for(std::map<std::string, ExampleApp::Search::SdkModel::ISearchServiceModule*>::iterator it = m_searchServiceModules.begin(); it != m_searchServiceModules.end(); ++it)
         {
@@ -1144,6 +1188,11 @@ namespace ExampleApp
         }
         
         m_pInteriorsExplorerModule->Update(dt);
+        
+#ifndef ANDROID
+        m_pAvatarModule->Update(dt);
+#endif
+
         
         Eegeo::Camera::RenderCamera renderCamera = m_pAppCameraModule->GetController().GetRenderCamera();
         Eegeo::Camera::CameraState cameraState = m_pAppCameraModule->GetController().GetCameraState();

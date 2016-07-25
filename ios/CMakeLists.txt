@@ -62,9 +62,13 @@ set(ios_frameworks
   -framework CoreGraphics 
   -framework CoreData
   -framework Security
-  -framework CoreLocation")
+  -framework CoreLocation
+  -framework CoreMotion
+  -framework CoreBluetooth
+  -framework SLIndoorLocation")
 
 set(linker_search_paths "-LInclude/eegeo -LInclude")
+set(framework_search_paths "${CMAKE_CURRENT_SOURCE_DIR}/ios_src/SenionLab/FrameWork")
 set(libs "${eegeo_sdk_libs} -lturbojpeg -lz -lcurl -luv -lFlurry_6.0.0")
 set(CMAKE_EXE_LINKER_FLAGS "${ios_frameworks} ${linker_search_paths} ${libs}")
 
@@ -103,6 +107,7 @@ set_xcode_property (${executable_name} INSTALL_PATH "/Applications")
 
 set_xcode_property(${executable_name} GCC_PRECOMPILE_PREFIX_HEADER "YES")
 set_xcode_property(${executable_name} GCC_PREFIX_HEADER "ExampleApp/ProjectSwallowApp-Prefix.pch")
+set_xcode_property(${executable_name} FRAMEWORK_SEARCH_PATHS "${framework_search_paths}")
 
 
 if(${COMPILE_CPP_03})

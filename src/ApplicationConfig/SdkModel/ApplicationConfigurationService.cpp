@@ -54,7 +54,10 @@ namespace ExampleApp
                                                 parsedConfig.WebProxyEnabled(),
                                                 parsedConfig.WebProxyIpAddress(),
                                                 parsedConfig.WebProxyPort(),
-                                                parsedConfig.WebProxyIgnorePattern());
+                                                parsedConfig.WebProxyIgnorePattern(),
+                                                parsedConfig.SenionMapKey(),
+                                                parsedConfig.SenionMapCustomerID(),
+                                                parsedConfig.BuildingsInfo());
             }
         }
     }

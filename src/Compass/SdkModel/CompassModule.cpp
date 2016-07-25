@@ -14,7 +14,7 @@ namespace ExampleApp
         {
             CompassModule::CompassModule(Eegeo::Location::NavigationService& navigationService,
                                          InteriorsNavigation::SdkModel::IInteriorsNavigationService& interiorsNavigationService,
-                                         Eegeo::Location::ILocationService& locationService,
+                                         ExampleApp::SenionLocation::SdkModel::ISenionLocationService&locationService,
                                          ExampleApp::AppCamera::SdkModel::IAppCameraController& cameraController,
                                          Eegeo::Helpers::IIdentityProvider& identityProvider,
                                          ExampleAppMessaging::TMessageBus& messageBus,

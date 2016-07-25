@@ -114,6 +114,33 @@ namespace ExampleApp
                 {
                     m_builder.SetWebProxyIgnorePattern(document["WebProxyIgnorePattern"].GetString());
                 }
+                
+                Eegeo_ASSERT(document.HasMember("SenionMapKey"), "SenionMapKey config not found");
+                m_builder.SetSenionMapKey(document["SenionMapKey"].GetString());
+                
+                
+                Eegeo_ASSERT(document.HasMember("SenionMapCustomerID"), "SenionMapCustomerID config not found");
+                m_builder.SetSenionCustomerID(document["SenionMapCustomerID"].GetString());
+                
+                
+                Eegeo_ASSERT(document.HasMember("Buildings"), "Buildings config not found");
+                // Using a reference for consecutive access is handy and faster.
+                const rapidjson::Value& buildingArray = document["Buildings"];
+                std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*> buildingInfoList;
+                for (rapidjson::SizeType i = 0; i < buildingArray.Size(); i++) // Uses SizeType instead of size_t
+                {
+                    const rapidjson::Value& building = buildingArray[i];
+                    Eegeo_ASSERT(building.HasMember("SenionMapKey"), "SenionMapKey config not found");
+                    std::string mapKey = building["SenionMapKey"].GetString();
+                    Eegeo_ASSERT(building.HasMember("SenionMapCustomerID"), "SenionMapCustomerID config not found");
+                    std::string customerID = building["SenionMapCustomerID"].GetString();
+                    Eegeo_ASSERT(building.HasMember("interior_id"), "interior_id config not found");
+                    std::string interiorID = building["interior_id"].GetString();
+                    ExampleApp::ApplicationConfig::ApplicationBuildingInfo * buildingInfo = Eegeo_NEW(ExampleApp::ApplicationConfig::ApplicationBuildingInfo)(mapKey, customerID, interiorID);
+                    buildingInfoList.push_back(buildingInfo);
+                }
+                m_builder.SetBuildingInfoArray(buildingInfoList);
+                
                 return m_builder.Build();
             }
         }

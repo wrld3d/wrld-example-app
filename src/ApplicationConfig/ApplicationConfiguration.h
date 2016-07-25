@@ -5,6 +5,7 @@
 #include <string>
 #include "ApplicationConfig.h"
 #include "LatLongAltitude.h"
+#include "ApplicationBuildingInfo.h"
 
 namespace ExampleApp
 {
@@ -39,6 +40,9 @@ namespace ExampleApp
             const std::string m_webProxyIpAddress;
             int m_webProxyPort;
             const std::string m_webProxyIgnorePattern;
+            const std::string m_senionMapKey;
+            const std::string m_senionMapCustomerID;
+            const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>m_buildingsInfo;
             
         public:
             
@@ -67,7 +71,10 @@ namespace ExampleApp
                                      bool webProxyEnabled,
                                      const std::string& webProxyIpAddress,
                                      int webProxyPort,
-                                     const std::string& webProxyIgnorePattern);
+                                     const std::string& webProxyIgnorePattern,
+                                     const std::string& senionMapKey,
+                                     const std::string& senionMapCustomerID,
+                                     const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>&buildingsInfo);
             
             const std::string& Name() const;
             
@@ -120,6 +127,12 @@ namespace ExampleApp
             int WebProxyPort() const;
             
             const std::string& WebProxyIgnorePattern() const;
+            
+            const std::string& SenionMapKey() const;
+            
+            const std::string& SenionMapCustomerID() const;
+            
+            const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>& BuildingsInfo() const;
         };
     }
 }

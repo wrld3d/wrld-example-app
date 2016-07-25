@@ -57,6 +57,7 @@
 #include "URLRequestHandler.h"
 #include "SurveyViewIncludes.h"
 #include "IMenuReactionModel.h"
+#include "SenionLabModule.h"
 
 @class ViewController;
 class AppInputDelegate;
@@ -135,6 +136,7 @@ private:
     ExampleApp::LinkOutObserver::LinkOutObserver* m_pLinkOutObserver;
     ExampleApp::URLRequest::View::URLRequestHandler* m_pURLRequestHandler;
     ExampleApp::Surveys::View::ISurveyViewModule* m_pSurveyViewModule;
+    ExampleApp::SenionLab::SenionLabModule* m_pSenionLabModule;
     ExampleApp::Menu::View::IMenuReactionModel* m_pMenuReactionModel;
     
     ImageStore* m_pImageStore;
@@ -148,7 +150,7 @@ private:
     Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<AppHost> m_failAlertHandler;
     Eegeo::Helpers::TCallback1<AppHost, const ExampleApp::UserInteraction::UserInteractionEnabledChangedMessage&> m_userInteractionEnabledChangedHandler;
 
-    void CreateApplicationViewModules(const Eegeo::Rendering::ScreenProperties& screenProperties);
+    void CreateApplicationViewModules(const Eegeo::Rendering::ScreenProperties& screenProperties,const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration);
     void DestroyApplicationViewModules();
     
     void SetTouchExclusivity();

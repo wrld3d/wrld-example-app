@@ -15,6 +15,7 @@
 #include "ISingleOptionAlertBoxDismissedHandler.h"
 #include "InteriorsNavigation.h"
 #include "InteriorsExplorer.h"
+#include "SenionLocation.h"
 
 namespace ExampleApp
 {
@@ -26,7 +27,7 @@ namespace ExampleApp
             {
                 Eegeo::Location::NavigationService& m_navigationService;
                 InteriorsNavigation::SdkModel::IInteriorsNavigationService& m_interiorsNavigationService;
-                Eegeo::Location::ILocationService& m_locationService;
+                ExampleApp::SenionLocation::SdkModel::ISenionLocationService& m_locationService;
                 ExampleApp::AppCamera::SdkModel::IAppCameraController& m_cameraController;
                 Eegeo::Helpers::CallbackCollection0 m_compassAllowedChangedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_gpsModeChangedCallbacks;
@@ -50,7 +51,7 @@ namespace ExampleApp
 
                 CompassModel(Eegeo::Location::NavigationService& navigationService,
                              InteriorsNavigation::SdkModel::IInteriorsNavigationService& interiorsNavigationService,
-                             Eegeo::Location::ILocationService& locationService,
+                             ExampleApp::SenionLocation::SdkModel::ISenionLocationService& locationService,
                              ExampleApp::AppCamera::SdkModel::IAppCameraController& Cameracontroller,
                              Metrics::IMetricsService& metricsService,
                              InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorExplorerModel,

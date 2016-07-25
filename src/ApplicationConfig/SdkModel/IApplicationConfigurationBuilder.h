@@ -74,6 +74,11 @@ namespace ExampleApp
                 virtual bool ValidateHMAC(const std::string& message, const std::string& hmac) const = 0;
                 
                 virtual ApplicationConfiguration Build() = 0;
+                
+                virtual IApplicationConfigurationBuilder& SetSenionMapKey(const std::string& mapKey) = 0;
+                virtual IApplicationConfigurationBuilder& SetSenionCustomerID(const std::string& customerID) = 0;
+                virtual IApplicationConfigurationBuilder& SetBuildingInfoArray(const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>&infoBuildingList) = 0;
+
             };
         }
     }

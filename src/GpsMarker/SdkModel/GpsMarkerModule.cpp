@@ -28,7 +28,7 @@ namespace ExampleApp
         {
             GpsMarkerModule::GpsMarkerModule(Eegeo::Modules::Core::RenderingModule& renderingModule,
                                              Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
-                                             Eegeo::Location::ILocationService& locationService,
+                                             ExampleApp::SenionLocation::SdkModel::ISenionLocationService& locationService,
                                              Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
                                              Eegeo::Modules::Map::MapModule& mapModule,
                                              ExampleAppMessaging::TMessageBus& messageBus,

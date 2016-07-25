@@ -31,7 +31,10 @@ namespace ExampleApp
                                                            bool webProxyEnabled,
                                                            const std::string& webProxyIpAddress,
                                                            int webProxyPort,
-                                                           const std::string& webProxyIgnorePattern)
+                                                           const std::string& webProxyIgnorePattern,
+                                                           const std::string& senionMapKey,
+                                                           const std::string& senionMapCustomerID,
+                                                           const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>& buildingsInfo)
         : m_name(name)
         , m_eegeoApiKey(eegeoApiKey)
         , m_interestLocation(interestLocation)
@@ -58,6 +61,9 @@ namespace ExampleApp
         , m_webProxyIpAddress(webProxyIpAddress)
         , m_webProxyPort(webProxyPort)
         , m_webProxyIgnorePattern(webProxyIgnorePattern)
+        , m_senionMapKey(senionMapKey)
+        , m_senionMapCustomerID(senionMapCustomerID)
+        , m_buildingsInfo(buildingsInfo)
         {
             
         }
@@ -191,5 +197,19 @@ namespace ExampleApp
         {
             return m_webProxyIgnorePattern;
         }
+        
+        const std::string& ApplicationConfiguration::SenionMapKey() const{
+            return m_senionMapKey;
+        }
+        
+        const std::string& ApplicationConfiguration::SenionMapCustomerID() const{
+            return m_senionMapCustomerID;
+        }
+        
+        
+        const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>& ApplicationConfiguration::BuildingsInfo() const{
+            return m_buildingsInfo;
+        }
+
     }
 }

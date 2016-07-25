@@ -13,6 +13,7 @@ namespace ExampleApp
             extern const float INTERIOR_FLOOR_HEIGHT;
             
             float GetFloorHeightAboveSeaLevel(const Eegeo::Resources::Interiors::InteriorsModel& interiorModel, unsigned int floorIndex);
+            float GetFloorHeightAboveSeaLevelIncludingEnvironmentFlattening(const Eegeo::Resources::Interiors::InteriorsModel& interiorModel, unsigned int floorIndex, float environmentFlatteningScalar);
         }
     }
 }

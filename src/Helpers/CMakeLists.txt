@@ -11,6 +11,10 @@ set(currsources
   ../src/Helpers/SizeHelpers.h
   ../src/Helpers/StateMachine.cpp
   ../src/Helpers/StateMachine.h
+  ../src/Helpers/IpAddressHelpers.cpp
+  ../src/Helpers/IpAddressHelpers.h
+  ../src/Helpers/JsonPrintHelper.cpp
+  ../src/Helpers/JsonPrintHelper.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\Helpers FILES ${currsources})

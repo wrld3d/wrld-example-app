@@ -9,6 +9,7 @@
 #include "EnvironmentFlatteningService.h"
 #include "InteriorsModel.h"
 #include "EarthConstants.h"
+#include "ISenionLocationService.h"
 
 namespace ExampleApp
 {
@@ -16,7 +17,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            GpsMarkerModel::GpsMarkerModel(Eegeo::Location::ILocationService& locationService,
+            GpsMarkerModel::GpsMarkerModel(ExampleApp::SenionLocation::SdkModel::ISenionLocationService& locationService,
                                            Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
                                            const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                            const bool interiorsAffectedByFlattening)
@@ -62,11 +63,18 @@ namespace ExampleApp
             {
                 float terrainHeight = 0.0f;
                 const bool inInterior = m_interiorInteractionModel.HasInteriorModel();
-                if(inInterior)
+                
+                if (inInterior && m_locationService.isSenionMode() == true)
+                {
+                    Eegeo::Space::LatLong latlong = Eegeo::Space::LatLong::FromDegrees(0.0, 0.0);
+                    GetServiceLocation(latlong);
+                    out_position = Eegeo::Space::LatLongAltitude::FromDegrees(latlong.GetLatitudeInDegrees(), latlong.GetLongitudeInDegrees(),16).ToECEF();
+                }
+                else if(inInterior)
                 {
                     const int currentFloor = m_interiorInteractionModel.GetSelectedFloorIndex();
                     const Eegeo::Resources::Interiors::InteriorsModel& interiorModel = *m_interiorInteractionModel.GetInteriorModel();
-
+                    
                     float floorOffset = Helpers::InteriorHeightHelpers::INTERIOR_FLOOR_HEIGHT*currentFloor;
                     terrainHeight = interiorModel.GetTangentSpaceBounds().GetMin().y;
                     
@@ -86,6 +94,10 @@ namespace ExampleApp
                     out_position = environmentFlattening.GetScaledPointEcef(m_currentLocationEcef, environmentFlattening.GetCurrentScale());
                 }
             }
+            void GpsMarkerModel::GetServiceLocation(Eegeo::Space::LatLong &latLong){
+                m_locationService.GetLocation(latLong);
+            }
+
         }
     }
 }

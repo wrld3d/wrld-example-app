@@ -44,7 +44,9 @@ namespace ExampleApp
                 std::string m_webProxyIpAddress;
                 int m_webProxyPort;
                 std::string m_webProxyIgnorePattern;
-                
+                std::string m_senionMapKey;
+                std::string m_senionMapCustomerID;
+                std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>m_buildingsInfo;
                 
             public:
                 ApplicationConfigurationBuilder(const IApplicationConfigurationCipher& applicationConfigurationEncryption,
@@ -102,6 +104,12 @@ namespace ExampleApp
 
                 IApplicationConfigurationBuilder& SetWebProxyIgnorePattern(const std::string& webProxyIgnorePattern);
 
+                IApplicationConfigurationBuilder& SetSenionMapKey(const std::string& mapKey);
+                
+                IApplicationConfigurationBuilder& SetSenionCustomerID(const std::string& customerID);
+                
+                IApplicationConfigurationBuilder& SetBuildingInfoArray(const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>&infoBuildingList);
+                
                 std::string Decrypt(const std::string& message) const;
 
                 bool ValidateHMAC(const std::string& message, const std::string& hmac) const;

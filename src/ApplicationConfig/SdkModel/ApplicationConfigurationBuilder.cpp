@@ -201,6 +201,21 @@ namespace ExampleApp
                 m_webProxyIgnorePattern = webProxyIgnorePattern;
                 return *this;
             }
+            
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetSenionMapKey(const std::string& mapKey)
+            {
+                m_senionMapKey = mapKey;
+                return *this;
+            }
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetSenionCustomerID(const std::string& customerID)
+            {
+                m_senionMapCustomerID = customerID;
+                return *this;
+            }
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetBuildingInfoArray(const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>&infoBuildingList){
+                m_buildingsInfo = infoBuildingList;
+                return *this;
+            }
 
             std::string ApplicationConfigurationBuilder::Decrypt(const std::string& value) const
             {
@@ -250,7 +265,10 @@ namespace ExampleApp
                                                 m_webProxyEnabled,
                                                 m_webProxyIpAddress,
                                                 m_webProxyPort,
-                                                m_webProxyIgnorePattern);
+                                                m_webProxyIgnorePattern,
+                                                m_senionMapKey,
+                                                m_senionMapCustomerID,
+                                                m_buildingsInfo);
             }
         }
     }

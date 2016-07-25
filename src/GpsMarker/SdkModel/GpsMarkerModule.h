@@ -9,6 +9,8 @@
 #include "Modules.h"
 #include "Location.h"
 #include "BidirectionalBus.h"
+#include "IAvatarModel.h"
+#include "SenionLocation.h"
 
 namespace ExampleApp
 {
@@ -22,7 +24,7 @@ namespace ExampleApp
                 
                 GpsMarkerModule(Eegeo::Modules::Core::RenderingModule& renderingModule,
                                 Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
-                                Eegeo::Location::ILocationService& locationService,
+                                ExampleApp::SenionLocation::SdkModel::ISenionLocationService& locationService,
                                 Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
                                 Eegeo::Modules::Map::MapModule& mapModule,
                                 ExampleAppMessaging::TMessageBus& messageBus,

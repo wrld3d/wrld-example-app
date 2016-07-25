@@ -1,4 +1,12 @@
 set(resources ${resources}
+        Resources/character.pvr
+        Resources/charactercisco.png
+        Resources/charactercisco.pvr
+        Resources/CharacterIdle_01.POD
+        Resources/Characteridleanim.POD
+        Resources/CharacterWalk_01.POD
+        Resources/Characterwalkanim.POD
+		Resources/shadow.png
 		Resources/ApplicationConfigs
 		Resources/Arrow.png
 		Resources/arrow1.png

@@ -90,6 +90,15 @@
 #include "InteriorsEntityIdHighlightVisibilityController.h"
 #include "Surveys.h"
 #include "IMenuIgnoredReactionModel.h"
+#include "RenderingTransformMesh.h"
+#include "IndoorLocation.h"
+
+#ifndef ANDROID
+#include "Avatar.h"
+#include "SenionLocation.h"
+#include "AvatarVisibilityObserver.h"
+#endif
+
 
 namespace ExampleApp
 {
@@ -187,7 +196,15 @@ namespace ExampleApp
         AppCamera::SdkModel::IAppCameraModule* m_pAppCameraModule;
         
         const bool m_interiorsEnabled;
-
+        
+        ExampleApp::IndoorLocation::SdkModel::IIndoorLocationModule* m_pIndoorLocationModule;
+        
+        ExampleApp::SenionLocation::SdkModel::ISenionLocationService *m_pLocationServiceFacade;
+#ifndef ANDROID
+        SenionLocation::AvatarVisibilityObserver* m_pAvatarVisiblityChangedObserver;
+#endif
+        
+        
 		void CreateSQLiteModule(Eegeo::UI::NativeUIFactories& nativeUIFactories);
 
         void CreateApplicationModelModules(Eegeo::UI::NativeUIFactories& nativeUIFactories,
@@ -225,6 +242,12 @@ namespace ExampleApp
         
         const bool IsTourCameraActive() const;
 
+        RenderingTransformMesh::SdkModel::RenderingTransformMeshModule* m_pRenderingTransformMeshModule;
+#ifndef ANDROID
+        ExampleApp::Avatar::AvatarModule::AvatarModule* m_pAvatarModule;
+#endif
+
+        
     public:
         MobileExampleApp(Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
                          Eegeo::Rendering::ScreenProperties& screenProperties,
@@ -252,6 +275,11 @@ namespace ExampleApp
         ExampleApp::ApplicationConfig::ApplicationConfiguration GetApplicationConfiguration() const
         {
             return m_applicationConfiguration;
+        }
+        
+        ExampleApp::IndoorLocation::SdkModel::IIndoorLocationModule& GetIndoorLocationModule() const
+        {
+            return *m_pIndoorLocationModule;
         }
 
         float PinDiameter() const
@@ -413,6 +441,13 @@ namespace ExampleApp
         {
             return *m_pToursModule;
         }
+        
+#ifndef ANDROID
+        ExampleApp::Avatar::AvatarModule::AvatarModule& AvatarModule() const
+        {
+            return *m_pAvatarModule;
+        }
+#endif
         
         const ExampleApp::Tours::SdkModel::TourInstances::TwitterFeed::ITwitterFeedTourModule& TwitterFeedTourModule() const
         {
