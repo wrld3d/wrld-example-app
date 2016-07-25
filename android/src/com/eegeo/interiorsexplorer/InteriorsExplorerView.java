@@ -136,7 +136,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
         m_uiRootView = null;
     }
     
-    public void shakeSlider()
+    public void playShakeSliderAnim()
     {
     	final long offset = m_floorListContainer.getWidth() / 3;
     	
