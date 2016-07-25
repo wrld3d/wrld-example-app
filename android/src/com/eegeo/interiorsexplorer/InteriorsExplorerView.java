@@ -1,11 +1,15 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 package com.eegeo.interiorsexplorer;
 
-import com.eegeo.ProjectSwallowApp.R;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.eegeo.ProjectSwallowApp.R;
+import com.eegeo.entrypointinfrastructure.MainActivity;
+
+import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
@@ -13,18 +17,8 @@ import android.view.animation.BounceInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.view.View.MeasureSpec;
-import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
-import android.graphics.Color;
-import android.util.*;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.eegeo.entrypointinfrastructure.MainActivity;
 
 public class InteriorsExplorerView implements View.OnClickListener, View.OnTouchListener
 {
@@ -41,6 +35,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     private Boolean m_draggingFloorButton;
 
     private final long m_stateChangeAnimationTimeMilliseconds = 200;
+    private final long m_initialJumpThersholdPx = 5;
     
     private float m_topYPosActive;
     private float m_topYPosInactive;
@@ -52,6 +47,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     
     private InteriorsFloorListAdapter m_floorListAdapter = null;
     private float m_previousYCoordinate;
+    private boolean m_isButtonInitialJumpRemoved = false;
     
     private boolean m_canProcessButtons;
     private boolean m_isOnScreen = false;
@@ -257,11 +253,18 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
 		m_floorButton.getBackground().setState(new int[] {android.R.attr.state_pressed});
 		m_previousYCoordinate = initialYCoordinate;
 		m_draggingFloorButton = true;
+		m_isButtonInitialJumpRemoved = false;
     }
     
     private void updateDraggingButton(float yCoordinate)
     {
     	float y = yCoordinate;
+		
+    	if(!m_isButtonInitialJumpRemoved) 
+    	{
+    		detectAndRemoveInitialJump(y);
+    	}
+    	
     	float newY = m_floorButton.getY() + (y - m_previousYCoordinate);
 		newY = Math.max(0.0f, Math.min(getListViewHeight(m_floorList)-ButtonSize, newY));
 		m_floorButton.setY(newY);
@@ -282,6 +285,21 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
 		InteriorsExplorerViewJniMethods.OnFloorSelected(m_nativeCallerPointer, selectedFloor);
     }
     
+    /**
+     * This function will remove the starting jump on slider if detected
+     * @param yCoordinate
+     */
+    private void detectAndRemoveInitialJump(float yCoordinate)
+    {
+    	float y = yCoordinate;
+    	float deltaY = y - m_previousYCoordinate; 
+    	if(Math.abs(deltaY) > m_initialJumpThersholdPx)
+    	{
+    		m_previousYCoordinate += deltaY;
+    		m_isButtonInitialJumpRemoved = true;
+    	}
+    }
+
     @Override
     public void onClick(View view)
     {
