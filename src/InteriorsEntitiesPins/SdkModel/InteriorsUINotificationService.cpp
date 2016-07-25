@@ -36,7 +36,6 @@ namespace ExampleApp
                 {
                     if (RequiresUINotification((*i)->GetCategoryId()))
                     {
-                        auto x = 10;
                     }
                 }
             }
