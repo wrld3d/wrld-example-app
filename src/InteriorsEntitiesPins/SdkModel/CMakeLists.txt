@@ -9,6 +9,8 @@ set(currsources
   ../src/InteriorsEntitiesPins/SdkModel/InteriorsEntitiesPinsModule.cpp
   ../src/InteriorsEntitiesPins/SdkModel/InteriorsEntitiesPinsModule.h
   ../src/InteriorsEntitiesPins/SdkModel/InteriorsEntityPinData.h
+  ../src/InteriorsEntitiesPins/SdkModel/InteriorsUINotificationService.cpp
+  ../src/InteriorsEntitiesPins/SdkModel/InteriorsUINotificationService.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\InteriorsEntitiesPins\\SdkModel FILES ${currsources})

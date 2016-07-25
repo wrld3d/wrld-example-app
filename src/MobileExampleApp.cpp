@@ -591,6 +591,15 @@ namespace ExampleApp
         
         const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel = m_initialExperienceModule.GetInitialExperienceModel();
         
+        if (m_interiorsEnabled)
+        {
+            m_pInteriorsEntitiesPinsModule = Eegeo_NEW(InteriorsEntitiesPins::SdkModel::InteriorsEntitiesPinsModule(m_pWorld->GetPlatformAbstractionModule(),
+                                                                                                                m_pWorld->GetRenderingModule(),
+                                                                                                                m_pWorld->GetMapModule(),
+                                                                                                                m_screenProperties));
+                                                                                                            
+        }
+        
         m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                      interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                      interiorsPresentationModule.GetInteriorTransitionModel(),
@@ -605,7 +614,8 @@ namespace ExampleApp
                                                                                                      m_messageBus,
                                                                                                      m_metricsService,
                                                                                                      initialExperienceModel,
-                                                                                                     interiorsAffectedByFlattening);
+                                                                                                     interiorsAffectedByFlattening,
+                                                                                                     m_pInteriorsEntitiesPinsModule->GetInteriorsEntitiesPinsController());
         
         m_pMyPinCreationModule = Eegeo_NEW(ExampleApp::MyPinCreation::SdkModel::MyPinCreationModule)(m_pMyPinsModule->GetMyPinsService(),
                                                                                                      m_identityProvider,
@@ -670,15 +680,6 @@ namespace ExampleApp
         
         m_pTwitterFeedModule = Eegeo_NEW(Social::TwitterFeed::TwitterFeedModule)(m_applicationConfiguration.TwitterAuthCode(),
                                                                                  World().GetPlatformAbstractionModule().GetWebLoadRequestFactory());
-        
-        if (m_interiorsEnabled)
-        {
-            m_pInteriorsEntitiesPinsModule = Eegeo_NEW(InteriorsEntitiesPins::SdkModel::InteriorsEntitiesPinsModule(m_pWorld->GetPlatformAbstractionModule(),
-                                                                                                                m_pWorld->GetRenderingModule(),
-                                                                                                                m_pWorld->GetMapModule(),
-                                                                                                                m_screenProperties));
-                                                                                                            
-        }
         
         std::vector<ScreenControl::View::IScreenControlViewModel*> reactors(GetReactorControls());
         std::vector<ExampleApp::OpenableControl::View::IOpenableControlViewModel*> openables(GetOpenableControls());
@@ -1322,6 +1323,8 @@ namespace ExampleApp
         {
             return;
         }
+
+        m_pInteriorsEntitiesPinsModule->GetInteriorsEntitiesPinsController().Event_TouchTap(data);
         
         m_pCurrentTouchController->Event_TouchTap(data);
     }

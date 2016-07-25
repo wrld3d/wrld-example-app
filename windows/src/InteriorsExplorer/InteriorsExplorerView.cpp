@@ -27,6 +27,7 @@ namespace ExampleApp
                 mSetTouchEnabled.SetupMethod(m_uiViewClass, m_uiView, "SetTouchEnabled");
                 mSetFloorPanelEnabled.SetupMethod(m_uiViewClass, m_uiView, "SetFloorPanelEnabled");
                 mDestroy.SetupMethod(m_uiViewClass, m_uiView, "Destroy");
+                mPlaySliderAnim.SetupMethod(m_uiViewClass, m_uiView, "PlaySliderShakeAnim");
             }
 
             void InteriorsExplorerView::UpdateFloors(const std::vector<std::string>& floorShortNames, int currentlySelectedFloorIndex)
@@ -124,6 +125,11 @@ namespace ExampleApp
             void InteriorsExplorerView::RemoveFloorSelectionDraggedCallback(Eegeo::Helpers::ICallback1<float>& callback)
             {
                 m_floorSelectionDraggedCallbacks.RemoveCallback(callback);
+            }
+
+            void InteriorsExplorerView::PlaySliderAnim()
+            {
+                mPlaySliderAnim();
             }
 
 

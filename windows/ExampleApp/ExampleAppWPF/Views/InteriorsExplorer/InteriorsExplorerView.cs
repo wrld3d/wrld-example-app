@@ -76,7 +76,7 @@ namespace ExampleAppWPF
             Hide();
         }
 
-        void ShakeSliderButton()
+        void PlaySliderShakeAnim()
         {
             var position = m_floorSlider.RenderTransform.Transform(new Point());
             var offset = m_floorSlider.ActualWidth / 3.0;
