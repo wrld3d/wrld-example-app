@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Windows.Navigation;
 using System.Windows.Threading;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ExampleAppWPF
 {
@@ -34,7 +35,8 @@ namespace ExampleAppWPF
 
         private const float m_oversampleScale = 1.0f;
 
-        List<int> m_zeroIndexedTouchIds;
+        List<KeyValuePair<int, bool>> m_zeroIndexedTouchIds;
+
         private bool m_isFullscreen;
 
         public MainWindow()
@@ -54,7 +56,7 @@ namespace ExampleAppWPF
             m_isMouseInputActive = true;
             m_isTouchInputActive = true;
 
-            m_zeroIndexedTouchIds = new List<int>();
+            m_zeroIndexedTouchIds = new List<KeyValuePair<int, bool>>();
             m_isMouseInputActive = true;
             m_isFullscreen = false;
         }
@@ -132,7 +134,14 @@ namespace ExampleAppWPF
             TouchDown += OnTouchDown;
             TouchUp += OnTouchUp;
             TouchMove += OnTouchMove;
-            TouchLeave += (o, e) => { if (m_isTouchInputActive) m_mapImage.SetAllTouchInputEventsToPointerUp(CheckAndGetZeroIndexedId(e.TouchDevice.Id)); };
+            TouchLeave += (o, e) =>
+            {
+                if (m_isTouchInputActive)
+                {
+                    m_mapImage.SetAllTouchInputEventsToPointerUp(CheckAndGetZeroIndexedId(e.TouchDevice.Id));
+                    RemoveTouchId(e.TouchDevice.Id);
+                }
+            };
 
             Dispatcher.Hooks.DispatcherInactive += new EventHandler(DispatcherInactive);
 
@@ -146,14 +155,22 @@ namespace ExampleAppWPF
 
         private int CheckAndGetZeroIndexedId(int systemId)
         {
-            int result =  m_zeroIndexedTouchIds.IndexOf(systemId);
+            var result = m_zeroIndexedTouchIds.FindIndex((_t) => _t.Value != false && _t.Key == systemId);
 
-            if(result != -1)
+            if (result != -1)
             {
                 return result;
             }
 
-            m_zeroIndexedTouchIds.Add(systemId);
+            result = m_zeroIndexedTouchIds.FindIndex((_t) => _t.Value == false);
+
+            if (result != -1)
+            {
+                m_zeroIndexedTouchIds[result] = new KeyValuePair<int, bool>(systemId, true);
+                return result;
+            }
+
+            m_zeroIndexedTouchIds.Add(new KeyValuePair<int, bool>(systemId, true));
 
             return m_zeroIndexedTouchIds.Count - 1;
         }
@@ -172,12 +189,22 @@ namespace ExampleAppWPF
             {
                 m_mapImage.HandleTouchUpEvent((float)e.TouchDevice.GetTouchPoint(this).Position.X, (float)e.TouchDevice.GetTouchPoint(this).Position.Y, 0.0f, CheckAndGetZeroIndexedId(e.TouchDevice.Id));
             }
+
+            RemoveTouchId(e.TouchDevice.Id);
+        }
+
+        void RemoveTouchId(int systemId)
+        {
+            var index = CheckAndGetZeroIndexedId(systemId);
+
+            m_zeroIndexedTouchIds[index] = new KeyValuePair<int, bool>(systemId, false);
         }
 
         private void OnTouchDown(object sender, TouchEventArgs e)
         {
             if (m_isTouchInputActive)
             {
+                
                 m_mapImage.HandleTouchDownEvent((float)e.TouchDevice.GetTouchPoint(this).Position.X, (float)e.TouchDevice.GetTouchPoint(this).Position.Y, 0.0f, CheckAndGetZeroIndexedId(e.TouchDevice.Id));
             }
         }
