@@ -66,7 +66,7 @@ namespace ExampleApp
                 
                 m_pFloorDraggedObserver = Eegeo_NEW(InteriorsExplorerFloorDraggedObserver)(*m_pModel, m_pInteriorsCameraController->GetTouchController());
 
-                m_pUINotificationService = Eegeo_NEW(InteriorsUINotificationService)(interiorsEntitiesPinsController);
+                m_pUINotificationService = Eegeo_NEW(InteriorsUINotificationService)(messageBus, interiorsEntitiesPinsController);
             }
             
             InteriorsExplorerModule::~InteriorsExplorerModule()

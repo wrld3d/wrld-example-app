@@ -2,6 +2,7 @@
 
 #include "InteriorsUINotificationService.h"
 #include "InteriorsEntitiesPinsController.h"
+#include "InteriorsExplorerUINotifyMessage.h"
 
 namespace ExampleApp
 {
@@ -11,10 +12,12 @@ namespace ExampleApp
         {
             const int NumNotifiableIcons = 3;
 
-            InteriorsUINotificationService::InteriorsUINotificationService(InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsPinsController)
+            InteriorsUINotificationService::InteriorsUINotificationService(ExampleAppMessaging::TMessageBus& messageBus,
+                                                                           InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsPinsController)
                 : m_interiorsPinsController(interiorsPinsController)
                 , m_interiorsPinSelectedCallback(this, &InteriorsUINotificationService::OnInteriorPinSelected)
                 , m_notifiableIcons(NumNotifiableIcons)
+                , m_messageBus(messageBus)
             {
                 m_interiorsPinsController.RegisterInteriorsPinSelected(m_interiorsPinSelectedCallback);
 
@@ -36,6 +39,7 @@ namespace ExampleApp
                 {
                     if (RequiresUINotification((*i)->GetCategoryId()))
                     {
+                        m_messageBus.Publish(InteriorsExplorer::InteriorsExplorerUINotifyMessage());
                     }
                 }
             }

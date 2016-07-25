@@ -4,6 +4,7 @@
 
 #include "Types.h"
 #include "IInteriorsEntitiesPinsController.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -15,7 +16,7 @@ namespace ExampleApp
             {
             public:
                 
-                InteriorsUINotificationService(InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsPinsController);
+                InteriorsUINotificationService(ExampleAppMessaging::TMessageBus& messageBus, InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsPinsController);
                 
                 ~InteriorsUINotificationService();
                 
@@ -27,6 +28,8 @@ namespace ExampleApp
 
                 std::vector<int> m_notifiableIcons;
                 bool RequiresUINotification(int iconCategory);
+
+                ExampleAppMessaging::TMessageBus& m_messageBus;
             };
         }
     }

@@ -30,10 +30,12 @@ namespace ExampleApp
             , m_draggingFloorSelectionCallback(this, &InteriorsExplorerController::OnFloorSelectionDragged)
             , m_viewStateCallback(this, &InteriorsExplorerController::OnViewStateChangeScreenControl)
             , m_appModeChangedCallback(this, &InteriorsExplorerController::OnAppModeChanged)
+            , m_interiorsUINotificationCallback(this, &InteriorsExplorerController::OnInteriorsUINotificationRequired)
             {
                 m_messageBus.SubscribeUi(m_stateChangedCallback);
                 m_messageBus.SubscribeUi(m_floorSelectedCallback);
                 m_messageBus.SubscribeUi(m_appModeChangedCallback);
+                m_messageBus.SubscribeUi(m_interiorsUINotificationCallback);
                 
                 m_viewModel.InsertOnScreenStateChangedCallback(m_viewStateCallback);
                 
@@ -50,6 +52,7 @@ namespace ExampleApp
                 
                 m_viewModel.RemoveOnScreenStateChangedCallback(m_viewStateCallback);
                 
+                m_messageBus.UnsubscribeUi(m_interiorsUINotificationCallback);
                 m_messageBus.UnsubscribeUi(m_stateChangedCallback);
                 m_messageBus.UnsubscribeUi(m_floorSelectedCallback);
                 m_messageBus.UnsubscribeUi(m_appModeChangedCallback);
@@ -106,6 +109,11 @@ namespace ExampleApp
             void InteriorsExplorerController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
             {
                 m_appMode = message.GetAppMode();
+            }
+
+            void InteriorsExplorerController::OnInteriorsUINotificationRequired(const InteriorsExplorerUINotifyMessage & message)
+            {
+                m_view.PlaySliderAnim();
             }
         }
     }
