@@ -70,7 +70,7 @@ public class MenuExpandableListView extends ExpandableListView {
 		{
 			if (isGroupExpanded(i))
 			{
-				collapseGroup(i);
+				delayCollapseGroup(i);
 			}
 		}
 	}
