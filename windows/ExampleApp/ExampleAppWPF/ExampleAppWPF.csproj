@@ -130,6 +130,7 @@
     <Compile Include="Views\Menu\MenuView.cs" />
     <Compile Include="Views\SettingsMenu\SettingsMenuView.cs" />
     <Compile Include="Views\SearchMenu\SearchMenuView.cs" />
+    <Compile Include="WindowInteractionTouchHandler.cs" />
     <Page Include="CheckBoxStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

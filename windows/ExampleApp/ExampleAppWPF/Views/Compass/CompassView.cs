@@ -23,6 +23,7 @@ namespace ExampleAppWPF
 
         bool m_isActive = false;
 
+        private WindowInteractionTouchHandler m_touchHandler;
         static CompassView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(CompassView), new FrameworkPropertyMetadata(typeof(CompassView)));
@@ -39,6 +40,7 @@ namespace ExampleAppWPF
             mainWindow.SizeChanged += PerformLayout;
             mainWindow.MainGrid.Children.Add(this);
             ShowGpsDisabledView();
+            m_touchHandler = new WindowInteractionTouchHandler(this);
         }
 
         public override void OnApplyTemplate()

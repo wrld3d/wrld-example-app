@@ -14,6 +14,7 @@ namespace ExampleAppWPF
         private double m_yPosInactive;
         private IntPtr m_nativeCallerPointer;
         private double m_stateChangeAnimationTimeMilliseconds = 200;
+        private WindowInteractionTouchHandler m_touchHandler;
 
         bool m_isActive = false;
 
@@ -31,6 +32,8 @@ namespace ExampleAppWPF
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
             mainWindow.SizeChanged += PerformLayout;
             mainWindow.MainGrid.Children.Add(this);
+
+            m_touchHandler = new WindowInteractionTouchHandler(this);
         }
 
         private void PerformLayout(object sender, RoutedEventArgs e)

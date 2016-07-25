@@ -58,6 +58,7 @@ namespace ExampleAppWPF
 
         protected abstract void RefreshListData(List<string> groups, List<bool> groupsExpandable, Dictionary<string, List<string>> groupToChildrenMap);
 
+        private WindowInteractionTouchHandler m_touchHandler;
         static MenuView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MenuView), new FrameworkPropertyMetadata(typeof(MenuView)));
@@ -72,6 +73,7 @@ namespace ExampleAppWPF
             m_openState = -1.0f;
             m_isAnimating = false;
             m_isOffScreen = true;
+            m_touchHandler = new WindowInteractionTouchHandler(this);
         }
 
         protected void PerformLayout(object sender, SizeChangedEventArgs e)

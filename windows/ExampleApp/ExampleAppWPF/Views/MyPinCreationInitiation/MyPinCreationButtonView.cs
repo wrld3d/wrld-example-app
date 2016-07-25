@@ -45,6 +45,8 @@ namespace ExampleAppWPF
 
         bool m_isActive = false;
 
+        private WindowInteractionTouchHandler m_touchHandler;
+
         static MyPinCreationButtonView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MyPinCreationButtonView), new FrameworkPropertyMetadata(typeof(MyPinCreationButtonView)));
@@ -59,6 +61,7 @@ namespace ExampleAppWPF
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
             mainWindow.SizeChanged += PerformLayout;
             mainWindow.MainGrid.Children.Add(this);
+            m_touchHandler = new WindowInteractionTouchHandler(this);
         }
 
         private void MyPinCreationButtonView_Click(object sender, RoutedEventArgs e)

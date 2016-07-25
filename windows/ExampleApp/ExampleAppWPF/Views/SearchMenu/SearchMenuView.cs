@@ -48,6 +48,8 @@ namespace ExampleAppWPF
         private Storyboard m_searchArrowOpen;
         private Storyboard m_searchArrowClosed;
 
+        private WindowInteractionTouchHandler m_touchHandler;
+
         static SearchMenuView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SearchMenuView), new FrameworkPropertyMetadata(typeof(SearchMenuView)));
@@ -64,6 +66,8 @@ namespace ExampleAppWPF
             m_searchInFlight = false;
             m_hasResults = false;
             m_hasCategorySearch = false;
+            m_touchHandler = new WindowInteractionTouchHandler(this);
+
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
