@@ -16,6 +16,7 @@
     * [Speeding up build times](#speeding-up-build-times)
 * [Troubleshooting](#troubleshooting)
     * [Eclipse hangs adding native support](#eclipse-hangs-adding-native-support)
+    * [Eclipse hangs during first build](#eclipse-hangs-during-first-build)
 
 Before you begin, ensure you have completed the initial steps as described in the [root of the repository](https://github.com/eegeo/eegeo-example-app).
 
@@ -112,3 +113,21 @@ Some developers have experienced a deadlock when adding native support to the pr
 - Delete the contents of [Android.mk](/android/jni/Android.mk#L4).
 - Add native support to the project
 - Revert the change to Android.mk
+ 
+### Eclipse hangs during first build
+
+Some developers have experienced an issue where the project hangs while building for the first time, with the message "Invoking scanner config builder on project". The following steps mitigate this issue:
+
+#### Workaround A (try this first):
+- Cancel the build
+- Build the project
+
+#### Workaround B:
+- Right-click on the project in Eclipse's Project Explorer
+- Select Properties
+- Select the "Builders" option on the left hand side of the properties dialog
+- Untick "Scanner Configuration Builder" 
+- Press OK on the subsequent warning dialog
+- Build the project
+
+You can re-enable the functionality after the initial build has completed.
