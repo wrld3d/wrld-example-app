@@ -1,6 +1,10 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
+#include "CallbackCollection.h"
+#include "AppInterface.h"
+#include <vector>
+#include "Pin.h"
 
 namespace ExampleApp
 {

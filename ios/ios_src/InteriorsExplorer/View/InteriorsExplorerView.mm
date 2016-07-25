@@ -325,7 +325,7 @@ namespace
     self.pFloorPanel.userInteractionEnabled = self.pFloorChangeButton.userInteractionEnabled = m_floorSelectionEnabled;
 }
 
-- (void) shakeSliderButton
+- (void) playSliderShakeAnim
 {
     CGFloat xPos = [self GetXPositionForFloorPanelAt:1.0];
     

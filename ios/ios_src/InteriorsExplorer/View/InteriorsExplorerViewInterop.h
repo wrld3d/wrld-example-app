@@ -47,6 +47,8 @@ namespace ExampleApp
                 
                 void SetTouchEnabled(bool enabled);
                 
+                void PlaySliderAnim();
+                
             private:
                 
                 Eegeo::Helpers::CallbackCollection1<int> m_selectedFloorCallbacks;

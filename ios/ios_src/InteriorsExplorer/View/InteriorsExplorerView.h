@@ -64,7 +64,7 @@
 
 - (void) refreshFloorViews;
 
-- (void) shakeSliderButton;
+- (void) playSliderShakeAnim;
 
 // NOTE: Replace these once integrated with search ux colour scheme.
 - (UIColor*) textColorNormal;
