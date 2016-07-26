@@ -107,8 +107,8 @@ public class MeetingRoomSearchResultPoiView implements View.OnClickListener
 		m_poiImage.setVisibility(View.GONE);
 		m_poiImageProgressBar.setVisibility(View.GONE);
 
-		if (!imageUrl.equals("")) 
-		{
+		if (!imageUrl.equals("")) {
+			m_poiImage.setVisibility(View.VISIBLE);
 			m_poiImageProgressBar.setVisibility(View.VISIBLE);
 		}
 
