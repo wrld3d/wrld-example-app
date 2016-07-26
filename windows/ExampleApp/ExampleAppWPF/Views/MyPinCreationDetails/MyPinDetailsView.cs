@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.IO;
+using System.Windows.Input;
 
 namespace ExampleAppWPF
 {
@@ -24,6 +25,7 @@ namespace ExampleAppWPF
         private Image m_imageView = null;
         private Button m_closeButton = null;
         private Button m_removeButton = null;
+        private ScrollViewer m_PinDetailsView;
 
         private float m_imageWidth;
 
@@ -69,6 +71,26 @@ namespace ExampleAppWPF
 
             m_removeButton.Click += OnDeleteClicked;
             m_closeButton.Click += OnCloseClicked;
+
+            m_PinDetailsView = (ScrollViewer)GetTemplateChild("PinDetailsView");
+            m_PinDetailsView.TouchDown += OnPinDetailsTouchDown;
+            m_PinDetailsView.TouchUp += OnPinDetailsTouchUp;
+            m_PinDetailsView.ManipulationBoundaryFeedback += OnPinDetailsBoundaryFeedback;
+        }
+
+        private void OnPinDetailsBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void OnPinDetailsTouchUp(object sender, TouchEventArgs e)
+        {
+            m_PinDetailsView.ReleaseTouchCapture(e.TouchDevice);
+        }
+
+        private void OnPinDetailsTouchDown(object sender, TouchEventArgs e)
+        {
+            m_PinDetailsView.CaptureTouch(e.TouchDevice);
         }
 
         private void OnDeleteClicked(object sender, RoutedEventArgs e)
