@@ -62,6 +62,7 @@ namespace ExampleAppWPF
             m_selectFromGalleryButton.Click -= OnSelectFromGalleryClick;
             m_submitButton.Click -= OnSubmitClick;
             m_tosLink.Click -= OnHyperlinkClick;
+            m_description.ManipulationBoundaryFeedback -= OnDescriptionViewBoundaryFeedback;
 
             m_currentWindow.MainGrid.Children.Remove(this);
         }
@@ -84,7 +85,7 @@ namespace ExampleAppWPF
             m_tosLink = CheckAndGetProperty("TermsLink") as System.Windows.Documents.Hyperlink;
 
             m_prevSource = m_poiImage.Source;
-            
+
             m_closeButton = CheckAndGetProperty("CloseButton") as Button;
             m_closeButton.Click += OnCloseClick;
             m_selectFromGalleryButton.Click += OnSelectFromGalleryClick;
