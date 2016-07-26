@@ -4,7 +4,7 @@
 
 #include <string>
 
-#include "rapidjson/document.h"
+#include "document.h"
 
 namespace ExampleApp
 {

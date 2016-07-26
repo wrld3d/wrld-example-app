@@ -2,8 +2,8 @@
 
 #include "JsonPrintHelper.h"
 
-#include "rapidjson/stringbuffer.h"
-#include "rapidjson/prettywriter.h"
+#include "stringbuffer.h"
+#include "prettywriter.h"
 
 namespace ExampleApp
 {
