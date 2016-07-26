@@ -101,17 +101,19 @@
 
 - (void) didFinishLoadingManager
 {
-    //[locationManager startUpdatingLocation];
+    [locationManager startUpdatingLocation];
     
     //#Mock Location Tesing Uncomment below line and comment above line
-    [self startOfSiteTesting];
+//    [self startOfSiteTesting];
 }
 - (void)didUpdateLocation:(SLCoordinate3D *)location withUncertainty:(double)radius andStatus:(SLLocationStatus)locationStatus
 {
     
-    Eegeo::Resources::Interiors::InteriorId builingID(std::string("westport_house"));
+    
+//    Eegeo::Resources::Interiors::InteriorId builingID(std::string("westport_house"));
     // TJ, TODO: the floor index needs a layer of indirection.
     m_pDeviceModel->UpdateLocation(0, 0, location.latitude, location.longitude, m_pBuildingID, 2);//location.floorNr);
+    
 
 }
 - (void) didUpdateHeading:(double)heading withStatus:(BOOL)status
