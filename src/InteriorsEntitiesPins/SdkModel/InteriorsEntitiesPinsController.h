@@ -11,6 +11,7 @@
 #include "InteriorsEntitiesRepository.h"
 #include "Terrain.h"
 #include "CallbackCollection.h"
+#include "InteriorsEntityMetadata.h"
 
 #include <map>
 #include <string>
@@ -58,6 +59,7 @@ namespace ExampleApp
                 void RemovePinForEntity(const Eegeo::Resources::Interiors::Entities::InteriorsEntityModel& model);
                 void RemoveAllPins();
                 void UpdateScaleForPins(float t);
+                int FindPinIconIndexForEntity(const Eegeo::Resources::Interiors::Entities::InteriorsEntityMetadata& interiorsEntityMetadata) const;
                 
                 Eegeo::Resources::Interiors::Entities::InteriorsEntitiesRepository& m_interiorsEntitiesRepository;
                 Eegeo::Pins::PinController& m_pinController;

@@ -16,6 +16,7 @@
 #include "InteriorInteractionModel.h"
 #include "InteriorsEntitiesRepository.h"
 #include "InteriorTransitionModel.h"
+#include "StringHelpers.h"
 
 namespace ExampleApp
 {
@@ -49,13 +50,13 @@ namespace ExampleApp
                 m_interiorInteractionModel.RegisterModelChangedCallback(m_interiorModelChangedCallback);
                 m_interiorInteractionModel.RegisterInteractionStateChangedCallback(m_interiorInteractionStateChangedCallback);
                 
-                m_labelNameToIconIndex["Restroom"] = InteriorsPinIconType::Bathroom;
-                m_labelNameToIconIndex["Men's Bathroom"] = InteriorsPinIconType::Bathroom;
-                m_labelNameToIconIndex["Women's Bathroom"] = InteriorsPinIconType::Bathroom;
-                m_labelNameToIconIndex["Bathroom"] = InteriorsPinIconType::Bathroom;
-                m_labelNameToIconIndex["Elevator"] = InteriorsPinIconType::Elevator;
-                m_labelNameToIconIndex["Escalator"] = InteriorsPinIconType::Escalator;
-                m_labelNameToIconIndex["Stairs"] = InteriorsPinIconType::Stairs;
+                m_labelNameToIconIndex["restroom"] = InteriorsPinIconType::Bathroom;
+                m_labelNameToIconIndex["men's bathroom"] = InteriorsPinIconType::Bathroom;
+                m_labelNameToIconIndex["women's bathroom"] = InteriorsPinIconType::Bathroom;
+                m_labelNameToIconIndex["bathroom"] = InteriorsPinIconType::Bathroom;
+                m_labelNameToIconIndex["elevator"] = InteriorsPinIconType::Elevator;
+                m_labelNameToIconIndex["escalator"] = InteriorsPinIconType::Escalator;
+                m_labelNameToIconIndex["stairs"] = InteriorsPinIconType::Stairs;
                 
                 for (std::map<std::string, int>::const_iterator it = m_labelNameToIconIndex.begin(); it != m_labelNameToIconIndex.end(); ++it)
                 {
@@ -125,7 +126,8 @@ namespace ExampleApp
                         continue;
                     }
                     
-                    if (m_labelNameToIconIndex.find(pMetadata->name) != m_labelNameToIconIndex.end())
+                    const int iconIndex = FindPinIconIndexForEntity(*pMetadata);
+                    if (iconIndex >= 0)
                     {
                         AddPinForEntity(**it, interiorModel);
                     }
@@ -138,7 +140,6 @@ namespace ExampleApp
                 
                 const Eegeo::Resources::Interiors::Entities::InteriorsEntityMetadata *pMetadata = interiorModel.GetMetadataForEntityFromCategory("labels", model.GetIdentifier());
                 
-                Eegeo_ASSERT(m_labelNameToIconIndex.find(pMetadata->name) != m_labelNameToIconIndex.end(), "Wasn't expecting to generate a pin for this label");
                 Eegeo_ASSERT(pMetadata != NULL, "No metadata to create entity pin");
                 
                 Eegeo::Space::LatLong pinLocation = Eegeo::Space::LatLong::FromDegrees(pMetadata->latitudeDegrees, pMetadata->longitudeDegrees);
@@ -148,7 +149,8 @@ namespace ExampleApp
                 
                 const float height = static_cast<float>(pMetadata->altitude - terrainHeight + wallHeight);
                 
-                int pinIconIndex = m_labelNameToIconIndex.at(pMetadata->name);
+                const int pinIconIndex = FindPinIconIndexForEntity(*pMetadata);
+                Eegeo_ASSERT(pinIconIndex >= 0, "Wasn't expecting to generate a pin for this label");
                 
                 if (m_floorToScaleMap.find(pMetadata->floorNumber) == m_floorToScaleMap.end())
                 {
@@ -292,6 +294,22 @@ namespace ExampleApp
                 {
                     RemoveAllPins();
                     m_floorToScaleMap.clear();
+                }
+            }
+            
+            int InteriorsEntitiesPinsController::FindPinIconIndexForEntity(const Eegeo::Resources::Interiors::Entities::InteriorsEntityMetadata& interiorsEntityMetadata) const
+            {
+                const std::string& nameLowerCase = Eegeo::Helpers::ToLower(interiorsEntityMetadata.name);
+                
+                std::map<std::string, int>::const_iterator iter = m_labelNameToIconIndex.find(nameLowerCase);
+                
+                if (iter == m_labelNameToIconIndex.end())
+                {
+                    return -1;
+                }
+                else
+                {
+                    return iter->second;
                 }
             }
         }
