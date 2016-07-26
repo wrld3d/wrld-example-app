@@ -76,6 +76,32 @@ namespace ExampleAppWPF
             Hide();
         }
 
+        public void PlaySliderShakeAnim()
+        {
+            var position = m_floorSlider.RenderTransform.Transform(new Point());
+            var offset = m_floorSlider.ActualWidth / 3.0;
+
+            var anim = new DoubleAnimation();
+            anim.From = position.X - offset;
+            anim.To = position.X;
+            anim.EasingFunction = new ElasticEase()
+            {
+                EasingMode = EasingMode.EaseOut,
+                Springiness = 2
+            };
+            anim.Duration = new Duration(TimeSpan.FromMilliseconds(1100));
+
+            var transform = new TranslateTransform(position.X - offset, position.Y);
+
+            m_floorSlider.RenderTransform = transform;
+            transform.BeginAnimation(TranslateTransform.XProperty, anim);
+        }
+
+        private void OnAnimCompleted(object sender, EventArgs e)
+        {
+            GetThumb(m_floorSlider).RenderTransform = new ScaleTransform(1.0, 1.0);
+        }
+
         private static Thumb GetThumb(Slider slider)
         {
             var track = slider.Template.FindName("PART_Track", slider) as Track;
@@ -168,13 +194,19 @@ namespace ExampleAppWPF
 
             
             var floorPanelAnimation = new DoubleAnimation();
+            floorPanelAnimation.BeginTime = TimeSpan.FromMilliseconds(m_stateChangeAnimationTimeMilliseconds * 5);
             floorPanelAnimation.From = currentPosition.X;
             floorPanelAnimation.To = CalcPanelX(FloorSelectionEnabled ? t : 0.0f);
             floorPanelAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(m_stateChangeAnimationTimeMilliseconds));
 
-            var transform = new TranslateTransform(currentPosition.X, currentPosition.Y);
-            m_floorPanel.RenderTransform = transform;
-            transform.BeginAnimation(TranslateTransform.XProperty, floorPanelAnimation);
+            var floorPanelTransform = new TranslateTransform(currentPosition.X, currentPosition.Y);
+            m_floorPanel.RenderTransform = floorPanelTransform;
+            floorPanelTransform.BeginAnimation(TranslateTransform.XProperty, floorPanelAnimation);
+
+            var dismissButtonTransform = new TranslateTransform(CalcPanelX(1.0 - t), 0);
+            m_dismissButton.RenderTransform = dismissButtonTransform;
+            floorPanelAnimation.To = t;
+            dismissButtonTransform.BeginAnimation(TranslateTransform.XProperty, floorPanelAnimation);
 
             var detailsPanelAnimation = new DoubleAnimation();
             detailsPanelAnimation.From = m_detailsPanel.Opacity;

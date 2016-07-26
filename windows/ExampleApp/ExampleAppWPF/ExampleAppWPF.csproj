@@ -72,6 +72,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
@@ -303,7 +304,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\WinBuild\ExampleApp.vcxproj">
+    <ProjectReference Include="..\..\build\ExampleApp.vcxproj">
       <Project>{6483906b-8db8-4f77-8da7-68865f7a9135}</Project>
       <Name>ExampleApp</Name>
     </ProjectReference>
