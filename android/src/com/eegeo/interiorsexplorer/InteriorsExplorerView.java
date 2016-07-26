@@ -35,6 +35,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     private Boolean m_draggingFloorButton;
 
     private final long m_stateChangeAnimationTimeMilliseconds = 200;
+    private final long m_initialJumpThersholdPx = 5;
     
     private float m_topYPosActive;
     private float m_topYPosInactive;
@@ -46,6 +47,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     
     private InteriorsFloorListAdapter m_floorListAdapter = null;
     private float m_previousYCoordinate;
+    private boolean m_isButtonInitialJumpRemoved = false;
     
     private boolean m_canProcessButtons;
     
@@ -239,12 +241,19 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
 		m_floorButton.getBackground().setState(new int[] {android.R.attr.state_pressed});
 		m_previousYCoordinate = initialYCoordinate;
 		m_draggingFloorButton = true;
+		m_isButtonInitialJumpRemoved = false;
     }
     
     private void updateDraggingButton(float yCoordinate)
     {
     	float y = yCoordinate;
-		float newY = m_floorButton.getY() + (y - m_previousYCoordinate);
+		
+    	if(!m_isButtonInitialJumpRemoved) 
+    	{
+    		detectAndRemoveInitialJump(y);
+    	}
+    	
+    	float newY = m_floorButton.getY() + (y - m_previousYCoordinate);
 		newY = Math.max(0.0f, Math.min(getListViewHeight(m_floorList)-ButtonSize, newY));
 		m_floorButton.setY(newY);
 		m_previousYCoordinate = y;
@@ -262,6 +271,21 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
 		int selectedFloor = Math.round(dragParameter * floorCount);
 		moveButtonToFloorIndex(selectedFloor, true);
 		InteriorsExplorerViewJniMethods.OnFloorSelected(m_nativeCallerPointer, selectedFloor);
+    }
+    
+    /**
+     * This function will remove the starting jump on slider if detected
+     * @param yCoordinate
+     */
+    private void detectAndRemoveInitialJump(float yCoordinate)
+    {
+    	float y = yCoordinate;
+    	float deltaY = y - m_previousYCoordinate; 
+    	if(Math.abs(deltaY) > m_initialJumpThersholdPx)
+    	{
+    		m_previousYCoordinate += deltaY;
+    		m_isButtonInitialJumpRemoved = true;
+    	}
     }
 
     @Override
