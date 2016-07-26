@@ -6,7 +6,7 @@
 
 namespace ExampleApp
 {
-    static const std::string ApplicationConfigurationPath = "ApplicationConfigs/project_swallow_config.json";
+    static const std::string ApplicationConfigurationPath = "ApplicationConfigs/encrypted_config.json";
 
     static const std::string ApplicationConfigurationSecret = "APP_CONFIG_SECRET_HERE";
 

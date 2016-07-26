@@ -94,6 +94,11 @@ namespace ExampleApp
             {
                 [m_pView setTouchEnabled: enabled];
             }
+            
+            void InteriorsExplorerViewInterop::PlaySliderAnim()
+            {
+                [m_pView playSliderShakeAnim];
+            }
         }
     }
 }

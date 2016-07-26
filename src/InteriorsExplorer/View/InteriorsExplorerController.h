@@ -11,6 +11,7 @@
 #include "InteriorsExplorerFloorSelectedMessage.h"
 #include "IAppModeModel.h" // FM: Included for definition of AppMode, may want to extract AppMode to separate .h
 #include <sstream>
+#include "InteriorsExplorerUINotifyMessage.h"
 
 namespace ExampleApp
 {
@@ -37,6 +38,7 @@ namespace ExampleApp
                 void OnStateChanged(const InteriorsExplorerStateChangedMessage& message);
                 void OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel &viewModel, float &state);
                 void OnAppModeChanged(const AppModes::AppModeChangedMessage& message);
+                void OnInteriorsUINotificationRequired(const InteriorsExplorerUINotifyMessage& message);
                 
                 IInteriorsExplorerView& m_view;
                 InteriorsExplorerViewModel& m_viewModel;
@@ -48,8 +50,9 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, const InteriorsExplorerFloorSelectedMessage&> m_floorSelectedCallback;
                 Eegeo::Helpers::TCallback2<InteriorsExplorerController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
+                Eegeo::Helpers::TCallback1<InteriorsExplorerController, const InteriorsExplorerUINotifyMessage&> m_interiorsUINotificationCallback;
                 
-		AppModes::SdkModel::AppMode m_appMode;
+                AppModes::SdkModel::AppMode m_appMode;
                 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
             };

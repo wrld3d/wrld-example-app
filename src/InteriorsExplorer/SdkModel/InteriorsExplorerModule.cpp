@@ -33,7 +33,8 @@ namespace ExampleApp
                                                              ExampleAppMessaging::TMessageBus& messageBus,
                                                              Metrics::IMetricsService& metricsService,
                                                              const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel,
-                                                             const bool interiorsAffectedByFlattening)
+                                                             const bool interiorsAffectedByFlattening,
+                                                             InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsEntitiesPinsController)
             {
                 m_pUserInteractionModel = Eegeo_NEW(InteriorExplorerUserInteractionModel)();
                 
@@ -64,10 +65,13 @@ namespace ExampleApp
                 m_pViewModel = Eegeo_NEW(View::InteriorsExplorerViewModel)(false, identityProvider.GetNextIdentity(), messageBus);
                 
                 m_pFloorDraggedObserver = Eegeo_NEW(InteriorsExplorerFloorDraggedObserver)(*m_pModel, m_pInteriorsCameraController->GetTouchController());
+
+                m_pUINotificationService = Eegeo_NEW(InteriorsUINotificationService)(messageBus, interiorsEntitiesPinsController);
             }
             
             InteriorsExplorerModule::~InteriorsExplorerModule()
             {
+                Eegeo_DELETE m_pUINotificationService;
                 Eegeo_DELETE m_pFloorDraggedObserver;
                 Eegeo_DELETE m_pViewModel;
                 Eegeo_DELETE m_pModel;
@@ -118,6 +122,11 @@ namespace ExampleApp
             InteriorExplorerUserInteractionModel& InteriorsExplorerModule::GetInteriorsExplorerUserInteractionModel() const
             {
                 return *m_pUserInteractionModel;
+            }
+
+            InteriorsUINotificationService & InteriorsExplorerModule::GetInteriorsUINotificationService() const
+            {
+                return *m_pUINotificationService;
             }
         }
     }

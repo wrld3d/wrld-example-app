@@ -92,7 +92,7 @@
     [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
     
     self.alpha = 0.5f;
-    self.pFloorNameLabel.alpha = 0.0f;
+    self.pFloorNameLabel.alpha = 0.5f;
     
     [UIView commitAnimations];
 }
