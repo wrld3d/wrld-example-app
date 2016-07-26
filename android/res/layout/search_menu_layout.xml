@@ -11,7 +11,7 @@
     
     <LinearLayout
         android:id="@+id/search_menu_list_container"
-        android:layout_width="332dp"
+        android:layout_width="@dimen/search_results_bar_width"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         
