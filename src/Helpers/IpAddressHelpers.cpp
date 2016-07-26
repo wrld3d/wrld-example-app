@@ -4,11 +4,13 @@
 
 extern "C"
 {
-#include <arpa/inet.h>
+#ifndef EEGEO_WIN
+#include <arpa/inet.h>  
 #include <net/if.h>
+#endif
 // If using this on android it need and implementation available in GitHub with name android-ifaddrs
 // android-ifaddrs include must come after net/if.h
-#ifndef ANDROID
+#if !defined(EEGEO_DROID) && !defined(EEGEO_WIN)
 #include <ifaddrs.h>
 #endif
     
@@ -35,7 +37,7 @@ namespace ExampleApp
             {
                 
                 std::vector<InterfaceInfo> interfaceInfos;
-#ifndef ANDROID
+#if !defined(EEGEO_DROID) && !defined (EEGEO_WIN)
                 struct ifaddrs *interfaceList;
                 
                 if(!getifaddrs(&interfaceList))
