@@ -54,6 +54,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     private float m_previousYCoordinate;
     
     private boolean m_canProcessButtons;
+    private boolean m_isOnScreen = false;
     
     // TODO: Replace these with refs to UX iteration color scheme.
     private final int TextColorNormal = Color.parseColor("#1256B0");
@@ -146,6 +147,11 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     
     public void playShakeSliderAnim()
     {
+    	if(!m_isOnScreen)
+    	{
+    		return;
+    	}
+    	
     	final long offset = m_floorListContainer.getWidth() / 3;
     	
     	Animation moveLeft = new TranslateAnimation(0, -offset, 0, 0);
@@ -256,7 +262,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     private void updateDraggingButton(float yCoordinate)
     {
     	float y = yCoordinate;
-		float newY = m_floorButton.getY() + (y - m_previousYCoordinate);
+    	float newY = m_floorButton.getY() + (y - m_previousYCoordinate);
 		newY = Math.max(0.0f, Math.min(getListViewHeight(m_floorList)-ButtonSize, newY));
 		m_floorButton.setY(newY);
 		m_previousYCoordinate = y;
@@ -275,7 +281,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
 		moveButtonToFloorIndex(selectedFloor, true);
 		InteriorsExplorerViewJniMethods.OnFloorSelected(m_nativeCallerPointer, selectedFloor);
     }
-
+    
     @Override
     public void onClick(View view)
     {
@@ -292,14 +298,18 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
 
     public void animateToActive()
     {
+    	m_isOnScreen = true;
+    	
     	animateViewToY((int)m_topYPosActive);
-        animateViewToX((int)m_leftXPosActive, true);
+        animateViewToX((int)m_leftXPosActive, m_isOnScreen);
     }
 
     public void animateToInactive()
     {
+        m_isOnScreen = false;
+    	
         animateViewToY((int)m_topYPosInactive);
-        animateViewToX((int)m_leftXPosInactive, false);
+        animateViewToX((int)m_leftXPosInactive, m_isOnScreen);
     }
 
     protected void animateViewToY(final int yAsPx)
