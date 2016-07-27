@@ -85,6 +85,8 @@
 #include "IMenuReactionModel.h"
 #include "InteriorsNavigation.h"
 #include "IMenuIgnoredReactionModel.h"
+#include "DoubleTapIndoorInteraction.h"
+#include "IRayCaster.h"
 
 namespace ExampleApp
 {
@@ -167,7 +169,10 @@ namespace ExampleApp
         Tours::SdkModel::TourInstances::TwitterFeed::ITwitterFeedTourModule* m_pTwitterFeedTourModule;
         
         AppCamera::SdkModel::IAppCameraModule* m_pAppCameraModule;
-
+        ExampleApp::DoubleTapIndoorInteraction::SdkModel::IDoubleTapIndoorInteractionController* m_pDoubleTapIndoorInteractionController;
+        
+        Eegeo::Collision::IRayCaster* m_pRayCaster;
+        
         Menu::View::IMenuReactionModel& m_menuReaction;
         Menu::View::IMenuIgnoredReactionModel* m_pModalityIgnoredReactionModel;
         Menu::View::IMenuIgnoredReactionModel* m_pReactorIgnoredReactionModel;
