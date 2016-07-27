@@ -22,7 +22,8 @@ namespace ExampleAppWPF
         private double m_panelOffscreenOffsetX;
         private double m_stateChangeAnimationTimeMilliseconds = 200.0;
         private bool m_dragInProgress = false;
-        private string[] m_floorShortNames = new string[] { };
+        private bool m_animationInProgress = false;
+        private string[] m_floorShortNames = new string[] {};
 
         private const float DefaultOffscreenOffsetX = 100.0f;
 
@@ -78,6 +79,11 @@ namespace ExampleAppWPF
 
         public void PlaySliderShakeAnim()
         {
+            if(m_animationInProgress)
+            {
+                return;
+            }
+
             var position = m_floorSlider.RenderTransform.Transform(new Point());
             var offset = m_floorSlider.ActualWidth / 3.0;
 
@@ -90,16 +96,19 @@ namespace ExampleAppWPF
                 Springiness = 2
             };
             anim.Duration = new Duration(TimeSpan.FromMilliseconds(1100));
+            anim.Completed += OnAnimCompleted;
 
             var transform = new TranslateTransform(position.X - offset, position.Y);
 
             m_floorSlider.RenderTransform = transform;
             transform.BeginAnimation(TranslateTransform.XProperty, anim);
+
+            m_animationInProgress = true;
         }
 
         private void OnAnimCompleted(object sender, EventArgs e)
         {
-            GetThumb(m_floorSlider).RenderTransform = new ScaleTransform(1.0, 1.0);
+            m_animationInProgress = false;
         }
 
         private static Thumb GetThumb(Slider slider)
@@ -191,8 +200,6 @@ namespace ExampleAppWPF
             var storyboard = new Storyboard();
             var currentPosition = m_floorPanel.RenderTransform.Transform(new Point(0.0, 0.0));
 
-
-            
             var floorPanelAnimation = new DoubleAnimation();
             floorPanelAnimation.BeginTime = TimeSpan.FromMilliseconds(m_stateChangeAnimationTimeMilliseconds * 5);
             floorPanelAnimation.From = currentPosition.X;
