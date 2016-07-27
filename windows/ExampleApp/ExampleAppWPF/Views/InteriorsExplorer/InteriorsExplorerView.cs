@@ -143,6 +143,8 @@ namespace ExampleAppWPF
             m_floorSlider.Maximum = FloorCount - 1;
             m_floorSlider.Value = m_selectedFloorIndex;
             UpdateFloorSliderTagFromValue();
+
+            m_floorPanel.Visibility = FloorSelectionEnabled ? Visibility.Visible : Visibility.Hidden; ;
         }
         public void SetFloorName(string name)
         {
@@ -213,6 +215,8 @@ namespace ExampleAppWPF
             var dismissButtonPosition = m_dismissButton.RenderTransform.Transform(new Point());
             var dismissButtonTransform = new TranslateTransform(dismissButtonPosition.X, dismissButtonPosition.Y);
             m_dismissButton.RenderTransform = dismissButtonTransform;
+            floorPanelAnimation.From = dismissButtonPosition.X;
+            floorPanelAnimation.To = CalcPanelX(t);
             dismissButtonTransform.BeginAnimation(TranslateTransform.XProperty, floorPanelAnimation);
 
             var detailsPanelAnimation = new DoubleAnimation();
