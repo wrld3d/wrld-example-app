@@ -61,9 +61,10 @@ namespace ExampleApp
                 
                 void SwallowCategoryMenuOption::Select()
                 {
+                    m_menuViewModel.Close();
+
                     if(m_inInteriorMode && m_closeMenuInInterior)
                     {
-                        m_menuViewModel.Close();
                     }
                     
                     if (m_hasRadiusOverride)
