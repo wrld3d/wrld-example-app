@@ -77,7 +77,7 @@ public abstract class MenuAnimationHandler
 	
 	public boolean isOffScreen()
 	{
-		return getOnScreenState() < m_lowEndThreshold;
+		return getOnScreenState() <= m_lowEndThreshold;
 	}
 	
 	public boolean isClosedOnScreen()
@@ -88,5 +88,11 @@ public abstract class MenuAnimationHandler
 	public boolean isOpenOnScreen()
 	{
 		return getOpenOnScreenState() > m_highEndThreshold;
+	}
+	
+	public void cancelAnimation()
+	{
+		m_onScreenAnimatorSet.cancel();
+		m_openAnimatorSet.cancel();
 	}
 }
