@@ -42,7 +42,8 @@ namespace ExampleApp
                                                 Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                 const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                                 Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& interiorsLabelsController,
-                                                Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider);
+                                                Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
+                                                bool interiorsAffectedByFlattening);
                 
                 ~InteriorsEntitiesPinsController();
                 
@@ -84,6 +85,8 @@ namespace ExampleApp
                 std::map<std::string, int> m_labelNameToIconIndex;
                 std::map<int, float> m_floorToScaleMap;
                 TEntityToPinIdMap m_entityToPinIdMap;
+
+                const bool m_interiorsAffectedByFlattening;
 
                 Eegeo::Helpers::CallbackCollection1<const std::vector<Eegeo::Pins::Pin*>&> m_interiorPinSelectedCallbacks;
                 

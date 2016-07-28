@@ -19,7 +19,8 @@ namespace ExampleApp
                 InteriorsEntitiesPinsModule(Eegeo::Modules::IPlatformAbstractionModule& platformAbstractionModule,
                                             Eegeo::Modules::Core::RenderingModule& renderingModule,
                                             Eegeo::Modules::Map::MapModule& mapModule,
-                                            const Eegeo::Rendering::ScreenProperties& screenProperties);
+                                            const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                            const bool interiorsAffectedByFlattening);
                 
                 ~InteriorsEntitiesPinsModule();
                 

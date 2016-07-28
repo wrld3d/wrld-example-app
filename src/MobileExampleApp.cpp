@@ -596,7 +596,8 @@ namespace ExampleApp
             m_pInteriorsEntitiesPinsModule = Eegeo_NEW(InteriorsEntitiesPins::SdkModel::InteriorsEntitiesPinsModule(m_pWorld->GetPlatformAbstractionModule(),
                                                                                                                 m_pWorld->GetRenderingModule(),
                                                                                                                 m_pWorld->GetMapModule(),
-                                                                                                                m_screenProperties));
+                                                                                                                m_screenProperties,
+                                                                                                                interiorsAffectedByFlattening));
                                                                                                             
         }
         
