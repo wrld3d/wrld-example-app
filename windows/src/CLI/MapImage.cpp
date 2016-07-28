@@ -263,9 +263,14 @@ namespace ExampleApp
             m_appRunner->SetAllInputEventsToPointerUp(ScaledScreenCoord(x), ScaledScreenCoord(y));
         }
 
-        void MapImage::SetAllTouchInputEventsToPointerUp(int touchId)
+        void MapImage::SetTouchInputEventToPointerUp(int touchId)
         {
-            m_appRunner->SetAllTouchInputEventsToPointerUp(touchId);
+            m_appRunner->SetTouchInputEventToPointerUp(touchId);
+        }
+
+        void MapImage::PopAllTouchEvents()
+        {
+            m_appRunner->PopAllTouchEvents();
         }
 
         void MapImage::RespondToResize(int width, int  height)

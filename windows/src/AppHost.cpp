@@ -334,9 +334,14 @@ void AppHost::SetAllInputEventsToPointerUp(int x, int y)
     m_pInputProcessor->SetAllInputEventsToPointerUp(x, y);
 }
 
-void AppHost::SetAllTouchInputEventsToPointerUp(int touchId)
+void AppHost::SetTouchInputEventToPointerUp(int touchId)
 {
-    m_pInputProcessor->SetAllTouchInputEventsToPointerUp(touchId);
+    m_pInputProcessor->SetTouchInputEventToPointerUp(touchId);
+}
+
+void AppHost::PopAllTouchEvents()
+{
+    m_pInputProcessor->PopAllTouchEvents();
 }
 
 void AppHost::Update(float dt)

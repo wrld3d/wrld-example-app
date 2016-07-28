@@ -134,17 +134,25 @@ namespace ExampleAppWPF
             TouchDown += OnTouchDown;
             TouchUp += OnTouchUp;
             TouchMove += OnTouchMove;
-            TouchLeave += (o, e) =>
+            MapHost.TouchLeave += (o, e) =>
             {
                 if (m_isTouchInputActive)
                 {
-                    m_mapImage.SetAllTouchInputEventsToPointerUp(CheckAndGetZeroIndexedId(e.TouchDevice.Id));
+                    m_mapImage.SetTouchInputEventToPointerUp(CheckAndGetZeroIndexedId(e.TouchDevice.Id));
                     RemoveTouchId(e.TouchDevice.Id);
                 }
             };
 
             Dispatcher.Hooks.DispatcherInactive += new EventHandler(DispatcherInactive);
 
+        }
+
+        public void PopAllTouchEvents()
+        {
+            if (!m_isTouchInputActive)
+            {
+                m_mapImage.PopAllTouchEvents();
+            }
         }
 
         private void SetFullScreen(bool isFullScreen)

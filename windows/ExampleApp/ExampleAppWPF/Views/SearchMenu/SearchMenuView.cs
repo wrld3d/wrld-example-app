@@ -67,7 +67,7 @@ namespace ExampleAppWPF
             m_hasResults = false;
             m_hasCategorySearch = false;
             m_touchHandler = new WindowInteractionTouchHandler(this);
-
+            TouchEnter += (o, e) => { mainWindow.PopAllTouchEvents(); };
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -191,15 +191,6 @@ namespace ExampleAppWPF
 
             m_adapter = new MenuListAdapter(false, m_list, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SubMenuItemPanel");
             m_resultListAdapter = new MenuListAdapter(false, m_resultsList, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SearchResultPanel");
-
-            TouchMove += OnTouchMove;
-
-            PreviewMouseMove += OnMouseMove;
-        }
-
-        private void OnMouseMove(object sender, MouseEventArgs e)
-        {
-            e.Handled = true;
         }
 
         private void OnResultsListBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
@@ -215,11 +206,6 @@ namespace ExampleAppWPF
         private void OnResultsListTouchDown(object sender, TouchEventArgs e)
         {
             m_resultsOptionsView.CaptureTouch(e.TouchDevice);
-        }
-
-        private void OnTouchMove(object sender, TouchEventArgs e)
-        {
-            e.Handled = true;
         }
 
         private void OnSearchBoxTextChanged(object sender, TextChangedEventArgs e)
