@@ -61,3 +61,5 @@ include(../src/Watermark/CMakeLists.txt)
 include(../src/WeatherMenu/CMakeLists.txt)
 include(../src/WorldAreaLoader/CMakeLists.txt)
 include(../src/WorldPins/CMakeLists.txt)
+include(../src/DoubleTapIndoorInteraction/CMakeLists.txt)
+
