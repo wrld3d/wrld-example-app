@@ -34,6 +34,7 @@ namespace ExampleAppWPF
             mainWindow.MainGrid.Children.Add(this);
 
             m_touchHandler = new WindowInteractionTouchHandler(this);
+            TouchEnter += (o, e) => { mainWindow.PopAllTouchEvents(); };
         }
 
         private void PerformLayout(object sender, RoutedEventArgs e)
