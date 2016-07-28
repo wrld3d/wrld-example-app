@@ -2,7 +2,6 @@
 
 package com.eegeo.menu;
 
-import android.util.Log;
 import android.view.View;
 
 import com.eegeo.animation.ReversibleAnimatorSet;
@@ -78,7 +77,7 @@ public abstract class MenuAnimationHandler
 	
 	public boolean isOffScreen()
 	{
-		return getOnScreenState() < m_lowEndThreshold;
+		return getOnScreenState() <= m_lowEndThreshold;
 	}
 	
 	public boolean isClosedOnScreen()
