@@ -198,12 +198,7 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
                 }
                 else
                 {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(m_activity);
-                    builder.setTitle("Error");
-                    builder.setMessage("Error opening camera. Make sure device camera is not 'disabled'");
-                    builder.setNegativeButton("Ok", null);
-                    builder.setCancelable(false);
-                    builder.show();
+                    showCameraErrorDialog();
                 }
             }
         }
@@ -429,8 +424,14 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
         if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
                 && grantResults[1] == PackageManager.PERMISSION_GRANTED)
         {
-            m_activity.getPhotoIntentDispatcher().takePhoto();
-            m_awaitingIntentResponse = true;
+        	if (m_activity.getPhotoIntentDispatcher().takePhoto())
+            {
+                m_awaitingIntentResponse = true;
+            }
+            else
+            {
+                showCameraErrorDialog();
+            }
         }
         else
         {
@@ -439,6 +440,15 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
             showPermissionRequiredDialog(m_activity);
         }
         return;
+    }
+    
+    private void showCameraErrorDialog(){
+    	AlertDialog.Builder builder = new AlertDialog.Builder(m_activity);
+        builder.setTitle("Error");
+        builder.setMessage("Error opening camera. Make sure device camera is not 'disabled'");
+        builder.setNegativeButton("Ok", null);
+        builder.setCancelable(false);
+        builder.show();
     }
 
     private void showPermissionRequiredDialog(final Activity context)
