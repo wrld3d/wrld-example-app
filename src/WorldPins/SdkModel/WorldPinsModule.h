@@ -34,7 +34,6 @@ namespace ExampleApp
                 IWorldPinsInFocusController* m_pWorldPinsInFocusController;
                 View::WorldPinInFocusObserver* m_pWorldPinInFocusObserver;
                 WorldPinsModalityObserver* m_pWorldPinsModalityObserver;
-                IWorldPinIconMapping* m_pWorldPinIconMapping;
 
             public:
                 WorldPinsModule(Eegeo::Pins::PinRepository& pinRepository,
@@ -48,7 +47,7 @@ namespace ExampleApp
                                 const bool interiorsAffectedByFlattening,
                                 const Menu::View::IMenuReactionModel& menuReaction,
                                 const float screenOversampleScale,
-                                const IWorldPinIconMappingFactory& worldPinIconMappingFactory);
+                                const IWorldPinIconMapping& worldPinIconMapping);
 
                 ~WorldPinsModule();
 
@@ -65,8 +64,6 @@ namespace ExampleApp
                 IWorldPinsInFocusController& GetWorldPinsInFocusController() const;
 
                 ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel() const;
-                
-                IWorldPinIconMapping& GetWorldPinIconMapping() const;
             };
         }
     }

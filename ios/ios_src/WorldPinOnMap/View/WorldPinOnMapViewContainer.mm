@@ -20,7 +20,7 @@
         
         self.pYelpHovercard = [[YelpHovercardView alloc]initWithParams:pinDiameter :pixelScale :m_pInterop];
         
-        self.pInteriorHovercard = [[InteriorsHovercard alloc]initWithParams:pinDiameter :pixelScale :m_pInterop];
+        self.pInteriorHovercard = [[InteriorsHovercard alloc]initWithParams:pinDiameter*1.5f :pixelScale :m_pInterop];
         
         self.pTourHovercard = [[TourHovercardView alloc]initWithParams:pinDiameter :pixelScale :pImageStore :m_pInterop];
         

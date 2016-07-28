@@ -123,9 +123,8 @@ namespace ExampleApp
         ExampleApp::MapMode::SdkModel::IMapModeModule* m_pMapModeModule;
         ExampleApp::FlattenButton::SdkModel::IFlattenButtonModule* m_pFlattenButtonModule;
         Search::SdkModel::ISearchModule* m_pSearchModule;
-        Eegeo::Rendering::ITexturePageLayout* m_pPinIconsTexturePageLayout;
-        Eegeo::Helpers::GLHelpers::TextureInfo m_pinIconsTexture;
         Eegeo::Pins::PinsModule* m_pPinsModule;
+        ExampleApp::WorldPins::SdkModel::IWorldPinIconMapping* m_pWorldPinsIconMapping;
         ExampleApp::WorldPins::SdkModel::IWorldPinsModule* m_pWorldPinsModule;
         SearchResultOnMap::SdkModel::ISearchResultOnMapModule* m_pSearchResultOnMapModule;
         ExampleApp::Reaction::View::IReactionModelModule* m_pReactionModelModule;
@@ -185,11 +184,9 @@ namespace ExampleApp
 
         std::vector<ExampleApp::ScreenControl::View::IScreenControlViewModel*> GetReactorControls() const;
         
-        Eegeo::Pins::PinsModule* CreatePlatformPinsModuleInstance(Eegeo::Modules::Map::MapModule& mapModule,
-                                                                  Eegeo::EegeoWorld& world,
-                                                                  const std::string& pinsTexture,
-                                                                  float pinDiameter,
-                                                                  int sheetSize);
+        Eegeo::Pins::PinsModule* CreatePlatformPinsModuleInstance(Eegeo::EegeoWorld& world,
+            const Eegeo::Helpers::GLHelpers::TextureInfo& pinTextureInfo,
+            const Eegeo::Rendering::AtlasTexturePageLayout& atlasTexturePageLayou);
 
         void InitialisePinsModules(Eegeo::Modules::Map::MapModule& mapModule,
                                    Eegeo::EegeoWorld& world,

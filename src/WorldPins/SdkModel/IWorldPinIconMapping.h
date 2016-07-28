@@ -2,6 +2,9 @@
 
 #pragma once
 
+#include "Rendering.h"
+#include "GLHelpers.h"
+#include "AtlasTexturePageLayout.h"
 #include <string>
 
 namespace ExampleApp
@@ -16,6 +19,8 @@ namespace ExampleApp
                 virtual ~IWorldPinIconMapping() { }
 
                 virtual int IconIndexForKey(const std::string& key) const = 0;
+                virtual const Eegeo::Rendering::AtlasTexturePageLayout& GetTexturePageLayout() const = 0;
+                virtual const Eegeo::Helpers::GLHelpers::TextureInfo& GetTextureInfo() const = 0;
             };
         }
     }
