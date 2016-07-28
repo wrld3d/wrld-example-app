@@ -17,6 +17,8 @@
 #include "InteriorsEntitiesRepository.h"
 #include "InteriorTransitionModel.h"
 #include "StringHelpers.h"
+#include "SerializedJsonHelpers.h"
+
 
 #include <math.h>
 
