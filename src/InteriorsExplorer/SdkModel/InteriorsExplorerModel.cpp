@@ -17,6 +17,7 @@
 #include "InteriorInteractionModel.h"
 
 #include "ICameraTransitionController.h"
+#include "IPersistentSettingsModel.h"
 
 namespace ExampleApp
 {
@@ -42,7 +43,8 @@ namespace ExampleApp
                                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                            VisualMap::SdkModel::IVisualMapService& visualMapService,
                                                            ExampleAppMessaging::TMessageBus& messageBus,
-                                                           Metrics::IMetricsService& metricsService)
+                                                           Metrics::IMetricsService& metricsService,
+                                                           PersistentSettings::IPersistentSettingsModel& persistentSettings)
             : m_interiorInteractionModel(interiorInteractionModel)
             , m_interiorSelectionModel(interiorSelectionModel)
             , m_visualMapService(visualMapService)
@@ -54,6 +56,7 @@ namespace ExampleApp
             , m_floorSelectionDraggedCallback(this, &InteriorsExplorerModel::OnFloorSelectionDragged)
             , m_interiorExplorerEnabled(false)
             , m_currentInteriorFloorIndex(0)
+            , m_persistentSettings(persistentSettings)
             {
                 m_interiorInteractionModel.RegisterInteractionStateChangedCallback(m_interactionModelStateChangedCallback);
                 
@@ -118,6 +121,23 @@ namespace ExampleApp
                     m_interiorExplorerEnabled = false;
                     PublishInteriorExplorerStateChange();
                 }
+            }
+            
+            bool InteriorsExplorerModel::GetHasViewedAnyInterior()
+            {
+                bool result = false;
+                
+                if(!m_persistentSettings.TryGetValue(InteriorsExplorerModel_HasViewedAnyInterior, result))
+                {
+                    result = false;
+                }
+                
+                return result;
+            }
+            
+            void InteriorsExplorerModel::SetHasViewedAnyInterior(bool hasViewedAnyInterior)
+            {
+                m_persistentSettings.SetValue(InteriorsExplorerModel_HasViewedAnyInterior, true);
             }
             
            

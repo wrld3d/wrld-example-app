@@ -14,6 +14,7 @@
 #include "IMetricsService.h"
 #include "IIdentity.h"
 #include "Interiors.h"
+#include "InteriorsExplorerTutorialView.h"
 #include "ScreenControlViewModelIncludes.h"
 #include "IInteriorsExplorerViewModule.h"
 
@@ -28,10 +29,11 @@ namespace ExampleApp
             private:
                 InteriorsExplorerController* m_pController;
                 InteriorsExplorerView* m_pView;
-                
+                InteriorsExplorerTutorialView* m_pTutorialView;
                 
             public:
-                InteriorsExplorerViewModule(InteriorsExplorerViewModel& viewModel,
+                InteriorsExplorerViewModule(SdkModel::InteriorsExplorerModel& model,
+                                            InteriorsExplorerViewModel& viewModel,
                                             ExampleAppMessaging::TMessageBus& messageBus,
                                             const Eegeo::Rendering::ScreenProperties& screenProperties,
                                             Eegeo::Helpers::IdentityProvider& identityProvider);
@@ -41,6 +43,8 @@ namespace ExampleApp
                 InteriorsExplorerController& GetController() const;
                 
                 InteriorsExplorerView& GetView() const;
+                
+                InteriorsExplorerTutorialView& GetTutorialView() const;
             };
         }
     }

@@ -377,7 +377,8 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     m_pInitialExperienceIntroViewModule = Eegeo_NEW(ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule)(m_messageBus);
     
     
-    m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
+    m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(app.InteriorsExplorerModule().GetInteriorsExplorerModel(),
+                                                                                                                 app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
                                                                                                                  m_messageBus,
                                                                                                                  screenProperties,
                                                                                                                  app.GetIdentityProvider());
@@ -422,6 +423,9 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     {
         [m_pView addSubview: &m_pTourWebViewModule->GetTourWebView()];
     }
+    
+    // Interior tutorial layer
+    [m_pView addSubview: &m_pInteriorsExplorerViewModule->GetTutorialView()];
     
     // Initial experience layer
     [m_pView addSubview: &m_pInitialExperienceIntroViewModule->GetIntroView()];
