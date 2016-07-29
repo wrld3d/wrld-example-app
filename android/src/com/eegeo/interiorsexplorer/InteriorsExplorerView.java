@@ -103,7 +103,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
 		    	float controlWidth = m_topPanel.getWidth();
 		    	float controlHeight = m_topPanel.getHeight();
 		    	
-		    	m_topYPosActive = controlHeight;
+		    	m_topYPosActive = m_activity.dipAsPx(20);
 		    	m_topYPosInactive = -controlHeight;
 		    	
 		    	m_topPanel.setX((screenWidth * 0.5f) - (controlWidth * 0.5f));
@@ -112,7 +112,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
 		    	controlWidth = m_floorListContainer.getWidth();
 		    	controlHeight = m_floorListContainer.getHeight();
 		    	
-		    	m_leftXPosActive = screenWidth - (m_backButton.getWidth() + m_backButton.getWidth() / 2.0f);
+		    	m_leftXPosActive = screenWidth - (m_backButton.getWidth() / 2.0f  + m_activity.getResources().getDimension(R.dimen.menu_button_margin) + controlWidth / 2.0f);
 		    	m_leftXPosInactive = screenWidth;
 		    	
 		    	m_floorListContainer.setX(m_leftXPosInactive);
