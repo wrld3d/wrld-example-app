@@ -63,6 +63,16 @@ namespace ExampleApp
                 StartTransitionTo(newInterestPoint, distanceFromInterest, bearingRadians, m_defaultInteriorId, 0, jumpIfFar);
             }
             
+            void CameraTransitionController::StartTransitionTo(float distanceFromInterest,
+                                                               const Eegeo::Resources::Interiors::InteriorId& interiorId,
+                                                               int targetFloorIndex,
+                                                               bool jumpIfFar)
+            {
+                float bearingRadians = Eegeo::Math::Deg2Rad(m_appCameraController.GetHeadingDegrees());
+                StartTransitionTo(m_interiorsCameraController.GetInterestLocation(),distanceFromInterest,bearingRadians,interiorId,targetFloorIndex,jumpIfFar);
+                
+            }
+            
             void CameraTransitionController::StartTransitionTo(const Eegeo::dv3& newInterestPoint,
                                                                float distanceFromInterest,
                                                                float newHeadingRadians,

@@ -81,6 +81,17 @@ namespace ExampleApp
                 m_pTransitionController->StartTransitionTo(newInterestPoint, distanceFromInterest, newHeadingRadians, interiorId, targetFloorIndex, jumpIfFar);
             }
             
+            void CameraTransitionService::StartTransitionTo(float distanceFromInterest,
+                                                            const Eegeo::Resources::Interiors::InteriorId& interiorId,
+                                                            int targetFloorIndex,
+                                                            bool jumpIfFar)
+            {
+                FailIfNoValidControllerSet();
+                m_pTransitionController->StartTransitionTo(distanceFromInterest, interiorId, targetFloorIndex);
+                
+            }
+
+            
             void CameraTransitionService::StopCurrentTransition()
             {
                 FailIfNoValidControllerSet();

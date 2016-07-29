@@ -90,6 +90,8 @@
 #include "InteriorsEntityIdHighlightVisibilityController.h"
 #include "Surveys.h"
 #include "IMenuIgnoredReactionModel.h"
+#include "DoubleTapIndoorInteraction.h"
+#include "IRayCaster.h"
 #include "RenderingTransformMesh.h"
 #include "IndoorLocation.h"
 
@@ -196,6 +198,8 @@ namespace ExampleApp
         AppCamera::SdkModel::IAppCameraModule* m_pAppCameraModule;
         
         const bool m_interiorsEnabled;
+        
+        ExampleApp::DoubleTapIndoorInteraction::SdkModel::IDoubleTapIndoorInteractionController* m_pDoubleTapIndoorInteractionController;        
         
         ExampleApp::IndoorLocation::SdkModel::IIndoorLocationModule* m_pIndoorLocationModule;
         
