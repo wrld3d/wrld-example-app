@@ -26,11 +26,11 @@
     
     <TextView
         android:id="@+id/floor_name"
-        android:alpha="0"
         android:layout_width="30dp"
-        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="25dp"
+        android:layout_toLeftOf="@+id/interiors_explorer_floor_list_item_centerline"
+        android:layout_height="wrap_content"
+        android:alpha="0.5"
         android:gravity="left|center_vertical"
         android:maxLength="2"
         android:maxLines="1"

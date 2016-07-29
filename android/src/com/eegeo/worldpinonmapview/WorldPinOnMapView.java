@@ -5,6 +5,7 @@ package com.eegeo.worldpinonmapview;
 import android.animation.Animator;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -62,6 +63,8 @@ public class WorldPinOnMapView implements View.OnClickListener
     public void show(final String title, final String subtitle, final String ratingsImg, final int reviewCount, final float modality)
     {
         boolean usedImage = !ratingsImg.isEmpty();
+        int titleMarginDp = 3;
+        float density = m_activity.getResources().getDisplayMetrics().density;
         
     	if(usedImage)
     	{
@@ -90,10 +93,26 @@ public class WorldPinOnMapView implements View.OnClickListener
     	{
     		m_ratingsBar.setVisibility(View.GONE);
     		m_poiAccreditationImage.setVisibility(View.GONE);
-        	m_detailsView.setVisibility(View.VISIBLE);
-        	m_detailsView.setText(subtitle);
-        	m_poiRatingImage.setImageDrawable(null);
+    		
+    		if(subtitle != null && subtitle.length()>0)
+    		{
+    			m_detailsView.setVisibility(View.VISIBLE);
+            	m_detailsView.setText(subtitle);	
+    		}
+    		else 
+    		{
+    			m_detailsView.setVisibility(View.GONE);
+    			titleMarginDp = 15; 
+    		}
+    		
+    		m_poiRatingImage.setImageDrawable(null);
+    		
     	}
+    	
+		int titleMarginPx = (int)(titleMarginDp * density);
+		MarginLayoutParams titleParams = (MarginLayoutParams)m_titleView.getLayoutParams();
+		titleParams.setMargins(0, titleMarginPx, 0, titleMarginPx);
+		m_titleView.setLayoutParams(titleParams);
     	
         m_view.setEnabled(true);
         m_titleView.setText(title);

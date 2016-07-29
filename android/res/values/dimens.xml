@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <dimen name="menu_button_margin">28dp</dimen>
     <dimen name="search_result_anchor_margin">50dp</dimen>
     <dimen name="search_clear_button_size">20dp</dimen>
     <dimen name="search_results_bar_width">382dp</dimen>
     <dimen name="search_menu_edit_text_background_width">295dp</dimen>
     <dimen name="search_menu_result_cell_height">44dp</dimen>
+    <dimen name="menu_item_footer_padding_height">2dp</dimen>
+    <dimen name="menu_button_top_offset">20dp</dimen>
+    <dimen name="search_editext_width">295dp</dimen>
+
 </resources>

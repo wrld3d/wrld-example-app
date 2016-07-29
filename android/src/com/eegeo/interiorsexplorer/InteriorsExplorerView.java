@@ -1,25 +1,24 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 package com.eegeo.interiorsexplorer;
 
-import com.eegeo.ProjectSwallowApp.R;
-
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.RelativeLayout;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.view.View.MeasureSpec;
-import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
-import android.graphics.Color;
-import android.util.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.eegeo.ProjectSwallowApp.R;
 import com.eegeo.entrypointinfrastructure.MainActivity;
+
+import android.graphics.Color;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class InteriorsExplorerView implements View.OnClickListener, View.OnTouchListener
 {
@@ -36,6 +35,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     private Boolean m_draggingFloorButton;
 
     private final long m_stateChangeAnimationTimeMilliseconds = 200;
+    private final long m_initialJumpThersholdPx = 5;
     
     private float m_topYPosActive;
     private float m_topYPosInactive;
@@ -47,8 +47,10 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     
     private InteriorsFloorListAdapter m_floorListAdapter = null;
     private float m_previousYCoordinate;
+    private boolean m_isButtonInitialJumpRemoved = false;
     
     private boolean m_canProcessButtons;
+    private boolean m_isOnScreen = false;
     
     // TODO: Replace these with refs to UX iteration color scheme.
     private final int TextColorNormal = Color.parseColor("#1256B0");
@@ -101,7 +103,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
 		    	float controlWidth = m_topPanel.getWidth();
 		    	float controlHeight = m_topPanel.getHeight();
 		    	
-		    	m_topYPosActive = controlHeight;
+		    	m_topYPosActive = m_activity.dipAsPx(20);
 		    	m_topYPosInactive = -controlHeight;
 		    	
 		    	m_topPanel.setX((screenWidth * 0.5f) - (controlWidth * 0.5f));
@@ -110,11 +112,13 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
 		    	controlWidth = m_floorListContainer.getWidth();
 		    	controlHeight = m_floorListContainer.getHeight();
 		    	
-		    	m_leftXPosActive = screenWidth - (controlWidth + m_activity.dipAsPx(5));
+		    	m_leftXPosActive = screenWidth - (m_backButton.getWidth() / 2.0f  + m_activity.getResources().getDimension(R.dimen.menu_button_margin) + controlWidth / 2.0f);
 		    	m_leftXPosInactive = screenWidth;
 		    	
 		    	m_floorListContainer.setX(m_leftXPosInactive);
 		    	m_floorListContainer.setY((screenHeight * 0.5f) - (controlHeight * 0.5f));
+		    	m_backButton.setX(m_leftXPosInactive);
+		    	m_backButton.setY(m_topYPosActive + m_topPanel.getHeight() * 1.5f);
 		    	
 		    	m_uiRootView.removeOnLayoutChangeListener(this);
 			}
@@ -135,6 +139,30 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
         final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
         uiRoot.removeView(m_uiRootView);
         m_uiRootView = null;
+    }
+    
+    public void playShakeSliderAnim()
+    {
+    	if(!m_isOnScreen)
+    	{
+    		return;
+    	}
+    	
+    	final long offset = m_floorListContainer.getWidth() / 3;
+    	
+    	Animation moveLeft = new TranslateAnimation(0, -offset, 0, 0);
+    	moveLeft.setDuration(100);
+    	
+    	Animation bounceRight = new TranslateAnimation(0, offset, 0, 0);
+    	bounceRight.setDuration(1000);
+    	bounceRight.setInterpolator(new BounceInterpolator());
+    	
+    	AnimationSet set = new AnimationSet(false);
+    	
+    	set.addAnimation(moveLeft);
+    	set.addAnimation(bounceRight);
+    	
+    	 m_floorListContainer.startAnimation(set);
     }
     
     public void updateFloors(String[] floorShortNames, int currentlySelectedFloorIndex)
@@ -225,12 +253,19 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
 		m_floorButton.getBackground().setState(new int[] {android.R.attr.state_pressed});
 		m_previousYCoordinate = initialYCoordinate;
 		m_draggingFloorButton = true;
+		m_isButtonInitialJumpRemoved = false;
     }
     
     private void updateDraggingButton(float yCoordinate)
     {
     	float y = yCoordinate;
-		float newY = m_floorButton.getY() + (y - m_previousYCoordinate);
+		
+    	if(!m_isButtonInitialJumpRemoved) 
+    	{
+    		detectAndRemoveInitialJump(y);
+    	}
+    	
+    	float newY = m_floorButton.getY() + (y - m_previousYCoordinate);
 		newY = Math.max(0.0f, Math.min(getListViewHeight(m_floorList)-ButtonSize, newY));
 		m_floorButton.setY(newY);
 		m_previousYCoordinate = y;
@@ -249,6 +284,21 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
 		moveButtonToFloorIndex(selectedFloor, true);
 		InteriorsExplorerViewJniMethods.OnFloorSelected(m_nativeCallerPointer, selectedFloor);
     }
+    
+    /**
+     * This function will remove the starting jump on slider if detected
+     * @param yCoordinate
+     */
+    private void detectAndRemoveInitialJump(float yCoordinate)
+    {
+    	float y = yCoordinate;
+    	float deltaY = y - m_previousYCoordinate; 
+    	if(Math.abs(deltaY) > m_initialJumpThersholdPx)
+    	{
+    		m_previousYCoordinate += deltaY;
+    		m_isButtonInitialJumpRemoved = true;
+    	}
+    }
 
     @Override
     public void onClick(View view)
@@ -266,14 +316,18 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
 
     public void animateToActive()
     {
+    	m_isOnScreen = true;
+    	
     	animateViewToY((int)m_topYPosActive);
-        animateViewToX((int)m_leftXPosActive);
+        animateViewToX((int)m_leftXPosActive, m_isOnScreen);
     }
 
     public void animateToInactive()
     {
+        m_isOnScreen = false;
+    	
         animateViewToY((int)m_topYPosInactive);
-        animateViewToX((int)m_leftXPosInactive);
+        animateViewToX((int)m_leftXPosInactive, m_isOnScreen);
     }
 
     protected void animateViewToY(final int yAsPx)
@@ -283,11 +337,19 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
         .setDuration(m_stateChangeAnimationTimeMilliseconds);
     }
     
-    protected void animateViewToX(final int xAsPx)
+    protected void animateViewToX(final int xAsPx, final boolean addDelay)
     {
+    	long delay = addDelay ? m_stateChangeAnimationTimeMilliseconds * 5 : 0;
+    	
     	m_floorListContainer.animate()
         .x(xAsPx)
-        .setDuration(m_stateChangeAnimationTimeMilliseconds);
+        .setDuration(m_stateChangeAnimationTimeMilliseconds)
+        .setStartDelay(delay);
+    	
+    	m_backButton.animate()
+    	.x(xAsPx)
+        .setDuration(m_stateChangeAnimationTimeMilliseconds)
+        .setStartDelay(delay);
     }
 
     public void animateToIntermediateOnScreenState(final float onScreenState)
@@ -319,7 +381,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
         	ViewGroup child = (ViewGroup)m_floorList.getChildAt(i);
         	TextView text = (TextView)child.findViewById(R.id.floor_name);
         	
-        	text.animate().alpha(0.0f).setDuration(m_stateChangeAnimationTimeMilliseconds);
+        	text.animate().alpha(0.5f).setDuration(m_stateChangeAnimationTimeMilliseconds);
         }
     }
     

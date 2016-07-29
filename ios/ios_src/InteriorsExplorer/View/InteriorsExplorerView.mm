@@ -93,10 +93,9 @@ namespace
         
         const float buttonSize = 50.f;
         const float labelLength = isPhone ? fminf(200.f, m_screenWidth*0.5f) : 315.f;
-        const float labelSpacing = 11.f;
         
         const float detailsPanelHeight = 50.0f;
-        float totalPanelLength = isPhone ? labelLength : labelLength + buttonSize + labelSpacing;
+        float totalPanelLength = labelLength;
         
         float totalPanelHeight = detailsPanelHeight;
         
@@ -104,12 +103,12 @@ namespace
         
         self.pDetailsPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_screenWidth * 0.5f - totalPanelLength * 0.5f, upperMargin, totalPanelLength, totalPanelHeight)] autorelease];
         
-        UIColor* backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
+        UIColor* dismissButtonBackgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         
-        const float dismissButtonX = isPhone? m_inactiveFloorListXPosition : totalPanelLength-buttonSize;
-        const float dismissButtonY = isPhone? self.pFloorPanel.frame.origin.y - 10.0f : 0.0f;
-        UIView* dismissButtonParent = isPhone? self : self.pDetailsPanel;
-        self.pDismissButtonBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(backgroundColor)] autorelease];
+        const float dismissButtonX = m_inactiveFloorListXPosition;
+        const float dismissButtonY = self.pFloorPanel.frame.origin.y - 10.0f;
+        UIView* dismissButtonParent = self;
+        self.pDismissButtonBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(dismissButtonBackgroundColor)] autorelease];
         self.pDismissButtonBackground.frame = CGRectMake(dismissButtonX, dismissButtonY, buttonSize, buttonSize);
         self.pDismissButtonBackground.userInteractionEnabled = YES;
         [dismissButtonParent addSubview:self.pDismissButtonBackground];
@@ -120,9 +119,11 @@ namespace
         [self.pDismissButton addTarget:self action:@selector(onCancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.pDismissButtonBackground addSubview:self.pDismissButton];
         
+        UIColor* detailsPanelBackgroundColor = [UIColor blackColor];
         
-        self.pDetailsPanelBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(backgroundColor)] autorelease];
+        self.pDetailsPanelBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(detailsPanelBackgroundColor)] autorelease];
         self.pDetailsPanelBackground.frame = CGRectMake(0, 0, labelLength, detailsPanelHeight);
+        self.pDetailsPanelBackground.alpha = 0.5f;
                 
         [self.pDetailsPanel addSubview:self.pDetailsPanelBackground];
         
@@ -130,7 +131,7 @@ namespace
         
         self.pFloorNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake( textPadding, textPadding, labelLength - (2*textPadding), detailsPanelHeight - (2*textPadding))] autorelease];
         self.pFloorNameLabel.textColor = [UIColor whiteColor];
-        self.pFloorNameLabel.textAlignment = NSTextAlignmentLeft;
+        self.pFloorNameLabel.textAlignment = NSTextAlignmentCenter;
         [self.pDetailsPanel addSubview:self.pFloorNameLabel];
                 
         
@@ -266,9 +267,7 @@ namespace
     [self.pFloorListViews removeAllObjects];
     
     
-    const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
-    
-    m_floorDivisionHeight = isPhone ? m_screenHeight*0.0625f : 50;
+    m_floorDivisionHeight = m_screenHeight*0.0625f;
     const float divisionWidth = 30;
     const float divisionLabelWidth = 25;
     const float divisionLabelSpacing = 15;
@@ -284,18 +283,15 @@ namespace
     }
     
     CGRect floorPanelFrame = self.pFloorPanel.frame;
-    const float floorPanelVerticalCenterline = isPhone ? 0.54f : 0.5f;
+    const float floorPanelVerticalCenterline = 0.54f;
     floorPanelFrame.origin.y = m_screenHeight*floorPanelVerticalCenterline - totalHeight*0.5f;
     floorPanelFrame.size.height = totalHeight;
     self.pFloorPanel.frame = floorPanelFrame;
     
-    if(isPhone)
-    {
-        CGRect dismissButtonFrame = self.pDismissButtonBackground.frame;
-        const float dismissButtonSpacing = 10.f;
-        dismissButtonFrame.origin.y = (self.pFloorPanel.frame.origin.y - dismissButtonSpacing) - dismissButtonFrame.size.height;
-        self.pDismissButtonBackground.frame = dismissButtonFrame;
-    }
+    CGRect dismissButtonFrame = self.pDismissButtonBackground.frame;
+    const float dismissButtonSpacing = 10.f;
+    dismissButtonFrame.origin.y = (self.pFloorPanel.frame.origin.y - dismissButtonSpacing) - dismissButtonFrame.size.height;
+    self.pDismissButtonBackground.frame = dismissButtonFrame;
     
     float yOffset = ((float)self.pFloorChangeButton.frame.size.height - m_floorDivisionHeight)*0.5f;
     int floorIndex = 0;
@@ -329,6 +325,36 @@ namespace
     self.pFloorPanel.userInteractionEnabled = self.pFloorChangeButton.userInteractionEnabled = m_floorSelectionEnabled;
 }
 
+- (void) playSliderShakeAnim
+{
+    CGFloat xPos = [self GetXPositionForFloorPanelAt:1.0];
+    
+    CGFloat posLeft = xPos - 5.0f;
+    CGFloat posRight = xPos + 10.0f;
+
+    [UIView animateWithDuration:1.1 delay:0.0 usingSpringWithDamping:0.3 initialSpringVelocity:0.2 options:UIViewKeyframeAnimationOptionCalculationModeCubicPaced animations:^{
+        
+        [UIView animateKeyframesWithDuration:0.1 delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubicPaced animations:^{
+            CGRect floorFrame = self.pFloorPanel.frame;
+            floorFrame.origin.x = posLeft;
+            self.pFloorPanel.frame = floorFrame;
+        } completion:nil];
+        
+        [UIView animateKeyframesWithDuration:0.1 delay:0.1 options:UIViewKeyframeAnimationOptionCalculationModeCubicPaced animations:^{
+            CGRect floorFrame = self.pFloorPanel.frame;
+            floorFrame.origin.x = posRight;
+            self.pFloorPanel.frame = floorFrame;
+        } completion:nil];
+        
+        [UIView animateKeyframesWithDuration:0.15 delay:0.2 options:UIViewKeyframeAnimationOptionCalculationModeCubicPaced animations:^{
+            CGRect floorFrame = self.pFloorPanel.frame;
+            floorFrame.origin.x = xPos;
+            self.pFloorPanel.frame = floorFrame;
+        } completion:nil];
+        
+    } completion:nil];
+}
+
 - (void) refreshFloorIndicator:(int)floorIndex
 {
     int nameIndex = static_cast<int>(m_tableViewFloorNames.size()-1) - floorIndex;
@@ -343,8 +369,7 @@ namespace
 
 - (float) GetXPositionForDismissButtonAt:(float)t
 {
-    const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
-    return isPhone ? m_screenWidth - t * (iPhoneDismissButtonMargin + self.pDismissButtonBackground.frame.size.width) : 0.0f;
+    return m_screenWidth - t * (iPhoneDismissButtonMargin + self.pDismissButtonBackground.frame.size.width);
 }
 
 - (void) setFullyOnScreen
@@ -363,14 +388,10 @@ namespace
     CGRect floorPanel = self.pFloorPanel.frame;
     floorPanel.origin.x = [self GetXPositionForFloorPanelAt :onScreenState];
     
-    const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
-    if(isPhone)
-    {
-        CGRect dismissPanel = self.pDismissButtonBackground.frame;
-        dismissPanel.origin.x = [self GetXPositionForDismissButtonAt:onScreenState];
-        
-        self.pDismissButtonBackground.frame = dismissPanel;
-    }
+    CGRect dismissPanel = self.pDismissButtonBackground.frame;
+    dismissPanel.origin.x = [self GetXPositionForDismissButtonAt:onScreenState];
+    
+    self.pDismissButtonBackground.frame = dismissPanel;
     
     self.hidden = onScreenState == 0.0f;
     self.pFloorPanel.frame = floorPanel;
@@ -385,15 +406,15 @@ namespace
     floorFrame.origin.x = [self GetXPositionForFloorPanelAt:t];
     
     CGRect dismissButtonFrame = self.pDismissButtonBackground.frame;
-    const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
-    if(isPhone)
-    {
-        dismissButtonFrame.origin.x = [self GetXPositionForDismissButtonAt:t];
-    }
+
+    dismissButtonFrame.origin.x = [self GetXPositionForDismissButtonAt:t];
+    
+    bool isOnScreenAnim = false;
     
     if(t > 0.f)
     {
         self.hidden = false;
+        isOnScreenAnim = true;
     }
     
     [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds
@@ -401,12 +422,7 @@ namespace
                         options:UIViewAnimationOptionBeginFromCurrentState
                      animations:^
      {
-         self.pFloorPanel.frame = floorFrame;
          self.pDetailsPanel.alpha = t;
-         if(isPhone)
-         {
-             self.pDismissButtonBackground.frame = dismissButtonFrame;
-         }
      }
                      completion:^(BOOL finished)
      {
@@ -414,6 +430,16 @@ namespace
          m_onScreenParam = t;
      }
      ];
+    
+    [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds
+                          delay:isOnScreenAnim ? 1.0f : 0.0f
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:^
+     {
+         self.pFloorPanel.frame = floorFrame;
+         self.pDismissButtonBackground.frame = dismissButtonFrame;
+     }
+                     completion:nil];
 }
 
 - (void) setTouchEnabled:(BOOL)enabled

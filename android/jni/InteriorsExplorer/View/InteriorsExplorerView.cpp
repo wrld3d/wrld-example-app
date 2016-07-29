@@ -204,6 +204,17 @@ namespace ExampleApp
 				jmethodID setTouchEnabled = env->GetMethodID(m_uiViewClass, "setTouchEnabled", "(Z)V");
 				env->CallVoidMethod(m_uiView, setTouchEnabled, enabled);
             }
+
+            void InteriorsExplorerView::PlaySliderAnim()
+			{
+				ASSERT_UI_THREAD
+
+				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				JNIEnv* env = attached.envForThread;
+
+				jmethodID playSliderAnim = env->GetMethodID(m_uiViewClass, "playShakeSliderAnim", "()V");
+				env->CallVoidMethod(m_uiView, playSliderAnim);
+			}
         }
     }
 }

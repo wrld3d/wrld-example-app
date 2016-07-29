@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="search_results_bar_width">300dp</dimen>
+    <dimen name="search_results_bar_width">400dp</dimen>
     <dimen name="search_menu_edit_text_background_width">263dp</dimen>
+    <dimen name="search_editext_width">336dp</dimen>
 </resources>

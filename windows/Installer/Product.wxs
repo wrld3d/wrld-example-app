@@ -545,6 +545,30 @@
       <Component Id="cmpv1kRDr7eAOyPqUE5duTGUQ3JQ3w" Directory="RESOURCEFOLDER" Guid="{3E1610A4-F0E0-4E66-A8BB-1AECEDA07D2D}">
         <File Id="filJ2gVjWpkZstyAi3LCyJsnMLM8bE" KeyPath="yes" Source="payload\Resources\yelp_reviews.png" />
       </Component>
+	  <Component Id="cmpC75AC57B5838E1B2567AF74E728686D1" Directory="RESOURCEFOLDER" Guid="{14700B7F-83F0-402B-8056-66EE5EC40712}">
+		<File Id="filAEF3800E254DD044B2634C411514B2D6" KeyPath="yes" Source="payload\Resources\CharacterIdle_01.POD" />
+	  </Component>
+	  <Component Id="cmp4CDFCEFE7D3F5379DB0CBDEC5BBCC966" Directory="RESOURCEFOLDER" Guid="{3EB0A2A1-948E-4764-BD5B-1FE42A2FA1A4}">
+		<File Id="filB37DD4FE2C6E24FB8560D79DD5DAEBF5" KeyPath="yes" Source="payload\Resources\CharacterWalk_01.POD" />
+	  </Component>
+	  <Component Id="cmp8EB74923B66A928E5C9557A2BB61513D" Directory="RESOURCEFOLDER" Guid="{5E415F27-223D-49CB-8BA2-26F231AEBFD9}">
+		<File Id="filC081149AB86A25D51A0F9C396F848A8E" KeyPath="yes" Source="payload\Resources\Characteridleanim.POD" />
+	  </Component>
+	  <Component Id="cmp36912A746E998BD72EAE17A4FAC50363" Directory="RESOURCEFOLDER" Guid="{762A0B6A-FF61-4A1E-839A-AF97DB17FF17}">
+		<File Id="filDB8F676A1CA7112E18B82E289782A10C" KeyPath="yes" Source="payload\Resources\Characterwalkanim.POD" />
+	  </Component>
+	  <Component Id="cmp84DB9476F6B9317CF634EC401B8A1491" Directory="RESOURCEFOLDER" Guid="{CA09E00D-712C-40C5-B115-8A8C7F14B1E4}">
+		<File Id="fil27EC67575938A6BF1D0694E03173587E" KeyPath="yes" Source="payload\Resources\character.pvr" />
+	  </Component>
+	  <Component Id="cmpF7FB373CB88E3E1AA0BB4355EF305B4F" Directory="RESOURCEFOLDER" Guid="{919F5EA6-3ACB-4B8D-86EE-177520C55CAA}">
+		<File Id="fil2E149E91FA5754F313751AC2AF901235" KeyPath="yes" Source="payload\Resources\charactercisco.png" />
+	  </Component>
+	  <Component Id="cmp7CEEAB35BACAA0630B70ADCCA252FE24" Directory="RESOURCEFOLDER" Guid="{58F49ACB-5016-4AC6-8C48-FF60087040FE}">
+		<File Id="fil516440A7A8A9B41C596FBB0ACAF5295B" KeyPath="yes" Source="payload\Resources\charactercisco.pvr" />
+	  </Component>
+	  <Component Id="cmp63D15D4AEBC0DD77201B7B162394A38B" Directory="RESOURCEFOLDER" Guid="{8BD61C3C-2CE3-41E6-87F8-599336F6360D}">
+		<File Id="fil60BEA221E4175E593300B930EEE12292" KeyPath="yes" Source="payload\Resources\shadow.png" />
+	  </Component>
       <Component Id="cmp524CBE567AD8069759874A8E02F30357" Directory="APPCONFIGFOLDER" Guid="{7A789439-8928-47B4-B3AB-5957A50907E3}">
         <File Id="fil9574A5EC37417ABB0113D376A4D4B1FC" KeyPath="yes" Source="payload\Resources\ApplicationConfigs\encrypted_config.json" />
       </Component>

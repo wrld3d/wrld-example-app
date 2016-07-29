@@ -1,4 +1,3 @@
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/interiors_explorer_view"
@@ -9,21 +8,25 @@
 
     <LinearLayout 
     android:id="@+id/top_panel"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="wrap_content" >
-
         <TextView
-			android:layout_width="200dp"
-	        android:layout_height="match_parent"
-	        android:gravity="center"
-            android:layout_centerInParent="true"
-	        android:textColor="@color/darkgrey"
-	        android:textSize="18dp"
-	        android:background="@color/white"
-	        android:id="@+id/floor_name" >
-		</TextView>
-		
+            android:id="@+id/floor_name"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="@color/gold"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="18dp" >
+        </TextView>
+	</LinearLayout>
+	
         <ImageView
+            android:layout_margin="@dimen/menu_button_margin"
+            android:layout_gravity="end"
+            android:layout_below="@+id/top_panel"
             android:id="@+id/back_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,11 +34,7 @@
             android:baselineAlignBottom="true"
             android:src="@drawable/button_exit_interior_states">
         </ImageView>
-        
 
-        
-	</LinearLayout>
-
-	<include layout="@layout/interiors_floor_list_container_layout"/>
+	<include android:layout_marginTop="15dp"  android:layout_below="@+id/back_button" android:layout_width="70dp"  android:layout_height="150dp"  layout="@layout/interiors_floor_list_container_layout"/>
 
 </RelativeLayout>

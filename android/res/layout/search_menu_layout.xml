@@ -1,19 +1,17 @@
 <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/search_menu_view"
-    android:layout_width="wrap_content"
+    android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_centerHorizontal="true"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:descendantFocusability="beforeDescendants"
-    android:layout_marginTop="50dp" 
-    android:layout_marginBottom="50dp" 
+    android:layout_marginTop="@dimen/menu_button_top_offset" 
     android:focusableInTouchMode="true" >
     
     <LinearLayout
         android:id="@+id/search_menu_list_container"
-        android:layout_width="332dp"
+        android:layout_width="@dimen/search_results_bar_width"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         
@@ -63,7 +61,15 @@
 			android:dividerHeight="1dp"
 			android:overScrollMode="never"
 			android:paddingLeft="32dp"
-			android:paddingRight="5dp" />
+			android:paddingRight="5dp"
+			android:childDivider="@color/ui_border"
+			android:groupIndicator="@null"/>
+		
+		<View
+        	android:id="@+id/search_menu_results_footer"
+        	android:layout_width="fill_parent"
+        	android:layout_height="@dimen/menu_item_footer_padding_height"
+        	android:background="@color/ui_border" />
 	</LinearLayout>
 
     <RelativeLayout

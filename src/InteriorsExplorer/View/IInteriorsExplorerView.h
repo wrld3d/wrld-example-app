@@ -36,6 +36,8 @@ namespace ExampleApp
                 virtual void RemoveFloorSelectionDraggedCallback(Eegeo::Helpers::ICallback1<float>& callback) = 0;
                 
                 virtual void SetTouchEnabled(bool enabled) = 0;
+
+                virtual void PlaySliderAnim() = 0;
             };
         }
     }

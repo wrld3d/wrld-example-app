@@ -22,7 +22,8 @@ namespace ExampleAppWPF
         private double m_panelOffscreenOffsetX;
         private double m_stateChangeAnimationTimeMilliseconds = 200.0;
         private bool m_dragInProgress = false;
-        private string[] m_floorShortNames = new string[] { };
+        private bool m_animationInProgress = false;
+        private string[] m_floorShortNames = new string[] {};
 
         private const float DefaultOffscreenOffsetX = 100.0f;
 
@@ -72,8 +73,45 @@ namespace ExampleAppWPF
             var currentPosition = m_floorPanel.RenderTransform.Transform(new Point(0.0, 0.0));
             m_floorPanel.RenderTransform = new TranslateTransform(m_panelOffscreenOffsetX, currentPosition.Y);
 
+            var dismissButtonPosition = m_dismissButton.RenderTransform.Transform(new Point());
+            m_dismissButton.RenderTransform = new TranslateTransform(m_panelOffscreenOffsetX, dismissButtonPosition.Y);
+
             SetTouchEnabled(false);
             Hide();
+        }
+
+        public void PlaySliderShakeAnim()
+        {
+            if(m_animationInProgress)
+            {
+                return;
+            }
+
+            var position = m_floorSlider.RenderTransform.Transform(new Point());
+            var offset = m_floorSlider.ActualWidth / 3.0;
+
+            var anim = new DoubleAnimation();
+            anim.From = position.X - offset;
+            anim.To = position.X;
+            anim.EasingFunction = new ElasticEase()
+            {
+                EasingMode = EasingMode.EaseOut,
+                Springiness = 2
+            };
+            anim.Duration = new Duration(TimeSpan.FromMilliseconds(1100));
+            anim.Completed += OnAnimCompleted;
+
+            var transform = new TranslateTransform(position.X - offset, position.Y);
+
+            m_floorSlider.RenderTransform = transform;
+            transform.BeginAnimation(TranslateTransform.XProperty, anim);
+
+            m_animationInProgress = true;
+        }
+
+        private void OnAnimCompleted(object sender, EventArgs e)
+        {
+            m_animationInProgress = false;
         }
 
         private static Thumb GetThumb(Slider slider)
@@ -112,6 +150,8 @@ namespace ExampleAppWPF
             m_floorSlider.Minimum = 0;
             m_floorSlider.Maximum = FloorCount - 1;
             SetSelectedFloor(currentlySelectedFloorIndex);
+
+            m_floorPanel.Visibility = FloorSelectionEnabled ? Visibility.Visible : Visibility.Hidden; ;
         }
         public void SetFloorName(string name)
         {
@@ -137,6 +177,9 @@ namespace ExampleAppWPF
             m_detailsPanel.Opacity = transitionParam;
             var currentPosition = m_floorPanel.RenderTransform.Transform(new Point(0.0, 0.0));
             m_floorPanel.RenderTransform = new TranslateTransform(newX, currentPosition.Y);
+
+            var dismissButtonPosition = m_dismissButton.RenderTransform.Transform(new Point());
+            m_dismissButton.RenderTransform = new TranslateTransform(newX, dismissButtonPosition.Y);
         }
 
         private double CalcPanelX(double t)
@@ -157,31 +200,39 @@ namespace ExampleAppWPF
         }
         private void AnimateTo(float t)
         {
+            bool onScreen = false;
+
             if (t > 0.0f)
             {
                 Visibility = Visibility.Visible;
+                onScreen = true;
             }
 
             var storyboard = new Storyboard();
             var currentPosition = m_floorPanel.RenderTransform.Transform(new Point(0.0, 0.0));
 
-
-            
             var floorPanelAnimation = new DoubleAnimation();
+            floorPanelAnimation.BeginTime = TimeSpan.FromMilliseconds(onScreen ? m_stateChangeAnimationTimeMilliseconds * 5 : 0.0);
             floorPanelAnimation.From = currentPosition.X;
             floorPanelAnimation.To = CalcPanelX(FloorSelectionEnabled ? t : 0.0f);
+            floorPanelAnimation.Completed += Storyboard_Completed;
             floorPanelAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(m_stateChangeAnimationTimeMilliseconds));
 
-            var transform = new TranslateTransform(currentPosition.X, currentPosition.Y);
-            m_floorPanel.RenderTransform = transform;
-            transform.BeginAnimation(TranslateTransform.XProperty, floorPanelAnimation);
+            var floorPanelTransform = new TranslateTransform(currentPosition.X, currentPosition.Y);
+            m_floorPanel.RenderTransform = floorPanelTransform;
+            floorPanelTransform.BeginAnimation(TranslateTransform.XProperty, floorPanelAnimation);
+
+            var dismissButtonPosition = m_dismissButton.RenderTransform.Transform(new Point());
+            var dismissButtonTransform = new TranslateTransform(dismissButtonPosition.X, dismissButtonPosition.Y);
+            m_dismissButton.RenderTransform = dismissButtonTransform;
+            floorPanelAnimation.From = dismissButtonPosition.X;
+            floorPanelAnimation.To = CalcPanelX(t);
+            dismissButtonTransform.BeginAnimation(TranslateTransform.XProperty, floorPanelAnimation);
 
             var detailsPanelAnimation = new DoubleAnimation();
             detailsPanelAnimation.From = m_detailsPanel.Opacity;
             detailsPanelAnimation.To = t;
             detailsPanelAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(m_stateChangeAnimationTimeMilliseconds));
-
-            detailsPanelAnimation.Completed += Storyboard_Completed;
 
             m_detailsPanel.BeginAnimation(OpacityProperty, detailsPanelAnimation);
         }

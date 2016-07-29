@@ -26,7 +26,8 @@ public class InitialExperienceIntroView implements View.OnClickListener, Animati
 	private int m_animationDuration;
 	
 	private RelativeLayout m_banner;
-	private LinearLayout m_menuDialog;
+	private LinearLayout m_settingMenuDialog;
+	private LinearLayout m_searchMenuDialog;
 	private LinearLayout m_compassDialog;
 	private LinearLayout m_mapmodeDialog;
 	private LinearLayout m_pinCreationDialog;
@@ -53,12 +54,14 @@ public class InitialExperienceIntroView implements View.OnClickListener, Animati
         m_view = m_activity.getLayoutInflater().inflate(R.layout.initial_experience_intro_layout, m_uiRoot, false);
         
         m_banner = (RelativeLayout)m_view.findViewById(R.id.initial_ux_intro_banner);
-        m_menuDialog = (LinearLayout)m_view.findViewById(R.id.initial_ux_menu_dialog);
+        m_settingMenuDialog = (LinearLayout)m_view.findViewById(R.id.initial_ux_settings_menu_dialog);
+        m_searchMenuDialog = (LinearLayout)m_view.findViewById(R.id.initial_ux_search_menu_dialog);
         m_compassDialog = (LinearLayout)m_view.findViewById(R.id.initial_ux_compass_dialog);
         m_mapmodeDialog = (LinearLayout)m_view.findViewById(R.id.initial_ux_mapmode_dialog);
         m_pinCreationDialog = (LinearLayout)m_view.findViewById(R.id.initial_ux_pin_creation_dialog);
         
-        setDialogText(m_menuDialog, "Main Menu", "Start exploring here");
+        setDialogText(m_settingMenuDialog, "Settings Menu", "Change your settings here");
+        setDialogText(m_searchMenuDialog, "Search Menu", "Start exploring here");
         setDialogText(m_compassDialog, "Compass", "Find me\nLock rotation");
         setDialogText(m_mapmodeDialog, "Map Mode", "Simple 2D View");
         setDialogText(m_pinCreationDialog, "My Pins", "Create your own pins");
@@ -86,13 +89,15 @@ public class InitialExperienceIntroView implements View.OnClickListener, Animati
     	m_mainAnimationOn.setInterpolator(new DecelerateInterpolator());
     	m_banner.startAnimation(m_mainAnimationOn);
     	
-    	Animation mainDialogAnim = createDialogAnimation(0.0f, 1.0f, m_animationDuration/4, 0);
-    	m_menuDialog.startAnimation(mainDialogAnim);
-    	Animation mapModeAnim = createDialogAnimation(0.0f, 1.0f, m_animationDuration/4, (m_animationDuration/4)*1);
+    	Animation settingsDialogAnim = createDialogAnimation(0.0f, 1.0f, m_animationDuration/4, 0);
+        m_settingMenuDialog.startAnimation(settingsDialogAnim);
+    	Animation searchDialogAnim = createDialogAnimation(0.0f, 1.0f, m_animationDuration/4, (m_animationDuration/4)*1);
+    	m_searchMenuDialog.startAnimation(searchDialogAnim);
+    	Animation mapModeAnim = createDialogAnimation(0.0f, 1.0f, m_animationDuration/4, (m_animationDuration/4)*2);
     	m_mapmodeDialog.startAnimation(mapModeAnim);
-    	Animation compassAnim = createDialogAnimation(0.0f, 1.0f, m_animationDuration/4, (m_animationDuration/4)*2);
+    	Animation compassAnim = createDialogAnimation(0.0f, 1.0f, m_animationDuration/4, (m_animationDuration/4)*3);
     	m_compassDialog.startAnimation(compassAnim);
-    	Animation pinCreateAnim = createDialogAnimation(0.0f, 1.0f, m_animationDuration/4, (m_animationDuration/4)*3);
+    	Animation pinCreateAnim = createDialogAnimation(0.0f, 1.0f, m_animationDuration/4, (m_animationDuration/4)*4);
     	m_pinCreationDialog.startAnimation(pinCreateAnim);
     }
 
@@ -105,13 +110,15 @@ public class InitialExperienceIntroView implements View.OnClickListener, Animati
     	m_mainAnimationOff.setAnimationListener(this);
     	m_banner.startAnimation(m_mainAnimationOff);
     	
-    	Animation mainDialogAnim = createDialogAnimation(1.0f, 0.0f, m_animationDuration/4, 0);
-    	m_menuDialog.startAnimation(mainDialogAnim);
-    	Animation mapModeAnim = createDialogAnimation(1.0f, 0.0f, m_animationDuration/4, (m_animationDuration/4)*1);
+    	Animation settingDialogAnim = createDialogAnimation(1.0f, 0.0f, m_animationDuration/4, 0);
+    	m_settingMenuDialog.startAnimation(settingDialogAnim);
+    	Animation searchDialogAnim = createDialogAnimation(1.0f, 0.0f, m_animationDuration/4, (m_animationDuration/4)*1);
+    	m_searchMenuDialog.startAnimation(searchDialogAnim);
+    	Animation mapModeAnim = createDialogAnimation(1.0f, 0.0f, m_animationDuration/4, (m_animationDuration/4)*2);
     	m_mapmodeDialog.startAnimation(mapModeAnim);
-    	Animation compassAnim = createDialogAnimation(1.0f, 0.0f, m_animationDuration/4, (m_animationDuration/4)*2);
+    	Animation compassAnim = createDialogAnimation(1.0f, 0.0f, m_animationDuration/4, (m_animationDuration/4)*3);
     	m_compassDialog.startAnimation(compassAnim);
-    	Animation pinCreateAnim = createDialogAnimation(1.0f, 0.0f, m_animationDuration/4, (m_animationDuration/4)*3);
+    	Animation pinCreateAnim = createDialogAnimation(1.0f, 0.0f, m_animationDuration/4, (m_animationDuration/4)*4);
     	m_pinCreationDialog.startAnimation(pinCreateAnim);
     }
     
@@ -128,6 +135,10 @@ public class InitialExperienceIntroView implements View.OnClickListener, Animati
     private void setDialogText(LinearLayout dialogRoot, String titleText, String descText)
     {
     	ViewGroup dialog = (ViewGroup)dialogRoot.getChildAt(0);
+    	if(dialog instanceof RelativeLayout)
+    	{
+    	    dialog = (ViewGroup)dialogRoot.getChildAt(1);    
+    	}
     	TextView title = (TextView)dialog.getChildAt(0);
     	TextView description = (TextView)dialog.getChildAt(1);
     	title.setText(titleText);

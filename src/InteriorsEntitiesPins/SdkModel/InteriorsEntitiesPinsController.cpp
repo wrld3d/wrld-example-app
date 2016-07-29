@@ -49,14 +49,13 @@ namespace ExampleApp
                 m_interiorInteractionModel.RegisterModelChangedCallback(m_interiorModelChangedCallback);
                 m_interiorInteractionModel.RegisterInteractionStateChangedCallback(m_interiorInteractionStateChangedCallback);
                 
-                // This is same across all interiors right now. If we want different omissions per interior
-                // then we'll need to do a bit of work.
-                m_labelNameToIconIndex["Restroom"] = 0;
-                m_labelNameToIconIndex["Men's Bathroom"] = 0;
-                m_labelNameToIconIndex["Women's Bathroom"] = 0;
-                m_labelNameToIconIndex["Bathroom"] = 0;
-                m_labelNameToIconIndex["Elevator"] = 1; // Not really an elevator logo, just for testing
-                m_labelNameToIconIndex["Escalator"] = 1;
+                m_labelNameToIconIndex["Restroom"] = InteriorsPinIconType::Bathroom;
+                m_labelNameToIconIndex["Men's Bathroom"] = InteriorsPinIconType::Bathroom;
+                m_labelNameToIconIndex["Women's Bathroom"] = InteriorsPinIconType::Bathroom;
+                m_labelNameToIconIndex["Bathroom"] = InteriorsPinIconType::Bathroom;
+                m_labelNameToIconIndex["Elevator"] = InteriorsPinIconType::Elevator;
+                m_labelNameToIconIndex["Escalator"] = InteriorsPinIconType::Escalator;
+                m_labelNameToIconIndex["Stairs"] = InteriorsPinIconType::Stairs;
                 
                 for (std::map<std::string, int>::const_iterator it = m_labelNameToIconIndex.begin(); it != m_labelNameToIconIndex.end(); ++it)
                 {
@@ -90,9 +89,26 @@ namespace ExampleApp
                 }
             }
             
-            void InteriorsEntitiesPinsController::Event_TouchTap(const AppInterface::TapData& data, Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& globeCameraController)
+            void InteriorsEntitiesPinsController::Event_TouchTap(const AppInterface::TapData& data)
             {
                 // TODO: Leaving this here in case we want to consume touch and be able to tap pins.
+                std::vector<Eegeo::Pins::Pin*> intersectingPins;
+                m_pinController.TryGetPinsIntersectingScreenPoint(data.point, intersectingPins);
+
+                if (intersectingPins.size() > 0)
+                {
+                    m_interiorPinSelectedCallbacks.ExecuteCallbacks(intersectingPins);
+                }
+            }
+
+            void InteriorsEntitiesPinsController::RegisterInteriorsPinSelected(Eegeo::Helpers::ICallback1<const std::vector<Eegeo::Pins::Pin*>&>& callback)
+            {
+                m_interiorPinSelectedCallbacks.AddCallback(callback);
+            }
+
+            void InteriorsEntitiesPinsController::UnregisterInteriorsPinSelected(Eegeo::Helpers::ICallback1<const std::vector<Eegeo::Pins::Pin*>&>& callback)
+            {
+                m_interiorPinSelectedCallbacks.RemoveCallback(callback);
             }
             
             void InteriorsEntitiesPinsController::AddPinsForEntities(const Eegeo::Resources::Interiors::Entities::TEntityModelVector& entities)

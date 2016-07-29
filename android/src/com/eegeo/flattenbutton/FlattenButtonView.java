@@ -103,5 +103,13 @@ public class FlattenButtonView implements View.OnClickListener
     public void setViewEnabled(final boolean enabled)
     {
     	m_view.setEnabled(enabled);
+    	if (!enabled) 
+    	{
+    		m_view.setAlpha(0.5f);
+    	}
+    	else 
+    	{
+    		m_view.setAlpha(1f);
+    	}
     }
 }
