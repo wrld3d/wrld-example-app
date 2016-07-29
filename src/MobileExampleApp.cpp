@@ -93,6 +93,7 @@
 #include "AppModeStatesFactory.h"
 #include "AppGlobeCameraWrapper.h"
 #include "AppInteriorCameraWrapper.h"
+#include "EnvironmentRayCaster.h"
 #include "NativeUIFactories.h"
 #include "InteriorsNavigationService.h"
 #include "UserInteractionModule.h"
@@ -133,8 +134,10 @@
 #include "RenderingTransformMeshModule.h"
 #include "IndoorLocationModule.h"
 #include "LocationServiceFacade.h"
-//#include "DoubleTapIndoorInteractionController.h"
-//#include "IDoubleTapIndoorInteractionController.h"
+#include "DoubleTapIndoorInteractionController.h"
+#include "IDoubleTapIndoorInteractionController.h"
+#include "AggregateCollisionBvhProvider.h"
+
 
 #ifndef ANDROID
 #include "IAvatarController.h"
@@ -356,6 +359,8 @@ namespace ExampleApp
 
         m_pGlobeCameraController = cameraControllerFactory.Create(gpsGlobeCameraConfig, touchControllerConfig, globeCameraConfig, m_screenProperties);
         
+        m_pRayCaster = Eegeo_NEW(Eegeo::Collision::EnvironmentRayCaster)(mapModule.GetAggregateCollisionBvhProvider(),mapModule.GetEnvironmentFlatteningService());
+        
         m_pGlobeCameraWrapper = Eegeo_NEW(AppCamera::SdkModel::AppGlobeCameraWrapper)(*m_pGlobeCameraController);
 
         m_pCameraTouchController = &m_pGlobeCameraController->GetTouchController();
@@ -377,7 +382,7 @@ namespace ExampleApp
         Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
 
         m_pCameraTransitionService = Eegeo_NEW(ExampleApp::CameraTransitions::SdkModel::CameraTransitionService)();
-
+        
         m_pStreamingVolume = Eegeo_NEW(Eegeo::Streaming::CameraFrustumStreamingVolume)(mapModule.GetResourceCeilingProvider(),
                                                                                        Eegeo::Config::LodRefinementConfig::GetLodRefinementAltitudesForDeviceSpec(platformConfig.PerformanceConfig.DeviceSpecification),
                                                                                        Eegeo::Streaming::QuadTreeCube::MAX_DEPTH_TO_VISIT,
@@ -432,6 +437,8 @@ namespace ExampleApp
                                                                                                                        m_messageBus);
         m_pCameraTransitionService->SetTransitionController(*m_pCameraTransitionController);
         
+        m_pDoubleTapIndoorInteractionController = Eegeo_NEW(ExampleApp::DoubleTapIndoorInteraction::SdkModel::DoubleTapIndoorInteractionController)(m_pInteriorsExplorerModule->GetInteriorsCameraController(),*m_pCameraTransitionController,interiorsPresentationModule.GetInteriorInteractionModel(),*m_pRayCaster);        
+        
         m_pLoadingScreen = CreateLoadingScreen(screenProperties, m_pWorld->GetRenderingModule(), m_pWorld->GetPlatformAbstractionModule());
         
         if(m_applicationConfiguration.TryStartAtGpsLocation())
@@ -460,6 +467,7 @@ namespace ExampleApp
 
         DestroyApplicationModelModules();
         
+        Eegeo_DELETE m_pRayCaster;
         Eegeo_DELETE m_pSQLiteModule;
 
         Eegeo_DELETE m_pCameraTransitionService;
@@ -1493,12 +1501,15 @@ namespace ExampleApp
         {
             return;
         }
-
+        
         if (m_pWorldPinsModule->GetWorldPinsService().HandleTouchDoubleTap(data.point))
         {
             return;
         }
-
+        if (m_pAppModeModel->GetAppMode() == AppModes::SdkModel::InteriorMode)
+        {
+            m_pDoubleTapIndoorInteractionController->OnDoubleTap(data);
+        }
         m_pCurrentTouchController->Event_TouchDoubleTap(data);
     }
 
