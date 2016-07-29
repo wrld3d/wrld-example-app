@@ -395,11 +395,11 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                  m_iOSFlurryMetricsService,
                                                                                  *m_pURLRequestHandler);
     
-    ExampleApp::IndoorLocation::SdkModel::IIndoorLocationModule &tempModule = app.GetIndoorLocationModule();
-    
-    
-    m_pSenionLabModule = Eegeo_NEW(ExampleApp::SenionLab::SenionLabModule)(&(tempModule.GetDeviceModel()),app.GetAppModeModel(),app.World().GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel(),applicationConfiguration.BuildingsInfo());
-
+    m_pSenionLabModule = Eegeo_NEW(ExampleApp::SenionLab::SenionLabModule)(&(app.GetIndoorLocationModule().GetDeviceModel()),
+                                                                           app.GetAppModeModel(),
+                                                                           app.World().GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel(),
+                                                                           app.World().GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel(),
+                                                                           applicationConfiguration.BuildingsInfo());
     
     // 3d map view layer.
     [m_pView addSubview: &m_pWorldPinOnMapViewModule->GetWorldPinOnMapView()];

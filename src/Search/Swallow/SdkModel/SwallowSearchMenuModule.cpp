@@ -40,11 +40,11 @@ namespace ExampleApp
                     
                     m_pWorkingGroupsMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                     m_pWorkingGroupsMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pWorkingGroupsMenuModel);
-                    m_pWorkingGroupsMenuOptionsModel->AddItem("Working Groups",
-                                                              "Working Groups",
+                    m_pWorkingGroupsMenuOptionsModel->AddItem("Departments",
+                                                              "Departments",
                                                               "",
                                                               "",
-                                                              Eegeo_NEW(View::SwallowCategoryMenuOption)(Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME,
+                                                              Eegeo_NEW(View::SwallowCategoryMenuOption)(Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME,
                                                                                                          false,
                                                                                                          true,
                                                                                                          menuViewModel,
@@ -52,8 +52,8 @@ namespace ExampleApp
                     
                     m_pFacilitiesMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                     m_pFacilitiesMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pFacilitiesMenuModel);
-                    m_pFacilitiesMenuOptionsModel->AddItem("Facilities",
-                                                           "Facilities",
+                    m_pFacilitiesMenuOptionsModel->AddItem("Facilities & Amenities",
+                                                           "Facilities & Amenities",
                                                            "",
                                                            "",
                                                            Eegeo_NEW(View::SwallowCategoryMenuOption)(Search::Swallow::SearchConstants::FACILITY_CATEGORY_NAME,
@@ -62,19 +62,29 @@ namespace ExampleApp
                                                                                                       menuViewModel,
                                                                                                       messageBus));
                     
+                    m_pPersonMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
+                    m_pPersonsMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pPersonMenuModel);
+                    m_pPersonsMenuOptionsModel->AddItem("People",
+                                                        "People",
+                                                        "",
+                                                        "",
+                                                        Eegeo_NEW(View::SwallowCategoryMenuOption)(Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME,                                                                                                      true,
+                                                                                                   true,
+                                                                                                   menuViewModel,                                                                                                      messageBus));
+                    
+                    
                     m_pOfficesMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                     m_pOfficesMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pOfficesMenuModel);
-                    m_pOfficesMenuOptionsModel->AddItem("Offices",
-                                                        "Offices",
+                    m_pOfficesMenuOptionsModel->AddItem("Buildings",
+                                                        "Buildings",
                                                         "",
                                                         "",
                                                         Eegeo_NEW(View::SwallowCategoryMenuOption)(Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME,
                                                                                                    false,
-                                                                                                   false,
+                                                                                                   true,
                                                                                                    menuViewModel,
                                                                                                    static_cast<float>(Eegeo::Space::EarthConstants::Radius*2.0),
-                                                                                                   messageBus));
-                }
+                                                                                                   messageBus));                }
                 
                 SwallowSearchMenuModule::~SwallowSearchMenuModule()
                 {

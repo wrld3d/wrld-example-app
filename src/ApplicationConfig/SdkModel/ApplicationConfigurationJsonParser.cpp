@@ -113,15 +113,7 @@ namespace ExampleApp
                 if (document.HasMember("WebProxyIgnorePattern"))
                 {
                     m_builder.SetWebProxyIgnorePattern(document["WebProxyIgnorePattern"].GetString());
-                }
-                
-                Eegeo_ASSERT(document.HasMember("SenionMapKey"), "SenionMapKey config not found");
-                m_builder.SetSenionMapKey(document["SenionMapKey"].GetString());
-                
-                
-                Eegeo_ASSERT(document.HasMember("SenionMapCustomerID"), "SenionMapCustomerID config not found");
-                m_builder.SetSenionCustomerID(document["SenionMapCustomerID"].GetString());
-                
+                }                
                 
                 Eegeo_ASSERT(document.HasMember("Buildings"), "Buildings config not found");
                 // Using a reference for consecutive access is handy and faster.

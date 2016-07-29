@@ -7,7 +7,8 @@
 #include "Interiors.h"
 
 @interface SenionLabLocationManager : NSObject
--(instancetype)initWithAvtarModule:(ExampleApp::IndoorLocation::SdkModel::IIndoorLocationDeviceModel *)deviceModel senionMapKey:(NSString*)mapKey senionCustomerID:(NSString*)customerID builidingID:(Eegeo::Resources::Interiors::InteriorId)bulidingID;
--(instancetype)initWithAvtarModule:(ExampleApp::IndoorLocation::SdkModel::IIndoorLocationDeviceModel *)deviceModel buildingMapKeyList:(NSMutableArray*)buildingMapList;
+-(instancetype)initWithAvtarModule:(ExampleApp::IndoorLocation::SdkModel::IIndoorLocationDeviceModel *)deviceModel senionMapKey:(NSString*)mapKey senionCustomerID:(NSString*)customerID builidingID:(Eegeo::Resources::Interiors::InteriorId)bulidingID ndFloorIndex:(int)floorIndex;
+-(void)stopUpdatingLocation;
+-(void)SetFloorIndex:(int)floorNumber;
 
 @end

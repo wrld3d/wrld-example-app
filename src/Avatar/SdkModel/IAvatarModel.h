@@ -41,6 +41,9 @@ namespace ExampleApp
                 
                 virtual void SetAvatarStatus(bool visibilityStatus)= 0;
                 
+                virtual void ResetAvatarModel() = 0;
+
+                
                 virtual void AddAvatarVisiblityChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveAvatarVisiblityChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 

@@ -61,12 +61,12 @@ namespace ExampleApp
                     }
                     float heightAboveSeaLevel = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevelIncludingEnvironmentFlattening(*m_interiorInteractionModel.GetInteriorModel(), m_interiorInteractionModel.GetSelectedFloorIndex(), m_environmentFlatteningService.GetCurrentScale());
                     
-                    if(building.Value() == "westport_house" && m_interiorInteractionModel.GetSelectedFloorIndex() == 2){ // here check interior and floor for height offset
+                    if((building.Value() == "swallow_lon_citygatehouse" || building.Value() == "westport_house") && m_interiorInteractionModel.GetSelectedFloorIndex() == floor){ // here check interior and floor for height offset
                         m_avatarView.SetHeightAboveSeaLevel(heightAboveSeaLevel+0.26); // #workaround to resolve floor height issue. Might need to look some offset factor for better solution
                     }else{
                         m_avatarView.SetHeightAboveSeaLevel(heightAboveSeaLevel);
                     }
-                
+
                     m_avatarModel.SetTargetPosition(latLong);
                     
                     
@@ -79,6 +79,9 @@ namespace ExampleApp
                 }else{
                     if(m_avatarView.IsShowingAvatar())
                     {
+                        Eegeo::Space::LatLong latLong1(0.0f,0.0f);
+                        m_avatarModel.SetPosition(latLong1);
+                        m_avatarModel.SetTargetPosition(latLong1);
                         m_avatarView.HideAvatar();
                     }
                 }
@@ -111,12 +114,19 @@ namespace ExampleApp
                     }
                     else
                     {
+//                        printf("Lat: %f , Lng: %f \n",m_avatarModel.GetPosition().GetLatitudeInDegrees(), m_avatarModel.GetPosition().GetLongitudeInDegrees());
+
                         m_avatarView.SetLatLongHeading(m_avatarModel.GetPosition(), m_avatarModel.GetHeading());
                     }
                 
                 }else{
                     if(m_avatarView.IsShowingAvatar())
                     {
+//                        Eegeo::Space::LatLong latLong1(0.0f,0.0f);
+//                        m_avatarModel.SetPosition(latLong1);
+//                        m_avatarModel.SetTargetPosition(latLong1);
+                        
+                        m_avatarModel.ResetAvatarModel();
                         m_avatarView.HideAvatar();
                     }
                 }
@@ -148,10 +158,7 @@ namespace ExampleApp
                     {
                         m_avatarView.ShowAvatar();
                     }
-                }
-                
-               
-                
+                }                                               
             }
         }
     }

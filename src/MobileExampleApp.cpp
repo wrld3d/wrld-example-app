@@ -845,11 +845,11 @@ namespace ExampleApp
         
         m_pSearchMenuModule->SetSearchSection("Search Results", m_pSearchResultSectionModule->GetSearchResultSectionModel());
         m_pSearchMenuModule->AddMenuSection("Meeting Rooms", m_pSwallowSearchMenuModule->GetMeetingRoomsMenuModel(), false);
-        m_pSearchMenuModule->AddMenuSection("Working Groups", m_pSwallowSearchMenuModule->GetWorkingGroupsMenuModel(), false);
-        m_pSearchMenuModule->AddMenuSection("Facilties", m_pSwallowSearchMenuModule->GetFacilitiesMenuModel(), false);
-        m_pSearchMenuModule->AddMenuSection("Offices", m_pSwallowSearchMenuModule->GetOfficesMenuModel(), false);
-        m_pSearchMenuModule->AddMenuSection("My Reports", m_pMyPinsModule->GetMyPinsMenuModel(), true);
-        m_pSearchMenuModule->AddMenuSection("Search", m_pCategorySearchModule->GetCategorySearchMenuModel(), true);
+        m_pSearchMenuModule->AddMenuSection("Facilities & Amenities",        m_pSwallowSearchMenuModule->GetFacilitiesMenuModel(), false);
+        m_pSearchMenuModule->AddMenuSection("Buildings",          m_pSwallowSearchMenuModule->GetOfficesMenuModel(), false);
+        m_pSearchMenuModule->AddMenuSection("My Location Reports", m_pMyPinsModule->GetMyPinsMenuModel(), true);
+        m_pSearchMenuModule->AddMenuSection("Discover", m_pCategorySearchModule->GetCategorySearchMenuModel(), true);
+        
     }
     
     void MobileExampleApp::InitialiseAppState(Eegeo::UI::NativeUIFactories& nativeUIFactories)

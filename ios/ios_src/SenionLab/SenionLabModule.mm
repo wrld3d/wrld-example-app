@@ -3,6 +3,7 @@
 
 #import "SenionLabModule.h"
 #include "InteriorSelectionModel.h"
+#include "InteriorInteractionModel.h"
 #import <sys/utsname.h>
 
 namespace ExampleApp
@@ -13,13 +14,17 @@ namespace ExampleApp
         SenionLabModule::SenionLabModule(ExampleApp::IndoorLocation::SdkModel::IIndoorLocationDeviceModel *deviceModel,
                                          ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                          Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                         const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>&buildingsInfo): m_deviceModel(deviceModel),
-                                                                                                                                    m_appModeChangedCallback(this, &SenionLabModule::OnAppModeChanged),
-                                                                                                                                    m_appModeModel(appModeModel),
-                                                                                                                                    m_interiorSelectionModel(interiorSelectionModel),                                                                                                                                    m_buildingsInfoList(buildingsInfo)
+                                         Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                         const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>&buildingsInfo):m_deviceModel(deviceModel),                                                                                                                                    m_appModeChangedCallback(this, &SenionLabModule::OnAppModeChanged),
+                                                            m_interiorSelectionModel(interiorSelectionModel),
+                                                                            m_interiorInteractionModel(interiorInteractionModel),
+                                                                            m_buildingsInfoList(buildingsInfo),m_appModeModel(appModeModel),m_floorSelectedCallback(this,&SenionLabModule::OnFloorSelected)
         {
+
             m_pLoctionManager = nil;
             m_appModeModel.RegisterAppModeChangedCallback(m_appModeChangedCallback);
+            
+            m_interiorInteractionModel.RegisterInteractionStateChangedCallback(m_floorSelectedCallback);
 
         }
         
@@ -35,10 +40,32 @@ namespace ExampleApp
             
             if (m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode)
             {
-                
-                Eegeo::Resources::Interiors::InteriorId builingID = m_interiorSelectionModel.GetSelectedInteriorId();
-                InitlizeSenionLocationManagerWithInteriorID(getBuildingInfo(builingID));
             }
+            else if (m_appModeModel.GetAppMode() == AppModes::SdkModel::WorldMode)
+            {
+                [m_pLoctionManager stopUpdatingLocation];
+            }
+        }
+        
+        void SenionLabModule::OnFloorSelected()
+        {
+            if(m_pBuildingID.Value() != m_interiorSelectionModel.GetSelectedInteriorId().Value())
+            {
+                [m_pLoctionManager stopUpdatingLocation];
+                m_selectedFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
+                m_pBuildingID = m_interiorSelectionModel.GetSelectedInteriorId();
+                InitlizeSenionLocationManagerWithInteriorID(getBuildingInfo(m_pBuildingID));
+                return;
+            }
+            
+            if(m_selectedFloorIndex != m_interiorInteractionModel.GetSelectedFloorIndex())
+            {
+                m_selectedFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
+                
+                if(m_pLoctionManager)
+                    [m_pLoctionManager SetFloorIndex:m_selectedFloorIndex];
+            }
+            
         }
         
         ExampleApp::ApplicationConfig::ApplicationBuildingInfo* SenionLabModule::getBuildingInfo(Eegeo::Resources::Interiors::InteriorId interiorID)
@@ -91,7 +118,7 @@ namespace ExampleApp
             
             if(isBluetoothSupported(deviceModel))
             {
-                m_pLoctionManager = [[SenionLabLocationManager alloc] initWithAvtarModule:m_deviceModel senionMapKey:[NSString stringWithCString:respectiveBuilding->SenionMapKey().c_str() encoding:[NSString defaultCStringEncoding]] senionCustomerID:[NSString stringWithCString:respectiveBuilding->SenionMapCustomerID().c_str() encoding:[NSString defaultCStringEncoding]] builidingID:builingID];
+                m_pLoctionManager = [[SenionLabLocationManager alloc] initWithAvtarModule:m_deviceModel senionMapKey:[NSString stringWithCString:respectiveBuilding->SenionMapKey().c_str() encoding:[NSString defaultCStringEncoding]] senionCustomerID:[NSString stringWithCString:respectiveBuilding->SenionMapCustomerID().c_str() encoding:[NSString defaultCStringEncoding]] builidingID:builingID ndFloorIndex:m_selectedFloorIndex];
             }
             else
             {
@@ -100,8 +127,6 @@ namespace ExampleApp
                 [pUnsupportedPopUp release];
             }
         }
-        
-
-        
     }
+    
 }

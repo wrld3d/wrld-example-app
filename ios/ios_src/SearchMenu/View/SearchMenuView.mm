@@ -277,7 +277,7 @@
     self.pSearchEditBox.backgroundColor = [UIColor clearColor];
     self.pSearchEditBox.borderStyle = UITextBorderStyleNone;
     self.pSearchEditBox.returnKeyType = UIReturnKeySearch;
-    self.pSearchEditBox.placeholder = @"Enter search term";
+    self.pSearchEditBox.placeholder = @"Search people, depts, groups, etc.";
     
     self.pSearchEditBoxClearButtonContainer = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, searchClearButtonSize + searchClearButtonRightInset, searchClearButtonSize)] autorelease];
     

@@ -39,6 +39,10 @@ namespace ExampleApp
                     
                     Menu::View::IMenuModel* m_pOfficesMenuModel;
                     Menu::View::IMenuOptionsModel* m_pOfficesMenuOptionsModel;
+                    
+                    Menu::View::IMenuModel* m_pPersonMenuModel;
+                    Menu::View::IMenuOptionsModel* m_pPersonsMenuOptionsModel;                    
+                    
                 };
             }
         }
