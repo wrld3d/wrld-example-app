@@ -28,11 +28,17 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<SenionLabModule> m_appModeChangedCallback;
                 ExampleApp::IndoorLocation::SdkModel::IIndoorLocationDeviceModel *m_deviceModel;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
+                Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>m_buildingsInfoList;
                 
-                
+                Eegeo::Helpers::TCallback0<SenionLabModule> m_floorSelectedCallback;
+
+                Eegeo::Resources::Interiors::InteriorId m_pBuildingID;
+                int m_selectedFloorIndex;
                 
                 void OnAppModeChanged();
+                void OnFloorSelected();
+                
                 ExampleApp::ApplicationConfig::ApplicationBuildingInfo* getBuildingInfo(Eegeo::Resources::Interiors::InteriorId interiorID);
                 void InitlizeSenionLocationManagerWithInteriorID(ExampleApp::ApplicationConfig::ApplicationBuildingInfo *respectiveBuilding);
 
@@ -40,6 +46,7 @@ namespace ExampleApp
                 SenionLabModule(ExampleApp::IndoorLocation::SdkModel::IIndoorLocationDeviceModel *deviceModel,
                                 ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                 Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                 const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>&buildingsInfo);
                 
                 ~SenionLabModule();                

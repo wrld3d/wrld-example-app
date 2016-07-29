@@ -168,6 +168,29 @@ namespace ExampleApp
                 
                 Eegeo_ASSERT(m_currentHeading == m_currentHeading, "heading created returned NaN, currentDirection.x = %f and 1/x = %f", m_currentDirection.x, 1/m_currentDirection.x);
             }
+            
+            void AvatarModel::ResetAvatarModel() {
+                
+                m_currentLatLong = Eegeo::Space::LatLong(0.0f,0.0f);
+                
+                m_currentDirection = Eegeo::dv3(0.0f, 1.0f, 0.0f);
+                
+                m_targetPos = Eegeo::dv3(0.0f, 0.0f, 0.0f);
+                
+                m_currentPos = Eegeo::dv3(0.0f, 0.0f, 0.0f);;
+                
+                m_currentHeading = 0.0f;
+
+                m_destinationReached = true;
+
+                m_time = 0.0f;
+
+                m_timeToReachDest = 0.0f;
+                
+                m_velocity = 4.0f;
+
+            }
+            
             void AvatarModel::AddAvatarVisiblityChangedCallback(Eegeo::Helpers::ICallback0 &callback)
             {
                 m_AvatarVisiblityCallbacks.AddCallback(callback);

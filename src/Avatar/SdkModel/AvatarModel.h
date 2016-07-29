@@ -41,15 +41,14 @@ namespace ExampleApp
                 
                 void SetAvatarStatus(bool visibilityStatus);
                 
+                void ResetAvatarModel();
+                
                 void AddAvatarVisiblityChangedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveAvatarVisiblityChangedCallback(Eegeo::Helpers::ICallback0& callback);
                 
                 
                 void AddAvatarLocationChangedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveAvatarLocationChangedCallback(Eegeo::Helpers::ICallback0& callback);
-                
-                
-                
 
                 
             private:

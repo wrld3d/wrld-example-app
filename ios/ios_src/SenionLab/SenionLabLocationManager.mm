@@ -11,11 +11,12 @@
 {
     SLIndoorLocationManager *locationManager;
     ExampleApp::IndoorLocation::SdkModel::IIndoorLocationDeviceModel *m_pDeviceModel;
-    NSMutableArray *locationManagerArray;
     Eegeo::Resources::Interiors::InteriorId m_pBuildingID;
+    int m_floorIndex;
 }
 -(void)startOfSiteTesting;
 @end
+
 @implementation SenionLabLocationManager
 
 #pragma mark init
@@ -27,35 +28,17 @@
     }
     return self;
 }
--(instancetype)initWithAvtarModule:(ExampleApp::IndoorLocation::SdkModel::IIndoorLocationDeviceModel *)deviceModel senionMapKey:(NSString*)mapKey senionCustomerID:(NSString*)customerID builidingID:(Eegeo::Resources::Interiors::InteriorId)bulidingID
+
+-(instancetype)initWithAvtarModule:(ExampleApp::IndoorLocation::SdkModel::IIndoorLocationDeviceModel *)deviceModel senionMapKey:(NSString*)mapKey senionCustomerID:(NSString*)customerID builidingID:(Eegeo::Resources::Interiors::InteriorId)bulidingID ndFloorIndex:(int)floorIndex
 {
     if (self = [super init])
     {
         [self initializeSDK:mapKey senionCustomerID:customerID];
         m_pDeviceModel = deviceModel;
         m_pBuildingID = bulidingID;
+        m_floorIndex = floorIndex;
     }
     return self;
-}
--(instancetype)initWithAvtarModule:(ExampleApp::IndoorLocation::SdkModel::IIndoorLocationDeviceModel *)deviceModel buildingMapKeyList:(NSMutableArray*)buildingMapList
-{
-    if (self = [super init])
-    {
-        locationManagerArray = [[NSMutableArray alloc]init];
-        
-        for(NSDictionary*building in buildingMapList)
-        {
-            NSString *mapKey = [building objectForKey:@"map_key"];
-            NSString *customer_id = [building objectForKey:@"customer_id"];
-            SLIndoorLocationManager *locationManager_  = [[SLIndoorLocationManager alloc] initWithMapKey:mapKey andCustomerId:customer_id];
-            locationManager_.delegate = self;
-            [locationManagerArray addObject:locationManager_];
-            
-        }
-        m_pDeviceModel = deviceModel;
-    }
-    return self;
-
 }
 
 -(void)initializeSDK:(NSString*)mapKey senionCustomerID:(NSString*)customerID
@@ -71,23 +54,81 @@
 -(void)startOfSiteTesting
 {
     
-  
-    SLCoordinate3D *coordinate3d1 = [[SLCoordinate3D alloc] initWithLatitude:56.459875 andLongitude:-2.978198 andFloorNr:2];
-    SLLocationState *locState1 = [[SLLocationState alloc]initWithLocation:coordinate3d1 andLocationUncertainty:0.0 andLocationStatus:SLLocationStatusConfirmed];
+    if(m_pBuildingID.Value() == "westport_house")
+    {
+        // West Port Mock Data
+        SLCoordinate3D *coordinate3d1 = [[SLCoordinate3D alloc] initWithLatitude:56.459875 andLongitude:-2.978198 andFloorNr:m_floorIndex];
+        SLLocationState *locState1 = [[SLLocationState alloc]initWithLocation:coordinate3d1 andLocationUncertainty:0.0 andLocationStatus:SLLocationStatusConfirmed];
+        
+        SLCoordinate3D *coordinate3d2 = [[SLCoordinate3D alloc] initWithLatitude:56.459959 andLongitude:-2.978228 andFloorNr:m_floorIndex];
+        SLLocationState *locState2 = [[SLLocationState alloc]initWithLocation:coordinate3d2 andLocationUncertainty:0.0 andLocationStatus:SLLocationStatusConfirmed];
+        
+        SLCoordinate3D *coordinate3d3 = [[SLCoordinate3D alloc] initWithLatitude:56.460009 andLongitude:-2.978240 andFloorNr:m_floorIndex];
+        SLLocationState *locState3 = [[SLLocationState alloc]initWithLocation:coordinate3d3 andLocationUncertainty:0.0 andLocationStatus:SLLocationStatusConfirmed];
+        
+        SLCoordinate3D *coordinate3d4 = [[SLCoordinate3D alloc] initWithLatitude:56.460046 andLongitude:-2.978339 andFloorNr:m_floorIndex];
+        SLLocationState *locState4 = [[SLLocationState alloc]initWithLocation:coordinate3d4 andLocationUncertainty:0.0 andLocationStatus:SLLocationStatusConfirmed];
+        
+        
+        NSArray *locationStateArry = [[NSArray alloc] initWithObjects:locState1,locState2,locState3,locState4,nil];
+        [locationManager startMockupLocationWithLocationStateArray:locationStateArry andTimeInterval:1];
+        
+    }
     
-    SLCoordinate3D *coordinate3d2 = [[SLCoordinate3D alloc] initWithLatitude:56.459959 andLongitude:-2.978228 andFloorNr:2];
-    SLLocationState *locState2 = [[SLLocationState alloc]initWithLocation:coordinate3d2 andLocationUncertainty:0.0 andLocationStatus:SLLocationStatusConfirmed];
+   else if (m_pBuildingID.Value() == "swallow_lon_citygatehouse")
+   {
+       
+       //Lat: 51.520146 , Lng: -0.086268
+       SLCoordinate3D *coordinate3d1 = [[SLCoordinate3D alloc] initWithLatitude:51.520146 andLongitude:-0.086268 andFloorNr:m_floorIndex];
+       SLLocationState *locState1 = [[SLLocationState alloc]initWithLocation:coordinate3d1 andLocationUncertainty:0.0 andLocationStatus:SLLocationStatusConfirmed];
+       
+       SLCoordinate3D *coordinate3d2 = [[SLCoordinate3D alloc] initWithLatitude:51.520150 andLongitude:-0.086392 andFloorNr:m_floorIndex];
+       SLLocationState *locState2 = [[SLLocationState alloc]initWithLocation:coordinate3d2 andLocationUncertainty:0.0 andLocationStatus:SLLocationStatusConfirmed];
+       
+       NSArray *locationStateArry = [[NSArray alloc] initWithObjects:locState1,locState2,nil];
+       [locationManager startMockupLocationWithLocationStateArray:locationStateArry andTimeInterval:1];
+       
+   }
+    
+    else if (m_pBuildingID.Value() == "swallow_lon_50finsbury")
+    {
 
-    SLCoordinate3D *coordinate3d3 = [[SLCoordinate3D alloc] initWithLatitude:56.460009 andLongitude:-2.978240 andFloorNr:2];
-    SLLocationState *locState3 = [[SLLocationState alloc]initWithLocation:coordinate3d3 andLocationUncertainty:0.0 andLocationStatus:SLLocationStatusConfirmed];
-    
-    SLCoordinate3D *coordinate3d4 = [[SLCoordinate3D alloc] initWithLatitude:56.460046 andLongitude:-2.978339 andFloorNr:2];
-    SLLocationState *locState4 = [[SLLocationState alloc]initWithLocation:coordinate3d4 andLocationUncertainty:0.0 andLocationStatus:SLLocationStatusConfirmed];
+        SLCoordinate3D *coordinate3d1 = [[SLCoordinate3D alloc] initWithLatitude:51.520009 andLongitude:-0.087011 andFloorNr:m_floorIndex];
+        SLLocationState *locState1 = [[SLLocationState alloc]initWithLocation:coordinate3d1 andLocationUncertainty:0.0 andLocationStatus:SLLocationStatusConfirmed];
+        
+        SLCoordinate3D *coordinate3d2 = [[SLCoordinate3D alloc] initWithLatitude:51.520018 andLongitude:-0.087071 andFloorNr:m_floorIndex];
+        SLLocationState *locState2 = [[SLLocationState alloc]initWithLocation:coordinate3d2 andLocationUncertainty:0.0 andLocationStatus:SLLocationStatusConfirmed];
+        
+        NSArray *locationStateArry = [[NSArray alloc] initWithObjects:locState1,locState2,nil];
+        [locationManager startMockupLocationWithLocationStateArray:locationStateArry andTimeInterval:1];
+        
+    }
 
+}
+
+-(void)stopUpdatingLocation
+{
     
-    NSArray *locationStateArry = [[NSArray alloc] initWithObjects:locState1,locState2,locState3,locState4,nil];
+    [locationManager stopUpdatingMockupLocation];
+    [locationManager stopUpdatingLocation];
+}
+
+-(void)SetFloorIndex:(int)floorNumber
+{
     
-    [locationManager startMockupLocationWithLocationStateArray:locationStateArry andTimeInterval:1];
+    m_floorIndex = floorNumber;
+}
+
+-(BOOL)shouldShowAvatar:(int)floorNumber
+{
+    
+    if(m_pBuildingID.Value() == "westport_house" && floorNumber == 2)
+        return true;
+    else if (m_pBuildingID.Value() == "swallow_lon_citygatehouse" && (floorNumber == 1 || floorNumber == 2))
+        return true;
+    else if (m_pBuildingID.Value() == "swallow_lon_50finsbury" && floorNumber == 7)
+        return true;
+    return false;
 }
 
 #pragma mark dealloc
@@ -101,19 +142,16 @@
 
 - (void) didFinishLoadingManager
 {
-    [locationManager startUpdatingLocation];
+//    [locationManager startUpdatingLocation];
     
     //#Mock Location Tesing Uncomment below line and comment above line
-//    [self startOfSiteTesting];
+    [self startOfSiteTesting];
 }
 - (void)didUpdateLocation:(SLCoordinate3D *)location withUncertainty:(double)radius andStatus:(SLLocationStatus)locationStatus
 {
-    
-    
-//    Eegeo::Resources::Interiors::InteriorId builingID(std::string("westport_house"));
     // TJ, TODO: the floor index needs a layer of indirection.
-    m_pDeviceModel->UpdateLocation(0, 0, location.latitude, location.longitude, m_pBuildingID, 2);//location.floorNr);
-    
+    if([self shouldShowAvatar:m_floorIndex])
+        m_pDeviceModel->UpdateLocation(0, 0, location.latitude, location.longitude, m_pBuildingID, m_floorIndex);
 
 }
 - (void) didUpdateHeading:(double)heading withStatus:(BOOL)status
