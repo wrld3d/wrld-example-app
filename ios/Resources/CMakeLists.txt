@@ -1,6 +1,9 @@
 set(resources ${resources}
 		Resources/ApplicationConfigs
 		Resources/ApplicationConfigs/standard_config.json
+        	Resources/Alert_Tutorial_icon.png
+        	Resources/Alert_Tutorial_icon@2x.png
+        	Resources/Alert_Tutorial_icon@3x.png
 		Resources/Arrow.png
 		Resources/arrow1.png
 		Resources/arrow1@2x.png
@@ -14,6 +17,9 @@ set(resources ${resources}
 		Resources/arrow3_right.png
 		Resources/arrow3_right@2x.png
 		Resources/arrow3_right@3x.png
+        	Resources/arrow3_right_blue.png
+        	Resources/arrow3_right_blue@2x.png
+        	Resources/arrow3_right_blue@3x.png
 		Resources/arrow3_up.png
 		Resources/arrow3_up@2x.png
 		Resources/arrow3_up@3x.png
@@ -278,13 +284,6 @@ set(resources ${resources}
 		Resources/image_blank.png
 		Resources/image_blank@2x.png
 		Resources/image_blank@3x.png
-		Resources/Interiors
-		Resources/Interiors/icons_interior_entities.png
-		Resources/Interiors/icons_interior_entities@2x.png
-		Resources/Interiors/icons_interior_entities@3x.png
-		Resources/Interiors/interiors_pin.png
-		Resources/Interiors/interiors_pin@2x.png
-		Resources/Interiors/interiors_pin@3x.png
         Resources/IPAexGothic32_A8_icons_0.png
         Resources/IPAexGothic32_A8_icons_1.png
         Resources/IPAexGothic32_A8_icons_2.png
@@ -357,9 +356,9 @@ set(resources ${resources}
 		Resources/search_results_spinner@2x.png
 		Resources/search_results_spinner@3x.png
 		Resources/SearchResultOnMap
-		Resources/SearchResultOnMap/pin_icon_texture_page.png
-		Resources/SearchResultOnMap/pin_icon_texture_page@2x.png
-        Resources/SearchResultOnMap/pin_icon_texture_page@3x.png
+		Resources/SearchResultOnMap/pin_sheet_0.png
+		Resources/SearchResultOnMap/pin_sheet_0@2x.png
+        Resources/SearchResultOnMap/pin_sheet_0@3x.png
         Resources/SearchResultOnMap/pin_sheet.json
 		Resources/SplashScreen
 		Resources/SplashScreen/Icon-60@2x.png

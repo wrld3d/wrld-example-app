@@ -35,6 +35,7 @@ namespace ExampleApp
                 jclass m_uiViewClass;
                 jobject m_uiView;
                 const float m_pinOffset;
+                bool m_showingEnlargedPin;
 
                 Eegeo::Helpers::CallbackCollection0 m_selectedCallbacks;
             };

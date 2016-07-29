@@ -4,6 +4,7 @@
 
 #include "IInteriorsEntitiesPinsModule.h"
 #include "Modules.h"
+#include "WorldPins.h"
 #include "Pins.h"
 #include "GLHelpers.h"
 
@@ -19,7 +20,9 @@ namespace ExampleApp
                 InteriorsEntitiesPinsModule(Eegeo::Modules::IPlatformAbstractionModule& platformAbstractionModule,
                                             Eegeo::Modules::Core::RenderingModule& renderingModule,
                                             Eegeo::Modules::Map::MapModule& mapModule,
-                                            const Eegeo::Rendering::ScreenProperties& screenProperties);
+                                            const WorldPins::SdkModel::IWorldPinIconMapping& worldPinIconMapping,
+                                            const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                            const bool interiorsAffectedByFlattening);
                 
                 ~InteriorsEntitiesPinsModule();
                 

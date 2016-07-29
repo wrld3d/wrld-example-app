@@ -34,6 +34,7 @@ namespace ExampleApp
                                         Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
                                         WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                         WorldPins::SdkModel::IWorldPinsScaleController& worldPinsScaleController,
+                                        const WorldPins::SdkModel::IWorldPinIconMapping& worldPinIconMapping,
                                         const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                         VisualMap::SdkModel::IVisualMapService& visualMapService,
                                         const Eegeo::Resources::Interiors::InteriorsCameraControllerFactory& interiorCameraControllerFactory,

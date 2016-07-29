@@ -98,7 +98,8 @@ public:
     void HandleTouchScreenInputEvent(const Eegeo::Windows::Input::TouchScreenInputEvent& event);
 
     void SetAllInputEventsToPointerUp(int x, int y);
-    void SetAllTouchInputEventsToPointerUp(int touchId);
+    void SetTouchInputEventToPointerUp(int touchId);
+    void PopAllTouchEvents();
 
     void SetEnvironmentFlatten(bool flattenState);
     void SetCameraLocation(const Eegeo::Space::LatLongAltitude& interestPoint, double distanceToInterestPoint, double orientationInDegrees);

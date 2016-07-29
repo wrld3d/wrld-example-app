@@ -39,7 +39,11 @@ namespace ExampleApp
                                        const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                        int targetFloorIndex,
                                        bool jumpIfFar=true);
-                
+                void StartTransitionTo(float distanceFromInterest,
+                                       const Eegeo::Resources::Interiors::InteriorId& interiorId,
+                                       int targetFloorIndex,
+                                       bool jumpIfFar=true);
+   
                 void StartTransitionTo(const Eegeo::dv3& newInterestPoint,
                                        float distanceFromInterest,
                                        float newHeadingRadians,

@@ -15,6 +15,7 @@ namespace ExampleAppWPF
         private TextBlock m_aboutTextView;
         private Button m_closeButton;
         private FrameworkElement m_mainContainer;
+        private ScrollViewer m_AboutPageView;
 
 
         static AboutPageView()
@@ -49,6 +50,26 @@ namespace ExampleAppWPF
             m_mainContainer = (FrameworkElement)GetTemplateChild("MainContainer");
 
             m_mainContainer.MouseDown += OnContainerMouseDown;
+
+            m_AboutPageView = (ScrollViewer)GetTemplateChild("AboutPageView");
+            m_AboutPageView.TouchDown += OnPinDetailsTouchDown;  
+            m_AboutPageView.TouchUp += OnPinDetailsTouchUp;
+            m_AboutPageView.ManipulationBoundaryFeedback += OnPinDetailsBoundaryFeedback;
+        }
+
+        private void OnPinDetailsBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void OnPinDetailsTouchUp(object sender, TouchEventArgs e)
+        {
+            m_AboutPageView.ReleaseTouchCapture(e.TouchDevice);
+        }
+
+        private void OnPinDetailsTouchDown(object sender, TouchEventArgs e)
+        {
+            m_aboutTextView.CaptureTouch(e.TouchDevice);
         }
 
         private void OnContainerMouseDown(object sender, MouseButtonEventArgs e)

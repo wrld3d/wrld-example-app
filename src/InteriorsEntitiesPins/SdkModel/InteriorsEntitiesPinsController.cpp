@@ -16,6 +16,11 @@
 #include "InteriorInteractionModel.h"
 #include "InteriorsEntitiesRepository.h"
 #include "InteriorTransitionModel.h"
+#include "StringHelpers.h"
+#include "IWorldPinIconMapping.h"
+#include "SerializedJsonHelpers.h"
+
+#include <math.h>
 
 namespace ExampleApp
 {
@@ -23,13 +28,31 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+            namespace
+            {
+                float GetHeightOffset(const Eegeo::Resources::Interiors::Entities::InteriorsEntityMetadata* pMetadata)
+                {
+                    float heightOffset = 5.f;
+                    const std::string heightOffsetField = "height_offset";
+                    double heightOffsetValue = 0.0;
+
+                    if (Eegeo::Helpers::TryGetDoubleValueFromSerializedJson(pMetadata->extendedInfo, heightOffsetField, heightOffsetValue))
+                    {
+                        heightOffset = static_cast<float>(heightOffsetValue);
+                    }
+
+                    return heightOffset;
+                }
+            }
             InteriorsEntitiesPinsController::InteriorsEntitiesPinsController(Eegeo::Resources::Interiors::Entities::InteriorsEntitiesRepository& interiorsEntitiesRepostiory,
                                                                              Eegeo::Pins::PinController& pinController,
                                                                              Eegeo::Pins::PinRepository& pinRepository,
+                                                                             const ExampleApp::WorldPins::SdkModel::IWorldPinIconMapping& pinIconMapper,
                                                                              Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                              const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                                                              Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& interiorsLabelsController,
-                                                                             Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider)
+                                                                             Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
+                                                                             bool interiorsAffectedByFlattening)
             : m_interiorsEntitiesRepository(interiorsEntitiesRepostiory)
             , m_pinController(pinController)
             , m_pinRepository(pinRepository)
@@ -42,6 +65,7 @@ namespace ExampleApp
             , m_interiorInteractionStateChangedCallback(this, &InteriorsEntitiesPinsController::HandleInteriorInteractionStateChanged)
             , m_lastId(0)
             , m_terrainHeightProvider(terrainHeightProvider)
+            , m_interiorsAffectedByFlattening(interiorsAffectedByFlattening)
             {
                 m_interiorsEntitiesRepository.RegisterEntitiesAddedCallback(m_entitiesAddedCallback);
                 m_interiorsEntitiesRepository.RegisterEntitiesRemovedCallback(m_entitiesRemovedCallback);
@@ -49,13 +73,13 @@ namespace ExampleApp
                 m_interiorInteractionModel.RegisterModelChangedCallback(m_interiorModelChangedCallback);
                 m_interiorInteractionModel.RegisterInteractionStateChangedCallback(m_interiorInteractionStateChangedCallback);
                 
-                m_labelNameToIconIndex["Restroom"] = InteriorsPinIconType::Bathroom;
-                m_labelNameToIconIndex["Men's Bathroom"] = InteriorsPinIconType::Bathroom;
-                m_labelNameToIconIndex["Women's Bathroom"] = InteriorsPinIconType::Bathroom;
-                m_labelNameToIconIndex["Bathroom"] = InteriorsPinIconType::Bathroom;
-                m_labelNameToIconIndex["Elevator"] = InteriorsPinIconType::Elevator;
-                m_labelNameToIconIndex["Escalator"] = InteriorsPinIconType::Escalator;
-                m_labelNameToIconIndex["Stairs"] = InteriorsPinIconType::Stairs;
+                m_labelNameToIconIndex["restroom"] = pinIconMapper.IconIndexForKey(IconKeyToilets);
+                m_labelNameToIconIndex["men's bathroom"] = pinIconMapper.IconIndexForKey(IconKeyToilets);
+                m_labelNameToIconIndex["women's bathroom"] = pinIconMapper.IconIndexForKey(IconKeyToilets);
+                m_labelNameToIconIndex["bathroom"] = pinIconMapper.IconIndexForKey(IconKeyToilets);
+                m_labelNameToIconIndex["elevator"] = pinIconMapper.IconIndexForKey(IconKeyElevator);
+                m_labelNameToIconIndex["escalator"] = pinIconMapper.IconIndexForKey(IconKeyEscalator);
+                m_labelNameToIconIndex["stairs"] = pinIconMapper.IconIndexForKey(IconKeyStairs);
                 
                 for (std::map<std::string, int>::const_iterator it = m_labelNameToIconIndex.begin(); it != m_labelNameToIconIndex.end(); ++it)
                 {
@@ -125,7 +149,8 @@ namespace ExampleApp
                         continue;
                     }
                     
-                    if (m_labelNameToIconIndex.find(pMetadata->name) != m_labelNameToIconIndex.end())
+                    const int iconIndex = FindPinIconIndexForEntity(*pMetadata);
+                    if (iconIndex >= 0)
                     {
                         AddPinForEntity(**it, interiorModel);
                     }
@@ -138,17 +163,22 @@ namespace ExampleApp
                 
                 const Eegeo::Resources::Interiors::Entities::InteriorsEntityMetadata *pMetadata = interiorModel.GetMetadataForEntityFromCategory("labels", model.GetIdentifier());
                 
-                Eegeo_ASSERT(m_labelNameToIconIndex.find(pMetadata->name) != m_labelNameToIconIndex.end(), "Wasn't expecting to generate a pin for this label");
                 Eegeo_ASSERT(pMetadata != NULL, "No metadata to create entity pin");
                 
                 Eegeo::Space::LatLong pinLocation = Eegeo::Space::LatLong::FromDegrees(pMetadata->latitudeDegrees, pMetadata->longitudeDegrees);
                 const float wallHeight = 3.f;
                 float terrainHeight = 0.f;
                 m_terrainHeightProvider.TryGetHeight(pinLocation.ToECEF(), 12, terrainHeight);
+
+                float height = static_cast<float>(pMetadata->altitude - terrainHeight + wallHeight) + GetHeightOffset(pMetadata);
                 
-                const float height = static_cast<float>(pMetadata->altitude - terrainHeight + wallHeight);
+                if (!m_interiorsAffectedByFlattening)
+                {
+                    height -= std::abs(interiorModel.GetTangentSpaceBounds().GetMin().y - terrainHeight);
+                }
                 
-                int pinIconIndex = m_labelNameToIconIndex.at(pMetadata->name);
+                const int pinIconIndex = FindPinIconIndexForEntity(*pMetadata);
+                Eegeo_ASSERT(pinIconIndex >= 0, "Wasn't expecting to generate a pin for this label");
                 
                 if (m_floorToScaleMap.find(pMetadata->floorNumber) == m_floorToScaleMap.end())
                 {
@@ -292,6 +322,22 @@ namespace ExampleApp
                 {
                     RemoveAllPins();
                     m_floorToScaleMap.clear();
+                }
+            }
+            
+            int InteriorsEntitiesPinsController::FindPinIconIndexForEntity(const Eegeo::Resources::Interiors::Entities::InteriorsEntityMetadata& interiorsEntityMetadata) const
+            {
+                const std::string& nameLowerCase = Eegeo::Helpers::ToLower(interiorsEntityMetadata.name);
+                
+                std::map<std::string, int>::const_iterator iter = m_labelNameToIconIndex.find(nameLowerCase);
+                
+                if (iter == m_labelNameToIconIndex.end())
+                {
+                    return -1;
+                }
+                else
+                {
+                    return iter->second;
                 }
             }
         }

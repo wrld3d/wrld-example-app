@@ -199,11 +199,19 @@ void AppRunner::SetAllInputEventsToPointerUp(int x, int y)
     }
 }
 
-void AppRunner::SetAllTouchInputEventsToPointerUp(int touchId)
+void AppRunner::SetTouchInputEventToPointerUp(int touchId)
 {
     if (m_pAppHost)
     {
-        m_pAppHost->SetAllTouchInputEventsToPointerUp(touchId);
+        m_pAppHost->SetTouchInputEventToPointerUp(touchId);
+    }
+}
+
+void AppRunner::PopAllTouchEvents()
+{
+    if (m_pAppHost)
+    {
+        m_pAppHost->PopAllTouchEvents();
     }
 }
 

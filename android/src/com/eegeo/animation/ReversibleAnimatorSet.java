@@ -134,4 +134,13 @@ public class ReversibleAnimatorSet
 		
 		return durationMilliseconds;
 	}
+	
+	public void cancel() 
+	{
+		if(m_animatorSet.isRunning()) 
+		{
+			m_animatorSet.cancel();
+		}
+	}
+	
 }

@@ -22,6 +22,7 @@ namespace ExampleAppWPF
         private double m_panelOffscreenOffsetX;
         private double m_stateChangeAnimationTimeMilliseconds = 200.0;
         private bool m_dragInProgress = false;
+        private bool m_animationInProgress = false;
         private string[] m_floorShortNames = new string[] {};
 
         private const float DefaultOffscreenOffsetX = 100.0f;
@@ -72,12 +73,20 @@ namespace ExampleAppWPF
             var currentPosition = m_floorPanel.RenderTransform.Transform(new Point(0.0, 0.0));
             m_floorPanel.RenderTransform = new TranslateTransform(m_panelOffscreenOffsetX, currentPosition.Y);
 
+            var dismissButtonPosition = m_dismissButton.RenderTransform.Transform(new Point());
+            m_dismissButton.RenderTransform = new TranslateTransform(m_panelOffscreenOffsetX, dismissButtonPosition.Y);
+
             SetTouchEnabled(false);
             Hide();
         }
 
         public void PlaySliderShakeAnim()
         {
+            if(m_animationInProgress)
+            {
+                return;
+            }
+
             var position = m_floorSlider.RenderTransform.Transform(new Point());
             var offset = m_floorSlider.ActualWidth / 3.0;
 
@@ -90,16 +99,19 @@ namespace ExampleAppWPF
                 Springiness = 2
             };
             anim.Duration = new Duration(TimeSpan.FromMilliseconds(1100));
+            anim.Completed += OnAnimCompleted;
 
             var transform = new TranslateTransform(position.X - offset, position.Y);
 
             m_floorSlider.RenderTransform = transform;
             transform.BeginAnimation(TranslateTransform.XProperty, anim);
+
+            m_animationInProgress = true;
         }
 
         private void OnAnimCompleted(object sender, EventArgs e)
         {
-            GetThumb(m_floorSlider).RenderTransform = new ScaleTransform(1.0, 1.0);
+            m_animationInProgress = false;
         }
 
         private static Thumb GetThumb(Slider slider)
@@ -140,6 +152,8 @@ namespace ExampleAppWPF
             m_floorSlider.Maximum = FloorCount - 1;
             m_floorSlider.Value = m_selectedFloorIndex;
             UpdateFloorSliderTagFromValue();
+
+            m_floorPanel.Visibility = FloorSelectionEnabled ? Visibility.Visible : Visibility.Hidden; ;
         }
         public void SetFloorName(string name)
         {
@@ -160,6 +174,9 @@ namespace ExampleAppWPF
             m_detailsPanel.Opacity = transitionParam;
             var currentPosition = m_floorPanel.RenderTransform.Transform(new Point(0.0, 0.0));
             m_floorPanel.RenderTransform = new TranslateTransform(newX, currentPosition.Y);
+
+            var dismissButtonPosition = m_dismissButton.RenderTransform.Transform(new Point());
+            m_dismissButton.RenderTransform = new TranslateTransform(newX, dismissButtonPosition.Y);
         }
 
         private double CalcPanelX(double t)
@@ -180,29 +197,33 @@ namespace ExampleAppWPF
         }
         private void AnimateTo(float t)
         {
+            bool onScreen = false;
+
             if (t > 0.0f)
             {
                 Visibility = Visibility.Visible;
+                onScreen = true;
             }
 
             var storyboard = new Storyboard();
             var currentPosition = m_floorPanel.RenderTransform.Transform(new Point(0.0, 0.0));
 
-
-            
             var floorPanelAnimation = new DoubleAnimation();
-            floorPanelAnimation.BeginTime = TimeSpan.FromMilliseconds(m_stateChangeAnimationTimeMilliseconds * 5);
+            floorPanelAnimation.BeginTime = TimeSpan.FromMilliseconds(onScreen ? m_stateChangeAnimationTimeMilliseconds * 5 : 0.0);
             floorPanelAnimation.From = currentPosition.X;
             floorPanelAnimation.To = CalcPanelX(FloorSelectionEnabled ? t : 0.0f);
+            floorPanelAnimation.Completed += Storyboard_Completed;
             floorPanelAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(m_stateChangeAnimationTimeMilliseconds));
 
             var floorPanelTransform = new TranslateTransform(currentPosition.X, currentPosition.Y);
             m_floorPanel.RenderTransform = floorPanelTransform;
             floorPanelTransform.BeginAnimation(TranslateTransform.XProperty, floorPanelAnimation);
 
-            var dismissButtonTransform = new TranslateTransform(CalcPanelX(1.0 - t), 0);
+            var dismissButtonPosition = m_dismissButton.RenderTransform.Transform(new Point());
+            var dismissButtonTransform = new TranslateTransform(dismissButtonPosition.X, dismissButtonPosition.Y);
             m_dismissButton.RenderTransform = dismissButtonTransform;
-            floorPanelAnimation.To = t;
+            floorPanelAnimation.From = dismissButtonPosition.X;
+            floorPanelAnimation.To = CalcPanelX(t);
             dismissButtonTransform.BeginAnimation(TranslateTransform.XProperty, floorPanelAnimation);
 
             var detailsPanelAnimation = new DoubleAnimation();
@@ -210,35 +231,7 @@ namespace ExampleAppWPF
             detailsPanelAnimation.To = t;
             detailsPanelAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(m_stateChangeAnimationTimeMilliseconds));
 
-            detailsPanelAnimation.Completed += Storyboard_Completed;
-
             m_detailsPanel.BeginAnimation(OpacityProperty, detailsPanelAnimation);
-
-
-            //var testAnim = new DoubleAnimation();
-            //testAnim.From = 1.0;
-            //testAnim.To = 0.0;
-            //testAnim.AutoReverse = true;
-            //testAnim.RepeatBehavior = RepeatBehavior.Forever;
-            //testAnim.Duration = new Duration(TimeSpan.FromSeconds(1.0));
-
-            //m_floorSlider.Background.BeginAnimation(Brush.OpacityProperty, testAnim);
-
-            //testAnim.CurrentTimeInvalidated += delegate (object sender, EventArgs e)
-            //{
-            //    //var value = (double)(testAnim.GetValue(OpacityProperty));
-            //    var test = m_floorSlider.Background.Opacity;
-            //    m_floorSlider.Background.Opacity = test;
-            //    m_floorSlider.Background.InvalidateProperty(OpacityProperty);
-            //    m_floorSlider.InvalidateVisual();
-            //};
-
-
-            //            m_floorSlider.Background = m_testBrush;
-            //m_floorSlider.BeginAnimation(OpacityProperty, testAnim);
-            //m_testBrush.Opacity = 0.3;
-
-
         }
 
         private void Storyboard_Completed(object sender, EventArgs e)
