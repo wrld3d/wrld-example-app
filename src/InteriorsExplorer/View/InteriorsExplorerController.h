@@ -23,7 +23,8 @@ namespace ExampleApp
             {
             public:
                 
-                InteriorsExplorerController(IInteriorsExplorerView& view,
+                InteriorsExplorerController(SdkModel::InteriorsExplorerModel& model,
+                                            IInteriorsExplorerView& view,
                                             InteriorsExplorerViewModel& viewModel,
                                             ExampleAppMessaging::TMessageBus& messageBus);
                 
@@ -40,6 +41,7 @@ namespace ExampleApp
                 void OnAppModeChanged(const AppModes::AppModeChangedMessage& message);
                 void OnInteriorsUINotificationRequired(const InteriorsExplorerUINotifyMessage& message);
                 
+                SdkModel::InteriorsExplorerModel& m_model;
                 IInteriorsExplorerView& m_view;
                 InteriorsExplorerViewModel& m_viewModel;
                 

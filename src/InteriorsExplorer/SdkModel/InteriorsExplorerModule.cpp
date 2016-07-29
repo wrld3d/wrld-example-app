@@ -34,7 +34,8 @@ namespace ExampleApp
                                                              Metrics::IMetricsService& metricsService,
                                                              const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel,
                                                              const bool interiorsAffectedByFlattening,
-                                                             InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsEntitiesPinsController)
+                                                             InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsEntitiesPinsController,
+                                                             PersistentSettings::IPersistentSettingsModel& persistentSettings)
             {
                 m_pUserInteractionModel = Eegeo_NEW(InteriorExplorerUserInteractionModel)();
                 
@@ -60,7 +61,8 @@ namespace ExampleApp
                                                              interiorSelectionModel,
                                                              visualMapService,
                                                              messageBus,
-                                                             metricsService);
+                                                             metricsService,
+                                                             persistentSettings);
                 
                 m_pViewModel = Eegeo_NEW(View::InteriorsExplorerViewModel)(false, identityProvider.GetNextIdentity(), messageBus);
                 
