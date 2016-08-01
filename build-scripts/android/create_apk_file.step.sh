@@ -28,7 +28,7 @@ is_windows=$(is_windows)
 
 pushd $pathToProjectDir
 
-apiVersion=${4:-23}
+apiVersion=${3:-23}
 
 droid_cmd_to_execute="android update project --path . --name NativeActivity --target android-$apiVersion"
 
