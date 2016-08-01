@@ -31,6 +31,7 @@
         android:ems="10"
         android:hint="Search people, depts, groups, etc."
         android:inputType="text"
+        android:imeOptions="actionDone"
         android:paddingLeft="8dp"
         android:textSize="18dp"
         android:singleLine="true">
@@ -43,7 +44,7 @@
         android:id="@+id/search_menu_spinner"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_alignRight="@+id/search_menu_view_edit_text_view"
+        android:layout_alignRight="@+id/search_menu_edit_text_background"
         android:layout_centerVertical="true"
         android:layout_marginRight="5dp"
         android:background="@android:color/transparent" />
