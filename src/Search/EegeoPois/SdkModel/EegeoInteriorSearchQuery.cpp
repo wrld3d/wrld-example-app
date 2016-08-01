@@ -43,7 +43,7 @@ namespace ExampleApp
                     std::stringstream urlstream;
                     urlstream.setf(std::ios_base::fixed);
                     urlstream << serviceUrl;
-                    urlstream << "/indoor?c=";
+                    urlstream << "/indoor?t=";
                     urlstream << encodedQuery;
                     urlstream << "&f=";
                     urlstream << m_floorIdx;

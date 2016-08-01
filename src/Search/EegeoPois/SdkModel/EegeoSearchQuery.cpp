@@ -40,7 +40,7 @@ namespace ExampleApp
                     urlstream << serviceUrl;
                     if (query.IsCategory())
                     {
-                        urlstream << "/category?c=";
+                        urlstream << "/tag?t=";
                     }
                     else
                     {

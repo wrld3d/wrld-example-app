@@ -33,7 +33,7 @@ namespace ExampleApp
                         bool indoor = json["indoor"].GetBool();
                         Eegeo::Resources::Interiors::InteriorId interiorId(json["indoor_id"].GetString());
                         
-                        std::string category = json["category"].GetString();
+                        std::string category = json["tags"].GetString();
                         std::vector<std::string> categories;
                         
                         std::string userData = "";
