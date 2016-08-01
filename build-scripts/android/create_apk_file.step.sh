@@ -28,7 +28,9 @@ is_windows=$(is_windows)
 
 pushd $pathToProjectDir
 
-droid_cmd_to_execute="android update project --path . --name NativeActivity --target android-23"
+apiVersion=${4:-23}
+
+droid_cmd_to_execute="android update project --path . --name NativeActivity --target android-$apiVersion"
 
 if [ "$is_windows" == true ]; then
     cmd "/c ${droid_cmd_to_execute}"
