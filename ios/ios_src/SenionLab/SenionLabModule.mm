@@ -112,7 +112,7 @@ namespace ExampleApp
             }
             else
             {
-                UIAlertView *pUnsupportedPopUp = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Senion navigation is not available due to unsupported bluetooth hardware." delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles: nil];
+                UIAlertView *pUnsupportedPopUp = [[UIAlertView alloc] initWithTitle:@"We're Sorry" message:@"Indoor positioning is not available for your device" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil];
                 [pUnsupportedPopUp show];
                 [pUnsupportedPopUp release];
             }
