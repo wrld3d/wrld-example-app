@@ -8,7 +8,7 @@ from PIL import Image
 import xlrd
 
 IMAGES_FOLDER = "images"
-CATEGORIES = [u'stationery',
+TAGS = [u'stationery',
               u'toilets',
               u'print_station',
               u'emergency_exit']
@@ -155,7 +155,7 @@ def validate_images(xls_sheet, first_data_row_number, image_column_index, availa
 
     return all_images_validated
 
-def validate_category_text_field(xls_sheet, poi_columns, column_name, first_data_row_number, available_in_app_col_index, categories):
+def validate_tags_text_field(xls_sheet, poi_columns, column_name, first_data_row_number, available_in_app_col_index, tags):
     column_index = poi_columns.index(column_name)
     all_rows_validated = True
     for row_num in range(first_data_row_number, xls_sheet.nrows):
@@ -169,8 +169,8 @@ def validate_category_text_field(xls_sheet, poi_columns, column_name, first_data
             print ("empty cell found for required text field '%s', row %d " % (column_name, row_num))
             all_rows_validated = False
 
-        if not text_value in categories:
-            print("Unknown category " + text_value + " for row " + str(row_num))
+        if not text_value in tags:
+            print("Unknown tag " + text_value + " for row " + str(row_num))
             all_rows_validated = False
 
         if not text_type is xlrd.XL_CELL_TEXT:
@@ -428,7 +428,7 @@ def build_meeting_room_table(xls_book, sheet_index, db_cursor, connection, src_i
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated image_filename column values")
 
-    all_validated &= validate_category_text_field(xls_sheet, poi_columns, 'availability', first_data_row_number, available_in_app_col_index, MEETING_ROOM_STATUSES)
+    all_validated &= validate_tags_text_field(xls_sheet, poi_columns, 'availability', first_data_row_number, available_in_app_col_index, MEETING_ROOM_STATUSES)
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated availability column values")
 
@@ -547,7 +547,7 @@ def build_facility_table(xls_book, sheet_index, db_cursor, connection, src_image
 
     print(str(table_name))
 
-    poi_columns = ['name', 'category', 'image_filename', 'description', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees']
+    poi_columns = ['name', 'tags', 'image_filename', 'description', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees']
     control_columns = ['available_in_app']
     expected_columns = poi_columns + control_columns
     available_in_app_col_index = len(poi_columns)
@@ -562,9 +562,9 @@ def build_facility_table(xls_book, sheet_index, db_cursor, connection, src_image
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated name column values")
 
-    all_validated &= validate_category_text_field(xls_sheet, poi_columns, 'category', first_data_row_number, available_in_app_col_index, CATEGORIES)
+    all_validated &= validate_tags_text_field(xls_sheet, poi_columns, 'tags', first_data_row_number, available_in_app_col_index, TAGS)
     if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated name category values")
+        raise ValueError("failed to validated name tags values")
 
     all_validated &= validate_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path)
     if not all_validated and stop_on_first_error:
