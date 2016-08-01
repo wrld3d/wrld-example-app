@@ -68,7 +68,10 @@ namespace ExampleApp
                 {
                     Eegeo::Space::LatLong latlong = Eegeo::Space::LatLong::FromDegrees(0.0, 0.0);
                     GetServiceLocation(latlong);
-                    out_position = Eegeo::Space::LatLongAltitude::FromDegrees(latlong.GetLatitudeInDegrees(), latlong.GetLongitudeInDegrees(),16).ToECEF();
+                    
+                    const int currentFloor = m_interiorInteractionModel.GetSelectedFloorIndex();
+                    out_position = Eegeo::Space::LatLongAltitude::FromDegrees(latlong.GetLatitudeInDegrees(), latlong.GetLongitudeInDegrees(), (currentFloor * Helpers::InteriorHeightHelpers::INTERIOR_FLOOR_HEIGHT) + Helpers::InteriorHeightHelpers::INTERIOR_AVATAR_OFFSET).ToECEF();
+                    
                 }
                 else if(inInterior)
                 {

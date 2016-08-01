@@ -13,6 +13,7 @@ namespace ExampleApp
         namespace InteriorHeightHelpers
         {
             const float INTERIOR_FLOOR_HEIGHT = 5.0f;
+            const float INTERIOR_AVATAR_OFFSET = 5.0f;
             
             float GetFloorHeightAboveSeaLevel(const Eegeo::Resources::Interiors::InteriorsModel& interiorModel, unsigned int floorIndex)
             {
