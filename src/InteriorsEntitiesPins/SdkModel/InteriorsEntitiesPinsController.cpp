@@ -12,13 +12,14 @@
 #include "InteriorsEntityPinData.h"
 #include "IInteriorsLabelController.h"
 #include "InteriorsFloorModel.h"
-#include "TerrainHeightProvider.h"
 #include "InteriorInteractionModel.h"
 #include "InteriorsEntitiesRepository.h"
 #include "InteriorTransitionModel.h"
 #include "StringHelpers.h"
 #include "IWorldPinIconMapping.h"
 #include "SerializedJsonHelpers.h"
+#include "InteriorHelpers.h"
+#include "InteriorsEntitiesHelpers.h"
 
 #include <math.h>
 
@@ -28,22 +29,6 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            namespace
-            {
-                float GetHeightOffset(const Eegeo::Resources::Interiors::Entities::InteriorsEntityMetadata* pMetadata)
-                {
-                    float heightOffset = 5.f;
-                    const std::string heightOffsetField = "height_offset";
-                    double heightOffsetValue = 0.0;
-
-                    if (Eegeo::Helpers::TryGetDoubleValueFromSerializedJson(pMetadata->extendedInfo, heightOffsetField, heightOffsetValue))
-                    {
-                        heightOffset = static_cast<float>(heightOffsetValue);
-                    }
-
-                    return heightOffset;
-                }
-            }
             InteriorsEntitiesPinsController::InteriorsEntitiesPinsController(Eegeo::Resources::Interiors::Entities::InteriorsEntitiesRepository& interiorsEntitiesRepostiory,
                                                                              Eegeo::Pins::PinController& pinController,
                                                                              Eegeo::Pins::PinRepository& pinRepository,
@@ -51,7 +36,6 @@ namespace ExampleApp
                                                                              Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                              const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                                                              Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& interiorsLabelsController,
-                                                                             Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
                                                                              bool interiorsAffectedByFlattening)
             : m_interiorsEntitiesRepository(interiorsEntitiesRepostiory)
             , m_pinController(pinController)
@@ -64,7 +48,6 @@ namespace ExampleApp
             , m_interiorModelChangedCallback(this, &InteriorsEntitiesPinsController::HandleInteriorModelChanged)
             , m_interiorInteractionStateChangedCallback(this, &InteriorsEntitiesPinsController::HandleInteriorInteractionStateChanged)
             , m_lastId(0)
-            , m_terrainHeightProvider(terrainHeightProvider)
             , m_interiorsAffectedByFlattening(interiorsAffectedByFlattening)
             {
                 m_interiorsEntitiesRepository.RegisterEntitiesAddedCallback(m_entitiesAddedCallback);
@@ -166,17 +149,7 @@ namespace ExampleApp
                 Eegeo_ASSERT(pMetadata != NULL, "No metadata to create entity pin");
                 
                 Eegeo::Space::LatLong pinLocation = Eegeo::Space::LatLong::FromDegrees(pMetadata->latitudeDegrees, pMetadata->longitudeDegrees);
-                const float wallHeight = 3.f;
-                float terrainHeight = 0.f;
-                m_terrainHeightProvider.TryGetHeight(pinLocation.ToECEF(), 12, terrainHeight);
 
-                float height = static_cast<float>(pMetadata->altitude - terrainHeight + wallHeight) + GetHeightOffset(pMetadata);
-                
-                if (!m_interiorsAffectedByFlattening)
-                {
-                    height -= std::abs(interiorModel.GetTangentSpaceBounds().GetMin().y - terrainHeight);
-                }
-                
                 const int pinIconIndex = FindPinIconIndexForEntity(*pMetadata);
                 Eegeo_ASSERT(pinIconIndex >= 0, "Wasn't expecting to generate a pin for this label");
                 
@@ -184,13 +157,20 @@ namespace ExampleApp
                 {
                     m_floorToScaleMap[pMetadata->floorNumber] = 0.f;
                 }
-                
+
                 Entities::InteriorsEntityPinData* pPinData = Eegeo_NEW(Entities::InteriorsEntityPinData)(pMetadata->floorNumber);
-                Eegeo::Pins::Pin* pPin = Eegeo_NEW(Eegeo::Pins::Pin)(m_lastId, pinLocation, height, pinIconIndex, pPinData);
+                Eegeo::Pins::Pin* pPin = Eegeo_NEW(Eegeo::Pins::Pin)(m_lastId, pinLocation, 0.0f, pinIconIndex, pPinData);
+                
+                float bottomOfInterior = m_interiorInteractionModel.GetInteriorModel()->GetTangentSpaceBounds().GetMin().y;
+                float heightAboveGround = (pMetadata->altitude - bottomOfInterior) + Eegeo::Resources::Interiors::Entities::Helpers::GetHeightOffset(pMetadata);
+                
+                pPin->SetTerrainHeight(bottomOfInterior, 14);
+                pPin->SetHeightAboveTerrain(heightAboveGround);
+
                 m_entityToPinIdMap[&model] = m_lastId;
                 m_pinRepository.AddPin(*pPin);
                 m_pinController.SetScaleForPin(*pPin, 0.f);
-                
+
                 m_lastId++;
             }
             
