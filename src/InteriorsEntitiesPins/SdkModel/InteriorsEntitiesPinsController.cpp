@@ -35,8 +35,7 @@ namespace ExampleApp
                                                                              const ExampleApp::WorldPins::SdkModel::IWorldPinIconMapping& pinIconMapper,
                                                                              Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                              const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
-                                                                             Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& interiorsLabelsController,
-                                                                             bool interiorsAffectedByFlattening)
+                                                                             Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& interiorsLabelsController)
             : m_interiorsEntitiesRepository(interiorsEntitiesRepostiory)
             , m_pinController(pinController)
             , m_pinRepository(pinRepository)
@@ -48,7 +47,6 @@ namespace ExampleApp
             , m_interiorModelChangedCallback(this, &InteriorsEntitiesPinsController::HandleInteriorModelChanged)
             , m_interiorInteractionStateChangedCallback(this, &InteriorsEntitiesPinsController::HandleInteriorInteractionStateChanged)
             , m_lastId(0)
-            , m_interiorsAffectedByFlattening(interiorsAffectedByFlattening)
             {
                 m_interiorsEntitiesRepository.RegisterEntitiesAddedCallback(m_entitiesAddedCallback);
                 m_interiorsEntitiesRepository.RegisterEntitiesRemovedCallback(m_entitiesRemovedCallback);
