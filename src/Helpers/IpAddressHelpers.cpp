@@ -7,6 +7,8 @@ extern "C"
 #ifndef EEGEO_WIN
 #include <arpa/inet.h>  
 #include <net/if.h>
+#include "EegeoPlatformMacros.h"
+
 #endif
 // If using this on android it need and implementation available in GitHub with name android-ifaddrs
 // android-ifaddrs include must come after net/if.h
