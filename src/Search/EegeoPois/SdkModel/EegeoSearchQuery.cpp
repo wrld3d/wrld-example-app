@@ -30,6 +30,7 @@ namespace ExampleApp
                 {
                     float minimumScore = 0.25;
                     const int maximumNumberOfResults = 99;
+                    const int timeOutSecs = 30;
 
                     std::string encodedQuery;
                     urlEncoder.UrlEncode(query.Query(), encodedQuery);
@@ -59,6 +60,7 @@ namespace ExampleApp
                         .Begin(Eegeo::Web::HttpVerbs::GET, url, m_webRequestCompleteCallback)
                         .SetShouldCacheAggressively(false)
                         .SetShouldRequestOnlyFromCache(false)
+                        .SetTimeout(timeOutSecs)
                         .Build();
                     m_pWebLoadRequest->Load();
                 }
