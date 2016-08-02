@@ -95,6 +95,13 @@ namespace ExampleApp
             {
                 Eegeo_ASSERT(m_interiorInteractionModel.HasInteriorModel(), "Can't show interior explorer without a selected and streamed interior");
                 
+                m_hasViewedAnyInterior = false;
+
+				if(!m_persistentSettings.TryGetValue(InteriorsExplorerModel_HasViewedAnyInterior, m_hasViewedAnyInterior))
+				{
+					m_hasViewedAnyInterior = false;
+				}
+
                 if(!m_interiorExplorerEnabled)
                 {
                     // stop the state stack from growing when going from interior to another interior.
@@ -125,19 +132,12 @@ namespace ExampleApp
             
             bool InteriorsExplorerModel::GetHasViewedAnyInterior()
             {
-                bool result = false;
-                
-                if(!m_persistentSettings.TryGetValue(InteriorsExplorerModel_HasViewedAnyInterior, result))
-                {
-                    result = false;
-                }
-                
-                return result;
+                return m_hasViewedAnyInterior;
             }
             
             void InteriorsExplorerModel::SetHasViewedAnyInterior(bool hasViewedAnyInterior)
             {
-                m_persistentSettings.SetValue(InteriorsExplorerModel_HasViewedAnyInterior, true);
+                this->m_hasViewedAnyInterior = hasViewedAnyInterior;
             }
             
            
@@ -172,6 +172,8 @@ namespace ExampleApp
             
             void InteriorsExplorerModel::Exit()
             {
+            	m_persistentSettings.SetValue(InteriorsExplorerModel_HasViewedAnyInterior, m_hasViewedAnyInterior);
+
                 HideInteriorExplorer();
                 m_metricsService.SetEvent(MetricEventInteriorExitPressed);
                 m_interiorExplorerExitedCallbacks.ExecuteCallbacks();

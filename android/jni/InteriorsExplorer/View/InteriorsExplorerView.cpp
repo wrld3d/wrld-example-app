@@ -119,6 +119,28 @@ namespace ExampleApp
 				env->CallVoidMethod(m_uiView, setSelectedFloorIndex, index);
             }
 
+            void InteriorsExplorerView::AddTutorialDialogs()
+            {
+            	ASSERT_UI_THREAD
+
+				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				JNIEnv* env = attached.envForThread;
+
+				jmethodID addTutorialDialogs = env->GetMethodID(m_uiViewClass, "addTutorialDialogs", "()V");
+				env->CallVoidMethod(m_uiView, addTutorialDialogs);
+            }
+
+            void InteriorsExplorerView::RemoveTutorialDialogs()
+            {
+            	ASSERT_UI_THREAD
+
+				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				JNIEnv* env = attached.envForThread;
+
+				jmethodID removeTutorialDialogs = env->GetMethodID(m_uiViewClass, "removeTutorialDialogs", "()V");
+				env->CallVoidMethod(m_uiView, removeTutorialDialogs);
+            }
+
             void InteriorsExplorerView::InsertDismissedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 ASSERT_UI_THREAD

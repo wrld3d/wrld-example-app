@@ -72,6 +72,7 @@ namespace ExampleApp
                 Metrics::IMetricsService& m_metricsService;
                 
                 PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
+                bool m_hasViewedAnyInterior;
                 
                 Eegeo::Helpers::TCallback0<InteriorsExplorerModel> m_interactionModelStateChangedCallback;
                 
