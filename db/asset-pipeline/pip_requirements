@@ -5,5 +5,5 @@ xlutils
 python-dateutil
 pyshp
 geojson
-pillow
+Pillow==3.2.0
 requests

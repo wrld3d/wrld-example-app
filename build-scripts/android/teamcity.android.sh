@@ -7,6 +7,7 @@ pathToProjectDir=${4}
 pathToReleaseKey=${5:-./release-key.keystore}
 hockeyAppIdentifier=${6:-62a47548d62a577300d5949f3f858683}
 shouldKeepLibs=${7:-1}
+apiVersion=$8
 
 #poke the version in the manifest
 manifest=$pathToProjectDir/AndroidManifest.xml
@@ -29,7 +30,7 @@ fi
 
 git checkout $file_to_poke
 
-sh "./build-scripts/android/create_apk_file.step.sh" $pathToProjectDir $pathToReleaseKey
+sh "./build-scripts/android/create_apk_file.step.sh" $pathToProjectDir $pathToReleaseKey $apiVersion
 if [ $? -ne 0 ] ; then
   exit 1
 fi

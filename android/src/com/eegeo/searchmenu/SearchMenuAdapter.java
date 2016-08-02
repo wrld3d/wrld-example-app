@@ -86,7 +86,7 @@ public class SearchMenuAdapter extends BaseAdapter
 
             ImageView categoryIcon = (ImageView)contextView.findViewById(R.id.menu_list_item_icon);
             String categoryIconString = data.has("icon") ? data.getString("icon") : m_defaultIconString;
-            categoryIcon.setImageResource(CategoryResources.getSearchResultIconForCategory(m_context, categoryIconString));
+            categoryIcon.setImageResource(CategoryResources.getSmallIconForResourceName(m_context, categoryIconString));
             
         }
         catch(Exception exception)
