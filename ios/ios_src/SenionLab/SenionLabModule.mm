@@ -52,20 +52,10 @@ namespace ExampleApp
             if(m_pBuildingID.Value() != m_interiorSelectionModel.GetSelectedInteriorId().Value())
             {
                 [m_pLoctionManager stopUpdatingLocation];
-                m_selectedFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
                 m_pBuildingID = m_interiorSelectionModel.GetSelectedInteriorId();
                 InitlizeSenionLocationManagerWithInteriorID(getBuildingInfo(m_pBuildingID));
                 return;
             }
-            
-            if(m_selectedFloorIndex != m_interiorInteractionModel.GetSelectedFloorIndex())
-            {
-                m_selectedFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
-                
-                if(m_pLoctionManager)
-                    [m_pLoctionManager SetFloorIndex:m_selectedFloorIndex];
-            }
-            
         }
         
         ExampleApp::ApplicationConfig::ApplicationBuildingInfo* SenionLabModule::getBuildingInfo(Eegeo::Resources::Interiors::InteriorId interiorID)
@@ -118,7 +108,7 @@ namespace ExampleApp
             
             if(isBluetoothSupported(deviceModel))
             {
-                m_pLoctionManager = [[SenionLabLocationManager alloc] initWithAvtarModule:m_deviceModel senionMapKey:[NSString stringWithCString:respectiveBuilding->SenionMapKey().c_str() encoding:[NSString defaultCStringEncoding]] senionCustomerID:[NSString stringWithCString:respectiveBuilding->SenionMapCustomerID().c_str() encoding:[NSString defaultCStringEncoding]] builidingID:builingID ndFloorIndex:m_selectedFloorIndex];
+                m_pLoctionManager = [[SenionLabLocationManager alloc] initWithAvtarModule:m_deviceModel senionMapKey:[NSString stringWithCString:respectiveBuilding->SenionMapKey().c_str() encoding:[NSString defaultCStringEncoding]] senionCustomerID:[NSString stringWithCString:respectiveBuilding->SenionMapCustomerID().c_str() encoding:[NSString defaultCStringEncoding]] builidingID:builingID ndSenionFloorMap:respectiveBuilding->SenionFloorMap()];
             }
             else
             {

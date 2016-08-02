@@ -128,7 +128,21 @@ namespace ExampleApp
                     std::string customerID = building["SenionMapCustomerID"].GetString();
                     Eegeo_ASSERT(building.HasMember("interior_id"), "interior_id config not found");
                     std::string interiorID = building["interior_id"].GetString();
-                    ExampleApp::ApplicationConfig::ApplicationBuildingInfo * buildingInfo = Eegeo_NEW(ExampleApp::ApplicationConfig::ApplicationBuildingInfo)(mapKey, customerID, interiorID);
+                    
+                    Eegeo_ASSERT(building.HasMember("SenionidToFloorIndexMapping"), "Senion to local floor index config not found");
+                    std::map<int,int> senionFloorMapping;
+                    const rapidjson::Value& floorMappingArray = building["SenionidToFloorIndexMapping"];
+                    for (rapidjson::SizeType y = 0; y < floorMappingArray.Size(); y++)
+                    {
+                        const rapidjson::Value& senionMapping = floorMappingArray[y];
+
+                        Eegeo_ASSERT(senionMapping.HasMember("SenionIndex"), "Senion index config not found");
+                        Eegeo_ASSERT(senionMapping.HasMember("FloorIindex"), "Floor index config not found");
+                        
+                        senionFloorMapping[static_cast<float>(senionMapping["SenionIndex"].GetInt())] = static_cast<float>(senionMapping["FloorIindex"].GetInt());
+                    }
+                    
+                    ExampleApp::ApplicationConfig::ApplicationBuildingInfo * buildingInfo = Eegeo_NEW(ExampleApp::ApplicationConfig::ApplicationBuildingInfo)(mapKey, customerID, interiorID, senionFloorMapping);
                     buildingInfoList.push_back(buildingInfo);
                 }
                 m_builder.SetBuildingInfoArray(buildingInfoList);
