@@ -25,6 +25,7 @@ namespace ExampleApp
                                                              Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
                                                              WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                              WorldPins::SdkModel::IWorldPinsScaleController& worldPinsScaleController,
+                                                             const WorldPins::SdkModel::IWorldPinIconMapping& worldPinIconMapping,
                                                              const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                              VisualMap::SdkModel::IVisualMapService& visualMapService,
                                                              const Eegeo::Resources::Interiors::InteriorsCameraControllerFactory& interiorCameraControllerFactory,
@@ -66,7 +67,7 @@ namespace ExampleApp
                 
                 m_pFloorDraggedObserver = Eegeo_NEW(InteriorsExplorerFloorDraggedObserver)(*m_pModel, m_pInteriorsCameraController->GetTouchController());
 
-                m_pUINotificationService = Eegeo_NEW(InteriorsUINotificationService)(messageBus, interiorsEntitiesPinsController);
+                m_pUINotificationService = Eegeo_NEW(InteriorsUINotificationService)(messageBus, interiorsEntitiesPinsController, worldPinIconMapping);
             }
             
             InteriorsExplorerModule::~InteriorsExplorerModule()

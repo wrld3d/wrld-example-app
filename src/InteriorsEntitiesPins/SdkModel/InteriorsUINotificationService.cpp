@@ -3,6 +3,7 @@
 #include "InteriorsUINotificationService.h"
 #include "InteriorsEntitiesPinsController.h"
 #include "InteriorsExplorerUINotifyMessage.h"
+#include "IWorldPinIconMapping.h"
 
 namespace ExampleApp
 {
@@ -13,7 +14,8 @@ namespace ExampleApp
             const int NumNotifiableIcons = 3;
 
             InteriorsUINotificationService::InteriorsUINotificationService(ExampleAppMessaging::TMessageBus& messageBus,
-                                                                           InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsPinsController)
+                                                                           InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsPinsController,
+                                                                           const WorldPins::SdkModel::IWorldPinIconMapping& pinIconMapping)
                 : m_interiorsPinsController(interiorsPinsController)
                 , m_interiorsPinSelectedCallback(this, &InteriorsUINotificationService::OnInteriorPinSelected)
                 , m_notifiableIcons(NumNotifiableIcons)
@@ -21,9 +23,9 @@ namespace ExampleApp
             {
                 m_interiorsPinsController.RegisterInteriorsPinSelected(m_interiorsPinSelectedCallback);
 
-                m_notifiableIcons[0] = InteriorsEntitiesPins::SdkModel::InteriorsPinIconType::Elevator;
-                m_notifiableIcons[1] = InteriorsEntitiesPins::SdkModel::InteriorsPinIconType::Escalator;
-                m_notifiableIcons[2] = InteriorsEntitiesPins::SdkModel::InteriorsPinIconType::Stairs;
+                m_notifiableIcons[0] = pinIconMapping.IconIndexForKey(InteriorsEntitiesPins::SdkModel::IconKeyElevator);
+                m_notifiableIcons[1] = pinIconMapping.IconIndexForKey(InteriorsEntitiesPins::SdkModel::IconKeyEscalator);
+                m_notifiableIcons[2] = pinIconMapping.IconIndexForKey(InteriorsEntitiesPins::SdkModel::IconKeyStairs);
             }
 
             InteriorsUINotificationService::~InteriorsUINotificationService()

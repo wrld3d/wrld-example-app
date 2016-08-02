@@ -17,7 +17,9 @@ namespace ExampleApp
             class WorldPinIconMappingFactory : public IWorldPinIconMappingFactory, private Eegeo::NonCopyable
             {
             public:
-                WorldPinIconMappingFactory(Eegeo::Helpers::IFileIO& fileIO, const std::string& sheetManifestFile);
+                WorldPinIconMappingFactory(Eegeo::Helpers::IFileIO& fileIO, 
+                    const std::string& sheetManifestFile,
+                    Eegeo::Helpers::ITextureFileLoader& textureFileLoader);
                 virtual ~WorldPinIconMappingFactory() { }
                 
                 virtual IWorldPinIconMapping* Create() const;
@@ -25,6 +27,7 @@ namespace ExampleApp
             private:
                 Eegeo::Helpers::IFileIO& m_fileIO;
                 const std::string m_sheetManifestFile;
+                Eegeo::Helpers::ITextureFileLoader& m_textureFileLoader;
                 
             };
         }

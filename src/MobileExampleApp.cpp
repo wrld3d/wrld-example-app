@@ -111,6 +111,7 @@
 #include "ModalityIgnoredReactionModel.h"
 #include "ReactorIgnoredReactionModel.h"
 #include "WorldPinIconMappingFactory.h"
+#include "IWorldPinIconMapping.h"
 #include "DoubleTapIndoorInteractionController.h"
 #include "IDoubleTapIndoorInteractionController.h"
 #include "AggregateCollisionBvhProvider.h"
@@ -223,9 +224,9 @@ namespace ExampleApp
         , m_pMapModeModule(NULL)
         , m_pFlattenButtonModule(NULL)
         , m_pSearchModule(NULL)
-        , m_pPinIconsTexturePageLayout(NULL)
         , m_pPinsModule(NULL)
         , m_pWorldPinsModule(NULL)
+        , m_pWorldPinsIconMapping(NULL)
         , m_pSearchResultOnMapModule(NULL)
         , m_pReactionModelModule(NULL)
         , m_pReactionControllerModule(NULL)
@@ -604,11 +605,10 @@ namespace ExampleApp
         if (m_interiorsEnabled)
         {
             m_pInteriorsEntitiesPinsModule = Eegeo_NEW(InteriorsEntitiesPins::SdkModel::InteriorsEntitiesPinsModule(m_pWorld->GetPlatformAbstractionModule(),
-                                                                                                                m_pWorld->GetRenderingModule(),
-                                                                                                                m_pWorld->GetMapModule(),
-                                                                                                                m_screenProperties,
-                                                                                                                interiorsAffectedByFlattening));
-                                                                                                            
+                                                                                                                    m_pWorld->GetRenderingModule(),
+                                                                                                                    m_pWorld->GetMapModule(),
+                                                                                                                    *m_pWorldPinsIconMapping,
+                                                                                                                    m_screenProperties));                                                                                               
         }
         
         m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(interiorsPresentationModule.GetInteriorInteractionModel(),
@@ -617,6 +617,7 @@ namespace ExampleApp
                                                                                                      interiorsModelModule.GetInteriorMarkerModelRepository(),
                                                                                                      m_pWorldPinsModule->GetWorldPinsService(),
                                                                                                      m_pWorldPinsModule->GetWorldPinsScaleController(),
+                                                                                                     *m_pWorldPinsIconMapping,
                                                                                                      mapModule.GetEnvironmentFlatteningService(),
                                                                                                      m_pVisualMapModule->GetVisualMapService(),
                                                                                                      interiorsCameraControllerFactory,
@@ -809,6 +810,8 @@ namespace ExampleApp
 		Eegeo_DELETE m_pWorldPinsModule;
 
 		Eegeo_DELETE m_pPinsModule;
+        
+        Eegeo_DELETE m_pWorldPinsIconMapping;
 
         Eegeo_DELETE m_pAppCameraModule;
         
@@ -852,35 +855,20 @@ namespace ExampleApp
         return reactors;
     }
     
-    Eegeo::Pins::PinsModule* MobileExampleApp::CreatePlatformPinsModuleInstance(Eegeo::Modules::Map::MapModule& mapModule,
-                                                                                Eegeo::EegeoWorld& world,
-                                                                                const std::string& pinsTexture,
-                                                                                float pinDiameter,
-                                                                                int sheetSize)
+    Eegeo::Pins::PinsModule* MobileExampleApp::CreatePlatformPinsModuleInstance(Eegeo::EegeoWorld& world,
+                                                                                const Eegeo::Helpers::GLHelpers::TextureInfo& pinTextureInfo,
+                                                                                const Eegeo::Rendering::AtlasTexturePageLayout& atlasTexturePageLayout)
     {
-        m_platformAbstractions.GetTextureFileLoader().LoadTexture(m_pinIconsTexture,
-                                                                  Helpers::ImageHelpers::GetImageNameForDevice(pinsTexture, ".png"),
-                                                                  false);
-        Eegeo_ASSERT(m_pinIconsTexture.textureId != 0);
-        
-        int numberOfTilesAlongEachAxisOfTexturePage = sheetSize;
-        m_pPinIconsTexturePageLayout = Eegeo_NEW(Eegeo::Rendering::RegularTexturePageLayout)(numberOfTilesAlongEachAxisOfTexturePage);
-        
-        float spriteWidth = pinDiameter;
-        float spriteHeight = pinDiameter;
-        
         Eegeo::Modules::Core::RenderingModule& renderingModule = world.GetRenderingModule();
-        
-        return Eegeo::Pins::PinsModule::Create(renderingModule,
-                                               world.GetPlatformAbstractionModule(),
-                                               mapModule,
-                                               m_pinIconsTexture.textureId,
-                                               *m_pPinIconsTexturePageLayout,
-                                               Eegeo::Rendering::LayerIds::InteriorEntities,
-                                               spriteWidth,
-                                               spriteHeight,
-                                               m_screenProperties,
-                                               false);
+        Eegeo::Modules::Map::MapModule& mapModule = world.GetMapModule();
+
+        return Eegeo::Pins::PinsModule::CreateWithAtlas(renderingModule,
+                                                       world.GetPlatformAbstractionModule(),
+                                                       mapModule,
+                                                       pinTextureInfo.textureId,
+                                                       atlasTexturePageLayout,
+                                                       Eegeo::Rendering::LayerIds::InteriorEntities,
+                                                       m_screenProperties);
     }
     
     void MobileExampleApp::InitialisePinsModules(Eegeo::Modules::Map::MapModule& mapModule,
@@ -888,13 +876,16 @@ namespace ExampleApp
                                                  const bool interiorsAffectedByFlattening,
                                                  const float screenOversampleScale)
     {
-        const int iconsPerRowColum = 10;
+        ExampleApp::WorldPins::SdkModel::WorldPinIconMappingFactory worldPinIconMappingFactory(
+            m_platformAbstractions.GetFileIO(),
+            "SearchResultOnMap/pin_sheet.json",
+            m_platformAbstractions.GetTextureFileLoader());
 
-        m_pPinsModule = CreatePlatformPinsModuleInstance(mapModule, world, "SearchResultOnMap/pin_icon_texture_page", m_pinDiameter, iconsPerRowColum);
+        m_pWorldPinsIconMapping = worldPinIconMappingFactory.Create();
+
+        m_pPinsModule = CreatePlatformPinsModuleInstance(world, m_pWorldPinsIconMapping->GetTextureInfo(), m_pWorldPinsIconMapping->GetTexturePageLayout());
         
         Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
-        
-        ExampleApp::WorldPins::SdkModel::WorldPinIconMappingFactory worldPinIconMappingFactory(m_platformAbstractions.GetFileIO(), "SearchResultOnMap/pin_sheet.json");
         
         m_pWorldPinsModule = Eegeo_NEW(ExampleApp::WorldPins::SdkModel::WorldPinsModule)(
                                  m_pPinsModule->GetRepository(),
@@ -908,7 +899,7 @@ namespace ExampleApp
                                  interiorsAffectedByFlattening,
                                  m_menuReaction,
                                  screenOversampleScale,
-                                 worldPinIconMappingFactory);
+                                 *m_pWorldPinsIconMapping);
     }
     
     void MobileExampleApp::InitialiseToursModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world, const bool interiorsAffectedByFlattening)

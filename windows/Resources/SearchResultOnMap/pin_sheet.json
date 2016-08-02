@@ -1,208 +1,263 @@
 {
     "pages": [
         {
-            "index": 0, 
-            "page": "output/1x/pin_sheet.png", 
-            "pins_per_axis": 10, 
-            "size": 280
+            "width": 256, 
+            "file": "pin_sheet_0", 
+            "height": 256
         }
     ], 
     "icons": [
         {
+            "index": 0, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 0, 
+            "x": 41, 
+            "id": "blank"
+        }, 
+        {
+            "index": 1, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 0, 
+            "x": 70, 
+            "id": "accommodation"
+        }, 
+        {
+            "index": 2, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 0, 
+            "x": 99, 
+            "id": "art_museums"
+        }, 
+        {
+            "index": 3, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 0, 
+            "x": 128, 
+            "id": "business"
+        }, 
+        {
+            "index": 4, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 0, 
+            "x": 157, 
+            "id": "entertainment"
+        }, 
+        {
+            "index": 5, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 0, 
+            "x": 186, 
+            "id": "food_drink"
+        }, 
+        {
+            "index": 6, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 0, 
+            "x": 215, 
+            "id": "amenities"
+        }, 
+        {
+            "index": 7, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 29, 
+            "x": 41, 
+            "id": "health"
+        }, 
+        {
+            "index": 8, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 29, 
+            "x": 70, 
+            "id": "my_pins"
+        }, 
+        {
+            "index": 9, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 29, 
+            "x": 99, 
+            "id": "person"
+        }, 
+        {
+            "index": 10, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 29, 
+            "x": 128, 
+            "id": "misc"
+        }, 
+        {
+            "index": 11, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 29, 
+            "x": 157, 
+            "id": "shopping"
+        }, 
+        {
+            "index": 12, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 29, 
+            "x": 186, 
+            "id": "sports_leisure"
+        }, 
+        {
+            "index": 13, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 29, 
+            "x": 215, 
+            "id": "tourism"
+        }, 
+        {
+            "index": 14, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 41, 
+            "x": 0, 
+            "id": "transport"
+        }, 
+        {
+            "index": 15, 
+            "h": 40, 
+            "page": 0, 
+            "w": 40, 
             "y": 0, 
             "x": 0, 
-            "page": 0, 
-            "name": "blank", 
-            "index": 0
+            "id": "indoor_map"
         }, 
         {
-            "y": 0, 
-            "x": 1, 
+            "index": 16, 
+            "h": 28, 
             "page": 0, 
-            "name": "accommodation", 
-            "index": 1
+            "w": 28, 
+            "y": 58, 
+            "x": 29, 
+            "id": "disabled_access"
         }, 
         {
-            "y": 0, 
-            "x": 2, 
+            "index": 17, 
+            "h": 28, 
             "page": 0, 
-            "name": "art_museums", 
-            "index": 2
+            "w": 28, 
+            "y": 58, 
+            "x": 58, 
+            "id": "toilets"
         }, 
         {
-            "y": 0, 
-            "x": 3, 
+            "index": 18, 
+            "h": 28, 
             "page": 0, 
-            "name": "business", 
-            "index": 3
+            "w": 28, 
+            "y": 58, 
+            "x": 87, 
+            "id": "defibrillator"
         }, 
         {
-            "y": 0, 
-            "x": 4, 
+            "index": 19, 
+            "h": 28, 
             "page": 0, 
-            "name": "entertainment", 
-            "index": 4
+            "w": 28, 
+            "y": 58, 
+            "x": 116, 
+            "id": "elevator"
         }, 
         {
-            "y": 0, 
-            "x": 5, 
+            "index": 20, 
+            "h": 28, 
             "page": 0, 
-            "name": "food_drink", 
-            "index": 5
+            "w": 28, 
+            "y": 58, 
+            "x": 145, 
+            "id": "stairs"
         }, 
         {
-            "y": 0, 
-            "x": 6, 
+            "index": 21, 
+            "h": 28, 
             "page": 0, 
-            "name": "amenities", 
-            "index": 6
+            "w": 28, 
+            "y": 58, 
+            "x": 174, 
+            "id": "escalator"
         }, 
         {
-            "y": 0, 
-            "x": 7, 
+            "index": 22, 
+            "h": 28, 
             "page": 0, 
-            "name": "health", 
-            "index": 7
+            "w": 28, 
+            "y": 58, 
+            "x": 203, 
+            "id": "printer"
         }, 
         {
-            "y": 0, 
-            "x": 8, 
+            "index": 23, 
+            "h": 28, 
             "page": 0, 
-            "name": "my_pins", 
-            "index": 8
-        }, 
-        {
-            "y": 0, 
-            "x": 9, 
-            "page": 0, 
-            "name": "person", 
-            "index": 9
-        }, 
-        {
-            "y": 1, 
+            "w": 28, 
+            "y": 70, 
             "x": 0, 
-            "page": 0, 
-            "name": "misc", 
-            "index": 10
+            "id": "reception"
         }, 
         {
-            "y": 1, 
-            "x": 1, 
+            "index": 24, 
+            "h": 28, 
             "page": 0, 
-            "name": "shopping", 
-            "index": 11
+            "w": 28, 
+            "y": 87, 
+            "x": 29, 
+            "id": "stationary"
         }, 
         {
-            "y": 1, 
-            "x": 2, 
+            "index": 25, 
+            "h": 28, 
             "page": 0, 
-            "name": "sports_leisure", 
-            "index": 12
+            "w": 28, 
+            "y": 87, 
+            "x": 58, 
+            "id": "fire"
         }, 
         {
-            "y": 1, 
-            "x": 3, 
+            "index": 26, 
+            "h": 28, 
             "page": 0, 
-            "name": "tourism", 
-            "index": 13
+            "w": 28, 
+            "y": 87, 
+            "x": 87, 
+            "id": "first_aid"
         }, 
         {
-            "y": 1, 
-            "x": 4, 
+            "index": 27, 
+            "h": 28, 
             "page": 0, 
-            "name": "transport", 
-            "index": 14
-        }, 
-        {
-            "y": 1, 
-            "x": 5, 
-            "page": 0, 
-            "name": "indoor_map", 
-            "index": 15
-        }, 
-        {
-            "y": 1, 
-            "x": 6, 
-            "page": 0, 
-            "name": "disabled_access", 
-            "index": 16
-        }, 
-        {
-            "y": 1, 
-            "x": 7, 
-            "page": 0, 
-            "name": "toilets", 
-            "index": 17
-        }, 
-        {
-            "y": 1, 
-            "x": 8, 
-            "page": 0, 
-            "name": "defibrillator", 
-            "index": 18
-        }, 
-        {
-            "y": 1, 
-            "x": 9, 
-            "page": 0, 
-            "name": "elevator", 
-            "index": 19
-        }, 
-        {
-            "y": 2, 
-            "x": 0, 
-            "page": 0, 
-            "name": "stairs", 
-            "index": 20
-        }, 
-        {
-            "y": 2, 
-            "x": 1, 
-            "page": 0, 
-            "name": "escalator", 
-            "index": 21
-        }, 
-        {
-            "y": 2, 
-            "x": 2, 
-            "page": 0, 
-            "name": "printer", 
-            "index": 22
-        }, 
-        {
-            "y": 2, 
-            "x": 3, 
-            "page": 0, 
-            "name": "reception", 
-            "index": 23
-        }, 
-        {
-            "y": 2, 
-            "x": 4, 
-            "page": 0, 
-            "name": "stationary", 
-            "index": 24
-        }, 
-        {
-            "y": 2, 
-            "x": 5, 
-            "page": 0, 
-            "name": "fire", 
-            "index": 25
-        }, 
-        {
-            "y": 2, 
-            "x": 6, 
-            "page": 0, 
-            "name": "first_aid", 
-            "index": 26
-        }, 
-        {
-            "y": 2, 
-            "x": 7, 
-            "page": 0, 
-            "name": "emergency_exit", 
-            "index": 27
+            "w": 28, 
+            "y": 87, 
+            "x": 116, 
+            "id": "emergency_exit"
         }
     ]
 }
