@@ -12,31 +12,24 @@
     SLIndoorLocationManager *locationManager;
     ExampleApp::IndoorLocation::SdkModel::IIndoorLocationDeviceModel *m_pDeviceModel;
     Eegeo::Resources::Interiors::InteriorId m_pBuildingID;
-    int m_floorIndex;
+    std::map<int,int> m_senionFloorMap;
 }
 -(void)startOfSiteTesting;
+
 @end
 
 @implementation SenionLabLocationManager
 
 #pragma mark init
-- (instancetype)init
-{
-    if (self = [super init])
-    {
-    
-    }
-    return self;
-}
 
--(instancetype)initWithAvtarModule:(ExampleApp::IndoorLocation::SdkModel::IIndoorLocationDeviceModel *)deviceModel senionMapKey:(NSString*)mapKey senionCustomerID:(NSString*)customerID builidingID:(Eegeo::Resources::Interiors::InteriorId)bulidingID ndFloorIndex:(int)floorIndex
+-(instancetype)initWithAvtarModule:(ExampleApp::IndoorLocation::SdkModel::IIndoorLocationDeviceModel *)deviceModel senionMapKey:(NSString*)mapKey senionCustomerID:(NSString*)customerID builidingID:(Eegeo::Resources::Interiors::InteriorId)bulidingID ndSenionFloorMap:(std::map<int,int>)senionFloorMap
 {
     if (self = [super init])
     {
         [self initializeSDK:mapKey senionCustomerID:customerID];
         m_pDeviceModel = deviceModel;
         m_pBuildingID = bulidingID;
-        m_floorIndex = floorIndex;
+        m_senionFloorMap = senionFloorMap;
     }
     return self;
 }
@@ -53,6 +46,7 @@
 
 -(void)startOfSiteTesting
 {
+    int m_floorIndex = 1;   // for mock testing only
     
     if(m_pBuildingID.Value() == "westport_house")
     {
@@ -78,7 +72,6 @@
    else if (m_pBuildingID.Value() == "swallow_lon_citygatehouse")
    {
        
-       //Lat: 51.520146 , Lng: -0.086268
        SLCoordinate3D *coordinate3d1 = [[SLCoordinate3D alloc] initWithLatitude:51.520146 andLongitude:-0.086268 andFloorNr:m_floorIndex];
        SLLocationState *locState1 = [[SLLocationState alloc]initWithLocation:coordinate3d1 andLocationUncertainty:0.0 andLocationStatus:SLLocationStatusConfirmed];
        
@@ -103,31 +96,24 @@
         [locationManager startMockupLocationWithLocationStateArray:locationStateArry andTimeInterval:1];
         
     }
-
 }
 
 -(void)stopUpdatingLocation
 {
-    
     [locationManager stopUpdatingMockupLocation];
     [locationManager stopUpdatingLocation];
 }
 
--(void)SetFloorIndex:(int)floorNumber
+-(BOOL)shouldShowAvatar:(int)senionID ndFloorNum:(int &)floorNum
 {
+    std::map<int,int>::iterator it = m_senionFloorMap.find(senionID);
     
-    m_floorIndex = floorNumber;
-}
-
--(BOOL)shouldShowAvatar:(int)floorNumber
-{
+    if(it != m_senionFloorMap.end())
+    {
+        floorNum = it->second;
+        return true;
+    }
     
-    if(m_pBuildingID.Value() == "westport_house" && floorNumber == 2)
-        return true;
-    else if (m_pBuildingID.Value() == "swallow_lon_citygatehouse" && (floorNumber == 1 || floorNumber == 2))
-        return true;
-    else if (m_pBuildingID.Value() == "swallow_lon_50finsbury" && floorNumber == 7)
-        return true;
     return false;
 }
 
@@ -142,17 +128,20 @@
 
 - (void) didFinishLoadingManager
 {
-//    [locationManager startUpdatingLocation];
+    //[locationManager startUpdatingLocation];
     
     //#Mock Location Tesing Uncomment below line and comment above line
     [self startOfSiteTesting];
 }
 - (void)didUpdateLocation:(SLCoordinate3D *)location withUncertainty:(double)radius andStatus:(SLLocationStatus)locationStatus
 {
+    int floorNum = -1;
+    
     // TJ, TODO: the floor index needs a layer of indirection.
-    if([self shouldShowAvatar:m_floorIndex])
-        m_pDeviceModel->UpdateLocation(0, 0, location.latitude, location.longitude, m_pBuildingID, m_floorIndex);
-
+     if([self shouldShowAvatar:location.floorNr ndFloorNum:floorNum])
+     {
+        m_pDeviceModel->UpdateLocation(0, 0, location.latitude, location.longitude, m_pBuildingID, floorNum);
+     }
 }
 - (void) didUpdateHeading:(double)heading withStatus:(BOOL)status
 {

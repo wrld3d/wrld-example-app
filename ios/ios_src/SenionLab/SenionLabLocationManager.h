@@ -5,10 +5,10 @@
 #import <Foundation/Foundation.h>
 #include "IndoorLocation.h"
 #include "Interiors.h"
+#include <map>
 
 @interface SenionLabLocationManager : NSObject
--(instancetype)initWithAvtarModule:(ExampleApp::IndoorLocation::SdkModel::IIndoorLocationDeviceModel *)deviceModel senionMapKey:(NSString*)mapKey senionCustomerID:(NSString*)customerID builidingID:(Eegeo::Resources::Interiors::InteriorId)bulidingID ndFloorIndex:(int)floorIndex;
+-(instancetype)initWithAvtarModule:(ExampleApp::IndoorLocation::SdkModel::IIndoorLocationDeviceModel *)deviceModel senionMapKey:(NSString*)mapKey senionCustomerID:(NSString*)customerID builidingID:(Eegeo::Resources::Interiors::InteriorId)bulidingID ndSenionFloorMap:(std::map<int,int>)senionFloorMap;
 -(void)stopUpdatingLocation;
--(void)SetFloorIndex:(int)floorNumber;
 
 @end

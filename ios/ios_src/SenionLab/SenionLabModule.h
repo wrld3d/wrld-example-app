@@ -34,7 +34,6 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<SenionLabModule> m_floorSelectedCallback;
 
                 Eegeo::Resources::Interiors::InteriorId m_pBuildingID;
-                int m_selectedFloorIndex;
                 
                 void OnAppModeChanged();
                 void OnFloorSelected();
