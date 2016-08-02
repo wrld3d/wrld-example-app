@@ -12,7 +12,7 @@
 @class SearchMenuView;
 @class SearchResultsTableDataProvider;
 
-@interface SearchMenuView : MenuView<CustomTableRowSelectionDelegate>
+@interface SearchMenuView : MenuView<CustomTableRowSelectionDelegate, UIScrollViewDelegate>
 {
     
 }
