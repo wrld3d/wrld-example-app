@@ -9,7 +9,6 @@
 #include "GlobalFogging.h"
 #include "AppInterface.h"
 #include "JpegLoader.h"
-#include "Blitter.h"
 #include "EffectHandler.h"
 #include "SearchServiceCredentials.h"
 #include "WindowsThreadHelper.h"

@@ -14,7 +14,6 @@
 #include "Base/Allocator.h"
 #include "Base/ArrayBuffer.h"
 #include "Base/AssertHandler.h"
-#include "Base/Blitter.h"
 #include "Base/BoundingBox.h"
 #include "Base/EegeoBaseNew.h"
 #include "Base/EegeoPlatformMacros.h"

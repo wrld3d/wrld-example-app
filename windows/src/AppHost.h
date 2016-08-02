@@ -23,7 +23,6 @@
 #include "NativeUIFactories.h"
 #include "TerrainHeightRepository.h"
 #include "GlobalShadowing.h"
-#include "Blitter.h"
 #include "WindowsNativeState.h"
 #include "AppInputDelegate.h"
 #include "Modules.h"
