@@ -214,8 +214,15 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
                 return;
             }
 
-            m_activity.getPhotoIntentDispatcher().selectPhotoFromGallery();
-            m_awaitingIntentResponse = true;
+            if(m_activity.getPhotoIntentDispatcher().selectPhotoFromGallery()) 
+            {
+            	m_awaitingIntentResponse = true;
+            } 
+            else 
+            {
+                showGalleryErrorDialog();
+            }
+
         }
         else if(view == m_closeButton)
         {
@@ -440,6 +447,16 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
         }
         return;
     }
+    
+    private void showGalleryErrorDialog()
+    {
+		AlertDialog.Builder builder = new AlertDialog.Builder(m_activity);
+		builder.setTitle("Error");
+		builder.setMessage("Error opening gallery. Make sure device gallery is not 'disabled'");
+		builder.setNegativeButton("Ok", null);
+		builder.setCancelable(false);
+		builder.show();
+	}
 
     private void showPermissionRequiredDialog(final Activity context)
     {

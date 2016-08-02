@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
@@ -68,11 +69,21 @@ public class PhotoIntentDispatcher
         return false;
     }
 
-    public void selectPhotoFromGallery()
+    public boolean selectPhotoFromGallery()
     {
-        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setType("image/*");
-        m_activity.startActivityForResult(intent, SELECT_PHOTO_FROM_GALLERY);
+        try
+        {
+			Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		    intent.setType("image/*");
+		    m_activity.startActivityForResult(intent, SELECT_PHOTO_FROM_GALLERY);
+		    return true;
+        } 
+        catch (ActivityNotFoundException e)
+        {
+        	e.printStackTrace();
+        }
+        
+        return false;
     }
 
     public void addActivityIntentResultHandler(IActivityIntentResultHandler handler)
