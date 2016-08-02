@@ -189,18 +189,18 @@ set(resources ${resources}
 		Resources/gps_marker.png
 		Resources/gps_marker@2x.png
 		Resources/gps_marker@3x.png
-        Resources/icon1_accommodation.png
-        Resources/icon1_accommodation@2x.png
-        Resources/icon1_accommodation@3x.png
-        Resources/icon1_amenities.png
-        Resources/icon1_amenities@2x.png
-        Resources/icon1_amenities@3x.png
+		Resources/icon1_accommodation.png
+		Resources/icon1_accommodation@2x.png
+		Resources/icon1_accommodation@3x.png
+		Resources/icon1_amenities.png
+		Resources/icon1_amenities@2x.png
+		Resources/icon1_amenities@3x.png
         Resources/icon1_aroundme.png
         Resources/icon1_aroundme@2x.png
         Resources/icon1_aroundme@3x.png
-        Resources/icon1_art_museums.png
-        Resources/icon1_art_museums@2x.png
-        Resources/icon1_art_museums@3x.png
+		Resources/icon1_art_museums.png
+		Resources/icon1_art_museums@2x.png
+		Resources/icon1_art_museums@3x.png
         Resources/icon1_arts.png
         Resources/icon1_arts@2x.png
         Resources/icon1_arts@3x.png
@@ -210,21 +210,21 @@ set(resources ${resources}
         Resources/icon1_bank.png
         Resources/icon1_bank@2x.png
         Resources/icon1_bank@3x.png
-        Resources/icon1_business.png
-        Resources/icon1_business@2x.png
-        Resources/icon1_business@3x.png
+		Resources/icon1_business.png
+		Resources/icon1_business@2x.png
+		Resources/icon1_business@3x.png
         Resources/icon1_clear.png
         Resources/icon1_clear@2x.png
         Resources/icon1_clear@3x.png
         Resources/icon1_coffee.png
         Resources/icon1_coffee@2x.png
         Resources/icon1_coffee@3x.png
-        Resources/icon1_dawn.png
-        Resources/icon1_dawn@2x.png
-        Resources/icon1_dawn@3x.png
-        Resources/icon1_day.png
-        Resources/icon1_day@2x.png
-        Resources/icon1_day@3x.png
+		Resources/icon1_dawn.png
+		Resources/icon1_dawn@2x.png
+		Resources/icon1_dawn@3x.png
+		Resources/icon1_day.png
+		Resources/icon1_day@2x.png
+		Resources/icon1_day@3x.png
         Resources/icon1_defibrillator.png
         Resources/icon1_defibrillator@2x.png
         Resources/icon1_defibrillator@3x.png
@@ -234,9 +234,9 @@ set(resources ${resources}
         Resources/icon1_disabled_access.png
         Resources/icon1_disabled_access@2x.png
         Resources/icon1_disabled_access@3x.png
-        Resources/icon1_dusk.png
-        Resources/icon1_dusk@2x.png
-        Resources/icon1_dusk@3x.png
+		Resources/icon1_dusk.png
+		Resources/icon1_dusk@2x.png
+		Resources/icon1_dusk@3x.png
         Resources/icon1_elevator.png
         Resources/icon1_elevator@2x.png
         Resources/icon1_elevator@3x.png
@@ -246,9 +246,9 @@ set(resources ${resources}
         Resources/icon1_emergencyexit.png
         Resources/icon1_emergencyexit@2x.png
         Resources/icon1_emergencyexit@3x.png
-        Resources/icon1_entertainment.png
-        Resources/icon1_entertainment@2x.png
-        Resources/icon1_entertainment@3x.png
+		Resources/icon1_entertainment.png
+		Resources/icon1_entertainment@2x.png
+		Resources/icon1_entertainment@3x.png
         Resources/icon1_escalator.png
         Resources/icon1_escalator@2x.png
         Resources/icon1_escalator@3x.png
@@ -258,21 +258,21 @@ set(resources ${resources}
         Resources/icon1_first_aid.png
         Resources/icon1_first_aid@2x.png
         Resources/icon1_first_aid@3x.png
-        Resources/icon1_fog.png
-        Resources/icon1_fog@2x.png
-        Resources/icon1_fog@3x.png
+		Resources/icon1_fog.png
+		Resources/icon1_fog@2x.png
+		Resources/icon1_fog@3x.png
         Resources/icon1_foggy.png
         Resources/icon1_foggy@2x.png
         Resources/icon1_foggy@3x.png
         Resources/icon1_food.png
         Resources/icon1_food@2x.png
         Resources/icon1_food@3x.png
-        Resources/icon1_food_drink.png
-        Resources/icon1_food_drink@2x.png
-        Resources/icon1_food_drink@3x.png
-        Resources/icon1_health.png
-        Resources/icon1_health@2x.png
-        Resources/icon1_health@3x.png
+		Resources/icon1_food_drink.png
+		Resources/icon1_food_drink@2x.png
+		Resources/icon1_food_drink@3x.png
+		Resources/icon1_health.png
+		Resources/icon1_health@2x.png
+		Resources/icon1_health@3x.png
         Resources/icon1_hotel.png
         Resources/icon1_hotel@2x.png
         Resources/icon1_hotel@3x.png
@@ -297,15 +297,15 @@ set(resources ${resources}
         Resources/icon1_meeting_room_unavailable.png
         Resources/icon1_meeting_room_unavailable@2x.png
         Resources/icon1_meeting_room_unavailable@3x.png
-        Resources/icon1_misc.png
-        Resources/icon1_misc@2x.png
-        Resources/icon1_misc@3x.png
+		Resources/icon1_misc.png
+		Resources/icon1_misc@2x.png
+		Resources/icon1_misc@3x.png
         Resources/icon1_my_pins.png
         Resources/icon1_my_pins@2x.png
         Resources/icon1_my_pins@3x.png
-        Resources/icon1_night.png
-        Resources/icon1_night@2x.png
-        Resources/icon1_night@3x.png
+		Resources/icon1_night.png
+		Resources/icon1_night@2x.png
+		Resources/icon1_night@3x.png
         Resources/icon1_nightlife.png
         Resources/icon1_nightlife@2x.png
         Resources/icon1_nightlife@3x.png
@@ -333,30 +333,30 @@ set(resources ${resources}
         Resources/icon1_printer.png
         Resources/icon1_printer@2x.png
         Resources/icon1_printer@3x.png
-        Resources/icon1_rain.png
-        Resources/icon1_rain@2x.png
-        Resources/icon1_rain@3x.png
+		Resources/icon1_rain.png
+		Resources/icon1_rain@2x.png
+		Resources/icon1_rain@3x.png
         Resources/icon1_rainy.png
         Resources/icon1_rainy@2x.png
         Resources/icon1_rainy@3x.png
         Resources/icon1_reception.png
         Resources/icon1_reception@2x.png
         Resources/icon1_reception@3x.png
-        Resources/icon1_shopping.png
-        Resources/icon1_shopping@2x.png
-        Resources/icon1_shopping@3x.png
-        Resources/icon1_snow.png
-        Resources/icon1_snow@2x.png
-        Resources/icon1_snow@3x.png
+		Resources/icon1_shopping.png
+		Resources/icon1_shopping@2x.png
+		Resources/icon1_shopping@3x.png
+		Resources/icon1_snow.png
+		Resources/icon1_snow@2x.png
+		Resources/icon1_snow@3x.png
         Resources/icon1_snowy.png
         Resources/icon1_snowy@2x.png
         Resources/icon1_snowy@3x.png
         Resources/icon1_sports_leisure.png
         Resources/icon1_sports_leisure@2x.png
         Resources/icon1_sports_leisure@3x.png
-        Resources/icon1_spring.png
-        Resources/icon1_spring@2x.png
-        Resources/icon1_spring@3x.png
+		Resources/icon1_spring.png
+		Resources/icon1_spring@2x.png
+		Resources/icon1_spring@3x.png
         Resources/icon1_stairs.png
         Resources/icon1_stairs@2x.png
         Resources/icon1_stairs@3x.png
@@ -384,12 +384,12 @@ set(resources ${resources}
         Resources/icon1_tours.png
         Resources/icon1_tours@2x.png
         Resources/icon1_tours@3x.png
-        Resources/icon1_transport.png
-        Resources/icon1_transport@2x.png
-        Resources/icon1_transport@3x.png
-        Resources/icon1_winter.png
-        Resources/icon1_winter@2x.png
-        Resources/icon1_winter@3x.png
+		Resources/icon1_transport.png
+		Resources/icon1_transport@2x.png
+		Resources/icon1_transport@3x.png
+		Resources/icon1_winter.png
+		Resources/icon1_winter@2x.png
+		Resources/icon1_winter@3x.png
         Resources/icon1_working_group.png
         Resources/icon1_working_group@2x.png
         Resources/icon1_working_group@3x.png
@@ -433,9 +433,9 @@ set(resources ${resources}
 		Resources/poi_marker.png
 		Resources/poi_marker@2x.png
 		Resources/poi_marker@3x.png
-		Resources/poi_placeholder.png
-		Resources/poi_placeholder@2x.png
-		Resources/poi_placeholder@3x.png
+        Resources/poi_placeholder.png
+        Resources/poi_placeholder@2x.png
+        Resources/poi_placeholder@3x.png
 		Resources/results_anchor_arrow.png
 		Resources/results_anchor_arrow@2x.png
 		Resources/results_anchor_arrow@3x.png
@@ -460,15 +460,30 @@ set(resources ${resources}
 		Resources/search_results_spinner.png
 		Resources/search_results_spinner@2x.png
 		Resources/search_results_spinner@3x.png
+		Resources/SearchResults_Fade.png
+		Resources/SearchResults_Fade@0.75x.png
+		Resources/SearchResults_Fade@1.5x.png
+		Resources/SearchResults_Fade@2x.png
+		Resources/SearchResults_Fade@3x.png
+		Resources/SearchResults_ScrollButton_Down.png
+		Resources/SearchResults_ScrollButton_Down@0.75x.png
+		Resources/SearchResults_ScrollButton_Down@1.5x.png
+		Resources/SearchResults_ScrollButton_Down@2x.png
+		Resources/SearchResults_ScrollButton_Down@3x.png
+		Resources/SearchResults_ScrollButton.png
+		Resources/SearchResults_ScrollButton@0.75x.png
+		Resources/SearchResults_ScrollButton@1.5x.png
+		Resources/SearchResults_ScrollButton@2x.png
+		Resources/SearchResults_ScrollButton@3x.png
 		Resources/SearchResultOnMap
 		Resources/SearchResultOnMap/pin_icon_texture_page.png
 		Resources/SearchResultOnMap/pin_icon_texture_page@2x.png
-		Resources/SearchResultOnMap/pin_icon_texture_page@3x.png
+        Resources/SearchResultOnMap/pin_icon_texture_page@3x.png
 		Resources/SearchResultOnMap
         Resources/SearchResultOnMap/pin_sheet_0.png
         Resources/SearchResultOnMap/pin_sheet_0@2x.png
         Resources/SearchResultOnMap/pin_sheet_0@3x.png
-        Resources/SearchResultOnMap/pin_sheet.json		
+        Resources/SearchResultOnMap/pin_sheet.json
 		Resources/SplashScreen
 		Resources/SplashScreen/Icon-60@2x.png
 		Resources/SplashScreen/Icon-60@3x.png
@@ -532,44 +547,44 @@ set(resources ${resources}
 		Resources/floor_selection_button.png
 		Resources/floor_selection_button@2x.png
 		Resources/floor_selection_button@3x.png
-        Resources/Yelp
-        Resources/yelp_map.json
-        Resources/Yelp/reviewsFromYelpRED.png
-        Resources/Yelp/reviewsFromYelpRED@2x.png
-        Resources/Yelp/reviewsFromYelpRED@3x.png
-        Resources/Yelp/stars_0_0.png
-        Resources/Yelp/stars_0_0@2x.png
-        Resources/Yelp/stars_0_0@3x.png
-        Resources/Yelp/stars_1_0.png
-        Resources/Yelp/stars_1_0@2x.png
-        Resources/Yelp/stars_1_0@3x.png
-        Resources/Yelp/stars_1_5.png
-        Resources/Yelp/stars_1_5@2x.png
-        Resources/Yelp/stars_1_5@3x.png
-        Resources/Yelp/stars_2_0.png
-        Resources/Yelp/stars_2_0@2x.png
-        Resources/Yelp/stars_2_0@3x.png
-        Resources/Yelp/stars_2_5.png
-        Resources/Yelp/stars_2_5@2x.png
-        Resources/Yelp/stars_2_5@3x.png
-        Resources/Yelp/stars_3_0.png
-        Resources/Yelp/stars_3_0@2x.png
-        Resources/Yelp/stars_3_0@3x.png
-        Resources/Yelp/stars_3_5.png
-        Resources/Yelp/stars_3_5@2x.png
-        Resources/Yelp/stars_3_5@3x.png
-        Resources/Yelp/stars_4_0.png
-        Resources/Yelp/stars_4_0@2x.png
-        Resources/Yelp/stars_4_0@3x.png
-        Resources/Yelp/stars_4_5.png
-        Resources/Yelp/stars_4_5@2x.png
-        Resources/Yelp/stars_4_5@3x.png
-        Resources/Yelp/stars_5_0.png
-        Resources/Yelp/stars_5_0@2x.png
-        Resources/Yelp/stars_5_0@3x.png
-        Resources/Yelp/yelp_logo.png
-        Resources/Yelp/yelp_logo@2x.png
-        Resources/Yelp/yelp_logo@3x.png
-        Resources/Yelp/yelp_logo_100x50.png
+		Resources/Yelp
+		Resources/yelp_map.json
+		Resources/Yelp/reviewsFromYelpRED.png
+		Resources/Yelp/reviewsFromYelpRED@2x.png
+		Resources/Yelp/reviewsFromYelpRED@3x.png
+		Resources/Yelp/stars_0_0.png
+		Resources/Yelp/stars_0_0@2x.png
+		Resources/Yelp/stars_0_0@3x.png
+		Resources/Yelp/stars_1_0.png
+		Resources/Yelp/stars_1_0@2x.png
+		Resources/Yelp/stars_1_0@3x.png
+		Resources/Yelp/stars_1_5.png
+		Resources/Yelp/stars_1_5@2x.png
+		Resources/Yelp/stars_1_5@3x.png
+		Resources/Yelp/stars_2_0.png
+		Resources/Yelp/stars_2_0@2x.png
+		Resources/Yelp/stars_2_0@3x.png
+		Resources/Yelp/stars_2_5.png
+		Resources/Yelp/stars_2_5@2x.png
+		Resources/Yelp/stars_2_5@3x.png
+		Resources/Yelp/stars_3_0.png
+		Resources/Yelp/stars_3_0@2x.png
+		Resources/Yelp/stars_3_0@3x.png
+		Resources/Yelp/stars_3_5.png
+		Resources/Yelp/stars_3_5@2x.png
+		Resources/Yelp/stars_3_5@3x.png
+		Resources/Yelp/stars_4_0.png
+		Resources/Yelp/stars_4_0@2x.png
+		Resources/Yelp/stars_4_0@3x.png
+		Resources/Yelp/stars_4_5.png
+		Resources/Yelp/stars_4_5@2x.png
+		Resources/Yelp/stars_4_5@3x.png
+		Resources/Yelp/stars_5_0.png
+		Resources/Yelp/stars_5_0@2x.png
+		Resources/Yelp/stars_5_0@3x.png
+		Resources/Yelp/yelp_logo.png
+		Resources/Yelp/yelp_logo@2x.png
+		Resources/Yelp/yelp_logo@3x.png
+		Resources/Yelp/yelp_logo_100x50.png
 		ExampleApp/Images.xcassets
 )
