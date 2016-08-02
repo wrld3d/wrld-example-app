@@ -46,7 +46,7 @@
 
 -(void)startOfSiteTesting
 {
-    int m_floorIndex = 1;   // for mock testing only
+    int m_floorIndex = 0;   // for mock testing only
     
     if(m_pBuildingID.Value() == "westport_house")
     {
@@ -104,7 +104,7 @@
     [locationManager stopUpdatingLocation];
 }
 
--(BOOL)shouldShowAvatar:(int)senionID ndFloorNum:(int &)floorNum
+-(BOOL)tryGetFloorIdFromSenion:(int)senionID ndFloorNum:(int &)floorNum
 {
     std::map<int,int>::iterator it = m_senionFloorMap.find(senionID);
     
@@ -138,10 +138,10 @@
     int floorNum = -1;
     
     // TJ, TODO: the floor index needs a layer of indirection.
-     if([self shouldShowAvatar:location.floorNr ndFloorNum:floorNum])
-     {
+    if([self tryGetFloorIdFromSenion:location.floorNr ndFloorNum:floorNum])
+    {
         m_pDeviceModel->UpdateLocation(0, 0, location.latitude, location.longitude, m_pBuildingID, floorNum);
-     }
+    }
 }
 - (void) didUpdateHeading:(double)heading withStatus:(BOOL)status
 {
