@@ -8,7 +8,7 @@ import json
 import xlrd
 
 IMAGES_FOLDER = "images"
-CATEGORIES = [u'stationery',
+TAGS = [u'stationery',
               u'toilets',
               u'print_station',
               u'emergency_exit']
@@ -110,7 +110,7 @@ def validate_images(xls_sheet, first_data_row_number, image_column_index, availa
 
     return all_images_validated
 
-def validate_category_text_field(xls_sheet, poi_columns, column_name, first_data_row_number, available_in_app_col_index, categories):
+def validate_tags_text_field(xls_sheet, poi_columns, column_name, first_data_row_number, available_in_app_col_index, tags):
     column_index = poi_columns.index(column_name)
     all_rows_validated = True
     for row_num in range(first_data_row_number, xls_sheet.nrows):
@@ -124,8 +124,8 @@ def validate_category_text_field(xls_sheet, poi_columns, column_name, first_data
             print ("empty cell found for required text field '%s', row %d " % (column_name, row_num))
             all_rows_validated = False
 
-        if not text_value in categories:
-            print("Unknown category " + text_value + " for row " + str(row_num))
+        if not text_value in tags:
+            print("Unknown tag " + text_value + " for row " + str(row_num))
             all_rows_validated = False
 
         if not text_type is xlrd.XL_CELL_TEXT:
@@ -314,7 +314,7 @@ def collect_employee_table(xls_book, sheet_index, src_image_folder_path, verbose
 	    	yield {
 	            "title":v[column_names.index('name')],
 	            "subtitle":v[column_names.index('job_title')],
-	            "category":"person",
+	            "tags":"person",
 	            "lat":desk['lat'],
 	            "lon":desk['lon'],
 	            "indoor":True,
@@ -351,7 +351,7 @@ def collect_meeting_room_table(xls_book, sheet_index, src_image_folder_path, ver
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated image_filename column values")
 
-    all_validated &= validate_category_text_field(xls_sheet, poi_columns, 'availability', first_data_row_number, available_in_app_col_index, MEETING_ROOM_STATUSES)
+    all_validated &= validate_tags_text_field(xls_sheet, poi_columns, 'availability', first_data_row_number, available_in_app_col_index, MEETING_ROOM_STATUSES)
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated availability column values")
 
@@ -385,7 +385,7 @@ def collect_meeting_room_table(xls_book, sheet_index, src_image_folder_path, ver
         yield  {
             "title":v[column_names.index('name')],
             "subtitle":"",
-            "category":"meeting_room",
+            "tags":"meeting_room",
             "lat":float(v[column_names.index('latitude_degrees')]),
             "lon":float(v[column_names.index('longitude_degrees')]),
             "indoor":True,
@@ -453,7 +453,7 @@ def collect_working_group_table(xls_book, sheet_index, src_image_folder_path, ve
     	yield {
             "title":v[column_names.index('name')],
             "subtitle":"",
-            "category":"working_group",
+            "tags":"working_group",
             "lat":float(v[column_names.index('latitude_degrees')]),
             "lon":float(v[column_names.index('longitude_degrees')]),
             "indoor":True,
@@ -470,7 +470,7 @@ def collect_working_group_table(xls_book, sheet_index, src_image_folder_path, ve
 def collect_facility_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row):
     xls_sheet = xls_book.sheet_by_index(sheet_index)
 
-    poi_columns = ['name', 'category', 'image_filename', 'description', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees']
+    poi_columns = ['name', 'tags', 'image_filename', 'description', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees']
     control_columns = ['available_in_app']
     expected_columns = poi_columns + control_columns
     available_in_app_col_index = len(poi_columns)
@@ -485,9 +485,9 @@ def collect_facility_table(xls_book, sheet_index, src_image_folder_path, verbose
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated name column values")
 
-    all_validated &= validate_category_text_field(xls_sheet, poi_columns, 'category', first_data_row_number, available_in_app_col_index, CATEGORIES)
+    all_validated &= validate_tags_text_field(xls_sheet, poi_columns, 'tags', first_data_row_number, available_in_app_col_index, TAGS)
     if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated name category values")
+        raise ValueError("failed to validated name tags values")
 
     all_validated &= validate_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path)
     if not all_validated and stop_on_first_error:
@@ -524,7 +524,7 @@ def collect_facility_table(xls_book, sheet_index, src_image_folder_path, verbose
     	yield {
             "title":v[column_names.index('name')],
             "subtitle":"",
-            "category":"facility",
+            "tags":"facility",
             "lat":float(v[column_names.index('latitude_degrees')]),
             "lon":float(v[column_names.index('longitude_degrees')]),
             "indoor":True,
@@ -533,7 +533,7 @@ def collect_facility_table(xls_book, sheet_index, src_image_folder_path, verbose
             "user_data":
             {
               "image_url":v[column_names.index('image_filename')],
-              "subcategory":v[column_names.index('category')],
+              "subcategory":v[column_names.index('tags')],
               "description":v[column_names.index('description')],
               "office_location":office_location
             }
@@ -556,50 +556,50 @@ def get_office_location_from_interior_and_floor(interior_id, floor_id):
 
 def collect_department_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row, departments):
     xls_sheet = xls_book.sheet_by_index(sheet_index)
-    
+
     poi_columns = ['name', 'image_filename', 'description', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees']
     control_columns = ['available_in_app']
     expected_columns = poi_columns + control_columns
     available_in_app_col_index = len(poi_columns)
-    
+
     all_validated = True
-    
+
     all_validated &= validate_column_names(xls_sheet, column_name_row, expected_columns)
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated column names")
-    
+
     all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'name', first_data_row_number, available_in_app_col_index)
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated name column values")
-    
+
     all_validated &= validate_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path)
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated image_filename column values")
-    
+
     all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'description', first_data_row_number, available_in_app_col_index)
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated description column values")
-    
+
     all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'interior_id', first_data_row_number, available_in_app_col_index)
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated interior_id column values")
-    
+
     all_validated &= validate_required_int_field(xls_sheet, poi_columns, 'interior_floor', first_data_row_number, available_in_app_col_index, MIN_FLOOR)
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated interior floor number")
-    
+
     all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'latitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LAT, MAX_LAT)
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated title latitude_degrees values")
-    
+
     all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'longitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LNG, MAX_LNG)
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated title longitude_degrees values")
-    
+
     if not all_validated:
         raise ValueError("failed validation")
 
-    column_names = ['id'] + poi_columns    
+    column_names = ['id'] + poi_columns
     for v in gather_table_with_image(column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename')):
         department_name = v[column_names.index('name')]
         department_desks = []
@@ -609,7 +609,7 @@ def collect_department_table(xls_book, sheet_index, src_image_folder_path, verbo
     	yield {
             "title":department_name,
             "subtitle":"",
-            "category":"department",
+            "tags":"department",
             "lat":float(v[column_names.index('latitude_degrees')]),
             "lon":float(v[column_names.index('longitude_degrees')]),
             "indoor":True,
@@ -622,7 +622,7 @@ def collect_department_table(xls_book, sheet_index, src_image_folder_path, verbo
               "desks":department_desks
             }
        }
-    
+
 def collect_office_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row):
     xls_sheet = xls_book.sheet_by_index(sheet_index)
 
@@ -665,7 +665,7 @@ def collect_office_table(xls_book, sheet_index, src_image_folder_path, verbose, 
     	yield {
             "title":v[column_names.index('name')],
             "subtitle":"",
-            "category":"office",
+            "tags":"office",
             "lat":float(v[column_names.index('latitude_degrees')]),
             "lon":float(v[column_names.index('longitude_degrees')]),
             "user_data":
@@ -729,7 +729,7 @@ def collect_transition_table(xls_book, sheet_index, src_image_folder_path, verbo
     	yield  {
             "title":"Transition",
             "subtitle":"Indoor Transition",
-            "category":"transition",
+            "tags":"transition",
             "lat":float(v[column_names.index('latitude_degrees')]),
             "lon":float(v[column_names.index('longitude_degrees')]),
             "indoor":True,
@@ -756,6 +756,9 @@ def persist_entities(entities, poi_service_url, dev_auth_token, cdn_base_url):
             if 'image_url' in entity['user_data']:
                 original = entity['user_data']['image_url']
                 entity['user_data']['image_url'] = "{0}/images/{1}".format(cdn_base_url, original)
+
+            user_data = entity['user_data']
+            entity['user_data'] = json.dumps(user_data, ensure_ascii=False)
 
     url = "{0}/bulk/?token={1}".format(poi_service_url, dev_auth_token)
     response = requests.post(url, json={"create":entities}, verify=False)
