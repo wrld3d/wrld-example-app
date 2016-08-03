@@ -152,37 +152,36 @@ namespace
     m_screenHeight = self.superview.bounds.size.height;
     [self setFrame:CGRectMake(0, 0, m_screenWidth, m_screenHeight)];
     
-    CGRect dialogFrame = self.pExitDialogContainer.frame;
-    int dialogWidth = dialogFrame.size.width;
-    int dialogHeight = dialogFrame.size.height;
     int textPaddingLeft = (m_iconPaddingLeft * 2) + m_iconSize;
     int textPaddingRight = 4;
     int titlePaddingTop = isPhone ? 9 : 17;
     int descriptionPaddingTop = isPhone ? 4 : 9;
     
+    CGRect exitDialogFrame = self.pExitDialogContainer.frame;
+    int exitDialogWidth = exitDialogFrame.size.width;
+    
     CGSize exitTitleTextSize = [self.pExitDialogTitle sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
-    float exitTitleWidth = dialogWidth-(textPaddingLeft + textPaddingRight);
+    float exitTitleWidth = exitDialogWidth-(textPaddingLeft + textPaddingRight);
     
     CGRect exitTitleRect = CGRectMake(textPaddingLeft, titlePaddingTop, exitTitleWidth, exitTitleTextSize.height);
     [self.pExitDialogTitle setFrame:exitTitleRect];
     
-    float exitDescriptionHeight = dialogHeight - exitTitleTextSize.height - (titlePaddingTop * 2);
-    float exitDescriptonWidth = exitTitleWidth;
-    
-    CGRect exitDescriptonRect = CGRectMake(textPaddingLeft, exitTitleTextSize.height + titlePaddingTop + descriptionPaddingTop, exitDescriptonWidth, exitDescriptionHeight);
+    CGSize exitDescriptionSize = [self.pExitDialogDescription sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+    CGRect exitDescriptonRect = CGRectMake(textPaddingLeft, exitTitleTextSize.height + titlePaddingTop + descriptionPaddingTop, exitTitleWidth, exitDescriptionSize.height);
     [self.pExitDialogDescription setFrame:exitDescriptonRect];
     
     
+    CGRect changeFloorDialogFrame = self.pExitDialogContainer.frame;
+    int changeFloorDialogWidth = changeFloorDialogFrame.size.width;
+    
     CGSize changeFloorTitleTextSize = [self.pChangeFloorDialogTitle sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
-    float changeFloorTitleWidth = dialogWidth-(textPaddingLeft + textPaddingRight);
+    float changeFloorTitleWidth = changeFloorDialogWidth-(textPaddingLeft + textPaddingRight);
     
     CGRect changeFloorTitleRect = CGRectMake(textPaddingLeft, titlePaddingTop, changeFloorTitleWidth, changeFloorTitleTextSize.height);
     [self.pChangeFloorDialogTitle setFrame:changeFloorTitleRect];
     
-    float changeFloorsDescriptionHeight = dialogHeight - changeFloorTitleTextSize.height - (titlePaddingTop * 2);
-    float changeFloorsDescriptonWidth = changeFloorTitleWidth;
-    
-    CGRect changeFloorsDescriptonRect = CGRectMake(textPaddingLeft, changeFloorTitleTextSize.height + titlePaddingTop + descriptionPaddingTop, changeFloorsDescriptonWidth, changeFloorsDescriptionHeight);
+    CGSize changeFloorDescriptionSize = [self.pChangeFloorDialogDescription sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+    CGRect changeFloorsDescriptonRect = CGRectMake(textPaddingLeft, changeFloorTitleTextSize.height + titlePaddingTop + descriptionPaddingTop, changeFloorTitleWidth, changeFloorDescriptionSize.height);
     [self.pChangeFloorDialogDescription setFrame:changeFloorsDescriptonRect];
 }
 
@@ -209,21 +208,51 @@ namespace
                                   : (bool) showChangeFloorDialog
 {
     const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
-    CGRect dialogFrame = self.pExitDialogContainer.frame;
-    int dialogWidth = dialogFrame.size.width;
-    int dialogHeight = dialogFrame.size.height;
     int arrowLength = isPhone ? 20 : 30;
     int dialogMargin = (isPhone ? 79 : 95);
+    int descriptionPaddingBottom = isPhone ? 9 : 17;
     
-    CGRect exitDialogFrame = self.pExitDialogContainer.frame;
-    exitDialogFrame.origin.x = newPositionX - (dialogWidth + (dialogOutlineSize * 2) + arrowLength + dialogMargin);
-    exitDialogFrame.origin.y = (dismissButtonPositionY + dismissButtonHeight / 2) - ((dialogHeight + (dialogOutlineSize * 2)) / 2);
-    self.pExitDialogContainer.frame = exitDialogFrame;
+    CGRect exitDialogLabelFrame = self.pExitDialogLabel.frame;
+    CGRect exitDialogDescriptionFrame = self.pExitDialogDescription.frame;
+    exitDialogLabelFrame.size.height = exitDialogDescriptionFrame.origin.y + exitDialogDescriptionFrame.size.height + descriptionPaddingBottom;
+    self.pExitDialogLabel.frame = exitDialogLabelFrame;
     
-    CGRect changeFloorDialogFrame = self.pChangeFloorDialogContainer.frame;
-    changeFloorDialogFrame.origin.x = newPositionX - (dialogWidth + (dialogOutlineSize * 2) + arrowLength + dialogMargin);
-    changeFloorDialogFrame.origin.y = (floorChangeButtonPositionY + floorChangeButtonHeight / 2) - ((dialogHeight + (dialogOutlineSize * 2)) / 2);
-    self.pChangeFloorDialogContainer.frame = changeFloorDialogFrame;
+    CGRect exitDialogContainerFrame = self.pExitDialogContainer.frame;
+    int exitDialogWidth = exitDialogContainerFrame.size.width;
+    int exitDialogHeight = exitDialogLabelFrame.size.height;
+    exitDialogContainerFrame.size.height = exitDialogHeight + (dialogOutlineSize * 2);
+    exitDialogContainerFrame.origin.x = newPositionX - (exitDialogWidth + (dialogOutlineSize * 2) + arrowLength + dialogMargin);
+    exitDialogContainerFrame.origin.y = (dismissButtonPositionY + dismissButtonHeight / 2) - ((exitDialogHeight + (dialogOutlineSize * 2)) / 2);
+    self.pExitDialogContainer.frame = exitDialogContainerFrame;
+    
+    CGRect exitDialogOutlineArrowFrame = self.pExitDialogOutlineArrow.frame;
+    exitDialogOutlineArrowFrame.origin.y = (exitDialogHeight + (dialogOutlineSize * 2)) / 2 - (m_arrowWidth + (dialogOutlineSize * 2)) / 2;
+    self.pExitDialogOutlineArrow.frame = exitDialogOutlineArrowFrame;
+    
+    CGRect exitDialogArrowFrame = self.pExitDialogArrow.frame;
+    exitDialogArrowFrame.origin.y = exitDialogHeight / 2 - m_arrowWidth / 2;
+    self.pExitDialogArrow.frame = exitDialogArrowFrame;
+    
+    CGRect changeFloorDialogLabelFrame = self.pChangeFloorDialogLabel.frame;
+    CGRect changeFloorDialogDescriptionFrame = self.pChangeFloorDialogDescription.frame;
+    changeFloorDialogLabelFrame.size.height = changeFloorDialogDescriptionFrame.origin.y + changeFloorDialogDescriptionFrame.size.height + descriptionPaddingBottom;
+    self.pChangeFloorDialogLabel.frame = changeFloorDialogLabelFrame;
+    
+    CGRect changeFloorDialogContainerFrame = self.pChangeFloorDialogContainer.frame;
+    int changeFloorDialogWidth = changeFloorDialogContainerFrame.size.width;
+    int changeFloorDialogHeight = changeFloorDialogLabelFrame.size.height;
+    changeFloorDialogContainerFrame.size.height = changeFloorDialogHeight + (dialogOutlineSize * 2);
+    changeFloorDialogContainerFrame.origin.x = newPositionX - (changeFloorDialogWidth + (dialogOutlineSize * 2) + arrowLength + dialogMargin);
+    changeFloorDialogContainerFrame.origin.y = (floorChangeButtonPositionY + floorChangeButtonHeight / 2) - ((changeFloorDialogHeight + (dialogOutlineSize * 2)) / 2);
+    self.pChangeFloorDialogContainer.frame = changeFloorDialogContainerFrame;
+    
+    CGRect changeFloorDialogOutlineArrowFrame = self.pChangeFloorDialogOutlineArrow.frame;
+    changeFloorDialogOutlineArrowFrame.origin.y = (changeFloorDialogHeight + (dialogOutlineSize * 2)) / 2 - (m_arrowWidth + (dialogOutlineSize * 2)) / 2;
+    self.pChangeFloorDialogOutlineArrow.frame = changeFloorDialogOutlineArrowFrame;
+    
+    CGRect changeFloorDialogArrowFrame = self.pChangeFloorDialogArrow.frame;
+    changeFloorDialogArrowFrame.origin.y = changeFloorDialogHeight / 2 - m_arrowWidth / 2;
+    self.pChangeFloorDialogArrow.frame = changeFloorDialogArrowFrame;
     
     m_showChangeFloorDialog = showChangeFloorDialog;
 }
