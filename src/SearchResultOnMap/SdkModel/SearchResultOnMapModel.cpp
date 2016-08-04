@@ -439,7 +439,7 @@ namespace ExampleApp
                 ExampleApp::WorldPins::SdkModel::WorldPinItemModel* pinItemModel = it->second;
                 m_worldPinsService.RemovePin(pinItemModel);
                 m_searchResultsToPinModel.erase(it);
-                
+                m_currentSelectedId.clear();
                 RefreshPinsForSelection();
             }
 
