@@ -68,7 +68,9 @@ public:
         Eegeo::Rendering::ScreenProperties screenProperties,
         EGLDisplay display,
         EGLSurface shareSurface,
-        EGLContext resourceBuildShareContext
+        EGLContext resourceBuildShareContext,
+        bool hasNativeTouchInput,
+        int maxDeviceTouchCount
         );
     ~AppHost();
 
@@ -94,8 +96,11 @@ public:
 
     void HandleMouseInputEvent(const Eegeo::Windows::Input::MouseInputEvent& event);
     void HandleKeyboardInputEvent(const Eegeo::Windows::Input::KeyboardInputEvent& event);
+    void HandleTouchScreenInputEvent(const Eegeo::Windows::Input::TouchScreenInputEvent& event);
 
     void SetAllInputEventsToPointerUp(int x, int y);
+    void SetTouchInputEventToPointerUp(int touchId);
+    void PopAllTouchEvents();
 
     void SetEnvironmentFlatten(bool flattenState);
     void SetCameraLocation(const Eegeo::Space::LatLongAltitude& interestPoint, double distanceToInterestPoint, double orientationInDegrees);
@@ -104,10 +109,14 @@ public:
     void SetSharedSurface(EGLSurface sharedSurface);
     void SetViewportOffset(float x, float y);
 
+    bool ShouldStartFullscreen();
+
 private:
     bool m_isPaused;
     Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;
     Eegeo::Windows::WindowsLocationService* m_pWindowsLocationService;
+
+    bool m_shouldStartFullscreen;
 
     WindowsNativeState& m_nativeState;
     AppInputDelegate* m_pAppInputDelegate;
@@ -165,4 +174,6 @@ private:
     void DestroyApplicationViewModulesFromUiThread();
 
     void HandleStartupFailure();
+
+    int m_maxDeviceTouchCount;
 };

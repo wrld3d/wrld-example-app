@@ -35,6 +35,7 @@ namespace ExampleApp
                                                 parsedConfig.DistanceToInterestMetres(),
                                                 parsedConfig.OrientationDegrees(),
                                                 parsedConfig.TryStartAtGpsLocation(),
+                                                parsedConfig.ShouldStartFullscreen(),
                                                 parsedConfig.GoogleAnalyticsReferrerToken(),
                                                 parsedConfig.FlurryAppKey(),
                                                 parsedConfig.YelpConsumerKey(),
@@ -57,7 +58,8 @@ namespace ExampleApp
                                                 parsedConfig.WebProxyIgnorePattern(),
                                                 parsedConfig.SenionMapKey(),
                                                 parsedConfig.SenionMapCustomerID(),
-                                                parsedConfig.BuildingsInfo());
+                                                parsedConfig.BuildingsInfo(),
+                                                parsedConfig.IsKioskTouchInputEnabled());
             }
         }
     }

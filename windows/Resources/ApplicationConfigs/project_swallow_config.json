@@ -24,6 +24,8 @@
     "WebProxyIpAddress":"",
     "WebProxyPort":0,
     "WebProxyIgnorePattern":"",
+	"IsKioskTouchInputEnabled":false,
+	"StartAppInFullscreen":false,
     "Buildings": [
                   
                   {

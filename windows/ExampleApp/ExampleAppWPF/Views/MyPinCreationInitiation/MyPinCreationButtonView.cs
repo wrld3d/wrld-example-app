@@ -38,11 +38,14 @@ namespace ExampleAppWPF
     public class MyPinCreationButtonView : ButtonBase
     {
         private IntPtr m_nativeCallerPointer;
-    
+
         private double m_yPosActive;
         private double m_yPosInactive;
-        private bool m_isFirstLayout = true;
         private double m_stateChangeAnimationTimeMilliseconds = 200;
+
+        bool m_isActive = false;
+
+        private WindowInteractionTouchHandler m_touchHandler;
 
         static MyPinCreationButtonView()
         {
@@ -58,37 +61,31 @@ namespace ExampleAppWPF
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
             mainWindow.SizeChanged += PerformLayout;
             mainWindow.MainGrid.Children.Add(this);
+            m_touchHandler = new WindowInteractionTouchHandler(this);
+            TouchEnter += (o, e) => { mainWindow.PopAllTouchEvents(); };
         }
 
         private void MyPinCreationButtonView_Click(object sender, RoutedEventArgs e)
         {
             MyPinCreationViewCLIMethods.StartButtonPressed(m_nativeCallerPointer);
         }
-        
+
         private void PerformLayout(object sender, RoutedEventArgs e)
         {
             Point currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
-            double onScreenState = (currentPosition.Y - m_yPosInactive) / (m_yPosActive - m_yPosInactive);
 
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
-            double screenHeight = mainWindow.ActualHeight;
-            double screenWidth = mainWindow.ActualWidth;
+            double screenHeight = mainWindow.MainGrid.ActualHeight;
+            double screenWidth = mainWindow.MainGrid.ActualWidth;
             double viewHeight = ActualHeight;
             double viewWidth = ActualWidth;
-            m_yPosActive = screenHeight * 0.5 - (viewHeight * 0.5 + ConversionHelpers.AndroidToWindowsDip(16));
+            const double margin = 23.0;
+            m_yPosActive = screenHeight * 0.5 - (viewHeight * 0.5) - (margin);
             m_yPosInactive = screenHeight * 0.5 + viewHeight * 0.5;
-            double layoutY = m_yPosInactive;
-
-            if (!m_isFirstLayout)
-            {
-                layoutY = onScreenState * (m_yPosActive - m_yPosInactive) + m_yPosInactive;
-            }
-
-            m_isFirstLayout = false;
 
             var transform = new TranslateTransform(
                 ConversionHelpers.AndroidToWindowsDip(32) + viewWidth * 0.5,
-                layoutY);
+                m_isActive ? m_yPosActive : m_yPosInactive);
 
             RenderTransform = transform;
         }
@@ -96,11 +93,13 @@ namespace ExampleAppWPF
         public void AnimateToInactive()
         {
             AnimateViewToY(m_yPosInactive);
+            m_isActive = false;
         }
 
         public void AnimateToActive()
         {
             AnimateViewToY(m_yPosActive);
+            m_isActive = true;
         }
 
         public void AnimateViewToY(double y)

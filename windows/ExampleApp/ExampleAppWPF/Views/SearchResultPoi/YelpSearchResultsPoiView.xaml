@@ -93,7 +93,7 @@
                                 </Grid>
 
                                 <Grid Grid.Row="1" Margin="0,10,0,0" >
-                                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Background="{StaticResource White}" Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}">
+                                    <ScrollViewer Name="MainScrollViewr" HorizontalScrollBarVisibility="Disabled" PanningRatio="3" PanningDeceleration="0" PanningMode="VerticalOnly" VerticalScrollBarVisibility="Auto" Background="{StaticResource White}" Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}">
 
                                         <StackPanel VerticalAlignment="Top">
 

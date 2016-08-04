@@ -141,6 +141,7 @@
     <Compile Include="Views\SettingsMenu\SettingsMenuView.cs" />
     <Compile Include="Views\SearchMenu\SearchMenuView.cs" />
     <Compile Include="Search\Yelp\YelpSearch.cs" />
+    <Compile Include="WindowsInteractionTouchHandler.cs" />
     <Page Include="CheckBoxStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

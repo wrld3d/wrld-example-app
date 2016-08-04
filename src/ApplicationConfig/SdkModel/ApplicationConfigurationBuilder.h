@@ -24,6 +24,7 @@ namespace ExampleApp
                 float m_distanceToInterestMetres;
                 float m_orientationDegrees;
                 bool m_tryStartAtGpsLocation;
+                bool m_shouldStartFullscreen;
                 std::string m_googleAnalyticsReferrerToken;
                 std::string m_flurryAppKey;
                 std::string m_yelpConsumerKey;
@@ -47,6 +48,7 @@ namespace ExampleApp
                 std::string m_senionMapKey;
                 std::string m_senionMapCustomerID;
                 std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>m_buildingsInfo;
+                bool m_isKioskTouchInputEnabled;
                 
             public:
                 ApplicationConfigurationBuilder(const IApplicationConfigurationCipher& applicationConfigurationEncryption,
@@ -109,6 +111,10 @@ namespace ExampleApp
                 IApplicationConfigurationBuilder& SetSenionCustomerID(const std::string& customerID);
                 
                 IApplicationConfigurationBuilder& SetBuildingInfoArray(const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>&infoBuildingList);
+
+                IApplicationConfigurationBuilder& SetShouldStartFullscreen(bool startFullscreen);
+                
+                IApplicationConfigurationBuilder& SetIsKioskTouchInputEnabled(bool kioskTouchInputEnabled);
                 
                 std::string Decrypt(const std::string& message) const;
 

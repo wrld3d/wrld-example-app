@@ -146,6 +146,16 @@ namespace ExampleApp
                     buildingInfoList.push_back(buildingInfo);
                 }
                 m_builder.SetBuildingInfoArray(buildingInfoList);
+
+                if (document.HasMember("IsKioskTouchInputEnabled") && !document["IsKioskTouchInputEnabled"].IsNull())
+                {
+                    m_builder.SetIsKioskTouchInputEnabled(document["IsKioskTouchInputEnabled"].GetBool());
+                }
+
+                if (document.HasMember("StartAppInFullscreen") && !document["StartAppInFullscreen"].IsNull())
+                {
+                    m_builder.SetShouldStartFullscreen(document["StartAppInFullscreen"].GetBool());
+                }
                 
                 return m_builder.Build();
             }
