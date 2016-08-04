@@ -27,20 +27,48 @@
         	android:layout_height="6dp"
         	android:background="@color/menu_header_separator" />
         
-		<ListView
-			android:id="@+id/search_menu_item_list"
-			android:layout_width="fill_parent"
-			android:layout_height="0dp" 
-			android:background="@color/ui_border"
-			android:cacheColorHint="@android:color/transparent"
-			android:listSelector="@android:color/transparent"
-			android:clipChildren="false"
-			android:clipToPadding="false"
-			android:divider="@color/ui_border"
-			android:dividerHeight="1dp"
-			android:overScrollMode="never"
-			android:paddingLeft="32dp"
-			android:paddingRight="5dp" />
+		<RelativeLayout
+        android:id="@+id/search_menu_result_count_contain"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/ui_border" >
+        
+	        <ListView
+				android:id="@+id/search_menu_item_list"
+				android:layout_width="fill_parent"
+				android:layout_height="200dp" 
+				android:background="@color/ui_border"
+				android:cacheColorHint="@android:color/transparent"
+				android:listSelector="@android:color/transparent"
+				android:clipChildren="false"
+				android:clipToPadding="false"
+				android:divider="@color/ui_border"
+				android:dividerHeight="1dp"
+				android:overScrollMode="never"
+				android:paddingLeft="32dp"
+				android:paddingRight="5dp" />
+	        
+	        <ImageView
+			    android:id="@+id/search_results_fade"
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:paddingRight="5dp"
+				android:paddingLeft="32dp"
+				android:layout_alignBottom="@+id/search_menu_item_list"
+				android:adjustViewBounds="true"
+				android:src="@drawable/search_results_fade">
+		    </ImageView>
+
+			<Button
+			    android:id="@+id/search_results_scroll_button"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_alignBottom="@+id/search_menu_item_list"
+			    android:layout_alignParentRight="true"
+			    android:layout_marginRight="104dp"
+			    android:background="@drawable/button_scroll_down_states"
+			    android:clickable="true" />	
+    	</RelativeLayout>
 		
 		<View
         	android:id="@+id/search_menu_results_separator"
