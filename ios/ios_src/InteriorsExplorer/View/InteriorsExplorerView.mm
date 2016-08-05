@@ -37,7 +37,7 @@ namespace
     return [UIColor colorWithRed:(205.0f/255.0f) green:(252.0f/255.0f) blue:(13.0f/255.0f) alpha:1.0f];;
 }
 
-- (id) initWithParams:(float)width :(float)height :(float)pixelScale
+- (id) initWithParams:(float)width :(float)height :(float)pixelScale :(InteriorsExplorerTutorialView&)tutorialView
 {
     if (self = [super init])
     {
@@ -47,11 +47,13 @@ namespace
         m_screenWidth = width/pixelScale;
         m_screenHeight = height/pixelScale;
         
+        self.pTutorialView = &tutorialView;
+        
         self.pFloorListViews = [NSMutableArray array];
         
         m_stateChangeAnimationTimeSeconds = 0.2f;
         
-        m_pInterop = new ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewInterop(self);
+        m_pInterop = new ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewInterop(self, &tutorialView);
 
         self.frame = CGRectMake(0,
                                 0,
@@ -293,6 +295,14 @@ namespace
     dismissButtonFrame.origin.y = (self.pFloorPanel.frame.origin.y - dismissButtonSpacing) - dismissButtonFrame.size.height;
     self.pDismissButtonBackground.frame = dismissButtonFrame;
     
+    const bool showChangeFloorDialog = floorCount > 1;
+    [self.pTutorialView repositionTutorialDialogs:dismissButtonFrame.origin.x
+                                                 :dismissButtonFrame.origin.y
+                                                 :dismissButtonFrame.size.height
+                                                 :self.pFloorPanel.frame.origin.y + self.pFloorPanel.frame.size.height - self.pFloorChangeButton.frame.size.height
+                                                 :self.pFloorChangeButton.frame.size.height
+                                                 :showChangeFloorDialog];
+    
     float yOffset = ((float)self.pFloorChangeButton.frame.size.height - m_floorDivisionHeight)*0.5f;
     int floorIndex = 0;
     for(std::vector<std::string>::const_iterator it = m_tableViewFloorNames.begin(); it != m_tableViewFloorNames.end(); it++)
@@ -439,7 +449,10 @@ namespace
          self.pFloorPanel.frame = floorFrame;
          self.pDismissButtonBackground.frame = dismissButtonFrame;
      }
-                     completion:nil];
+                     completion:^(BOOL FINISHED)
+     {
+         [self.pTutorialView animateTo:t];
+     }];
 }
 
 - (void) setTouchEnabled:(BOOL)enabled

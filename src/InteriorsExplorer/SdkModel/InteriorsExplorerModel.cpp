@@ -17,6 +17,7 @@
 #include "InteriorInteractionModel.h"
 
 #include "ICameraTransitionController.h"
+#include "IPersistentSettingsModel.h"
 
 namespace ExampleApp
 {
@@ -42,7 +43,8 @@ namespace ExampleApp
                                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                            VisualMap::SdkModel::IVisualMapService& visualMapService,
                                                            ExampleAppMessaging::TMessageBus& messageBus,
-                                                           Metrics::IMetricsService& metricsService)
+                                                           Metrics::IMetricsService& metricsService,
+                                                           PersistentSettings::IPersistentSettingsModel& persistentSettings)
             : m_interiorInteractionModel(interiorInteractionModel)
             , m_interiorSelectionModel(interiorSelectionModel)
             , m_visualMapService(visualMapService)
@@ -54,6 +56,7 @@ namespace ExampleApp
             , m_floorSelectionDraggedCallback(this, &InteriorsExplorerModel::OnFloorSelectionDragged)
             , m_interiorExplorerEnabled(false)
             , m_currentInteriorFloorIndex(0)
+            , m_persistentSettings(persistentSettings)
             {
                 m_interiorInteractionModel.RegisterInteractionStateChangedCallback(m_interactionModelStateChangedCallback);
                 
@@ -92,6 +95,13 @@ namespace ExampleApp
             {
                 Eegeo_ASSERT(m_interiorInteractionModel.HasInteriorModel(), "Can't show interior explorer without a selected and streamed interior");
                 
+                m_hasViewedAnyInterior = false;
+
+				if(!m_persistentSettings.TryGetValue(InteriorsExplorerModel_HasViewedAnyInterior, m_hasViewedAnyInterior))
+				{
+					m_hasViewedAnyInterior = false;
+				}
+
                 if(!m_interiorExplorerEnabled)
                 {
                     // stop the state stack from growing when going from interior to another interior.
@@ -118,6 +128,16 @@ namespace ExampleApp
                     m_interiorExplorerEnabled = false;
                     PublishInteriorExplorerStateChange();
                 }
+            }
+            
+            bool InteriorsExplorerModel::GetHasViewedAnyInterior()
+            {
+                return m_hasViewedAnyInterior;
+            }
+            
+            void InteriorsExplorerModel::SetHasViewedAnyInterior(bool hasViewedAnyInterior)
+            {
+                this->m_hasViewedAnyInterior = hasViewedAnyInterior;
             }
             
            
@@ -152,6 +172,8 @@ namespace ExampleApp
             
             void InteriorsExplorerModel::Exit()
             {
+            	m_persistentSettings.SetValue(InteriorsExplorerModel_HasViewedAnyInterior, m_hasViewedAnyInterior);
+
                 HideInteriorExplorer();
                 m_metricsService.SetEvent(MetricEventInteriorExitPressed);
                 m_interiorExplorerExitedCallbacks.ExecuteCallbacks();

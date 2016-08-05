@@ -35,6 +35,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     private Boolean m_draggingFloorButton;
 
     private final long m_stateChangeAnimationTimeMilliseconds = 200;
+    private final long m_stateChangeAnimationDelayMilliseconds = m_stateChangeAnimationTimeMilliseconds * 5;
     private final long m_initialJumpThersholdPx = 5;
     
     private float m_topYPosActive;
@@ -48,6 +49,8 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     private InteriorsFloorListAdapter m_floorListAdapter = null;
     private float m_previousYCoordinate;
     private boolean m_isButtonInitialJumpRemoved = false;
+    
+    private InteriorsExplorerTutorialView m_tutorialView = null;
     
     private boolean m_canProcessButtons;
     private boolean m_isOnScreen = false;
@@ -123,6 +126,8 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
         });
         uiRoot.addView(m_uiRootView);
         
+        m_tutorialView = new InteriorsExplorerTutorialView(m_activity);
+        
         hideFloorLabels();
     }
     
@@ -182,6 +187,13 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     	
     	boolean floorSelectionEnabled = floorShortNames.length > 1;
     	m_floorListContainer.setVisibility(floorSelectionEnabled ? View.VISIBLE : View.GONE);
+    	
+    	m_tutorialView.setUIPositions(m_leftXPosActive,
+    										m_backButton.getY(),
+    										m_backButton.getHeight(),
+    										m_floorListContainer.getY() + m_floorButton.getY(),
+    										m_floorButton.getHeight(),
+    										m_floorListAdapter.getCount() > 1);
     }
     
     private void moveButtonToFloorIndex(int floorIndex, Boolean shouldAnimate)
@@ -217,6 +229,16 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     	{
     		moveButtonToFloorIndex(index, true);
     	}
+    }
+    
+    public void addTutorialDialogs()
+    {
+    	m_tutorialView.show();
+    }
+    
+    public void removeTutorialDialogs()
+    {
+    	m_tutorialView.hide();
     }
     
     public void setTouchEnabled(boolean enabled)
@@ -314,6 +336,8 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     	
     	animateViewToY((int)m_topYPosActive);
         animateViewToX((int)m_leftXPosActive, m_isOnScreen);
+        
+        m_tutorialView.animateToActive(m_stateChangeAnimationTimeMilliseconds + (m_isOnScreen ? m_stateChangeAnimationDelayMilliseconds : 0));
     }
 
     public void animateToInactive()
@@ -322,6 +346,8 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     	
     	animateViewToY((int)m_topYPosInactive);
         animateViewToX((int)m_leftXPosInactive, m_isOnScreen);
+        
+        m_tutorialView.animateToInactive(m_stateChangeAnimationTimeMilliseconds);
     }
 
     protected void animateViewToY(final int yAsPx)
@@ -333,7 +359,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     
     protected void animateViewToX(final int xAsPx, final boolean addDelay)
     {
-    	long delay = addDelay ? m_stateChangeAnimationTimeMilliseconds * 5 : 0;
+    	long delay = addDelay ? m_stateChangeAnimationDelayMilliseconds : 0;
     	
     	m_floorListContainer.animate()
         .x(xAsPx)
