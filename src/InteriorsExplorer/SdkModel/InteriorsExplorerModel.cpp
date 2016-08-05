@@ -97,7 +97,7 @@ namespace ExampleApp
                 
                 m_hasViewedAnyInterior = false;
 
-				if(!m_persistentSettings.TryGetValue(InteriorsExplorerModel_HasViewedAnyInterior, m_hasViewedAnyInterior))
+				if(!m_persistentSettings.TryGetValue(HasViewedAnyInterior, m_hasViewedAnyInterior))
 				{
 					m_hasViewedAnyInterior = false;
 				}
@@ -172,7 +172,7 @@ namespace ExampleApp
             
             void InteriorsExplorerModel::Exit()
             {
-            	m_persistentSettings.SetValue(InteriorsExplorerModel_HasViewedAnyInterior, m_hasViewedAnyInterior);
+            	m_persistentSettings.SetValue(HasViewedAnyInterior, m_hasViewedAnyInterior);
 
                 HideInteriorExplorer();
                 m_metricsService.SetEvent(MetricEventInteriorExitPressed);
