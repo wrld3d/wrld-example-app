@@ -32,6 +32,7 @@ namespace ExampleApp
                 const std::string MetricEventInteriorSelected = "Interior Selected";
                 const std::string MetricEventInteriorFloorSelected = "Interior Floor Selected";
                 const std::string MetricEventInteriorExitPressed = "Interior Exit Pressed";
+				const std::string HasViewedAnyInterior = "InteriorsExplorerModel_HasViewedAnyInterior";
                 
                 std::string ToFloorName(const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel)
                 {
