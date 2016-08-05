@@ -348,17 +348,33 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         }
         else
         {
-            textInsetX = 9.0f;
+            textInsetX = 0.0f;
             cell.imageView.image = nil;
         }
         
         const float textY = 0.0f;
-        const float textWidth = [tableView getCellWidth] - textInsetX;
+        float arrowInset = 0.0f;
+
+        
+        const ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections.at(m_tableSectionMap[tableView]);
+        if(section.IsExpandable())
+        {
+            arrowInset = 18.0f;
+            
+        }
+        const float textWidth = [tableView getCellWidth] - textInsetX-arrowInset;
+        
         const float textHeight = isHeader ? CellConstants::SectionHeaderCellHeight : CellConstants::SubSectionCellHeight;
         
         cell.textLabel.text = [NSString stringWithUTF8String:name.c_str()];
         cell.textLabel.font = [UIFont systemFontOfSize: [self getTextLabelFontSize:isHeader]];
         cell.textLabel.textColor = isHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderTextColor : ExampleApp::Helpers::ColorPalette::TableSubCellTextColor;
+        
+        if ([[cell.textLabel class] instancesRespondToSelector:@selector(allowsDefaultTighteningForTruncation)])
+        {
+            cell.textLabel.allowsDefaultTighteningForTruncation = true;
+        }
+        cell.textLabel.adjustsFontSizeToFitWidth = true;
         [cell.textLabel sizeToFit];
         
         CGRect textFrame = CGRectMake(textInsetX,
