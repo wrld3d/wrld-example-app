@@ -567,6 +567,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         );
 
 	m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(
+		app.InteriorsExplorerModule().GetInteriorsExplorerModel(),
 		app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
 		m_messageBus);
 
