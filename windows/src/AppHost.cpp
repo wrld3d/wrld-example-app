@@ -121,7 +121,9 @@ AppHost::AppHost(
     Eegeo::Rendering::ScreenProperties screenProperties,
     EGLDisplay display,
     EGLSurface shareSurface,
-    EGLContext resourceBuildShareContext
+    EGLContext resourceBuildShareContext,
+    bool hasNativeTouchInput,
+    int maxDeviceTouchCount
     )
     :m_isPaused(false)
     , m_pJpegLoader(NULL)
@@ -156,6 +158,8 @@ AppHost::AppHost(
 	, m_pInteriorsExplorerViewModule(NULL)
     , m_failAlertHandler(this, &AppHost::HandleStartupFailure)
     , m_pMenuReaction(NULL)
+    , m_shouldStartFullscreen(false)
+    , m_maxDeviceTouchCount(maxDeviceTouchCount)
 {
     ASSERT_NATIVE_THREAD
          
@@ -193,11 +197,10 @@ AppHost::AppHost(
 
     Eegeo::EffectHandler::Initialise();
 
-    const bool enableTouch = false;
-    const int maxTouches = 0;
+    bool enableTouchControls = hasNativeTouchInput ? applicationConfiguration.IsKioskTouchInputEnabled() : false;
 
     const Eegeo::Windows::Input::WindowsInputProcessorConfig& windowsInputProcessorConfig = Eegeo::Windows::Input::WindowsInputProcessor::DefaultConfig();
-    m_pInputProcessor = Eegeo_NEW(Eegeo::Windows::Input::WindowsInputProcessor)(&m_inputHandler, m_nativeState.GetWindow(), screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), windowsInputProcessorConfig, enableTouch, maxTouches);
+    m_pInputProcessor = Eegeo_NEW(Eegeo::Windows::Input::WindowsInputProcessor)(&m_inputHandler, m_nativeState.GetWindow(), screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), windowsInputProcessorConfig, enableTouchControls, m_maxDeviceTouchCount);
 
 	m_pWindowsPersistentSettingsModel = Eegeo_NEW(ExampleApp::PersistentSettings::WindowsPersistentSettingsModel)(m_nativeState);
 
@@ -219,6 +222,8 @@ AppHost::AppHost(
     const std::string& deviceModel = nativeState.GetDeviceModel();
     const Eegeo::Config::PlatformConfig& defaultPlatformConfig = Eegeo::Windows::WindowsPlatformConfigBuilder(deviceModel).Build();
     const Eegeo::Config::PlatformConfig& platformConfig = ExampleApp::PlatformConfigBuilder::Build(defaultPlatformConfig, applicationConfiguration, "Textures/EmbeddedTheme");
+
+    m_shouldStartFullscreen = applicationConfiguration.ShouldStartFullscreen();
 
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
         *m_pWindowsPlatformAbstractionModule,
@@ -290,6 +295,11 @@ AppHost::~AppHost()
     m_pWindowsLocationService = NULL;
 }
 
+bool AppHost::ShouldStartFullscreen()
+{
+    return m_shouldStartFullscreen;
+}
+
 void AppHost::OnResume()
 {
     ASSERT_NATIVE_THREAD
@@ -338,9 +348,24 @@ void AppHost::HandleKeyboardInputEvent(const Eegeo::Windows::Input::KeyboardInpu
     m_pInputProcessor->HandleMouseInput(event);
 }
 
+void AppHost::HandleTouchScreenInputEvent(const Eegeo::Windows::Input::TouchScreenInputEvent& event)
+{
+    m_pInputProcessor->HandleTouchScreenInput(event, static_cast<float>(m_nativeState.GetWidth()), static_cast<float>(m_nativeState.GetHeight()));
+}
+
 void AppHost::SetAllInputEventsToPointerUp(int x, int y)
 {
     m_pInputProcessor->SetAllInputEventsToPointerUp(x, y);
+}
+
+void AppHost::SetTouchInputEventToPointerUp(int touchId)
+{
+    m_pInputProcessor->SetTouchInputEventToPointerUp(touchId);
+}
+
+void AppHost::PopAllTouchEvents()
+{
+    m_pInputProcessor->PopAllTouchEvents();
 }
 
 void AppHost::Update(float dt)

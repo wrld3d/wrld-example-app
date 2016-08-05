@@ -30,6 +30,7 @@ namespace ExampleAppWPF
             mainWindow.SizeChanged += PerformLayout;
             mainWindow.MainGrid.Children.Add(this);
             Loaded += SettingsMenuView_Loaded;
+            TouchEnter += (o, e) => { mainWindow.PopAllTouchEvents(); };
         }
 
         private void SettingsMenuView_Loaded(object sender, RoutedEventArgs e)

@@ -1,18 +1,13 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:ExampleAppWPF">
-    
+
     <Style TargetType="{x:Type local:CompassView}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CompassView}">
                     <Canvas Name="ImageCanvas">
-                        <Image Name="ButtonImage" Source="/Assets/button_compass_off.png" Width="70" Height="70">
-                            <Image.Clip>
-                                <EllipseGeometry Center="35,35" RadiusX="35" RadiusY="35"/>
-                            </Image.Clip>
-                        </Image>
-                        
+                        <Image Name="ButtonImage" Source="/Assets/button_compass_off.png" Width="70" Height="70"/>
                         <Image Name="CompassArrow" Source="/Assets/compass_point_off.png" Width="9" Height="25" Visibility="Collapsed" />
                     </Canvas>
                     <ControlTemplate.Triggers>
@@ -35,8 +30,7 @@
         </Setter>
         <Setter Property="Height" Value="70"/>
         <Setter Property="Width" Value="70"/>
-        <Setter Property="Margin" Value="0,0,0,23"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
     </Style>
-    
+
 </ResourceDictionary>

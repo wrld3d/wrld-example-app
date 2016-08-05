@@ -27,15 +27,21 @@ namespace
 
 AppRunner::AppRunner
 (
-    WindowsNativeState* pNativeState
+    WindowsNativeState* pNativeState,
+    bool hasNativeTouchInput,
+    int maxDeviceTouchCount
 )
     : m_pNativeState(pNativeState)
     , m_pAppHost(NULL)
     , m_updatingNative(true)
     , m_isPaused(false)
     , m_appRunning(true)
+    , m_hasNativeTouch(hasNativeTouchInput)
+    , m_maxDeviceTouchCount(maxDeviceTouchCount)
 {
     ASSERT_NATIVE_THREAD
+
+    m_wpPrev.length = sizeof(m_wpPrev);
 
     Eegeo::Helpers::ThreadHelpers::SetThisThreadAsMainThread();
 }
@@ -72,7 +78,9 @@ void AppRunner::CreateAppHost()
                          screenProperties,
                          m_displayService.GetDisplay(),
                          m_displayService.GetSharedSurface(),
-                         m_displayService.GetResourceBuildSharedContext()
+                         m_displayService.GetResourceBuildSharedContext(),
+                         m_hasNativeTouch,
+                         m_maxDeviceTouchCount
                      );
     }
 }
@@ -152,6 +160,14 @@ void AppRunner::HandleKeyboardUpEvent(char keyCode)
     }
 }
 
+void AppRunner::HandleTouchEvent(const Eegeo::Windows::Input::TouchScreenInputEvent& event)
+{
+    if (m_pAppHost)
+    {
+        m_pAppHost->HandleTouchScreenInputEvent(event);
+    }
+}
+
 void AppRunner::ActivateSharedSurface()
 {
     if (m_pAppHost != NULL)
@@ -180,6 +196,22 @@ void AppRunner::SetAllInputEventsToPointerUp(int x, int y)
     if (m_pAppHost)
     {
         m_pAppHost->SetAllInputEventsToPointerUp(x, y);
+    }
+}
+
+void AppRunner::SetTouchInputEventToPointerUp(int touchId)
+{
+    if (m_pAppHost)
+    {
+        m_pAppHost->SetTouchInputEventToPointerUp(touchId);
+    }
+}
+
+void AppRunner::PopAllTouchEvents()
+{
+    if (m_pAppHost)
+    {
+        m_pAppHost->PopAllTouchEvents();
     }
 }
 
@@ -309,3 +341,37 @@ void* AppRunner::GetMainRenderSurfaceSharePointer()
 {
     return m_displayService.GetMainRenderSurfaceSharePointer();
 }
+
+bool AppRunner::ShouldStartFullscreen() const
+{
+    return m_pAppHost->ShouldStartFullscreen();
+}
+
+void AppRunner::SetFullscreen(bool fullscreen)
+{
+    DWORD dwStyle = GetWindowLong(m_pNativeState->GetWindow(), GWL_STYLE);
+
+    if (fullscreen)
+    {
+        MONITORINFO mi;
+        mi.cbSize = sizeof(mi);
+
+        if (GetWindowPlacement(m_pNativeState->GetWindow(), &m_wpPrev) &&
+            GetMonitorInfo(MonitorFromWindow(m_pNativeState->GetWindow(), MONITOR_DEFAULTTOPRIMARY), &mi))
+        {
+            SetWindowLong(m_pNativeState->GetWindow(), GWL_STYLE, dwStyle & ~WS_OVERLAPPEDWINDOW);
+            SetWindowPos(m_pNativeState->GetWindow(), HWND_TOP,
+                mi.rcMonitor.left, mi.rcMonitor.top,
+                mi.rcMonitor.right - mi.rcMonitor.left,
+                mi.rcMonitor.bottom - mi.rcMonitor.top,
+                SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
+        }
+    }
+    else
+    {
+        SetWindowLong(m_pNativeState->GetWindow(), GWL_STYLE, dwStyle | WS_OVERLAPPEDWINDOW);
+        SetWindowPlacement(m_pNativeState->GetWindow(), &m_wpPrev);
+        SetWindowPos(m_pNativeState->GetWindow(), NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
+    }
+}
+

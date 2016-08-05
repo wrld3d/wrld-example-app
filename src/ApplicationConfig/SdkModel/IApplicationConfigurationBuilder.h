@@ -69,6 +69,10 @@ namespace ExampleApp
 
                 virtual IApplicationConfigurationBuilder& SetWebProxyIgnorePattern(const std::string& webProxyIgnorePattern) = 0;
 
+                virtual IApplicationConfigurationBuilder& SetShouldStartFullscreen(bool startFullscreen) = 0;
+
+                virtual IApplicationConfigurationBuilder& SetIsKioskTouchInputEnabled(bool kioskTouchInputEnabled) = 0;
+
                 virtual std::string Decrypt(const std::string& value) const = 0;
 
                 virtual bool ValidateHMAC(const std::string& message, const std::string& hmac) const = 0;

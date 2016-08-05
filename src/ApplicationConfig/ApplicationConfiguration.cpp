@@ -12,6 +12,7 @@ namespace ExampleApp
                                                            float distanceToInterestMetres,
                                                            float orientationDegrees,
                                                            bool tryStartAtGpsLocation,
+                                                           bool startFullscreen,
                                                            const std::string& googleAnalyticsReferrerToken,
                                                            const std::string& flurryAppKey,
                                                            const std::string& yelpConsumerKey,
@@ -34,13 +35,15 @@ namespace ExampleApp
                                                            const std::string& webProxyIgnorePattern,
                                                            const std::string& senionMapKey,
                                                            const std::string& senionMapCustomerID,
-                                                           const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>& buildingsInfo)
+                                                           const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>& buildingsInfo,
+                                                           const bool isKioskTouchInputEnabled)
         : m_name(name)
         , m_eegeoApiKey(eegeoApiKey)
         , m_interestLocation(interestLocation)
         , m_distanceToInterestMetres(distanceToInterestMetres)
         , m_orientationDegrees(orientationDegrees)
         , m_tryStartAtGpsLocation(tryStartAtGpsLocation)
+        , m_shouldStartFullscreen(startFullscreen)
         , m_googleAnalyticsReferrerToken(googleAnalyticsReferrerToken)
         , m_flurryAppKey(flurryAppKey)
         , m_yelpConsumerKey(yelpConsumerKey)
@@ -64,6 +67,7 @@ namespace ExampleApp
         , m_senionMapKey(senionMapKey)
         , m_senionMapCustomerID(senionMapCustomerID)
         , m_buildingsInfo(buildingsInfo)
+        , m_isKioskTouchInputEnabled(isKioskTouchInputEnabled)
         {
             
         }
@@ -209,6 +213,16 @@ namespace ExampleApp
         
         const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>& ApplicationConfiguration::BuildingsInfo() const{
             return m_buildingsInfo;
+        }
+
+        bool ApplicationConfiguration::IsKioskTouchInputEnabled() const
+        {
+            return m_isKioskTouchInputEnabled;
+        }
+
+        bool ApplicationConfiguration::ShouldStartFullscreen() const
+        {
+            return m_shouldStartFullscreen;
         }
 
     }

@@ -128,10 +128,10 @@
 
 - (void) didFinishLoadingManager
 {
-    //[locationManager startUpdatingLocation];
+    [locationManager startUpdatingLocation];
     
     //#Mock Location Tesing Uncomment below line and comment above line
-    [self startOfSiteTesting];
+//    [self startOfSiteTesting];
 }
 - (void)didUpdateLocation:(SLCoordinate3D *)location withUncertainty:(double)radius andStatus:(SLLocationStatus)locationStatus
 {

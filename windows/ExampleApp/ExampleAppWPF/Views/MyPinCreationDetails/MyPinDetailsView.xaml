@@ -22,8 +22,8 @@
                             </Grid>
                         </StackPanel>
                         <Button x:Name="Close" Content="Button" Height="36" Width="36" Style="{StaticResource Close_CreatePIN}" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Margin="0,-50,5,0"/>
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="390">
-                            <StackPanel Width="Auto">
+                            <ScrollViewer Height="390" Width="auto" Name="PinDetailsView" PanningRatio="1" PanningDeceleration="0" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="False">
+                                <StackPanel Width="Auto">
                                 <TextBlock Text=" Description" Background="{StaticResource Gold}" Foreground="{StaticResource White}" Width="Auto" Height="20" Margin="5, 10, 5, 0"/>
                                 <TextBlock x:Name="Description" TextWrapping="Wrap" Background="{StaticResource White}" Foreground="{StaticResource Gold}" Width="Auto" Margin="5, 10, 5, 0"/>
                                 <TextBlock x:Name="ImageHeader" Text=" Image" Background="{StaticResource Gold}" Foreground="{StaticResource White}" Width="Auto" Height="20" Margin="5, 10, 5, 0"/>

@@ -6,6 +6,7 @@ using ExampleApp.CLI;
 using System.Diagnostics;
 using System.Windows.Navigation;
 using System.Windows.Threading;
+using System.Collections.Generic;
 
 namespace ExampleAppWPF
 {
@@ -20,7 +21,8 @@ namespace ExampleAppWPF
         private TimeSpan m_currentRenderArgsRenderingTime = TimeSpan.Zero;
         
         private Stopwatch m_frameTimer;
-        private bool m_isInputActive;
+        private bool m_isMouseInputActive;
+        private bool m_isTouchInputActive;
         private int m_frameCount = 0;
         private bool m_hasEmptiedEventQueueSinceLastRender = true;
         private bool m_hasHadRenderEventSinceRender = false;
@@ -30,6 +32,10 @@ namespace ExampleAppWPF
         private const float m_maxWaitPercentage = 1.1f;
 
         private const float m_oversampleScale = 1.5f;
+
+        List<KeyValuePair<int, bool>> m_zeroIndexedTouchIds;
+
+        private bool m_isFullscreen;
 
         public MainWindow()
         {
@@ -43,8 +49,15 @@ namespace ExampleAppWPF
             Closed += MainWindow_Closed;
 
             m_frameTimer = Stopwatch.StartNew();
-            m_isInputActive = true;
+            m_isMouseInputActive = true;
             Visibility = Visibility.Visible;
+
+            m_isMouseInputActive = true;
+            m_isTouchInputActive = true;
+
+            m_zeroIndexedTouchIds = new List<KeyValuePair<int, bool>>();
+
+            m_isFullscreen = false;
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
@@ -60,14 +73,41 @@ namespace ExampleAppWPF
             }
         }
 
+        public bool HasTouchInput()
+        {
+            foreach (TabletDevice tabletDevice in Tablet.TabletDevices)
+            {
+                //Only detect if it is a touch Screen not how many touches (i.e. Single touch or Multi-touch)
+                if (tabletDevice.Type == TabletDeviceType.Touch)
+                    return true;
+            }
+            return false;
+        }
+
+        public int GetMaxDeviceTouchCount()
+        {
+            foreach (TabletDevice tabletDevice in Tablet.TabletDevices)
+            {
+                return tabletDevice.StylusDevices.Count;
+            }
+            return 0;
+        }
+
         private void MainWindow_Loaded(object sender, EventArgs loadedEvent)
         {
+            FocusManager.SetFocusedElement(this, this);
+            Focus();
+            Keyboard.Focus(this);
+
             MainGrid.SizeChanged += MapHost_SizeChanged;
 
             int pixelWidth = (int)MainGrid.ActualWidth;
             int pixelHeight = (int)MainGrid.ActualHeight;
 
-            m_mapImage.Init(pixelWidth, pixelHeight, m_oversampleScale);
+            bool hasNativeTouchInput = HasTouchInput();
+            int maxDeviceTouchCount = GetMaxDeviceTouchCount();
+
+            m_mapImage.Init(pixelWidth, pixelHeight, m_oversampleScale, hasNativeTouchInput, maxDeviceTouchCount);
 
             MapHost.Source = m_mapImage;
             MapHost.Width = pixelWidth;
@@ -77,20 +117,117 @@ namespace ExampleAppWPF
             m_mapImage.IsFrontBufferAvailableChanged += OnIsFrontBufferAvailableChanged;
             CompositionTarget.Rendering += CompositionTarget_Rendering;
 
-            MouseLeftButtonDown += (o, e) => { if (m_isInputActive) m_mapImage.HandlePanStartEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
-            PreviewMouseLeftButtonUp += (o, e) => { if (m_isInputActive) m_mapImage.HandlePanEndEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
-            MouseRightButtonDown += (o, e) => { if (m_isInputActive) m_mapImage.HandleRotateStartEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
-            PreviewMouseRightButtonUp += (o, e) => { if (m_isInputActive) m_mapImage.HandleRotateEndEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
-            MouseWheel += (o, e) => { if (m_isInputActive) m_mapImage.HandleZoomEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), e.Delta, Keyboard.Modifiers); };
-            MouseLeave += (o, e) => { if (m_isInputActive) m_mapImage.SetAllInputEventsToPointerUp((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y)); };
-            MouseMove += (o, e) => { if (m_isInputActive) m_mapImage.HandleMouseMoveEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
+            if (m_mapImage.ShouldStartFullscreen())
+            {
+                SetFullScreen(true);
+            }
 
-            KeyDown += (o, e) => { m_mapImage.HandleKeyboardDownEvent((int)KeyInterop.VirtualKeyFromKey(e.Key)); };
+            MouseLeftButtonDown += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandlePanStartEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
+            PreviewMouseLeftButtonUp += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandlePanEndEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
+            MouseRightButtonDown += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandleRotateStartEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
+            PreviewMouseRightButtonUp += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandleRotateEndEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
+            MouseWheel += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandleZoomEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), e.Delta, Keyboard.Modifiers); };
+            MouseLeave += (o, e) => { if (m_isMouseInputActive) m_mapImage.SetAllInputEventsToPointerUp((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y)); };
+            MouseMove += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandleMouseMoveEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
+
+            MapHost.KeyDown += MainWindowOnKeyDown;
+            KeyDown += MainWindowOnKeyDown;
 
             MouseDown += MainWindow_MouseDown;
             MouseUp += MainWindow_MouseUp;
 
+            TouchDown += OnTouchDown;
+            TouchUp += OnTouchUp;
+            TouchMove += OnTouchMove;
+            MapHost.TouchLeave += (o, e) =>
+            {
+                if (m_isTouchInputActive)
+                {
+                    m_mapImage.SetTouchInputEventToPointerUp(CheckAndGetZeroIndexedId(e.TouchDevice.Id));
+                    RemoveTouchId(e.TouchDevice.Id);
+                }
+            };
+
             Dispatcher.Hooks.DispatcherInactive += new EventHandler(DispatcherInactive);
+        }
+
+        public void PopAllTouchEvents()
+        {
+            if (!m_isTouchInputActive)
+            {
+                m_mapImage.PopAllTouchEvents();
+            }
+        }
+
+        private void SetFullScreen(bool isFullScreen)
+        {
+            m_mapImage.SetFullscreen(isFullScreen);
+            m_isFullscreen = isFullScreen;
+        }
+
+        private int CheckAndGetZeroIndexedId(int systemId)
+        {
+            var result = m_zeroIndexedTouchIds.FindIndex((_t) => _t.Value != false && _t.Key == systemId);
+
+            if (result != -1)
+            {
+                return result;
+            }
+
+            result = m_zeroIndexedTouchIds.FindIndex((_t) => _t.Value == false);
+
+            if (result != -1)
+            {
+                m_zeroIndexedTouchIds[result] = new KeyValuePair<int, bool>(systemId, true);
+                return result;
+            }
+
+            m_zeroIndexedTouchIds.Add(new KeyValuePair<int, bool>(systemId, true));
+
+            return m_zeroIndexedTouchIds.Count - 1;
+        }
+
+        private void OnTouchMove(object sender, TouchEventArgs e)
+        {
+            if (m_isTouchInputActive)
+            {
+                m_mapImage.HandleTouchMoveEvent((float)e.TouchDevice.GetTouchPoint(this).Position.X, (float)e.TouchDevice.GetTouchPoint(this).Position.Y, 0.0f, CheckAndGetZeroIndexedId(e.TouchDevice.Id));
+            }
+        }
+
+        private void OnTouchUp(object sender, TouchEventArgs e)
+        {
+            if (m_isTouchInputActive)
+            {
+                m_mapImage.HandleTouchUpEvent((float)e.TouchDevice.GetTouchPoint(this).Position.X, (float)e.TouchDevice.GetTouchPoint(this).Position.Y, 0.0f, CheckAndGetZeroIndexedId(e.TouchDevice.Id));
+            }
+
+            RemoveTouchId(e.TouchDevice.Id);
+        }
+
+        void RemoveTouchId(int systemId)
+        {
+            var index = CheckAndGetZeroIndexedId(systemId);
+
+            m_zeroIndexedTouchIds[index] = new KeyValuePair<int, bool>(systemId, false);
+        }
+
+        private void OnTouchDown(object sender, TouchEventArgs e)
+        {
+            if (m_isTouchInputActive)
+            {
+                m_mapImage.HandleTouchDownEvent((float)e.TouchDevice.GetTouchPoint(this).Position.X, (float)e.TouchDevice.GetTouchPoint(this).Position.Y, 0.0f, CheckAndGetZeroIndexedId(e.TouchDevice.Id));
+            }
+        }
+
+        private void MainWindowOnKeyDown(object sender, KeyEventArgs e)
+        {
+            m_mapImage.HandleKeyboardDownEvent((int)KeyInterop.VirtualKeyFromKey(e.Key));
+
+            if (Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.LeftShift) && Keyboard.IsKeyDown(Key.F))
+            {
+                SetFullScreen(!m_isFullscreen);
+            }
         }
 
         private void DispatcherInactive(object sender, EventArgs e)
@@ -112,7 +249,8 @@ namespace ExampleAppWPF
 
         public void SetInputActive(bool input)
         {
-            m_isInputActive = input;
+            m_isMouseInputActive = input;
+            m_isTouchInputActive = input;
         }
 
         public void SetOpacity(double opacity)
@@ -122,7 +260,7 @@ namespace ExampleAppWPF
 
         private void MainWindow_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Middle && m_isInputActive)
+            if (e.ChangedButton == MouseButton.Middle && m_isMouseInputActive)
             {
                 m_mapImage.HandleTiltEnd((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers);
             }
@@ -130,7 +268,7 @@ namespace ExampleAppWPF
 
         private void MainWindow_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Middle && m_isInputActive)
+            if (e.ChangedButton == MouseButton.Middle && m_isMouseInputActive)
             {
                 m_mapImage.HandleTiltStart((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers);
             }

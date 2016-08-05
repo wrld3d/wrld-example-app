@@ -13,7 +13,7 @@
                     <StackPanel Name="MainContainer" Background="{StaticResource White}">
                         <Rectangle Fill="{StaticResource Gold}" Height="10"/>
                         <TextBlock Text="About this app..." Foreground="{StaticResource Gold}" FontWeight="Bold" Margin="5, 10, 0, 10" FontSize="20"/>
-                        <ScrollViewer Height="390" VerticalScrollBarVisibility="Auto" Focusable="False">
+                        <ScrollViewer Height="390" Width="auto" Name="AboutPageView" PanningRatio="1" PanningDeceleration="0" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="False">
                             <StackPanel Orientation="Vertical">
                                 <Image Source="/Assets/eegeo_logo.png" Width="140" Height="52" HorizontalAlignment="Center"/>
                                 <TextBlock Name="AppText" Width="300" HorizontalAlignment="Left" TextWrapping="Wrap" TextAlignment="Center" Margin="10, 0, 10, 0"/>

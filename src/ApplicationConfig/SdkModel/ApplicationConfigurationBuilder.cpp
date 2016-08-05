@@ -42,6 +42,8 @@ namespace ExampleApp
             , m_webProxyIpAddress("")
             , m_webProxyPort(0)
             , m_webProxyIgnorePattern("")
+            , m_isKioskTouchInputEnabled(false)
+            , m_shouldStartFullscreen(false)
             {
                 
             }
@@ -217,6 +219,18 @@ namespace ExampleApp
                 return *this;
             }
 
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetShouldStartFullscreen(bool startFullscreen)
+            {
+                m_shouldStartFullscreen = startFullscreen;
+                return *this;
+            }
+
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetIsKioskTouchInputEnabled(bool kioskTouchInputEnabled)
+            {
+                m_isKioskTouchInputEnabled = kioskTouchInputEnabled;
+                return *this;
+            }
+
             std::string ApplicationConfigurationBuilder::Decrypt(const std::string& value) const
             {
                 return m_cipher.Decrypt(value);
@@ -246,6 +260,7 @@ namespace ExampleApp
                                                 m_distanceToInterestMetres,
                                                 m_orientationDegrees,
                                                 m_tryStartAtGpsLocation,
+                                                m_shouldStartFullscreen,
                                                 m_googleAnalyticsReferrerToken,
                                                 m_flurryAppKey,
                                                 m_yelpConsumerKey,
@@ -268,7 +283,8 @@ namespace ExampleApp
                                                 m_webProxyIgnorePattern,
                                                 m_senionMapKey,
                                                 m_senionMapCustomerID,
-                                                m_buildingsInfo);
+                                                m_buildingsInfo,
+                                                m_isKioskTouchInputEnabled);
             }
         }
     }

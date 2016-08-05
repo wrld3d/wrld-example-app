@@ -73,6 +73,13 @@ namespace ExampleAppWPF
             m_mainContainer.MouseDown += OnContainerMouseDown;
 
             m_closeButton.Click += HandleCloseButtonClicked;
+
+            TouchMove += OnTouchMove;
+        }
+
+        private void OnTouchMove(object sender, TouchEventArgs e)
+        {
+            e.Handled = true;
         }
 
         private void OnContainerMouseDown(object sender, MouseButtonEventArgs e)

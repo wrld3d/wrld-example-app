@@ -8,7 +8,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace ExampleAppWPF
-{   
+{
     public class CompassView : ButtonBase
     {
         private IntPtr m_nativeCallerPointer;
@@ -20,8 +20,10 @@ namespace ExampleAppWPF
         private double m_yPosInactive;
         private double m_compassPointOffsetX;
         private double m_compassPointOffsetY;
-        private bool m_isFirstLayout = true;
 
+        bool m_isActive = false;
+
+        private WindowInteractionTouchHandler m_touchHandler;
         static CompassView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(CompassView), new FrameworkPropertyMetadata(typeof(CompassView)));
@@ -30,7 +32,7 @@ namespace ExampleAppWPF
         public CompassView(IntPtr nativeCallerPointer)
         {
             m_nativeCallerPointer = nativeCallerPointer;
-            
+
             Click += CompassView_Click;
             Loaded += PerformLayout;
 
@@ -38,6 +40,8 @@ namespace ExampleAppWPF
             mainWindow.SizeChanged += PerformLayout;
             mainWindow.MainGrid.Children.Add(this);
             ShowGpsDisabledView();
+            m_touchHandler = new WindowInteractionTouchHandler(this);
+            TouchEnter += (o, e) => { mainWindow.PopAllTouchEvents(); };
         }
 
         public override void OnApplyTemplate()
@@ -61,11 +65,10 @@ namespace ExampleAppWPF
         private void PerformLayout(object sender, RoutedEventArgs e)
         {
             Point currentPosition = RenderTransform.Transform(new Point(0.0, 0.0));
-            double onScreenState = (currentPosition.Y - m_yPosInactive) / (m_yPosActive - m_yPosInactive);
 
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
-            double screenHeight = mainWindow.ActualHeight;
-            double screenWidth = mainWindow.ActualWidth;
+            double screenHeight = mainWindow.MainGrid.ActualHeight;
+            double screenWidth = mainWindow.MainGrid.ActualWidth;
 
             double viewHeight = ActualHeight;
             double viewWidth = ActualWidth;
@@ -76,23 +79,15 @@ namespace ExampleAppWPF
             m_compassPointOffsetX = (viewWidth) * 0.5;
             m_compassPointOffsetY = (viewHeight) * 0.5;
 
-            m_yPosActive = screenHeight * 0.5 - (viewHeight * 0.5 + ConversionHelpers.AndroidToWindowsDip(16));
+            const double margin = 23.0;
+            m_yPosActive = screenHeight * 0.5 - (viewHeight * 0.5) - (margin);
             m_yPosInactive = screenHeight * 0.5 + viewHeight * 0.5;
 
-            double layoutY = m_yPosInactive;
-
-            if (!m_isFirstLayout)
-            {
-                layoutY = onScreenState * (m_yPosActive - m_yPosInactive) + m_yPosInactive;
-            }
-
-            m_isFirstLayout = false;
-
-            var transform = new TranslateTransform(0.0, layoutY);
+            var transform = new TranslateTransform(currentPosition.X, m_isActive ? m_yPosActive : m_yPosInactive);
 
             RenderTransform = transform;
         }
-        
+
         public void Destroy()
         {
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
@@ -103,11 +98,13 @@ namespace ExampleAppWPF
         public void AnimateToInactive()
         {
             AnimateViewToY(m_yPosInactive);
+            m_isActive = false;
         }
 
         public void AnimateToActive()
         {
             AnimateViewToY(m_yPosActive);
+            m_isActive = true;
         }
 
         public void AnimateViewToY(double y)
@@ -158,7 +155,7 @@ namespace ExampleAppWPF
             var transformGroup = new TransformGroup();
             transformGroup.Children.Add(rotateTransform);
             transformGroup.Children.Add(translateTransform);
-            
+
             m_compassPoint.RenderTransform = transformGroup;
             m_compassPoint.Visibility = Visibility.Visible;
         }
@@ -206,8 +203,8 @@ namespace ExampleAppWPF
         {
             double innerDiameter = m_compassInner.Width;
             var circle = new Ellipse();
-            circle.Width = innerDiameter/2;
-            circle.Height = innerDiameter/2;
+            circle.Width = innerDiameter / 2;
+            circle.Height = innerDiameter / 2;
             circle.Fill = filled ? Brushes.White : Brushes.Transparent;
             circle.Stroke = filled ? Brushes.Transparent : Brushes.White;
 
