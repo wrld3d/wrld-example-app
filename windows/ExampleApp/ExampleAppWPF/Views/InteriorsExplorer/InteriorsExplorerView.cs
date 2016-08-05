@@ -12,11 +12,13 @@ namespace ExampleAppWPF
     {
         private IntPtr m_nativeCallerPointer;
         private Slider m_floorSlider;
+        private Thumb m_sliderThumb;
         private TickBarVerticalWithLabels m_sliderTickBar;
         private TextBlock m_floorName;
         private Button m_dismissButton;
         private Grid m_floorPanel;
         private Grid m_detailsPanel;
+        private InteriorsExplorerTutorialView m_tutorialView;
         
         private int m_selectedFloorIndex;
         private double m_panelOffscreenOffsetX;
@@ -55,10 +57,10 @@ namespace ExampleAppWPF
 
             m_sliderTickBar = GetTickBar(m_floorSlider);
 
-            var sliderThumb = GetThumb(m_floorSlider);
+            m_sliderThumb = GetThumb(m_floorSlider);
 
-            sliderThumb.DragStarted += OnSliderDragStarted;
-            sliderThumb.DragCompleted += OnSliderDragCompleted;
+            m_sliderThumb.DragStarted += OnSliderDragStarted;
+            m_sliderThumb.DragCompleted += OnSliderDragCompleted;
 
             m_floorName = (TextBlock)GetTemplateChild("FloorName");
 
@@ -75,6 +77,8 @@ namespace ExampleAppWPF
 
             var dismissButtonPosition = m_dismissButton.RenderTransform.Transform(new Point());
             m_dismissButton.RenderTransform = new TranslateTransform(m_panelOffscreenOffsetX, dismissButtonPosition.Y);
+
+            m_tutorialView = (InteriorsExplorerTutorialView) GetTemplateChild("InteriorsExplorerTutorialView");
 
             SetTouchEnabled(false);
             Hide();
@@ -151,7 +155,16 @@ namespace ExampleAppWPF
             m_floorSlider.Maximum = FloorCount - 1;
             SetSelectedFloor(currentlySelectedFloorIndex);
 
-            m_floorPanel.Visibility = FloorSelectionEnabled ? Visibility.Visible : Visibility.Hidden; ;
+            m_floorPanel.Visibility = FloorSelectionEnabled ? Visibility.Visible : Visibility.Hidden;
+            
+            Point dismissButtonPosition = m_dismissButton.TransformToAncestor(Application.Current.MainWindow).Transform(new Point());
+            Point sliderThumbPosition = m_sliderThumb.TransformToAncestor(Application.Current.MainWindow).Transform(new Point());
+            m_tutorialView.repositionDialogs((float) (dismissButtonPosition.X - m_panelOffscreenOffsetX),
+                                                (float) dismissButtonPosition.Y + 5,
+                                                0,
+                                                (float) sliderThumbPosition.Y + 3,
+                                                0,
+                                                FloorCount > 1);
         }
         public void SetFloorName(string name)
         {
@@ -211,8 +224,10 @@ namespace ExampleAppWPF
             var storyboard = new Storyboard();
             var currentPosition = m_floorPanel.RenderTransform.Transform(new Point(0.0, 0.0));
 
+            double delayMilliseconds = onScreen ? m_stateChangeAnimationTimeMilliseconds * 5 : 0.0;
+
             var floorPanelAnimation = new DoubleAnimation();
-            floorPanelAnimation.BeginTime = TimeSpan.FromMilliseconds(onScreen ? m_stateChangeAnimationTimeMilliseconds * 5 : 0.0);
+            floorPanelAnimation.BeginTime = TimeSpan.FromMilliseconds(delayMilliseconds);
             floorPanelAnimation.From = currentPosition.X;
             floorPanelAnimation.To = CalcPanelX(FloorSelectionEnabled ? t : 0.0f);
             floorPanelAnimation.Completed += Storyboard_Completed;
@@ -235,6 +250,8 @@ namespace ExampleAppWPF
             detailsPanelAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(m_stateChangeAnimationTimeMilliseconds));
 
             m_detailsPanel.BeginAnimation(OpacityProperty, detailsPanelAnimation);
+
+            m_tutorialView.animateTo(t, delayMilliseconds + m_stateChangeAnimationTimeMilliseconds, t <= 0);
         }
 
         private void Storyboard_Completed(object sender, EventArgs e)
@@ -260,6 +277,16 @@ namespace ExampleAppWPF
         public void Hide()
         {
             Visibility = Visibility.Hidden;
+        }
+
+        public void AddTutorialDialogs()
+        {
+            m_tutorialView.show();
+        }
+
+        public void RemoveTutorialDialogs()
+        {
+            m_tutorialView.hide();
         }
 
         private void OnSliderDragStarted(object sender, DragStartedEventArgs e)
