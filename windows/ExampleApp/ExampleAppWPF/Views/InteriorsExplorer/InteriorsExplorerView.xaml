@@ -6,7 +6,8 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../../Colours.xaml" />
         <ResourceDictionary Source="../../TransparentButtonStyle.xaml" />
-        <ResourceDictionary Source="../../SimpleSlider.xaml" />        
+        <ResourceDictionary Source="../../SimpleSlider.xaml" />
+        <ResourceDictionary Source="InteriorsExplorerTutorialView.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="ExitButtonStyle" TargetType="{x:Type Button}">
@@ -35,7 +36,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
 
     <Style TargetType="{x:Type local:InteriorsExplorerView}">
         <Setter Property="Template">
@@ -83,6 +83,8 @@
 
                             </Grid>
                         </StackPanel>
+
+                        <local:InteriorsExplorerTutorialView x:Name="InteriorsExplorerTutorialView" Style="{StaticResource InteriorsExplorerTutorialView}"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
