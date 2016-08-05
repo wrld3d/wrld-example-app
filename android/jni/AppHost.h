@@ -23,7 +23,6 @@
 #include "TerrainHeightRepository.h"
 #include "GlobalShadowing.h"
 #include "TouchEventWrapper.h"
-#include "Blitter.h"
 #include "AndroidNativeState.h"
 #include "AppInputDelegate.h"
 #include "Modules.h"

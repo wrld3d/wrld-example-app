@@ -608,8 +608,7 @@ namespace ExampleApp
                                                                                                                     m_pWorld->GetRenderingModule(),
                                                                                                                     m_pWorld->GetMapModule(),
                                                                                                                     *m_pWorldPinsIconMapping,
-                                                                                                                    m_screenProperties,
-                                                                                                                    interiorsAffectedByFlattening));                                                                                               
+                                                                                                                    m_screenProperties));                                                                                               
         }
         
         m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(interiorsPresentationModule.GetInteriorInteractionModel(),

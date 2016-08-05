@@ -28,15 +28,11 @@ namespace ExampleApp
                                                                      Eegeo::Modules::Core::RenderingModule& renderingModule,
                                                                      Eegeo::Modules::Map::MapModule& mapModule,
                                                                      const WorldPins::SdkModel::IWorldPinIconMapping& worldPinIconMapping,
-                                                                     const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                                                     const bool interiorsAffectedByFlattening)
+                                                                     const Eegeo::Rendering::ScreenProperties& screenProperties)
             : m_pInteriorsEntitiesPinsController(NULL)
             , m_pEntityPinsModule(NULL)
             , m_pEntityPinIconsTexturePageLayout(NULL)
             {
-                
-                Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule = mapModule.GetTerrainModelModule();
-
                 m_pEntityPinsModule = Eegeo::Pins::PinsModule::CreateWithAtlas(renderingModule,
                                                                       platformAbstractionModule,
                                                                       mapModule,
@@ -54,9 +50,7 @@ namespace ExampleApp
                                                                                                 worldPinIconMapping,
                                                                                                 interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                 interiorsPresentationModule.GetInteriorTransitionModel(),
-                                                                                                interiorsPresentationModule.GetInteriorsLabelsController(),
-                                                                                                terrainModelModule.GetTerrainHeightProvider(),
-                                                                                                interiorsAffectedByFlattening);
+                                                                                                interiorsPresentationModule.GetInteriorsLabelsController());
                 
                 
             }

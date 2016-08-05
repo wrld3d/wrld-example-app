@@ -40,9 +40,7 @@ namespace ExampleApp
                                                 const ExampleApp::WorldPins::SdkModel::IWorldPinIconMapping& pinIconMapper,
                                                 Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                 const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
-                                                Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& interiorsLabelsController,
-                                                Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
-                                                bool interiorsAffectedByFlattening);
+                                                Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& interiorsLabelsController);
                 
                 ~InteriorsEntitiesPinsController();
                 
@@ -85,13 +83,9 @@ namespace ExampleApp
                 std::map<int, float> m_floorToScaleMap;
                 TEntityToPinIdMap m_entityToPinIdMap;
 
-                const bool m_interiorsAffectedByFlattening;
-
                 Eegeo::Helpers::CallbackCollection1<const std::vector<Eegeo::Pins::Pin*>&> m_interiorPinSelectedCallbacks;
                 
                 Eegeo::Pins::TPinId m_lastId;
-                
-                Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& m_terrainHeightProvider;
             };
         }
     }

@@ -7,7 +7,6 @@
 #include "EegeoWorld.h"
 #include "ScreenProperties.h"
 #include "AppInterface.h"
-#include "Blitter.h"
 #include "EffectHandler.h"
 #include "SearchServiceCredentials.h"
 #include "GlobeCameraController.h"
