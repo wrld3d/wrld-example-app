@@ -96,6 +96,8 @@ public:
     void SetSharedSurface(EGLSurface sharedSurface);
     void SetViewportOffset(float x, float y);
 
+    static std::string GetMeetingRoomState(std::string roomName);
+
 private:
     bool m_isPaused;
     Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;

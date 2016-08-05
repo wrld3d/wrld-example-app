@@ -21,6 +21,7 @@ namespace ExampleApp
                 AndroidNativeState& m_nativeState;
                 Eegeo::Helpers::CallbackCollection0 m_closedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<Search::SdkModel::SearchResultModel> m_togglePinClickedCallbacks;
+                Eegeo::Helpers::CallbackCollection2<const Search::SdkModel::SearchResultModel&, const std::string&> m_availabilityChangedCallbacks;
 
                 jclass m_uiViewClass;
                 jobject m_uiView;
@@ -53,10 +54,22 @@ namespace ExampleApp
 
                 void HandlePinToggleClicked();
 
+                void HandleAvailabilityChanged(std::string& availability);
+
             private:
                 void CreateAndShowYelpPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned);
 
                 void CreateAndShowGeoNamesPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned);
+
+                void CreateAndShowPersonSearchResultPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned);
+
+				void CreateAndShowMeetingRoomSearchResultPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned);
+
+				void CreateAndShowWorkingGroupSearchResultPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned);
+
+				void CreateAndShowFacilitySearchResultPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned);
+
+				void CreateAndShowDepartmentSearchResultPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned);
 
                 jclass CreateJavaClass(const std::string& viewClass);
 

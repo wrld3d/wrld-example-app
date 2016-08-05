@@ -76,7 +76,7 @@ public class SearchMenuAdapter extends BaseAdapter
 
             TextView nameLabel = (TextView)contextView.findViewById(R.id.menu_list_item_name);
 
-            nameLabel.setText(data.getString("name"));
+            nameLabel.setText(data.optString("name"));
             nameLabel.setEllipsize(TruncateAt.END);
             nameLabel.setHorizontallyScrolling(false);
             nameLabel.setSingleLine();

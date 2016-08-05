@@ -5,6 +5,9 @@
 #include "SearchVendorNames.h"
 #include "YelpSearchResultModel.h"
 #include "YelpSearchJsonParser.h"
+#include "SwallowSearchConstants.h"
+#include "SwallowSearchParser.h"
+#include "logger.h"
 
 namespace ExampleApp
 {
@@ -31,6 +34,8 @@ namespace ExampleApp
 
                 m_model = model;
                 const std::string& vendor = m_model.GetVendor();
+                const std::string& category = m_model.GetCategory();
+
                 if(vendor == Search::YelpVendorName)
                 {
                 	CreateAndShowYelpPoiView(model, isPinned);
@@ -38,6 +43,30 @@ namespace ExampleApp
                 else if(vendor == Search::GeoNamesVendorName)
                 {
                 	CreateAndShowGeoNamesPoiView(model, isPinned);
+                }
+                else if(vendor == Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
+                {
+                	CreateAndShowPersonSearchResultPoiView(model, isPinned);
+                }
+                else if(vendor == Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
+				{
+					CreateAndShowMeetingRoomSearchResultPoiView(model, isPinned);
+				}
+                else if(vendor == Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME)
+				{
+                	CreateAndShowWorkingGroupSearchResultPoiView(model, isPinned);
+				}
+                else if(vendor == ExampleApp::Search::EegeoVendorName && (category == ExampleApp::Search::Swallow::SearchConstants::PRINT_STATION_CATEGORY_NAME
+                                                                              || category == ExampleApp::Search::Swallow::SearchConstants::TOILETS_CATEGORY_NAME
+                                                                              || category == ExampleApp::Search::Swallow::SearchConstants::FACILITY_CATEGORY_NAME
+                                                                              || category == ExampleApp::Search::Swallow::SearchConstants::EMERGENCY_EXIT_CATEGORY_NAME
+                                                                              || category == ExampleApp::Search::Swallow::SearchConstants::STATIONERY_CATEGORY_NAME))
+                {
+                	CreateAndShowFacilitySearchResultPoiView(model, isPinned);
+                }
+                else if(vendor == ExampleApp::Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME)
+                {
+                	CreateAndShowDepartmentSearchResultPoiView(model, isPinned);
                 }
                 else
                 {
@@ -89,12 +118,12 @@ namespace ExampleApp
 
             void SearchResultPoiView::InsertAvailabilityChangedCallback(Eegeo::Helpers::ICallback2<const Search::SdkModel::SearchResultModel&, const std::string&>& callback)
             {
-            	// TJ: Stubbed for Droid implementation
+            	m_availabilityChangedCallbacks.AddCallback(callback);
             }
 
             void SearchResultPoiView::RemoveAvailabilityChangedCallback(Eegeo::Helpers::ICallback2<const Search::SdkModel::SearchResultModel&, const std::string&>& callback)
             {
-            	// TJ: Stubbed for Droid implementation
+            	m_availabilityChangedCallbacks.RemoveCallback(callback);
             }
 
             void SearchResultPoiView::InsertClosedCallback(Eegeo::Helpers::ICallback0& callback)
@@ -137,6 +166,13 @@ namespace ExampleApp
                 ASSERT_UI_THREAD
 
                 m_togglePinClickedCallbacks.ExecuteCallbacks(m_model);
+            }
+
+            void SearchResultPoiView::HandleAvailabilityChanged(std::string& availability)
+            {
+            	ASSERT_UI_THREAD
+
+				m_availabilityChangedCallbacks.ExecuteCallbacks(m_model, availability);
             }
 
             void SearchResultPoiView::CreateAndShowYelpPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned)
@@ -220,6 +256,182 @@ namespace ExampleApp
             	env->DeleteLocalRef(addressStr);
             	env->DeleteLocalRef(titleStr);
             }
+
+            void SearchResultPoiView::CreateAndShowPersonSearchResultPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned)
+            {
+            	const std::string viewClass = "com/eegeo/searchresultpoiview/PersonSearchResultPoiView";
+            	m_uiViewClass = CreateJavaClass(viewClass);
+				m_uiView = CreateJavaObject(m_uiViewClass);
+
+				ExampleApp::Search::Swallow::SdkModel::SwallowPersonResultModel personModel;
+				personModel = ExampleApp::Search::Swallow::SdkModel::SearchParser::TransformToSwallowPersonResult(m_model);
+
+				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				JNIEnv* env = attached.envForThread;
+
+				jstring nameStr = env->NewStringUTF(personModel.GetName().c_str());
+				jstring jobTitleStr = env->NewStringUTF(personModel.GetJobTitle().c_str());
+				jstring workingGroupStr = env->NewStringUTF(personModel.GetWorkingGroup().c_str());
+				jstring locationStr = env->NewStringUTF(personModel.GetOfficeLocation().c_str());
+				jstring deskStr = env->NewStringUTF(personModel.GetDeskCode().c_str());
+				jstring imageUrlStr = env->NewStringUTF(personModel.GetImageFilename().c_str());
+
+				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
+				env->CallVoidMethod(
+						m_uiView,
+						displayPoiInfoMethod,
+						nameStr,
+						jobTitleStr,
+						workingGroupStr,
+						locationStr,
+						deskStr,
+						imageUrlStr,
+						isPinned
+				);
+
+				env->DeleteLocalRef(nameStr);
+				env->DeleteLocalRef(jobTitleStr);
+				env->DeleteLocalRef(workingGroupStr);
+				env->DeleteLocalRef(locationStr);
+				env->DeleteLocalRef(deskStr);
+				env->DeleteLocalRef(imageUrlStr);
+            }
+
+			void SearchResultPoiView::CreateAndShowMeetingRoomSearchResultPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned)
+			{
+				const std::string viewClass = "com/eegeo/searchresultpoiview/MeetingRoomSearchResultPoiView";
+				m_uiViewClass = CreateJavaClass(viewClass);
+				m_uiView = CreateJavaObject(m_uiViewClass);
+
+				ExampleApp::Search::Swallow::SdkModel::SwallowMeetingRoomResultModel meetingRoomModel;
+				meetingRoomModel = ExampleApp::Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(model);
+
+				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				JNIEnv* env = attached.envForThread;
+
+				jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
+				jstring availabilityStr = env->NewStringUTF(meetingRoomModel.GetAvailability().c_str());
+				jstring categoryStr = env->NewStringUTF(model.GetCategory().c_str());
+				jstring imageUrlStr = env->NewStringUTF(meetingRoomModel.GetImageUrl().c_str());
+
+				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
+				env->CallVoidMethod(
+						m_uiView,
+						displayPoiInfoMethod,
+						titleStr,
+						availabilityStr,
+						categoryStr,
+						imageUrlStr,
+						isPinned
+				);
+
+				env->DeleteLocalRef(titleStr);
+				env->DeleteLocalRef(availabilityStr);
+				env->DeleteLocalRef(categoryStr);
+				env->DeleteLocalRef(imageUrlStr);
+			}
+
+			void SearchResultPoiView::CreateAndShowWorkingGroupSearchResultPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned)
+			{
+				const std::string viewClass = "com/eegeo/searchresultpoiview/DepartmentSearchResultPoiView";
+				m_uiViewClass = CreateJavaClass(viewClass);
+				m_uiView = CreateJavaObject(m_uiViewClass);
+
+				ExampleApp::Search::Swallow::SdkModel::SwallowDepartmentResultModel departmentModel;
+				departmentModel = ExampleApp::Search::Swallow::SdkModel::SearchParser::TransformToSwallowDepartmentResult(model);
+
+				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				JNIEnv* env = attached.envForThread;
+
+				jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
+				jstring descriptionStr = env->NewStringUTF(departmentModel.GetDescription().c_str());
+				jstring categoryStr = env->NewStringUTF(model.GetCategory().c_str());
+				jstring imageUrlStr = env->NewStringUTF(departmentModel.GetImageUrl().c_str());
+
+				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
+				env->CallVoidMethod(
+						m_uiView,
+						displayPoiInfoMethod,
+						titleStr,
+						descriptionStr,
+						categoryStr,
+						imageUrlStr,
+						isPinned
+				);
+
+				env->DeleteLocalRef(titleStr);
+				env->DeleteLocalRef(descriptionStr);
+				env->DeleteLocalRef(categoryStr);
+				env->DeleteLocalRef(imageUrlStr);
+			}
+
+			void SearchResultPoiView::CreateAndShowFacilitySearchResultPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned)
+			{
+				const std::string viewClass = "com/eegeo/searchresultpoiview/FacilitySearchResultPoiView";
+				m_uiViewClass = CreateJavaClass(viewClass);
+				m_uiView = CreateJavaObject(m_uiViewClass);
+
+				ExampleApp::Search::Swallow::SdkModel::SwallowDepartmentResultModel departmentModel;
+				departmentModel = ExampleApp::Search::Swallow::SdkModel::SearchParser::TransformToSwallowDepartmentResult(model);
+
+				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				JNIEnv* env = attached.envForThread;
+
+				jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
+				jstring descriptionStr = env->NewStringUTF(departmentModel.GetDescription().c_str());
+				jstring categoryStr = env->NewStringUTF(model.GetCategory().c_str());
+				jstring imageUrlStr = env->NewStringUTF(departmentModel.GetImageUrl().c_str());
+
+				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
+				env->CallVoidMethod(
+						m_uiView,
+						displayPoiInfoMethod,
+						titleStr,
+						descriptionStr,
+						categoryStr,
+						imageUrlStr,
+						isPinned
+				);
+
+				env->DeleteLocalRef(titleStr);
+				env->DeleteLocalRef(descriptionStr);
+				env->DeleteLocalRef(categoryStr);
+				env->DeleteLocalRef(imageUrlStr);
+			}
+
+			void SearchResultPoiView::CreateAndShowDepartmentSearchResultPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned)
+			{
+				const std::string viewClass = "com/eegeo/searchresultpoiview/DepartmentSearchResultPoiView";
+				m_uiViewClass = CreateJavaClass(viewClass);
+				m_uiView = CreateJavaObject(m_uiViewClass);
+
+				ExampleApp::Search::Swallow::SdkModel::SwallowDepartmentResultModel departmentModel;
+				departmentModel = ExampleApp::Search::Swallow::SdkModel::SearchParser::TransformToSwallowDepartmentResult(model);
+
+				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				JNIEnv* env = attached.envForThread;
+
+				jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
+				jstring descriptionStr = env->NewStringUTF(departmentModel.GetDescription().c_str());
+				jstring categoryStr = env->NewStringUTF(model.GetCategory().c_str());
+				jstring imageUrlStr = env->NewStringUTF(departmentModel.GetImageUrl().c_str());
+
+				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
+				env->CallVoidMethod(
+						m_uiView,
+						displayPoiInfoMethod,
+						titleStr,
+						descriptionStr,
+						categoryStr,
+						imageUrlStr,
+						isPinned
+				);
+
+				env->DeleteLocalRef(titleStr);
+				env->DeleteLocalRef(descriptionStr);
+				env->DeleteLocalRef(categoryStr);
+				env->DeleteLocalRef(imageUrlStr);
+			}
 
             jclass SearchResultPoiView::CreateJavaClass(const std::string& viewClass)
             {
