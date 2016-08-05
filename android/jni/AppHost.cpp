@@ -677,3 +677,7 @@ void AppHost::HandleUserInteractionEnabledChanged(const ExampleApp::UserInteract
 	env->CallVoidMethod(m_nativeState.activity, touchEnabledMethod, message.IsEnabled());
 }
 
+std::string AppHost::GetMeetingRoomState(std::string roomName){
+	return "available";
+}
+

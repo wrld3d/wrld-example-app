@@ -43,6 +43,42 @@ public class CategoryResources
         {
             return "food";
         }
+        if(category.contains("meeting_room"))
+        {
+        	return "meeting_room";
+        }
+        if(category.contains("department"))
+        {
+        	return "department";
+        }
+        if(category.contains("stationery"))
+        {
+        	return "stationery";
+        }
+        if(category.contains("toilets"))
+        {
+        	return "toilets";
+        }
+        if(category.contains("print_station"))
+        {
+        	return "print_station";
+        }
+        if(category.contains("emergency_exit"))
+        {
+        	return "emergency_exit";
+        }
+        if(category.contains("facility"))
+        {
+        	return "facility";
+        }
+        if(category.contains("person"))
+        {
+        	return "person";
+        }
+        if(category.contains("office"))
+        {
+        	return "office";
+        }
 
         return "misc";
     }

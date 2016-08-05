@@ -19,6 +19,7 @@
     <string name="header_country">Country</string>
     <string name="header_categories">Categories</string>
     <string name="header_reviews">Reviews</string>
+    <string name="header_availability">Availability</string>
     
     <string name="content_desc_compass_lock">This icon represents that the compass is now locked to the device\'s heading.</string>
     <string name="content_desc_category_icon">This icon represents a specific place of interest category</string>
