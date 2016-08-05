@@ -682,10 +682,12 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\arrow3_right_blue.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Alert_Tutorial_icon.png" />
+    <Resource Include="..\..\Resources\Alert_Tutorial_icon.png">
+      <Link>Assets\Alert_Tutorial_icon.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\arrow3_right_blue.png">
+      <Link>Assets\arrow3_right_blue.png</Link>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
