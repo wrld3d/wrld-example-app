@@ -104,6 +104,8 @@
     <Compile Include="Views\ControlBase.cs" />
     <Compile Include="Views\ControlClickHandler.cs" />
     <Compile Include="Properties\VersionInfo.cs" />
+    <Compile Include="Views\InteriorsExplorer\InteriorsExplorerTutorialDialogView.cs" />
+    <Compile Include="Views\InteriorsExplorer\InteriorsExplorerTutorialView.cs" />
     <Compile Include="Views\InteriorsExplorer\InteriorsExplorerView.cs" />
     <Compile Include="Views\Menu\MenuDelayedSourceUpdateAnimatorListener.cs" />
     <Compile Include="Views\Menu\MenuListAdapter.cs" />
@@ -185,6 +187,14 @@
     <Page Include="Views\FlattenButton\FlattenButtonView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InteriorsExplorer\InteriorsExplorerTutorialDialogView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\InteriorsExplorer\InteriorsExplorerTutorialView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\InteriorsExplorer\InteriorsExplorerView.xaml">
       <SubType>Designer</SubType>
@@ -670,6 +680,12 @@
     <Resource Include="..\..\Resources\icon1_stationary.png">
       <Link>Assets\icon1_stationary.png</Link>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\arrow3_right_blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Alert_Tutorial_icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
