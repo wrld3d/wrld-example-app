@@ -86,8 +86,6 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_interiorExplorerEnteredCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_interiorExplorerExitedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_interiorExplorerFloorSelectionDraggedCallbacks;
-                
-                std::string HasViewedAnyInterior = "InteriorsExplorerModel_HasViewedAnyInterior";
             };
         }
     }
