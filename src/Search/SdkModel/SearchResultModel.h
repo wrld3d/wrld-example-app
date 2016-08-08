@@ -30,6 +30,7 @@ namespace ExampleApp
                 std::string m_vendor;
                 std::string m_jsonData;
                 int64_t m_searchResultCreationTimeStamp;
+                mutable int m_availabilityState;
                 
             public:
                 static const int CurrentVersion;
@@ -58,6 +59,10 @@ namespace ExampleApp
                 const std::string& GetTitle() const;
                 
                 const std::string& GetIdentifier() const;
+                
+                const int GetAvailability() const;
+                
+                void SetAvailability(int availability) const;
                 
                 const Eegeo::Space::LatLong& GetLocation() const;
                 

@@ -5,6 +5,7 @@
 #include "Types.h"
 #include "Search.h"
 #include "Interiors.h"
+#include "IPersistentSettingsModel.h"
 #include "InteriorsExplorer.h"
 #include "Rendering.h"
 #include "BidirectionalBus.h"
@@ -29,7 +30,8 @@ namespace ExampleApp
                                                            Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                                            Search::SdkModel::ISearchResultRepository& searchResultRepository,
                                                            Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& labelController,
-                                                           ExampleAppMessaging::TMessageBus& messageBus);
+                                                           ExampleAppMessaging::TMessageBus& messageBus,
+                                                           PersistentSettings::IPersistentSettingsModel& persistentSettings);
                     
                     ~InteriorsHighlightVisibilityController();
                     
@@ -65,6 +67,8 @@ namespace ExampleApp
                     
                     std::map<std::string, std::string> m_highlightAvailabilityData;
                     std::map<std::string, Eegeo::Rendering::Renderables::InteriorHighlightRenderable*> m_currentHighlightRenderables;
+                    
+                    ExampleApp::PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
                 };
             }
         }

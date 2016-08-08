@@ -408,7 +408,8 @@ namespace ExampleApp
             m_pSearchModule->GetSearchQueryPerformer(), 
             m_pSearchModule->GetSearchResultRepository(), 
             mapModule.GetInteriorsPresentationModule().GetInteriorsLabelsController(), 
-            m_messageBus);
+            m_messageBus,
+            m_persistentSettings);
 
         Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
 
@@ -548,7 +549,7 @@ namespace ExampleApp
                                                                                                                                supportedCategories,
                                                                                                                                m_applicationConfiguration.SearchServiceUrl(),
                                                                                                                                apiKey,
-                                                                                                                               world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel()
+                                                                                                                               world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel(),                                                                                                                               m_persistentSettings
                                                                                                                                );
         }
 

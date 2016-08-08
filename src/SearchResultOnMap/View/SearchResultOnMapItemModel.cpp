@@ -5,6 +5,7 @@
 #include "ISearchResultPoiViewModel.h"
 #include "Logger.h"
 #include "SearchResultOnMapItemModelSelectedMessage.h"
+#include "SwallowSearchConstants.h"
 
 namespace ExampleApp
 {
@@ -18,19 +19,45 @@ namespace ExampleApp
                 : m_searchResultModel(searchResultModel)
                 , m_messageBus(messageBus)
                 , m_metricsService(metricsService)
+                , m_availabilityChangedHandlerBinding(this, &SearchResultOnMapItemModel::OnAvailabilityChanged)
             {
-
+                m_messageBus.SubscribeNative(m_availabilityChangedHandlerBinding);
             }
 
             SearchResultOnMapItemModel::~SearchResultOnMapItemModel()
             {
-
+                m_messageBus.UnsubscribeNative(m_availabilityChangedHandlerBinding);
             }
 
             void SearchResultOnMapItemModel::SelectPin()
             {
                 m_metricsService.SetEvent("Pin Selected", "Name", m_searchResultModel.GetTitle().c_str());
                 m_messageBus.Publish(SearchResultOnMapItemModelSelectedMessage(m_searchResultModel));
+            }
+            
+            void SearchResultOnMapItemModel::OnAvailabilityChanged(const ExampleApp::SearchResultOnMap::SearchResultMeetingAvailabilityChanged& message)
+            {
+                
+                const Search::SdkModel::SearchResultModel& updatedModel = message.GetModel();
+                
+                if(m_searchResultModel.GetIdentifier() == updatedModel.GetIdentifier())
+                {
+                    int tempState = 1;
+                    if(message.GetAvailability() == Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE)
+                    {
+                        tempState = 1;
+                    }
+                    else if (message.GetAvailability() == Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_SOON)
+                    {
+                        tempState = 2;
+                    }
+                    else
+                    {
+                        tempState = 3;
+                    }
+                    
+                    m_searchResultModel.SetAvailability(tempState);
+                }
             }
         }
     }

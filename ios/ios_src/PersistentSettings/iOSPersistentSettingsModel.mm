@@ -96,7 +96,7 @@ namespace ExampleApp
 
         void iOSPersistentSettingsModel::SetValue(const std::string& name, const std::string& value)
         {
-            [&m_userDefaults setObject:ToNSString(name) forKey:ToNSString(name)];
+            [&m_userDefaults setObject:ToNSString(value) forKey:ToNSString(name)];
             Flush();
         }
 

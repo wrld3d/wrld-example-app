@@ -27,16 +27,18 @@ namespace ExampleApp
             {
                 InteriorsHighlightVisibilityController::InteriorsHighlightVisibilityController(Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                                                Search::SdkModel::ISearchService& searchService,
-                                                                                               Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                                                                                                                     Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                                                                                Search::SdkModel::ISearchResultRepository& searchResultRepository,
                                                                                                Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& labelController,
-                                                                                               ExampleAppMessaging::TMessageBus& messageBus)
+                                                                                               ExampleAppMessaging::TMessageBus& messageBus,
+                                                                                               PersistentSettings::IPersistentSettingsModel& persistentSettings)
                 : m_interiorInteractionModel(interiorInteractionModel)
                 , m_interiorslabelsController(labelController)
                 , m_searchService(searchService)
                 , m_searchQueryPerformer(searchQueryPerformer)
                 , m_searchResultRepository(searchResultRepository)
                 , m_messageBus(messageBus)
+                ,m_persistentSettings(persistentSettings)
                 , m_searchResultsHandler(this, &InteriorsHighlightVisibilityController::OnSearchResultsLoaded)
                 , m_searchResultsClearedHandler(this, &InteriorsHighlightVisibilityController::OnSearchResultCleared)
                 , m_interiorInteractionModelChangedHandler(this, &InteriorsHighlightVisibilityController::OnInteriorInteractionModelChanged)
@@ -64,7 +66,25 @@ namespace ExampleApp
                 
                 void InteriorsHighlightVisibilityController::OnAvailabilityChanged(const ExampleApp::SearchResultOnMap::SearchResultMeetingAvailabilityChanged& message)
                 {
-                    const Search::Swallow::SdkModel::SwallowMeetingRoomResultModel& meetingRoom = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(message.GetModel());
+                    int tempState = 1;
+                    if(message.GetAvailability() == Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE)
+                    {
+                        tempState = 1;
+                    }
+                    else if (message.GetAvailability() == Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_SOON)
+                    {
+                        tempState = 2;
+                    }
+                    else
+                    {
+                        tempState = 3;
+                    }
+                    
+                    m_persistentSettings.SetValue(message.GetModel().GetIdentifier(), tempState);
+                    Search::SdkModel::SearchResultModel model = message.GetModel();
+                    
+                    const Search::Swallow::SdkModel::SwallowMeetingRoomResultModel& meetingRoom = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(model);
+                    
                     const std::string& roomName = meetingRoom.GetName();
                     std::map<std::string, Eegeo::Rendering::Renderables::InteriorHighlightRenderable*>::iterator it =
                     m_currentHighlightRenderables.find(roomName);
@@ -75,6 +95,8 @@ namespace ExampleApp
                     }
                     
                     m_highlightAvailabilityData[roomName] = message.GetAvailability();
+                    
+                    m_persistentSettings.SetValue(roomName, message.GetAvailability());
                 }
                 
                 void InteriorsHighlightVisibilityController::DeactivateHighlightRenderables()
@@ -216,8 +238,10 @@ namespace ExampleApp
                         
                         const Search::Swallow::SdkModel::SwallowMeetingRoomResultModel& meetingRoom = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(*it);
                         
-                        const std::string& roomName = meetingRoom.GetName();
-                        const std::string& availability = meetingRoom.GetAvailability();
+                        std::string roomName = meetingRoom.GetName();
+                        
+                        std::string availability = meetingRoom.GetAvailability();
+                        m_persistentSettings.TryGetValue(roomName, availability);
                         
                         std::map<std::string, Eegeo::Rendering::Renderables::InteriorHighlightRenderable*>::iterator room =
                         m_currentHighlightRenderables.find(roomName);

@@ -64,20 +64,22 @@ namespace ExampleApp
                     if (model.GetCategory() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
                     {
                         Search::Swallow::SdkModel::SwallowMeetingRoomResultModel meetingRoomModel = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(model);
-                        subtitle = meetingRoomModel.GetOfficeLocation();
+//                        subtitle = meetingRoomModel.GetOfficeLocation();
+                        subtitle = Search::Swallow::SdkModel::SearchParser::GetFormattedAvailabilityString(meetingRoomModel.GetAvailability());
+
                         
-                        if(meetingRoomModel.GetAvailability().compare(Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE) == 0)
-                        {
-                            category = Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_AVAILABLE;
-                        }
-                        else if(meetingRoomModel.GetAvailability().compare(Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_SOON) == 0)
-                        {
-                            category = Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_AVAILABLE_SOON;
-                        }
-                        else if(meetingRoomModel.GetAvailability().compare(Search::Swallow::SearchConstants::MEETING_ROOM_OCCUPIED) == 0)
-                        {
-                            category = Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_OCCUPIED;
-                        }
+//                        if(meetingRoomModel.GetAvailability().compare(Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE) == 0)
+//                        {
+//                            category = Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_AVAILABLE;
+//                        }
+//                        else if(meetingRoomModel.GetAvailability().compare(Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_SOON) == 0)
+//                        {
+//                            category = Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_AVAILABLE_SOON;
+//                        }
+//                        else if(meetingRoomModel.GetAvailability().compare(Search::Swallow::SearchConstants::MEETING_ROOM_OCCUPIED) == 0)
+//                        {
+//                            category = Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_OCCUPIED;
+//                        }
                     }
                     else if(model.GetCategory() == Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME)
                     {
@@ -93,7 +95,7 @@ namespace ExampleApp
                     m_menuOptions.AddItem(model.GetIdentifier(),
                                           model.GetTitle(),
                                           subtitle,
-                                          category,
+                                          model.GetCategory(),
                                           Eegeo_NEW(SearchResultItemModel)(model.GetIdentifier(),
                                                                            model.GetTitle(),
                                                                            model.GetLocation().ToECEF(),
@@ -118,6 +120,45 @@ namespace ExampleApp
 
                 m_lastAddedResults.clear();
             }
+            
+            void SearchResultSectionController::OnAvailabilityChanged(const ExampleApp::SearchResultOnMap::SearchResultMeetingAvailabilityChanged& message)
+            {
+                for(int i = 0; i < m_lastAddedResults.size(); ++i)
+                {
+                    
+                    Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
+                    
+                    if(model.GetIdentifier() == message.GetModel().GetIdentifier())
+                    {
+                        
+                        m_menuOptions.RemoveItem(model.GetIdentifier());
+                        std::string subtitle = model.GetSubtitle();
+                        
+                        if (model.GetCategory() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
+                        {
+                            subtitle = Search::Swallow::SdkModel::SearchParser::GetFormattedAvailabilityString(message.GetAvailability());
+                        }
+                        m_menuOptions.AddItem(model.GetIdentifier(),
+                                              model.GetTitle(),
+                                              subtitle,
+                                              model.GetCategory(),
+                                            Eegeo_NEW(SearchResultItemModel)(model.GetIdentifier(),
+                                                                             model.GetTitle(),
+                                                                               model.GetLocation().ToECEF(),
+                                                                               model.IsInterior(),
+                                                                               model.GetBuildingId(),
+                                                                               model.GetFloor(),
+                                                                               m_searchMenuViewModel,
+                                                                             m_searchResultPoiViewModel,
+                                                                               GetOriginalIndexForSearchResult(m_lastAddedResults,model),
+                                                                               m_messageBus,
+                                                                             m_menuReaction));
+                    }
+                    
+                }
+                
+            }
+
 
             SearchResultSectionController::SearchResultSectionController(Menu::View::IMenuViewModel& searchMenuViewModel,
                                                                          Menu::View::IMenuOptionsModel& menuOptions,
@@ -133,15 +174,18 @@ namespace ExampleApp
             , m_searchQueryRemovedHandler(this, &SearchResultSectionController::OnSearchQueryRemovedMessage)
             , m_menuReaction(menuReaction)
             , m_searchResultPoiViewModel(searchResultPoiViewModel)
+            , m_availabilityChangedHandlerBinding(this, &SearchResultSectionController::OnAvailabilityChanged)
             {
                 m_messageBus.SubscribeUi(m_searchResultReceivedHandler);
                 m_messageBus.SubscribeUi(m_searchQueryRemovedHandler);
+                m_messageBus.SubscribeNative(m_availabilityChangedHandlerBinding);
             }
 
             SearchResultSectionController::~SearchResultSectionController()
             {
                 m_messageBus.UnsubscribeUi(m_searchQueryRemovedHandler);
                 m_messageBus.UnsubscribeUi(m_searchResultReceivedHandler);
+                m_messageBus.UnsubscribeNative(m_availabilityChangedHandlerBinding);
             }
         }
     }
