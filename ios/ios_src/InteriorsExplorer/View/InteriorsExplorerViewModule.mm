@@ -12,14 +12,22 @@ namespace ExampleApp
     {
         namespace View
         {
-            InteriorsExplorerViewModule::InteriorsExplorerViewModule(InteriorsExplorerViewModel& viewModel,
+            InteriorsExplorerViewModule::InteriorsExplorerViewModule(SdkModel::InteriorsExplorerModel& model,
+                                                                     InteriorsExplorerViewModel& viewModel,
                                                                      ExampleAppMessaging::TMessageBus& messageBus,
                                                                      const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                                      Eegeo::Helpers::IdentityProvider& identityProvider)
             {
-                m_pView = [[InteriorsExplorerView alloc] initWithParams: screenProperties.GetScreenWidth(): screenProperties.GetScreenHeight(): screenProperties.GetPixelScale()];
+                const int screenWidth = screenProperties.GetScreenWidth();
+                const int screenHeight = screenProperties.GetScreenHeight();
+                const int pixelScale = screenProperties.GetPixelScale();
                 
-                m_pController = Eegeo_NEW(InteriorsExplorerController)(*[m_pView getInterop],
+                m_pTutorialView = [[InteriorsExplorerTutorialView alloc] initWithParams: screenWidth : screenHeight : pixelScale];
+                
+                m_pView = [[InteriorsExplorerView alloc] initWithParams: screenWidth : screenHeight : pixelScale : *m_pTutorialView ];
+                
+                m_pController = Eegeo_NEW(InteriorsExplorerController)(model,
+                                                                       *[m_pView getInterop],
                                                                        viewModel,
                                                                        messageBus);
             }
@@ -29,6 +37,8 @@ namespace ExampleApp
                 Eegeo_DELETE m_pController;
                 
                 [m_pView release];
+                
+                [m_pTutorialView release];
             }
             
             InteriorsExplorerController& InteriorsExplorerViewModule::GetController() const
@@ -39,6 +49,11 @@ namespace ExampleApp
             InteriorsExplorerView& InteriorsExplorerViewModule::GetView() const
             {
                 return *m_pView;
+            }
+            
+            InteriorsExplorerTutorialView& InteriorsExplorerViewModule::GetTutorialView() const
+            {
+                return *m_pTutorialView;
             }
         }
     }

@@ -4,6 +4,7 @@
 
 #import <UIKit/UIKit.h>
 #include "InteriorsExplorerViewIncludes.h"
+#include "InteriorsExplorerTutorialView.h"
 #include <string>
 #include <vector>
 
@@ -36,7 +37,7 @@
     std::vector<std::string> m_tableViewFloorNames;
 }
 
-- (id) initWithParams:(float)width :(float)height :(float)pixelScale;
+- (id) initWithParams:(float)width :(float)height :(float)pixelScale :(InteriorsExplorerTutorialView&)tutorialView;
 
 - (ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewInterop*) getInterop;
 
@@ -83,5 +84,7 @@
 @property(nonatomic, retain) UILabel* pFloorNameLabel;
 
 @property(nonatomic, retain) NSMutableArray* pFloorListViews;
+
+@property(nonatomic, retain) InteriorsExplorerTutorialView* pTutorialView;
 
 @end
