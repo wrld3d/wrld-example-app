@@ -1,0 +1,30 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ExampleAppWPF">
+
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../../Colours.xaml" />
+		<ResourceDictionary Source="InteriorsExplorerTutorialDialogView.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="InteriorsExplorerTutorialView" TargetType="{x:Type local:InteriorsExplorerTutorialView}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid
+                        Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth}"
+                        Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualHeight}">
+                        <Grid.Background>
+                            <SolidColorBrush Color="Black" Opacity="0" />
+                        </Grid.Background>
+                        <Grid>
+							<local:InteriorsExplorerTutorialDialogView x:Name="ExitDialog" Style="{StaticResource InteriorsExplorerTutorialDialogView}"/>
+							<local:InteriorsExplorerTutorialDialogView x:Name="ChangeFloorDialog" Style="{StaticResource InteriorsExplorerTutorialDialogView}"/>
+						</Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

@@ -1,6 +1,9 @@
 set(resources ${resources}
 		Resources/ApplicationConfigs
 		Resources/ApplicationConfigs/standard_config.json
+        	Resources/Alert_Tutorial_icon.png
+        	Resources/Alert_Tutorial_icon@2x.png
+        	Resources/Alert_Tutorial_icon@3x.png
 		Resources/Arrow.png
 		Resources/arrow1.png
 		Resources/arrow1@2x.png
@@ -14,6 +17,9 @@ set(resources ${resources}
 		Resources/arrow3_right.png
 		Resources/arrow3_right@2x.png
 		Resources/arrow3_right@3x.png
+        	Resources/arrow3_right_blue.png
+        	Resources/arrow3_right_blue@2x.png
+        	Resources/arrow3_right_blue@3x.png
 		Resources/arrow3_up.png
 		Resources/arrow3_up@2x.png
 		Resources/arrow3_up@3x.png

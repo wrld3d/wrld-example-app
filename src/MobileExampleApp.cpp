@@ -627,7 +627,8 @@ namespace ExampleApp
                                                                                                      m_metricsService,
                                                                                                      initialExperienceModel,
                                                                                                      interiorsAffectedByFlattening,
-                                                                                                     m_pInteriorsEntitiesPinsModule->GetInteriorsEntitiesPinsController());
+                                                                                                     m_pInteriorsEntitiesPinsModule->GetInteriorsEntitiesPinsController(),
+                                                                                                     m_persistentSettings);
         
         m_pMyPinCreationModule = Eegeo_NEW(ExampleApp::MyPinCreation::SdkModel::MyPinCreationModule)(m_pMyPinsModule->GetMyPinsService(),
                                                                                                      m_identityProvider,

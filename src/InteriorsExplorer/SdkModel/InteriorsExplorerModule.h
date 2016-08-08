@@ -17,6 +17,7 @@
 #include "InitialExperience.h"
 #include "InteriorsUINotificationService.h"
 #include "IInteriorsEntitiesPinsController.h"
+#include "PersistentSettings.h"
 
 namespace ExampleApp
 {
@@ -43,7 +44,8 @@ namespace ExampleApp
                                         Metrics::IMetricsService& metricsService,
                                         const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel,
                                         const bool interiorsAffectedByFlattening,
-                                        InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsEntitiesPinsController);
+                                        InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsEntitiesPinsController,
+                                        PersistentSettings::IPersistentSettingsModel& persistentSettings);
 
                 ~InteriorsExplorerModule();
                 
