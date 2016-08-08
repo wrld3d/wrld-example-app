@@ -29,7 +29,6 @@ namespace ExampleApp
                 Eegeo::m44 m_transform;
                 bool m_ownMaterialAndMesh;
                 Eegeo::Rendering::Materials::IMaterial* m_pOwnedMaterial;
-                Eegeo::Rendering::Mesh* m_pOwnedMesh;
             };
         }
     }
