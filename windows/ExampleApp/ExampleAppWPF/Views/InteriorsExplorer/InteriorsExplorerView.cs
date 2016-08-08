@@ -11,6 +11,7 @@ namespace ExampleAppWPF
     public class InteriorsExplorerView : ControlBase
     {
         private IntPtr m_nativeCallerPointer;
+		private Grid m_container;
         private Slider m_floorSlider;
         private Thumb m_sliderThumb;
         private TickBarVerticalWithLabels m_sliderTickBar;
@@ -49,8 +50,10 @@ namespace ExampleAppWPF
             base.OnApplyTemplate();
 
             m_panelOffscreenOffsetX = DefaultOffscreenOffsetX;
+			
+			m_container = GetTemplateChild("Container") as Grid;
 
-            m_floorSlider = GetTemplateChild("FloorSlider") as Slider;
+			m_floorSlider = GetTemplateChild("FloorSlider") as Slider;
             m_floorSlider.ValueChanged += OnSliderValueChanged;
 
             m_floorSlider.ApplyTemplate();
@@ -79,6 +82,7 @@ namespace ExampleAppWPF
             m_dismissButton.RenderTransform = new TranslateTransform(m_panelOffscreenOffsetX, dismissButtonPosition.Y);
 
             m_tutorialView = (InteriorsExplorerTutorialView) GetTemplateChild("InteriorsExplorerTutorialView");
+			m_tutorialView.hide();
 
             SetTouchEnabled(false);
             Hide();
@@ -161,12 +165,14 @@ namespace ExampleAppWPF
             
             Point dismissButtonPosition = m_dismissButton.TransformToAncestor(Application.Current.MainWindow).Transform(new Point());
             Point sliderThumbPosition = m_sliderThumb.TransformToAncestor(Application.Current.MainWindow).Transform(new Point());
-            m_tutorialView.repositionDialogs((float) (dismissButtonPosition.X - m_panelOffscreenOffsetX),
+			
+			m_tutorialView.repositionDialogs((float) (dismissButtonPosition.X - m_panelOffscreenOffsetX),
                                                 (float) dismissButtonPosition.Y + 5,
                                                 0,
                                                 (float) sliderThumbPosition.Y + 3,
                                                 0,
-                                                FloorCount > 1);
+                                                FloorCount > 1,
+												m_container.Margin);
         }
         public void SetFloorName(string name)
         {
