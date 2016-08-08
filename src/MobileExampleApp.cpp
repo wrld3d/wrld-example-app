@@ -463,7 +463,6 @@ namespace ExampleApp
         Eegeo_DELETE m_pInteriorsHighlightVisibilityController;
         Eegeo_DELETE m_pInteriorsEntityIdHighlightVisibilityController;
         Eegeo_DELETE m_pInteriorsPickingController;
-        Eegeo_DELETE m_pRayCaster;
 
         DestroyApplicationModelModules();
         

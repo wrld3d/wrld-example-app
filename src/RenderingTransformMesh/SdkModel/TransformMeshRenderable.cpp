@@ -30,7 +30,6 @@ namespace ExampleApp
                 if(m_ownMaterialAndMesh)
                 {
                     Eegeo_DELETE m_pOwnedMaterial;
-                    Eegeo_DELETE m_pOwnedMesh;
                 }
             }
             
