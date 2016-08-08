@@ -1312,8 +1312,8 @@ namespace ExampleApp
         {
             return;
         }
-        
-        if(m_pWorldPinsModule->GetWorldPinsService().HandleTouchTap(data.point))
+        Eegeo::v2 correctedForOversampling = data.point * m_screenProperties.GetOversampleScale();
+        if(m_pWorldPinsModule->GetWorldPinsService().HandleTouchTap(correctedForOversampling))
         {
             return;
         }
