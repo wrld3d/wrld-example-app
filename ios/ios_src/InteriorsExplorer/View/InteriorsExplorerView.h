@@ -10,7 +10,7 @@
 
 @class InteriorsExplorerView;
 
-@interface InteriorsExplorerView : UIView
+@interface InteriorsExplorerView : UIView<UITableViewDataSource, UITableViewDelegate>
 {
     ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewInterop* m_pInterop;
     
@@ -29,10 +29,15 @@
     
     float m_detailsPanelHeight;
     float m_floorDivisionHeight;
+    float m_halfButtonHeight;
+    float m_halfDivisionHeight;
     BOOL m_touchEnabled;
     BOOL m_draggingFloorButton;
     BOOL m_floorSelectionEnabled;
     float m_floorButtonParameter;
+    float m_floorSelection;
+    
+    CGRect m_scrollRect;
     
     std::vector<std::string> m_tableViewFloorNames;
 }
@@ -83,8 +88,9 @@
 @property(nonatomic, retain) UIImageView* pDismissButtonBackground;
 @property(nonatomic, retain) UILabel* pFloorNameLabel;
 
-@property(nonatomic, retain) NSMutableArray* pFloorListViews;
+@property(nonatomic, retain) UITableView* pFloorListView;
 
 @property(nonatomic, retain) InteriorsExplorerTutorialView* pTutorialView;
+@property(nonatomic, retain) NSTimer* pTimer;
 
 @end

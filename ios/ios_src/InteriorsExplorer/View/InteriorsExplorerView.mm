@@ -49,8 +49,6 @@ namespace
         
         self.pTutorialView = &tutorialView;
         
-        self.pFloorListViews = [NSMutableArray array];
-        
         m_stateChangeAnimationTimeSeconds = 0.2f;
         
         m_pInterop = new ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewInterop(self, &tutorialView);
@@ -67,8 +65,18 @@ namespace
         m_inactiveDetailPaneYPosition = m_screenHeight;
         
 
-        self.pFloorPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_inactiveFloorListXPosition, m_screenHeight/2.0f, 120, 200)] autorelease];
+        self.pFloorPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_inactiveFloorListXPosition, m_screenHeight/2.0f, 110, 200)] autorelease];
         [self addSubview:self.pFloorPanel];
+        
+        
+        self.pFloorListView = [[[UITableView alloc] initWithFrame:CGRectMake(0, 0, 110, 200) style:UITableViewStylePlain] autorelease];
+        self.pFloorListView.delegate = self;
+        self.pFloorListView.dataSource = self;
+        self.pFloorListView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        self.pFloorListView.backgroundColor = [UIColor clearColor];
+        self.pFloorListView.autoresizesSubviews = YES;
+        
+        [self.pFloorPanel addSubview:self.pFloorListView];
         
         self.pFloorChangeButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 64, 64)] autorelease];
         [self.pFloorChangeButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"floor_selection_button") forState:UIControlStateNormal];
@@ -135,8 +143,6 @@ namespace
         self.pFloorNameLabel.textColor = [UIColor whiteColor];
         self.pFloorNameLabel.textAlignment = NSTextAlignmentCenter;
         [self.pDetailsPanel addSubview:self.pFloorNameLabel];
-                
-        
         
         [self addSubview:self.pDetailsPanel];
         
@@ -145,6 +151,10 @@ namespace
         m_onScreenParam = 0.f;
         m_touchEnabled = NO;
         m_floorSelectionEnabled = NO;
+        
+        m_floorDivisionHeight = m_screenHeight*0.0625f;
+        m_halfDivisionHeight = m_floorDivisionHeight/2.0f;
+        m_halfButtonHeight=static_cast<float>(self.pFloorChangeButton.frame.size.height/2.0f);
         
         [self hideFloorLabels];
         [self setHidden:YES];
@@ -260,28 +270,16 @@ namespace
 
 - (void) refreshFloorViews
 {
-    for(InteriorsExplorerFloorItemView* item in self.pFloorListViews)
-    {
-        [item removeFromSuperview];
+    [self.pFloorListView reloadData];
+    
 
-    }
-    
-    [self.pFloorListViews removeAllObjects];
-    
-    
-    m_floorDivisionHeight = m_screenHeight*0.0625f;
-    const float divisionWidth = 30;
-    const float divisionLabelWidth = 25;
-    const float divisionLabelSpacing = 15;
-    float maxHeight = m_screenHeight*0.5f;
     int floorCount = static_cast<int>(m_tableViewFloorNames.size());
+    float maxHeight = m_screenHeight*0.5f;
     float verticalPadding = ((float)self.pFloorChangeButton.frame.size.height - m_floorDivisionHeight);
     float totalHeight = m_floorDivisionHeight * floorCount + verticalPadding;
     if(totalHeight > maxHeight)
     {
-        m_floorDivisionHeight = (maxHeight-verticalPadding)/(floorCount);
         totalHeight = maxHeight;
-        verticalPadding = ((float)self.pFloorChangeButton.frame.size.height - m_floorDivisionHeight);
     }
     
     CGRect floorPanelFrame = self.pFloorPanel.frame;
@@ -289,11 +287,19 @@ namespace
     floorPanelFrame.origin.y = m_screenHeight*floorPanelVerticalCenterline - totalHeight*0.5f;
     floorPanelFrame.size.height = totalHeight;
     self.pFloorPanel.frame = floorPanelFrame;
-    
+    self.pFloorListView.frame = CGRectMake(0, verticalPadding/2, floorPanelFrame.size.width, floorPanelFrame.size.height-(verticalPadding));
     CGRect dismissButtonFrame = self.pDismissButtonBackground.frame;
     const float dismissButtonSpacing = 10.f;
     dismissButtonFrame.origin.y = (self.pFloorPanel.frame.origin.y - dismissButtonSpacing) - dismissButtonFrame.size.height;
     self.pDismissButtonBackground.frame = dismissButtonFrame;
+    
+    m_floorSelectionEnabled= (floorCount > 1);
+    self.pFloorPanel.hidden = !m_floorSelectionEnabled;
+    self.pFloorPanel.userInteractionEnabled = self.pFloorChangeButton.userInteractionEnabled = m_floorSelectionEnabled;
+    
+    // TODO: Better solution for this. Layout doesn't appear to be updating correctly after reloadData, causing the list view's content bounds
+    // to be incorrect.  Adjusting the content inset by a non-0 value seems to correct it.
+    [self.pFloorListView setContentInset:UIEdgeInsetsMake(1, 0, 0, 0)];
     
     const bool showChangeFloorDialog = floorCount > 1;
     [self.pTutorialView repositionTutorialDialogs:dismissButtonFrame.origin.x
@@ -302,33 +308,6 @@ namespace
                                                  :self.pFloorPanel.frame.origin.y + self.pFloorPanel.frame.size.height - self.pFloorChangeButton.frame.size.height
                                                  :self.pFloorChangeButton.frame.size.height
                                                  :showChangeFloorDialog];
-    
-    float yOffset = ((float)self.pFloorChangeButton.frame.size.height - m_floorDivisionHeight)*0.5f;
-    int floorIndex = 0;
-    for(std::vector<std::string>::const_iterator it = m_tableViewFloorNames.begin(); it != m_tableViewFloorNames.end(); it++)
-    {
-        const std::string& name = *it;
-        NSString* nameString = [NSString stringWithCString:name.c_str() encoding:NSUTF8StringEncoding];
-        
-        InteriorsExplorerFloorItemView* pFloorView = [[[InteriorsExplorerFloorItemView alloc] initWithParams:divisionLabelWidth
-                                                                                                            :divisionLabelSpacing
-                                                                                                            :divisionWidth
-                                                                                                            :m_floorDivisionHeight
-                                                                                                            :m_pixelScale
-                                                                                                            :nameString
-                                                                                                            :(floorIndex == 0)
-                                                                                                            :(floorIndex == floorCount-1)] autorelease];
-        CGRect viewFrame = pFloorView.frame;
-        viewFrame.origin.y = yOffset;
-        viewFrame.origin.x = (self.pFloorPanel.frame.size.width*0.5f) - ((divisionLabelWidth + divisionLabelSpacing) + 0.5 * divisionWidth);
-        pFloorView.frame = viewFrame;
-        
-        [self.pFloorPanel insertSubview:pFloorView belowSubview:self.pFloorChangeButton];
-        [self.pFloorListViews addObject:pFloorView];
-        
-        yOffset += m_floorDivisionHeight;
-        floorIndex++;
-    }
     
     m_floorSelectionEnabled= (floorCount > 1);
     self.pFloorPanel.hidden = !m_floorSelectionEnabled;
@@ -460,12 +439,44 @@ namespace
     m_touchEnabled = enabled;
 }
 
+- (void) step
+{
+    if(!m_draggingFloorButton)
+    {
+        return;
+    }
+    
+    float scrollDelta = 0.0f;
+    const float joystickScrollThresholdDistance = 0.25f;
+    const float maxScrollSpeed=15.0f;
+    if(m_floorButtonParameter <= joystickScrollThresholdDistance)
+    {
+        float localT = m_floorButtonParameter/joystickScrollThresholdDistance;
+        scrollDelta = (1.0 - localT) * maxScrollSpeed;
+    }
+    else if(m_floorButtonParameter >= 1.0f-joystickScrollThresholdDistance)
+    {
+        float localT = (m_floorButtonParameter-(1.0f-joystickScrollThresholdDistance))/joystickScrollThresholdDistance;
+        scrollDelta = -localT*maxScrollSpeed;
+    }
+    
+    m_scrollRect.origin.y += scrollDelta;
+    [self.pFloorListView scrollRectToVisible:m_scrollRect animated:NO];
+    
+    CGPoint localButtonCenter = CGPointMake(0.0f, m_halfButtonHeight);
+    CGPoint pointInTable = [self.pFloorChangeButton convertPoint:localButtonCenter toView:self.pFloorListView];
+    m_floorSelection = 1.0f - static_cast<float>((pointInTable.y-m_halfDivisionHeight)/(self.pFloorListView.contentSize.height-m_floorDivisionHeight));
+
+    m_pInterop->SetFloorSelectionDrag(m_floorSelection);
+}
+
 - (void) dragButton:(ImmediatePanGestureRecognizer*)recognizer
 {
+    
     if(recognizer.state == UIGestureRecognizerStateChanged ||
        recognizer.state == UIGestureRecognizerStateEnded)
     {
-        
+     
         CGPoint translation = [recognizer translationInView:self.pFloorChangeButton];
         CGRect buttonFrame = self.pFloorChangeButton.frame;
         buttonFrame.origin.y += translation.y;
@@ -473,6 +484,18 @@ namespace
         self.pFloorChangeButton.frame = buttonFrame;
         
         [recognizer setTranslation:CGPointZero inView:self.pFloorChangeButton];
+        
+        if(!self.pTimer)
+        {
+            self.pTimer = [NSTimer timerWithTimeInterval:1.0/60.0
+                                                  target:self
+                                                selector:@selector(step)
+                                                userInfo:nil
+                                                 repeats:YES];
+        }
+        [[NSRunLoop mainRunLoop] addTimer:self.pTimer forMode:NSDefaultRunLoopMode];
+        m_scrollRect.origin = self.pFloorListView.contentOffset;
+        m_scrollRect.size = self.pFloorListView.bounds.size;
     }
     
     if(recognizer.state == UIGestureRecognizerStateBegan)
@@ -487,48 +510,82 @@ namespace
     
     if(m_draggingFloorButton)
     {
-        m_pInterop->SetFloorSelectionDrag(m_floorButtonParameter);
         [self.pFloorChangeButton setSelected:YES];
     }
     else
     {
         int floorCount = (int)m_tableViewFloorNames.size()-1;
-        int floorIndex = (int)roundf(m_floorButtonParameter*floorCount);
+        int floorIndex = (int)roundf(m_floorSelection*floorCount);
         m_pInterop->SelectFloor(floorIndex);
         
         [self moveButtonToFloorIndex:floorIndex :YES];
         [self.pFloorChangeButton setSelected:NO];
         [self hideFloorLabels];
+        
+        [self.pTimer invalidate];
+        self.pTimer = nil;
     }
 }
 
 - (void) hideFloorLabels
 {
-    for(InteriorsExplorerFloorItemView* item in self.pFloorListViews)
-    {
-        [item hideName];
-    }
+    [self setFloorListAlpha:0.5f];
     
     self.pFloorOnButtonLabel.textColor = [self textColorNormal];
 }
 
 - (void) showFloorLabels
 {
-    for(InteriorsExplorerFloorItemView* item in self.pFloorListViews)
-    {
-        [item showName];
-    }
+    [self setFloorListAlpha:1.0f];
     
     self.pFloorOnButtonLabel.textColor = [self textColorHighlighted];
 }
 
+- (void) setFloorListAlpha :(CGFloat)alpha
+{
+    [self.layer removeAllAnimations];
+    
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.25];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    
+    self.pFloorListView.alpha = alpha;
+    
+    [UIView commitAnimations];
+}
+
 - (void) moveButtonToFloorIndex:(int)floorIndex :(BOOL)shouldAnimate
 {
-    int floorCount = static_cast<int>(self.pFloorListViews.count);
-    InteriorsExplorerFloorItemView* topItem = [self.pFloorListViews objectAtIndex:0];
-    CGRect topFrame = topItem.frame;
-    CGFloat topY = topFrame.origin.y + (m_floorDivisionHeight*0.5f) - self.pFloorChangeButton.frame.size.height*0.5f;
-    CGFloat newY = topY + ((floorCount-1)-floorIndex) * m_floorDivisionHeight;
+    int row = static_cast<int>((m_tableViewFloorNames.size()-1)-floorIndex);
+    NSIndexPath* ipath = [NSIndexPath indexPathForRow:row inSection:0];
+    
+    
+    int floorCount = static_cast<int>(m_tableViewFloorNames.size());
+    
+    CGFloat topY = self.pFloorListView.frame.origin.y;
+    CGFloat bottomY = topY+self.pFloorListView.frame.size.height;
+    CGFloat newY = 0;
+    
+    CGFloat controlHalfHeightBounds = self.pFloorListView.bounds.size.height/2;
+    CGFloat heightForFloorIndex = topY + ((floorCount-1)-floorIndex) * m_floorDivisionHeight;
+    if(heightForFloorIndex < controlHalfHeightBounds)
+    {
+        // Stay within the top half of the control;
+        newY = topY + heightForFloorIndex + m_halfButtonHeight - m_floorDivisionHeight;
+        
+    }
+    else if(heightForFloorIndex >= self.pFloorListView.contentSize.height-(controlHalfHeightBounds+m_halfDivisionHeight))
+    {
+        // Stay within the bottom half of the control;
+        newY = bottomY - m_halfButtonHeight - (floorIndex+0.5f)*m_floorDivisionHeight;
+    }
+    else
+    {
+        // Stay in the center
+        newY = topY + controlHalfHeightBounds - m_halfButtonHeight;
+    }
+    
     
     if(shouldAnimate)
     {
@@ -539,6 +596,8 @@ namespace
                              CGRect buttonFrame = self.pFloorChangeButton.frame;
                              buttonFrame.origin.y = newY;
                              self.pFloorChangeButton.frame = buttonFrame;
+                             
+                             [self.pFloorListView scrollToRowAtIndexPath:ipath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
             
         }
                          completion:^(BOOL finished){
@@ -550,8 +609,72 @@ namespace
         CGRect buttonFrame = self.pFloorChangeButton.frame;
         buttonFrame.origin.y = newY;
         self.pFloorChangeButton.frame = buttonFrame;
+        
+        
+        [self.pFloorListView scrollToRowAtIndexPath:ipath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
     }
 }
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return static_cast<int>(m_tableViewFloorNames.size());
+}
+
+static NSString *CellIdentifier = @"floorCell";
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    const float divisionWidth = 30;
+    const float divisionLabelWidth = 25;
+    const float divisionLabelSpacing = 15;
+    
+    int floorIndex = static_cast<int>(indexPath.row);
+    int floorCount = static_cast<int>(m_tableViewFloorNames.size());
+    
+    InteriorsExplorerFloorItemView *cell = (InteriorsExplorerFloorItemView*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if(cell == nil)
+    {
+        cell = [[[InteriorsExplorerFloorItemView alloc] initWithParams:divisionLabelWidth
+                                                                      :divisionLabelSpacing
+                                                                      :divisionWidth
+                                                                      :m_floorDivisionHeight
+                                                                      :m_pixelScale
+                                                                      :CellIdentifier] autorelease];
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleGray;
+        
+        if ([cell respondsToSelector:@selector(layoutMargins)])
+        {
+            cell.layoutMargins = UIEdgeInsetsZero;
+        }
+        
+        if ([cell respondsToSelector:@selector(separatorInset)])
+        {
+            [cell setSeparatorInset:UIEdgeInsetsZero];
+        }
+    }
+    
+    const std::string& name = m_tableViewFloorNames.at(floorIndex);
+    NSString* nameString = [NSString stringWithCString:name.c_str() encoding:NSUTF8StringEncoding];
+    
+    BOOL top = (floorIndex==0);
+    BOOL bottom = (floorIndex==floorCount-1);
+    
+    [cell setFloor:nameString :top :bottom];
+    
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return m_floorDivisionHeight;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return m_floorDivisionHeight;
+}
+
 
 @end
 
