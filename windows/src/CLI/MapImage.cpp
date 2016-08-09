@@ -50,7 +50,6 @@ namespace ExampleApp
             const bool requiresPBuffer = true;
             const int screenWidth = (int)(width * oversampleScale);
             const int screenHeight = (int)(height * oversampleScale);
-
             if (m_pState == NULL)
             {
                 m_pState = WindowsNativeState::Create(appName, hinstance, windowHandle, screenWidth, screenHeight, fullScreen, requiresPBuffer, oversampleScale, deviceModel, deviceDpi);
@@ -245,17 +244,17 @@ namespace ExampleApp
 
         void MapImage::HandleTouchDownEvent(float x, float y, float z, int id)
         {
-            m_appRunner->HandleTouchEvent(MakeTouchScreenInputEvent(x, y, z, id, Eegeo::Windows::Input::TouchScreenInputAction::TouchScreenDown));
+            m_appRunner->HandleTouchEvent(MakeTouchScreenInputEvent(ScaledScreenCoord(x), ScaledScreenCoord(y), z, id, Eegeo::Windows::Input::TouchScreenInputAction::TouchScreenDown));
         }
         
         void MapImage::HandleTouchUpEvent(float x, float y, float z, int id)
         {
-            m_appRunner->HandleTouchEvent(MakeTouchScreenInputEvent(x, y, z, id, Eegeo::Windows::Input::TouchScreenInputAction::TouchScreenUp));
+            m_appRunner->HandleTouchEvent(MakeTouchScreenInputEvent(ScaledScreenCoord(x), ScaledScreenCoord(y), z, id, Eegeo::Windows::Input::TouchScreenInputAction::TouchScreenUp));
         }
 
         void MapImage::HandleTouchMoveEvent(float x, float y, float z, int id)
         {
-            m_appRunner->HandleTouchEvent(MakeTouchScreenInputEvent(x, y, z, id, Eegeo::Windows::Input::TouchScreenInputAction::TouchScreenMove));
+            m_appRunner->HandleTouchEvent(MakeTouchScreenInputEvent(ScaledScreenCoord(x), ScaledScreenCoord(y), z, id, Eegeo::Windows::Input::TouchScreenInputAction::TouchScreenMove));
         }
 
         void MapImage::SetAllInputEventsToPointerUp(int x, int y)
