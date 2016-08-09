@@ -439,6 +439,14 @@ namespace
     m_touchEnabled = enabled;
 }
 
+- (CGFloat) getScrollSpeed:(CGFloat)t
+{
+    const float maxScrollSpeed=15.0f;
+    
+    t = MAX(-1, MIN(1,t));
+    return t*ABS(t)*maxScrollSpeed;
+}
+
 - (void) step
 {
     if(!m_draggingFloorButton)
@@ -448,16 +456,17 @@ namespace
     
     float scrollDelta = 0.0f;
     const float joystickScrollThresholdDistance = 0.25f;
-    const float maxScrollSpeed=15.0f;
+    
+    
     if(m_floorButtonParameter <= joystickScrollThresholdDistance)
     {
         float localT = m_floorButtonParameter/joystickScrollThresholdDistance;
-        scrollDelta = (1.0 - localT) * maxScrollSpeed;
+        scrollDelta = [self getScrollSpeed:(1.0 - localT)];
     }
     else if(m_floorButtonParameter >= 1.0f-joystickScrollThresholdDistance)
     {
         float localT = (m_floorButtonParameter-(1.0f-joystickScrollThresholdDistance))/joystickScrollThresholdDistance;
-        scrollDelta = -localT*maxScrollSpeed;
+        scrollDelta = [self getScrollSpeed:-localT];
     }
     
     m_scrollRect.origin.y += scrollDelta;
