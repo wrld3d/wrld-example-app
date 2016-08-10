@@ -96,10 +96,10 @@ namespace ExampleApp
                     
                     OnFloorSelected(InteriorsExplorerFloorSelectedMessage(message.GetSelectedFloorIndex(), message.GetSelectedFloorName()));
                     
-                    if(!m_model.GetHasViewedAnyInterior())
+                    if(m_model.GetInteriorsViewedCount() < 2)
                     {
                         m_view.AddTutorialDialogs();
-                        m_model.SetHasViewedAnyInterior(true);
+                        m_model.RecordHasViewedInterior();
                     }
                     
                     m_viewModel.AddToScreen();
