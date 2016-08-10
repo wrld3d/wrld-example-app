@@ -6,6 +6,7 @@
 #include "EegeoSearchQueryFactory.h"
 #include "EegeoSearchService.h"
 #include "SwallowSearchConstants.h"
+#include "EegeoCategoryIconMapper.h"
 
 namespace ExampleApp
 {
@@ -21,7 +22,8 @@ namespace ExampleApp
                                                                    const std::vector<std::string>& availableCategories,
                                                                    const std::string& serviceUrl,
                                                                    const std::string& apiKey,
-                                                                   const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel)
+                                                                   const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                                   PersistentSettings::IPersistentSettingsModel& persistentSettings)
                 : m_pEegeoSearchQueryFactory(NULL)
                 , m_pEegeoParser(NULL)
                 , m_pSearchService(NULL)
@@ -31,7 +33,10 @@ namespace ExampleApp
                                                                                     interiorInteractionModel,
                                                                                     serviceUrl,
                                                                                     apiKey);
-                    m_pEegeoParser = Eegeo_NEW(EegeoJsonParser)();
+                    
+                    m_pCategoryIconMapper = Eegeo_NEW(EegeoCategoryIconMapper)();
+                    
+                    m_pEegeoParser = Eegeo_NEW(EegeoJsonParser)(*m_pCategoryIconMapper,persistentSettings);
                     
                     m_pSearchService = Eegeo_NEW(EegeoSearchService)(*m_pEegeoSearchQueryFactory,
                                                                         *m_pEegeoParser,

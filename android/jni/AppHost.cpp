@@ -553,9 +553,10 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 								);
 
     m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(
-    																							 app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
-                                                                                                 m_messageBus,
-                                                                                                 m_nativeState);
+    		app.InteriorsExplorerModule().GetInteriorsExplorerModel(),
+			app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
+            m_messageBus,
+            m_nativeState);
 
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
 
@@ -675,8 +676,3 @@ void AppHost::HandleUserInteractionEnabledChanged(const ExampleApp::UserInteract
 	jmethodID touchEnabledMethod = env->GetMethodID(m_nativeState.activityClass, methodName.c_str(), "(Z)V");
 	env->CallVoidMethod(m_nativeState.activity, touchEnabledMethod, message.IsEnabled());
 }
-
-std::string AppHost::GetMeetingRoomState(std::string roomName){
-	return "available";
-}
-

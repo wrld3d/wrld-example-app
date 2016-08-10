@@ -8,6 +8,8 @@ set(currsources
   ios_src/InteriorsExplorer/View/InteriorsExplorerFloorItemView.mm
   ios_src/InteriorsExplorer/View/InteriorsExplorerView.h
   ios_src/InteriorsExplorer/View/InteriorsExplorerView.mm
+  ios_src/InteriorsExplorer/View/InteriorsExplorerTutorialView.h
+  ios_src/InteriorsExplorer/View/InteriorsExplorerTutorialView.mm
   ios_src/InteriorsExplorer/View/InteriorsExplorerViewIncludes.h
   ios_src/InteriorsExplorer/View/InteriorsExplorerViewInterop.h
   ios_src/InteriorsExplorer/View/InteriorsExplorerViewInterop.mm

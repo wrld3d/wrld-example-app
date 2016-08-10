@@ -408,7 +408,8 @@ namespace ExampleApp
             m_pSearchModule->GetSearchQueryPerformer(), 
             m_pSearchModule->GetSearchResultRepository(), 
             mapModule.GetInteriorsPresentationModule().GetInteriorsLabelsController(), 
-            m_messageBus);
+            m_messageBus,
+            m_persistentSettings);
 
         Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
 
@@ -463,7 +464,6 @@ namespace ExampleApp
         Eegeo_DELETE m_pInteriorsHighlightVisibilityController;
         Eegeo_DELETE m_pInteriorsEntityIdHighlightVisibilityController;
         Eegeo_DELETE m_pInteriorsPickingController;
-        Eegeo_DELETE m_pRayCaster;
 
         DestroyApplicationModelModules();
         
@@ -548,7 +548,7 @@ namespace ExampleApp
                                                                                                                                supportedCategories,
                                                                                                                                m_applicationConfiguration.SearchServiceUrl(),
                                                                                                                                apiKey,
-                                                                                                                               world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel()
+                                                                                                                               world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel(),                                                                                                                               m_persistentSettings
                                                                                                                                );
         }
 
@@ -744,8 +744,9 @@ namespace ExampleApp
                                                                                                      m_metricsService,
                                                                                                      initialExperienceModel,
                                                                                                      interiorsAffectedByFlattening,
-                                                                                                     m_pInteriorsEntitiesPinsModule->GetInteriorsEntitiesPinsController());
-
+                                                                                                     m_pInteriorsEntitiesPinsModule->GetInteriorsEntitiesPinsController(),
+                                                                                                     m_persistentSettings);
+        
         m_pMyPinCreationModule = Eegeo_NEW(ExampleApp::MyPinCreation::SdkModel::MyPinCreationModule)(m_pMyPinsModule->GetMyPinsService(),
                                  m_identityProvider,
                                  m_pSettingsMenuModule->GetSettingsMenuViewModel(),

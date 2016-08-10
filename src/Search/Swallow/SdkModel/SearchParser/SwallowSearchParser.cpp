@@ -127,21 +127,26 @@ namespace ExampleApp
                         rapidjson::Document json;
                         
                         std::string imageUrl;
+                        
+                        TryParseImageDetails(searchResultModel, imageUrl);
+                        
                         std::string availability = "available";
                         std::string officeLocation = "unknown";
                         
-                        TryParseImageDetails(searchResultModel, imageUrl);
-                        if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
-                        {
-                            if(json.HasMember(SearchConstants::AVAILABILITY_FIELD_NAME.c_str()) && json[SearchConstants::AVAILABILITY_FIELD_NAME.c_str()].IsString())
-                            {
-                                availability = json[SearchConstants::AVAILABILITY_FIELD_NAME.c_str()].GetString();
-                            }
-                            
-                            if(json.HasMember(SearchConstants::OFFICE_LOCATION_FIELD_NAME.c_str()) && json[SearchConstants::OFFICE_LOCATION_FIELD_NAME.c_str()].IsString())
-                            {
-                                officeLocation = json[SearchConstants::OFFICE_LOCATION_FIELD_NAME.c_str()].GetString();
-                            }
+                        int availabilityState = searchResultModel.GetAvailability();
+                        
+                        switch (availabilityState) {
+                            case 1:
+                                availability = SearchConstants::MEETING_ROOM_AVAILABLE;
+                                break;
+                            case 2:
+                                availability = SearchConstants::MEETING_ROOM_AVAILABLE_SOON;
+                                break;
+                            case 3:
+                                availability = SearchConstants::MEETING_ROOM_OCCUPIED;
+                                break;
+                            default:
+                                break;
                         }
                         
                         

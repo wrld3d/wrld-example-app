@@ -35,8 +35,10 @@ namespace ExampleApp
                 
                 Eegeo::Helpers::TCallback1<SearchResultSectionController, const Search::SearchQueryResponseReceivedMessage&> m_searchResultReceivedHandler;
                 Eegeo::Helpers::TCallback1<SearchResultSectionController, const Search::SearchQueryRemovedMessage&> m_searchQueryRemovedHandler;
-
+                Eegeo::Helpers::TCallback1<SearchResultSectionController, const SearchResultOnMap::SearchResultMeetingAvailabilityChanged&>m_availabilityChangedHandlerBinding;
+                
             private:
+                void OnAvailabilityChanged(const ExampleApp::SearchResultOnMap::SearchResultMeetingAvailabilityChanged& message);
                 
                 void OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message);
                 

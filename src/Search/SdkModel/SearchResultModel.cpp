@@ -30,6 +30,7 @@ namespace ExampleApp
             , m_vendor("")
             , m_jsonData("")
             , m_searchResultCreationTimeStamp(-1)
+            , m_availabilityState(1)
             {
                 
             }
@@ -83,6 +84,16 @@ namespace ExampleApp
             const std::string& SearchResultModel::GetIdentifier() const
             {
                 return m_identifier;
+            }
+            
+            const int SearchResultModel::GetAvailability() const
+            {
+                return m_availabilityState;
+            }
+            
+            void SearchResultModel::SetAvailability(int availability) const
+            {
+                m_availabilityState = availability;
             }
             
             const Eegeo::Space::LatLong& SearchResultModel::GetLocation() const
