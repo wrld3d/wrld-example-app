@@ -89,6 +89,8 @@
 @property(nonatomic, retain) UILabel* pFloorNameLabel;
 
 @property(nonatomic, retain) UITableView* pFloorListView;
+@property(nonatomic, retain) UIImageView* pFloorListArrowUp;
+@property(nonatomic, retain) UIImageView* pFloorListArrowDown;
 
 @property(nonatomic, retain) InteriorsExplorerTutorialView* pTutorialView;
 @property(nonatomic, retain) NSTimer* pTimer;

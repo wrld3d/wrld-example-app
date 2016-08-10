@@ -68,6 +68,11 @@ namespace
         self.pFloorPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_inactiveFloorListXPosition, m_screenHeight/2.0f, 110, 200)] autorelease];
         [self addSubview:self.pFloorPanel];
         
+        self.pFloorListArrowDown = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow3_down"]] autorelease];
+        self.pFloorListArrowUp = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow3_up"]] autorelease];
+        
+        [self.pFloorPanel addSubview:self.pFloorListArrowDown];
+        [self.pFloorPanel addSubview:self.pFloorListArrowUp];
         
         self.pFloorListView = [[[UITableView alloc] initWithFrame:CGRectMake(0, 0, 110, 200) style:UITableViewStylePlain] autorelease];
         self.pFloorListView.delegate = self;
@@ -158,6 +163,7 @@ namespace
         
         [self hideFloorLabels];
         [self setHidden:YES];
+        [self setArrowState:NO :NO];
     }
     
     return self;
@@ -297,10 +303,6 @@ namespace
     self.pFloorPanel.hidden = !m_floorSelectionEnabled;
     self.pFloorPanel.userInteractionEnabled = self.pFloorChangeButton.userInteractionEnabled = m_floorSelectionEnabled;
     
-    // TODO: Better solution for this. Layout doesn't appear to be updating correctly after reloadData, causing the list view's content bounds
-    // to be incorrect.  Adjusting the content inset by a non-0 value seems to correct it.
-    [self.pFloorListView setContentInset:UIEdgeInsetsMake(1, 0, 0, 0)];
-    
     const bool showChangeFloorDialog = floorCount > 1;
     [self.pTutorialView repositionTutorialDialogs:dismissButtonFrame.origin.x
                                                  :dismissButtonFrame.origin.y
@@ -312,6 +314,13 @@ namespace
     m_floorSelectionEnabled= (floorCount > 1);
     self.pFloorPanel.hidden = !m_floorSelectionEnabled;
     self.pFloorPanel.userInteractionEnabled = self.pFloorChangeButton.userInteractionEnabled = m_floorSelectionEnabled;
+    
+    const CGFloat arrowWidth=20.0f;
+    const CGFloat arrowHeight=verticalPadding*0.5f;
+    self.pFloorListArrowUp.frame = CGRectMake(self.pFloorPanel.frame.size.width/2 - arrowWidth/2, self.pFloorListView.frame.origin.y-arrowHeight, arrowWidth, arrowHeight);
+    self.pFloorListArrowDown.frame = CGRectMake(self.pFloorPanel.frame.size.width/2 - arrowWidth/2, self.pFloorListView.frame.origin.y+self.pFloorListView.frame.size.height, arrowWidth, arrowHeight);
+    
+    [self refreshArrowState];
 }
 
 - (void) playSliderShakeAnim
@@ -447,6 +456,18 @@ namespace
     return t*ABS(t)*maxScrollSpeed;
 }
 
+- (void) refreshArrowState
+{
+    [self setArrowState:self.pFloorListView.contentOffset.y>0
+                       :self.pFloorListView.contentOffset.y<self.pFloorListView.contentSize.height-self.pFloorListView.bounds.size.height];
+}
+
+- (void) setArrowState:(BOOL)showUp :(BOOL)showDown
+{
+    self.pFloorListArrowUp.hidden = !showUp;
+    self.pFloorListArrowDown.hidden = !showDown;
+}
+
 - (void) step
 {
     if(!m_draggingFloorButton)
@@ -477,6 +498,8 @@ namespace
     m_floorSelection = 1.0f - static_cast<float>((pointInTable.y-m_halfDivisionHeight)/(self.pFloorListView.contentSize.height-m_floorDivisionHeight));
 
     m_pInterop->SetFloorSelectionDrag(m_floorSelection);
+    
+    [self refreshArrowState];
 }
 
 - (void) dragButton:(ImmediatePanGestureRecognizer*)recognizer
@@ -560,6 +583,8 @@ namespace
     [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
     
     self.pFloorListView.alpha = alpha;
+    self.pFloorListArrowDown.alpha = alpha;
+    self.pFloorListArrowUp.alpha = alpha;
     
     [UIView commitAnimations];
 }
@@ -609,8 +634,9 @@ namespace
                              [self.pFloorListView scrollToRowAtIndexPath:ipath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
             
         }
-                         completion:^(BOOL finished){
-            
+                         completion:^(BOOL finished)
+        {
+                              [self refreshArrowState];
         }];
     }
     else
@@ -619,9 +645,10 @@ namespace
         buttonFrame.origin.y = newY;
         self.pFloorChangeButton.frame = buttonFrame;
         
-        
         [self.pFloorListView scrollToRowAtIndexPath:ipath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+        [self refreshArrowState];
     }
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
