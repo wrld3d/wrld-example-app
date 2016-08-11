@@ -5,7 +5,7 @@
                     xmlns:System.Windows="clr-namespace:System.Windows;assembly=PresentationCore"
                     xmlns:Animation="clr-namespace:System.Windows.Media.Animation;assembly=PresentationCore"
                     >
-    
+
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../../Colours.xaml" />
@@ -15,7 +15,7 @@
     <System.Windows:Duration x:Key="shutterAnimDuration">0:0:0.2</System.Windows:Duration>
     <Animation:KeyTime x:Key="shutterAnimEndKeyTime">0:0:0.2</Animation:KeyTime>
     <Animation:KeyTime x:Key="itemCollapseEndKeyTime">0:0:0.4</Animation:KeyTime>
-    
+
 
     <Style x:Key="RotatingAnim" TargetType="{x:Type Image}">
         <Setter Property="RenderTransform">
@@ -51,7 +51,7 @@
                                 </DoubleAnimation.EasingFunction>
                             </DoubleAnimation>
                         </Storyboard>
-                        
+
                         <Storyboard x:Key="ItemShutterClose">
                             <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" To="0" Duration="{StaticResource shutterAnimDuration}">
                                 <DoubleAnimation.EasingFunction>
@@ -187,7 +187,7 @@
                                 </Button.Style>
                             </Button>
                         </Grid>
-                        
+
                         <!--Search result count. Closed Margin: 32-->
                         <Grid Name="SearchResultCountContainer" Margin="20,0,0,0" VerticalAlignment="Top" Background="{StaticResource PrimaryBG_colour}" Width="20" Height="36" Panel.ZIndex="100" Visibility="Hidden">
                             <TextBlock IsEnabled="False" Margin="0,9,2,0"  Name="SearchResultCount" Text="20" Foreground="{StaticResource LightGrey}" TextAlignment="Center" Width="20" Height="36" FontFamily="{StaticResource PrimaryUIFont}" FontSize="12"/>
@@ -312,90 +312,153 @@
 
                             <Grid Grid.Row="2">
                                 <StackPanel  Orientation="Vertical" >
-                                    <ScrollViewer Width="250" Background="{StaticResource PrimaryBG_colour}" Name="ResultsMenuOptionsView" PanningRatio="3" PanningDeceleration="0" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
-                                        <ListBox Name="SearchResultsList" Template="{StaticResource ListBoxControlTemplateNoPadding}" Background="{StaticResource PrimaryBG_colour}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0" Focusable="False">
-                                            <ListBox.Resources>
-                                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
-                                                <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent"/>
-                                                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrush}" Color="Transparent"/>
-                                                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="Transparent"/>
-                                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
+                                    <Grid>
+                                        <ScrollViewer Width="250" Background="{StaticResource PrimaryBG_colour}" Name="ResultsMenuOptionsView" PanningRatio="3" PanningDeceleration="0" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+                                            <ListBox Name="SearchResultsList" Template="{StaticResource ListBoxControlTemplateNoPadding}" Background="{StaticResource PrimaryBG_colour}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0" Focusable="False">
+                                                <ListBox.Resources>
+                                                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
+                                                    <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent"/>
+                                                    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrush}" Color="Transparent"/>
+                                                    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="Transparent"/>
+                                                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
 
-                                                <DataTemplate DataType="{x:Type local:SearchMenuListItem}">
-                                                    <Grid HorizontalAlignment="Stretch" Height="43" Background="{StaticResource Gold}">
-                                                        <Grid.RowDefinitions>
-                                                            <RowDefinition Height="*"/>
-                                                            <RowDefinition Height="1"/>
-                                                        </Grid.RowDefinitions>
-                                                        <Grid HorizontalAlignment="Stretch" Grid.Row="0">
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="Auto"/>
-                                                                <ColumnDefinition Width="*"/>
-                                                                <ColumnDefinition Width="Auto"/>
-                                                            </Grid.ColumnDefinitions>
-                                                            <StackPanel Name="SearchResultPanel" Orientation="Horizontal" HorizontalAlignment="Stretch" Width="225"  Grid.Column="0" Background="{StaticResource SubMenuItemDefaultColour}" Margin="20,0,0,0" >
-                                                                <StackPanel.Triggers>
-                                                                    <EventTrigger RoutedEvent="MouseLeftButtonDown">
-                                                                        <BeginStoryboard>
-                                                                            <Storyboard>
-                                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SearchResultPanel" Storyboard.TargetProperty="Background">
-                                                                                    <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource SubMenuItemMouseDownColour}"/>
-                                                                                </ObjectAnimationUsingKeyFrames>
-                                                                            </Storyboard>
-                                                                        </BeginStoryboard>
-                                                                    </EventTrigger>
-                                                                    <EventTrigger RoutedEvent="MouseEnter">
-                                                                        <BeginStoryboard>
-                                                                            <Storyboard>
-                                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SearchResultPanel" Storyboard.TargetProperty="Background">
-                                                                                    <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource SubMenuItemMouseOverColour}"/>
-                                                                                </ObjectAnimationUsingKeyFrames>
-                                                                            </Storyboard>
-                                                                        </BeginStoryboard>
-                                                                    </EventTrigger>
-                                                                    <EventTrigger RoutedEvent="MouseLeave">
-                                                                        <BeginStoryboard>
-                                                                            <Storyboard>
-                                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SearchResultPanel" Storyboard.TargetProperty="Background">
-                                                                                    <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource SubMenuItemDefaultColour}"/>
-                                                                                </ObjectAnimationUsingKeyFrames>
-                                                                            </Storyboard>
-                                                                        </BeginStoryboard>
-                                                                    </EventTrigger>
-                                                                </StackPanel.Triggers>
-                                                                <StackPanel.Resources>
-                                                                    <Style TargetType="{x:Type StackPanel}">
-                                                                        <Setter Property="RenderTransform">
-                                                                            <Setter.Value>
-                                                                                <ScaleTransform ScaleY="1"/>
-                                                                            </Setter.Value>
-                                                                        </Setter>
-                                                                    </Style>
-                                                                </StackPanel.Resources>
-                                                                <Image Source="{Binding Path=Icon}" Width="36" Height="36" VerticalAlignment="Center" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
-                                                                <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="175">
-                                                                    <TextBlock Text="{Binding Path=Name}" FontSize="13" Foreground="Black" MaxWidth="{Binding RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}, Path=Width}" Margin="5,1,0,0" TextTrimming="CharacterEllipsis"/>
-                                                                    <TextBlock Text="{Binding Path=Details}" FontSize="11" Foreground="{StaticResource DarkGrey}" MaxWidth="{Binding RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}, Path=Width}" Margin="5,0,0,0" TextTrimming="CharacterEllipsis"/>
+                                                    <DataTemplate DataType="{x:Type local:SearchMenuListItem}">
+                                                        <Grid HorizontalAlignment="Stretch" Height="43" Background="{StaticResource Gold}">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*"/>
+                                                                <RowDefinition Height="1"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Grid HorizontalAlignment="Stretch" Grid.Row="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="Auto"/>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="Auto"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <StackPanel Name="SearchResultPanel" Orientation="Horizontal" HorizontalAlignment="Stretch" Width="225"  Grid.Column="0" Background="{StaticResource SubMenuItemDefaultColour}" Margin="20,0,0,0" >
+                                                                    <StackPanel.Triggers>
+                                                                        <EventTrigger RoutedEvent="MouseLeftButtonDown">
+                                                                            <BeginStoryboard>
+                                                                                <Storyboard>
+                                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SearchResultPanel" Storyboard.TargetProperty="Background">
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource SubMenuItemMouseDownColour}"/>
+                                                                                    </ObjectAnimationUsingKeyFrames>
+                                                                                </Storyboard>
+                                                                            </BeginStoryboard>
+                                                                        </EventTrigger>
+                                                                        <EventTrigger RoutedEvent="MouseEnter">
+                                                                            <BeginStoryboard>
+                                                                                <Storyboard>
+                                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SearchResultPanel" Storyboard.TargetProperty="Background">
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource SubMenuItemMouseOverColour}"/>
+                                                                                    </ObjectAnimationUsingKeyFrames>
+                                                                                </Storyboard>
+                                                                            </BeginStoryboard>
+                                                                        </EventTrigger>
+                                                                        <EventTrigger RoutedEvent="MouseLeave">
+                                                                            <BeginStoryboard>
+                                                                                <Storyboard>
+                                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SearchResultPanel" Storyboard.TargetProperty="Background">
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource SubMenuItemDefaultColour}"/>
+                                                                                    </ObjectAnimationUsingKeyFrames>
+                                                                                </Storyboard>
+                                                                            </BeginStoryboard>
+                                                                        </EventTrigger>
+                                                                    </StackPanel.Triggers>
+                                                                    <StackPanel.Resources>
+                                                                        <Style TargetType="{x:Type StackPanel}">
+                                                                            <Setter Property="RenderTransform">
+                                                                                <Setter.Value>
+                                                                                    <ScaleTransform ScaleY="1"/>
+                                                                                </Setter.Value>
+                                                                            </Setter>
+                                                                        </Style>
+                                                                    </StackPanel.Resources>
+                                                                    <Image Source="{Binding Path=Icon}" Width="36" Height="36" VerticalAlignment="Center" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                                                                    <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="175">
+                                                                        <TextBlock Text="{Binding Path=Name}" FontSize="13" Foreground="Black" MaxWidth="{Binding RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}, Path=Width}" Margin="5,1,0,0" TextTrimming="CharacterEllipsis"/>
+                                                                        <TextBlock Text="{Binding Path=Details}" FontSize="11" Foreground="{StaticResource DarkGrey}" MaxWidth="{Binding RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}, Path=Width}" Margin="5,0,0,0" TextTrimming="CharacterEllipsis"/>
+                                                                    </StackPanel>
                                                                 </StackPanel>
-                                                            </StackPanel>
+                                                            </Grid>
+                                                            <Rectangle Grid.Row="1" Grid.Column="1" Fill="{StaticResource Gold}" Margin="42,0,0,0"/>
                                                         </Grid>
-                                                        <Rectangle Grid.Row="1" Grid.Column="1" Fill="{StaticResource Gold}" Margin="42,0,0,0"/>
-                                                    </Grid>
-                                                </DataTemplate>
-                                            </ListBox.Resources>
-                                            <ListBox.ItemContainerStyle>
-                                                <Style TargetType="{x:Type ListBoxItem}">
-                                                    <Setter Property="IsTabStop" Value="False" />
-                                                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                                                    <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="None"/>
-                                                    <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>                                                    
-                                                </Style>
-                                             </ListBox.ItemContainerStyle>
-                                        </ListBox>
-                                    </ScrollViewer>
+                                                    </DataTemplate>
+                                                </ListBox.Resources>
+                                                <ListBox.ItemContainerStyle>
+                                                    <Style TargetType="{x:Type ListBoxItem}">
+                                                        <Setter Property="IsTabStop" Value="False" />
+                                                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                                        <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="None"/>
+                                                        <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+                                                    </Style>
+                                                </ListBox.ItemContainerStyle>
+                                            </ListBox>
+                                        </ScrollViewer>
+
+                                        <Grid Name="SearchResultsButtonAndFadeContainer" Visibility="Collapsed">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <Grid Width="211" Height="56" Grid.Row="1" Margin="22,0,0,0" HorizontalAlignment="Left">
+                                                <Image IsHitTestVisible="False" Grid.Row="1" Grid.Column="0" Name="SearchResultsFade" Source="/Assets/search_results_fade.png" HorizontalAlignment="Left" VerticalAlignment="Bottom" Visibility="Visible">
+                                                </Image>
+                                            </Grid>
+
+                                            <RepeatButton Grid.Row="1" Grid.Column="1" Name="SearchResultsScrollButton" Width="48" Height="48" Visibility="Hidden" Margin="0, 0, 0, 0" VerticalAlignment="Bottom">
+                                                <RepeatButton.Style>
+                                                    <Style TargetType="{x:Type RepeatButton}">
+                                                        <Style.Setters>
+                                                            <Setter Property="Template">
+                                                                <Setter.Value>
+                                                                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                                                                        <Grid>
+                                                                            <Image Source="/Assets/search_results_scroll_button.png" Name="SearchResultsScrollButton"/>
+                                                                        </Grid>
+                                                                        <ControlTemplate.Triggers>
+                                                                            <Trigger Property="IsPressed" Value="True">
+                                                                                <Setter TargetName="SearchResultsScrollButton" Property="Source" Value="/Assets/search_results_scroll_button_down.png"/>
+                                                                            </Trigger>
+
+                                                                            <MultiTrigger>
+                                                                                <MultiTrigger.Conditions>
+                                                                                    <Condition Property="IsPressed" Value="False"/>
+                                                                                    <Condition Property="IsMouseOver" Value="True"/>
+                                                                                </MultiTrigger.Conditions>
+                                                                                <MultiTrigger.Setters>
+                                                                                    <Setter TargetName="SearchResultsScrollButton" Property="Source" Value="/Assets/search_results_scroll_button.png"/>
+                                                                                </MultiTrigger.Setters>
+                                                                            </MultiTrigger>
+
+                                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                            </Trigger>
+
+                                                                        </ControlTemplate.Triggers>
+                                                                    </ControlTemplate>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </Style.Setters>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="Visibility" Value="Visible">
+                                                                <Trigger.EnterActions>
+                                                                    <BeginStoryboard>
+                                                                        <Storyboard>
+                                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                                From="0.0" To="1.0" Duration="0:0:1"/>
+                                                                        </Storyboard>
+                                                                    </BeginStoryboard>
+                                                                </Trigger.EnterActions>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </RepeatButton.Style>
+                                            </RepeatButton>
+                                        </Grid>
+                                    </Grid>
                                     
                                     <Grid Name="ResultsListSeparator" Width="250" Height="2" Background="{StaticResource PrimaryBG_Over_Colour}" Visibility="Collapsed"/>
-                                    
+
                                     <ScrollViewer Width="250" Background="{StaticResource PrimaryBG_colour}" Name="MenuOptionsView" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="False" >
                                         <ListBox Margin="12,0,0,0" Name="SecondaryMenuItemList" Template="{StaticResource ListBoxControlTemplateNoPadding}" ItemsSource="{Binding Children}" Background="{StaticResource PrimaryBG_colour}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0" Focusable="False">
                                             <ListBox.Resources>
@@ -484,7 +547,7 @@
                                                                                     </BeginStoryboard>
                                                                                 </DataTrigger.EnterActions>
                                                                             </DataTrigger>
-                                                                            
+
                                                                             <DataTrigger Binding="{Binding IsExpanded}" Value="false">
                                                                                 <DataTrigger.EnterActions>
                                                                                     <BeginStoryboard>
