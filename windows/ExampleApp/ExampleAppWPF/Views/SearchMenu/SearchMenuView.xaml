@@ -216,7 +216,7 @@
                                 </Style>
                             </Grid.Resources>
                             <Border BorderBrush="White" Background="White" BorderThickness="1,1,1,1" CornerRadius="5" Width="225" Height="26" VerticalAlignment="Center">
-                                <TextBox Name="SearchInputBox" FontFamily="{StaticResource PrimaryUIFont}" Width="190"  FontSize="16" HorizontalAlignment="Left" Foreground="{StaticResource DarkGrey}" Margin="5,0,0,0" BorderThickness="0">
+                                <TextBox Name="SearchInputBox" FontFamily="{StaticResource PrimaryUIFont}" Width="190" FontSize="16" HorizontalAlignment="Left" Foreground="{StaticResource DarkGrey}" Margin="5,0,0,0" BorderThickness="0">
                                     <TextBox.Resources>
                                         <Style TargetType="{x:Type TextBox}">
                                             <Style.Resources>
@@ -312,7 +312,8 @@
 
                             <Grid Grid.Row="2">
                                 <StackPanel  Orientation="Vertical" >
-                                    <ScrollViewer Width="250" Background="{StaticResource PrimaryBG_colour}" Name="ResultsMenuOptionsView" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="False" >
+                                    <Grid>
+                                        <ScrollViewer Width="250" Background="{StaticResource PrimaryBG_colour}" Name="ResultsMenuOptionsView" PanningRatio="3" PanningDeceleration="0" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
                                         <ListBox Name="SearchResultsList" Template="{StaticResource ListBoxControlTemplateNoPadding}" Background="{StaticResource PrimaryBG_colour}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0" Focusable="False">
                                             <ListBox.Resources>
                                                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
@@ -393,6 +394,68 @@
                                              </ListBox.ItemContainerStyle>
                                         </ListBox>
                                     </ScrollViewer>
+                                    
+                                        <Grid Name="SearchResultsButtonAndFadeContainer" Visibility="Collapsed">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <Grid Width="211" Height="56" Grid.Row="1" Margin="22,0,0,0" HorizontalAlignment="Left">
+                                                <Image IsHitTestVisible="False" Grid.Row="1" Grid.Column="0" Name="SearchResultsFade" Source="/Assets/search_results_fade.png" HorizontalAlignment="Left" VerticalAlignment="Bottom" Visibility="Visible">
+                                                </Image>
+                                            </Grid>
+
+                                            <RepeatButton Grid.Row="1" Grid.Column="1" Name="SearchResultsScrollButton" Width="48" Height="48" Visibility="Hidden" Margin="0, 0, 0, 0" VerticalAlignment="Bottom">
+                                                <RepeatButton.Style>
+                                                    <Style TargetType="{x:Type RepeatButton}">
+                                                        <Style.Setters>
+                                                            <Setter Property="Template">
+                                                                <Setter.Value>
+                                                                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                                                                        <Grid>
+                                                                            <Image Source="/Assets/search_results_scroll_button.png" Name="SearchResultsScrollButton"/>
+                                                                        </Grid>
+                                                                        <ControlTemplate.Triggers>
+                                                                            <Trigger Property="IsPressed" Value="True">
+                                                                                <Setter TargetName="SearchResultsScrollButton" Property="Source" Value="/Assets/search_results_scroll_button_down.png"/>
+                                                                            </Trigger>
+
+                                                                            <MultiTrigger>
+                                                                                <MultiTrigger.Conditions>
+                                                                                    <Condition Property="IsPressed" Value="False"/>
+                                                                                    <Condition Property="IsMouseOver" Value="True"/>
+                                                                                </MultiTrigger.Conditions>
+                                                                                <MultiTrigger.Setters>
+                                                                                    <Setter TargetName="SearchResultsScrollButton" Property="Source" Value="/Assets/search_results_scroll_button.png"/>
+                                                                                </MultiTrigger.Setters>
+                                                                            </MultiTrigger>
+
+                                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                            </Trigger>
+
+                                                                        </ControlTemplate.Triggers>
+                                                                    </ControlTemplate>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </Style.Setters>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="Visibility" Value="Visible">
+                                                                <Trigger.EnterActions>
+                                                                    <BeginStoryboard>
+                                                                        <Storyboard>
+                                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                                From="0.0" To="1.0" Duration="0:0:1"/>
+                                                                        </Storyboard>
+                                                                    </BeginStoryboard>
+                                                                </Trigger.EnterActions>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </RepeatButton.Style>
+                                            </RepeatButton>
+                                        </Grid>
+                                    </Grid>
                                     
                                     <Grid Name="ResultsListSeparator" Width="250" Height="2" Background="{StaticResource PrimaryBG_Over_Colour}" Visibility="Collapsed"/>
                                     
