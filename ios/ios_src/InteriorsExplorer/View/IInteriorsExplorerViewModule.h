@@ -19,6 +19,8 @@ namespace ExampleApp
                 virtual InteriorsExplorerController& GetController() const = 0;
                 
                 virtual InteriorsExplorerView& GetView() const = 0;
+                
+                virtual InteriorsExplorerTutorialView& GetTutorialView() const = 0;
             };
         }
     }

@@ -15,6 +15,7 @@
 #include "Interiors.h"
 #include "ScreenControlViewModelIncludes.h"
 #include "IInteriorsExplorerViewModule.h"
+#include "InteriorsExplorerModel.h"
 
 namespace ExampleApp
 {
@@ -30,7 +31,8 @@ namespace ExampleApp
                 
                 
             public:
-                InteriorsExplorerViewModule(InteriorsExplorerViewModel& viewModel,
+                InteriorsExplorerViewModule(SdkModel::InteriorsExplorerModel& model,
+											InteriorsExplorerViewModel& viewModel,
                                             ExampleAppMessaging::TMessageBus& messageBus);
                 
                 ~InteriorsExplorerViewModule();

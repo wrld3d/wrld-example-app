@@ -1,0 +1,40 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/initial_ux_view_background"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false" >
+    
+    <!-- Exit Indoors dialog -->
+
+    <LinearLayout
+        android:id="@+id/interiors_explorer_tutorial_exit_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="70dp"
+        android:orientation="horizontal" >
+
+        <include layout="@layout/interiors_explorer_tutorial_dialog_layout" />
+
+    </LinearLayout>
+
+    <!-- Change Floors dialog -->
+
+    <LinearLayout
+        android:id="@+id/interiors_explorer_tutorial_change_floor_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="70dp"
+        android:orientation="horizontal" >
+
+        <include layout="@layout/interiors_explorer_tutorial_dialog_layout" />
+
+    </LinearLayout>
+
+</RelativeLayout>

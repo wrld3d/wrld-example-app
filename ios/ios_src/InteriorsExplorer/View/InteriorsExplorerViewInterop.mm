@@ -45,6 +45,16 @@ namespace ExampleApp
                 [m_pView setSelectedFloor:index];
             }
             
+            void InteriorsExplorerViewInterop::AddTutorialDialogs()
+            {
+                [m_pTutorialView show];
+            }
+            
+            void InteriorsExplorerViewInterop::RemoveTutorialDialogs()
+            {
+                [m_pTutorialView hide];
+            }
+            
             void InteriorsExplorerViewInterop::InsertDismissedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 m_dismissedCallbacks.AddCallback(callback);

@@ -15,6 +15,7 @@
 #include "AppModes.h"
 #include "InteriorsExplorer.h"
 #include "VisualMap.h"
+#include "PersistentSettings.h"
 
 namespace ExampleApp
 {
@@ -29,7 +30,8 @@ namespace ExampleApp
                                        Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                        VisualMap::SdkModel::IVisualMapService& visualMapService,
                                        ExampleAppMessaging::TMessageBus& messageBus,
-                                       Metrics::IMetricsService& metricsService);
+                                       Metrics::IMetricsService& metricsServic,
+                                       PersistentSettings::IPersistentSettingsModel& persistentSettings);
                 ~InteriorsExplorerModel();
                 
                 void SelectFloor(int floor);
@@ -41,6 +43,9 @@ namespace ExampleApp
                 
                 void ChangeToInteriorMapState();
                 void ResumePreviousMapState();
+                
+                int GetInteriorsViewedCount();
+                void RecordHasViewedInterior();
                 
                 void InsertInteriorExplorerEnteredCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveInteriorExplorerEnteredCallback(Eegeo::Helpers::ICallback0& callback);
@@ -65,6 +70,9 @@ namespace ExampleApp
 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Metrics::IMetricsService& m_metricsService;
+                
+                PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
+                int m_interiorsViewedCount;
                 
                 Eegeo::Helpers::TCallback0<InteriorsExplorerModel> m_interactionModelStateChangedCallback;
                 

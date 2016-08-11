@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -162,6 +163,7 @@ namespace ExampleAppWPF
             m_editText.GotFocus += OnSearchBoxSelected;
             m_editText.LostFocus += OnSearchBoxUnSelected;
             m_editText.TextChanged += OnSearchBoxTextChanged;
+            
 
             m_mainContainer = (Grid)GetTemplateChild("SerchMenuMainContainer");
 
@@ -326,7 +328,9 @@ namespace ExampleAppWPF
         {
             if (e.Key == Key.Enter)
             {
-                string queryText = m_editText.Text;
+                Encoding enc = Encoding.GetEncoding("Windows-1252");
+                byte[] bytes = Encoding.UTF8.GetBytes(m_editText.Text);
+                string queryText = enc.GetString(bytes);
 
                 if (queryText.Length > 0)
                 {

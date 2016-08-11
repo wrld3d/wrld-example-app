@@ -31,7 +31,8 @@ namespace ExampleApp
                 InteriorsExplorerView* m_pView;
                 
             public:
-                InteriorsExplorerViewModule(InteriorsExplorerViewModel& viewModel,
+                InteriorsExplorerViewModule(SdkModel::InteriorsExplorerModel& model,
+                							InteriorsExplorerViewModel& viewModel,
                                             ExampleAppMessaging::TMessageBus& messageBus,
 											AndroidNativeState &nativeState);
                 

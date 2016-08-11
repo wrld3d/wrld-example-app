@@ -4,44 +4,52 @@
 
 @implementation InteriorsExplorerFloorItemView
 
-- (id) initWithParams:(float)labelWidth :(float)labelSpacing :(float)divisionWidth :(float)height :(float)pixelScale :(NSString*)floorName :(BOOL)isTop :(BOOL)isBottom
+- (id) initWithParams:(float)labelWidth :(float)labelSpacing :(float)divisionWidth :(float)height :(float)pixelScale :(NSString*)reuseId
 {
-    if (self = [super init])
+    if (self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseId])
     {
+        self.backgroundColor=[UIColor clearColor];
+        
         self.frame = CGRectMake(0, 0, labelWidth+divisionWidth+labelSpacing, height);
         
-        UIBezierPath* path = [UIBezierPath bezierPath];
+        UIBezierPath* linePath = [UIBezierPath bezierPath];
+        UIBezierPath* topPath = [UIBezierPath bezierPath];
+        UIBezierPath* bottomPath = [UIBezierPath bezierPath];
         
         // Horizontal centerline.
-        [path moveToPoint:CGPointMake(labelWidth+labelSpacing, height*0.5f)];
-        [path addLineToPoint:CGPointMake(labelWidth+labelSpacing+divisionWidth, height*0.5f)];
+        [linePath moveToPoint:CGPointMake(labelWidth+labelSpacing, height*0.5f)];
+        [linePath addLineToPoint:CGPointMake(labelWidth+labelSpacing+divisionWidth, height*0.5f)];
         
         float centerlineX = labelWidth + labelSpacing + 0.5f * divisionWidth;
-        // Vertical centerline
-        if(!isTop)
-        {
-            [path moveToPoint:CGPointMake(centerlineX, 0.0f)];
-            [path addLineToPoint:CGPointMake(centerlineX, height*0.5f)];
-        }
-        if(!isBottom)
-        {
-            [path moveToPoint:CGPointMake(centerlineX, height*0.5f)];
-            [path addLineToPoint:CGPointMake(centerlineX, height)];
-        }
         
-        CAShapeLayer* shapeLayer = [CAShapeLayer layer];
-        shapeLayer.path = [path CGPath];
-        shapeLayer.strokeColor = [[UIColor whiteColor] CGColor];
-        shapeLayer.lineWidth = 1.0f;
+        [topPath moveToPoint:CGPointMake(centerlineX, 0.0f)];
+        [topPath addLineToPoint:CGPointMake(centerlineX, height*0.5f)];
         
-        [self.layer addSublayer:shapeLayer];
+        [bottomPath moveToPoint:CGPointMake(centerlineX, height*0.5f)];
+        [bottomPath addLineToPoint:CGPointMake(centerlineX, height)];
+
+        self.pDivisionShape = [CAShapeLayer layer];
+        self.pDivisionShape.path = [linePath CGPath];
+        self.pDivisionShape.strokeColor = [[UIColor whiteColor] CGColor];
+        self.pDivisionShape.lineWidth = 1.0f;
+        
+        self.pTopDivisionShape = [CAShapeLayer layer];
+        self.pTopDivisionShape.path = [topPath CGPath];
+        self.pTopDivisionShape.strokeColor = [[UIColor whiteColor] CGColor];
+        self.pTopDivisionShape.lineWidth = 1.0f;
+        
+        self.pBottomDivisionShape = [CAShapeLayer layer];
+        self.pBottomDivisionShape.path = [bottomPath CGPath];
+        self.pBottomDivisionShape.strokeColor = [[UIColor whiteColor] CGColor];
+        self.pBottomDivisionShape.lineWidth = 1.0f;
+        
+        [self.layer addSublayer:self.pDivisionShape];
         
         self.pFloorNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, labelWidth, height)] autorelease];
         self.pFloorNameLabel.lineBreakMode = NSLineBreakByClipping;
         self.pFloorNameLabel.adjustsFontSizeToFitWidth = NO;
         self.pFloorNameLabel.textColor = [UIColor whiteColor];
         self.pFloorNameLabel.textAlignment = NSTextAlignmentRight;
-        self.pFloorNameLabel.text = floorName;
         //[self.pFloorNameLabel sizeToFit];
         CGRect f = self.pFloorNameLabel.frame;
         f.size.height = height;
@@ -51,11 +59,25 @@
         self.userInteractionEnabled = false;
         self.pFloorNameLabel.userInteractionEnabled = false;
         
-        [self hideName];
-        
-        
     }
     return self;
+}
+
+- (void)setFloor :(NSString*)floorName :(BOOL)isTop :(BOOL)isBottom
+{
+    self.pFloorNameLabel.text = floorName;
+
+    [self.pTopDivisionShape removeFromSuperlayer];
+    [self.pBottomDivisionShape removeFromSuperlayer];
+    
+    if(!isTop)
+    {
+        [self.layer addSublayer:self.pTopDivisionShape];
+    }
+    if(!isBottom)
+    {
+        [self.layer addSublayer:self.pBottomDivisionShape];
+    }
 }
 
 - (void)dealloc
@@ -65,36 +87,6 @@
     
     [self removeFromSuperview];
     [super dealloc];
-}
-
-- (void) showName
-{
-    [self.layer removeAllAnimations];
-    
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.25];
-    [UIView setAnimationBeginsFromCurrentState:YES];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-    
-    self.alpha = 1.0f;
-    self.pFloorNameLabel.alpha = 1.0f;
-    
-    [UIView commitAnimations];
-}
-
-- (void) hideName
-{
-    [self.layer removeAllAnimations];
-    
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.25];
-    [UIView setAnimationBeginsFromCurrentState:YES];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-    
-    self.alpha = 0.5f;
-    self.pFloorNameLabel.alpha = 0.5f;
-    
-    [UIView commitAnimations];
 }
 
 @end
