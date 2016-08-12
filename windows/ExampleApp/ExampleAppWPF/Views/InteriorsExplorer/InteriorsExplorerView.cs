@@ -181,7 +181,7 @@ namespace ExampleAppWPF
 				Point sliderPosition = m_floorSlider.TransformToAncestor(Application.Current.MainWindow).Transform(new Point());
 
 				double sliderHeight = m_sliderTickBar.ActualHeight - m_sliderTickBar.ReservedSpace;
-				double sliderFloorSpacing = sliderHeight * m_sliderTickBar.TickFrequency / (FloorCount - 1);
+				double sliderFloorSpacing = sliderHeight * m_sliderTickBar.TickFrequency / Math.Max(FloorCount - 1, 1);
 				m_tutorialView.repositionDialogs((float)(dismissButtonPosition.X - m_panelOffscreenOffsetX),
 													(float)dismissButtonPosition.Y + 5,
 													0,
