@@ -187,13 +187,6 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     	
     	boolean floorSelectionEnabled = floorShortNames.length > 1;
     	m_floorListContainer.setVisibility(floorSelectionEnabled ? View.VISIBLE : View.GONE);
-    	
-    	m_tutorialView.setUIPositions(m_leftXPosActive,
-    										m_backButton.getY(),
-    										m_backButton.getHeight(),
-    										m_floorListContainer.getY() + m_floorButton.getY(),
-    										m_floorButton.getHeight(),
-    										m_floorListAdapter.getCount() > 1);
     }
     
     private void moveButtonToFloorIndex(int floorIndex, Boolean shouldAnimate)
@@ -214,6 +207,13 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     	{
     		m_floorButton.setY(newY);
     	}
+    	
+    	m_tutorialView.setUIPositions(m_leftXPosActive + 7,
+										m_backButton.getY(),
+										m_backButton.getHeight(),
+										m_floorListContainer.getY() + m_floorButton.getY(),
+										m_floorButton.getHeight(),
+										m_floorListAdapter.getCount() > 1);
     }
     
     public void setFloorName(String name)
