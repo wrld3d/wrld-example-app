@@ -23,7 +23,10 @@ public class SearchResultsScrollButtonTouchDownListener implements View.OnTouchL
 		@SuppressLint("NewApi")
 		@Override public void run() {
             mHandler.postDelayed(this, 0);
-            m_searchList.scrollListBy(SearchMenuResultsListAnimationConstants.SearchMenuResultsListScrollButtonSpeed);
+            if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT)
+            {
+            	m_searchList.scrollListBy(SearchMenuResultsListAnimationConstants.SearchMenuResultsListScrollButtonSpeed);
+            }
         }
     };
     
