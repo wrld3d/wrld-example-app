@@ -154,25 +154,13 @@ namespace ExampleAppWPF
 
             m_sliderTickBar.TickLabels = string.Join(",", floorShortNames);
 
-            m_selectedFloorIndex = currentlySelectedFloorIndex;
+			m_selectedFloorIndex = currentlySelectedFloorIndex;
 
             m_floorSlider.Minimum = 0;
             m_floorSlider.Maximum = FloorCount - 1;
-            m_floorSlider.Value = m_selectedFloorIndex;
-            UpdateFloorSliderTagFromValue();
+			SetSelectedFloor(currentlySelectedFloorIndex);
 
-            m_floorPanel.Visibility = FloorSelectionEnabled ? Visibility.Visible : Visibility.Hidden;
-            
-            Point dismissButtonPosition = m_dismissButton.TransformToAncestor(Application.Current.MainWindow).Transform(new Point());
-            Point sliderThumbPosition = m_sliderThumb.TransformToAncestor(Application.Current.MainWindow).Transform(new Point());
-			
-			m_tutorialView.repositionDialogs((float) (dismissButtonPosition.X - m_panelOffscreenOffsetX),
-                                                (float) dismissButtonPosition.Y + 5,
-                                                0,
-                                                (float) sliderThumbPosition.Y + 3,
-                                                0,
-                                                FloorCount > 1,
-												m_container.Margin);
+			m_floorPanel.Visibility = FloorSelectionEnabled ? Visibility.Visible : Visibility.Hidden;
         }
         public void SetFloorName(string name)
         {
@@ -185,6 +173,25 @@ namespace ExampleAppWPF
         public void SetSelectedFloor(int floorIndex)
         {
             m_selectedFloorIndex = floorIndex;
+
+            if (!m_dragInProgress)
+            {
+                m_floorSlider.Value = m_selectedFloorIndex;
+                UpdateFloorSliderTagFromValue();
+
+				Point dismissButtonPosition = m_dismissButton.TransformToAncestor(Application.Current.MainWindow).Transform(new Point());
+				Point sliderPosition = m_floorSlider.TransformToAncestor(Application.Current.MainWindow).Transform(new Point());
+
+				double sliderHeight = m_sliderTickBar.ActualHeight - m_sliderTickBar.ReservedSpace;
+				double sliderFloorSpacing = sliderHeight * m_sliderTickBar.TickFrequency / (FloorCount - 1);
+				m_tutorialView.repositionDialogs((float)(dismissButtonPosition.X - m_panelOffscreenOffsetX),
+													(float)dismissButtonPosition.Y + 5,
+													0,
+													(float)(sliderPosition.Y + sliderHeight - (sliderFloorSpacing * floorIndex) + 3),
+													0,
+													FloorCount > 1,
+													m_container.Margin);
+			}
         }
 
         public void SetOnScreenStateToIntermediateValue(float transitionParam)
