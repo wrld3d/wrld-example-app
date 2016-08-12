@@ -689,6 +689,13 @@
       <Link>Assets\arrow3_right_blue.png</Link>
     </Resource>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\search_results_fade.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\search_results_scroll_button.png" />
+    <Resource Include="Assets\search_results_scroll_button_down.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)..\..\Resources" "$(TargetDir)Resources" /e /y /i /r

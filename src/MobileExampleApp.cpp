@@ -1313,7 +1313,6 @@ namespace ExampleApp
         {
             return;
         }
-        
         if(m_pWorldPinsModule->GetWorldPinsService().HandleTouchTap(data.point))
         {
             return;

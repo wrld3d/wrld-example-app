@@ -355,6 +355,21 @@ set(resources ${resources}
 		Resources/search_results_spinner.png
 		Resources/search_results_spinner@2x.png
 		Resources/search_results_spinner@3x.png
+		Resources/SearchResults_Fade.png
+		Resources/SearchResults_Fade@0.75x.png
+		Resources/SearchResults_Fade@1.5x.png
+		Resources/SearchResults_Fade@2x.png
+		Resources/SearchResults_Fade@3x.png
+		Resources/SearchResults_ScrollButton_Down.png
+		Resources/SearchResults_ScrollButton_Down@0.75x.png
+		Resources/SearchResults_ScrollButton_Down@1.5x.png
+		Resources/SearchResults_ScrollButton_Down@2x.png
+		Resources/SearchResults_ScrollButton_Down@3x.png
+		Resources/SearchResults_ScrollButton.png
+		Resources/SearchResults_ScrollButton@0.75x.png
+		Resources/SearchResults_ScrollButton@1.5x.png
+		Resources/SearchResults_ScrollButton@2x.png
+		Resources/SearchResults_ScrollButton@3x.png
 		Resources/SearchResultOnMap
 		Resources/SearchResultOnMap/pin_sheet_0.png
 		Resources/SearchResultOnMap/pin_sheet_0@2x.png

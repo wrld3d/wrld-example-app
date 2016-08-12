@@ -4,8 +4,10 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -19,7 +21,7 @@ namespace ExampleAppWPF
         private TextBox m_editText;
         private MenuListAdapter m_adapter;
         private Grid m_searchBox;
-        
+
         private ListBox m_resultsList;
         private MenuListAdapter m_resultListAdapter;
         private Grid m_resultsSpinner;
@@ -29,6 +31,9 @@ namespace ExampleAppWPF
         private ScrollViewer m_resultsOptionsView;
         private FrameworkElement m_searchArrow;
         private FrameworkElement m_resultsSeparator;
+        private RepeatButton m_searchResultsScrollButton;
+        private Image m_searchResultsFade;
+        private Grid m_searchResultsButtonAndFadeContainer;
 
         private Grid m_resultsCountContainer;
 
@@ -130,6 +135,7 @@ namespace ExampleAppWPF
             m_resultsOptionsView = (ScrollViewer)GetTemplateChild("ResultsMenuOptionsView");
             m_resultsOptionsView.TouchDown += OnResultsListTouchDown;
             m_resultsOptionsView.TouchUp += OnResultsListTouchUp;
+            m_resultsOptionsView.TouchMove += OnResultsListTouchMove;
             m_resultsOptionsView.ManipulationBoundaryFeedback += OnResultsListBoundaryFeedback;
 
             m_resultsSpinner = (Grid)GetTemplateChild("SearchResultsSpinner");
@@ -140,6 +146,11 @@ namespace ExampleAppWPF
             m_searchBox = (Grid)GetTemplateChild("SearchBox");
             m_searchArrow = (FrameworkElement)GetTemplateChild("SearchArrow");
             m_resultsSeparator = (FrameworkElement)GetTemplateChild("ResultsListSeparator");
+            m_searchResultsFade = (Image)GetTemplateChild("SearchResultsFade");
+            m_searchResultsButtonAndFadeContainer = (Grid)GetTemplateChild("SearchResultsButtonAndFadeContainer");
+
+            m_searchResultsScrollButton = (RepeatButton)GetTemplateChild("SearchResultsScrollButton");
+            m_searchResultsScrollButton.Click += OnResultsScrollButtonMouseDown;
 
             m_resultsClearButton = (Button)GetTemplateChild("SearchClear");
             m_resultsClearButton.Click += OnResultsClear;
@@ -162,6 +173,7 @@ namespace ExampleAppWPF
             m_editText.GotFocus += OnSearchBoxSelected;
             m_editText.LostFocus += OnSearchBoxUnSelected;
             m_editText.TextChanged += OnSearchBoxTextChanged;
+            
 
             m_mainContainer = (Grid)GetTemplateChild("SerchMenuMainContainer");
 
@@ -193,6 +205,13 @@ namespace ExampleAppWPF
             m_resultListAdapter = new MenuListAdapter(false, m_resultsList, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SearchResultPanel");
         }
 
+        private void OnResultsScrollButtonMouseDown(object sender, RoutedEventArgs e)
+        {
+            //const?
+            m_resultsOptionsView.ScrollToVerticalOffset(m_resultsOptionsView.VerticalOffset+10);
+            HandleSearchResultsScrolledToBottom();
+        }
+
         private void OnResultsListBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
         {
             e.Handled = true;
@@ -206,6 +225,11 @@ namespace ExampleAppWPF
         private void OnResultsListTouchDown(object sender, TouchEventArgs e)
         {
             m_resultsOptionsView.CaptureTouch(e.TouchDevice);
+        }
+
+        private void OnResultsListTouchMove(object sender, TouchEventArgs e)
+        {
+            HandleSearchResultsScrolledToBottom();
         }
 
         private void OnSearchBoxTextChanged(object sender, TextChangedEventArgs e)
@@ -233,6 +257,8 @@ namespace ExampleAppWPF
         {
             m_resultsOptionsView.ScrollToVerticalOffset(m_resultsOptionsView.VerticalOffset - e.Delta);
             e.Handled = true;
+
+            HandleSearchResultsScrolledToBottom();
         }
 
         private void OnMenuListItemSelected(object sender, MouseEventArgs e)
@@ -326,7 +352,9 @@ namespace ExampleAppWPF
         {
             if (e.Key == Key.Enter)
             {
-                string queryText = m_editText.Text;
+                Encoding enc = Encoding.GetEncoding("Windows-1252");
+                byte[] bytes = Encoding.UTF8.GetBytes(m_editText.Text);
+                string queryText = enc.GetString(bytes);
 
                 if (queryText.Length > 0)
                 {
@@ -376,6 +404,7 @@ namespace ExampleAppWPF
             m_resultsClearButton.Visibility = Visibility.Visible;
             m_searchArrow.Visibility = Visibility.Visible;
             m_resultsSeparator.Visibility = Visibility.Visible;
+            m_searchResultsButtonAndFadeContainer.Visibility = Visibility.Visible;
 
             m_searchInFlight = false;
         }
@@ -418,7 +447,7 @@ namespace ExampleAppWPF
                 m_searchArrowOpen.Begin(m_searchArrow);
 
                 base.AnimateToOpenOnScreen();
-                m_mainWindow.EnableInput(); 
+                m_mainWindow.EnableInput();
             }
         }
 
@@ -453,9 +482,13 @@ namespace ExampleAppWPF
             {
                 m_resultsCount.Text = count.ToString();
                 m_resultsCountContainer.Visibility = Visibility.Visible;
+                m_searchResultsScrollButton.Visibility = Visibility.Visible;
+                m_resultsOptionsView.ScrollToTop();
             }
             else
             {
+                m_searchResultsButtonAndFadeContainer.Visibility = Visibility.Collapsed;
+                m_searchResultsScrollButton.Visibility = Visibility.Hidden;
                 m_resultsCountContainer.Visibility = Visibility.Hidden;
                 m_resultsSpinner.Visibility = Visibility.Hidden;
                 ClearSearchResultsListBox();
@@ -468,6 +501,20 @@ namespace ExampleAppWPF
         protected override void RefreshListData(List<string> groups, List<bool> groupsExpandable, Dictionary<string, List<string>> groupToChildrenMap)
         {
             m_adapter.SetData(m_list.ItemsSource, groups, groupsExpandable, groupToChildrenMap);
+        }
+
+        private void HandleSearchResultsScrolledToBottom()
+        {
+            if (m_resultsOptionsView.VerticalOffset == m_resultsOptionsView.ScrollableHeight)
+            {
+                m_searchResultsButtonAndFadeContainer.Visibility = Visibility.Collapsed;
+                m_searchResultsScrollButton.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                m_searchResultsButtonAndFadeContainer.Visibility = Visibility.Visible;
+                m_searchResultsScrollButton.Visibility = Visibility.Visible;
+            }
         }
     }
 }

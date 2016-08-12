@@ -16,17 +16,25 @@ import com.eegeo.menu.MenuListAnimationConstants;
 import com.eegeo.menu.MenuListAnimationHandler;
 import com.eegeo.menu.MenuView;
 import com.eegeo.mobileexampleapp.R;
-
+import com.eegeo.searchmenu.SearchResultsScrollButtonTouchDownListener;
+import com.eegeo.searchmenu.SearchResultsScrollListener;
+import com.eegeo.searchmenu.SearchMenuResultsListAnimationConstants;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -66,6 +74,12 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     
     private SearchMenuAnimationHandler m_searchMenuAnimationHandler = null;
     private MenuListAnimationHandler m_menuListAnimationHandler = null;
+    
+    private ImageView m_searchResultsFade;
+    private Button m_searchResultsScrollButton;
+    private boolean m_searchResultsScrollable;
+    private SearchResultsScrollButtonTouchDownListener m_searchResultsScrollButtonTouchDownListener;
+    private SearchResultsScrollListener m_searchResultsScrollListener;
     	
     public SearchMenuView(MainActivity activity, long nativeCallerPointer)
     {
@@ -110,6 +124,10 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         
         m_searchMenuResultsSeparator = m_view.findViewById(R.id.search_menu_results_separator);
         m_searchMenuResultsSeparator.setVisibility(View.GONE);
+        
+        m_searchResultsFade = (ImageView)m_view.findViewById(R.id.search_results_fade);
+        m_searchResultsScrollButton = (Button)m_view.findViewById(R.id.search_results_scroll_button);
+        m_searchResultsScrollable = false;
         
         final MenuView scopedMenuView = this;
 
@@ -156,6 +174,12 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         m_activity.recursiveDisableSplitMotionEvents(vg);
         
         m_isCategory = false;
+        
+        m_searchResultsScrollListener = new SearchResultsScrollListener(m_searchResultsScrollButton, m_searchResultsFade, m_searchResultsScrollable);       
+        m_searchList.setOnScrollListener(m_searchResultsScrollListener);	
+                
+        m_searchResultsScrollButtonTouchDownListener = new SearchResultsScrollButtonTouchDownListener(m_searchList);
+        m_searchResultsScrollButton.setOnTouchListener(m_searchResultsScrollButtonTouchDownListener);  
     }
     
     @Override
@@ -351,6 +375,32 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     	menuHeightAnimator.setDuration(MenuListAnimationConstants.MenuListTotalAnimationSpeedMilliseconds);
     	menuHeightAnimator.start();
     	m_searchList.setSelection(0);
+    	
+    	if(resultCount > 0 && oldHeight == 0)
+    	{
+    		Animation fadeIn = new AlphaAnimation(0, 1);
+    		fadeIn.setInterpolator(new DecelerateInterpolator());
+    		fadeIn.setDuration(SearchMenuResultsListAnimationConstants.SearchMenuResultsListScrollButtonAnimationSpeedMilliseconds);
+
+    		AnimationSet animation = new AnimationSet(false);
+    		animation.addAnimation(fadeIn);
+    		m_searchResultsScrollButton.setAnimation(animation);
+    	}
+    	
+    	if(fullHeight > availableHeight + cellHeight)
+    	{
+    		m_searchResultsFade.setVisibility(View.VISIBLE);
+    		m_searchResultsScrollButton.setVisibility(View.VISIBLE);
+    		m_searchResultsScrollable = true;
+    	}
+    	else
+    	{
+    		m_searchResultsFade.setVisibility(View.INVISIBLE);
+    		m_searchResultsScrollButton.setVisibility(View.INVISIBLE);
+    		m_searchResultsScrollable = false;
+    	}
+    	
+    	m_searchResultsScrollListener.UpdateScrollable(m_searchResultsScrollable);
     }
 
 	@Override

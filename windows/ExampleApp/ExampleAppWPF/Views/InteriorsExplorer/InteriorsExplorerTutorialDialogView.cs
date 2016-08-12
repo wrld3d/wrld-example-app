@@ -37,7 +37,8 @@ namespace ExampleAppWPF
         }
 
         public void repositionDialog(double xPosition,
-                                        double yPosition)
+                                        double yPosition,
+										Thickness rootContainerMargin)
         {
 			resizeDialog();
 			
@@ -60,7 +61,8 @@ namespace ExampleAppWPF
 				containerMargin.Bottom = 0;
 			}
 
-            m_container.Margin = containerMargin;
+			containerMargin.Bottom -= rootContainerMargin.Bottom;
+			m_container.Margin = containerMargin;
         }
         public void animateTo(double t, double delayMilliseconds)
         {

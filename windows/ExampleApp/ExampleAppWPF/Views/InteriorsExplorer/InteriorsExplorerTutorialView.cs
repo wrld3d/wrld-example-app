@@ -41,11 +41,12 @@ namespace ExampleAppWPF
                                         float dismissButtonHeight,
                                         float floorChangeButtonPositionY,
                                         float floorChangeButtonHeight,
-                                        bool showChangeFloorDialog)
+                                        bool showChangeFloorDialog,
+										Thickness rootContainerMargin)
         {
-			m_exitDialog.repositionDialog(Application.Current.MainWindow.Width - newPositionX, Application.Current.MainWindow.Height - dismissButtonPositionY);
+			m_exitDialog.repositionDialog(Application.Current.MainWindow.Width - newPositionX, Application.Current.MainWindow.Height - dismissButtonPositionY, rootContainerMargin);
 
-			m_changeFloorDialog.repositionDialog(Application.Current.MainWindow.Width - newPositionX, Application.Current.MainWindow.Height - floorChangeButtonPositionY);
+			m_changeFloorDialog.repositionDialog(Application.Current.MainWindow.Width - newPositionX, Application.Current.MainWindow.Height - floorChangeButtonPositionY, rootContainerMargin);
             m_changeFloorDialog.Visibility = showChangeFloorDialog ? Visibility.Visible : Visibility.Hidden;
         }
         public void animateTo(double t, double delayMilliseconds, bool animateDialogsAtSameTime)
