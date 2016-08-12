@@ -8,7 +8,6 @@
         Title="BWAY" Margin="0" KeyboardNavigation.DirectionalNavigation="Once" KeyboardNavigation.TabNavigation="None"
         MinWidth="1024"
         MinHeight="768"
-        Focusable="False"
         Visibility="Hidden"
         UseLayoutRounding="True">
         <Grid Background="Black" x:Name="MainGrid">
