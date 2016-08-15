@@ -260,7 +260,6 @@ namespace
 - (void) animateTo: (float) t
 {
     self.pExitDialogContainer.alpha = 0.0f;
-    [self.pExitDialogContainer setHidden:NO];
     
     self.pChangeFloorDialogContainer.alpha = 0.0f;
     if(m_showChangeFloorDialog)
@@ -347,9 +346,12 @@ namespace
     [super dealloc];
 }
 
-- (void) show
+- (void) show: (bool) showExitDialog : (bool) showChangeFloorDialog
 {
     [self setHidden:NO];
+    
+    [self.pExitDialogContainer setHidden:!showExitDialog];
+    [self.pChangeFloorDialogContainer setHidden:!showChangeFloorDialog];
 }
 
 - (void) hide

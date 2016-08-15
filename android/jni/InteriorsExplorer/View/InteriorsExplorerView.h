@@ -33,8 +33,9 @@ namespace ExampleApp
                 void SetSelectedFloorIndex(int index);
                 void UpdateFloors(const std::vector<std::string>& floorShortNames, int currentlySelectedFloorIndex);
 
-                void AddTutorialDialogs();
+                void AddTutorialDialogs(bool showExitDialog, bool showChangeFloorDialog);
                 void RemoveTutorialDialogs();
+                bool GetCanShowChangeFloorTutorialDialog();
 
                 void InsertDismissedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveDismissedCallback(Eegeo::Helpers::ICallback0& callback);
