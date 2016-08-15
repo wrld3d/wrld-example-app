@@ -1,5 +1,13 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
+
+#include "IJpegLoader.h"
+#include "ILocationService.h"
+#include "IConnectivityService.h"
+#include "IPlatformAbstractionModule.h"
+#include "IPersistentSettingsModel.h"
+#include "IMetricsService.h"
+
 #include "App.h"
 #include "MenuController.h"
 #include "AppHost.h"
@@ -89,6 +97,42 @@
 
 using namespace Eegeo::iOS;
 
+class iOSAbstractionIoCModule
+{
+public:
+    iOSAbstractionIoCModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder,
+                            const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration)
+    : m_builder(builder)
+    , m_applicationConfiguration(applicationConfiguration)
+    {
+    }
+    void Register()
+    {
+        m_builder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
+        {
+            return std::make_shared<Eegeo::iOS::iOSPlatformAbstractionModule>(*(context.resolve<Eegeo::Helpers::Jpeg::IJpegLoader>()), m_applicationConfiguration.EegeoApiKey());
+        }).as<Eegeo::Modules::IPlatformAbstractionModule>().singleInstance();
+        
+        // TODO, template out:
+        
+        m_builder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
+        {
+            Eegeo::Modules::IPlatformAbstractionModule& module = *(context.resolve<Eegeo::Modules::IPlatformAbstractionModule>());
+            return std::shared_ptr<Eegeo::Helpers::ITextureFileLoader>(&module.GetTextureFileLoader());
+        }).singleInstance();
+        
+        m_builder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
+        {
+            Eegeo::Modules::IPlatformAbstractionModule& module = *(context.resolve<Eegeo::Modules::IPlatformAbstractionModule>());
+            return std::shared_ptr<Eegeo::Helpers::IHttpCache>(&module.GetHttpCache());
+        }).singleInstance();
+    }
+    
+private:
+    const ExampleApp::ApplicationConfig::ApplicationConfiguration& m_applicationConfiguration;
+    const std::shared_ptr<Hypodermic::ContainerBuilder> m_builder;
+};
+
 AppHost::AppHost(
     ViewController& viewController,
     UIView* pView,
@@ -99,92 +143,103 @@ AppHost::AppHost(
 
     :m_pView(pView)
     ,m_viewController(viewController)
-    ,m_pJpegLoader(NULL)
-    ,m_piOSLocationService(NULL)
-    ,m_piOSConnectivityService(NULL)
     ,m_iOSInputBoxFactory()
     ,m_iOSKeyboardInputFactory()
     ,m_iOSAlertBoxFactory()
     ,m_iOSNativeUIFactories(m_iOSAlertBoxFactory, m_iOSInputBoxFactory, m_iOSKeyboardInputFactory)
-    ,m_piOSPlatformAbstractionModule(NULL)
     ,m_pApp(NULL)
     ,m_requestedApplicationInitialiseViewState(false)
-    ,m_iOSFlurryMetricsService(metricsService)
     ,m_failAlertHandler(this, &AppHost::HandleStartupFailure)
     ,m_pTourWebViewModule(NULL)
     ,m_pTourFullScreenImageViewModule(NULL)
     ,m_pTourExplorerViewModule(NULL)
     ,m_userInteractionEnabledChangedHandler(this, &AppHost::HandleUserInteractionEnabledChanged)
-    ,m_pLinkOutObserver(NULL)
-    ,m_pURLRequestHandler(NULL)
-    ,m_pMenuReactionModel(NULL)
 {
     Eegeo::TtyHandler::TtyEnabled = true;
     
-    m_piOSLocationService = Eegeo_NEW(iOSLocationService)();
+    m_containerBuilder = std::make_shared<Hypodermic::ContainerBuilder>();
 
-    m_piOSConnectivityService = Eegeo_NEW(iOSConnectivityService)();
+    m_containerBuilder->registerInstance(std::shared_ptr<ExampleApp::Metrics::iOSFlurryMetricsService>(&metricsService)).as<ExampleApp::Metrics::IMetricsService>();
+    m_containerBuilder->registerType<iOSLocationService>().as<Eegeo::Location::ILocationService>().singleInstance();
+    m_containerBuilder->registerType<iOSConnectivityService>().as<Eegeo::Web::IConnectivityService>().singleInstance();
+    m_containerBuilder->registerType<Eegeo::Helpers::Jpeg::JpegLoader>().as<Eegeo::Helpers::Jpeg::IJpegLoader>().singleInstance();
+    m_containerBuilder->registerType<ExampleApp::ExampleAppMessaging::TMessageBus>().singleInstance();
+    m_containerBuilder->registerType<ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus>().singleInstance();
+    m_containerBuilder->registerType<ExampleApp::PersistentSettings::iOSPersistentSettingsModel>().as<ExampleApp::PersistentSettings::IPersistentSettingsModel>().singleInstance();
 
-    m_pJpegLoader = Eegeo_NEW(Eegeo::Helpers::Jpeg::JpegLoader)();
-
-    m_piOSPlatformAbstractionModule = Eegeo_NEW(Eegeo::iOS::iOSPlatformAbstractionModule)(*m_pJpegLoader, applicationConfiguration.EegeoApiKey());
-
-    Eegeo::EffectHandler::Initialise();
-
-    Eegeo::iOS::iOSPlatformConfigBuilder iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion());
+    iOSAbstractionIoCModule iosAbstractionModule(m_containerBuilder, applicationConfiguration);
+    iosAbstractionModule.Register();
     
-    const Eegeo::Config::PlatformConfig& platformConfiguration = ExampleApp::ApplicationConfig::SdkModel::BuildPlatformConfig(iOSPlatformConfigBuilder, applicationConfiguration);
+    m_containerBuilder->registerType<ExampleApp::InitialExperience::iOSInitialExperienceModule>().as<ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule>().singleInstance();
     
-    m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::iOSInitialExperienceModule)(m_iOSPersistentSettingsModel, m_messageBus);
-    
-    m_pNetworkCapabilities = Eegeo_NEW(ExampleApp::Net::SdkModel::NetworkCapabilities)(*m_piOSConnectivityService,
-                                                                                       m_piOSPlatformAbstractionModule->GetHttpCache(),
-                                                                                       m_iOSPersistentSettingsModel);
-    
-    m_pLinkOutObserver = Eegeo_NEW(ExampleApp::LinkOutObserver::LinkOutObserver)(m_iOSFlurryMetricsService,
-                                                                                 m_iOSPersistentSettingsModel);
-    
-    m_pLinkOutObserver->OnAppStart();
-    
-    m_pURLRequestHandler = Eegeo_NEW(ExampleApp::URLRequest::View::URLRequestHandler)(m_messageBus,
-                                                                                      *m_pLinkOutObserver);
+    m_containerBuilder->registerType<ExampleApp::Net::SdkModel::NetworkCapabilities>().as<ExampleApp::Net::SdkModel::INetworkCapabilities>().singleInstance();
+    m_containerBuilder->registerType<ExampleApp::LinkOutObserver::LinkOutObserver>().singleInstance();
+    m_containerBuilder->registerType<ExampleApp::URLRequest::View::URLRequestHandler>().singleInstance();
     
     m_pImageStore = [[ImageStore alloc]init];
     
-    m_pMenuReactionModel = Eegeo_NEW(ExampleApp::Menu::View::IOSMenuReactionModel)();
+    m_containerBuilder->registerType<ExampleApp::Menu::View::IOSMenuReactionModel>().as<ExampleApp::Menu::View::IMenuReactionModel>().singleInstance();
     
-    m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
-			 applicationConfiguration,
-             *m_piOSPlatformAbstractionModule,
-             screenProperties,
-             *m_piOSLocationService,
-             m_iOSNativeUIFactories,
-             platformConfiguration,
-             *m_pJpegLoader,
-             *m_pInitialExperienceModule,
-             m_iOSPersistentSettingsModel,
-             m_messageBus,
-             m_sdkModelDomainEventBus,
-             *m_pNetworkCapabilities,
-             m_iOSFlurryMetricsService,             
-             *this,
-             *m_pMenuReactionModel);
-
+    Eegeo::iOS::iOSPlatformConfigBuilder iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion());
+    const Eegeo::Config::PlatformConfig& platformConfiguration = ExampleApp::ApplicationConfig::SdkModel::BuildPlatformConfig(iOSPlatformConfigBuilder, applicationConfiguration);
+    
+    m_containerBuilder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
+                                                {
+                                                    return std::make_shared<ExampleApp::MobileExampleApp>(
+                                                        applicationConfiguration,
+                                                        *(context.resolve<Eegeo::Modules::IPlatformAbstractionModule>()),
+                                                        screenProperties,
+                                                        *(context.resolve<Eegeo::Location::ILocationService>()),
+                                                        m_iOSNativeUIFactories,
+                                                        platformConfiguration,
+                                                        *(context.resolve<Eegeo::Helpers::Jpeg::IJpegLoader>()),
+                                                        *(context.resolve<ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule>()),
+                                                        *(context.resolve<ExampleApp::PersistentSettings::IPersistentSettingsModel>()),
+                                                        *(context.resolve<ExampleApp::ExampleAppMessaging::TMessageBus>()),
+                                                        *(context.resolve<ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus>()),
+                                                        *(context.resolve<ExampleApp::Net::SdkModel::INetworkCapabilities>()),
+                                                        *(context.resolve<ExampleApp::Metrics::IMetricsService>()),
+                                                        *this,
+                                                        *(context.resolve<ExampleApp::Menu::View::IMenuReactionModel>())
+                                                      );
+                                                }).singleInstance();
+    
+    
+    m_containerBuilder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
+                                                {
+                                                    return std::make_shared<AppLocationDelegate>(context.resolve<iOSLocationService>(), m_viewController);
+                                                }).singleInstance();
+    
+    
+    // TODO : More to put in the container past here...
+    
+    m_container = m_containerBuilder->build();
+    m_container->resolve<ExampleApp::LinkOutObserver::LinkOutObserver>()->OnAppStart();
+    
+    m_pApp = (m_container->resolve<ExampleApp::MobileExampleApp>()).get();
+    
     CreateApplicationViewModules(screenProperties);
 
     m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_pApp, m_viewController, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), screenProperties.GetPixelScale());
-    m_pAppLocationDelegate = Eegeo_NEW(AppLocationDelegate)(*m_piOSLocationService, m_viewController);
-    
-    m_messageBus.SubscribeUi(m_userInteractionEnabledChangedHandler);
+
+    Eegeo::EffectHandler::Initialise();
+    GetMessageBus().SubscribeUi(m_userInteractionEnabledChangedHandler);
+}
+
+ExampleApp::ExampleAppMessaging::TMessageBus& AppHost::GetMessageBus()
+{
+    return *(m_container->resolve<ExampleApp::ExampleAppMessaging::TMessageBus>());
+}
+
+ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus& AppHost::GetSdkMessageBus()
+{
+    return *(m_container->resolve<ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus>());
 }
 
 AppHost::~AppHost()
 {
-    m_messageBus.UnsubscribeUi(m_userInteractionEnabledChangedHandler);
+    GetMessageBus().UnsubscribeUi(m_userInteractionEnabledChangedHandler);
     
-    Eegeo_DELETE m_pAppLocationDelegate;
-    m_pAppLocationDelegate = NULL;
-
     Eegeo_DELETE m_pAppInputDelegate;
     m_pAppInputDelegate = NULL;
 
@@ -195,30 +250,6 @@ AppHost::~AppHost()
     
     [m_pImageStore release];
     m_pImageStore = nil;
-    
-    Eegeo_DELETE m_pURLRequestHandler;
-    m_pURLRequestHandler = NULL;
-    
-    Eegeo_DELETE m_pLinkOutObserver;
-    m_pLinkOutObserver = NULL;
-    
-    Eegeo_DELETE m_pNetworkCapabilities;
-    m_pNetworkCapabilities = NULL;
-
-    Eegeo_DELETE m_pInitialExperienceModule;
-    m_pInitialExperienceModule = NULL;
-
-    Eegeo_DELETE m_piOSLocationService;
-    m_piOSLocationService = NULL;
-
-    Eegeo_DELETE m_piOSPlatformAbstractionModule;
-    m_piOSPlatformAbstractionModule = NULL;
-
-    Eegeo_DELETE m_pJpegLoader;
-    m_pJpegLoader = NULL;
-
-    Eegeo_DELETE m_piOSConnectivityService;
-    m_piOSConnectivityService = NULL;
 
     Eegeo::EffectHandler::Reset();
     Eegeo::EffectHandler::Shutdown();
@@ -226,7 +257,7 @@ AppHost::~AppHost()
 
 void AppHost::OnResume()
 {
-    m_pLinkOutObserver->OnAppResume();
+    m_container->resolve<ExampleApp::LinkOutObserver::LinkOutObserver>()->OnAppResume();
     
     m_pApp->OnResume();
 }
@@ -243,7 +274,7 @@ void AppHost::NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProper
 
 void AppHost::Update(float dt)
 {
-    if (!m_pAppLocationDelegate->HasReceivedPermissionResponse())
+    if (!m_container->resolve<AppLocationDelegate>()->HasReceivedPermissionResponse())
     {
         return;
     }
@@ -257,8 +288,8 @@ void AppHost::Update(float dt)
     m_pApp->Update(dt);
     m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel().UpdateObjectsUiThread(dt);
 
-    m_messageBus.FlushToUi();
-    m_messageBus.FlushToNative();
+    GetMessageBus().FlushToUi();
+    GetMessageBus().FlushToNative();
 }
 
 void AppHost::Draw(float dt)
@@ -278,8 +309,8 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     m_pWatermarkViewModule = Eegeo_NEW(ExampleApp::Watermark::View::WatermarkViewModule)(app.WatermarkModule().GetWatermarkViewModel(),
                                                                                          app.WatermarkModule().GetWatermarkDataRepository(),
                                                                                          screenProperties,
-                                                                                         m_messageBus,
-                                                                                         m_iOSFlurryMetricsService);
+                                                                                         GetMessageBus(),
+                                                                                         *(m_container->resolve<ExampleApp::Metrics::IMetricsService>()));
 
     m_pModalBackgroundViewModule = Eegeo_NEW(ExampleApp::ModalBackground::View::ModalBackgroundViewModule)(app.ModalityModule().GetModalityModel(), screenProperties);
     
@@ -287,7 +318,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                                   app.SettingsMenuModule().GetSettingsMenuViewModel(),
                                                                                                   screenProperties,
                                                                                                   m_pModalBackgroundViewModule->GetModalBackgroundViewInterop(),
-                                                                                                  m_messageBus);
+                                                                                                  GetMessageBus());
     
     m_pSearchMenuViewModule = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchMenuViewModule)(app.SearchMenuModule().GetSearchMenuModel(),
                                                                                             app.SearchMenuModule().GetSearchMenuViewModel(),
@@ -295,24 +326,24 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                             screenProperties,
                                                                                             app.CategorySearchModule().GetCategorySearchRepository(),
                                                                                             m_pModalBackgroundViewModule->GetModalBackgroundViewInterop(),
-                                                                                            m_messageBus);
+                                                                                            GetMessageBus());
     
     m_pSearchResultSectionViewModule = Eegeo_NEW(ExampleApp::SearchResultSection::View::SearchResultSectionViewModule)(app.SearchMenuModule().GetSearchMenuViewModel(),
                                                                                                                        app.SearchResultSectionModule().GetSearchResultSectionOptionsModel(),
                                                                                                                        app.SearchResultSectionModule().GetSearchResultSectionOrder(),
-                                                                                                                       m_messageBus,
-                                                                                                                       *m_pMenuReactionModel,
+                                                                                                                       GetMessageBus(),
+                                                                                                                       *(m_container->resolve<ExampleApp::Menu::View::IMenuReactionModel>()),
                                                                                                                        app.SearchResultPoiModule().GetSearchResultPoiViewModel());
 
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
-                                                                                                           m_messageBus,
-                                                                                                           m_iOSFlurryMetricsService);
+                                                                                                           GetMessageBus(),
+                                                                                                           *(m_container->resolve<ExampleApp::Metrics::IMetricsService>()));
 
     m_pFlattenButtonViewModule = Eegeo_NEW(ExampleApp::FlattenButton::View::FlattenButtonViewModule)(
                                      app.FlattenButtonModule().GetFlattenButtonViewModel(),
                                      screenProperties,
-                                     m_messageBus,
-                                     m_iOSFlurryMetricsService);
+                                     GetMessageBus(),
+                                     *(m_container->resolve<ExampleApp::Metrics::IMetricsService>()));
 
     m_pWorldPinOnMapViewModule = Eegeo_NEW(ExampleApp::WorldPins::View::WorldPinOnMapViewModule)(app.WorldPinsModule().GetWorldPinInFocusViewModel(),
                                  app.WorldPinsModule().GetScreenControlViewModel(),
@@ -323,36 +354,36 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     
     m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::View::CompassViewModule)(app.CompassModule().GetCompassViewModel(),
                            screenProperties,
-                           m_messageBus);
+                           GetMessageBus());
 
-    m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewModule)(app.AboutPageModule().GetAboutPageViewModel(), m_iOSFlurryMetricsService);
+    m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewModule)(app.AboutPageModule().GetAboutPageViewModel(), *(m_container->resolve<ExampleApp::Metrics::IMetricsService>()));
     
     m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(app.OptionsModule().GetOptionsViewModel(),
-                                                                                   m_piOSPlatformAbstractionModule->GetiOSHttpCache(),
-                                                                                   m_messageBus,
+                                                                                   *(m_container->resolve<Eegeo::Helpers::IHttpCache>()),
+                                                                                   GetMessageBus(),
                                                                                    app.World().GetWorkPool());
 
-    m_pMyPinCreationInitiationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationInitiationViewModule)(m_messageBus,
+    m_pMyPinCreationInitiationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationInitiationViewModule)(GetMessageBus(),
                                            app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
                                            app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
                                            screenProperties,
-                                           m_iOSFlurryMetricsService);
+                                           *(m_container->resolve<ExampleApp::Metrics::IMetricsService>()));
 
-    m_pMyPinCreationConfirmationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationConfirmationViewModule)(m_messageBus,
+    m_pMyPinCreationConfirmationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationConfirmationViewModule)(GetMessageBus(),
             app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
             app.MyPinCreationModule().GetMyPinCreationCompositeViewModel(),
             app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
             screenProperties,
-            m_iOSFlurryMetricsService);
+            *(m_container->resolve<ExampleApp::Metrics::IMetricsService>()));
 
     m_pMyPinCreationDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewModule)(
-                                            m_messageBus,
+                                            GetMessageBus(),
                                             app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
                                             screenProperties,
-                                            m_iOSFlurryMetricsService,
+                                            *(m_container->resolve<ExampleApp::Metrics::IMetricsService>()),
                                             &m_viewController);
 
-    m_pMyPinDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinDetails::View::MyPinDetailsViewModule)(m_messageBus,
+    m_pMyPinDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinDetails::View::MyPinDetailsViewModule)(GetMessageBus(),
                                 app.MyPinDetailsModule().GetMyPinDetailsViewModel(),
                                 screenProperties);
     
@@ -362,9 +393,9 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
         m_pTourWebViewModule = Eegeo_NEW(ExampleApp::Tours::View::TourWeb::TourWebViewModule)(screenProperties);
         
         m_pTourExplorerViewModule = Eegeo_NEW(ExampleApp::Tours::View::TourExplorer::TourExplorerViewModule)
-                                                                                           (m_messageBus,
+                                                                                           (GetMessageBus(),
                                                                                             app.ToursModule().GetToursExplorerViewModel(),
-                                                                                            *m_pURLRequestHandler,
+                                                                                            *(m_container->resolve<ExampleApp::URLRequest::View::URLRequestHandler>()),
                                                                                             app.ToursModule().GetToursExplorerCompositeViewController(),
                                                                                             screenProperties,
                                                                                             m_pImageStore);
@@ -373,17 +404,17 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                                                                   screenProperties);
     }
     
-    m_pInitialExperienceIntroViewModule = Eegeo_NEW(ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule)(m_messageBus);
+    m_pInitialExperienceIntroViewModule = Eegeo_NEW(ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule)(GetMessageBus());
     
     
     m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
-                                                                                                                 m_messageBus,
+                                                                                                                 GetMessageBus(),
                                                                                                                  screenProperties,
                                                                                                                  app.GetIdentityProvider());
     
-    m_pSurveyViewModule = Eegeo_NEW(ExampleApp::Surveys::View::SurveyViewModule)(m_messageBus,
-                                                                                 m_iOSFlurryMetricsService,
-                                                                                 *m_pURLRequestHandler);
+    m_pSurveyViewModule = Eegeo_NEW(ExampleApp::Surveys::View::SurveyViewModule)(GetMessageBus(),
+                                                                                 *(m_container->resolve<ExampleApp::Metrics::IMetricsService>()),
+                                                                                 *(m_container->resolve<ExampleApp::URLRequest::View::URLRequestHandler>()));
     
     // 3d map view layer.
     [m_pView addSubview: &m_pWorldPinOnMapViewModule->GetWorldPinOnMapView()];
@@ -537,7 +568,7 @@ void AppHost::HandleFailureToProvideWorkingApiKey()
 void AppHost::HandleFailureToDownloadBootstrapResources()
 {
     std::string message =
-        m_pNetworkCapabilities->StreamOverWifiOnly()
+        m_container->resolve<ExampleApp::Net::SdkModel::INetworkCapabilities>()->StreamOverWifiOnly()
         ? "Unable to download required data! Please ensure you have a Wi-fi connection the next time you attempt to run this application."
         : "Unable to download required data! Please ensure you have an Internet connection the next time you attempt to run this application.";
 

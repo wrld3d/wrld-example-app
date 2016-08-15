@@ -6,6 +6,7 @@
 #import <CoreLocation/CLLocationManagerDelegate.h>
 #include "Types.h"
 #include "iOSLocationService.h"
+#include <memory>
 
 @interface AppLocationDelegateLocationListener : NSObject<CLLocationManagerDelegate>
 {
@@ -18,7 +19,7 @@ class AppLocationDelegate : protected Eegeo::NonCopyable
     AppLocationDelegateLocationListener* m_pAppLocationDelegateLocationListener;
     bool m_receivedPermissionResponse;
 public:
-    AppLocationDelegate(Eegeo::iOS::iOSLocationService& iOSLocationService,
+    AppLocationDelegate(const std::shared_ptr<Eegeo::iOS::iOSLocationService>& iOSLocationService,
                         UIViewController& viewController);
 
     ~AppLocationDelegate();

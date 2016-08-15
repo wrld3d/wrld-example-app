@@ -9,6 +9,7 @@
 #include "ICallback.h"
 #include "LinkOutObserver.h"
 #include <string>
+#include <memory>
 
 namespace ExampleApp
 {
@@ -20,8 +21,8 @@ namespace ExampleApp
             {
             private:
                 
-                ExampleAppMessaging::TMessageBus& m_messageBus;
-                LinkOutObserver::LinkOutObserver& m_linkOutObserver;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
+                const std::shared_ptr<LinkOutObserver::LinkOutObserver> m_linkOutObserver;
                 Eegeo::Helpers::TCallback1<URLRequestHandler, const URLRequestedMessage&> m_urlRequestedCallback;
                 Eegeo::Helpers::TCallback1<URLRequestHandler, const DeeplinkURLRequestedMessage&> m_deeplinkUrlRequestedCallback;
                 void OnURLRequested(const URLRequestedMessage& message);
@@ -29,8 +30,8 @@ namespace ExampleApp
                 
             public:
                 
-                URLRequestHandler(ExampleAppMessaging::TMessageBus& messageBus,
-                                  LinkOutObserver::LinkOutObserver& linkOutObserver);
+                URLRequestHandler(const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                  const std::shared_ptr<LinkOutObserver::LinkOutObserver>& linkOutObserver);
                 
                 ~URLRequestHandler();
                 

@@ -8,7 +8,7 @@
 #include "IHttpCache.h"
 #include "PersistentSettings.h"
 #include "CallbackCollection.h"
-
+#include <memory>
 
 namespace ExampleApp
 {
@@ -18,9 +18,9 @@ namespace ExampleApp
         {
             class NetworkCapabilities : public INetworkCapabilities, private Eegeo::NonCopyable
             {
-                Eegeo::Web::IConnectivityService& m_connectivityService;
-                Eegeo::Helpers::IHttpCache& m_httpCache;
-                PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
+                const std::shared_ptr<Eegeo::Web::IConnectivityService> m_connectivityService;
+                const std::shared_ptr<Eegeo::Helpers::IHttpCache> m_httpCache;
+                const std::shared_ptr<PersistentSettings::IPersistentSettingsModel> m_persistentSettings;
                 bool m_streamOverWifiOnly;
                 bool m_networkAvailable;
                 bool m_connectedToWifi;
@@ -32,9 +32,9 @@ namespace ExampleApp
                 bool QueryIsNetworkAvailable() const;
                 bool QueryIsConnectedToWifi() const;
             public:
-                NetworkCapabilities(Eegeo::Web::IConnectivityService& connectivityService,
-                                    Eegeo::Helpers::IHttpCache& httpCache,
-                                    PersistentSettings::IPersistentSettingsModel& persistentSettings);
+                NetworkCapabilities(const std::shared_ptr<Eegeo::Web::IConnectivityService>& connectivityService,
+                                    const std::shared_ptr<Eegeo::Helpers::IHttpCache>& httpCache,
+                                    const std::shared_ptr<PersistentSettings::IPersistentSettingsModel>& persistentSettings);
                 
                 ~NetworkCapabilities();
                 

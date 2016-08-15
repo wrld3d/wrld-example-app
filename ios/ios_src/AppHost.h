@@ -57,6 +57,10 @@
 #include "SurveyViewIncludes.h"
 #include "IMenuReactionModel.h"
 
+#include "Hypodermic/ContainerBuilder.h"
+
+#include <memory>
+
 @class ViewController;
 class AppInputDelegate;
 class AppLocationDelegate;
@@ -92,19 +96,21 @@ public:
     void HandleInvalidConnectivityError();
 
 private:
+    ExampleApp::ExampleAppMessaging::TMessageBus& GetMessageBus();
+    ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus& GetSdkMessageBus();
+
+    std::shared_ptr<Hypodermic::ContainerBuilder> m_containerBuilder;
+    std::shared_ptr<Hypodermic::Container> m_container;
+    
     UIView* m_pView;
     ViewController& m_viewController;
-    Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;
-    Eegeo::iOS::iOSLocationService* m_piOSLocationService;
-    Eegeo::iOS::iOSConnectivityService* m_piOSConnectivityService;
     AppInputDelegate* m_pAppInputDelegate;
-    AppLocationDelegate* m_pAppLocationDelegate;
+    //AppLocationDelegate* m_pAppLocationDelegate;
 
     Eegeo::UI::NativeInput::iOS::iOSInputBoxFactory m_iOSInputBoxFactory;
     Eegeo::UI::NativeInput::iOS::iOSKeyboardInputFactory m_iOSKeyboardInputFactory;
     Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory m_iOSAlertBoxFactory;
     Eegeo::UI::NativeUIFactories m_iOSNativeUIFactories;
-    Eegeo::iOS::iOSPlatformAbstractionModule* m_piOSPlatformAbstractionModule;
     
     ExampleApp::SettingsMenu::View::ISettingsMenuViewModule* m_pSettingsMenuViewModule;
     ExampleApp::SearchMenu::View::ISearchMenuViewModule* m_pSearchMenuViewModule;
@@ -115,8 +121,8 @@ private:
     ExampleApp::WorldPins::View::IWorldPinOnMapViewModule* m_pWorldPinOnMapViewModule;
     ExampleApp::Compass::View::ICompassViewModule* m_pCompassViewModule;
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModule* m_pViewControllerUpdaterModule;
-    ExampleApp::PersistentSettings::iOSPersistentSettingsModel m_iOSPersistentSettingsModel;
-    ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule* m_pInitialExperienceModule;
+    //ExampleApp::PersistentSettings::iOSPersistentSettingsModel m_iOSPersistentSettingsModel;
+    //ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule* m_pInitialExperienceModule;
     ExampleApp::AboutPage::View::IAboutPageViewModule* m_pAboutPageViewModule;
     ExampleApp::MyPinCreation::View::IMyPinCreationInitiationViewModule* m_pMyPinCreationInitiationViewModule;
     ExampleApp::MyPinCreation::View::IMyPinCreationConfirmationViewModule* m_pMyPinCreationConfirmationViewModule;
@@ -128,21 +134,21 @@ private:
     ExampleApp::Tours::View::TourExplorer::ITourExplorerViewModule* m_pTourExplorerViewModule;
     ExampleApp::Tours::View::TourFullScreenImage::ITourFullScreenImageViewModule* m_pTourFullScreenImageViewModule;
     ExampleApp::InitialExperience::View::IInitialExperienceIntroViewModule* m_pInitialExperienceIntroViewModule;
-    ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
-    ExampleApp::Metrics::iOSFlurryMetricsService& m_iOSFlurryMetricsService;
+    //ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
+    //ExampleApp::Metrics::iOSFlurryMetricsService& m_iOSFlurryMetricsService;
     ExampleApp::InteriorsExplorer::View::IInteriorsExplorerViewModule* m_pInteriorsExplorerViewModule;
-    ExampleApp::LinkOutObserver::LinkOutObserver* m_pLinkOutObserver;
-    ExampleApp::URLRequest::View::URLRequestHandler* m_pURLRequestHandler;
+    //ExampleApp::LinkOutObserver::LinkOutObserver* m_pLinkOutObserver;
+    //ExampleApp::URLRequest::View::URLRequestHandler* m_pURLRequestHandler;
     ExampleApp::Surveys::View::ISurveyViewModule* m_pSurveyViewModule;
-    ExampleApp::Menu::View::IMenuReactionModel* m_pMenuReactionModel;
+    //ExampleApp::Menu::View::IMenuReactionModel* m_pMenuReactionModel;
     
     ImageStore* m_pImageStore;
     
     ExampleApp::MobileExampleApp* m_pApp;
     bool m_requestedApplicationInitialiseViewState;
 
-    ExampleApp::ExampleAppMessaging::TMessageBus m_messageBus;
-    ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus m_sdkModelDomainEventBus;
+    //ExampleApp::ExampleAppMessaging::TMessageBus m_messageBus;
+    //ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus m_sdkModelDomainEventBus;
     
     Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<AppHost> m_failAlertHandler;
     Eegeo::Helpers::TCallback1<AppHost, const ExampleApp::UserInteraction::UserInteractionEnabledChangedMessage&> m_userInteractionEnabledChangedHandler;

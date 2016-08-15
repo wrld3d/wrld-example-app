@@ -8,6 +8,7 @@
 #include "WorldAreaLoader.h"
 #include "PersistentSettings.h"
 #include "Menu.h"
+#include <memory>
 
 namespace ExampleApp
 {
@@ -20,10 +21,10 @@ namespace ExampleApp
                 IInitialExperienceModel* m_pInitialExperienceModel;
                 IInitialExperienceController* m_pInitialExperienceController;
 
-                PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
+                const std::shared_ptr<PersistentSettings::IPersistentSettingsModel> m_persistentSettings;
 
             public:
-                InitialExperienceModuleBase(PersistentSettings::IPersistentSettingsModel& persistentSettings);
+                InitialExperienceModuleBase(const std::shared_ptr<PersistentSettings::IPersistentSettingsModel>& persistentSettings);
 
                 ~InitialExperienceModuleBase();
 

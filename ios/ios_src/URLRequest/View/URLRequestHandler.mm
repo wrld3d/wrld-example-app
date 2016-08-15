@@ -9,21 +9,21 @@ namespace ExampleApp
     {
         namespace View
         {
-            URLRequestHandler::URLRequestHandler(ExampleAppMessaging::TMessageBus& messageBus,
-                                                 LinkOutObserver::LinkOutObserver& linkOutObserver)
+            URLRequestHandler::URLRequestHandler(const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                                 const std::shared_ptr<LinkOutObserver::LinkOutObserver>& linkOutObserver)
             : m_messageBus(messageBus)
             , m_linkOutObserver(linkOutObserver)
             , m_urlRequestedCallback(this, &URLRequestHandler::OnURLRequested)
             , m_deeplinkUrlRequestedCallback(this, &URLRequestHandler::OnDeeplinkURLRequested)
             {
-                m_messageBus.SubscribeUi(m_urlRequestedCallback);
-                m_messageBus.SubscribeUi(m_deeplinkUrlRequestedCallback);
+                m_messageBus->SubscribeUi(m_urlRequestedCallback);
+                m_messageBus->SubscribeUi(m_deeplinkUrlRequestedCallback);
             }
             
             URLRequestHandler::~URLRequestHandler()
             {
-                m_messageBus.UnsubscribeUi(m_deeplinkUrlRequestedCallback);
-                m_messageBus.UnsubscribeUi(m_urlRequestedCallback);
+                m_messageBus->UnsubscribeUi(m_deeplinkUrlRequestedCallback);
+                m_messageBus->UnsubscribeUi(m_urlRequestedCallback);
             }
             
             void URLRequestHandler::OnURLRequested(const ExampleApp::URLRequest::URLRequestedMessage &message)
@@ -43,7 +43,7 @@ namespace ExampleApp
                 
                 NSURL* escapedUrl = [NSURL URLWithString:escaped];
                 
-                m_linkOutObserver.OnLinkOut([[escapedUrl host] UTF8String]);
+                m_linkOutObserver->OnLinkOut([[escapedUrl host] UTF8String]);
                 
                 [[UIApplication sharedApplication] openURL:escapedUrl];
             }

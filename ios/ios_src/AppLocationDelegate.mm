@@ -27,11 +27,11 @@ float GetValidOrNegativeHeading(float HeadingAccuracy, float TrueHeading, float 
 @implementation AppLocationDelegateLocationListener
 
 CLLocationManager* m_pLocationManager;
-Eegeo::iOS::iOSLocationService* m_piOSLocationService;
+std::shared_ptr<Eegeo::iOS::iOSLocationService> m_piOSLocationService;
 UIViewController* m_pUIViewController;
 AppLocationDelegate* m_pAppLocationDelegate;
 
--(void)start:(Eegeo::iOS::iOSLocationService *)piOSLocationService
+-(void)start:(const std::shared_ptr<Eegeo::iOS::iOSLocationService>&)piOSLocationService
     :(UIViewController*)pViewController
     :(AppLocationDelegate*)pAppLocationDelegate
 {
@@ -130,12 +130,12 @@ AppLocationDelegate* m_pAppLocationDelegate;
 
 @end
 
-AppLocationDelegate::AppLocationDelegate(Eegeo::iOS::iOSLocationService& iOSLocationService,
+AppLocationDelegate::AppLocationDelegate(const std::shared_ptr<Eegeo::iOS::iOSLocationService>& iOSLocationService,
         UIViewController& viewController)
     : m_receivedPermissionResponse(false)
 {
     m_pAppLocationDelegateLocationListener = [[AppLocationDelegateLocationListener alloc] init];
-    [m_pAppLocationDelegateLocationListener start:&iOSLocationService :&viewController: this];
+    [m_pAppLocationDelegateLocationListener start:iOSLocationService :&viewController: this];
 }
 
 AppLocationDelegate::~AppLocationDelegate()

@@ -8,8 +8,8 @@ namespace ExampleApp
 {
     namespace InitialExperience
     {
-        iOSInitialExperienceModule::iOSInitialExperienceModule(PersistentSettings::IPersistentSettingsModel& persistentSettings,
-                                                               ExampleAppMessaging::TMessageBus& messageBus)
+        iOSInitialExperienceModule::iOSInitialExperienceModule(const std::shared_ptr<PersistentSettings::IPersistentSettingsModel>& persistentSettings,
+                                                               const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
             : InitialExperienceModuleBase(persistentSettings)
             , m_messageBus(messageBus)
         {
@@ -24,7 +24,7 @@ namespace ExampleApp
         {
             std::vector<SdkModel::IInitialExperienceStep*> steps;
 
-            SdkModel::IInitialExperienceStep* pIntroScreenStep = Eegeo_NEW(SdkModel::InitialExperienceIntroStep)(m_messageBus, GetPersistentSettings());
+            SdkModel::IInitialExperienceStep* pIntroScreenStep = Eegeo_NEW(SdkModel::InitialExperienceIntroStep)(*m_messageBus, GetPersistentSettings());
             
             steps.push_back(pIntroScreenStep);
             

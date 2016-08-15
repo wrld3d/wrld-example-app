@@ -8,6 +8,7 @@
 
 #include "Metrics.h"
 #include "PersistentSettings.h"
+#include <memory>
 
 namespace ExampleApp
 {
@@ -16,14 +17,14 @@ namespace ExampleApp
         class LinkOutObserver : private Eegeo::NonCopyable
         {
         private:
-            Metrics::IMetricsService& m_metricsService;
-            PersistentSettings::IPersistentSettingsModel& m_persistentSettingsModel;
+            const std::shared_ptr<Metrics::IMetricsService> m_metricsService;
+            const std::shared_ptr<PersistentSettings::IPersistentSettingsModel> m_persistentSettingsModel;
             
             void CheckResumeFromLink() const;
             
         public:
-            LinkOutObserver(Metrics::IMetricsService& metricsService,
-                            PersistentSettings::IPersistentSettingsModel& persistentSettingsModel);
+            LinkOutObserver(const std::shared_ptr<Metrics::IMetricsService>& metricsService,
+                            const std::shared_ptr<PersistentSettings::IPersistentSettingsModel>& persistentSettingsModel);
             
             ~LinkOutObserver();
             

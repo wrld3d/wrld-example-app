@@ -11,7 +11,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            InitialExperienceModuleBase::InitialExperienceModuleBase(PersistentSettings::IPersistentSettingsModel& persistentSettings)
+            InitialExperienceModuleBase::InitialExperienceModuleBase(const std::shared_ptr<PersistentSettings::IPersistentSettingsModel>& persistentSettings)
                 : m_pInitialExperienceModel(NULL)
                 , m_pInitialExperienceController(NULL)
                 , m_persistentSettings(persistentSettings)
@@ -25,7 +25,7 @@ namespace ExampleApp
 
             PersistentSettings::IPersistentSettingsModel& InitialExperienceModuleBase::GetPersistentSettings() const
             {
-                return m_persistentSettings;
+                return *m_persistentSettings;
             }
 
             void InitialExperienceModuleBase::InitialiseWithApplicationModels(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel &worldAreaLoaderModel)

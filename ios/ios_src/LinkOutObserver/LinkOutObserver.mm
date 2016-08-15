@@ -25,8 +25,8 @@ namespace ExampleApp
 {
     namespace LinkOutObserver
     {
-        LinkOutObserver::LinkOutObserver(Metrics::IMetricsService& metricsService,
-                                         PersistentSettings::IPersistentSettingsModel& persistentSettingsModel)
+        LinkOutObserver::LinkOutObserver(const std::shared_ptr<Metrics::IMetricsService>& metricsService,
+                                         const std::shared_ptr<PersistentSettings::IPersistentSettingsModel>& persistentSettingsModel)
         : m_metricsService(metricsService)
         , m_persistentSettingsModel(persistentSettingsModel)
         {
@@ -41,13 +41,13 @@ namespace ExampleApp
         void LinkOutObserver::CheckResumeFromLink() const
         {
             bool lastExitViaDeepLink = false;
-            if(m_persistentSettingsModel.TryGetValue(ExitSettingName, lastExitViaDeepLink) && lastExitViaDeepLink)
+            if(m_persistentSettingsModel->TryGetValue(ExitSettingName, lastExitViaDeepLink) && lastExitViaDeepLink)
             {
-                m_persistentSettingsModel.SetValue(ExitSettingName, false);
+                m_persistentSettingsModel->SetValue(ExitSettingName, false);
                 
                 double lastExitTime;
                 
-                if(m_persistentSettingsModel.TryGetValue(TimeSettingName, lastExitTime))
+                if(m_persistentSettingsModel->TryGetValue(TimeSettingName, lastExitTime))
                 {
                     double currentTime = CFAbsoluteTimeGetCurrent();
                     
@@ -56,7 +56,7 @@ namespace ExampleApp
                         std::stringstream timeDifference;
                         timeDifference << (currentTime - lastExitTime);
                         
-                        m_metricsService.SetEvent(ResumeMetricName, ResumeMetricDelayKey, timeDifference.str());
+                        m_metricsService->SetEvent(ResumeMetricName, ResumeMetricDelayKey, timeDifference.str());
                     }
                 }
             }
@@ -74,10 +74,10 @@ namespace ExampleApp
             
         void LinkOutObserver::OnLinkOut(const std::string& linkHost) const
         {
-            m_metricsService.SetEvent(ExitMetricName, ExitMetricHostKey, linkHost);
+            m_metricsService->SetEvent(ExitMetricName, ExitMetricHostKey, linkHost);
             
-            m_persistentSettingsModel.SetValue(ExitSettingName, true);
-            m_persistentSettingsModel.SetValue(TimeSettingName, CFAbsoluteTimeGetCurrent());
+            m_persistentSettingsModel->SetValue(ExitSettingName, true);
+            m_persistentSettingsModel->SetValue(TimeSettingName, CFAbsoluteTimeGetCurrent());
         }
     }
 }

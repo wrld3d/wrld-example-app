@@ -9,6 +9,7 @@
 #include "PersistentSettings.h"
 #include "BidirectionalBus.h"
 #include "Menu.h"
+#include <memory>
 
 namespace ExampleApp
 {
@@ -17,8 +18,8 @@ namespace ExampleApp
         class iOSInitialExperienceModule : public SdkModel::InitialExperienceModuleBase, private Eegeo::NonCopyable
         {
         public:
-            iOSInitialExperienceModule(PersistentSettings::IPersistentSettingsModel& persistentSettings,
-                                       ExampleAppMessaging::TMessageBus& messageBus);
+            iOSInitialExperienceModule(const std::shared_ptr<PersistentSettings::IPersistentSettingsModel>& persistentSettings,
+                                       const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
 
             ~iOSInitialExperienceModule();
 
@@ -26,7 +27,7 @@ namespace ExampleApp
 
             std::vector<SdkModel::IInitialExperienceStep*> CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel);
             
-            ExampleAppMessaging::TMessageBus& m_messageBus;
+            const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
         };
     }
 }

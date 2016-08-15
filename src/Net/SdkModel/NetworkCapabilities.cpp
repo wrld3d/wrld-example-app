@@ -15,9 +15,9 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            NetworkCapabilities::NetworkCapabilities(Eegeo::Web::IConnectivityService& connectivityService,
-                                                     Eegeo::Helpers::IHttpCache& httpCache,
-                                                     PersistentSettings::IPersistentSettingsModel& persistentSettings)
+            NetworkCapabilities::NetworkCapabilities(const std::shared_ptr<Eegeo::Web::IConnectivityService>& connectivityService,
+                                                     const std::shared_ptr<Eegeo::Helpers::IHttpCache>& httpCache,
+                                                     const std::shared_ptr<PersistentSettings::IPersistentSettingsModel>& persistentSettings)
             : m_connectivityService(connectivityService)
             , m_httpCache(httpCache)
             , m_persistentSettings(persistentSettings)
@@ -26,24 +26,24 @@ namespace ExampleApp
             , m_connectedToWifi(QueryIsConnectedToWifi())
             , m_connectionChangedCallback(this, &NetworkCapabilities::HandleConnectionChanged)
             {
-                if(!m_persistentSettings.TryGetValue(NetworkCapabilities_OnlyStreamOverWifi_Key, m_streamOverWifiOnly))
+                if(!m_persistentSettings->TryGetValue(NetworkCapabilities_OnlyStreamOverWifi_Key, m_streamOverWifiOnly))
                 {
                     m_streamOverWifiOnly = false;
                 }
                 
                 bool httpCachingEnabled;
-                if(m_persistentSettings.TryGetValue(NetworkCapabilities_HttpCacheEnabled_Key, httpCachingEnabled))
+                if(m_persistentSettings->TryGetValue(NetworkCapabilities_HttpCacheEnabled_Key, httpCachingEnabled))
                 {
                     SetHttpCachingEnabled(httpCachingEnabled);
                 }
                 
-                m_connectivityService.RegisterConnectivityChangedCallback(m_connectionChangedCallback);
+                m_connectivityService->RegisterConnectivityChangedCallback(m_connectionChangedCallback);
                 
             }
             
             NetworkCapabilities::~NetworkCapabilities()
             {
-                m_connectivityService.UnregisterConnectivityChangedCallback(m_connectionChangedCallback);
+                m_connectivityService->UnregisterConnectivityChangedCallback(m_connectionChangedCallback);
             }
             
             bool NetworkCapabilities::StreamOverWifiOnly() const
@@ -66,7 +66,7 @@ namespace ExampleApp
                 const bool changed = streamOverWifiOnlyEnabled != m_streamOverWifiOnly;
                 
                 m_streamOverWifiOnly = streamOverWifiOnlyEnabled;
-                m_persistentSettings.SetValue(NetworkCapabilities_OnlyStreamOverWifi_Key, m_streamOverWifiOnly);
+                m_persistentSettings->SetValue(NetworkCapabilities_OnlyStreamOverWifi_Key, m_streamOverWifiOnly);
                 
                 if (changed)
                 {
@@ -76,15 +76,15 @@ namespace ExampleApp
             
             bool NetworkCapabilities::HttpCachingEnabled() const
             {
-                return m_httpCache.GetEnabled();
+                return m_httpCache->GetEnabled();
             }
             
             void NetworkCapabilities::SetHttpCachingEnabled(bool httpCachingEnabled)
             {
                 const bool changed = httpCachingEnabled != HttpCachingEnabled();
                 
-                m_httpCache.SetEnabled(httpCachingEnabled);
-                m_persistentSettings.SetValue(NetworkCapabilities_HttpCacheEnabled_Key, httpCachingEnabled);
+                m_httpCache->SetEnabled(httpCachingEnabled);
+                m_persistentSettings->SetValue(NetworkCapabilities_HttpCacheEnabled_Key, httpCachingEnabled);
                 
                 if (changed)
                 {
@@ -125,12 +125,12 @@ namespace ExampleApp
             
             bool NetworkCapabilities::QueryIsNetworkAvailable() const
             {
-                return m_connectivityService.HasConnectivity();
+                return m_connectivityService->HasConnectivity();
             }
             
             bool NetworkCapabilities::QueryIsConnectedToWifi() const
             {
-                return (m_connectivityService.GetConnectivityType() == Eegeo::Web::Wifi);
+                return (m_connectivityService->GetConnectivityType() == Eegeo::Web::Wifi);
             }
         }
     }
