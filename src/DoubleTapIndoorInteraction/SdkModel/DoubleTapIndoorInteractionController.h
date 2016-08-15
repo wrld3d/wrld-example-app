@@ -41,6 +41,8 @@ namespace ExampleApp
                 
             private:
                 
+                const int m_closeDistanceOffSet;
+                const int m_optimizedDistanceOffSet;
                 ExampleApp::AppModes::SdkModel::IAppModeModel& m_appModeModel;
                 Eegeo::Resources::Terrain::Collision::TerrainRayPicker* m_pTerrainRayPicker;
                 Eegeo::Resources::Interiors::InteriorTransitionModel& m_interiorTransitionModel;
@@ -53,9 +55,10 @@ namespace ExampleApp
                 
                 
                 float CalcRecommendedOverviewDistanceForFloor();
-                void ZoomInTo(float distance,const AppInterface::TapData& data);
+                void ZoomIn(float distance,const AppInterface::TapData& data);
                 float CalculateCloseDistanceWithRespectTo(float optimizedDistance);
                 bool PerformRayPick(const Eegeo::dv3 &rayOrigin,Eegeo::dv3 &rayDirection,Eegeo::dv3 &out_rayIntersectionPoint,double &out_intersectionParam,float &out_terrainHeight,float &out_heightAboveTerrain);
+ 
 
 
             };
