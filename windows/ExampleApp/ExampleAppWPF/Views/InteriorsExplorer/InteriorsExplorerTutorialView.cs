@@ -55,14 +55,17 @@ namespace ExampleAppWPF
 			m_changeFloorDialog.animateTo(t, delayMilliseconds + (animateDialogsAtSameTime ? 0 : InteriorsExplorerTutorialDialogView.AnimationTimeMilliseconds * 0.8f));
         }
 
-        public void show()
-        {
+		public void show(bool showExitDialog, bool showChangeFloorDialog)
+		{
 			Visibility = Visibility.Visible;
-        }
 
-        public void hide()
-        {
-            Visibility = Visibility.Hidden;
-        }
+			m_exitDialog.Opacity = showExitDialog ? 1 : 0;
+			m_changeFloorDialog.Opacity = showChangeFloorDialog ? 1 : 0;
+		}
+
+		public void hide()
+		{
+			Visibility = Visibility.Hidden;
+		}
 	}
 }
