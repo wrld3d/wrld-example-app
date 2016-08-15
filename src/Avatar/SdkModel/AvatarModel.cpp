@@ -120,6 +120,7 @@ namespace ExampleApp
                 if(m_currentPos.LengthSq() == 0.0)
                 {
                     SetPosition(target);
+                     m_AvatarLocationChangeCallbacks.ExecuteCallbacks();
                 }
                 
                 Eegeo::dv3 heading = m_targetPos - m_currentPos;
