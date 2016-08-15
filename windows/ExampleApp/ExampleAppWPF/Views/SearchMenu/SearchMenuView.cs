@@ -134,8 +134,8 @@ namespace ExampleAppWPF
             m_resultsOptionsView = (ScrollViewer)GetTemplateChild("ResultsMenuOptionsView");
             m_resultsOptionsView.TouchDown += OnResultsListTouchDown;
             m_resultsOptionsView.TouchUp += OnResultsListTouchUp;
-            m_resultsOptionsView.TouchMove += OnResultsListTouchMove;
             m_resultsOptionsView.ManipulationBoundaryFeedback += OnResultsListBoundaryFeedback;
+            m_resultsOptionsView.ScrollChanged += OnSearchResultsScrolled;
 
             m_resultsSpinner = (Grid)GetTemplateChild("SearchResultsSpinner");
             m_resultsCount = (TextBlock)GetTemplateChild("SearchResultCount");
@@ -199,17 +199,29 @@ namespace ExampleAppWPF
             m_searchInputTextClose = ((Storyboard)Template.Resources["CloseSearchInputBoxText"]).Clone();
 
             m_searchArrowOpen = ((Storyboard)Template.Resources["OpenSearchArrow"]).Clone();
-            m_searchArrowClosed  = ((Storyboard)Template.Resources["CloseSearchArrow"]).Clone();
+            m_searchArrowClosed = ((Storyboard)Template.Resources["CloseSearchArrow"]).Clone();
 
             m_adapter = new MenuListAdapter(false, m_list, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SubMenuItemPanel");
             m_resultListAdapter = new MenuListAdapter(false, m_resultsList, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SearchResultPanel");
         }
 
+        private void OnSearchResultsScrolled(object sender, RoutedEventArgs e)
+        {
+            if (m_resultsOptionsView.VerticalOffset == m_resultsOptionsView.ScrollableHeight)
+            {
+                m_searchResultsButtonAndFadeContainer.Visibility = Visibility.Collapsed;
+                m_searchResultsScrollButton.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                m_searchResultsButtonAndFadeContainer.Visibility = Visibility.Visible;
+                m_searchResultsScrollButton.Visibility = Visibility.Visible;
+            }
+        }
 
         private void OnResultsScrollButtonMouseDown(object sender, RoutedEventArgs e)
         {
             m_resultsOptionsView.ScrollToVerticalOffset(m_resultsOptionsView.VerticalOffset+10);
-            HandleSearchResultsScrolledToBottom();
         }
 
         private void OnResultsListBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
@@ -225,11 +237,6 @@ namespace ExampleAppWPF
         private void OnResultsListTouchDown(object sender, TouchEventArgs e)
         {
             m_resultsOptionsView.CaptureTouch(e.TouchDevice);
-        }
-
-        private void OnResultsListTouchMove(object sender, TouchEventArgs e)
-        {
-            HandleSearchResultsScrolledToBottom();
         }
 
         private void OnSearchBoxTextChanged(object sender, TextChangedEventArgs e)
@@ -257,8 +264,6 @@ namespace ExampleAppWPF
         {
             m_resultsOptionsView.ScrollToVerticalOffset(m_resultsOptionsView.VerticalOffset - e.Delta);
             e.Handled = true;
-
-            HandleSearchResultsScrolledToBottom();
         }
 
         private void OnMenuListItemSelected(object sender, MouseEventArgs e)
@@ -501,20 +506,6 @@ namespace ExampleAppWPF
         protected override void RefreshListData(List<string> groups, List<bool> groupsExpandable, Dictionary<string, List<string>> groupToChildrenMap)
         {
             m_adapter.SetData(m_list.ItemsSource, groups, groupsExpandable, groupToChildrenMap);
-        }
-
-        private void HandleSearchResultsScrolledToBottom()
-        {
-            if (m_resultsOptionsView.VerticalOffset == m_resultsOptionsView.ScrollableHeight)
-            {
-                m_searchResultsButtonAndFadeContainer.Visibility = Visibility.Collapsed;
-                m_searchResultsScrollButton.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                m_searchResultsButtonAndFadeContainer.Visibility = Visibility.Visible;
-                m_searchResultsScrollButton.Visibility = Visibility.Visible;
-            }
         }
     }
 }
