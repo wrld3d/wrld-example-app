@@ -408,7 +408,6 @@ namespace ExampleAppWPF
             m_resultsClearButton.Visibility = Visibility.Visible;
             m_searchArrow.Visibility = Visibility.Visible;
             m_resultsSeparator.Visibility = Visibility.Visible;
-            m_searchResultsButtonAndFadeContainer.Visibility = Visibility.Visible;
 
             m_searchInFlight = false;
 
@@ -506,6 +505,7 @@ namespace ExampleAppWPF
         protected override void RefreshListData(List<string> groups, List<bool> groupsExpandable, Dictionary<string, List<string>> groupToChildrenMap)
         {
             m_adapter.SetData(m_list.ItemsSource, groups, groupsExpandable, groupToChildrenMap);
+            m_resultsOptionsView.MaxHeight = CalcResultOptionsViewMaxHeight();
         }
     }
 }
