@@ -43,15 +43,8 @@ set(CMAKE_)
 set(CMAKE_OSX_ARCHITECTURES "armv7;arm64;i386")
 set(IOS_WARNING_FLAGS "-Wmost -Werror -Wno-four-char-constants -Wno-unknown-pragmas -Wno-reorder")
 
-if(${COMPILE_CPP_03})
-    message(STATUS "CMake generating C++03 build")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -x objective-c++ ${IOS_WARNING_FLAGS}")
-    set(eegeo_sdk_libs "-lapps-on-maps -lapps-on-maps-sim")
-else(${COMPILE_CPP_03})
-    message(STATUS "CMake generating C++11 build")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -x objective-c++ -DCOMPILE_CPP_11 ${IOS_WARNING_FLAGS}")
-    set(eegeo_sdk_libs "-lapps-on-maps-cpp11 -lapps-on-maps-cpp11-sim")
-endif(${COMPILE_CPP_03})
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -x objective-c++ ${IOS_WARNING_FLAGS}")
+set(eegeo_sdk_libs "-lapps-on-maps-cpp11 -lapps-on-maps-cpp11-sim")
 
 set(ios_frameworks 
   "-framework CoreLocation
@@ -109,15 +102,8 @@ set_xcode_property (${executable_name} COMBINE_HIDPI_IMAGES "No")
 set_xcode_property(${executable_name} GCC_PRECOMPILE_PREFIX_HEADER "YES")
 set_xcode_property(${executable_name} GCC_PREFIX_HEADER "ExampleApp/ExampleApp-Prefix.pch")
 
-
-if(${COMPILE_CPP_03})
-  set_xcode_property(${executable_name} CLANG_CXX_LANGUAGE_STANDARD "c++98")
-  set_xcode_property(${executable_name} CLANG_CXX_LIBRARY "libstdc++")
-else(${COMPILE_CPP_03})
-  add_definitions(-DCOMPILE_CPP_11)
-  set_xcode_property(${executable_name} CLANG_CXX_LANGUAGE_STANDARD "c++11")
-  set_xcode_property(${executable_name} CLANG_CXX_LIBRARY "libc++")
-endif(${COMPILE_CPP_03})
+set_xcode_property(${executable_name} CLANG_CXX_LANGUAGE_STANDARD "c++11")
+set_xcode_property(${executable_name} CLANG_CXX_LIBRARY "libc++")
 
 set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH "YES")
 set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/build/Debug-iphoneos/ RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/build/Release-iphoneos/)

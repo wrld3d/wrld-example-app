@@ -63,12 +63,7 @@ cflags := -Wall -Wno-unknown-pragmas -Wno-sign-compare -Wno-format-security -Wno
 
 #LOCAL_CFLAGS += -Werror
 
-ifdef COMPILE_CPP_03  
-  cppflags := -std=c++0x -fexceptions
-else  
-  cppflags := -DCOMPILE_CPP_11=1 -std=c++11 -fexceptions
-endif
-
+cppflags := -std=c++11 -fexceptions
 
 LOCAL_CFLAGS += ${cflags}
 LOCAL_CPPFLAGS += ${cppflags}
