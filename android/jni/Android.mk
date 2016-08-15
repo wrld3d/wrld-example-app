@@ -66,15 +66,7 @@ LOCAL_LDLIBS += -fuse-ld=bfd -Wl,--stub-group-size=2085000
 LOCAL_STATIC_LIBRARIES := recce-common-lib eegeo-sdk-lib png-lib curl-lib uv-lib ssl-lib crypto-lib http-parser-lib jpeg-lib turbojpeg-lib sqlite-lib
 
 cflags := -Wall -Wno-unknown-pragmas -Wno-sign-compare -Wno-format-security -Wno-reorder
-
-#LOCAL_CFLAGS += -Werror
-
-ifdef COMPILE_CPP_03  
-  cppflags := -std=c++0x  -fexceptions
-else  
-  cppflags := -DCOMPILE_CPP_11=1 -std=c++11  -fexceptions
-endif
-
+cppflags := -std=c++11 -fexceptions
 
 LOCAL_CFLAGS += ${cflags}
 LOCAL_CPPFLAGS += ${cppflags}
