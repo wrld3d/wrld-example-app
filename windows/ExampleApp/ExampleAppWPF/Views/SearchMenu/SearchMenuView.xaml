@@ -406,7 +406,7 @@
                                                 </Image>
                                             </Grid>
 
-                                            <RepeatButton Grid.Row="1" Grid.Column="1" Name="SearchResultsScrollButton" Width="48" Height="48" Visibility="Hidden" Margin="0, 0, 0, 0" VerticalAlignment="Bottom">
+                                            <RepeatButton Grid.Row="1" Name="SearchResultsScrollButton" Width="48" Height="48" Visibility="Hidden" Margin="0, 0, 0, 0" VerticalAlignment="Bottom">
                                                 <RepeatButton.Style>
                                                     <Style TargetType="{x:Type RepeatButton}">
                                                         <Style.Setters>
