@@ -72,6 +72,8 @@
 
 - (void) playSliderShakeAnim;
 
+- (bool) GetCanShowChangeFloorTutorialDialog;
+
 // NOTE: Replace these once integrated with search ux colour scheme.
 - (UIColor*) textColorNormal;
 - (UIColor*) textColorHighlighted;
