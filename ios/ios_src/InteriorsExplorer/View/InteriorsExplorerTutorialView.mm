@@ -209,7 +209,7 @@ namespace
 {
     const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     int arrowLength = isPhone ? 20 : 30;
-    int dialogMargin = (isPhone ? 79 : 95);
+    int dialogMargin = (isPhone ? 79 : 80);
     int descriptionPaddingBottom = isPhone ? 9 : 17;
     
     CGRect exitDialogLabelFrame = self.pExitDialogLabel.frame;

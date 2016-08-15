@@ -303,14 +303,6 @@ namespace
     self.pFloorPanel.hidden = !m_floorSelectionEnabled;
     self.pFloorPanel.userInteractionEnabled = self.pFloorChangeButton.userInteractionEnabled = m_floorSelectionEnabled;
     
-    const bool showChangeFloorDialog = floorCount > 1;
-    [self.pTutorialView repositionTutorialDialogs:dismissButtonFrame.origin.x
-                                                 :dismissButtonFrame.origin.y
-                                                 :dismissButtonFrame.size.height
-                                                 :self.pFloorPanel.frame.origin.y + self.pFloorPanel.frame.size.height - self.pFloorChangeButton.frame.size.height
-                                                 :self.pFloorChangeButton.frame.size.height
-                                                 :showChangeFloorDialog];
-    
     m_floorSelectionEnabled= (floorCount > 1);
     self.pFloorPanel.hidden = !m_floorSelectionEnabled;
     self.pFloorPanel.userInteractionEnabled = self.pFloorChangeButton.userInteractionEnabled = m_floorSelectionEnabled;
@@ -649,6 +641,14 @@ namespace
         [self refreshArrowState];
     }
     
+    const bool showChangeFloorDialog = floorCount > 1;
+    const CGRect dismissButtonFrame = self.pDismissButtonBackground.frame;
+    [self.pTutorialView repositionTutorialDialogs:dismissButtonFrame.origin.x
+                                                 :dismissButtonFrame.origin.y
+                                                 :dismissButtonFrame.size.height
+                                                 :self.pFloorPanel.frame.origin.y + self.pFloorChangeButton.frame.origin.y
+                                                 :self.pFloorChangeButton.frame.size.height
+                                                 :showChangeFloorDialog];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
