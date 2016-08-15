@@ -147,6 +147,7 @@ namespace ExampleAppWPF
 
             m_searchResultsScrollButton = (RepeatButton)GetTemplateChild("SearchResultsScrollButton");
             m_searchResultsScrollButton.Click += OnResultsScrollButtonMouseDown;
+            m_searchResultsScrollButton.PreviewMouseWheel += OnResultsMenuScrollWheel;
 
             m_resultsClearButton = (Button)GetTemplateChild("SearchClear");
             m_resultsClearButton.Click += OnResultsClear;
@@ -199,9 +200,9 @@ namespace ExampleAppWPF
             m_adapter = new MenuListAdapter(false, m_list, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SubMenuItemPanel");
             m_resultListAdapter = new MenuListAdapter(false, m_resultsList, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SearchResultPanel");
         }
+
         private void OnResultsScrollButtonMouseDown(object sender, RoutedEventArgs e)
         {
-            //const?
             m_resultsOptionsView.ScrollToVerticalOffset(m_resultsOptionsView.VerticalOffset+10);
             HandleSearchResultsScrolledToBottom();
         }
