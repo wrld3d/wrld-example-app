@@ -63,23 +63,22 @@ namespace ExampleApp
                     std::string category = model.GetCategory();
                     if (model.GetCategory() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
                     {
+                        // Availability is no longer a subtitle as that affects search results.
                         Search::Swallow::SdkModel::SwallowMeetingRoomResultModel meetingRoomModel = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(model);
-//                        subtitle = meetingRoomModel.GetOfficeLocation();
                         subtitle = Search::Swallow::SdkModel::SearchParser::GetFormattedAvailabilityString(meetingRoomModel.GetAvailability());
-
                         
-//                        if(meetingRoomModel.GetAvailability().compare(Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE) == 0)
-//                        {
-//                            category = Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_AVAILABLE;
-//                        }
-//                        else if(meetingRoomModel.GetAvailability().compare(Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_SOON) == 0)
-//                        {
-//                            category = Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_AVAILABLE_SOON;
-//                        }
-//                        else if(meetingRoomModel.GetAvailability().compare(Search::Swallow::SearchConstants::MEETING_ROOM_OCCUPIED) == 0)
-//                        {
-//                            category = Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_OCCUPIED;
-//                        }
+                        if(meetingRoomModel.GetAvailability().compare(Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE) == 0)
+                        {
+                            category = Search::Swallow::SearchConstants::MEETING_ROOM_ICON_AVAILABLE;
+                        }
+                        else if(meetingRoomModel.GetAvailability().compare(Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_SOON) == 0)
+                        {
+                            category = Search::Swallow::SearchConstants::MEETING_ROOM_ICON_AVAILABLE_SOON;
+                        }
+                        else if(meetingRoomModel.GetAvailability().compare(Search::Swallow::SearchConstants::MEETING_ROOM_OCCUPIED) == 0)
+                        {
+                            category = Search::Swallow::SearchConstants::MEETING_ROOM_ICON_OCCUPIED;
+                        }
                     }
                     else if(model.GetCategory() == Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME)
                     {

@@ -8,6 +8,8 @@
 #include "ISearchResultParser.h"
 #include "Types.h"
 
+#include <document.h>
+
 namespace ExampleApp
 {
     namespace Search
@@ -26,16 +28,6 @@ namespace ExampleApp
                     void ParseSearchResults(const std::string& serialized,
                                             std::vector<Search::SdkModel::SearchResultModel>& out_results);
                 };
-                
-                bool TryParseYelpBusinessSearchResult(const std::string& serialized,
-                                                      IYelpCategoryMapper& yelpCategoryMapper,
-                                                      Search::SdkModel::SearchResultModel& out_result);
-                
-                YelpSearchResultModel TransformToYelpSearchResult(const Search::SdkModel::SearchResultModel& searchResultModel);
-
-                bool TryParseImageDetails(const Search::SdkModel::SearchResultModel& searchResultModel, std::string& out_imageUrl);
-
-                bool TryParseReviewDetails(const Search::SdkModel::SearchResultModel& searchResultModel, std::string& out_ratingImageUrl, int& out_reviewCount);
             }
         }
     }

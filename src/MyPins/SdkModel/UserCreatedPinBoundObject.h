@@ -23,15 +23,17 @@ namespace ExampleApp
                 size_t m_imageSize;
                 bool m_share;
                 std::string m_imagePath;
+                std::string m_pinIconKey;
                 MyPinsFileIO& m_myPinsFileIO;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 MyPins::SdkModel::MyPinsWebService& m_webService;
-
+                
                 void SubmitPinToWebService(const MyPinModel& pinModel);
                 
             public:
                 static UserCreatedPinBoundObject* FromSerializedData(MyPinModel::TPinIdType pinId,
                                                                      const std::string& serializedData,
+                                                                     const std::string& pinIconKey,
                                                                      MyPinsFileIO& myPinsFileIO,
                                                                      ExampleAppMessaging::TMessageBus& messageBus,
                                                                      MyPins::SdkModel::MyPinsWebService& webService);
@@ -40,12 +42,14 @@ namespace ExampleApp
                                           Byte* imageData,
                                           size_t imageSize,
                                           bool share,
+                                          const std::string& pinIconKey,
                                           MyPinsFileIO& myPinsFileIO,
                                           ExampleAppMessaging::TMessageBus& messageBus,
                                           MyPins::SdkModel::MyPinsWebService& webService);
                 
                 UserCreatedPinBoundObject(MyPinModel::TPinIdType pinId,
                                           const std::string& imagePath,
+                                          const std::string& pinIconKey,
                                           MyPinsFileIO& myPinsFileIO,
                                           ExampleAppMessaging::TMessageBus& messageBus,
                                           MyPins::SdkModel::MyPinsWebService& webService);
@@ -70,7 +74,7 @@ namespace ExampleApp
                 
                 std::string GetIconForPin() const;
                 
-                const std::string& GetSerialized() const;
+                std::string GetSerialized() const;
             };
         }
     }

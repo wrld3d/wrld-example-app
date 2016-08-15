@@ -1,0 +1,335 @@
+{
+    "pages": [
+        {
+            "width": 256, 
+            "file": "pin_sheet_0", 
+            "height": 256
+        }
+    ], 
+    "icons": [
+        {
+            "index": 0, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 0, 
+            "x": 41, 
+            "id": "blank"
+        }, 
+        {
+            "index": 1, 
+            "h": 8, 
+            "page": 0, 
+            "w": 8, 
+            "y": 0, 
+            "x": 244, 
+            "id": "label_point"
+        }, 
+        {
+            "index": 2, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 0, 
+            "x": 70, 
+            "id": "accommodation"
+        }, 
+        {
+            "index": 3, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 0, 
+            "x": 99, 
+            "id": "art_museums"
+        }, 
+        {
+            "index": 4, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 0, 
+            "x": 128, 
+            "id": "business"
+        }, 
+        {
+            "index": 5, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 0, 
+            "x": 157, 
+            "id": "entertainment"
+        }, 
+        {
+            "index": 6, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 0, 
+            "x": 186, 
+            "id": "food_drink"
+        }, 
+        {
+            "index": 7, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 0, 
+            "x": 215, 
+            "id": "amenities"
+        }, 
+        {
+            "index": 8, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 29, 
+            "x": 41, 
+            "id": "health"
+        }, 
+        {
+            "index": 9, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 29, 
+            "x": 70, 
+            "id": "my_pins"
+        }, 
+        {
+            "index": 10, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 29, 
+            "x": 99, 
+            "id": "person"
+        }, 
+        {
+            "index": 11, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 29, 
+            "x": 128, 
+            "id": "misc"
+        }, 
+        {
+            "index": 12, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 29, 
+            "x": 157, 
+            "id": "shopping"
+        }, 
+        {
+            "index": 13, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 29, 
+            "x": 186, 
+            "id": "sports_leisure"
+        }, 
+        {
+            "index": 14, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 29, 
+            "x": 215, 
+            "id": "tourism"
+        }, 
+        {
+            "index": 15, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 41, 
+            "x": 0, 
+            "id": "transport"
+        }, 
+        {
+            "index": 16, 
+            "h": 40, 
+            "page": 0, 
+            "w": 40, 
+            "y": 0, 
+            "x": 0, 
+            "id": "indoor_map"
+        }, 
+        {
+            "index": 17, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 58, 
+            "x": 29, 
+            "id": "disabled_access"
+        }, 
+        {
+            "index": 18, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 58, 
+            "x": 58, 
+            "id": "toilets"
+        }, 
+        {
+            "index": 19, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 58, 
+            "x": 87, 
+            "id": "defibrillator"
+        }, 
+        {
+            "index": 20, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 58, 
+            "x": 116, 
+            "id": "elevator"
+        }, 
+        {
+            "index": 21, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 58, 
+            "x": 145, 
+            "id": "stairs"
+        }, 
+        {
+            "index": 22, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 58, 
+            "x": 174, 
+            "id": "escalator"
+        }, 
+        {
+            "index": 23, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 58, 
+            "x": 203, 
+            "id": "printer"
+        }, 
+        {
+            "index": 24, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 70, 
+            "x": 0, 
+            "id": "reception"
+        }, 
+        {
+            "index": 25, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 87, 
+            "x": 29, 
+            "id": "stationary"
+        }, 
+        {
+            "index": 26, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 87, 
+            "x": 58, 
+            "id": "fire"
+        }, 
+        {
+            "index": 27, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 87, 
+            "x": 87, 
+            "id": "first_aid"
+        }, 
+        {
+            "index": 28, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 87, 
+            "x": 116, 
+            "id": "emergency_exit"
+        }, 
+        {
+            "index": 29, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 87, 
+            "x": 145, 
+            "id": "department"
+        }, 
+        {
+            "index": 30, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 87, 
+            "x": 174, 
+            "id": "meeting_room_available"
+        }, 
+        {
+            "index": 31, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 87, 
+            "x": 203, 
+            "id": "meeting_room_available_soon"
+        }, 
+        {
+            "index": 32, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 99, 
+            "x": 0, 
+            "id": "meeting_room"
+        }, 
+        {
+            "index": 33, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 116, 
+            "x": 29, 
+            "id": "meeting_room_unavailable"
+        }, 
+        {
+            "index": 34, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 116, 
+            "x": 58, 
+            "id": "office"
+        }, 
+        {
+            "index": 35, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 116, 
+            "x": 87, 
+            "id": "working_group"
+        }
+    ]
+}

@@ -24,17 +24,20 @@ namespace ExampleApp
                                                                            MyPinModel::TPinIdType pinId,
                                                                            Byte* imageData,
                                                                            size_t imageSize,
-                                                                           bool share) = 0;
+                                                                           bool share,
+                                                                           const std::string& pinIconKey) = 0;
                 
                 virtual IMyPinBoundObject* CreateSearchResultPinBoundObject(MyPinsFileIO& myPinsFileIO,
                                                                             MyPinModel::TPinIdType pinId,
                                                                             const Search::SdkModel::SearchResultModel& searchResult,
+                                                                            const std::string& pinIconKey,
                                                                             ExampleApp::MyPins::SdkModel::IMyPinsService& myPinsService) = 0;
                 
                 virtual IMyPinBoundObject* CreatePinBoundObjectFromSerialized(MyPinsFileIO& myPinsFileIO,
                                                                               MyPinModel::TPinIdType pinId,
                                                                               const MyPinsSemanticPinType& semanticPinType,
-                                                                              const std::string& serializedData,
+                                                                              const std::string& pinMetadataJson,
+                                                                              const std::string& pinIconKey,
                                                                               ExampleApp::MyPins::SdkModel::IMyPinsService& myPinsService) = 0;
             };
         }

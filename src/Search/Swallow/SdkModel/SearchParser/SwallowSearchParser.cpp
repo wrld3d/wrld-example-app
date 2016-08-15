@@ -106,20 +106,32 @@ namespace ExampleApp
                         rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
                         json.Accept(writer);
                         
-                        return Search::SdkModel::SearchResultModel(ExampleApp::Search::SdkModel::SearchResultModel::CurrentVersion,
-                                                                   searchResultModel.GetIdentifier(),
-                                                                   searchResultModel.GetTitle(),
-                                                                   searchResultModel.GetSubtitle(),
-                                                                   searchResultModel.GetLocation(),
-                                                                   0.0f,
-                                                                   true,
-                                                                   searchResultModel.GetBuildingId(),
-                                                                   searchResultModel.GetFloor(),
-                                                                   Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME,
-                                                                   std::vector<std::string>(),
-                                                                   Search::EegeoVendorName,
-                                                                   strbuf.GetString(),
-                                                                   searchResultModel.GetCreationTimestamp());
+                        ExampleApp::Search::SdkModel::SearchResultModel result(ExampleApp::Search::SdkModel::SearchResultModel::CurrentVersion,                                  searchResultModel.GetIdentifier(),                                         searchResultModel.GetTitle(),                                        searchResultModel.GetSubtitle(),                                          searchResultModel.GetLocation(),                                      0.0f,
+                                                                               true,
+                                                                               searchResultModel.GetBuildingId(),
+                                                                               searchResultModel.GetFloor(),
+                                                                               Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME,
+                                                                               std::vector<std::string>(),
+                                                                               Search::EegeoVendorName,
+                                                                               strbuf.GetString(),
+                                                                               searchResultModel.GetCreationTimestamp());
+                        
+                        
+                        int tempState = 1;
+                        if(updatedAvailability == Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE)
+                        {
+                            tempState = 1;
+                        }
+                        else if (updatedAvailability == Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_SOON)
+                        {
+                            tempState = 2;
+                        }
+                        else
+                        {
+                            tempState = 3;
+                        }
+                        result.SetAvailability(tempState);
+                        return result;
                     }
                     
                     SwallowMeetingRoomResultModel TransformToSwallowMeetingRoomResult(const Search::SdkModel::SearchResultModel& searchResultModel)

@@ -1,9 +1,10 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "YelpSearchConstants.h"
+#include "Document.h"
 
 //
-// Yelp categories from http://www.yelp.com/developers/documentation/v2/all_category_list
+// Yelp categories from http://www.yelp.com/developers/documentumentation/v2/all_category_list
 //
 
 namespace ExampleApp
@@ -14,22 +15,67 @@ namespace ExampleApp
         {
             namespace SearchConstants
             {
-                std::string GetDefaultCategory() { return "misc"; }
+                namespace
+                {
+                    std::string GetFileContents(Eegeo::Helpers::IFileIO& fileIO, const std::string& fileName)
+                    {
+                        std::string contents;
+
+                        std::fstream file;
+                        std::size_t size;
+
+                        if (fileIO.OpenFile(file, size, fileName, std::ios::in))
+                        {
+                            contents = std::string((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+                        }
+
+                        return contents;
+                    }
+                }
                 
-                std::map<std::string, std::string> GetYelpFoundationCategoryToApplicationCategoryMap()
+                std::string GetDefaultCategory() { return "misc"; }
+
+                std::map<std::string, std::string> GetYelpFoundationCategoryToApplicationCategoryMap(Eegeo::Helpers::IFileIO& fileIO)
                 {
                     std::map<std::string, std::string> yelpToApplicationCategoryMap;
-                    
-                    yelpToApplicationCategoryMap["food"] = "coffee";
-                    yelpToApplicationCategoryMap["restaurants"] = "food";
-                    yelpToApplicationCategoryMap["nightlife"] = "nightlife";
-                    yelpToApplicationCategoryMap["arts"] = "arts";
-                    yelpToApplicationCategoryMap["galleries"] = "arts";
-                    yelpToApplicationCategoryMap["eventservices"] = "arts";
-                    yelpToApplicationCategoryMap["venues"] = "arts";
-                    yelpToApplicationCategoryMap["hotelstravel"] = "hotel";
-                    yelpToApplicationCategoryMap["active"] = "park";
-                    yelpToApplicationCategoryMap["financialservices"] = "bank";
+
+                    std::string contents = GetFileContents(fileIO, "yelp_map.json");
+
+                    rapidjson::Document document;
+
+                    if (document.Parse<0>(contents.c_str()).HasParseError())
+                    {
+                        Eegeo_TTY("Warning: Cannot parse Yelp Category Map!!");
+                        return yelpToApplicationCategoryMap;
+                    }
+
+                    std::vector<std::string> categories = GetCategories();
+
+                    for (std::vector<std::string>::const_iterator it = categories.begin();
+                        it != categories.end();
+                        ++it)
+                    {
+                        const std::string& category = (*it);
+
+                        if (!document.HasMember(category.c_str()))
+                        {
+                            continue;
+                        }
+                        
+                        rapidjson::GenericValue<rapidjson::UTF8<> >& list = document[category.c_str()];
+
+                        if (!list.IsArray())
+                        {
+                            continue;
+                        }
+                        
+                        for (rapidjson::Value::ValueIterator iter = list.Begin();
+                            iter != list.End();
+                            ++iter)
+                        {
+                            yelpToApplicationCategoryMap.insert(std::make_pair(iter->GetString(), category));
+                        }
+                    }
                     
                     return yelpToApplicationCategoryMap;
                 }
@@ -39,15 +85,19 @@ namespace ExampleApp
                     const bool showCategoriesInSearchMenu = true;
                     
                     std::vector<ExampleApp::CategorySearch::View::CategorySearchModel> categories;
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Around Me", "", false, "aroundme", showCategoriesInSearchMenu));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Coffee", "coffee", false, "coffee", showCategoriesInSearchMenu));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Food", "restaurants", false, "food", showCategoriesInSearchMenu));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Nightlife", "nightlife", false, "nightlife", showCategoriesInSearchMenu));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Arts", "museums", false, "arts", showCategoriesInSearchMenu));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Hotels", "hotels", false, "hotel", showCategoriesInSearchMenu));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Parks", "parks", false, "park", showCategoriesInSearchMenu));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Banks", "financialservices", false, "bank", showCategoriesInSearchMenu));
-					
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Around Me", "", true, "aroundme", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Accommodation", "accommodation", true, "accommodation", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Art & Museum", "art_museums", true, "art_museums", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Business", "business", true, "business", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Entertainment", "entertainment", true, "entertainment", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Food & Drink", "food_drink", true, "food_drink", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("General Amenities", "amenities", true, "amenities", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Health", "health", true, "health", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Shopping", "shopping", true, "shopping", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Sport & Leisure", "sports_leisure", true, "sports_leisure", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Tourist", "tourism", true, "tourism", showCategoriesInSearchMenu));
+                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Transport", "transport", true, "transport", showCategoriesInSearchMenu));
+
                     return categories;
                 }
                 
@@ -55,15 +105,37 @@ namespace ExampleApp
                 {
                     std::vector<std::string> categories;
                     categories.push_back("");
-                    categories.push_back("coffee");
-                    categories.push_back("restaurants");
-                    categories.push_back("nightlife");
-                    categories.push_back("museums");
-                    categories.push_back("hotels");
-                    categories.push_back("parks");
-                    categories.push_back("financialservices");
-                    categories.push_back("active");
+                    categories.push_back("accommodation");
+                    categories.push_back("art_museums");
+                    categories.push_back("business");
+                    categories.push_back("entertainment");
+                    categories.push_back("food_drink");
+                    categories.push_back("amenities");
+                    categories.push_back("health");
+                    categories.push_back("shopping");
+                    categories.push_back("sports_leisure");
+                    categories.push_back("tourism");
+                    categories.push_back("transport");
                     return categories;
+                }
+
+                std::map<std::string, std::string> GetApplicationToYelpCategoryMap()
+                {
+                    std::map<std::string, std::string> applicationMap;
+
+                    applicationMap["accommodation"] = "hotels";
+                    applicationMap["art_museums"] = "museums";
+                    applicationMap["business"] = "professional";
+                    applicationMap["entertainment"] = "arts";
+                    applicationMap["food_drink"] = "food";
+                    applicationMap["amenities"] = "homeservices";
+                    applicationMap["health"] = "health";
+                    applicationMap["shopping"] = "shopping";
+                    applicationMap["sports_leisure"] = "active";
+                    applicationMap["tourism"] = "tours";
+                    applicationMap["transport"] = "transport";
+
+                    return applicationMap;
                 }
             }
         }

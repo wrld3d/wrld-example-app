@@ -7,6 +7,7 @@
 #include "EegeoSearchService.h"
 #include "SwallowSearchConstants.h"
 #include "EegeoCategoryIconMapper.h"
+#include "EegeoReadableTagMapper.h"
 
 namespace ExampleApp
 {
@@ -27,6 +28,7 @@ namespace ExampleApp
                 : m_pEegeoSearchQueryFactory(NULL)
                 , m_pEegeoParser(NULL)
                 , m_pSearchService(NULL)
+                , m_pCategoryIconMapper(NULL)
                 {
                     m_pEegeoSearchQueryFactory = Eegeo_NEW(EegeoSearchQueryFactory)(webRequestFactory,
                                                                                     urlEncoder,
@@ -35,8 +37,8 @@ namespace ExampleApp
                                                                                     apiKey);
                     
                     m_pCategoryIconMapper = Eegeo_NEW(EegeoCategoryIconMapper)();
-                    
-                    m_pEegeoParser = Eegeo_NEW(EegeoJsonParser)(*m_pCategoryIconMapper,persistentSettings);
+                    m_pReadableTagMapper = Eegeo_NEW(EegeoReadableTagMapper)();
+                    m_pEegeoParser = Eegeo_NEW(EegeoJsonParser)(*m_pCategoryIconMapper,*m_pReadableTagMapper,persistentSettings);
                     
                     m_pSearchService = Eegeo_NEW(EegeoSearchService)(*m_pEegeoSearchQueryFactory,
                                                                         *m_pEegeoParser,
@@ -49,6 +51,7 @@ namespace ExampleApp
                     Eegeo_DELETE m_pSearchService;
                     Eegeo_DELETE m_pEegeoParser;
                     Eegeo_DELETE m_pEegeoSearchQueryFactory;
+                    Eegeo_DELETE m_pReadableTagMapper;
                 }
                 
                 Search::SdkModel::ISearchService& EegeoSearchServiceModule::GetSearchService() const

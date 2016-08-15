@@ -12,6 +12,7 @@
 #include "App.h"
 #include "YelpSearchJsonParser.h"
 #include "UIHelpers.h"
+#include "YelpParsingHelpers.h"
 
 #import "UIButton+DefaultStates.h"
 #import "UIView+TouchExclusivity.h"
@@ -560,7 +561,7 @@ namespace
     
     m_model = *pModel;
     
-    m_yelpModel = ExampleApp::Search::Yelp::SdkModel::TransformToYelpSearchResult(m_model);
+    m_yelpModel = ExampleApp::Search::Yelp::SdkModel::Helpers::TransformToYelpSearchResult(m_model);
     
     m_isPinned = isPinned;
     [self updatePinnedButtonState];

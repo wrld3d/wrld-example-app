@@ -36,6 +36,7 @@ namespace ExampleApp
                 const std::string DEPARTMENT_CATEGORY_NAME = "department";
                 const std::string TRANSITION_CATEGORY_NAME = "transition";
                 const std::string STATIONERY_CATEGORY_NAME = "stationery";
+                const std::string RECEPTION_CATEGORY_NAME = "reception";
                 const std::string TOILETS_CATEGORY_NAME = "toilets";
                 const std::string PRINT_STATION_CATEGORY_NAME = "print_station";
                 const std::string EMERGENCY_EXIT_CATEGORY_NAME = "emergency_exit";
@@ -44,9 +45,9 @@ namespace ExampleApp
                 const std::string MEETING_ROOM_AVAILABLE_SOON = "available_soon";
                 const std::string MEETING_ROOM_OCCUPIED = "occupied";
                 
-                const std::string MEETING_ROOM_CATEGORY_AVAILABLE = "meeting_room_avail";
-                const std::string MEETING_ROOM_CATEGORY_AVAILABLE_SOON = "meeting_room_avail_soon";
-                const std::string MEETING_ROOM_CATEGORY_OCCUPIED = "meeting_room_occupied";
+                const std::string MEETING_ROOM_ICON_AVAILABLE = "meeting_room_available";
+                const std::string MEETING_ROOM_ICON_AVAILABLE_SOON = "meeting_room_available_soon";
+                const std::string MEETING_ROOM_ICON_OCCUPIED = "meeting_room_unavailable";
                 
                 const int MEETING_ROOM_AVAILABLE_PRIORITY = 0;
                 const int MEETING_ROOM_AVAILABLE_SOON_PRIORITY = 1;
@@ -85,6 +86,7 @@ namespace ExampleApp
                     categories.push_back(PRINT_STATION_CATEGORY_NAME);
                     categories.push_back(DEPARTMENT_CATEGORY_NAME);
                     categories.push_back(STATIONERY_CATEGORY_NAME);
+                    categories.push_back(RECEPTION_CATEGORY_NAME);
                     categories.push_back(PERSON_CATEGORY_NAME);
                     categories.push_back(TRANSITION_CATEGORY_NAME);
                     

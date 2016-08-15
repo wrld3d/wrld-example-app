@@ -29,7 +29,8 @@ namespace ExampleApp
                     m_tagIconMapping.insert(std::make_pair("person", "person"));
                     m_tagIconMapping.insert(std::make_pair("department", "department"));
                     m_tagIconMapping.insert(std::make_pair("office", "office"));
-                    m_tagIconMapping.insert(std::make_pair("print_station", "print_station"));
+                    m_tagIconMapping.insert(std::make_pair("printer", "printer"));
+                    m_tagIconMapping.insert(std::make_pair("print_station", "printer"));
                     m_tagIconMapping.insert(std::make_pair("reception", "reception"));
                     m_tagIconMapping.insert(std::make_pair("transition", "transition"));
                     

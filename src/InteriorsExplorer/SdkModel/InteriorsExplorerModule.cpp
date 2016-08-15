@@ -35,6 +35,7 @@ namespace ExampleApp
                                                              const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel,
                                                              const bool interiorsAffectedByFlattening,
                                                              InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsEntitiesPinsController,
+                                                             const WorldPins::SdkModel::IWorldPinIconMapping& worldPinIconMapping,
                                                              PersistentSettings::IPersistentSettingsModel& persistentSettings)
             {
                 m_pUserInteractionModel = Eegeo_NEW(InteriorExplorerUserInteractionModel)();
@@ -68,7 +69,7 @@ namespace ExampleApp
                 
                 m_pFloorDraggedObserver = Eegeo_NEW(InteriorsExplorerFloorDraggedObserver)(*m_pModel, m_pInteriorsCameraController->GetTouchController());
 
-                m_pUINotificationService = Eegeo_NEW(InteriorsUINotificationService)(messageBus, interiorsEntitiesPinsController);
+                m_pUINotificationService = Eegeo_NEW(InteriorsUINotificationService)(messageBus, interiorsEntitiesPinsController,worldPinIconMapping);
             }
             
             InteriorsExplorerModule::~InteriorsExplorerModule()

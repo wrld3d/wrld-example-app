@@ -22,26 +22,26 @@ namespace ExampleApp
                              PersistentSettings::IPersistentSettingsModel& persistentSetting,
                              IMyPinBoundObjectFactory& myPinBoundObjectFactory,
                              IMyPinBoundObjectRepository& myPinBoundObjectRepository);
-
+                
                 bool TryCacheImageToDisk(Byte* imageData,
                                          size_t imageSize,
                                          int myPinId,
                                          std::string& out_filename);
-
+                
                 void DeleteImageFromDisk(const std::string& imagePath);
-
+                
                 void SavePinModelToDisk(const MyPinModel& pinModel);
-
+                
                 void LoadPinModelsFromDisk(std::vector<std::pair<MyPinModel*, IMyPinBoundObject*> >& out_pinModelBindings, IMyPinsService& myPinsService);
-
+                
                 void SaveAllRepositoryPinsToDisk(const std::vector<MyPinModel*>& pinModels);
-
+                
                 int GetLastIdWrittenToDisk() const;
-
+                
             private:
-
+                
                 bool WriteJsonToDisk(const std::string& jsonString);
-
+                
                 Eegeo::Helpers::IFileIO& m_fileIO;
                 PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
                 IMyPinBoundObjectFactory& m_myPinBoundObjectFactory;

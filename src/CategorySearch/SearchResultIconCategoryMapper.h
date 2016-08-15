@@ -7,7 +7,6 @@
 #include "Search.h"
 #include "ISearchResultIconCategoryMapper.h"
 #include "Types.h"
-#include "SwallowMeetingRoomResultModel.h"
 
 namespace ExampleApp
 {
@@ -15,17 +14,20 @@ namespace ExampleApp
     {
         class SearchResultIconCategoryMapper : public ISearchResultIconCategoryMapper, private Eegeo::NonCopyable
         {
-            std::map<std::string, int> m_categoryToIconIndex;
-            std::map<std::string, int> m_availabilityToIconIndex;
+            std::map<std::string, std::string> m_availabilityToIconIndex;
+            
+        private:
+            std::string GetMeetingRoomIconFromAvailability(const Search::Swallow::SdkModel::SwallowMeetingRoomResultModel& meetingRoom) const;
+
             
         public:
             SearchResultIconCategoryMapper();
             
             ~SearchResultIconCategoryMapper();
         
-            int GetIconIndexFromSearchResult(const Search::SdkModel::SearchResultModel& searchResultModel) const;
-        private:
-            int GetMeetingRoomIconFromAvailability(const Search::Swallow::SdkModel::SwallowMeetingRoomResultModel& meetingRoom) const;
+            std::string GetIconKeyFromSearchResult(const Search::SdkModel::SearchResultModel& searchResultModel) const;
+
+
         };
     }
 }

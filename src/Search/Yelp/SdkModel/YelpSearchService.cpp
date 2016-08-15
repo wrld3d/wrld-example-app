@@ -12,6 +12,9 @@
 #include "IGeoNamesSearchQueryFactory.h"
 #include "IGeoNamesParser.h"
 #include "INetworkCapabilities.h"
+#include "YelpBusinessQueryFactory.h"
+#include "YelpBusinessJsonParser.h"
+#include "YelpBusinessQuery.h"
 
 namespace ExampleApp
 {
@@ -22,11 +25,13 @@ namespace ExampleApp
             namespace SdkModel
             {
                 YelpSearchService::YelpSearchService(YelpSearchQueryFactory& searchQueryFactory,
+                                                     YelpBusinessQueryFactory& yelpBusinessQueryFactory,
                                                      Search::SdkModel::ISearchResultParser& searchResultParser,
                                                      Net::SdkModel::INetworkCapabilities& networkCapabilities,
                                                      const std::vector<std::string>& availableCategories)
                 : Search::SdkModel::SearchServiceBase(availableCategories)
                 , m_searchQueryFactory(searchQueryFactory)
+                , m_yelpBusinessQueryFactory(yelpBusinessQueryFactory)
                 , m_searchResultParser(searchResultParser)
                 , m_networkCapabilities(networkCapabilities)
                 , m_currentQueryModel("", false, false, Eegeo::Space::LatLongAltitude(0, 0, 0), 0.f)
@@ -40,6 +45,8 @@ namespace ExampleApp
                 {
                     CancelInFlightQueries();
                 }
+                
+                
                 
                 void YelpSearchService::CancelInFlightQueries()
                 {
@@ -56,6 +63,7 @@ namespace ExampleApp
                         ExecuteQueryResponseReceivedCallbacks(m_currentQueryModel, results);
                     }
                 }
+                
                 
                 void YelpSearchService::PerformLocationQuerySearch(const Search::SdkModel::SearchQuery& searchQuery)
                 {
@@ -80,6 +88,13 @@ namespace ExampleApp
                     m_pCurrentRequest->Dispatch();
                 }
                 
+                void YelpSearchService::PerformIdentitySearch(const Search::SdkModel::SearchResultModel& outdatedSearchResult,
+                                                              Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& completionCallback)
+                {
+                    YelpBusinessQuery* pYelpBusinessQuery = m_yelpBusinessQueryFactory.Create(outdatedSearchResult.GetIdentifier(), completionCallback);
+                    pYelpBusinessQuery->Dispatch();
+                }
+                
                 
                 void YelpSearchService::HandleSearchResponse()
                 {
@@ -98,11 +113,11 @@ namespace ExampleApp
                     ExecuteQueryResponseReceivedCallbacks(m_currentQueryModel, results);
                 }
                 
-                void YelpSearchService::PerformIdentitySearch(const Search::SdkModel::SearchResultModel& outdatedSearchResult,
-                                                              Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& callback)
+                void YelpSearchService::HandleYelpBusinessQueryDestroy(YelpBusinessQuery& yelpBusinessQuery)
                 {
-                    m_searchQueryFactory.CreateYelpSearchForSpecificLocation(outdatedSearchResult, callback)->Dispatch();
+                    Eegeo_DELETE &yelpBusinessQuery;
                 }
+                
             }
         }
     }

@@ -11,6 +11,7 @@
 #include "Bounds.h"
 #include "EarthConstants.h"
 #include "Logger.h"
+#include "WorldPinIconMapping.h"
 
 namespace ExampleApp
 {
@@ -22,13 +23,15 @@ namespace ExampleApp
                                                IWorldPinsFactory& worldPinsFactory,
                                                Eegeo::Pins::PinRepository& pinRepository,
                                                Eegeo::Pins::PinController& pinController,
-                                               const Eegeo::Rendering::EnvironmentFlatteningService& flatteningService)
+                                               const Eegeo::Rendering::EnvironmentFlatteningService& flatteningService,
+                                               const IWorldPinIconMapping& worldPinIconMapping)
                 : m_worldPinsRepository(worldPinsRepository)
                 , m_worldPinsFactory(worldPinsFactory)
                 , m_pinRepository(pinRepository)
                 , m_pinController(pinController)
                 , m_environmentFlatteningService(flatteningService)
                 , m_pinAlreadySelected(false)
+                ,m_worldPinIconMapping(worldPinIconMapping)
             {
             }
 
@@ -47,10 +50,11 @@ namespace ExampleApp
                                                         bool interior,
                                                         const WorldPinInteriorData& worldPinInteriorData,
                                                         const Eegeo::Space::LatLong& location,
-                                                        int iconIndex,
+                                                        const std::string& pinIconKey,
                                                         float heightAboveTerrainMetres,
                                                         int visibilityMask)
             {
+                const int iconIndex = m_worldPinIconMapping.IconIndexForKey(pinIconKey);
                 
                 Eegeo::Pins::Pin* pPin = m_worldPinsFactory.CreatePin(location, iconIndex, heightAboveTerrainMetres);
 
@@ -101,11 +105,11 @@ namespace ExampleApp
                 m_pinController.SetScaleForPin(*pPin, scaleWithTerrainHeight);
             }
             
-            void WorldPinsService::UpdatePinCategory(const WorldPinItemModel& pinItemModel, int category)
+            void WorldPinsService::UpdatePinCategory(const WorldPinItemModel& pinItemModel, const std::string& iconKey)
             {
                 Eegeo::Pins::Pin* pPin = m_pinRepository.GetPinById(pinItemModel.Id());
                 Eegeo_ASSERT(pPin != NULL, "Couldn't find Pin to set category on");
-                pPin->SetCategoryId(category);
+                pPin->SetCategoryId(m_worldPinIconMapping.IconIndexForKey(iconKey));
             }
 
             bool WorldPinsService::HandleTouchTap(const Eegeo::v2& screenTapPoint)

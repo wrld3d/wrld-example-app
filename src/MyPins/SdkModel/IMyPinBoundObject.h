@@ -35,7 +35,7 @@ namespace ExampleApp
                 
                 virtual std::string GetIconForPin() const = 0;
                 
-                virtual const std::string& GetSerialized() const = 0;
+                virtual std::string GetSerialized() const = 0;
             };
         }
     }

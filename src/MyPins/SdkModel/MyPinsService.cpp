@@ -23,6 +23,7 @@
 #include "YelpSearchJsonParser.h"
 #include "WorldPinVisibility.h"
 #include "SearchVendorNames.h"
+#include "YelpParsingHelpers.h"
 
 namespace ExampleApp
 {
@@ -91,7 +92,7 @@ namespace ExampleApp
                                                                                                       pMyPinModel->IsInterior(),
                                                                                                       worldPinInteriorData,
                                                                                                       pMyPinModel->GetLatLong(),
-                                                                                                      pMyPinModel->GetSdkMapPinIconIndexIcon(),
+                                                                                                      pMyPinModel->GetPinIconKey(),
                                                                                                       pMyPinModel->GetHeightAboveTerrainMetres(),
                                                                                                       pinVisibilityMask);
 
@@ -145,7 +146,7 @@ namespace ExampleApp
                     std::string ratingImageUrl = "";
                     int reviewCount = 0;
                         
-                    Search::Yelp::SdkModel::TryParseReviewDetails(result, ratingImageUrl, reviewCount);
+                    Search::Yelp::SdkModel::Helpers::TryParseReviewDetails(result, ratingImageUrl, reviewCount);
                         
                     pPinModel->Update(result.GetTitle(), result.GetSubtitle(), ratingImageUrl, reviewCount);
                     pWorldPinItemModel->Refresh(result.GetTitle(), result.GetSubtitle(), ratingImageUrl, reviewCount);
@@ -181,13 +182,14 @@ namespace ExampleApp
                                                       bool shouldShare)
             {
                 MyPinModel::TPinIdType idForThisPin = ++m_lastIdUsed;
-                const int myPinIconIndex = 9;
+                const std::string pinIconKey = "my_pins";
                 
                 IMyPinBoundObject& boundObject = *m_myPinBoundObjectFactory.CreateUserCreatedPinBoundObject(m_myPinsFileIO,
                                                                                                             idForThisPin,
                                                                                                             imageData,
                                                                                                             imageSize,
-                                                                                                            shouldShare);
+                                                                                                            shouldShare,
+                                                                                                            pinIconKey);
                 m_myPinBoundObjectRepository.AddBoundItemForPin(idForThisPin, boundObject);
                 
                 MyPinModel *pinModel = Eegeo_NEW(MyPinModel)(MyPinModel::CurrentVersion,
@@ -196,8 +198,8 @@ namespace ExampleApp
                                                              description,
                                                              Search::MyPinVendorName,
                                                              ratingsImage,
+                                                             pinIconKey,
                                                              reviewCount,
-                                                             myPinIconIndex,
                                                              latLong,
                                                              heightAboveTerrainMetres,
                                                              interior,
@@ -212,7 +214,7 @@ namespace ExampleApp
             }
             
             void MyPinsService::SaveSearchResultPoiPin(const Search::SdkModel::SearchResultModel& searchResult,
-                                                       int pinIconIndex)
+                                                       const std::string& pinIconKey)
             {
                 
                 
@@ -221,6 +223,7 @@ namespace ExampleApp
                 IMyPinBoundObject& boundObject = *m_myPinBoundObjectFactory.CreateSearchResultPinBoundObject(m_myPinsFileIO,
                                                                                                              idForThisPin,
                                                                                                              searchResult,
+                                                                                                             pinIconKey,
                                                                                                              *this);
                 m_myPinBoundObjectRepository.AddBoundItemForPin(idForThisPin, boundObject);
                 
@@ -228,7 +231,7 @@ namespace ExampleApp
                 std::string ratingImageUrl = "";
                 int reviewCount = 0;
                 
-                Search::Yelp::SdkModel::TryParseReviewDetails(searchResult, ratingImageUrl, reviewCount);
+                Search::Yelp::SdkModel::Helpers::TryParseReviewDetails(searchResult, ratingImageUrl, reviewCount);
                 
                 MyPinModel *pinModel = Eegeo_NEW(MyPinModel)(MyPinModel::CurrentVersion,
                                                              idForThisPin,
@@ -236,8 +239,8 @@ namespace ExampleApp
                                                              searchResult.GetSubtitle(),
                                                              searchResult.GetVendor(),
                                                              ratingImageUrl,
+                                                             pinIconKey,
                                                              reviewCount,
-                                                             pinIconIndex,
                                                              searchResult.GetLocation(),
                                                              searchResult.GetHeightAboveTerrainMetres(),
                                                              searchResult.IsInterior(),

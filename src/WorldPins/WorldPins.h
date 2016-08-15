@@ -19,6 +19,8 @@ namespace ExampleApp
             class IWorldPinsFloorHeightController;
             class IWorldPinsInFocusModel;
             class IWorldPinsInFocusController;
+            class IWorldPinIconMappingFactory;
+            class IWorldPinIconMapping;
         }
 
         namespace View

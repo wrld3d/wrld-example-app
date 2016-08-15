@@ -15,6 +15,7 @@
 #include "SearchResultModel.h"
 #include "NetIncludes.h"
 
+
 namespace ExampleApp
 {
     namespace Search
@@ -27,6 +28,8 @@ namespace ExampleApp
             {
             private:
                 YelpSearchQueryFactory& m_searchQueryFactory;
+                YelpBusinessQueryFactory& m_yelpBusinessQueryFactory;
+                
                 Search::SdkModel::ISearchResultParser& m_searchResultParser;
                 Net::SdkModel::INetworkCapabilities& m_networkCapabilities;
                 
@@ -37,6 +40,7 @@ namespace ExampleApp
                 
             public:
                 YelpSearchService(YelpSearchQueryFactory& searchQueryFactory,
+                                  YelpBusinessQueryFactory& yelpBusinessQueryFactory,
                                   Search::SdkModel::ISearchResultParser& searchResultParser,
                                   Net::SdkModel::INetworkCapabilities& networkCapabilities,
                                   const std::vector<std::string>& availableCategories);
@@ -51,8 +55,11 @@ namespace ExampleApp
                                            Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& callback);
                 
             private:
+            
                 
                 void HandleSearchResponse();
+                
+                void HandleYelpBusinessQueryDestroy(YelpBusinessQuery& yelpBusinessQuery);
             };
         }
         }

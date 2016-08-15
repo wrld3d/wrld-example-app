@@ -9,6 +9,8 @@
 #include "WorldPinsFloorHeightController.h"
 #include "WorldPinsInFocusController.h"
 #include "WorldPinInFocusViewModel.h"
+#include "WorldPinIconMappingFactory.h"
+#include "WorldPinIconMapping.h"
 
 namespace ExampleApp
 {
@@ -27,7 +29,8 @@ namespace ExampleApp
                                              ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
                                              const bool interiorsAffectedByFlattening,
                                              const Menu::View::IMenuReactionModel& menuReaction,
-                                             const float screenOversampleScale)
+                                             const float screenOversampleScale,
+                                             const IWorldPinIconMapping& worldPinIconMapping)
             {
                 m_pWorldPinsFactory = Eegeo_NEW(WorldPinsFactory);
 
@@ -37,7 +40,8 @@ namespace ExampleApp
                                       *m_pWorldPinsFactory,
                                       pinRepository,
                                       pinController,
-                                      environmentFlatteningService);
+                                      environmentFlatteningService,
+                                      worldPinIconMapping);
 
                 m_pWorldPinsScaleController = Eegeo_NEW(WorldPinsScaleController)(*m_pWorldPinsRepository,
                                               *m_pWorldPinsService,

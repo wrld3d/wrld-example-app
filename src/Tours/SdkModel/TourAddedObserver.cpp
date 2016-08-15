@@ -50,7 +50,7 @@ namespace ExampleApp
                                                            tourModel.IsInterior(),
                                                            tourModel.WorldPinInteriorData(),
                                                            tourModel.Location(),
-                                                           tourModel.IconIndex(),
+                                                           tourModel.PinIconKey(),
                                                            0.0f,
                                                            WorldPins::SdkModel::WorldPinVisibility::World);
                     

@@ -7,7 +7,8 @@
 #include "SearchResultModel.h"
 #include "EegeoSearchResultModel.h"
 #include "ICategoryIconMapper.h"
-#include "IPersistentSettingsModel.h"
+#include "PersistentSettings.h"
+#include "EegeoPois.h"
 
 namespace ExampleApp
 {
@@ -20,17 +21,23 @@ namespace ExampleApp
                 class EegeoJsonParser : public IEegeoParser, private Eegeo::NonCopyable
                 {
                     const SearchResultPoi::SdkModel::ICategoryIconMapper& m_categoryIconMapper;
+                    const EegeoReadableTagMapper& m_tagReadableNameMapper;
                     ExampleApp::PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
                     
                 public:
-                    EegeoJsonParser(const SearchResultPoi::SdkModel::ICategoryIconMapper& tagIconMapper, PersistentSettings::IPersistentSettingsModel& persistentSettings);
+                    EegeoJsonParser(const SearchResultPoi::SdkModel::ICategoryIconMapper& tagIconMapper,const EegeoReadableTagMapper& tagReadableNameMapper,
+                                    PersistentSettings::IPersistentSettingsModel& persistentSettings);
+                    
                     void ParseEegeoQueryResults(const std::string& serialized,
                                                 std::vector<Search::SdkModel::SearchResultModel>& out_results);
+                    
                 };
-
+                
                 EegeoSearchResultModel TransformToEegeoSearchResult(const Search::SdkModel::SearchResultModel& searchResultModel);
                 
                 bool TryParseImageDetails(const Search::SdkModel::SearchResultModel& searchResultModel, std::string& out_imageUrl);
+                
+                
             }
         }
     }
