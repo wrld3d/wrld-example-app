@@ -33,7 +33,7 @@ namespace ExampleAppWPF
 
             if(enableTouchLeave)
             {
-                ui.MouseLeave += (o, e) => { window.EnableInput(); };
+                ui.TouchLeave += (o, e) => { window.EnableInput(); };
             }
         }
     }

@@ -72,6 +72,14 @@ namespace ExampleAppWPF
             m_hasResults = false;
             m_hasCategorySearch = false;
             m_touchHandler = new WindowInteractionTouchHandler(this, true, false, true);
+
+            MouseEnter += (o, e) =>
+            {
+                mainWindow.PopAllMouseEvents();
+                mainWindow.DisableInput();
+            };
+
+            MouseLeave += (o, e) => { mainWindow.EnableInput(); };
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
