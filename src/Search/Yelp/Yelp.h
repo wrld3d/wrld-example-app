@@ -13,7 +13,10 @@ namespace ExampleApp
                 class IYelpCategoryMapper;
                 class IYelpSearchQuery;
                 class YelpSearchQueryFactory;
-                class YelpSearchResultModel;
+				class YelpSearchResultModel;
+                class YelpBusinessJsonParser;
+                class YelpBusinessQueryFactory;
+                class YelpBusinessQuery;
             }
         }
     }

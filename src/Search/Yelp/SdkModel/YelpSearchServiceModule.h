@@ -9,6 +9,7 @@
 #include "NetIncludes.h"
 #include "UrlHelpers.h"
 #include "ISearchServiceModule.h"
+#include "IFileIO.h"
 
 namespace ExampleApp
 {
@@ -20,7 +21,9 @@ namespace ExampleApp
             {
                 Search::SdkModel::ISearchService* m_pSearchService;
                 Yelp::SdkModel::YelpSearchQueryFactory* m_pSearchQueryFactory;
-                Search::SdkModel::ISearchResultParser* m_pSearchResultParser;
+                Yelp::SdkModel::YelpBusinessQueryFactory* m_pYelpBusinessQueryFactory;
+                Search::SdkModel::ISearchResultParser* m_pYelpSearchJsonParser;
+                Yelp::SdkModel::YelpBusinessJsonParser* m_pYelpBusinessJsonParser;
                 Yelp::SdkModel::IYelpCategoryMapper* m_pYelpCategoryMapper;
 
             public:
@@ -31,7 +34,8 @@ namespace ExampleApp
 					const std::string& yelpConsumerKey,
 					const std::string& yelpConsumerSecret,
 					const std::string& yelpOAuthToken,
-					const std::string& yelpOAuthTokenSecret);
+					const std::string& yelpOAuthTokenSecret,
+                    Eegeo::Helpers::IFileIO& fileIO);
 
                 ~YelpSearchServiceModule();
 

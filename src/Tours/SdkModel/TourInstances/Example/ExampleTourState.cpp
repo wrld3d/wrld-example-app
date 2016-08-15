@@ -92,7 +92,7 @@ namespace ExampleApp
                                                                                                  Search::ExampleTourVendorName);
                             
                             const float heightOffsetMetres = 0.0f;
-                            const int iconIndex = 10;
+                            const std::string tourEntryPinIconKey = "tour_entry";
                             
                             m_pPinItemModel = m_worldPinsService.AddPin(Eegeo_NEW(ExampleTourPinSelectionHandler)(m_messageBus, m_stateModel),
                                                                         NULL,
@@ -100,7 +100,7 @@ namespace ExampleApp
                                                                         m_interior,
                                                                         m_worldPinInteriorData,
                                                                         m_position,
-                                                                        iconIndex,
+                                                                        tourEntryPinIconKey,
                                                                         heightOffsetMetres,
                                                                         WorldPins::SdkModel::WorldPinVisibility::TourPin);
                         }

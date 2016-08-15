@@ -351,7 +351,15 @@ namespace
     
     m_model = *pModel;
     m_meetingRoomModel = ExampleApp::Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(m_model);
-    m_availability = m_meetingRoomModel.GetAvailability();
+    std::string availability = "available";
+    
+    NSString *state = [[NSUserDefaults standardUserDefaults]objectForKey:[NSString stringWithUTF8String:m_meetingRoomModel.GetName().c_str()]];
+    if(state && state != NULL)
+    {
+        availability = std::string([state UTF8String]);
+    }
+    
+    m_availability = availability;
     m_isPinned = isPinned;
     [self updatePinnedButtonState];
     

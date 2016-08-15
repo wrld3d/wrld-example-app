@@ -22,6 +22,7 @@
 #include "SwallowSearchConstants.h"
 #include "ISearchService.h"
 #include "SearchResultSectionItemSelectedMessage.h"
+#include "YelpParsingHelpers.h"
 
 #include <algorithm>
 
@@ -283,15 +284,14 @@ namespace ExampleApp
                         
                         Search::Swallow::SdkModel::SwallowMeetingRoomResultModel meetingRoomResult = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(result);
                         
-                        int availabilityCategory = m_searchResultIconCategoryMapper.GetMeetingRoomIconFromAvailability(meetingRoomResult);
+                        std::string availabilityIconKey = m_searchResultIconCategoryMapper.GetIconKeyFromSearchResult(result);
                         
                         ExampleApp::WorldPins::SdkModel::WorldPinItemModel* pPinItemModel = pinIt->second;
-                        m_worldPinsService.UpdatePinCategory(*pPinItemModel, availabilityCategory);
+                        m_worldPinsService.UpdatePinCategory(*pPinItemModel, availabilityIconKey);
                     }
                 }
                 
-                RefreshPinsForSelection();
-            }
+                RefreshPinsForSelection();            }
             
             void SearchResultOnMapModel::OnSearchResultSectionItemSelected(const SearchResultSection::SearchResultSectionItemSelectedMessage& message)
             {
@@ -386,7 +386,7 @@ namespace ExampleApp
                 {
                     const WorldPins::SdkModel::WorldPinItemModel& worldPinModel = *(it->second);
                     const SearchResultModel& mutatedModel = Search::Swallow::SdkModel::SearchParser::MutateMeetingRoomAvailability(model, meetingAvailbilityChangedMessage.GetAvailability());
-                    m_worldPinsService.UpdatePinCategory(worldPinModel, m_searchResultIconCategoryMapper.GetIconIndexFromSearchResult(mutatedModel));
+                    m_worldPinsService.UpdatePinCategory(worldPinModel, m_searchResultIconCategoryMapper.GetIconKeyFromSearchResult(mutatedModel));
                 }
             }
             
@@ -399,12 +399,12 @@ namespace ExampleApp
                 
                 View::SearchResultOnMapItemModel* pSearchResultOnMapItemModel = m_searchResultOnMapFactory.CreateSearchResultOnMapItemModel(searchResultModel);
                 
-                const int pinIconIndex = m_searchResultIconCategoryMapper.GetIconIndexFromSearchResult(searchResultModel);
+                const std::string& pinIconKey = m_searchResultIconCategoryMapper.GetIconKeyFromSearchResult(searchResultModel);
                 
                 std::string ratingsImage = "";
                 int reviewCount = 0;
                 
-                Search::Yelp::SdkModel::TryParseReviewDetails(searchResultModel, ratingsImage, reviewCount);
+                Search::Yelp::SdkModel::Helpers::TryParseReviewDetails(searchResultModel, ratingsImage, reviewCount);
                 
                 WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(searchResultModel.GetTitle(),
                                                                          searchResultModel.GetSubtitle(),
@@ -421,7 +421,7 @@ namespace ExampleApp
                                                                                                              searchResultModel.IsInterior(),
                                                                                                              worldPinInteriorData,
                                                                                                              searchResultModel.GetLocation(),
-                                                                                                             pinIconIndex,
+                                                                                                             pinIconKey,
                                                                                                              searchResultModel.GetHeightAboveTerrainMetres(),
                                                                                                              WorldPins::SdkModel::WorldPinVisibility::Search);
                 

@@ -26,7 +26,7 @@ namespace ExampleApp
                 std::string m_vendor;
                 std::string m_ratingsImage;
                 int m_reviewCount;
-                int m_sdkMapPinIconIndex;
+                std::string m_pinIconKey;
                 Eegeo::Space::LatLong m_latLong;
                 float m_heightAboveTerrainMetres;
                 bool m_interior;
@@ -44,8 +44,8 @@ namespace ExampleApp
                            const std::string& description,
                            const std::string& vendor,
                            const std::string& ratingsImage,
+                           const std::string& pinIconKey,
                            int reviewCount,
-                           int sdkMapPinIconIndex,
                            const Eegeo::Space::LatLong& latLong,
                            float heightAboveTerrainMetresbool,
                            bool interior,
@@ -87,9 +87,9 @@ namespace ExampleApp
                     return m_reviewCount;
                 }
                 
-                int GetSdkMapPinIconIndexIcon() const
+                std::string GetPinIconKey() const
                 {
-                    return m_sdkMapPinIconIndex;
+                    return m_pinIconKey;
                 }
                 
                 const Eegeo::Space::LatLong& GetLatLong() const

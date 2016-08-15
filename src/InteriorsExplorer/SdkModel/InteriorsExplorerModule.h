@@ -44,6 +44,7 @@ namespace ExampleApp
                                         const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel,
                                         const bool interiorsAffectedByFlattening,
                                         InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsEntitiesPinsController,
+                                        const WorldPins::SdkModel::IWorldPinIconMapping& worldPinIconMapping,
                                         PersistentSettings::IPersistentSettingsModel& persistentSettings);
 
                 ~InteriorsExplorerModule();

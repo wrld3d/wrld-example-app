@@ -295,14 +295,6 @@ namespace
     dismissButtonFrame.origin.y = (self.pFloorPanel.frame.origin.y - dismissButtonSpacing) - dismissButtonFrame.size.height;
     self.pDismissButtonBackground.frame = dismissButtonFrame;
     
-    const bool showChangeFloorDialog = floorCount > 1;
-    [self.pTutorialView repositionTutorialDialogs:dismissButtonFrame.origin.x
-                                                 :dismissButtonFrame.origin.y
-                                                 :dismissButtonFrame.size.height
-                                                 :self.pFloorPanel.frame.origin.y + self.pFloorPanel.frame.size.height - self.pFloorChangeButton.frame.size.height
-                                                 :self.pFloorChangeButton.frame.size.height
-                                                 :showChangeFloorDialog];
-    
     float yOffset = ((float)self.pFloorChangeButton.frame.size.height - m_floorDivisionHeight)*0.5f;
     int floorIndex = 0;
     for(std::vector<std::string>::const_iterator it = m_tableViewFloorNames.begin(); it != m_tableViewFloorNames.end(); it++)
@@ -329,7 +321,7 @@ namespace
         yOffset += m_floorDivisionHeight;
         floorIndex++;
     }
-    
+
     m_floorSelectionEnabled= (floorCount > 1);
     self.pFloorPanel.hidden = !m_floorSelectionEnabled;
     self.pFloorPanel.userInteractionEnabled = self.pFloorChangeButton.userInteractionEnabled = m_floorSelectionEnabled;
@@ -551,6 +543,15 @@ namespace
         buttonFrame.origin.y = newY;
         self.pFloorChangeButton.frame = buttonFrame;
     }
+    
+    const bool showChangeFloorDialog = floorCount > 1;
+    const CGRect dismissButtonFrame = self.pDismissButtonBackground.frame;
+    [self.pTutorialView repositionTutorialDialogs:dismissButtonFrame.origin.x
+                                                 :dismissButtonFrame.origin.y
+                                                 :dismissButtonFrame.size.height
+                                                 :self.pFloorPanel.frame.origin.y + self.pFloorChangeButton.frame.origin.y
+                                                 :self.pFloorChangeButton.frame.size.height
+                                                 :showChangeFloorDialog];
 }
 
 @end

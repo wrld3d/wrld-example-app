@@ -6,6 +6,8 @@
 #include "EegeoSearchQueryFactory.h"
 #include "EegeoSearchService.h"
 #include "SwallowSearchConstants.h"
+#include "EegeoCategoryIconMapper.h"
+#include "EegeoReadableTagMapper.h"
 
 namespace ExampleApp
 {
@@ -21,17 +23,22 @@ namespace ExampleApp
                                                                    const std::vector<std::string>& availableCategories,
                                                                    const std::string& serviceUrl,
                                                                    const std::string& apiKey,
-                                                                   const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel)
+                                                                   const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                                   PersistentSettings::IPersistentSettingsModel& persistentSettings)
                 : m_pEegeoSearchQueryFactory(NULL)
                 , m_pEegeoParser(NULL)
                 , m_pSearchService(NULL)
+                , m_pCategoryIconMapper(NULL)
                 {
                     m_pEegeoSearchQueryFactory = Eegeo_NEW(EegeoSearchQueryFactory)(webRequestFactory,
                                                                                     urlEncoder,
                                                                                     interiorInteractionModel,
                                                                                     serviceUrl,
                                                                                     apiKey);
-                    m_pEegeoParser = Eegeo_NEW(EegeoJsonParser)();
+                    
+                    m_pCategoryIconMapper = Eegeo_NEW(EegeoCategoryIconMapper)();
+                    m_pReadableTagMapper = Eegeo_NEW(EegeoReadableTagMapper)();
+                    m_pEegeoParser = Eegeo_NEW(EegeoJsonParser)(*m_pCategoryIconMapper,*m_pReadableTagMapper,persistentSettings);
                     
                     m_pSearchService = Eegeo_NEW(EegeoSearchService)(*m_pEegeoSearchQueryFactory,
                                                                         *m_pEegeoParser,
@@ -44,6 +51,7 @@ namespace ExampleApp
                     Eegeo_DELETE m_pSearchService;
                     Eegeo_DELETE m_pEegeoParser;
                     Eegeo_DELETE m_pEegeoSearchQueryFactory;
+                    Eegeo_DELETE m_pReadableTagMapper;
                 }
                 
                 Search::SdkModel::ISearchService& EegeoSearchServiceModule::GetSearchService() const

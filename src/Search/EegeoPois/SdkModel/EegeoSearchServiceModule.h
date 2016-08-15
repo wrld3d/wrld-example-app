@@ -11,9 +11,13 @@
 #include "NetIncludes.h"
 #include "Search.h"
 #include "Interiors.h"
+#include "ICategoryIconMapper.h"
 
 #include <vector>
 #include <string>
+
+#include "IPersistentSettingsModel.h"
+#include "Helpers.h"
 
 namespace ExampleApp
 {
@@ -29,6 +33,10 @@ namespace ExampleApp
                     IEegeoSearchQueryFactory* m_pEegeoSearchQueryFactory;
                     IEegeoParser* m_pEegeoParser;
                     Search::SdkModel::ISearchService* m_pSearchService;
+                    
+                    SearchResultPoi::SdkModel::ICategoryIconMapper *m_pCategoryIconMapper;
+                    EegeoReadableTagMapper *m_pReadableTagMapper;
+                    
                 public:
                     EegeoSearchServiceModule(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                              Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
@@ -36,7 +44,8 @@ namespace ExampleApp
                                              const std::vector<std::string>& availableCategories,
                                              const std::string& serviceUrl,
                                              const std::string& apiKey,
-                                             const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel);
+                                             const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                             PersistentSettings::IPersistentSettingsModel& persistentSettings);
                     
                     ~EegeoSearchServiceModule();
                     

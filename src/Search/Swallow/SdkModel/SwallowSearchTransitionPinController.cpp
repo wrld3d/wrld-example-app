@@ -58,7 +58,7 @@ namespace ExampleApp
                                                                                        (*it).GetFloor());
                         
                         const float heightOffsetMetres = 0.0f;
-                        const int iconIndex = m_searchResultIconCategoryMapper.GetIconIndexFromSearchResult(*it);
+                        const std::string& pinIconKey = m_searchResultIconCategoryMapper.GetIconKeyFromSearchResult(*it);
                         const bool isInteriorPin = true;
                         
                         SwallowTransitionResultModel transitionResultModel = SearchParser::TransformToSwallowTransitionResult(*it);
@@ -72,7 +72,7 @@ namespace ExampleApp
                                                                                                           isInteriorPin,
                                                                                                           worldPinInteriorData,
                                                                                                           (*it).GetLocation(),
-                                                                                                          iconIndex,
+                                                                                                          pinIconKey,
                                                                                                           heightOffsetMetres,
                                                                                                           WorldPins::SdkModel::WorldPinVisibility::Search);
                         pPinItemModel->SetFocusable(false);

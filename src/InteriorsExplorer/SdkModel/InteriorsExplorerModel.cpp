@@ -32,7 +32,7 @@ namespace ExampleApp
                 const std::string MetricEventInteriorSelected = "Interior Selected";
                 const std::string MetricEventInteriorFloorSelected = "Interior Floor Selected";
                 const std::string MetricEventInteriorExitPressed = "Interior Exit Pressed";
-				const std::string HasViewedAnyInterior = "InteriorsExplorerModel_HasViewedAnyInterior";
+				const std::string InteriorsViewedCount = "InteriorsExplorerModel_InteriorsViewedCount";
                 
                 std::string ToFloorName(const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel)
                 {
@@ -58,6 +58,7 @@ namespace ExampleApp
             , m_interiorExplorerEnabled(false)
             , m_currentInteriorFloorIndex(0)
             , m_persistentSettings(persistentSettings)
+            , m_interiorsViewedCount(0)
             {
                 m_interiorInteractionModel.RegisterInteractionStateChangedCallback(m_interactionModelStateChangedCallback);
                 
@@ -96,11 +97,11 @@ namespace ExampleApp
             {
                 Eegeo_ASSERT(m_interiorInteractionModel.HasInteriorModel(), "Can't show interior explorer without a selected and streamed interior");
                 
-                m_hasViewedAnyInterior = false;
+                m_interiorsViewedCount = 0;
 
-				if(!m_persistentSettings.TryGetValue(HasViewedAnyInterior, m_hasViewedAnyInterior))
+				if(!m_persistentSettings.TryGetValue(InteriorsViewedCount, m_interiorsViewedCount))
 				{
-					m_hasViewedAnyInterior = false;
+					m_interiorsViewedCount = 0;
 				}
 
                 if(!m_interiorExplorerEnabled)
@@ -131,14 +132,14 @@ namespace ExampleApp
                 }
             }
             
-            bool InteriorsExplorerModel::GetHasViewedAnyInterior()
+            int InteriorsExplorerModel::GetInteriorsViewedCount()
             {
-                return m_hasViewedAnyInterior;
+                return m_interiorsViewedCount;
             }
             
-            void InteriorsExplorerModel::SetHasViewedAnyInterior(bool hasViewedAnyInterior)
+            void InteriorsExplorerModel::RecordHasViewedInterior()
             {
-                this->m_hasViewedAnyInterior = hasViewedAnyInterior;
+                ++m_interiorsViewedCount;
             }
             
            
@@ -173,7 +174,7 @@ namespace ExampleApp
             
             void InteriorsExplorerModel::Exit()
             {
-            	m_persistentSettings.SetValue(HasViewedAnyInterior, m_hasViewedAnyInterior);
+            	m_persistentSettings.SetValue(InteriorsViewedCount, m_interiorsViewedCount);
 
                 HideInteriorExplorer();
                 m_metricsService.SetEvent(MetricEventInteriorExitPressed);

@@ -53,6 +53,13 @@
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" >
+                
+                <com.eegeo.helpers.SquareImageView
+	                android:id="@+id/search_result_poi_view_image"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:background="@color/white"
+	                android:adjustViewBounds="true" />	               
 
                 <ProgressBar
                     android:id="@+id/search_result_poi_view_image_progress"
@@ -63,12 +70,7 @@
                     android:layout_centerVertical="true" />
             </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/search_result_poi_view_image"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true" />
-
+  
             <!-- Availability -->
 
             <TextView

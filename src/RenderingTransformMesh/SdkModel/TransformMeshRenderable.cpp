@@ -21,7 +21,6 @@ namespace ExampleApp
             , m_transform(Eegeo::m44::CreateIdentity())
             , m_ownMaterialAndMesh(ownMaterialAndMesh)
             , m_pOwnedMaterial(pMaterial)
-            , m_pOwnedMesh(pMesh)
             {
             }
             

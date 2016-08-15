@@ -31,8 +31,9 @@ public class NetworkChangeReceiver extends BroadcastReceiver
 		{
 			public void run()
 			{
-				int networkStatus = ConnectivityQuerier.getConnectivityStatus(localContext);
-				ConnectivityServiceJniMethods.SetConnectivityType(m_nativeCallerPointer, networkStatus);
+				final int networkStatus = ConnectivityQuerier.getConnectivityStatus(localContext);
+				final String ssid = networkStatus == ConnectivityQuerier.WIFI ? WifiSSIDQuerier.getWifiSSID(localContext) : "";
+				ConnectivityServiceJniMethods.SetConnectivityType(m_nativeCallerPointer, networkStatus, ssid);
 			}
 		});
 	}

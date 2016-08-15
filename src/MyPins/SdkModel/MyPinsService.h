@@ -50,7 +50,7 @@ namespace ExampleApp
                                            bool shouldShare);
                 
                 void SaveSearchResultPoiPin(const Search::SdkModel::SearchResultModel& searchResult,
-                                            int pinIconIndex);
+                                            const std::string& pinIconKey);
                 
                 void UpdatePinWithResult(const int myPinId, const Search::SdkModel::SearchResultModel& result);
                 

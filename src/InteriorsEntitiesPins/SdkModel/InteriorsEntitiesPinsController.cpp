@@ -16,6 +16,7 @@
 #include "InteriorInteractionModel.h"
 #include "InteriorsEntitiesRepository.h"
 #include "InteriorTransitionModel.h"
+#include "IWorldPinIconMapping.h"
 
 namespace ExampleApp
 {
@@ -26,6 +27,7 @@ namespace ExampleApp
             InteriorsEntitiesPinsController::InteriorsEntitiesPinsController(Eegeo::Resources::Interiors::Entities::InteriorsEntitiesRepository& interiorsEntitiesRepostiory,
                                                                              Eegeo::Pins::PinController& pinController,
                                                                              Eegeo::Pins::PinRepository& pinRepository,
+                                                                             const ExampleApp::WorldPins::SdkModel::IWorldPinIconMapping& pinIconMapper,
                                                                              Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                              const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                                                              Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& interiorsLabelsController,
@@ -49,13 +51,15 @@ namespace ExampleApp
                 m_interiorInteractionModel.RegisterModelChangedCallback(m_interiorModelChangedCallback);
                 m_interiorInteractionModel.RegisterInteractionStateChangedCallback(m_interiorInteractionStateChangedCallback);
                 
-                m_labelNameToIconIndex["Restroom"] = InteriorsPinIconType::Bathroom;
-                m_labelNameToIconIndex["Men's Bathroom"] = InteriorsPinIconType::Bathroom;
-                m_labelNameToIconIndex["Women's Bathroom"] = InteriorsPinIconType::Bathroom;
-                m_labelNameToIconIndex["Bathroom"] = InteriorsPinIconType::Bathroom;
-                m_labelNameToIconIndex["Elevator"] = InteriorsPinIconType::Elevator;
-                m_labelNameToIconIndex["Escalator"] = InteriorsPinIconType::Escalator;
-                m_labelNameToIconIndex["Stairs"] = InteriorsPinIconType::Stairs;
+                m_labelNameToIconIndex["restroom"] = pinIconMapper.IconIndexForKey(IconKeyToilets);
+                m_labelNameToIconIndex["men's bathroom"] = pinIconMapper.IconIndexForKey(IconKeyToilets);
+                m_labelNameToIconIndex["women's bathroom"] = pinIconMapper.IconIndexForKey(IconKeyToilets);
+                m_labelNameToIconIndex["bathroom"] = pinIconMapper.IconIndexForKey(IconKeyToilets);
+                m_labelNameToIconIndex["elevator"] = pinIconMapper.IconIndexForKey(IconKeyElevator);
+                m_labelNameToIconIndex["escalator"] = pinIconMapper.IconIndexForKey(IconKeyEscalator);
+                m_labelNameToIconIndex["stairs"] = pinIconMapper.IconIndexForKey(IconKeyStairs);
+
+                
                 
                 for (std::map<std::string, int>::const_iterator it = m_labelNameToIconIndex.begin(); it != m_labelNameToIconIndex.end(); ++it)
                 {

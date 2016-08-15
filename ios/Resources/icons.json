@@ -1,0 +1,192 @@
+{
+    "icons": [
+        {
+            "name": "accommodation", 
+            "file": "icon1_accommodation.png"
+        }, 
+        {
+            "name": "aroundme", 
+            "file": "icon1_aroundme.png"
+        }, 
+        {
+            "name": "art_museums", 
+            "file": "icon1_art_museums.png"
+        }, 
+        {
+            "name": "business", 
+            "file": "icon1_business.png"
+        }, 
+        {
+            "name": "entertainment", 
+            "file": "icon1_entertainment.png"
+        }, 
+        {
+            "name": "food_drink", 
+            "file": "icon1_food_drink.png"
+        }, 
+        {
+            "name": "amenities", 
+            "file": "icon1_amenities.png"
+        }, 
+        {
+            "name": "health", 
+            "file": "icon1_health.png"
+        }, 
+        {
+            "name": "my_pins", 
+            "file": "icon1_my_pins.png"
+        }, 
+        {
+            "name": "misc", 
+            "file": "icon1_misc.png"
+        }, 
+        {
+            "name": "shopping", 
+            "file": "icon1_shopping.png"
+        }, 
+        {
+            "name": "sports_leisure", 
+            "file": "icon1_sports_leisure.png"
+        }, 
+        {
+            "name": "tourism", 
+            "file": "icon1_tourism.png"
+        }, 
+        {
+            "name": "transport", 
+            "file": "icon1_transport.png"
+        }, 
+        {
+            "name": "spring", 
+            "file": "icon1_spring.png"
+        }, 
+        {
+            "name": "autumn", 
+            "file": "icon1_autumn.png"
+        }, 
+        {
+            "name": "winter", 
+            "file": "icon1_winter.png"
+        }, 
+        {
+            "name": "summer", 
+            "file": "icon1_summer.png"
+        }, 
+        {
+            "name": "dawn", 
+            "file": "icon1_dawn.png"
+        }, 
+        {
+            "name": "day", 
+            "file": "icon1_day.png"
+        }, 
+        {
+            "name": "dusk", 
+            "file": "icon1_dusk.png"
+        }, 
+        {
+            "name": "night", 
+            "file": "icon1_night.png"
+        }, 
+        {
+            "name": "clear", 
+            "file": "icon1_clear.png"
+        }, 
+        {
+            "name": "sun", 
+            "file": "icon1_sun.png"
+        }, 
+        {
+            "name": "fog", 
+            "file": "icon1_fog.png"
+        }, 
+        {
+            "name": "rain", 
+            "file": "icon1_rain.png"
+        }, 
+        {
+            "name": "snow", 
+            "file": "icon1_snow.png"
+        }, 
+        {
+            "name": "emergency_exit", 
+            "file": "icon1_emergency_exit.png"
+        }, 
+        {
+            "name": "fire", 
+            "file": "icon1_fire.png"
+        }, 
+        {
+            "name": "first_aid", 
+            "file": "icon1_first_aid.png"
+        }, 
+        {
+            "name": "disabled_access", 
+            "file": "icon1_disabled_access.png"
+        }, 
+        {
+            "name": "toilets", 
+            "file": "icon1_toilets.png"
+        }, 
+        {
+            "name": "defibrillator", 
+            "file": "icon1_defibrillator.png"
+        }, 
+        {
+            "name": "elevator", 
+            "file": "icon1_elevator.png"
+        }, 
+        {
+            "name": "stairs", 
+            "file": "icon1_stairs.png"
+        }, 
+        {
+            "name": "escalator", 
+            "file": "icon1_escalator.png"
+        }, 
+        {
+            "name": "printer", 
+            "file": "icon1_printer.png"
+        }, 
+        {
+            "name": "reception", 
+            "file": "icon1_reception.png"
+        }, 
+        {
+            "name": "stationary", 
+            "file": "icon1_stationary.png"
+        }, 
+        {
+            "name": "person", 
+            "file": "icon1_person.png"
+        }, 
+        {
+            "name": "department", 
+            "file": "icon1_department.png"
+        }, 
+        {
+            "name": "meeting_room_available", 
+            "file": "icon1_meeting_room_available.png"
+        }, 
+        {
+            "name": "meeting_room_available_soon", 
+            "file": "icon1_meeting_room_available_soon.png"
+        }, 
+        {
+            "name": "meeting_room", 
+            "file": "icon1_meeting_room.png"
+        }, 
+        {
+            "name": "meeting_room_unavailable", 
+            "file": "icon1_meeting_room_unavailable.png"
+        }, 
+        {
+            "name": "office", 
+            "file": "icon1_office.png"
+        }, 
+        {
+            "name": "working_group", 
+            "file": "icon1_working_group.png"
+        }
+    ]
+}

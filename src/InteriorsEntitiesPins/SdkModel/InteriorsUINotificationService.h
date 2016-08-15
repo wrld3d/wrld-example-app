@@ -5,6 +5,7 @@
 #include "Types.h"
 #include "IInteriorsEntitiesPinsController.h"
 #include "BidirectionalBus.h"
+#include "WorldPins.h"
 
 namespace ExampleApp
 {
@@ -16,7 +17,7 @@ namespace ExampleApp
             {
             public:
                 
-                InteriorsUINotificationService(ExampleAppMessaging::TMessageBus& messageBus, InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsPinsController);
+                InteriorsUINotificationService(ExampleAppMessaging::TMessageBus& messageBus, InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsPinsController,const WorldPins::SdkModel::IWorldPinIconMapping& pinIconMapping);
                 
                 ~InteriorsUINotificationService();
                 

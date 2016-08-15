@@ -4,10 +4,11 @@
 #include "SearchVendorNames.h"
 #include "TimeHelpers.h"
 #include "InteriorId.h"
-
 #include "document.h"
 #include "writer.h"
 #include "stringbuffer.h"
+#include "EegeoReadableTagMapper.h"
+#include "IPersistentSettingsModel.h"
 
 #include <sstream>
 #include <map>
@@ -21,9 +22,45 @@ namespace ExampleApp
             namespace SdkModel
             {
                 namespace
-                {   
-                    Search::SdkModel::SearchResultModel ParseSearchResultFromJsonObject(const rapidjson::Value& json)
+                {
+                    std::vector<std::string> SplitIntoTags(const std::string& str, char c)
                     {
+                        std::vector<std::string> tags;
+                        unsigned previous_start = -1;
+                        
+                        for (unsigned i = 0; i < str.length(); ++i)
+                        {
+                            if (str[i] == c)
+                            {
+                                tags.push_back(str.substr(previous_start + 1, i - previous_start - 1));
+                                previous_start = i;
+                            }
+                        }
+                        
+                        if (previous_start != str.length() - 1)
+                        {
+                            tags.push_back(str.substr(previous_start + 1));
+                        }
+                        
+                        return tags;
+                    }
+                    std::vector<std::string> GetNamesForTags(const std::vector<std::string>& tags, const EegeoReadableTagMapper& tagNameMapper)
+                    {
+                        std::vector<std::string> readableTags;
+                        
+                        for(std::vector<std::string>::const_iterator it = tags.begin(); it != tags.end(); ++it)
+                        {
+                            const std::string& tag = *it;
+                            
+                            readableTags.push_back(tagNameMapper.GetNameForTag(tag));
+                        }
+                        
+                        return readableTags;
+                    }
+
+                    Search::SdkModel::SearchResultModel ParseSearchResultFromJsonObject(const rapidjson::Value& json, const SearchResultPoi::SdkModel::ICategoryIconMapper& tagIconMapper,const EegeoReadableTagMapper& tagNameMapper,PersistentSettings::IPersistentSettingsModel& persistentSettings)
+                    {
+                        
                         Eegeo::Space::LatLong location = Eegeo::Space::LatLong::FromDegrees(json["lat"].GetDouble(),
                                                                                             json["lon"].GetDouble());
                         
@@ -33,38 +70,56 @@ namespace ExampleApp
                         bool indoor = json["indoor"].GetBool();
                         Eegeo::Resources::Interiors::InteriorId interiorId(json["indoor_id"].GetString());
                         
-                        std::string category = json["tags"].GetString();
-                        std::vector<std::string> categories;
+                        std::vector<std::string> tags = SplitIntoTags(json["tags"].GetString(), ' ');
+                        
+                        std::vector<std::string> readableTags = GetNamesForTags(tags, tagNameMapper);
+                        
+                        std::string category = tagIconMapper.GetIconForCategories(tags);
+                        
+                        int availabilityState = 1;
+                        
+                        if(persistentSettings.TryGetValue(idStream.str(), availabilityState))
+                        {
+                        }
+                        
                         
                         std::string userData = "";
                         
                         if (json.HasMember("user_data"))
                         {
-                            if (json["user_data"].HasMember("subcategory") && json["user_data"]["subcategory"].IsString())
-                            {
-                                category = json["user_data"]["subcategory"].GetString();
-                            }
                             rapidjson::StringBuffer strbuf;
                             rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
                             json["user_data"].Accept(writer);
                             userData = strbuf.GetString();
+                            
                         }
                         
-                        return ExampleApp::Search::SdkModel::SearchResultModel(ExampleApp::Search::SdkModel::SearchResultModel::CurrentVersion,
-                                                                               idStream.str(),
-                                                                               json["title"].GetString(),
-                                                                               json["subtitle"].GetString(),
-                                                                               location,
-                                                                               static_cast<float>(json["height_offset"].GetDouble()),
-                                                                               indoor,
-                                                                               interiorId,
-                                                                               json["floor_id"].GetInt(),
-                                                                               category,
-                                                                               categories,
-                                                                               ExampleApp::Search::EegeoVendorName,
-                                                                               userData,
-                                                                               Eegeo::Helpers::Time::MillisecondsSinceEpoch());
+                        ExampleApp::Search::SdkModel::SearchResultModel tempResultModel = ExampleApp::Search::SdkModel::SearchResultModel(ExampleApp::Search::SdkModel::SearchResultModel::CurrentVersion,
+                                                                                                                                          idStream.str(),
+                                                                                                                                          json["title"].GetString(),
+                                                                                                                                          json["subtitle"].GetString(),
+                                                                                                                                          location,
+                                                                                                                                          static_cast<float>(json["height_offset"].GetDouble()),
+                                                                                                                                          indoor,
+                                                                                                                                          interiorId,
+                                                                                                                                          json["floor_id"].GetInt(),
+                                                                                                                                          category,
+                                                                                                                                          readableTags,
+                                                                                                                                          ExampleApp::Search::EegeoVendorName,
+                                                                                                                                          userData,
+                                                                                                                                          Eegeo::Helpers::Time::MillisecondsSinceEpoch());
+                        
+                        tempResultModel.SetAvailability(availabilityState);
+                        return tempResultModel;
                     }
+                }
+                
+                EegeoJsonParser::EegeoJsonParser(const SearchResultPoi::SdkModel::ICategoryIconMapper &categoryIconMapper,const EegeoReadableTagMapper& tagReadableNameMapper,PersistentSettings::IPersistentSettingsModel& persistentSettings)
+                :m_categoryIconMapper(categoryIconMapper),
+                m_persistentSettings(persistentSettings),
+                m_tagReadableNameMapper(tagReadableNameMapper)
+                {
+                    
                 }
                 
                 void EegeoJsonParser::ParseEegeoQueryResults(const std::string& serialized,
@@ -79,7 +134,8 @@ namespace ExampleApp
                         for(int i = 0; i < numEntries; ++i)
                         {
                             const rapidjson::Value& json = document[i];
-                            Search::SdkModel::SearchResultModel result(ParseSearchResultFromJsonObject(json));
+                            Search::SdkModel::SearchResultModel result(ParseSearchResultFromJsonObject(json, m_categoryIconMapper,m_tagReadableNameMapper,m_persistentSettings));
+                            
                             out_results.push_back(result);
                         }
                     }

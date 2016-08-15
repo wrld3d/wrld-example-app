@@ -62,7 +62,6 @@ namespace ExampleApp
                 
                 m_pMyPinBoundObjectFactory = Eegeo_NEW(MyPinBoundObjectFactory)(messageBus,
                                                                                 sdkModelDomainEventBus,
-                                                                                categorySearchRepository,
                                                                                 myPinsSearchResultRefreshService,
                                                                                 *m_pMyPinsWebService);
 

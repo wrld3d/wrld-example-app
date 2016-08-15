@@ -21,6 +21,10 @@ namespace ExampleApp
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 
                 Metrics::IMetricsService& m_metricsService;
+                
+                Eegeo::Helpers::TCallback1<SearchResultOnMapItemModel, const SearchResultOnMap::SearchResultMeetingAvailabilityChanged&> m_availabilityChangedHandlerBinding;
+                
+                void OnAvailabilityChanged(const ExampleApp::SearchResultOnMap::SearchResultMeetingAvailabilityChanged& message);
 
             public:
                 SearchResultOnMapItemModel(const Search::SdkModel::SearchResultModel& searchResultModel,

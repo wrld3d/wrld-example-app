@@ -6,6 +6,8 @@ set(currsources
   ../src/Search/EegeoPois/SdkModel/EegeoJsonParser.h
   ../src/Search/EegeoPois/SdkModel/EegeoSearchQuery.cpp
   ../src/Search/EegeoPois/SdkModel/EegeoSearchQuery.h
+  ../src/Search/EegeoPois/SdkModel/EegeoReadableTagMapper.h
+  ../src/Search/EegeoPois/SdkModel/EegeoReadableTagMapper.cpp
   ../src/Search/EegeoPois/SdkModel/EegeoInteriorSearchQuery.h
   ../src/Search/EegeoPois/SdkModel/EegeoInteriorSearchQuery.cpp
   ../src/Search/EegeoPois/SdkModel/EegeoSearchQueryFactory.cpp

@@ -47,7 +47,8 @@ namespace ExampleApp
                                 ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
                                 const bool interiorsAffectedByFlattening,
                                 const Menu::View::IMenuReactionModel& menuReaction,
-                                const float screenOversampleScale);
+                                const float screenOversampleScale,
+                                const IWorldPinIconMapping& worldPinIconMapping);
 
                 ~WorldPinsModule();
 

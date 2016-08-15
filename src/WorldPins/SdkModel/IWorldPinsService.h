@@ -26,7 +26,7 @@ namespace ExampleApp
                                                   bool interior,
                                                   const WorldPinInteriorData& worldPinInteriorData,
                                                   const Eegeo::Space::LatLong& location,
-                                                  int iconIndex,
+                                                  const std::string& pinIconKey,
                                                   float heightAboveTerrainMetres,
                                                   int visibilityMask) = 0;
 
@@ -34,7 +34,7 @@ namespace ExampleApp
 
                 virtual void UpdatePinScale(const WorldPinItemModel& pinItemModel, float scale) = 0;
                 
-                virtual void UpdatePinCategory(const WorldPinItemModel& pinItemModel, int category) = 0;
+                virtual void UpdatePinCategory(const WorldPinItemModel& pinItemModel, const std::string& iconKey) = 0;
 
                 virtual void GetPinEcefAndScreenLocations(const WorldPinItemModel& pinItemModel,
                         Eegeo::dv3& ecefLocation,

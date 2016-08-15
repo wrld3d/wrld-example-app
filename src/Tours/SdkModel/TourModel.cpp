@@ -70,7 +70,7 @@ namespace ExampleApp
             
             TourModel::TourModel(const std::string& name,
                                  const std::string& introText,
-                                 int iconIndex,
+                                 const std::string& pinIconKey,
                                  const Eegeo::Space::LatLong& location,
                                  bool visibleOnMap,
                                  bool isInterior,
@@ -86,7 +86,7 @@ namespace ExampleApp
                                  const std::string& twitterBaseProfileImage)
             : m_name(name)
             , m_introText(introText)
-            , m_iconIndex(iconIndex)
+            , m_pinIconKey(pinIconKey)
             , m_location(location)
             , m_visibleOnMap(visibleOnMap)
             , m_showGradientBase(showGradientBase)
@@ -119,9 +119,9 @@ namespace ExampleApp
                 return m_introText;
             }
             
-            int TourModel::IconIndex() const
+            std::string TourModel::PinIconKey() const
             {
-                return m_iconIndex;
+                return m_pinIconKey;
             }
             
             const Eegeo::Space::LatLong& TourModel::Location() const
