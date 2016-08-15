@@ -91,9 +91,12 @@ public class InteriorsExplorerTutorialView implements View.OnClickListener, View
     	hide();
     }
     
-    public void show()
+    public void show(boolean showExitDialog, boolean showChangeFloorDialog)
     {
     	m_uiRoot.addView(m_uiRootView);
+    	
+    	m_uiExitDialog.setVisibility(showExitDialog ? View.VISIBLE : View.INVISIBLE);
+    	m_uiChangeFloorDialog.setVisibility(showChangeFloorDialog ? View.VISIBLE : View.INVISIBLE);
     }
     
     public void hide()
