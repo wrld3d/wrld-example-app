@@ -40,7 +40,7 @@
 
 - (void) animateTo: (float) t;
 
-- (void) show;
+- (void) show: (bool) showExitDialog : (bool) showChangeFloorDialog;
 
 - (void) hide;
 
