@@ -30,4 +30,8 @@ public class NetworkChangeReceiverRegistrationService
     {
         return ConnectivityQuerier.getConnectivityStatus(m_activity);
     }
+	String getInitialNetworkWifiSSID()
+	{
+		return WifiSSIDQuerier.getWifiSSID(m_activity);
+	}
 }

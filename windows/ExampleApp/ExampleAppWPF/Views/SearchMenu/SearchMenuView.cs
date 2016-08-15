@@ -71,8 +71,7 @@ namespace ExampleAppWPF
             m_searchInFlight = false;
             m_hasResults = false;
             m_hasCategorySearch = false;
-            m_touchHandler = new WindowInteractionTouchHandler(this);
-            TouchEnter += (o, e) => { mainWindow.PopAllTouchEvents(); };
+            m_touchHandler = new WindowInteractionTouchHandler(this, true, false, true);
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)

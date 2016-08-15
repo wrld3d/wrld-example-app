@@ -33,8 +33,7 @@ namespace ExampleAppWPF
             mainWindow.SizeChanged += PerformLayout;
             mainWindow.MainGrid.Children.Add(this);
 
-            m_touchHandler = new WindowInteractionTouchHandler(this);
-            TouchEnter += (o, e) => { mainWindow.PopAllTouchEvents(); };
+            m_touchHandler = new WindowInteractionTouchHandler(this, false, true, true);
         }
 
         private void PerformLayout(object sender, RoutedEventArgs e)
