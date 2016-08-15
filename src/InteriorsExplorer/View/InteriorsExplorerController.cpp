@@ -96,11 +96,24 @@ namespace ExampleApp
                     
                     OnFloorSelected(InteriorsExplorerFloorSelectedMessage(message.GetSelectedFloorIndex(), message.GetSelectedFloorName()));
                     
-                    if(m_model.GetInteriorsViewedCount() < 2)
-                    {
-                        m_view.AddTutorialDialogs();
-                        m_model.RecordHasViewedInterior();
-                    }
+					const int maxTutorialViews = 2;
+					bool showExitTutorial = m_model.GetInteriorExitTutorialViewedCount() < maxTutorialViews;
+					bool showChangeFloorTutorial = m_model.GetInteriorChangeFloorTutorialViewedCount() < maxTutorialViews && m_view.GetCanShowChangeFloorTutorialDialog();
+
+					if(showExitTutorial || showChangeFloorTutorial)
+					{
+						m_view.AddTutorialDialogs(showExitTutorial, showChangeFloorTutorial);
+
+						if(showExitTutorial)
+						{
+							m_model.RecordHasViewedInteriorExitTutorial();
+						}
+
+						if(showChangeFloorTutorial)
+						{
+							m_model.RecordHasViewedInteriorChangeFloorTutorial();
+						}
+					}
                     
                     m_viewModel.AddToScreen();
                 }

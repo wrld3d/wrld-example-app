@@ -45,14 +45,19 @@ namespace ExampleApp
                 [m_pView setSelectedFloor:index];
             }
             
-            void InteriorsExplorerViewInterop::AddTutorialDialogs()
+            void InteriorsExplorerViewInterop::AddTutorialDialogs(bool showExitDialog, bool showChangeFloorDialog)
             {
-                [m_pTutorialView show];
+                [m_pTutorialView show: showExitDialog : showChangeFloorDialog];
             }
             
             void InteriorsExplorerViewInterop::RemoveTutorialDialogs()
             {
                 [m_pTutorialView hide];
+            }
+            
+            bool InteriorsExplorerViewInterop::GetCanShowChangeFloorTutorialDialog()
+            {
+                return [m_pView GetCanShowChangeFloorTutorialDialog];
             }
             
             void InteriorsExplorerViewInterop::InsertDismissedCallback(Eegeo::Helpers::ICallback0& callback)

@@ -357,6 +357,12 @@ namespace
     } completion:nil];
 }
 
+- (bool) GetCanShowChangeFloorTutorialDialog
+{
+    int floorCount = static_cast<int>(m_tableViewFloorNames.size());
+    return floorCount > 1;
+}
+
 - (void) refreshFloorIndicator:(int)floorIndex
 {
     int nameIndex = static_cast<int>(m_tableViewFloorNames.size()-1) - floorIndex;

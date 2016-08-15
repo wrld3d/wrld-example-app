@@ -237,14 +237,19 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     	}
     }
     
-    public void addTutorialDialogs()
+    public void addTutorialDialogs(boolean showExitDialog, boolean showChangeFloorDialog)
     {
-    	m_tutorialView.show();
+    	m_tutorialView.show(showExitDialog, showChangeFloorDialog);
     }
     
     public void removeTutorialDialogs()
     {
     	m_tutorialView.hide();
+    }
+    
+    public boolean getCanShowChangeFloorTutorialDialog()
+    {
+    	return m_floorListAdapter.getCount() > 1;
     }
     
     public void setTouchEnabled(boolean enabled)
