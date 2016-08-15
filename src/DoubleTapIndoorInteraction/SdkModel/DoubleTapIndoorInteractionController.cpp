@@ -14,6 +14,7 @@
 #include "CollisionMeshResourceRepository.h"
 #include "DoubleTapIndoorInteractionController.h"
 
+
 namespace ExampleApp
 {
     namespace DoubleTapIndoorInteraction
@@ -25,7 +26,7 @@ namespace ExampleApp
                                                                                        Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                                        ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                                                                        Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
-                                                                                       Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule):m_interiorsCameraController(interiorsCameraController),m_cameraTransitionController(cameraTransitionController),m_interiorInteractionModel(interiorInteractionModel),m_appModeModel(appModeModel),m_interiorTransitionModel(interiorTransitionModel)
+                                                                                       Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule):m_interiorsCameraController(interiorsCameraController),m_cameraTransitionController(cameraTransitionController),m_interiorInteractionModel(interiorInteractionModel),m_appModeModel(appModeModel),m_interiorTransitionModel(interiorTransitionModel),m_closeDistanceOffSet(10),m_optimizedDistanceOffSet(100)
             {
                 m_pTerrainRayPicker = Eegeo_NEW(Eegeo::Resources::Terrain::Collision::TerrainRayPicker)(terrainModelModule.GetTerrainHeightProvider(), terrainModelModule.GetCollisionMeshResourceRepository());
             }
@@ -40,29 +41,20 @@ namespace ExampleApp
                 float optimizedDistance = CalcRecommendedOverviewDistanceForFloor();
                 float camerDistanceFrom = m_interiorsCameraController.GetDistanceToInterest();
                 Eegeo::Resources::Interiors::InteriorId interiorID = m_interiorInteractionModel.GetInteriorModel()->GetId();
-                int selectedFloor = m_interiorInteractionModel.GetSelectedFloorIndex();
                 
-                if ((camerDistanceFrom < optimizedDistance  && camerDistanceFrom >= CalculateCloseDistanceWithRespectTo(optimizedDistance)) || (camerDistanceFrom > optimizedDistance && camerDistanceFrom  < optimizedDistance + 50))
+                if ((camerDistanceFrom < optimizedDistance  && camerDistanceFrom >= CalculateCloseDistanceWithRespectTo(optimizedDistance) + m_closeDistanceOffSet) || (camerDistanceFrom > optimizedDistance && camerDistanceFrom  < optimizedDistance + m_optimizedDistanceOffSet))
                 {
-                    // Zoom into closest
                     float closeDistacne = CalculateCloseDistanceWithRespectTo(optimizedDistance);
-                    ZoomInTo(closeDistacne, data);
-
+                    ZoomIn(closeDistacne, data);
                 }
-                else if (camerDistanceFrom <= CalculateCloseDistanceWithRespectTo(optimizedDistance))
+                else
                 {
-                    // Zoom into optimized distance
-                    m_cameraTransitionController.StartTransitionTo(optimizedDistance - (optimizedDistance * 0.1), interiorID, selectedFloor);
-
-                }
-                else if (camerDistanceFrom > optimizedDistance)
-                {
-                    m_cameraTransitionController.StartTransitionTo(optimizedDistance, interiorID, selectedFloor);
+                    ZoomIn(optimizedDistance, data);
                 }
 
   
             }
-            void DoubleTapIndoorInteractionController::ZoomInTo(float distance,const AppInterface::TapData& data)
+            void DoubleTapIndoorInteractionController::ZoomIn(float distance,const AppInterface::TapData& data)
             {
                 
 
@@ -165,7 +157,7 @@ namespace ExampleApp
             }
             float DoubleTapIndoorInteractionController::CalculateCloseDistanceWithRespectTo(float optimizedDistance)
             {
-                return optimizedDistance*0.3;
+                return optimizedDistance*0.5;
             }
             
 
