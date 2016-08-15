@@ -63,7 +63,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     private int m_resultsCount = 0;
     
     private SearchMenuAnimationHandler m_searchMenuAnimationHandler = null;
-    	
+    
     private ImageView m_searchResultsFade;
     private Button m_searchResultsScrollButton;
     private boolean m_searchResultsScrollable;
@@ -355,6 +355,14 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     	menuHeightAnimator.start();
     	m_searchList.setSelection(0);
     	
+
+    	
+    	if(fullHeight > availableHeight + cellHeight)
+    	{
+    		m_searchResultsFade.setVisibility(View.VISIBLE);
+    		m_searchResultsScrollButton.setVisibility(View.VISIBLE);
+    		m_searchResultsScrollable = true;
+    		
     	if(resultCount > 0 && oldHeight == 0)
     	{
     		Animation fadeIn = new AlphaAnimation(0, 1);
@@ -365,12 +373,6 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     		animation.addAnimation(fadeIn);
     		m_searchResultsScrollButton.setAnimation(animation);
     	}
-    	
-    	if(fullHeight > availableHeight + cellHeight)
-    	{
-    		m_searchResultsFade.setVisibility(View.VISIBLE);
-    		m_searchResultsScrollButton.setVisibility(View.VISIBLE);
-    		m_searchResultsScrollable = true;
     	}
     	else
     	{
