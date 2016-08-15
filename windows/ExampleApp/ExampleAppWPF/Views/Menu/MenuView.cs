@@ -73,7 +73,6 @@ namespace ExampleAppWPF
             m_openState = -1.0f;
             m_isAnimating = false;
             m_isOffScreen = true;
-            m_touchHandler = new WindowInteractionTouchHandler(this);
         }
 
         protected void PerformLayout(object sender, SizeChangedEventArgs e)

@@ -9,12 +9,32 @@ namespace ExampleAppWPF
 {
     class WindowInteractionTouchHandler
     {
-        public WindowInteractionTouchHandler(FrameworkElement ui)
+        public WindowInteractionTouchHandler(FrameworkElement ui, bool enableTouchEnter, bool enableTouchDown, bool enableTouchLeave)
         {
             var window = Application.Current.MainWindow as MainWindow;
 
-            ui.TouchEnter += (o, e) => { window.DisableInput(); };
-            ui.TouchLeave += (o, e) => { window.EnableInput();  };
+            if (enableTouchEnter)
+            {
+                ui.TouchEnter += (o, e) =>
+                {
+                    window.PopAllTouchEvents();
+                    window.DisableInput();
+                };
+            }
+
+            if(enableTouchDown)
+            {
+                ui.TouchDown += (o, e) =>
+                {
+                    window.PopAllTouchEvents();
+                    window.DisableInput();
+                };
+            }
+
+            if(enableTouchLeave)
+            {
+                ui.MouseLeave += (o, e) => { window.EnableInput(); };
+            }
         }
     }
 }
