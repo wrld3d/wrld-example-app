@@ -37,8 +37,9 @@ namespace ExampleApp
                 Helpers::ReflectionHelpers::Method<bool> mSetFloorPanelEnabled;
                 Helpers::ReflectionHelpers::Method<void> mDestroy;
                 Helpers::ReflectionHelpers::Method<void> mPlaySliderAnim;
-				Helpers::ReflectionHelpers::Method<void> mAddTutorialDialogs;
+				Helpers::ReflectionHelpers::Method<bool,bool> mAddTutorialDialogs;
 				Helpers::ReflectionHelpers::Method<void> mRemoveTutorialDialogs;
+				Helpers::ReflectionHelpers::Method<void> mGetCanShowChangeFloorTutorialDialog;
 
             public:
                 InteriorsExplorerView();
@@ -69,9 +70,11 @@ namespace ExampleApp
 
                 void OnDismissed();
 
-				void AddTutorialDialogs();
+				void AddTutorialDialogs(bool showExitDialog, bool showChangeFloorDialog);
 
 				void RemoveTutorialDialogs();
+
+				bool GetCanShowChangeFloorTutorialDialog();
 
                 void InsertDismissedCallback(Eegeo::Helpers::ICallback0& callback);
 

@@ -32,7 +32,8 @@ namespace ExampleApp
                 const std::string MetricEventInteriorSelected = "Interior Selected";
                 const std::string MetricEventInteriorFloorSelected = "Interior Floor Selected";
                 const std::string MetricEventInteriorExitPressed = "Interior Exit Pressed";
-				const std::string InteriorsViewedCount = "InteriorsExplorerModel_InteriorsViewedCount";
+				const std::string InteriorExitTutorialViewedCount = "InteriorsExplorerModel_InteriorExitTutorialViewedCount";
+				const std::string InteriorChangeFloorTutorialViewedCount = "InteriorsExplorerModel_InteriorChangeFloorTutorialViewedCount";
                 
                 std::string ToFloorName(const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel)
                 {
@@ -58,7 +59,8 @@ namespace ExampleApp
             , m_interiorExplorerEnabled(false)
             , m_currentInteriorFloorIndex(0)
             , m_persistentSettings(persistentSettings)
-            , m_interiorsViewedCount(0)
+            , m_interiorExitTutorialViewedCount(0)
+			, m_interiorChangeFloorTutorialViewedCount(0)
             {
                 m_interiorInteractionModel.RegisterInteractionStateChangedCallback(m_interactionModelStateChangedCallback);
                 
@@ -97,11 +99,18 @@ namespace ExampleApp
             {
                 Eegeo_ASSERT(m_interiorInteractionModel.HasInteriorModel(), "Can't show interior explorer without a selected and streamed interior");
                 
-                m_interiorsViewedCount = 0;
+                m_interiorExitTutorialViewedCount = 0;
 
-				if(!m_persistentSettings.TryGetValue(InteriorsViewedCount, m_interiorsViewedCount))
+				if(!m_persistentSettings.TryGetValue(InteriorExitTutorialViewedCount, m_interiorExitTutorialViewedCount))
 				{
-					m_interiorsViewedCount = 0;
+					m_interiorExitTutorialViewedCount = 0;
+				}
+
+				m_interiorChangeFloorTutorialViewedCount = 0;
+
+				if(!m_persistentSettings.TryGetValue(InteriorChangeFloorTutorialViewedCount, m_interiorChangeFloorTutorialViewedCount))
+				{
+					m_interiorChangeFloorTutorialViewedCount = 0;
 				}
 
                 if(!m_interiorExplorerEnabled)
@@ -132,15 +141,25 @@ namespace ExampleApp
                 }
             }
             
-            int InteriorsExplorerModel::GetInteriorsViewedCount()
+            int InteriorsExplorerModel::GetInteriorExitTutorialViewedCount()
             {
-                return m_interiorsViewedCount;
+                return m_interiorExitTutorialViewedCount;
             }
             
-            void InteriorsExplorerModel::RecordHasViewedInterior()
+            void InteriorsExplorerModel::RecordHasViewedInteriorExitTutorial()
             {
-                ++m_interiorsViewedCount;
+                ++m_interiorExitTutorialViewedCount;
             }
+
+			int InteriorsExplorerModel::GetInteriorChangeFloorTutorialViewedCount()
+			{
+				return m_interiorChangeFloorTutorialViewedCount;
+			}
+
+			void InteriorsExplorerModel::RecordHasViewedInteriorChangeFloorTutorial()
+			{
+				++m_interiorChangeFloorTutorialViewedCount;
+			}
             
            
             void InteriorsExplorerModel::HandleInteractionModelStateChanged()
@@ -174,7 +193,8 @@ namespace ExampleApp
             
             void InteriorsExplorerModel::Exit()
             {
-            	m_persistentSettings.SetValue(InteriorsViewedCount, m_interiorsViewedCount);
+            	m_persistentSettings.SetValue(InteriorExitTutorialViewedCount, m_interiorExitTutorialViewedCount);
+				m_persistentSettings.SetValue(InteriorChangeFloorTutorialViewedCount, m_interiorChangeFloorTutorialViewedCount);
 
                 HideInteriorExplorer();
                 m_metricsService.SetEvent(MetricEventInteriorExitPressed);

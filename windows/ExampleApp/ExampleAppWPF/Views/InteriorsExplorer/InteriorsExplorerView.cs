@@ -189,7 +189,7 @@ namespace ExampleAppWPF
 													0,
 													(float)(sliderPosition.Y + sliderHeight - (sliderFloorSpacing * floorIndex) + 3),
 													0,
-													FloorCount > 1,
+													GetCanShowChangeFloorTutorialDialog(),
 													m_container.Margin);
 			}
         }
@@ -289,15 +289,20 @@ namespace ExampleAppWPF
             Visibility = Visibility.Hidden;
         }
 
-        public void AddTutorialDialogs()
+        public void AddTutorialDialogs(bool showExitDialog, bool showChangeFloorDialog)
         {
-            m_tutorialView.show();
+            m_tutorialView.show(showExitDialog, showChangeFloorDialog);
         }
 
         public void RemoveTutorialDialogs()
         {
             m_tutorialView.hide();
         }
+
+		public bool GetCanShowChangeFloorTutorialDialog()
+		{
+			return FloorCount > 1;
+		}
 
         private void OnSliderDragStarted(object sender, DragStartedEventArgs e)
         {
