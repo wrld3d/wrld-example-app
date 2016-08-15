@@ -44,8 +44,10 @@ namespace ExampleApp
                 void ChangeToInteriorMapState();
                 void ResumePreviousMapState();
                 
-                int GetInteriorsViewedCount();
-                void RecordHasViewedInterior();
+                int GetInteriorExitTutorialViewedCount();
+                void RecordHasViewedInteriorExitTutorial();
+				int GetInteriorChangeFloorTutorialViewedCount();
+				void RecordHasViewedInteriorChangeFloorTutorial();
                 
                 void InsertInteriorExplorerEnteredCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveInteriorExplorerEnteredCallback(Eegeo::Helpers::ICallback0& callback);
@@ -72,7 +74,8 @@ namespace ExampleApp
                 Metrics::IMetricsService& m_metricsService;
                 
                 PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
-                int m_interiorsViewedCount;
+                int m_interiorExitTutorialViewedCount;
+				int m_interiorChangeFloorTutorialViewedCount;
                 
                 Eegeo::Helpers::TCallback0<InteriorsExplorerModel> m_interactionModelStateChangedCallback;
                 
