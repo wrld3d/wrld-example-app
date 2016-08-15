@@ -42,6 +42,26 @@ namespace ExampleApp
                 }
             }
 
+            namespace
+            {
+                std::string GetMeetingRoomAvailablityIcon(std::string availability)
+                {
+                    if(availability.compare(Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE) == 0)
+                    {
+                        return Search::Swallow::SearchConstants::MEETING_ROOM_ICON_AVAILABLE;
+                    }
+                    else if(availability.compare(Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_SOON) == 0)
+                    {
+                        return Search::Swallow::SearchConstants::MEETING_ROOM_ICON_AVAILABLE_SOON;
+                    }
+                    else if(availability.compare(Search::Swallow::SearchConstants::MEETING_ROOM_OCCUPIED) == 0)
+                    {
+                        return Search::Swallow::SearchConstants::MEETING_ROOM_ICON_OCCUPIED;
+                    }
+                    return "";
+                }
+            }
+            
             void SearchResultSectionController::OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message)
             {
                 for(int i = 0; i < m_lastAddedResults.size(); ++i)
@@ -67,18 +87,7 @@ namespace ExampleApp
                         Search::Swallow::SdkModel::SwallowMeetingRoomResultModel meetingRoomModel = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(model);
                         subtitle = Search::Swallow::SdkModel::SearchParser::GetFormattedAvailabilityString(meetingRoomModel.GetAvailability());
                         
-                        if(meetingRoomModel.GetAvailability().compare(Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE) == 0)
-                        {
-                            category = Search::Swallow::SearchConstants::MEETING_ROOM_ICON_AVAILABLE;
-                        }
-                        else if(meetingRoomModel.GetAvailability().compare(Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_SOON) == 0)
-                        {
-                            category = Search::Swallow::SearchConstants::MEETING_ROOM_ICON_AVAILABLE_SOON;
-                        }
-                        else if(meetingRoomModel.GetAvailability().compare(Search::Swallow::SearchConstants::MEETING_ROOM_OCCUPIED) == 0)
-                        {
-                            category = Search::Swallow::SearchConstants::MEETING_ROOM_ICON_OCCUPIED;
-                        }
+                        category = GetMeetingRoomAvailablityIcon(meetingRoomModel.GetAvailability());
                     }
                     else if(model.GetCategory() == Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME)
                     {
@@ -94,7 +103,7 @@ namespace ExampleApp
                     m_menuOptions.AddItem(model.GetIdentifier(),
                                           model.GetTitle(),
                                           subtitle,
-                                          model.GetCategory(),
+                                          category,
                                           Eegeo_NEW(SearchResultItemModel)(model.GetIdentifier(),
                                                                            model.GetTitle(),
                                                                            model.GetLocation().ToECEF(),
@@ -137,10 +146,13 @@ namespace ExampleApp
                         {
                             subtitle = Search::Swallow::SdkModel::SearchParser::GetFormattedAvailabilityString(message.GetAvailability());
                         }
+                        
+                        std::string categoryIcon = GetMeetingRoomAvailablityIcon(message.GetAvailability());
+                        
                         m_menuOptions.AddItem(model.GetIdentifier(),
                                               model.GetTitle(),
                                               subtitle,
-                                              model.GetCategory(),
+                                              categoryIcon,
                                             Eegeo_NEW(SearchResultItemModel)(model.GetIdentifier(),
                                                                              model.GetTitle(),
                                                                                model.GetLocation().ToECEF(),
