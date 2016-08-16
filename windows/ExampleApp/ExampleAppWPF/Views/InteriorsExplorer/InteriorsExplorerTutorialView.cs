@@ -17,9 +17,11 @@ namespace ExampleAppWPF
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-
-            Click += OnViewClicked;
             
+            MainWindow mainWindow = (MainWindow) Application.Current.MainWindow;
+            mainWindow.AddHandler(UIElement.MouseLeftButtonDownEvent, (RoutedEventHandler) OnMouseLeftButtonDown, true);
+            mainWindow.AddHandler(UIElement.TouchDownEvent, (RoutedEventHandler) OnMouseLeftButtonDown, true);
+
             m_exitDialog = (InteriorsExplorerTutorialDialogView) GetTemplateChild("ExitDialog");
 			m_exitDialog.ApplyTemplate();
 			m_exitDialog.setDialogText(Properties.Resources.InteriorsExplorerTutorialView_ExitDialogTitle.Replace("\\n", "\n"),
@@ -31,7 +33,7 @@ namespace ExampleAppWPF
 												Properties.Resources.InteriorsExplorerTutorialView_ChangeFloorDialogDescription.Replace("\\n", "\n"));
 		}
 
-        public void OnViewClicked(object sender, RoutedEventArgs e)
+        public void OnMouseLeftButtonDown(object sender, RoutedEventArgs e)
         {
             hide();
         }

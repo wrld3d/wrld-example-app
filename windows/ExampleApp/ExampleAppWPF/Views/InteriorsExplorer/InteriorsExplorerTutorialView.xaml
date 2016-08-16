@@ -9,6 +9,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="InteriorsExplorerTutorialView" TargetType="{x:Type local:InteriorsExplorerTutorialView}">
+        <Setter Property="IsHitTestVisible" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
