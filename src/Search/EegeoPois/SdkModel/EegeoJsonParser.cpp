@@ -80,8 +80,8 @@ namespace ExampleApp
                         
                         if(persistentSettings.TryGetValue(idStream.str(), availabilityState))
                         {
+                            
                         }
-                        
                         
                         std::string userData = "";
                         
@@ -91,7 +91,15 @@ namespace ExampleApp
                             rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
                             json["user_data"].Accept(writer);
                             userData = strbuf.GetString();
-                            
+                        }
+
+                        rapidjson::Document userDataDocument;
+                        if (!userDataDocument.Parse<0>(userData.c_str()).HasParseError())
+                        {
+                            if(userDataDocument.HasMember("subcategory"))
+                            {
+                                category = userDataDocument["subcategory"].GetString();
+                            }
                         }
                         
                         ExampleApp::Search::SdkModel::SearchResultModel tempResultModel = ExampleApp::Search::SdkModel::SearchResultModel(ExampleApp::Search::SdkModel::SearchResultModel::CurrentVersion,
