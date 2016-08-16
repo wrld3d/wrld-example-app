@@ -1,8 +1,6 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 package com.eegeo.interiorsexplorer;
 
-import java.nio.channels.SelectableChannel;
-
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.mobileexampleapp.R;
 
@@ -12,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class InteriorsExplorerTutorialView implements View.OnClickListener, View.OnTouchListener
+public class InteriorsExplorerTutorialView implements View.OnTouchListener
 {
     protected MainActivity m_activity = null;
     
@@ -49,7 +47,6 @@ public class InteriorsExplorerTutorialView implements View.OnClickListener, View
         setDialogText(m_uiChangeFloorDialog, "Change Floors", "Slide the elevator button\nup and down to move\nbetween floors.");
         m_uiChangeFloorDialog.setAlpha(0);
         
-        m_uiRootView.setOnClickListener(this);
         m_uiRootView.setOnTouchListener(this);
         
         m_uiRootView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() 
@@ -82,14 +79,8 @@ public class InteriorsExplorerTutorialView implements View.OnClickListener, View
     {
 		hide();
 		
-		return true;
+		return false;
 	}
-
-    @Override
-    public void onClick(View view)
-    {
-    	hide();
-    }
     
     public void show(boolean showExitDialog, boolean showChangeFloorDialog)
     {
