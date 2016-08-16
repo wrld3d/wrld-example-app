@@ -200,6 +200,13 @@ namespace
     [self dismiss];
 }
 
+- (BOOL) pointInside: (CGPoint) point withEvent: (UIEvent*) event
+{
+    [self dismiss];
+    
+    return NO;
+}
+
 - (void) repositionTutorialDialogs: (float) newPositionX
                                   : (float) dismissButtonPositionY
                                   : (float) dismissButtonHeight
