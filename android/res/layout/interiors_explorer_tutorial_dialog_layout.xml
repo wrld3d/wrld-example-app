@@ -60,7 +60,7 @@
                 <TextView
 					android:id="@+id/interiors_explorer_tutorial_dialog_title"
 					android:layout_width="fill_parent"
-					android:layout_height="20dp"
+					android:layout_height="22dp"
 					android:gravity="center_vertical"
 					android:singleLine="true"
 					android:ellipsize="end"
