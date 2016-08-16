@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.eegeo.ProjectSwallowApp.R;
+import com.eegeo.animation.ReversibleValueAnimator;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.menu.MenuItemSelectedListener;
 import com.eegeo.menu.MenuListAdapter;
@@ -14,6 +15,8 @@ import com.eegeo.menu.MenuView;
 import com.eegeo.searchmenu.SearchResultsScrollButtonTouchDownListener;
 import com.eegeo.searchmenu.SearchResultsScrollListener;
 import com.eegeo.searchmenu.SearchMenuResultsListAnimationConstants;
+import com.eegeo.animation.updatelisteners.ViewHeightAnimatorUpdateListener;
+import com.eegeo.menu.MenuListAnimationConstants;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
