@@ -83,14 +83,6 @@ In order to use the eeGeo 3D Maps API, you must sign up for a free developer acc
 
 After signing up for a developer account and creating an API key, add it to the example app [ApiKey file](https://github.com/eegeo/mobile-example-app/blob/master/src/ApiKey.h#L10) as described in the previous section.
 
-### C++ 03 Only Builds
-It's possible to build C++03 only versions of the application. To do this, you'll need to pull down a C\++03 version of the SDK.
-* `./update.platform.sh -p [ios|android|windows] -c` will fetch c\++03/libc++ ABI compatible versions of the SDK for libc++
-* `./build -p [ios|android|windows] -c` from the command line will build targeting c\++03 / libc++
-* For Android builds, add `COMPILE_CPP_03=1` to your ndkbuild command  
-* For CMake builds, add `DCOMPILE_CPP_03=1` to your cmake command. e.g. `cmake -G Xcode -DCOMPILE_CPP_03=1 ..`
-
-
 ## SDK Overview 
 
 The [example app](https://github.com/eegeo/mobile-example-app) demonstrates a variety of SDK features, and is a good starting point to get to know how the SDK works. 
