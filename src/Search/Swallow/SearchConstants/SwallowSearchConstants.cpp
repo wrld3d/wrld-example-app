@@ -38,7 +38,7 @@ namespace ExampleApp
                 const std::string STATIONERY_CATEGORY_NAME = "stationery";
                 const std::string RECEPTION_CATEGORY_NAME = "reception";
                 const std::string TOILETS_CATEGORY_NAME = "toilets";
-                const std::string PRINT_STATION_CATEGORY_NAME = "printer";
+                const std::string PRINT_STATION_CATEGORY_NAME = "print_station";
                 const std::string EMERGENCY_EXIT_CATEGORY_NAME = "emergency_exit";
                 
                 const std::string MEETING_ROOM_AVAILABLE = "available";
