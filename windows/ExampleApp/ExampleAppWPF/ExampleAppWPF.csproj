@@ -668,9 +668,6 @@
     <Resource Include="..\..\Resources\icon1_meeting_room.png">
       <Link>Assets\icon1_meeting_room.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\icon1_print_station.png">
-      <Link>Assets\icon1_print_station.png</Link>
-    </Resource>
     <Resource Include="..\..\Resources\icon1_working_group.png">
       <Link>Assets\icon1_working_group.png</Link>
     </Resource>
@@ -750,6 +747,11 @@
     </Resource>
     <Resource Include="..\..\Resources\icon1_meeting_room_unavailable.png">
       <Link>Assets\icon1_meeting_room_unavailable.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\icon1_printer.png">
+      <Link>Assets\icon1_printer.png</Link>
     </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
