@@ -70,19 +70,12 @@ namespace ExampleApp
                         bool indoor = json["indoor"].GetBool();
                         Eegeo::Resources::Interiors::InteriorId interiorId(json["indoor_id"].GetString());
                         
-                        std::vector<std::string> tags = SplitIntoTags(json["tags"].GetString(), ' ');
-                        
-                        std::vector<std::string> readableTags = GetNamesForTags(tags, tagNameMapper);
-                        
-                        std::string category = tagIconMapper.GetIconForCategories(tags);
-                        
                         int availabilityState = 1;
                         
                         if(persistentSettings.TryGetValue(idStream.str(), availabilityState))
                         {
                             
                         }
-                        
                         std::string userData = "";
                         
                         if (json.HasMember("user_data"))
@@ -92,15 +85,21 @@ namespace ExampleApp
                             json["user_data"].Accept(writer);
                             userData = strbuf.GetString();
                         }
+                        
+                        std::vector<std::string> tags = SplitIntoTags(json["tags"].GetString(), ' ');
+                        
+                        std::vector<std::string> readableTags = GetNamesForTags(tags, tagNameMapper);
 
                         rapidjson::Document userDataDocument;
                         if (!userDataDocument.Parse<0>(userData.c_str()).HasParseError())
                         {
                             if(userDataDocument.HasMember("subcategory"))
                             {
-                                category = userDataDocument["subcategory"].GetString();
+                                tags.push_back(userDataDocument["subcategory"].GetString());
                             }
                         }
+                        
+                        std::string categoryIcon = tagIconMapper.GetIconForCategories(tags);
                         
                         ExampleApp::Search::SdkModel::SearchResultModel tempResultModel = ExampleApp::Search::SdkModel::SearchResultModel(ExampleApp::Search::SdkModel::SearchResultModel::CurrentVersion,
                                                                                                                                           idStream.str(),
@@ -111,7 +110,7 @@ namespace ExampleApp
                                                                                                                                           indoor,
                                                                                                                                           interiorId,
                                                                                                                                           json["floor_id"].GetInt(),
-                                                                                                                                          category,
+                                                                                                                                          categoryIcon,
                                                                                                                                           readableTags,
                                                                                                                                           ExampleApp::Search::EegeoVendorName,
                                                                                                                                           userData,
