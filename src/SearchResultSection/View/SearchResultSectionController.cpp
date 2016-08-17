@@ -85,7 +85,7 @@ namespace ExampleApp
                     {
                         // Availability is no longer a subtitle as that affects search results.
                         Search::Swallow::SdkModel::SwallowMeetingRoomResultModel meetingRoomModel = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(model);
-                        subtitle = Search::Swallow::SdkModel::SearchParser::GetFormattedAvailabilityString(meetingRoomModel.GetAvailability());
+                        subtitle = meetingRoomModel.GetOfficeLocation();
                         
                         category = GetMeetingRoomAvailablityIcon(meetingRoomModel.GetAvailability());
                     }

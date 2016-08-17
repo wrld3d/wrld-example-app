@@ -161,6 +161,13 @@ namespace ExampleApp
                                 break;
                         }
                         
+                        if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
+                        {
+                            if(json.HasMember(SearchConstants::OFFICE_LOCATION_FIELD_NAME.c_str()) && json[SearchConstants::OFFICE_LOCATION_FIELD_NAME.c_str()].IsString())
+                            {
+                                officeLocation = json[SearchConstants::OFFICE_LOCATION_FIELD_NAME.c_str()].GetString();
+                            }
+                        }
                         
                         return SwallowMeetingRoomResultModel(searchResultModel.GetTitle(),
                                                              imageUrl,
