@@ -33,6 +33,7 @@ namespace ExampleApp
                     m_tagIconMapping.insert(std::make_pair("print_station", "printer"));
                     m_tagIconMapping.insert(std::make_pair("reception", "reception"));
                     m_tagIconMapping.insert(std::make_pair("transition", "transition"));
+                    m_tagIconMapping.insert(std::make_pair("toilets", "toilets"));
                     
                 }
 
@@ -56,7 +57,7 @@ namespace ExampleApp
 
                     return m_defaultCategory;
                 }
-            }
+                            }
         }
     }
 }

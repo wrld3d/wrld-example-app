@@ -765,9 +765,6 @@
     <Resource Include="..\..\Resources\icon1_printer.png">
       <Link>Assets\icon1_printer.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\icon1_print_station.png">
-      <Link>Assets\icon1_print_station.png</Link>
-    </Resource>
     <Resource Include="..\..\Resources\icon1_rain.png">
       <Link>Assets\icon1_rain.png</Link>
     </Resource>
@@ -797,9 +794,6 @@
     </Resource>
     <Resource Include="..\..\Resources\icon1_stationary.png">
       <Link>Assets\icon1_stationary.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_stationery.png">
-      <Link>Assets\icon1_stationery.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\icon1_summer.png">
       <Link>Assets\icon1_summer.png</Link>
