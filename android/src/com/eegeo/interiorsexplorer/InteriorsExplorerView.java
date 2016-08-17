@@ -4,8 +4,8 @@ package com.eegeo.interiorsexplorer;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.eegeo.ProjectSwallowApp.R;
 import com.eegeo.entrypointinfrastructure.MainActivity;
+import com.eegeo.ProjectSwallowApp.R;
 
 import android.graphics.Color;
 import android.view.MotionEvent;
@@ -43,7 +43,8 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
 
     private RelativeLayout m_floorListContainer;
     private ListView m_floorList;
-    private float m_leftXPosActive;
+    private float m_leftXPosActiveBackButton;
+    private float m_leftXPosActiveFloorListContainer;
     private float m_leftXPosInactive;
     
     private InteriorsFloorListAdapter m_floorListAdapter = null;
@@ -100,7 +101,6 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
 					int bottom, int oldLeft, int oldTop, int oldRight,
 					int oldBottom) 
 			{				
-				final float screenHeight = uiRoot.getHeight();
 		    	final float screenWidth = uiRoot.getWidth();
 		    	
 		    	float controlWidth = m_topPanel.getWidth();
@@ -114,12 +114,13 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
 		    	
 		    	controlWidth = m_floorListContainer.getWidth();
 		    	controlHeight = m_floorListContainer.getHeight();
+		    	int menuButtonMarginPx = m_activity.dipAsPx((int) m_activity.getResources().getDimension(R.dimen.menu_button_margin));
 		    	
-		    	m_leftXPosActive = screenWidth - (m_backButton.getWidth() / 2.0f  + m_activity.getResources().getDimension(R.dimen.menu_button_margin) + controlWidth / 2.0f);
+		    	m_leftXPosActiveBackButton = screenWidth - (menuButtonMarginPx + m_backButton.getWidth() / 2.0f);
+		    	m_leftXPosActiveFloorListContainer = screenWidth - (menuButtonMarginPx + controlWidth / 2.0f);
 		    	m_leftXPosInactive = screenWidth;
 		    	
 		    	m_floorListContainer.setX(m_leftXPosInactive);
-		    	m_floorListContainer.setY((screenHeight * 0.5f) - (controlHeight * 0.5f));
 		    	m_backButton.setX(m_leftXPosInactive);
 		    	m_backButton.setY(m_topYPosActive + m_topPanel.getHeight() * 1.5f);
 		    	
@@ -179,13 +180,10 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     	}
     	
     	m_floorListAdapter.setData(temp);
-    	
-    	final float screenHeight = m_uiRootView.getHeight();
     	float controlHeight = getListViewHeight(m_floorList);
     	RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams)m_floorListContainer.getLayoutParams();
     	layoutParams.height = (int)controlHeight;
     	m_floorListContainer.setLayoutParams(layoutParams);
-    	m_floorListContainer.setY((screenHeight * 0.5f) - (controlHeight * 0.5f));
     	
     	refreshFloorIndicator(currentlySelectedFloorIndex);
     	moveButtonToFloorIndex(currentlySelectedFloorIndex, false);
@@ -197,7 +195,6 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     private void moveButtonToFloorIndex(int floorIndex, Boolean shouldAnimate)
     {
     	int floorCount = m_floorListAdapter.getCount();
-    	m_floorButton.setX(0.0f);
     	float topY = (m_floorList.getY()) + (ListItemHeight*0.5f) - m_floorButton.getWidth()*0.5f;
     	float newY = topY + ((floorCount-1)-floorIndex) * ListItemHeight;
     	newY = Math.max(0.0f, Math.min(getListViewHeight(m_floorList)-m_floorButton.getHeight(), newY));
@@ -214,7 +211,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     		m_floorButton.setY(newY);
     	}
     	
-    	m_tutorialView.setUIPositions(m_leftXPosActive + 7,
+    	m_tutorialView.setUIPositions(m_leftXPosActiveFloorListContainer + 14,
 										m_backButton.getY(),
 										m_backButton.getHeight(),
 										m_floorListContainer.getY() + m_floorButton.getY(),
@@ -346,7 +343,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     	m_isOnScreen = true;
     	
     	animateViewToY((int)m_topYPosActive);
-        animateViewToX((int)m_leftXPosActive, m_isOnScreen);
+        animateViewToX((int)m_leftXPosActiveBackButton, (int) m_leftXPosActiveFloorListContainer, m_isOnScreen);
         
         m_tutorialView.animateToActive(m_stateChangeAnimationTimeMilliseconds + (m_isOnScreen ? m_stateChangeAnimationDelayMilliseconds : 0));
     }
@@ -355,8 +352,8 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     {
         m_isOnScreen = false;
     	
-        animateViewToY((int)m_topYPosInactive);
-        animateViewToX((int)m_leftXPosInactive, m_isOnScreen);
+    	animateViewToY((int)m_topYPosInactive);
+        animateViewToX((int)m_leftXPosInactive, (int)m_leftXPosInactive, m_isOnScreen);
         
         m_tutorialView.animateToInactive(m_stateChangeAnimationTimeMilliseconds);
     }
@@ -368,17 +365,17 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
         .setDuration(m_stateChangeAnimationTimeMilliseconds);
     }
     
-    protected void animateViewToX(final int xAsPx, final boolean addDelay)
+    protected void animateViewToX(final int xAsPxBackButton, final int xAsPxFloorListContainer, final boolean addDelay)
     {
     	long delay = addDelay ? m_stateChangeAnimationDelayMilliseconds : 0;
     	
     	m_floorListContainer.animate()
-        .x(xAsPx)
+        .x(xAsPxFloorListContainer)
         .setDuration(m_stateChangeAnimationTimeMilliseconds)
         .setStartDelay(delay);
     	
     	m_backButton.animate()
-    	.x(xAsPx)
+    	.x(xAsPxBackButton)
         .setDuration(m_stateChangeAnimationTimeMilliseconds)
         .setStartDelay(delay);
     }
