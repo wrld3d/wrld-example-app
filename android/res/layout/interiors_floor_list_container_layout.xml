@@ -6,14 +6,15 @@
     android:background="@android:color/transparent"
     android:cacheColorHint="@android:color/transparent"
     android:clipChildren="false"
+    android:layout_gravity="center_horizontal"
     android:clipToPadding="false" >
     
     <ListView
         android:id="@+id/interiors_floor_item_list"
-        android:layout_width="50dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
         android:background="@android:color/transparent"
         android:cacheColorHint="@android:color/transparent"
         android:clipChildren="false"
@@ -31,7 +32,7 @@
         android:id="@+id/interiors_floor_list_button"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:layout_alignParentLeft="true"
+        android:layout_centerHorizontal="true"
         android:background="@drawable/floor_button_states"
         android:clickable="true" >
         
