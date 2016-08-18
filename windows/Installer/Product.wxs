@@ -51,9 +51,7 @@
               </Directory>
               <Directory Id="APPCONFIGFOLDER" Name="ApplicationConfigs"/>
               <Directory Id="INTERIORSFOLDER" Name="Interiors"/>
-              <Directory Id="PINSFOLDER" Name="SearchResultOnMap">
-                <Directory Id="ICONSFOLDER" Name="Icons"/>
-              </Directory>
+              <Directory Id="PINSFOLDER" Name="SearchResultOnMap"/>
               <Directory Id="TEXTURESFOLDER" Name="Textures">
                 <Directory Id="THEMEFOLDER" Name="EmbeddedTheme"/>
               </Directory>
@@ -371,15 +369,6 @@
       <Component Id="cmpeWHKJqf2VPNzKFRyN6AOad3GvJw" Directory="RESOURCEFOLDER" Guid="{D798A434-BD3F-42C4-BA94-5E15A1728D47}">
         <File Id="filcBadqlZX8WZKgeEQx0Cee_LGmFs" KeyPath="yes" Source="payload\Resources\icon1_meeting_room.png" />
       </Component>
-      <Component Id="cmpqU4aFv7iGSdNWzDtewqFuV.r4RM" Directory="RESOURCEFOLDER" Guid="{5CD206DF-14C2-4A5D-84DC-59F341418DAA}">
-        <File Id="filTZgjxRhrO4xa7PHGjrEm.LOy00c" KeyPath="yes" Source="payload\Resources\icon1_meeting_room_avail.png" />
-      </Component>
-      <Component Id="cmp_Q6OzteleP9SCmVstOPrdVduD6Y" Directory="RESOURCEFOLDER" Guid="{7471C90C-93C6-4B6F-9EA8-1A6370A0FA6F}">
-        <File Id="filCN.IkFyb2i9t12eFawcIEivX.CU" KeyPath="yes" Source="payload\Resources\icon1_meeting_room_avail_soon.png" />
-      </Component>
-      <Component Id="cmp9fcfbsLDte2TjywEpb8VUKggI_k" Directory="RESOURCEFOLDER" Guid="{428F47E8-B199-44D6-8491-A28248E36839}">
-        <File Id="filCFY30tlMHM_KjbIabcnJDFiDTpU" KeyPath="yes" Source="payload\Resources\icon1_meeting_room_occupied.png" />
-      </Component>
       <Component Id="cmpPEUgTHKrlHyhSynH8YDIAXyFggA" Directory="RESOURCEFOLDER" Guid="{A4258389-A49B-4732-BD54-692EDAE8922F}">
         <File Id="filC5cuveP5K5M.WWyVtDlHAEq4jCk" KeyPath="yes" Source="payload\Resources\icon1_misc.png" />
       </Component>
@@ -406,9 +395,6 @@
       </Component>
       <Component Id="cmpaJS8UzrcymdB.5.XfTIo8ruy2Fc" Directory="RESOURCEFOLDER" Guid="{91491075-14EE-47C4-BAA3-B8E27EC6967D}">
         <File Id="filvnAlINXFFl51DNLHkTXG9CX2HDA" KeyPath="yes" Source="payload\Resources\icon1_place.png" />
-      </Component>
-      <Component Id="cmpVhu_4RCgEBg.VVB648g.PeY.d2Q" Directory="RESOURCEFOLDER" Guid="{07484E98-8BFB-42BC-BBA6-A0C2945A5066}">
-        <File Id="filw8PpetjMtGtvsUOELVYQZa_Wakk" KeyPath="yes" Source="payload\Resources\icon1_print_station.png" />
       </Component>
       <Component Id="cmpa3yR9LsV.J3U4mlUbT.SRL3A3IY" Directory="RESOURCEFOLDER" Guid="{7F4DAFF4-4B49-4D95-9AB1-DCF8A68B1606}">
         <File Id="filiqln4O64eQ8J4DBzhOm.J4sGeFU" KeyPath="yes" Source="payload\Resources\icon1_rainy.png" />
@@ -589,69 +575,6 @@
       </Component>
       <Component Id="cmpKDcIdT9uhG0c_U4.7GhY0ci.Nyg" Directory="INTERIORSFOLDER" Guid="{220AE8B2-1AFA-4906-A55C-5D7B86AD1AB8}">
         <File Id="filTNs_xwzpJc._BgyCpbFtzVkuIIA" KeyPath="yes" Source="payload\Resources\Interiors\interiors_pin@3x.png" />
-      </Component>
-      <Component Id="cmpxzCqX0In8mbESYvDIXOTmKH6D6k" Directory="PINSFOLDER" Guid="{E5320CF2-420A-45D0-8351-2FF95C4498E1}">
-        <File Id="filBtjltKuPljLF4oPbC11WwCuZgyI" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\pin_icon_texture_page.png" />
-      </Component>
-      <Component Id="cmpl5wKI6B.bI0.gE08XB5wSSQGoMU" Directory="ICONSFOLDER" Guid="{3A185179-3FCC-46D1-95CA-3D54D35064F0}">
-        <File Id="fil9oLYNUCSCIpplap2vOt_RctQP5I" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\bank.png" />
-      </Component>
-      <Component Id="cmpBNOIEgDGCwSYTEYSAWBY.LY3MrA" Directory="ICONSFOLDER" Guid="{0CAFE748-1833-4552-9C01-A192ACEBBEA3}">
-        <File Id="filrXaUFgWsSzCIyJ4lBGSzWr6ZGWk" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\coffee.png" />
-      </Component>
-      <Component Id="cmpYqCs3uwYMDEX4szMCi18sKVDs9U" Directory="ICONSFOLDER" Guid="{7B03B50F-397F-451D-84B8-FDF4672B7E7D}">
-        <File Id="filjaUBW6IwlJvTVIHPg241bw.CWkU" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\facebook.png" />
-      </Component>
-      <Component Id="cmpDqjqfA7ZT51wqBTVCgeJ0RlE_SE" Directory="ICONSFOLDER" Guid="{796B598E-0336-442D-BECA-522F3364D3A5}">
-        <File Id="filhwnnLx5adENGVArlQ_cHX5vAb54" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\hotel.png" />
-      </Component>
-      <Component Id="cmpy7FEOgboqxmoNBI73IQDrTpFz9A" Directory="ICONSFOLDER" Guid="{DAD1263D-2EFB-4F8E-99B5-BFC29C8544F9}">
-        <File Id="fild3aWGKmxzYnPskL8.IfFC.2tCHQ" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\instagram.png" />
-      </Component>
-      <Component Id="cmp3_ZassC5R1xDZsZCgdYzx4UYrTQ" Directory="ICONSFOLDER" Guid="{FF87576A-733F-4C46-90A7-3833BFD16911}">
-        <File Id="fild46XRHzWLYygsgizf.E_P.fe2a4" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\meeting_room.png" />
-      </Component>
-      <Component Id="cmpJJm3jbIfBRhsKnzzS3Lbhc_e5m0" Directory="ICONSFOLDER" Guid="{FB63A918-7940-4601-B988-B8220237E3B6}">
-        <File Id="filRIMhj.4d0y.m2lOHo2pq68YkkfI" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\museum.png" />
-      </Component>
-      <Component Id="cmpN6bLC.n0pdBG4gwcfqmc.9OAih8" Directory="ICONSFOLDER" Guid="{919BF892-DE26-4DB1-9247-176E05BE79BB}">
-        <File Id="filqf86mS10VpPG5CQjjpEmgDCojy8" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\nightlife.png" />
-      </Component>
-      <Component Id="cmpqRjxmWd.oJLmORuvBNYw1qWLW5M" Directory="ICONSFOLDER" Guid="{498D05F0-A393-45F2-B9DB-25F42DF22B02}">
-        <File Id="filWpWPVZHj7be5n0HyrqmFbITJZaY" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\none.png" />
-      </Component>
-      <Component Id="cmpNfC2DOCSFgERJjEwYoJ9rOB.5mw" Directory="ICONSFOLDER" Guid="{84FB9C52-4D48-44A5-B46E-99C24EC73D89}">
-        <File Id="filzH7KMBetmjKW0fRm9O.O4DPGRSI" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\park.png" />
-      </Component>
-      <Component Id="cmpL6tk0pkzwumBAoa84DL4Ats2iGI" Directory="ICONSFOLDER" Guid="{D979AF9C-02BA-42BE-9D68-9024C2AF3CFC}">
-        <File Id="filF8qxBv2P6qJvKcDb.rr9e8BATGU" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\pin.png" />
-      </Component>
-      <Component Id="cmpQDICCYfX5pb1mm3axOrnuwyHkxI" Directory="ICONSFOLDER" Guid="{0A839D84-02DF-4E70-B528-93698EE41D94}">
-        <File Id="filV0Ws9SZL1ZGOY3Q.CHIp9FfXfWA" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\print_station.png" />
-      </Component>
-      <Component Id="cmp6RoFPGfdQd1OqxYqOIBVNDxwpfI" Directory="ICONSFOLDER" Guid="{2687E241-D283-4978-93B7-95EEC6591056}">
-        <File Id="fils79hzxEl5mpklXQJXHDuECBdJig" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\restaurant.png" />
-      </Component>
-      <Component Id="cmp5Pd9C4DNnMKy0VpFJ1eD5vOpmss" Directory="ICONSFOLDER" Guid="{38665EF9-73F3-4EB2-BE45-610C2135A6A1}">
-        <File Id="filqXR1tAHiUq708YtrC74kdm_y_ek" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\stationery.png" />
-      </Component>
-      <Component Id="cmpCiJqFhNXUnRD3kP2a6koDIDHIbg" Directory="ICONSFOLDER" Guid="{7961C40F-504B-4B0E-A6DE-DE9758BA081D}">
-        <File Id="fil4V0V3SvCPuyHbiuESVLgDNz1VXc" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\theatre.png" />
-      </Component>
-      <Component Id="cmpozUohssqK.buGxgJd1hV9F8Lbp4" Directory="ICONSFOLDER" Guid="{68DBB4AC-F722-433E-B6A5-2FB97F52CF9B}">
-        <File Id="filY0iQczzJ4KST9tCFpdu1IbOn1GY" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\toilets.png" />
-      </Component>
-      <Component Id="cmpL04f3p8AkeF0nlHkCkYcbJag9D8" Directory="ICONSFOLDER" Guid="{EDE2ADA6-F89D-4F73-A058-22D56CC4E781}">
-        <File Id="fillAjprFybypnDPqPscaWBWVVXLJs" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\twitter.png" />
-      </Component>
-      <Component Id="cmpH0tbiiW8k4.f9WVn8VGSwVtKJhg" Directory="ICONSFOLDER" Guid="{8478C431-7DD3-4079-B3A8-D89144D4ECE2}">
-        <File Id="filYzJUAjPOIYv1a8PB2GOBKIXEIWg" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\weblink.png" />
-      </Component>
-      <Component Id="cmpdoKOTHBaGFNQrBRqJEPy2s6sb2E" Directory="ICONSFOLDER" Guid="{183EF31D-CD3B-4269-8A32-1368BD5EBCE5}">
-        <File Id="fil3qrZuSGQL6Q81GoRjo6dWKdoNmk" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\working_group.png" />
-      </Component>
-      <Component Id="cmpiPZvE5FyZuvRhVH3DVelX7BY4lo" Directory="ICONSFOLDER" Guid="{6A51AAB5-0D5F-4BAC-891B-1142D793C78B}">
-        <File Id="filRcyQ3f9FUto9pPKQUTIzJVE6AGY" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\Icons\youtube.png" />
       </Component>
       <Component Id="cmpD9F8ADD33F7E807FD4F99A016565C721" Directory="THEMEFOLDER" Guid="{A7642B48-F459-47B4-8AB1-B638846FA241}">
 		<File Id="fil5B337BC21611277A2F4FE7E5F3D0B665" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\Default_water_reflection_cube_map_negX.png" />
@@ -983,7 +906,9 @@
       <Component Id="_eb81c867.f9d7.4805.9b70.387cd717d8aa" Directory="PINSFOLDER" Guid="{9cda98ae-0106-4324-b2dd-b444149a1593}">
         <File Id="_39239187.7ec7.48c9.8300.f0399f2a74d2" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\pin_sheet_0.png" />
       </Component>
-
+      <Component Id="_ef8aba17.2801.4864.94d6.67ea3e7c327a" Directory="RESOURCEFOLDER" Guid="{63bc2b3f-782f-4deb-b552-8c8a7b6a537b}">
+        <File Id="_c04558a2.a560.48c0.96cd.6fb48b4f7e35" KeyPath="yes" Source="payload\Resources\yelp_map.json" />
+      </Component>
     </ComponentGroup>
 
     <!-- Start menu definitions-->
