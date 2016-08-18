@@ -279,21 +279,12 @@ set(resources ${resources}
         Resources/icon1_meeting_room.png
         Resources/icon1_meeting_room@2x.png
         Resources/icon1_meeting_room@3x.png
-        Resources/icon1_meeting_room_avail.png
-        Resources/icon1_meeting_room_avail@2x.png
-        Resources/icon1_meeting_room_avail@3x.png
-        Resources/icon1_meeting_room_avail_soon.png
-        Resources/icon1_meeting_room_avail_soon@2x.png
-        Resources/icon1_meeting_room_avail_soon@3x.png
         Resources/icon1_meeting_room_available.png
         Resources/icon1_meeting_room_available@2x.png
         Resources/icon1_meeting_room_available@3x.png
         Resources/icon1_meeting_room_available_soon.png
         Resources/icon1_meeting_room_available_soon@2x.png
         Resources/icon1_meeting_room_available_soon@3x.png
-        Resources/icon1_meeting_room_occupied.png
-        Resources/icon1_meeting_room_occupied@2x.png
-        Resources/icon1_meeting_room_occupied@3x.png
         Resources/icon1_meeting_room_unavailable.png
         Resources/icon1_meeting_room_unavailable@2x.png
         Resources/icon1_meeting_room_unavailable@3x.png
@@ -327,9 +318,6 @@ set(resources ${resources}
         Resources/icon1_place.png
         Resources/icon1_place@2x.png
         Resources/icon1_place@3x.png
-        Resources/icon1_print_station.png
-        Resources/icon1_print_station@2x.png
-        Resources/icon1_print_station@3x.png
         Resources/icon1_printer.png
         Resources/icon1_printer@2x.png
         Resources/icon1_printer@3x.png
