@@ -348,7 +348,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         }
         else
         {
-            textInsetX = 0.0f;
+            textInsetX = 2.0f;
             cell.imageView.image = nil;
         }
         
