@@ -177,6 +177,8 @@ namespace ExampleAppWPF
                 m_isOffScreen = true;
             }
 
+            PerformLayout(sender, null);
+
             m_animationCompleteCallback?.Invoke(sender, e);
         }
 
@@ -201,7 +203,6 @@ namespace ExampleAppWPF
 
                 var screenWidth = mainGrid.ActualWidth;
                 var totalWidth = m_mainContainer.ActualWidth + m_menuIcon.ActualWidth;
-
                 var db = new DoubleAnimation(m_onScreenPos, TimeSpan.FromMilliseconds(m_animationTimeMilliseconds));
 
                 try
