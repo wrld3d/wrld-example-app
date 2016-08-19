@@ -21,6 +21,7 @@ namespace ExampleApp
                 , m_latLong(Eegeo::Space::LatLong::FromDegrees(0, 0))
                 , m_mapX(0.0f)
                 , m_mapY(0.0f)
+                ,isBlueToothEnabled(false)
                 {
                 }
                 
@@ -40,6 +41,8 @@ namespace ExampleApp
                 const float GetMapX() const { return m_mapX; }
                 const float GetMapY() const { return m_mapY; }
                 const float GetHeading() const { return m_heading; }
+                const bool GetBlueToothState() const{return isBlueToothEnabled;}
+                void SetBlueToothState(bool blueToothStatus){isBlueToothEnabled = blueToothStatus;}
                 void setHeading(double heading) { m_heading = heading;}
                 
             private:
@@ -49,6 +52,7 @@ namespace ExampleApp
                 float m_mapX;
                 float m_mapY;
                 double m_heading = 0; // Heading from senion lab. Updated by senion lab heading callback
+                bool isBlueToothEnabled;
             };
         }
     }

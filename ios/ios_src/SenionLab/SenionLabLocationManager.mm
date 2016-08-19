@@ -140,7 +140,7 @@
     // TJ, TODO: the floor index needs a layer of indirection.
     if([self tryGetFloorIdFromSenion:location.floorNr ndFloorNum:floorNum])
     {
-        m_pDeviceModel->UpdateLocation(0, 0, location.latitude, location.longitude, m_pBuildingID, floorNum);
+        m_pDeviceModel->UpdateLocation(0, 0, location.latitude, location.longitude, m_pBuildingID, floorNum, locationManager.isBleEnabled);
     }
 }
 - (void) didUpdateHeading:(double)heading withStatus:(BOOL)status

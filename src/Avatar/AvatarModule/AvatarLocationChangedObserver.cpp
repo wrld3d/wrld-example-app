@@ -28,7 +28,7 @@ namespace ExampleApp
             
             void AvatarLocationChangedObserver::OnLocationChanged()
             {
-                m_avatarController.SetModelTarget(m_deviceModel.GetLocation().GetLatLong(), m_deviceModel.GetLocation().GetBuildingID(), m_deviceModel.GetLocation().GetFloor());
+                m_avatarController.SetModelTarget(m_deviceModel.GetLocation().GetLatLong(), m_deviceModel.GetLocation().GetBuildingID(), m_deviceModel.GetLocation().GetFloor(),m_deviceModel.GetLocation().GetBlueToothState());
             }
         }
     }

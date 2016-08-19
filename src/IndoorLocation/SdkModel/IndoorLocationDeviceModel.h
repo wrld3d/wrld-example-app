@@ -25,7 +25,7 @@ namespace ExampleApp
 
 
                 const DeviceLocation& GetLocation() const;
-                void UpdateLocation(float mapX, float mapY, double latitudeDegrees, double longitudeDegrees, const Eegeo::Resources::Interiors::InteriorId& building, int floor);
+                void UpdateLocation(float mapX, float mapY, double latitudeDegrees, double longitudeDegrees, const Eegeo::Resources::Interiors::InteriorId& building, int floor, bool isBlueToothEnabled);
                 void UpdateHeading(double heading);
                 void AddLocationChangedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveLocationChangedCallback(Eegeo::Helpers::ICallback0& callback);

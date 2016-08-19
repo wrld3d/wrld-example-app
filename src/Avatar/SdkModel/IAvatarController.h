@@ -18,7 +18,7 @@ namespace ExampleApp
                 
                 virtual ~IAvatarController() {}
                 
-                virtual void SetModelTarget(const Eegeo::Space::LatLong& latLong, const Eegeo::Resources::Interiors::InteriorId& building, int floor) = 0;
+                virtual void SetModelTarget(const Eegeo::Space::LatLong& latLong, const Eegeo::Resources::Interiors::InteriorId& building, int floor, bool isBlueToothEnabled) = 0;
                 
                 virtual void Update(float dt) = 0;
                 

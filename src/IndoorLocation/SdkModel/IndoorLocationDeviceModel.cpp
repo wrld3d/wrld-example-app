@@ -28,10 +28,11 @@ namespace ExampleApp
                 Eegeo_ASSERT(m_hasLocation, "Cannot retrieve Device Location. No location has been retrieved yet.");
                 return m_location;
             }
-            void IndoorLocationDeviceModel::UpdateLocation(float mapX, float mapY, double latitudeDegrees, double longitudeDegrees, const Eegeo::Resources::Interiors::InteriorId& building, int floor)
+            void IndoorLocationDeviceModel::UpdateLocation(float mapX, float mapY, double latitudeDegrees, double longitudeDegrees, const Eegeo::Resources::Interiors::InteriorId& building, int floor, bool isBlueToothEnabled)
             {
                // Eegeo_ASSERT(m_isRegistered, "Cannot update location of unregistered device.");
                 m_location.Update(mapX, mapY, latitudeDegrees, longitudeDegrees, building, floor);
+                m_location.SetBlueToothState(isBlueToothEnabled);
                 m_hasLocation = true;
                 m_locationUpdatedCallbacks.ExecuteCallbacks();
                 Eegeo_TTY("DEVICE LOCATION UPDATED: (%f, %f) %f, %f, %s, %d", mapX, mapY, latitudeDegrees, longitudeDegrees, building.Value().c_str(), floor);

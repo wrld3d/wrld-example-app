@@ -29,7 +29,7 @@ namespace ExampleApp
                 
                 ~AvatarController();
                 
-                void SetModelTarget(const Eegeo::Space::LatLong& latLong, const Eegeo::Resources::Interiors::InteriorId& building, int floor);
+                void SetModelTarget(const Eegeo::Space::LatLong& latLong, const Eegeo::Resources::Interiors::InteriorId& building, int floor, bool isBlueToothEnabled);
                 
                 void Update(float dt);
                 
@@ -47,6 +47,7 @@ namespace ExampleApp
                 ExampleApp::AppModes::SdkModel::IAppModeModel& m_appModeModel;
                 Eegeo::Helpers::TCallback0<AvatarController> m_appModeChangedCallback;
                 Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
+                bool m_isBlueToothEnabled;
             };
         }
     }
