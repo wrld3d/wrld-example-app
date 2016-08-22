@@ -176,10 +176,13 @@ namespace ExampleAppWPF
                 m_isOffScreen = true;
             }
 
+            PerformLayout(sender, null);
+
             if (m_animationCompleteCallback != null)
             {
                 m_animationCompleteCallback(sender, e);
             }
+
         }
 
         public virtual void AnimateToClosedOnScreen()
