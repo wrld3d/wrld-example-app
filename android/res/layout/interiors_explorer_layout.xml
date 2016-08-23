@@ -24,10 +24,18 @@
         </TextView>
 	</LinearLayout>
 	
+    <RelativeLayout
+        android:id="@+id/right_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="45dp"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+
         <ImageView
-            android:layout_margin="@dimen/menu_button_margin"
             android:layout_gravity="end"
-            android:layout_below="@+id/top_panel"
             android:id="@+id/back_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,5 +45,6 @@
         </ImageView>
 
 	<include android:layout_marginTop="15dp"  android:layout_below="@+id/back_button" android:layout_width="70dp"  android:layout_height="150dp"  layout="@layout/interiors_floor_list_container_layout"/>
+	</RelativeLayout>
 
 </RelativeLayout>

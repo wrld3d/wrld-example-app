@@ -8,9 +8,9 @@ import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.ProjectSwallowApp.R;
 
 import android.graphics.Color;
+import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.BounceInterpolator;
@@ -26,6 +26,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     protected long m_nativeCallerPointer;
     private View m_uiRootView = null;
     private View m_topPanel = null;
+    private View m_rightPanel = null;
     
     private ImageView m_backButton = null;
     private TextView m_floorNameView = null;
@@ -43,6 +44,11 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
 
     private RelativeLayout m_floorListContainer;
     private ListView m_floorList;
+    private int m_maxFloorsViewableCount;
+    private RelativeLayout m_floorLayout;
+    private ImageView m_floorUpArrow;
+    private ImageView m_floorDownArrow;
+    
     private float m_leftXPosActiveBackButton;
     private float m_leftXPosActiveFloorListContainer;
     private float m_leftXPosInactive;
@@ -59,7 +65,6 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     // TODO: Replace these with refs to UX iteration color scheme.
     private final int TextColorNormal = Color.parseColor("#1256B0");
     private final int TextColorDown = Color.parseColor("#CDFC0D");
-    private final float ButtonSize;
     private final float ListItemHeight;
 
     public InteriorsExplorerView(MainActivity activity, long nativeCallerPointer)
@@ -71,6 +76,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
         m_uiRootView = m_activity.getLayoutInflater().inflate(R.layout.interiors_explorer_layout, uiRoot, false);
         
         m_topPanel = m_uiRootView.findViewById(R.id.top_panel);
+        m_rightPanel = m_uiRootView.findViewById(R.id.right_panel);
         
         m_backButton = (ImageView)m_uiRootView.findViewById(R.id.back_button);
         m_backButton.setOnClickListener(this);
@@ -82,6 +88,9 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
         
         m_floorListAdapter = new InteriorsFloorListAdapter(m_activity, R.layout.interiors_floor_list_item);
         m_floorList.setAdapter(m_floorListAdapter);
+        m_floorLayout = (RelativeLayout) m_uiRootView.findViewById(R.id.interiors_floor_layout);
+        m_floorUpArrow = (ImageView) m_uiRootView.findViewById(R.id.interiors_elevator_up_arrow);
+        m_floorDownArrow = (ImageView) m_uiRootView.findViewById(R.id.interiors_elevator_down_arrow);
         
         m_floorButton = (RelativeLayout)m_uiRootView.findViewById(R.id.interiors_floor_list_button);
         m_floorButtonText = (TextView)m_uiRootView.findViewById(R.id.interiors_floor_list_button_text);
@@ -89,7 +98,6 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
         m_draggingFloorButton = false;
         
         // TODO: Move to Dimens values resource when integrated with Search UX changes.
-        ButtonSize = m_activity.dipAsPx(64.0f);
         ListItemHeight = m_activity.dipAsPx(50.0f);
         
         m_floorButton.setOnTouchListener(this);
@@ -122,7 +130,19 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
 		    	
 		    	m_floorListContainer.setX(m_leftXPosInactive);
 		    	m_backButton.setX(m_leftXPosInactive);
-		    	m_backButton.setY(m_topYPosActive + m_topPanel.getHeight() * 1.5f);
+		    	
+		    	int screenHeight = uiRoot.getHeight();
+		    	
+		    	RelativeLayout.LayoutParams rightPanelLayoutParams = (RelativeLayout.LayoutParams) m_rightPanel.getLayoutParams();
+		    	int rightPanelMarginTop = rightPanelLayoutParams.topMargin;
+		    	int rightPanelMarginBottom = rightPanelLayoutParams.bottomMargin;
+		    	
+		    	RelativeLayout.LayoutParams floorListContainerLayoutParams = (RelativeLayout.LayoutParams) m_floorListContainer.getLayoutParams();
+		    	int floorListMarginTop = floorListContainerLayoutParams.topMargin;
+		    	
+		    	int maxFloorContainerHeight = screenHeight - rightPanelMarginTop - m_backButton.getHeight() - floorListMarginTop - rightPanelMarginBottom;
+		    	
+		    	m_maxFloorsViewableCount = (int) Math.floor(maxFloorContainerHeight / ListItemHeight);
 		    	
 		    	m_uiRootView.removeOnLayoutChangeListener(this);
 			}
@@ -136,9 +156,13 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     
     private int getListViewHeight(ListView list) 
     {
-        // Const out some of these.
-        return list.getCount() * (int)ListItemHeight + (int)(ButtonSize - ListItemHeight);
+        return list.getCount() * (int)ListItemHeight;
    }
+    
+    private int getListViewHeight(int listCount)
+    {
+    	return listCount * (int)ListItemHeight;
+    }
 
     public void destroy()
     {
@@ -180,7 +204,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     	}
     	
     	m_floorListAdapter.setData(temp);
-    	float controlHeight = getListViewHeight(m_floorList);
+    	float controlHeight = getListViewHeight(Math.min(m_floorList.getCount(), m_maxFloorsViewableCount));
     	RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams)m_floorListContainer.getLayoutParams();
     	layoutParams.height = (int)controlHeight;
     	m_floorListContainer.setLayoutParams(layoutParams);
@@ -190,14 +214,41 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     	
     	boolean floorSelectionEnabled = floorShortNames.length > 1;
     	m_floorListContainer.setVisibility(floorSelectionEnabled ? View.VISIBLE : View.GONE);
+    	
+    	m_floorUpArrow.setY(m_floorList.getY());
+    	m_floorDownArrow.setY(m_floorList.getY() + controlHeight - m_floorDownArrow.getHeight());
+    }
+    
+    private void setArrowState(boolean showUp, boolean showDown)
+    {
+    	m_floorUpArrow.setVisibility(showUp ? View.VISIBLE : View.INVISIBLE);
+    	m_floorDownArrow.setVisibility(showDown ? View.VISIBLE : View.INVISIBLE);
     }
     
     private void moveButtonToFloorIndex(int floorIndex, Boolean shouldAnimate)
     {
     	int floorCount = m_floorListAdapter.getCount();
+    	int halfMaxFloorsViewableCount = Math.round(m_maxFloorsViewableCount / 2);
+    	
+    	int startFloorIndex = floorCount - 1 - floorIndex;
+    	
+    	if(floorCount - 1 - startFloorIndex >= halfMaxFloorsViewableCount)
+    	{
+    		startFloorIndex = Math.max(startFloorIndex - halfMaxFloorsViewableCount, 0);
+    	}
+    	
+    	int screenFloorIndex = floorCount - 1 - floorIndex;
+    	
+    	if(floorCount > m_maxFloorsViewableCount)
+    	{
+    		startFloorIndex = Math.min(startFloorIndex, floorCount - m_maxFloorsViewableCount);
+    		
+    		screenFloorIndex = floorCount - 1 - floorIndex - startFloorIndex;
+    	}
+    	
     	float topY = (m_floorList.getY()) + (ListItemHeight*0.5f) - m_floorButton.getWidth()*0.5f;
-    	float newY = topY + ((floorCount-1)-floorIndex) * ListItemHeight;
-    	newY = Math.max(0.0f, Math.min(getListViewHeight(m_floorList)-m_floorButton.getHeight(), newY));
+    	float newY = topY + screenFloorIndex * ListItemHeight;
+    	newY = Math.max(0.0f, Math.min(getListViewHeight(m_floorList), newY));
     	
     	if(shouldAnimate)
     	{
@@ -205,18 +256,24 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     		.y(newY)
     		.setDuration(m_stateChangeAnimationTimeMilliseconds)
     		.start();
+    		
+    		m_floorList.smoothScrollToPosition(startFloorIndex);
     	}
     	else
     	{
     		m_floorButton.setY(newY);
+    		
+    		m_floorList.setSelection(startFloorIndex);
     	}
     	
-    	m_tutorialView.setUIPositions(m_leftXPosActiveFloorListContainer + 14,
-										m_backButton.getY(),
-										m_backButton.getHeight(),
-										m_floorListContainer.getY() + m_floorButton.getY(),
-										m_floorButton.getHeight(),
-										m_floorListAdapter.getCount() > 1);
+    	if(floorCount > m_maxFloorsViewableCount)
+    	{
+    		setArrowState(floorCount - 1 - floorIndex > halfMaxFloorsViewableCount, floorCount - startFloorIndex > m_maxFloorsViewableCount);
+    	}
+    	else
+    	{
+    		setArrowState(false, false);
+    	}
     }
     
     public void setFloorName(String name)
@@ -282,6 +339,8 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     
     private void updateDraggingButton(float yCoordinate)
     {
+    	final float joystickScrollThresholdDistance = 0.25f;
+    	
     	float y = yCoordinate;
 		
     	if(!m_isButtonInitialJumpRemoved) 
@@ -290,11 +349,42 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     	}
     	
     	float newY = m_floorButton.getY() + (y - m_previousYCoordinate);
-		newY = Math.max(0.0f, Math.min(getListViewHeight(m_floorList)-ButtonSize, newY));
+		newY = Math.max(0.0f, Math.min(Math.min(getListViewHeight(m_maxFloorsViewableCount - 1), getListViewHeight(m_floorList.getCount() - 1)), newY));
 		m_floorButton.setY(newY);
 		m_previousYCoordinate = y;
-		float dragParameter = 1.0f - (newY / (getListViewHeight(m_floorList)-ButtonSize));
-		InteriorsExplorerViewJniMethods.OnFloorSelectionDragged(m_nativeCallerPointer, dragParameter);;
+		
+		float scrollDelta = 0;
+		
+		float listViewHeightOnScreen = getListViewHeight(m_maxFloorsViewableCount - 1);
+		float normalisedNewY = newY / listViewHeightOnScreen;
+		
+		if(normalisedNewY <= joystickScrollThresholdDistance)
+		{
+			float localT = normalisedNewY / joystickScrollThresholdDistance;
+			scrollDelta = getScrollSpeed(1 - localT);
+		}
+		else if(normalisedNewY >= 1 - joystickScrollThresholdDistance)
+		{
+			float localT = (normalisedNewY - (1 - joystickScrollThresholdDistance)) / joystickScrollThresholdDistance;
+			scrollDelta = getScrollSpeed(-localT);
+		}
+		
+		m_floorList.smoothScrollByOffset(-Math.round(scrollDelta));
+		
+		View firstVisibleChild = m_floorList.getChildAt(0);
+		float topY = (m_floorList.getFirstVisiblePosition() * ListItemHeight) - firstVisibleChild.getTop();
+		
+		float dragParameter = 1.0f - ((topY + newY) / (getListViewHeight(m_floorList.getCount() - 1)));
+		InteriorsExplorerViewJniMethods.OnFloorSelectionDragged(m_nativeCallerPointer, dragParameter);
+		
+		int floorCount = m_floorList.getCount();
+		if(floorCount > m_maxFloorsViewableCount)
+		{
+			int firstFloorVisibleInView = m_floorList.getFirstVisiblePosition();
+			boolean showUp = firstFloorVisibleInView > 0 || firstVisibleChild.getTop() < 0;
+			boolean showDown = floorCount - firstFloorVisibleInView - (firstVisibleChild.getTop() < 0 ? 1 : 0) > m_maxFloorsViewableCount;
+			setArrowState(showUp, showDown);
+		}
     }
     
     private void endDraggingButton()
@@ -302,11 +392,23 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     	hideFloorLabels();
 		m_draggingFloorButton = false;
 		m_floorButton.getBackground().setState(new int[] {});
-		float dragParameter = 1.0f - (m_floorButton.getY() / (getListViewHeight(m_floorList)-ButtonSize));
+		
+		View firstVisibleChild = m_floorList.getChildAt(0);
+		float topY = (m_floorList.getFirstVisiblePosition() * ListItemHeight) - firstVisibleChild.getTop();
+		
+		float dragParameter = 1.0f - ((topY + m_floorButton.getY()) / (getListViewHeight(m_floorList.getCount() - 1)));
 		int floorCount = m_floorListAdapter.getCount()-1;
 		int selectedFloor = Math.round(dragParameter * floorCount);
 		moveButtonToFloorIndex(selectedFloor, true);
 		InteriorsExplorerViewJniMethods.OnFloorSelected(m_nativeCallerPointer, selectedFloor);
+    }
+    
+    private float getScrollSpeed(float t)
+    {
+    	final float maxScrollSpeed = 15;
+    	
+    	t = Math.max(-1, Math.min(1, t));
+    	return t * Math.abs(t) * maxScrollSpeed;
     }
     
     /**
@@ -345,7 +447,27 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     	animateViewToY((int)m_topYPosActive);
         animateViewToX((int)m_leftXPosActiveBackButton, (int) m_leftXPosActiveFloorListContainer, m_isOnScreen);
         
-        m_tutorialView.animateToActive(m_stateChangeAnimationTimeMilliseconds + (m_isOnScreen ? m_stateChangeAnimationDelayMilliseconds : 0));
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable()
+        {
+        	@Override
+        	public void run()
+        	{
+        		int[] rootViewPosition = {0, 0};
+        		m_uiRootView.getLocationInWindow(rootViewPosition);
+        		int[] backButtonPosition = {0, 0};
+        		m_backButton.getLocationInWindow(backButtonPosition);
+        		int[] floorButtonPosition = {0, 0};
+        		m_floorButton.getLocationInWindow(floorButtonPosition);
+        		m_tutorialView.setUIPositions(m_leftXPosActiveFloorListContainer + 14,
+												backButtonPosition[1] - rootViewPosition[1],
+												m_backButton.getHeight(),
+												floorButtonPosition[1] - rootViewPosition[1],
+												m_floorButton.getHeight(),
+												m_floorListAdapter.getCount() > 1);
+        		m_tutorialView.animateToActive(0);
+        	}
+        }, m_stateChangeAnimationTimeMilliseconds + (m_isOnScreen ? m_stateChangeAnimationDelayMilliseconds : 0));
     }
 
     public void animateToInactive()
@@ -401,30 +523,13 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     {
         m_floorButtonText.setTextColor(TextColorNormal);
 
-    	m_floorList.animate().alpha(0.5f).setDuration(m_stateChangeAnimationTimeMilliseconds);
-    	
-        int floorCount = m_floorListAdapter.getCount();
-        for(int i = 0; i < floorCount; ++i)
-        {
-        	ViewGroup child = (ViewGroup)m_floorList.getChildAt(i);
-        	TextView text = (TextView)child.findViewById(R.id.floor_name);
-        	
-        	text.animate().alpha(0.5f).setDuration(m_stateChangeAnimationTimeMilliseconds);
-        }
+        m_floorLayout.animate().alpha(0.5f).setDuration(m_stateChangeAnimationTimeMilliseconds);
     }
     
     private void showFloorLabels()
     {
     	m_floorButtonText.setTextColor(TextColorDown);
     	
-    	int floorCount = m_floorListAdapter.getCount();
-    	m_floorList.animate().alpha(1.0f).setDuration(m_stateChangeAnimationTimeMilliseconds);
-        for(int i = 0; i < floorCount; ++i)
-        {
-        	ViewGroup child = (ViewGroup)m_floorList.getChildAt(i);
-        	TextView text = (TextView)child.findViewById(R.id.floor_name);
-        	
-        	text.animate().alpha(1.0f).setDuration(m_stateChangeAnimationTimeMilliseconds);
-        }
+    	m_floorLayout.animate().alpha(1.0f).setDuration(m_stateChangeAnimationTimeMilliseconds);
     }
 }
