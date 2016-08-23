@@ -9,7 +9,7 @@
 #include "writer.h"
 #include "stringbuffer.h"
 #include "YelpSearchJsonParser.h"
-#include "IYelpCategoryMapper.h"
+#include "IYelpCategoryToTagMapper.h"
 #include "LatLongAltitude.h"
 #include "SearchResultModel.h"
 #include "SearchQuery.h"
@@ -27,7 +27,9 @@ namespace
         std::string placeId;
         std::string address;
         std::string name;
-        std::string category;
+
+        // This is the result of mapping a yelp category to an app tag
+        std::string mappedAppTag;
         std::string uniqueId;
         Eegeo::Space::LatLong location;
         
@@ -47,7 +49,7 @@ namespace ExampleApp
                 namespace Helpers
                 {
                     ExampleApp::Search::SdkModel::SearchResultModel ParseYelpSearchResultFromJsonObject(const Value& json,
-                                                                                                        ExampleApp::Search::Yelp::SdkModel::IYelpCategoryMapper& yelpCategoryMapper)
+                                                                                                        ExampleApp::Search::Yelp::SdkModel::IYelpCategoryToTagMapper& yelpCategoryMapper)
                     {
                         Result entry;
                         
@@ -92,8 +94,8 @@ namespace ExampleApp
                                 }
                             }
                         }
-                        
-                        yelpCategoryMapper.TryGetBestMatchingApplicationCategoryForYelpCategories(allCategories, entry.category);
+
+                        yelpCategoryMapper.TryGetBestMatchingTagForYelpCategories(allCategories, entry.mappedAppTag);
                         
                         if(json.HasMember("location"))
                         {
@@ -137,6 +139,9 @@ namespace ExampleApp
                         rapidjson::StringBuffer strbuf;
                         rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
                         json.Accept(writer);
+
+                        // TODO tags: should I be directly using this as the icon key, or do I need to map it?
+                        ExampleApp::Search::SdkModel::TagIconKey tagIconKey = entry.mappedAppTag;
                         
                         return ExampleApp::Search::SdkModel::SearchResultModel(ExampleApp::Search::SdkModel::SearchResultModel::CurrentVersion,
                                                                                entry.uniqueId,
@@ -147,8 +152,9 @@ namespace ExampleApp
                                                                                interior,
                                                                                building,
                                                                                floor,
-                                                                               entry.category,
+                                                                               allCategories,
                                                                                humanCategories,
+                                                                               tagIconKey,
                                                                                ExampleApp::Search::YelpVendorName,
                                                                                strbuf.GetString(),
                                                                                Eegeo::Helpers::Time::MillisecondsSinceEpoch());

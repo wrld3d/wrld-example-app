@@ -32,9 +32,9 @@ namespace ExampleApp
 		return Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(m_pSearchResultModel->GetJsonData());
 	}
 
-	System::String^ SearchResultModelCLI::Category::get()
+	System::String^ SearchResultModelCLI::IconKey::get()
 	{
-		return Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(m_pSearchResultModel->GetCategory());
+		return Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(m_pSearchResultModel->GetIconKey());
 	}
 
 	System::String^ SearchResultModelCLI::Vendor::get()
@@ -42,17 +42,17 @@ namespace ExampleApp
 		return Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(m_pSearchResultModel->GetVendor());
 	}
 
-	array<System::String^>^ SearchResultModelCLI::HumanReadableCategories::get()
+	array<System::String^>^ SearchResultModelCLI::HumanReadableTags::get()
 	{
-		const std::vector<std::string>& humanReadableCategories(m_pSearchResultModel->GetHumanReadableCategories());
-		array<System::String^>^ humanCategoriesArray = gcnew array<System::String^>(static_cast<int>(humanReadableCategories.size()));
+		const std::vector<std::string>& humanReadableTags(m_pSearchResultModel->GetHumanReadableTags());
+		array<System::String^>^ humanReadableTagsArray = gcnew array<System::String^>(static_cast<int>(humanReadableTags.size()));
 
-		for (size_t i = 0; i < humanReadableCategories.size(); ++i)
+		for (size_t i = 0; i < humanReadableTags.size(); ++i)
 		{
-			const std::string& categoryString(humanReadableCategories[i]);
-			humanCategoriesArray[static_cast<int>(i)] = Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(categoryString);
+			const std::string& tagString(humanReadableTags[i]);
+			humanReadableTagsArray[static_cast<int>(i)] = Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(tagString);
 		}
 
-		return humanCategoriesArray;
+		return humanReadableTagsArray;
 	}
 }

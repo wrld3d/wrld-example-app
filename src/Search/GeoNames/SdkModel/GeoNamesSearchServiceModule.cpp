@@ -42,11 +42,6 @@ namespace ExampleApp
                 {
                     return *m_pSearchService;
                 }
-                
-                std::vector<CategorySearch::View::CategorySearchModel> GeoNamesSearchServiceModule::GetCategorySearchModels() const
-                {
-                    return std::vector<CategorySearch::View::CategorySearchModel>();
-                }
             }
         }
     }

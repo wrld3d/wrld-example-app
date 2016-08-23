@@ -67,7 +67,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     private TextView m_searchCountText;
     private Integer m_searchCount;
     
-    private boolean m_isCategory;
+    private boolean m_isTag;
     private boolean m_isFindMenuChildItemClicked;
     
     private ArrayList<String> m_pendingResults = null;
@@ -175,7 +175,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         ViewGroup vg = (ViewGroup)m_view;
         m_activity.recursiveDisableSplitMotionEvents(vg);
         
-        m_isCategory = false;
+        m_isTag = false;
         
         m_searchResultsScrollListener = new SearchResultsScrollListener(m_searchResultsScrollButton, m_searchResultsFade, m_searchResultsScrollable, m_searchList);       
         m_searchList.setOnScrollListener(m_searchResultsScrollListener);	
@@ -241,16 +241,16 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     	m_progressSpinner.setVisibility(View.GONE);
     }
     
-    public void setEditText(String searchText, boolean isCategory)
+    public void setEditText(String searchText, boolean isTag)
     {
-    	setEditTextInternal(searchText, isCategory);
+    	setEditTextInternal(searchText, isTag);
     	m_editText.clearFocus();
     }
     
-    private void setEditTextInternal(String searchText, boolean isCategory)
+    private void setEditTextInternal(String searchText, boolean isTag)
     {
     	m_editText.setText(searchText);
-    	m_isCategory = isCategory;
+    	m_isTag = isTag;
     	updateClearButtonVisibility();
     }
     
@@ -422,7 +422,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
 	@Override
 	public void onFocusChange(View v, boolean hasFocus) 
 	{
-		if(hasFocus && m_isCategory)
+		if(hasFocus && m_isTag)
 		{
 			setEditTextInternal("", false);
 		}

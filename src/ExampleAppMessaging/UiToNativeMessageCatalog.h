@@ -6,7 +6,7 @@
 #include "CatalogBinding.h"
 #include "SearchMenuPerformedSearchMessage.h"
 #include "SearchResultSectionItemSelectedMessage.h"
-#include "CategorySearchSelectedMessage.h"
+#include "TagSearchSelectedMessage.h"
 #include "WeatherSelectedMessage.h"
 #include "PlaceJumpSelectedMessage.h"
 #include "ModalityChangedMessage.h"
@@ -45,7 +45,7 @@ namespace ExampleApp
         class UiToNativeMessageCatalog
             : public Eegeo::Messaging::CatalogBinding<SearchMenu::SearchMenuPerformedSearchMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultSection::SearchResultSectionItemSelectedMessage>
-            , public Eegeo::Messaging::CatalogBinding<CategorySearch::CategorySearchSelectedMessage>
+            , public Eegeo::Messaging::CatalogBinding<TagSearch::TagSearchSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<WeatherMenu::WeatherSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<PlaceJumps::PlaceJumpSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<Modality::ModalityChangedMessage>

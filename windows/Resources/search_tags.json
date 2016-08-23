@@ -1,0 +1,18 @@
+{
+  "tags": [
+    { "tag": "", "readable_tag": "", "icon_key": "aroundme" },
+    { "tag": "accommodation", "readable_tag": "Accommodation", "icon_key": "accommodation" },
+    { "tag": "amenities", "readable_tag": "General Amenities", "icon_key": "amenities" },
+    { "tag": "art_museums", "readable_tag": "Art & Museum", "icon_key": "art_museums" },
+    { "tag": "business", "readable_tag": "Business", "icon_key": "business" },
+    { "tag": "entertainment", "readable_tag": "Entertainment", "icon_key": "entertainment" },
+    { "tag": "food_drink", "readable_tag": "Food & Drink", "icon_key": "food_drink" },
+    { "tag": "health", "readable_tag": "Health", "icon_key": "health" },
+    { "tag": "shopping", "readable_tag": "Shopping", "icon_key": "shopping" },
+    { "tag": "sports_leisure", "readable_tag": "Sport & Leisure", "icon_key": "sports_leisure" },
+    { "tag": "tourism", "readable_tag": "Tourist", "icon_key": "tourism" },
+    { "tag": "transport", "readable_tag": "Transport", "icon_key": "transport" }
+  ],
+  "default_readable_tag": "Unknown",
+  "default_icon_key": "misc"
+}

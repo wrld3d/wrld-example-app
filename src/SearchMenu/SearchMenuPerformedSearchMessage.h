@@ -11,15 +11,15 @@ namespace ExampleApp
         class SearchMenuPerformedSearchMessage
         {
             std::string m_searchQuery;
-            bool m_isCategory;
+            bool m_isTag;
             bool m_isInterior;
 
         public:
-            SearchMenuPerformedSearchMessage(const std::string& searchQuery, bool isCategory, bool isInterior);
+            SearchMenuPerformedSearchMessage(const std::string& searchQuery, bool isTag, bool isInterior);
 
             const std::string& SearchQuery() const;
             
-            bool IsCategory() const;
+            bool IsTag() const;
             
             bool IsInterior() const;
         };

@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.eegeo.categories.CategoryResources;
+import com.eegeo.tags.TagResources;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.mobileexampleapp.R;
 
@@ -342,7 +342,7 @@ public class MenuExpandableListAdapter extends BaseExpandableListAdapter
 		ImageView itemIcon = (ImageView)itemView.findViewById(R.id.menu_list_item_icon);
 		if (itemIcon != null)
 		{
-			itemIcon.setImageResource(CategoryResources.getIconForResourceName(m_context, itemData.getIcon()));
+			itemIcon.setImageResource(TagResources.getIconForResourceName(m_context, itemData.getIcon()));
 		}
 		
 		return itemView;

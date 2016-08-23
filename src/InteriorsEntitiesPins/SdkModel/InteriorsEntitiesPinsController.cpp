@@ -124,7 +124,9 @@ namespace ExampleApp
                 
                 for (Eegeo::Resources::Interiors::Entities::TEntityModelVector::const_iterator it = entities.begin(); it != entities.end(); ++it)
                 {
-                    const Eegeo::Resources::Interiors::Entities::InteriorsEntityMetadata *pMetadata = interiorModel.GetMetadataForEntityFromCategory("labels", (*it)->GetIdentifier());
+                    const Eegeo::Resources::Interiors::Entities::InteriorsEntityMetadata *pMetadata =
+                            interiorModel.GetMetadataForEntityFromCategory("labels", (*it)->GetIdentifier());
+
                     if (pMetadata == NULL)
                     {
                         continue;

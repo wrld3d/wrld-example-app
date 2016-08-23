@@ -32,7 +32,7 @@ namespace ExampleApp
                 , m_floorIdx(floorIdx)
                 , m_webRequestCompleteCallback(this, &EegeoInteriorSearchQuery::OnWebResponseReceived)
                 {
-                    Eegeo_ASSERT(query.IsCategory(), "Only support category indoor queries");
+                    Eegeo_ASSERT(query.IsTag(), "Only support tag indoor queries");
                     const int maximumNumberOfResults = 99;
                     
                     std::string encodedQuery;

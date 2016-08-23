@@ -23,7 +23,7 @@
 - (void) removeSeachKeyboard;
 
 - (void) setEditText :(NSString*)searchText
-                     :(bool)isCategory;
+                     :(bool)isTag;
 
 - (void) clearSearch;
 

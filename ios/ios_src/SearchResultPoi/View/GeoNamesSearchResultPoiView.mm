@@ -79,8 +79,8 @@ namespace
         self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pControlContainer addSubview: self.pHeadlineContainer];
         
-        self.pCategoryIconContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pHeadlineContainer addSubview: self.pCategoryIconContainer];
+        self.pTagIconContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pHeadlineContainer addSubview: self.pTagIconContainer];
         
         self.pTitleLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextTitleColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
         [self.pHeadlineContainer addSubview: self.pTitleLabel];
@@ -129,8 +129,8 @@ namespace
     [self.pContentContainer removeFromSuperview];
     [self.pContentContainer release];
     
-    [self.pCategoryIconContainer removeFromSuperview];
-    [self.pCategoryIconContainer release];
+    [self.pTagIconContainer removeFromSuperview];
+    [self.pTagIconContainer release];
     
     [self.pTitleLabel removeFromSuperview];
     [self.pTitleLabel release];
@@ -217,7 +217,7 @@ namespace
                                            closeButtonSectionHeight);
     }
     
-    self.pCategoryIconContainer.frame = CGRectMake(0.f, 0.f, headlineHeight, headlineHeight);
+    self.pTagIconContainer.frame = CGRectMake(0.f, 0.f, headlineHeight, headlineHeight);
     const float titlePadding = 10.0f;
     self.pTitleLabel.frame = CGRectMake(headlineHeight + titlePadding,
                                         0.f,
@@ -277,9 +277,9 @@ namespace
     
     self.pTitleLabel.text = [NSString stringWithUTF8String:pModel->GetTitle().c_str()];
     
-    [self.pCategoryIconContainer.subviews makeObjectsPerformSelector: @selector(removeFromSuperview)];
-    std::string categoryIcon = ExampleApp::Helpers::IconResources::GetSmallIconForCategory(pModel->GetCategory());
-    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pCategoryIconContainer, categoryIcon, ExampleApp::Helpers::ImageHelpers::Centre);
+    [self.pTagIconContainer.subviews makeObjectsPerformSelector: @selector(removeFromSuperview)];
+    std::string tagIcon = ExampleApp::Helpers::IconResources::GetSmallIconForTag(pModel->GetIconKey());
+    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pTagIconContainer, tagIcon, ExampleApp::Helpers::ImageHelpers::Centre);
     
     self.pCountryHeaderContainer.hidden = true;
     self.pCountryContent.hidden = true;

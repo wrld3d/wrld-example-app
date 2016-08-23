@@ -157,14 +157,14 @@ namespace ExampleApp
             	AndroidSafeNativeThreadAttachment attached(m_nativeState);
             	JNIEnv* env = attached.envForThread;
 
-            	jobjectArray humanReadableCategoriesArray = CreateJavaArray(model.GetHumanReadableCategories());
+            	jobjectArray humanReadableTagsArray = CreateJavaArray(model.GetHumanReadableTags());
             	jobjectArray reviewsArray = CreateJavaArray(yelpModel.GetReviews());
 
             	jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
             	jstring addressStr = env->NewStringUTF(model.GetSubtitle().c_str());
             	jstring phoneStr = env->NewStringUTF(yelpModel.GetPhone().c_str());
             	jstring urlStr = env->NewStringUTF(yelpModel.GetWebUrl().c_str());
-            	jstring categoryStr = env->NewStringUTF(model.GetCategory().c_str());
+            	jstring iconKeyStr = env->NewStringUTF(model.GetIconKey().c_str());
             	jstring imageUrlStr = env->NewStringUTF(yelpModel.GetImageUrl().c_str());
             	jstring ratingImageUrlStr = env->NewStringUTF(yelpModel.GetRatingImageUrl().c_str());
             	jstring vendorStr = env->NewStringUTF(model.GetVendor().c_str());
@@ -177,8 +177,8 @@ namespace ExampleApp
 						addressStr,
 						phoneStr,
 						urlStr,
-						categoryStr,
-						humanReadableCategoriesArray,
+						iconKeyStr,
+						humanReadableTagsArray,
 						imageUrlStr,
 						ratingImageUrlStr,
 						vendorStr,
@@ -190,13 +190,13 @@ namespace ExampleApp
             	env->DeleteLocalRef(vendorStr);
             	env->DeleteLocalRef(ratingImageUrlStr);
             	env->DeleteLocalRef(imageUrlStr);
-            	env->DeleteLocalRef(categoryStr);
+            	env->DeleteLocalRef(iconKeyStr);
             	env->DeleteLocalRef(urlStr);
             	env->DeleteLocalRef(phoneStr);
             	env->DeleteLocalRef(addressStr);
             	env->DeleteLocalRef(titleStr);
             	env->DeleteLocalRef(reviewsArray);
-            	env->DeleteLocalRef(humanReadableCategoriesArray);
+            	env->DeleteLocalRef(humanReadableTagsArray);
             }
 
             void SearchResultPoiView::CreateAndShowGeoNamesPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned)
@@ -210,7 +210,7 @@ namespace ExampleApp
 
             	jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
             	jstring addressStr = env->NewStringUTF(model.GetSubtitle().c_str());
-            	jstring categoryStr = env->NewStringUTF(model.GetCategory().c_str());
+            	jstring iconKeyStr = env->NewStringUTF(model.GetIconKey().c_str());
 
             	jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
             	env->CallVoidMethod(
@@ -218,11 +218,11 @@ namespace ExampleApp
 						displayPoiInfoMethod,
 						titleStr,
 						addressStr,
-						categoryStr,
+						iconKeyStr,
 						isPinned
             	);
 
-            	env->DeleteLocalRef(categoryStr);
+            	env->DeleteLocalRef(iconKeyStr);
             	env->DeleteLocalRef(addressStr);
             	env->DeleteLocalRef(titleStr);
             }
@@ -240,13 +240,13 @@ namespace ExampleApp
             	AndroidSafeNativeThreadAttachment attached(m_nativeState);
             	JNIEnv* env = attached.envForThread;
 
-            	jobjectArray humanReadableCategoriesArray = CreateJavaArray(model.GetHumanReadableCategories());
+            	jobjectArray humanReadableTagsArray = CreateJavaArray(model.GetHumanReadableTags());
 
             	jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
             	jstring addressStr = env->NewStringUTF(model.GetSubtitle().c_str());
             	jstring phoneStr = env->NewStringUTF(eegeoSearchResultModel.GetPhone().c_str());
             	jstring urlStr = env->NewStringUTF(eegeoSearchResultModel.GetWebUrl().c_str());
-            	jstring categoryStr = env->NewStringUTF(model.GetCategory().c_str());
+            	jstring iconKeyStr = env->NewStringUTF(model.GetIconKey().c_str());
             	jstring imageUrlStr = env->NewStringUTF(eegeoSearchResultModel.GetImageUrl().c_str());
             	jstring vendorStr = env->NewStringUTF(model.GetVendor().c_str());
 
@@ -258,8 +258,8 @@ namespace ExampleApp
 						addressStr,
 						phoneStr,
 						urlStr,
-						categoryStr,
-						humanReadableCategoriesArray,
+						iconKeyStr,
+						humanReadableTagsArray,
 						imageUrlStr,
 						vendorStr,
 						isPinned
@@ -267,12 +267,12 @@ namespace ExampleApp
 
             	env->DeleteLocalRef(vendorStr);
             	env->DeleteLocalRef(imageUrlStr);
-            	env->DeleteLocalRef(categoryStr);
+            	env->DeleteLocalRef(iconKeyStr);
             	env->DeleteLocalRef(urlStr);
             	env->DeleteLocalRef(phoneStr);
             	env->DeleteLocalRef(addressStr);
             	env->DeleteLocalRef(titleStr);
-            	env->DeleteLocalRef(humanReadableCategoriesArray);
+            	env->DeleteLocalRef(humanReadableTagsArray);
             }
 
             jclass SearchResultPoiView::CreateJavaClass(const std::string& viewClass)

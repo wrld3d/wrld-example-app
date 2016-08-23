@@ -18,7 +18,7 @@ namespace ExampleApp
                                                              SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
                                                              WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                              MyPins::SdkModel::IMyPinsService& myPinsService,
-                                                             CategorySearch::ISearchResultIconCategoryMapper& searchResultOnMapIconCategoryMapper,
+                                                             TagSearch::ISearchResultIconKeyMapper& searchResultOnMapIconKeyMapper,
                                                              Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultMyPinsService,
                                                              ExampleAppMessaging::TMessageBus& messageBus,
                                                              Metrics::IMetricsService& metricsService,
@@ -30,7 +30,7 @@ namespace ExampleApp
                                                                               myPinsService,
                                                                               *m_pSearchResultOnMapFactory,
                                                                               searchResultMyPinsService,
-                                                                              searchResultOnMapIconCategoryMapper,
+                                                                              searchResultOnMapIconKeyMapper,
                                                                               searchResultRepository);
                 
                 m_pSearchResultOnMapItemModelSelectedObserver = Eegeo_NEW(View::SearchResultOnMapItemModelSelectedObserver)(searchResultPoiViewModel,

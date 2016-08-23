@@ -14,6 +14,8 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+            typedef std::string TagIconKey;
+
             class SearchResultModel
             {
                 int m_version;
@@ -25,8 +27,9 @@ namespace ExampleApp
                 bool m_interior;
                 Eegeo::Resources::Interiors::InteriorId m_building;
                 int m_floor;
-                std::string m_applicationCategory;
-                std::vector<std::string> m_humanReadableCategories;
+                std::vector<std::string> m_tags;
+                std::vector<std::string> m_humanReadableTags;
+                TagIconKey m_iconKey;
                 std::string m_vendor;
                 std::string m_jsonData;
                 int64_t m_searchResultCreationTimeStamp;
@@ -43,8 +46,9 @@ namespace ExampleApp
                                   bool interior,
                                   const Eegeo::Resources::Interiors::InteriorId& building,
                                   int floor,
-                                  const std::string& applicationCategory,
-                                  const std::vector<std::string>& humanReadableCategories,
+                                  const std::vector<std::string>& tags,
+                                  const std::vector<std::string>& humanReadableTags,
+                                  const TagIconKey& iconKey,
                                   const std::string& vendor,
                                   const std::string& jsonData,
                                   int64_t searchResultCreationTimeStamp);
@@ -72,10 +76,14 @@ namespace ExampleApp
                 const std::string& GetSubtitle() const;
                 
                 const std::string& GetJsonData() const;
-                
-                const std::string& GetCategory() const;
-                
-                const std::vector<std::string>& GetHumanReadableCategories() const;
+
+                const TagIconKey& GetIconKey() const;
+
+                const std::vector<std::string>& GetTags() const;
+
+                std::string GetPrimaryTag() const;
+
+                const std::vector<std::string>& GetHumanReadableTags() const;
                 
                 const std::string& GetVendor() const;
                 

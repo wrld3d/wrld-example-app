@@ -25,7 +25,7 @@ namespace ExampleApp
                 
                 m_metricsService.SetEvent("Opened POI",
                                           "Title", searchResultModel.GetTitle().c_str(),
-                                          "Category", searchResultModel.GetCategory().c_str(),
+                                          "Tag", searchResultModel.GetPrimaryTag().c_str(),
                                           "Vicinity", searchResultModel.GetSubtitle().c_str());
                 
                 m_view.Show(searchResultModel, m_viewModel.IsPinned());

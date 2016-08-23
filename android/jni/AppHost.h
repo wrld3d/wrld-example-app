@@ -55,6 +55,7 @@
 #include "IInteriorsExplorerViewModule.h"
 #include "SearchResultSectionViewIncludes.h"
 #include "IMenuReactionModel.h"
+#include "TagSearchViewIncludes.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
@@ -119,6 +120,7 @@ private:
     ExampleApp::Menu::View::IMenuViewModule* m_pSettingsMenuViewModule;
     ExampleApp::Menu::View::IMenuViewModule* m_pSearchMenuViewModule;
     ExampleApp::SearchResultSection::View::ISearchResultSectionViewModule* m_pSearchResultSectionViewModule;
+    ExampleApp::TagSearch::View::ITagSearchViewModule* m_pTagSearchViewModule;
     ExampleApp::ModalBackground::View::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
     ExampleApp::FlattenButton::View::IFlattenButtonViewModule* m_pFlattenButtonViewModule;
     ExampleApp::SearchResultPoi::View::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;

@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.eegeo.categories.CategoryResources;
+import com.eegeo.tags.TagResources;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.helpers.TintablePinToggleButton;
 import com.eegeo.mobileexampleapp.R;
@@ -23,7 +23,7 @@ public class GeoNamesSearchResultPoiView
     private TextView m_titleView = null;
     private TextView m_countryView = null;
     private TextView m_countryHeader = null;
-    private ImageView m_categoryIcon = null;
+    private ImageView m_tagIcon = null;
     private TintablePinToggleButton m_togglePinnedWrapper;
 
     public GeoNamesSearchResultPoiView(MainActivity activity, long nativeCallerPointer)
@@ -40,7 +40,7 @@ public class GeoNamesSearchResultPoiView
         m_titleView = (TextView)m_view.findViewById(R.id.search_result_poi_view_title);
         m_countryView = (TextView)m_view.findViewById(R.id.search_result_poi_view_country);
         m_countryHeader = (TextView)m_view.findViewById(R.id.search_result_poi_view_country_header);
-        m_categoryIcon = (ImageView)m_view.findViewById(R.id.search_result_poi_view_category_icon);
+        m_tagIcon = (ImageView)m_view.findViewById(R.id.search_result_poi_view_tag_icon);
 
         m_view.setVisibility(View.GONE);
         m_uiRoot.addView(m_view);
@@ -66,7 +66,7 @@ public class GeoNamesSearchResultPoiView
     public void displayPoiInfo(
     		final String title,
     		final String address,
-    		final String category,
+    		final String iconKey,
     		final boolean isPinned)
     {
         m_titleView.setText(title);
@@ -85,8 +85,8 @@ public class GeoNamesSearchResultPoiView
             m_countryView.setVisibility(View.GONE);
         }
         
-        int iconId = CategoryResources.getSmallIconForCategory(m_activity, category);
-        m_categoryIcon.setImageResource(iconId);
+        int iconId = TagResources.getSmallIconForTag(m_activity, iconKey);
+        m_tagIcon.setImageResource(iconId);
 
         m_closeButton.setEnabled(true);
         m_togglePinnedWrapper.setPinToggleState(isPinned);

@@ -14,64 +14,35 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            namespace
-            {
-                std::string ExtractAnyVersion4Data(rapidjson::Document& document)
-                {
-                    rapidjson::Document jsonDoc;
-                    rapidjson::Document::AllocatorType& allocator = jsonDoc.GetAllocator();
-                    rapidjson::Value valueObject(rapidjson::kObjectType);
-                    std::string jsonString ="";
-                    
-                    if(document.HasMember("phone") && std::string(document["phone"].GetString()).empty() == false)
-                    {
-                        valueObject.AddMember("display_phone", rapidjson::Value(document["display_phone"], allocator).Move(), allocator);
-                    }
-                    if(document.HasMember("web") && std::string(document["web"].GetString()).empty() == false)
-                    {
-                        valueObject.AddMember("url", rapidjson::Value(document["web"], allocator).Move(), allocator);
-                    }
-                    if(document.HasMember("imageUrl") && std::string(document["imageUrl"].GetString()).empty() == false)
-                    {
-                        valueObject.AddMember("image_url", rapidjson::Value(document["imageUrl"], allocator).Move(), allocator);
-                    }
-                    if(document.HasMember("ratingImageUrl") && std::string(document["ratingImageUrl"].GetString()).empty() == false)
-                    {
-                        valueObject.AddMember("rating", rapidjson::Value(document["ratingImageUrl"], allocator).Move(), allocator);
-                    }
-                    if(document.HasMember("reviews"))
-                    {
-                        const rapidjson::Value& reviewsJson(document["reviews"]);
-                        if(reviewsJson.Size() > 0)
-                        {
-                            rapidjson::SizeType index = 0;
-                            valueObject.AddMember("snippet_text", rapidjson::Value(reviewsJson[index], allocator).Move(), allocator);
-                        }
-                    }
-                    if(document.HasMember("reviewCount"))
-                    {
-                        valueObject.AddMember("review_count", document["reviewCount"].GetInt(), allocator);
-                    }
-                    
-                    rapidjson::StringBuffer strbuf;
-                    rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
-                    valueObject.Accept(writer);
-                    return strbuf.GetString();
-                }
-            }
             std::string SerializeToJson(const SearchResultModel& searchResult)
             {
                 rapidjson::Document jsonDoc;
                 rapidjson::Document::AllocatorType& allocator = jsonDoc.GetAllocator();
                 rapidjson::Value valueObject(rapidjson::kObjectType);
                 
-                rapidjson::Value categoriesJson(rapidjson::kArrayType);
-                const std::vector<std::string>& categories(searchResult.GetHumanReadableCategories());
-                for(std::vector<std::string>::const_iterator it = categories.begin(); it != categories.end(); ++ it)
+                rapidjson::Value humanReadableTagsJson(rapidjson::kArrayType);
+
                 {
-                    categoriesJson.PushBack(rapidjson::Value(it->c_str(), allocator).Move(), allocator);
+                    const std::vector<std::string>& humanReadableTags(searchResult.GetHumanReadableTags());
+                    humanReadableTagsJson.Reserve(humanReadableTags.size(), allocator);
+
+                    for (const auto& v : humanReadableTags)
+                    {
+                        humanReadableTagsJson.PushBack(rapidjson::Value(v.c_str(), allocator).Move(), allocator);
+                    }
                 }
-                
+
+                rapidjson::Value tagsJson(rapidjson::kArrayType);
+
+                {
+                    const std::vector<std::string>& tags(searchResult.GetTags());
+                    tagsJson.Reserve(tags.size(), allocator);
+                    for(const auto& v : tags)
+                    {
+                        tagsJson.PushBack(rapidjson::Value(v.c_str(), allocator).Move(), allocator);
+                    }
+                }
+
                 valueObject.AddMember("version", searchResult.GetVersion(), allocator);
                 valueObject.AddMember("id", rapidjson::Value(searchResult.GetIdentifier().c_str(), allocator).Move(), allocator);
                 valueObject.AddMember("title", rapidjson::Value(searchResult.GetTitle().c_str(), allocator).Move(), allocator);
@@ -79,8 +50,10 @@ namespace ExampleApp
                 valueObject.AddMember("interior", searchResult.IsInterior(), allocator);
                 valueObject.AddMember("building", rapidjson::Value(searchResult.GetBuildingId().Value().c_str(), allocator).Move(), allocator);
                 valueObject.AddMember("floor", searchResult.GetFloor(), allocator);
-                valueObject.AddMember("category", rapidjson::Value(searchResult.GetCategory().c_str(), allocator).Move(), allocator);
-                valueObject.AddMember("humanReadableCategories", categoriesJson, allocator);
+
+                valueObject.AddMember("tags", tagsJson, allocator);
+                valueObject.AddMember("humanReadableTags", humanReadableTagsJson, allocator);
+                valueObject.AddMember("iconKey", rapidjson::Value(searchResult.GetIconKey().c_str(), allocator).Move(), allocator);
                 valueObject.AddMember("vendor", rapidjson::Value(searchResult.GetVendor().c_str(), allocator).Move(), allocator);
                 valueObject.AddMember("latitude", searchResult.GetLocation().GetLatitudeInDegrees(), allocator);
                 valueObject.AddMember("longitude", searchResult.GetLocation().GetLongitudeInDegrees(), allocator);
@@ -94,11 +67,10 @@ namespace ExampleApp
                 return strbuf.GetString();
                 
             }
-            
+
             bool TryDeserializeFromJson(const std::string& searchResultJson, SearchResultModel& out_resultModel)
             {
                 rapidjson::Document document;
-                
                 const bool successfullyParsed = !(document.Parse<0>(searchResultJson.c_str()).HasParseError());
                 
                 if(!successfullyParsed)
@@ -113,70 +85,76 @@ namespace ExampleApp
                     return false;
                 }
                 
-                int version = document["version"].GetInt();
-                
-                const int earliestSupportedVersionForUpversioning = 4;
-                
-                if(version < earliestSupportedVersionForUpversioning)
+                const int version = document["version"].GetInt();
+
+                if(version != ExampleApp::Search::SdkModel::SearchResultModel::CurrentVersion)
                 {
                     Eegeo_TTY("Old SearchResultModel version detected: tried to deserialize version %d but current version is %d. Please delete and reinstall the application.\n", version, SearchResultModel::CurrentVersion);
                     return false;
                 }
                 
-                std::string jsonData = "";
-                if(version == 4)
+                const std::string jsonData = document["json"].GetString();
+
+                const bool interior = document.HasMember("interior") ?
+                        document["interior"].GetBool() :
+                        false;
+
+                const std::string building = document.HasMember("building") ?
+                        document["building"].GetString() :
+                        "";
+
+                const int floor = document.HasMember("floor") ?
+                        document["floor"].GetInt() :
+                        0;
+
+                const float heightAboveTerrainMetres = document.HasMember("heightAboveTerrain") ?
+                        static_cast<float>(document["heightAboveTerrain"].GetDouble())
+                        : 0.0f;
+
+                const Search::SdkModel::TagIconKey tagIconKey = document["iconKey"].GetString();
+
+                std::vector<std::string> tags;
+
                 {
-                    jsonData = ExtractAnyVersion4Data(document);
-                    version = SearchResultModel::CurrentVersion;
+                    const auto& tagsJson(document["tags"]);
+                    tags.reserve(tagsJson.Size());
+                    for (auto i = 0; i < tagsJson.Size(); ++i)
+                    {
+                        tags.push_back(tagsJson[i].GetString());
+                    }
                 }
-                else if(version > 4)
+
+                std::vector<std::string> humanReadableTags;
+
                 {
-                    jsonData = document["json"].GetString();
+                    const auto& humanReadableTagsJson(document["humanReadableTags"]);
+                    humanReadableTags.reserve(humanReadableTagsJson.Size());
+                    for (auto i = 0; i < humanReadableTagsJson.Size(); ++i)
+                    {
+                        humanReadableTags.push_back(humanReadableTagsJson[i].GetString());
+                    }
                 }
-                
-                const rapidjson::Value& categoriesJson(document["humanReadableCategories"]);
-                std::vector<std::string> categories;
-                for(rapidjson::SizeType i = 0; i < categoriesJson.Size(); ++ i)
-                {
-                    categories.push_back(categoriesJson[i].GetString());
-                }
-                
-                bool interior = false;
-                if(document.HasMember("interior"))
-                {
-                    interior = document["interior"].GetBool();
-                }
-                
-                std::string building = "";
-                if(document.HasMember("building"))
-                {
-                    building = document["building"].GetString();
-                }
-        
-                int floor = 0;
-                if(document.HasMember("floor"))
-                {
-                    floor = document["floor"].GetInt();
-                }
-                
-                float heightAboveTerrainMetres = 0;
-                if(document.HasMember("heightAboveTerrain"))
-                {
-                    heightAboveTerrainMetres = static_cast<float>(document["heightAboveTerrain"].GetDouble());
-                }
-                
+
+                const Eegeo::Space::LatLong& location = Eegeo::Space::LatLong::FromDegrees(
+                        document["latitude"].GetDouble(),
+                        document["longitude"].GetDouble());
+
+                const std::string subtitle = document.HasMember("address") ?
+                        document["address"].GetString() :
+                        document["subtitle"].GetString();
+
                 out_resultModel = SearchResultModel(version,
                                                     document["id"].GetString(),
                                                     document["title"].GetString(),
-                                                    document.HasMember("address") ? document["address"].GetString() : document["subtitle"].GetString(),
-                                                    Eegeo::Space::LatLong::FromDegrees(document["latitude"].GetDouble(),
-                                                                                       document["longitude"].GetDouble()),
+                                                    subtitle,
+                                                    location,
                                                     heightAboveTerrainMetres,
                                                     interior,
                                                     building,
                                                     floor,
-                                                    document["category"].GetString(),
-                                                    categories,
+                                                    tags,
+                                                    humanReadableTags,
+                                                    tagIconKey,
                                                     document["vendor"].GetString(),
                                                     jsonData,
                                                     document["createTimestamp"].GetInt64());

@@ -18,7 +18,7 @@ namespace ExampleApp
                 namespace Helpers
                 {
                     ExampleApp::Search::SdkModel::SearchResultModel ParseYelpSearchResultFromJsonObject(const rapidjson::Value& json,
-                                                                                                        ExampleApp::Search::Yelp::SdkModel::IYelpCategoryMapper& yelpCategoryMapper);
+                                                                                                        ExampleApp::Search::Yelp::SdkModel::IYelpCategoryToTagMapper& yelpCategoryMapper);
                     
                     YelpSearchResultModel TransformToYelpSearchResult(const Search::SdkModel::SearchResultModel& searchResultModel);
                     

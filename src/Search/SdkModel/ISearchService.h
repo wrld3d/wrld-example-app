@@ -20,7 +20,7 @@ namespace ExampleApp
             public:
                 virtual ~ISearchService() { }
                 
-                virtual bool CanHandleCategory(const std::string& category) const = 0;
+                virtual bool CanHandleTag(const std::string& tag) const = 0;
                 
                 virtual bool CanHandleIndoor() const = 0;
 
