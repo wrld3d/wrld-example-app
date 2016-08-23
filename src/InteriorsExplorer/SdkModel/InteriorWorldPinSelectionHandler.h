@@ -36,6 +36,11 @@ namespace ExampleApp
                 
                 void SelectPin()
                 {
+                    if (!m_pinController.PinInteractionAllowedForCurrentNetwork(m_interiorId.Value()))
+                    {
+                        m_pinController.ShowAlert();
+                        return;
+                    }
                     if(!m_pinController.PinInteractionAllowed(m_interiorId.Value()))
                     {
                         return;

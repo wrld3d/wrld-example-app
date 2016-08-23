@@ -143,8 +143,9 @@
 #ifndef ANDROID
 #include "IAvatarController.h"
 #include "AvatarModule.h"
-
 #endif
+
+#include "RestrictedBuildingService.h"
 
 namespace ExampleApp
 {
@@ -667,15 +668,6 @@ namespace ExampleApp
         Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
         Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
         
-        m_pSearchResultSectionModule = Eegeo_NEW(SearchResultSection::SdkModel::SearchResultSectionModule)(m_pSearchMenuModule->GetSearchMenuViewModel(),
-                                                                                                  m_pSearchModule->GetSearchResultRepository(),
-                                                                                                  m_pSearchModule->GetSearchQueryPerformer(),
-                                                                                                  *m_pCameraTransitionService,
-                                                                                                  interiorsPresentationModule.GetInteriorInteractionModel(),
-                                                                                                  interiorsModelModule.GetInteriorMarkerModelRepository(),
-                                                                                                  m_pAppCameraModule->GetController(),
-                                                                                                  m_messageBus);
-        
         m_pSearchResultOnMapModule = Eegeo_NEW(SearchResultOnMap::SdkModel::SearchResultOnMapModule)(m_pSearchModule->GetSearchResultRepository(),
                                                                                                      m_pSearchServiceModule->GetSearchService(),
                                                                                                      m_pSearchResultPoiModule->GetSearchResultPoiViewModel(),
@@ -728,6 +720,8 @@ namespace ExampleApp
                                                                                                                     m_screenProperties));
         }
         
+        m_pRestrictedBuildingInfoService = Eegeo_NEW(ExampleApp::WifiInfo::RestrictedBuildingService)(m_applicationConfiguration.RestrictedBuildingsInfo(),m_platformAbstractions.GetConnectivityService(), m_pWorld->GetNativeUIFactories());
+        
         m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                      interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                      interiorsPresentationModule.GetInteriorTransitionModel(),
@@ -745,8 +739,21 @@ namespace ExampleApp
                                                                                                      interiorsAffectedByFlattening,
                                                                                                      m_pInteriorsEntitiesPinsModule->GetInteriorsEntitiesPinsController(),
                                                                                                      *m_pWorldPinsIconMapping,
-                                                                                                     m_persistentSettings);
-                
+                                                                                                     m_persistentSettings,
+                                                                                                     m_platformAbstractions.GetConnectivityService(),
+                                                                                                     *m_pRestrictedBuildingInfoService);
+
+        m_pSearchResultSectionModule = Eegeo_NEW(SearchResultSection::SdkModel::SearchResultSectionModule)(m_pSearchMenuModule->GetSearchMenuViewModel(),
+                                                                                                           m_pSearchModule->GetSearchResultRepository(),
+                                                                                                           m_pSearchModule->GetSearchQueryPerformer(),
+                                                                                                           *m_pCameraTransitionService,
+                                                                                                           interiorsPresentationModule.GetInteriorInteractionModel(),
+                                                                                                           interiorsModelModule.GetInteriorMarkerModelRepository(),
+                                                                                                           m_pAppCameraModule->GetController(),
+                                                                                                           m_messageBus,
+                                                                                                           *m_pRestrictedBuildingInfoService);
+        
+        
         m_pMyPinCreationModule = Eegeo_NEW(ExampleApp::MyPinCreation::SdkModel::MyPinCreationModule)(m_pMyPinsModule->GetMyPinsService(),
                                  m_identityProvider,
                                  m_pSettingsMenuModule->GetSettingsMenuViewModel(),
@@ -938,6 +945,8 @@ namespace ExampleApp
         Eegeo_DELETE m_pInteriorCameraWrapper;
 
         Eegeo_DELETE m_pWatermarkModule;
+        
+        Eegeo_DELETE m_pRestrictedBuildingInfoService;
         
         Eegeo_DELETE m_pInteriorsExplorerModule;
 

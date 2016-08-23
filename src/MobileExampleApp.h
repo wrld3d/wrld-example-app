@@ -101,6 +101,7 @@
 #include "AvatarVisibilityObserver.h"
 #endif
 
+#include "IRestrictedBuildingService.h"
 
 namespace ExampleApp
 {
@@ -198,7 +199,9 @@ namespace ExampleApp
         
         const bool m_interiorsEnabled;
         
-        ExampleApp::DoubleTapIndoorInteraction::SdkModel::IDoubleTapIndoorInteractionController* m_pDoubleTapIndoorInteractionController;        
+        ExampleApp::DoubleTapIndoorInteraction::SdkModel::IDoubleTapIndoorInteractionController* m_pDoubleTapIndoorInteractionController;
+        
+        ExampleApp::WifiInfo::IRestrictedBuildingService* m_pRestrictedBuildingInfoService;
         
         ExampleApp::IndoorLocation::SdkModel::IIndoorLocationModule* m_pIndoorLocationModule;
         

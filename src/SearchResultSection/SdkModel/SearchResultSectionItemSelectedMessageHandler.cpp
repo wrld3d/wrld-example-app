@@ -15,10 +15,17 @@ namespace ExampleApp
                 const float newDistanceFromInterest = 1000;
                 if(message.InInterior())
                 {
-                    m_cameraTransitionController.StartTransitionTo(message.SearchResultLocationEcef(),
-                                                                   InteriorsExplorer::DefaultInteriorSearchResultTransitionInterestDistance,
-                                                                   message.InteriorBuildingId(),
-                                                                   message.FloorIndex());
+                    if(!m_restrictedBuildingInformationService.CanAccessBuildingWithCurrentNetwork(message.InteriorBuildingId().Value()))
+                    {
+                        m_restrictedBuildingInformationService.ShowAlertMessage();
+                    }
+                    else
+                    {
+                        m_cameraTransitionController.StartTransitionTo(message.SearchResultLocationEcef(),
+                                                                       InteriorsExplorer::DefaultInteriorTransitionInterestDistance,
+                                                                       message.InteriorBuildingId(),
+                                                                       message.FloorIndex());
+                    }
                 }
                 else
                 {
@@ -30,10 +37,12 @@ namespace ExampleApp
 
             SearchResultSectionItemSelectedMessageHandler::SearchResultSectionItemSelectedMessageHandler(
                 CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
-                ExampleAppMessaging::TMessageBus& messageBus)
+                ExampleAppMessaging::TMessageBus& messageBus,
+                ExampleApp::WifiInfo::IRestrictedBuildingService& restrictedBuildingInformationService)
                 : m_cameraTransitionController(cameraTransitionController)
                 , m_messageBus(messageBus)
                 , m_handleSearchResultSectionItemSelectedMessageBinding(this, &SearchResultSectionItemSelectedMessageHandler::OnSearchResultSectionItemSelectedMessage)
+                , m_restrictedBuildingInformationService(restrictedBuildingInformationService)
             {
                 m_messageBus.SubscribeNative(m_handleSearchResultSectionItemSelectedMessageBinding);
             }

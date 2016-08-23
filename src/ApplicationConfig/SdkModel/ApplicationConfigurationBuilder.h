@@ -48,6 +48,7 @@ namespace ExampleApp
                 std::string m_senionMapKey;
                 std::string m_senionMapCustomerID;
                 std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>m_buildingsInfo;
+                std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*>m_restrictedBuildingsInfo;
                 bool m_isKioskTouchInputEnabled;
                 
             public:
@@ -112,6 +113,8 @@ namespace ExampleApp
                 
                 IApplicationConfigurationBuilder& SetBuildingInfoArray(const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>&infoBuildingList);
 
+                IApplicationConfigurationBuilder& SetRestrictedBuildingInfoArray(const std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*>&restrictedBuildingInfo);
+                
                 IApplicationConfigurationBuilder& SetShouldStartFullscreen(bool startFullscreen);
                 
                 IApplicationConfigurationBuilder& SetIsKioskTouchInputEnabled(bool kioskTouchInputEnabled);

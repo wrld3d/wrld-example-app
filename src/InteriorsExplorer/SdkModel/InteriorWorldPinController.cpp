@@ -13,6 +13,7 @@
 #include "SearchVendorNames.h"
 #include "IInitialExperienceModel.h"
 
+
 namespace ExampleApp
 {
     namespace InteriorsExplorer
@@ -24,7 +25,8 @@ namespace ExampleApp
                                                                    WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                                    Eegeo::Resources::Interiors::InteriorsCameraController& cameraController,
                                                                    ExampleAppMessaging::TMessageBus& messageBus,
-                                                                   const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel)
+                                                                   const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel,
+                                                                   ExampleApp::WifiInfo::IRestrictedBuildingService& restrictedBuildingInformationService)
             : m_interiorSelectionModel(interiorSelectionModel)
             , m_markerRepository(markerRepository)
             , m_worldPinsService(worldPinsService)
@@ -35,6 +37,7 @@ namespace ExampleApp
             , m_menuDraggedCallback(this, &InteriorWorldPinController::HandleMenuDragged)
             , m_menuIsDragging(false)
             , m_initialExperienceModel(initialExperienceModel)
+            , m_restrictedBuildingInformationService(restrictedBuildingInformationService)
             {
                 m_markerRepository.RegisterNotifyAddedCallback(m_markerAddedCallback);
                 m_markerRepository.RegisterNotifyRemovedCallback(m_markerRemovedCallback);
@@ -58,6 +61,16 @@ namespace ExampleApp
                 }
                 
                 m_interiorIdToWorldPinMap.clear();
+            }
+            
+            const void InteriorWorldPinController::ShowAlert() const
+            {
+                m_restrictedBuildingInformationService.ShowAlertMessage();
+            }
+            
+            const bool InteriorWorldPinController::PinInteractionAllowedForCurrentNetwork(const std::string& interiorId) const
+            {
+                return m_restrictedBuildingInformationService.CanAccessBuildingWithCurrentNetwork(interiorId);
             }
             
             const bool InteriorWorldPinController::PinInteractionAllowed(const std::string& interiorId) const

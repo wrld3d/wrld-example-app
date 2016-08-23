@@ -7,6 +7,7 @@
 #include "ICameraTransitionController.h"
 #include "SearchResultSectionItemSelectedMessage.h"
 #include "Types.h"
+#include "IRestrictedBuildingService.h"
 
 namespace ExampleApp
 {
@@ -21,11 +22,14 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<SearchResultSectionItemSelectedMessageHandler, const SearchResultSectionItemSelectedMessage&> m_handleSearchResultSectionItemSelectedMessageBinding;
 
                 void OnSearchResultSectionItemSelectedMessage(const SearchResultSectionItemSelectedMessage& message);
-
+                
+                ExampleApp::WifiInfo::IRestrictedBuildingService& m_restrictedBuildingInformationService;
+                
             public:
                 SearchResultSectionItemSelectedMessageHandler(
                     CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
-                    ExampleAppMessaging::TMessageBus& messageBus);
+                    ExampleAppMessaging::TMessageBus& messageBus,
+                    ExampleApp::WifiInfo::IRestrictedBuildingService& restrictedBuildingInformationService);
 
                 ~SearchResultSectionItemSelectedMessageHandler();
             };

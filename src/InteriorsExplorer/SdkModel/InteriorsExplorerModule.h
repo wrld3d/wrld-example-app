@@ -18,6 +18,9 @@
 #include "InteriorsUINotificationService.h"
 #include "IInteriorsEntitiesPinsController.h"
 #include "PersistentSettings.h"
+#include "IConnectivityService.h"
+#include "IRestrictedBuildingService.h"
+#include "InteriorExplorerConnectionChangedObserver.h"
 
 namespace ExampleApp
 {
@@ -45,7 +48,9 @@ namespace ExampleApp
                                         const bool interiorsAffectedByFlattening,
                                         InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsEntitiesPinsController,
                                         const WorldPins::SdkModel::IWorldPinIconMapping& worldPinIconMapping,
-                                        PersistentSettings::IPersistentSettingsModel& persistentSettings);
+                                        PersistentSettings::IPersistentSettingsModel& persistentSettings,
+                                        Eegeo::Web::IConnectivityService& connectivityService,
+                                        ExampleApp::WifiInfo::IRestrictedBuildingService& restrictedBuildingInformationService);
 
                 ~InteriorsExplorerModule();
                 
@@ -80,6 +85,8 @@ namespace ExampleApp
                 Eegeo::Camera::GlobeCamera::GlobeCameraController* m_pGlobeCameraController;
 
                 InteriorsUINotificationService* m_pUINotificationService;
+                
+                InteriorExplorerConnectionChangedObserver* m_pInteriorExplorerConnectionChangedObserver;
             };
         }
     }

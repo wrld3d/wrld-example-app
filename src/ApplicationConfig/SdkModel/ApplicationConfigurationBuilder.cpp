@@ -219,6 +219,12 @@ namespace ExampleApp
                 return *this;
             }
 
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetRestrictedBuildingInfoArray(const std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*>&restrictedBuildingInfo)
+            {
+                m_restrictedBuildingsInfo = restrictedBuildingInfo;
+                return *this;
+            }
+            
             IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetShouldStartFullscreen(bool startFullscreen)
             {
                 m_shouldStartFullscreen = startFullscreen;
@@ -284,6 +290,7 @@ namespace ExampleApp
                                                 m_senionMapKey,
                                                 m_senionMapCustomerID,
                                                 m_buildingsInfo,
+                                                m_restrictedBuildingsInfo,
                                                 m_isKioskTouchInputEnabled);
             }
         }

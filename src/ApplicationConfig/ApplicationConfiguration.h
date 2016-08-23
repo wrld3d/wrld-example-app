@@ -6,6 +6,8 @@
 #include "ApplicationConfig.h"
 #include "LatLongAltitude.h"
 #include "ApplicationBuildingInfo.h"
+#include "RestrictedBuildingInfo.h"
+#include <vector>
 
 namespace ExampleApp
 {
@@ -44,6 +46,7 @@ namespace ExampleApp
             const std::string m_senionMapKey;
             const std::string m_senionMapCustomerID;
             const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>m_buildingsInfo;
+            const std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*>m_restrictedBuildingsInfo;
             bool m_isKioskTouchInputEnabled;
             
         public:
@@ -78,6 +81,7 @@ namespace ExampleApp
                                      const std::string& senionMapKey,
                                      const std::string& senionMapCustomerID,
                                      const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>&buildingsInfo,
+                                     const std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*>&restrictedBuildingsInfo,
                                      const bool isKioskTouchInputEnabled);
             
             const std::string& Name() const;
@@ -139,7 +143,9 @@ namespace ExampleApp
             const std::string& SenionMapCustomerID() const;
             
             const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>& BuildingsInfo() const;
-
+            
+            const std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*>& RestrictedBuildingsInfo() const;
+            
             bool IsKioskTouchInputEnabled() const;
         };
     }

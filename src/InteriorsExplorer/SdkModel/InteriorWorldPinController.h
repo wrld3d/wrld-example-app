@@ -10,6 +10,7 @@
 #include <string>
 #include "BidirectionalBus.h"
 #include "InitialExperience.h"
+#include "IRestrictedBuildingService.h"
 
 namespace ExampleApp
 {
@@ -26,14 +27,17 @@ namespace ExampleApp
                                            WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                            Eegeo::Resources::Interiors::InteriorsCameraController& cameraController,
                                            ExampleAppMessaging::TMessageBus& messageBus,
-                                           const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel);
+                                           const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel,
+                                           ExampleApp::WifiInfo::IRestrictedBuildingService& restrictedBuildingInformationService);
                 ~InteriorWorldPinController();
                 
                 const bool PinInteractionAllowed(const std::string& interiorId) const;
+                const bool PinInteractionAllowedForCurrentNetwork(const std::string& interiorId) const;
                 
                 void Update(float dt);
                 
                 void SetInitialExperienceComplete();
+                const void ShowAlert() const;                
                 
             private:
 
@@ -50,7 +54,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<InteriorWorldPinController, const Eegeo::Resources::Interiors::Markers::InteriorMarkerModel&> m_markerAddedCallback;
                 Eegeo::Helpers::TCallback1<InteriorWorldPinController, const Eegeo::Resources::Interiors::Markers::InteriorMarkerModel&> m_markerRemovedCallback;
                 
-                Eegeo::Helpers::TCallback1<InteriorWorldPinController, const Menu::MenuDragStateChangedMessage&> m_menuDraggedCallback;
+                Eegeo::Helpers::TCallback1<InteriorWorldPinController, const Menu::MenuDragStateChangedMessage&> m_menuDraggedCallback;                
+                ExampleApp::WifiInfo::IRestrictedBuildingService& m_restrictedBuildingInformationService;
                 
                 void HandleMarkerAdded(const Eegeo::Resources::Interiors::Markers::InteriorMarkerModel& markerModel);
                 void HandleMarkerRemoved(const Eegeo::Resources::Interiors::Markers::InteriorMarkerModel& markerModel);

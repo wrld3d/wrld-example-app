@@ -36,7 +36,10 @@ namespace ExampleApp
                                                              const bool interiorsAffectedByFlattening,
                                                              InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsEntitiesPinsController,
                                                              const WorldPins::SdkModel::IWorldPinIconMapping& worldPinIconMapping,
-                                                             PersistentSettings::IPersistentSettingsModel& persistentSettings)
+                                                             PersistentSettings::IPersistentSettingsModel& persistentSettings,
+                                                             Eegeo::Web::IConnectivityService& connectivityService,
+                                                             ExampleApp::WifiInfo::IRestrictedBuildingService& restrictedBuildingInformationService)
+            
             {
                 m_pUserInteractionModel = Eegeo_NEW(InteriorExplorerUserInteractionModel)();
                 
@@ -56,7 +59,8 @@ namespace ExampleApp
                                                                               worldPinsService,
                                                                               *m_pInteriorsCameraController,
                                                                               messageBus,
-                                                                              initialExperienceModel);
+                                                                              initialExperienceModel,
+                                                                              restrictedBuildingInformationService);
                 
                 m_pModel = Eegeo_NEW(InteriorsExplorerModel)(interiorInteractionModel,
                                                              interiorSelectionModel,
@@ -64,6 +68,9 @@ namespace ExampleApp
                                                              messageBus,
                                                              metricsService,
                                                              persistentSettings);
+                
+                m_pInteriorExplorerConnectionChangedObserver = Eegeo_NEW(InteriorExplorerConnectionChangedObserver)(connectivityService,interiorSelectionModel,*m_pModel,restrictedBuildingInformationService);
+
                 
                 m_pViewModel = Eegeo_NEW(View::InteriorsExplorerViewModel)(false, identityProvider.GetNextIdentity(), messageBus);
                 

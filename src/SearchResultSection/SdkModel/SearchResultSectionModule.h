@@ -13,6 +13,7 @@
 #include "Interiors.h"
 #include "AppCamera.h"
 #include "Types.h"
+#include "IRestrictedBuildingService.h"
 
 namespace ExampleApp
 {
@@ -38,7 +39,8 @@ namespace ExampleApp
                                           const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                           const Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& interiorMarkerRepository,
                                           AppCamera::SdkModel::IAppCameraController& appCameraController,
-                                          ExampleAppMessaging::TMessageBus& messageBus);
+                                          ExampleAppMessaging::TMessageBus& messageBus,
+                                          ExampleApp::WifiInfo::IRestrictedBuildingService& restrictedBuildingInformationService);
 
                 ~SearchResultSectionModule();
 

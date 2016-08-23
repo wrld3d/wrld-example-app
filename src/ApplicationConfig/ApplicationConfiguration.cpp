@@ -36,6 +36,7 @@ namespace ExampleApp
                                                            const std::string& senionMapKey,
                                                            const std::string& senionMapCustomerID,
                                                            const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>& buildingsInfo,
+                                                            const std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*>&restrictedBuildingsInfo,
                                                            const bool isKioskTouchInputEnabled)
         : m_name(name)
         , m_eegeoApiKey(eegeoApiKey)
@@ -67,6 +68,7 @@ namespace ExampleApp
         , m_senionMapKey(senionMapKey)
         , m_senionMapCustomerID(senionMapCustomerID)
         , m_buildingsInfo(buildingsInfo)
+        , m_restrictedBuildingsInfo(restrictedBuildingsInfo)
         , m_isKioskTouchInputEnabled(isKioskTouchInputEnabled)
         {
             
@@ -214,7 +216,12 @@ namespace ExampleApp
         const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>& ApplicationConfiguration::BuildingsInfo() const{
             return m_buildingsInfo;
         }
-
+        
+        const std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*>& ApplicationConfiguration::RestrictedBuildingsInfo() const
+        {
+            return m_restrictedBuildingsInfo;
+        }
+        
         bool ApplicationConfiguration::IsKioskTouchInputEnabled() const
         {
             return m_isKioskTouchInputEnabled;

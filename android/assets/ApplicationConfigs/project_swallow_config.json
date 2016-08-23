@@ -55,6 +55,23 @@
                                                   "FloorIindex": 2
                                                   }]
                   }
+                  ],                  
+        "Wifi_Restricted_Buildings": [
+                  {
+                  "interior_id": "70f9b00f-8c4f-4570-9a23-62bd80a76f8a",
+                  "allowed_wifi_ids": [{
+                                       "ssid": "eeGeo 2.4GHz"
+                                      }, {
+                                      "ssid": "eeGeo Guest"
+                                      }]
+                                      }, {
+                  "interior_id": "westport_house",
+                  "allowed_wifi_ids": [{
+                                      "ssid": "eeGeo 5GHz"
+                                      }, {
+                                      "ssid": "eeGeo Guest"
+                                      }]
+                  }
                   ]
 
 }

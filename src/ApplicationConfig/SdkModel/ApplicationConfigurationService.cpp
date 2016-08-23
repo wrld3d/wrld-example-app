@@ -59,6 +59,7 @@ namespace ExampleApp
                                                 parsedConfig.SenionMapKey(),
                                                 parsedConfig.SenionMapCustomerID(),
                                                 parsedConfig.BuildingsInfo(),
+                                                parsedConfig.RestrictedBuildingsInfo(),
                                                 parsedConfig.IsKioskTouchInputEnabled());
             }
         }

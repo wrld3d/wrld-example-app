@@ -24,7 +24,6 @@
     "WebProxyIpAddress": "",
     "WebProxyPort": 0,
     "Buildings": [
-                  
                   {
                   "SenionMapKey": "70f77f56-78b7-42bb-b94f-3c2c6d8dd30a",
                   "SenionMapCustomerID": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a",
@@ -53,6 +52,21 @@
                                                   "FloorIindex": 2
                                                   }]
                   }
-                  ]
+                  ],
+    "Wifi_Restricted_Buildings": [{
+                                  "interior_id": "70f9b00f-8c4f-4570-9a23-62bd80a76f8a",
+                                  "allowed_wifi_ids": [{
+                                                       "ssid": "eeGeo 2.4GHz"
+                                                       }, {
+                                                       "ssid": "eeGeo Guest"
+                                                       }]
+                                  }, {
+                                  "interior_id": "westport_house",
+                                  "allowed_wifi_ids": [{
+                                                       "ssid": "eeGeo 5GHz"
+                                                       }, {
+                                                       "ssid": "eeGeo Guest"
+                                                       }]
+                                  }]
     
 }

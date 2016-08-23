@@ -6,6 +6,8 @@ set(currsources
   ../src/ApplicationConfig/ApplicationConfiguration.h
   ../src/ApplicationConfig/ApplicationBuildingInfo.cpp
   ../src/ApplicationConfig/ApplicationBuildingInfo.h
+  ../src/ApplicationConfig/RestrictedBuildingInfo.cpp
+  ../src/ApplicationConfig/RestrictedBuildingInfo.h
   ../src/ApplicationConfig/CMakeLists.txt
 )
 set(sources ${sources} ${currsources})

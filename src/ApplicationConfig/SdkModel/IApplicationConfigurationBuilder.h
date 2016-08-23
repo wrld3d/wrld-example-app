@@ -82,7 +82,7 @@ namespace ExampleApp
                 virtual IApplicationConfigurationBuilder& SetSenionMapKey(const std::string& mapKey) = 0;
                 virtual IApplicationConfigurationBuilder& SetSenionCustomerID(const std::string& customerID) = 0;
                 virtual IApplicationConfigurationBuilder& SetBuildingInfoArray(const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>&infoBuildingList) = 0;
-
+                virtual IApplicationConfigurationBuilder& SetRestrictedBuildingInfoArray(const std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*>&restrictedBuildingInfo) = 0;
             };
         }
     }
