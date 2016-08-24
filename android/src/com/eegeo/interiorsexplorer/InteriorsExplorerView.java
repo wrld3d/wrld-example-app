@@ -8,6 +8,7 @@ import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.mobileexampleapp.R;
 
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
@@ -49,6 +50,11 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     private ImageView m_floorUpArrow;
     private ImageView m_floorDownArrow;
     
+    private boolean m_isScrolling = false;
+    private float m_scrollYCoordinate;
+    private Handler m_scrollHandler;
+    private Runnable m_scrollingRunnable;
+    
     private float m_leftXPosActiveBackButton;
     private float m_leftXPosActiveFloorListContainer;
     private float m_leftXPosInactive;
@@ -85,6 +91,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
         
         m_floorListContainer = (RelativeLayout)m_uiRootView.findViewById(R.id.interiors_floor_list_container);
         m_floorList = (ListView)m_uiRootView.findViewById(R.id.interiors_floor_item_list);
+        m_floorList.setEnabled(false);
         
         m_floorListAdapter = new InteriorsFloorListAdapter(m_activity, R.layout.interiors_floor_list_item);
         m_floorList.setAdapter(m_floorListAdapter);
@@ -152,6 +159,17 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
         m_tutorialView = new InteriorsExplorerTutorialView(m_activity);
         
         hideFloorLabels();
+        
+        m_scrollHandler = new Handler();
+        m_scrollingRunnable = new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				scrollingUpdate();
+				m_scrollHandler.postDelayed(m_scrollingRunnable, 1);
+			}
+		};
     }
     
     private int getListViewHeight(ListView list) 
@@ -169,6 +187,8 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
         final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
         uiRoot.removeView(m_uiRootView);
         m_uiRootView = null;
+        
+        m_scrollHandler.removeCallbacks(m_scrollingRunnable);
     }
     
     public void playShakeSliderAnim()
@@ -215,6 +235,10 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     	boolean floorSelectionEnabled = floorShortNames.length > 1;
     	m_floorListContainer.setVisibility(floorSelectionEnabled ? View.VISIBLE : View.GONE);
     	
+    	int floorListWidth = m_floorList.getWidth();
+    	int floorArrowHeight = m_floorUpArrow.getHeight();
+    	m_floorList.setClipBounds(new Rect(-floorListWidth / 2, floorArrowHeight, floorListWidth, (int) controlHeight - floorArrowHeight));
+    	
     	m_floorUpArrow.setY(m_floorList.getY());
     	m_floorDownArrow.setY(m_floorList.getY() + controlHeight - m_floorDownArrow.getHeight());
     }
@@ -228,11 +252,11 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     private void moveButtonToFloorIndex(int floorIndex, Boolean shouldAnimate)
     {
     	int floorCount = m_floorListAdapter.getCount();
-    	int halfMaxFloorsViewableCount = Math.round(m_maxFloorsViewableCount / 2);
+    	int halfMaxFloorsViewableCount = (int) Math.ceil(m_maxFloorsViewableCount / 2.0f);
     	
-    	int startFloorIndex = floorCount - 1 - floorIndex;
+    	int startFloorIndex = floorCount - floorIndex;
     	
-    	if(floorCount - 1 - startFloorIndex >= halfMaxFloorsViewableCount)
+    	if(floorCount - startFloorIndex >= halfMaxFloorsViewableCount)
     	{
     		startFloorIndex = Math.max(startFloorIndex - halfMaxFloorsViewableCount, 0);
     	}
@@ -257,7 +281,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     		.setDuration(m_stateChangeAnimationTimeMilliseconds)
     		.start();
     		
-    		m_floorList.smoothScrollToPosition(startFloorIndex);
+    		m_floorList.smoothScrollToPositionFromTop(startFloorIndex, 0);
     	}
     	else
     	{
@@ -268,7 +292,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     	
     	if(floorCount > m_maxFloorsViewableCount)
     	{
-    		setArrowState(floorCount - 1 - floorIndex > halfMaxFloorsViewableCount, floorCount - startFloorIndex > m_maxFloorsViewableCount);
+    		setArrowState(floorCount - floorIndex > halfMaxFloorsViewableCount, floorCount - startFloorIndex > m_maxFloorsViewableCount);
     	}
     	else
     	{
@@ -335,60 +359,24 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
 		m_previousYCoordinate = initialYCoordinate;
 		m_draggingFloorButton = true;
 		m_isButtonInitialJumpRemoved = false;
+		
+		startScrollingUpdate();
     }
     
     private void updateDraggingButton(float yCoordinate)
     {
-    	final float joystickScrollThresholdDistance = 0.25f;
-    	
-    	float y = yCoordinate;
+    	m_scrollYCoordinate = yCoordinate;
 		
     	if(!m_isButtonInitialJumpRemoved) 
     	{
-    		detectAndRemoveInitialJump(y);
+    		detectAndRemoveInitialJump(m_scrollYCoordinate);
     	}
-    	
-    	float newY = m_floorButton.getY() + (y - m_previousYCoordinate);
-		newY = Math.max(0.0f, Math.min(Math.min(getListViewHeight(m_maxFloorsViewableCount - 1), getListViewHeight(m_floorList.getCount() - 1)), newY));
-		m_floorButton.setY(newY);
-		m_previousYCoordinate = y;
-		
-		float scrollDelta = 0;
-		
-		float listViewHeightOnScreen = getListViewHeight(m_maxFloorsViewableCount - 1);
-		float normalisedNewY = newY / listViewHeightOnScreen;
-		
-		if(normalisedNewY <= joystickScrollThresholdDistance)
-		{
-			float localT = normalisedNewY / joystickScrollThresholdDistance;
-			scrollDelta = getScrollSpeed(1 - localT);
-		}
-		else if(normalisedNewY >= 1 - joystickScrollThresholdDistance)
-		{
-			float localT = (normalisedNewY - (1 - joystickScrollThresholdDistance)) / joystickScrollThresholdDistance;
-			scrollDelta = getScrollSpeed(-localT);
-		}
-		
-		m_floorList.smoothScrollByOffset(-Math.round(scrollDelta));
-		
-		View firstVisibleChild = m_floorList.getChildAt(0);
-		float topY = (m_floorList.getFirstVisiblePosition() * ListItemHeight) - firstVisibleChild.getTop();
-		
-		float dragParameter = 1.0f - ((topY + newY) / (getListViewHeight(m_floorList.getCount() - 1)));
-		InteriorsExplorerViewJniMethods.OnFloorSelectionDragged(m_nativeCallerPointer, dragParameter);
-		
-		int floorCount = m_floorList.getCount();
-		if(floorCount > m_maxFloorsViewableCount)
-		{
-			int firstFloorVisibleInView = m_floorList.getFirstVisiblePosition();
-			boolean showUp = firstFloorVisibleInView > 0 || firstVisibleChild.getTop() < 0;
-			boolean showDown = floorCount - firstFloorVisibleInView - (firstVisibleChild.getTop() < 0 ? 1 : 0) > m_maxFloorsViewableCount;
-			setArrowState(showUp, showDown);
-		}
     }
     
     private void endDraggingButton()
     {
+    	endScrollingUpdate();
+    	
     	hideFloorLabels();
 		m_draggingFloorButton = false;
 		m_floorButton.getBackground().setState(new int[] {});
@@ -531,5 +519,74 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     	m_floorButtonText.setTextColor(TextColorDown);
     	
     	m_floorLayout.animate().alpha(1.0f).setDuration(m_stateChangeAnimationTimeMilliseconds);
+    }
+    
+    private void startScrollingUpdate()
+    {
+    	if(!m_isScrolling)
+    	{
+    		m_previousYCoordinate = m_scrollYCoordinate;
+			m_scrollingRunnable.run();
+    	}
+    	
+    	m_isScrolling = true;
+    }
+    
+    private void scrollingUpdate()
+    {
+    	if(m_isScrolling)
+    	{
+	    	final float joystickScrollThresholdDistance = 0.25f;
+	    	
+	    	if(!m_isButtonInitialJumpRemoved)
+	    	{
+	    		detectAndRemoveInitialJump(m_scrollYCoordinate);
+	    	}
+	    	
+	    	float newY = m_floorButton.getY() + (m_scrollYCoordinate - m_previousYCoordinate);
+			newY = Math.max(0.0f, Math.min(Math.min(getListViewHeight(m_maxFloorsViewableCount - 1), getListViewHeight(m_floorList.getCount() - 1)), newY));
+			m_floorButton.setY(newY);
+			m_previousYCoordinate = m_scrollYCoordinate;
+			
+			float scrollDelta = 0;
+			
+			float listViewHeightOnScreen = getListViewHeight(m_maxFloorsViewableCount - 1);
+			float normalisedNewY = newY / listViewHeightOnScreen;
+			
+			if(normalisedNewY <= joystickScrollThresholdDistance)
+			{
+				float localT = normalisedNewY / joystickScrollThresholdDistance;
+				scrollDelta = getScrollSpeed(1 - localT);
+			}
+			else if(normalisedNewY >= 1 - joystickScrollThresholdDistance)
+			{
+				float localT = (normalisedNewY - (1 - joystickScrollThresholdDistance)) / joystickScrollThresholdDistance;
+				scrollDelta = getScrollSpeed(-localT);
+			}
+			
+			m_floorList.smoothScrollByOffset(-Math.round(scrollDelta));
+			
+			View firstVisibleChild = m_floorList.getChildAt(0);
+			float topY = (m_floorList.getFirstVisiblePosition() * ListItemHeight) - firstVisibleChild.getTop();
+			
+			float dragParameter = 1.0f - ((topY + newY) / (getListViewHeight(m_floorList.getCount() - 1)));
+			InteriorsExplorerViewJniMethods.OnFloorSelectionDragged(m_nativeCallerPointer, dragParameter);
+			
+			int floorCount = m_floorList.getCount();
+			if(floorCount > m_maxFloorsViewableCount)
+			{
+				int firstFloorVisibleInView = m_floorList.getFirstVisiblePosition();
+				boolean showUp = firstFloorVisibleInView > 0 || firstVisibleChild.getTop() < -(ListItemHeight * 0.5f);
+				boolean showDown = floorCount - firstFloorVisibleInView - (firstVisibleChild.getTop() < 0 ? 1 : 0) > m_maxFloorsViewableCount;
+				setArrowState(showUp, showDown);
+			}
+    	}
+    }
+    
+    private void endScrollingUpdate()
+    {
+    	m_isScrolling = false;
+    	
+    	m_scrollHandler.removeCallbacks(m_scrollingRunnable);
     }
 }
