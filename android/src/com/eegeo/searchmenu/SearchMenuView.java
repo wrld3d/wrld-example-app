@@ -165,7 +165,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         
         m_isCategory = false;
         
-        m_searchResultsScrollListener = new SearchResultsScrollListener(m_searchResultsScrollButton, m_searchResultsFade, m_searchResultsScrollable);       
+        m_searchResultsScrollListener = new SearchResultsScrollListener(m_searchResultsScrollButton, m_searchResultsFade, m_searchResultsScrollable, m_searchList);       
         m_searchList.setOnScrollListener(m_searchResultsScrollListener);	
                 
         m_searchResultsScrollButtonTouchDownListener = new SearchResultsScrollButtonTouchDownListener(m_searchList);
