@@ -327,6 +327,7 @@
     self.pTableViewContainer.backgroundColor = [UIColor clearColor];
     self.pTableViewContainer.scrollEnabled = YES;
     self.pTableViewContainer.userInteractionEnabled = YES;
+    self.pTableViewContainer.delaysContentTouches = false;
     
     m_anchorArrowWidth = anchorArrowSize;
     m_anchorArrowClosedHeight = 0.0f;
