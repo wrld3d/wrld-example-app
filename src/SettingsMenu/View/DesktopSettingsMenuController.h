@@ -55,9 +55,13 @@ namespace ExampleApp
 
                 Eegeo::Helpers::TCallback0<DesktopSettingsMenuController> m_onViewOpenedCallback;
                 Eegeo::Helpers::TCallback0<DesktopSettingsMenuController> m_onViewClosedCallback;
+                Eegeo::Helpers::TCallback0<DesktopSettingsMenuController> m_onViewClickedCallback;
 
                 void OnSearchMenuOpened();
                 void OnSearchMenuClosed();
+                void OnSearchMenuClicked();
+
+                bool m_searchMenuIsOpened;
 
             public:
                 DesktopSettingsMenuController(Menu::View::IMenuView& menuView,
