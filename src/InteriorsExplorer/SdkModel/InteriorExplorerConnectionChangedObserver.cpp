@@ -55,7 +55,7 @@ namespace ExampleApp
             void InteriorExplorerConnectionChangedObserver::HandleConnectionChanged(const bool &connected)
             {
                 
-                if (connected != m_connectivityStatus && !connected)
+                if ((connected != m_connectivityStatus && !connected) || m_connectivityService.GetConnectivityType() !=  Eegeo::Web::Wifi)
                 {
                     OnWifiDisconnected();
                     return;
@@ -74,6 +74,12 @@ namespace ExampleApp
                 	 }
                     OnWifiInfoChange(ssid);
                 }
+                else
+                {
+                    OnWifiDisconnected();
+                    return;
+                }
+                
                 m_connectivityStatus = connected;
             
             }
