@@ -6,8 +6,8 @@
       
     <RelativeLayout
     	android:id="@+id/my_pin_details_view_container"
-	    android:layout_width="250dip"
-	    android:layout_height="295dip"
+	    android:layout_width="330dip"
+	    android:layout_height="550dip"
 	    android:layout_centerInParent="true">
 		    
         <!-- Title bar -->
