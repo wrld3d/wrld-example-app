@@ -564,7 +564,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
 				scrollDelta = getScrollSpeed(-localT);
 			}
 			
-			m_floorList.smoothScrollByOffset(-Math.round(scrollDelta));
+			m_floorList.scrollListBy(-Math.round(scrollDelta));
 			
 			View firstVisibleChild = m_floorList.getChildAt(0);
 			float topY = (m_floorList.getFirstVisiblePosition() * ListItemHeight) - firstVisibleChild.getTop();
