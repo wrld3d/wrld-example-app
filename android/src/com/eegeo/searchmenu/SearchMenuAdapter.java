@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.eegeo.ProjectSwallowApp.R;
 import com.eegeo.categories.CategoryResources;
+import com.eegeo.entrypointinfrastructure.MainActivity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -81,9 +82,19 @@ public class SearchMenuAdapter extends BaseAdapter
             nameLabel.setHorizontallyScrolling(false);
             nameLabel.setSingleLine();
 
+            String detailString = data.optString("details");
             TextView detailLabel = (TextView)contextView.findViewById(R.id.menu_list_item_detail);
-            detailLabel.setText(data.optString("details"));
-
+            detailLabel.setText(detailString);
+            
+            if(detailString == "")
+            {
+            	nameLabel.setPadding(0, ((MainActivity) m_context).dipAsPx(7), 0, 0);
+            }
+            else
+            {
+            	nameLabel.setPadding(0, 0, 0, 0);
+            }
+            
             ImageView categoryIcon = (ImageView)contextView.findViewById(R.id.menu_list_item_icon);
             String categoryIconString = data.has("icon") ? data.getString("icon") : m_defaultIconString;
             categoryIcon.setImageResource(CategoryResources.getSmallIconForResourceName(m_context, categoryIconString));
