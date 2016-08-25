@@ -1,4 +1,3 @@
-if(${IOS})
 set(headers ${headers} ../src/WifiInfo
 )
 set(currsources
@@ -10,5 +9,3 @@ set(currsources
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\WifiInfo FILES ${currsources})
-
-endif(${IOS})
