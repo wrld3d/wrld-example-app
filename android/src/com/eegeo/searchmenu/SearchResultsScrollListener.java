@@ -14,12 +14,14 @@ public class SearchResultsScrollListener implements OnScrollListener
 	private Button m_searchResultsScrollButton;
 	private ImageView m_searchResultsFade;
 	private boolean m_searchResultsScrollable;
+	private ListView m_searchList;
 	
-	public SearchResultsScrollListener(Button button, ImageView imageView, boolean scrollable) 
+	public SearchResultsScrollListener(Button button, ImageView imageView, boolean scrollable, ListView searchList) 
 	{
 		m_searchResultsScrollButton = button;
 		m_searchResultsFade = imageView;
 		m_searchResultsScrollable = scrollable;
+		m_searchList = searchList;
 	}
 	
 	public void UpdateScrollable(boolean scrollable)
@@ -35,6 +37,7 @@ public class SearchResultsScrollListener implements OnScrollListener
 	@Override
 	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) 
 	{	
+		m_searchList.setVerticalScrollBarEnabled(true);
 		if(totalItemCount == 0)
 			return;
 	

@@ -228,11 +228,13 @@ namespace ExampleAppWPF
         private void OnResultsListTouchUp(object sender, TouchEventArgs e)
         {
             m_resultsOptionsView.ReleaseTouchCapture(e.TouchDevice);
+            m_resultsOptionsView.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
         }
 
         private void OnResultsListTouchDown(object sender, TouchEventArgs e)
         {
             m_resultsOptionsView.CaptureTouch(e.TouchDevice);
+            m_resultsOptionsView.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
         }
 
         private void OnSearchBoxTextChanged(object sender, TextChangedEventArgs e)

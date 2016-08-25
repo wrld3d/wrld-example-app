@@ -13,19 +13,21 @@ import android.widget.ListView;
 public class SearchResultsScrollButtonTouchDownListener implements View.OnTouchListener
 {
 	private ListView m_searchList = null;
-    private final Handler mHandler = new Handler();
+    private final Handler m_handler = new Handler();
+    private static  long m_delay = 100L/120L;
     
 	public SearchResultsScrollButtonTouchDownListener(ListView view) {
 		m_searchList = view;
 	}
 
-    final Runnable mAction = new Runnable() {
+    final Runnable m_action = new Runnable() {
 		@SuppressLint("NewApi")
 		@Override public void run() {
-            mHandler.postDelayed(this, 0);
+            m_handler.postDelayed(this, m_delay);
             if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT)
-            {
+            {   
             	m_searchList.scrollListBy(SearchMenuResultsListAnimationConstants.SearchMenuResultsListScrollButtonSpeed);
+            	m_searchList.setVerticalScrollBarEnabled(false);
             }
         }
     };
@@ -34,10 +36,10 @@ public class SearchResultsScrollButtonTouchDownListener implements View.OnTouchL
 	public boolean onTouch(View v, MotionEvent event) {
 		switch(event.getAction()) {
 			case MotionEvent.ACTION_DOWN:
-	            mHandler.postDelayed(mAction, 0);
+				m_handler.postDelayed(m_action, m_delay);
 	            break;
 	        case MotionEvent.ACTION_UP:
-	            mHandler.removeCallbacks(mAction);
+	        	m_handler.removeCallbacks(m_action);
 	            break;
 		}
 		return false;
