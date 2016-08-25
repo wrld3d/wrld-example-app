@@ -19,6 +19,7 @@ import com.eegeo.animation.updatelisteners.ViewHeightAnimatorUpdateListener;
 import com.eegeo.menu.MenuListAnimationConstants;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.TextUtils.TruncateAt;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
@@ -107,6 +108,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         m_disabledTextColor = m_activity.getResources().getColor(R.color.text_field_disabled);
         m_enabledTextColor = m_activity.getResources().getColor(R.color.text_field_enabled);
         m_editText.setTextColor(m_enabledTextColor);
+        m_editText.setEllipsize(TruncateAt.END);
         
         m_searchCountText = (TextView)m_view.findViewById(R.id.search_menu_result_count);
         m_searchCountText.setText("");
