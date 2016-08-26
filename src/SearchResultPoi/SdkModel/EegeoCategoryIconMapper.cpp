@@ -34,6 +34,7 @@ namespace ExampleApp
                     m_tagIconMapping.insert(std::make_pair("reception", "reception"));
                     m_tagIconMapping.insert(std::make_pair("transition", "transition"));
                     m_tagIconMapping.insert(std::make_pair("toilets", "toilets"));
+                    m_tagIconMapping.insert(std::make_pair("working_group", "working_group"));
                     
                 }
 
