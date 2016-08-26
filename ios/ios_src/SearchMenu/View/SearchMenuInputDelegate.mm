@@ -58,7 +58,7 @@
     m_currentSearchIsCategory = false;
     m_searchInProgress = false;
     
-    m_scrollSpeed = 1.5f;
+    m_scrollSpeed = 25.0f;
     
     [[NSNotificationCenter defaultCenter]addObserver:self
                                             selector:@selector(keyboardDidChangeFrame:)
@@ -207,11 +207,17 @@
     CGPoint searchResultListScrollOffset = m_pSearchMenuScrollView.contentOffset;
     searchResultListScrollOffset.y += m_scrollSpeed;
 
-    if (searchResultListScrollOffset.y > m_pSearchMenuScrollView.contentSize.height - m_pSearchMenuScrollView.frame.size.height) {
+    if (searchResultListScrollOffset.y > m_pSearchMenuScrollView.contentSize.height - m_pSearchMenuScrollView.frame.size.height)
+    {
         searchResultListScrollOffset.y = m_pSearchMenuScrollView.contentSize.height - m_pSearchMenuScrollView.frame.size.height;
     }
 
-    m_pSearchMenuScrollView.contentOffset = searchResultListScrollOffset;
+    [UIView animateWithDuration:0.15
+                          delay:0
+                        options:UIViewAnimationCurveLinear
+                     animations:^ {
+        m_pSearchMenuScrollView.contentOffset = searchResultListScrollOffset;
+    } completion:nil];
 }
 
 - (void)searchMenuScrollStart
@@ -219,14 +225,14 @@
     CGPoint searchResultListScrollOffset = m_pSearchMenuScrollView.contentOffset;
     searchResultListScrollOffset.y += m_scrollSpeed;
     
-    m_pSearchMenuScrollView.contentOffset = searchResultListScrollOffset;
-
-    searchMenuScrollUpdateTimer = [NSTimer timerWithTimeInterval:1.0/120.0
-                                                          target:self
-                                                        selector:@selector(searchMenuScrollDown)
-                                                        userInfo:nil
-                                                         repeats:YES];
-    [[NSRunLoop mainRunLoop] addTimer:searchMenuScrollUpdateTimer forMode:NSDefaultRunLoopMode];
+    [UIView animateWithDuration:0.15
+                          delay:0
+                        options:UIViewAnimationCurveLinear
+                     animations:^ {
+                         m_pSearchMenuScrollView.contentOffset = searchResultListScrollOffset;
+                     } completion:nil];
+    
+    searchMenuScrollUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(searchMenuScrollDown) userInfo:nil repeats:YES];
 }
 
 - (void)searchMenuScrollStop
