@@ -15,6 +15,7 @@
 #include "InteriorTransitionModel.h"
 #include "ICameraTransitionController.h"
 #include "IDoubleTapIndoorInteractionController.h"
+#include "IAppCameraController.h"
 
 
 namespace ExampleApp
@@ -35,7 +36,8 @@ namespace ExampleApp
                                                      Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                      ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                                      Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
-                                                     Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule);
+                                                     Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
+                                                     AppCamera::SdkModel::IAppCameraController& iCameraController);
                 ~DoubleTapIndoorInteractionController();
                 void OnDoubleTap(const AppInterface::TapData& data);
                 
@@ -49,11 +51,8 @@ namespace ExampleApp
                 Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 Eegeo::Resources::Interiors::InteriorsCameraController& m_interiorsCameraController;
                 ExampleApp::CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionController;
-
-
-                
-                
-                
+                AppCamera::SdkModel::IAppCameraController& m_iCameraController;
+    
                 float CalcRecommendedOverviewDistanceForFloor();
                 void ZoomIn(float distance,const AppInterface::TapData& data);
                 float CalculateCloseDistanceWithRespectTo(float optimizedDistance);
