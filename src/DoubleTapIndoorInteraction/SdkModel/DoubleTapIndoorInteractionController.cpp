@@ -14,7 +14,6 @@
 #include "CollisionMeshResourceRepository.h"
 #include "DoubleTapIndoorInteractionController.h"
 
-
 namespace ExampleApp
 {
     namespace DoubleTapIndoorInteraction
@@ -26,7 +25,10 @@ namespace ExampleApp
                                                                                        Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                                        ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                                                                        Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
-                                                                                       Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule):m_interiorsCameraController(interiorsCameraController),m_cameraTransitionController(cameraTransitionController),m_interiorInteractionModel(interiorInteractionModel),m_appModeModel(appModeModel),m_interiorTransitionModel(interiorTransitionModel),m_closeDistanceOffSet(10),m_optimizedDistanceOffSet(100)
+                                                                                       Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
+                                                                                       AppCamera::SdkModel::IAppCameraController& iCameraController)
+            :m_interiorsCameraController(interiorsCameraController),m_cameraTransitionController(cameraTransitionController),m_interiorInteractionModel(interiorInteractionModel),m_appModeModel(appModeModel),m_interiorTransitionModel(interiorTransitionModel),m_closeDistanceOffSet(10),m_optimizedDistanceOffSet(100),m_iCameraController(iCameraController)
+            
             {
                 m_pTerrainRayPicker = Eegeo_NEW(Eegeo::Resources::Terrain::Collision::TerrainRayPicker)(terrainModelModule.GetTerrainHeightProvider(), terrainModelModule.GetCollisionMeshResourceRepository());
             }
@@ -41,10 +43,11 @@ namespace ExampleApp
                 float optimizedDistance = CalcRecommendedOverviewDistanceForFloor();
                 float camerDistanceFrom = m_interiorsCameraController.GetDistanceToInterest();
                 Eegeo::Resources::Interiors::InteriorId interiorID = m_interiorInteractionModel.GetInteriorModel()->GetId();
-                
-                if ((camerDistanceFrom < optimizedDistance  && camerDistanceFrom >= CalculateCloseDistanceWithRespectTo(optimizedDistance) + m_closeDistanceOffSet) || (camerDistanceFrom > optimizedDistance && camerDistanceFrom  < optimizedDistance + m_optimizedDistanceOffSet))
+
+                float closeDistacne = CalculateCloseDistanceWithRespectTo(optimizedDistance);
+
+                if ((camerDistanceFrom < optimizedDistance  && camerDistanceFrom >= (closeDistacne + m_closeDistanceOffSet)) || (camerDistanceFrom > optimizedDistance && camerDistanceFrom  < (optimizedDistance + m_optimizedDistanceOffSet)))
                 {
-                    float closeDistacne = CalculateCloseDistanceWithRespectTo(optimizedDistance);
                     ZoomIn(closeDistacne, data);
                 }
                 else
@@ -58,13 +61,14 @@ namespace ExampleApp
             {
                 
 
-                const Eegeo::Camera::RenderCamera& renderCamera = m_interiorsCameraController.GetRenderCamera();
+                const Eegeo::Camera::RenderCamera& renderCamera = m_iCameraController.GetRenderCamera();
                 float screenPixelX = data.point.GetX();
                 float screenPixelY = data.point.GetY();
                 
                 Eegeo::dv3 rayDirection;
                 Eegeo::Camera::CameraHelpers::GetScreenPickRay(renderCamera, screenPixelX, screenPixelY, rayDirection);
-                const Eegeo::dv3& rayOrigin = renderCamera.GetEcefLocation();
+//                const Eegeo::dv3& rayOrigin = renderCamera.GetEcefLocation();
+                const Eegeo::dv3& rayOrigin = m_iCameraController.GetNonFlattenedCameraPosition();
 
                 
                 Eegeo::dv3 rayIntersectionPoint;
@@ -140,7 +144,7 @@ namespace ExampleApp
             float DoubleTapIndoorInteractionController::CalcRecommendedOverviewDistanceForFloor()
             {
                 
-                const Eegeo::Camera::RenderCamera& renderCamera = m_interiorsCameraController.GetRenderCamera();
+                const Eegeo::Camera::RenderCamera& renderCamera = m_iCameraController.GetRenderCamera();
                 const bool isLandscapeOrientation = renderCamera.GetAspect() > 1.0f;
                 const float verticalFovRadians = renderCamera.GetFOV();
                 const float horizontalFovRadians = isLandscapeOrientation ? verticalFovRadians * Eegeo::Camera::RenderCamera::NominalAspectRatio : verticalFovRadians * renderCamera.GetAspect();
@@ -157,7 +161,7 @@ namespace ExampleApp
             }
             float DoubleTapIndoorInteractionController::CalculateCloseDistanceWithRespectTo(float optimizedDistance)
             {
-                return optimizedDistance*0.5;
+                return optimizedDistance*0.36;
             }
             
 
