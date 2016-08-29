@@ -147,34 +147,36 @@ namespace ExampleApp
                 }
                 m_builder.SetBuildingInfoArray(buildingInfoList);
                 
-                
-                const rapidjson::Value& restrictedBuildingJsonArray = document["Wifi_Restricted_Buildings"];
                 std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*> restrictedBuildingModelArray;
+                const char* wifiRestrictedBuildingTag = "Wifi_Restricted_Buildings";
                 
-                
-                for (rapidjson::SizeType i = 0; i < restrictedBuildingJsonArray.Size(); i++)
+                if (document.HasMember(wifiRestrictedBuildingTag))
                 {
-                    const rapidjson::Value& restrictedBuilding = restrictedBuildingJsonArray[i];
-                    
-                    Eegeo_ASSERT(restrictedBuilding.HasMember("interior_id"), "interior_id config not found");
-                    std::string interiorID = restrictedBuilding["interior_id"].GetString();
-                    
-                    const rapidjson::Value& allowedWifiIDsJsonArray = restrictedBuilding["allowed_wifi_ids"];
-                    std::vector<std::string> allowedWifiIDsModelArray;
-                    for (rapidjson::SizeType i = 0; i < allowedWifiIDsJsonArray.Size(); i++)
+                    const rapidjson::Value& restrictedBuildingJsonArray = document[wifiRestrictedBuildingTag];
+
+                    for (rapidjson::SizeType i = 0; i < restrictedBuildingJsonArray.Size(); i++)
                     {
-                        const rapidjson::Value& wifiSsId = allowedWifiIDsJsonArray[i];
-                        
-                        Eegeo_ASSERT(wifiSsId.HasMember("ssid"), "ssid config not found");
-                        std::string allowedWifiId = wifiSsId["ssid"].GetString();
-                        allowedWifiIDsModelArray.push_back(allowedWifiId);
-                        
+                        const rapidjson::Value& restrictedBuilding = restrictedBuildingJsonArray[i];
+
+                        Eegeo_ASSERT(restrictedBuilding.HasMember("interior_id"), "interior_id config not found");
+                        std::string interiorID = restrictedBuilding["interior_id"].GetString();
+
+                        const rapidjson::Value& allowedWifiIDsJsonArray = restrictedBuilding["allowed_wifi_ids"];
+                        std::vector<std::string> allowedWifiIDsModelArray;
+                        for (rapidjson::SizeType i = 0; i < allowedWifiIDsJsonArray.Size(); i++)
+                        {
+                            const rapidjson::Value& wifiSsId = allowedWifiIDsJsonArray[i];
+
+                            Eegeo_ASSERT(wifiSsId.HasMember("ssid"), "ssid config not found");
+                            std::string allowedWifiId = wifiSsId["ssid"].GetString();
+                            allowedWifiIDsModelArray.push_back(allowedWifiId);
+
+                        }
+                        ExampleApp::ApplicationConfig::RestrictedBuildingInfo *restricitedBuildingInfo = Eegeo_NEW(ExampleApp::ApplicationConfig::RestrictedBuildingInfo)(interiorID, allowedWifiIDsModelArray);
+                        restrictedBuildingModelArray.push_back(restricitedBuildingInfo);
                     }
-                    ExampleApp::ApplicationConfig::RestrictedBuildingInfo *restricitedBuildingInfo = Eegeo_NEW(ExampleApp::ApplicationConfig::RestrictedBuildingInfo)(interiorID,allowedWifiIDsModelArray);
-                    restrictedBuildingModelArray.push_back(restricitedBuildingInfo);
-                    
-                    
                 }
+
                 m_builder.SetRestrictedBuildingInfoArray(restrictedBuildingModelArray);
 
                 if (document.HasMember("IsKioskTouchInputEnabled") && !document["IsKioskTouchInputEnabled"].IsNull())
