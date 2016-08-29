@@ -13,7 +13,8 @@ namespace ExampleApp
         RestrictedBuildingService::RestrictedBuildingService(const std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*>&restrictedBuildingsInfo,
                                                              Eegeo::Web::IConnectivityService& connectivityService,
                                                              Eegeo::UI::NativeUIFactories& nativeUIFactories)
-        : m_restrictedBuildingsInfo(restrictedBuildingsInfo),m_connectivityService(connectivityService),m_nativeUIFactories(nativeUIFactories), m_pAlertBoxDismissedHandler(NULL)
+        : m_restrictedBuildingsInfo(restrictedBuildingsInfo),m_connectivityService(connectivityService),m_nativeUIFactories(nativeUIFactories), m_pAlertBoxDismissedHandler(NULL),
+        m_isRestrictedBuildingAlertShown(false)
         {
              m_pAlertBoxDismissedHandler = Eegeo_NEW(Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<RestrictedBuildingService>(this, &RestrictedBuildingService::HandleAlertBoxDismissed));
         }
@@ -75,13 +76,17 @@ namespace ExampleApp
         
         void RestrictedBuildingService::ShowAlertMessage()
         {
-            m_nativeUIFactories.AlertBoxFactory().CreateSingleOptionAlertBox("Indoor Map Not Available", "Sorry, that indoor map cannot be explored over your current WiFi network.", *m_pAlertBoxDismissedHandler);
+            if(!m_isRestrictedBuildingAlertShown)
+            {
+                m_nativeUIFactories.AlertBoxFactory().CreateSingleOptionAlertBox("Indoor Map Not Available", "Sorry, that indoor map cannot be explored over your current WiFi network.", *m_pAlertBoxDismissedHandler);
+                
+                m_isRestrictedBuildingAlertShown = true;
+            }
         }
         
         void RestrictedBuildingService::HandleAlertBoxDismissed()
         {
+            m_isRestrictedBuildingAlertShown = false;
         }
-
-        
     }
 }
