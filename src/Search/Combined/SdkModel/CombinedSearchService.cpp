@@ -158,7 +158,7 @@ namespace ExampleApp
                          it++)
                     {
                         const Search::SdkModel::SearchResultModel& searchResult = *it;
-                        if (searchResult.GetCategory() == Search::Swallow::SearchConstants::TRANSITION_CATEGORY_NAME && !query.IsCategory())
+                        if (searchResult.GetCategory() == Search::Swallow::SearchConstants::INDOOR_MAP_CATEGORY_NAME && !query.IsCategory())
                         {
                             continue;
                         }

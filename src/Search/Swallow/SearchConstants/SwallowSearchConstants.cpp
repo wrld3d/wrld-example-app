@@ -35,6 +35,7 @@ namespace ExampleApp
                 const std::string OFFICE_CATEGORY_NAME = "office";
                 const std::string DEPARTMENT_CATEGORY_NAME = "department";
                 const std::string TRANSITION_CATEGORY_NAME = "transition";
+                const std::string INDOOR_MAP_CATEGORY_NAME = "indoor_map";
                 const std::string STATIONERY_CATEGORY_NAME = "stationery";
                 const std::string RECEPTION_CATEGORY_NAME = "reception";
                 const std::string TOILETS_CATEGORY_NAME = "toilets";
@@ -107,7 +108,7 @@ namespace ExampleApp
                 
                 bool ShouldShowCategoryAsSearchResult(const std::string& category)
                 {
-                    if(category == TRANSITION_CATEGORY_NAME)
+                    if(category == INDOOR_MAP_CATEGORY_NAME)
                     {
                         return false;
                     }
