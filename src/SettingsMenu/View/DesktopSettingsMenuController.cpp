@@ -28,7 +28,6 @@ namespace ExampleApp
             , m_currentAppMode(AppModes::SdkModel::AppMode::WorldMode)
             , m_onViewOpenedCallback(this, &DesktopSettingsMenuController::OnSearchMenuOpened)
             , m_onViewClosedCallback(this, &DesktopSettingsMenuController::OnSearchMenuClosed)
-            , m_onViewClickedCallback(this, &DesktopSettingsMenuController::OnSearchMenuClicked)
             , m_searchMenuView(searchMenuView)
             {
                 m_modalBackgroundView.InsertTappedCallback(m_onModalBackgroundTappedCallback);
@@ -40,12 +39,9 @@ namespace ExampleApp
 
                 m_searchMenuView.InsertOnViewOpened(m_onViewOpenedCallback);
                 m_searchMenuView.InsertOnViewClosed(m_onViewClosedCallback);
-                m_searchMenuView.InsertOnViewClicked(m_onViewClickedCallback);
 
                 m_isControlOpen[Control::SearchMenu] = false;
                 m_isControlOpen[Control::POICard] = false;
-
-                m_searchMenuIsOpened = false;
             }
             
             DesktopSettingsMenuController::~DesktopSettingsMenuController()
@@ -59,7 +55,6 @@ namespace ExampleApp
 
                 m_searchMenuView.RemoveOnViewOpened(m_onViewOpenedCallback);
                 m_searchMenuView.RemoveOnViewClosed(m_onViewClosedCallback);
-                m_searchMenuView.RemoveOnViewClicked(m_onViewClickedCallback);
             }
             
             void DesktopSettingsMenuController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
@@ -129,32 +124,20 @@ namespace ExampleApp
 
             }
 
-            void DesktopSettingsMenuController::OnSearchMenuClicked()
-            {
-                if (m_searchMenuIsOpened == false)
-                {
-                    m_viewModel.RemoveFromScreen();
-                    m_isControlOpen[Control::SearchMenu] = true;
-                }
-                if (m_searchMenuIsOpened == true)
-                {
-                    if (!m_isControlOpen[Control::POICard])
-                    {
-                        m_viewModel.AddToScreen();
-                    }
-
-                    m_isControlOpen[Control::SearchMenu] = false;
-                }
-            }
-            
             void DesktopSettingsMenuController::OnSearchMenuOpened()
             {
-                m_searchMenuIsOpened = true;
+                m_viewModel.RemoveFromScreen();
+                m_isControlOpen[Control::SearchMenu] = true;
             }
             
             void DesktopSettingsMenuController::OnSearchMenuClosed()
             {
-                m_searchMenuIsOpened = false;
+                if (!m_isControlOpen[Control::POICard])
+                {
+                    m_viewModel.AddToScreen();
+                }
+
+                m_isControlOpen[Control::SearchMenu] = false;
             }
         }
     }
