@@ -90,23 +90,6 @@ public class SettingsMenuView extends MenuView
     		m_list.setEnabled(false);
     	}
     }
-    
-    @Override
-    public void animateToClosedOnScreen() {
-
-    	super.animateToClosedOnScreen();
-    	
-    	if(m_menuState == MenuState.OFF_SCREEN)
-    	{
-	    	m_animating = true;
-	    	
-	    	m_menuAnimationHandler.playToClosedOnScreen();
-	    	
-	    	m_list.setEnabled(false);
-	    	
-	    	m_menuState = MenuState.CLOSED_ON_SCREEN;
-    	}
-    }
 
     @Override
     protected void handleDragFinish(int xPx, int yPx)
