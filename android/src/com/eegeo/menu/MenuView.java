@@ -112,6 +112,8 @@ public abstract class MenuView implements View.OnClickListener, MenuAnimationSta
     	m_list.setEnabled(false);
     	
     	m_menuState = MenuState.CLOSED_ON_SCREEN;
+    	
+    	MenuViewJniMethods.ViewCloseCompleted(m_nativeCallerPointer);
     }
 
     public void animateToOpenOnScreen()
@@ -126,6 +128,8 @@ public abstract class MenuView implements View.OnClickListener, MenuAnimationSta
     	m_menuAnimationHandler.playToOpenOnScreen();
     	
     	m_menuState = MenuState.OPEN_ON_SCREEN;
+    	
+    	MenuViewJniMethods.ViewOpenCompleted(m_nativeCallerPointer);
     }
 
     public void animateOffScreen()
