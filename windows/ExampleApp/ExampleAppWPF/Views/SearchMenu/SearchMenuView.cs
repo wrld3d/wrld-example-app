@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -355,7 +356,9 @@ namespace ExampleAppWPF
         {
             if (e.Key == Key.Enter)
             {
-                string queryText = m_editText.Text;
+                Encoding enc = Encoding.GetEncoding("Windows-1252");
+                byte[] bytes = Encoding.UTF8.GetBytes(m_editText.Text);
+                string queryText = enc.GetString(bytes);
 
                 if (queryText.Length > 0)
                 {
