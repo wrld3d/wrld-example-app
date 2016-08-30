@@ -27,7 +27,7 @@ namespace ExampleApp
             
         private:
             
-            
+            bool m_isRestrictedBuildingAlertShown;
             Eegeo::Web::IConnectivityService& m_connectivityService;
             const std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*>&m_restrictedBuildingsInfo;
             Eegeo::UI::NativeUIFactories& m_nativeUIFactories;

@@ -58,7 +58,7 @@ public class SettingsMenuAnimationHandler extends MenuAnimationHandler
         
         settingsMenuTitleView.setX(dragTabWidthPx);
         
-        addAnimator(m_onScreenAnimatorSet, screenWidthPx, screenWidthPx - (dragTabWidthPx + menuButtonMarginPx), new ViewXAnimatorUpdateListener(m_view), new CircleInOutTimeInterpolator());
+        addAnimator(m_onScreenAnimatorSet, screenWidthPx + (dragTabWidthPx + menuButtonMarginPx), screenWidthPx - (dragTabWidthPx + menuButtonMarginPx), new ViewXAnimatorUpdateListener(m_view), new CircleInOutTimeInterpolator());
 		addAnimator(m_onScreenAnimatorSet, 0.0f, 0.0f, new ViewScaleXAnimatorUpdateListener(titleContainerView), new CircleInOutTimeInterpolator());
 		addAnimator(m_onScreenAnimatorSet, 0, dragTabWidthPx + menuButtonMarginPx, new ViewXAnimatorUpdateListener(listItemContainerView), new CircleInOutTimeInterpolator());
 		addAnimator(m_onScreenAnimatorSet, 0.0f, 0.0f, new ViewAlphaAnimatorUpdateListener(settingsMenuTitleView), new CircleInOutTimeInterpolator());

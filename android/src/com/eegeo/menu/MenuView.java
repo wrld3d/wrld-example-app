@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
@@ -112,6 +114,16 @@ public abstract class MenuView implements View.OnClickListener, MenuAnimationSta
     	m_list.setEnabled(false);
     	
     	m_menuState = MenuState.CLOSED_ON_SCREEN;
+    	
+    	Handler closeHandler = new Handler();
+    	closeHandler.postDelayed(new Runnable()
+    	{
+			@Override
+			public void run()
+			{
+				MenuViewJniMethods.ViewCloseCompleted(m_nativeCallerPointer);
+			}
+		}, 1);
     }
 
     public void animateToOpenOnScreen()
@@ -126,6 +138,16 @@ public abstract class MenuView implements View.OnClickListener, MenuAnimationSta
     	m_menuAnimationHandler.playToOpenOnScreen();
     	
     	m_menuState = MenuState.OPEN_ON_SCREEN;
+    	
+    	Handler openHandler = new Handler();
+    	openHandler.postDelayed(new Runnable()
+    	{
+			@Override
+			public void run()
+			{
+				MenuViewJniMethods.ViewOpenCompleted(m_nativeCallerPointer);
+			}
+		}, 1);
     }
 
     public void animateOffScreen()

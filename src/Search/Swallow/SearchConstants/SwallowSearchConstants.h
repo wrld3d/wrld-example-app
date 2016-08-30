@@ -40,6 +40,9 @@ namespace ExampleApp
                 extern const std::string DEPARTMENT_CATEGORY_NAME;
                 extern const std::string STATIONERY_CATEGORY_NAME;
                 extern const std::string TRANSITION_CATEGORY_NAME;
+                // MAB: "transition" results are currently set to the "indoor_map" icon, but there is no separation of icon + category,
+                // So as a workaround until work is done to separate this, there is also an 'indoor_map' category name.
+                extern const std::string INDOOR_MAP_CATEGORY_NAME; 
                 extern const std::string TOILETS_CATEGORY_NAME;
                 extern const std::string PRINT_STATION_CATEGORY_NAME;
                 extern const std::string EMERGENCY_EXIT_CATEGORY_NAME;

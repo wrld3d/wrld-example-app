@@ -229,7 +229,7 @@ namespace ExampleApp
                     
                 }
                 else if((pSearchResultModel->GetCategory() != Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME)
-                        && (pSearchResultModel->GetCategory() != Search::Swallow::SearchConstants::TRANSITION_CATEGORY_NAME))
+                        && (pSearchResultModel->GetCategory() != Search::Swallow::SearchConstants::INDOOR_MAP_CATEGORY_NAME))
                 {
                     AddSearchResultOnMap(*pSearchResultModel);
                 }
@@ -262,7 +262,7 @@ namespace ExampleApp
                     }
                 }
                 else if((pSearchResultModel->GetCategory() != Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME)
-                        && (pSearchResultModel->GetCategory() != Search::Swallow::SearchConstants::TRANSITION_CATEGORY_NAME))
+                        && (pSearchResultModel->GetCategory() != Search::Swallow::SearchConstants::INDOOR_MAP_CATEGORY_NAME))
                 {
                     RemoveSearchResultOnMap(*pSearchResultModel);
                 }

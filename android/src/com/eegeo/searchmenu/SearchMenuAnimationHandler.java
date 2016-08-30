@@ -76,7 +76,7 @@ public class SearchMenuAnimationHandler extends MenuAnimationHandler
         m_view.setX(0.0f);
 		searchCountView.setVisibility(View.GONE);
 	
-		addAnimator(m_onScreenAnimatorSet, -dragTabWidthPx, menuButtonMarginPx, false, new ViewXAnimatorUpdateListener(dragTabView), new CircleInOutTimeInterpolator());
+		addAnimator(m_onScreenAnimatorSet, -(dragTabWidthPx + menuButtonMarginPx), menuButtonMarginPx, false, new ViewXAnimatorUpdateListener(dragTabView), new CircleInOutTimeInterpolator());
 		addAnimator(m_onScreenAnimatorSet, -titleContainerWidthPx, -titleContainerWidthPx, false, new ViewXAnimatorUpdateListener(titleContainerView), new CircleInOutTimeInterpolator());
 		addAnimator(m_onScreenAnimatorSet, -titleContainerWidthPx, -titleContainerWidthPx, false, new ViewXAnimatorUpdateListener(searchMenuSeparatorView), new CircleInOutTimeInterpolator());
 		addAnimator(m_onScreenAnimatorSet, -titleContainerWidthPx, -titleContainerWidthPx, false, new ViewXAnimatorUpdateListener(searchMenuFooterSeparatorView), new CircleInOutTimeInterpolator());
