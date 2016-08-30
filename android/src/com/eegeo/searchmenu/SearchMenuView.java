@@ -346,10 +346,19 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         final float occupiedHeight = topBar.getHeight() + menuListContainer.getHeight() + seperatorBars.getHeight() * 2.0f;    
         final float availableHeight = viewHeight - occupiedHeight;
         
-    	final float cellHeight = m_activity.getResources().getDimension(R.dimen.search_menu_result_cell_height);
+    	float cellHeight = m_activity.getResources().getDimension(R.dimen.search_menu_result_cell_height);
+    	
+    	View firstVisibleChild = m_searchList.getChildAt(0);
+    	if(firstVisibleChild != null)
+    	{
+    		cellHeight = firstVisibleChild.getHeight();
+    	}
+    	
     	final float fullHeight = cellHeight * resultCount;
+    	
+    	final float listDividerHeight = m_searchList.getDividerHeight();
 
-    	final int height = (int)Math.min(fullHeight, availableHeight);
+    	final int height = (int)Math.min(Math.max(fullHeight - listDividerHeight, 0), availableHeight);
     	
     	ViewGroup.LayoutParams params = m_searchList.getLayoutParams();
     	int oldHeight = params.height;
@@ -413,7 +422,15 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         	updateResults(m_pendingResults);
 		}
 		
-    	updateSearchMenuHeight(m_resultsCount);
+		updateSearchMenuHeight(m_resultsCount);
+	}
+	
+	@Override
+	public void onOpenOnScreenAnimationComplete()
+	{
+		super.onOpenOnScreenAnimationComplete();
+		
+		updateSearchMenuHeight(m_resultsCount);
 	}
 
 	@Override
