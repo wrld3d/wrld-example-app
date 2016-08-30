@@ -17,6 +17,9 @@ import com.eegeo.searchmenu.SearchResultsScrollListener;
 import com.eegeo.searchmenu.SearchMenuResultsListAnimationConstants;
 import com.eegeo.animation.updatelisteners.ViewHeightAnimatorUpdateListener;
 import com.eegeo.menu.MenuListAnimationConstants;
+
+import android.animation.Animator;
+import android.animation.Animator.AnimatorListener;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.TextUtils.TruncateAt;
@@ -334,7 +337,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     	m_pendingResults = null;
     }
     
-    private void updateSearchMenuHeight(int resultCount)
+    private void updateSearchMenuHeight(final int resultCount)
     {   
         final RelativeLayout mainSearchSubview = (RelativeLayout)m_view.findViewById(R.id.search_menu_view);
 
@@ -353,11 +356,35 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
 
     	final int height = (int)Math.min(Math.max(fullHeight - listDividerHeight, 0), availableHeight);
     	
+    	int oldHeight = m_searchList.getHeight();
     	ViewGroup.LayoutParams params = m_searchList.getLayoutParams();
-    	int oldHeight = params.height;
-
+		params.height = oldHeight;
+		m_searchList.setLayoutParams(params);
+		
     	ReversibleValueAnimator menuHeightAnimator = ReversibleValueAnimator.ofInt(oldHeight, height);
     	menuHeightAnimator.addUpdateListener(new ViewHeightAnimatorUpdateListener<LinearLayout.LayoutParams>(m_searchList));
+    	menuHeightAnimator.addListener(new AnimatorListener()
+    	{
+			@Override
+			public void onAnimationStart(Animator animation) {}
+			
+			@Override
+			public void onAnimationRepeat(Animator animation) {}
+			
+			@Override
+			public void onAnimationEnd(Animator animation)
+			{
+				if(fullHeight < availableHeight)
+				{
+					ViewGroup.LayoutParams params = m_searchList.getLayoutParams();
+					params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+		    		m_searchList.setLayoutParams(params);
+				}
+			}
+			
+			@Override
+			public void onAnimationCancel(Animator animation) {}
+		});
     	menuHeightAnimator.setDuration(MenuListAnimationConstants.MenuListTotalAnimationSpeedMilliseconds);
     	menuHeightAnimator.start();
     	m_searchList.setSelection(0);
@@ -414,8 +441,6 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
 		{
         	updateResults(m_pendingResults);
 		}
-		
-    	updateSearchMenuHeight(m_resultsCount);
 	}
 
 	@Override
