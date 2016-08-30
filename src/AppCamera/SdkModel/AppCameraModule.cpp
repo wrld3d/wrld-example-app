@@ -32,7 +32,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            void AppCameraModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+            void AppCameraModule::Register(const TContainerBuilder& builder)
             {
                 builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                                    {

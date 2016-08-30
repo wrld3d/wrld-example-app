@@ -31,7 +31,7 @@ namespace ExampleApp
     {
     }
     
-    void AppWiring::RegisterModuleInstance(const std::shared_ptr<IModule> module)
+    void AppWiring::RegisterModuleInstance(const std::shared_ptr<Module> module)
     {
         auto moduleSet = m_moduleContainer->resolve<TModules>();
         moduleSet->push_back(module);
@@ -65,6 +65,15 @@ namespace ExampleApp
             module->Register(m_appContainerBuilder);
         }
         m_appContainer = m_appContainerBuilder->build();
+        for (auto module : *moduleSet)
+        {
+            module->AssignContainer(m_appContainer);
+            module->RegisterLeaves();
+            for (auto leaf : module->GetLeaves())
+            {
+                m_leaves.push_back(leaf);
+            }
+        }
     }
     
     const std::shared_ptr<MobileExampleApp> AppWiring::BuildMobileExampleApp()

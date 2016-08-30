@@ -19,7 +19,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            void MyPinCreationModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+            void MyPinCreationModule::Register(const TContainerBuilder& builder)
             {
                 builder->registerType<MyPinCreationModel>().as<IMyPinCreationModel>().singleInstance();
                 builder->registerType<MyPinCreationModelObserver>().singleInstance();
@@ -34,6 +34,13 @@ namespace ExampleApp
                                                        return std::make_shared<View::MyPinCreationConfirmationViewModel>(context.resolve<Eegeo::Helpers::IIdentityProvider>()->GetNextIdentity(), false, context.resolve<Reaction::View::IReactionControllerModel>());
                                                    }).as<View::IMyPinCreationConfirmationViewModel>().singleInstance();
                 builder->registerType<View::MyPinCreationCompositeViewModel>().as<View::IMyPinCreationCompositeViewModel>().singleInstance();
+            }
+            
+            void MyPinCreationModule::RegisterLeaves()
+            {
+                RegisterLeaf<MyPinCreationViewSavePinHandler>();
+                RegisterLeaf<MyPinCreationViewStateChangedHandler>();
+                RegisterLeaf<MyPinCreationModelObserver>();
             }
         }
     }

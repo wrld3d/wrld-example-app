@@ -114,7 +114,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            void AboutPageModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+            void AboutPageModule::Register(const TContainerBuilder& builder)
             {
                 builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                                    {

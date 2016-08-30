@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "IModule.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -12,10 +12,10 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                class PoiRingModule : public IModule
+                class PoiRingModule : public Module
                 {
                 public:
-                    void Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder);
+                    void Register(const TContainerBuilder& builder);
                 };
             }
         }

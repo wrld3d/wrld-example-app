@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "IModule.h"
+#include "Module.h"
 #include "Types.h"
 #include "ApplicationConfiguration.h"
 #include "IPlatformConfigBuilder.h"
@@ -15,11 +15,11 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class ApplicationConfigurationModule : public IModule, private Eegeo::NonCopyable
+            class ApplicationConfigurationModule : public Module
             {
             public:
                 ApplicationConfigurationModule(const ApplicationConfiguration& defaultConfig);
-                void Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder);
+                void Register(const TContainerBuilder& builder);
             private:
                 ApplicationConfiguration m_default;
             };

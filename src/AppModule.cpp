@@ -28,7 +28,7 @@
 
 namespace ExampleApp
 {
-    void AppModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+    void AppModule::Register(const TContainerBuilder& builder)
     {
         builder->registerType<AppModes::SdkModel::AppModeModel>().as<AppModes::SdkModel::IAppModeModel>().singleInstance();
         builder->registerType<AppModes::States::SdkModel::AppModeStatesFactory>().as<AppModes::SdkModel::IAppModeStatesFactory>().singleInstance();

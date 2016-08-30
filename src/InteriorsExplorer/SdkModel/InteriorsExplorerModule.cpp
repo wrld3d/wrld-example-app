@@ -29,7 +29,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            void InteriorsExplorerModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+            void InteriorsExplorerModule::Register(const TContainerBuilder& builder)
             {
                 builder->registerType<InteriorExplorerUserInteractionModel>().singleInstance();
                 builder->registerType<InteriorVisibilityUpdater>().singleInstance();
@@ -49,6 +49,12 @@ namespace ExampleApp
                                                    }).singleInstance();
                 builder->registerType<InteriorsExplorerFloorDraggedObserver>().singleInstance();
                 builder->registerType<InteriorsUINotificationService>().singleInstance();
+            }
+            
+            void InteriorsExplorerModule::RegisterLeaves()
+            {
+                RegisterLeaf<InteriorsExplorerFloorDraggedObserver>();
+                RegisterLeaf<InteriorsUINotificationService>();
             }
         }
     }

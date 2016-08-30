@@ -30,13 +30,18 @@ namespace ExampleApp
                 }
             };
             
-            void CategorySearchModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+            void CategorySearchModule::Register(const TContainerBuilder& builder)
             {
                 builder->registerType<View::TCategories>().singleInstance();
                 builder->registerType<View::CategorySearchRepository>().as<View::ICategorySearchRepository>().singleInstance();
                 builder->registerType<CategorySearchMenuModel>().singleInstance();
                 builder->registerType<CategorySearchMenuOptionsModel>().singleInstance();
                 builder->registerType<CategorySearchSelectedMessageHandler>().singleInstance();
+            }
+            
+            void CategorySearchModule::RegisterLeaves()
+            {
+                RegisterLeaf<CategorySearchSelectedMessageHandler>();
             }
             
             /*

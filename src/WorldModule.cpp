@@ -35,7 +35,7 @@
 
 namespace ExampleApp
 {
-    void WorldModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+    void WorldModule::Register(const TContainerBuilder& builder)
     {
         builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                            {

@@ -11,7 +11,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            void WorldAreaLoaderModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+            void WorldAreaLoaderModule::Register(const TContainerBuilder& builder)
             {
                 builder->registerType<WorldAreaLoaderModel>().as<IWorldAreaLoaderModel>().singleInstance();
             }

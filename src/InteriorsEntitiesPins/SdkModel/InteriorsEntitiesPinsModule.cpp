@@ -27,7 +27,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            void InteriorsEntitiesPinsModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+            void InteriorsEntitiesPinsModule::Register(const TContainerBuilder& builder)
             {
                 builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                                    {

@@ -84,7 +84,7 @@
 #include "UserInteractionEnabledChangedMessage.h"
 #include "SurveyViewModule.h"
 #include "IOSMenuReactionModel.h"
-#include "IModule.h"
+#include "Module.h"
 
 #include <memory>
 
@@ -92,10 +92,10 @@
 
 using namespace Eegeo::iOS;
 
-class iOSAbstractionIoCModule : public ExampleApp::IModule
+class iOSAbstractionIoCModule : public ExampleApp::Module
 {
 public:
-    void Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+    void Register(const ExampleApp::TContainerBuilder& builder)
     {
         builder->registerType<Eegeo::UI::NativeInput::iOS::iOSInputBoxFactory>().as<Eegeo::UI::NativeInput::IInputBoxFactory>().singleInstance();
         builder->registerType<Eegeo::UI::NativeInput::iOS::iOSKeyboardInputFactory>().as<Eegeo::UI::NativeInput::IKeyboardInputFactory>().singleInstance();
@@ -128,7 +128,7 @@ public:
     }
 };
 
-class iOSAppModule : public ExampleApp::IModule
+class iOSAppModule : public ExampleApp::Module
 {
 public:
     iOSAppModule(
@@ -143,7 +143,7 @@ public:
     {
     }
     
-    void Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+    void Register(const ExampleApp::TContainerBuilder& builder)
     {
         builder->registerExternallyOwnedInstance(m_metricsService).as<ExampleApp::Metrics::IMetricsService>();
         builder->registerExternallyOwnedInstance(m_screenProperties);

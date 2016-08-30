@@ -2,13 +2,13 @@
 
 #pragma once
 
-#include "IModule.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
-    class AppModule : public IModule
+    class AppModule : public Module
     {
     public:
-        void Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder);
+        void Register(const TContainerBuilder& builder);
     };
 }

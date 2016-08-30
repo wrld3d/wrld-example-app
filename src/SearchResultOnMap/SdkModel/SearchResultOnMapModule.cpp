@@ -19,11 +19,16 @@ namespace ExampleApp
     {
         namespace SdkModel
         {   
-            void SearchResultOnMapModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+            void SearchResultOnMapModule::Register(const TContainerBuilder& builder)
             {
                 builder->registerType<View::SearchResultOnMapFactory>().as<View::ISearchResultOnMapFactory>().singleInstance();
                 builder->registerType<SearchResultOnMapModel>().as<ISearchResultOnMapModel>().singleInstance();
                 builder->registerType<View::SearchResultOnMapItemModelSelectedObserver>().singleInstance();
+            }
+            
+            void SearchResultOnMapModule::RegisterLeaves()
+            {
+                RegisterLeaf<View::SearchResultOnMapItemModelSelectedObserver>();
             }
         }
     }

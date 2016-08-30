@@ -7,7 +7,7 @@ set(currsources
   ../src/ApiKey.h
   ../src/CMakeLists.txt
   ../src/IAppCamera.h
-  ../src/IModule.h
+  ../src/Module.h
   ../src/Logger.h
   ../src/MobileExampleApp.cpp
   ../src/MobileExampleApp.h

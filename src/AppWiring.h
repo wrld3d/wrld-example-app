@@ -6,7 +6,7 @@
 #include "Hypodermic/ContainerBuilder.h"
 #include "MobileExampleApp.h"
 #include "ICallback.h"
-#include "IModule.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -26,7 +26,7 @@ namespace ExampleApp
             moduleSet->push_back(std::make_shared<T>());
         }
         
-        void RegisterModuleInstance(const std::shared_ptr<IModule> module);
+        void RegisterModuleInstance(const std::shared_ptr<Module> module);
         void RegisterDefaultModules();
         void ResolveModules();
         
@@ -44,6 +44,8 @@ namespace ExampleApp
 
         const std::shared_ptr<Hypodermic::ContainerBuilder> m_appContainerBuilder;
         std::shared_ptr<Hypodermic::Container> m_appContainer;
+        
+        TLeaves m_leaves;
         
         Eegeo::Helpers::CallbackCollection1<TModules&> m_moduleRegistrationCallbacks;
     };

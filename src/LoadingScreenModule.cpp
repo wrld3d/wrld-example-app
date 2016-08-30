@@ -14,7 +14,7 @@
 
 namespace ExampleApp
 {
-    void LoadingScreenModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+    void LoadingScreenModule::Register(const TContainerBuilder& builder)
     {
         builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                          {

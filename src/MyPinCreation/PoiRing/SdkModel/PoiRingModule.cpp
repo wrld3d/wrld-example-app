@@ -26,7 +26,7 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                void PoiRingModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+                void PoiRingModule::Register(const TContainerBuilder& builder)
                 {
                     builder->registerType<PoiRingRenderable>().singleInstance();
                     builder->registerType<PoiRing::SdkModel::PoiRingView>().singleInstance();

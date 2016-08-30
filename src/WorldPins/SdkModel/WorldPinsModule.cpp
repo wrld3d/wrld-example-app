@@ -25,7 +25,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            void WorldPinsModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+            void WorldPinsModule::Register(const TContainerBuilder& builder)
             {
                 builder->registerType<WorldPinsFactory>().as<IWorldPinsFactory>().singleInstance();
                 builder->registerType<WorldPinsRepository>().as<IWorldPinsRepository>().singleInstance();
@@ -69,6 +69,12 @@ namespace ExampleApp
                                                      auto pinsModule = context.resolve<Eegeo::Pins::PinsModule>();
                                                      return std::shared_ptr<Eegeo::Pins::PinController>(&pinsModule->GetController());
                                                  }).singleInstance();
+            }
+            
+            void WorldPinsModule::RegisterLeaves()
+            {
+                RegisterLeaf<WorldPinsModalityObserver>();
+                RegisterLeaf<View::WorldPinInFocusObserver>();
             }
         }
     }

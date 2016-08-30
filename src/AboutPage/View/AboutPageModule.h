@@ -4,7 +4,7 @@
 
 #include "Types.h"
 
-#include "IModule.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -12,10 +12,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            class AboutPageModule : public IModule
+            class AboutPageModule : public Module
             {
             public:
-                void Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder);
+                void Register(const TContainerBuilder& builder);
             };
         }
     }

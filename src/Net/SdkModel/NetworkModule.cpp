@@ -15,7 +15,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            void NetworkModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+            void NetworkModule::Register(const TContainerBuilder& builder)
             {
                 builder->registerType<ExampleApp::Net::SdkModel::NetworkCapabilities>().as<ExampleApp::Net::SdkModel::INetworkCapabilities>().singleInstance();
                 builder->registerType<ConnectivityChangedObserver>().singleInstance();
@@ -26,6 +26,11 @@ namespace ExampleApp
                                                                                                                    context.resolve<Eegeo::Resources::Terrain::Heights::TerrainHeightProvider>().get()
                                                                                                                    );
                                                    }).singleInstance();
+            }
+            
+            void NetworkModule::RegisterLeaves()
+            {
+                RegisterLeaf<ConnectivityChangedObserver>();
             }
         }
     }

@@ -27,7 +27,7 @@ namespace ExampleApp
 {
     namespace Tours
     {
-        void ToursModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+        void ToursModule::Register(const TContainerBuilder& builder)
         {
             builder->registerType<SdkModel::TourRepository>().as<SdkModel::ITourRepository>().singleInstance();
             builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
@@ -53,6 +53,17 @@ namespace ExampleApp
             builder->registerType<View::TourFullScreenImage::TourFullScreenImageViewModel>().as<View::TourFullScreenImage::ITourFullScreenImageViewModel>().singleInstance();
             builder->registerType<View::TourFullScreenImage::TourFullScreenImageCeremonyBeganObserver>().singleInstance();
             builder->registerType<View::TourFullScreenImage::TourFullScreenImageCeremonyEndedObserver>().singleInstance();
+        }
+        
+        void ToursModule::RegisterLeaves()
+        {
+            RegisterLeaf<SdkModel::TourAddedObserver>();
+            RegisterLeaf<SdkModel::TourRemovedObserver>();
+            RegisterLeaf<SdkModel::TourActiveStateChangedMessageHandler>();
+            RegisterLeaf<SdkModel::ActiveTourQuitSelectedMessageHandler>();
+            RegisterLeaf<View::TourExplorer::TourSelectedViewObserver>();
+            RegisterLeaf<View::TourFullScreenImage::TourFullScreenImageCeremonyBeganObserver>();
+            RegisterLeaf<View::TourFullScreenImage::TourFullScreenImageCeremonyEndedObserver>();
         }
     }
 }

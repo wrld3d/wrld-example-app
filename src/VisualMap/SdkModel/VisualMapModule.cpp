@@ -18,7 +18,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            void VisualMapModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+            void VisualMapModule::Register(const TContainerBuilder& builder)
             {
                 builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                                    {
@@ -28,6 +28,11 @@ namespace ExampleApp
                 builder->registerType<VisualMapStateHistory>().as<IVisualMapStateHistory>().singleInstance();
                 builder->registerType<VisualMapController>().as<IVisualMapController>().singleInstance();
                 builder->registerType<VisualMapService>().as<IVisualMapService>().singleInstance();
+            }
+            
+            void VisualMapModule::RegisterLeaves()
+            {
+                RegisterLeaf<IVisualMapController>();
             }
         }
     }

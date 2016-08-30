@@ -19,7 +19,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            void SearchResultPoiModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+            void SearchResultPoiModule::Register(const TContainerBuilder& builder)
             {
 #ifdef EEGEO_WIN
                 builder->registerType<DesktopSearchResultPoiViewModel>().as<ISearchResultPoiViewModel>().singleInstance();
@@ -30,6 +30,12 @@ namespace ExampleApp
                 builder->registerType<SdkModel::SearchResultPoiPinToggledMessageHandler>().singleInstance();
                 builder->registerType<SdkModel::SearchResultPoiViewImageFetcher>().as<SdkModel::ISearchResultPoiViewImageFetcher>().singleInstance();
                 builder->registerType<SdkModel::SearchResultPoiViewOpenedMessageHandler>().singleInstance();
+            }
+            
+            void SearchResultPoiModule::RegisterLeaves()
+            {
+                RegisterLeaf<SdkModel::SearchResultPoiPinToggledMessageHandler>();
+                RegisterLeaf<SdkModel::SearchResultPoiViewOpenedMessageHandler>();
             }
         }
     }

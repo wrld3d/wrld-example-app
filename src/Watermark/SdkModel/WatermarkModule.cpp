@@ -21,7 +21,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            void WatermarkModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+            void WatermarkModule::Register(const TContainerBuilder& builder)
             {
                 builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                                    {
@@ -35,6 +35,11 @@ namespace ExampleApp
                 builder->registerType<View::WatermarkDataRepository>().as<View::IWatermarkDataRepository>().singleInstance();
                 builder->registerType<WatermarkModel>().singleInstance();
                 builder->registerType<WatermarkInteriorStateChangedObserver>().singleInstance();
+            }
+            
+            void WatermarkModule::RegisterLeaves()
+            {
+                RegisterLeaf<WatermarkInteriorStateChangedObserver>();
             }
             
             /*            

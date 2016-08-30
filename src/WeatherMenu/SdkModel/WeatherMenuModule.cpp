@@ -35,7 +35,7 @@ namespace ExampleApp
                 std::shared_ptr<WeatherMenuModel> m_menuModel;
             };
             
-            void WeatherMenuModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+            void WeatherMenuModule::Register(const TContainerBuilder& builder)
             {
                 builder->registerType<WeatherController>().as<IWeatherController>().singleInstance();
                 builder->registerType<WeatherSelectedMessageHandler>().singleInstance();
@@ -74,6 +74,11 @@ namespace ExampleApp
                                                        }
                                                        return optionsModel;
                                                    }).singleInstance();*/
+            }
+            
+            void WeatherMenuModule::RegisterLeaves()
+            {
+                RegisterLeaf<WeatherSelectedMessageHandler>();
             }
         }
     }

@@ -97,7 +97,7 @@ namespace ExampleApp
             }
 
             
-            void ApplicationConfigurationModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder> &builder)
+            void ApplicationConfigurationModule::Register(const TContainerBuilder& builder)
             {
                 builder->registerType<ApplicationConfigurationReader>().as<IApplicationConfigurationReader>().singleInstance();
                 builder->registerExternallyOwnedInstance(m_default);
