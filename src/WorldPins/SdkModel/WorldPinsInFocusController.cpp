@@ -35,10 +35,10 @@ namespace ExampleApp
                 }
             }
             
-            WorldPinsInFocusController::WorldPinsInFocusController(IWorldPinsRepository& worldPinsRepository,
-                    IWorldPinsService& worldPinsService,
-                    float screenOversampleScale,
-                    ExampleAppMessaging::TMessageBus& messageBus)
+            WorldPinsInFocusController::WorldPinsInFocusController(const std::shared_ptr<IWorldPinsRepository>& worldPinsRepository,
+                                                                   const std::shared_ptr<IWorldPinsService>& worldPinsService,
+                                                                   const std::shared_ptr<Eegeo::Rendering::ScreenProperties>& screenProperties,
+                                                                   const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
                 : m_worldPinsRepository(worldPinsRepository)
                 , m_worldPinsService(worldPinsService)
                 , m_messageBus(messageBus)
@@ -46,16 +46,19 @@ namespace ExampleApp
                 , m_selectedFocussedMessageHandlerBinding(this, &WorldPinsInFocusController::OnSelectedFocussedMessage)
                 , m_pLastFocussedModel(NULL)
                 , m_focusEnabled(true)
-                , m_screenOversampleScale(screenOversampleScale)
+                , m_screenOversampleScale(screenProperties->GetOversampleScale())
             {
-                m_messageBus.SubscribeNative(m_visibilityMessageHandlerBinding);
-                m_messageBus.SubscribeNative(m_selectedFocussedMessageHandlerBinding);
+                Eegeo_ASSERT(m_worldPinsRepository != nullptr);
+                Eegeo_ASSERT(m_worldPinsService != nullptr);
+                Eegeo_ASSERT(m_messageBus != nullptr);
+                m_messageBus->SubscribeNative(m_visibilityMessageHandlerBinding);
+                m_messageBus->SubscribeNative(m_selectedFocussedMessageHandlerBinding);
             }
 
             WorldPinsInFocusController::~WorldPinsInFocusController()
             {
-                m_messageBus.UnsubscribeNative(m_visibilityMessageHandlerBinding);
-                m_messageBus.UnsubscribeNative(m_selectedFocussedMessageHandlerBinding);
+                m_messageBus->UnsubscribeNative(m_visibilityMessageHandlerBinding);
+                m_messageBus->UnsubscribeNative(m_selectedFocussedMessageHandlerBinding);
             }
 
             void WorldPinsInFocusController::Update(float deltaSeconds, const Eegeo::dv3& ecefInterestPoint, const Eegeo::Camera::RenderCamera& renderCamera)
@@ -67,9 +70,9 @@ namespace ExampleApp
 
                 if(m_focusEnabled)
                 {
-                    for(size_t i = 0; i < m_worldPinsRepository.GetItemCount(); ++i)
+                    for(size_t i = 0; i < m_worldPinsRepository->GetItemCount(); ++i)
                     {
-                        ExampleApp::WorldPins::SdkModel::WorldPinItemModel* worldPinItemModel = m_worldPinsRepository.GetItemAtIndex(i);
+                        ExampleApp::WorldPins::SdkModel::WorldPinItemModel* worldPinItemModel = m_worldPinsRepository->GetItemAtIndex(i);
 
                         if (!worldPinItemModel->IsFocusable())
                         {
@@ -79,7 +82,7 @@ namespace ExampleApp
                         Eegeo::dv3 ecefPinLocation;
                         Eegeo::v2 screenPinLocation;
 
-                        m_worldPinsService.GetPinEcefAndScreenLocations(*worldPinItemModel,
+                        m_worldPinsService->GetPinEcefAndScreenLocations(*worldPinItemModel,
                                 ecefPinLocation,
                                 screenPinLocation);
 
@@ -113,7 +116,7 @@ namespace ExampleApp
 
                     if(m_pLastFocussedModel != NULL)
                     {
-                        m_messageBus.Publish(WorldPinGainedFocusMessage(WorldPinsInFocusModel(m_pLastFocussedModel->GetPinId(),
+                        m_messageBus->Publish(WorldPinGainedFocusMessage(WorldPinsInFocusModel(m_pLastFocussedModel->GetPinId(),
                                              m_pLastFocussedModel->GetTitle(),
                                              m_pLastFocussedModel->GetSubtitle(),
                                              m_pLastFocussedModel->GetVendor(),
@@ -124,14 +127,14 @@ namespace ExampleApp
                     }
                     else
                     {
-                        m_messageBus.Publish(WorldPinLostFocusMessage());
+                        m_messageBus->Publish(WorldPinLostFocusMessage());
                     }
                 }
                 else
                 {
                     if(m_pLastFocussedModel != NULL)
                     {
-                        m_messageBus.Publish(WorldPinInFocusChangedLocationMessage(closestScreenPinLocation));
+                        m_messageBus->Publish(WorldPinInFocusChangedLocationMessage(closestScreenPinLocation));
                     }
                 }
             }
@@ -143,7 +146,7 @@ namespace ExampleApp
             
             void WorldPinsInFocusController::OnSelectedFocussedMessage(const WorldPinsSelectedFocussedMessage& worldPinsSelectedFocussedMessage)
             {
-                m_worldPinsService.SelectPin(worldPinsSelectedFocussedMessage.PinId());
+                m_worldPinsService->SelectPin(worldPinsSelectedFocussedMessage.PinId());
             }
         }
     }

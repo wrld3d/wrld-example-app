@@ -6,6 +6,8 @@
 #include "ICallback.h"
 #include "Types.h"
 
+#include <memory>
+
 namespace ExampleApp
 {
     namespace Tours
@@ -14,13 +16,13 @@ namespace ExampleApp
         {
             class TourRemovedObserver : private Eegeo::NonCopyable
             {
-                ITourRepository& m_tourRepository;
+                const std::shared_ptr<ITourRepository> m_tourRepository;
                 Eegeo::Helpers::TCallback1<TourRemovedObserver, TourModel> m_binding;
                 
                 void HandleTourRemoved(TourModel& tourModel);
                 
             public:
-                TourRemovedObserver(ITourRepository& tourRepository);
+                TourRemovedObserver(const std::shared_ptr<ITourRepository>& tourRepository);
                 
                 ~TourRemovedObserver();
             };

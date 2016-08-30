@@ -7,6 +7,7 @@
 #include "Search.h"
 #include "Helpers.h"
 #include "Web.h"
+#include "ApplicationConfiguration.h"
 #include <string>
 
 namespace ExampleApp
@@ -15,14 +16,13 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class MyPinsWebService
+            class MyPinsWebService : private Eegeo::NonCopyable
             {
             public:
                 MyPinsWebService(
-                                 const std::string& webServiceBaseUrl,
-                                 const std::string& webServiceAuthToken,
-                                 Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
-                                 Eegeo::Helpers::IFileIO& fileIO);
+                                 const std::shared_ptr<ApplicationConfig::ApplicationConfiguration>& appConfig,
+                                 const std::shared_ptr<Eegeo::Web::IWebLoadRequestFactory>& webLoadRequestFactory,
+                                 const std::shared_ptr<Eegeo::Helpers::IFileIO>& fileIO);
                 
                 void SubmitSearchResultPin(
                                            const MyPinModel& pinModel,
@@ -38,8 +38,8 @@ namespace ExampleApp
                 
                 const std::string m_url;
                 const std::string m_authHeader;
-                Eegeo::Web::IWebLoadRequestFactory& m_webLoadRequestFactory;
-                Eegeo::Helpers::IFileIO& m_fileIO;
+                const std::shared_ptr<Eegeo::Web::IWebLoadRequestFactory>& m_webLoadRequestFactory;
+                const std::shared_ptr<Eegeo::Helpers::IFileIO>& m_fileIO;
                 Eegeo::Web::TWebLoadRequestCompletionCallback<MyPinsWebService> m_webRequestCompleteCallback;
             };
         }

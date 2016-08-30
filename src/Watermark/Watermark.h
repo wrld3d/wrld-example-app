@@ -8,7 +8,6 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class IWatermarkModule;
             class WatermarkInteriorStateChangedObserver;
             class WatermarkModel;
         }

@@ -12,39 +12,39 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            AppInteriorCameraWrapper::AppInteriorCameraWrapper(Eegeo::Resources::Interiors::InteriorsCameraController& interiorCameraController)
+            AppInteriorCameraWrapper::AppInteriorCameraWrapper(const std::shared_ptr<Eegeo::Resources::Interiors::InteriorsCameraController>& interiorCameraController)
             : m_interiorCameraController(interiorCameraController)
             {
             }
             
             void AppInteriorCameraWrapper::Update(float dt)
             {
-                m_interiorCameraController.Update(dt);
+                m_interiorCameraController->Update(dt);
             }
             
             const Eegeo::Camera::CameraState AppInteriorCameraWrapper::GetCameraState() const
             {
-                return m_interiorCameraController.GetCameraState();
+                return m_interiorCameraController->GetCameraState();
             }
             
             const Eegeo::Camera::RenderCamera AppInteriorCameraWrapper::GetRenderCamera() const
             {
-                return m_interiorCameraController.GetRenderCamera();
+                return m_interiorCameraController->GetRenderCamera();
             }
             
             Eegeo::dv3 AppInteriorCameraWrapper::ComputeNonFlattenedCameraPosition() const
             {
-                return m_interiorCameraController.ComputeNonFlattenedCameraPosition();
+                return m_interiorCameraController->ComputeNonFlattenedCameraPosition();
             }
             
             Eegeo::ITouchController& AppInteriorCameraWrapper::GetTouchController() const
             {
-                return m_interiorCameraController.GetTouchController();
+                return m_interiorCameraController->GetTouchController();
             }
             
             float AppInteriorCameraWrapper::GetHeadingDegrees() const
             {
-                return m_interiorCameraController.GetHeadingDegrees();
+                return m_interiorCameraController->GetHeadingDegrees();
             }
         }
     }

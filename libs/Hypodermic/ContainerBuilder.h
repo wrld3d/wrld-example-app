@@ -14,7 +14,12 @@
 
 namespace Hypodermic
 {
-
+    template <class T>
+    const std::shared_ptr<T> makeExternallyOwned(T& instance)
+    {
+        return std::shared_ptr< T >(std::shared_ptr< T >{}, &instance);
+    }
+    
     class ContainerBuilder
     {
     public:
@@ -42,6 +47,19 @@ namespace Hypodermic
             typedef typename RegistrationDescriptorBuilder::ForProvidedInstance< T >::Type RegistrationDescriptorType;
 
             return finalizeRegistration(std::make_shared< RegistrationDescriptorType >(instance));
+        }
+        
+        /// <summary>
+        /// Register an externally owned instance of type T
+        /// </summary>
+        /// <param name="instance">The externally owned instance to register inside ContainerBuilder</param>
+        /// <returns>A reference on a new ProvidedInstanceRegistrationDescriptor</returns>
+        template <class T>
+        typename RegistrationDescriptorBuilder::ForProvidedInstance< T >::Type& registerExternallyOwnedInstance(T& instance)
+        {
+            typedef typename RegistrationDescriptorBuilder::ForProvidedInstance< T >::Type RegistrationDescriptorType;
+
+            return finalizeRegistration(std::make_shared< RegistrationDescriptorType >(makeExternallyOwned(instance)));
         }
 
         /// <summary>

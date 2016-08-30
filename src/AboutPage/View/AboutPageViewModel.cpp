@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "AboutPageViewModel.h"
+#include "IIdentity.h"
 
 #include <sstream>
 
@@ -11,26 +12,24 @@ namespace ExampleApp
         namespace View
         {
             AboutPageViewModel::AboutPageViewModel(
-                Eegeo::Helpers::TIdentity identity,
-                Reaction::View::IReactionControllerModel& reactionControllerModel,
+                const std::shared_ptr<Eegeo::Helpers::IIdentityProvider>& identity,
+                const std::shared_ptr<Reaction::View::IReactionControllerModel>& reactionControllerModel,
                 const std::string& buildVersion,
                 const std::string& platformVersion,
                 const std::string& platformHash,
                 const std::string& platformArchitecture,
                 const std::string& aboutText)
-                : m_openable(identity, reactionControllerModel)
-                , m_buildVersion(buildVersion)
-                , m_platformVersion(platformVersion)
-                , m_platformHash(platformHash)
-                , m_platformArchitecture(platformArchitecture)
-                , m_aboutText(aboutText)
+            : m_openable(identity, reactionControllerModel)
+            , m_buildVersion(buildVersion)
+            , m_platformVersion(platformVersion)
+            , m_platformHash(platformHash)
+            , m_platformArchitecture(platformArchitecture)
+            , m_aboutText(aboutText)
             {
-
             }
 
             AboutPageViewModel::~AboutPageViewModel()
             {
-
             }
 
             bool AboutPageViewModel::TryAcquireReactorControl()

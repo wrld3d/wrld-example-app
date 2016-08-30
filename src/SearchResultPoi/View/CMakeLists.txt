@@ -2,7 +2,6 @@ set(headers ${headers} ../src/SearchResultPoi/View
 )
 set(currsources
   ../src/SearchResultPoi/View/CMakeLists.txt
-  ../src/SearchResultPoi/View/ISearchResultPoiModule.h
   ../src/SearchResultPoi/View/ISearchResultPoiView.h
   ../src/SearchResultPoi/View/ISearchResultPoiViewModel.h
   ../src/SearchResultPoi/View/SearchResultPoiController.cpp

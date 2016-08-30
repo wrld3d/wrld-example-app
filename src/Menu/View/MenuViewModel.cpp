@@ -10,7 +10,7 @@ namespace ExampleApp
         {
             MenuViewModel::MenuViewModel(bool isInitiallyOnScreen,
                                          Eegeo::Helpers::TIdentity identity,
-                                         Reaction::View::IReactionControllerModel& reactionControllerModel)
+                                         const std::shared_ptr<Reaction::View::IReactionControllerModel>& reactionControllerModel)
             : m_identity(identity)
             , m_openViewModel(identity, reactionControllerModel)
             , m_screenViewModel(identity)

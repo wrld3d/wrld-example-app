@@ -6,6 +6,7 @@
 #include "Menu.h"
 #include "ICallback.h"
 #include "BidirectionalBus.h"
+#include "Types.h"
 
 namespace ExampleApp
 {
@@ -13,23 +14,23 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class MyPinsRepositoryObserver
+            class MyPinsRepositoryObserver : private Eegeo::NonCopyable
             {
             public:
                 typedef MyPinModel* TModel;
 
-                MyPinsRepositoryObserver(MyPinsRepository& myPinsRepository,
-                                         IMyPinBoundObjectRepository& myPinBoundObjectRepository,
-                                         MyPinsFileIO& myPinsFileIO,
-                                         ExampleAppMessaging::TMessageBus& messageBus);
+                MyPinsRepositoryObserver(const std::shared_ptr<MyPinsRepository>& myPinsRepository,
+                                         const std::shared_ptr<IMyPinBoundObjectRepository>& myPinBoundObjectRepository,
+                                         const std::shared_ptr<MyPinsFileIO>& myPinsFileIO,
+                                         const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
 
                 ~MyPinsRepositoryObserver();
 
             private:
-                MyPinsRepository& m_myPinsRepository;
-                IMyPinBoundObjectRepository& m_myPinBoundObjectRepository;
-                MyPinsFileIO& m_myPinsFileIO;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<MyPinsRepository> m_myPinsRepository;
+                const std::shared_ptr<IMyPinBoundObjectRepository> m_myPinBoundObjectRepository;
+                const std::shared_ptr<MyPinsFileIO> m_myPinsFileIO;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
 
                 Eegeo::Helpers::TCallback1<MyPinsRepositoryObserver, MyPinModel*> m_pinAddedCallback;
                 Eegeo::Helpers::TCallback1<MyPinsRepositoryObserver, MyPinModel*> m_pinRemovedCallback;

@@ -22,8 +22,8 @@ namespace ExampleApp
             class SurveyObserver : private Eegeo::NonCopyable
             {
             private:
-                ExampleAppMessaging::TMessageBus& m_messageBus;
-                PersistentSettings::IPersistentSettingsModel& m_persistentSettingsModel;
+                std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
+                std::shared_ptr<PersistentSettings::IPersistentSettingsModel> m_persistentSettingsModel;
                 
                 Eegeo::Helpers::TCallback1<SurveyObserver, const SearchMenu::SearchMenuPerformedSearchMessage&> m_onSearchPerformedMessage;
                 Eegeo::Helpers::TCallback1<SurveyObserver, const CategorySearch::CategorySearchSelectedMessage&> m_onCategorySearchPerformedMessage;
@@ -51,8 +51,8 @@ namespace ExampleApp
                 bool PinCreationRequirementsMet() const;
                 
             public:
-                SurveyObserver(ExampleAppMessaging::TMessageBus& messageBus,
-                               PersistentSettings::IPersistentSettingsModel& persistentSettingsModel);
+                SurveyObserver(const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                               const std::shared_ptr<PersistentSettings::IPersistentSettingsModel>& persistentSettingsModel);
                 
                 ~SurveyObserver();
                 

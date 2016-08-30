@@ -8,7 +8,7 @@ AppRunner::AppRunner
 (
     ViewController& viewController,
     UIView* pView,
-    const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
+    ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
     ExampleApp::Metrics::iOSFlurryMetricsService& metricsService
 )
     : m_viewController(viewController)
@@ -102,13 +102,10 @@ void AppRunner::NotifyViewLayoutChanged()
     {
         m_displayService.UpdateDisplayDimensions();
 
-        const Eegeo::Rendering::ScreenProperties& screenProperties =
-            Eegeo::Rendering::ScreenProperties::Make(
-                m_displayService.GetDisplayWidth(),
-                m_displayService.GetDisplayHeight(),
-                m_displayService.GetPixelScale(),
-                m_displayService.GetDisplayDpi());
-
+        auto screenProperties = std::make_shared<Eegeo::Rendering::ScreenProperties>(m_displayService.GetDisplayWidth(),
+                                                                                     m_displayService.GetDisplayHeight(),
+                                                                                     m_displayService.GetPixelScale(),
+                                                                                     m_displayService.GetDisplayDpi());
         m_pAppHost->NotifyScreenPropertiesChanged(screenProperties);
     }
 }

@@ -25,18 +25,18 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            CameraTransitionController::CameraTransitionController(Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
-                                                                   Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
-                                                                   Eegeo::Location::NavigationService& navigationService,
-                                                                   ExampleApp::InteriorsNavigation::SdkModel::IInteriorsNavigationService& interiorsNavigationService,
-                                                                   Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
-                                                                   ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
-                                                                   ExampleApp::AppCamera::SdkModel::IAppCameraController& appCameraController,
-                                                                   Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                                   Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                                                   const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
-                                                                   InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
-                                                                   ExampleApp::ExampleAppMessaging::TMessageBus& messageBus)
+            CameraTransitionController::CameraTransitionController(const std::shared_ptr<Eegeo::Camera::GlobeCamera::GpsGlobeCameraController>& cameraController,
+                                                                   const std::shared_ptr<Eegeo::Resources::Interiors::InteriorsCameraController>& interiorsCameraController,
+                                                                   const std::shared_ptr<Eegeo::Location::NavigationService>& navigationService,
+                                                                   const std::shared_ptr<ExampleApp::InteriorsNavigation::SdkModel::IInteriorsNavigationService>& interiorsNavigationService,
+                                                                   const std::shared_ptr<Eegeo::Resources::Terrain::Heights::TerrainHeightProvider>& terrainHeightProvider,
+                                                                   const std::shared_ptr<ExampleApp::AppModes::SdkModel::IAppModeModel>& appModeModel,
+                                                                   const std::shared_ptr<ExampleApp::AppCamera::SdkModel::IAppCameraController>& appCameraController,
+                                                                   const std::shared_ptr<Eegeo::Resources::Interiors::InteriorSelectionModel>& interiorSelectionModel,
+                                                                   const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel,
+                                                                   const std::shared_ptr<Eegeo::Resources::Interiors::InteriorTransitionModel>& interiorTransitionModel,
+                                                                   const std::shared_ptr<InteriorsExplorer::SdkModel::InteriorsExplorerModel>& interiorsExplorerModel,
+                                                                   const std::shared_ptr<ExampleApp::ExampleAppMessaging::TMessageBus>& messageBus)
             : m_cameraController(cameraController)
             , m_interiorsCameraController(interiorsCameraController)
             , m_navigationService(navigationService)
@@ -58,7 +58,7 @@ namespace ExampleApp
                                                                float distanceFromInterest,
                                                                bool jumpIfFar)
             {
-                float bearingRadians = Eegeo::Math::Deg2Rad(m_appCameraController.GetHeadingDegrees());
+                float bearingRadians = Eegeo::Math::Deg2Rad(m_appCameraController->GetHeadingDegrees());
 
                 StartTransitionTo(newInterestPoint, distanceFromInterest, bearingRadians, m_defaultInteriorId, 0, jumpIfFar);
             }
@@ -68,8 +68,8 @@ namespace ExampleApp
                                                                int targetFloorIndex,
                                                                bool jumpIfFar)
             {
-                float bearingRadians = Eegeo::Math::Deg2Rad(m_appCameraController.GetHeadingDegrees());
-                StartTransitionTo(m_interiorsCameraController.GetInterestLocation(),distanceFromInterest,bearingRadians,interiorId,targetFloorIndex,jumpIfFar);
+                float bearingRadians = Eegeo::Math::Deg2Rad(m_appCameraController->GetHeadingDegrees());
+                StartTransitionTo(m_interiorsCameraController->GetInterestLocation(),distanceFromInterest,bearingRadians,interiorId,targetFloorIndex,jumpIfFar);
                 
             }
 
@@ -88,7 +88,7 @@ namespace ExampleApp
                                                                int targetFloorIndex,
                                                                bool jumpIfFar)
             {
-                float bearingRadians = Eegeo::Math::Deg2Rad(m_appCameraController.GetHeadingDegrees());
+                float bearingRadians = Eegeo::Math::Deg2Rad(m_appCameraController->GetHeadingDegrees());
                 
                 StartTransitionTo(newInterestPoint, distanceFromInterest, bearingRadians, interiorId, targetFloorIndex, jumpIfFar);
             }
@@ -105,14 +105,14 @@ namespace ExampleApp
                     StopCurrentTransition();
                 }
                 
-                m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsModeOff);
-                m_interiorsNavigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsModeOff);
+                m_navigationService->SetGpsMode(Eegeo::Location::NavigationService::GpsModeOff);
+                m_interiorsNavigationService->SetGpsMode(Eegeo::Location::NavigationService::GpsModeOff);
                 
-                if(m_appModeModel.GetAppMode() == ExampleApp::AppModes::SdkModel::InteriorMode)
+                if(m_appModeModel->GetAppMode() == ExampleApp::AppModes::SdkModel::InteriorMode)
                 {
                     const double exitInteriorDistanceSquared = 100*100;
-                    double interestDifferenceSquared = (m_interiorsCameraController.GetInterestLocation() - newInterestPoint).LengthSq();
-                    if(m_interiorSelectionModel.GetSelectedInteriorId() == interiorId)
+                    double interestDifferenceSquared = (m_interiorsCameraController->GetInterestLocation() - newInterestPoint).LengthSq();
+                    if(m_interiorSelectionModel->GetSelectedInteriorId() == interiorId)
                     {
                         Eegeo_ASSERT(interiorId != Eegeo::Resources::Interiors::InteriorId::NullId(), "Invalid state. Have selected null Interior while in Interior mode");
                         EnqueueTransitionToInteriorStage(newInterestPoint, distanceFromInterest, interiorId, targetFloorIndex);
@@ -131,7 +131,7 @@ namespace ExampleApp
                     }
                 }
                 
-                const bool transitioningToNewInterior = interiorId != m_interiorSelectionModel.GetSelectedInteriorId() && interiorId != Eegeo::Resources::Interiors::InteriorId::NullId();
+                const bool transitioningToNewInterior = interiorId != m_interiorSelectionModel->GetSelectedInteriorId() && interiorId != Eegeo::Resources::Interiors::InteriorId::NullId();
                 
                 if(!transitioningToNewInterior)
                 {
@@ -178,7 +178,7 @@ namespace ExampleApp
 
                 ICameraTransitionStage* pCurrentStage = m_transitionStages.front();
                 pCurrentStage->Update(dt);
-                if(pCurrentStage->StageIsComplete() && !m_appCameraController.IsTransitionInFlight())
+                if(pCurrentStage->StageIsComplete() && !m_appCameraController->IsTransitionInFlight())
                 {
                     pCurrentStage->End();
                     Eegeo_DELETE pCurrentStage;
@@ -211,7 +211,7 @@ namespace ExampleApp
             
             void CameraTransitionController::EnqueueExitInteriorStage()
             {
-                ICameraTransitionStage* pStage = Eegeo_NEW(ExitCurrentInteriorStage)(m_interiorsExplorerModel, m_appModeModel);
+                ICameraTransitionStage* pStage = Eegeo_NEW(ExitCurrentInteriorStage)(*m_interiorsExplorerModel, *m_appModeModel);
                 m_transitionStages.push(pStage);
             }
             
@@ -220,8 +220,8 @@ namespace ExampleApp
                                                                            float newHeadingRadians,
                                                                            bool jumpIfFar)
             {
-                ICameraTransitionStage* pStage = Eegeo_NEW(TransitionToWorldPointStage)(m_cameraController,
-                                                                                        m_terrainHeightProvider,
+                ICameraTransitionStage* pStage = Eegeo_NEW(TransitionToWorldPointStage)(*m_cameraController,
+                                                                                        *m_terrainHeightProvider,
                                                                                         newInterestPoint,
                                                                                         distanceFromInterest,
                                                                                         newHeadingRadians,
@@ -234,10 +234,10 @@ namespace ExampleApp
                                                                               const Eegeo::Resources::Interiors::InteriorId &interiorId,
                                                                               int targetFloorIndex)
             {
-                ICameraTransitionStage* pStage = Eegeo_NEW(TransitionToInteriorStage)(m_interiorInteractionModel,
-                                                                                      m_interiorSelectionModel,
-                                                                                      m_interiorTransitionModel,
-                                                                                      m_interiorsCameraController,
+                ICameraTransitionStage* pStage = Eegeo_NEW(TransitionToInteriorStage)(*m_interiorInteractionModel,
+                                                                                      *m_interiorSelectionModel,
+                                                                                      *m_interiorTransitionModel,
+                                                                                      *m_interiorsCameraController,
                                                                                       newInterestPoint,
                                                                                       newDistanceToInterest,
                                                                                       interiorId,
@@ -253,11 +253,11 @@ namespace ExampleApp
                                                                                    bool jumpIfFar)
             {
                 ICameraTransitionStage* pStage = Eegeo_NEW(TransitionToInteriorPointStage)(
-                                                                                           m_interiorInteractionModel,
-                                                                                           m_interiorSelectionModel,
-                                                                                           m_interiorTransitionModel,
-                                                                                           m_interiorsExplorerModel,
-                                                                                           m_interiorsCameraController,
+                                                                                           *m_interiorInteractionModel,
+                                                                                           *m_interiorSelectionModel,
+                                                                                           *m_interiorTransitionModel,
+                                                                                           *m_interiorsExplorerModel,
+                                                                                           *m_interiorsCameraController,
                                                                                            newInterestPoint,
                                                                                            newDistanceFromInterest,
                                                                                            interiorId,

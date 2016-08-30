@@ -15,7 +15,7 @@ namespace ExampleApp
 
         namespace View
         {
-            ReactionControllerModel::ReactionControllerModel(const Menu::View::IMenuIgnoredReactionModel& menuIgnoredReaction)
+            ReactionControllerModel::ReactionControllerModel(const std::shared_ptr<Menu::View::IReactorIgnoredReactionModel>& menuIgnoredReaction)
                 : m_currentExpandedOpenableIdentity(Unacquired)
                 , m_reactorControlIdentity(Unacquired)
                 , m_menuIgnoredReaction(menuIgnoredReaction)
@@ -35,7 +35,7 @@ namespace ExampleApp
 
             void ReactionControllerModel::AcquireOpenableOpen(Eegeo::Helpers::TIdentity identity)
             {
-                if (m_menuIgnoredReaction.IsIgnored(identity))
+                if (m_menuIgnoredReaction->IsIgnored(identity))
                 {
                     return;
                 }
@@ -47,7 +47,7 @@ namespace ExampleApp
 
             void ReactionControllerModel::ReleaseOpenableOpen(Eegeo::Helpers::TIdentity identity)
             {
-                if (m_menuIgnoredReaction.IsIgnored(identity))
+                if (m_menuIgnoredReaction->IsIgnored(identity))
                 {
                     return;
                 }

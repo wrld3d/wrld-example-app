@@ -8,9 +8,9 @@ namespace ExampleApp
     {
         namespace View
         {
-            CompassViewModel::CompassViewModel(Eegeo::Helpers::TIdentity identity,
+            CompassViewModel::CompassViewModel(const std::shared_ptr<Eegeo::Helpers::IIdentityProvider>& identity,
                                                bool initiallyOnScreen)
-                : m_screenControl(initiallyOnScreen, identity)
+                : m_screenControl(initiallyOnScreen, identity->GetNextIdentity())
             {
 
             }

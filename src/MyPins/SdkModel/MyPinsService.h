@@ -18,16 +18,16 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class MyPinsService : public IMyPinsService
+            class MyPinsService : public IMyPinsService, private Eegeo::NonCopyable
             {
             public:
-                MyPinsService(IMyPinsRepository& myPinsRepository,
-                              MyPinsFileIO& myPinsFileIO,
-                              IMyPinSelectionHandlerFactory& myPinSelectionHandlerFactory,
-                              IMyPinVisibilityStateChangedHandlerFactory& myPinVisibilityStateChangedHandlerFactory,
-                              IMyPinBoundObjectFactory& myPinBoundObjectFactory,
-                              IMyPinBoundObjectRepository& myPinBoundObjectRepository,
-                              WorldPins::SdkModel::IWorldPinsService& worldPinsService);
+                MyPinsService(const std::shared_ptr<IMyPinsRepository>& myPinsRepository,
+                              const std::shared_ptr<MyPinsFileIO>& myPinsFileIO,
+                              const std::shared_ptr<IMyPinSelectionHandlerFactory>& myPinSelectionHandlerFactory,
+                              const std::shared_ptr<IMyPinVisibilityStateChangedHandlerFactory>& myPinVisibilityStateChangedHandlerFactory,
+                              const std::shared_ptr<IMyPinBoundObjectFactory>& myPinBoundObjectFactory,
+                              const std::shared_ptr<IMyPinBoundObjectRepository>& myPinBoundObjectRepository,
+                              const std::shared_ptr<WorldPins::SdkModel::IWorldPinsService>& worldPinsService);
                 
                 void LoadAllPinsFromDisk();
 
@@ -57,13 +57,13 @@ namespace ExampleApp
                 void SaveAllPinsToDisk();
                 
             private:
-                IMyPinsRepository& m_myPinsRepository;
-                MyPinsFileIO& m_myPinsFileIO;
-                IMyPinSelectionHandlerFactory& m_myPinSelectionHandlerFactory;
-                IMyPinVisibilityStateChangedHandlerFactory& m_myPinVisibilityStateChangedHandlerFactory;
-                IMyPinBoundObjectFactory& m_myPinBoundObjectFactory;
-                IMyPinBoundObjectRepository& m_myPinBoundObjectRepository;
-                WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
+                const std::shared_ptr<IMyPinsRepository> m_myPinsRepository;
+                const std::shared_ptr<MyPinsFileIO> m_myPinsFileIO;
+                const std::shared_ptr<IMyPinSelectionHandlerFactory> m_myPinSelectionHandlerFactory;
+                const std::shared_ptr<IMyPinVisibilityStateChangedHandlerFactory> m_myPinVisibilityStateChangedHandlerFactory;
+                const std::shared_ptr<IMyPinBoundObjectFactory> m_myPinBoundObjectFactory;
+                const std::shared_ptr<IMyPinBoundObjectRepository> m_myPinBoundObjectRepository;
+                const std::shared_ptr<WorldPins::SdkModel::IWorldPinsService> m_worldPinsService;
 
                 MyPinModel::TPinIdType m_lastIdUsed;
 

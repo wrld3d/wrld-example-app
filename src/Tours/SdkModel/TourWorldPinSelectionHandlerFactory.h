@@ -17,12 +17,12 @@ namespace ExampleApp
         {
             class TourWorldPinSelectionHandlerFactory : private Eegeo::NonCopyable
             {
-                ITourService& m_tourService;
-                AppModes::SdkModel::IAppModeModel& m_appModeModel;
+                const std::shared_ptr<ITourService> m_tourService;
+                const std::shared_ptr<AppModes::SdkModel::IAppModeModel> m_appModeModel;
                 
             public:
-                TourWorldPinSelectionHandlerFactory(ITourService& tourService,
-                                                    AppModes::SdkModel::IAppModeModel& appModeModel);
+                TourWorldPinSelectionHandlerFactory(const std::shared_ptr<ITourService>& tourService,
+                                                    const std::shared_ptr<AppModes::SdkModel::IAppModeModel>& appModeModel);
                 
                 ExampleApp::WorldPins::SdkModel::IWorldPinSelectionHandler* CreateSelectionHandler(TourModel& model);
             };

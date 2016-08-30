@@ -10,21 +10,21 @@ namespace ExampleApp
         namespace View
         {
             InteriorsExplorerViewModel::InteriorsExplorerViewModel(bool initiallyOnScreen,
-                                                                   Eegeo::Helpers::TIdentity identity,
-                                                                   ExampleAppMessaging::TMessageBus& messageBus)
+                                                                   const std::shared_ptr<Eegeo::Helpers::IIdentityProvider>& identity,
+                                                                   const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
             : m_onScreenState(initiallyOnScreen ? 1.f : 0.f)
             , m_addedToScreen(initiallyOnScreen)
-            , m_identity(identity)
+            , m_identity(identity->GetNextIdentity())
             , m_messageBus(messageBus)
             , m_canAddToScreen(false)
             , m_appModeChangedCallback(this, &InteriorsExplorerViewModel::OnAppModeChanged)
             {
-                m_messageBus.SubscribeUi(m_appModeChangedCallback);
+                m_messageBus->SubscribeUi(m_appModeChangedCallback);
             }
             
             InteriorsExplorerViewModel::~InteriorsExplorerViewModel()
             {
-                m_messageBus.UnsubscribeUi(m_appModeChangedCallback);
+                m_messageBus->UnsubscribeUi(m_appModeChangedCallback);
             }
             
             Eegeo::Helpers::TIdentity InteriorsExplorerViewModel::GetIdentity() const

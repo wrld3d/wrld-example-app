@@ -16,14 +16,14 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            SearchRefreshService::SearchRefreshService(ISearchService& searchService,
-                    ISearchQueryPerformer& searchQueryPerformer,
-                    CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
-                    Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                    float minimumSecondsBetweenUpdates,
-                    float minimumInterestLateralDeltaAt1km,
-                    float minimumInteriorInterestLateralDelta,
-                    float maximumInterestLateralSpeedAt1km)
+            SearchRefreshService::SearchRefreshService(const std::shared_ptr<ISearchService>& searchService,
+                                                       const std::shared_ptr<ISearchQueryPerformer>& searchQueryPerformer,
+                                                       const std::shared_ptr<CameraTransitions::SdkModel::ICameraTransitionController>& cameraTransitionsController,
+                                                       const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel,
+                                                       float minimumSecondsBetweenUpdates,
+                                                       float minimumInterestLateralDeltaAt1km,
+                                                       float minimumInteriorInterestLateralDelta,
+                                                       float maximumInterestLateralSpeedAt1km)
                 : m_minimumSecondsBetweenUpdates(minimumSecondsBetweenUpdates)
                 , m_minimumInterestLateralDeltaAt1km(minimumInterestLateralDeltaAt1km)
                 , m_minimumInteriorInterestLateralDelta(minimumInteriorInterestLateralDelta)
@@ -48,18 +48,18 @@ namespace ExampleApp
                 , m_previousQueryInteriorId()
                 , m_interiorHasChanged(false)
             {
-                m_searchService.InsertOnPerformedQueryCallback(m_searchResultQueryIssuedCallback);
-                m_searchService.InsertOnReceivedQueryResultsCallback(m_searchResultResponseReceivedCallback);
-                m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(m_searchQueryResultsClearedCallback);
-                m_interiorInteractionModel.RegisterModelChangedCallback(m_interiorChangedCallback);
+                m_searchService->InsertOnPerformedQueryCallback(m_searchResultQueryIssuedCallback);
+                m_searchService->InsertOnReceivedQueryResultsCallback(m_searchResultResponseReceivedCallback);
+                m_searchQueryPerformer->InsertOnSearchResultsClearedCallback(m_searchQueryResultsClearedCallback);
+                m_interiorInteractionModel->RegisterModelChangedCallback(m_interiorChangedCallback);
             }
 
             SearchRefreshService::~SearchRefreshService()
             {
-                m_interiorInteractionModel.UnregisterModelChangedCallback(m_interiorChangedCallback);
-                m_searchQueryPerformer.RemoveOnSearchResultsClearedCallback(m_searchQueryResultsClearedCallback);
-                m_searchService.RemoveOnReceivedQueryResultsCallback(m_searchResultResponseReceivedCallback);
-                m_searchService.RemoveOnPerformedQueryCallback(m_searchResultQueryIssuedCallback);
+                m_interiorInteractionModel->UnregisterModelChangedCallback(m_interiorChangedCallback);
+                m_searchQueryPerformer->RemoveOnSearchResultsClearedCallback(m_searchQueryResultsClearedCallback);
+                m_searchService->RemoveOnReceivedQueryResultsCallback(m_searchResultResponseReceivedCallback);
+                m_searchService->RemoveOnPerformedQueryCallback(m_searchResultQueryIssuedCallback);
             }
 
             void SearchRefreshService::SetEnabled(bool enabled)
@@ -84,7 +84,7 @@ namespace ExampleApp
                     return false;
                 }
                 
-                if (m_cameraTransitionsController.IsTransitioning())
+                if (m_cameraTransitionsController->IsTransitioning())
                 {
                     return false;
                 }
@@ -94,15 +94,15 @@ namespace ExampleApp
                     return false;
                 }
 
-                bool hasChangedInteriorFloors = m_interiorInteractionModel.HasInteriorModel() &&
-                m_previousQueryFloorIndex != m_interiorInteractionModel.GetSelectedFloorIndex();
+                bool hasChangedInteriorFloors = m_interiorInteractionModel->HasInteriorModel() &&
+                m_previousQueryFloorIndex != m_interiorInteractionModel->GetSelectedFloorIndex();
                 if (hasChangedInteriorFloors)
                 {
                     if (m_interiorHasChanged)
                     {
                         m_interiorHasChanged = false;
 
-                        m_previousQueryFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
+                        m_previousQueryFloorIndex = m_interiorInteractionModel->GetSelectedFloorIndex();
 
                         return false;
                     }
@@ -121,7 +121,7 @@ namespace ExampleApp
                 
                 const double angularInterestDeltaFromQuery = (interestPointEcef - m_previousQueryLocationEcef).Length() / viewpointDistance;
                 const double multiplier = 0.001;
-                const double minimumInterestLateralDeltaAngle = m_interiorInteractionModel.HasInteriorModel() ? m_minimumInteriorInterestLateralDelta * m_minimumInteriorInterestLateralDelta : m_minimumInterestLateralDeltaAt1km * multiplier;
+                const double minimumInterestLateralDeltaAngle = m_interiorInteractionModel->HasInteriorModel() ? m_minimumInteriorInterestLateralDelta * m_minimumInteriorInterestLateralDelta : m_minimumInterestLateralDeltaAt1km * multiplier;
 
                 const bool belowLateralThreshold = (angularInterestDeltaFromQuery < minimumInterestLateralDeltaAngle);
                 if (belowLateralThreshold)
@@ -155,13 +155,13 @@ namespace ExampleApp
                 if (shouldRefresh)
                 {
                     const Eegeo::Space::LatLongAltitude& currentLocation = Eegeo::Space::LatLongAltitude::FromECEF(interestPointEcef);
-                    const SearchQuery& previousQuery = m_searchQueryPerformer.GetPreviousSearchQuery();
-                    m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), previousQuery.ShouldTryInteriorSearch(), currentLocation);
+                    const SearchQuery& previousQuery = m_searchQueryPerformer->GetPreviousSearchQuery();
+                    m_searchQueryPerformer->PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), previousQuery.ShouldTryInteriorSearch(), currentLocation);
 
-                    if (m_interiorInteractionModel.HasInteriorModel())
+                    if (m_interiorInteractionModel->HasInteriorModel())
                     {
-                        m_previousQueryInteriorId = m_interiorInteractionModel.GetInteriorModel()->GetId();
-                        m_previousQueryFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
+                        m_previousQueryInteriorId = m_interiorInteractionModel->GetInteriorModel()->GetId();
+                        m_previousQueryFloorIndex = m_interiorInteractionModel->GetSelectedFloorIndex();
                     }
 
                     m_previousQueryLocationEcef = interestPointEcef;
@@ -176,11 +176,11 @@ namespace ExampleApp
             {
                 if (!m_searchResultsCleared && m_searchResultsExist)
                 {
-                    const SearchQuery& previousQuery = m_searchQueryPerformer.GetPreviousSearchQuery();
+                    const SearchQuery& previousQuery = m_searchQueryPerformer->GetPreviousSearchQuery();
                     
                     if (previousQuery.IsCategory())
                     {
-                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), previousQuery.ShouldTryInteriorSearch());
+                        m_searchQueryPerformer->PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), previousQuery.ShouldTryInteriorSearch());
                         m_secondsSincePreviousRefresh = 0.f;
 
                         m_interiorHasChanged = true;
@@ -192,7 +192,7 @@ namespace ExampleApp
             {
                 ++ m_queriesPending;
                 m_searchResultsCleared = false;
-                m_previousQueryFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
+                m_previousQueryFloorIndex = m_interiorInteractionModel->GetSelectedFloorIndex();
             }
 
             void SearchRefreshService::HandleSearchResultsResponseReceived(const SearchQuery& query,

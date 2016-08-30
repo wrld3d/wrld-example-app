@@ -12,36 +12,34 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                CombinedSearchServiceModule::CombinedSearchServiceModule(std::map<std::string, Search::SdkModel::ISearchServiceModule*> searchServiceModules,
-                                                                         Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel)
-                : m_pSearchService(NULL)
+/*                CombinedSearchServiceModule::CombinedSearchServiceModule(std::map<std::string, std::shared_ptr<Search::SdkModel::ISearchServiceModule>>& searchServiceModules,
+                                                                         const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel)
                 {
-                    std::map<std::string,Search::SdkModel::ISearchService*> searchServices;
+                    std::map<std::string, std::shared_ptr<Search::SdkModel::ISearchService>> searchServices;
                     
-                    for(std::map<std::string, Search::SdkModel::ISearchServiceModule*>::const_iterator it = searchServiceModules.begin(); it != searchServiceModules.end(); ++it)
+                    for(std::map<std::string, std::shared_ptr<Search::SdkModel::ISearchServiceModule>>::const_iterator it = searchServiceModules.begin(); it != searchServiceModules.end(); ++it)
                     {
-                        searchServices[(*it).first] = &(*it).second->GetSearchService();
+                        searchServices[(*it).first] = (*it).second->GetSearchService();
                         std::vector<CategorySearch::View::CategorySearchModel> categorySearchModels = (*it).second->GetCategorySearchModels();
                         m_categorySearchModels.insert(m_categorySearchModels.end(), categorySearchModels.begin(), categorySearchModels.end());
                     }
                     
-                    m_pSearchService = Eegeo_NEW(CombinedSearchService)(searchServices, interiorInteractionModel);
+                    m_searchService = std::make_shared<CombinedSearchService>(searchServices, interiorInteractionModel);
                 }
                 
                 CombinedSearchServiceModule::~CombinedSearchServiceModule()
                 {
-                    Eegeo_DELETE m_pSearchService;
                 }
                 
-                Search::SdkModel::ISearchService& CombinedSearchServiceModule::GetSearchService() const
+                const std::shared_ptr<Search::SdkModel::ISearchService> CombinedSearchServiceModule::GetSearchService() const
                 {
-                    return *m_pSearchService;
+                    return m_searchService;
                 }
                 
                 std::vector<CategorySearch::View::CategorySearchModel> CombinedSearchServiceModule::GetCategorySearchModels() const
                 {
                     return m_categorySearchModels;
-                }
+                } */
             }
         }
     }

@@ -16,17 +16,17 @@ namespace ExampleApp
         {
             class TourAddedObserver : private Eegeo::NonCopyable
             {
-                ITourRepository& m_tourRepository;
-                WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
-                TourWorldPinSelectionHandlerFactory& m_tourWorldPinSelectionHandlerFactory;
+                const std::shared_ptr<ITourRepository> m_tourRepository;
+                const std::shared_ptr<WorldPins::SdkModel::IWorldPinsService> m_worldPinsService;
+                const std::shared_ptr<TourWorldPinSelectionHandlerFactory> m_tourWorldPinSelectionHandlerFactory;
                 Eegeo::Helpers::TCallback1<TourAddedObserver, TourModel> m_binding;
                 
                 void HandleTourAdded(TourModel& tourModel);
                 
             public:
-                TourAddedObserver(ITourRepository& tourRepository,
-                                  WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                  TourWorldPinSelectionHandlerFactory& tourWorldPinSelectionHandlerFactory);
+                TourAddedObserver(const std::shared_ptr<ITourRepository>& tourRepository,
+                                  const std::shared_ptr<WorldPins::SdkModel::IWorldPinsService>& worldPinsService,
+                                  const std::shared_ptr<TourWorldPinSelectionHandlerFactory>& tourWorldPinSelectionHandlerFactory);
 
                 ~TourAddedObserver();
             };

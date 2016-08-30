@@ -8,7 +8,6 @@ set(currsources
   ../src/Options/CMakeLists.txt
   ../src/Options/CompletedCacheClearMessage.cpp
   ../src/Options/CompletedCacheClearMessage.h
-  ../src/Options/IOptionsModule.h
   ../src/Options/OptionsModule.cpp
   ../src/Options/OptionsModule.h
   ../src/Options/StreamOverWifiOnlyChangedMessage.cpp

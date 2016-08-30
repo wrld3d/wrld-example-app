@@ -11,8 +11,8 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            VisualMapService::VisualMapService(IVisualMapModel& visualMapModel,
-                                               IVisualMapStateHistory& visualMapStateHistory)
+            VisualMapService::VisualMapService(const std::shared_ptr<IVisualMapModel>& visualMapModel,
+                                               const std::shared_ptr<IVisualMapStateHistory>& visualMapStateHistory)
             : m_visualMapModel(visualMapModel)
             , m_visualMapStateHistory(visualMapStateHistory)
             {
@@ -22,7 +22,7 @@ namespace ExampleApp
             void VisualMapService::SetVisualMapState(const VisualMapState& visualMapState)
             {
                 const bool preservePreviousState = true;
-                m_visualMapModel.SetVisualMapState(visualMapState, preservePreviousState);
+                m_visualMapModel->SetVisualMapState(visualMapState, preservePreviousState);
             }
             
             void VisualMapService::SetVisualMapState(const std::string& theme, const std::string& state, bool isFlattened)
@@ -32,39 +32,39 @@ namespace ExampleApp
             
             void VisualMapService::SetVisualMapTheme(const std::string& theme)
             {
-                const VisualMapState& currentState = m_visualMapModel.GetVisualMapState();
+                const VisualMapState& currentState = m_visualMapModel->GetVisualMapState();
                 SetVisualMapState(theme, currentState.GetState(), currentState.IsFlattened());
             }
             
             void VisualMapService::SetVisualMapThemeState(const std::string& state)
             {
-                const VisualMapState& currentState = m_visualMapModel.GetVisualMapState();
+                const VisualMapState& currentState = m_visualMapModel->GetVisualMapState();
                 SetVisualMapState(currentState.GetTheme(), state, currentState.IsFlattened());
             }
             
             void VisualMapService::SetVisualMapFlattenedState(bool isFlattened)
             {
-                const VisualMapState& currentState = m_visualMapModel.GetVisualMapState();
+                const VisualMapState& currentState = m_visualMapModel->GetVisualMapState();
                 SetVisualMapState(currentState.GetTheme(), currentState.GetState(), isFlattened);
             }
             
             VisualMapState VisualMapService::GetCurrentVisualMapState() const
             {
-                return m_visualMapModel.GetVisualMapState();
+                return m_visualMapModel->GetVisualMapState();
             }
             
             void VisualMapService::StoreCurrentMapState()
             {
-                const VisualMapState& currentState = m_visualMapModel.GetVisualMapState();
-                m_visualMapStateHistory.Push(currentState);
+                const VisualMapState& currentState = m_visualMapModel->GetVisualMapState();
+                m_visualMapStateHistory->Push(currentState);
             }
             
             void VisualMapService::RestorePreviousMapState()
             {
-                const VisualMapState& previousState = m_visualMapStateHistory.Pop();
+                const VisualMapState& previousState = m_visualMapStateHistory->Pop();
                 
                 const bool preservePreviousState = false;
-                m_visualMapModel.SetVisualMapState(previousState, preservePreviousState);
+                m_visualMapModel->SetVisualMapState(previousState, preservePreviousState);
             }
         }
     }

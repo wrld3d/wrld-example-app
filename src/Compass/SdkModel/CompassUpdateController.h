@@ -22,20 +22,20 @@ namespace ExampleApp
             {
             public:
 
-                CompassUpdateController(ICompassModel& model,
-                                        Eegeo::Location::NavigationService& navigationService,
-                                        InteriorsNavigation::SdkModel::IInteriorsNavigationService& interiorsNavigationService,
-                                        ExampleAppMessaging::TMessageBus& messageBus,
-                                        AppModes::SdkModel::IAppModeModel& appModeModel);
+                CompassUpdateController(const std::shared_ptr<ICompassModel>& model,
+                                        const std::shared_ptr<Eegeo::Location::NavigationService>& navigationService,
+                                        const std::shared_ptr<InteriorsNavigation::SdkModel::IInteriorsNavigationService>& interiorsNavigationService,
+                                        const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                        const std::shared_ptr<AppModes::SdkModel::IAppModeModel>& appModeModel);
 
                 void Update(float deltaSeconds);
 
             private:
-                ICompassModel& m_model;
-                Eegeo::Location::NavigationService& m_navigationService;
-                InteriorsNavigation::SdkModel::IInteriorsNavigationService& m_interiorsNavigationService;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
-                AppModes::SdkModel::IAppModeModel& m_appModeModel;
+                const std::shared_ptr<ICompassModel> m_model;
+                const std::shared_ptr<Eegeo::Location::NavigationService> m_navigationService;
+                const std::shared_ptr<InteriorsNavigation::SdkModel::IInteriorsNavigationService> m_interiorsNavigationService;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
+                const std::shared_ptr<AppModes::SdkModel::IAppModeModel> m_appModeModel;
             };
         }
     }

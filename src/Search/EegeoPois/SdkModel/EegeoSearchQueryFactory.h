@@ -11,6 +11,7 @@
 #include "UrlHelpers.h"
 #include "Interiors.h"
 #include "IAppModeModel.h"
+#include "ApplicationConfiguration.h"
 #include <string>
 
 namespace ExampleApp
@@ -23,16 +24,15 @@ namespace ExampleApp
             {
                 class EegeoSearchQueryFactory : public IEegeoSearchQueryFactory, private Eegeo::NonCopyable
                 {
-                    Eegeo::Web::IWebLoadRequestFactory& m_webRequestFactory;
-                    Eegeo::Helpers::UrlHelpers::IUrlEncoder& m_urlEncoder;
-                    const Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
+                    std::shared_ptr<Eegeo::Web::IWebLoadRequestFactory> m_webRequestFactory;
+                    std::shared_ptr<Eegeo::Helpers::UrlHelpers::IUrlEncoder> m_urlEncoder;
+                    std::shared_ptr<const Eegeo::Resources::Interiors::InteriorInteractionModel> m_interiorInteractionModel;
                     const std::string m_serviceUrl;
                 public:
-                    EegeoSearchQueryFactory(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
-                                            Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
-                                            const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                            const std::string& serviceUrl,
-					    const std::string& apiKey);
+                    EegeoSearchQueryFactory(const std::shared_ptr<Eegeo::Web::IWebLoadRequestFactory>& webRequestFactory,
+                                            const std::shared_ptr<Eegeo::Helpers::UrlHelpers::IUrlEncoder>& urlEncoder,
+                                            const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel,
+                                            const std::shared_ptr<ExampleApp::ApplicationConfig::ApplicationConfiguration>& config);
                     
                     ~EegeoSearchQueryFactory();
                     

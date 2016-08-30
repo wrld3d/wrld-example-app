@@ -24,8 +24,8 @@ namespace ExampleApp
                 SearchResultPoiOpenableControl m_openable;
 
             public:
-                SearchResultPoiViewModel(Eegeo::Helpers::TIdentity identity,
-                                         Reaction::View::IReactionControllerModel& reactionControllerModel);
+                SearchResultPoiViewModel(const std::shared_ptr<Eegeo::Helpers::IIdentityProvider>& identity,
+                                         const std::shared_ptr<Reaction::View::IReactionControllerModel>& reactionControllerModel);
 
                 ~SearchResultPoiViewModel();
 

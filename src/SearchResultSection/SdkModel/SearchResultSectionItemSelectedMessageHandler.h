@@ -16,16 +16,16 @@ namespace ExampleApp
         {
             class SearchResultSectionItemSelectedMessageHandler : private Eegeo::NonCopyable
             {
-                CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionController;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<CameraTransitions::SdkModel::ICameraTransitionController> m_cameraTransitionController;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 Eegeo::Helpers::TCallback1<SearchResultSectionItemSelectedMessageHandler, const SearchResultSectionItemSelectedMessage&> m_handleSearchResultSectionItemSelectedMessageBinding;
 
                 void OnSearchResultSectionItemSelectedMessage(const SearchResultSectionItemSelectedMessage& message);
 
             public:
                 SearchResultSectionItemSelectedMessageHandler(
-                    CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
-                    ExampleAppMessaging::TMessageBus& messageBus);
+                                                              const std::shared_ptr<CameraTransitions::SdkModel::ICameraTransitionController>& cameraTransitionController,
+                                                              const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
 
                 ~SearchResultSectionItemSelectedMessageHandler();
             };

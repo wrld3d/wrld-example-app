@@ -2,15 +2,7 @@
 
 #pragma once
 
-#include "FlattenButton.h"
-#include "FlattenButtonModule.h"
-#include "IFlattenButtonModule.h"
-#include "IIdentity.h"
-#include "FlattenButtonViewModel.h"
-#include "FlattenButtonViewStateChangedObserver.h"
-#include "FlattenButtonModelStateChangedObserver.h"
-#include "BidirectionalBus.h"
-#include "MapMode.h"
+#include "Hypodermic/ContainerBuilder.h"
 
 namespace ExampleApp
 {
@@ -18,26 +10,14 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class FlattenButtonModule : public IFlattenButtonModule, private Eegeo::NonCopyable
+            class FlattenButtonModule
             {
-            private:
-                View::FlattenButtonViewModel* m_pViewModel;
-                IFlattenButtonModel* m_pModel;
-                FlattenButtonViewStateChangedObserver* m_pFlattenButtonViewStateChangedObserver;
-                FlattenButtonModelStateChangedObserver* m_pFlattenButtonModelStateChangedObserver;
-
             public:
-                FlattenButtonModule(MapMode::SdkModel::IMapModeModel & mapModeModel,
-                                    Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                    ExampleAppMessaging::TMessageBus& messageBus);
-
-                ~FlattenButtonModule();
-
-                IFlattenButtonModel& GetFlattenButtonModel() const;
-
-                View::IFlattenButtonViewModel& GetFlattenButtonViewModel() const;
-
-                ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel() const;
+                FlattenButtonModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder);
+                
+                void Register();
+            private:
+                const std::shared_ptr<Hypodermic::ContainerBuilder> m_builder;
             };
         }
     }

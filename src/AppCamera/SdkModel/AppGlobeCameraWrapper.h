@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "GlobeCamera.h"
 #include "IAppCamera.h"
+#include <memory>
 
 namespace ExampleApp
 {
@@ -16,7 +17,7 @@ namespace ExampleApp
             {
             public:
                 
-                AppGlobeCameraWrapper(Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& gpsGlobeCameraController);
+                AppGlobeCameraWrapper(const std::shared_ptr<Eegeo::Camera::GlobeCamera::GpsGlobeCameraController>& gpsGlobeCameraController);
                 
                 void Update(float dt);
                 
@@ -28,13 +29,13 @@ namespace ExampleApp
                 
                 Eegeo::ITouchController& GetTouchController() const;
                 
-                Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& GetGlobeCameraController() const { return m_gpsGlobeCameraController; }
+                Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& GetGlobeCameraController() const { return *m_gpsGlobeCameraController; }
                 
                 float GetHeadingDegrees() const;
                 
             private:
                 
-                Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_gpsGlobeCameraController;
+                const std::shared_ptr<Eegeo::Camera::GlobeCamera::GpsGlobeCameraController> m_gpsGlobeCameraController;
             };
         }
     }

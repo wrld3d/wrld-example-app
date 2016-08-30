@@ -17,27 +17,27 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                AppModeStatesFactory::AppModeStatesFactory(AppCamera::SdkModel::IAppCameraController& appCameraController,
-                                                           AppCamera::SdkModel::AppGlobeCameraWrapper& worldCameraController,
-                                                           AppCamera::SdkModel::AppInteriorCameraWrapper& interiorCameraController,
-                                                           Tours::SdkModel::Camera::IToursCameraController& toursCameraController,
-                                                           Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
-                                                           InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdate,
-                                                           InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
-                                                           InteriorsExplorer::SdkModel::InteriorExplorerUserInteractionModel& interiorExplorerUserInteractionModel,
-                                                           AppModes::SdkModel::IAppModeModel& appModeModel,
-                                                           Tours::SdkModel::ITourService& tourService,
-                                                           Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                           Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                                           Eegeo::UI::NativeUIFactories& nativeUIFactories,
-                                                           MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
-                                                           VisualMap::SdkModel::IVisualMapService& visualMapService)
+                AppModeStatesFactory::AppModeStatesFactory(const std::shared_ptr<AppCamera::SdkModel::IAppCameraController>& appCameraController,
+                                                           const std::shared_ptr<AppCamera::SdkModel::AppGlobeCameraWrapper>& worldCameraController,
+                                                           const std::shared_ptr<AppCamera::SdkModel::AppInteriorCameraWrapper>& interiorCameraController,
+                                                           const std::shared_ptr<Tours::SdkModel::Camera::IToursCameraController>& toursCameraController,
+                                                           const std::shared_ptr<Eegeo::Streaming::CameraFrustumStreamingVolume>& cameraFrustumStreamingVolume,
+                                                           const std::shared_ptr<InteriorsExplorer::SdkModel::InteriorVisibilityUpdater>& interiorVisibilityUpdater,
+                                                           const std::shared_ptr<InteriorsExplorer::SdkModel::InteriorsExplorerModel>& interiorsExplorerModel,
+                                                           const std::shared_ptr<InteriorsExplorer::SdkModel::InteriorExplorerUserInteractionModel>& interiorExplorerUserInteractionModel,
+                                                           const std::shared_ptr<AppModes::SdkModel::IAppModeModel>& appModeModel,
+                                                           const std::shared_ptr<Tours::SdkModel::ITourService>& tourService,
+                                                           const std::shared_ptr<Eegeo::Resources::Interiors::InteriorSelectionModel>& interiorSelectionModel,
+                                                           const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel,
+                                                           const std::shared_ptr<Eegeo::UI::NativeUIFactories>& nativeUIFactories,
+                                                           const std::shared_ptr<MyPinCreation::SdkModel::IMyPinCreationModel>& myPinCreationModel,
+                                                           const std::shared_ptr<VisualMap::SdkModel::IVisualMapService>& visualMapService)
                 : m_appCameraController(appCameraController)
                 , m_worldCameraController(worldCameraController)
                 , m_interiorCameraController(interiorCameraController)
                 , m_toursCameraController(toursCameraController)
                 , m_cameraFrustumStreamingVolume(cameraFrustumStreamingVolume)
-                , m_interiorVisibilityUpdate(interiorVisibilityUpdate)
+                , m_interiorVisibilityUpdate(interiorVisibilityUpdater)
                 , m_interiorsExplorerModel(interiorsExplorerModel)
                 , m_interiorExplorerUserInteractionModel(interiorExplorerUserInteractionModel)
                 , m_appModeModel(appModeModel)
@@ -55,42 +55,42 @@ namespace ExampleApp
                 {
                     std::vector<Helpers::IStateMachineState*> states;
                     
-                    const int worldCameraHandle = m_appCameraController.CreateCameraHandleFromController(m_worldCameraController);
-                    const int interiorCameraHandle = m_appCameraController.CreateCameraHandleFromController(m_interiorCameraController);
-                    const int toursCameraHandle = m_appCameraController.CreateCameraHandleFromController(m_toursCameraController);
+                    const int worldCameraHandle = m_appCameraController->CreateCameraHandleFromController(*m_worldCameraController);
+                    const int interiorCameraHandle = m_appCameraController->CreateCameraHandleFromController(*m_interiorCameraController);
+                    const int toursCameraHandle = m_appCameraController->CreateCameraHandleFromController(*m_toursCameraController);
                     
-                    states.push_back(Eegeo_NEW(States::SdkModel::WorldState)(m_appCameraController,
+                    states.push_back(Eegeo_NEW(States::SdkModel::WorldState)(*m_appCameraController,
                                                                              worldCameraHandle,
-                                                                             m_tourService,
-                                                                             m_interiorSelectionModel,
-                                                                             m_appModeModel,
-                                                                             m_interiorCameraController.GetInteriorCameraController()));
+                                                                             *m_tourService,
+                                                                             *m_interiorSelectionModel,
+                                                                             *m_appModeModel,
+                                                                             m_interiorCameraController->GetInteriorCameraController()));
                     
-                    states.push_back(Eegeo_NEW(States::SdkModel::InteriorExplorerState)(m_appCameraController,
-                                                                                        m_interiorSelectionModel,
-                                                                                        m_interiorInteractionModel,
+                    states.push_back(Eegeo_NEW(States::SdkModel::InteriorExplorerState)(*m_appCameraController,
+                                                                                        *m_interiorSelectionModel,
+                                                                                        *m_interiorInteractionModel,
                                                                                         interiorCameraHandle,
-                                                                                        m_tourService,
-                                                                                        m_cameraFrustumStreamingVolume,
-                                                                                        m_interiorVisibilityUpdate,
-                                                                                        m_interiorsExplorerModel,
-                                                                                        m_interiorExplorerUserInteractionModel,
-                                                                                        m_appModeModel,
-                                                                                        m_worldCameraController.GetGlobeCameraController(),
-                                                                                        m_interiorCameraController.GetInteriorCameraController(),
-                                                                                        m_nativeUIFactories,
-                                                                                        m_myPinCreationModel));
+                                                                                        *m_tourService,
+                                                                                        *m_cameraFrustumStreamingVolume,
+                                                                                        *m_interiorVisibilityUpdate,
+                                                                                        *m_interiorsExplorerModel,
+                                                                                        *m_interiorExplorerUserInteractionModel,
+                                                                                        *m_appModeModel,
+                                                                                        m_worldCameraController->GetGlobeCameraController(),
+                                                                                        m_interiorCameraController->GetInteriorCameraController(),
+                                                                                        *m_nativeUIFactories,
+                                                                                        *m_myPinCreationModel));
                     
-                    states.push_back(Eegeo_NEW(States::SdkModel::TourState)(m_appCameraController,
+                    states.push_back(Eegeo_NEW(States::SdkModel::TourState)(*m_appCameraController,
                                                                             toursCameraHandle,
-                                                                            m_tourService,
-                                                                            m_interiorSelectionModel,
-                                                                            m_appModeModel,
-                                                                            m_worldCameraController.GetGlobeCameraController(),
-                                                                            m_interiorCameraController.GetInteriorCameraController(),
-                                                                            m_interiorsExplorerModel,
-                                                                            m_myPinCreationModel,
-                                                                            m_visualMapService));
+                                                                            *m_tourService,
+                                                                            *m_interiorSelectionModel,
+                                                                            *m_appModeModel,
+                                                                            m_worldCameraController->GetGlobeCameraController(),
+                                                                            m_interiorCameraController->GetInteriorCameraController(),
+                                                                            *m_interiorsExplorerModel,
+                                                                            *m_myPinCreationModel,
+                                                                            *m_visualMapService));
 
                     return states;
                 }

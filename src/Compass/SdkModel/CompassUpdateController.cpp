@@ -13,11 +13,11 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            CompassUpdateController::CompassUpdateController(ICompassModel& model,
-                                                             Eegeo::Location::NavigationService& navigationService,
-                                                             InteriorsNavigation::SdkModel::IInteriorsNavigationService& interiorsNavigationService,
-                                                             ExampleAppMessaging::TMessageBus& messageBus,
-                                                             AppModes::SdkModel::IAppModeModel& appModeModel)
+            CompassUpdateController::CompassUpdateController(const std::shared_ptr<ICompassModel>& model,
+                                                             const std::shared_ptr<Eegeo::Location::NavigationService>& navigationService,
+                                                             const std::shared_ptr<InteriorsNavigation::SdkModel::IInteriorsNavigationService>& interiorsNavigationService,
+                                                             const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                                             const std::shared_ptr<AppModes::SdkModel::IAppModeModel>& appModeModel)
                 : m_model(model)
                 , m_navigationService(navigationService)
                 , m_interiorsNavigationService(interiorsNavigationService)
@@ -28,15 +28,15 @@ namespace ExampleApp
 
             void CompassUpdateController::Update(float deltaSeconds)
             {
-                m_messageBus.Publish(CompassHeadingUpdateMessage(m_model.GetHeadingRadians()));
+                m_messageBus->Publish(CompassHeadingUpdateMessage(m_model->GetHeadingRadians()));
                 
-                if(m_appModeModel.GetAppMode() == AppModes::SdkModel::WorldMode)
+                if(m_appModeModel->GetAppMode() == AppModes::SdkModel::WorldMode)
                 {
-                    m_model.TryUpdateToNavigationServiceGpsMode(m_navigationService.GetGpsMode());
+                    m_model->TryUpdateToNavigationServiceGpsMode(m_navigationService->GetGpsMode());
                 }
                 else
                 {
-                    m_model.TryUpdateToNavigationServiceGpsMode(m_interiorsNavigationService.GetGpsMode());
+                    m_model->TryUpdateToNavigationServiceGpsMode(m_interiorsNavigationService->GetGpsMode());
                 }
             }
         }

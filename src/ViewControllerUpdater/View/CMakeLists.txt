@@ -4,7 +4,6 @@ set(currsources
   ../src/ViewControllerUpdater/View/CMakeLists.txt
   ../src/ViewControllerUpdater/View/IUpdateableViewController.h
   ../src/ViewControllerUpdater/View/IViewControllerUpdaterModel.h
-  ../src/ViewControllerUpdater/View/IViewControllerUpdaterModule.h
   ../src/ViewControllerUpdater/View/ViewControllerUpdater.h
   ../src/ViewControllerUpdater/View/ViewControllerUpdaterModel.cpp
   ../src/ViewControllerUpdater/View/ViewControllerUpdaterModel.h

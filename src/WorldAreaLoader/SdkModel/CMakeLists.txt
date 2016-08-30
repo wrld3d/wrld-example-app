@@ -3,7 +3,6 @@ set(headers ${headers} ../src/WorldAreaLoader/SdkModel
 set(currsources
   ../src/WorldAreaLoader/SdkModel/CMakeLists.txt
   ../src/WorldAreaLoader/SdkModel/IWorldAreaLoaderModel.h
-  ../src/WorldAreaLoader/SdkModel/IWorldAreaLoaderModule.h
   ../src/WorldAreaLoader/SdkModel/WorldAreaLoader.h
   ../src/WorldAreaLoader/SdkModel/WorldAreaLoaderModel.cpp
   ../src/WorldAreaLoader/SdkModel/WorldAreaLoaderModel.h

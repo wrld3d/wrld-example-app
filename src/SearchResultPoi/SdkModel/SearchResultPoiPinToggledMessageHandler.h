@@ -16,15 +16,15 @@ namespace ExampleApp
         {
             class SearchResultPoiPinToggledMessageHandler : Eegeo::NonCopyable
             {
-                ISearchResultPoiMyPinService& m_searchResultPoiMyPinService;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<ISearchResultPoiMyPinService> m_searchResultPoiMyPinService;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 Eegeo::Helpers::TCallback1<SearchResultPoiPinToggledMessageHandler, const SearchResultPoiPinToggledMessage&> m_handlerBinding;
                 
                 void OnSearchResultPoiPinToggled(const SearchResultPoiPinToggledMessage& message);
                 
             public:
-                SearchResultPoiPinToggledMessageHandler(ISearchResultPoiMyPinService& searchResultPoiMyPinService,
-                                                        ExampleAppMessaging::TMessageBus& messageBus);
+                SearchResultPoiPinToggledMessageHandler(const std::shared_ptr<ISearchResultPoiMyPinService>& searchResultPoiMyPinService,
+                                                        const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
                 
                 ~SearchResultPoiPinToggledMessageHandler();
             };

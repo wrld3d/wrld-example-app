@@ -43,13 +43,13 @@ namespace ExampleApp
             
             class TourService : public ITourService, private Eegeo::NonCopyable
             {
-                ITourRepository& m_repository;
-                Camera::IToursCameraTransitionController& m_cameraTransitionController;
+                const std::shared_ptr<ITourRepository> m_repository;
+                const std::shared_ptr<Camera::IToursCameraTransitionController> m_cameraTransitionController;
                 std::map<std::string, States::ITourStateMachine*> m_pTourToStateMachineMapping;
-                Metrics::IMetricsService& m_metricsService;
-                Search::SdkModel::ISearchRefreshService& m_searchRefreshService;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
-                ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkDomainEventBus;
+                const std::shared_ptr<Metrics::IMetricsService> m_metricsService;
+                const std::shared_ptr<Search::SdkModel::ISearchRefreshService> m_searchRefreshService;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
+                const std::shared_ptr<ExampleAppMessaging::TSdkModelDomainEventBus> m_sdkDomainEventBus;
                 
                 TourModel m_activeTourModel;
                 TourModel m_nextTourModel;
@@ -64,12 +64,12 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_tourEndedCallbacks;
                 
             public:
-                TourService(ITourRepository& repository,
-                            Camera::IToursCameraTransitionController& cameraTransitionController,
-                            Metrics::IMetricsService& metricsService,
-                            Search::SdkModel::ISearchRefreshService& searchRefreshService,
-                            ExampleAppMessaging::TMessageBus& messageBus,
-                            ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus);
+                TourService(const std::shared_ptr<ITourRepository>& repository,
+                            const std::shared_ptr<Camera::IToursCameraTransitionController>& cameraTransitionController,
+                            const std::shared_ptr<Metrics::IMetricsService>& metricsService,
+                            const std::shared_ptr<Search::SdkModel::ISearchRefreshService>& searchRefreshService,
+                            const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                            const std::shared_ptr<ExampleAppMessaging::TSdkModelDomainEventBus>& sdkDomainEventBus);
                 
                 ~TourService();
                 

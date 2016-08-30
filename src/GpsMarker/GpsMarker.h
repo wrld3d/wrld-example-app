@@ -8,7 +8,6 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class IGpsMarkerModule;
             class IGpsMarkerController;
             class GpsMarkerModel;
             class GpsMarkerView;

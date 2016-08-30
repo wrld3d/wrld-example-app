@@ -16,14 +16,14 @@ namespace ExampleApp
             class MyPinCreationModelObserver : public Eegeo::NonCopyable
             {
             public:
-                MyPinCreationModelObserver(IMyPinCreationModel& myPinCreationModel,
-                                           ExampleAppMessaging::TMessageBus& messageBus);
+                MyPinCreationModelObserver(const std::shared_ptr<IMyPinCreationModel>& myPinCreationModel,
+                                           const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
 
                 ~MyPinCreationModelObserver();
 
             private:
-                IMyPinCreationModel& m_myPinCreationModel;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<IMyPinCreationModel> m_myPinCreationModel;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
 
                 Eegeo::Helpers::TCallback1<MyPinCreationModelObserver, MyPinCreationStage> m_callback;
 

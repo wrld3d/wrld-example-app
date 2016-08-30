@@ -17,6 +17,9 @@
 #include "InteriorsLabelController.h"
 #include "ImagePathHelpers.h"
 #include "IWorldPinIconMapping.h"
+#include "EegeoWorld.h"
+#include "InteriorInteractionModel.h"
+#include "InteriorTransitionModel.h"
 
 namespace ExampleApp
 {
@@ -24,53 +27,30 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            InteriorsEntitiesPinsModule::InteriorsEntitiesPinsModule(Eegeo::Modules::IPlatformAbstractionModule& platformAbstractionModule,
-                                                                     Eegeo::Modules::Core::RenderingModule& renderingModule,
-                                                                     Eegeo::Modules::Map::MapModule& mapModule,
-                                                                     const WorldPins::SdkModel::IWorldPinIconMapping& worldPinIconMapping,
-                                                                     const Eegeo::Rendering::ScreenProperties& screenProperties)
-            : m_pInteriorsEntitiesPinsController(NULL)
-            , m_pEntityPinsModule(NULL)
-            , m_pEntityPinIconsTexturePageLayout(NULL)
+            void InteriorsEntitiesPinsModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
             {
-                m_pEntityPinsModule = Eegeo::Pins::PinsModule::CreateWithAtlas(renderingModule,
-                                                                      platformAbstractionModule,
-                                                                      mapModule,
-                                                                      worldPinIconMapping.GetTextureInfo().textureId,
-                                                                      worldPinIconMapping.GetTexturePageLayout(),
-                                                                      Eegeo::Rendering::LayerIds::AfterWorld,
-                                                                      screenProperties);
-
-                Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
-                Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
-                
-                m_pInteriorsEntitiesPinsController = Eegeo_NEW(InteriorsEntitiesPinsController)(interiorsModelModule.GetInteriorsEntitiesRepository(),
-                                                                                                m_pEntityPinsModule->GetController(),
-                                                                                                m_pEntityPinsModule->GetRepository(),
-                                                                                                worldPinIconMapping,
-                                                                                                interiorsPresentationModule.GetInteriorInteractionModel(),
-                                                                                                interiorsPresentationModule.GetInteriorTransitionModel(),
-                                                                                                interiorsPresentationModule.GetInteriorsLabelsController());
-                
-                
-            }
-            
-            InteriorsEntitiesPinsModule::~InteriorsEntitiesPinsModule()
-            {
-                Eegeo_DELETE m_pInteriorsEntitiesPinsController;
-                Eegeo_DELETE m_pEntityPinsModule;
-                Eegeo_DELETE m_pEntityPinIconsTexturePageLayout;
-                Eegeo_GL(glDeleteTextures(1, &m_entityPinsTextureInfo.textureId));
-            }
-            
-            IInteriorsEntitiesPinsController& InteriorsEntitiesPinsModule::GetInteriorsEntitiesPinsController()
-            {
-                return *m_pInteriorsEntitiesPinsController;
-            }
-            
-            Eegeo::Pins::PinsModule& InteriorsEntitiesPinsModule::GetPinsModule()
-            {
-                return *m_pEntityPinsModule;
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                   {
+                                                       auto world = context.resolve<Eegeo::EegeoWorld>();
+                                                       auto worldPinMapping = context.resolve<WorldPins::SdkModel::IWorldPinIconMapping>();
+                                                       auto module = Eegeo::Pins::PinsModule::CreateWithAtlas(world->GetRenderingModule(),
+                                                                                                              *(context.resolve<Eegeo::Modules::IPlatformAbstractionModule>()),
+                                                                                                              world->GetMapModule(),
+                                                                                                              worldPinMapping->GetTextureInfo().textureId,
+                                                                                                              worldPinMapping->GetTexturePageLayout(),
+                                                                                                              Eegeo::Rendering::LayerIds::AfterWorld,
+                                                                                                              *(context.resolve<Eegeo::Rendering::ScreenProperties>()));
+                                                       return std::shared_ptr<Eegeo::Pins::PinsModule>(module);
+                                                   }).singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                   {
+                                                       return Hypodermic::makeExternallyOwned(context.resolve<Eegeo::Pins::PinsModule>()->GetController());
+                                                   }).singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                   {
+                                                       return Hypodermic::makeExternallyOwned(context.resolve<Eegeo::Pins::PinsModule>()->GetRepository());
+                                                   }).singleInstance();
+                builder->registerType<InteriorsEntitiesPinsController>().as<IInteriorsEntitiesPinsController>().singleInstance();
             }
         }
     }

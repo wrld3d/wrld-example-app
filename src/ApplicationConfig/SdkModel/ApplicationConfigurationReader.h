@@ -15,10 +15,10 @@ namespace ExampleApp
         {
             class ApplicationConfigurationReader : public IApplicationConfigurationReader, private Eegeo::NonCopyable
             {
-                Eegeo::Helpers::IFileIO& m_fileIO;
+                const std::shared_ptr<Eegeo::Helpers::IFileIO> m_fileIO;
                 
             public:
-                ApplicationConfigurationReader(Eegeo::Helpers::IFileIO& fileIO);
+                ApplicationConfigurationReader(const std::shared_ptr<Eegeo::Helpers::IFileIO>& fileIO);
                 
                 std::string ReadApplicationConfiguration(const std::string& pathToConfiguration);
             };

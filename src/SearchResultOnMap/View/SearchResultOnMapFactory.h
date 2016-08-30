@@ -16,12 +16,11 @@ namespace ExampleApp
         {
             class SearchResultOnMapFactory : public ISearchResultOnMapFactory, private Eegeo::NonCopyable
             {
-                ExampleAppMessaging::TMessageBus& m_messageBus;
-                
-                Metrics::IMetricsService& m_metricsService;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
+                const std::shared_ptr<Metrics::IMetricsService> m_metricsService;
 
             public:
-                SearchResultOnMapFactory(ExampleAppMessaging::TMessageBus& messageBus, Metrics::IMetricsService& metricsService);
+                SearchResultOnMapFactory(const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus, const std::shared_ptr<Metrics::IMetricsService>& metricsService);
 
                 ~SearchResultOnMapFactory();
 

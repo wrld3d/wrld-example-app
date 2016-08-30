@@ -8,37 +8,35 @@ namespace ExampleApp
     {
         namespace View
         {
-            SearchResultOnMapItemModelSelectedObserver::SearchResultOnMapItemModelSelectedObserver(SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
-                    ExampleAppMessaging::TMessageBus& messageBus,
-                    const Menu::View::IMenuReactionModel& menuReaction)
+            SearchResultOnMapItemModelSelectedObserver::SearchResultOnMapItemModelSelectedObserver(const std::shared_ptr<SearchResultPoi::View::ISearchResultPoiViewModel>& searchResultPoiViewModel,
+                                                                                                   const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                                                                                   const std::shared_ptr<Menu::View::IMenuReactionModel>& menuReaction)
                 : m_searchResultPoiViewModel(searchResultPoiViewModel)
                 , m_messageBus(messageBus)
                 , m_handlerBinding(this, &SearchResultOnMapItemModelSelectedObserver::OnSearchResultOnMapItemModelSelectedMessage)
                 , m_menuReaction(menuReaction)
             {
-                m_messageBus.SubscribeUi(m_handlerBinding);
+                m_messageBus->SubscribeUi(m_handlerBinding);
             }
 
             SearchResultOnMapItemModelSelectedObserver::~SearchResultOnMapItemModelSelectedObserver()
             {
-                m_messageBus.UnsubscribeUi(m_handlerBinding);
+                m_messageBus->UnsubscribeUi(m_handlerBinding);
             }
 
             void SearchResultOnMapItemModelSelectedObserver::OnSearchResultOnMapItemModelSelectedMessage(const SearchResultOnMapItemModelSelectedMessage& message)
             {
-                if (m_menuReaction.GetShouldOpenMenu())
+                if (m_menuReaction->GetShouldOpenMenu())
                 {
-                    if (!m_searchResultPoiViewModel.IsOpen())
+                    if (!m_searchResultPoiViewModel->IsOpen())
                     {
-                        m_searchResultPoiViewModel.Open(message.GetModel(), false);
+                        m_searchResultPoiViewModel->Open(message.GetModel(), false);
                     }
                 }
                 else
                 {
-                    m_searchResultPoiViewModel.Open(message.GetModel(), false);
+                    m_searchResultPoiViewModel->Open(message.GetModel(), false);
                 }
-                
-                
             }
         }
     }

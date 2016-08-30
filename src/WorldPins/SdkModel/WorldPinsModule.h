@@ -2,20 +2,7 @@
 
 #pragma once
 
-#include "IWorldPinsModule.h"
-#include "WorldPins.h"
-#include "Pins.h"
-#include "PinController.h"
-#include "Rendering.h"
-#include "Camera.h"
-#include "BidirectionalBus.h"
-#include "WorldPinInFocusObserver.h"
-#include "IIdentity.h"
-#include "IScreenControlViewModel.h"
-#include "WorldPinsModalityObserver.h"
-#include "Interiors.h"
-#include "SdkModelDomainEventBus.h"
-#include "IMenuReactionModel.h"
+#include "IModule.h"
 
 namespace ExampleApp
 {
@@ -23,47 +10,10 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class WorldPinsModule : public IWorldPinsModule
+            class WorldPinsModule : public IModule
             {
-                IWorldPinsFactory* m_pWorldPinsFactory;
-                IWorldPinsService* m_pWorldPinsService;
-                IWorldPinsRepository* m_pWorldPinsRepository;
-                IWorldPinsScaleController* m_pWorldPinsScaleController;
-                IWorldPinsFloorHeightController* m_pWorldPinsFloorHeightController;
-                View::WorldPinInFocusViewModel* m_pWorldPinsInFocusViewModel;
-                IWorldPinsInFocusController* m_pWorldPinsInFocusController;
-                View::WorldPinInFocusObserver* m_pWorldPinInFocusObserver;
-                WorldPinsModalityObserver* m_pWorldPinsModalityObserver;
-
             public:
-                WorldPinsModule(Eegeo::Pins::PinRepository& pinRepository,
-                                Eegeo::Pins::PinController& pinController,
-                                const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                ExampleAppMessaging::TMessageBus& messageBus,
-                                const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
-                                ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
-                                const bool interiorsAffectedByFlattening,
-                                const Menu::View::IMenuReactionModel& menuReaction,
-                                const float screenOversampleScale,
-                                const IWorldPinIconMapping& worldPinIconMapping);
-
-                ~WorldPinsModule();
-
-                IWorldPinsService& GetWorldPinsService() const;
-
-                IWorldPinsFactory& GetWorldPinsFactory() const;
-
-                IWorldPinsScaleController& GetWorldPinsScaleController() const;
-                
-                IWorldPinsFloorHeightController& GetWorldPinsFloorHeightController() const;
-
-                View::IWorldPinInFocusViewModel& GetWorldPinInFocusViewModel() const;
-
-                IWorldPinsInFocusController& GetWorldPinsInFocusController() const;
-
-                ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel() const;
+                void Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder);
             };
         }
     }

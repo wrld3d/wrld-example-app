@@ -9,24 +9,24 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            MyPinDetailsViewRemovePinHandler::MyPinDetailsViewRemovePinHandler(MyPins::SdkModel::IMyPinsService& myPinsService,
-                    ExampleAppMessaging::TMessageBus& messageBus)
+            MyPinDetailsViewRemovePinHandler::MyPinDetailsViewRemovePinHandler(const std::shared_ptr<MyPins::SdkModel::IMyPinsService>& myPinsService,
+                                                                               const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
                 : m_myPinsService(myPinsService)
                 , m_messageBus(messageBus)
                 , m_handler(this, &MyPinDetailsViewRemovePinHandler::OnMyPinCreationViewSavePinMessage)
             {
-                m_messageBus.SubscribeNative(m_handler);
+                m_messageBus->SubscribeNative(m_handler);
             }
 
             MyPinDetailsViewRemovePinHandler::~MyPinDetailsViewRemovePinHandler()
             {
-                m_messageBus.UnsubscribeNative(m_handler);
+                m_messageBus->UnsubscribeNative(m_handler);
             }
 
 
             void MyPinDetailsViewRemovePinHandler::OnMyPinCreationViewSavePinMessage(const MyPinDetailsViewRemovePinMessage& message)
             {
-                m_myPinsService.RemovePinWithId(message.GetMyPinModelId());
+                m_myPinsService->RemovePinWithId(message.GetMyPinModelId());
             }
         }
     }

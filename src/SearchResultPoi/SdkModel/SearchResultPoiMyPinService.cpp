@@ -12,9 +12,9 @@ namespace ExampleApp
     {
         namespace SdkModel
         {   
-            SearchResultPoiMyPinService::SearchResultPoiMyPinService(MyPins::SdkModel::IMyPinsService& myPinsService,
-                                                                     Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultMyPinsService,
-                                                                     CategorySearch::ISearchResultIconCategoryMapper& searchResultIconCategoryMapper)
+            SearchResultPoiMyPinService::SearchResultPoiMyPinService(const std::shared_ptr<MyPins::SdkModel::IMyPinsService>& myPinsService,
+                                                                     const std::shared_ptr<Search::SdkModel::MyPins::ISearchResultMyPinsService>& searchResultMyPinsService,
+                                                                     const std::shared_ptr<CategorySearch::ISearchResultIconCategoryMapper>& searchResultIconCategoryMapper)
             : m_myPinsService(myPinsService)
             , m_searchResultMyPinsService(searchResultMyPinsService)
             , m_searchResultIconCategoryMapper(searchResultIconCategoryMapper)
@@ -31,16 +31,16 @@ namespace ExampleApp
             {
                 MyPins::SdkModel::MyPinModel myPinModel;
                 
-                if(m_searchResultMyPinsService.TryGetPinForSearchResult(searchResult, myPinModel))
+                if(m_searchResultMyPinsService->TryGetPinForSearchResult(searchResult, myPinModel))
                 {
                     // The pin already exists, so remove it and return!
-                    m_myPinsService.RemovePinWithId(myPinModel.Identifier());
+                    m_myPinsService->RemovePinWithId(myPinModel.Identifier());
                 }
                 else
                 {
                     // The pin doesn't exist, so we must add it...
-                    const std::string& pinIconKey = m_searchResultIconCategoryMapper.GetIconKeyFromSearchResult(searchResult);
-                    m_myPinsService.SaveSearchResultPoiPin(searchResult, pinIconKey);
+                    const std::string& pinIconKey = m_searchResultIconCategoryMapper->GetIconKeyFromSearchResult(searchResult);
+                    m_myPinsService->SaveSearchResultPoiPin(searchResult, pinIconKey);
                 }
             }
         }

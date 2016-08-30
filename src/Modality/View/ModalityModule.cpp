@@ -1,9 +1,10 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-#include <vector>
 #include "ModalityModule.h"
 #include "ModalityModel.h"
 #include "ModalityController.h"
+#include "ModalityObserver.h"
+#include "ModalityIgnoredReactionModel.h"
 
 namespace ExampleApp
 {
@@ -11,33 +12,16 @@ namespace ExampleApp
     {
         namespace View
         {
-            ModalityModule::ModalityModule(ExampleAppMessaging::TMessageBus& messageBus,
-                                           const std::vector<OpenableControl::View::IOpenableControlViewModel*>& viewModels,
-                                           Menu::View::IMenuIgnoredReactionModel& ignoredReactionModel)
+            ModalityModule::ModalityModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+            : m_builder(builder)
             {
-                m_pModel = Eegeo_NEW(ModalityModel)();
-
-                m_pController = Eegeo_NEW(ModalityController)(*m_pModel,
-                                                              viewModels,
-                                                              ignoredReactionModel);
-
-                m_pModalityObserver = Eegeo_NEW(ModalityObserver)(*m_pModel, messageBus);
             }
-
-            ModalityModule::~ModalityModule()
+            
+            void ModalityModule::Register()
             {
-                Eegeo_DELETE m_pModalityObserver;
-                Eegeo_DELETE m_pModel;
-            }
-
-            IModalityModel& ModalityModule::GetModalityModel() const
-            {
-                return *m_pModel;
-            }
-
-            IModalityController& ModalityModule::GetModalityController() const
-            {
-                return *m_pController;
+                m_builder->registerType<ModalityModel>().as<IModalityModel>().singleInstance();
+                m_builder->registerType<ModalityController>().as<IModalityController>().singleInstance();
+                m_builder->registerType<ModalityObserver>().singleInstance();
             }
         }
     }

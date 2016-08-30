@@ -3,7 +3,9 @@
 #pragma once
 
 #include "IMyPinVisibilityStateChangedHandlerFactory.h"
+#include "Types.h"
 #include "MyPins.h"
+#include <memory>
 
 namespace ExampleApp
 {
@@ -11,13 +13,13 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class MyPinVisibilityStateChangedHandlerFactory : public IMyPinVisibilityStateChangedHandlerFactory
+            class MyPinVisibilityStateChangedHandlerFactory : public IMyPinVisibilityStateChangedHandlerFactory, private Eegeo::NonCopyable
             {
             private:
-                MyPins::SdkModel::IMyPinBoundObjectRepository& m_myPinBoundObjectRepository;
+                const std::shared_ptr<MyPins::SdkModel::IMyPinBoundObjectRepository> m_myPinBoundObjectRepository;
                 
             public:
-                MyPinVisibilityStateChangedHandlerFactory(MyPins::SdkModel::IMyPinBoundObjectRepository& myPinBoundObjectRepository);
+                MyPinVisibilityStateChangedHandlerFactory(const std::shared_ptr<MyPins::SdkModel::IMyPinBoundObjectRepository>& myPinBoundObjectRepository);
                 
                 WorldPins::SdkModel::IWorldPinVisibilityStateChangedHandler* CreateMyPinVisibilityStateChangedHandler(MyPinModel& myPinModel) const;
             };

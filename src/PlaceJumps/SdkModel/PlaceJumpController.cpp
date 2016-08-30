@@ -12,14 +12,14 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            PlaceJumpController::PlaceJumpController(CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController)
+            PlaceJumpController::PlaceJumpController(const std::shared_ptr<CameraTransitions::SdkModel::ICameraTransitionController>& cameraTransitionController)
                 : m_cameraTransitionController(cameraTransitionController)
             {
             }
 
             void PlaceJumpController::JumpTo(const View::IPlaceJumpModel& jumpModel)
             {
-                m_cameraTransitionController.StartTransitionTo(jumpModel.GetLocation().ToECEF(), jumpModel.GetDistance(), Eegeo::Math::Deg2Rad(jumpModel.GetHeadingDegrees()));
+                m_cameraTransitionController->StartTransitionTo(jumpModel.GetLocation().ToECEF(), jumpModel.GetDistance(), Eegeo::Math::Deg2Rad(jumpModel.GetHeadingDegrees()));
             }
         }
     }

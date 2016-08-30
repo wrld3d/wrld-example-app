@@ -8,9 +8,9 @@ namespace ExampleApp
     {
         namespace View
         {
-            WatermarkViewModel::WatermarkViewModel(Eegeo::Helpers::TIdentity identity,
-                    bool initiallyOnScreen)
-                : m_screenControl(initiallyOnScreen, identity)
+            WatermarkViewModel::WatermarkViewModel(const std::shared_ptr<Eegeo::Helpers::IIdentityProvider>& identity,
+                                                   bool initiallyOnScreen)
+                : m_screenControl(initiallyOnScreen, identity->GetNextIdentity())
             {
 
             }

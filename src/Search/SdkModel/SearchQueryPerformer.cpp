@@ -25,9 +25,9 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            SearchQueryPerformer::SearchQueryPerformer(ISearchService& searchService,
-                                                       ISearchResultRepository& searchResultRepository,
-                                                       Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController)
+            SearchQueryPerformer::SearchQueryPerformer(const std::shared_ptr<ISearchService>& searchService,
+                                                       const std::shared_ptr<ISearchResultRepository>& searchResultRepository,
+                                                       const std::shared_ptr<Eegeo::Camera::GlobeCamera::GpsGlobeCameraController>& cameraController)
                 : m_searchService(searchService)
                 , m_searchResultsRepository(searchResultRepository)
                 , m_pSearchResultResponseReceivedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<SearchQueryPerformer, const SearchQuery&, const std::vector<SearchResultModel>&>))(this, &SearchQueryPerformer::HandleSearchResultsResponseReceived))
@@ -35,12 +35,12 @@ namespace ExampleApp
                 , m_hasQuery(false)
                 , m_cameraController(cameraController)
             {
-                m_searchService.InsertOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
+                m_searchService->InsertOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
             }
 
             SearchQueryPerformer::~SearchQueryPerformer()
             {
-                m_searchService.RemoveOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
+                m_searchService->RemoveOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
                 
                 Eegeo_DELETE m_pSearchResultResponseReceivedCallback;
             }
@@ -52,13 +52,13 @@ namespace ExampleApp
 
             void SearchQueryPerformer::PerformSearchQuery(const std::string& query, bool isCategory, bool tryInteriorSearch)
             {
-                Eegeo::Space::LatLongAltitude location = Eegeo::Space::LatLongAltitude::FromECEF(m_cameraController.GetEcefInterestPoint());
+                Eegeo::Space::LatLongAltitude location = Eegeo::Space::LatLongAltitude::FromECEF(m_cameraController->GetEcefInterestPoint());
                 PerformSearchQuery(query, isCategory, tryInteriorSearch, location);
             }
             
             void SearchQueryPerformer::PerformSearchQuery(const std::string& query, bool isCategory, bool tryInteriorSearch, float radius)
             {
-                const Eegeo::Space::LatLongAltitude& location = Eegeo::Space::LatLongAltitude::FromECEF(m_cameraController.GetEcefInterestPoint());
+                const Eegeo::Space::LatLongAltitude& location = Eegeo::Space::LatLongAltitude::FromECEF(m_cameraController->GetEcefInterestPoint());
                 PerformSearchQuery(query, isCategory, tryInteriorSearch, location, radius);
             }
 
@@ -67,7 +67,7 @@ namespace ExampleApp
                     bool tryInteriorSearch,
                     const Eegeo::Space::LatLongAltitude& location)
             {
-                const float radius = GetSearchRadius(m_cameraController.GetRenderCamera());
+                const float radius = GetSearchRadius(m_cameraController->GetRenderCamera());
                 PerformSearchQuery(query, isCategory, tryInteriorSearch, location, radius);
             }
             
@@ -80,14 +80,14 @@ namespace ExampleApp
                 m_hasQuery = true;
                 SearchQuery searchQuery(query, isCategory, tryInteriorSearch, location, radius);
                 m_previousQuery = searchQuery;
-                m_searchService.PerformLocationQuerySearch(searchQuery);
+                m_searchService->PerformLocationQuerySearch(searchQuery);
             }
 
             void SearchQueryPerformer::RemoveSearchQueryResults()
             {
                 m_hasQuery = false;
 
-                m_searchService.CancelInFlightQueries();
+                m_searchService->CancelInFlightQueries();
                 
                 RemoveExistingSearchResults();
 
@@ -113,13 +113,13 @@ namespace ExampleApp
                 std::map<SearchResultModel, size_t> currentRepoHash;
                 std::set<size_t> retainedResultIndices;
                 std::vector<SearchResultModel*> newResultTemporaryStorage;
-                const int topIndexBeforeAddingNewResult = static_cast<int>(m_searchResultsRepository.GetItemCount() - 1);
+                const int topIndexBeforeAddingNewResult = static_cast<int>(m_searchResultsRepository->GetItemCount() - 1);
 
                 // First of all lets map the contents of the results repo so we can easily look results up later.
                 // Map the result to its index.
-                for(size_t i = 0; i < m_searchResultsRepository.GetItemCount(); ++ i)
+                for(size_t i = 0; i < m_searchResultsRepository->GetItemCount(); ++ i)
                 {
-                    SearchResultModel* pItem = m_searchResultsRepository.GetItemAtIndex(i);
+                    SearchResultModel* pItem = m_searchResultsRepository->GetItemAtIndex(i);
                     currentRepoHash.insert(std::make_pair(*pItem, i));
                 }
 
@@ -150,8 +150,8 @@ namespace ExampleApp
                 {
                     if(retainedResultIndices.find(i) == retainedResultIndices.end())
                     {
-                        SearchResultModel* pItem = m_searchResultsRepository.GetItemAtIndex(i);
-                        m_searchResultsRepository.RemoveItem(pItem);
+                        SearchResultModel* pItem = m_searchResultsRepository->GetItemAtIndex(i);
+                        m_searchResultsRepository->RemoveItem(pItem);
                         Eegeo_DELETE pItem;
                     }
                 }
@@ -161,16 +161,16 @@ namespace ExampleApp
                         it != newResultTemporaryStorage.end();
                         ++ it)
                 {
-                    m_searchResultsRepository.AddItem(*it);
+                    m_searchResultsRepository->AddItem(*it);
                 }
             }
 
             void SearchQueryPerformer::RemoveExistingSearchResults()
             {
-                while(m_searchResultsRepository.GetItemCount() > 0)
+                while(m_searchResultsRepository->GetItemCount() > 0)
                 {
-                    SearchResultModel* pItem = m_searchResultsRepository.GetItemAtIndex(0);
-                    m_searchResultsRepository.RemoveItem(pItem);
+                    SearchResultModel* pItem = m_searchResultsRepository->GetItemAtIndex(0);
+                    m_searchResultsRepository->RemoveItem(pItem);
                     Eegeo_DELETE pItem;
                 }
             }

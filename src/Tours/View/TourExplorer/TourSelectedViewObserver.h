@@ -19,16 +19,16 @@ namespace ExampleApp
             {
                 class TourSelectedViewObserver : private Eegeo::NonCopyable
                 {
-                    ExampleAppMessaging::TMessageBus& m_messageBus;
-                    TourExplorerCompositeViewController& m_tourExplorerCompositeViewController;
+                    const std::shared_ptr<ExampleAppMessaging::TMessageBus>& m_messageBus;
+                    const std::shared_ptr<TourExplorerCompositeViewController>& m_tourExplorerCompositeViewController;
                     
                     Eegeo::Helpers::TCallback1<TourSelectedViewObserver, const TourOnMapSelectedMessage&> m_binding;
                     
                     void HandleTourSelected(const TourOnMapSelectedMessage& message);
                     
                 public:
-                    TourSelectedViewObserver(TourExplorerCompositeViewController& tourExplorerCompositeViewController,
-                                             ExampleAppMessaging::TMessageBus& messageBus);
+                    TourSelectedViewObserver(const std::shared_ptr<TourExplorerCompositeViewController>& tourExplorerCompositeViewController,
+                                             const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
                     
                     ~TourSelectedViewObserver();
                 };

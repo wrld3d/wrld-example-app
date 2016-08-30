@@ -18,15 +18,15 @@ namespace ExampleApp
             {
             public:
 
-                MyPinDetailsViewRemovePinHandler(MyPins::SdkModel::IMyPinsService& myPinsService,
-                                                 ExampleAppMessaging::TMessageBus& messageBus);
+                MyPinDetailsViewRemovePinHandler(const std::shared_ptr<MyPins::SdkModel::IMyPinsService>& myPinsService,
+                                                 const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
 
                 ~MyPinDetailsViewRemovePinHandler();
 
             private:
                 
-                MyPins::SdkModel::IMyPinsService& m_myPinsService;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<MyPins::SdkModel::IMyPinsService>& m_myPinsService;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus>& m_messageBus;
 
                 Eegeo::Helpers::TCallback1<MyPinDetailsViewRemovePinHandler, const MyPinDetailsViewRemovePinMessage&> m_handler;
 

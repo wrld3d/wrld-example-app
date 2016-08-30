@@ -5,6 +5,8 @@
 #include "ICallback.h"
 #include "IIdentity.h"
 
+#include <vector>
+
 namespace ExampleApp
 {
     namespace ScreenControl
@@ -34,6 +36,8 @@ namespace ExampleApp
                 
                 virtual bool IsAddedToScreen() const = 0;
             };
+            
+            typedef std::vector<ScreenControl::View::IScreenControlViewModel*> TReactors;
         }
     }
 }

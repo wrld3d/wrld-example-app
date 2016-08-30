@@ -17,8 +17,8 @@ namespace ExampleApp
         {
             class MyPinDetailsModelSelectedObserver : private Eegeo::NonCopyable
             {
-                IMyPinDetailsDisplayService& m_myPinDetailsDisplayService;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<IMyPinDetailsDisplayService> m_myPinDetailsDisplayService;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 Eegeo::Helpers::TCallback1<MyPinDetailsModelSelectedObserver, const UserCreatedMyPinDetailsModelSelectedMessage&> m_userCreatedBinding;
                 Eegeo::Helpers::TCallback1<MyPinDetailsModelSelectedObserver, const SearchResultMyPinDetailsModelSelectedMessage&> m_searchResultBinding;
 
@@ -26,8 +26,8 @@ namespace ExampleApp
                 void OnSearchResultMyPinDetailsModelSelectedMessage(const SearchResultMyPinDetailsModelSelectedMessage& message);
 
             public:
-                MyPinDetailsModelSelectedObserver(IMyPinDetailsDisplayService& myPinDetailsDisplayService,
-                                                  ExampleAppMessaging::TMessageBus& messageBus);
+                MyPinDetailsModelSelectedObserver(const std::shared_ptr<IMyPinDetailsDisplayService>& myPinDetailsDisplayService,
+                                                  const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
 
                 ~MyPinDetailsModelSelectedObserver();
             };

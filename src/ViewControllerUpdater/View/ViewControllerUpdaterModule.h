@@ -2,10 +2,8 @@
 
 #pragma once
 
-#include <vector>
 #include "Types.h"
-#include "ViewControllerUpdater.h"
-#include "IViewControllerUpdaterModule.h"
+#include "IModule.h"
 
 namespace ExampleApp
 {
@@ -13,17 +11,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            class ViewControllerUpdaterModule: public IViewControllerUpdaterModule, private Eegeo::NonCopyable
+            class ViewControllerUpdaterModule : public IModule
             {
-            private:
-                IViewControllerUpdaterModel* m_pViewControllerUpdaterModel;
-
             public:
-                ViewControllerUpdaterModule();
-
-                ~ViewControllerUpdaterModule();
-
-                IViewControllerUpdaterModel& GetViewControllerUpdaterModel() const;
+                void Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder);
             };
         }
     }

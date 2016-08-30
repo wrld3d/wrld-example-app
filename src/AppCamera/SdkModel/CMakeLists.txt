@@ -11,7 +11,6 @@ set(currsources
   ../src/AppCamera/SdkModel/AppGlobeCameraWrapper.h
   ../src/AppCamera/SdkModel/CMakeLists.txt
   ../src/AppCamera/SdkModel/IAppCameraController.h
-  ../src/AppCamera/SdkModel/IAppCameraModule.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\AppCamera\\SdkModel FILES ${currsources})

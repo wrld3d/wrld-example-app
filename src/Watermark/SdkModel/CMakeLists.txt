@@ -2,7 +2,6 @@ set(headers ${headers} ../src/Watermark/SdkModel
 )
 set(currsources
   ../src/Watermark/SdkModel/CMakeLists.txt
-  ../src/Watermark/SdkModel/IWatermarkModule.h
   ../src/Watermark/SdkModel/WatermarkInteriorStateChangedObserver.cpp
   ../src/Watermark/SdkModel/WatermarkInteriorStateChangedObserver.h
   ../src/Watermark/SdkModel/WatermarkModel.h

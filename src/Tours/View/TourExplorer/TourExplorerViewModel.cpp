@@ -10,9 +10,9 @@ namespace ExampleApp
         {
             namespace TourExplorer
             {
-                TourExplorerViewModel::TourExplorerViewModel(Eegeo::Helpers::TIdentity identity,
+                TourExplorerViewModel::TourExplorerViewModel(const std::shared_ptr<Eegeo::Helpers::IIdentityProvider>& identity,
                                                              bool initiallyOnScreen)
-                : m_screenControl(initiallyOnScreen, identity)
+                : m_screenControl(initiallyOnScreen, identity->GetNextIdentity())
                 , m_shouldOffsetViewButton(false)
                 , m_tourModel(SdkModel::TourModel::Empty())
                 , m_initialCard(-1)

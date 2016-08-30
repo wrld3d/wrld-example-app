@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "FlattenButtonViewModel.h"
+#include "IIdentity.h"
 
 namespace ExampleApp
 {
@@ -8,9 +9,9 @@ namespace ExampleApp
     {
         namespace View
         {
-            FlattenButtonViewModel::FlattenButtonViewModel(Eegeo::Helpers::TIdentity identity,
+            FlattenButtonViewModel::FlattenButtonViewModel(const std::shared_ptr<Eegeo::Helpers::IIdentityProvider>& identity,
                     bool initiallyOnScreen)
-                : m_screenControl(initiallyOnScreen, identity)
+                : m_screenControl(initiallyOnScreen, identity->GetNextIdentity())
             {
 
             }

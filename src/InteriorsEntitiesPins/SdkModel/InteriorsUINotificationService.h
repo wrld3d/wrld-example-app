@@ -7,6 +7,8 @@
 #include "BidirectionalBus.h"
 #include "WorldPins.h"
 
+#include <memory>
+
 namespace ExampleApp
 {
     namespace InteriorsExplorer
@@ -17,14 +19,14 @@ namespace ExampleApp
             {
             public:
                 
-                InteriorsUINotificationService(ExampleAppMessaging::TMessageBus& messageBus,
-                                               InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsPinsController,
-                                               const WorldPins::SdkModel::IWorldPinIconMapping& pinIconMapping);
+                InteriorsUINotificationService(const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                               const std::shared_ptr<InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController>& interiorsPinsController,
+                                               const std::shared_ptr<WorldPins::SdkModel::IWorldPinIconMapping>& pinIconMapping);
                 
                 ~InteriorsUINotificationService();
                 
             private:
-                InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& m_interiorsPinsController;
+                const std::shared_ptr<InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController> m_interiorsPinsController;
 
                 Eegeo::Helpers::TCallback1<InteriorsUINotificationService, const std::vector<Eegeo::Pins::Pin*>&> m_interiorsPinSelectedCallback;
                 void OnInteriorPinSelected(const std::vector<Eegeo::Pins::Pin*>& selectedPins);
@@ -32,7 +34,7 @@ namespace ExampleApp
                 std::vector<int> m_notifiableIcons;
                 bool RequiresUINotification(int iconCategory);
 
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
             };
         }
     }

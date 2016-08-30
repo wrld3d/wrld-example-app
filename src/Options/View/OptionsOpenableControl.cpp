@@ -8,7 +8,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            OptionsOpenableControl::OptionsOpenableControl(Eegeo::Helpers::TIdentity identity, Reaction::View::IReactionControllerModel& reactionControllerModel)
+            OptionsOpenableControl::OptionsOpenableControl(Eegeo::Helpers::TIdentity identity, const std::shared_ptr<Reaction::View::IReactionControllerModel>& reactionControllerModel)
                 : OpenableControl::View::OpenableControlViewModelBase(reactionControllerModel)
                 , m_identity(identity)
             {

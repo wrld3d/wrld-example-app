@@ -28,18 +28,18 @@ namespace ExampleApp
             {
             public:
 
-                CameraTransitionController(Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
-                                           Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
-                                           Eegeo::Location::NavigationService& navigationService,
-                                           ExampleApp::InteriorsNavigation::SdkModel::IInteriorsNavigationService& interiorsNavigationService,
-                                           Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
-                                           ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
-                                           ExampleApp::AppCamera::SdkModel::IAppCameraController& appCameraController,
-                                           Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                           Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                           const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
-                                           InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
-                                           ExampleAppMessaging::TMessageBus& messageBus);
+                CameraTransitionController(const std::shared_ptr<Eegeo::Camera::GlobeCamera::GpsGlobeCameraController>& cameraController,
+                                           const std::shared_ptr<Eegeo::Resources::Interiors::InteriorsCameraController>& interiorsCameraController,
+                                           const std::shared_ptr<Eegeo::Location::NavigationService>& navigationService,
+                                           const std::shared_ptr<ExampleApp::InteriorsNavigation::SdkModel::IInteriorsNavigationService>& interiorsNavigationService,
+                                           const std::shared_ptr<Eegeo::Resources::Terrain::Heights::TerrainHeightProvider>& terrainHeightProvider,
+                                           const std::shared_ptr<ExampleApp::AppModes::SdkModel::IAppModeModel>& appModeModel,
+                                           const std::shared_ptr<ExampleApp::AppCamera::SdkModel::IAppCameraController>& appCameraController,
+                                           const std::shared_ptr<Eegeo::Resources::Interiors::InteriorSelectionModel>& interiorSelectionModel,
+                                           const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel,
+                                           const std::shared_ptr<Eegeo::Resources::Interiors::InteriorTransitionModel>& interiorTransitionModel,
+                                           const std::shared_ptr<InteriorsExplorer::SdkModel::InteriorsExplorerModel>& interiorsExplorerModel,
+                                           const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
 
                 void StartTransitionTo(const Eegeo::dv3& newInterestPoint,
                                        float distanceFromInterest,
@@ -102,17 +102,17 @@ namespace ExampleApp
                 
                 void StartQueuedTransition();
                 
-                Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_cameraController;
-                Eegeo::Resources::Interiors::InteriorsCameraController& m_interiorsCameraController;
-                Eegeo::Location::NavigationService& m_navigationService;
-                ExampleApp::InteriorsNavigation::SdkModel::IInteriorsNavigationService& m_interiorsNavigationService;
-                Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& m_terrainHeightProvider;
-                ExampleApp::AppModes::SdkModel::IAppModeModel& m_appModeModel;
-                ExampleApp::AppCamera::SdkModel::IAppCameraController& m_appCameraController;
-                Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
-                Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
-                const Eegeo::Resources::Interiors::InteriorTransitionModel& m_interiorTransitionModel;
-                InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel;
+                const std::shared_ptr<Eegeo::Camera::GlobeCamera::GpsGlobeCameraController> m_cameraController;
+                const std::shared_ptr<Eegeo::Resources::Interiors::InteriorsCameraController> m_interiorsCameraController;
+                const std::shared_ptr<Eegeo::Location::NavigationService> m_navigationService;
+                const std::shared_ptr<ExampleApp::InteriorsNavigation::SdkModel::IInteriorsNavigationService> m_interiorsNavigationService;
+                const std::shared_ptr<Eegeo::Resources::Terrain::Heights::TerrainHeightProvider> m_terrainHeightProvider;
+                const std::shared_ptr<ExampleApp::AppModes::SdkModel::IAppModeModel> m_appModeModel;
+                const std::shared_ptr<ExampleApp::AppCamera::SdkModel::IAppCameraController> m_appCameraController;
+                const std::shared_ptr<Eegeo::Resources::Interiors::InteriorSelectionModel> m_interiorSelectionModel;
+                const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel> m_interiorInteractionModel;
+                const std::shared_ptr<const Eegeo::Resources::Interiors::InteriorTransitionModel> m_interiorTransitionModel;
+                const std::shared_ptr<InteriorsExplorer::SdkModel::InteriorsExplorerModel> m_interiorsExplorerModel;
                
                 Eegeo::Resources::Interiors::InteriorId m_defaultInteriorId;
                 bool m_isTransitioning;

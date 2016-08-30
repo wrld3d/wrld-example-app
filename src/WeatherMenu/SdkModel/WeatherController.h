@@ -19,7 +19,7 @@ namespace ExampleApp
             {
             public:
 
-                WeatherController(VisualMap::SdkModel::IVisualMapService& visualMapService);
+                WeatherController(const std::shared_ptr<VisualMap::SdkModel::IVisualMapService>& visualMapService);
 
                 void SetWeather(const std::string& weather);
                 void SetTime(const std::string& time);
@@ -27,7 +27,7 @@ namespace ExampleApp
                 void SetState(const std::string& state);
 
             private:
-                VisualMap::SdkModel::IVisualMapService& m_visualMapService;
+                std::shared_ptr<VisualMap::SdkModel::IVisualMapService> m_visualMapService;
             };
         }
     }

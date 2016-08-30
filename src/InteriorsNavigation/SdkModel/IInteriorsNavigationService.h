@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "Types.h"
 #include "NavigationService.h"
 
 namespace ExampleApp
@@ -11,7 +10,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class IInteriorsNavigationService : protected Eegeo::NonCopyable
+            class IInteriorsNavigationService
             {
             public:
                 virtual ~IInteriorsNavigationService(){}

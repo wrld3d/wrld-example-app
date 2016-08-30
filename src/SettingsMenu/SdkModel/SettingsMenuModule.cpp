@@ -8,6 +8,7 @@
 #include "MenuSectionViewModel.h"
 #include "MenuViewModel.h"
 #include "OptionsMenuOption.h"
+#include "IReactionControllerModel.h"
 
 namespace ExampleApp
 {
@@ -15,6 +16,70 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+            class SettingsMenuModel : public Menu::View::MenuModel
+            {
+            };
+            
+            class OptionsMenuModel : public Menu::View::MenuModel
+            {
+            };
+            
+            class AboutMenuModel : public Menu::View::MenuModel
+            {
+            };
+            
+            class SettingsMenuOptionsModel : public Menu::View::MenuOptionsModel
+            {
+            public:
+                SettingsMenuOptionsModel(const std::shared_ptr<SettingsMenuModel>& settingsMenuModel) : Menu::View::MenuOptionsModel(*settingsMenuModel)
+                {
+                }
+            };
+            
+            class OptionsMenuOptionsModel : public Menu::View::MenuOptionsModel
+            {
+            public:
+                OptionsMenuOptionsModel(const std::shared_ptr<OptionsMenuModel>& optionsMenuModel) : Menu::View::MenuOptionsModel(*optionsMenuModel)
+                {
+                }
+            };
+            
+            class AboutMenuOptionsModel : public Menu::View::MenuOptionsModel
+            {
+            public:
+                AboutMenuOptionsModel(const std::shared_ptr<AboutMenuModel>& aboutMenuModel) : Menu::View::MenuOptionsModel(*aboutMenuModel)
+                {
+                }
+            };
+            
+            class SettingsMenuViewModel : public Menu::View::MenuViewModel
+            {
+            public:
+                SettingsMenuViewModel(bool isInitiallyOnScreen,
+                                      const std::shared_ptr<Eegeo::Helpers::IIdentityProvider>& identity,
+                                      const std::shared_ptr<Reaction::View::IReactionControllerModel>& reactionControllerModel)
+                : Menu::View::MenuViewModel(isInitiallyOnScreen, identity->GetNextIdentity(), reactionControllerModel)
+                {
+                }
+            };
+            
+            void SettingsMenuModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+            {
+                builder->registerType<SettingsMenuModel>().singleInstance();
+                builder->registerType<SettingsMenuOptionsModel>().singleInstance();
+                builder->registerType<OptionsMenuModel>().singleInstance();
+                builder->registerType<OptionsMenuOptionsModel>().singleInstance();
+                builder->registerType<AboutMenuModel>().singleInstance();
+                builder->registerType<AboutMenuOptionsModel>().singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     return std::make_shared<SettingsMenuViewModel>(false,
+                                                                                                   context.resolve<Eegeo::Helpers::IIdentityProvider>(),
+                                                                                                   context.resolve<Reaction::View::IReactionControllerModel>());
+                                                 }).singleInstance();
+            }
+            
+            /*
             SettingsMenuModule::SettingsMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
                                                    Reaction::View::IReactionControllerModel& reactionControllerModel,
                                                    AboutPage::View::IAboutPageViewModel& aboutPageViewModel,
@@ -43,48 +108,7 @@ namespace ExampleApp
                 AddMenuSection("About", *m_pAboutMenuModel, false);
                 
             }
-            
-            SettingsMenuModule::~SettingsMenuModule()
-            {
-                Eegeo_DELETE m_pOptionsMenuOptionsModel;
-                Eegeo_DELETE m_pOptionsMenuModel;
-                
-                Eegeo_DELETE m_pAboutMenuOptionsModel;
-                Eegeo_DELETE m_pAboutMenuModel;
-                
-                for(std::vector<Menu::View::IMenuSectionViewModel*>::iterator it = m_sections.begin(); it != m_sections.end(); ++ it)
-                {
-                    Eegeo_DELETE *it;
-                }
-                
-                Eegeo_DELETE m_pViewModel;
-                Eegeo_DELETE m_pMenuOptionsModel;
-                Eegeo_DELETE m_pModel;
-            }
-            
-            void SettingsMenuModule::AddMenuSection(const std::string& name,
-                                                    Menu::View::IMenuModel& menuModel,
-                                                    bool isExpandable)
-            {
-                Menu::View::MenuSectionViewModel* pMenuSection = Eegeo_NEW(Menu::View::MenuSectionViewModel)(name, "", menuModel, isExpandable);
-                m_pViewModel->AddSection(*pMenuSection);
-                m_sections.push_back(pMenuSection);
-            }
-            
-            Menu::View::IMenuModel& SettingsMenuModule::GetSettingsMenuModel() const
-            {
-                return *m_pModel;
-            }
-            
-            Menu::View::IMenuOptionsModel& SettingsMenuModule::GetSettingsMenuOptionsModel() const
-            {
-                return *m_pMenuOptionsModel;
-            }
-            
-            Menu::View::IMenuViewModel& SettingsMenuModule::GetSettingsMenuViewModel() const
-            {
-                return *m_pViewModel;
-            }
+            */
         }
     }
 }

@@ -27,11 +27,10 @@ namespace ExampleApp
                 const float m_minimumInteriorInterestLateralDelta;
                 const float m_maximumInterestLateralSpeedAt1km;
 
-                ISearchService& m_searchService;
-                
-                ISearchQueryPerformer& m_searchQueryPerformer;
-                CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionsController;
-                Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
+                std::shared_ptr<ISearchService> m_searchService;
+                std::shared_ptr<ISearchQueryPerformer> m_searchQueryPerformer;
+                std::shared_ptr<CameraTransitions::SdkModel::ICameraTransitionController> m_cameraTransitionsController;
+                std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel> m_interiorInteractionModel;
                 Eegeo::Helpers::TCallback1<SearchRefreshService, const SearchQuery&> m_searchResultQueryIssuedCallback;
                 Eegeo::Helpers::TCallback2<SearchRefreshService, const SearchQuery&, const std::vector<SearchResultModel>&> m_searchResultResponseReceivedCallback;
                 Eegeo::Helpers::TCallback0<SearchRefreshService> m_searchQueryResultsClearedCallback;
@@ -49,10 +48,10 @@ namespace ExampleApp
                 Eegeo::Resources::Interiors::InteriorId m_previousQueryInteriorId;
 
             public:
-                SearchRefreshService(ISearchService& searchService,
-                                     ISearchQueryPerformer& searchQueryPerformer,
-                                     CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
-                                     Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                SearchRefreshService(const std::shared_ptr<ISearchService>& searchService,
+                                     const std::shared_ptr<ISearchQueryPerformer>& searchQueryPerformer,
+                                     const std::shared_ptr<CameraTransitions::SdkModel::ICameraTransitionController>& cameraTransitionsController,
+                                     const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel,
                                      float minimumSecondsBetweenUpdates,
                                      float minimumInterestLateralDeltaAt1km,
                                      float minimumInteriorInterestLateralDelta,

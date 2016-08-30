@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "Types.h"
 #include <vector>
 #include "IStateMachineState.h"
 
@@ -12,7 +11,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class IAppModeStatesFactory : protected Eegeo::NonCopyable
+            class IAppModeStatesFactory
             {
             public:
                 virtual ~IAppModeStatesFactory()

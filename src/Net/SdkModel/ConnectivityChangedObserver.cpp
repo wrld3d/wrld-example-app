@@ -10,23 +10,23 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            ConnectivityChangedObserver::ConnectivityChangedObserver(Eegeo::Web::WebConnectivityValidator& connectivityValidator,
-                                                                     ExampleAppMessaging::TMessageBus& messageBus)
+            ConnectivityChangedObserver::ConnectivityChangedObserver(const std::shared_ptr<Eegeo::Web::WebConnectivityValidator>& connectivityValidator,
+                                                                     const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
             : m_connectivityValidator(connectivityValidator)
             , m_messageBus(messageBus)
             , m_connectivityChangeCallback(this, &ConnectivityChangedObserver::HandleConnectivityChanged)
             {
-                m_connectivityValidator.RegisterStateChangedCallback(m_connectivityChangeCallback);
+                m_connectivityValidator->RegisterStateChangedCallback(m_connectivityChangeCallback);
             }
             
             ConnectivityChangedObserver::~ConnectivityChangedObserver()
             {
-                m_connectivityValidator.UnregisterStateChangedCallback(m_connectivityChangeCallback);
+                m_connectivityValidator->UnregisterStateChangedCallback(m_connectivityChangeCallback);
             }
             
             void ConnectivityChangedObserver::HandleConnectivityChanged()
             {
-                m_messageBus.Publish(ConnectivityChangedViewMessage(m_connectivityValidator.IsValid()));
+                m_messageBus->Publish(ConnectivityChangedViewMessage(m_connectivityValidator->IsValid()));
             }
         }
     }

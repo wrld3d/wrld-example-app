@@ -21,6 +21,7 @@ namespace ExampleApp
             {
                 struct ToursCameraState;
                 
+                class TourGlobeCameraTouchController;
                 class IToursCameraMode;
                 class IToursCameraTransitionMode;
                 class IToursCameraController;

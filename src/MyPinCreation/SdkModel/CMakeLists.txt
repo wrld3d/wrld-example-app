@@ -3,7 +3,6 @@ set(headers ${headers} ../src/MyPinCreation/SdkModel
 set(currsources
   ../src/MyPinCreation/SdkModel/CMakeLists.txt
   ../src/MyPinCreation/SdkModel/IMyPinCreationModel.h
-  ../src/MyPinCreation/SdkModel/IMyPinCreationModule.h
   ../src/MyPinCreation/SdkModel/MyPinCreationModel.cpp
   ../src/MyPinCreation/SdkModel/MyPinCreationModel.h
   ../src/MyPinCreation/SdkModel/MyPinCreationModelObserver.cpp

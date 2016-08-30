@@ -16,15 +16,15 @@ namespace ExampleApp
         {
             class CompletedCacheClearMessageHandler : private Eegeo::NonCopyable
             {
-                IOptionsViewModel& m_optionsViewModel;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<IOptionsViewModel> m_optionsViewModel;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 Eegeo::Helpers::TCallback1<CompletedCacheClearMessageHandler, const CompletedCacheClearMessage&> m_messageHandlerBinding;
                 
                 void OnCompletedCacheClear(const CompletedCacheClearMessage& message);
                 
             public:
-                CompletedCacheClearMessageHandler(IOptionsViewModel& optionsViewModel,
-                                                  ExampleAppMessaging::TMessageBus& messageBus);
+                CompletedCacheClearMessageHandler(const std::shared_ptr<IOptionsViewModel>& optionsViewModel,
+                                                  const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
                 
                 ~CompletedCacheClearMessageHandler();
             };

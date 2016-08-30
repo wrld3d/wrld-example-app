@@ -39,7 +39,7 @@ namespace ExampleApp
             {
                 const char* YelpCategoryTaxonomyUrl("https://cdn1.eegeo.com/search/yelp/v2/en/category.json.gz");
                 
-                YelpCategoryMapper::YelpCategoryMapper(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
+                YelpCategoryMapper::YelpCategoryMapper(const std::shared_ptr<Eegeo::Web::IWebLoadRequestFactory>& webRequestFactory,
                                                        const std::map<std::string, std::string>& yelpToApplicationCategoryMap,
                                                        const std::string& defaultCategory)
                 : m_webRequestFactory(webRequestFactory)
@@ -100,7 +100,7 @@ namespace ExampleApp
                 {
                     Eegeo_ASSERT(!m_hasDownloadedTaxonomy);
                     m_isDownloadingTaxonomy = true;
-                    m_webRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, YelpCategoryTaxonomyUrl, m_yelpTaxonomyRequestCompletedCallback)
+                    m_webRequestFactory->Begin(Eegeo::Web::HttpVerbs::GET, YelpCategoryTaxonomyUrl, m_yelpTaxonomyRequestCompletedCallback)
                         .Build()->Load();
                 }
                 

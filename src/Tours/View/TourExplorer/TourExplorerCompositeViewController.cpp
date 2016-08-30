@@ -12,10 +12,10 @@ namespace ExampleApp
         {
             namespace TourExplorer
             {
-                TourExplorerCompositeViewController::TourExplorerCompositeViewController(ITourExplorerViewModel& tourExplorerViewModel,
-                                                                                         Menu::View::IMenuViewModel& searchMenuViewModel,
-                                                                                         Menu::View::IMenuViewModel& settingsMenuViewModel,
-                                                                                         ScreenControl::View::IScreenControlViewModel& watermarkViewModel)
+                TourExplorerCompositeViewController::TourExplorerCompositeViewController(const std::shared_ptr<ITourExplorerViewModel>& tourExplorerViewModel,
+                                                                                         const std::shared_ptr<Menu::View::IMenuViewModel>& searchMenuViewModel,
+                                                                                         const std::shared_ptr<Menu::View::IMenuViewModel>& settingsMenuViewModel,
+                                                                                         const std::shared_ptr<ScreenControl::View::IScreenControlViewModel>& watermarkViewModel)
                 : m_tourExplorerViewModel(tourExplorerViewModel)
                 , m_searchMenuViewModel(searchMenuViewModel)
                 , m_settingsMenuViewModel(searchMenuViewModel)
@@ -32,13 +32,13 @@ namespace ExampleApp
                 void TourExplorerCompositeViewController::OpenTourExplorer(const SdkModel::TourModel& tourModel, const int startAtCard, bool showBackButton)
                 {
                     m_tourExplorerOpen = true;
-                    m_tourExplorerViewModel.SetCurrentTour(tourModel);
-                    m_tourExplorerViewModel.SetInitialCard(startAtCard);
-                    m_tourExplorerViewModel.SetShowBackButton(showBackButton);
-                    m_tourExplorerViewModel.AddToScreen();
+                    m_tourExplorerViewModel->SetCurrentTour(tourModel);
+                    m_tourExplorerViewModel->SetInitialCard(startAtCard);
+                    m_tourExplorerViewModel->SetShowBackButton(showBackButton);
+                    m_tourExplorerViewModel->AddToScreen();
                    
-                    m_searchMenuViewModel.RemoveFromScreen();
-                    m_settingsMenuViewModel.RemoveFromScreen();
+                    m_searchMenuViewModel->RemoveFromScreen();
+                    m_settingsMenuViewModel->RemoveFromScreen();
                     
                 }
                 
@@ -47,10 +47,10 @@ namespace ExampleApp
                     if(m_tourExplorerOpen)
                     {
                         m_tourExplorerOpen = false;
-                        m_tourExplorerViewModel.RemoveFromScreen();
+                        m_tourExplorerViewModel->RemoveFromScreen();
                         
-                        m_searchMenuViewModel.AddToScreen();
-                        m_settingsMenuViewModel.AddToScreen();
+                        m_searchMenuViewModel->AddToScreen();
+                        m_settingsMenuViewModel->AddToScreen();
                     }
                 }
             }

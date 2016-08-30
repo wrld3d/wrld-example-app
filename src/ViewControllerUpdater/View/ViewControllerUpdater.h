@@ -10,7 +10,6 @@ namespace ExampleApp
         {
             class IUpdateableViewController;
             class IViewControllerUpdaterModel;
-            class IViewControllerUpdaterModule;
         }
     }
 }

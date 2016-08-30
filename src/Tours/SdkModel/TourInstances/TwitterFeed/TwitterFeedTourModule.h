@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "ITwitterFeedTourModule.h"
 #include "Types.h"
 #include "TwitterFeedTour.h"
 #include "Tours.h"
@@ -22,7 +21,7 @@ namespace ExampleApp
             {
                 namespace TwitterFeed
                 {
-                    class TwitterFeedTourModule : public ITwitterFeedTourModule, private Eegeo::NonCopyable
+                    class TwitterFeedTourModule : private Eegeo::NonCopyable
                     {
                     private:
                         TwitterFeedTourObserver* m_pTwitterFeedTourObserver;

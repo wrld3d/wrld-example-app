@@ -30,8 +30,6 @@ namespace ExampleApp
                     m_messageBus.Publish(FlattenButton::FlattenButtonViewStateChangedMessage(false));
                     m_messageBus.Publish(WeatherSelectedMessage(m_weatherStateModel));
                 }
-
-                
             }
         }
     }

@@ -14,17 +14,13 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                YelpBusinessQueryFactory::YelpBusinessQueryFactory(
-                                                               const std::string& yelpConsumerKey,
-                                                               const std::string& yelpConsumerSecret,
-                                                               const std::string& yelpOAuthToken,
-                                                               const std::string& yelpOAuthTokenSecret,
-                                                               const YelpBusinessJsonParser& yelpBusinessParser,
-                                                               Eegeo::Web::IWebLoadRequestFactory& webRequestFactory)
+                YelpBusinessQueryFactory::YelpBusinessQueryFactory(const std::shared_ptr<ExampleApp::ApplicationConfig::ApplicationConfiguration>& config,
+                                                                   const std::shared_ptr<YelpBusinessJsonParser>& yelpBusinessParser,
+                                                                   const std::shared_ptr<Eegeo::Web::IWebLoadRequestFactory>& webRequestFactory)
                 : m_yelpBusinessParser(yelpBusinessParser)
                 , m_webRequestFactory(webRequestFactory)
-                , m_consumer(yelpConsumerKey, yelpConsumerSecret)
-                , m_token(yelpOAuthToken, yelpOAuthTokenSecret)
+                , m_consumer(config->YelpConsumerKey(), config->YelpConsumerSecret())
+                , m_token(config->YelpOAuthToken(), config->YelpOAuthTokenSecret())
                 , m_client(&m_consumer, &m_token)
                 , m_apiUrl("https://api.yelp.com/v2/business/")
                 {
@@ -41,7 +37,7 @@ namespace ExampleApp
 
                     ss << oauthParams;
                     
-                    return Eegeo_NEW(YelpBusinessQuery)(ss.str(), completionCallback, m_webRequestFactory, m_yelpBusinessParser);
+                    return Eegeo_NEW(YelpBusinessQuery)(ss.str(), completionCallback, *m_webRequestFactory, *m_yelpBusinessParser);
                 }
             }
         }

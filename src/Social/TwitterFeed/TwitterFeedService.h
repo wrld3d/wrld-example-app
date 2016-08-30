@@ -8,6 +8,7 @@
 #include "TwitterFeed.h"
 #include "Web.h"
 #include "CallbackCollection.h"
+#include "ApplicationConfiguration.h"
 #include <queue>
 #include <map>
 
@@ -56,7 +57,7 @@ namespace ExampleApp
                 const std::string m_twitterAuthCode;
                 std::string m_accessToken;
                 
-                Eegeo::Web::IWebLoadRequestFactory& m_webLoadRequestFactory;
+                const std::shared_ptr<Eegeo::Web::IWebLoadRequestFactory> m_webLoadRequestFactory;
                 
                 Eegeo::Web::IWebLoadRequest* m_pCurrentAuthRequest;
                 Eegeo::Web::IWebLoadRequest* m_pCurrentTimeLineRequest;
@@ -75,7 +76,8 @@ namespace ExampleApp
                 void ClearAccountNameQueue();
                 
             public:
-                TwitterFeedService(const std::string& twitterAuthCode, Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory);
+                TwitterFeedService(const std::shared_ptr<ExampleApp::ApplicationConfig::ApplicationConfiguration>& appConfig,
+                                   const std::shared_ptr<Eegeo::Web::IWebLoadRequestFactory>& webLoadRequestFactory);
                 ~TwitterFeedService();
                 
                 void LoadTimeline(const std::string& userId);

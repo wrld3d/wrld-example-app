@@ -2,14 +2,7 @@
 
 #pragma once
 
-// eeGeo SDK includes
-#include "Types.h"
-// App includes
-#include "AppCamera.h"
-#include "BidirectionalBus.h"
-#include "ICameraTransitionController.h"
-#include "InteriorsExplorer.h"
-#include "UserInteraction.h"
+#include "Hypodermic/ContainerBuilder.h"
 
 namespace ExampleApp
 {
@@ -17,6 +10,13 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+            class UserInteractionModule
+            {
+            public:
+                void Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder);
+            };
+            
+            /*
             class UserInteractionModule : Eegeo::NonCopyable
             {
             private:
@@ -33,7 +33,7 @@ namespace ExampleApp
                 ~UserInteractionModule();
                 
                 const UserInteractionModel& GetUserInteractionModel() const;
-            };
+            };*/
         }
     }
 }

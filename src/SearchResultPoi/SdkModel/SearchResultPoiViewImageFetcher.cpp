@@ -16,8 +16,8 @@ namespace ExampleApp
         namespace SdkModel
         {
             
-            SearchResultPoiViewImageFetcher::SearchResultPoiViewImageFetcher(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
-                                                                             ExampleAppMessaging::TMessageBus& messageBus)
+            SearchResultPoiViewImageFetcher::SearchResultPoiViewImageFetcher(const std::shared_ptr<Eegeo::Web::IWebLoadRequestFactory>& webRequestFactory,
+                                                                             const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
             : m_webRequestFactory(webRequestFactory)
             , m_messageBus(messageBus)
             , m_webRequestCallback(this, &SearchResultPoiViewImageFetcher::OnImageFetchResponseReceived)
@@ -37,14 +37,14 @@ namespace ExampleApp
                     pImageBytes = webResponse.TransferResourceDataOwnership();
                 }
                 
-                m_messageBus.Publish(SearchResultPoiViewImageDownloadCompletedMessage(webResponse.GetUrl(),
+                m_messageBus->Publish(SearchResultPoiViewImageDownloadCompletedMessage(webResponse.GetUrl(),
                                                                                       pImageBytes,
                                                                                       webResponse.IsSucceeded()));
             }
             
             void SearchResultPoiViewImageFetcher::FetchImageForSearchResult(const std::string& imageUrl)
             {
-                m_webRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, imageUrl, m_webRequestCallback).Build()->Load();
+                m_webRequestFactory->Begin(Eegeo::Web::HttpVerbs::GET, imageUrl, m_webRequestCallback).Build()->Load();
             }
         }
     }

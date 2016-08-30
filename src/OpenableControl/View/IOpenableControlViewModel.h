@@ -4,6 +4,7 @@
 
 #include "ICallback.h"
 #include "IIdentity.h"
+#include <vector>
 
 namespace ExampleApp
 {
@@ -38,6 +39,8 @@ namespace ExampleApp
 
                 virtual float OpenState() const = 0;
             };
+
+            typedef std::vector<OpenableControl::View::IOpenableControlViewModel*> TOpenables;
         }
     }
 }

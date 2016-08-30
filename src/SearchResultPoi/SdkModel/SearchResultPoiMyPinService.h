@@ -17,14 +17,14 @@ namespace ExampleApp
         {
             class SearchResultPoiMyPinService : public ISearchResultPoiMyPinService, private Eegeo::NonCopyable
             {
-                MyPins::SdkModel::IMyPinsService& m_myPinsService;
-                Search::SdkModel::MyPins::ISearchResultMyPinsService& m_searchResultMyPinsService;
-                CategorySearch::ISearchResultIconCategoryMapper& m_searchResultIconCategoryMapper;
+                const std::shared_ptr<MyPins::SdkModel::IMyPinsService> m_myPinsService;
+                const std::shared_ptr<Search::SdkModel::MyPins::ISearchResultMyPinsService> m_searchResultMyPinsService;
+                const std::shared_ptr<CategorySearch::ISearchResultIconCategoryMapper> m_searchResultIconCategoryMapper;
                 
             public:
-                SearchResultPoiMyPinService(MyPins::SdkModel::IMyPinsService& myPinsService,
-                                            Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultMyPinsService,
-                                            CategorySearch::ISearchResultIconCategoryMapper& searchResultIconCategoryMapper);
+                SearchResultPoiMyPinService(const std::shared_ptr<MyPins::SdkModel::IMyPinsService>& myPinsService,
+                                            const std::shared_ptr<Search::SdkModel::MyPins::ISearchResultMyPinsService>& searchResultMyPinsService,
+                                            const std::shared_ptr<CategorySearch::ISearchResultIconCategoryMapper>& searchResultIconCategoryMapper);
                 
                 ~SearchResultPoiMyPinService();
                 

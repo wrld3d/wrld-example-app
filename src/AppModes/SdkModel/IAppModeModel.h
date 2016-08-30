@@ -25,7 +25,7 @@ namespace ExampleApp
                 TourMode
             };
 
-            class IAppModeModel : protected Eegeo::NonCopyable
+            class IAppModeModel
             {
             public:
                 virtual ~IAppModeModel()

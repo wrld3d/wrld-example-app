@@ -2,15 +2,7 @@
 
 #pragma once
 
-#include "ICategorySearchModule.h"
-#include "Types.h"
-#include "Search.h"
-#include "Menu.h"
-#include "CategorySearchSelectedMessageHandler.h"
-#include "BidirectionalBus.h"
-#include "CategorySearchModel.h"
-#include "IMetricsService.h"
-#include "IMenuReactionModel.h"
+#include "IModule.h"
 
 namespace ExampleApp
 {
@@ -18,30 +10,10 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class CategorySearchModule : public ICategorySearchModule, private Eegeo::NonCopyable
+            class CategorySearchModule : public IModule
             {
             public:
-                CategorySearchModule(const std::vector<CategorySearch::View::CategorySearchModel>& categorySearchModels,
-                                     Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                                     Menu::View::IMenuViewModel& menuViewModel,
-                                     ExampleAppMessaging::TMessageBus& messageBus,
-                                     Metrics::IMetricsService& metricsService,
-                                     const Menu::View::IMenuReactionModel& menuReaction);
-
-                ~CategorySearchModule();
-
-                Menu::View::IMenuModel& GetCategorySearchMenuModel() const;
-
-                View::ICategorySearchRepository& GetCategorySearchRepository() const;
-                
-                ISearchResultIconCategoryMapper& GetSearchResultIconCategoryMapper() const;
-
-            private:
-                Menu::View::IMenuModel* m_pMenuModel;
-                Menu::View::IMenuOptionsModel* m_pMenuOptionsModel;
-                View::ICategorySearchRepository* m_pCategorySearchRepository;
-                CategorySearchSelectedMessageHandler* m_pCategorySearchSelectedMessageHandler;
-                ISearchResultIconCategoryMapper* m_pSearchResultIconCategoryMapper;
+                void Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder);
             };
         }
     }

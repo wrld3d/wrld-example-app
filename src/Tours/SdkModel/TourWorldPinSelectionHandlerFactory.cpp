@@ -10,8 +10,8 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            TourWorldPinSelectionHandlerFactory::TourWorldPinSelectionHandlerFactory(ITourService& tourService,
-                                                                                     AppModes::SdkModel::IAppModeModel& appModeModel)
+            TourWorldPinSelectionHandlerFactory::TourWorldPinSelectionHandlerFactory(const std::shared_ptr<ITourService>& tourService,
+                                                                                     const std::shared_ptr<AppModes::SdkModel::IAppModeModel>& appModeModel)
             : m_tourService(tourService)
             , m_appModeModel(appModeModel)
             {
@@ -21,8 +21,8 @@ namespace ExampleApp
             ExampleApp::WorldPins::SdkModel::IWorldPinSelectionHandler* TourWorldPinSelectionHandlerFactory::CreateSelectionHandler(TourModel& model)
             {
                 return Eegeo_NEW(TourWorldPinSelectionHandler)(model,
-                                                               m_tourService,
-                                                               m_appModeModel);
+                                                               *m_tourService,
+                                                               *m_appModeModel);
             }
         };
     }

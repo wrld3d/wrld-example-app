@@ -8,6 +8,7 @@
 #include "YelpSearchConstants.h"
 #include "YelpSearchQueryFactory.h"
 #include "YelpBusinessQueryFactory.h"
+#include "INetworkCapabilities.h"
 
 namespace ExampleApp
 {
@@ -15,70 +16,35 @@ namespace ExampleApp
     {
         namespace Yelp
         {
-            YelpSearchServiceModule::YelpSearchServiceModule(
-                Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
-                Net::SdkModel::INetworkCapabilities& networkCapabilities,
-                Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
-				const std::string& yelpConsumerKey,
-				const std::string& yelpConsumerSecret,
-				const std::string& yelpOAuthToken,
-				const std::string& yelpOAuthTokenSecret,
-                Eegeo::Helpers::IFileIO& fileIO)
-            : m_pSearchService(NULL)
-            , m_pSearchQueryFactory(NULL)
-            , m_pYelpBusinessQueryFactory(NULL)
-            , m_pYelpSearchJsonParser(NULL)
-            , m_pYelpBusinessJsonParser(NULL)
-            , m_pYelpCategoryMapper(NULL)
+            YelpSearchServiceModule::YelpSearchServiceModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+            : m_builder(builder)
             {
-                m_pYelpCategoryMapper = Eegeo_NEW(Yelp::SdkModel::YelpCategoryMapper)(webRequestFactory,
-                    Yelp::SearchConstants::GetYelpFoundationCategoryToApplicationCategoryMap(fileIO),
-                    Yelp::SearchConstants::GetDefaultCategory());
-
-                m_pYelpSearchJsonParser = Eegeo_NEW(Yelp::SdkModel::YelpSearchJsonParser)(*m_pYelpCategoryMapper);
-                
-                m_pYelpBusinessJsonParser = Eegeo_NEW(Yelp::SdkModel::YelpBusinessJsonParser)(*m_pYelpCategoryMapper);
-
-                m_pSearchQueryFactory = Eegeo_NEW(Yelp::SdkModel::YelpSearchQueryFactory)(
-                    yelpConsumerKey,
-                    yelpConsumerSecret,
-                    yelpOAuthToken,
-                    yelpOAuthTokenSecret,
-                    webRequestFactory);
-                
-                m_pYelpBusinessQueryFactory = Eegeo_NEW(Yelp::SdkModel::YelpBusinessQueryFactory)(
-                                                                                                  yelpConsumerKey,
-                                                                                                  yelpConsumerSecret,
-                                                                                                  yelpOAuthToken,
-                                                                                                  yelpOAuthTokenSecret,
-                                                                                                  *m_pYelpBusinessJsonParser,
-                                                                                                  webRequestFactory);
-
-                m_pSearchService = Eegeo_NEW(Yelp::SdkModel::YelpSearchService)(*m_pSearchQueryFactory,
-                                                                                *m_pYelpBusinessQueryFactory,
-                                                                                *m_pYelpSearchJsonParser,
-                                                                                networkCapabilities,
-                                                                                Yelp::SearchConstants::GetCategories());
             }
-
-            YelpSearchServiceModule::~YelpSearchServiceModule()
+            
+            void YelpSearchServiceModule::Register()
             {
-                Eegeo_DELETE m_pSearchService;
-                Eegeo_DELETE m_pSearchQueryFactory;
-                Eegeo_DELETE m_pYelpBusinessQueryFactory;
-                Eegeo_DELETE m_pYelpSearchJsonParser;
-                Eegeo_DELETE m_pYelpBusinessJsonParser;
-                Eegeo_DELETE m_pYelpCategoryMapper;
-            }
-
-            Search::SdkModel::ISearchService& YelpSearchServiceModule::GetSearchService() const
-            {
-                return *m_pSearchService;
-            }
-
-            std::vector<CategorySearch::View::CategorySearchModel> YelpSearchServiceModule::GetCategorySearchModels() const
-            {
-                return Yelp::SearchConstants::GetCategorySearchModels();
+                m_builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                   {
+                                                       return std::make_shared<Yelp::SdkModel::YelpCategoryMapper>(
+                                                            context.resolve<Eegeo::Web::IWebLoadRequestFactory>(),
+                                                            Yelp::SearchConstants::GetYelpFoundationCategoryToApplicationCategoryMap(*(context.resolve<Eegeo::Helpers::IFileIO>())),
+                                                            Yelp::SearchConstants::GetDefaultCategory()
+                                                       );
+                                                   }).singleInstance();
+                m_builder->registerType<Yelp::SdkModel::YelpSearchJsonParser>().singleInstance();
+                m_builder->registerType<Yelp::SdkModel::YelpBusinessJsonParser>().singleInstance();
+                m_builder->registerType<Yelp::SdkModel::YelpSearchQueryFactory>().singleInstance();
+                m_builder->registerType<Yelp::SdkModel::YelpBusinessQueryFactory>().singleInstance();
+                m_builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                   {
+                                                       return std::make_shared<Yelp::SdkModel::YelpSearchService>(
+                                                            context.resolve<Yelp::SdkModel::YelpSearchQueryFactory>(),
+                                                            context.resolve<Yelp::SdkModel::YelpBusinessQueryFactory>(),
+                                                            context.resolve<Yelp::SdkModel::YelpSearchJsonParser>(),
+                                                            context.resolve<Net::SdkModel::INetworkCapabilities>(),
+                                                            Yelp::SearchConstants::GetCategories()
+                                                       );
+                                                   }).singleInstance();
             }
         }
     }

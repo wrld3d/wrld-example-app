@@ -17,15 +17,15 @@ namespace ExampleApp
             class CompassViewCycledObserver : private Eegeo::NonCopyable
             {
             private:
-                ExampleAppMessaging::TMessageBus& m_messageBus;
-                ICompassModel& m_model;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
+                const std::shared_ptr<ICompassModel> m_model;
                 Eegeo::Helpers::TCallback1<CompassViewCycledObserver, const CompassViewCycledMessage&> m_handler;
 
                 void OnCompassViewCycledMessage(const CompassViewCycledMessage& message);
 
             public:
-                CompassViewCycledObserver(ICompassModel& model,
-                                          ExampleAppMessaging::TMessageBus& messageBus
+                CompassViewCycledObserver(const std::shared_ptr<ICompassModel>& model,
+                                          const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus
                                          );
 
                 ~CompassViewCycledObserver();

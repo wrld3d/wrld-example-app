@@ -7,6 +7,7 @@ set(currsources
   ../src/SearchMenu/View/SearchMenuController.h
   ../src/SearchMenu/View/DesktopSearchMenuController.cpp
   ../src/SearchMenu/View/DesktopSearchMenuController.h
+  ../src/SearchMenu/View/SearchMenuOptions.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\SearchMenu\\View FILES ${currsources})

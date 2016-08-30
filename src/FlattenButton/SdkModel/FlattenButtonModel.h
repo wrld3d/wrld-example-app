@@ -17,7 +17,7 @@ namespace ExampleApp
         {
             class FlattenButtonModel : public IFlattenButtonModel, private Eegeo::NonCopyable
             {
-                MapMode::SdkModel::IMapModeModel& m_mapModeModel;
+                const std::shared_ptr<MapMode::SdkModel::IMapModeModel> m_mapModeModel;
 
                 Eegeo::Helpers::CallbackCollection0 m_changedCallbacks;
                 Eegeo::Helpers::TCallback0<FlattenButtonModel> m_onMapModeChangedCallback;
@@ -26,7 +26,7 @@ namespace ExampleApp
 
             public:
 
-                FlattenButtonModel(MapMode::SdkModel::IMapModeModel& mapModeModel);
+                FlattenButtonModel(const std::shared_ptr<MapMode::SdkModel::IMapModeModel>& mapModeModel);
 
                 ~FlattenButtonModel();
 

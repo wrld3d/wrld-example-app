@@ -2,12 +2,7 @@
 
 #pragma once
 
-#include "Types.h"
-#include "ITwitterFeedModule.h"
-#include "TwitterFeed.h"
-#include "Web.h"
-
-#include <string>
+#include "Hypodermic/ContainerBuilder.h"
 
 namespace ExampleApp
 {
@@ -15,15 +10,14 @@ namespace ExampleApp
     {
         namespace TwitterFeed
         {
-            class TwitterFeedModule : public ITwitterFeedModule, public Eegeo::NonCopyable
+            class TwitterFeedModule
             {
-            private:
-                ITwitterFeedService* m_pTwitterFeedService;
             public:
-                TwitterFeedModule(const std::string& twitterAuthCode, Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory);
-                ~TwitterFeedModule();
+                TwitterFeedModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder);
                 
-                ITwitterFeedService& GetTwitterFeedService() const;
+                void Register();
+            private:
+                const std::shared_ptr<Hypodermic::ContainerBuilder> m_builder;
             };
         }
     }

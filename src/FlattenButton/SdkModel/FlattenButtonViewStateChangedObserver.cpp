@@ -8,29 +8,29 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            FlattenButtonViewStateChangedObserver::FlattenButtonViewStateChangedObserver(IFlattenButtonModel& flattenButtonModel,
-                    ExampleAppMessaging::TMessageBus& messageBus)
+            FlattenButtonViewStateChangedObserver::FlattenButtonViewStateChangedObserver(const std::shared_ptr<IFlattenButtonModel>& flattenButtonModel,
+                                                                                         const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
                 : m_flattenButtonModel(flattenButtonModel)
                 , m_messageBus(messageBus)
                 , m_handlerBinding(this, &FlattenButtonViewStateChangedObserver::OnFlattenButtonStateChangedMessage)
             {
-                m_messageBus.SubscribeNative(m_handlerBinding);
+                m_messageBus->SubscribeNative(m_handlerBinding);
             }
 
             FlattenButtonViewStateChangedObserver::~FlattenButtonViewStateChangedObserver()
             {
-                m_messageBus.UnsubscribeNative(m_handlerBinding);
+                m_messageBus->UnsubscribeNative(m_handlerBinding);
             }
 
             void FlattenButtonViewStateChangedObserver::OnFlattenButtonStateChangedMessage(const FlattenButtonViewStateChangedMessage& message)
             {
                 if(message.IsFlattened())
                 {
-                    m_flattenButtonModel.Flatten();
+                    m_flattenButtonModel->Flatten();
                 }
                 else
                 {
-                    m_flattenButtonModel.Unflatten();
+                    m_flattenButtonModel->Unflatten();
                 }
             }
         }

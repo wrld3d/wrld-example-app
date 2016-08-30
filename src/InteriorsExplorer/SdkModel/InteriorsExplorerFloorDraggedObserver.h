@@ -6,6 +6,7 @@
 #include "ITouchController.h"
 #include "Types.h"
 #include "ICallback.h"
+#include <memory>
 
 namespace ExampleApp
 {
@@ -17,8 +18,8 @@ namespace ExampleApp
             {
             public:
                 
-                InteriorsExplorerFloorDraggedObserver(InteriorsExplorerModel& interiorExplorerModel,
-                                                      Eegeo::ITouchController& interiorCameraTouchController);
+                InteriorsExplorerFloorDraggedObserver(const std::shared_ptr<InteriorsExplorerModel>& interiorExplorerModel,
+                                                      const std::shared_ptr<Eegeo::ITouchController>& interiorCameraTouchController);
                 
                 ~InteriorsExplorerFloorDraggedObserver();
                 
@@ -26,8 +27,8 @@ namespace ExampleApp
                 
                 void OnFloorDragged();
                 
-                InteriorsExplorerModel& m_interiorExplorerModel;
-                Eegeo::ITouchController& m_interiorCameraTouchController;
+                const std::shared_ptr<InteriorsExplorerModel> m_interiorExplorerModel;
+                const std::shared_ptr<Eegeo::ITouchController> m_interiorCameraTouchController;
                 Eegeo::Helpers::TCallback0<InteriorsExplorerFloorDraggedObserver> m_floorDraggedCallback;
             };
         }

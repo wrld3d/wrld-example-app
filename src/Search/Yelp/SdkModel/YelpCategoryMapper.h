@@ -22,7 +22,7 @@ namespace ExampleApp
                 {
                     typedef std::map<std::string, std::string>::iterator mapIt;
                     
-                    Eegeo::Web::IWebLoadRequestFactory& m_webRequestFactory;
+                    std::shared_ptr<Eegeo::Web::IWebLoadRequestFactory> m_webRequestFactory;
                     std::map<std::string, std::string> m_yelpLeafCategoryToYelpFoundationCategoryMap;
                     std::map<std::string, std::string> m_yelpToApplicationCategoryMap;
                     std::string m_defaultCategory;
@@ -35,7 +35,7 @@ namespace ExampleApp
                     void ParseYelpCategoryTaxonomy(const std::string& serializedTaxonomyJson);
                     
                 public:
-                    YelpCategoryMapper(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
+                    YelpCategoryMapper(const std::shared_ptr<Eegeo::Web::IWebLoadRequestFactory>& webRequestFactory,
                                        const std::map<std::string, std::string>& yelpToApplicationCategoryMap,
                                        const std::string& defaultCategory);
                     

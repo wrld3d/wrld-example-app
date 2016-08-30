@@ -8,6 +8,8 @@
 #include "Pins.h"
 #include "Rendering.h"
 #include "Interiors.h"
+#include "PlatformConfig.h"
+#include <memory>
 
 namespace ExampleApp
 {
@@ -18,16 +20,16 @@ namespace ExampleApp
             class WorldPinsFloorHeightController : public IWorldPinsFloorHeightController, private Eegeo::NonCopyable
             {
             private:
-                IWorldPinsRepository& m_worldPinsRepository;
-                Eegeo::Pins::PinRepository& m_pinRepository;
-                const Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
+                const std::shared_ptr<IWorldPinsRepository>& m_worldPinsRepository;
+                const std::shared_ptr<Eegeo::Pins::PinRepository>& m_pinRepository;
+                const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& m_interiorInteractionModel;
                 const bool m_interiorsAffectedByFlattening;
                 
             public:
-                WorldPinsFloorHeightController(IWorldPinsRepository& worldPinsRepository,
-                                               Eegeo::Pins::PinRepository& pinRepository,
-                                               const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                               const bool interiorsAffectedByFlattening);
+                WorldPinsFloorHeightController(const std::shared_ptr<IWorldPinsRepository>& worldPinsRepository,
+                                               const std::shared_ptr<Eegeo::Pins::PinRepository>& pinRepository,
+                                               const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel,
+                                               const std::shared_ptr<Eegeo::Config::PlatformConfig>& platformConfig);
                 
                 ~WorldPinsFloorHeightController();
                 

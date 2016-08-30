@@ -15,16 +15,15 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                EegeoSearchQueryFactory::EegeoSearchQueryFactory(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
-                                                                 Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
-                                                                 const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                                                 const std::string& serviceUrl,
-							         const std::string& apiKey)
+                EegeoSearchQueryFactory::EegeoSearchQueryFactory(const std::shared_ptr<Eegeo::Web::IWebLoadRequestFactory>& webRequestFactory,
+                                                                 const std::shared_ptr<Eegeo::Helpers::UrlHelpers::IUrlEncoder>& urlEncoder,
+                                                                 const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel,
+                                                                 const std::shared_ptr<ExampleApp::ApplicationConfig::ApplicationConfiguration>& config)
                 : m_webRequestFactory(webRequestFactory)
                 , m_interiorInteractionModel(interiorInteractionModel)
                 , m_urlEncoder(urlEncoder)
-                , m_serviceUrl(serviceUrl)
-                , m_apiKey(apiKey)
+                , m_serviceUrl(config->EegeoSearchServiceUrl())
+                , m_apiKey(config->EegeoApiKey())
                 {
                     
                 }
@@ -37,23 +36,23 @@ namespace ExampleApp
                 IEegeoSearchQuery* EegeoSearchQueryFactory::CreateEegeoSearchForQuery(const Search::SdkModel::SearchQuery& query,
                                                                                                   Eegeo::Helpers::ICallback0& completionCallback)
                 {
-                    if (m_interiorInteractionModel.HasInteriorModel() && query.IsCategory() && query.ShouldTryInteriorSearch())
+                    if (m_interiorInteractionModel->HasInteriorModel() && query.IsCategory() && query.ShouldTryInteriorSearch())
                     {
                         
-                        const Eegeo::Resources::Interiors::InteriorsModel& interiorsModel = *m_interiorInteractionModel.GetInteriorModel();
-                        return Eegeo_NEW(EegeoInteriorSearchQuery)(m_webRequestFactory,
-                                                                   m_urlEncoder,
+                        const Eegeo::Resources::Interiors::InteriorsModel& interiorsModel = *m_interiorInteractionModel->GetInteriorModel();
+                        return Eegeo_NEW(EegeoInteriorSearchQuery)(*m_webRequestFactory,
+                                                                   *m_urlEncoder,
                                                                    query,
                                                                    m_serviceUrl,
                                                                    m_apiKey,
                                                                    interiorsModel.GetId(),
-                                                                   m_interiorInteractionModel.GetSelectedFloorIndex(),
+                                                                   m_interiorInteractionModel->GetSelectedFloorIndex(),
                                                                    completionCallback);
                     }
                     else
                     {
-                        return Eegeo_NEW(EegeoSearchQuery)(m_webRequestFactory,
-                                                           m_urlEncoder,
+                        return Eegeo_NEW(EegeoSearchQuery)(*m_webRequestFactory,
+                                                           *m_urlEncoder,
                                                            query,
                                                            m_serviceUrl,
                                                            m_apiKey,

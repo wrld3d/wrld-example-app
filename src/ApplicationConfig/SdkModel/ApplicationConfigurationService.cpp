@@ -10,8 +10,8 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            ApplicationConfigurationService::ApplicationConfigurationService(IApplicationConfigurationParser& parser,
-                                                                             IApplicationConfigurationReader& reader)
+            ApplicationConfigurationService::ApplicationConfigurationService(const std::shared_ptr<IApplicationConfigurationParser>& parser,
+                                                                             const std::shared_ptr<IApplicationConfigurationReader>& reader)
             : m_parser(parser)
             , m_reader(reader)
             {
@@ -20,8 +20,8 @@ namespace ExampleApp
             
             ApplicationConfiguration ApplicationConfigurationService::LoadConfiguration(const std::string& path)
             {
-                const std::string& serialized = m_reader.ReadApplicationConfiguration(path);
-                return m_parser.ParseConfiguration(serialized);
+                const std::string& serialized = m_reader->ReadApplicationConfiguration(path);
+                return m_parser->ParseConfiguration(serialized);
             }
         }
     }

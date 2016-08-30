@@ -2,10 +2,7 @@
 
 #pragma once
 
-#include "IMyPinCreationDetailsModule.h"
-#include "MyPinCreationDetailsVIewModel.h"
-#include "Reaction.h"
-#include "IIdentity.h"
+#include "Hypodermic/ContainerBuilder.h"
 
 namespace ExampleApp
 {
@@ -13,21 +10,14 @@ namespace ExampleApp
     {
         namespace View
         {
-            class MyPinCreationDetailsModule : public IMyPinCreationDetailsModule
+            class MyPinCreationDetailsModule
             {
             public:
-                MyPinCreationDetailsModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                           Reaction::View::IReactionControllerModel& reactionControllerModel);
-
-                ~MyPinCreationDetailsModule();
-
-                IMyPinCreationDetailsViewModel& GetMyPinCreationDetailsViewModel() const;
-
-                OpenableControl::View::IOpenableControlViewModel& GetObservableOpenableControl() const;
-
+                MyPinCreationDetailsModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder);
+                
+                void Register();
             private:
-                MyPinCreationDetailsViewModel* m_pMyPinCreationDetailsViewModel;
-
+                const std::shared_ptr<Hypodermic::ContainerBuilder> m_builder;
             };
         }
     }

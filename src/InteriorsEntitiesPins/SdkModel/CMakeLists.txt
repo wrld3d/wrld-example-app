@@ -3,7 +3,6 @@ set(headers ${headers} ../src/InteriorsEntitiesPins/SdkModel
 set(currsources
   ../src/InteriorsEntitiesPins/SdkModel/CMakeLists.txt
   ../src/InteriorsEntitiesPins/SdkModel/IInteriorsEntitiesPinsController.h
-  ../src/InteriorsEntitiesPins/SdkModel/IInteriorsEntitiesPinsModule.h
   ../src/InteriorsEntitiesPins/SdkModel/InteriorsEntitiesPinsController.cpp
   ../src/InteriorsEntitiesPins/SdkModel/InteriorsEntitiesPinsController.h
   ../src/InteriorsEntitiesPins/SdkModel/InteriorsEntitiesPinsModule.cpp

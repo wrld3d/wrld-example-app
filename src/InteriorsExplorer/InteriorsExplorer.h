@@ -8,7 +8,6 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class IInteriorsExplorerModule;
             class InteriorsExplorerModel;
             class InteriorWorldPinController;
             class InteriorVisibilityUpdater;

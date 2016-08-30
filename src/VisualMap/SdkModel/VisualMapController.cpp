@@ -14,11 +14,11 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            VisualMapController::VisualMapController(IVisualMapModel& visualMapModel,
-                                                     IVisualMapStateHistory& visualMapStateHistory,
-                                                     Eegeo::Resources::CityThemes::ICityThemesService& themesService,
-                                                     Eegeo::Resources::CityThemes::ICityThemesUpdater& themesUpdater,
-                                                     Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService)
+            VisualMapController::VisualMapController(const std::shared_ptr<IVisualMapModel>& visualMapModel,
+                                                     const std::shared_ptr<IVisualMapStateHistory>& visualMapStateHistory,
+                                                     const std::shared_ptr<Eegeo::Resources::CityThemes::ICityThemesService>& themesService,
+                                                     const std::shared_ptr<Eegeo::Resources::CityThemes::ICityThemesUpdater>& themesUpdater,
+                                                     const std::shared_ptr<Eegeo::Rendering::EnvironmentFlatteningService>& environmentFlatteningService)
             : m_visualMapModel(visualMapModel)
             , m_visualMapStateHistory(visualMapStateHistory)
             , m_themesService(themesService)
@@ -26,27 +26,27 @@ namespace ExampleApp
             , m_environmentFlatteningService(environmentFlatteningService)
             , m_onVisualMapModelChanged(this, &VisualMapController::OnVisualMapModelChanged)
             {
-                m_visualMapModel.AddVisualMapStateChangedCallback(m_onVisualMapModelChanged);
+                m_visualMapModel->AddVisualMapStateChangedCallback(m_onVisualMapModelChanged);
             }
             
             VisualMapController::~VisualMapController()
             {
-                m_visualMapModel.RemoveVisualMapStateChangedCallback(m_onVisualMapModelChanged);
+                m_visualMapModel->RemoveVisualMapStateChangedCallback(m_onVisualMapModelChanged);
             }
             
             void VisualMapController::OnVisualMapModelChanged(const VisualMapState& previousState, const bool& storePreviousState)
             {
                 if (storePreviousState)
                 {
-                    m_visualMapStateHistory.Push(previousState);
+                    m_visualMapStateHistory->Push(previousState);
                 }
                 
-                VisualMapState currentState = m_visualMapModel.GetVisualMapState();
+                VisualMapState currentState = m_visualMapModel->GetVisualMapState();
                 
-                m_environmentFlatteningService.SetIsFlattened(currentState.IsFlattened());
+                m_environmentFlatteningService->SetIsFlattened(currentState.IsFlattened());
 
-                m_themesUpdater.SetThemeMustContain(currentState.GetTheme());
-                m_themesService.RequestTransitionToState(currentState.GetState(), 1);
+                m_themesUpdater->SetThemeMustContain(currentState.GetTheme());
+                m_themesService->RequestTransitionToState(currentState.GetState(), 1);
             }
         }
     }

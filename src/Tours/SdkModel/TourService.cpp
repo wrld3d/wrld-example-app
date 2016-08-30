@@ -26,12 +26,12 @@ namespace ExampleApp
                 const std::string TourCardExitedKey = "card exit";
             }
             
-            TourService::TourService(ITourRepository& repository,
-                                     Camera::IToursCameraTransitionController& cameraTransitionController,
-                                     Metrics::IMetricsService& metricsService,
-                                     Search::SdkModel::ISearchRefreshService& searchRefreshService,
-                                     ExampleAppMessaging::TMessageBus& messageBus,
-                                     ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus)
+            TourService::TourService(const std::shared_ptr<ITourRepository>& repository,
+                                     const std::shared_ptr<Camera::IToursCameraTransitionController>& cameraTransitionController,
+                                     const std::shared_ptr<Metrics::IMetricsService>& metricsService,
+                                     const std::shared_ptr<Search::SdkModel::ISearchRefreshService>& searchRefreshService,
+                                     const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                     const std::shared_ptr<ExampleAppMessaging::TSdkModelDomainEventBus>& sdkDomainEventBus)
             : m_repository(repository)
             , m_cameraTransitionController(cameraTransitionController)
             , m_messageBus(messageBus)
@@ -50,9 +50,9 @@ namespace ExampleApp
             
             TourService::~TourService()
             {
-                while(m_repository.GetItemCount() != 0)
+                while(m_repository->GetItemCount() != 0)
                 {
-                    const TourModel& tourModel(m_repository.GetItemAtIndex(0));
+                    const TourModel& tourModel(m_repository->GetItemAtIndex(0));
                     RemoveTour(tourModel);
                 }
             }
@@ -64,7 +64,7 @@ namespace ExampleApp
             
             void TourService::AddTour(const TourModel& tourModel, States::ITourStateMachine& tourStateMachine)
             {
-                m_repository.AddItem(tourModel);
+                m_repository->AddItem(tourModel);
                 Eegeo_ASSERT(m_pTourToStateMachineMapping.find(tourModel.Name()) == m_pTourToStateMachineMapping.end());
                 m_pTourToStateMachineMapping[tourModel.Name()] = &tourStateMachine;
             }
@@ -75,7 +75,7 @@ namespace ExampleApp
                 Eegeo_ASSERT(pMapIt != m_pTourToStateMachineMapping.end());
                 Eegeo_DELETE pMapIt->second;
                 m_pTourToStateMachineMapping.erase(pMapIt);
-                m_repository.RemoveItem(tourModel);
+                m_repository->RemoveItem(tourModel);
             }
             
             void TourService::StartCurrentActiveTour(const TourModel& tourModel, const int atCard)
@@ -87,7 +87,7 @@ namespace ExampleApp
                 Eegeo_ASSERT(atCard >= 0 && atCard < m_activeTourModel.StateCount(),
                              "Invalid 'atCard' parameter. Must be within range. Was: %d, Max: %d", atCard, m_activeTourModel.StateCount());
                 
-                m_cameraTransitionController.ResetControllerState();
+                m_cameraTransitionController->ResetControllerState();
                 
                 m_pActiveTourStateMachine = m_pTourToStateMachineMapping[tourModel.Name()];
                 m_pActiveTourStateMachine->StartTour(atCard);
@@ -95,20 +95,20 @@ namespace ExampleApp
                 m_hasActiveTour = true;
                 m_activeTourState = atCard;
                 
-                m_metricsService.BeginTimedEvent(TourMetricsPrefix + m_activeTourModel.Name());
+                m_metricsService->BeginTimedEvent(TourMetricsPrefix + m_activeTourModel.Name());
 
                 std::stringstream ss;
                 ss << atCard;
-                m_metricsService.SetEvent(TourMetricsPrefix + m_activeTourModel.Name(), TourCardEnteredKey, ss.str());
+                m_metricsService->SetEvent(TourMetricsPrefix + m_activeTourModel.Name(), TourCardEnteredKey, ss.str());
                 
-                m_searchRefreshService.SetEnabled(false);
+                m_searchRefreshService->SetEnabled(false);
                 m_pActiveTourStateMachine = m_pTourToStateMachineMapping[tourModel.Name()];
                 m_pActiveTourStateMachine->StartTour(atCard);
 
                 bool showBackButton = !m_previousActiveToursStack.empty();
                 
-                m_messageBus.Publish(TourOnMapSelectedMessage(m_activeTourModel, atCard, showBackButton));
-                m_sdkDomainEventBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::TourPin));
+                m_messageBus->Publish(TourOnMapSelectedMessage(m_activeTourModel, atCard, showBackButton));
+                m_sdkDomainEventBus->Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::TourPin));
                 if(m_previousActiveToursStack.size() == 0)
                 {
                     m_tourStartedCallbacks.ExecuteCallbacks();
@@ -130,9 +130,9 @@ namespace ExampleApp
                 
                 std::stringstream ss;
                 ss << m_activeTourState;
-                m_metricsService.SetEvent(TourMetricsPrefix + m_activeTourModel.Name(), TourCardExitedKey, ss.str());
+                m_metricsService->SetEvent(TourMetricsPrefix + m_activeTourModel.Name(), TourCardExitedKey, ss.str());
                 
-                m_metricsService.EndTimedEvent(TourMetricsPrefix + m_activeTourModel.Name());
+                m_metricsService->EndTimedEvent(TourMetricsPrefix + m_activeTourModel.Name());
                 
                 m_activeTourModel = TourModel::Empty();
                 m_hasActiveTour = false;
@@ -146,8 +146,8 @@ namespace ExampleApp
                     // Don't return to app camera if we're going to another tour.
                     if(m_previousActiveToursStack.size() == 0)
                     {
-                        m_searchRefreshService.SetEnabled(true);
-                        m_sdkDomainEventBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::World | WorldPins::SdkModel::WorldPinVisibility::Search | WorldPins::SdkModel::WorldPinVisibility::UserPin));
+                        m_searchRefreshService->SetEnabled(true);
+                        m_sdkDomainEventBus->Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::World | WorldPins::SdkModel::WorldPinVisibility::Search | WorldPins::SdkModel::WorldPinVisibility::UserPin));
                         
                         m_tourEndedCallbacks.ExecuteCallbacks();
                 
@@ -185,14 +185,14 @@ namespace ExampleApp
                 {
                     std::stringstream ss;
                     ss << m_activeTourState;
-                    m_metricsService.SetEvent(TourMetricsPrefix + m_activeTourModel.Name(), TourCardExitedKey, ss.str());
+                    m_metricsService->SetEvent(TourMetricsPrefix + m_activeTourModel.Name(), TourCardExitedKey, ss.str());
                     
                     m_activeTourState = activeStateIndex;
                     m_pActiveTourStateMachine->ChangeToState(activeStateIndex);
                     
                     ss.clear();
                     ss << m_activeTourState;
-                    m_metricsService.SetEvent(TourMetricsPrefix + m_activeTourModel.Name(), TourCardEnteredKey, ss.str());
+                    m_metricsService->SetEvent(TourMetricsPrefix + m_activeTourModel.Name(), TourCardEnteredKey, ss.str());
                 }
             }
             

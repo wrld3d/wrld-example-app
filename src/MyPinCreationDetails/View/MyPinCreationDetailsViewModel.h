@@ -21,7 +21,8 @@ namespace ExampleApp
                 MyPinCreationDetailsOpenableControl m_openable;
 
             public:
-                MyPinCreationDetailsViewModel(Eegeo::Helpers::TIdentity identity, Reaction::View::IReactionControllerModel& reactionControllerModel);
+                MyPinCreationDetailsViewModel(const std::shared_ptr<Eegeo::Helpers::IIdentityProvider>& identity,
+                                              const std::shared_ptr<Reaction::View::IReactionControllerModel>& reactionControllerModel);
 
                 ~MyPinCreationDetailsViewModel();
 

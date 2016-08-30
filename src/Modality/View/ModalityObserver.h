@@ -16,15 +16,15 @@ namespace ExampleApp
         {
             class ModalityObserver : private Eegeo::NonCopyable
             {
-                IModalityModel& m_modalityModel;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<IModalityModel> m_modalityModel;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 Eegeo::Helpers::TCallback0<ModalityObserver> m_modalityChangedCallback;
 
                 void HandleModalityChanged();
 
             public:
-                ModalityObserver(IModalityModel& modalityModel,
-                                 ExampleAppMessaging::TMessageBus& messageBus);
+                ModalityObserver(const std::shared_ptr<IModalityModel>& modalityModel,
+                                 const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
 
                 ~ModalityObserver();
             };

@@ -19,9 +19,9 @@ namespace ExampleApp
         {
             class SearchQueryObserver : private Eegeo::NonCopyable
             {
-                ISearchService& m_searchService;
-                ISearchQueryPerformer& m_searchQueryPerformer;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                std::shared_ptr<ISearchService> m_searchService;
+                std::shared_ptr<ISearchQueryPerformer> m_searchQueryPerformer;
+                std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 Eegeo::Helpers::TCallback1<SearchQueryObserver, const SearchQuery&> m_searchQueryPerformedCallback;
                 Eegeo::Helpers::TCallback2<SearchQueryObserver, const SearchQuery&, const std::vector<SearchResultModel>&> m_searchQueryResponseCallback;
                 Eegeo::Helpers::TCallback0<SearchQueryObserver> m_searchQueryResultsClearedCallback;
@@ -33,9 +33,9 @@ namespace ExampleApp
                 void HandleSearchQueryCleared();
 
             public:
-                SearchQueryObserver(ISearchService& searchService,
-                                    ISearchQueryPerformer& searchQueryPerformer,
-                                    ExampleAppMessaging::TMessageBus& messageBus);
+                SearchQueryObserver(const std::shared_ptr<ISearchService>& searchService,
+                                    const std::shared_ptr<ISearchQueryPerformer>& searchQueryPerformer,
+                                    const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
 
                 ~SearchQueryObserver();
             };

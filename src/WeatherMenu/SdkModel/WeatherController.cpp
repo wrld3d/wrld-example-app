@@ -29,33 +29,33 @@ namespace ExampleApp
                 }
             }
             
-            WeatherController::WeatherController(VisualMap::SdkModel::IVisualMapService& visualMapService)
+            WeatherController::WeatherController(const std::shared_ptr<VisualMap::SdkModel::IVisualMapService>& visualMapService)
             : m_visualMapService(visualMapService)
             {
             }
 
             void WeatherController::SetTime(const std::string& time)
             {
-                const VisualMap::SdkModel::VisualMapState& currentState = m_visualMapService.GetCurrentVisualMapState();
+                const VisualMap::SdkModel::VisualMapState& currentState = m_visualMapService->GetCurrentVisualMapState();
                 const TTimeWeatherPair& currentTimeWeather = ExtractTimeWeatherPairFromState(currentState.GetState());
                 SetState(time + currentTimeWeather.second);
             }
 
             void WeatherController::SetWeather(const std::string& weather)
             {
-                const VisualMap::SdkModel::VisualMapState& currentState = m_visualMapService.GetCurrentVisualMapState();
+                const VisualMap::SdkModel::VisualMapState& currentState = m_visualMapService->GetCurrentVisualMapState();
                 const TTimeWeatherPair& currentTimeWeather = ExtractTimeWeatherPairFromState(currentState.GetState());
                 SetState(currentTimeWeather.first + weather);
             }
 
             void WeatherController::SetTheme(const std::string& theme)
             {
-                m_visualMapService.SetVisualMapTheme(theme);
+                m_visualMapService->SetVisualMapTheme(theme);
             }
             
             void WeatherController::SetState(const std::string& state)
             {
-                m_visualMapService.SetVisualMapThemeState(state);
+                m_visualMapService->SetVisualMapThemeState(state);
             }
         }
     }

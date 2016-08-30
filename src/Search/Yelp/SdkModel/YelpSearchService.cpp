@@ -24,10 +24,10 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                YelpSearchService::YelpSearchService(YelpSearchQueryFactory& searchQueryFactory,
-                                                     YelpBusinessQueryFactory& yelpBusinessQueryFactory,
-                                                     Search::SdkModel::ISearchResultParser& searchResultParser,
-                                                     Net::SdkModel::INetworkCapabilities& networkCapabilities,
+                YelpSearchService::YelpSearchService(const std::shared_ptr<YelpSearchQueryFactory>& searchQueryFactory,
+                                                     const std::shared_ptr<YelpBusinessQueryFactory>& yelpBusinessQueryFactory,
+                                                     const std::shared_ptr<Search::SdkModel::ISearchResultParser>& searchResultParser,
+                                                     const std::shared_ptr<Net::SdkModel::INetworkCapabilities>& networkCapabilities,
                                                      const std::vector<std::string>& availableCategories)
                 : Search::SdkModel::SearchServiceBase(availableCategories)
                 , m_searchQueryFactory(searchQueryFactory)
@@ -70,7 +70,7 @@ namespace ExampleApp
                     CancelInFlightQueries();
                     
                     ExecuteQueryPerformedCallbacks(searchQuery);
-                    if(m_networkCapabilities.StreamOverWifiOnly() && !m_networkCapabilities.ConnectedToWifi())
+                    if(m_networkCapabilities->StreamOverWifiOnly() && !m_networkCapabilities->ConnectedToWifi())
                     {
                         ExecutQueryResponseReceivedCallbacks(searchQuery, std::vector<Search::SdkModel::SearchResultModel>());
                         return;
@@ -84,14 +84,14 @@ namespace ExampleApp
                     // the details of how cancellation works with the request lifecycle for our platform specific
                     // implementations. We keep a pointer to the current request so we can change the active request,
                     // have a NULL request, etc.
-                    m_pCurrentRequest = m_searchQueryFactory.CreateYelpSearchForQuery(m_currentQueryModel, m_poiSearchCallback);
+                    m_pCurrentRequest = m_searchQueryFactory->CreateYelpSearchForQuery(m_currentQueryModel, m_poiSearchCallback);
                     m_pCurrentRequest->Dispatch();
                 }
                 
                 void YelpSearchService::PerformIdentitySearch(const Search::SdkModel::SearchResultModel& outdatedSearchResult,
                                                               Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& completionCallback)
                 {
-                    YelpBusinessQuery* pYelpBusinessQuery = m_yelpBusinessQueryFactory.Create(outdatedSearchResult.GetIdentifier(), completionCallback);
+                    YelpBusinessQuery* pYelpBusinessQuery = m_yelpBusinessQueryFactory->Create(outdatedSearchResult.GetIdentifier(), completionCallback);
                     pYelpBusinessQuery->Dispatch();
                 }
                 
@@ -105,7 +105,7 @@ namespace ExampleApp
                     if(m_pCurrentRequest->IsSucceeded())
                     {
                         const std::string& response(m_pCurrentRequest->ResponseString());
-                        m_searchResultParser.ParseSearchResults(response, results);
+                        m_searchResultParser->ParseSearchResults(response, results);
                     }
                     
                     m_pCurrentRequest = NULL;

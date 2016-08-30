@@ -15,12 +15,12 @@ namespace ExampleApp
     {
         namespace View
         {
-            MyPinCreationCompositeViewModel::MyPinCreationCompositeViewModel(ExampleAppMessaging::TMessageBus& messageBus,
-                    IMyPinCreationInitiationViewModel& initiationViewModel,
-                    IMyPinCreationConfirmationViewModel& confirmationViewModel,
-                    ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
-                    ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
-                    ScreenControl::View::IScreenControlViewModel& interiorControlViewModel)
+            MyPinCreationCompositeViewModel::MyPinCreationCompositeViewModel(const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                                                             const std::shared_ptr<IMyPinCreationInitiationViewModel>& initiationViewModel,
+                                                                             const std::shared_ptr<IMyPinCreationConfirmationViewModel>& confirmationViewModel,
+                                                                             const std::shared_ptr<ExampleApp::Menu::View::IMenuViewModel>& searchMenuViewModel,
+                                                                             const std::shared_ptr<ExampleApp::Menu::View::IMenuViewModel>& settingsMenuViewModel,
+                                                                             const std::shared_ptr<ScreenControl::View::IScreenControlViewModel>& interiorControlViewModel)
                 : m_stateChangeHandler(this, &MyPinCreationCompositeViewModel::OnPoiRingStateChangedMessage)
                 , m_settingsMenuStateChangedCallback(this, &MyPinCreationCompositeViewModel::HandleSettingsMenuStateChanged)
                 , m_messageBus(messageBus)
@@ -30,14 +30,14 @@ namespace ExampleApp
                 , m_searchMenuViewModel(searchMenuViewModel)
                 , m_settingsMenuViewModel(settingsMenuViewModel)
             {
-                m_messageBus.SubscribeUi(m_stateChangeHandler);
-                m_settingsMenuViewModel.InsertOnScreenStateChangedCallback(m_settingsMenuStateChangedCallback);
+                m_messageBus->SubscribeUi(m_stateChangeHandler);
+                m_settingsMenuViewModel->InsertOnScreenStateChangedCallback(m_settingsMenuStateChangedCallback);
             }
 
             MyPinCreationCompositeViewModel::~MyPinCreationCompositeViewModel()
             {
-                m_messageBus.UnsubscribeUi(m_stateChangeHandler);
-                m_settingsMenuViewModel.RemoveOnScreenStateChangedCallback(m_settingsMenuStateChangedCallback);
+                m_messageBus->UnsubscribeUi(m_stateChangeHandler);
+                m_settingsMenuViewModel->RemoveOnScreenStateChangedCallback(m_settingsMenuStateChangedCallback);
             }
 
             void MyPinCreationCompositeViewModel::OnPoiRingStateChangedMessage(const ExampleApp::MyPinCreation::MyPinCreationStateChangedMessage &message)
@@ -46,28 +46,28 @@ namespace ExampleApp
                 {
                 case Inactive:
                 {
-                    m_initiationViewModel.AddToScreen();
-                    m_interiorControlViewModel.AddToScreen();
-                    m_searchMenuViewModel.AddToScreen();
-                    m_settingsMenuViewModel.AddToScreen();
+                    m_initiationViewModel->AddToScreen();
+                    m_interiorControlViewModel->AddToScreen();
+                    m_searchMenuViewModel->AddToScreen();
+                    m_settingsMenuViewModel->AddToScreen();
 
-                    m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::All));
-                    m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(true));
+                    m_messageBus->Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::All));
+                    m_messageBus->Publish(GpsMarker::GpsMarkerVisibilityMessage(true));
 
-                    m_confirmationViewModel.RemoveFromScreen();
+                    m_confirmationViewModel->RemoveFromScreen();
                     break;
                 }
                 case Ring:
                 {
-                    m_confirmationViewModel.AddToScreen();
-                    m_initiationViewModel.RemoveFromScreen();
-                    m_interiorControlViewModel.RemoveFromScreen();
-                    m_searchMenuViewModel.RemoveFromScreen();
+                    m_confirmationViewModel->AddToScreen();
+                    m_initiationViewModel->RemoveFromScreen();
+                    m_interiorControlViewModel->RemoveFromScreen();
+                    m_searchMenuViewModel->RemoveFromScreen();
 
-                    m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::None));
-                    m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(false));
+                    m_messageBus->Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::None));
+                    m_messageBus->Publish(GpsMarker::GpsMarkerVisibilityMessage(false));
 
-                    m_settingsMenuViewModel.RemoveFromScreen();
+                    m_settingsMenuViewModel->RemoveFromScreen();
                     break;
                 }
                 case Details:
@@ -88,15 +88,15 @@ namespace ExampleApp
             {
                 if (viewModel.IsFullyOnScreen())
                 {
-                    m_initiationViewModel.SetShouldOffsetViewButton(true);
-                    m_initiationViewModel.AddToScreen();
+                    m_initiationViewModel->SetShouldOffsetViewButton(true);
+                    m_initiationViewModel->AddToScreen();
                 }
                 else
                 {
-                    m_initiationViewModel.SetShouldOffsetViewButton(false);
-                    if (m_initiationViewModel.IsFullyOnScreen())
+                    m_initiationViewModel->SetShouldOffsetViewButton(false);
+                    if (m_initiationViewModel->IsFullyOnScreen())
                     {
-                        m_initiationViewModel.AddToScreen();
+                        m_initiationViewModel->AddToScreen();
                     }
                 }
             }

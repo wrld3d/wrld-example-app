@@ -11,7 +11,6 @@ set(currsources
   ../src/GpsMarker/SdkModel/GpsMarkerView.cpp
   ../src/GpsMarker/SdkModel/GpsMarkerView.h
   ../src/GpsMarker/SdkModel/IGpsMarkerController.h
-  ../src/GpsMarker/SdkModel/IGpsMarkerModule.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\GpsMarker\\SdkModel FILES ${currsources})

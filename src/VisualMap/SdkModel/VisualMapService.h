@@ -18,8 +18,8 @@ namespace ExampleApp
             class VisualMapService : public IVisualMapService, protected Eegeo::NonCopyable
             {
             public:
-                VisualMapService(IVisualMapModel& visualMapModel,
-                                 IVisualMapStateHistory& visualMapStateHistory);
+                VisualMapService(const std::shared_ptr<IVisualMapModel>& visualMapModel,
+                                 const std::shared_ptr<IVisualMapStateHistory>& visualMapStateHistory);
                 
                 void SetVisualMapState(const VisualMapState& visualMapState);
                 void SetVisualMapState(const std::string& theme, const std::string& state, bool isFlattened);
@@ -34,8 +34,8 @@ namespace ExampleApp
                 void RestorePreviousMapState();
                 
             private:
-                IVisualMapModel& m_visualMapModel;
-                IVisualMapStateHistory& m_visualMapStateHistory;
+                std::shared_ptr<IVisualMapModel> m_visualMapModel;
+                std::shared_ptr<IVisualMapStateHistory> m_visualMapStateHistory;
             };
         }
     }

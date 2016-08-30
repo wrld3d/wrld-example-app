@@ -2,15 +2,7 @@
 
 #pragma once
 
-#include "IWeatherMenuModule.h"
-#include "WeatherMenu.h"
-#include "Menu.h"
-#include "Helpers.h"
-#include "BidirectionalBus.h"
-#include "WeatherSelectedMessageHandler.h"
-#include "IMetricsService.h"
-#include "VisualMap.h"
-#include "IAppModeModel.h"
+#include "IModule.h"
 
 namespace ExampleApp
 {
@@ -18,33 +10,10 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class WeatherMenuModule : public IWeatherMenuModule
+            class WeatherMenuModule : public IModule
             {
             public:
-                WeatherMenuModule(Eegeo::Helpers::IFileIO& fileio,
-                                  VisualMap::SdkModel::IVisualMapService& visualMapService,
-                                  ExampleAppMessaging::TMessageBus& messageBus,
-                                  Metrics::IMetricsService& metricsService,
-                                  const AppModes::SdkModel::IAppModeModel& appModeModel);
-
-                ~WeatherMenuModule();
-
-                Menu::View::IMenuModel& GetWeatherMenuModel() const
-                {
-                    return *m_pMenuModel;
-                }
-                
-                IWeatherController& GetWeatherController() const
-                {
-                    return *m_pWeatherController;
-                }
-                
-            private:
-
-                Menu::View::IMenuModel* m_pMenuModel;
-                Menu::View::IMenuOptionsModel* m_pMenuOptionsModel;
-                IWeatherController* m_pWeatherController;
-                WeatherSelectedMessageHandler* m_pWeatherSelectedMessageHandler;
+                void Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder);
             };
         }
     }

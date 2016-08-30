@@ -3,12 +3,11 @@
 #pragma once
 
 #include "Interiors.h"
+#include "Types.h"
 #include "IRayCaster.h"
 #include "EnvironmentRayCaster.h"
 #include "ICameraTransitionController.h"
 #include "IDoubleTapIndoorInteractionController.h"
-
-
 
 namespace ExampleApp
 {
@@ -16,28 +15,24 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            
-            class DoubleTapIndoorInteractionController : public IDoubleTapIndoorInteractionController {
-            
-                
+            class DoubleTapIndoorInteractionController : public IDoubleTapIndoorInteractionController, private Eegeo::NonCopyable
+            {
             public:
-                
-                DoubleTapIndoorInteractionController(Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
-                                                     ExampleApp::CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
-                                                     Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                                     Eegeo::Collision::IRayCaster& rayCaster);
+                DoubleTapIndoorInteractionController(const std::shared_ptr<Eegeo::Resources::Interiors::InteriorsCameraController>& interiorsCameraController,
+                                                     const std::shared_ptr<ExampleApp::CameraTransitions::SdkModel::ICameraTransitionController>& cameraTransitionController,
+                                                     const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel,
+                                                     const std::shared_ptr<Eegeo::Collision::IRayCaster>& rayCaster);
                 ~DoubleTapIndoorInteractionController();
                 void OnDoubleTap(const AppInterface::TapData& data);
                 
             private:
                 
-                Eegeo::Collision::IRayCaster& m_enovRayCaster;
-                Eegeo::Resources::Interiors::InteriorsCameraController& m_interiorsCameraController;
-                Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
-                ExampleApp::CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionController;
+                const std::shared_ptr<Eegeo::Collision::IRayCaster> m_enovRayCaster;
+                const std::shared_ptr<Eegeo::Resources::Interiors::InteriorsCameraController> m_interiorsCameraController;
+                const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel> m_interiorInteractionModel;
+                const std::shared_ptr<ExampleApp::CameraTransitions::SdkModel::ICameraTransitionController> m_cameraTransitionController;
                 
-                void ZoomInTo(float distance,const AppInterface::TapData& data);
-
+                void ZoomInTo(float distance, const AppInterface::TapData& data);
             };
             
         }

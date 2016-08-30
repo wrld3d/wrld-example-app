@@ -16,16 +16,16 @@ namespace ExampleApp
         {
             class PlaceJumpSelectedMessageHandler : private Eegeo::NonCopyable
             {
-                IPlaceJumpController& m_placeJumpController;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<IPlaceJumpController> m_placeJumpController;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 Eegeo::Helpers::TCallback1<PlaceJumpSelectedMessageHandler, const PlaceJumpSelectedMessage&> m_handlerBinding;
 
                 void OnPlaceJumpSelectedMessage(const PlaceJumpSelectedMessage& message);
 
             public:
                 PlaceJumpSelectedMessageHandler(
-                    IPlaceJumpController& placeJumpController,
-                    ExampleAppMessaging::TMessageBus& messageBus);
+                                                const std::shared_ptr<IPlaceJumpController>& placeJumpController,
+                                                const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
 
                 ~PlaceJumpSelectedMessageHandler();
             };

@@ -147,24 +147,24 @@ namespace ExampleApp
                 fileIO.WriteFile((Byte*)jsonString.c_str(), jsonString.size(), MyPinsDataFilename);
             }
 
-            MyPinsFileIO::MyPinsFileIO(Eegeo::Helpers::IFileIO& fileIO,
-                                       PersistentSettings::IPersistentSettingsModel& persistentSettings,
-                                       IMyPinBoundObjectFactory& myPinBoundObjectFactory,
-                                       IMyPinBoundObjectRepository& myPinBoundObjectRepository)
+            MyPinsFileIO::MyPinsFileIO(const std::shared_ptr<Eegeo::Helpers::IFileIO>& fileIO,
+                                       const std::shared_ptr<PersistentSettings::IPersistentSettingsModel>& persistentSettings,
+                                       const std::shared_ptr<IMyPinBoundObjectFactory>& myPinBoundObjectFactory,
+                                       const std::shared_ptr<IMyPinBoundObjectRepository>& myPinBoundObjectRepository)
                 : m_fileIO(fileIO)
                 , m_persistentSettings(persistentSettings)
                 , m_myPinBoundObjectFactory(myPinBoundObjectFactory)
                 , m_myPinBoundObjectRepository(myPinBoundObjectRepository)
             {
-                if (!m_fileIO.Exists(MyPinsDataFilename))
+                if (!m_fileIO->Exists(MyPinsDataFilename))
                 {
-                    CreateEmptyJsonFile(m_fileIO);
+                    CreateEmptyJsonFile(*m_fileIO);
                 }
 
                 int lastId = 0;
-                if (!m_persistentSettings.TryGetValue(MyPins_LastMyPinModelIdKey, lastId))
+                if (!m_persistentSettings->TryGetValue(MyPins_LastMyPinModelIdKey, lastId))
                 {
-                    m_persistentSettings.SetValue(MyPins_LastMyPinModelIdKey, lastId);
+                    m_persistentSettings->SetValue(MyPins_LastMyPinModelIdKey, lastId);
                 }
             }
 
@@ -180,13 +180,13 @@ namespace ExampleApp
 
                 std::string imagePath = ss.str();
 
-                if (m_fileIO.Exists(imagePath))
+                if (m_fileIO->Exists(imagePath))
                 {
                     Eegeo_TTY("%s already exists\n", imagePath.c_str());
                     return false;
                 }
 
-                if (m_fileIO.WriteFile(imageData, imageSize, imagePath, std::fstream::out | std::fstream::binary))
+                if (m_fileIO->WriteFile(imageData, imageSize, imagePath, std::fstream::out | std::fstream::binary))
                 {
                     out_filename = imagePath;
                     return true;
@@ -199,9 +199,9 @@ namespace ExampleApp
 
             void MyPinsFileIO::DeleteImageFromDisk(const std::string& imagePath)
             {
-                if (m_fileIO.Exists(imagePath))
+                if (m_fileIO->Exists(imagePath))
                 {
-                    m_fileIO.DeleteFile(imagePath);
+                    m_fileIO->DeleteFile(imagePath);
                 }
             }
 
@@ -210,7 +210,7 @@ namespace ExampleApp
                 std::fstream stream;
                 size_t size;
 
-                if (m_fileIO.OpenFile(stream, size, MyPinsDataFilename))
+                if (m_fileIO->OpenFile(stream, size, MyPinsDataFilename))
                 {
                     std::string json((std::istreambuf_iterator<char>(stream)),
                                      (std::istreambuf_iterator<char>()));
@@ -228,7 +228,7 @@ namespace ExampleApp
                     rapidjson::Value& myPinsArray = jsonDoc[MyPinsJsonArrayName.c_str()];
 
                     rapidjson::Value pinModelJson;
-                    MyPinModelToJson(pinModel, allocator, m_myPinBoundObjectRepository, pinModelJson);
+                    MyPinModelToJson(pinModel, allocator, *m_myPinBoundObjectRepository, pinModelJson);
                     
                     myPinsArray.PushBack(pinModelJson, allocator);
 
@@ -239,7 +239,7 @@ namespace ExampleApp
 
                     if (WriteJsonToDisk(jsonString))
                     {
-                        m_persistentSettings.SetValue(MyPins_LastMyPinModelIdKey, pinModel.Identifier());
+                        m_persistentSettings->SetValue(MyPins_LastMyPinModelIdKey, pinModel.Identifier());
                     }
                 }
                 else
@@ -250,9 +250,9 @@ namespace ExampleApp
 
             void MyPinsFileIO::SaveAllRepositoryPinsToDisk(const std::vector<MyPinModel*>& pinModels)
             {
-                if (m_fileIO.Exists(MyPinsDataFilename))
+                if (m_fileIO->Exists(MyPinsDataFilename))
                 {
-                    m_fileIO.DeleteFile(MyPinsDataFilename);
+                    m_fileIO->DeleteFile(MyPinsDataFilename);
                 }
 
                 rapidjson::Document jsonDoc;
@@ -270,7 +270,7 @@ namespace ExampleApp
                     const MyPinModel* pinModel = *it;
 
                     rapidjson::Value pinModelJson;
-                    MyPinModelToJson(*pinModel, allocator, m_myPinBoundObjectRepository, pinModelJson);
+                    MyPinModelToJson(*pinModel, allocator, *m_myPinBoundObjectRepository, pinModelJson);
 
                     myPinsArray.PushBack(pinModelJson, allocator);
                 }
@@ -280,7 +280,7 @@ namespace ExampleApp
                 jsonDoc.Accept(writer);
 
                 std::string jsonString(strbuf.GetString());
-                m_fileIO.WriteFile((Byte*)jsonString.c_str(), jsonString.size(), MyPinsDataFilename);
+                m_fileIO->WriteFile((Byte*)jsonString.c_str(), jsonString.size(), MyPinsDataFilename);
             }
 
             void MyPinsFileIO::LoadPinModelsFromDisk(std::vector<std::pair<MyPinModel*, IMyPinBoundObject*> >& out_pinModelBindings, IMyPinsService& myPinService)
@@ -290,7 +290,7 @@ namespace ExampleApp
                 std::fstream stream;
                 size_t size;
 
-                if (m_fileIO.OpenFile(stream, size, MyPinsDataFilename))
+                if (m_fileIO->OpenFile(stream, size, MyPinsDataFilename))
                 {
                     std::string json((std::istreambuf_iterator<char>(stream)),
                                      (std::istreambuf_iterator<char>()));
@@ -379,7 +379,7 @@ namespace ExampleApp
                             floor = entry["floor"].GetInt();
                         }
                         
-                        IMyPinBoundObject* pPinBoundObject(m_myPinBoundObjectFactory.CreatePinBoundObjectFromSerialized(*this,
+                        IMyPinBoundObject* pPinBoundObject(m_myPinBoundObjectFactory->CreatePinBoundObjectFromSerialized(*this,
                                                                                                                         pinId,
                                                                                                                         semanticPinType,
                                                                                                                         pinMetadataJson,
@@ -413,14 +413,14 @@ namespace ExampleApp
             
             bool MyPinsFileIO::WriteJsonToDisk(const std::string &jsonString)
             {
-                m_fileIO.DeleteFile(MyPinsDataFilename);
-                return m_fileIO.WriteFile((Byte*)jsonString.c_str(), jsonString.size(), MyPinsDataFilename);
+                m_fileIO->DeleteFile(MyPinsDataFilename);
+                return m_fileIO->WriteFile((Byte*)jsonString.c_str(), jsonString.size(), MyPinsDataFilename);
             }
 
             int MyPinsFileIO::GetLastIdWrittenToDisk() const
             {
                 int lastId = -1;
-                m_persistentSettings.TryGetValue(MyPins_LastMyPinModelIdKey, lastId);
+                m_persistentSettings->TryGetValue(MyPins_LastMyPinModelIdKey, lastId);
 
                 return lastId;
             }

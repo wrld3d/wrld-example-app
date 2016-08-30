@@ -1,6 +1,8 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "MyPinCreationDetailsModule.h"
+#include "MyPinCreationDetailsViewModel.h"
+#include "IReactionControllerModel.h"
 
 namespace ExampleApp
 {
@@ -8,25 +10,14 @@ namespace ExampleApp
     {
         namespace View
         {
-            MyPinCreationDetailsModule::MyPinCreationDetailsModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                    Reaction::View::IReactionControllerModel& reactionControllerModel)
+            MyPinCreationDetailsModule::MyPinCreationDetailsModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+            : m_builder(builder)
             {
-                m_pMyPinCreationDetailsViewModel = Eegeo_NEW(MyPinCreationDetailsViewModel)(identityProvider.GetNextIdentity(), reactionControllerModel);
             }
-
-            MyPinCreationDetailsModule::~MyPinCreationDetailsModule()
+            
+            void MyPinCreationDetailsModule::Register()
             {
-                Eegeo_DELETE m_pMyPinCreationDetailsViewModel;
-            }
-
-            IMyPinCreationDetailsViewModel& MyPinCreationDetailsModule::GetMyPinCreationDetailsViewModel() const
-            {
-                return *m_pMyPinCreationDetailsViewModel;
-            }
-
-            OpenableControl::View::IOpenableControlViewModel& MyPinCreationDetailsModule::GetObservableOpenableControl() const
-            {
-                return m_pMyPinCreationDetailsViewModel->GetOpenableControl();
+                m_builder->registerType<MyPinCreationDetailsViewModel>().as<IMyPinCreationDetailsViewModel>().singleInstance();
             }
         }
     }

@@ -20,7 +20,7 @@ namespace ExampleApp
             {
             public:
 
-                CompassViewModel(Eegeo::Helpers::TIdentity identity,
+                CompassViewModel(const std::shared_ptr<Eegeo::Helpers::IIdentityProvider>& identity,
                                  bool isInitiallyOnScreen);
 
                 Eegeo::Helpers::TIdentity GetIdentity() const;

@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Types.h"
 #include "NavigationService.h"
 #include "IInteriorsNavigationService.h"
 #include "GlobeCamera.h"
@@ -9,6 +10,7 @@
 #include "InteriorsExplorer.h"
 #include "Interiors.h"
 #include "ICallback.h"
+#include <memory>
 
 namespace ExampleApp
 {
@@ -16,15 +18,15 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class InteriorsNavigationService : public IInteriorsNavigationService
+            class InteriorsNavigationService : public IInteriorsNavigationService, private Eegeo::NonCopyable
             {
             public:
                 
-                InteriorsNavigationService(Eegeo::Location::ILocationService& locationService,
-                                           Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
-                                           Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& cameraTouchController,
-                                           Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                           const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel);
+                InteriorsNavigationService(const std::shared_ptr<Eegeo::Location::ILocationService>& locationService,
+                                           const std::shared_ptr<Eegeo::Resources::Interiors::InteriorsCameraController>& interiorsCameraController,
+                                           const std::shared_ptr<Eegeo::Camera::GlobeCamera::GlobeCameraTouchController>& cameraTouchController,
+                                           const std::shared_ptr<Eegeo::Resources::Interiors::InteriorSelectionModel>& interiorSelectionModel,
+                                           const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel);
                 
                 ~InteriorsNavigationService();
                 
@@ -40,12 +42,13 @@ namespace ExampleApp
                 
                 void HandleInteriorSelectionModelChanged(const Eegeo::Resources::Interiors::InteriorId& prevId);
                 
-                Eegeo::Location::ILocationService& m_locationService;
-                Eegeo::Resources::Interiors::InteriorsCameraController& m_interiorsCameraController;
-                Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& m_cameraTouchController;
+                const std::shared_ptr<Eegeo::Location::ILocationService> m_locationService;
+                const std::shared_ptr<Eegeo::Resources::Interiors::InteriorsCameraController> m_interiorsCameraController;
+                const std::shared_ptr<Eegeo::Camera::GlobeCamera::GlobeCameraTouchController> m_cameraTouchController;
+                const std::shared_ptr<Eegeo::Resources::Interiors::InteriorSelectionModel> m_interiorSelectionModel;
+                const std::shared_ptr<const Eegeo::Resources::Interiors::InteriorInteractionModel> m_interiorInteractionModel;
+
                 Eegeo::Location::NavigationService::GpsMode m_gpsMode;
-                Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
-                const Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 
                 Eegeo::Helpers::TCallback1<InteriorsNavigationService, const Eegeo::Resources::Interiors::InteriorId> m_interiorSelectionModelChangedHandler;
                 

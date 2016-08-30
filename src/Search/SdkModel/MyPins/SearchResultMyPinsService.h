@@ -23,7 +23,7 @@ namespace ExampleApp
             {
                 class SearchResultMyPinsService : public ISearchResultMyPinsService, private Eegeo::NonCopyable
                 {
-                    ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkModelDomainEventBus;
+                    std::shared_ptr<ExampleAppMessaging::TSdkModelDomainEventBus> m_sdkModelDomainEventBus;
                     Eegeo::Helpers::CallbackCollection1<Search::SdkModel::SearchResultModel> m_searchResultPinnedCallbacks;
                     Eegeo::Helpers::CallbackCollection1<Search::SdkModel::SearchResultModel> m_searchResultUnpinnedCallbacks;
                     
@@ -39,7 +39,7 @@ namespace ExampleApp
                     void OnSearchResultPinRemovedEvent(const ExampleApp::MyPins::SdkModel::SearchResultPinRemovedEvent& event);
                     
                 public:
-                    SearchResultMyPinsService(ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus);
+                    SearchResultMyPinsService(const std::shared_ptr<ExampleAppMessaging::TSdkModelDomainEventBus>& sdkModelDomainEventBus);
                     
                     ~SearchResultMyPinsService();
                     

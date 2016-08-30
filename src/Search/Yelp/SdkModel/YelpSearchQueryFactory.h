@@ -8,6 +8,7 @@
 #include "SearchResultModel.h"
 #include "Yelp.h"
 #include "IWebLoadRequestFactory.h"
+#include "ApplicationConfiguration.h"
 
 #include "liboauthcpp.h"
 
@@ -23,11 +24,8 @@ namespace ExampleApp
                 {
                 public:
                     YelpSearchQueryFactory(
-                        const std::string& yelpConsumerKey,
-                        const std::string& yelpConsumerSecret,
-                        const std::string& yelpOAuthToken,
-                        const std::string& yelpOAuthTokenSecret,
-                        Eegeo::Web::IWebLoadRequestFactory& webRequestFactory);
+                        const std::shared_ptr<ExampleApp::ApplicationConfig::ApplicationConfiguration>& config,
+                        const std::shared_ptr<Eegeo::Web::IWebLoadRequestFactory>& webRequestFactory);
                     
                     ~YelpSearchQueryFactory();
                     
@@ -41,7 +39,7 @@ namespace ExampleApp
                     OAuth::Client m_client;
                     OAuth::Token m_token;
                     
-                    Eegeo::Web::IWebLoadRequestFactory& m_webRequestFactory;
+                    std::shared_ptr<Eegeo::Web::IWebLoadRequestFactory> m_webRequestFactory;
                     std::map<std::string, std::string> m_applicationToYelpCategoryMap;
                 };
             }

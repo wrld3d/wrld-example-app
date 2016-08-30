@@ -8,9 +8,9 @@ namespace ExampleApp
     {
         namespace View
         {
-            AboutPageOpenableControl::AboutPageOpenableControl(Eegeo::Helpers::TIdentity identity, Reaction::View::IReactionControllerModel& reactionControllerModel)
+            AboutPageOpenableControl::AboutPageOpenableControl(const std::shared_ptr<Eegeo::Helpers::IIdentityProvider>& identity, const std::shared_ptr<Reaction::View::IReactionControllerModel>& reactionControllerModel)
                 : OpenableControl::View::OpenableControlViewModelBase(reactionControllerModel)
-                , m_identity(identity)
+                , m_identity(identity->GetNextIdentity())
             {
             }
 

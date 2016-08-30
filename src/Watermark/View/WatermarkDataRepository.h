@@ -4,6 +4,7 @@
 
 #include "IWatermarkDataRepository.h"
 #include "Watermark.h"
+#include "Types.h"
 
 #include <map>
 #include <string>
@@ -14,7 +15,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            class WatermarkDataRepository : public IWatermarkDataRepository
+            class WatermarkDataRepository : public IWatermarkDataRepository, private Eegeo::NonCopyable
             {
             public:
                 void AddWatermarkData(const std::string& key,

@@ -2,14 +2,7 @@
 
 #pragma once
 
-#include <vector>
-#include "Types.h"
-#include "Reaction.h"
-#include "ReactionModel.h"
-#include "OpenableControlViewModelIncludes.h"
-#include "ScreenControlViewModelIncludes.h"
-#include "IReactionModelModule.h"
-#include "IMenuIgnoredReactionModel.h"
+#include "Hypodermic/ContainerBuilder.h"
 
 namespace ExampleApp
 {
@@ -17,19 +10,14 @@ namespace ExampleApp
     {
         namespace View
         {
-            class ReactionModelModule: public IReactionModelModule, private Eegeo::NonCopyable
+            class ReactionModelModule
             {
-            private:
-                IReactionModel* m_pModel;
             public:
-                ReactionModelModule(IReactionControllerModel& reactionControllerModel,
-                                    const std::vector<OpenableControl::View::IOpenableControlViewModel*>& openables,
-                                    const std::vector<ScreenControl::View::IScreenControlViewModel*>& reactors,
-                                    Menu::View::IMenuIgnoredReactionModel& menuIgnoredReaction);
-
-                ~ReactionModelModule();
-
-                IReactionModel& GetReactionModel() const;
+                ReactionModelModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder);
+                
+                void Register();
+            private:
+                const std::shared_ptr<Hypodermic::ContainerBuilder> m_builder;
             };
         }
     }

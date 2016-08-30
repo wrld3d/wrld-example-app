@@ -16,20 +16,20 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            TourAddedObserver::TourAddedObserver(ITourRepository& tourRepository,
-                                                 WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                                 TourWorldPinSelectionHandlerFactory& tourWorldPinSelectionHandlerFactory)
+            TourAddedObserver::TourAddedObserver(const std::shared_ptr<ITourRepository>& tourRepository,
+                                                 const std::shared_ptr<WorldPins::SdkModel::IWorldPinsService>& worldPinsService,
+                                                 const std::shared_ptr<TourWorldPinSelectionHandlerFactory>& tourWorldPinSelectionHandlerFactory)
             : m_tourRepository(tourRepository)
             , m_worldPinsService(worldPinsService)
             , m_tourWorldPinSelectionHandlerFactory(tourWorldPinSelectionHandlerFactory)
             , m_binding(this, &TourAddedObserver::HandleTourAdded)
             {
-                m_tourRepository.InsertItemAddedCallback(m_binding);
+                m_tourRepository->InsertItemAddedCallback(m_binding);
             }
             
             TourAddedObserver::~TourAddedObserver()
             {
-                m_tourRepository.RemoveItemAddedCallback(m_binding);
+                m_tourRepository->RemoveItemAddedCallback(m_binding);
             }
             
             void TourAddedObserver::HandleTourAdded(TourModel& tourModel)
@@ -39,7 +39,7 @@ namespace ExampleApp
                     typedef WorldPins::SdkModel::WorldPinItemModel TPin;
 
                     const std::string tourVendor = tourModel.UsesTwitter()? Search::WorldTwitterVendorName : Search::ExampleTourVendorName;
-                    TPin* pPin = m_worldPinsService.AddPin(m_tourWorldPinSelectionHandlerFactory.CreateSelectionHandler(tourModel),
+                    TPin* pPin = m_worldPinsService->AddPin(m_tourWorldPinSelectionHandlerFactory->CreateSelectionHandler(tourModel),
                                                            NULL,
                                                            WorldPins::SdkModel::WorldPinFocusData(tourModel.Name(),
                                                                                                   tourModel.IntroText(),

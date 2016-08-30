@@ -21,14 +21,14 @@ namespace ExampleApp
         {
             namespace Camera
             {
-                ToursCameraController::ToursCameraController(const Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
-                                                             Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& touchController,
-                                                             const Eegeo::Rendering::ScreenProperties& screenProperties)
+                ToursCameraController::ToursCameraController(const std::shared_ptr<Eegeo::Streaming::ResourceCeilingProvider>& resourceCeilingProvider,
+                                                             const std::shared_ptr<TourGlobeCameraTouchController>& touchController,
+                                                             const std::shared_ptr<Eegeo::Rendering::ScreenProperties>& screenProperties)
                 : m_resourceCeilingProvider(resourceCeilingProvider)
                 , m_pCurrentMode(NULL)
                 , m_touchController(touchController)
                 {
-                    UpdateScreenProperties(screenProperties);
+                    UpdateScreenProperties(*screenProperties);
                 }
                 
                 void ToursCameraController::SetMode(IToursCameraMode* pMode)
@@ -40,12 +40,12 @@ namespace ExampleApp
                 {
                     Eegeo_ASSERT(m_pCurrentMode != NULL, "Camera mode is NULL")
                     
-                    m_touchController.Update(dt);
+                    m_touchController->Update(dt);
 
                     float screenWidth = m_camera.GetViewportWidth();
                     float screenHeight = m_camera.GetViewportHeight();
                     float inputScreenScale = 1.0f / std::max(screenWidth, screenHeight);
-                    m_pCurrentMode->UpdateCamera(dt, m_touchController, inputScreenScale);
+                    m_pCurrentMode->UpdateCamera(dt, *m_touchController, inputScreenScale);
                     
                     const ToursCameraState& state = m_pCurrentMode->GetCurrentState();
                     
@@ -60,8 +60,8 @@ namespace ExampleApp
                     Eegeo_ASSERT(m_pCurrentMode != NULL, "Camera mode is NULL")
                     
                     float cameraAltitude = static_cast<float>(Eegeo::Space::SpaceHelpers::GetAltitude(m_camera.GetEcefLocation()));
-                    float approxTerrainAltitude = m_resourceCeilingProvider.GetApproximateResourceCeilingAltitude();
-                    float approxTerrainAltitudeDelta = approxTerrainAltitude - m_resourceCeilingProvider.GetApproximateResourceFloorAltitude();
+                    float approxTerrainAltitude = m_resourceCeilingProvider->GetApproximateResourceCeilingAltitude();
+                    float approxTerrainAltitudeDelta = approxTerrainAltitude - m_resourceCeilingProvider->GetApproximateResourceFloorAltitude();
                     
                     float nearZ;
                     float farZ;

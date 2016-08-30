@@ -7,6 +7,8 @@
 #include "VectorMath.h"
 #include "Terrain.h"
 
+#include <memory>
+
 namespace ExampleApp
 {
     namespace GpsMarker
@@ -17,8 +19,8 @@ namespace ExampleApp
             {
             public:
                 
-                GpsMarkerModel(Eegeo::Location::ILocationService& locationService,
-                               Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider);
+                GpsMarkerModel(const std::shared_ptr<Eegeo::Location::ILocationService>& locationService,
+                               const std::shared_ptr<Eegeo::Resources::Terrain::Heights::TerrainHeightProvider>& terrainHeightProvider);
                 ~GpsMarkerModel();
 
                 bool UpdateGpsPosition();
@@ -28,8 +30,8 @@ namespace ExampleApp
                 
             private:
                 
-                Eegeo::Location::ILocationService& m_locationService;
-                Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& m_terrainHeightProvider;
+                std::shared_ptr<Eegeo::Location::ILocationService> m_locationService;
+                std::shared_ptr<Eegeo::Resources::Terrain::Heights::TerrainHeightProvider> m_terrainHeightProvider;
                 
                 bool m_hasLocation;
                 Eegeo::dv3 m_currentLocationEcef;

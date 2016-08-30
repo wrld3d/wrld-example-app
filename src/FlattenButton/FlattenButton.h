@@ -9,7 +9,6 @@ namespace ExampleApp
         namespace SdkModel
         {
             class IFlattenButtonModel;
-            class IFlattenButtonModule;
         }
 
         namespace View

@@ -3,6 +3,7 @@
 #include "SurveyModule.h"
 
 #include "SurveyObserver.h"
+#include "IPersistentSettingsModel.h"
 
 namespace ExampleApp
 {
@@ -10,22 +11,9 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            SurveyModule::SurveyModule(ExampleAppMessaging::TMessageBus& messageBus,
-                                       PersistentSettings::IPersistentSettingsModel& persistentSettingsModel)
-            : m_pSurveyObserver(NULL)
+            void SurveyModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
             {
-                m_pSurveyObserver = Eegeo_NEW(SurveyObserver)(messageBus,
-                                                              persistentSettingsModel);
-            }
-            
-            SurveyModule::~SurveyModule()
-            {
-                Eegeo_DELETE m_pSurveyObserver;
-            }
-            
-            SurveyObserver& SurveyModule::GetSurveyObserver() const
-            {
-                return *m_pSurveyObserver;
+                builder->registerType<SurveyObserver>().singleInstance();
             }
         }
     }

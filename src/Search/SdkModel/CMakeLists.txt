@@ -3,13 +3,11 @@ set(headers ${headers} ../src/Search/SdkModel
 set(currsources
   ../src/Search/SdkModel/CMakeLists.txt
   ../src/Search/SdkModel/IdentitySearchCallbackData.h
-  ../src/Search/SdkModel/ISearchModule.h
   ../src/Search/SdkModel/ISearchQueryPerformer.h
   ../src/Search/SdkModel/ISearchRefreshService.h
   ../src/Search/SdkModel/ISearchResultParser.h
   ../src/Search/SdkModel/ISearchResultRepository.h
   ../src/Search/SdkModel/ISearchService.h
-  ../src/Search/SdkModel/ISearchServiceModule.h
   ../src/Search/SdkModel/SearchJsonParser.cpp
   ../src/Search/SdkModel/SearchJsonParser.h
   ../src/Search/SdkModel/SearchModule.cpp

@@ -16,7 +16,7 @@ namespace ExampleApp
         {
             class WorldAreaLoaderModel : public IWorldAreaLoaderModel, private Eegeo::NonCopyable
             {
-                Eegeo::Web::PrecacheService& m_precacheService;
+                const std::shared_ptr<Eegeo::Web::PrecacheService> m_precacheService;
                 bool m_preloadInProgress;
                 Eegeo::Helpers::CallbackCollection0 m_preloadStartedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_preloadCompletedCallbacks;
@@ -28,7 +28,7 @@ namespace ExampleApp
                 void HandlePreloadServiceEvent();
 
             public:
-                WorldAreaLoaderModel(Eegeo::Web::PrecacheService& precacheService);
+                WorldAreaLoaderModel(const std::shared_ptr<Eegeo::Web::PrecacheService>& precacheService);
 
                 ~WorldAreaLoaderModel();
 

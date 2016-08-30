@@ -6,6 +6,8 @@
 #include "ICallback.h"
 #include "BidirectionalBus.h"
 
+#include <memory>
+
 namespace ExampleApp
 {
     namespace Net
@@ -16,8 +18,8 @@ namespace ExampleApp
             {
             public:
                 
-                ConnectivityChangedObserver(Eegeo::Web::WebConnectivityValidator& connectivityValidator,
-                                            ExampleAppMessaging::TMessageBus& messageBus);
+                ConnectivityChangedObserver(const std::shared_ptr<Eegeo::Web::WebConnectivityValidator>& connectivityValidator,
+                                            const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
                 ~ConnectivityChangedObserver();
                 
             private:
@@ -26,8 +28,8 @@ namespace ExampleApp
                 
                 void HandleConnectivityChanged();
                 
-                ExampleAppMessaging::TMessageBus& m_messageBus;
-                Eegeo::Web::WebConnectivityValidator& m_connectivityValidator;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
+                const std::shared_ptr<Eegeo::Web::WebConnectivityValidator> m_connectivityValidator;
             };
         }
     }

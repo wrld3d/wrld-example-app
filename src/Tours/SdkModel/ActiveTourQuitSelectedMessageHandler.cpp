@@ -10,29 +10,29 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            ActiveTourQuitSelectedMessageHandler::ActiveTourQuitSelectedMessageHandler(ITourService& tourService,
-                                                                                       ExampleAppMessaging::TMessageBus& messageBus)
+            ActiveTourQuitSelectedMessageHandler::ActiveTourQuitSelectedMessageHandler(const std::shared_ptr<ITourService>& tourService,
+                                                                                       const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
             : m_tourService(tourService)
             , m_messageBus(messageBus)
             , m_binding(this, &ActiveTourQuitSelectedMessageHandler::HandleActiveTourQuitSelected)
             {
-                m_messageBus.SubscribeNative(m_binding);
+                m_messageBus->SubscribeNative(m_binding);
             }
             
             ActiveTourQuitSelectedMessageHandler::~ActiveTourQuitSelectedMessageHandler()
             {
-                m_messageBus.UnsubscribeNative(m_binding);
+                m_messageBus->UnsubscribeNative(m_binding);
             }
             
             void ActiveTourQuitSelectedMessageHandler::HandleActiveTourQuitSelected(const ActiveTourQuitSelectedMessage& message)
             {
                 if(message.ExitTours())
                 {
-                    m_tourService.EndAllTours();
+                    m_tourService->EndAllTours();
                 }
                 else
                 {
-                    m_tourService.EndCurrentActiveTour();
+                    m_tourService->EndCurrentActiveTour();
                 }
             }
         }

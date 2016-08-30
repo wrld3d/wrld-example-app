@@ -3,6 +3,9 @@
 #include "FlattenButtonModule.h"
 #include "FlattenButtonViewModel.h"
 #include "FlattenButtonModel.h"
+#include "FlattenButtonViewStateChangedObserver.h"
+#include "FlattenButtonModelStateChangedObserver.h"
+#include "IMapModeModel.h"
 
 namespace ExampleApp
 {
@@ -10,37 +13,20 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            FlattenButtonModule::FlattenButtonModule(MapMode::SdkModel::IMapModeModel& mapModeModel,
-                                                     Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                                     ExampleAppMessaging::TMessageBus& messageBus)
+            FlattenButtonModule::FlattenButtonModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+            : m_builder(builder)
             {
-                m_pModel = Eegeo_NEW(FlattenButtonModel)(mapModeModel);
-                m_pViewModel = Eegeo_NEW(View::FlattenButtonViewModel)(identityProvider.GetNextIdentity(), false);
-                m_pFlattenButtonViewStateChangedObserver = Eegeo_NEW(FlattenButtonViewStateChangedObserver)(*m_pModel, messageBus);
-                m_pFlattenButtonModelStateChangedObserver = Eegeo_NEW(FlattenButtonModelStateChangedObserver)(*m_pModel, messageBus);
             }
-
-            FlattenButtonModule::~FlattenButtonModule()
+            
+            void FlattenButtonModule::Register()
             {
-                Eegeo_DELETE m_pFlattenButtonModelStateChangedObserver;
-                Eegeo_DELETE m_pFlattenButtonViewStateChangedObserver;
-                Eegeo_DELETE m_pViewModel;
-                Eegeo_DELETE m_pModel;
-            }
-
-            IFlattenButtonModel& FlattenButtonModule::GetFlattenButtonModel() const
-            {
-                return *m_pModel;
-            }
-
-            View::IFlattenButtonViewModel& FlattenButtonModule::GetFlattenButtonViewModel() const
-            {
-                return *m_pViewModel;
-            }
-
-            ScreenControl::View::IScreenControlViewModel& FlattenButtonModule::GetScreenControlViewModel() const
-            {
-                return m_pViewModel->GetScreenControlViewModel();
+                m_builder->registerType<FlattenButtonModel>().as<IFlattenButtonModel>().singleInstance();
+                m_builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                   {
+                                                       return std::make_shared<View::FlattenButtonViewModel>(context.resolve<Eegeo::Helpers::IIdentityProvider>(), false);
+                                                   }).as<View::IFlattenButtonViewModel>().singleInstance();
+                m_builder->registerType<FlattenButtonViewStateChangedObserver>().singleInstance();
+                m_builder->registerType<FlattenButtonModelStateChangedObserver>().singleInstance();
             }
         }
     }

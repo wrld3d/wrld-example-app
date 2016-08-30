@@ -10,13 +10,12 @@ namespace ExampleApp
     {
         namespace View
         {
-            OptionsViewModel::OptionsViewModel(Eegeo::Helpers::TIdentity identity,
-                                               Reaction::View::IReactionControllerModel& reactionControllerModel,
-                                               bool streamOverWifiOnly,
-                                               bool cachingEnabled)
-            : m_openable(identity, reactionControllerModel)
-            , m_streamOverWifiOnly(streamOverWifiOnly)
-            , m_cachingEnabled(cachingEnabled)
+            OptionsViewModel::OptionsViewModel(const std::shared_ptr<Eegeo::Helpers::IIdentityProvider>& identity,
+                                               const std::shared_ptr<Reaction::View::IReactionControllerModel>& reactionControllerModel,
+                                               const std::shared_ptr<Net::SdkModel::INetworkCapabilities>& networkCapabilities)
+            : m_openable(identity->GetNextIdentity(), reactionControllerModel)
+            , m_streamOverWifiOnly(networkCapabilities->StreamOverWifiOnly())
+            , m_cachingEnabled(networkCapabilities->HttpCachingEnabled())
             , m_inCacheClearCeremony(false)
             {
                 

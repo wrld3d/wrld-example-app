@@ -19,12 +19,11 @@ namespace ExampleApp
         namespace SdkModel
         {
             MyPinsWebService::MyPinsWebService(
-                                               const std::string& webServiceBaseUrl,
-                                               const std::string& webServiceAuthToken,
-                                               Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
-                                               Eegeo::Helpers::IFileIO& fileIO)
-            : m_url(webServiceBaseUrl)
-            , m_authHeader("Token " + webServiceAuthToken)
+                                               const std::shared_ptr<ApplicationConfig::ApplicationConfiguration>& appConfig,
+                                               const std::shared_ptr<Eegeo::Web::IWebLoadRequestFactory>& webLoadRequestFactory,
+                                               const std::shared_ptr<Eegeo::Helpers::IFileIO>& fileIO)
+            : m_url(appConfig->MyPinsWebServiceUrl())
+            , m_authHeader("Token " + appConfig->MyPinsWebServiceAuthToken())
             , m_webLoadRequestFactory(webLoadRequestFactory)
             , m_fileIO(fileIO)
             , m_webRequestCompleteCallback(this, &MyPinsWebService::WebRequestCompleteCallback)
@@ -55,7 +54,7 @@ namespace ExampleApp
             {
                 // when storing search result pins, due to licensing terms we're just storing the lat, long and id
                 // this allows us to refresh the pin when required.
-                Eegeo::Web::WebRequestBuilder requestBuilder = m_webLoadRequestFactory.Begin(Eegeo::Web::HttpVerbs::POST, m_url + CreatePoiEndPoint, m_webRequestCompleteCallback)
+                Eegeo::Web::WebRequestBuilder requestBuilder = m_webLoadRequestFactory->Begin(Eegeo::Web::HttpVerbs::POST, m_url + CreatePoiEndPoint, m_webRequestCompleteCallback)
                     .AddFormData("poi[type]", PoiTypeSearchResult)
                     .AddFormData("poi[vendor_name]", searchResult.GetVendor())
                     .AddFormData("poi[vendor_id]", searchResult.GetIdentifier())
@@ -72,7 +71,7 @@ namespace ExampleApp
                                                         const MyPinModel& pinModel,
                                                         const std::string& imagePath)
             {
-                Eegeo::Web::WebRequestBuilder requestBuilder = m_webLoadRequestFactory.Begin(Eegeo::Web::HttpVerbs::POST, m_url + CreatePoiEndPoint, m_webRequestCompleteCallback)
+                Eegeo::Web::WebRequestBuilder requestBuilder = m_webLoadRequestFactory->Begin(Eegeo::Web::HttpVerbs::POST, m_url + CreatePoiEndPoint, m_webRequestCompleteCallback)
                     .AddFormData("poi[type]", PoiTypeUserGenerated)
                     .AddFormData("poi[title]", pinModel.GetTitle())
                     .AddFormData("poi[description]", pinModel.GetDescription())
@@ -91,7 +90,7 @@ namespace ExampleApp
                     std::fstream stream;
                     size_t size;
 
-                    if (m_fileIO.OpenFile(stream, size, imagePath, std::ios::in | std::ios::binary))
+                    if (m_fileIO->OpenFile(stream, size, imagePath, std::ios::in | std::ios::binary))
                     {
                         imageData.resize(size);
                         stream.read((char*)&imageData[0], size);

@@ -28,21 +28,21 @@ namespace ExampleApp
                 TPinToSelectionHandlerMap m_pinsToSelectionHandlers;
                 TPinToVisiblityHandlerMap m_pinsToVisbilityChangedHandlers;
 
-                IWorldPinsRepository& m_worldPinsRepository;
-                IWorldPinsFactory& m_worldPinsFactory;
-                Eegeo::Pins::PinRepository& m_pinRepository;
-                Eegeo::Pins::PinController& m_pinController;
-                const Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
-                const IWorldPinIconMapping& m_worldPinIconMapping;
+                const std::shared_ptr<IWorldPinsRepository> m_worldPinsRepository;
+                const std::shared_ptr<IWorldPinsFactory> m_worldPinsFactory;
+                const std::shared_ptr<Eegeo::Pins::PinRepository> m_pinRepository;
+                const std::shared_ptr<Eegeo::Pins::PinController> m_pinController;
+                const std::shared_ptr<const Eegeo::Rendering::EnvironmentFlatteningService> m_environmentFlatteningService;
+                const std::shared_ptr<const IWorldPinIconMapping> m_worldPinIconMapping;
                 bool m_pinAlreadySelected;
 
             public:
-                WorldPinsService(IWorldPinsRepository& worldPinsRepository,
-                                 IWorldPinsFactory& worldPinsFactory,
-                                 Eegeo::Pins::PinRepository& pinRepository,
-                                 Eegeo::Pins::PinController& pinController,
-                                 const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                 const IWorldPinIconMapping& worldPinIconMapping);
+                WorldPinsService(const std::shared_ptr<IWorldPinsRepository>& worldPinsRepository,
+                                 const std::shared_ptr<IWorldPinsFactory>& worldPinsFactory,
+                                 const std::shared_ptr<Eegeo::Pins::PinRepository>& pinRepository,
+                                 const std::shared_ptr<Eegeo::Pins::PinController>& pinController,
+                                 const std::shared_ptr<Eegeo::Rendering::EnvironmentFlatteningService>& environmentFlatteningService,
+                                 const std::shared_ptr<IWorldPinIconMapping>& worldPinIconMapping);
 
                 ~WorldPinsService();
 

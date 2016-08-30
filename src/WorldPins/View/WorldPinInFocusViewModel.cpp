@@ -11,9 +11,9 @@ namespace ExampleApp
     {
         namespace View
         {
-            WorldPinInFocusViewModel::WorldPinInFocusViewModel(Eegeo::Helpers::TIdentity identity)
+            WorldPinInFocusViewModel::WorldPinInFocusViewModel(const std::shared_ptr<Eegeo::Helpers::IIdentityProvider>& identity)
                 : m_isOpen(false)
-                , m_screenControl(identity)
+                , m_screenControl(identity->GetNextIdentity())
             {
 
             }

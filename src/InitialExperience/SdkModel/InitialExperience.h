@@ -8,7 +8,6 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class IInitialExperienceModule;
             class IInitialExperienceModel;
             class IInitialExperienceStep;
             class IInitialExperienceController;

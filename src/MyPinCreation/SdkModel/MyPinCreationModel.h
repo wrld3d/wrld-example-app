@@ -10,6 +10,7 @@
 #include "IWorkPool.h"
 #include "MyPins.h"
 #include "LatLongAltitude.h"
+#include "Types.h"
 
 #include <vector>
 
@@ -18,11 +19,11 @@ namespace ExampleApp
     namespace MyPinCreation
     {
         namespace SdkModel
-        {
-            class MyPinCreationModel : public IMyPinCreationModel
+        {            
+            class MyPinCreationModel : public IMyPinCreationModel, private Eegeo::NonCopyable
             {
             public:
-                MyPinCreationModel(MyPins::SdkModel::IMyPinsService& myPinsService);
+                MyPinCreationModel(const std::shared_ptr<MyPins::SdkModel::IMyPinsService>& myPinsService);
 
                 ~MyPinCreationModel();
 
@@ -66,7 +67,7 @@ namespace ExampleApp
                 int m_floor;
                 Eegeo::Resources::Interiors::InteriorId m_buildingId;
 
-                MyPins::SdkModel::IMyPinsService& m_myPinsService;
+                const std::shared_ptr<MyPins::SdkModel::IMyPinsService> m_myPinsService;
 
                 Eegeo::Helpers::CallbackCollection1<MyPinCreationStage> m_stateChangedCallbacks;
             };

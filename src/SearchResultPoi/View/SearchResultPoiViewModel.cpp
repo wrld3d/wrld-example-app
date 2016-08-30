@@ -9,10 +9,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            SearchResultPoiViewModel::SearchResultPoiViewModel(Eegeo::Helpers::TIdentity identity,
-                    Reaction::View::IReactionControllerModel& reactionControllerModel)
+            SearchResultPoiViewModel::SearchResultPoiViewModel(const std::shared_ptr<Eegeo::Helpers::IIdentityProvider>& identity,
+                                                               const std::shared_ptr<Reaction::View::IReactionControllerModel>& reactionControllerModel)
                 : m_searchResultModel()
-                , m_openable(identity, reactionControllerModel)
+                , m_openable(identity->GetNextIdentity(), reactionControllerModel)
             {
 
             }

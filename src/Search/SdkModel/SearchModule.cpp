@@ -4,9 +4,23 @@
 #include "SearchResultRepository.h"
 #include "SearchResultModel.h"
 #include "SearchQueryPerformer.h"
+#include "SearchQueryObserver.h"
 #include "SearchRefreshService.h"
 #include "SearchResultMyPinsService.h"
 #include "MyPinsSearchResultRefreshService.h"
+#include "GeoNamesSearchServiceModule.h"
+#include "EegeoSearchServiceModule.h"
+#include "YelpSearchServiceModule.h"
+#include "GeoNamesSearchService.h"
+#include "EegeoSearchService.h"
+#include "YelpSearchService.h"
+#include "CombinedSearchService.h"
+#include "SearchVendorNames.h"
+#include "IGeoNamesSearchQueryFactory.h"
+#include "IGeoNamesParser.h"
+#include "INetworkCapabilities.h"
+#include "InteriorInteractionModel.h"
+#include "ICameraTransitionController.h"
 
 namespace ExampleApp
 {
@@ -14,71 +28,42 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            SearchModule::SearchModule(ISearchService& exteriorSearchService,
-                                       Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
-                                       CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
-                                       Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                       ExampleAppMessaging::TMessageBus& messageBus,
-                                       ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus)
+            SearchModule::SearchModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+            : m_builder(builder)
             {
-                m_pSearchResultRepository = Eegeo_NEW(SearchResultRepository)();
-                
-                m_pSearchResultMyPinsService = Eegeo_NEW(MyPins::SearchResultMyPinsService)(sdkModelDomainEventBus);
-                
-                m_pMyPinsSearchResultRefreshService = Eegeo_NEW(MyPins::MyPinsSearchResultRefreshService)(*m_pSearchResultMyPinsService,
-                                                                                                          exteriorSearchService);
-
-                m_pSearchQueryPerformer = Eegeo_NEW(SearchQueryPerformer)(exteriorSearchService,
-                                                                          *m_pSearchResultRepository,
-                                                                          cameraController);
-
-                m_pSearchRefreshService = Eegeo_NEW(SearchRefreshService)(exteriorSearchService,
-                                          *m_pSearchQueryPerformer,
-                                          cameraTransitionsController,
-                                          interiorInteractionModel,
-                                          1.f,
-                                          100.f,
-                                          1100.f,
-                                          50.f);
-
-                m_pSearchQueryObserver = Eegeo_NEW(SearchQueryObserver)(exteriorSearchService,
-                                                                        *m_pSearchQueryPerformer,
-                                                                        messageBus);
-            }
-
-            SearchModule::~SearchModule()
-            {
-                Eegeo_DELETE m_pSearchQueryObserver;
-                Eegeo_DELETE m_pSearchRefreshService;
-                Eegeo_DELETE m_pSearchQueryPerformer;
-                Eegeo_DELETE m_pMyPinsSearchResultRefreshService;
-                Eegeo_DELETE m_pSearchResultMyPinsService;
-                Eegeo_DELETE m_pSearchResultRepository;
             }
             
-            ISearchResultRepository& SearchModule::GetSearchResultRepository() const
+            void SearchModule::Register()
             {
-                return *m_pSearchResultRepository;
-            }
-
-            ISearchQueryPerformer& SearchModule::GetSearchQueryPerformer() const
-            {
-                return *m_pSearchQueryPerformer;
-            }
-
-            ISearchRefreshService& SearchModule::GetSearchRefreshService() const
-            {
-                return *m_pSearchRefreshService;
-            }
-            
-            MyPins::ISearchResultMyPinsService& SearchModule::GetSearchResultMyPinsService() const
-            {
-                return *m_pSearchResultMyPinsService;
-            }
-            
-            MyPins::IMyPinsSearchResultRefreshService& SearchModule::GetMyPinsSearchResultRefreshService() const
-            {
-                return *m_pMyPinsSearchResultRefreshService;
+                Search::GeoNames::SdkModel::GeoNamesSearchServiceModule(m_builder).Register();
+                Search::EegeoPois::SdkModel::EegeoSearchServiceModule(m_builder).Register();
+                ExampleApp::Search::Yelp::YelpSearchServiceModule(m_builder).Register();
+                m_builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                   {
+                                                       std::map<std::string, std::shared_ptr<Search::SdkModel::ISearchService>> searchServices;
+                                                       searchServices[Search::GeoNamesVendorName] = context.resolve<ExampleApp::Search::GeoNames::SdkModel::GeoNamesSearchService>();
+                                                       searchServices[Search::EegeoVendorName] = context.resolve<ExampleApp::Search::EegeoPois::SdkModel::EegeoSearchService>();
+                                                       searchServices[Search::YelpVendorName] = context.resolve<ExampleApp::Search::Yelp::SdkModel::YelpSearchService>();
+                                                       return std::make_shared<ExampleApp::Search::Combined::SdkModel::CombinedSearchService>(searchServices,
+                                                                                                                                              context.resolve<Eegeo::Resources::Interiors::InteriorInteractionModel>());
+                                                       
+                                                   }).as<Search::SdkModel::ISearchService>().singleInstance();
+                m_builder->registerType<SearchResultRepository>().as<ISearchResultRepository>().singleInstance();
+                m_builder->registerType<MyPins::SearchResultMyPinsService>().as<MyPins::ISearchResultMyPinsService>().singleInstance();
+                m_builder->registerType<MyPins::MyPinsSearchResultRefreshService>().as<MyPins::IMyPinsSearchResultRefreshService>().singleInstance();
+                m_builder->registerType<SearchQueryPerformer>().as<ISearchQueryPerformer>().singleInstance();
+                m_builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                   {
+                                                       return std::make_shared<SearchRefreshService>(context.resolve<ISearchService>(),
+                                                                                                     context.resolve<ISearchQueryPerformer>(),
+                                                                                                     context.resolve<CameraTransitions::SdkModel::ICameraTransitionController>(),
+                                                                                                     context.resolve<Eegeo::Resources::Interiors::InteriorInteractionModel>(),
+                                                                                                     1.f,
+                                                                                                     100.f,
+                                                                                                     1100.f,
+                                                                                                     50.f);
+                                                   }).as<ISearchRefreshService>().singleInstance();\
+                m_builder->registerType<SearchQueryObserver>().singleInstance();
             }
         }
     }

@@ -8,6 +8,7 @@
 #include "MenuOptionsModel.h"
 #include "MenuSectionViewModel.h"
 #include "SearchMenuPerformedSearchMessageHandler.h"
+#include "SearchMenuOptions.h"
 
 namespace ExampleApp
 {
@@ -15,29 +16,18 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            SearchMenuModule::SearchMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                               ExampleApp::Reaction::View::IReactionControllerModel& reactionControllerModel,
-                                               Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                                               ExampleAppMessaging::TMessageBus& messageBus,
-                                               Metrics::IMetricsService& metricsService)
-            : m_pMenuModel(NULL)
-            , m_pMenuOptionsModel(NULL)
-            , m_pMenuViewModel(NULL)
-            , m_pSearchSectionViewModel(NULL)
-            , m_pPerformedSearchMessageHandler(NULL)
+            void SearchMenuModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
             {
-                m_pMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
-                m_pMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pMenuModel);
-                
-                m_pMenuViewModel = Eegeo_NEW(Menu::View::MenuViewModel)(false,
-                                                                        identityProvider.GetNextIdentity(),
-                                                                        reactionControllerModel);
-                
-                m_pPerformedSearchMessageHandler = Eegeo_NEW(SearchMenuPerformedSearchMessageHandler)(searchQueryPerformer,
-                                                                                                      messageBus,
-                                                                                                      metricsService);
+                builder->registerType<View::SearchMenuModel>().singleInstance();
+                builder->registerType<View::SearchMenuOptionsModel>().singleInstance();
+                builder->registerType<View::SearchMenuViewModel>().singleInstance();
+                builder->registerType<SearchMenuPerformedSearchMessageHandler>();
             }
             
+            /*
+             
+            TODO: fix up this...
+             
             SearchMenuModule::~SearchMenuModule()
             {
                 Eegeo_DELETE m_pPerformedSearchMessageHandler;
@@ -67,28 +57,14 @@ namespace ExampleApp
                 m_pMenuViewModel->AddSection(*pMenuSection);
                 m_sections.push_back(pMenuSection);
             }
-            
-            Menu::View::IMenuModel& SearchMenuModule::GetSearchMenuModel() const
-            {
-                return *m_pMenuModel;
-            }
-            
-            Menu::View::IMenuOptionsModel& SearchMenuModule::GetSearchMenuOptionsModel() const
-            {
-                return *m_pMenuOptionsModel;
-            }
-            
-            Menu::View::IMenuViewModel& SearchMenuModule::GetSearchMenuViewModel() const
-            {
-                return *m_pMenuViewModel;
-            }
-            
+             
             Menu::View::IMenuSectionViewModel& SearchMenuModule::GetSearchSectionViewModel() const
             {
                 Eegeo_ASSERT(m_pSearchSectionViewModel != NULL, "Search section view model not set, please call SetSearchSection before calling this function");
                 
                 return *m_pSearchSectionViewModel;
             }
+             */
         }
     }
 }

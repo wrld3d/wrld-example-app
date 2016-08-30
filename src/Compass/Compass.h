@@ -9,7 +9,6 @@ namespace ExampleApp
         namespace SdkModel
         {
             class ICompassModel;
-            class ICompassModule;
             class ICompassUpdateController;
         }
 

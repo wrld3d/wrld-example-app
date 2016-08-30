@@ -9,19 +9,9 @@ namespace ExampleApp
     {
         namespace View
         {
-            ViewControllerUpdaterModule::ViewControllerUpdaterModule()
+            void ViewControllerUpdaterModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
             {
-                m_pViewControllerUpdaterModel = Eegeo_NEW(ViewControllerUpdaterModel)();
-            }
-
-            ViewControllerUpdaterModule::~ViewControllerUpdaterModule()
-            {
-                Eegeo_DELETE m_pViewControllerUpdaterModel;
-            }
-
-            IViewControllerUpdaterModel& ViewControllerUpdaterModule::GetViewControllerUpdaterModel() const
-            {
-                return *m_pViewControllerUpdaterModel;
+                builder->registerType<ViewControllerUpdaterModel>().as<IViewControllerUpdaterModel>().singleInstance();
             }
         }
     }

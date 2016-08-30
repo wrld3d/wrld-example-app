@@ -17,9 +17,9 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                GeoNamesSearchService::GeoNamesSearchService(IGeoNamesSearchQueryFactory& geoNamesSearchQueryFactory,
-                                                             IGeoNamesParser& geoNamesParser,
-                                                             Net::SdkModel::INetworkCapabilities& networkCapabilities)
+                GeoNamesSearchService::GeoNamesSearchService(const std::shared_ptr<IGeoNamesSearchQueryFactory>& geoNamesSearchQueryFactory,
+                                                             const std::shared_ptr<IGeoNamesParser>& geoNamesParser,
+                                                             const std::shared_ptr<Net::SdkModel::INetworkCapabilities>& networkCapabilities)
                 : Search::SdkModel::SearchServiceBase(std::vector<std::string>())
                 , m_geoNamesSearchQueryFactory(geoNamesSearchQueryFactory)
                 , m_geoNamesParser(geoNamesParser)
@@ -61,7 +61,7 @@ namespace ExampleApp
                     CancelInFlightQueries();
                     
                     ExecuteQueryPerformedCallbacks(query);
-                    if(m_currentQueryModel.IsCategory() || (m_networkCapabilities.StreamOverWifiOnly() && !m_networkCapabilities.ConnectedToWifi()))
+                    if(m_currentQueryModel.IsCategory() || (m_networkCapabilities->StreamOverWifiOnly() && !m_networkCapabilities->ConnectedToWifi()))
                     {
                         ExecutQueryResponseReceivedCallbacks(query, std::vector<Search::SdkModel::SearchResultModel>());
                         return;
@@ -70,7 +70,7 @@ namespace ExampleApp
                     m_currentQueryModel = query;
                     m_hasActiveQuery = true;
                     
-                    m_pCurrentRequest = m_geoNamesSearchQueryFactory.CreateGeoNamesSearchForQuery(m_currentQueryModel,
+                    m_pCurrentRequest = m_geoNamesSearchQueryFactory->CreateGeoNamesSearchForQuery(m_currentQueryModel,
                                                                                                   m_searchCallback);
                 }
                 
@@ -89,7 +89,7 @@ namespace ExampleApp
                     {
                         const std::string& response(m_pCurrentRequest->ResponseString());
                         std::vector<GeoNamesSearchResultDto> geoNameResultDtos;
-                        m_geoNamesParser.ParseGeoNamesQueryResults(response, geoNameResultDtos);
+                        m_geoNamesParser->ParseGeoNamesQueryResults(response, geoNameResultDtos);
                         
                         queryResults.reserve(geoNameResultDtos.size());
                         if(!geoNameResultDtos.empty())

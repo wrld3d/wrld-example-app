@@ -37,20 +37,20 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<SearchResultOnMapModel, Search::SdkModel::SearchResultModel> m_searchResultPinnedCallback;
                 Eegeo::Helpers::TCallback1<SearchResultOnMapModel, Search::SdkModel::SearchResultModel> m_searchResultUnpinnedCallback;
                 
-                Search::SdkModel::MyPins::ISearchResultMyPinsService& m_searchResultOnMapMyPinsService;
-                MyPins::SdkModel::IMyPinsService& m_myPinsService;
-                Search::SdkModel::ISearchResultRepository& m_searchResultRepository;
-                CategorySearch::ISearchResultIconCategoryMapper& m_searchResultIconCategoryMapper;
-                View::ISearchResultOnMapFactory& m_searchResultOnMapFactory;
-                WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
+                const std::shared_ptr<Search::SdkModel::MyPins::ISearchResultMyPinsService> m_searchResultOnMapMyPinsService;
+                const std::shared_ptr<MyPins::SdkModel::IMyPinsService> m_myPinsService;
+                const std::shared_ptr<Search::SdkModel::ISearchResultRepository> m_searchResultRepository;
+                const std::shared_ptr<CategorySearch::ISearchResultIconCategoryMapper> m_searchResultIconCategoryMapper;
+                const std::shared_ptr<View::ISearchResultOnMapFactory> m_searchResultOnMapFactory;
+                const std::shared_ptr<WorldPins::SdkModel::IWorldPinsService> m_worldPinsService;
 
             public:
-                SearchResultOnMapModel(WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                       MyPins::SdkModel::IMyPinsService& myPinsService,
-                                       View::ISearchResultOnMapFactory& searchResultOnMapFactory,
-                                       Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultOnMapMyPinsService,
-                                       CategorySearch::ISearchResultIconCategoryMapper& searchResultIconCategoryMapper,
-                                       Search::SdkModel::ISearchResultRepository& searchResultRepository);
+                SearchResultOnMapModel(const std::shared_ptr<WorldPins::SdkModel::IWorldPinsService>& worldPinsService,
+                                       const std::shared_ptr<MyPins::SdkModel::IMyPinsService>& myPinsService,
+                                       const std::shared_ptr<View::ISearchResultOnMapFactory>& searchResultOnMapFactory,
+                                       const std::shared_ptr<Search::SdkModel::MyPins::ISearchResultMyPinsService>& searchResultOnMapMyPinsService,
+                                       const std::shared_ptr<CategorySearch::ISearchResultIconCategoryMapper>& searchResultIconCategoryMapper,
+                                       const std::shared_ptr<Search::SdkModel::ISearchResultRepository>& searchResultRepository);
 
                 ~SearchResultOnMapModel();
 

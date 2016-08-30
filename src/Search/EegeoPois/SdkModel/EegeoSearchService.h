@@ -22,9 +22,9 @@ namespace ExampleApp
                 class EegeoSearchService : public Search::SdkModel::SearchServiceBase, private Eegeo::NonCopyable
                 {
                 private:
-                    IEegeoSearchQueryFactory& m_eeGeoSearchQueryFactory;
-                    IEegeoParser& m_eeGeoParser;
-                    Net::SdkModel::INetworkCapabilities& m_networkCapabilities;
+                    std::shared_ptr<IEegeoSearchQueryFactory> m_eeGeoSearchQueryFactory;
+                    std::shared_ptr<IEegeoParser> m_eeGeoParser;
+                    std::shared_ptr<Net::SdkModel::INetworkCapabilities> m_networkCapabilities;
                     Search::SdkModel::SearchQuery m_currentQueryModel;
                     Eegeo::Helpers::TCallback0<EegeoSearchService> m_searchCallback;
                     IEegeoSearchQuery* m_pCurrentRequest;
@@ -32,10 +32,10 @@ namespace ExampleApp
                     Eegeo::Helpers::TCallback0<EegeoSearchService> m_networkCapabilitiesChangedHandler;
                     
                 public:
-                    EegeoSearchService(IEegeoSearchQueryFactory& EegeoSearchQueryFactory,
-                                           IEegeoParser& EegeoParser,
-                                           Net::SdkModel::INetworkCapabilities& networkCapabilities,
-                                           const std::vector<std::string>& availableCategories);
+                    EegeoSearchService(const std::shared_ptr<IEegeoSearchQueryFactory>& EegeoSearchQueryFactory,
+                                       const std::shared_ptr<IEegeoParser>& EegeoParser,
+                                       const std::shared_ptr<Net::SdkModel::INetworkCapabilities>& networkCapabilities,
+                                       const std::vector<std::string>& availableCategories);
                     
                     ~EegeoSearchService();
                     

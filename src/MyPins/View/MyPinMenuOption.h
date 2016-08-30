@@ -13,6 +13,9 @@
 #include "InteriorId.h"
 #include <string>
 #include "IMenuReactionModel.h"
+#include "SortedMenuModel.h"
+#include "SortedMenuComparisonFunctions.h"
+#include "MenuOptionsModel.h"
 
 namespace ExampleApp
 {
@@ -20,6 +23,22 @@ namespace ExampleApp
     {
         namespace View
         {
+            class MyPinsMenuModel : public Menu::View::SortedMenuModel
+            {
+            public:
+                MyPinsMenuModel() : Menu::View::SortedMenuModel(Menu::View::LexicographicalNameCompare)
+                {
+                }
+            };
+            
+            class MyPinsMenuOptionsModel : public Menu::View::MenuOptionsModel
+            {
+            public:
+                MyPinsMenuOptionsModel(const std::shared_ptr<MyPinsMenuModel>& settingsMenuModel) : Menu::View::MenuOptionsModel(*settingsMenuModel)
+                {
+                }
+            };
+
             class MyPinMenuOption : public Menu::View::IMenuOption
             {
             public:

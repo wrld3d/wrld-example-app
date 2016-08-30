@@ -4,16 +4,15 @@
 
 #include "Types.h"
 #include "AppInterface.h"
+
 namespace ExampleApp
 {
     namespace DoubleTapIndoorInteraction
     {
         namespace SdkModel
         {
-            
-            class IDoubleTapIndoorInteractionController : public Eegeo::NonCopyable {
-                
-            
+            class IDoubleTapIndoorInteractionController
+            {
             public:
                 virtual ~IDoubleTapIndoorInteractionController()
                 {

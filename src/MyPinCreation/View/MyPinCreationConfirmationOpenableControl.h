@@ -17,7 +17,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TIdentity m_identity;
 
             public:
-                MyPinCreationConfirmationOpenableControl(Eegeo::Helpers::TIdentity identity, Reaction::View::IReactionControllerModel& reactionControllerModel);
+                MyPinCreationConfirmationOpenableControl(Eegeo::Helpers::TIdentity identity, const std::shared_ptr<Reaction::View::IReactionControllerModel>& reactionControllerModel);
 
                 Eegeo::Helpers::TIdentity GetIdentity() const;
             };

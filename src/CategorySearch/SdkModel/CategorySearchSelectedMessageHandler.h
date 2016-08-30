@@ -16,19 +16,18 @@ namespace ExampleApp
         {
             class CategorySearchSelectedMessageHandler : private Eegeo::NonCopyable
             {
-                Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<Search::SdkModel::ISearchQueryPerformer> m_searchQueryPerformer;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 Eegeo::Helpers::TCallback1<CategorySearchSelectedMessageHandler, const CategorySearchSelectedMessage&> m_handlerBinding;
                 
-                Metrics::IMetricsService& m_metricsService;
+                const std::shared_ptr<Metrics::IMetricsService> m_metricsService;
 
                 void OnCategorySearchSelectedMessage(const CategorySearchSelectedMessage& message);
 
             public:
-                CategorySearchSelectedMessageHandler(
-                    Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                    ExampleAppMessaging::TMessageBus& messageBus,
-                    Metrics::IMetricsService& metricsService);
+                CategorySearchSelectedMessageHandler(const std::shared_ptr<Search::SdkModel::ISearchQueryPerformer>& searchQueryPerformer,
+                                                     const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                                     const std::shared_ptr<Metrics::IMetricsService>& metricsService);
 
                 ~CategorySearchSelectedMessageHandler();
             };

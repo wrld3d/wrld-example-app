@@ -9,20 +9,20 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            WorldAreaLoaderModel::WorldAreaLoaderModel(Eegeo::Web::PrecacheService& precacheService)
+            WorldAreaLoaderModel::WorldAreaLoaderModel(const std::shared_ptr<Eegeo::Web::PrecacheService>& precacheService)
                 : m_precacheService(precacheService)
-                , m_preloadInProgress(precacheService.CurrentlyPrecaching())
+                , m_preloadInProgress(precacheService->CurrentlyPrecaching())
                 , m_preloadCompletedCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<WorldAreaLoaderModel>(this, &WorldAreaLoaderModel::HandlePreloadServiceEvent)))
                 , m_preloadCancelledCallback(Eegeo_NEW(Eegeo::Helpers::TCallback0<WorldAreaLoaderModel>(this, &WorldAreaLoaderModel::HandlePreloadServiceEvent)))
             {
-                m_precacheService.InsertPrecacheCompletedCallback(*m_preloadCompletedCallback);
-                m_precacheService.InsertPrecacheCancelledCallback(*m_preloadCancelledCallback);
+                m_precacheService->InsertPrecacheCompletedCallback(*m_preloadCompletedCallback);
+                m_precacheService->InsertPrecacheCancelledCallback(*m_preloadCancelledCallback);
             }
 
             WorldAreaLoaderModel::~WorldAreaLoaderModel()
             {
-                m_precacheService.RemovePrecacheCompletedCallback(*m_preloadCompletedCallback);
-                m_precacheService.RemovePrecacheCancelledCallback(*m_preloadCancelledCallback);
+                m_precacheService->RemovePrecacheCompletedCallback(*m_preloadCompletedCallback);
+                m_precacheService->RemovePrecacheCancelledCallback(*m_preloadCancelledCallback);
 
                 Eegeo_DELETE m_preloadCompletedCallback;
                 Eegeo_DELETE m_preloadCancelledCallback;
@@ -30,34 +30,34 @@ namespace ExampleApp
 
             float WorldAreaLoaderModel::PercentCompleted() const
             {
-                return m_precacheService.PercentCompleted();
+                return m_precacheService->PercentCompleted();
             }
 
             bool WorldAreaLoaderModel::CurrentlyPreloading() const
             {
-                return m_precacheService.CurrentlyPrecaching();
+                return m_precacheService->CurrentlyPrecaching();
             }
 
             bool WorldAreaLoaderModel::IsCancelling() const
             {
-                return m_precacheService.IsCancelling();
+                return m_precacheService->IsCancelling();
             }
 
             bool WorldAreaLoaderModel::CanPreload(double altitude) const
             {
-                return m_precacheService.CanPrecache(altitude);
+                return m_precacheService->CanPrecache(altitude);
             }
 
             void WorldAreaLoaderModel::CancelPreload()
             {
-                return m_precacheService.CancelPrecaching();
+                return m_precacheService->CancelPrecaching();
             }
 
             void WorldAreaLoaderModel::PreloadResourcesInVolume(Eegeo::Streaming::IStreamingVolume& volume)
             {
                 Eegeo_ASSERT(!m_preloadInProgress, "Already pre-loading, cancel current pre-load before starting another.\n")
                 m_preloadInProgress = true;
-                m_precacheService.Precache(volume);
+                m_precacheService->Precache(volume);
                 m_preloadStartedCallbacks.ExecuteCallbacks();
             }
 

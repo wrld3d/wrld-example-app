@@ -10,7 +10,6 @@ set(currsources
   ../src/ApplicationConfig/SdkModel/ApplicationConfigurationService.cpp
   ../src/ApplicationConfig/SdkModel/ApplicationConfigurationService.h
   ../src/ApplicationConfig/SdkModel/CMakeLists.txt
-  ../src/ApplicationConfig/SdkModel/IApplicationConfigurationModule.h
   ../src/ApplicationConfig/SdkModel/IApplicationConfigurationParser.h
   ../src/ApplicationConfig/SdkModel/IApplicationConfigurationReader.h
   ../src/ApplicationConfig/SdkModel/IApplicationConfigurationService.h

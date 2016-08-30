@@ -4,7 +4,6 @@ set(currsources
   ../src/VisualMap/SdkModel/CMakeLists.txt
   ../src/VisualMap/SdkModel/IVisualMapController.h
   ../src/VisualMap/SdkModel/IVisualMapModel.h
-  ../src/VisualMap/SdkModel/IVisualMapModule.h
   ../src/VisualMap/SdkModel/IVisualMapService.h
   ../src/VisualMap/SdkModel/IVisualMapStateHistory.h
   ../src/VisualMap/SdkModel/VisualMapController.cpp

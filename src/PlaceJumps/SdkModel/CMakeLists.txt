@@ -3,7 +3,6 @@ set(headers ${headers} ../src/PlaceJumps/SdkModel
 set(currsources
   ../src/PlaceJumps/SdkModel/CMakeLists.txt
   ../src/PlaceJumps/SdkModel/IPlaceJumpController.h
-  ../src/PlaceJumps/SdkModel/IPlaceJumpsModule.h
   ../src/PlaceJumps/SdkModel/PlaceJumpController.cpp
   ../src/PlaceJumps/SdkModel/PlaceJumpController.h
   ../src/PlaceJumps/SdkModel/PlaceJumpSelectedMessageHandler.cpp

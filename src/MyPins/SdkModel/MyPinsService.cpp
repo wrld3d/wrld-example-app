@@ -30,13 +30,13 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            MyPinsService::MyPinsService(IMyPinsRepository& myPinsRepository,
-                                         MyPinsFileIO& myPinsFileIO,
-                                         IMyPinSelectionHandlerFactory& myPinSelectionHandlerFactory,
-                                         IMyPinVisibilityStateChangedHandlerFactory& myPinVisibilityStateChangedHandlerFactory,
-                                         IMyPinBoundObjectFactory& myPinBoundObjectFactory,
-                                         IMyPinBoundObjectRepository& myPinBoundObjectRepository,
-                                         WorldPins::SdkModel::IWorldPinsService& worldPinsService)
+            MyPinsService::MyPinsService(const std::shared_ptr<IMyPinsRepository>& myPinsRepository,
+                                         const std::shared_ptr<MyPinsFileIO>& myPinsFileIO,
+                                         const std::shared_ptr<IMyPinSelectionHandlerFactory>& myPinSelectionHandlerFactory,
+                                         const std::shared_ptr<IMyPinVisibilityStateChangedHandlerFactory>& myPinVisibilityStateChangedHandlerFactory,
+                                         const std::shared_ptr<IMyPinBoundObjectFactory>& myPinBoundObjectFactory,
+                                         const std::shared_ptr<IMyPinBoundObjectRepository>& myPinBoundObjectRepository,
+                                         const std::shared_ptr<WorldPins::SdkModel::IWorldPinsService>& worldPinsService)
                 : m_myPinsRepository(myPinsRepository)
                 , m_myPinsFileIO(myPinsFileIO)
                 , m_myPinSelectionHandlerFactory(myPinSelectionHandlerFactory)
@@ -44,7 +44,7 @@ namespace ExampleApp
                 , m_myPinBoundObjectFactory(myPinBoundObjectFactory)
                 , m_myPinBoundObjectRepository(myPinBoundObjectRepository)
                 , m_worldPinsService(worldPinsService)
-                , m_lastIdUsed(m_myPinsFileIO.GetLastIdWrittenToDisk())
+                , m_lastIdUsed(m_myPinsFileIO->GetLastIdWrittenToDisk())
             {
             }
             
@@ -52,7 +52,7 @@ namespace ExampleApp
             {
                 std::vector<std::pair<MyPinModel*, IMyPinBoundObject*> > pinModelBindings;
                 
-                m_myPinsFileIO.LoadPinModelsFromDisk(pinModelBindings, *this);
+                m_myPinsFileIO->LoadPinModelsFromDisk(pinModelBindings, *this);
                 
                 for (std::vector<std::pair<MyPinModel*, IMyPinBoundObject*> >::iterator it = pinModelBindings.begin();
                      it != pinModelBindings.end();
@@ -61,9 +61,9 @@ namespace ExampleApp
                     MyPinModel* pPinModel(it->first);
                     IMyPinBoundObject& pinModelBoundObject(*it->second);
                     
-                    m_myPinBoundObjectRepository.AddBoundItemForPin(pPinModel->Identifier(), pinModelBoundObject);
+                    m_myPinBoundObjectRepository->AddBoundItemForPin(pPinModel->Identifier(), pinModelBoundObject);
                     pinModelBoundObject.HandlePinAdded(*pPinModel);
-                    m_myPinsRepository.AddItem(pPinModel);
+                    m_myPinsRepository->AddItem(pPinModel);
                     AddPinToMap(pPinModel, WorldPins::SdkModel::WorldPinVisibility::None);
                 }
             }
@@ -79,13 +79,13 @@ namespace ExampleApp
                 
                 WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData(pMyPinModel->GetBuildingId(), pMyPinModel->GetFloor());
                 
-                MyPinSelectionHandler* pSelectionHandler(m_myPinSelectionHandlerFactory.CreateMyPinSelectionHandler(*pMyPinModel));
+                MyPinSelectionHandler* pSelectionHandler(m_myPinSelectionHandlerFactory->CreateMyPinSelectionHandler(*pMyPinModel));
                 
-                WorldPins::SdkModel::IWorldPinVisibilityStateChangedHandler* pVisibilityChangedHandler(m_myPinVisibilityStateChangedHandlerFactory.CreateMyPinVisibilityStateChangedHandler(*pMyPinModel));
+                WorldPins::SdkModel::IWorldPinVisibilityStateChangedHandler* pVisibilityChangedHandler(m_myPinVisibilityStateChangedHandlerFactory->CreateMyPinVisibilityStateChangedHandler(*pMyPinModel));
                 
                 int pinVisibilityMask = WorldPins::SdkModel::WorldPinVisibility::UserPin | aditionalMask;
                 
-                WorldPins::SdkModel::WorldPinItemModel* pWorldPinItemModel = m_worldPinsService.AddPin(pSelectionHandler,
+                WorldPins::SdkModel::WorldPinItemModel* pWorldPinItemModel = m_worldPinsService->AddPin(pSelectionHandler,
                                                                                                       pVisibilityChangedHandler,
                                                                                                       worldPinFocusData,
                                                                                                       pMyPinModel->IsInterior(),
@@ -122,14 +122,14 @@ namespace ExampleApp
                     MyPinModel* pPinModel = it->second.first;
                     WorldPins::SdkModel::WorldPinItemModel* pWorldPinItemModel = it->second.second;
 
-                    IMyPinBoundObject& boundObject = m_myPinBoundObjectRepository.GetBoundObjectForPin(*pPinModel);
-                    m_myPinBoundObjectRepository.RemoveBoundItemForPin(pPinModel->Identifier());
+                    IMyPinBoundObject& boundObject = m_myPinBoundObjectRepository->GetBoundObjectForPin(*pPinModel);
+                    m_myPinBoundObjectRepository->RemoveBoundItemForPin(pPinModel->Identifier());
                     boundObject.HandlePinRemoved(*pPinModel);
                     boundObject.HandlePinDestroyed(*pPinModel);
                     Eegeo_DELETE &boundObject;
                         
-                    m_worldPinsService.RemovePin(pWorldPinItemModel);
-                    m_myPinsRepository.RemoveItem(pPinModel);
+                    m_worldPinsService->RemovePin(pWorldPinItemModel);
+                    m_myPinsRepository->RemoveItem(pPinModel);
                     m_myPinToWorldPinMap.erase(it);
                 }
             }
@@ -157,14 +157,14 @@ namespace ExampleApp
             void MyPinsService::SaveAllPinsToDisk()
             {
                 std::vector<MyPinModel*> pinModels;
-                pinModels.reserve(m_myPinsRepository.GetItemCount());
+                pinModels.reserve(m_myPinsRepository->GetItemCount());
                 
-                for (int i = 0; i < m_myPinsRepository.GetItemCount(); ++i)
+                for (int i = 0; i < m_myPinsRepository->GetItemCount(); ++i)
                 {
-                    pinModels.push_back(m_myPinsRepository.GetItemAtIndex(i));
+                    pinModels.push_back(m_myPinsRepository->GetItemAtIndex(i));
                 }
                 
-                m_myPinsFileIO.SaveAllRepositoryPinsToDisk(pinModels);
+                m_myPinsFileIO->SaveAllRepositoryPinsToDisk(pinModels);
             }
             
             void MyPinsService::SaveUserCreatedPoiPin(const std::string& title,
@@ -183,13 +183,13 @@ namespace ExampleApp
                 MyPinModel::TPinIdType idForThisPin = ++m_lastIdUsed;
                 const std::string pinIconKey = "my_pins";
                 
-                IMyPinBoundObject& boundObject = *m_myPinBoundObjectFactory.CreateUserCreatedPinBoundObject(m_myPinsFileIO,
+                IMyPinBoundObject& boundObject = *m_myPinBoundObjectFactory->CreateUserCreatedPinBoundObject(*m_myPinsFileIO,
                                                                                                             idForThisPin,
                                                                                                             imageData,
                                                                                                             imageSize,
                                                                                                             shouldShare,
                                                                                                             pinIconKey);
-                m_myPinBoundObjectRepository.AddBoundItemForPin(idForThisPin, boundObject);
+                m_myPinBoundObjectRepository->AddBoundItemForPin(idForThisPin, boundObject);
                 
                 MyPinModel *pinModel = Eegeo_NEW(MyPinModel)(MyPinModel::CurrentVersion,
                                                              idForThisPin,
@@ -208,7 +208,7 @@ namespace ExampleApp
                 boundObject.HandlePinCreated(*pinModel);
                 boundObject.HandlePinAdded(*pinModel);
                 
-                m_myPinsRepository.AddItem(pinModel);
+                m_myPinsRepository->AddItem(pinModel);
                 AddPinToMap(pinModel, WorldPins::SdkModel::WorldPinVisibility::None);
             }
             
@@ -219,12 +219,12 @@ namespace ExampleApp
                 
                 MyPinModel::TPinIdType idForThisPin = ++m_lastIdUsed;
                 
-                IMyPinBoundObject& boundObject = *m_myPinBoundObjectFactory.CreateSearchResultPinBoundObject(m_myPinsFileIO,
+                IMyPinBoundObject& boundObject = *m_myPinBoundObjectFactory->CreateSearchResultPinBoundObject(*m_myPinsFileIO,
                                                                                                              idForThisPin,
                                                                                                              searchResult,
                                                                                                              pinIconKey,
                                                                                                              *this);
-                m_myPinBoundObjectRepository.AddBoundItemForPin(idForThisPin, boundObject);
+                m_myPinBoundObjectRepository->AddBoundItemForPin(idForThisPin, boundObject);
                 
                 
                 std::string ratingImageUrl = "";
@@ -249,7 +249,7 @@ namespace ExampleApp
                 boundObject.HandlePinCreated(*pinModel);
                 boundObject.HandlePinAdded(*pinModel);
                 
-                m_myPinsRepository.AddItem(pinModel);
+                m_myPinsRepository->AddItem(pinModel);
                 AddPinToMap(pinModel, WorldPins::SdkModel::WorldPinVisibility::Search);
             }
         }

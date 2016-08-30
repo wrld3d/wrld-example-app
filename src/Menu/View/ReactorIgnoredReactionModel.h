@@ -10,7 +10,11 @@ namespace ExampleApp
     {
         namespace View
         {
-            class ReactorIgnoredReactionModel : public IMenuIgnoredReactionModel
+            class IReactorIgnoredReactionModel : public IMenuIgnoredReactionModel
+            {
+            };
+            
+            class ReactorIgnoredReactionModel : public IReactorIgnoredReactionModel
             {
                 std::vector<Eegeo::Helpers::TIdentity> m_ignoredMenuIdentities;
             public:

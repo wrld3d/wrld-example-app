@@ -2,7 +2,6 @@ set(headers ${headers} ../src/Social/TwitterFeed
 )
 set(currsources
   ../src/Social/TwitterFeed/CMakeLists.txt
-  ../src/Social/TwitterFeed/ITwitterFeedModule.h
   ../src/Social/TwitterFeed/ITwitterFeedService.h
   ../src/Social/TwitterFeed/TweetModel.cpp
   ../src/Social/TwitterFeed/TweetModel.h

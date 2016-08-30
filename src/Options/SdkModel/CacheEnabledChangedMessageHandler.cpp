@@ -8,27 +8,27 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            CacheEnabledChangedMessageHandler::CacheEnabledChangedMessageHandler(Net::SdkModel::INetworkCapabilities& networkCapabilities,
-                                                                                 ExampleAppMessaging::TMessageBus& messageBus)
+            CacheEnabledChangedMessageHandler::CacheEnabledChangedMessageHandler(const std::shared_ptr<Net::SdkModel::INetworkCapabilities>& networkCapabilities,
+                                                                                 const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
             : m_networkCapabilities(networkCapabilities)
             , m_messageBus(messageBus)
             , m_messageHandlerBinding(this, &CacheEnabledChangedMessageHandler::OnPerformedCacheEnabledChange)
             {
-                m_messageBus.SubscribeNative(m_messageHandlerBinding);
+                m_messageBus->SubscribeNative(m_messageHandlerBinding);
             }
             
             CacheEnabledChangedMessageHandler::~CacheEnabledChangedMessageHandler()
             {
-                m_messageBus.UnsubscribeNative(m_messageHandlerBinding);
+                m_messageBus->UnsubscribeNative(m_messageHandlerBinding);
             }
             
             void CacheEnabledChangedMessageHandler::OnPerformedCacheEnabledChange(const CacheEnabledChangedMessage& message)
             {
                 // We do not expect this value to change other than via the dispatch of this message, so should always toggle.
                 // If these semantics change this assert should be removed.
-                Eegeo_ASSERT(message.CacheEnabled() != m_networkCapabilities.HttpCachingEnabled());
+                Eegeo_ASSERT(message.CacheEnabled() != m_networkCapabilities->HttpCachingEnabled());
                 
-                m_networkCapabilities.SetHttpCachingEnabled(message.CacheEnabled());
+                m_networkCapabilities->SetHttpCachingEnabled(message.CacheEnabled());
             }
         }
     }

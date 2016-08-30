@@ -6,11 +6,6 @@ namespace ExampleApp
 {
     namespace CategorySearch
     {
-        namespace SdkModel
-        {
-            class ICategorySearchModule;
-        }
-
         namespace View
         {
             class ICategorySearchModel;

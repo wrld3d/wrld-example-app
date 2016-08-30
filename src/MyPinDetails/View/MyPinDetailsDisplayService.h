@@ -16,14 +16,14 @@ namespace ExampleApp
         {   
             class MyPinDetailsDisplayService : public IMyPinDetailsDisplayService, private Eegeo::NonCopyable
             {
-                IMyPinDetailsViewModel& m_myPinDetailsViewModel;
-                SearchResultPoi::View::ISearchResultPoiViewModel& m_searchResultPoiViewModel;
-                const Menu::View::IMenuReactionModel& m_menuReaction;
+                const std::shared_ptr<IMyPinDetailsViewModel> m_myPinDetailsViewModel;
+                const std::shared_ptr<SearchResultPoi::View::ISearchResultPoiViewModel> m_searchResultPoiViewModel;
+                const std::shared_ptr<const Menu::View::IMenuReactionModel> m_menuReaction;
                 
             public:
-                MyPinDetailsDisplayService(IMyPinDetailsViewModel& myPinDetailsViewModel,
-                                           SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
-                                           const Menu::View::IMenuReactionModel& menuReactionModel);
+                MyPinDetailsDisplayService(const std::shared_ptr<IMyPinDetailsViewModel>& myPinDetailsViewModel,
+                                           const std::shared_ptr<SearchResultPoi::View::ISearchResultPoiViewModel>& searchResultPoiViewModel,
+                                           const std::shared_ptr<Menu::View::IMenuReactionModel>& menuReactionModel);
                 
                 ~MyPinDetailsDisplayService();
                 

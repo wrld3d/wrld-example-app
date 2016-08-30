@@ -16,15 +16,15 @@ namespace ExampleApp
         {
             class StreamOverWifiOnlyChangedMessageHandler : private Eegeo::NonCopyable
             {
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 Eegeo::Helpers::TCallback1<StreamOverWifiOnlyChangedMessageHandler, const StreamOverWifiOnlyChangedMessage&> m_messageHandlerBinding;
-                Net::SdkModel::INetworkCapabilities& m_networkCapabilities;
+                const std::shared_ptr<Net::SdkModel::INetworkCapabilities> m_networkCapabilities;
                 
                 void OnPerformedStreamOverWifiOnlyChange(const StreamOverWifiOnlyChangedMessage& message);
                 
             public:
-                StreamOverWifiOnlyChangedMessageHandler(ExampleAppMessaging::TMessageBus& messageBus,
-                                                        Net::SdkModel::INetworkCapabilities& networkCapabilities);
+                StreamOverWifiOnlyChangedMessageHandler(const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                                        const std::shared_ptr<Net::SdkModel::INetworkCapabilities>& networkCapabilities);
                 
                 ~StreamOverWifiOnlyChangedMessageHandler();
             };

@@ -8,23 +8,23 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            MyPinCreationModelObserver::MyPinCreationModelObserver(IMyPinCreationModel& myPinCreationModel,
-                    ExampleAppMessaging::TMessageBus& messageBus)
+            MyPinCreationModelObserver::MyPinCreationModelObserver(const std::shared_ptr<IMyPinCreationModel>& myPinCreationModel,
+                                                                   const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
                 : m_myPinCreationModel(myPinCreationModel)
                 , m_messageBus(messageBus)
                 , m_callback(this, &MyPinCreationModelObserver::HandlePoiCreationModelStateChange)
             {
-                m_myPinCreationModel.InsertStateChangedCallback(m_callback);
+                m_myPinCreationModel->InsertStateChangedCallback(m_callback);
             }
 
             MyPinCreationModelObserver::~MyPinCreationModelObserver()
             {
-                m_myPinCreationModel.RemoveStateChangedCallback(m_callback);
+                m_myPinCreationModel->RemoveStateChangedCallback(m_callback);
             }
 
             void MyPinCreationModelObserver::HandlePoiCreationModelStateChange(MyPinCreationStage& stage)
             {
-                m_messageBus.Publish(MyPinCreationStateChangedMessage(stage));
+                m_messageBus->Publish(MyPinCreationStateChangedMessage(stage));
             }
         }
     }

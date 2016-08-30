@@ -11,6 +11,13 @@
 #include "WorldPinInFocusViewModel.h"
 #include "WorldPinIconMappingFactory.h"
 #include "WorldPinIconMapping.h"
+#include "WorldPinInFocusObserver.h"
+#include "WorldPinsModalityObserver.h"
+#include "PinsModule.h"
+#include "EegeoWorld.h"
+#include "IFileIO.h"
+#include "InteriorInteractionModel.h"
+#include "InteriorTransitionModel.h"
 
 namespace ExampleApp
 {
@@ -18,105 +25,50 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            WorldPinsModule::WorldPinsModule(Eegeo::Pins::PinRepository& pinRepository,
-                                             Eegeo::Pins::PinController& pinController,
-                                             const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                             Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                             ExampleAppMessaging::TMessageBus& messageBus,
-                                             const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                             const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
-                                             ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
-                                             const bool interiorsAffectedByFlattening,
-                                             const Menu::View::IMenuReactionModel& menuReaction,
-                                             const float screenOversampleScale,
-                                             const IWorldPinIconMapping& worldPinIconMapping)
+            void WorldPinsModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
             {
-                m_pWorldPinsFactory = Eegeo_NEW(WorldPinsFactory);
-
-                m_pWorldPinsRepository = Eegeo_NEW(WorldPinsRepository);
-
-                m_pWorldPinsService = Eegeo_NEW(WorldPinsService)(*m_pWorldPinsRepository,
-                                      *m_pWorldPinsFactory,
-                                      pinRepository,
-                                      pinController,
-                                      environmentFlatteningService,
-                                      worldPinIconMapping);
-
-                m_pWorldPinsScaleController = Eegeo_NEW(WorldPinsScaleController)(*m_pWorldPinsRepository,
-                                              *m_pWorldPinsService,
-                                              messageBus,
-                                              interiorInteractionModel,
-                                              interiorTransitionModel,
-                                              sdkDomainEventBus);
+                builder->registerType<WorldPinsFactory>().as<IWorldPinsFactory>().singleInstance();
+                builder->registerType<WorldPinsRepository>().as<IWorldPinsRepository>().singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     ExampleApp::WorldPins::SdkModel::WorldPinIconMappingFactory worldPinIconMappingFactory(
+                                                                                                                                            *(context.resolve<Eegeo::Helpers::IFileIO>()),
+                                                                                                                                            "SearchResultOnMap/pin_sheet.json",
+                                                                                                                                            *(context.resolve<Eegeo::Helpers::ITextureFileLoader>()));
+                                                     
+                                                     return std::shared_ptr<ExampleApp::WorldPins::SdkModel::IWorldPinIconMapping>(worldPinIconMappingFactory.Create());
+                                                 }).singleInstance();
                 
-                
-                m_pWorldPinsFloorHeightController = Eegeo_NEW(WorldPinsFloorHeightController)(*m_pWorldPinsRepository,
-                                                                                              pinRepository,
-                                                                                              interiorInteractionModel,
-                                                                                              interiorsAffectedByFlattening);
-
-                m_pWorldPinsInFocusViewModel = Eegeo_NEW(View::WorldPinInFocusViewModel)(identityProvider.GetNextIdentity());
-
-                m_pWorldPinsInFocusController = Eegeo_NEW(WorldPinsInFocusController)(*m_pWorldPinsRepository,
-                                                *m_pWorldPinsService,
-                                                screenOversampleScale,
-                                                messageBus);
-
-
-                m_pWorldPinInFocusObserver = Eegeo_NEW(View::WorldPinInFocusObserver)(*m_pWorldPinsInFocusViewModel,
-                                             messageBus,
-                                             menuReaction);
-
-                m_pWorldPinsModalityObserver = Eegeo_NEW(WorldPinsModalityObserver)(*m_pWorldPinsScaleController,
-                                               messageBus);
-            }
-
-            WorldPinsModule::~WorldPinsModule()
-            {
-                Eegeo_DELETE m_pWorldPinsModalityObserver;
-                Eegeo_DELETE m_pWorldPinInFocusObserver;
-                Eegeo_DELETE m_pWorldPinsInFocusController;
-                Eegeo_DELETE m_pWorldPinsInFocusViewModel;
-                Eegeo_DELETE m_pWorldPinsFloorHeightController;
-                Eegeo_DELETE m_pWorldPinsScaleController;
-                Eegeo_DELETE m_pWorldPinsService;
-                Eegeo_DELETE m_pWorldPinsRepository;
-                Eegeo_DELETE m_pWorldPinsFactory;
-            }
-
-            IWorldPinsService& WorldPinsModule::GetWorldPinsService() const
-            {
-                return *m_pWorldPinsService;
-            }
-
-            IWorldPinsFactory& WorldPinsModule::GetWorldPinsFactory() const
-            {
-                return *m_pWorldPinsFactory;
-            }
-
-            IWorldPinsScaleController& WorldPinsModule::GetWorldPinsScaleController() const
-            {
-                return *m_pWorldPinsScaleController;
-            }
-            
-            IWorldPinsFloorHeightController& WorldPinsModule::GetWorldPinsFloorHeightController() const
-            {
-                return *m_pWorldPinsFloorHeightController;
-            }
-
-            View::IWorldPinInFocusViewModel& WorldPinsModule::GetWorldPinInFocusViewModel() const
-            {
-                return *m_pWorldPinsInFocusViewModel;
-            }
-
-            IWorldPinsInFocusController& WorldPinsModule::GetWorldPinsInFocusController() const
-            {
-                return *m_pWorldPinsInFocusController;
-            }
-
-            ScreenControl::View::IScreenControlViewModel& WorldPinsModule::GetScreenControlViewModel() const
-            {
-                return m_pWorldPinsInFocusViewModel->GetScreenControlViewModel();
+                builder->registerType<WorldPinsService>().as<IWorldPinsService>().singleInstance();
+                builder->registerType<WorldPinsScaleController>().as<IWorldPinsScaleController>().singleInstance();
+                builder->registerType<WorldPinsFloorHeightController>().as<IWorldPinsFloorHeightController>().singleInstance();
+                builder->registerType<View::WorldPinInFocusViewModel>().as<View::IWorldPinInFocusViewModel>().singleInstance();
+                builder->registerType<WorldPinsInFocusController>().as<IWorldPinsInFocusController>().singleInstance();
+                builder->registerType<View::WorldPinInFocusObserver>().singleInstance();
+                builder->registerType<WorldPinsModalityObserver>().singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto worldpinIconMapping = context.resolve<ExampleApp::WorldPins::SdkModel::IWorldPinIconMapping>();
+                                                     auto world = context.resolve<Eegeo::EegeoWorld>();
+                                                     return std::shared_ptr<Eegeo::Pins::PinsModule>(Eegeo::Pins::PinsModule::CreateWithAtlas(
+                                                                                                    world->GetRenderingModule(),
+                                                                                                    *(context.resolve<Eegeo::Modules::IPlatformAbstractionModule>()),
+                                                                                                    world->GetMapModule(),
+                                                                                                    worldpinIconMapping->GetTextureInfo().textureId,
+                                                                                                    worldpinIconMapping->GetTexturePageLayout(),
+                                                                                                    Eegeo::Rendering::LayerIds::InteriorEntities,
+                                                                                                    *(context.resolve<Eegeo::Rendering::ScreenProperties>())));
+                                                 }).singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto pinsModule = context.resolve<Eegeo::Pins::PinsModule>();
+                                                     return std::shared_ptr<Eegeo::Pins::PinRepository>(&pinsModule->GetRepository());
+                                                 }).singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto pinsModule = context.resolve<Eegeo::Pins::PinsModule>();
+                                                     return std::shared_ptr<Eegeo::Pins::PinController>(&pinsModule->GetController());
+                                                 }).singleInstance();
             }
         }
     }

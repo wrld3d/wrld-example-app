@@ -2,7 +2,6 @@ set(headers ${headers} ../src/Tours/SdkModel/TourInstances/TwitterFeed
 )
 set(currsources
   ../src/Tours/SdkModel/TourInstances/TwitterFeed/CMakeLists.txt
-  ../src/Tours/SdkModel/TourInstances/TwitterFeed/ITwitterFeedTourModule.h
   ../src/Tours/SdkModel/TourInstances/TwitterFeed/TweetStateData.h
   ../src/Tours/SdkModel/TourInstances/TwitterFeed/TwitterFeedPinSelectionHandler.cpp
   ../src/Tours/SdkModel/TourInstances/TwitterFeed/TwitterFeedPinSelectionHandler.h

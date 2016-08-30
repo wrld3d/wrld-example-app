@@ -18,7 +18,7 @@ namespace ExampleApp
 
             public:
                 MyPinDetailsOpenableControl(Eegeo::Helpers::TIdentity identity,
-                                            Reaction::View::IReactionControllerModel& reactionControllerModel);
+                                            const std::shared_ptr<Reaction::View::IReactionControllerModel>& reactionControllerModel);
 
                 Eegeo::Helpers::TIdentity GetIdentity() const;
             };

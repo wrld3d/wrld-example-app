@@ -14,8 +14,8 @@ namespace ExampleApp
         {
             namespace MyPins
             {   
-                MyPinsSearchResultRefreshService::MyPinsSearchResultRefreshService(ISearchResultMyPinsService& searchResultMyPinsService,
-                                                                                   Search::SdkModel::ISearchService& searchService)
+                MyPinsSearchResultRefreshService::MyPinsSearchResultRefreshService(const std::shared_ptr<ISearchResultMyPinsService>& searchResultMyPinsService,
+                                                                                   const std::shared_ptr<Search::SdkModel::ISearchService>& searchService)
                 
                 : m_searchResultMyPinsService(searchResultMyPinsService)
                 , m_searchService(searchService)
@@ -59,7 +59,7 @@ namespace ExampleApp
                         
                         const ExampleApp::MyPins::SdkModel::MyPinModel::TPinIdType existingPinId(identifierToPinIdMapIt->second);
                         
-                        Eegeo_ASSERT(!m_searchResultMyPinsService.ContainsPinWithId(existingPinId),
+                        Eegeo_ASSERT(!m_searchResultMyPinsService->ContainsPinWithId(existingPinId),
                                      "More than one search result pin with same ID %s exists, this should not be possible.\n",
                                      searchResultModel.GetIdentifier().c_str());
                         
@@ -94,7 +94,7 @@ namespace ExampleApp
                         Eegeo_ASSERT(insertPinIdToBoundObjectMapping.second,
                                      "Couldn't add pin ID to search pin binding mapping, key value already exists.\n");
                         
-                        m_searchService.PerformIdentitySearch(searchResultModel,
+                        m_searchService->PerformIdentitySearch(searchResultModel,
                                                               m_refreshSearchResultCompletedHandler);
                     }
                 }
@@ -118,7 +118,7 @@ namespace ExampleApp
                     }
                     
                     // Check the pin hasn't been removed from the MyPin repository during our query.
-                    if(m_searchResultMyPinsService.ContainsPinWithId(pinId))
+                    if(m_searchResultMyPinsService->ContainsPinWithId(pinId))
                     {
                         ExampleApp::MyPins::SdkModel::SearchResultPinBoundObject& boundObject(*pinIdToBoundObjectMapIt->second);
                         boundObject.FinishRefreshingSearchResult(result.IsSuccess(), pinId, result.GetSearchResultModel());

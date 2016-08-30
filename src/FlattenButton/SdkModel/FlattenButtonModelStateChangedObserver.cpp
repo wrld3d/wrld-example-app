@@ -8,23 +8,23 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            FlattenButtonModelStateChangedObserver::FlattenButtonModelStateChangedObserver(IFlattenButtonModel& flattenButtonModel,
-                    ExampleAppMessaging::TMessageBus& messageBus)
+            FlattenButtonModelStateChangedObserver::FlattenButtonModelStateChangedObserver(const std::shared_ptr<IFlattenButtonModel>& flattenButtonModel,
+                                                                                           const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
                 : m_flattenButtonModel(flattenButtonModel)
                 , m_messageBus(messageBus)
                 , m_flattenStateChangedCallback(this, &FlattenButtonModelStateChangedObserver::HandleFlattenStateChanged)
             {
-                m_flattenButtonModel.InsertChangedCallback(m_flattenStateChangedCallback);
+                m_flattenButtonModel->InsertChangedCallback(m_flattenStateChangedCallback);
             }
 
             FlattenButtonModelStateChangedObserver::~FlattenButtonModelStateChangedObserver()
             {
-                m_flattenButtonModel.RemoveChangedCallback(m_flattenStateChangedCallback);
+                m_flattenButtonModel->RemoveChangedCallback(m_flattenStateChangedCallback);
             }
 
             void FlattenButtonModelStateChangedObserver::HandleFlattenStateChanged()
             {
-                m_messageBus.Publish(FlattenButtonModelStateChangedMessage(m_flattenButtonModel.GetFlattened()));
+                m_messageBus->Publish(FlattenButtonModelStateChangedMessage(m_flattenButtonModel->GetFlattened()));
             }
         }
     }

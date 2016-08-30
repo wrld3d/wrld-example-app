@@ -16,6 +16,8 @@ namespace ExampleApp
 
             class IMyPinsModule;
             class MyPinsModule;
+            
+            class MyPinsMenuOptionsModel;
 
             class IMyPinsService;
             class MyPinsService;

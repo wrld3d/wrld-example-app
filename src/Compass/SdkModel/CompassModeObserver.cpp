@@ -9,31 +9,31 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            CompassModeObserver::CompassModeObserver(ICompassModel& model,
-                    ExampleApp::ExampleAppMessaging::TMessageBus& messageBus)
+            CompassModeObserver::CompassModeObserver(const std::shared_ptr<ICompassModel>& model,
+                                                     const std::shared_ptr<ExampleApp::ExampleAppMessaging::TMessageBus>& messageBus)
                 : m_model(model)
                 , m_messageBus(messageBus)
                 , m_callback(this, &CompassModeObserver::OnGpsModeChanged)
                 , m_unauthorizedCallback(this, &CompassModeObserver::OnGpsModeDeniedBecauseUnauthorized)
             {
-                m_model.InsertGpsModeChangedCallback(m_callback);
-                m_model.InsertGpsModeUnauthorizedCallback(m_unauthorizedCallback);
+                m_model->InsertGpsModeChangedCallback(m_callback);
+                m_model->InsertGpsModeUnauthorizedCallback(m_unauthorizedCallback);
             }
 
             CompassModeObserver::~CompassModeObserver()
             {
-                m_model.RemoveGpsModeChangedCallback(m_callback);
-                m_model.RemoveGpsModeUnauthorizedCallback(m_unauthorizedCallback);
+                m_model->RemoveGpsModeChangedCallback(m_callback);
+                m_model->RemoveGpsModeUnauthorizedCallback(m_unauthorizedCallback);
             }
 
             void CompassModeObserver::OnGpsModeChanged()
             {
-                m_messageBus.Publish(CompassModeChangedMessage(m_model.GetGpsMode()));
+                m_messageBus->Publish(CompassModeChangedMessage(m_model->GetGpsMode()));
             }
             
             void CompassModeObserver::OnGpsModeDeniedBecauseUnauthorized()
             {
-                m_messageBus.Publish(CompassModeUnauthorizedMessage());
+                m_messageBus->Publish(CompassModeUnauthorizedMessage());
             }
         }
     }

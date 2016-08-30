@@ -3,6 +3,7 @@
 #include "WorldAreaLoaderModule.h"
 #include "WorldAreaLoader.h"
 #include "WorldAreaLoaderModel.h"
+#include "PrecacheService.h"
 
 namespace ExampleApp
 {
@@ -10,20 +11,9 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            WorldAreaLoaderModule::WorldAreaLoaderModule(Eegeo::Web::PrecacheService& precacheService)
+            void WorldAreaLoaderModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
             {
-                WorldAreaLoaderModel* pModel = Eegeo_NEW(WorldAreaLoaderModel)(precacheService);
-                m_pWorldAreaLoaderModel = pModel;
-            }
-
-            WorldAreaLoaderModule::~WorldAreaLoaderModule()
-            {
-                Eegeo_DELETE m_pWorldAreaLoaderModel;
-            }
-
-            IWorldAreaLoaderModel& WorldAreaLoaderModule::GetWorldAreaLoaderModel() const
-            {
-                return *m_pWorldAreaLoaderModel;
+                builder->registerType<WorldAreaLoaderModel>().as<IWorldAreaLoaderModel>().singleInstance();
             }
         }
     }

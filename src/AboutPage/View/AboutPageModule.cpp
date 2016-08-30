@@ -2,7 +2,9 @@
 
 #include "AboutPageModule.h"
 #include "AboutPageViewModel.h"
+#include "ApplicationConfiguration.h"
 #include "EegeoWorld.h"
+#include "IReactionControllerModel.h"
 
 namespace
 {
@@ -112,27 +114,19 @@ namespace ExampleApp
     {
         namespace View
         {
-            AboutPageModule::AboutPageModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                             Reaction::View::IReactionControllerModel& reactionControllerModel,
-                                             const std::string& buildVersion)
+            void AboutPageModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
             {
-                std::string platformRuntimeArchitecture = (sizeof(void*) == 4) ? "32-bit" : "64-bit";
-                m_pAboutPageViewModel = Eegeo_NEW(AboutPageViewModel)(identityProvider.GetNextIdentity(), reactionControllerModel, buildVersion, EEGEO_PLATFORM_VERSION_NUMBER, EEGEO_PLATFORM_VERSION_HASH, platformRuntimeArchitecture, AboutPageText);
-            }
-
-            AboutPageModule::~AboutPageModule()
-            {
-                Eegeo_DELETE m_pAboutPageViewModel;
-            }
-
-            IAboutPageViewModel& AboutPageModule::GetAboutPageViewModel() const
-            {
-                return *m_pAboutPageViewModel;
-            }
-
-            OpenableControl::View::IOpenableControlViewModel& AboutPageModule::GetObservableOpenableControl() const
-            {
-                return m_pAboutPageViewModel->GetOpenableControl();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                   {
+                                                       std::string platformRuntimeArchitecture = (sizeof(void*) == 4) ? "32-bit" : "64-bit";
+                                                       return std::make_shared<AboutPageViewModel>(context.resolve<Eegeo::Helpers::IIdentityProvider>(),
+                                                                                                   context.resolve<Reaction::View::IReactionControllerModel>(),
+                                                                                                   context.resolve<ExampleApp::ApplicationConfig::ApplicationConfiguration>()->ProductVersion(),
+                                                                                                   EEGEO_PLATFORM_VERSION_NUMBER,
+                                                                                                   EEGEO_PLATFORM_VERSION_HASH,
+                                                                                                   platformRuntimeArchitecture,
+                                                                                                   AboutPageText);
+                                                   }).as<IAboutPageViewModel>().singleInstance();
             }
         }
     }

@@ -22,10 +22,10 @@ namespace ExampleApp
                 class PoiRingRenderable : public Eegeo::Rendering::RenderableBase
                 {
                 public:
-                    PoiRingRenderable(Eegeo::Modules::Core::RenderingModule& renderingModule,
-                                      Eegeo::Helpers::IFileIO& fileIO,
-                                      Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor,
-                                      Eegeo::Lighting::GlobalFogging& globalFogging);
+                    PoiRingRenderable(const std::shared_ptr<Eegeo::Modules::Core::RenderingModule>& renderingModule,
+                                      const std::shared_ptr<Eegeo::Helpers::IFileIO>& fileIO,
+                                      const std::shared_ptr<Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor>& textureRequestor,
+                                      const std::shared_ptr<Eegeo::Lighting::GlobalFogging>& globalFogging);
 
                     ~PoiRingRenderable();
 
@@ -36,7 +36,7 @@ namespace ExampleApp
                     void SetInnerSphereScale(const float scale);
                 private:
                     Eegeo::Model* m_pSphere;
-                    Eegeo::Lighting::GlobalFogging& m_fogging;
+                    const std::shared_ptr<Eegeo::Lighting::GlobalFogging> m_fogging;
 
                     Eegeo::Rendering::Shaders::ColorShader* m_pColorShader;
                     Eegeo::Rendering::Materials::ColorMaterial* m_pColorMaterial;

@@ -19,8 +19,8 @@ namespace ExampleApp
         {
             class WorldPinInFocusObserver : private Eegeo::NonCopyable
             {
-                IWorldPinInFocusViewModel& m_worldPinInFocusViewModel;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<IWorldPinInFocusViewModel> m_worldPinInFocusViewModel;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 Eegeo::Helpers::TCallback1<WorldPinInFocusObserver, const WorldPinGainedFocusMessage&> m_gainedFocusHandler;
                 Eegeo::Helpers::TCallback1<WorldPinInFocusObserver, const WorldPinLostFocusMessage&> m_lostFocusHandler;
                 Eegeo::Helpers::TCallback1<WorldPinInFocusObserver, const WorldPinInFocusChangedLocationMessage&> m_focusScreenLocationUpdatedHandler;
@@ -31,12 +31,12 @@ namespace ExampleApp
                 void OnWorldPinInFocusChangedLocationMessage(const WorldPinInFocusChangedLocationMessage& message);
                 void OnSelectedFocussedResultEvent();
 
-                const Menu::View::IMenuReactionModel& m_menuReaction;
+                const std::shared_ptr<Menu::View::IMenuReactionModel> m_menuReaction;
 
             public:
-                WorldPinInFocusObserver(IWorldPinInFocusViewModel& worldPinInFocusViewModel,
-                                        ExampleAppMessaging::TMessageBus& messageBus,
-                                        const Menu::View::IMenuReactionModel& menuReaction);
+                WorldPinInFocusObserver(const std::shared_ptr<IWorldPinInFocusViewModel>& worldPinInFocusViewModel,
+                                        const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                        const std::shared_ptr<Menu::View::IMenuReactionModel>& menuReaction);
 
                 ~WorldPinInFocusObserver();
             };

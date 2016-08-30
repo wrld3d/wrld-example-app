@@ -18,8 +18,8 @@ namespace ExampleApp
             {
             public:
 
-                WatermarkViewModel(Eegeo::Helpers::TIdentity identity,
-                                       bool isInitiallyOnScreen);
+                WatermarkViewModel(const std::shared_ptr<Eegeo::Helpers::IIdentityProvider>& identity,
+                                   bool isInitiallyOnScreen);
 
                 Eegeo::Helpers::TIdentity GetIdentity() const;
 

@@ -11,12 +11,12 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                GeoNamesSearchQueryFactory::GeoNamesSearchQueryFactory(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
-                                                                       Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
-                                                                       const std::string& geoNamesUserName)
+                GeoNamesSearchQueryFactory::GeoNamesSearchQueryFactory(const std::shared_ptr<Eegeo::Web::IWebLoadRequestFactory>& webRequestFactory,
+                                           const std::shared_ptr<Eegeo::Helpers::UrlHelpers::IUrlEncoder>& urlEncoder,
+                                           const std::shared_ptr<ExampleApp::ApplicationConfig::ApplicationConfiguration>& config)
                 : m_webRequestFactory(webRequestFactory)
                 , m_urlEncoder(urlEncoder)
-                , m_geoNamesUserName(geoNamesUserName)
+                , m_geoNamesUserName(config->GeoNamesUserName())
                 {
                     
                 }
@@ -29,8 +29,8 @@ namespace ExampleApp
                 IGeoNamesSearchQuery* GeoNamesSearchQueryFactory::CreateGeoNamesSearchForQuery(const Search::SdkModel::SearchQuery& query,
                                                                                                Eegeo::Helpers::ICallback0& completionCallback)
                 {
-                    return Eegeo_NEW(GeoNamesSearchQuery)(m_webRequestFactory,
-                                                          m_urlEncoder,
+                    return Eegeo_NEW(GeoNamesSearchQuery)(*m_webRequestFactory,
+                                                          *m_urlEncoder,
                                                           query,
                                                           completionCallback,
                                                           m_geoNamesUserName);

@@ -8,6 +8,7 @@
 #include "IGeoNamesSearchQueryFactory.h"
 #include "IGeoNamesSearchQuery.h"
 #include "Web.h"
+#include "ApplicationConfiguration.h"
 #include "UrlHelpers.h"
 
 namespace ExampleApp
@@ -20,15 +21,15 @@ namespace ExampleApp
             {
                 class GeoNamesSearchQueryFactory : public IGeoNamesSearchQueryFactory, private Eegeo::NonCopyable
                 {
-                    Eegeo::Web::IWebLoadRequestFactory& m_webRequestFactory;
-                    Eegeo::Helpers::UrlHelpers::IUrlEncoder& m_urlEncoder;
+                    std::shared_ptr<Eegeo::Web::IWebLoadRequestFactory> m_webRequestFactory;
+                    std::shared_ptr<Eegeo::Helpers::UrlHelpers::IUrlEncoder> m_urlEncoder;
                     
                     std::string m_geoNamesUserName;
                     
                 public:
-                    GeoNamesSearchQueryFactory(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
-                                               Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
-                                               const std::string& geoNamesUserName);
+                    GeoNamesSearchQueryFactory(const std::shared_ptr<Eegeo::Web::IWebLoadRequestFactory>& webRequestFactory,
+                                               const std::shared_ptr<Eegeo::Helpers::UrlHelpers::IUrlEncoder>& urlEncoder,
+                                               const std::shared_ptr<ExampleApp::ApplicationConfig::ApplicationConfiguration>& config);
                     
                     ~GeoNamesSearchQueryFactory();
                     

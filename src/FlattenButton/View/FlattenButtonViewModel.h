@@ -18,7 +18,7 @@ namespace ExampleApp
             {
             public:
 
-                FlattenButtonViewModel(Eegeo::Helpers::TIdentity identity,
+                FlattenButtonViewModel(const std::shared_ptr<Eegeo::Helpers::IIdentityProvider>& identity,
                                        bool isInitiallyOnScreen);
 
                 Eegeo::Helpers::TIdentity GetIdentity() const;

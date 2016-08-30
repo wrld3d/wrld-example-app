@@ -2,20 +2,7 @@
 
 #pragma once
 
-#include "Types.h"
-#include "SearchResultPoi.h"
-#include "ISearchResultPoiModule.h"
-#include "SearchResultPoiViewModel.h"
-#include "IIdentity.h"
-#include "Reaction.h"
-#include "SearchResultPoiPinToggledMessageHandler.h"
-#include "MyPins.h"
-#include "Search.h"
-#include "BidirectionalBus.h"
-#include "CategorySearch.h"
-#include "SearchResultPoiViewOpenedMessageHandler.h"
-#include "ISearchResultPoiViewImageFetcher.h"
-#include "Web.h"
+#include "IModule.h"
 
 namespace ExampleApp
 {
@@ -23,29 +10,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            class SearchResultPoiModule: public ISearchResultPoiModule, private Eegeo::NonCopyable
+            class SearchResultPoiModule : public IModule
             {
-            private:
-                SdkModel::ISearchResultPoiMyPinService* m_pSearchResultPoiMyPinService;
-                ISearchResultPoiViewModel* m_pSearchResultPoiViewModel;
-                SdkModel::SearchResultPoiPinToggledMessageHandler* m_pSearchResultPoiPinToggledMessageHandler;
-                SdkModel::SearchResultPoiViewOpenedMessageHandler* m_pSearchResultPoiViewOpenedMessageHandler;
-                SdkModel::ISearchResultPoiViewImageFetcher* m_pSearchResultPoiViewImageFetcher;
-                
-           public:
-                SearchResultPoiModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                      Reaction::View::IReactionControllerModel& reactionControllerModel,
-                                      MyPins::SdkModel::IMyPinsService& myPinsService,
-                                      Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultMyPinsService,
-                                      CategorySearch::ISearchResultIconCategoryMapper& searchResultIconCategoryMapper,
-                                      Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
-                                      ExampleAppMessaging::TMessageBus& messageBus);
-
-                ~SearchResultPoiModule();
-
-                ISearchResultPoiViewModel& GetSearchResultPoiViewModel() const;
-
-                OpenableControl::View::IOpenableControlViewModel& GetObservableOpenableControl() const;
+            public:
+                void Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder);
             };
         }
     }

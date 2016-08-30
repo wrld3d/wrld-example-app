@@ -24,31 +24,31 @@ namespace ExampleApp
             class WorldPinsScaleController : public IWorldPinsScaleController, private Eegeo::NonCopyable
             {
             private:
-                IWorldPinsRepository& m_worldPinsRepository;
-                IWorldPinsService& m_worldPinsService;
+                const std::shared_ptr<IWorldPinsRepository> m_worldPinsRepository;
+                const std::shared_ptr<IWorldPinsService> m_worldPinsService;
                 float m_modality;
                 float m_visibilityScale;
                 float m_targetVisibilityScale;
                 bool m_hideOutdoorPinsIndoors;
                 const float m_visibilityAnimationDuration;
                 
-                const Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
-                const Eegeo::Resources::Interiors::InteriorTransitionModel& m_interiorTransitionModel;
+                const std::shared_ptr<const Eegeo::Resources::Interiors::InteriorInteractionModel> m_interiorInteractionModel;
+                const std::shared_ptr<const Eegeo::Resources::Interiors::InteriorTransitionModel> m_interiorTransitionModel;
 
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 Eegeo::Helpers::TCallback1<WorldPinsScaleController, const WorldPinsVisibilityMessage&> m_visibilityMessageHandlerBinding;
                 
-                ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkDomainEventBus;
+                const std::shared_ptr<ExampleAppMessaging::TSdkModelDomainEventBus> m_sdkDomainEventBus;
                 
                 int m_visibilityMask;
 
             public:
-                WorldPinsScaleController(IWorldPinsRepository& worldPinsRepository,
-                                         WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                         ExampleAppMessaging::TMessageBus& messageBus,
-                                         const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                         const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
-                                         ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus);
+                WorldPinsScaleController(const std::shared_ptr<IWorldPinsRepository>& worldPinsRepository,
+                                         const std::shared_ptr<WorldPins::SdkModel::IWorldPinsService>& worldPinsService,
+                                         const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                         const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel,
+                                         const std::shared_ptr<Eegeo::Resources::Interiors::InteriorTransitionModel>& interiorTransitionModel,
+                                         const std::shared_ptr<ExampleAppMessaging::TSdkModelDomainEventBus>& sdkDomainEventBus);
 
                 ~WorldPinsScaleController();
 

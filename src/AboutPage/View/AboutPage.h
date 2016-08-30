@@ -8,7 +8,6 @@ namespace ExampleApp
     {
         namespace View
         {
-            class IAboutPageModule;
             class IAboutPageViewModel;
             class IAboutPageView;
             class AboutPageController;

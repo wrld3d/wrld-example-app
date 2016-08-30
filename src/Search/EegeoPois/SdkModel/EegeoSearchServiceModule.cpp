@@ -7,6 +7,10 @@
 #include "EegeoSearchService.h"
 #include "EegeoCategoryIconMapper.h"
 #include "EegeoReadableTagMapper.h"
+#include "YelpSearchConstants.h"
+#include "IWebLoadRequestFactory.h"
+#include "InteriorInteractionModel.h"
+#include "INetworkCapabilities.h"
 
 namespace ExampleApp
 {
@@ -16,52 +20,27 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                EegeoSearchServiceModule::EegeoSearchServiceModule(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
-                                                                   Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
-                                                                   Net::SdkModel::INetworkCapabilities& networkCapabilities,
-                                                                   const std::vector<std::string>& availableCategories,
-                                                                   const std::string& serviceUrl,
-                                                                   const std::string& apiKey,
-                                                                   const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel)
-                : m_pEegeoSearchQueryFactory(NULL)
-                , m_pEegeoParser(NULL)
-                , m_pSearchService(NULL)
-                , m_pCategoryIconMapper(NULL)
+                EegeoSearchServiceModule::EegeoSearchServiceModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+                : m_builder(builder)
                 {
-                    m_pEegeoSearchQueryFactory = Eegeo_NEW(EegeoSearchQueryFactory)(webRequestFactory,
-                                                                                    urlEncoder,
-                                                                                    interiorInteractionModel,
-                                                                                    serviceUrl,
-                                                                                    apiKey);
-
-                    m_pCategoryIconMapper = Eegeo_NEW(EegeoCategoryIconMapper)();
-                    m_pReadableTagMapper = Eegeo_NEW(EegeoReadableTagMapper)();
-
-                    m_pEegeoParser = Eegeo_NEW(EegeoJsonParser)(*m_pCategoryIconMapper, *m_pReadableTagMapper);
-                    
-                    m_pSearchService = Eegeo_NEW(EegeoSearchService)(*m_pEegeoSearchQueryFactory,
-                                                                        *m_pEegeoParser,
-                                                                        networkCapabilities,
-                                                                         availableCategories);
                 }
                 
-                EegeoSearchServiceModule::~EegeoSearchServiceModule()
+                void EegeoSearchServiceModule::Register()
                 {
-                    Eegeo_DELETE m_pSearchService;
-                    Eegeo_DELETE m_pEegeoParser;
-                    Eegeo_DELETE m_pCategoryIconMapper;
-                    Eegeo_DELETE m_pReadableTagMapper;
-                    Eegeo_DELETE m_pEegeoSearchQueryFactory;
-                }
-                
-                Search::SdkModel::ISearchService& EegeoSearchServiceModule::GetSearchService() const
-                {
-                    return *m_pSearchService;
-                }
-                
-                std::vector<CategorySearch::View::CategorySearchModel> EegeoSearchServiceModule::GetCategorySearchModels() const
-                {
-                    return std::vector<CategorySearch::View::CategorySearchModel>();
+                    m_builder->registerType<EegeoSearchQueryFactory>().as<IEegeoSearchQueryFactory>().singleInstance();
+                    m_builder->registerType<EegeoCategoryIconMapper>().as<SearchResultPoi::SdkModel::ICategoryIconMapper>().singleInstance();
+                    m_builder->registerType<EegeoReadableTagMapper>().singleInstance();
+                    m_builder->registerType<EegeoJsonParser>().as<IEegeoParser>().singleInstance();
+                    m_builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                       {
+                                                           std::vector<std::string> supportedCategories = Search::Yelp::SearchConstants::GetCategories();
+                                                           return std::make_shared<EegeoSearchService>(
+                                                                context.resolve<IEegeoSearchQueryFactory>(),
+                                                                context.resolve<IEegeoParser>(),
+                                                                context.resolve<Net::SdkModel::INetworkCapabilities>(),
+                                                                supportedCategories
+                                                           );
+                                                       }).singleInstance();
                 }
             }
         }

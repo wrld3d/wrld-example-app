@@ -10,23 +10,23 @@ namespace ExampleApp
     {
         namespace View
         {
-            MyPinRemovedFromMenuObserver::MyPinRemovedFromMenuObserver(Menu::View::IMenuOptionsModel& menuOptionsModel,
-                    ExampleAppMessaging::TMessageBus& messageBus)
+            MyPinRemovedFromMenuObserver::MyPinRemovedFromMenuObserver(const std::shared_ptr<MyPinsMenuOptionsModel>& menuOptionsModel,
+                                                                       const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
                 : m_menuOptionsModel(menuOptionsModel)
                 , m_messageBus(messageBus)
                 , m_handlerBinding(this, &MyPinRemovedFromMenuObserver::OnMyRemovedFromMenuMessage)
             {
-                m_messageBus.SubscribeUi(m_handlerBinding);
+                m_messageBus->SubscribeUi(m_handlerBinding);
             }
 
             MyPinRemovedFromMenuObserver::~MyPinRemovedFromMenuObserver()
             {
-                m_messageBus.UnsubscribeUi(m_handlerBinding);
+                m_messageBus->UnsubscribeUi(m_handlerBinding);
             }
 
             void MyPinRemovedFromMenuObserver::OnMyRemovedFromMenuMessage(const MyPinRemovedFromMenuMessage& message)
             {
-                m_menuOptionsModel.RemoveItem(ConvertModelDetailToString(message.GetMyPinId()));
+                m_menuOptionsModel->RemoveItem(ConvertModelDetailToString(message.GetMyPinId()));
             }
         }
     }

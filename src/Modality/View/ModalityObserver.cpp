@@ -8,23 +8,23 @@ namespace ExampleApp
     {
         namespace View
         {
-            ModalityObserver::ModalityObserver(IModalityModel& modalityModel,
-                                               ExampleAppMessaging::TMessageBus& messageBus)
+            ModalityObserver::ModalityObserver(const std::shared_ptr<IModalityModel>& modalityModel,
+                                               const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
                 : m_modalityModel(modalityModel)
                 , m_messageBus(messageBus)
                 , m_modalityChangedCallback(this, &ModalityObserver::HandleModalityChanged)
             {
-                m_modalityModel.InsertModalityChangedCallback(m_modalityChangedCallback);
+                m_modalityModel->InsertModalityChangedCallback(m_modalityChangedCallback);
             }
 
             ModalityObserver::~ModalityObserver()
             {
-                m_modalityModel.RemoveModalityChangedCallback(m_modalityChangedCallback);
+                m_modalityModel->RemoveModalityChangedCallback(m_modalityChangedCallback);
             }
 
             void ModalityObserver::HandleModalityChanged()
             {
-                m_messageBus.Publish(ModalityChangedMessage(m_modalityModel.GetModality()));
+                m_messageBus->Publish(ModalityChangedMessage(m_modalityModel->GetModality()));
             }
         }
     }

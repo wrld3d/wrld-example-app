@@ -7,7 +7,6 @@ set(currsources
   ../src/WorldPins/SdkModel/IWorldPinsFloorHeightController.h
   ../src/WorldPins/SdkModel/IWorldPinsInFocusController.h
   ../src/WorldPins/SdkModel/IWorldPinsInFocusModel.h
-  ../src/WorldPins/SdkModel/IWorldPinsModule.h
   ../src/WorldPins/SdkModel/IWorldPinsRepository.h
   ../src/WorldPins/SdkModel/IWorldPinsScaleController.h
   ../src/WorldPins/SdkModel/IWorldPinsService.h

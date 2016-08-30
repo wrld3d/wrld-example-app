@@ -3,6 +3,7 @@
 #include "TwitterFeedModule.h"
 #include "TweetRepository.h"
 #include "TwitterFeedService.h"
+#include "IWebLoadRequestFactory.h"
 
 namespace ExampleApp
 {
@@ -10,22 +11,14 @@ namespace ExampleApp
     {
         namespace TwitterFeed
         {
-            TwitterFeedModule::TwitterFeedModule(
-                const std::string& twitterAuthCode,
-                Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory)
-            : m_pTwitterFeedService(NULL)
+            TwitterFeedModule::TwitterFeedModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+            : m_builder(builder)
             {
-                m_pTwitterFeedService = Eegeo_NEW(TwitterFeedService)(twitterAuthCode, webLoadRequestFactory);
             }
             
-            TwitterFeedModule::~TwitterFeedModule()
+            void TwitterFeedModule::Register()
             {
-                Eegeo_DELETE m_pTwitterFeedService;
-            }
-            
-            ITwitterFeedService& TwitterFeedModule::GetTwitterFeedService() const
-            {
-                return *m_pTwitterFeedService;
+                m_builder->registerType<TwitterFeedService>().as<ITwitterFeedService>().singleInstance();
             }
         }
     }

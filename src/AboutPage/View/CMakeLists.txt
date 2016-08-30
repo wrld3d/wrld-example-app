@@ -11,7 +11,6 @@ set(currsources
   ../src/AboutPage/View/AboutPageViewModel.cpp
   ../src/AboutPage/View/AboutPageViewModel.h
   ../src/AboutPage/View/CMakeLists.txt
-  ../src/AboutPage/View/IAboutPageModule.h
   ../src/AboutPage/View/IAboutPageView.h
   ../src/AboutPage/View/IAboutPageViewModel.h
 )

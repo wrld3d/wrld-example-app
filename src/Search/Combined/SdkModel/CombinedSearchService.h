@@ -26,8 +26,8 @@ namespace ExampleApp
                 {
                 public:
                     
-                    CombinedSearchService(const std::map<std::string, Search::SdkModel::ISearchService*>& searchServices,
-                                          Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel);
+                    CombinedSearchService(const std::map<std::string, std::shared_ptr<Search::SdkModel::ISearchService>>& searchServices,
+                                          const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel);
                     
                     ~CombinedSearchService();
                     
@@ -49,7 +49,7 @@ namespace ExampleApp
                     
                 private:
                     
-                    std::map<std::string,Search::SdkModel::ISearchService*> m_searchServices;
+                    std::map<std::string, std::shared_ptr<Search::SdkModel::ISearchService>> m_searchServices;
                     
                     Eegeo::Helpers::TCallback2<CombinedSearchService,
                                                const Search::SdkModel::SearchQuery&,
@@ -58,7 +58,7 @@ namespace ExampleApp
                     int m_pendingResultsLeft;
                     std::vector<Search::SdkModel::SearchResultModel> m_combinedResults;
                     Search::SdkModel::SearchQuery m_currentQueryModel;
-                    Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
+                    std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel> m_interiorInteractionModel;
                     bool m_hasActiveQuery;
                     
                 };

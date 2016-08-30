@@ -7,6 +7,7 @@
 #include "IToursCameraTransitionController.h"
 #include "GlobeCamera.h"
 #include "Terrain.h"
+#include <memory>
 
 namespace ExampleApp
 {
@@ -20,8 +21,8 @@ namespace ExampleApp
                 {
                 public:
                     
-                    ToursCameraTransitionController(IToursCameraController& toursCameraController,
-                                                    Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& touchController);
+                    ToursCameraTransitionController(const std::shared_ptr<IToursCameraController>& toursCameraController,
+                                                    const std::shared_ptr<TourGlobeCameraTouchController>& touchController);
                     
                     ~ToursCameraTransitionController();
                     
@@ -43,7 +44,7 @@ namespace ExampleApp
                     bool ShouldPerformCameraSpline(const ToursCameraState& currentState,
                                                    const ToursCameraState& desiredState);
                     
-                    IToursCameraController& m_toursCameraController;
+                    const std::shared_ptr<IToursCameraController>& m_toursCameraController;
                     
                     // This class manages the lifetime of m_pToursTransitionMode.
                     IToursCameraTransitionMode* m_pToursTransitionMode;
@@ -54,7 +55,7 @@ namespace ExampleApp
                     IToursCameraMode* m_pToursCurrentMode;
                     IToursCameraMode* m_pToursNextMode;
                     
-                    Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& m_touchController;
+                    const std::shared_ptr<TourGlobeCameraTouchController> m_touchController;
                 };
             }
         }

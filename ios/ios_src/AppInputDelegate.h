@@ -3,7 +3,7 @@
 #pragma once
 
 #include "Types.h"
-#include "MobileExampleApp.h"
+#include "IInputController.h"
 #import <UIKit/UIKit.h>
 
 @class ViewController;
@@ -20,7 +20,7 @@ class AppInputDelegate : protected Eegeo::NonCopyable
 {
 public:
     AppInputDelegate(
-        ExampleApp::MobileExampleApp& exampleApp,
+        ExampleApp::IInputController& inputController,
         ViewController& viewController,
         float width,
         float height,
@@ -48,7 +48,7 @@ public:
     void Event_TouchUp 				(const AppInterface::TouchData& data);
 
 private:
-    ExampleApp::MobileExampleApp& m_exampleApp;
+    ExampleApp::IInputController& m_input;
     AppInputDelegateGestureListener* m_pAppInputDelegateGestureListener;
 };
 

@@ -19,15 +19,15 @@ namespace ExampleApp
             {
                 class TourFullScreenImageCeremonyEndedObserver : private Eegeo::NonCopyable
                 {
-                    ExampleAppMessaging::TMessageBus& m_messageBus;
-                    ITourFullScreenImageViewModel& m_tourFullScreenImageViewModel;
+                    const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
+                    const std::shared_ptr<ITourFullScreenImageViewModel> m_tourFullScreenImageViewModel;
                     Eegeo::Helpers::TCallback1<TourFullScreenImageCeremonyEndedObserver, const TourFullScreenImageCeremonyEndedMessage&> m_binding;
                     
                     void HandleTourFullScreenImageCeremonyEnded(const TourFullScreenImageCeremonyEndedMessage& message);
                     
                 public:
-                    TourFullScreenImageCeremonyEndedObserver(ITourFullScreenImageViewModel& tourFullScreenImageViewModel,
-                                                             ExampleAppMessaging::TMessageBus& messageBus);
+                    TourFullScreenImageCeremonyEndedObserver(const std::shared_ptr<ITourFullScreenImageViewModel>& tourFullScreenImageViewModel,
+                                                             const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
                     
                     ~TourFullScreenImageCeremonyEndedObserver();
                 };

@@ -2,11 +2,12 @@
 
 #pragma once
 
+#include "IModule.h"
 #include "Types.h"
-#include "IApplicationConfigurationModule.h"
-#include "ApplicationConfig.h"
+#include "ApplicationConfiguration.h"
+#include "IPlatformConfigBuilder.h"
 #include "IFileIO.h"
-#include "Config.h"
+#include <string>
 
 namespace ExampleApp
 {
@@ -14,19 +15,13 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class ApplicationConfigurationModule : public IApplicationConfigurationModule, private Eegeo::NonCopyable
+            class ApplicationConfigurationModule : public IModule, private Eegeo::NonCopyable
             {
-                IApplicationConfigurationService* m_pApplicationConfigurationService;
-                IApplicationConfigurationReader* m_pApplicationConfigurationReader;
-                IApplicationConfigurationParser* m_pApplicationConfigurationParser;
-                
             public:
-                ApplicationConfigurationModule(Eegeo::Helpers::IFileIO& fileIO,
-                                               const IApplicationConfigurationVersionProvider& applicationConfigurationVersionProvider);
-                
-                ~ApplicationConfigurationModule();
-                
-                IApplicationConfigurationService& GetApplicationConfigurationService();
+                ApplicationConfigurationModule(const ApplicationConfiguration& defaultConfig);
+                void Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder);
+            private:
+                ApplicationConfiguration m_default;
             };
             
             ApplicationConfig::ApplicationConfiguration LoadAppConfig(Eegeo::Helpers::IFileIO& fileIO,

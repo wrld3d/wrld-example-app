@@ -2,11 +2,7 @@
 
 #pragma once
 
-#include "IMapModeModule.h"
-#include "MapMode.h"
-#include "Types.h"
-#include "IMapModeModel.h"
-#include "VisualMap.h"
+#include "Hypodermic/ContainerBuilder.h"
 
 namespace ExampleApp
 {
@@ -14,17 +10,14 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class MapModeModule : public IMapModeModule, private Eegeo::NonCopyable
+            class MapModeModule
             {
             public:
-                MapModeModule(VisualMap::SdkModel::IVisualMapService& visualMapService);
-                ~MapModeModule();
-
-                IMapModeModel& GetMapModeModel();
-
+                MapModeModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder);
+                
+                void Register();
             private:
-                IMapModeModel* m_pMapModeModel;
-                MapModeController* m_pMapModeController;
+                const std::shared_ptr<Hypodermic::ContainerBuilder> m_builder;
             };
         }
     }

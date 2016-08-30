@@ -24,10 +24,10 @@ namespace ExampleApp
         {
             class CompassModel : public ICompassModel, private Eegeo::NonCopyable
             {
-                Eegeo::Location::NavigationService& m_navigationService;
-                InteriorsNavigation::SdkModel::IInteriorsNavigationService& m_interiorsNavigationService;
-                Eegeo::Location::ILocationService& m_locationService;
-                ExampleApp::AppCamera::SdkModel::IAppCameraController& m_cameraController;
+                const std::shared_ptr<Eegeo::Location::NavigationService> m_navigationService;
+                const std::shared_ptr<InteriorsNavigation::SdkModel::IInteriorsNavigationService> m_interiorsNavigationService;
+                const std::shared_ptr<Eegeo::Location::ILocationService> m_locationService;
+                const std::shared_ptr<ExampleApp::AppCamera::SdkModel::IAppCameraController> m_cameraController;
                 Eegeo::Helpers::CallbackCollection0 m_compassAllowedChangedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_gpsModeChangedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_gpsModeUnauthorizedCallbacks;
@@ -37,25 +37,25 @@ namespace ExampleApp
                 std::map<GpsMode::Values, Eegeo::Location::NavigationService::GpsMode> m_navigationGpsModeToCompassGpsMode;
                 std::map<GpsMode::Values, const char*> m_gpsModeToString;
                 
-                Metrics::IMetricsService& m_metricsService;
+                const std::shared_ptr<Metrics::IMetricsService> m_metricsService;
 
-                AppModes::SdkModel::IAppModeModel& m_appModeModel;
-                InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorExplorerModel;
+                const std::shared_ptr<AppModes::SdkModel::IAppModeModel> m_appModeModel;
+                const std::shared_ptr<InteriorsExplorer::SdkModel::InteriorsExplorerModel> m_interiorExplorerModel;
                 Eegeo::Helpers::TCallback0<CompassModel> m_appModeChangedCallback;
                 
-                Eegeo::UI::NativeAlerts::IAlertBoxFactory& m_alertBoxFactory;
+                const std::shared_ptr<Eegeo::UI::NativeAlerts::IAlertBoxFactory> m_alertBoxFactory;
                 Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<CompassModel> m_failAlertHandler;
                 
             public:
 
-                CompassModel(Eegeo::Location::NavigationService& navigationService,
-                             InteriorsNavigation::SdkModel::IInteriorsNavigationService& interiorsNavigationService,
-                             Eegeo::Location::ILocationService& locationService,
-                             ExampleApp::AppCamera::SdkModel::IAppCameraController& Cameracontroller,
-                             Metrics::IMetricsService& metricsService,
-                             InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorExplorerModel,
-                             AppModes::SdkModel::IAppModeModel& appModeModel,
-                             Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory);
+                CompassModel(const std::shared_ptr<Eegeo::Location::NavigationService>& navigationService,
+                             const std::shared_ptr<InteriorsNavigation::SdkModel::IInteriorsNavigationService>& interiorsNavigationService,
+                             const std::shared_ptr<Eegeo::Location::ILocationService>& locationService,
+                             const std::shared_ptr<ExampleApp::AppCamera::SdkModel::IAppCameraController>& cameraController,
+                             const std::shared_ptr<Metrics::IMetricsService>& metricsService,
+                             const std::shared_ptr<InteriorsExplorer::SdkModel::InteriorsExplorerModel>& interiorExplorerModel,
+                             const std::shared_ptr<AppModes::SdkModel::IAppModeModel>& appModeModel,
+                             const std::shared_ptr<Eegeo::UI::NativeAlerts::IAlertBoxFactory>& alertBoxFactory);
 
                 ~CompassModel();
 

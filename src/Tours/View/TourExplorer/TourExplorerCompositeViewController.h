@@ -7,6 +7,7 @@
 #include "ScreenControlViewModelIncludes.h"
 #include "ITourExplorerCompositeViewController.h"
 #include "Types.h"
+#include <memory>
 
 namespace ExampleApp
 {
@@ -18,16 +19,16 @@ namespace ExampleApp
             {
                 class TourExplorerCompositeViewController : public ITourExplorerCompositeViewController, private Eegeo::NonCopyable
                 {
-                    ITourExplorerViewModel& m_tourExplorerViewModel;
-                    Menu::View::IMenuViewModel& m_searchMenuViewModel;
-                    Menu::View::IMenuViewModel& m_settingsMenuViewModel;
+                    const std::shared_ptr<ITourExplorerViewModel> m_tourExplorerViewModel;
+                    const std::shared_ptr<Menu::View::IMenuViewModel> m_searchMenuViewModel;
+                    const std::shared_ptr<Menu::View::IMenuViewModel> m_settingsMenuViewModel;
                     bool m_tourExplorerOpen;
                     
                 public:
-                    TourExplorerCompositeViewController(ITourExplorerViewModel& tourExplorerViewModel,
-                                                        Menu::View::IMenuViewModel& searchMenuViewModel,
-                                                        Menu::View::IMenuViewModel& settingsMenuViewModel,
-                                                        ScreenControl::View::IScreenControlViewModel& watermarkViewModel);
+                    TourExplorerCompositeViewController(const std::shared_ptr<ITourExplorerViewModel>& tourExplorerViewModel,
+                                                        const std::shared_ptr<Menu::View::IMenuViewModel>& searchMenuViewModel,
+                                                        const std::shared_ptr<Menu::View::IMenuViewModel>& settingsMenuViewModel,
+                                                        const std::shared_ptr<ScreenControl::View::IScreenControlViewModel>& watermarkViewModel);
                     
                     ~TourExplorerCompositeViewController();
                     

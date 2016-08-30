@@ -27,7 +27,7 @@ namespace ExampleApp
                 }
             }
 
-            ApplicationConfigurationJsonParser::ApplicationConfigurationJsonParser(const ApplicationConfiguration& defaultConfig)
+            ApplicationConfigurationJsonParser::ApplicationConfigurationJsonParser(const std::shared_ptr<ApplicationConfiguration>& defaultConfig)
             : m_defaultConfig(defaultConfig)
             {
                 
@@ -56,22 +56,22 @@ namespace ExampleApp
                 const float startOrientationAboutInterestPoint = static_cast<float>(document["StartLocationOrientationDegrees"].GetDouble());
                 const bool tryStartAtGpsLocation = document["TryStartAtGpsLocation"].GetBool();
 
-                const std::string& name = ParseStringOrDefault(document, "Name", m_defaultConfig.Name());
-                const std::string& eegeoApiKey = ParseStringOrDefault(document, "EegeoApiKey", m_defaultConfig.EegeoApiKey());                
-                const std::string& coverageTreeManifestURL = ParseStringOrDefault(document, "CoverageTreeManifestURL", m_defaultConfig.CoverageTreeManifestURL());
-                const std::string& themeManifestURL = ParseStringOrDefault(document, "ThemeManifestURL", m_defaultConfig.ThemeManifestURL());
-                const std::string& embeddedThemeTexturePath = ParseStringOrDefault(document, "EmbeddedThemeTexturePath", m_defaultConfig.EmbeddedThemeTexturePath());
-                const std::string& googleAnalyticsReferrerToken = ParseStringOrDefault(document, "GoogleAnalyticsReferrerToken", m_defaultConfig.GoogleAnalyticsReferrerToken());
-                const std::string& flurryAppKey = ParseStringOrDefault(document, "FlurryAppKey", m_defaultConfig.FlurryAppKey());
-                const std::string& yelpConsumerKey = ParseStringOrDefault(document, "YelpConsumerKey", m_defaultConfig.YelpConsumerKey());
-                const std::string& yelpConsumerSecret = ParseStringOrDefault(document, "YelpConsumerSecret", m_defaultConfig.YelpConsumerSecret());
-                const std::string& yelpOAuthToken = ParseStringOrDefault(document, "YelpOAuthToken", m_defaultConfig.YelpOAuthToken());
-                const std::string& yelpOAuthTokenSecret = ParseStringOrDefault(document, "YelpOAuthTokenSecret", m_defaultConfig.YelpOAuthTokenSecret());
-                const std::string& geoNamesUserName = ParseStringOrDefault(document, "GeoNamesUserName", m_defaultConfig.GeoNamesUserName());
-                const std::string& eegeoSearchServiceUrl = ParseStringOrDefault(document, "EegeoSearchServiceUrl", m_defaultConfig.EegeoSearchServiceUrl());
-                const std::string& myPinsWebServiceUrl = ParseStringOrDefault(document, "MyPinsWebServiceUrl", m_defaultConfig.MyPinsWebServiceUrl());
-                const std::string& myPinsWebServiceAuthToken = ParseStringOrDefault(document, "MyPinsWebServiceAuthToken", m_defaultConfig.MyPinsWebServiceAuthToken());
-                const std::string& twitterAuthCode = ParseStringOrDefault(document, "TwitterAuthCode", m_defaultConfig.TwitterAuthCode());
+                const std::string& name = ParseStringOrDefault(document, "Name", m_defaultConfig->Name());
+                const std::string& eegeoApiKey = ParseStringOrDefault(document, "EegeoApiKey", m_defaultConfig->EegeoApiKey());
+                const std::string& coverageTreeManifestURL = ParseStringOrDefault(document, "CoverageTreeManifestURL", m_defaultConfig->CoverageTreeManifestURL());
+                const std::string& themeManifestURL = ParseStringOrDefault(document, "ThemeManifestURL", m_defaultConfig->ThemeManifestURL());
+                const std::string& embeddedThemeTexturePath = ParseStringOrDefault(document, "EmbeddedThemeTexturePath", m_defaultConfig->EmbeddedThemeTexturePath());
+                const std::string& googleAnalyticsReferrerToken = ParseStringOrDefault(document, "GoogleAnalyticsReferrerToken", m_defaultConfig->GoogleAnalyticsReferrerToken());
+                const std::string& flurryAppKey = ParseStringOrDefault(document, "FlurryAppKey", m_defaultConfig->FlurryAppKey());
+                const std::string& yelpConsumerKey = ParseStringOrDefault(document, "YelpConsumerKey", m_defaultConfig->YelpConsumerKey());
+                const std::string& yelpConsumerSecret = ParseStringOrDefault(document, "YelpConsumerSecret", m_defaultConfig->YelpConsumerSecret());
+                const std::string& yelpOAuthToken = ParseStringOrDefault(document, "YelpOAuthToken", m_defaultConfig->YelpOAuthToken());
+                const std::string& yelpOAuthTokenSecret = ParseStringOrDefault(document, "YelpOAuthTokenSecret", m_defaultConfig->YelpOAuthTokenSecret());
+                const std::string& geoNamesUserName = ParseStringOrDefault(document, "GeoNamesUserName", m_defaultConfig->GeoNamesUserName());
+                const std::string& eegeoSearchServiceUrl = ParseStringOrDefault(document, "EegeoSearchServiceUrl", m_defaultConfig->EegeoSearchServiceUrl());
+                const std::string& myPinsWebServiceUrl = ParseStringOrDefault(document, "MyPinsWebServiceUrl", m_defaultConfig->MyPinsWebServiceUrl());
+                const std::string& myPinsWebServiceAuthToken = ParseStringOrDefault(document, "MyPinsWebServiceAuthToken", m_defaultConfig->MyPinsWebServiceAuthToken());
+                const std::string& twitterAuthCode = ParseStringOrDefault(document, "TwitterAuthCode", m_defaultConfig->TwitterAuthCode());
 
                 bool isKioskTouchInputEnabled = false;
                 if (document.HasMember("IsKioskTouchInputEnabled") && !document["IsKioskTouchInputEnabled"].IsNull())
@@ -89,9 +89,9 @@ namespace ExampleApp
                 return ApplicationConfiguration(
                     name,
                     eegeoApiKey,
-                    m_defaultConfig.ProductVersion(),
-                    m_defaultConfig.BuildNumber(),
-                    m_defaultConfig.CombinedVersionString(),
+                    m_defaultConfig->ProductVersion(),
+                    m_defaultConfig->BuildNumber(),
+                    m_defaultConfig->CombinedVersionString(),
                     coverageTreeManifestURL,
                     themeManifestURL,
                     embeddedThemeTexturePath,

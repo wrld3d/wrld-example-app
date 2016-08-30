@@ -9,23 +9,23 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            TourActiveStateChangedMessageHandler::TourActiveStateChangedMessageHandler(ITourService& tourService,
-                                                                                       ExampleAppMessaging::TMessageBus& messageBus)
+            TourActiveStateChangedMessageHandler::TourActiveStateChangedMessageHandler(const std::shared_ptr<ITourService>& tourService,
+                                                                                       const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
             : m_tourService(tourService)
             , m_messageBus(messageBus)
             , m_binding(this, &TourActiveStateChangedMessageHandler::HandleTourActiveStateChanged)
             {
-                m_messageBus.SubscribeNative(m_binding);
+                m_messageBus->SubscribeNative(m_binding);
             }
             
             TourActiveStateChangedMessageHandler::~TourActiveStateChangedMessageHandler()
             {
-                m_messageBus.UnsubscribeNative(m_binding);
+                m_messageBus->UnsubscribeNative(m_binding);
             }
             
             void TourActiveStateChangedMessageHandler::HandleTourActiveStateChanged(const TourActiveStateChangedMessage& message)
             {
-                m_tourService.SetActiveTourState(message.GetActiveStateIndex());
+                m_tourService->SetActiveTourState(message.GetActiveStateIndex());
             }
         }
     }

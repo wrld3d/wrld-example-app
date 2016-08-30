@@ -6,6 +6,7 @@
 #include "ICallback.h"
 #include "Menu.h"
 #include "BidirectionalBus.h"
+#include "MyPinMenuOption.h"
 #include "MyPinRemovedFromMenuMessage.h"
 
 namespace ExampleApp
@@ -14,17 +15,17 @@ namespace ExampleApp
     {
         namespace View
         {
-            class MyPinRemovedFromMenuObserver
+            class MyPinRemovedFromMenuObserver : private Eegeo::NonCopyable
             {
             public:
-                MyPinRemovedFromMenuObserver(Menu::View::IMenuOptionsModel& menuOptionsModel,
-                                             ExampleAppMessaging::TMessageBus& messageBus);
+                MyPinRemovedFromMenuObserver(const std::shared_ptr<MyPinsMenuOptionsModel>& menuOptionsModel,
+                                             const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
 
                 ~MyPinRemovedFromMenuObserver();
 
             private:
-                Menu::View::IMenuOptionsModel& m_menuOptionsModel;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<Menu::View::IMenuOptionsModel> m_menuOptionsModel;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
 
                 Eegeo::Helpers::TCallback1<MyPinRemovedFromMenuObserver, const MyPinRemovedFromMenuMessage&> m_handlerBinding;
 

@@ -12,16 +12,15 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            InteriorVisibilityUpdater::InteriorVisibilityUpdater(Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
-                                                                 const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                                 const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                                                 float transitionDurationTimeSeconds)
+            InteriorVisibilityUpdater::InteriorVisibilityUpdater(const std::shared_ptr<Eegeo::Resources::Interiors::InteriorTransitionModel>& interiorTransitionModel,
+                                                                 const std::shared_ptr<Eegeo::Resources::Interiors::InteriorSelectionModel>& interiorSelectionModel,
+                                                                 const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel)
             : m_interiorTransitionModel(interiorTransitionModel)
             , m_interiorSelectionModel(interiorSelectionModel)
             , m_interiorInteractionModel(interiorInteractionModel)
             , m_interiorShouldDisplay(false)
             , m_interiorTransitionParameter(0.0f)
-            , m_interiorTransitionTimeSeconds(Eegeo::Max(transitionDurationTimeSeconds, 0.0f))
+            , m_interiorTransitionTimeSeconds(0.5f)
             {
                 
             }
@@ -38,7 +37,7 @@ namespace ExampleApp
             
             void InteriorVisibilityUpdater::Update(float dt)
             {
-                const bool shouldDisplay = m_interiorShouldDisplay && m_interiorSelectionModel.IsInteriorSelected() && m_interiorInteractionModel.HasInteriorModel();
+                const bool shouldDisplay = m_interiorShouldDisplay && m_interiorSelectionModel->IsInteriorSelected() && m_interiorInteractionModel->HasInteriorModel();
                 const float transitionTarget = shouldDisplay ? 1.f : 0.f;
                 
                 float delta = 0.f;
@@ -54,7 +53,7 @@ namespace ExampleApp
                 m_interiorTransitionParameter += delta / m_interiorTransitionTimeSeconds;
                 m_interiorTransitionParameter = Eegeo::Math::Clamp01(m_interiorTransitionParameter);
                 
-                m_interiorTransitionModel.SetVisibilityParam(m_interiorTransitionParameter);
+                m_interiorTransitionModel->SetVisibilityParam(m_interiorTransitionParameter);
             }
         }
     }

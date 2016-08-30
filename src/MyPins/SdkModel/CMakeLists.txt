@@ -6,7 +6,6 @@ set(currsources
   ../src/MyPins/SdkModel/IMyPinBoundObjectFactory.h
   ../src/MyPins/SdkModel/IMyPinBoundObjectRepository.h
   ../src/MyPins/SdkModel/IMyPinSelectionHandlerFactory.h
-  ../src/MyPins/SdkModel/IMyPinsModule.h
   ../src/MyPins/SdkModel/IMyPinsRepository.h
   ../src/MyPins/SdkModel/IMyPinsService.h
   ../src/MyPins/SdkModel/IMyPinVisibilityStateChangedHandlerFactory.h

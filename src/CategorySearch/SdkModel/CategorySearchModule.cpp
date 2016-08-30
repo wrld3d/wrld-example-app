@@ -18,6 +18,28 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+            class CategorySearchMenuModel : public Menu::View::MenuModel
+            {
+            };
+            
+            class CategorySearchMenuOptionsModel : public Menu::View::MenuOptionsModel
+            {
+            public:
+                CategorySearchMenuOptionsModel(const std::shared_ptr<CategorySearchMenuModel>& categorySearch) : Menu::View::MenuOptionsModel(*categorySearch)
+                {
+                }
+            };
+            
+            void CategorySearchModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+            {
+                builder->registerType<View::TCategories>().singleInstance();
+                builder->registerType<View::CategorySearchRepository>().as<View::ICategorySearchRepository>().singleInstance();
+                builder->registerType<CategorySearchMenuModel>().singleInstance();
+                builder->registerType<CategorySearchMenuOptionsModel>().singleInstance();
+                builder->registerType<CategorySearchSelectedMessageHandler>().singleInstance();
+            }
+            
+            /*
             CategorySearchModule::CategorySearchModule(const std::vector<CategorySearch::View::CategorySearchModel>& categorySearchModels,
                                                        Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                                        Menu::View::IMenuViewModel& menuViewModel,
@@ -57,31 +79,7 @@ namespace ExampleApp
                         );
                 
                 m_pSearchResultIconCategoryMapper = Eegeo_NEW(SearchResultIconCategoryMapper)();
-            }
-
-            CategorySearchModule::~CategorySearchModule()
-            {
-                Eegeo_DELETE m_pSearchResultIconCategoryMapper;
-                Eegeo_DELETE m_pCategorySearchSelectedMessageHandler;
-                Eegeo_DELETE m_pMenuOptionsModel;
-                Eegeo_DELETE m_pMenuModel;
-                Eegeo_DELETE m_pCategorySearchRepository;
-            }
-
-            Menu::View::IMenuModel& CategorySearchModule::GetCategorySearchMenuModel() const
-            {
-                return *m_pMenuModel;
-            }
-
-            View::ICategorySearchRepository& CategorySearchModule::GetCategorySearchRepository() const
-            {
-                return *m_pCategorySearchRepository;
-            }
-            
-            ISearchResultIconCategoryMapper& CategorySearchModule::GetSearchResultIconCategoryMapper() const
-            {
-                return *m_pSearchResultIconCategoryMapper;
-            }
+            }*/
         }
     }
 }

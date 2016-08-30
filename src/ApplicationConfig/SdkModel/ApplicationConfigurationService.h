@@ -13,12 +13,12 @@ namespace ExampleApp
         {
             class ApplicationConfigurationService : public IApplicationConfigurationService, private Eegeo::NonCopyable
             {
-                IApplicationConfigurationParser& m_parser;
-                IApplicationConfigurationReader& m_reader;
+                const std::shared_ptr<IApplicationConfigurationParser> m_parser;
+                const std::shared_ptr<IApplicationConfigurationReader> m_reader;
                 
             public:
-                ApplicationConfigurationService(IApplicationConfigurationParser& parser,
-                                                IApplicationConfigurationReader& reader);
+                ApplicationConfigurationService(const std::shared_ptr<IApplicationConfigurationParser>& parser,
+                                                const std::shared_ptr<IApplicationConfigurationReader>& reader);
                 
                 ApplicationConfiguration LoadConfiguration(const std::string& path);
             };

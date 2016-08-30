@@ -19,18 +19,18 @@ namespace ExampleApp
                 class GeoNamesSearchService : public Search::SdkModel::SearchServiceBase, private Eegeo::NonCopyable
                 {
                 private:
-                    IGeoNamesSearchQueryFactory& m_geoNamesSearchQueryFactory;
-                    IGeoNamesParser& m_geoNamesParser;
-                    Net::SdkModel::INetworkCapabilities& m_networkCapabilities;
+                    std::shared_ptr<IGeoNamesSearchQueryFactory> m_geoNamesSearchQueryFactory;
+                    std::shared_ptr<IGeoNamesParser> m_geoNamesParser;
+                    std::shared_ptr<Net::SdkModel::INetworkCapabilities> m_networkCapabilities;
                     Search::SdkModel::SearchQuery m_currentQueryModel;
                     Eegeo::Helpers::TCallback0<GeoNamesSearchService> m_searchCallback;
                     IGeoNamesSearchQuery* m_pCurrentRequest;
                     bool m_hasActiveQuery;
                     
                 public:
-                    GeoNamesSearchService(IGeoNamesSearchQueryFactory& geoNamesSearchQueryFactory,
-                                          IGeoNamesParser& geoNamesParser,
-                                          Net::SdkModel::INetworkCapabilities& networkCapabilities);
+                    GeoNamesSearchService(const std::shared_ptr<IGeoNamesSearchQueryFactory>& geoNamesSearchQueryFactory,
+                                          const std::shared_ptr<IGeoNamesParser>& geoNamesParser,
+                                          const std::shared_ptr<Net::SdkModel::INetworkCapabilities>& networkCapabilities);
                     
                     ~GeoNamesSearchService();
                     

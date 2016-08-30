@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "ISearchServiceModule.h"
+//#include "ISearchServiceModule.h"
 #include "Interiors.h"
 #include <map>
 #include <string>
@@ -15,24 +15,24 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                class CombinedSearchServiceModule : public Search::SdkModel::ISearchServiceModule
+/*                class CombinedSearchServiceModule : public Search::SdkModel::ISearchServiceModule
                 {
                 private:
-                    Search::SdkModel::ISearchService* m_pSearchService;
+                    std::shared_ptr<Search::SdkModel::ISearchService> m_searchService;
                     
                     std::vector<CategorySearch::View::CategorySearchModel> m_categorySearchModels;
                     
                 public:
-                    CombinedSearchServiceModule(std::map<std::string, Search::SdkModel::ISearchServiceModule*> searchServiceModules,
-                                                Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel);
+                    CombinedSearchServiceModule(std::map<std::string, std::shared_ptr<Search::SdkModel::ISearchServiceModule>>& searchServiceModules,
+                                                const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel);
                     
                     ~CombinedSearchServiceModule();
                     
-                    Search::SdkModel::ISearchService& GetSearchService() const;
+                    const std::shared_ptr<Search::SdkModel::ISearchService> GetSearchService() const;
                     
                     std::vector<CategorySearch::View::CategorySearchModel> GetCategorySearchModels() const;
                     
-                };
+                }; */
             }
         }
     }

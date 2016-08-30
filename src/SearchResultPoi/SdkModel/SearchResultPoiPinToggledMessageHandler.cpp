@@ -10,24 +10,24 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            SearchResultPoiPinToggledMessageHandler::SearchResultPoiPinToggledMessageHandler(ISearchResultPoiMyPinService& searchResultPoiMyPinService,
-                                                                                             ExampleAppMessaging::TMessageBus& messageBus)
+            SearchResultPoiPinToggledMessageHandler::SearchResultPoiPinToggledMessageHandler(const std::shared_ptr<ISearchResultPoiMyPinService>& searchResultPoiMyPinService,
+                                                                                             const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
             : m_searchResultPoiMyPinService(searchResultPoiMyPinService)
             , m_messageBus(messageBus)
             , m_handlerBinding(this, &SearchResultPoiPinToggledMessageHandler::OnSearchResultPoiPinToggled)
             {
-                m_messageBus.SubscribeNative(m_handlerBinding);
+                m_messageBus->SubscribeNative(m_handlerBinding);
             }
             
             SearchResultPoiPinToggledMessageHandler::~SearchResultPoiPinToggledMessageHandler()
             {
-                m_messageBus.UnsubscribeNative(m_handlerBinding);
+                m_messageBus->UnsubscribeNative(m_handlerBinding);
             }
             
             void SearchResultPoiPinToggledMessageHandler::OnSearchResultPoiPinToggled(const SearchResultPoiPinToggledMessage& message)
             {
                 Search::SdkModel::SearchResultModel searchResult = message.GetModel();
-                m_searchResultPoiMyPinService.AddOrRemoveSearchResultFromMyPins(searchResult);
+                m_searchResultPoiMyPinService->AddOrRemoveSearchResultFromMyPins(searchResult);
             }
         }
     }

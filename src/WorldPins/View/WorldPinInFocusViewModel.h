@@ -28,7 +28,7 @@ namespace ExampleApp
                 WorldPinInFocusScreenControl m_screenControl;
 
             public:
-                WorldPinInFocusViewModel(Eegeo::Helpers::TIdentity identity);
+                WorldPinInFocusViewModel(const std::shared_ptr<Eegeo::Helpers::IIdentityProvider>& identity);
 
                 ~WorldPinInFocusViewModel();
 

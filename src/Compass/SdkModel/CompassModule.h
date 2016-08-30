@@ -2,22 +2,7 @@
 
 #pragma once
 
-#include "Types.h"
-#include "Compass.h"
-#include "ICompassModule.h"
-#include "Rendering.h"
-#include "IIdentity.h"
-#include "Location.h"
-#include "CompassModeObserver.h"
-#include "CompassViewCycledObserver.h"
-#include "BidirectionalBus.h"
-#include "IMetricsService.h"
-#include "AppModes.h"
-#include "AlertBox.h"
-#include "InteriorsNavigation.h"
-#include "Interiors.h"
-#include "AppCamera.h"
-#include "InteriorsExplorer.h"
+#include "Hypodermic/ContainerBuilder.h"
 
 namespace ExampleApp
 {
@@ -25,6 +10,16 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+            class CompassModule
+            {
+            public:
+                CompassModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder);
+                
+                void Register();
+            private:
+                const std::shared_ptr<Hypodermic::ContainerBuilder> m_builder;
+            };
+            /*
             class CompassModule : public ICompassModule, private Eegeo::NonCopyable
             {
             private:
@@ -55,7 +50,7 @@ namespace ExampleApp
                 ICompassUpdateController& GetCompassUpdateController() const;
 
                 ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel() const;
-            };
+            };*/
         }
     }
 }

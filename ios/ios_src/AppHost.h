@@ -56,7 +56,8 @@
 #include "URLRequestHandler.h"
 #include "SurveyViewIncludes.h"
 #include "IMenuReactionModel.h"
-
+#include "ApplicationConfiguration.h"
+#include "AppWiring.h"
 #include "Hypodermic/ContainerBuilder.h"
 
 #include <memory>
@@ -72,7 +73,7 @@ public:
         ViewController& viewController,
         UIView* pView,
         Eegeo::Rendering::ScreenProperties screenProperties,
-        const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
+        ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
         ExampleApp::Metrics::iOSFlurryMetricsService& metricsService
     );
     ~AppHost();
@@ -85,7 +86,7 @@ public:
     void OnPause();
     void OnResume();
 
-    void NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties);
+    void NotifyScreenPropertiesChanged(const std::shared_ptr<Eegeo::Rendering::ScreenProperties>& screenProperties);
     
     void HandleFailureToProvideWorkingApiKey();
     
@@ -99,18 +100,18 @@ private:
     ExampleApp::ExampleAppMessaging::TMessageBus& GetMessageBus();
     ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus& GetSdkMessageBus();
 
-    std::shared_ptr<Hypodermic::ContainerBuilder> m_containerBuilder;
-    std::shared_ptr<Hypodermic::Container> m_container;
-    
     UIView* m_pView;
     ViewController& m_viewController;
     AppInputDelegate* m_pAppInputDelegate;
+    std::shared_ptr<ExampleApp::AppWiring> m_wiring;
+    std::shared_ptr<ExampleApp::MobileExampleApp> m_app;
+
     //AppLocationDelegate* m_pAppLocationDelegate;
 
-    Eegeo::UI::NativeInput::iOS::iOSInputBoxFactory m_iOSInputBoxFactory;
-    Eegeo::UI::NativeInput::iOS::iOSKeyboardInputFactory m_iOSKeyboardInputFactory;
-    Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory m_iOSAlertBoxFactory;
-    Eegeo::UI::NativeUIFactories m_iOSNativeUIFactories;
+    //Eegeo::UI::NativeInput::iOS::iOSInputBoxFactory m_iOSInputBoxFactory;
+    //Eegeo::UI::NativeInput::iOS::iOSKeyboardInputFactory m_iOSKeyboardInputFactory;
+    //Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory m_iOSAlertBoxFactory;
+    //Eegeo::UI::NativeUIFactories m_iOSNativeUIFactories;
     
     ExampleApp::SettingsMenu::View::ISettingsMenuViewModule* m_pSettingsMenuViewModule;
     ExampleApp::SearchMenu::View::ISearchMenuViewModule* m_pSearchMenuViewModule;
@@ -120,7 +121,7 @@ private:
     ExampleApp::SearchResultPoi::View::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;
     ExampleApp::WorldPins::View::IWorldPinOnMapViewModule* m_pWorldPinOnMapViewModule;
     ExampleApp::Compass::View::ICompassViewModule* m_pCompassViewModule;
-    ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModule* m_pViewControllerUpdaterModule;
+    //ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModule* m_pViewControllerUpdaterModule;
     //ExampleApp::PersistentSettings::iOSPersistentSettingsModel m_iOSPersistentSettingsModel;
     //ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule* m_pInitialExperienceModule;
     ExampleApp::AboutPage::View::IAboutPageViewModule* m_pAboutPageViewModule;
@@ -144,8 +145,7 @@ private:
     
     ImageStore* m_pImageStore;
     
-    ExampleApp::MobileExampleApp* m_pApp;
-    bool m_requestedApplicationInitialiseViewState;
+    //bool m_requestedApplicationInitialiseViewState;
 
     //ExampleApp::ExampleAppMessaging::TMessageBus m_messageBus;
     //ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus m_sdkModelDomainEventBus;

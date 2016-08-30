@@ -8,6 +8,7 @@
 #include "ICallback.h"
 #include "ModalityChangedMessage.h"
 #include "Rendering.h"
+#include <memory>
 
 namespace ExampleApp
 {
@@ -19,10 +20,10 @@ namespace ExampleApp
             {
             public:
                 
-                GpsMarkerController(GpsMarkerModel& model,
-                                    GpsMarkerView& view,
-                                    Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                    ExampleAppMessaging::TMessageBus& messageBus);
+                GpsMarkerController(const std::shared_ptr<GpsMarkerModel>& model,
+                                    const std::shared_ptr<GpsMarkerView>& view,
+                                    const std::shared_ptr<Eegeo::Rendering::EnvironmentFlatteningService>& environmentFlatteningService,
+                                    const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
                 ~GpsMarkerController();
                 
                 void Update(float dt, const Eegeo::Camera::RenderCamera& renderCamera);
@@ -33,12 +34,11 @@ namespace ExampleApp
                 float m_updateTime;
                 int m_visibilityCount;
                 
-                GpsMarkerModel& m_model;
-                GpsMarkerView& m_view;
+                std::shared_ptr<GpsMarkerModel> m_model;
+                std::shared_ptr<GpsMarkerView> m_view;
+                std::shared_ptr<Eegeo::Rendering::EnvironmentFlatteningService> m_environmentFlatteningService;
+                std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 
-                Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
-                
-                ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Helpers::TCallback1<GpsMarkerController, const Modality::ModalityChangedMessage&> m_modalityChangedHandlerBinding;
                 Eegeo::Helpers::TCallback1<GpsMarkerController, const GpsMarkerVisibilityMessage&> m_visibilityChangedHandlerBinding;
                 

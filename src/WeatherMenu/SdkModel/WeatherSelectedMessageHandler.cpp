@@ -14,36 +14,35 @@ namespace ExampleApp
 
                 if(model.HasTimeState())
                 {
-                    m_weatherController.SetTime(model.GetTimeState());
+                    m_weatherController->SetTime(model.GetTimeState());
                 }
                 if(model.HasWeatherState())
                 {
-                    m_weatherController.SetWeather(model.GetWeatherState());
+                    m_weatherController->SetWeather(model.GetWeatherState());
                 }
                 if(model.HasSeasonState())
                 {
-                    m_weatherController.SetTheme(model.GetSeasonState());
+                    m_weatherController->SetTheme(model.GetSeasonState());
                 }
-
                 if(model.HasExplicitState())
                 {
-                    m_weatherController.SetState(model.GetExplicitState());
+                    m_weatherController->SetState(model.GetExplicitState());
                 }
             }
 
             WeatherSelectedMessageHandler::WeatherSelectedMessageHandler(
-                IWeatherController& weatherController,
-                ExampleAppMessaging::TMessageBus& messageBus)
+                                                                         const std::shared_ptr<IWeatherController>& weatherController,
+                                                                         const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
                 : m_weatherController(weatherController)
                 , m_messageBus(messageBus)
                 , m_handlerBinding(this, &WeatherSelectedMessageHandler::OnWeatherSelectedMessage)
             {
-                m_messageBus.SubscribeNative(m_handlerBinding);
+                m_messageBus->SubscribeNative(m_handlerBinding);
             }
 
             WeatherSelectedMessageHandler::~WeatherSelectedMessageHandler()
             {
-                m_messageBus.UnsubscribeNative(m_handlerBinding);
+                m_messageBus->UnsubscribeNative(m_handlerBinding);
             }
         }
     }

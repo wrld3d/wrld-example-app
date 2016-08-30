@@ -4,7 +4,16 @@
 #include "CompassViewModel.h"
 #include "CompassModel.h"
 #include "CompassUpdateController.h"
-
+#include "CompassModeObserver.h"
+#include "CompassViewCycledObserver.h"
+#include "IInteriorsNavigationService.h"
+#include "ILocationService.h"
+#include "IAppCameraController.h"
+#include "InteriorsExplorerModel.h"
+#include "InteriorInteractionModel.h"
+#include "InteriorSelectionModel.h"
+#include "IVisualMapService.h"
+#include "IAlertBoxFactory.h"
 
 namespace ExampleApp
 {
@@ -12,59 +21,21 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            CompassModule::CompassModule(Eegeo::Location::NavigationService& navigationService,
-                                         InteriorsNavigation::SdkModel::IInteriorsNavigationService& interiorsNavigationService,
-                                         Eegeo::Location::ILocationService& locationService,
-                                         ExampleApp::AppCamera::SdkModel::IAppCameraController& cameraController,
-                                         Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                         ExampleAppMessaging::TMessageBus& messageBus,
-                                         Metrics::IMetricsService& metricsService,
-                                         InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorExplorerModel,
-                                         AppModes::SdkModel::IAppModeModel& appModeModel,
-                                         Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory)
+            CompassModule::CompassModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+            : m_builder(builder)
             {
-                m_pModel = Eegeo_NEW(CompassModel)(navigationService,
-                                                   interiorsNavigationService,
-                                                   locationService,
-                                                   cameraController,
-                                                   metricsService,
-                                                   interiorExplorerModel,
-                                                   appModeModel,
-                                                   alertBoxFactory);
-                
-                m_pViewModel = Eegeo_NEW(View::CompassViewModel)(identityProvider.GetNextIdentity(), false);
-                m_pCompassUpdateController = Eegeo_NEW(CompassUpdateController)(*m_pModel, navigationService, interiorsNavigationService, messageBus, appModeModel);
-                m_pCompassModeObserver = Eegeo_NEW(CompassModeObserver)(*m_pModel, messageBus);
-                m_pCompassViewCycledObserver = Eegeo_NEW(CompassViewCycledObserver)(*m_pModel, messageBus);
             }
-
-            CompassModule::~CompassModule()
+            
+            void CompassModule::Register()
             {
-                Eegeo_DELETE m_pCompassViewCycledObserver;
-                Eegeo_DELETE m_pCompassModeObserver;
-                Eegeo_DELETE m_pCompassUpdateController;
-                Eegeo_DELETE m_pViewModel;
-                Eegeo_DELETE m_pModel;
-            }
-
-            ICompassModel& CompassModule::GetCompassModel() const
-            {
-                return *m_pModel;
-            }
-
-            View::ICompassViewModel& CompassModule::GetCompassViewModel() const
-            {
-                return *m_pViewModel;
-            }
-
-            ICompassUpdateController& CompassModule::GetCompassUpdateController() const
-            {
-                return *m_pCompassUpdateController;
-            }
-
-            ScreenControl::View::IScreenControlViewModel& CompassModule::GetScreenControlViewModel() const
-            {
-                return m_pViewModel->GetScreenControlViewModel();
+                m_builder->registerType<CompassModel>().as<ICompassModel>().singleInstance();
+                m_builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                   {
+                                                       return std::make_shared<View::CompassViewModel>(context.resolve<Eegeo::Helpers::IIdentityProvider>(), false);
+                                                   }).as<View::ICompassViewModel>().singleInstance();
+                m_builder->registerType<CompassUpdateController>().as<ICompassUpdateController>().singleInstance();
+                m_builder->registerType<CompassModeObserver>().singleInstance();
+                m_builder->registerType<CompassViewCycledObserver>().singleInstance();
             }
         }
     }

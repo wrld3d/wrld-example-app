@@ -2,8 +2,12 @@
 
 #include "MyPinDetailsModule.h"
 #include "MyPinDetailsViewModel.h"
-#include "MyPinDetailsModelSelectedObserver.h"
 #include "MyPinDetailsDisplayService.h"
+#include "MyPinDetailsViewRemovePinHandler.h"
+#include "MyPinDetailsModelSelectedObserver.h"
+#include "IReactionControllerModel.h"
+#include "ISearchResultPoiViewModel.h"
+#include "IMyPinsService.h"
 
 namespace ExampleApp
 {
@@ -11,43 +15,17 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            MyPinDetailsModule::MyPinDetailsModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                                   Reaction::View::IReactionControllerModel& reactionControllerModel,
-                                                   MyPins::SdkModel::IMyPinsService& myPinsService,
-                                                   SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
-                                                   ExampleAppMessaging::TMessageBus& messageBus,
-                                                   const Menu::View::IMenuReactionModel& menuReaction)
+            MyPinDetailsModule::MyPinDetailsModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+            : m_builder(builder)
             {
-                m_pMyPinDetailsViewModel = Eegeo_NEW(MyPinDetails::View::MyPinDetailsViewModel)(identityProvider.GetNextIdentity(),
-                                           reactionControllerModel);
-                
-                m_pMyPinDetailsDisplayService = Eegeo_NEW(View::MyPinDetailsDisplayService)(*m_pMyPinDetailsViewModel,
-                                                                                            searchResultPoiViewModel,
-                                                                                            menuReaction);
-                
-                m_pMyPinDetailsModelSelectedObserver = Eegeo_NEW(MyPinDetails::View::MyPinDetailsModelSelectedObserver)(*m_pMyPinDetailsDisplayService,
-                                                       messageBus);
-
-                m_pMyPinDetailsViewRemovePinHandler = Eegeo_NEW(MyPinDetailsViewRemovePinHandler)(myPinsService,
-                                                      messageBus);
             }
-
-            MyPinDetailsModule::~MyPinDetailsModule()
+            
+            void MyPinDetailsModule::Register()
             {
-                Eegeo_DELETE m_pMyPinDetailsViewRemovePinHandler;
-                Eegeo_DELETE m_pMyPinDetailsModelSelectedObserver;
-                Eegeo_DELETE m_pMyPinDetailsDisplayService;
-                Eegeo_DELETE m_pMyPinDetailsViewModel;
-            }
-
-            MyPinDetails::View::IMyPinDetailsViewModel& MyPinDetailsModule::GetMyPinDetailsViewModel() const
-            {
-                return *m_pMyPinDetailsViewModel;
-            }
-
-            OpenableControl::View::IOpenableControlViewModel& MyPinDetailsModule::GetObservableOpenableControl() const
-            {
-                return m_pMyPinDetailsViewModel->GetOpenableControl();
+                m_builder->registerType<View::MyPinDetailsViewModel>().as<View::IMyPinDetailsViewModel>().singleInstance();
+                m_builder->registerType<View::MyPinDetailsDisplayService>().as<View::IMyPinDetailsDisplayService>().singleInstance();
+                m_builder->registerType<View::MyPinDetailsModelSelectedObserver>().singleInstance();
+                m_builder->registerType<MyPinDetailsViewRemovePinHandler>().singleInstance();
             }
         }
     }

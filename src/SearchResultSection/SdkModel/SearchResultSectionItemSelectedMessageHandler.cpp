@@ -15,32 +15,32 @@ namespace ExampleApp
                 const float newDistanceFromInterest = 1000;
                 if(message.InInterior())
                 {
-                    m_cameraTransitionController.StartTransitionTo(message.SearchResultLocationEcef(),
+                    m_cameraTransitionController->StartTransitionTo(message.SearchResultLocationEcef(),
                                                                    InteriorsExplorer::DefaultInteriorSearchResultTransitionInterestDistance,
                                                                    message.InteriorBuildingId(),
                                                                    message.FloorIndex());
                 }
                 else
                 {
-                    m_cameraTransitionController.StartTransitionTo(message.SearchResultLocationEcef(),
+                    m_cameraTransitionController->StartTransitionTo(message.SearchResultLocationEcef(),
                                                                    newDistanceFromInterest);
                 }
                 
             }
 
             SearchResultSectionItemSelectedMessageHandler::SearchResultSectionItemSelectedMessageHandler(
-                CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
-                ExampleAppMessaging::TMessageBus& messageBus)
+                                                                                                         const std::shared_ptr<CameraTransitions::SdkModel::ICameraTransitionController>& cameraTransitionController,
+                                                                                                         const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
                 : m_cameraTransitionController(cameraTransitionController)
                 , m_messageBus(messageBus)
                 , m_handleSearchResultSectionItemSelectedMessageBinding(this, &SearchResultSectionItemSelectedMessageHandler::OnSearchResultSectionItemSelectedMessage)
             {
-                m_messageBus.SubscribeNative(m_handleSearchResultSectionItemSelectedMessageBinding);
+                m_messageBus->SubscribeNative(m_handleSearchResultSectionItemSelectedMessageBinding);
             }
 
             SearchResultSectionItemSelectedMessageHandler::~SearchResultSectionItemSelectedMessageHandler()
             {
-                m_messageBus.UnsubscribeNative(m_handleSearchResultSectionItemSelectedMessageBinding);
+                m_messageBus->UnsubscribeNative(m_handleSearchResultSectionItemSelectedMessageBinding);
             }
         }
     }

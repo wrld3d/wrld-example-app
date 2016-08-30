@@ -2,11 +2,7 @@
 
 #pragma once
 
-#include "IInteriorsEntitiesPinsModule.h"
-#include "Modules.h"
-#include "WorldPins.h"
-#include "Pins.h"
-#include "GLHelpers.h"
+#include "IModule.h"
 
 namespace ExampleApp
 {
@@ -14,26 +10,10 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class InteriorsEntitiesPinsModule : public IInteriorsEntitiesPinsModule
+            class InteriorsEntitiesPinsModule : public IModule
             {
             public:
-                InteriorsEntitiesPinsModule(Eegeo::Modules::IPlatformAbstractionModule& platformAbstractionModule,
-                                            Eegeo::Modules::Core::RenderingModule& renderingModule,
-                                            Eegeo::Modules::Map::MapModule& mapModule,
-                                            const WorldPins::SdkModel::IWorldPinIconMapping& worldPinIconMapping,
-                                            const Eegeo::Rendering::ScreenProperties& screenProperties);
-                
-                ~InteriorsEntitiesPinsModule();
-                
-                IInteriorsEntitiesPinsController& GetInteriorsEntitiesPinsController();
-                Eegeo::Pins::PinsModule& GetPinsModule();
-            private:
-                
-                Eegeo::Pins::PinsModule* m_pEntityPinsModule;
-                IInteriorsEntitiesPinsController* m_pInteriorsEntitiesPinsController;
-                
-                Eegeo::Helpers::GLHelpers::TextureInfo m_entityPinsTextureInfo;
-                Eegeo::Rendering::ITexturePageLayout* m_pEntityPinIconsTexturePageLayout;
+                void Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder);
             };
         }
     }

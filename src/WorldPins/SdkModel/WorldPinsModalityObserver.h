@@ -16,15 +16,15 @@ namespace ExampleApp
         {
             class WorldPinsModalityObserver : private Eegeo::NonCopyable
             {
-                IWorldPinsScaleController& m_worldPinsScaleController;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<IWorldPinsScaleController>& m_worldPinsScaleController;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus>& m_messageBus;
                 Eegeo::Helpers::TCallback1<WorldPinsModalityObserver, const Modality::ModalityChangedMessage&> m_handlerBinding;
 
                 void OnModalityChangedMessage(const Modality::ModalityChangedMessage& message);
 
             public:
-                WorldPinsModalityObserver(IWorldPinsScaleController& worldPinsScaleController,
-                                          ExampleAppMessaging::TMessageBus& messageBus);
+                WorldPinsModalityObserver(const std::shared_ptr<IWorldPinsScaleController>& worldPinsScaleController,
+                                          const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
 
                 ~WorldPinsModalityObserver();
             };

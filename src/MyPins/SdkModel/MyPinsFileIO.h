@@ -15,13 +15,13 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class MyPinsFileIO
+            class MyPinsFileIO : private Eegeo::NonCopyable
             {
             public:
-                MyPinsFileIO(Eegeo::Helpers::IFileIO& fileIO,
-                             PersistentSettings::IPersistentSettingsModel& persistentSetting,
-                             IMyPinBoundObjectFactory& myPinBoundObjectFactory,
-                             IMyPinBoundObjectRepository& myPinBoundObjectRepository);
+                MyPinsFileIO(const std::shared_ptr<Eegeo::Helpers::IFileIO>& fileIO,
+                             const std::shared_ptr<PersistentSettings::IPersistentSettingsModel>& persistentSetting,
+                             const std::shared_ptr<IMyPinBoundObjectFactory>& myPinBoundObjectFactory,
+                             const std::shared_ptr<IMyPinBoundObjectRepository>& myPinBoundObjectRepository);
 
                 bool TryCacheImageToDisk(Byte* imageData,
                                          size_t imageSize,
@@ -42,10 +42,10 @@ namespace ExampleApp
 
                 bool WriteJsonToDisk(const std::string& jsonString);
 
-                Eegeo::Helpers::IFileIO& m_fileIO;
-                PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
-                IMyPinBoundObjectFactory& m_myPinBoundObjectFactory;
-                IMyPinBoundObjectRepository& m_myPinBoundObjectRepository;
+                const std::shared_ptr<Eegeo::Helpers::IFileIO> m_fileIO;
+                const std::shared_ptr<PersistentSettings::IPersistentSettingsModel> m_persistentSettings;
+                const std::shared_ptr<IMyPinBoundObjectFactory> m_myPinBoundObjectFactory;
+                const std::shared_ptr<IMyPinBoundObjectRepository> m_myPinBoundObjectRepository;
             };
         }
     }

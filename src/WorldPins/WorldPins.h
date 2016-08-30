@@ -9,7 +9,6 @@ namespace ExampleApp
         namespace SdkModel
         {
             class WorldPinItemModel;
-            class IWorldPinsModule;
             class IWorldPinsFactory;
             class IWorldPinsService;
             class IWorldPinsRepository;

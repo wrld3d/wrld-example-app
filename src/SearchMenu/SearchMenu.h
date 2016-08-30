@@ -18,6 +18,9 @@ namespace ExampleApp
         namespace View
         {
             class ISearchMenuView;
+            class SearchMenuModel;
+            class SearchMenuOptionsModel;
+            class SearchMenuViewModel;
         }
     }
 }

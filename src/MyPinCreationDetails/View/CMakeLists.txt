@@ -2,7 +2,6 @@ set(headers ${headers} ../src/MyPinCreationDetails/View
 )
 set(currsources
   ../src/MyPinCreationDetails/View/CMakeLists.txt
-  ../src/MyPinCreationDetails/View/IMyPinCreationDetailsModule.h
   ../src/MyPinCreationDetails/View/IMyPinCreationDetailsView.h
   ../src/MyPinCreationDetails/View/IMyPinCreationDetailsViewModel.h
   ../src/MyPinCreationDetails/View/MyPinCreationDetailsController.cpp

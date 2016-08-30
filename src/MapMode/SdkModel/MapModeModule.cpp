@@ -3,6 +3,7 @@
 #include "MapModeModule.h"
 #include "MapModeModel.h"
 #include "MapModeController.h"
+#include "IVisualMapService.h"
 
 namespace ExampleApp
 {
@@ -10,22 +11,15 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            MapModeModule::MapModeModule(VisualMap::SdkModel::IVisualMapService& visualMapService)
-            : m_pMapModeModel(NULL)
+            MapModeModule::MapModeModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+            : m_builder(builder)
             {
-                m_pMapModeModel = Eegeo_NEW(MapModeModel)();
-                m_pMapModeController = Eegeo_NEW(MapModeController)(*m_pMapModeModel, visualMapService);
             }
-
-            MapModeModule::~MapModeModule()
+            
+            void MapModeModule::Register()
             {
-                Eegeo_DELETE m_pMapModeController;
-                Eegeo_DELETE m_pMapModeModel;
-            }
-
-            IMapModeModel& MapModeModule::GetMapModeModel()
-            {
-                return *m_pMapModeModel;
+                m_builder->registerType<MapModeModel>().as<IMapModeModel>().singleInstance();
+                m_builder->registerType<MapModeController>().singleInstance();
             }
         }
     }

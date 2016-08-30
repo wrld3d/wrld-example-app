@@ -8,7 +8,6 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class ISettingsMenuModule;
         }
     }
 }

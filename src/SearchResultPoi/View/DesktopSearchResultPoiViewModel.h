@@ -24,8 +24,8 @@ namespace ExampleApp
                 SearchResultPoiOpenableControl m_openable;
 
             public:
-                DesktopSearchResultPoiViewModel(Eegeo::Helpers::TIdentity identity,
-                                         Reaction::View::IReactionControllerModel& reactionControllerModel);
+                DesktopSearchResultPoiViewModel(const std::shared_ptr<Eegeo::Helpers::IIdentityProvider>& identity,
+                                                const std::shared_ptr<Reaction::View::IReactionControllerModel>& reactionControllerModel);
 
                 ~DesktopSearchResultPoiViewModel();
 

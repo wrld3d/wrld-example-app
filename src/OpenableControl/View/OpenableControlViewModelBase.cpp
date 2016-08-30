@@ -9,7 +9,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            OpenableControlViewModelBase::OpenableControlViewModelBase(Reaction::View::IReactionControllerModel& reactionControllerModel)
+            OpenableControlViewModelBase::OpenableControlViewModelBase(const std::shared_ptr<Reaction::View::IReactionControllerModel>& reactionControllerModel)
                 : m_openState(0.f)
                 , m_reactionControllerModel(reactionControllerModel)
             {
@@ -23,46 +23,46 @@ namespace ExampleApp
 
             bool OpenableControlViewModelBase::HasReactorControl() const
             {
-                return m_reactionControllerModel.HasModalControl(GetIdentity());
+                return m_reactionControllerModel->HasModalControl(GetIdentity());
             }
 
             bool OpenableControlViewModelBase::TryAcquireReactorControl()
             {
-                if(m_reactionControllerModel.IsModalControlAcquired())
+                if(m_reactionControllerModel->IsModalControlAcquired())
                 {
-                    return m_reactionControllerModel.HasModalControl(GetIdentity());
+                    return m_reactionControllerModel->HasModalControl(GetIdentity());
                 }
                 else
                 {
-                    m_reactionControllerModel.AcquireModalControl(GetIdentity());
+                    m_reactionControllerModel->AcquireModalControl(GetIdentity());
                     return true;
                 }
             }
 
             bool OpenableControlViewModelBase::TryAcquireOpenableControl()
             {
-                if(m_reactionControllerModel.IsAnyOpenableOpen())
+                if(m_reactionControllerModel->IsAnyOpenableOpen())
                 {
-                    return m_reactionControllerModel.IsOpenableOpen(GetIdentity());
+                    return m_reactionControllerModel->IsOpenableOpen(GetIdentity());
                 }
                 else
                 {
-                    m_reactionControllerModel.AcquireOpenableOpen(GetIdentity());
+                    m_reactionControllerModel->AcquireOpenableOpen(GetIdentity());
                     return true;
                 }
             }
 
             void OpenableControlViewModelBase::ReleaseOpenableControl()
             {
-                if(m_reactionControllerModel.IsOpenableOpen(GetIdentity()))
+                if(m_reactionControllerModel->IsOpenableOpen(GetIdentity()))
                 {
-                    m_reactionControllerModel.ReleaseOpenableOpen(GetIdentity());
+                    m_reactionControllerModel->ReleaseOpenableOpen(GetIdentity());
                 }
             }
 
             void OpenableControlViewModelBase::ReleaseReactorControl()
             {
-                return m_reactionControllerModel.ReleaseModalControl(GetIdentity());
+                return m_reactionControllerModel->ReleaseModalControl(GetIdentity());
             }
 
             bool OpenableControlViewModelBase::Open(bool acquireReactor)

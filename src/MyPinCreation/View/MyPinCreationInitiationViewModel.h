@@ -20,7 +20,7 @@ namespace ExampleApp
             {
             public:
 
-                MyPinCreationInitiationViewModel(Eegeo::Helpers::TIdentity identity,
+                MyPinCreationInitiationViewModel(const std::shared_ptr<Eegeo::Helpers::IIdentityProvider>& identity,
                                                  bool isInitiallyOnScreen);
 
                 Eegeo::Helpers::TIdentity GetIdentity() const;

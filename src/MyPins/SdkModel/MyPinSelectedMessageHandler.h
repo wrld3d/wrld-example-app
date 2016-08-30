@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
+
 #include "MyPins.h"
 #include "Types.h"
 #include "BidirectionalBus.h"
@@ -8,6 +9,7 @@
 #include "ICallback.h"
 #include "MyPinSelectedMessage.h"
 #include "CameraTransitions.h"
+#include <memory>
 
 namespace ExampleApp
 {
@@ -15,17 +17,17 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class MyPinSelectedMessageHandler
+            class MyPinSelectedMessageHandler : private Eegeo::NonCopyable
             {
-                CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionController;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<CameraTransitions::SdkModel::ICameraTransitionController> m_cameraTransitionController;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 Eegeo::Helpers::TCallback1<MyPinSelectedMessageHandler, const MyPinSelectedMessage&> m_handlerBinding;
 
                 void OnMyPinSelectedMessage(const MyPinSelectedMessage& message);
 
             public:
-                MyPinSelectedMessageHandler(CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
-                                            ExampleAppMessaging::TMessageBus& messageBus);
+                MyPinSelectedMessageHandler(const std::shared_ptr<CameraTransitions::SdkModel::ICameraTransitionController>& cameraTransitionController,
+                                            const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
 
                 ~MyPinSelectedMessageHandler();
 

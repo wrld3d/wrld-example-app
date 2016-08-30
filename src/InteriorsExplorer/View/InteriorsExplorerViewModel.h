@@ -19,8 +19,8 @@ namespace ExampleApp
             {
             public:
                 InteriorsExplorerViewModel(bool initiallyOnScreen,
-                                           Eegeo::Helpers::TIdentity identity,
-                                           ExampleAppMessaging::TMessageBus& messageBus);
+                                           const std::shared_ptr<Eegeo::Helpers::IIdentityProvider>& identity,
+                                           const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
                 
                 ~InteriorsExplorerViewModel();
                 
@@ -53,7 +53,7 @@ namespace ExampleApp
                 
                 Eegeo::Helpers::CallbackCollection2<IScreenControlViewModel&, float> m_onScreenStateChangedCallbacks;
                 
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerViewModel, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
                 
                 void OnAppModeChanged(const AppModes::AppModeChangedMessage& message);

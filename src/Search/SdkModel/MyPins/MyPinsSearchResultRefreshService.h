@@ -28,16 +28,16 @@ namespace ExampleApp
                     TIdentifierToPinIdMap m_vendorIdToPinMap;
                     TPinIdToBoundObjectMap m_pinIdToSearchResultPinBoundObject;
                     
-                    ISearchResultMyPinsService& m_searchResultMyPinsService;
-                    Search::SdkModel::ISearchService& m_searchService;
+                    std::shared_ptr<ISearchResultMyPinsService> m_searchResultMyPinsService;
+                    std::shared_ptr<Search::SdkModel::ISearchService> m_searchService;
                     
                     Eegeo::Helpers::TCallback1<MyPinsSearchResultRefreshService, const SdkModel::IdentitySearchCallbackData&> m_refreshSearchResultCompletedHandler;
                     
                     void HandleRefreshSearchResultCompleted(const SdkModel::IdentitySearchCallbackData& result);
                     
                 public:
-                    MyPinsSearchResultRefreshService(ISearchResultMyPinsService& searchResultMyPinsService,
-                                                     Search::SdkModel::ISearchService& searchService);
+                    MyPinsSearchResultRefreshService(const std::shared_ptr<ISearchResultMyPinsService>& searchResultMyPinsService,
+                                                     const std::shared_ptr<Search::SdkModel::ISearchService>& searchService);
                     
                     ~MyPinsSearchResultRefreshService();
                     

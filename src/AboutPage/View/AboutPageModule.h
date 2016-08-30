@@ -3,11 +3,8 @@
 #pragma once
 
 #include "Types.h"
-#include "AboutPage.h"
-#include "IAboutPageModule.h"
-#include "AboutPageViewModel.h"
-#include "IIdentity.h"
-#include "Reaction.h"
+
+#include "IModule.h"
 
 namespace ExampleApp
 {
@@ -15,20 +12,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            class AboutPageModule : public IAboutPageModule, private Eegeo::NonCopyable
+            class AboutPageModule : public IModule
             {
-                AboutPageViewModel* m_pAboutPageViewModel;
-
             public:
-                AboutPageModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                Reaction::View::IReactionControllerModel& reactionControllerModel,
-                                const std::string& buildVersion);
-
-                ~AboutPageModule();
-
-                IAboutPageViewModel& GetAboutPageViewModel() const;
-
-                OpenableControl::View::IOpenableControlViewModel& GetObservableOpenableControl() const;
+                void Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder);
             };
         }
     }

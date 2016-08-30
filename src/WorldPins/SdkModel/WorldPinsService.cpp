@@ -19,12 +19,12 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            WorldPinsService::WorldPinsService(IWorldPinsRepository& worldPinsRepository,
-                                               IWorldPinsFactory& worldPinsFactory,
-                                               Eegeo::Pins::PinRepository& pinRepository,
-                                               Eegeo::Pins::PinController& pinController,
-                                               const Eegeo::Rendering::EnvironmentFlatteningService& flatteningService,
-                                               const IWorldPinIconMapping& worldPinIconMapping)
+            WorldPinsService::WorldPinsService(const std::shared_ptr<IWorldPinsRepository>& worldPinsRepository,
+                                               const std::shared_ptr<IWorldPinsFactory>& worldPinsFactory,
+                                               const std::shared_ptr<Eegeo::Pins::PinRepository>& pinRepository,
+                                               const std::shared_ptr<Eegeo::Pins::PinController>& pinController,
+                                               const std::shared_ptr<Eegeo::Rendering::EnvironmentFlatteningService>& flatteningService,
+                                               const std::shared_ptr<IWorldPinIconMapping>& worldPinIconMapping)
                 : m_worldPinsRepository(worldPinsRepository)
                 , m_worldPinsFactory(worldPinsFactory)
                 , m_pinRepository(pinRepository)
@@ -37,9 +37,9 @@ namespace ExampleApp
 
             WorldPinsService::~WorldPinsService()
             {
-                while(m_worldPinsRepository.GetItemCount() != 0)
+                while(m_worldPinsRepository->GetItemCount() != 0)
                 {
-                    WorldPinItemModel* item = m_worldPinsRepository.GetItemAtIndex(0);
+                    WorldPinItemModel* item = m_worldPinsRepository->GetItemAtIndex(0);
                     RemovePin(item);
                 }
             }
@@ -54,10 +54,10 @@ namespace ExampleApp
                                                         float heightAboveTerrainMetres,
                                                         int visibilityMask)
             {
-                const int iconIndex = m_worldPinIconMapping.IconIndexForKey(pinIconKey);
-                Eegeo::Pins::Pin* pPin = m_worldPinsFactory.CreatePin(location, iconIndex, heightAboveTerrainMetres);
+                const int iconIndex = m_worldPinIconMapping->IconIndexForKey(pinIconKey);
+                Eegeo::Pins::Pin* pPin = m_worldPinsFactory->CreatePin(location, iconIndex, heightAboveTerrainMetres);
 
-                m_pinRepository.AddPin(*pPin);
+                m_pinRepository->AddPin(*pPin);
 
                 Eegeo::Pins::TPinId pinId = pPin->GetId();
 
@@ -76,7 +76,7 @@ namespace ExampleApp
                                                                         interior,
                                                                         worldPinInteriorData,
                                                                         visibilityMask);
-                m_worldPinsRepository.AddItem(model);
+                m_worldPinsRepository->AddItem(model);
 
                 UpdatePinScale(*model, model->TransitionStateValue());
 
@@ -85,23 +85,23 @@ namespace ExampleApp
 
             void WorldPinsService::RemovePin(WorldPinItemModel* pinItemModel)
             {
-                Eegeo::Pins::Pin* pPin = m_pinRepository.GetPinById(pinItemModel->Id());
+                Eegeo::Pins::Pin* pPin = m_pinRepository->GetPinById(pinItemModel->Id());
 
                 //EXAMPLE_LOG("Pin removed\n");
-                m_pinRepository.RemovePin(*pPin);
+                m_pinRepository->RemovePin(*pPin);
                 ErasePin(pinItemModel->Id());
 
-                m_worldPinsRepository.RemoveItem(pinItemModel);
+                m_worldPinsRepository->RemoveItem(pinItemModel);
                 Eegeo_DELETE pinItemModel;
             }
 
             void WorldPinsService::UpdatePinScale(const WorldPinItemModel& pinItemModel, float scale)
             {
-                Eegeo::Pins::Pin* pPin = m_pinRepository.GetPinById(pinItemModel.Id());
+                Eegeo::Pins::Pin* pPin = m_pinRepository->GetPinById(pinItemModel.Id());
                 Eegeo_ASSERT(pPin != NULL);
 
                 float scaleWithTerrainHeight = pPin->HasTerrainHeight() ? scale : 0.f;
-                m_pinController.SetScaleForPin(*pPin, scaleWithTerrainHeight);
+                m_pinController->SetScaleForPin(*pPin, scaleWithTerrainHeight);
             }
 
             bool WorldPinsService::HandleTouchTap(const Eegeo::v2& screenTapPoint)
@@ -118,7 +118,7 @@ namespace ExampleApp
 			{
 				std::vector<Eegeo::Pins::Pin*> intersectingPinsClosestToCameraFirst;
 
-				if (m_pinController.TryGetPinsIntersectingScreenPoint(screenPoint, intersectingPinsClosestToCameraFirst))
+				if (m_pinController->TryGetPinsIntersectingScreenPoint(screenPoint, intersectingPinsClosestToCameraFirst))
 				{
 					Eegeo_ASSERT(intersectingPinsClosestToCameraFirst.size() > 0);
 					Eegeo::Pins::Pin* pSelectedPin = intersectingPinsClosestToCameraFirst[0];
@@ -134,15 +134,15 @@ namespace ExampleApp
                     Eegeo::dv3& ecefLocation,
                     Eegeo::v2& screenLocation) const
             {
-                Eegeo::Pins::Pin* pPin = m_pinRepository.GetPinById(pinItemModel.Id());
+                Eegeo::Pins::Pin* pPin = m_pinRepository->GetPinById(pinItemModel.Id());
                 Eegeo_ASSERT(pPin != NULL);
 
-                ecefLocation = m_environmentFlatteningService.GetScaledPointAboveGroundEcef(pPin->GetEcefPosition(),
+                ecefLocation = m_environmentFlatteningService->GetScaledPointAboveGroundEcef(pPin->GetEcefPosition(),
                                                                                             pPin->GetHeightAboveTerrain(),
-                                                                                            m_environmentFlatteningService.GetCurrentScale());
+                                                                                            m_environmentFlatteningService->GetCurrentScale());
                 
                 Eegeo::Geometry::Bounds2D outScreenBounds = Eegeo::Geometry::Bounds2D::Empty();
-                m_pinController.GetScreenBoundsForPin(*pPin, outScreenBounds);
+                m_pinController->GetScreenBoundsForPin(*pPin, outScreenBounds);
                 screenLocation = outScreenBounds.center();
             }
             

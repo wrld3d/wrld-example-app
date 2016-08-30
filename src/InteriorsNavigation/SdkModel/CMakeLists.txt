@@ -1,6 +1,8 @@
 set(headers ${headers} ../src/InteriorsNavigation/SdkModel
 )
 set(currsources
+  ../src/InteriorsNavigation/SdkModel/InteriorsNavigationModule.h
+  ../src/InteriorsNavigation/SdkModel/InteriorsNavigationModule.cpp
   ../src/InteriorsNavigation/SdkModel/IInteriorsNavigationService.h
   ../src/InteriorsNavigation/SdkModel/InteriorsNavigationService.cpp
   ../src/InteriorsNavigation/SdkModel/InteriorsNavigationService.h

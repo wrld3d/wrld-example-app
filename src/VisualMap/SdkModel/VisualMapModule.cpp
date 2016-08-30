@@ -10,6 +10,7 @@
 #include "EnvironmentFlatteningService.h"
 #include "ICityThemesService.h"
 #include "CityThemeData.h"
+#include "ICityThemesUpdater.h"
 
 namespace ExampleApp
 {
@@ -17,33 +18,16 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            VisualMapModule::VisualMapModule(Eegeo::Resources::CityThemes::ICityThemesService& themesService,
-                                             Eegeo::Resources::CityThemes::ICityThemesUpdater& themesUpdater,
-                                             Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService)
+            void VisualMapModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
             {
-                VisualMapState initalState("Summer", "DayDefault", false);
-                m_pVisualMapModel = Eegeo_NEW(VisualMapModel)(initalState);
-                m_pVisualMapStateHistory = Eegeo_NEW(VisualMapStateHistory)();
-                m_pVisualMapController = Eegeo_NEW(VisualMapController)(*m_pVisualMapModel,
-                                                                        *m_pVisualMapStateHistory,
-                                                                        themesService,
-                                                                        themesUpdater,
-                                                                        environmentFlatteningService);
-                
-                m_pVisualMapService = Eegeo_NEW(VisualMapService)(*m_pVisualMapModel, *m_pVisualMapStateHistory);
-            }
-            
-            VisualMapModule::~VisualMapModule()
-            {
-                Eegeo_DELETE m_pVisualMapService;
-                Eegeo_DELETE m_pVisualMapController;
-                Eegeo_DELETE m_pVisualMapStateHistory;
-                Eegeo_DELETE m_pVisualMapModel;
-            }
-            
-            IVisualMapService& VisualMapModule::GetVisualMapService() const
-            {
-                return *m_pVisualMapService;
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                   {
+                                                       VisualMapState initalState("Summer", "DayDefault", false);
+                                                       return std::make_shared<VisualMapModel>(initalState);
+                                                   }).as<IVisualMapModel>().singleInstance();
+                builder->registerType<VisualMapStateHistory>().as<IVisualMapStateHistory>().singleInstance();
+                builder->registerType<VisualMapController>().as<IVisualMapController>().singleInstance();
+                builder->registerType<VisualMapService>().as<IVisualMapService>().singleInstance();
             }
         }
     }

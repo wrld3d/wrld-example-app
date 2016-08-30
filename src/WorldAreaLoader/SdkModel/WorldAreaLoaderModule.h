@@ -2,9 +2,7 @@
 
 #pragma once
 
-#include "IWorldAreaLoaderModule.h"
-#include "WorldAreaLoader.h"
-#include "Web.h"
+#include "IModule.h"
 
 namespace ExampleApp
 {
@@ -12,16 +10,10 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class WorldAreaLoaderModule : public IWorldAreaLoaderModule
+            class WorldAreaLoaderModule : public IModule
             {
-                IWorldAreaLoaderModel* m_pWorldAreaLoaderModel;
-
             public:
-                WorldAreaLoaderModule(Eegeo::Web::PrecacheService& precacheService);
-
-                ~WorldAreaLoaderModule();
-
-                IWorldAreaLoaderModel& GetWorldAreaLoaderModel() const;
+                void Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder);
             };
         }
     }

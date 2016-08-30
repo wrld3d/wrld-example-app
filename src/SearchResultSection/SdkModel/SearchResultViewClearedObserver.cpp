@@ -8,23 +8,23 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            SearchResultViewClearedObserver::SearchResultViewClearedObserver(Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                                                                             ExampleAppMessaging::TMessageBus& messageBus)
+            SearchResultViewClearedObserver::SearchResultViewClearedObserver(const std::shared_ptr<Search::SdkModel::ISearchQueryPerformer>& searchQueryPerformer,
+                                                                             const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
             : m_searchQueryPerformer(searchQueryPerformer)
             , m_messageBus(messageBus)
             , m_handler(this, &SearchResultViewClearedObserver::OnSearchResultViewClearedMessage)
             {
-                m_messageBus.SubscribeNative(m_handler);
+                m_messageBus->SubscribeNative(m_handler);
             }
 
             SearchResultViewClearedObserver::~SearchResultViewClearedObserver()
             {
-                m_messageBus.UnsubscribeNative(m_handler);
+                m_messageBus->UnsubscribeNative(m_handler);
             }
             
             void SearchResultViewClearedObserver::OnSearchResultViewClearedMessage(const SearchResultViewClearedMessage& message)
             {
-                m_searchQueryPerformer.RemoveSearchQueryResults();
+                m_searchQueryPerformer->RemoveSearchQueryResults();
             }
         }
     }

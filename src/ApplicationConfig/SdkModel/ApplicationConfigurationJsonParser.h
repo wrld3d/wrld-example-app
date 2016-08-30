@@ -15,11 +15,11 @@ namespace ExampleApp
             class ApplicationConfigurationJsonParser : public IApplicationConfigurationParser, private Eegeo::NonCopyable
             {
             public:
-                ApplicationConfigurationJsonParser(const ApplicationConfiguration& defaultConfig);
+                ApplicationConfigurationJsonParser(const std::shared_ptr<ApplicationConfiguration>& defaultConfig);
 
                 ApplicationConfiguration ParseConfiguration(const std::string& serialized);
             private:
-                const ApplicationConfiguration m_defaultConfig;
+                const std::shared_ptr<const ApplicationConfiguration> m_defaultConfig;
             };
         }
     }

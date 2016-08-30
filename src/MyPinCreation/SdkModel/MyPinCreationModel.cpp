@@ -14,7 +14,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            MyPinCreationModel::MyPinCreationModel(MyPins::SdkModel::IMyPinsService& myPinsService)
+            MyPinCreationModel::MyPinCreationModel(const std::shared_ptr<MyPins::SdkModel::IMyPinsService>& myPinsService)
                 : m_stage(Inactive)
                 , m_position(Eegeo::dv3::Zero())
                 , m_myPinsService(myPinsService)
@@ -123,7 +123,7 @@ namespace ExampleApp
                                              size_t imageSize,
                                              bool shouldShare)
             {
-                m_myPinsService.SaveUserCreatedPoiPin(title,
+                m_myPinsService->SaveUserCreatedPoiPin(title,
                                                       description,
                                                       ratingsImage,
                                                       reviewCount,

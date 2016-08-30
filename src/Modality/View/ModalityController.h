@@ -19,16 +19,16 @@ namespace ExampleApp
         {
             class ModalityController : public IModalityController, private Eegeo::NonCopyable
             {
-                IModalityModel& m_modalityModel;
-                std::vector<OpenableControl::View::IOpenableControlViewModel*> m_viewModels;
+                const std::shared_ptr<IModalityModel> m_modalityModel;
+                const std::shared_ptr<OpenableControl::View::TOpenables> m_viewModels;
                 Eegeo::Helpers::ICallback2<OpenableControl::View::IOpenableControlViewModel&, float>* m_pMenuOpenStateChangedCallback;
 
-                Menu::View::IMenuIgnoredReactionModel& m_ignoredReactionModel;
+                const std::shared_ptr<Menu::View::IMenuIgnoredReactionModel> m_ignoredReactionModel;
 
             public:
-                ModalityController(IModalityModel& modalityModel,
-                                   const std::vector<OpenableControl::View::IOpenableControlViewModel*>& viewModels,
-                                   Menu::View::IMenuIgnoredReactionModel& ignoredReactionModel);
+                ModalityController(const std::shared_ptr<IModalityModel>& modalityModel,
+                                   const std::shared_ptr<OpenableControl::View::TOpenables>& viewModels,
+                                   const std::shared_ptr<Menu::View::IModalityIgnoredReactionModel>& ignoredReactionModel);
 
                 ~ModalityController();
 

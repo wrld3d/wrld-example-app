@@ -13,15 +13,16 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class MyPinSelectionHandlerFactory : public IMyPinSelectionHandlerFactory
+            class MyPinSelectionHandlerFactory : public IMyPinSelectionHandlerFactory, private Eegeo::NonCopyable
             {
             private:
-                MyPins::SdkModel::IMyPinBoundObjectRepository& m_myPinBoundObjectRepository;
+                const std::shared_ptr<MyPins::SdkModel::IMyPinBoundObjectRepository> m_myPinBoundObjectRepository;
                 
-                Metrics::IMetricsService& m_metricsService;
+                const std::shared_ptr<Metrics::IMetricsService> m_metricsService;
 
             public:
-                MyPinSelectionHandlerFactory(MyPins::SdkModel::IMyPinBoundObjectRepository& myPinBoundObjectRepository, Metrics::IMetricsService& metricsService);
+                MyPinSelectionHandlerFactory(const std::shared_ptr<MyPins::SdkModel::IMyPinBoundObjectRepository>& myPinBoundObjectRepository,
+                                             const std::shared_ptr<Metrics::IMetricsService>& metricsService);
 
                 MyPinSelectionHandler* CreateMyPinSelectionHandler(MyPinModel& myPinModel) const;
             };

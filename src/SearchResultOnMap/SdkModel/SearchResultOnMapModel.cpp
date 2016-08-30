@@ -27,12 +27,12 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            SearchResultOnMapModel::SearchResultOnMapModel(WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                                           MyPins::SdkModel::IMyPinsService& myPinsService,
-                                                           View::ISearchResultOnMapFactory& searchResultOnMapFactory,
-                                                           Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultOnMapMyPinsService,
-                                                           CategorySearch::ISearchResultIconCategoryMapper& searchResultIconCategoryMapper,
-                                                           Search::SdkModel::ISearchResultRepository& searchResultRepository)
+            SearchResultOnMapModel::SearchResultOnMapModel(const std::shared_ptr<WorldPins::SdkModel::IWorldPinsService>& worldPinsService,
+                                                           const std::shared_ptr<MyPins::SdkModel::IMyPinsService>& myPinsService,
+                                                           const std::shared_ptr<View::ISearchResultOnMapFactory>& searchResultOnMapFactory,
+                                                           const std::shared_ptr<Search::SdkModel::MyPins::ISearchResultMyPinsService>& searchResultOnMapMyPinsService,
+                                                           const std::shared_ptr<CategorySearch::ISearchResultIconCategoryMapper>& searchResultIconCategoryMapper,
+                                                           const std::shared_ptr<Search::SdkModel::ISearchResultRepository>& searchResultRepository)
             : m_searchResultRepository(searchResultRepository)
             , m_searchResultIconCategoryMapper(searchResultIconCategoryMapper)
             , m_searchResultOnMapMyPinsService(searchResultOnMapMyPinsService)
@@ -44,26 +44,26 @@ namespace ExampleApp
             , m_searchResultPinnedCallback(this, &SearchResultOnMapModel::HandleSearchResultPinned)
             , m_searchResultUnpinnedCallback(this, &SearchResultOnMapModel::HandleSearchResultUnpinned)
             {
-                m_searchResultRepository.InsertItemAddedCallback(m_searchResultAddedCallback);
-                m_searchResultRepository.InsertItemRemovedCallback(m_searchResultRemovedCallback);
+                m_searchResultRepository->InsertItemAddedCallback(m_searchResultAddedCallback);
+                m_searchResultRepository->InsertItemRemovedCallback(m_searchResultRemovedCallback);
                 
-                m_searchResultOnMapMyPinsService.InsertSearchResultPinnedCallback(m_searchResultPinnedCallback);
-                m_searchResultOnMapMyPinsService.InsertSearchResultUnpinnedCallback(m_searchResultUnpinnedCallback);
+                m_searchResultOnMapMyPinsService->InsertSearchResultPinnedCallback(m_searchResultPinnedCallback);
+                m_searchResultOnMapMyPinsService->InsertSearchResultUnpinnedCallback(m_searchResultUnpinnedCallback);
 
-                for(size_t i = 0; i < m_searchResultRepository.GetItemCount(); ++ i)
+                for(size_t i = 0; i < m_searchResultRepository->GetItemCount(); ++ i)
                 {
-                    Search::SdkModel::SearchResultModel* pModel = m_searchResultRepository.GetItemAtIndex(i);
+                    Search::SdkModel::SearchResultModel* pModel = m_searchResultRepository->GetItemAtIndex(i);
                     HandleAddedSearchResult(pModel);
                 }
             }
 
             SearchResultOnMapModel::~SearchResultOnMapModel()
             {
-                m_searchResultRepository.RemoveItemAddedCallback(m_searchResultAddedCallback);
-                m_searchResultRepository.RemoveItemRemovedCallback(m_searchResultRemovedCallback);
+                m_searchResultRepository->RemoveItemAddedCallback(m_searchResultAddedCallback);
+                m_searchResultRepository->RemoveItemRemovedCallback(m_searchResultRemovedCallback);
                 
-                m_searchResultOnMapMyPinsService.RemoveSearchResultPinnedCallback(m_searchResultPinnedCallback);
-                m_searchResultOnMapMyPinsService.RemoveSearchResultUnpinnedCallback(m_searchResultUnpinnedCallback);
+                m_searchResultOnMapMyPinsService->RemoveSearchResultPinnedCallback(m_searchResultPinnedCallback);
+                m_searchResultOnMapMyPinsService->RemoveSearchResultUnpinnedCallback(m_searchResultUnpinnedCallback);
 
                 while(m_searchResultsToPinModel.size())
                 {
@@ -78,17 +78,17 @@ namespace ExampleApp
             {
                 m_activeSearchResults.insert(*pSearchResultModel);
                 
-                if(m_searchResultOnMapMyPinsService.IsSearchResultPinned(*pSearchResultModel))
+                if(m_searchResultOnMapMyPinsService->IsSearchResultPinned(*pSearchResultModel))
                 {
                     m_hiddenSearchResultsDueToMyPins.insert(*pSearchResultModel);
                     
                     // Add Search to visibility mask
                     MyPins::SdkModel::MyPinModel myPinModel;
-                    bool success = m_searchResultOnMapMyPinsService.TryGetPinForSearchResult(*pSearchResultModel, myPinModel);
+                    bool success = m_searchResultOnMapMyPinsService->TryGetPinForSearchResult(*pSearchResultModel, myPinModel);
                     Eegeo_ASSERT(success, "MyPinModel for SearchResultModel not in SearchResultOnMapMyPinsService when it was reported as pinned");
                     
                     WorldPins::SdkModel::WorldPinItemModel* pWorldPinItemModel = NULL;
-                    if(m_myPinsService.TryGetWorldPinItemModelForMyPin(myPinModel.Identifier(), pWorldPinItemModel))
+                    if(m_myPinsService->TryGetWorldPinItemModelForMyPin(myPinModel.Identifier(), pWorldPinItemModel))
                     {
                         int newVisibilityMask = pWorldPinItemModel->VisibilityMask() | WorldPins::SdkModel::WorldPinVisibility::Search;
                         pWorldPinItemModel->SetVisibilityMask(newVisibilityMask);
@@ -105,7 +105,7 @@ namespace ExampleApp
             {
                 m_activeSearchResults.erase(*pSearchResultModel);
                 
-                if(m_searchResultOnMapMyPinsService.IsSearchResultPinned(*pSearchResultModel))
+                if(m_searchResultOnMapMyPinsService->IsSearchResultPinned(*pSearchResultModel))
                 {
                     // If it is pinned, we should not have a search result on map.
                     Eegeo_ASSERT(m_searchResultsToPinModel.find(*pSearchResultModel) == m_searchResultsToPinModel.end());
@@ -117,11 +117,11 @@ namespace ExampleApp
                     
                     // Remove Search from visibility mask
                     MyPins::SdkModel::MyPinModel myPinModel;
-                    bool success = m_searchResultOnMapMyPinsService.TryGetPinForSearchResult(*pSearchResultModel, myPinModel);
+                    bool success = m_searchResultOnMapMyPinsService->TryGetPinForSearchResult(*pSearchResultModel, myPinModel);
                     Eegeo_ASSERT(success, "MyPinModel for SearchResultModel not in SearchResultOnMapMyPinsService when it was reported as pinned");
                     
                     WorldPins::SdkModel::WorldPinItemModel* pWorldPinItemModel = NULL;
-                    if(m_myPinsService.TryGetWorldPinItemModelForMyPin(myPinModel.Identifier(), pWorldPinItemModel))
+                    if(m_myPinsService->TryGetWorldPinItemModelForMyPin(myPinModel.Identifier(), pWorldPinItemModel))
                     {
                         int newVisibilityMask = pWorldPinItemModel->VisibilityMask() & ~WorldPins::SdkModel::WorldPinVisibility::Search;
                         pWorldPinItemModel->SetVisibilityMask(newVisibilityMask);
@@ -175,9 +175,9 @@ namespace ExampleApp
                 Eegeo_ASSERT(it == m_searchResultsToPinModel.end(),
                              "Trying to add a world pin for a search result, but pin has already been added.");
                 
-                View::SearchResultOnMapItemModel* pSearchResultOnMapItemModel = m_searchResultOnMapFactory.CreateSearchResultOnMapItemModel(searchResultModel);
+                View::SearchResultOnMapItemModel* pSearchResultOnMapItemModel = m_searchResultOnMapFactory->CreateSearchResultOnMapItemModel(searchResultModel);
                 
-                const std::string& pinIconKey = m_searchResultIconCategoryMapper.GetIconKeyFromSearchResult(searchResultModel);
+                const std::string& pinIconKey = m_searchResultIconCategoryMapper->GetIconKeyFromSearchResult(searchResultModel);
                 
                 std::string ratingsImage = "";
                 int reviewCount = 0;
@@ -193,7 +193,7 @@ namespace ExampleApp
                 
                 WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData(searchResultModel.GetBuildingId(), searchResultModel.GetFloor());
                 
-                ExampleApp::WorldPins::SdkModel::WorldPinItemModel *pinItemModel = m_worldPinsService.AddPin(pSearchResultOnMapItemModel,
+                ExampleApp::WorldPins::SdkModel::WorldPinItemModel *pinItemModel = m_worldPinsService->AddPin(pSearchResultOnMapItemModel,
                                                                                                              NULL,
                                                                                                              worldPinFocusData,
                                                                                                              searchResultModel.IsInterior(),
@@ -213,7 +213,7 @@ namespace ExampleApp
                              "Trying to remove the world pin for a search result, but no pin exists for result.");
                 
                 ExampleApp::WorldPins::SdkModel::WorldPinItemModel* pinItemModel = it->second;
-                m_worldPinsService.RemovePin(pinItemModel);
+                m_worldPinsService->RemovePin(pinItemModel);
                 m_searchResultsToPinModel.erase(it);
             }
 

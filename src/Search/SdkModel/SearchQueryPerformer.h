@@ -21,19 +21,19 @@ namespace ExampleApp
         {
             class SearchQueryPerformer : public ISearchQueryPerformer, private Eegeo::NonCopyable
             {
-                ISearchService& m_searchService;
-                
-                ISearchResultRepository& m_searchResultsRepository;
+                std::shared_ptr<ISearchService> m_searchService;
+                std::shared_ptr<ISearchResultRepository> m_searchResultsRepository;
+
                 Eegeo::Helpers::ICallback2<const SearchQuery&, const std::vector<SearchResultModel>&>* m_pSearchResultResponseReceivedCallback;
                 Eegeo::Helpers::CallbackCollection0 m_queryResultsClearedCallbacks;
                 SearchQuery m_previousQuery;
                 bool m_hasQuery;
-                Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_cameraController;                
+                std::shared_ptr<Eegeo::Camera::GlobeCamera::GpsGlobeCameraController> m_cameraController;
 
             public:
-                SearchQueryPerformer(ISearchService& exteriorSearchService,
-                                     ISearchResultRepository& searchResultRepository,
-                                     Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController);
+                SearchQueryPerformer(const std::shared_ptr<ISearchService>& exteriorSearchService,
+                                     const std::shared_ptr<ISearchResultRepository>& searchResultRepository,
+                                     const std::shared_ptr<Eegeo::Camera::GlobeCamera::GpsGlobeCameraController>& cameraController);
 
                 ~SearchQueryPerformer();
 

@@ -104,7 +104,7 @@ namespace ExampleApp
                     }
                 }
                 
-                EegeoJsonParser::EegeoJsonParser(const SearchResultPoi::SdkModel::ICategoryIconMapper &categoryIconMapper, const EegeoReadableTagMapper& tagReadableNameMapper)
+                EegeoJsonParser::EegeoJsonParser(const std::shared_ptr<SearchResultPoi::SdkModel::ICategoryIconMapper>& categoryIconMapper, const std::shared_ptr<EegeoReadableTagMapper>& tagReadableNameMapper)
                 :m_categoryIconMapper(categoryIconMapper)
                 ,m_tagReadableNameMapper(tagReadableNameMapper)
                 {
@@ -123,7 +123,7 @@ namespace ExampleApp
                         for(int i = 0; i < numEntries; ++i)
                         {
                             const rapidjson::Value& json = document[i];
-                            Search::SdkModel::SearchResultModel result(ParseSearchResultFromJsonObject(json, m_categoryIconMapper, m_tagReadableNameMapper));
+                            Search::SdkModel::SearchResultModel result(ParseSearchResultFromJsonObject(json, *m_categoryIconMapper, *m_tagReadableNameMapper));
                             out_results.push_back(result);
                         }
                     }

@@ -23,7 +23,7 @@ namespace ExampleApp
 
                 MyPinCreationConfirmationViewModel(Eegeo::Helpers::TIdentity identity,
                                                    bool isInitiallyOnScreen,
-                                                   Reaction::View::IReactionControllerModel& reactionControllerModel);
+                                                   const std::shared_ptr<Reaction::View::IReactionControllerModel>& reactionControllerModel);
 
 
                 Eegeo::Helpers::TIdentity GetIdentity() const;

@@ -8,6 +8,8 @@
 #include "SearchResultViewClearedMessage.h"
 #include "Types.h"
 
+#include <memory>
+
 namespace ExampleApp
 {
     namespace SearchResultSection
@@ -17,15 +19,15 @@ namespace ExampleApp
             class SearchResultViewClearedObserver : private Eegeo::NonCopyable
             {
             private:
-                Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<Search::SdkModel::ISearchQueryPerformer> m_searchQueryPerformer;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 Eegeo::Helpers::TCallback1<SearchResultViewClearedObserver, const SearchResultViewClearedMessage&> m_handler;
 
                 void OnSearchResultViewClearedMessage(const SearchResultViewClearedMessage& message);
 
             public:
-                SearchResultViewClearedObserver(Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                                                ExampleAppMessaging::TMessageBus& messageBus);
+                SearchResultViewClearedObserver(const std::shared_ptr<Search::SdkModel::ISearchQueryPerformer>& searchQueryPerformer,
+                                                const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
 
                 ~SearchResultViewClearedObserver();
             };

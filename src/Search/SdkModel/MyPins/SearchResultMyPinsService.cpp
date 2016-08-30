@@ -16,19 +16,19 @@ namespace ExampleApp
         {
             namespace MyPins
             {
-                SearchResultMyPinsService::SearchResultMyPinsService(ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus)
+                SearchResultMyPinsService::SearchResultMyPinsService(const std::shared_ptr<ExampleAppMessaging::TSdkModelDomainEventBus>& sdkModelDomainEventBus)
                 : m_sdkModelDomainEventBus(sdkModelDomainEventBus)
                 , m_searchResultPinAddedEventHandler(this, &SearchResultMyPinsService::OnSearchResultPinAddedEvent)
                 , m_searchResultPinRemovedEventHandler(this, &SearchResultMyPinsService::OnSearchResultPinRemovedEvent)
                 {
-                    m_sdkModelDomainEventBus.Subscribe(m_searchResultPinAddedEventHandler);
-                    m_sdkModelDomainEventBus.Subscribe(m_searchResultPinRemovedEventHandler);
+                    m_sdkModelDomainEventBus->Subscribe(m_searchResultPinAddedEventHandler);
+                    m_sdkModelDomainEventBus->Subscribe(m_searchResultPinRemovedEventHandler);
                 }
                 
                 SearchResultMyPinsService::~SearchResultMyPinsService()
                 {
-                    m_sdkModelDomainEventBus.Unsubscribe(m_searchResultPinRemovedEventHandler);
-                    m_sdkModelDomainEventBus.Unsubscribe(m_searchResultPinAddedEventHandler);
+                    m_sdkModelDomainEventBus->Unsubscribe(m_searchResultPinRemovedEventHandler);
+                    m_sdkModelDomainEventBus->Unsubscribe(m_searchResultPinAddedEventHandler);
                 }
                 
                 bool SearchResultMyPinsService::IsSearchResultPinned(const SearchResultModel& searchResult) const

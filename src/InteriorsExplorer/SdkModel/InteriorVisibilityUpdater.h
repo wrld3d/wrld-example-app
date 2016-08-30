@@ -4,6 +4,7 @@
 
 #include "Types.h"
 #include "Interiors.h"
+#include <memory>
 
 namespace ExampleApp
 {
@@ -15,10 +16,9 @@ namespace ExampleApp
             {
             public:
                 
-                InteriorVisibilityUpdater(Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
-                                          const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                          const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                          float interiorTransitionTimeSeconds);
+                InteriorVisibilityUpdater(const std::shared_ptr<Eegeo::Resources::Interiors::InteriorTransitionModel>& interiorTransitionModel,
+                                          const std::shared_ptr<Eegeo::Resources::Interiors::InteriorSelectionModel>& interiorSelectionModel,
+                                          const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel);
                 ~InteriorVisibilityUpdater();
                 
                 void SetInteriorShouldDisplay(bool shouldDisplay);
@@ -27,9 +27,9 @@ namespace ExampleApp
                 
             private:
                 
-                Eegeo::Resources::Interiors::InteriorTransitionModel& m_interiorTransitionModel;
-                const Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
-                const Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
+                const std::shared_ptr<Eegeo::Resources::Interiors::InteriorTransitionModel> m_interiorTransitionModel;
+                const std::shared_ptr<const Eegeo::Resources::Interiors::InteriorSelectionModel> m_interiorSelectionModel;
+                const std::shared_ptr<const Eegeo::Resources::Interiors::InteriorInteractionModel> m_interiorInteractionModel;
                 const float m_interiorTransitionTimeSeconds;
                 
                 float m_interiorTransitionParameter;

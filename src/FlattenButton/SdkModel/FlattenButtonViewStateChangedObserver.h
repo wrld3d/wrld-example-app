@@ -15,15 +15,15 @@ namespace ExampleApp
         {
             class FlattenButtonViewStateChangedObserver
             {
-                IFlattenButtonModel& m_flattenButtonModel;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<IFlattenButtonModel> m_flattenButtonModel;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 Eegeo::Helpers::TCallback1<FlattenButtonViewStateChangedObserver, const FlattenButtonViewStateChangedMessage&> m_handlerBinding;
 
                 void OnFlattenButtonStateChangedMessage(const FlattenButtonViewStateChangedMessage& message);
 
             public:
-                FlattenButtonViewStateChangedObserver(IFlattenButtonModel& flattenButtonModel,
-                                                      ExampleAppMessaging::TMessageBus& messageBus);
+                FlattenButtonViewStateChangedObserver(const std::shared_ptr<IFlattenButtonModel>& flattenButtonModel,
+                                                      const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
 
                 ~FlattenButtonViewStateChangedObserver();
             };

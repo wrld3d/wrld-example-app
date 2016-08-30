@@ -8,8 +8,8 @@ namespace ExampleApp
     {
         namespace View
         {
-            MyPinCreationDetailsViewModel::MyPinCreationDetailsViewModel(Eegeo::Helpers::TIdentity identity, Reaction::View::IReactionControllerModel& reactionControllerModel)
-                : m_openable(identity, reactionControllerModel)
+            MyPinCreationDetailsViewModel::MyPinCreationDetailsViewModel(const std::shared_ptr<Eegeo::Helpers::IIdentityProvider>& identity, const std::shared_ptr<Reaction::View::IReactionControllerModel>& reactionControllerModel)
+                : m_openable(identity->GetNextIdentity(), reactionControllerModel)
             {
 
             }

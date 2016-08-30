@@ -2,9 +2,11 @@
 
 #pragma once
 
+#include "Types.h"
 #include "IPlaceJumpController.h"
 #include "PlaceJumps.h"
 #include "CameraTransitions.h"
+#include <memory>
 
 namespace ExampleApp
 {
@@ -12,15 +14,15 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class PlaceJumpController : public IPlaceJumpController
+            class PlaceJumpController : public IPlaceJumpController, private Eegeo::NonCopyable
             {
             public:
-                PlaceJumpController(CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController);
+                PlaceJumpController(const std::shared_ptr<CameraTransitions::SdkModel::ICameraTransitionController>& cameraTransitionController);
 
                 void JumpTo(const View::IPlaceJumpModel& jumpModel);
 
             private:
-                CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionController;
+                const std::shared_ptr<CameraTransitions::SdkModel::ICameraTransitionController> m_cameraTransitionController;
             };
         }
 

@@ -17,8 +17,8 @@ namespace ExampleApp
             class CompassModeObserver : private Eegeo::NonCopyable
             {
             private:
-                ICompassModel& m_model;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<ICompassModel> m_model;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 Eegeo::Helpers::TCallback0<CompassModeObserver> m_callback;
                 Eegeo::Helpers::TCallback0<CompassModeObserver> m_unauthorizedCallback;
 
@@ -26,8 +26,8 @@ namespace ExampleApp
                 void OnGpsModeDeniedBecauseUnauthorized();
 
             public:
-                CompassModeObserver(ICompassModel& model,
-                                    ExampleAppMessaging::TMessageBus& messageBus);
+                CompassModeObserver(const std::shared_ptr<ICompassModel>& model,
+                                    const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
 
                 ~CompassModeObserver();
             };

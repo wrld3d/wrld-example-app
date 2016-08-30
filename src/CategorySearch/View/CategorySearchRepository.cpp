@@ -9,7 +9,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            CategorySearchRepository::CategorySearchRepository(const std::vector<CategorySearchModel>& models)
+            CategorySearchRepository::CategorySearchRepository(const std::shared_ptr<TCategories>& models)
                 : m_models(models)
             {
 
@@ -17,7 +17,7 @@ namespace ExampleApp
 
             bool CategorySearchRepository::TryGetCategorySearchNameByQuery(const std::string& query, std::string& out_name) const
             {
-                for(std::vector<CategorySearchModel>::const_iterator it = m_models.begin(); it != m_models.end(); ++ it)
+                for(TCategories::const_iterator it = m_models->begin(); it != m_models->end(); ++ it)
                 {
                     const CategorySearchModel& categorySearchModel = *it;
                     if(categorySearchModel.SearchCategory() == query)

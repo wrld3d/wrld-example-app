@@ -2,11 +2,7 @@
 
 #pragma once
 
-#include "ISurveyModule.h"
-#include "Types.h"
-
-#include "BidirectionalBus.h"
-#include "PersistentSettings.h"
+#include "Hypodermic/ContainerBuilder.h"
 
 namespace ExampleApp
 {
@@ -14,19 +10,10 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class SurveyModule : public ISurveyModule, private Eegeo::NonCopyable
+            class SurveyModule
             {
-            private:
-                SurveyObserver* m_pSurveyObserver;
-                
             public:
-                SurveyModule(ExampleAppMessaging::TMessageBus& messageBus,
-                             PersistentSettings::IPersistentSettingsModel& persistentSettingsModel);
-                
-                ~SurveyModule();
-                
-                SurveyObserver& GetSurveyObserver() const;
-                
+                void Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder);
             };
         }
     }

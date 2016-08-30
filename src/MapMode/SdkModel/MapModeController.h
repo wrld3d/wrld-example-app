@@ -17,14 +17,14 @@ namespace ExampleApp
             class MapModeController
             {
             public:
-                MapModeController(IMapModeModel& mapModeModel,
-                                  VisualMap::SdkModel::IVisualMapService& visualMapService);
+                MapModeController(const std::shared_ptr<IMapModeModel>& mapModeModel,
+                                  const std::shared_ptr<VisualMap::SdkModel::IVisualMapService>& visualMapService);
 
                 ~MapModeController();
 
             private:
-                IMapModeModel& m_mapModeModel;
-                VisualMap::SdkModel::IVisualMapService& m_visualMapService;
+                const std::shared_ptr<IMapModeModel> m_mapModeModel;
+                const std::shared_ptr<VisualMap::SdkModel::IVisualMapService> m_visualMapService;
 
                 void OnMapModeChanged();
                 Eegeo::Helpers::TCallback0<MapModeController> m_onMapModeChangedCallback;

@@ -15,7 +15,7 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                YelpBusinessJsonParser::YelpBusinessJsonParser(IYelpCategoryMapper& yelpCategoryMapper)
+                YelpBusinessJsonParser::YelpBusinessJsonParser(const std::shared_ptr<IYelpCategoryMapper>& yelpCategoryMapper)
                 : m_yelpCategoryMapper(yelpCategoryMapper)
                 {
                     
@@ -30,7 +30,7 @@ namespace ExampleApp
                     
                     if (success)
                     {
-                        out_result = Helpers::ParseYelpSearchResultFromJsonObject(document, m_yelpCategoryMapper);
+                        out_result = Helpers::ParseYelpSearchResultFromJsonObject(document, *m_yelpCategoryMapper);
                     }
                     else
                     {

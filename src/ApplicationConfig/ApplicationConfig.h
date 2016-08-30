@@ -10,7 +10,6 @@ namespace ExampleApp
         
         namespace SdkModel
         {
-            class IApplicationConfigurationModule;
             class IApplicationConfigurationReader;
             class IApplicationConfigurationParser;
             class IApplicationConfigurationService;

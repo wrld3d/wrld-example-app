@@ -29,13 +29,13 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            InteriorsEntitiesPinsController::InteriorsEntitiesPinsController(Eegeo::Resources::Interiors::Entities::InteriorsEntitiesRepository& interiorsEntitiesRepostiory,
-                                                                             Eegeo::Pins::PinController& pinController,
-                                                                             Eegeo::Pins::PinRepository& pinRepository,
-                                                                             const ExampleApp::WorldPins::SdkModel::IWorldPinIconMapping& pinIconMapper,
-                                                                             Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                                                             const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
-                                                                             Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& interiorsLabelsController)
+            InteriorsEntitiesPinsController::InteriorsEntitiesPinsController(const std::shared_ptr<Eegeo::Resources::Interiors::Entities::InteriorsEntitiesRepository>& interiorsEntitiesRepostiory,
+                                                                             const std::shared_ptr<Eegeo::Pins::PinController>& pinController,
+                                                                             const std::shared_ptr<Eegeo::Pins::PinRepository>& pinRepository,
+                                                                             const std::shared_ptr<ExampleApp::WorldPins::SdkModel::IWorldPinIconMapping>& pinIconMapper,
+                                                                             const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel,
+                                                                             const std::shared_ptr<Eegeo::Resources::Interiors::InteriorTransitionModel>& interiorTransitionModel,
+                                                                             const std::shared_ptr<Eegeo::Resources::Interiors::Entities::IInteriorsLabelController>& interiorsLabelsController)
             : m_interiorsEntitiesRepository(interiorsEntitiesRepostiory)
             , m_pinController(pinController)
             , m_pinRepository(pinRepository)
@@ -48,39 +48,39 @@ namespace ExampleApp
             , m_interiorInteractionStateChangedCallback(this, &InteriorsEntitiesPinsController::HandleInteriorInteractionStateChanged)
             , m_lastId(0)
             {
-                m_interiorsEntitiesRepository.RegisterEntitiesAddedCallback(m_entitiesAddedCallback);
-                m_interiorsEntitiesRepository.RegisterEntitiesRemovedCallback(m_entitiesRemovedCallback);
+                m_interiorsEntitiesRepository->RegisterEntitiesAddedCallback(m_entitiesAddedCallback);
+                m_interiorsEntitiesRepository->RegisterEntitiesRemovedCallback(m_entitiesRemovedCallback);
                 
-                m_interiorInteractionModel.RegisterModelChangedCallback(m_interiorModelChangedCallback);
-                m_interiorInteractionModel.RegisterInteractionStateChangedCallback(m_interiorInteractionStateChangedCallback);
+                m_interiorInteractionModel->RegisterModelChangedCallback(m_interiorModelChangedCallback);
+                m_interiorInteractionModel->RegisterInteractionStateChangedCallback(m_interiorInteractionStateChangedCallback);
                 
-                m_labelNameToIconIndex["restroom"] = pinIconMapper.IconIndexForKey(IconKeyToilets);
-                m_labelNameToIconIndex["men's bathroom"] = pinIconMapper.IconIndexForKey(IconKeyToilets);
-                m_labelNameToIconIndex["women's bathroom"] = pinIconMapper.IconIndexForKey(IconKeyToilets);
-                m_labelNameToIconIndex["bathroom"] = pinIconMapper.IconIndexForKey(IconKeyToilets);
-                m_labelNameToIconIndex["elevator"] = pinIconMapper.IconIndexForKey(IconKeyElevator);
-                m_labelNameToIconIndex["escalator"] = pinIconMapper.IconIndexForKey(IconKeyEscalator);
-                m_labelNameToIconIndex["stairs"] = pinIconMapper.IconIndexForKey(IconKeyStairs);
+                m_labelNameToIconIndex["restroom"] = pinIconMapper->IconIndexForKey(IconKeyToilets);
+                m_labelNameToIconIndex["men's bathroom"] = pinIconMapper->IconIndexForKey(IconKeyToilets);
+                m_labelNameToIconIndex["women's bathroom"] = pinIconMapper->IconIndexForKey(IconKeyToilets);
+                m_labelNameToIconIndex["bathroom"] = pinIconMapper->IconIndexForKey(IconKeyToilets);
+                m_labelNameToIconIndex["elevator"] = pinIconMapper->IconIndexForKey(IconKeyElevator);
+                m_labelNameToIconIndex["escalator"] = pinIconMapper->IconIndexForKey(IconKeyEscalator);
+                m_labelNameToIconIndex["stairs"] = pinIconMapper->IconIndexForKey(IconKeyStairs);
                 
                 for (std::map<std::string, int>::const_iterator it = m_labelNameToIconIndex.begin(); it != m_labelNameToIconIndex.end(); ++it)
                 {
                     const std::string& labelName = it->first;
-                    m_interiorsLabelsController.AddLabelToOmit(labelName);
+                    m_interiorsLabelsController->AddLabelToOmit(labelName);
                 }
             }
             
             InteriorsEntitiesPinsController::~InteriorsEntitiesPinsController()
             {
-                m_interiorsEntitiesRepository.UnregisterEntitiesAddedCallback(m_entitiesAddedCallback);
-                m_interiorsEntitiesRepository.UnregisterEntitiesRemovedCallback(m_entitiesRemovedCallback);
+                m_interiorsEntitiesRepository->UnregisterEntitiesAddedCallback(m_entitiesAddedCallback);
+                m_interiorsEntitiesRepository->UnregisterEntitiesRemovedCallback(m_entitiesRemovedCallback);
                 
-                m_interiorInteractionModel.UnregisterModelChangedCallback(m_interiorModelChangedCallback);
-                m_interiorInteractionModel.UnregisterInteractionStateChangedCallback(m_interiorInteractionStateChangedCallback);
+                m_interiorInteractionModel->UnregisterModelChangedCallback(m_interiorModelChangedCallback);
+                m_interiorInteractionModel->UnregisterInteractionStateChangedCallback(m_interiorInteractionStateChangedCallback);
                 
                 for (std::map<std::string, int>::const_iterator it = m_labelNameToIconIndex.begin(); it != m_labelNameToIconIndex.end(); ++it)
                 {
                     const std::string& labelName = it->first;
-                    m_interiorsLabelsController.RemoveLabelToOmit(labelName);
+                    m_interiorsLabelsController->RemoveLabelToOmit(labelName);
                 }
             }
             
@@ -88,7 +88,7 @@ namespace ExampleApp
             {
                 const float TransitionTimeInSeconds = 0.75f;
                 
-                if (m_interiorInteractionModel.HasInteriorModel() && m_interiorTransitionModel.InteriorIsVisible())
+                if (m_interiorInteractionModel->HasInteriorModel() && m_interiorTransitionModel->InteriorIsVisible())
                 {
                     UpdateScaleForPins(dt/TransitionTimeInSeconds);
                 }
@@ -98,7 +98,7 @@ namespace ExampleApp
             {
                 // TODO: Leaving this here in case we want to consume touch and be able to tap pins.
                 std::vector<Eegeo::Pins::Pin*> intersectingPins;
-                m_pinController.TryGetPinsIntersectingScreenPoint(data.point, intersectingPins);
+                m_pinController->TryGetPinsIntersectingScreenPoint(data.point, intersectingPins);
 
                 if (intersectingPins.size() > 0)
                 {
@@ -118,9 +118,9 @@ namespace ExampleApp
             
             void InteriorsEntitiesPinsController::AddPinsForEntities(const Eegeo::Resources::Interiors::Entities::TEntityModelVector& entities)
             {
-                Eegeo_ASSERT(m_interiorInteractionModel.HasInteriorModel());
+                Eegeo_ASSERT(m_interiorInteractionModel->HasInteriorModel());
                 
-                const Eegeo::Resources::Interiors::InteriorsModel& interiorModel = *m_interiorInteractionModel.GetInteriorModel();
+                const Eegeo::Resources::Interiors::InteriorsModel& interiorModel = *m_interiorInteractionModel->GetInteriorModel();
                 
                 for (Eegeo::Resources::Interiors::Entities::TEntityModelVector::const_iterator it = entities.begin(); it != entities.end(); ++it)
                 {
@@ -159,15 +159,15 @@ namespace ExampleApp
                 Entities::InteriorsEntityPinData* pPinData = Eegeo_NEW(Entities::InteriorsEntityPinData)(pMetadata->floorNumber);
                 Eegeo::Pins::Pin* pPin = Eegeo_NEW(Eegeo::Pins::Pin)(m_lastId, pinLocation, 0.0f, pinIconIndex, pPinData);
                 
-                float bottomOfInterior = m_interiorInteractionModel.GetInteriorModel()->GetTangentSpaceBounds().GetMin().y;
+                float bottomOfInterior = m_interiorInteractionModel->GetInteriorModel()->GetTangentSpaceBounds().GetMin().y;
                 float heightAboveGround = (pMetadata->altitude - bottomOfInterior) + Eegeo::Resources::Interiors::Entities::Helpers::GetHeightOffset(pMetadata);
                 
                 pPin->SetTerrainHeight(bottomOfInterior, 14);
                 pPin->SetHeightAboveTerrain(heightAboveGround);
 
                 m_entityToPinIdMap[&model] = m_lastId;
-                m_pinRepository.AddPin(*pPin);
-                m_pinController.SetScaleForPin(*pPin, 0.f);
+                m_pinRepository->AddPin(*pPin);
+                m_pinController->SetScaleForPin(*pPin, 0.f);
 
                 m_lastId++;
             }
@@ -179,8 +179,8 @@ namespace ExampleApp
                 const Eegeo::Pins::TPinId id = m_entityToPinIdMap[&model];
                 m_entityToPinIdMap.erase(&model);
                 
-                Eegeo::Pins::Pin* pPin = m_pinRepository.GetPinById(id);
-                m_pinRepository.RemovePin(*pPin);
+                Eegeo::Pins::Pin* pPin = m_pinRepository->GetPinById(id);
+                m_pinRepository->RemovePin(*pPin);
                 Eegeo_DELETE pPin;
             }
             
@@ -190,8 +190,8 @@ namespace ExampleApp
                 {
                     const Eegeo::Pins::TPinId id = it->second;
 
-                    Eegeo::Pins::Pin* pPin = m_pinRepository.GetPinById(id);
-                    m_pinRepository.RemovePin(*pPin);
+                    Eegeo::Pins::Pin* pPin = m_pinRepository->GetPinById(id);
+                    m_pinRepository->RemovePin(*pPin);
                     Eegeo_DELETE pPin;
                 }
                 
@@ -202,13 +202,13 @@ namespace ExampleApp
             {
                 std::map<int, float> easedfloorScales;
 
-                Eegeo_ASSERT(m_interiorInteractionModel.HasInteriorModel(), "no current interior");
+                Eegeo_ASSERT(m_interiorInteractionModel->HasInteriorModel(), "no current interior");
                 
-                const Eegeo::Resources::Interiors::InteriorsFloorModel& floorModel = *m_interiorInteractionModel.GetSelectedFloorModel();
+                const Eegeo::Resources::Interiors::InteriorsFloorModel& floorModel = *m_interiorInteractionModel->GetSelectedFloorModel();
                 
                 int currentFloorNumber = floorModel.GetFloorNumber();
 
-                const bool canShowPins = m_interiorInteractionModel.IsCollapsed() && m_interiorTransitionModel.IsFadingInOrFullyVisible();
+                const bool canShowPins = m_interiorInteractionModel->IsCollapsed() && m_interiorTransitionModel->IsFadingInOrFullyVisible();
                 
                 for (std::map<int, float>::iterator it = m_floorToScaleMap.begin(); it != m_floorToScaleMap.end(); ++it)
                 {
@@ -223,18 +223,18 @@ namespace ExampleApp
                     easedfloorScales[floorNumber] = easedScale;
                 }
                 
-                const int pinCount = m_pinRepository.GetNumOfPins();
+                const int pinCount = m_pinRepository->GetNumOfPins();
                 for(int i = 0; i < pinCount; ++i)
                 {
-                    Eegeo::Pins::Pin* pPin = m_pinRepository.GetPinAtIndex(i);
+                    Eegeo::Pins::Pin* pPin = m_pinRepository->GetPinAtIndex(i);
                     const Entities::InteriorsEntityPinData* pPinData = static_cast<const Entities::InteriorsEntityPinData*>(pPin->GetUserData());
-                    m_pinController.SetScaleForPin(*pPin, easedfloorScales[pPinData->GetFloorNumber()]);
+                    m_pinController->SetScaleForPin(*pPin, easedfloorScales[pPinData->GetFloorNumber()]);
                 }
             }
             
             bool InteriorsEntitiesPinsController::CanProcessEntities(const std::string& interiorName, const Eegeo::Resources::Interiors::Entities::TEntityModelVector& entities) const
             {
-                if (!m_interiorInteractionModel.HasInteriorModel())
+                if (!m_interiorInteractionModel->HasInteriorModel())
                 {
                     return false;
                 }
@@ -244,7 +244,7 @@ namespace ExampleApp
                     return false;
                 }
                 
-                const Eegeo::Resources::Interiors::InteriorsModel& interiorModel = *m_interiorInteractionModel.GetInteriorModel();
+                const Eegeo::Resources::Interiors::InteriorsModel& interiorModel = *m_interiorInteractionModel->GetInteriorModel();
                 
                 if (interiorModel.GetName() != interiorName)
                 {
@@ -289,11 +289,11 @@ namespace ExampleApp
             
             void InteriorsEntitiesPinsController::HandleInteriorModelChanged()
             {
-                if (m_interiorInteractionModel.HasInteriorModel())
+                if (m_interiorInteractionModel->HasInteriorModel())
                 {
-                    const Eegeo::Resources::Interiors::InteriorsModel& interiorModel = *m_interiorInteractionModel.GetInteriorModel();
+                    const Eegeo::Resources::Interiors::InteriorsModel& interiorModel = *m_interiorInteractionModel->GetInteriorModel();
                     
-                    const Eegeo::Resources::Interiors::Entities::TEntityModelVector& entities = m_interiorsEntitiesRepository.GetAllStreamedEntitiesForInterior(interiorModel.GetName());
+                    const Eegeo::Resources::Interiors::Entities::TEntityModelVector& entities = m_interiorsEntitiesRepository->GetAllStreamedEntitiesForInterior(interiorModel.GetName());
                     AddPinsForEntities(entities);
                 }
                 else

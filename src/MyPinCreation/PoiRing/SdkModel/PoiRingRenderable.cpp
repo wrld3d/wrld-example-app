@@ -23,31 +23,31 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                PoiRingRenderable::PoiRingRenderable(Eegeo::Modules::Core::RenderingModule& renderingModule,
-                                                     Eegeo::Helpers::IFileIO& fileIO,
-                                                     Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor& textureRequestor,
-                                                     Eegeo::Lighting::GlobalFogging& globalFogging)
+                PoiRingRenderable::PoiRingRenderable(const std::shared_ptr<Eegeo::Modules::Core::RenderingModule>& renderingModule,
+                                                     const std::shared_ptr<Eegeo::Helpers::IFileIO>& fileIO,
+                                                     const std::shared_ptr<Eegeo::Rendering::AsyncTexturing::IAsyncTextureRequestor>& textureRequestor,
+                                                     const std::shared_ptr<Eegeo::Lighting::GlobalFogging>& globalFogging)
                     : Eegeo::Rendering::RenderableBase(Eegeo::Rendering::LayerIds::AfterAll,
                                                        Eegeo::dv3::Zero(),
-                                                       &renderingModule.GetNullMaterial())
+                                                       &renderingModule->GetNullMaterial())
                     , m_fogging(globalFogging)
                     , m_innerSphereScale(165.f)
                 {
-                    m_pSphere = Eegeo::Model::CreateFromPODFile("Geosphere_01.pod", fileIO, &textureRequestor, "");
+                    m_pSphere = Eegeo::Model::CreateFromPODFile("Geosphere_01.pod", *fileIO, textureRequestor.get(), "");
 
-                    Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator = renderingModule.GetShaderIdGenerator();
+                    Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator = renderingModule->GetShaderIdGenerator();
                     m_pColorShader = Eegeo::Rendering::Shaders::ColorShader::Create(shaderIdGenerator.GetNextId());
 
-                    Eegeo::Rendering::Materials::MaterialIdGenerator& materialIdGenerator = renderingModule.GetMaterialIdGenerator();
+                    Eegeo::Rendering::Materials::MaterialIdGenerator& materialIdGenerator = renderingModule->GetMaterialIdGenerator();
                     m_pColorMaterial = Eegeo_NEW(Eegeo::Rendering::Materials::ColorMaterial)(materialIdGenerator.GetNextId(),
                                        "RingQuadStencilMat",
                                        *m_pColorShader,
                                        Eegeo::v4(1.f, 1.f, 1.f, 1.f));
 
-                    Eegeo::Rendering::Mesh* pQuadMesh = Eegeo::Rendering::Geometry::CreatePositionQuad(renderingModule.GetGlBufferPool(),
-                                                        renderingModule.GetVertexLayoutPool());
+                    Eegeo::Rendering::Mesh* pQuadMesh = Eegeo::Rendering::Geometry::CreatePositionQuad(renderingModule->GetGlBufferPool(),
+                                                        renderingModule->GetVertexLayoutPool());
 
-                    Eegeo::Rendering::VertexLayouts::VertexBindingPool& vertexBindingPool = renderingModule.GetVertexBindingPool();
+                    Eegeo::Rendering::VertexLayouts::VertexBindingPool& vertexBindingPool = renderingModule->GetVertexBindingPool();
                     const Eegeo::Rendering::VertexLayouts::VertexBinding& quadVertexBinding = vertexBindingPool.GetVertexBinding(pQuadMesh->GetVertexLayout(),
                             m_pColorShader->GetVertexAttributes());
 
@@ -111,7 +111,7 @@ namespace ExampleApp
                     glState.StencilOpSeparate(GL_FRONT, GL_KEEP, GL_KEEP, GL_INCR_WRAP);
                     glState.StencilOpSeparate(GL_BACK, GL_KEEP, GL_KEEP, GL_DECR_WRAP);
 
-                    m_pSphere->Draw(glState, m_fogging);
+                    m_pSphere->Draw(glState, *m_fogging);
 
                     Eegeo::Node* pRoot = m_pSphere->GetRootNode();
                     const Eegeo::m44& originalLocalMatrix = pRoot->GetLocalMatrix();
@@ -122,7 +122,7 @@ namespace ExampleApp
                     transform.SetRow(3, originalCameraRelativePosition);
 
                     SetSphereMvp(transform);
-                    m_pSphere->Draw(glState, m_fogging);
+                    m_pSphere->Draw(glState, *m_fogging);
                 }
 
                 void PoiRingRenderable::RenderRingEffects(Eegeo::Rendering::GLState &glState) const

@@ -11,30 +11,30 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            MapModeController::MapModeController(IMapModeModel& mapModeModel,
-                                                 VisualMap::SdkModel::IVisualMapService& visualMapService)
+            MapModeController::MapModeController(const std::shared_ptr<IMapModeModel>& mapModeModel,
+                                                 const std::shared_ptr<VisualMap::SdkModel::IVisualMapService>& visualMapService)
             : m_mapModeModel(mapModeModel)
             , m_visualMapService(visualMapService)
             , m_onMapModeChangedCallback(this, &MapModeController::OnMapModeChanged)
             {
-                m_mapModeModel.AddMapModeChangedCallback(m_onMapModeChangedCallback);
+                m_mapModeModel->AddMapModeChangedCallback(m_onMapModeChangedCallback);
             }
 
             MapModeController::~MapModeController()
             {
-                m_mapModeModel.RemoveMapModeChangedCallback(m_onMapModeChangedCallback);
+                m_mapModeModel->RemoveMapModeChangedCallback(m_onMapModeChangedCallback);
             }
 
             void MapModeController::OnMapModeChanged()
             {
-                if (m_mapModeModel.IsInMapMode())
+                if (m_mapModeModel->IsInMapMode())
                 {
-                    const VisualMap::SdkModel::VisualMapState& currentState = m_visualMapService.GetCurrentVisualMapState();
-                    m_visualMapService.SetVisualMapState(currentState.GetTheme(), "MapMode", true);
+                    const VisualMap::SdkModel::VisualMapState& currentState = m_visualMapService->GetCurrentVisualMapState();
+                    m_visualMapService->SetVisualMapState(currentState.GetTheme(), "MapMode", true);
                 }
                 else
                 {
-                    m_visualMapService.RestorePreviousMapState();
+                    m_visualMapService->RestorePreviousMapState();
                 }
             }
         }

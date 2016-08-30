@@ -8,6 +8,7 @@
 #include "OptionsOpenableControl.h"
 #include "Reaction.h"
 #include "Options.h"
+#include "INetworkCapabilities.h"
 
 namespace ExampleApp
 {
@@ -26,10 +27,9 @@ namespace ExampleApp
                 bool m_inCacheClearCeremony;
                 
             public:
-                OptionsViewModel(Eegeo::Helpers::TIdentity identity,
-                                 Reaction::View::IReactionControllerModel& reactionControllerModel,
-                                 bool streamOverWifiOnly,
-                                 bool cachingEnabled);
+                OptionsViewModel(const std::shared_ptr<Eegeo::Helpers::IIdentityProvider>& identity,
+                                 const std::shared_ptr<Reaction::View::IReactionControllerModel>& reactionControllerModel,
+                                 const std::shared_ptr<Net::SdkModel::INetworkCapabilities>& networkCapabilities);
                 
                 ~OptionsViewModel();
                 

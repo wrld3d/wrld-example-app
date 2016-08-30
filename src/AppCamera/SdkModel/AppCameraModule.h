@@ -2,9 +2,7 @@
 
 #pragma once
 
-#include "Types.h"
-#include "IAppCameraModule.h"
-#include "AppCamera.h"
+#include "IModule.h"
 
 namespace ExampleApp
 {
@@ -12,18 +10,10 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class AppCameraModule : public IAppCameraModule
+            class AppCameraModule : public IModule
             {
             public:
-                
-                AppCameraModule();
-                ~AppCameraModule();
-                
-                IAppCameraController& GetController();
-                
-            private:
-                
-                IAppCameraController* m_pAppCameraController;
+                void Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder);
             };
         }
     }

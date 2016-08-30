@@ -14,7 +14,6 @@ namespace ExampleApp
             class IVisualMapStateHistory;
             class IVisualMapController;
             class IVisualMapService;
-            class IVisualMapModule;
         }
     }
 }

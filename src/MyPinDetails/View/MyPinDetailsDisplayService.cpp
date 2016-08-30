@@ -11,9 +11,9 @@ namespace ExampleApp
     {
         namespace View
         {
-            MyPinDetailsDisplayService::MyPinDetailsDisplayService(IMyPinDetailsViewModel& myPinDetailsViewModel,
-                                                                   SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
-                                                                   const Menu::View::IMenuReactionModel& menuReactionModel)
+            MyPinDetailsDisplayService::MyPinDetailsDisplayService(const std::shared_ptr<IMyPinDetailsViewModel>& myPinDetailsViewModel,
+                                                                   const std::shared_ptr<SearchResultPoi::View::ISearchResultPoiViewModel>& searchResultPoiViewModel,
+                                                                   const std::shared_ptr<Menu::View::IMenuReactionModel>& menuReactionModel)
             : m_myPinDetailsViewModel(myPinDetailsViewModel)
             , m_searchResultPoiViewModel(searchResultPoiViewModel)
             , m_menuReaction(menuReactionModel)
@@ -33,24 +33,24 @@ namespace ExampleApp
                                                                             const std::string& description,
                                                                             const std::string& imagePath)
             {
-                if (!m_myPinDetailsViewModel.IsOpen())
+                if (!m_myPinDetailsViewModel->IsOpen())
                 {
-                    m_myPinDetailsViewModel.Open(pinId, title, description, imagePath);
+                    m_myPinDetailsViewModel->Open(pinId, title, description, imagePath);
                 }
             }
             
             void MyPinDetailsDisplayService::DisplaySearchResultMyPinDetails(const Search::SdkModel::SearchResultModel& searchResultModel)
             {
-                if (m_menuReaction.GetShouldOpenMenu())
+                if (m_menuReaction->GetShouldOpenMenu())
                 {
-                    if (!m_searchResultPoiViewModel.IsOpen())
+                    if (!m_searchResultPoiViewModel->IsOpen())
                     {
-                        m_searchResultPoiViewModel.Open(searchResultModel, true);
+                        m_searchResultPoiViewModel->Open(searchResultModel, true);
                     }
                 }
                 else
                 {
-                    m_searchResultPoiViewModel.Open(searchResultModel, true);
+                    m_searchResultPoiViewModel->Open(searchResultModel, true);
                 }
             }
         }

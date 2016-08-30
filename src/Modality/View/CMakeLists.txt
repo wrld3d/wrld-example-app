@@ -5,7 +5,6 @@ set(currsources
   ../src/Modality/View/IModalBackgroundView.h
   ../src/Modality/View/IModalityController.h
   ../src/Modality/View/IModalityModel.h
-  ../src/Modality/View/IModalityModule.h
   ../src/Modality/View/ModalBackgroundController.cpp
   ../src/Modality/View/ModalBackgroundController.h
   ../src/Modality/View/ModalityController.cpp

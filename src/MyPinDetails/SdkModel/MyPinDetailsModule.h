@@ -2,16 +2,7 @@
 
 #pragma once
 
-#include "Types.h"
-#include "MyPinDetails.h"
-#include "IMyPinDetailsModule.h"
-#include "MyPinDetailsViewModel.h"
-#include "IIdentity.h"
-#include "Reaction.h"
-#include "BidirectionalBus.h"
-#include "MyPinDetailsViewRemovePinHandler.h"
-#include "SearchResultPoi.h"
-#include "IMenuReactionModel.h"
+#include "Hypodermic/ContainerBuilder.h"
 
 namespace ExampleApp
 {
@@ -19,27 +10,14 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class MyPinDetailsModule: public IMyPinDetailsModule, private Eegeo::NonCopyable
+            class MyPinDetailsModule
             {
-            private:
-                View::MyPinDetailsViewModel* m_pMyPinDetailsViewModel;
-                View::IMyPinDetailsDisplayService* m_pMyPinDetailsDisplayService;
-                View::MyPinDetailsModelSelectedObserver* m_pMyPinDetailsModelSelectedObserver;
-                MyPinDetailsViewRemovePinHandler* m_pMyPinDetailsViewRemovePinHandler;
-
             public:
-                MyPinDetailsModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                   Reaction::View::IReactionControllerModel& reactionControllerModel,
-                                   MyPins::SdkModel::IMyPinsService& myPinsService,
-                                   SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
-                                   ExampleAppMessaging::TMessageBus& messageBus,
-                                   const Menu::View::IMenuReactionModel& menuReaction);
-
-                ~MyPinDetailsModule();
-
-                View::IMyPinDetailsViewModel& GetMyPinDetailsViewModel() const;
-
-                OpenableControl::View::IOpenableControlViewModel& GetObservableOpenableControl() const;
+                MyPinDetailsModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder);
+                
+                void Register();
+            private:
+                const std::shared_ptr<Hypodermic::ContainerBuilder> m_builder;
             };
         }
     }

@@ -9,6 +9,7 @@
 #include "CallbackCollection.h"
 #include "TourExplorerScreenControl.h"
 #include "TourModel.h"
+#include <memory>
 
 namespace ExampleApp
 {
@@ -25,7 +26,7 @@ namespace ExampleApp
                     bool m_showBackButton;
                     
                 public:
-                    TourExplorerViewModel(Eegeo::Helpers::TIdentity identity,
+                    TourExplorerViewModel(const std::shared_ptr<Eegeo::Helpers::IIdentityProvider>& identity,
                                           bool isInitiallyOnScreen);
                     
                     void SetCurrentTour(const SdkModel::TourModel& tourModel);

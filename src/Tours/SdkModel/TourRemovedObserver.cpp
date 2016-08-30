@@ -9,16 +9,16 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            TourRemovedObserver::TourRemovedObserver(ITourRepository& tourRepository)
+            TourRemovedObserver::TourRemovedObserver(const std::shared_ptr<ITourRepository>& tourRepository)
             : m_tourRepository(tourRepository)
             , m_binding(this, &TourRemovedObserver::HandleTourRemoved)
             {
-                m_tourRepository.InsertItemAddedCallback(m_binding);
+                m_tourRepository->InsertItemAddedCallback(m_binding);
             }
             
             TourRemovedObserver::~TourRemovedObserver()
             {
-                m_tourRepository.RemoveItemAddedCallback(m_binding);
+                m_tourRepository->RemoveItemAddedCallback(m_binding);
             }
             
             void TourRemovedObserver::HandleTourRemoved(TourModel& tourModel)

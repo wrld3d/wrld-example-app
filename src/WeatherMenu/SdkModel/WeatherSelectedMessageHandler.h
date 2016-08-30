@@ -16,16 +16,16 @@ namespace ExampleApp
         {
             class WeatherSelectedMessageHandler : private Eegeo::NonCopyable
             {
-                IWeatherController& m_weatherController;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                std::shared_ptr<IWeatherController> m_weatherController;
+                std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 Eegeo::Helpers::TCallback1<WeatherSelectedMessageHandler, const WeatherSelectedMessage&> m_handlerBinding;
 
                 void OnWeatherSelectedMessage(const WeatherSelectedMessage& message);
 
             public:
                 WeatherSelectedMessageHandler(
-                    IWeatherController& weatherController,
-                    ExampleAppMessaging::TMessageBus& messageBus);
+                                              const std::shared_ptr<IWeatherController>& weatherController,
+                                              const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
 
                 ~WeatherSelectedMessageHandler();
             };

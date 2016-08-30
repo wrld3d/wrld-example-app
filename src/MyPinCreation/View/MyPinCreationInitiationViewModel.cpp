@@ -8,9 +8,9 @@ namespace ExampleApp
     {
         namespace View
         {
-            MyPinCreationInitiationViewModel::MyPinCreationInitiationViewModel(Eegeo::Helpers::TIdentity identity,
+            MyPinCreationInitiationViewModel::MyPinCreationInitiationViewModel(const std::shared_ptr<Eegeo::Helpers::IIdentityProvider>& identity,
                     bool initiallyOnScreen)
-                : m_screenControl(initiallyOnScreen, identity)
+                : m_screenControl(initiallyOnScreen, identity->GetNextIdentity())
                 , m_shouldOffsetViewButton(false)
             {
 

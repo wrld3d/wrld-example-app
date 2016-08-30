@@ -1,14 +1,26 @@
 set(headers ${headers} ../src
 )
 set(currsources
+  ../src/IInputController.h
+  ../src/InputController.h
+  ../src/InputController.cpp
   ../src/ApiKey.h
   ../src/CMakeLists.txt
   ../src/IAppCamera.h
+  ../src/IModule.h
   ../src/Logger.h
   ../src/MobileExampleApp.cpp
   ../src/MobileExampleApp.h
   ../src/PlatformAbstractionsFacade.cpp
   ../src/PlatformAbstractionsFacade.h
+  ../src/LoadingScreenModule.h
+  ../src/LoadingScreenModule.cpp
+  ../src/AppModule.h
+  ../src/AppModule.cpp
+  ../src/AppWiring.h
+  ../src/AppWiring.cpp
+  ../src/WorldModule.h
+  ../src/WorldModule.cpp
 )
 set(sources ${sources} ${currsources})
 source_group(\\src FILES ${currsources})

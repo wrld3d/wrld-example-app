@@ -11,6 +11,8 @@
 #include "Search.h"
 #include "Web.h"
 
+#include <memory>
+
 namespace ExampleApp
 {
     namespace MyPins
@@ -19,16 +21,16 @@ namespace ExampleApp
         {
             class MyPinBoundObjectFactory : public IMyPinBoundObjectFactory, private Eegeo::NonCopyable
             {
-                ExampleAppMessaging::TMessageBus& m_messageBus;
-                ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkModelDomainEventBus;
-                Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& m_myPinsSearchResultRefreshService;
-                MyPinsWebService& m_webService;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
+                const std::shared_ptr<ExampleAppMessaging::TSdkModelDomainEventBus> m_sdkModelDomainEventBus;
+                const std::shared_ptr<Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService> m_myPinsSearchResultRefreshService;
+                const std::shared_ptr<MyPinsWebService> m_webService;
                 
             public:
-                MyPinBoundObjectFactory(ExampleAppMessaging::TMessageBus& messageBus,
-                                        ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
-                                        Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
-                                        MyPinsWebService& webService);
+                MyPinBoundObjectFactory(const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                        const std::shared_ptr<ExampleAppMessaging::TSdkModelDomainEventBus>& sdkModelDomainEventBus,
+                                        const std::shared_ptr<Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService>& myPinsSearchResultRefreshService,
+                                        const std::shared_ptr<MyPinsWebService>& webService);
                 
                 ~MyPinBoundObjectFactory();
                 

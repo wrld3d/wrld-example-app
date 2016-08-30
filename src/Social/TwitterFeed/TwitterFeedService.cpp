@@ -33,9 +33,9 @@ namespace ExampleApp
             const std::string TwitterFeedService::ScreenNameParameter = "screen_name";
             
             TwitterFeedService::TwitterFeedService(
-                const std::string& twitterAuthCode, 
-                Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory)
-            : m_twitterAuthCode(twitterAuthCode)
+                                                   const std::shared_ptr<ExampleApp::ApplicationConfig::ApplicationConfiguration>& appConfig,
+                                                   const std::shared_ptr<Eegeo::Web::IWebLoadRequestFactory>& webLoadRequestFactory)
+            : m_twitterAuthCode(appConfig->TwitterAuthCode())
             , m_accessToken("")
             , m_webLoadRequestFactory(webLoadRequestFactory)
             , m_pCurrentAuthRequest(NULL)
@@ -72,7 +72,7 @@ namespace ExampleApp
             
             void TwitterFeedService::StartService()
             {
-                m_pCurrentAuthRequest = m_webLoadRequestFactory.Begin(Eegeo::Web::HttpVerbs::POST, TwitterAuthUrl, *m_pAuthCallback)
+                m_pCurrentAuthRequest = m_webLoadRequestFactory->Begin(Eegeo::Web::HttpVerbs::POST, TwitterAuthUrl, *m_pAuthCallback)
                         .AddFormData(GrantTypeKey, GrantTypeValue)
                         .AddHeader(TwitterAuthKey, TwitterAuthValue + m_twitterAuthCode)
                         .AddHeader(ContentTypeKey, ContentTypeValue).Build();
@@ -94,7 +94,7 @@ namespace ExampleApp
                 
                 timeLineURL << TwitterTimelineUrl << "?" << CountParameter << "=" << MaxTweets << "&" << ScreenNameParameter << "=" << m_accountNameQueue.front();
                 
-                m_pCurrentTimeLineRequest = m_webLoadRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, timeLineURL.str(), *m_pTimeLineCallback)
+                m_pCurrentTimeLineRequest = m_webLoadRequestFactory->Begin(Eegeo::Web::HttpVerbs::GET, timeLineURL.str(), *m_pTimeLineCallback)
                         .AddHeader(RequestAuthKey, RequestAuthValue + m_accessToken).Build();
                 
                 m_pCurrentTimeLineRequest->Load();

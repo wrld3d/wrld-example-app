@@ -20,12 +20,12 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            WorldPinsScaleController::WorldPinsScaleController(IWorldPinsRepository& worldPinsRepository,
-                                                               IWorldPinsService& worldPinsService,
-                                                               ExampleAppMessaging::TMessageBus& messageBus,
-                                                               const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                                               const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
-                                                               ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus)
+            WorldPinsScaleController::WorldPinsScaleController(const std::shared_ptr<IWorldPinsRepository>& worldPinsRepository,
+                                                               const std::shared_ptr<IWorldPinsService>& worldPinsService,
+                                                               const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                                               const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel,
+                                                               const std::shared_ptr<Eegeo::Resources::Interiors::InteriorTransitionModel>& interiorTransitionModel,
+                                                               const std::shared_ptr<ExampleAppMessaging::TSdkModelDomainEventBus>& sdkDomainEventBus)
                 : m_worldPinsRepository(worldPinsRepository)
                 , m_worldPinsService(worldPinsService)
                 , m_messageBus(messageBus)
@@ -40,14 +40,14 @@ namespace ExampleApp
                 , m_visibilityMask(WorldPins::SdkModel::WorldPinVisibility::All)
                 , m_hideOutdoorPinsIndoors(true)
             {
-                m_messageBus.SubscribeNative(m_visibilityMessageHandlerBinding);
-                m_sdkDomainEventBus.Subscribe(m_visibilityMessageHandlerBinding);
+                m_messageBus->SubscribeNative(m_visibilityMessageHandlerBinding);
+                m_sdkDomainEventBus->Subscribe(m_visibilityMessageHandlerBinding);
             }
 
             WorldPinsScaleController::~WorldPinsScaleController()
             {
-                m_messageBus.UnsubscribeNative(m_visibilityMessageHandlerBinding);
-                m_sdkDomainEventBus.Unsubscribe(m_visibilityMessageHandlerBinding);
+                m_messageBus->UnsubscribeNative(m_visibilityMessageHandlerBinding);
+                m_sdkDomainEventBus->Unsubscribe(m_visibilityMessageHandlerBinding);
             }
 
             void WorldPinsScaleController::Update(float deltaSeconds, const Eegeo::Camera::RenderCamera& renderCamera)
@@ -61,13 +61,13 @@ namespace ExampleApp
                     m_visibilityScale = Eegeo::Max(m_visibilityScale - deltaSeconds/m_visibilityAnimationDuration, m_targetVisibilityScale);
                 }
 
-                for(size_t i = 0; i < m_worldPinsRepository.GetItemCount(); ++i)
+                for(size_t i = 0; i < m_worldPinsRepository->GetItemCount(); ++i)
                 {
-                    WorldPinItemModel& worldPinItemModel = *m_worldPinsRepository.GetItemAtIndex(i);
+                    WorldPinItemModel& worldPinItemModel = *m_worldPinsRepository->GetItemAtIndex(i);
                     UpdateWorldPin(worldPinItemModel, deltaSeconds, renderCamera);
                     const float globalScale = 1.f - m_modality;
                     float scale = globalScale  * worldPinItemModel.TransitionStateValue() * m_visibilityScale;
-                    m_worldPinsService.UpdatePinScale(worldPinItemModel, scale);
+                    m_worldPinsService->UpdatePinScale(worldPinItemModel, scale);
                 }
             }
             
@@ -96,8 +96,8 @@ namespace ExampleApp
             bool WorldPinsScaleController::ShouldHidePin(WorldPins::SdkModel::WorldPinItemModel& worldPinItemModel,
                                                          const Eegeo::Camera::RenderCamera& renderCamera)
             {
-                const bool showingInterior = m_interiorTransitionModel.InteriorIsVisible();
-                const bool canShowInteriorPins = m_interiorInteractionModel.IsCollapsed();
+                const bool showingInterior = m_interiorTransitionModel->InteriorIsVisible();
+                const bool canShowInteriorPins = m_interiorInteractionModel->IsCollapsed();
                 
                 if((m_visibilityMask & worldPinItemModel.VisibilityMask()) == 0)
                 {
@@ -118,8 +118,8 @@ namespace ExampleApp
                 if(showingInterior && worldPinItemModel.IsInterior())
                 {
                     //hide if building and floor of pin not showing
-                    const bool isSameBuilding = m_interiorInteractionModel.HasInteriorModel() ? (m_interiorInteractionModel.GetInteriorModel()->GetId() == worldPinItemModel.GetInteriorData().building) : false;
-                    const bool isSameFloor = worldPinItemModel.GetInteriorData().floor == m_interiorInteractionModel.GetSelectedFloorIndex();
+                    const bool isSameBuilding = m_interiorInteractionModel->HasInteriorModel() ? (m_interiorInteractionModel->GetInteriorModel()->GetId() == worldPinItemModel.GetInteriorData().building) : false;
+                    const bool isSameFloor = worldPinItemModel.GetInteriorData().floor == m_interiorInteractionModel->GetSelectedFloorIndex();
 
                     hidePinFromInteriorData = !canShowInteriorPins || !isSameBuilding || !isSameFloor;
                 }
@@ -156,7 +156,7 @@ namespace ExampleApp
                     const Eegeo::Camera::RenderCamera& renderCamera) const
             {
                 Eegeo::dv3 ecefLocation;
-                m_worldPinsService.GetPinEcefAndScreenLocations(worldPinItemModel, ecefLocation, screenLocation);
+                m_worldPinsService->GetPinEcefAndScreenLocations(worldPinItemModel, ecefLocation, screenLocation);
                 Eegeo::v3 cameraLocal = (ecefLocation - renderCamera.GetEcefLocation()).ToSingle();
                 Eegeo::v3 screenPos;
                 renderCamera.Project(cameraLocal, screenPos);

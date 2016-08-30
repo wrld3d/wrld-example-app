@@ -18,16 +18,16 @@ namespace ExampleApp
             {
             public:
 
-                MyPinCreationViewStateChangedHandler(IMyPinCreationModel& myPinCreationModel,
-                                                     Search::SdkModel::ISearchRefreshService& searchRefreshService,
-                                                     ExampleAppMessaging::TMessageBus& messageBus);
+                MyPinCreationViewStateChangedHandler(const std::shared_ptr<IMyPinCreationModel>& myPinCreationModel,
+                                                     const std::shared_ptr<Search::SdkModel::ISearchRefreshService>& searchRefreshService,
+                                                     const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
 
                 ~MyPinCreationViewStateChangedHandler();
 
             private:
-                IMyPinCreationModel& m_myPinCreationModel;
-                Search::SdkModel::ISearchRefreshService& m_searchRefreshService;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<IMyPinCreationModel> m_myPinCreationModel;
+                const std::shared_ptr<Search::SdkModel::ISearchRefreshService> m_searchRefreshService;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
 
                 Eegeo::Helpers::TCallback1<MyPinCreationViewStateChangedHandler, const MyPinCreationViewStateChangedMessage&> m_handler;
 

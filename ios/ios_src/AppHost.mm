@@ -27,10 +27,8 @@
 #include "JpegLoader.h"
 #include "iOSPlatformAbstractionModule.h"
 #include "ViewController.h"
-#include "ISettingsMenuModule.h"
 #include "SettingsMenuViewModule.h"
 #include "SettingsMenuView.h"
-#include "ISearchMenuModule.h"
 #include "SearchMenuViewModule.h"
 #include "SearchMenuView.h"
 #include "ModalBackgroundView.h"
@@ -55,15 +53,10 @@
 #include "MyPinCreationInitiationView.h"
 #include "MyPinCreationConfirmationViewModule.h"
 #include "MyPinCreationConfirmationView.h"
-#include "IMyPinCreationModule.h"
-#include "IPoiRingModule.h"
-#include "IMyPinCreationDetailsModule.h"
 #include "MyPinCreationDetailsViewModule.h"
 #include "MyPinCreationDetailsView.h"
 #include "MyPinDetailsViewModule.h"
 #include "MyPinDetailsView.h"
-#include "IMyPinDetailsModule.h"
-#include "IMyPinsModule.h"
 #include "ApiKey.h"
 #include "ModalBackgroundViewModule.h"
 #include "OptionsViewModule.h"
@@ -80,7 +73,6 @@
 #include "ApplicationConfigurationModule.h"
 #include "IApplicationConfigurationService.h"
 #include "InteriorsExplorerViewModule.h"
-#include "IInteriorsExplorerModule.h"
 #include "InteriorsPresentationModule.h"
 #include "InteriorsExplorerView.h"
 #include "TourHovercardView.h"
@@ -92,63 +84,109 @@
 #include "UserInteractionEnabledChangedMessage.h"
 #include "SurveyViewModule.h"
 #include "IOSMenuReactionModel.h"
+#include "IModule.h"
+
+#include <memory>
 
 #import "UIView+TouchExclusivity.h"
 
 using namespace Eegeo::iOS;
 
-class iOSAbstractionIoCModule
+class iOSAbstractionIoCModule : public ExampleApp::IModule
 {
 public:
-    iOSAbstractionIoCModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder,
-                            const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration)
-    : m_builder(builder)
-    , m_applicationConfiguration(applicationConfiguration)
+    void Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
     {
-    }
-    void Register()
-    {
-        m_builder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
+        builder->registerType<Eegeo::UI::NativeInput::iOS::iOSInputBoxFactory>().as<Eegeo::UI::NativeInput::IInputBoxFactory>().singleInstance();
+        builder->registerType<Eegeo::UI::NativeInput::iOS::iOSKeyboardInputFactory>().as<Eegeo::UI::NativeInput::IKeyboardInputFactory>().singleInstance();
+        builder->registerType<Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory>().as<Eegeo::UI::NativeAlerts::IAlertBoxFactory>().singleInstance();
+        
+        builder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
         {
-            return std::make_shared<Eegeo::iOS::iOSPlatformAbstractionModule>(*(context.resolve<Eegeo::Helpers::Jpeg::IJpegLoader>()), m_applicationConfiguration.EegeoApiKey());
+            return std::make_shared<Eegeo::UI::NativeUIFactories>(*(context.resolve<Eegeo::UI::NativeAlerts::IAlertBoxFactory>()),
+                                                                  *(context.resolve<Eegeo::UI::NativeInput::IInputBoxFactory>()),
+                                                                  *(context.resolve<Eegeo::UI::NativeInput::IKeyboardInputFactory>()));
+        }).singleInstance();
+        
+        builder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
+        {
+            auto appConfig = context.resolve<ExampleApp::ApplicationConfig::ApplicationConfiguration>();
+            return std::make_shared<Eegeo::iOS::iOSPlatformAbstractionModule>(*(context.resolve<Eegeo::Helpers::Jpeg::IJpegLoader>()), appConfig->EegeoApiKey());
         }).as<Eegeo::Modules::IPlatformAbstractionModule>().singleInstance();
         
-        // TODO, template out:
+        // TODO, template out?
         
-        m_builder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
+        builder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
         {
-            Eegeo::Modules::IPlatformAbstractionModule& module = *(context.resolve<Eegeo::Modules::IPlatformAbstractionModule>());
-            return std::shared_ptr<Eegeo::Helpers::ITextureFileLoader>(&module.GetTextureFileLoader());
+            return Hypodermic::makeExternallyOwned(context.resolve<Eegeo::Modules::IPlatformAbstractionModule>()->GetTextureFileLoader());
         }).singleInstance();
         
-        m_builder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
+        builder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
         {
-            Eegeo::Modules::IPlatformAbstractionModule& module = *(context.resolve<Eegeo::Modules::IPlatformAbstractionModule>());
-            return std::shared_ptr<Eegeo::Helpers::IHttpCache>(&module.GetHttpCache());
+            return Hypodermic::makeExternallyOwned(context.resolve<Eegeo::Modules::IPlatformAbstractionModule>()->GetHttpCache());
         }).singleInstance();
     }
+};
+
+class iOSAppModule : public ExampleApp::IModule
+{
+public:
+    iOSAppModule(
+                        Eegeo::Rendering::ScreenProperties screenProperties,
+                        ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
+                        ExampleApp::Metrics::iOSFlurryMetricsService& metricsService,
+                        ViewController& viewController)
+    : m_screenProperties(screenProperties)
+    , m_applicationConfiguration(applicationConfiguration)
+    , m_metricsService(metricsService)
+    , m_viewController(viewController)
+    {
+    }
     
+    void Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+    {
+        builder->registerExternallyOwnedInstance(m_metricsService).as<ExampleApp::Metrics::IMetricsService>();
+        builder->registerExternallyOwnedInstance(m_screenProperties);
+        builder->registerExternallyOwnedInstance(m_applicationConfiguration);
+        builder->registerType<iOSLocationService>().as<Eegeo::Location::ILocationService>().singleInstance();
+        builder->registerType<iOSConnectivityService>().as<Eegeo::Web::IConnectivityService>().singleInstance();
+        builder->registerType<ExampleApp::PersistentSettings::iOSPersistentSettingsModel>().as<ExampleApp::PersistentSettings::IPersistentSettingsModel>().singleInstance();
+        builder->registerType<ExampleApp::InitialExperience::iOSInitialExperienceModule>().as<ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule>().singleInstance();
+        builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                         {
+                                             return Hypodermic::makeExternallyOwned(context.resolve<ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule>()->GetInitialExperienceModel());
+                                         }).singleInstance();
+        builder->registerType<ExampleApp::LinkOutObserver::LinkOutObserver>().singleInstance();
+        builder->registerType<ExampleApp::URLRequest::View::URLRequestHandler>().singleInstance();
+        builder->registerType<ExampleApp::Menu::View::IOSMenuReactionModel>().as<ExampleApp::Menu::View::IMenuReactionModel>().singleInstance();
+        builder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
+                                                    {
+                                                        Eegeo::iOS::iOSPlatformConfigBuilder iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion());
+                                                        return std::make_shared<Eegeo::Config::PlatformConfig>(ExampleApp::ApplicationConfig::SdkModel::BuildPlatformConfig(iOSPlatformConfigBuilder, *context.resolve<ExampleApp::ApplicationConfig::ApplicationConfiguration>()));
+                                                        
+                                                    }).singleInstance();
+        builder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
+                                                    {
+                                                        return std::make_shared<AppLocationDelegate>(context.resolve<iOSLocationService>(), m_viewController);
+                                                    }).singleInstance();
+    }
 private:
-    const ExampleApp::ApplicationConfig::ApplicationConfiguration& m_applicationConfiguration;
-    const std::shared_ptr<Hypodermic::ContainerBuilder> m_builder;
+    Eegeo::Rendering::ScreenProperties m_screenProperties;
+    ExampleApp::ApplicationConfig::ApplicationConfiguration& m_applicationConfiguration;
+    ExampleApp::Metrics::iOSFlurryMetricsService& m_metricsService;
+    ViewController& m_viewController;
 };
 
 AppHost::AppHost(
     ViewController& viewController,
     UIView* pView,
     Eegeo::Rendering::ScreenProperties screenProperties,
-    const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
+    ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
     ExampleApp::Metrics::iOSFlurryMetricsService& metricsService
 )
 
     :m_pView(pView)
     ,m_viewController(viewController)
-    ,m_iOSInputBoxFactory()
-    ,m_iOSKeyboardInputFactory()
-    ,m_iOSAlertBoxFactory()
-    ,m_iOSNativeUIFactories(m_iOSAlertBoxFactory, m_iOSInputBoxFactory, m_iOSKeyboardInputFactory)
-    ,m_pApp(NULL)
-    ,m_requestedApplicationInitialiseViewState(false)
     ,m_failAlertHandler(this, &AppHost::HandleStartupFailure)
     ,m_pTourWebViewModule(NULL)
     ,m_pTourFullScreenImageViewModule(NULL)
@@ -157,70 +195,28 @@ AppHost::AppHost(
 {
     Eegeo::TtyHandler::TtyEnabled = true;
     
-    m_containerBuilder = std::make_shared<Hypodermic::ContainerBuilder>();
+    m_wiring = std::make_shared<ExampleApp::AppWiring>();
+    m_wiring->RegisterModule<iOSAbstractionIoCModule>();
+    m_wiring->RegisterModuleInstance(std::make_shared<iOSAppModule>(screenProperties, applicationConfiguration, metricsService, m_viewController));
+    m_wiring->RegisterDefaultModules();
+    m_wiring->ResolveModules();
 
-    m_containerBuilder->registerInstance(std::shared_ptr<ExampleApp::Metrics::iOSFlurryMetricsService>(&metricsService)).as<ExampleApp::Metrics::IMetricsService>();
-    m_containerBuilder->registerType<iOSLocationService>().as<Eegeo::Location::ILocationService>().singleInstance();
-    m_containerBuilder->registerType<iOSConnectivityService>().as<Eegeo::Web::IConnectivityService>().singleInstance();
-    m_containerBuilder->registerType<Eegeo::Helpers::Jpeg::JpegLoader>().as<Eegeo::Helpers::Jpeg::IJpegLoader>().singleInstance();
-    m_containerBuilder->registerType<ExampleApp::ExampleAppMessaging::TMessageBus>().singleInstance();
-    m_containerBuilder->registerType<ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus>().singleInstance();
-    m_containerBuilder->registerType<ExampleApp::PersistentSettings::iOSPersistentSettingsModel>().as<ExampleApp::PersistentSettings::IPersistentSettingsModel>().singleInstance();
-
-    iOSAbstractionIoCModule iosAbstractionModule(m_containerBuilder, applicationConfiguration);
-    iosAbstractionModule.Register();
-    
-    m_containerBuilder->registerType<ExampleApp::InitialExperience::iOSInitialExperienceModule>().as<ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule>().singleInstance();
-    
-    m_containerBuilder->registerType<ExampleApp::Net::SdkModel::NetworkCapabilities>().as<ExampleApp::Net::SdkModel::INetworkCapabilities>().singleInstance();
-    m_containerBuilder->registerType<ExampleApp::LinkOutObserver::LinkOutObserver>().singleInstance();
-    m_containerBuilder->registerType<ExampleApp::URLRequest::View::URLRequestHandler>().singleInstance();
-    
     m_pImageStore = [[ImageStore alloc]init];
     
-    m_containerBuilder->registerType<ExampleApp::Menu::View::IOSMenuReactionModel>().as<ExampleApp::Menu::View::IMenuReactionModel>().singleInstance();
-    
-    Eegeo::iOS::iOSPlatformConfigBuilder iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion());
-    const Eegeo::Config::PlatformConfig& platformConfiguration = ExampleApp::ApplicationConfig::SdkModel::BuildPlatformConfig(iOSPlatformConfigBuilder, applicationConfiguration);
-    
-    m_containerBuilder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
-                                                {
-                                                    return std::make_shared<ExampleApp::MobileExampleApp>(
-                                                        applicationConfiguration,
-                                                        *(context.resolve<Eegeo::Modules::IPlatformAbstractionModule>()),
-                                                        screenProperties,
-                                                        *(context.resolve<Eegeo::Location::ILocationService>()),
-                                                        m_iOSNativeUIFactories,
-                                                        platformConfiguration,
-                                                        *(context.resolve<Eegeo::Helpers::Jpeg::IJpegLoader>()),
-                                                        *(context.resolve<ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule>()),
-                                                        *(context.resolve<ExampleApp::PersistentSettings::IPersistentSettingsModel>()),
-                                                        *(context.resolve<ExampleApp::ExampleAppMessaging::TMessageBus>()),
-                                                        *(context.resolve<ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus>()),
-                                                        *(context.resolve<ExampleApp::Net::SdkModel::INetworkCapabilities>()),
-                                                        *(context.resolve<ExampleApp::Metrics::IMetricsService>()),
-                                                        *this,
-                                                        *(context.resolve<ExampleApp::Menu::View::IMenuReactionModel>())
-                                                      );
-                                                }).singleInstance();
-    
-    
-    m_containerBuilder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
-                                                {
-                                                    return std::make_shared<AppLocationDelegate>(context.resolve<iOSLocationService>(), m_viewController);
-                                                }).singleInstance();
+//    m_containerBuilder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
+//                                                {
+//                                                    return std::shared_ptr<AppHost::AppHost>(this); // Danger: shared from this, enable_shared_from_this, or better extract out a sane error handler..
+//                                                }).as<Eegeo::IEegeoErrorHandler>().singleInstance();
     
     
     // TODO : More to put in the container past here...
     
-    m_container = m_containerBuilder->build();
-    m_container->resolve<ExampleApp::LinkOutObserver::LinkOutObserver>()->OnAppStart();
-    
-    m_pApp = (m_container->resolve<ExampleApp::MobileExampleApp>()).get();
+//    m_container->resolve<ExampleApp::LinkOutObserver::LinkOutObserver>()->OnAppStart();
+    m_app = m_wiring->BuildMobileExampleApp();
     
     CreateApplicationViewModules(screenProperties);
 
-    m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_pApp, m_viewController, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), screenProperties.GetPixelScale());
+    m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_wiring->Resolve<ExampleApp::IInputController>(), m_viewController, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), screenProperties.GetPixelScale());
 
     Eegeo::EffectHandler::Initialise();
     GetMessageBus().SubscribeUi(m_userInteractionEnabledChangedHandler);
@@ -228,12 +224,12 @@ AppHost::AppHost(
 
 ExampleApp::ExampleAppMessaging::TMessageBus& AppHost::GetMessageBus()
 {
-    return *(m_container->resolve<ExampleApp::ExampleAppMessaging::TMessageBus>());
+    return *(m_wiring->Resolve<ExampleApp::ExampleAppMessaging::TMessageBus>());
 }
 
 ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus& AppHost::GetSdkMessageBus()
 {
-    return *(m_container->resolve<ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus>());
+    return *(m_wiring->Resolve<ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus>());
 }
 
 AppHost::~AppHost()
@@ -245,9 +241,6 @@ AppHost::~AppHost()
 
     DestroyApplicationViewModules();
     
-    Eegeo_DELETE m_pApp;
-    m_pApp = NULL;
-    
     [m_pImageStore release];
     m_pImageStore = nil;
 
@@ -257,36 +250,36 @@ AppHost::~AppHost()
 
 void AppHost::OnResume()
 {
-    m_container->resolve<ExampleApp::LinkOutObserver::LinkOutObserver>()->OnAppResume();
+    m_wiring->Resolve<ExampleApp::LinkOutObserver::LinkOutObserver>()->OnAppResume();
     
-    m_pApp->OnResume();
+    m_app->OnResume();
 }
 
 void AppHost::OnPause()
 {
-    m_pApp->OnPause();
+    m_app->OnPause();
 }
 
-void AppHost::NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties)
+void AppHost::NotifyScreenPropertiesChanged(const std::shared_ptr<Eegeo::Rendering::ScreenProperties>& screenProperties)
 {
-    m_pApp->NotifyScreenPropertiesChanged(screenProperties);
+    m_app->NotifyScreenPropertiesChanged(screenProperties);
 }
 
 void AppHost::Update(float dt)
 {
-    if (!m_container->resolve<AppLocationDelegate>()->HasReceivedPermissionResponse())
+    if (!m_wiring->Resolve<AppLocationDelegate>()->HasReceivedPermissionResponse())
     {
         return;
     }
 
-    if(m_pApp->IsLoadingScreenComplete() && !m_requestedApplicationInitialiseViewState)
+    /*if(m_pApp->IsLoadingScreenComplete() && !m_requestedApplicationInitialiseViewState)
     {
         m_requestedApplicationInitialiseViewState = true;
         m_pApp->InitialiseApplicationViewState();
-    }
+    }*/
 
-    m_pApp->Update(dt);
-    m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel().UpdateObjectsUiThread(dt);
+    m_app->Update(dt);
+    //m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel().UpdateObjectsUiThread(dt);
 
     GetMessageBus().FlushToUi();
     GetMessageBus().FlushToNative();
@@ -294,19 +287,17 @@ void AppHost::Update(float dt)
 
 void AppHost::Draw(float dt)
 {
-    m_pApp->Draw(dt);
+    m_app->Draw(dt);
 }
 
 bool AppHost::IsRunning()
 {
-    return m_pApp->IsRunning();
+    return m_app->IsRunning();
 }
 
 void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenProperties& screenProperties)
 {
-    ExampleApp::MobileExampleApp& app = *m_pApp;
-    
-    m_pWatermarkViewModule = Eegeo_NEW(ExampleApp::Watermark::View::WatermarkViewModule)(app.WatermarkModule().GetWatermarkViewModel(),
+    /*m_pWatermarkViewModule = Eegeo_NEW(ExampleApp::Watermark::View::WatermarkViewModule)(app.WatermarkModule().GetWatermarkViewModel(),
                                                                                          app.WatermarkModule().GetWatermarkDataRepository(),
                                                                                          screenProperties,
                                                                                          GetMessageBus(),
@@ -462,7 +453,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     viewControllerUpdaterModel.AddUpdateableObject(m_pSettingsMenuViewModule->GetMenuController());
     viewControllerUpdaterModel.AddUpdateableObject(m_pSearchMenuViewModule->GetMenuController());
     
-    SetTouchExclusivity();
+    SetTouchExclusivity(); */
 }
 
 void AppHost::DestroyApplicationViewModules()
@@ -478,11 +469,11 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pCompassViewModule->GetCompassView() removeFromSuperview];
     [&m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView() removeFromSuperview];
     [&m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView() removeFromSuperview];
-    if(m_pApp->ToursEnabled())
+    /*if(m_pApp->ToursEnabled())
     {
         [&m_pTourFullScreenImageViewModule->GetTourFullScreenImageView() removeFromSuperview];
         [&m_pTourExplorerViewModule->GetTourExplorerView() removeFromSuperview];
-    }
+    }*/
     [&m_pInteriorsExplorerViewModule->GetView() removeFromSuperview];
 
     // Modal background layer.
@@ -498,10 +489,10 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pSearchResultPoiViewModule->GetView() removeFromSuperview];
     [&m_pAboutPageViewModule->GetAboutPageView() removeFromSuperview];
     [&m_pOptionsViewModule->GetOptionsView() removeFromSuperview];
-    if(m_pApp->ToursEnabled())
+    /*if(m_pApp->ToursEnabled())
     {
         [&m_pTourWebViewModule->GetTourWebView() removeFromSuperview];
-    }
+    }*/
     
     
     // Initial experience layer
@@ -511,7 +502,7 @@ void AppHost::DestroyApplicationViewModules()
     
     Eegeo_DELETE m_pInteriorsExplorerViewModule;
     
-    Eegeo_DELETE m_pViewControllerUpdaterModule;
+    //Eegeo_DELETE m_pViewControllerUpdaterModule;
     
     Eegeo_DELETE m_pTourFullScreenImageViewModule;
     
@@ -557,7 +548,7 @@ void AppHost::SetTouchExclusivity()
 
 void AppHost::HandleFailureToProvideWorkingApiKey()
 {
-    m_iOSAlertBoxFactory.CreateSingleOptionAlertBox
+    m_wiring->Resolve<Eegeo::UI::NativeAlerts::IAlertBoxFactory>()->CreateSingleOptionAlertBox
     (
      "Bad API Key",
      "You must provide a valid API key to the constructor of EegeoWorld. See the readme file for details.",
@@ -568,11 +559,11 @@ void AppHost::HandleFailureToProvideWorkingApiKey()
 void AppHost::HandleFailureToDownloadBootstrapResources()
 {
     std::string message =
-        m_container->resolve<ExampleApp::Net::SdkModel::INetworkCapabilities>()->StreamOverWifiOnly()
+        m_wiring->Resolve<ExampleApp::Net::SdkModel::INetworkCapabilities>()->StreamOverWifiOnly()
         ? "Unable to download required data! Please ensure you have a Wi-fi connection the next time you attempt to run this application."
         : "Unable to download required data! Please ensure you have an Internet connection the next time you attempt to run this application.";
 
-    m_iOSAlertBoxFactory.CreateSingleOptionAlertBox("Error", message, m_failAlertHandler);
+    m_wiring->Resolve<Eegeo::UI::NativeAlerts::IAlertBoxFactory>()->CreateSingleOptionAlertBox("Error", message, m_failAlertHandler);
 }
 
 void AppHost::HandleNoConnectivityWarning()
@@ -581,7 +572,7 @@ void AppHost::HandleNoConnectivityWarning()
 
 void AppHost::HandleInvalidConnectivityError()
 {
-    m_iOSAlertBoxFactory.CreateSingleOptionAlertBox
+    m_wiring->Resolve<Eegeo::UI::NativeAlerts::IAlertBoxFactory>()->CreateSingleOptionAlertBox
     (
      "Network error",
      "Unable to access web reliably. Please check your connection is valid & authenticated.",

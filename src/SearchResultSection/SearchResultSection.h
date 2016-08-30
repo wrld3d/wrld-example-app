@@ -8,13 +8,10 @@ namespace ExampleApp
     {
         class SearchResultSectionItemSelectedMessage;
 
-        namespace SdkModel
-        {
-            class ISearchResultSectionModule;
-        }
-
         namespace View
         {
+            class SearchResultSectionMenuModel;
+            class SearchResultSectionOptionsModel;
             class SearchResultSectionController;
             class ISearchResultSectionOrder;
         }

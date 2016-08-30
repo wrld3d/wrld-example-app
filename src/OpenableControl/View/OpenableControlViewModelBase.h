@@ -18,7 +18,7 @@ namespace ExampleApp
             {
             private:
                 float m_openState;
-                Reaction::View::IReactionControllerModel& m_reactionControllerModel;
+                std::shared_ptr<Reaction::View::IReactionControllerModel> m_reactionControllerModel;
 
                 Eegeo::Helpers::CallbackCollection2<IOpenableControlViewModel&, float> m_openStateChangedCallbacks;
 
@@ -27,7 +27,7 @@ namespace ExampleApp
                 void ReleaseOpenableControl();
 
             protected:
-                OpenableControlViewModelBase(Reaction::View::IReactionControllerModel& reactionControllerModel);
+                OpenableControlViewModelBase(const std::shared_ptr<Reaction::View::IReactionControllerModel>& reactionControllerModel);
 
             public:
 

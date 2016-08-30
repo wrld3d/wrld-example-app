@@ -6,7 +6,6 @@ set(currsources
   ../src/Tours/CMakeLists.txt
   ../src/Tours/CurrentTourCardTappedMessage.cpp
   ../src/Tours/CurrentTourCardTappedMessage.h
-  ../src/Tours/IToursModule.h
   ../src/Tours/TourActiveStateChangedMessage.cpp
   ../src/Tours/TourActiveStateChangedMessage.h
   ../src/Tours/TourChangeRequestMessage.cpp

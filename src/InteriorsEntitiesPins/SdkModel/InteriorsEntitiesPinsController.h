@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Types.h"
 #include "IInteriorsEntitiesPinsController.h"
 #include "Interiors.h"
 #include "ICallback.h"
@@ -30,17 +31,17 @@ namespace ExampleApp
             const std::string IconKeyStairs = "stairs";
             const std::string IconKeyElevator = "elevator";
             
-            class InteriorsEntitiesPinsController : public IInteriorsEntitiesPinsController
+            class InteriorsEntitiesPinsController : public IInteriorsEntitiesPinsController, private Eegeo::NonCopyable
             {
             public:
                 
-                InteriorsEntitiesPinsController(Eegeo::Resources::Interiors::Entities::InteriorsEntitiesRepository& interiorsEntitiesRepository,
-                                                Eegeo::Pins::PinController& pinController,
-                                                Eegeo::Pins::PinRepository& pinRepository,
-                                                const ExampleApp::WorldPins::SdkModel::IWorldPinIconMapping& pinIconMapper,
-                                                Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                                const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
-                                                Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& interiorsLabelsController);
+                InteriorsEntitiesPinsController(const std::shared_ptr<Eegeo::Resources::Interiors::Entities::InteriorsEntitiesRepository>& interiorsEntitiesRepository,
+                                                const std::shared_ptr<Eegeo::Pins::PinController>& pinController,
+                                                const std::shared_ptr<Eegeo::Pins::PinRepository>& pinRepository,
+                                                const std::shared_ptr<ExampleApp::WorldPins::SdkModel::IWorldPinIconMapping>& pinIconMapper,
+                                                const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel,
+                                                const std::shared_ptr<Eegeo::Resources::Interiors::InteriorTransitionModel>& interiorTransitionModel,
+                                                const std::shared_ptr<Eegeo::Resources::Interiors::Entities::IInteriorsLabelController>& interiorsLabelsController);
                 
                 ~InteriorsEntitiesPinsController();
                 
@@ -59,12 +60,12 @@ namespace ExampleApp
                 void UpdateScaleForPins(float t);
                 int FindPinIconIndexForEntity(const Eegeo::Resources::Interiors::Entities::InteriorsEntityMetadata& interiorsEntityMetadata) const;
                 
-                Eegeo::Resources::Interiors::Entities::InteriorsEntitiesRepository& m_interiorsEntitiesRepository;
-                Eegeo::Pins::PinController& m_pinController;
-                Eegeo::Pins::PinRepository& m_pinRepository;
-                Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
-                const Eegeo::Resources::Interiors::InteriorTransitionModel& m_interiorTransitionModel;
-                Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& m_interiorsLabelsController;
+                const std::shared_ptr<Eegeo::Resources::Interiors::Entities::InteriorsEntitiesRepository> m_interiorsEntitiesRepository;
+                const std::shared_ptr<Eegeo::Pins::PinController> m_pinController;
+                const std::shared_ptr<Eegeo::Pins::PinRepository> m_pinRepository;
+                const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel> m_interiorInteractionModel;
+                const std::shared_ptr<const Eegeo::Resources::Interiors::InteriorTransitionModel> m_interiorTransitionModel;
+                const std::shared_ptr<Eegeo::Resources::Interiors::Entities::IInteriorsLabelController> m_interiorsLabelsController;
                 
                 Eegeo::Helpers::TCallback2<InteriorsEntitiesPinsController, const std::string&, const Eegeo::Resources::Interiors::Entities::TEntityModelVector&> m_entitiesAddedCallback;
                 Eegeo::Helpers::TCallback2<InteriorsEntitiesPinsController, const std::string&, const Eegeo::Resources::Interiors::Entities::TEntityModelVector&> m_entitiesRemovedCallback;

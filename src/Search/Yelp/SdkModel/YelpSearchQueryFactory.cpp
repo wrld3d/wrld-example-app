@@ -44,15 +44,12 @@ namespace ExampleApp
                     
                     
                 }
-                YelpSearchQueryFactory::YelpSearchQueryFactory(
-                    const std::string& yelpConsumerKey,
-                    const std::string& yelpConsumerSecret,
-                    const std::string& yelpOAuthToken,
-                    const std::string& yelpOAuthTokenSecret,
-                    Eegeo::Web::IWebLoadRequestFactory& webRequestFactory)
+                
+                YelpSearchQueryFactory::YelpSearchQueryFactory(const std::shared_ptr<ExampleApp::ApplicationConfig::ApplicationConfiguration>& config,
+                                                               const std::shared_ptr<Eegeo::Web::IWebLoadRequestFactory>& webRequestFactory)
                 : m_webRequestFactory(webRequestFactory)
-                , m_consumer(yelpConsumerKey, yelpConsumerSecret)
-                , m_token(yelpOAuthToken, yelpOAuthTokenSecret)
+                , m_consumer(config->YelpConsumerKey(), config->YelpConsumerSecret())
+                , m_token(config->YelpOAuthToken(), config->YelpOAuthTokenSecret())
                 , m_client(&m_consumer, &m_token)
                 , m_apiUrl("https://api.yelp.com/v2/search")
                 {
@@ -117,7 +114,7 @@ namespace ExampleApp
                     return Eegeo_NEW(YelpSearchQuery)(
                         requestUrl.str(),
                         completionCallback,
-                        m_webRequestFactory);
+                        *m_webRequestFactory);
                 }
 
 

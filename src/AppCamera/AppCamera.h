@@ -6,7 +6,6 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class IAppCameraModule;
             class IAppCameraController;
             class IAppCamera;
             class AppGlobeCameraWrapper;

@@ -13,24 +13,24 @@ namespace ExampleApp
         {
             const int NumNotifiableIcons = 3;
 
-            InteriorsUINotificationService::InteriorsUINotificationService(ExampleAppMessaging::TMessageBus& messageBus,
-                                                                           InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsPinsController,
-                                                                           const WorldPins::SdkModel::IWorldPinIconMapping& pinIconMapping)
+            InteriorsUINotificationService::InteriorsUINotificationService(const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                                                           const std::shared_ptr<InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController>& interiorsPinsController,
+                                                                           const std::shared_ptr<WorldPins::SdkModel::IWorldPinIconMapping>& pinIconMapping)
                 : m_interiorsPinsController(interiorsPinsController)
                 , m_interiorsPinSelectedCallback(this, &InteriorsUINotificationService::OnInteriorPinSelected)
                 , m_notifiableIcons(NumNotifiableIcons)
                 , m_messageBus(messageBus)
             {
-                m_interiorsPinsController.RegisterInteriorsPinSelected(m_interiorsPinSelectedCallback);
+                m_interiorsPinsController->RegisterInteriorsPinSelected(m_interiorsPinSelectedCallback);
 
-                m_notifiableIcons[0] = pinIconMapping.IconIndexForKey(InteriorsEntitiesPins::SdkModel::IconKeyElevator);
-                m_notifiableIcons[1] = pinIconMapping.IconIndexForKey(InteriorsEntitiesPins::SdkModel::IconKeyEscalator);
-                m_notifiableIcons[2] = pinIconMapping.IconIndexForKey(InteriorsEntitiesPins::SdkModel::IconKeyStairs);
+                m_notifiableIcons[0] = pinIconMapping->IconIndexForKey(InteriorsEntitiesPins::SdkModel::IconKeyElevator);
+                m_notifiableIcons[1] = pinIconMapping->IconIndexForKey(InteriorsEntitiesPins::SdkModel::IconKeyEscalator);
+                m_notifiableIcons[2] = pinIconMapping->IconIndexForKey(InteriorsEntitiesPins::SdkModel::IconKeyStairs);
             }
 
             InteriorsUINotificationService::~InteriorsUINotificationService()
             {
-                m_interiorsPinsController.UnregisterInteriorsPinSelected(m_interiorsPinSelectedCallback);
+                m_interiorsPinsController->UnregisterInteriorsPinSelected(m_interiorsPinSelectedCallback);
             }
 
             void InteriorsUINotificationService::OnInteriorPinSelected(const std::vector<Eegeo::Pins::Pin*>& selectedPins)
@@ -41,7 +41,7 @@ namespace ExampleApp
                 {
                     if (RequiresUINotification((*i)->GetCategoryId()))
                     {
-                        m_messageBus.Publish(InteriorsExplorer::InteriorsExplorerUINotifyMessage());
+                        m_messageBus->Publish(InteriorsExplorer::InteriorsExplorerUINotifyMessage());
                     }
                 }
             }

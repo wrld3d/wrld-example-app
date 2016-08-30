@@ -3,7 +3,6 @@ set(headers ${headers} ../src/MyPinCreation/PoiRing/SdkModel
 set(currsources
   ../src/MyPinCreation/PoiRing/SdkModel/CMakeLists.txt
   ../src/MyPinCreation/PoiRing/SdkModel/IPoiRingController.h
-  ../src/MyPinCreation/PoiRing/SdkModel/IPoiRingModule.h
   ../src/MyPinCreation/PoiRing/SdkModel/IPoiRingTouchController.h
   ../src/MyPinCreation/PoiRing/SdkModel/PoiRingController.cpp
   ../src/MyPinCreation/PoiRing/SdkModel/PoiRingController.h

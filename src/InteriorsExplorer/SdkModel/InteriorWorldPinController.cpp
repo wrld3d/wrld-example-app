@@ -19,12 +19,12 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            InteriorWorldPinController::InteriorWorldPinController(Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                                   Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
-                                                                   WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                                                   Eegeo::Resources::Interiors::InteriorsCameraController& cameraController,
-                                                                   ExampleAppMessaging::TMessageBus& messageBus,
-                                                                   const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel)
+            InteriorWorldPinController::InteriorWorldPinController(const std::shared_ptr<Eegeo::Resources::Interiors::InteriorSelectionModel>& interiorSelectionModel,
+                                                                   const std::shared_ptr<Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository>& markerRepository,
+                                                                   const std::shared_ptr<WorldPins::SdkModel::IWorldPinsService>& worldPinsService,
+                                                                   const std::shared_ptr<IInteriorCameraController>& cameraController,
+                                                                   const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                                                   const std::shared_ptr<InitialExperience::SdkModel::IInitialExperienceModel>& initialExperienceModel)
             : m_interiorSelectionModel(interiorSelectionModel)
             , m_markerRepository(markerRepository)
             , m_worldPinsService(worldPinsService)
@@ -36,25 +36,25 @@ namespace ExampleApp
             , m_menuIsDragging(false)
             , m_initialExperienceModel(initialExperienceModel)
             {
-                m_markerRepository.RegisterNotifyAddedCallback(m_markerAddedCallback);
-                m_markerRepository.RegisterNotifyRemovedCallback(m_markerRemovedCallback);
+                m_markerRepository->RegisterNotifyAddedCallback(m_markerAddedCallback);
+                m_markerRepository->RegisterNotifyRemovedCallback(m_markerRemovedCallback);
                 
-                m_messageBus.SubscribeNative(m_menuDraggedCallback);
+                m_messageBus->SubscribeNative(m_menuDraggedCallback);
             }
             
             InteriorWorldPinController::~InteriorWorldPinController()
             {
-                m_messageBus.UnsubscribeNative(m_menuDraggedCallback);
+                m_messageBus->UnsubscribeNative(m_menuDraggedCallback);
                 
-                m_markerRepository.UnregisterNotifyAddedCallback(m_markerAddedCallback);
-                m_markerRepository.UnregisterNotifyRemovedCallback(m_markerRemovedCallback);
+                m_markerRepository->UnregisterNotifyAddedCallback(m_markerAddedCallback);
+                m_markerRepository->UnregisterNotifyRemovedCallback(m_markerRemovedCallback);
                 
                 for(std::map<std::string, WorldPins::SdkModel::WorldPinItemModel*>::iterator it = m_interiorIdToWorldPinMap.begin();
                     it != m_interiorIdToWorldPinMap.end();
                     ++it)
                 {
                     WorldPins::SdkModel::WorldPinItemModel* pPinModel = it->second;
-                    m_worldPinsService.RemovePin(pPinModel);
+                    m_worldPinsService->RemovePin(pPinModel);
                 }
                 
                 m_interiorIdToWorldPinMap.clear();
@@ -62,9 +62,9 @@ namespace ExampleApp
             
             const bool InteriorWorldPinController::PinInteractionAllowed(const std::string& interiorId) const
             {
-                const bool cameraUnlocked = m_initialExperienceModel.LockedCameraStepsCompleted();
+                const bool cameraUnlocked = m_initialExperienceModel->LockedCameraStepsCompleted();
                 return !m_menuIsDragging && cameraUnlocked &&
-                    !m_interiorSelectionModel.IsInteriorSelected() &&
+                    !m_interiorSelectionModel->IsInteriorSelected() &&
                     m_deferedRemovalMap.find(interiorId) == m_deferedRemovalMap.end();
             }
             
@@ -76,7 +76,7 @@ namespace ExampleApp
                 {
                     nextIt = it;
                     ++nextIt;
-                    m_worldPinsService.RemovePin(it->second);
+                    m_worldPinsService->RemovePin(it->second);
                     m_interiorIdToWorldPinMap.erase(it->first);
                     m_deferedRemovalMap.erase(it);
                 }
@@ -105,12 +105,12 @@ namespace ExampleApp
                                                                                     markerModel.GetMarkerLatLongAltitude().GetLongitudeInDegrees());
                 
                 InteriorWorldPinSelectionHandler* pSelectionHandler = Eegeo_NEW(InteriorWorldPinSelectionHandler)(markerModel.GetInteriorId(),
-                                                                                                                  m_interiorSelectionModel,
-                                                                                                                  m_cameraController,
+                                                                                                                  *m_interiorSelectionModel,
+                                                                                                                  *m_cameraController,
                                                                                                                   markerModel.GetMarkerLatLongAltitude().ToECEF(),
                                                                                                                   *this);
                 
-                WorldPins::SdkModel::WorldPinItemModel* pItemModel = m_worldPinsService.AddPin(pSelectionHandler,
+                WorldPins::SdkModel::WorldPinItemModel* pItemModel = m_worldPinsService->AddPin(pSelectionHandler,
                                                                                                NULL,
                                                                                                worldPinFocusData,
                                                                                                isInterior,

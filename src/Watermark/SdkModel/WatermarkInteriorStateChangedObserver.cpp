@@ -16,11 +16,11 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            WatermarkInteriorStateChangedObserver::WatermarkInteriorStateChangedObserver(WatermarkModel& watermarkModel,
-                                                                                         Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                                                         Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
-                                                                                         InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
-                                                                                         ExampleAppMessaging::TMessageBus& messageBus)
+            WatermarkInteriorStateChangedObserver::WatermarkInteriorStateChangedObserver(const std::shared_ptr<WatermarkModel>& watermarkModel,
+                                                                                         const std::shared_ptr<Eegeo::Resources::Interiors::InteriorSelectionModel>& interiorSelectionModel,
+                                                                                         const std::shared_ptr<Eegeo::Resources::Interiors::InteriorsModelRepository>& interiorsModelRepository,
+                                                                                         const std::shared_ptr<InteriorsExplorer::SdkModel::InteriorsExplorerModel>& interiorsExplorerModel,
+                                                                                         const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
             : m_watermarkModel(watermarkModel)
             , m_interiorSelectionModel(interiorSelectionModel)
             , m_interiorsModelRepository(interiorsModelRepository)
@@ -29,36 +29,36 @@ namespace ExampleApp
             , m_interiorExplorerEnteredCallback(this, &WatermarkInteriorStateChangedObserver::OnInteriorExplorerEntered)
             , m_interiorExplorerExitCallback(this, &WatermarkInteriorStateChangedObserver::OnInteriorExplorerExit)
             {
-                m_interiorsExplorerModel.InsertInteriorExplorerEnteredCallback(m_interiorExplorerEnteredCallback);
-                m_interiorsExplorerModel.InsertInteriorExplorerExitedCallback(m_interiorExplorerExitCallback);
+                m_interiorsExplorerModel->InsertInteriorExplorerEnteredCallback(m_interiorExplorerEnteredCallback);
+                m_interiorsExplorerModel->InsertInteriorExplorerExitedCallback(m_interiorExplorerExitCallback);
             }
                 
             WatermarkInteriorStateChangedObserver::~WatermarkInteriorStateChangedObserver()
             {
-                m_interiorsExplorerModel.RemoveInteriorExplorerEnteredCallback(m_interiorExplorerEnteredCallback);
-                m_interiorsExplorerModel.RemoveInteriorExplorerExitedCallback(m_interiorExplorerExitCallback);
+                m_interiorsExplorerModel->RemoveInteriorExplorerEnteredCallback(m_interiorExplorerEnteredCallback);
+                m_interiorsExplorerModel->RemoveInteriorExplorerExitedCallback(m_interiorExplorerExitCallback);
             }
             
             void WatermarkInteriorStateChangedObserver::OnInteriorExplorerEntered()
             {
-                const std::string& interiorName = m_interiorSelectionModel.GetSelectedInteriorId().Value();
+                const std::string& interiorName = m_interiorSelectionModel->GetSelectedInteriorId().Value();
                 
-                if (m_interiorsModelRepository.HasInterior(interiorName))
+                if (m_interiorsModelRepository->HasInterior(interiorName))
                 {
-                    Eegeo::Resources::Interiors::InteriorsModel& interiorModel = m_interiorsModelRepository.GetInterior(interiorName);
+                    Eegeo::Resources::Interiors::InteriorsModel& interiorModel = m_interiorsModelRepository->GetInterior(interiorName);
                     const std::string& sourceVendor = interiorModel.GetSourceVendor();
                     
-                    m_watermarkModel.SetId(sourceVendor);
-                    m_messageBus.Publish(WatermarkAlignmentStateChangedMessage(false, true));
-                    m_messageBus.Publish(WatermarkModelChangedMessage(m_watermarkModel.GetId()));
+                    m_watermarkModel->SetId(sourceVendor);
+                    m_messageBus->Publish(WatermarkAlignmentStateChangedMessage(false, true));
+                    m_messageBus->Publish(WatermarkModelChangedMessage(m_watermarkModel->GetId()));
                 }
             }
             
             void WatermarkInteriorStateChangedObserver::OnInteriorExplorerExit()
             {
-                m_watermarkModel.SetId(DefaultEegeoWatermarkId);
-                m_messageBus.Publish(WatermarkAlignmentStateChangedMessage(false, false));
-                m_messageBus.Publish(WatermarkModelChangedMessage(m_watermarkModel.GetId()));
+                m_watermarkModel->SetId(DefaultEegeoWatermarkId);
+                m_messageBus->Publish(WatermarkAlignmentStateChangedMessage(false, false));
+                m_messageBus->Publish(WatermarkModelChangedMessage(m_watermarkModel->GetId()));
             }
         }
     }

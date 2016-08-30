@@ -25,12 +25,12 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                PoiRingTouchController::PoiRingTouchController(MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
-                                                               Eegeo::Collision::IRayPicker& rayPicker,
-                                                               const IPoiRingController& poiRingController,
-                                                               ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
-                                                               const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                                               const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel)
+                PoiRingTouchController::PoiRingTouchController(const std::shared_ptr<MyPinCreation::SdkModel::IMyPinCreationModel>& myPinCreationModel,
+                                                               const std::shared_ptr<Eegeo::Collision::IRayPicker>& rayPicker,
+                                                               const std::shared_ptr<const IPoiRingController>& poiRingController,
+                                                               const std::shared_ptr<ExampleApp::AppModes::SdkModel::IAppModeModel>& appModeModel,
+                                                               const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel,
+                                                               const std::shared_ptr<Eegeo::Resources::Interiors::InteriorTransitionModel>& interiorTransitionModel)
                     : m_myPinCreationModel(myPinCreationModel)
                     , m_rayPicker(rayPicker)
                     , m_poiRingController(poiRingController)
@@ -44,7 +44,7 @@ namespace ExampleApp
 
                 bool PoiRingTouchController::HandleTouchDown(const AppInterface::TouchData& data, const Eegeo::Camera::RenderCamera& renderCamera, const Eegeo::dv3& nonFlattenedCameraPosition)
                 {
-                    if (m_myPinCreationModel.GetCreationStage() != Ring)
+                    if (m_myPinCreationModel->GetCreationStage() != Ring)
                     {
                         return false;
                     }
@@ -56,7 +56,7 @@ namespace ExampleApp
                 {
                     m_isDragging = false;
                     
-                    if (m_myPinCreationModel.GetCreationStage() != Ring)
+                    if (m_myPinCreationModel->GetCreationStage() != Ring)
                     {
                         return false;
                     }
@@ -85,11 +85,11 @@ namespace ExampleApp
                     {
                         Eegeo::dv3 iconPosition;
                         float iconSize;
-                        m_poiRingController.GetIconPositionAndSize(iconPosition, iconSize);
+                        m_poiRingController->GetIconPositionAndSize(iconPosition, iconSize);
                         
                         Eegeo::dv3 spherePosition;
                         float sphereRadius;
-                        m_poiRingController.GetSpherePositionAndRadius(spherePosition, sphereRadius);
+                        m_poiRingController->GetSpherePositionAndRadius(spherePosition, sphereRadius);
                         
                         m_initialCameraAltitiude =  renderCamera.GetAltitude();
                         
@@ -112,7 +112,7 @@ namespace ExampleApp
                     m_isDragging = false;
                     m_dragOffset = Eegeo::dv3();
 
-                    if (m_myPinCreationModel.GetCreationStage() != Ring)
+                    if (m_myPinCreationModel->GetCreationStage() != Ring)
                     {
                         return false;
                     }
@@ -122,7 +122,7 @@ namespace ExampleApp
 
                 bool PoiRingTouchController::HandleTouchMove(const AppInterface::TouchData &data, const Eegeo::Camera::RenderCamera &renderCamera, const Eegeo::dv3& nonFlattenedCameraPosition)
                 {
-                    if (m_myPinCreationModel.GetCreationStage() != Ring)
+                    if (m_myPinCreationModel->GetCreationStage() != Ring)
                     {
                         return false;
                     }
@@ -153,9 +153,9 @@ namespace ExampleApp
                             }
                             
                             Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong::FromECEF(rayIntersectionPoint - (m_dragOffset * offsetScale));
-                            m_myPinCreationModel.SetLatLong(latLong);
-                            m_myPinCreationModel.SetTerrainHeight(terrainHeight);
-                            m_myPinCreationModel.SetHeightAboveTerrain(heightAboveTerrain);
+                            m_myPinCreationModel->SetLatLong(latLong);
+                            m_myPinCreationModel->SetTerrainHeight(terrainHeight);
+                            m_myPinCreationModel->SetHeightAboveTerrain(heightAboveTerrain);
                         }
                         
                         return true;
@@ -166,7 +166,7 @@ namespace ExampleApp
                 
                 bool PoiRingTouchController::IsDragging() const
                 {
-                    return m_isDragging && m_myPinCreationModel.GetCreationStage() == Ring;
+                    return m_isDragging && m_myPinCreationModel->GetCreationStage() == Ring;
                 }
 
                 bool PoiRingTouchController::PerformRayPick(const Eegeo::dv3 &rayOrigin,
@@ -178,15 +178,15 @@ namespace ExampleApp
                 {
                     bool rayPick = false;
 
-                    if(m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode && m_interiorTransitionModel.InteriorIsVisible())
+                    if(m_appModeModel->GetAppMode() == AppModes::SdkModel::InteriorMode && m_interiorTransitionModel->InteriorIsVisible())
                     {
-                        const Eegeo::Resources::Interiors::InteriorsModel* interiorsModel = m_interiorInteractionModel.GetInteriorModel();
+                        const Eegeo::Resources::Interiors::InteriorsModel* interiorsModel = m_interiorInteractionModel->GetInteriorModel();
                         
                         Eegeo_ASSERT(interiorsModel, "Couldn't get current interiorsModel");
                         
                         const Eegeo::dv3 originNormal = interiorsModel->GetTangentBasis().GetUp();
                         
-                        const int selectedFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
+                        const int selectedFloorIndex = m_interiorInteractionModel->GetSelectedFloorIndex();
 
                         float floorHeightAboveSeaLevel = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(*interiorsModel, selectedFloorIndex);
                         
@@ -198,7 +198,7 @@ namespace ExampleApp
                     }
                     else
                     {
-                        rayPick = m_rayPicker.TryGetRayIntersection(rayOrigin, rayDirection, out_rayIntersectionPoint, out_intersectionParam);
+                        rayPick = m_rayPicker->TryGetRayIntersection(rayOrigin, rayDirection, out_rayIntersectionPoint, out_intersectionParam);
                         if(rayPick)
                         {
                             out_terrainHeight = static_cast<float>(out_rayIntersectionPoint.Length() - Eegeo::Space::EarthConstants::Radius);

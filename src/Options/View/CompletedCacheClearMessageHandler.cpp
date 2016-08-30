@@ -9,23 +9,23 @@ namespace ExampleApp
     {
         namespace View
         {
-            CompletedCacheClearMessageHandler::CompletedCacheClearMessageHandler(IOptionsViewModel& optionsViewModel,
-                                                                                 ExampleAppMessaging::TMessageBus& messageBus)
+            CompletedCacheClearMessageHandler::CompletedCacheClearMessageHandler(const std::shared_ptr<IOptionsViewModel>& optionsViewModel,
+                                                                                 const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
             : m_optionsViewModel(optionsViewModel)
             , m_messageBus(messageBus)
             , m_messageHandlerBinding(this, &CompletedCacheClearMessageHandler::OnCompletedCacheClear)
             {
-                m_messageBus.SubscribeUi(m_messageHandlerBinding);
+                m_messageBus->SubscribeUi(m_messageHandlerBinding);
             }
             
             CompletedCacheClearMessageHandler::~CompletedCacheClearMessageHandler()
             {
-                m_messageBus.UnsubscribeUi(m_messageHandlerBinding);
+                m_messageBus->UnsubscribeUi(m_messageHandlerBinding);
             }
             
             void CompletedCacheClearMessageHandler::OnCompletedCacheClear(const CompletedCacheClearMessage& message)
             {
-                m_optionsViewModel.EndCacheClearCeremony();
+                m_optionsViewModel->EndCacheClearCeremony();
             }
         }
     }

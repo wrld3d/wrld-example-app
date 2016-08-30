@@ -8,23 +8,23 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            MyPinCreationViewSavePinHandler::MyPinCreationViewSavePinHandler(IMyPinCreationModel& myPinCreationModel,
-                    ExampleAppMessaging::TMessageBus& messageBus)
+            MyPinCreationViewSavePinHandler::MyPinCreationViewSavePinHandler(const std::shared_ptr<IMyPinCreationModel>& myPinCreationModel,
+                                                                             const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
                 : m_myPinCreationModel(myPinCreationModel)
                 , m_messageBus(messageBus)
                 , m_handler(this, &MyPinCreationViewSavePinHandler::OnMyPinCreationViewSavePinMessageMessage)
             {
-                m_messageBus.SubscribeNative(m_handler);
+                m_messageBus->SubscribeNative(m_handler);
             }
 
             MyPinCreationViewSavePinHandler::~MyPinCreationViewSavePinHandler()
             {
-                m_messageBus.UnsubscribeNative(m_handler);
+                m_messageBus->UnsubscribeNative(m_handler);
             }
 
             void MyPinCreationViewSavePinHandler::OnMyPinCreationViewSavePinMessageMessage(const MyPinCreationViewSavePinMessage& message)
             {
-                m_myPinCreationModel.SavePoi(message.GetTitle(),
+                m_myPinCreationModel->SavePoi(message.GetTitle(),
                                              message.GetDescription(),
                                              "",
                                              0,

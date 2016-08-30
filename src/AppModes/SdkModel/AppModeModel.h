@@ -8,6 +8,8 @@
 #include "StateMachine.h"
 #include "IStateMachineState.h"
 #include "AppCamera.h"
+#include "Types.h"
+#include <memory>
 
 namespace ExampleApp
 {
@@ -15,10 +17,10 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class AppModeModel : public IAppModeModel
+            class AppModeModel : public IAppModeModel, private Eegeo::NonCopyable
             {
             public:
-                AppModeModel(ExampleAppMessaging::TMessageBus& messageBus);
+                AppModeModel(const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
                 ~AppModeModel();
 
                 
@@ -37,7 +39,7 @@ namespace ExampleApp
 
             private:
                 
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 Eegeo::Helpers::CallbackCollection0 m_appModeChangedCallbacks;
                 
                 AppMode m_appMode;

@@ -11,6 +11,7 @@
 #include "EnvironmentFlatteningService.h"
 #include "VectorMathDecl.h"
 #include "Rendering.h"
+#include "PlatformConfig.h"
 
 namespace ExampleApp
 {
@@ -23,14 +24,14 @@ namespace ExampleApp
                 class PoiRingController : public IPoiRingController
                 {
                 public:
-                    PoiRingController(MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
-                                      PoiRingView& poiRingView,
-                                      Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                      Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
-                                      const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                      const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
-                                      Eegeo::Rendering::ScreenProperties& screenProperties,
-                                      const bool interiorsAffectedByFlattening);
+                    PoiRingController(const std::shared_ptr<MyPinCreation::SdkModel::IMyPinCreationModel>& myPinCreationModel,
+                                      const std::shared_ptr<PoiRingView>& poiRingView,
+                                      const std::shared_ptr<Eegeo::Rendering::EnvironmentFlatteningService>& environmentFlatteningService,
+                                      const std::shared_ptr<Eegeo::Resources::Terrain::Heights::TerrainHeightProvider>& terrainHeightProvider,
+                                      const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel,
+                                      const std::shared_ptr<Eegeo::Resources::Interiors::InteriorTransitionModel>& interiorTransitionModel,
+                                      const std::shared_ptr<Eegeo::Rendering::ScreenProperties>& screenProperties,
+                                      const std::shared_ptr<Eegeo::Config::PlatformConfig>& platformConfig);
 
                     void Update(float dt, const Eegeo::Camera::RenderCamera& renderCamera, const Eegeo::dv3& cameraEcefInterestPoint);
 
@@ -38,14 +39,13 @@ namespace ExampleApp
                     void GetSpherePositionAndRadius(Eegeo::dv3& out_sphereCenterEcef, float& out_sphereRadius) const;
 
                 private:
-                    Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
-                    Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& m_terrainHeightProvider;
-                    const Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
-                    const Eegeo::Resources::Interiors::InteriorTransitionModel& m_interiorTransitionModel;
-
-                    MyPinCreation::SdkModel::IMyPinCreationModel& m_myPinCreationModel;
-
-                    PoiRingView& m_poiRingView;
+                    const std::shared_ptr<Eegeo::Rendering::EnvironmentFlatteningService> m_environmentFlatteningService;
+                    const std::shared_ptr<Eegeo::Resources::Terrain::Heights::TerrainHeightProvider> m_terrainHeightProvider;
+                    const std::shared_ptr<const Eegeo::Resources::Interiors::InteriorInteractionModel> m_interiorInteractionModel;
+                    const std::shared_ptr<const Eegeo::Resources::Interiors::InteriorTransitionModel> m_interiorTransitionModel;
+                    const std::shared_ptr<MyPinCreation::SdkModel::IMyPinCreationModel> m_myPinCreationModel;
+                    const std::shared_ptr<Eegeo::Rendering::ScreenProperties> m_screenProperties;
+                    const std::shared_ptr<PoiRingView> m_poiRingView;
 
                     float m_scaleInterpolationParam;
                     float m_easeDurationInSeconds;
@@ -56,8 +56,6 @@ namespace ExampleApp
 
                     Eegeo::v3 CalculateQuadScreenSpaceTranslation(const Eegeo::Camera::RenderCamera& renderCamera) const;
                     float CalculateTransitionScale(float dt);
-                    
-                    Eegeo::Rendering::ScreenProperties& m_screenProperties;
                 };
             }
         }

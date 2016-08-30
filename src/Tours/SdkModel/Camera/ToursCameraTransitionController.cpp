@@ -10,6 +10,7 @@
 #include "EarthConstants.h"
 #include "IntersectionTests.h"
 #include "InterestPointTransitionCameraMode.h"
+#include "ToursCameraController.h"
 
 namespace ExampleApp
 {
@@ -19,8 +20,8 @@ namespace ExampleApp
         {
             namespace Camera
             {
-                ToursCameraTransitionController::ToursCameraTransitionController(IToursCameraController& toursCameraController,
-                                                                                 Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& touchController)
+                ToursCameraTransitionController::ToursCameraTransitionController(const std::shared_ptr<IToursCameraController>& toursCameraController,
+                                                                                 const std::shared_ptr<TourGlobeCameraTouchController>& touchController)
                 : m_toursCameraController(toursCameraController)
                 , m_pToursTransitionMode(NULL)
                 , m_pToursCurrentMode(NULL)
@@ -54,7 +55,7 @@ namespace ExampleApp
                         
                         m_pToursCurrentMode = NULL;
                         m_pToursCurrentMode = m_pToursNextMode;
-                        m_toursCameraController.SetMode(m_pToursCurrentMode);
+                        m_toursCameraController->SetMode(m_pToursCurrentMode);
                     }
                 }
                 
@@ -65,7 +66,7 @@ namespace ExampleApp
                     m_pToursNextMode = pTargetCameraMode;
                     
                     // HACK - Need to ensure both modes have a valid state (by updating). Should ensure they're initialised as such.
-                    m_pToursNextMode->UpdateCamera(0.0f, m_touchController, 0.0f);
+                    m_pToursNextMode->UpdateCamera(0.0f, *m_touchController, 0.0f);
                                         
                     if(IsTransitioning()) // interrupting an in-flight transition
                     {
@@ -74,14 +75,14 @@ namespace ExampleApp
                         m_pToursTransitionMode = InterestPointTransitionCameraMode::CreateBetweenStates(currentTransitionCameraState,
                                                                                                         m_pToursNextMode->GetCurrentState(),
                                                                                                         jumpIfFar);
-                        m_toursCameraController.SetMode(m_pToursTransitionMode);
+                        m_toursCameraController->SetMode(m_pToursTransitionMode);
                     }
                     else if(m_pToursCurrentMode != NULL) // transition from stable state
                     {
                         m_pToursTransitionMode = InterestPointTransitionCameraMode::CreateBetweenStates(m_pToursCurrentMode->GetCurrentState(),
                                                                                                         m_pToursNextMode->GetCurrentState(),
                                                                                                         jumpIfFar);
-                        m_toursCameraController.SetMode(m_pToursTransitionMode);
+                        m_toursCameraController->SetMode(m_pToursTransitionMode);
                     }
                     else // 'transition' from app
                     {
@@ -90,7 +91,7 @@ namespace ExampleApp
                         
                         m_pToursCurrentMode = NULL;
                         m_pToursCurrentMode = m_pToursNextMode;
-                        m_toursCameraController.SetMode(m_pToursCurrentMode);
+                        m_toursCameraController->SetMode(m_pToursCurrentMode);
                     }
                 }
                 

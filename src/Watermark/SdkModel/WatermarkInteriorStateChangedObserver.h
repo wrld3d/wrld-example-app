@@ -18,20 +18,20 @@ namespace ExampleApp
             class WatermarkInteriorStateChangedObserver
             {
             public:
-                WatermarkInteriorStateChangedObserver(WatermarkModel& watermarkModel,
-                                                      Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                      Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
-                                                      InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel,
-                                                      ExampleAppMessaging::TMessageBus& messageBus);
+                WatermarkInteriorStateChangedObserver(const std::shared_ptr<WatermarkModel>& watermarkModel,
+                                                      const std::shared_ptr<Eegeo::Resources::Interiors::InteriorSelectionModel>& interiorSelectionModel,
+                                                      const std::shared_ptr<Eegeo::Resources::Interiors::InteriorsModelRepository>& interiorsModelRepository,
+                                                      const std::shared_ptr<InteriorsExplorer::SdkModel::InteriorsExplorerModel>& m_interiorsExplorerModel,
+                                                      const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
                 
                 ~WatermarkInteriorStateChangedObserver();
                 
             private:
-                WatermarkModel& m_watermarkModel;
-                Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
-                Eegeo::Resources::Interiors::InteriorsModelRepository& m_interiorsModelRepository;
-                InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<WatermarkModel> m_watermarkModel;
+                const std::shared_ptr<Eegeo::Resources::Interiors::InteriorSelectionModel> m_interiorSelectionModel;
+                const std::shared_ptr<Eegeo::Resources::Interiors::InteriorsModelRepository> m_interiorsModelRepository;
+                const std::shared_ptr<InteriorsExplorer::SdkModel::InteriorsExplorerModel> m_interiorsExplorerModel;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 
                 void OnInteriorExplorerEntered();
                 Eegeo::Helpers::TCallback0<WatermarkInteriorStateChangedObserver> m_interiorExplorerEnteredCallback;

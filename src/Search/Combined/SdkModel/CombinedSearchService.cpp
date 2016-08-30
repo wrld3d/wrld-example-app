@@ -12,8 +12,8 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                CombinedSearchService::CombinedSearchService(const std::map<std::string,Search::SdkModel::ISearchService*>& searchServices,
-                                                             Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel)
+                CombinedSearchService::CombinedSearchService(const std::map<std::string, std::shared_ptr<Search::SdkModel::ISearchService>>& searchServices,
+                                                             const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel)
                 : SearchServiceBase(std::vector<std::string>())
                 , m_searchServices(searchServices)
                 , m_searchQueryResponseCallback(this, &CombinedSearchService::OnSearchResponseRecieved)
@@ -22,7 +22,7 @@ namespace ExampleApp
                 , m_currentQueryModel("", false, false, Eegeo::Space::LatLongAltitude(0, 0, 0), 0.f)
                 , m_hasActiveQuery(false)
                 {
-                    std::map<std::string,Search::SdkModel::ISearchService*>::const_iterator iter;
+                    std::map<std::string, std::shared_ptr<Search::SdkModel::ISearchService>>::const_iterator iter;
                     
                     for (iter = m_searchServices.begin(); iter != m_searchServices.end(); ++iter)
                     {
@@ -32,7 +32,7 @@ namespace ExampleApp
                 
                 CombinedSearchService::~CombinedSearchService()
                 {
-                    std::map<std::string,Search::SdkModel::ISearchService*>::const_iterator iter;
+                    std::map<std::string, std::shared_ptr<Search::SdkModel::ISearchService>>::const_iterator iter;
                     
                     for (iter = m_searchServices.begin(); iter != m_searchServices.end(); ++iter)
                     {
@@ -42,7 +42,7 @@ namespace ExampleApp
                 
                 bool CombinedSearchService::CanHandleCategory(const std::string& category) const
                 {
-                    std::map<std::string,Search::SdkModel::ISearchService*>::const_iterator iter;
+                    std::map<std::string, std::shared_ptr<Search::SdkModel::ISearchService>>::const_iterator iter;
                     
                     for (iter = m_searchServices.begin(); iter != m_searchServices.end(); ++iter)
                     {
@@ -60,7 +60,7 @@ namespace ExampleApp
                 {
                     if (searchService.CanHandleIndoor())
                     {
-                        const bool isIndoor = m_interiorInteractionModel.HasInteriorModel();
+                        const bool isIndoor = m_interiorInteractionModel->HasInteriorModel();
                         
                         if (isIndoor || query.ShouldTryInteriorSearch())
                         {
@@ -92,9 +92,9 @@ namespace ExampleApp
                         CancelInFlightQueries();
                     }
                     
-                    std::vector<Search::SdkModel::ISearchService*> queryServices;
+                    std::vector<std::shared_ptr<Search::SdkModel::ISearchService>> queryServices;
                     
-                    for (std::map<std::string,Search::SdkModel::ISearchService*>::const_iterator iter = m_searchServices.begin(); iter != m_searchServices.end(); ++iter)
+                    for (std::map<std::string,std::shared_ptr<Search::SdkModel::ISearchService>>::const_iterator iter = m_searchServices.begin(); iter != m_searchServices.end(); ++iter)
                     {
                         if (CanPerformLocationQuerySearch(query, *(iter->second)))
                         {
@@ -117,7 +117,7 @@ namespace ExampleApp
                     m_currentQueryModel = query;
                     m_hasActiveQuery = true;
                     
-                    for (std::vector<Search::SdkModel::ISearchService*>::const_iterator iter = queryServices.begin(); iter != queryServices.end(); ++iter)
+                    for (std::vector<std::shared_ptr<Search::SdkModel::ISearchService>>::const_iterator iter = queryServices.begin(); iter != queryServices.end(); ++iter)
                     {
                         (*iter)->PerformLocationQuerySearch(query);
                     }
@@ -126,10 +126,10 @@ namespace ExampleApp
                 void CombinedSearchService::PerformIdentitySearch(const Search::SdkModel::SearchResultModel& outdatedSearchResult,
                                                                      Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& callback)
                 {
-                    std::map<std::string,Search::SdkModel::ISearchService*>::iterator iter = m_searchServices.find(outdatedSearchResult.GetVendor());
+                    std::map<std::string,std::shared_ptr<Search::SdkModel::ISearchService>>::iterator iter = m_searchServices.find(outdatedSearchResult.GetVendor());
                     if (iter != m_searchServices.end())
                     {
-                        Search::SdkModel::ISearchService* pSearchService = iter->second;
+                        std::shared_ptr<Search::SdkModel::ISearchService>& pSearchService = iter->second;
                         pSearchService->PerformIdentitySearch(outdatedSearchResult,callback);
                     }
                     else
@@ -142,7 +142,7 @@ namespace ExampleApp
                 
                 void CombinedSearchService::CancelInFlightQueries()
                 {
-                    std::map<std::string,Search::SdkModel::ISearchService*>::const_iterator iter;
+                    std::map<std::string, std::shared_ptr<Search::SdkModel::ISearchService>>::const_iterator iter;
                     
                     for (iter = m_searchServices.begin(); iter != m_searchServices.end(); ++iter)
                     {

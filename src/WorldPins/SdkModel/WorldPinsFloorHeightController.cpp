@@ -18,14 +18,14 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            WorldPinsFloorHeightController::WorldPinsFloorHeightController(IWorldPinsRepository& worldPinsRepository,
-                                                                           Eegeo::Pins::PinRepository& pinRepository,
-                                                                           const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                                                           const bool interiorsAffectedByFlattening)
+            WorldPinsFloorHeightController::WorldPinsFloorHeightController(const std::shared_ptr<IWorldPinsRepository>& worldPinsRepository,
+                                                                           const std::shared_ptr<Eegeo::Pins::PinRepository>& pinRepository,
+                                                                           const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel,
+                                                                           const std::shared_ptr<Eegeo::Config::PlatformConfig>& platformConfig)
                 : m_worldPinsRepository(worldPinsRepository)
                 , m_pinRepository(pinRepository)
                 , m_interiorInteractionModel(interiorInteractionModel)
-                , m_interiorsAffectedByFlattening(interiorsAffectedByFlattening)
+                , m_interiorsAffectedByFlattening(platformConfig->OptionsConfig.InteriorsAffectedByFlattening)
             {
             }
             
@@ -35,23 +35,23 @@ namespace ExampleApp
             
             void WorldPinsFloorHeightController::Update(float deltaSeconds)
             {
-                if (m_interiorInteractionModel.HasInteriorModel())
+                if (m_interiorInteractionModel->HasInteriorModel())
                 {
-                    const Eegeo::Resources::Interiors::InteriorsModel& interiorModel = *m_interiorInteractionModel.GetInteriorModel();
-                    const int selectedFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
+                    const Eegeo::Resources::Interiors::InteriorsModel& interiorModel = *m_interiorInteractionModel->GetInteriorModel();
+                    const int selectedFloorIndex = m_interiorInteractionModel->GetSelectedFloorIndex();
                     
                     float altitude = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(interiorModel, selectedFloorIndex);
                     float heightAboveTerrain = Helpers::InteriorHeightHelpers::INTERIOR_FLOOR_HEIGHT*selectedFloorIndex;
                     
-                    for(size_t i = 0; i < m_worldPinsRepository.GetItemCount(); ++i)
+                    for(size_t i = 0; i < m_worldPinsRepository->GetItemCount(); ++i)
                     {
-                        WorldPinItemModel& worldPinItemModel = *m_worldPinsRepository.GetItemAtIndex(i);
+                        WorldPinItemModel& worldPinItemModel = *m_worldPinsRepository->GetItemAtIndex(i);
                         if (worldPinItemModel.NeedsFloorHeight())
                         {
                             if (worldPinItemModel.GetInteriorData().floor == selectedFloorIndex &&
                                 worldPinItemModel.GetInteriorData().building == interiorModel.GetId())
                             {
-                                Eegeo::Pins::Pin* pPin = m_pinRepository.GetPinById(worldPinItemModel.Id());
+                                Eegeo::Pins::Pin* pPin = m_pinRepository->GetPinById(worldPinItemModel.Id());
                                 if(m_interiorsAffectedByFlattening)
                                 {
                                     pPin->SetTerrainHeight(altitude, 14);

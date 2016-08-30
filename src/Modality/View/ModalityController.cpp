@@ -3,6 +3,7 @@
 #include "ModalityController.h"
 #include "IModalityModel.h"
 #include "MathFunc.h"
+#include "ModalityIgnoredReactionModel.h"
 
 namespace ExampleApp
 {
@@ -10,17 +11,17 @@ namespace ExampleApp
     {
         namespace View
         {
-            ModalityController::ModalityController(IModalityModel& modalityModel,
-                                                   const std::vector<OpenableControl::View::IOpenableControlViewModel*>& viewModels,
-                                                   Menu::View::IMenuIgnoredReactionModel& ignoredReactionModel)
+            ModalityController::ModalityController(const std::shared_ptr<IModalityModel>& modalityModel,
+                                                   const std::shared_ptr<OpenableControl::View::TOpenables>& viewModels,
+                                                   const std::shared_ptr<Menu::View::IModalityIgnoredReactionModel>& ignoredReactionModel)
                 : m_modalityModel(modalityModel)
                 , m_pMenuOpenStateChangedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<ModalityController, OpenableControl::View::IOpenableControlViewModel&, float>))(this, &ModalityController::MenuOpenStateChangeHandler))
                 , m_viewModels(viewModels)
                 , m_ignoredReactionModel(ignoredReactionModel)
             {
 
-                for(std::vector<OpenableControl::View::IOpenableControlViewModel*>::iterator it = m_viewModels.begin();
-                        it != m_viewModels.end();
+                for(OpenableControl::View::TOpenables::const_iterator it = m_viewModels->begin();
+                        it != m_viewModels->end();
                         ++ it)
                 {
                     OpenableControl::View::IOpenableControlViewModel& viewModel = **it;
@@ -30,15 +31,15 @@ namespace ExampleApp
 
             ModalityController::~ModalityController()
             {
-                for(std::vector<OpenableControl::View::IOpenableControlViewModel*>::iterator it = m_viewModels.begin();
-                        it != m_viewModels.end();
+                for(OpenableControl::View::TOpenables::const_iterator it = m_viewModels->begin();
+                        it != m_viewModels->end();
                         ++ it)
                 {
                     OpenableControl::View::IOpenableControlViewModel& viewModel = **it;
                     viewModel.RemoveOpenStateChangedCallback(*m_pMenuOpenStateChangedCallback);
                 }
 
-                m_viewModels.clear();
+                m_viewModels->clear();
 
                 Eegeo_DELETE m_pMenuOpenStateChangedCallback;
             }
@@ -47,8 +48,8 @@ namespace ExampleApp
             {
                 float max = 0.f;
 
-                for(std::vector<OpenableControl::View::IOpenableControlViewModel*>::const_iterator it = m_viewModels.begin();
-                        it != m_viewModels.end();
+                for(OpenableControl::View::TOpenables::const_iterator it = m_viewModels->begin();
+                        it != m_viewModels->end();
                         ++ it)
                 {
                     OpenableControl::View::IOpenableControlViewModel& viewModel = **it;
@@ -66,12 +67,12 @@ namespace ExampleApp
             {
                 Eegeo::Helpers::TIdentity identity = viewModel.GetIdentity();
 
-                if (m_ignoredReactionModel.IsIgnored(identity))
+                if (m_ignoredReactionModel->IsIgnored(identity))
                 {
                     return;
                 }
                 
-                m_modalityModel.SetModality(openState);
+                m_modalityModel->SetModality(openState);
             }
         }
     }

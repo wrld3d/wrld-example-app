@@ -17,10 +17,10 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            MyPinsRepositoryObserver::MyPinsRepositoryObserver(MyPinsRepository& myPinsRepository,
-                                                               IMyPinBoundObjectRepository& myPinBoundObjectRepository,
-                                                               MyPinsFileIO& myPinsFileIO,
-                                                               ExampleAppMessaging::TMessageBus& messageBus)
+            MyPinsRepositoryObserver::MyPinsRepositoryObserver(const std::shared_ptr<MyPinsRepository>& myPinsRepository,
+                                                               const std::shared_ptr<IMyPinBoundObjectRepository>& myPinBoundObjectRepository,
+                                                               const std::shared_ptr<MyPinsFileIO>& myPinsFileIO,
+                                                               const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
             : m_myPinsRepository(myPinsRepository)
             , m_myPinBoundObjectRepository(myPinBoundObjectRepository)
             , m_myPinsFileIO(myPinsFileIO)
@@ -28,22 +28,22 @@ namespace ExampleApp
             , m_pinAddedCallback(this, &MyPinsRepositoryObserver::HandlePinAddedToRepository)
             , m_pinRemovedCallback(this, &MyPinsRepositoryObserver::HandlePinRemovedFromRepository)
             {
-                m_myPinsRepository.InsertItemAddedCallback(m_pinAddedCallback);
-                m_myPinsRepository.InsertItemRemovedCallback(m_pinRemovedCallback);
+                m_myPinsRepository->InsertItemAddedCallback(m_pinAddedCallback);
+                m_myPinsRepository->InsertItemRemovedCallback(m_pinRemovedCallback);
                 
             }
 
             MyPinsRepositoryObserver::~MyPinsRepositoryObserver()
             {
-                m_myPinsRepository.RemoveItemAddedCallback(m_pinAddedCallback);
-                m_myPinsRepository.RemoveItemRemovedCallback(m_pinRemovedCallback);
+                m_myPinsRepository->RemoveItemAddedCallback(m_pinAddedCallback);
+                m_myPinsRepository->RemoveItemRemovedCallback(m_pinRemovedCallback);
             }
 
             void MyPinsRepositoryObserver::HandlePinAddedToRepository(MyPinModel*& myPinModel)
             {
-                IMyPinBoundObject& pinBoundObject(m_myPinBoundObjectRepository.GetBoundObjectForPin(*myPinModel));
+                IMyPinBoundObject& pinBoundObject(m_myPinBoundObjectRepository->GetBoundObjectForPin(*myPinModel));
                 
-                m_messageBus.Publish(MyPinAddedToMenuMessage(myPinModel->Identifier(),
+                m_messageBus->Publish(MyPinAddedToMenuMessage(myPinModel->Identifier(),
                                                              myPinModel->GetTitle(),
                                                              myPinModel->GetDescription(),
                                                              pinBoundObject.GetIconForPin(),
@@ -54,17 +54,17 @@ namespace ExampleApp
 
             void MyPinsRepositoryObserver::HandlePinRemovedFromRepository(MyPinModel*& myPinModel)
             {
-                m_messageBus.Publish(MyPinRemovedFromMenuMessage(myPinModel->Identifier()));
+                m_messageBus->Publish(MyPinRemovedFromMenuMessage(myPinModel->Identifier()));
 
                 std::vector<MyPinModel*> pinModels;
-                pinModels.reserve(m_myPinsRepository.GetItemCount());
+                pinModels.reserve(m_myPinsRepository->GetItemCount());
 
-                for (int i = 0; i < m_myPinsRepository.GetItemCount(); ++i)
+                for (int i = 0; i < m_myPinsRepository->GetItemCount(); ++i)
                 {
-                    pinModels.push_back(m_myPinsRepository.GetItemAtIndex(i));
+                    pinModels.push_back(m_myPinsRepository->GetItemAtIndex(i));
                 }
 
-                m_myPinsFileIO.SaveAllRepositoryPinsToDisk(pinModels);
+                m_myPinsFileIO->SaveAllRepositoryPinsToDisk(pinModels);
             }
         }
     }

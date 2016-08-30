@@ -8,24 +8,24 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            CompassViewCycledObserver::CompassViewCycledObserver(ICompassModel& model,
-                    ExampleAppMessaging::TMessageBus& messageBus
+            CompassViewCycledObserver::CompassViewCycledObserver(const std::shared_ptr<ICompassModel>& model,
+                                                                 const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus
                                                                 )
                 : m_model(model)
                 , m_messageBus(messageBus)
                 , m_handler(this, &CompassViewCycledObserver::OnCompassViewCycledMessage)
             {
-                m_messageBus.SubscribeNative(m_handler);
+                m_messageBus->SubscribeNative(m_handler);
             }
 
             CompassViewCycledObserver::~CompassViewCycledObserver()
             {
-                m_messageBus.UnsubscribeNative(m_handler);
+                m_messageBus->UnsubscribeNative(m_handler);
             }
 
             void CompassViewCycledObserver::OnCompassViewCycledMessage(const CompassViewCycledMessage& message)
             {
-                m_model.CycleToNextGpsMode();
+                m_model->CycleToNextGpsMode();
             }
         }
     }

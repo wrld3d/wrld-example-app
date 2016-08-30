@@ -9,27 +9,27 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            StreamOverWifiOnlyChangedMessageHandler::StreamOverWifiOnlyChangedMessageHandler(ExampleAppMessaging::TMessageBus& messageBus,
-                                                                                             Net::SdkModel::INetworkCapabilities& networkCapabilities)
+            StreamOverWifiOnlyChangedMessageHandler::StreamOverWifiOnlyChangedMessageHandler(const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                                                                             const std::shared_ptr<Net::SdkModel::INetworkCapabilities>& networkCapabilities)
             : m_messageBus(messageBus)
             , m_messageHandlerBinding(this, &StreamOverWifiOnlyChangedMessageHandler::OnPerformedStreamOverWifiOnlyChange)
             , m_networkCapabilities(networkCapabilities)
             {
-                m_messageBus.SubscribeNative(m_messageHandlerBinding);
+                m_messageBus->SubscribeNative(m_messageHandlerBinding);
             }
             
             StreamOverWifiOnlyChangedMessageHandler::~StreamOverWifiOnlyChangedMessageHandler()
             {
-                m_messageBus.UnsubscribeNative(m_messageHandlerBinding);
+                m_messageBus->UnsubscribeNative(m_messageHandlerBinding);
             }
             
             void StreamOverWifiOnlyChangedMessageHandler::OnPerformedStreamOverWifiOnlyChange(const StreamOverWifiOnlyChangedMessage& message)
             {
                 // We do not expect this value to change other than via the dispatch of this message, so should always toggle.
                 // If these semantics change this assert should be removed.
-                Eegeo_ASSERT(message.StreamOverWifiOnly() != m_networkCapabilities.StreamOverWifiOnly());
+                Eegeo_ASSERT(message.StreamOverWifiOnly() != m_networkCapabilities->StreamOverWifiOnly());
                 
-                m_networkCapabilities.SetStreamOverWifiOnlyMode(message.StreamOverWifiOnly());
+                m_networkCapabilities->SetStreamOverWifiOnlyMode(message.StreamOverWifiOnly());
             }
         }
     }

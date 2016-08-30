@@ -9,31 +9,31 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            FlattenButtonModel::FlattenButtonModel(MapMode::SdkModel::IMapModeModel& mapModeModel)
+            FlattenButtonModel::FlattenButtonModel(const std::shared_ptr<MapMode::SdkModel::IMapModeModel>& mapModeModel)
             : m_mapModeModel(mapModeModel)
             , m_onMapModeChangedCallback(this, &FlattenButtonModel::OnMapModeChanged)
             {
-                m_mapModeModel.AddMapModeChangedCallback(m_onMapModeChangedCallback);
+                m_mapModeModel->AddMapModeChangedCallback(m_onMapModeChangedCallback);
             }
 
             FlattenButtonModel::~FlattenButtonModel()
             {
-                m_mapModeModel.RemoveMapModeChangedCallback(m_onMapModeChangedCallback);
+                m_mapModeModel->RemoveMapModeChangedCallback(m_onMapModeChangedCallback);
             }
 
             void FlattenButtonModel::Flatten()
             {
-                m_mapModeModel.SetInMapMode(true);
+                m_mapModeModel->SetInMapMode(true);
             }
 
             void FlattenButtonModel::Unflatten()
             {
-                m_mapModeModel.SetInMapMode(false);
+                m_mapModeModel->SetInMapMode(false);
             }
 
             bool FlattenButtonModel::GetFlattened() const
             {
-                return m_mapModeModel.IsInMapMode();
+                return m_mapModeModel->IsInMapMode();
             }
 
             void FlattenButtonModel::InsertChangedCallback(Eegeo::Helpers::ICallback0& callback)

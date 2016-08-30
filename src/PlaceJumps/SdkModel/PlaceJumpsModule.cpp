@@ -10,6 +10,8 @@
 #include "MenuOptionsModel.h"
 #include "PlaceJumpMenuOption.h"
 #include "PlaceJumpController.h"
+#include "PlaceJumpSelectedMessageHandler.h"
+#include "ICameraTransitionController.h"
 
 namespace ExampleApp
 {
@@ -17,6 +19,27 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+            class PlaceJumpMenuModel : public Menu::View::MenuModel
+            {
+            };
+            
+            class PlaceJumpMenuOptionsModel : public Menu::View::MenuOptionsModel
+            {
+            public:
+                PlaceJumpMenuOptionsModel(const std::shared_ptr<PlaceJumpMenuModel>& placeJumpModel) : Menu::View::MenuOptionsModel(*placeJumpModel)
+                {
+                }
+            };
+            
+            void PlaceJumpsModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+            {
+                builder->registerType<PlaceJumpController>().as<IPlaceJumpController>().singleInstance();
+                builder->registerType<PlaceJumpMenuModel>().singleInstance();
+                builder->registerType<PlaceJumpMenuOptionsModel>().singleInstance();
+                builder->registerType<PlaceJumpSelectedMessageHandler>().singleInstance();
+            }
+            
+            /*
             PlaceJumpsModule::PlaceJumpsModule(Eegeo::Helpers::IFileIO& fileIO,
                                                CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                                                Menu::View::IMenuViewModel& menuViewModel,
@@ -24,10 +47,10 @@ namespace ExampleApp
                                                Metrics::IMetricsService& metricsService,
                                                const Menu::View::IMenuReactionModel& menuReaction)
             {
-                m_pJumpController = Eegeo_NEW(PlaceJumpController)(cameraTransitionController);
+                //m_pJumpController = Eegeo_NEW(PlaceJumpController)(cameraTransitionController);
 
-                m_pMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
-                m_pMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pMenuModel);
+                //m_pMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
+                //m_pMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pMenuModel);
 
                 std::fstream stream;
                 size_t size;
@@ -56,15 +79,7 @@ namespace ExampleApp
                 }
 
                 m_pPlaceJumpSelectedMessageHandler = Eegeo_NEW(PlaceJumpSelectedMessageHandler)(*m_pJumpController, messageBus);
-            }
-
-            PlaceJumpsModule::~PlaceJumpsModule()
-            {
-                Eegeo_DELETE m_pPlaceJumpSelectedMessageHandler;
-                Eegeo_DELETE m_pMenuOptionsModel;
-                Eegeo_DELETE m_pMenuModel;
-                Eegeo_DELETE m_pJumpController;
-            }
+            }*/
         }
     }
 }

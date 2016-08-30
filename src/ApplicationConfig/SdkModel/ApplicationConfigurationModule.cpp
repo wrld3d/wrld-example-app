@@ -69,11 +69,15 @@ namespace ExampleApp
                                                                       const std::string& configFilePath
                                                                       )
             {
+                auto builder = std::make_shared<Hypodermic::ContainerBuilder>();
+                builder->registerExternallyOwnedInstance(fileIO);
+                builder->registerExternallyOwnedInstance(applicationConfigurationVersionProvider);
+                ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule applicationConfigurationModule(BuildDefaultConfig(applicationConfigurationVersionProvider));
+                applicationConfigurationModule.Register(builder);
                 
-                ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule applicationConfigurationModule(fileIO,
-                                                                                                                       applicationConfigurationVersionProvider
-                                                                                                                       );
-                return applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration(configFilePath);
+                auto container = builder->build();
+                auto service = container->resolve<IApplicationConfigurationService>();
+                return service->LoadConfiguration(configFilePath);
             }
             
             Eegeo::Config::PlatformConfig BuildPlatformConfig(Eegeo::Config::IPlatformConfigBuilder& platformConfigBuilder,
@@ -87,28 +91,18 @@ namespace ExampleApp
                 return platformConfig;
             }
             
-            ApplicationConfigurationModule::ApplicationConfigurationModule(
-                Eegeo::Helpers::IFileIO& fileIO,
-                const IApplicationConfigurationVersionProvider& applicationConfigurationVersionProvider)
+            ApplicationConfigurationModule::ApplicationConfigurationModule(const ApplicationConfiguration& defaultConfig)
+            : m_default(defaultConfig)
             {
-                const ApplicationConfiguration& defaultConfig = BuildDefaultConfig(applicationConfigurationVersionProvider);
+            }
 
-                m_pApplicationConfigurationReader = Eegeo_NEW(ApplicationConfigurationReader)(fileIO);
-                m_pApplicationConfigurationParser = Eegeo_NEW(ApplicationConfigurationJsonParser)(defaultConfig);
-                m_pApplicationConfigurationService = Eegeo_NEW(ApplicationConfigurationService)(*m_pApplicationConfigurationParser,
-																								*m_pApplicationConfigurationReader);                    
-            }
             
-            ApplicationConfigurationModule::~ApplicationConfigurationModule()
+            void ApplicationConfigurationModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder> &builder)
             {
-                Eegeo_DELETE m_pApplicationConfigurationService;
-                Eegeo_DELETE m_pApplicationConfigurationParser;
-                Eegeo_DELETE m_pApplicationConfigurationReader;
-            }
-            
-            IApplicationConfigurationService& ApplicationConfigurationModule::GetApplicationConfigurationService()
-            {
-                return *m_pApplicationConfigurationService;
+                builder->registerType<ApplicationConfigurationReader>().as<IApplicationConfigurationReader>().singleInstance();
+                builder->registerExternallyOwnedInstance(m_default);
+                builder->registerType<ApplicationConfigurationJsonParser>().as<IApplicationConfigurationParser>().singleInstance();
+                builder->registerType<ApplicationConfigurationService>().as<IApplicationConfigurationService>().singleInstance();
             }
         }
     }

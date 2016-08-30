@@ -11,18 +11,18 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            MyPinSelectedMessageHandler::MyPinSelectedMessageHandler(CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
-                    ExampleAppMessaging::TMessageBus& messageBus)
+            MyPinSelectedMessageHandler::MyPinSelectedMessageHandler(const std::shared_ptr<CameraTransitions::SdkModel::ICameraTransitionController>& cameraTransitionController,
+                                                                     const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
                 : m_cameraTransitionController(cameraTransitionController)
                 , m_messageBus(messageBus)
                 , m_handlerBinding(this, &MyPinSelectedMessageHandler::OnMyPinSelectedMessage)
             {
-                m_messageBus.SubscribeNative(m_handlerBinding);
+                m_messageBus->SubscribeNative(m_handlerBinding);
             }
 
             MyPinSelectedMessageHandler::~MyPinSelectedMessageHandler()
             {
-                m_messageBus.UnsubscribeNative(m_handlerBinding);
+                m_messageBus->UnsubscribeNative(m_handlerBinding);
             }
 
             void MyPinSelectedMessageHandler::OnMyPinSelectedMessage(const MyPinSelectedMessage& message)
@@ -30,12 +30,12 @@ namespace ExampleApp
                 const float MyPinAltitude = 1500.0f;
                 if(message.GetInteriorId() == Eegeo::Resources::Interiors::InteriorId::NullId())
                 {
-                    m_cameraTransitionController.StartTransitionTo(message.GetPinLocation().ToECEF(),
+                    m_cameraTransitionController->StartTransitionTo(message.GetPinLocation().ToECEF(),
                                                                   MyPinAltitude);
                 }
                 else
                 {
-                    m_cameraTransitionController.StartTransitionTo(message.GetPinLocation().ToECEF(),
+                    m_cameraTransitionController->StartTransitionTo(message.GetPinLocation().ToECEF(),
                                                                InteriorsExplorer::DefaultInteriorSearchResultTransitionInterestDistance,
                                                                message.GetInteriorId(),
                                                                message.GetFloorIndex());

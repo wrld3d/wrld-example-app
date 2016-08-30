@@ -16,15 +16,15 @@ namespace ExampleApp
         {
             class CacheEnabledChangedMessageHandler : private Eegeo::NonCopyable
             {
-                Net::SdkModel::INetworkCapabilities& m_networkCapabilities;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<Net::SdkModel::INetworkCapabilities> m_networkCapabilities;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 Eegeo::Helpers::TCallback1<CacheEnabledChangedMessageHandler, const CacheEnabledChangedMessage&> m_messageHandlerBinding;
                 
                 void OnPerformedCacheEnabledChange(const CacheEnabledChangedMessage& message);
                 
             public:
-                CacheEnabledChangedMessageHandler(Net::SdkModel::INetworkCapabilities& networkCapabilities,
-                                                  ExampleAppMessaging::TMessageBus& messageBus);
+                CacheEnabledChangedMessageHandler(const std::shared_ptr<Net::SdkModel::INetworkCapabilities>& networkCapabilities,
+                                                  const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
                 
                 ~CacheEnabledChangedMessageHandler();
             };

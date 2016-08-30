@@ -16,6 +16,8 @@ namespace ExampleApp
             class IMenuViewModel;
             class IMenuSectionViewModel;
             class IMenuSectionsViewModel;
+            class IModalityIgnoredReactionModel;
+            class IReactorIgnoredReactionModel;
             struct MenuItemViewModel;
             class MenuController;
             class IMenuView;

@@ -31,8 +31,8 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            SurveyObserver::SurveyObserver(ExampleAppMessaging::TMessageBus& messageBus,
-                                           PersistentSettings::IPersistentSettingsModel& persistentSettingsModel)
+            SurveyObserver::SurveyObserver(const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                           const std::shared_ptr<PersistentSettings::IPersistentSettingsModel>& persistentSettingsModel)
             : m_messageBus(messageBus)
             , m_persistentSettingsModel(persistentSettingsModel)
             , m_onSearchPerformedMessage(this, &SurveyObserver::OnSearchPerformedMessage)
@@ -41,20 +41,20 @@ namespace ExampleApp
             , m_onWeatherSelected(this, &SurveyObserver::OnWeatherSelected)
             , m_onPinCreated(this, &SurveyObserver::OnPinCreated)
             {
-                m_messageBus.SubscribeNative(m_onSearchPerformedMessage);
-                m_messageBus.SubscribeNative(m_onCategorySearchPerformedMessage);
-                m_messageBus.SubscribeNative(m_onSearchResultSelected);
-                m_messageBus.SubscribeNative(m_onWeatherSelected);
-                m_messageBus.SubscribeNative(m_onPinCreated);
+                m_messageBus->SubscribeNative(m_onSearchPerformedMessage);
+                m_messageBus->SubscribeNative(m_onCategorySearchPerformedMessage);
+                m_messageBus->SubscribeNative(m_onSearchResultSelected);
+                m_messageBus->SubscribeNative(m_onWeatherSelected);
+                m_messageBus->SubscribeNative(m_onPinCreated);
             }
             
             SurveyObserver::~SurveyObserver()
             {
-                m_messageBus.UnsubscribeNative(m_onSearchPerformedMessage);
-                m_messageBus.UnsubscribeNative(m_onCategorySearchPerformedMessage);
-                m_messageBus.UnsubscribeNative(m_onSearchResultSelected);
-                m_messageBus.UnsubscribeNative(m_onWeatherSelected);
-                m_messageBus.UnsubscribeNative(m_onPinCreated);
+                m_messageBus->UnsubscribeNative(m_onSearchPerformedMessage);
+                m_messageBus->UnsubscribeNative(m_onCategorySearchPerformedMessage);
+                m_messageBus->UnsubscribeNative(m_onSearchResultSelected);
+                m_messageBus->UnsubscribeNative(m_onWeatherSelected);
+                m_messageBus->UnsubscribeNative(m_onPinCreated);
             }
             
             void SurveyObserver::OnStartup()
@@ -129,7 +129,7 @@ namespace ExampleApp
             {
                 bool surveyOffered = false;
                 
-                m_persistentSettingsModel.TryGetValue(SurveyOfferedKeyName, surveyOffered);
+                m_persistentSettingsModel->TryGetValue(SurveyOfferedKeyName, surveyOffered);
                 
                 return surveyOffered;
             }
@@ -138,14 +138,14 @@ namespace ExampleApp
             {
                 int surveyConditions = 0;
                 
-                m_persistentSettingsModel.TryGetValue(SurveyConditionsKeyName, surveyConditions);
+                m_persistentSettingsModel->TryGetValue(SurveyConditionsKeyName, surveyConditions);
                 
                 return static_cast<unsigned int>(surveyConditions);
             }
             
             void SurveyObserver::SetSurveyConditions(unsigned int surveyConditions)
             {
-                m_persistentSettingsModel.SetValue(SurveyConditionsKeyName, static_cast<int>(surveyConditions));
+                m_persistentSettingsModel->SetValue(SurveyConditionsKeyName, static_cast<int>(surveyConditions));
                 
                 CheckRequirementsMet();
             }
@@ -164,15 +164,15 @@ namespace ExampleApp
                 
                 if(SearchRequirementsMet())
                 {
-                    m_persistentSettingsModel.SetValue(SurveyOfferedKeyName, true);
+                    m_persistentSettingsModel->SetValue(SurveyOfferedKeyName, true);
                     
-                    m_messageBus.Publish(StartSearchSurveyMessage());
+                    m_messageBus->Publish(StartSearchSurveyMessage());
                 }
                 else if(WeatherRequirementsMet() || PinCreationRequirementsMet())
                 {
-                    m_persistentSettingsModel.SetValue(SurveyOfferedKeyName, true);
+                    m_persistentSettingsModel->SetValue(SurveyOfferedKeyName, true);
                     
-                    m_messageBus.Publish(StartUxSurveyMessage());
+                    m_messageBus->Publish(StartUxSurveyMessage());
                 }
             }
             

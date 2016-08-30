@@ -9,7 +9,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            MyPinVisibilityStateChangedHandlerFactory::MyPinVisibilityStateChangedHandlerFactory(MyPins::SdkModel::IMyPinBoundObjectRepository& myPinBoundObjectRepository)
+            MyPinVisibilityStateChangedHandlerFactory::MyPinVisibilityStateChangedHandlerFactory(const std::shared_ptr<MyPins::SdkModel::IMyPinBoundObjectRepository>& myPinBoundObjectRepository)
             : m_myPinBoundObjectRepository(myPinBoundObjectRepository)
             {
                 
@@ -17,7 +17,7 @@ namespace ExampleApp
             
             WorldPins::SdkModel::IWorldPinVisibilityStateChangedHandler* MyPinVisibilityStateChangedHandlerFactory::CreateMyPinVisibilityStateChangedHandler(MyPinModel& myPinModel) const
             {
-                return Eegeo_NEW(MyPinVisibilityStateChangedHandler)(myPinModel, m_myPinBoundObjectRepository);
+                return Eegeo_NEW(MyPinVisibilityStateChangedHandler)(myPinModel, *m_myPinBoundObjectRepository);
             }
         }
     }

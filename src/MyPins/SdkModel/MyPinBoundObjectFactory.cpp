@@ -11,10 +11,10 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            MyPinBoundObjectFactory::MyPinBoundObjectFactory(ExampleAppMessaging::TMessageBus& messageBus,
-                                                             ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
-                                                             Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
-                                                             MyPinsWebService& webService)
+            MyPinBoundObjectFactory::MyPinBoundObjectFactory(const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                                             const std::shared_ptr<ExampleAppMessaging::TSdkModelDomainEventBus>& sdkModelDomainEventBus,
+                                                             const std::shared_ptr<Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService>& myPinsSearchResultRefreshService,
+                                                             const std::shared_ptr<MyPinsWebService>& webService)
             : m_messageBus(messageBus)
             , m_sdkModelDomainEventBus(sdkModelDomainEventBus)
             , m_myPinsSearchResultRefreshService(myPinsSearchResultRefreshService)
@@ -41,8 +41,8 @@ namespace ExampleApp
                                                             share,
                                                             pinIconKey,
                                                             myPinsFileIO,
-                                                            m_messageBus,
-                                                            m_webService);
+                                                            *m_messageBus,
+                                                            *m_webService);
             }
             
             IMyPinBoundObject* MyPinBoundObjectFactory::CreateSearchResultPinBoundObject(MyPinsFileIO& myPinsFileIO,
@@ -55,9 +55,9 @@ namespace ExampleApp
                                                              searchResult,
                                                              pinIconKey,
                                                              myPinsFileIO,
-                                                             m_myPinsSearchResultRefreshService,
-                                                             m_messageBus,
-                                                             m_sdkModelDomainEventBus,
+                                                             *m_myPinsSearchResultRefreshService,
+                                                             *m_messageBus,
+                                                             *m_sdkModelDomainEventBus,
                                                              myPinsService);
             }
             
@@ -76,8 +76,8 @@ namespace ExampleApp
                                                                              pinMetadataJson,
                            													 pinIconKey,
                                                                              myPinsFileIO,
-                                                                             m_messageBus,
-                                                                             m_webService);
+                                                                             *m_messageBus,
+                                                                             *m_webService);
                     }break;
                         
                     case SearchResultPoi:
@@ -86,9 +86,9 @@ namespace ExampleApp
                                                                               pinMetadataJson,
                                                                               pinIconKey,
                                                                               myPinsFileIO,
-                                                                              m_myPinsSearchResultRefreshService,
-                                                                              m_messageBus,
-                                                                              m_sdkModelDomainEventBus,
+                                                                              *m_myPinsSearchResultRefreshService,
+                                                                              *m_messageBus,
+                                                                              *m_sdkModelDomainEventBus,
                                                                               myPinsService
                                                                               );
                     }break;

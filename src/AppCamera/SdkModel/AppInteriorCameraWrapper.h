@@ -6,6 +6,7 @@
 #include "Interiors.h"
 #include "IAppCamera.h"
 #include "VectorMath.h"
+#include <memory>
 
 namespace ExampleApp
 {
@@ -13,11 +14,11 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class AppInteriorCameraWrapper : public IAppCamera
+            class AppInteriorCameraWrapper : public IAppCamera, private Eegeo::NonCopyable
             {
             public:
                 
-                AppInteriorCameraWrapper(Eegeo::Resources::Interiors::InteriorsCameraController& interiorCameraController);
+                AppInteriorCameraWrapper(const std::shared_ptr<Eegeo::Resources::Interiors::InteriorsCameraController>& interiorCameraController);
                 
                 void Update(float dt);
                 
@@ -29,13 +30,13 @@ namespace ExampleApp
                 
                 Eegeo::ITouchController& GetTouchController() const;
                 
-                Eegeo::Resources::Interiors::InteriorsCameraController& GetInteriorCameraController() const { return m_interiorCameraController; }
+                Eegeo::Resources::Interiors::InteriorsCameraController& GetInteriorCameraController() const { return *m_interiorCameraController; }
                 
                 float GetHeadingDegrees() const;
                 
             private:
                 
-                Eegeo::Resources::Interiors::InteriorsCameraController& m_interiorCameraController;
+                const std::shared_ptr<Eegeo::Resources::Interiors::InteriorsCameraController> m_interiorCameraController;
             };
         }
     }

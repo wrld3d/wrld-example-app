@@ -16,10 +16,10 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                EegeoSearchService::EegeoSearchService(IEegeoSearchQueryFactory& EegeoSearchQueryFactory,
-                                                               IEegeoParser& EegeoParser,
-                                                               Net::SdkModel::INetworkCapabilities& networkCapabilities,
-                                                               const std::vector<std::string>& availableCategories)
+                EegeoSearchService::EegeoSearchService(const std::shared_ptr<IEegeoSearchQueryFactory>& EegeoSearchQueryFactory,
+                                                       const std::shared_ptr<IEegeoParser>& EegeoParser,
+                                                       const std::shared_ptr<Net::SdkModel::INetworkCapabilities>& networkCapabilities,
+                                                       const std::vector<std::string>& availableCategories)
                 : Search::SdkModel::SearchServiceBase(availableCategories)
                 , m_eeGeoSearchQueryFactory(EegeoSearchQueryFactory)
                 , m_eeGeoParser(EegeoParser)
@@ -30,13 +30,13 @@ namespace ExampleApp
                 , m_hasActiveQuery(false)
                 , m_networkCapabilitiesChangedHandler(this, &EegeoSearchService::HandleNetworkCapabilitiesChanged)
                 {
-                    m_networkCapabilities.RegisterChangedCallback(m_networkCapabilitiesChangedHandler);
+                    m_networkCapabilities->RegisterChangedCallback(m_networkCapabilitiesChangedHandler);
                 }
                 
                 EegeoSearchService::~EegeoSearchService()
                 {
                     CancelInFlightQueries();
-                    m_networkCapabilities.UnregisterChangedCallback(m_networkCapabilitiesChangedHandler);
+                    m_networkCapabilities->UnregisterChangedCallback(m_networkCapabilitiesChangedHandler);
                 }
                 
                 void EegeoSearchService::CancelInFlightQueries()
@@ -64,7 +64,7 @@ namespace ExampleApp
                     CancelInFlightQueries();
                     
                     ExecuteQueryPerformedCallbacks(query);
-                    if(m_networkCapabilities.StreamOverWifiOnly() && !m_networkCapabilities.ConnectedToWifi())
+                    if(m_networkCapabilities->StreamOverWifiOnly() && !m_networkCapabilities->ConnectedToWifi())
                     {
                         ExecutQueryResponseReceivedCallbacks(query, std::vector<Search::SdkModel::SearchResultModel>());
                         return;
@@ -73,8 +73,8 @@ namespace ExampleApp
                     m_currentQueryModel = query;
                     m_hasActiveQuery = true;
                     
-                    m_pCurrentRequest = m_eeGeoSearchQueryFactory.CreateEegeoSearchForQuery(m_currentQueryModel,
-                                                                                                  m_searchCallback);
+                    m_pCurrentRequest = m_eeGeoSearchQueryFactory->CreateEegeoSearchForQuery(m_currentQueryModel,
+                                                                                             m_searchCallback);
                 }
                 
                 void EegeoSearchService::PerformIdentitySearch(const Search::SdkModel::SearchResultModel& outdatedSearchResult,
@@ -91,7 +91,7 @@ namespace ExampleApp
                     if(m_pCurrentRequest != NULL && m_pCurrentRequest->IsSucceeded())  // Needs NULL check because callback can happen before factory returns query
                     {
                         const std::string& response(m_pCurrentRequest->ResponseString());
-                        m_eeGeoParser.ParseEegeoQueryResults(response, queryResults);
+                        m_eeGeoParser->ParseEegeoQueryResults(response, queryResults);
                     }
                     
                     m_hasActiveQuery = false;
@@ -100,7 +100,7 @@ namespace ExampleApp
                 
                 void EegeoSearchService::HandleNetworkCapabilitiesChanged()
                 {
-                    if (!m_networkCapabilities.NetworkAvailable())
+                    if (!m_networkCapabilities->NetworkAvailable())
                     {
                         CancelInFlightQueries();
                     }

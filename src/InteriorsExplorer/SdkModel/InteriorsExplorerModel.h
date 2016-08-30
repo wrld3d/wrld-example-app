@@ -25,11 +25,11 @@ namespace ExampleApp
             class InteriorsExplorerModel : private Eegeo::NonCopyable
             {
             public:
-                InteriorsExplorerModel(Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                       Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                       VisualMap::SdkModel::IVisualMapService& visualMapService,
-                                       ExampleAppMessaging::TMessageBus& messageBus,
-                                       Metrics::IMetricsService& metricsService);
+                InteriorsExplorerModel(const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel,
+                                       const std::shared_ptr<Eegeo::Resources::Interiors::InteriorSelectionModel>& interiorSelectionModel,
+                                       const std::shared_ptr<VisualMap::SdkModel::IVisualMapService>& visualMapService,
+                                       const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                       const std::shared_ptr<Metrics::IMetricsService>& metricsService);
                 ~InteriorsExplorerModel();
                 
                 void SelectFloor(int floor);
@@ -59,12 +59,11 @@ namespace ExampleApp
                 
                 void PublishInteriorExplorerStateChange();
 
-                Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
-                Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
-                VisualMap::SdkModel::IVisualMapService& m_visualMapService;
-
-                ExampleAppMessaging::TMessageBus& m_messageBus;
-                Metrics::IMetricsService& m_metricsService;
+                const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel> m_interiorInteractionModel;
+                const std::shared_ptr<Eegeo::Resources::Interiors::InteriorSelectionModel> m_interiorSelectionModel;
+                const std::shared_ptr<VisualMap::SdkModel::IVisualMapService> m_visualMapService;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
+                const std::shared_ptr<Metrics::IMetricsService> m_metricsService;
                 
                 Eegeo::Helpers::TCallback0<InteriorsExplorerModel> m_interactionModelStateChangedCallback;
                 

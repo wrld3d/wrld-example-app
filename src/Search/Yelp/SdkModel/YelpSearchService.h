@@ -27,11 +27,11 @@ namespace ExampleApp
             class YelpSearchService : public Search::SdkModel::SearchServiceBase, private Eegeo::NonCopyable
             {
             private:
-                YelpSearchQueryFactory& m_searchQueryFactory;
-                YelpBusinessQueryFactory& m_yelpBusinessQueryFactory;
+                std::shared_ptr<YelpSearchQueryFactory> m_searchQueryFactory;
+                std::shared_ptr<YelpBusinessQueryFactory> m_yelpBusinessQueryFactory;
                 
-                Search::SdkModel::ISearchResultParser& m_searchResultParser;
-                Net::SdkModel::INetworkCapabilities& m_networkCapabilities;
+                std::shared_ptr<Search::SdkModel::ISearchResultParser> m_searchResultParser;
+                std::shared_ptr<Net::SdkModel::INetworkCapabilities> m_networkCapabilities;
                 
                 Search::SdkModel::SearchQuery m_currentQueryModel;
                 Eegeo::Helpers::TCallback0<YelpSearchService> m_poiSearchCallback;
@@ -39,10 +39,10 @@ namespace ExampleApp
                 bool m_hasActiveQuery;
                 
             public:
-                YelpSearchService(YelpSearchQueryFactory& searchQueryFactory,
-                                  YelpBusinessQueryFactory& yelpBusinessQueryFactory,
-                                  Search::SdkModel::ISearchResultParser& searchResultParser,
-                                  Net::SdkModel::INetworkCapabilities& networkCapabilities,
+                YelpSearchService(const std::shared_ptr<YelpSearchQueryFactory>& searchQueryFactory,
+                                  const std::shared_ptr<YelpBusinessQueryFactory>& yelpBusinessQueryFactory,
+                                  const std::shared_ptr<Search::SdkModel::ISearchResultParser>& searchResultParser,
+                                  const std::shared_ptr<Net::SdkModel::INetworkCapabilities>& networkCapabilities,
                                   const std::vector<std::string>& availableCategories);
                 
                 ~YelpSearchService();

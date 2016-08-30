@@ -2,14 +2,7 @@
 
 #pragma once
 
-#include "ISearchServiceModule.h"
-
-#include "Types.h"
-#include "UrlHelpers.h"
-#include "Web.h"
-#include "GeoNames.h"
-#include "NetIncludes.h"
-#include "Search.h"
+#include "Hypodermic/ContainerBuilder.h"
 
 namespace ExampleApp
 {
@@ -19,23 +12,14 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                class GeoNamesSearchServiceModule : public Search::SdkModel::ISearchServiceModule, private Eegeo::NonCopyable
+                class GeoNamesSearchServiceModule
                 {
-                private:
-                    IGeoNamesSearchQueryFactory* m_pGeoNamesSearchQueryFactory;
-                    IGeoNamesParser* m_pGeoNamesParser;
-                    Search::SdkModel::ISearchService* m_pSearchService;
                 public:
-                    GeoNamesSearchServiceModule(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
-                                                Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
-                                                Net::SdkModel::INetworkCapabilities& networkCapabilities,
-                                                const std::string& geoNamesUserName);
+                    GeoNamesSearchServiceModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder);
                     
-                    ~GeoNamesSearchServiceModule();
-                    
-                    Search::SdkModel::ISearchService& GetSearchService() const;
-                    
-                    std::vector<CategorySearch::View::CategorySearchModel> GetCategorySearchModels() const;
+                    void Register();
+                private:
+                    const std::shared_ptr<Hypodermic::ContainerBuilder> m_builder;
                 };
             }
         }

@@ -17,16 +17,16 @@ namespace ExampleApp
         {
             class TourActiveStateChangedMessageHandler : private Eegeo::NonCopyable
             {
-                ITourService& m_tourService;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<ITourService> m_tourService;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 
                 Eegeo::Helpers::TCallback1<TourActiveStateChangedMessageHandler, const TourActiveStateChangedMessage&> m_binding;
                 
                 void HandleTourActiveStateChanged(const TourActiveStateChangedMessage& message);
                 
             public:
-                TourActiveStateChangedMessageHandler(ITourService& tourService,
-                                                     ExampleAppMessaging::TMessageBus& messageBus);
+                TourActiveStateChangedMessageHandler(const std::shared_ptr<ITourService>& tourService,
+                                                     const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
                 
                 ~TourActiveStateChangedMessageHandler();
             };

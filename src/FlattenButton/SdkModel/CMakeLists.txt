@@ -11,7 +11,6 @@ set(currsources
   ../src/FlattenButton/SdkModel/FlattenButtonViewStateChangedObserver.cpp
   ../src/FlattenButton/SdkModel/FlattenButtonViewStateChangedObserver.h
   ../src/FlattenButton/SdkModel/IFlattenButtonModel.h
-  ../src/FlattenButton/SdkModel/IFlattenButtonModule.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\FlattenButton\\SdkModel FILES ${currsources})

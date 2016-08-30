@@ -9,6 +9,8 @@
 #include "IMenuViewModel.h"
 #include "ICallback.h"
 #include "IMenuIgnoredReactionModel.h"
+#include "IOpenableControlViewModel.h"
+#include "IScreenControlViewModel.h"
 
 namespace ExampleApp
 {
@@ -18,20 +20,20 @@ namespace ExampleApp
         {
             class ReactionModel : public IReactionModel, private Eegeo::NonCopyable
             {
-                IReactionControllerModel& m_reactionControllerModel;
+                const std::shared_ptr<IReactionControllerModel> m_reactionControllerModel;
 
-                std::vector<OpenableControl::View::IOpenableControlViewModel*> m_openables;
-                std::vector<ScreenControl::View::IScreenControlViewModel*> m_reactors;
+                const std::shared_ptr<OpenableControl::View::TOpenables> m_openables;
+                const std::shared_ptr<ScreenControl::View::TReactors> m_reactors;
 
-                Menu::View::IMenuIgnoredReactionModel& m_menuIgnoredReaction;
+                const std::shared_ptr<Menu::View::IMenuIgnoredReactionModel> m_menuIgnoredReaction;
 
                 Eegeo::Helpers::ICallback2<OpenableControl::View::IOpenableControlViewModel&, float>* m_pMenuOpenStateChangedCallback;
 
             public:
-                ReactionModel(IReactionControllerModel& reactionControllerModel,
-                              const std::vector<OpenableControl::View::IOpenableControlViewModel*>& openables,
-                              const std::vector<ScreenControl::View::IScreenControlViewModel*>& reactors,
-                              Menu::View::IMenuIgnoredReactionModel& menuIgnoredReaction);
+                ReactionModel(const std::shared_ptr<IReactionControllerModel>& reactionControllerModel,
+                              const std::shared_ptr<OpenableControl::View::TOpenables>& openables,
+                              const std::shared_ptr<ScreenControl::View::TReactors>& reactors,
+                              const std::shared_ptr<Menu::View::IReactorIgnoredReactionModel>& menuIgnoredReaction);
 
                 ~ReactionModel();
 

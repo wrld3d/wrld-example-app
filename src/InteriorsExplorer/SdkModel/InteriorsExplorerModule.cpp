@@ -12,6 +12,16 @@
 #include "InteriorExplorerUserInteractionModel.h"
 #include "IInitialExperienceModel.h"
 #include "InteriorsExplorerFloorDraggedObserver.h"
+#include "InteriorsUINotificationService.h"
+#include "InteriorCameraController.h"
+#include "InteriorTransitionModel.h"
+#include "InteriorSelectionModel.h"
+#include "InteriorInteractionModel.h"
+#include "InteriorMarkerModelRepository.h"
+#include "IWorldPinsService.h"
+#include "IVisualMapService.h"
+#include "IMetricsService.h"
+#include "IWorldPinIconMapping.h"
 
 namespace ExampleApp
 {
@@ -19,115 +29,26 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            InteriorsExplorerModule::InteriorsExplorerModule(Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                                             Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                             Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
-                                                             Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
-                                                             WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                                             WorldPins::SdkModel::IWorldPinsScaleController& worldPinsScaleController,
-                                                             const WorldPins::SdkModel::IWorldPinIconMapping& worldPinIconMapping,
-                                                             const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                                             VisualMap::SdkModel::IVisualMapService& visualMapService,
-                                                             const Eegeo::Resources::Interiors::InteriorsCameraControllerFactory& interiorCameraControllerFactory,
-                                                             const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                                             Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                                             ExampleAppMessaging::TMessageBus& messageBus,
-                                                             Metrics::IMetricsService& metricsService,
-                                                             const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel,
-                                                             const bool interiorsAffectedByFlattening,
-                                                             InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsEntitiesPinsController)
+            void InteriorsExplorerModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
             {
-                m_pUserInteractionModel = Eegeo_NEW(InteriorExplorerUserInteractionModel)();
-                
-                const float transitionTime = 0.5f;
-                m_pVisibilityUpdater = Eegeo_NEW(InteriorVisibilityUpdater)(interiorTransitionModel, interiorSelectionModel, interiorInteractionModel, transitionTime);
-                
-                m_pGlobeCameraTouchController = interiorCameraControllerFactory.CreateTouchController();
-                
-                m_pGlobeCameraController = interiorCameraControllerFactory.CreateInteriorGlobeCameraController(*m_pGlobeCameraTouchController);
-
-                m_pInteriorsCameraController = interiorCameraControllerFactory.CreateInteriorsCameraController(*m_pGlobeCameraTouchController,
-                                                                                                               *m_pGlobeCameraController);
-                
-                
-                m_pWorldPinController = Eegeo_NEW(InteriorWorldPinController)(interiorSelectionModel,
-                                                                              markerRepository,
-                                                                              worldPinsService,
-                                                                              *m_pInteriorsCameraController,
-                                                                              messageBus,
-                                                                              initialExperienceModel);
-                
-                m_pModel = Eegeo_NEW(InteriorsExplorerModel)(interiorInteractionModel,
-                                                             interiorSelectionModel,
-                                                             visualMapService,
-                                                             messageBus,
-                                                             metricsService);
-                
-                m_pViewModel = Eegeo_NEW(View::InteriorsExplorerViewModel)(false, identityProvider.GetNextIdentity(), messageBus);
-                
-                m_pFloorDraggedObserver = Eegeo_NEW(InteriorsExplorerFloorDraggedObserver)(*m_pModel, m_pInteriorsCameraController->GetTouchController());
-
-                m_pUINotificationService = Eegeo_NEW(InteriorsUINotificationService)(messageBus, interiorsEntitiesPinsController, worldPinIconMapping);
-            }
-            
-            InteriorsExplorerModule::~InteriorsExplorerModule()
-            {
-                Eegeo_DELETE m_pUINotificationService;
-                Eegeo_DELETE m_pFloorDraggedObserver;
-                Eegeo_DELETE m_pViewModel;
-                Eegeo_DELETE m_pModel;
-                Eegeo_DELETE m_pWorldPinController;
-                Eegeo_DELETE m_pInteriorsCameraController;
-                Eegeo_DELETE m_pGlobeCameraTouchController;
-                Eegeo_DELETE m_pGlobeCameraController;
-                Eegeo_DELETE m_pVisibilityUpdater;
-                Eegeo_DELETE m_pUserInteractionModel;
-            }
-            
-            View::InteriorsExplorerViewModel& InteriorsExplorerModule::GetInteriorsExplorerViewModel() const
-            {
-                return *m_pViewModel;
-            }
-            
-            ScreenControl::View::IScreenControlViewModel& InteriorsExplorerModule::GetScreenControlViewModel() const
-            {
-                return *m_pViewModel;
-            }
-            
-            InteriorVisibilityUpdater& InteriorsExplorerModule::GetInteriorVisibilityUpdater() const
-            {
-                return *m_pVisibilityUpdater;
-            }
-            
-            Eegeo::Resources::Interiors::InteriorsCameraController& InteriorsExplorerModule::GetInteriorsCameraController() const
-            {
-                return *m_pInteriorsCameraController;
-            }
-            
-            void InteriorsExplorerModule::Update(float dt) const
-            {
-                m_pVisibilityUpdater->Update(dt);
-                m_pWorldPinController->Update(dt);
-            }
-            
-            InteriorsExplorerModel& InteriorsExplorerModule::GetInteriorsExplorerModel() const
-            {
-                return *m_pModel;
-            }
-            
-            Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& InteriorsExplorerModule::GetTouchController() const
-            {
-                return *m_pGlobeCameraTouchController;
-            }
-            
-            InteriorExplorerUserInteractionModel& InteriorsExplorerModule::GetInteriorsExplorerUserInteractionModel() const
-            {
-                return *m_pUserInteractionModel;
-            }
-
-            InteriorsUINotificationService & InteriorsExplorerModule::GetInteriorsUINotificationService() const
-            {
-                return *m_pUINotificationService;
+                builder->registerType<InteriorExplorerUserInteractionModel>().singleInstance();
+                builder->registerType<InteriorVisibilityUpdater>().singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                   {
+                                                       auto factory = context.resolve<Eegeo::Resources::Interiors::InteriorsCameraControllerFactory>();
+                                                       auto touchController = std::shared_ptr<Eegeo::Camera::GlobeCamera::GlobeCameraTouchController>(factory->CreateTouchController());
+                                                       auto cameraController = std::shared_ptr<Eegeo::Camera::GlobeCamera::GlobeCameraController>(factory->CreateInteriorGlobeCameraController(*touchController));
+                                                       auto sdkCameraController = std::shared_ptr<Eegeo::Resources::Interiors::InteriorsCameraController>(factory->CreateInteriorsCameraController(*touchController, *cameraController));
+                                                       return std::make_shared<InteriorCameraController>(touchController, cameraController, sdkCameraController);
+                                                   }).as<IInteriorCameraController>().singleInstance();
+                builder->registerType<InteriorWorldPinController>().singleInstance();
+                builder->registerType<InteriorsExplorerModel>().singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                   {
+                                                       return std::make_shared<View::InteriorsExplorerViewModel>(false, context.resolve<Eegeo::Helpers::IIdentityProvider>(), context.resolve<ExampleAppMessaging::TMessageBus>());
+                                                   }).singleInstance();
+                builder->registerType<InteriorsExplorerFloorDraggedObserver>().singleInstance();
+                builder->registerType<InteriorsUINotificationService>().singleInstance();
             }
         }
     }

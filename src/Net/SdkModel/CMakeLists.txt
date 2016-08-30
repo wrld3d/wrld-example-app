@@ -2,6 +2,8 @@ set(headers ${headers} ../src/Net/SdkModel
 )
 set(currsources
   ../src/Net/SdkModel/CMakeLists.txt
+  ../src/Net/SdkModel/NetworkModule.h
+  ../src/Net/SdkModel/NetworkModule.cpp
   ../src/Net/SdkModel/ConnectivityChangedObserver.cpp
   ../src/Net/SdkModel/ConnectivityChangedObserver.h
   ../src/Net/SdkModel/ExampleAppCustomWebLoadRequestFactory.cpp

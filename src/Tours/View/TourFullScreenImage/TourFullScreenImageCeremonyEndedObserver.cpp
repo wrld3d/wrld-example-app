@@ -10,24 +10,24 @@ namespace ExampleApp
         {
             namespace TourFullScreenImage
             {
-                TourFullScreenImageCeremonyEndedObserver::TourFullScreenImageCeremonyEndedObserver(ITourFullScreenImageViewModel& tourFullScreenImageViewModel,
-                                                                                                   ExampleAppMessaging::TMessageBus& messageBus)
+                TourFullScreenImageCeremonyEndedObserver::TourFullScreenImageCeremonyEndedObserver(const std::shared_ptr<ITourFullScreenImageViewModel>& tourFullScreenImageViewModel,
+                                                                                                   const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
                 : m_tourFullScreenImageViewModel(tourFullScreenImageViewModel)
                 , m_messageBus(messageBus)
                 , m_binding(this, &TourFullScreenImageCeremonyEndedObserver::HandleTourFullScreenImageCeremonyEnded)
                 {
                     
-                    m_messageBus.SubscribeUi(m_binding);
+                    m_messageBus->SubscribeUi(m_binding);
                 }
                 
                 TourFullScreenImageCeremonyEndedObserver::~TourFullScreenImageCeremonyEndedObserver()
                 {
-                    m_messageBus.UnsubscribeUi(m_binding);
+                    m_messageBus->UnsubscribeUi(m_binding);
                 }
                 
                 void TourFullScreenImageCeremonyEndedObserver::HandleTourFullScreenImageCeremonyEnded(const TourFullScreenImageCeremonyEndedMessage& message)
                 {
-                    m_tourFullScreenImageViewModel.EndFullScreenImageCeremony();
+                    m_tourFullScreenImageViewModel->EndFullScreenImageCeremony();
                 }
             }
         }

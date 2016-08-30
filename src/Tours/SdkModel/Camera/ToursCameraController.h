@@ -21,13 +21,27 @@ namespace ExampleApp
         {
             namespace Camera
             {
+                class TourGlobeCameraTouchController : public Eegeo::Camera::GlobeCamera::GlobeCameraTouchController
+                {
+                public:
+                    TourGlobeCameraTouchController(Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration config,
+                                                   const std::shared_ptr<Eegeo::Rendering::ScreenProperties>& screenProperties)
+                    : GlobeCameraTouchController(config, *screenProperties)
+                    , m_screenProperties(screenProperties)
+                    {
+                    }
+                private:
+                    const std::shared_ptr<Eegeo::Rendering::ScreenProperties> m_screenProperties;
+                };
+        
+                
                 class ToursCameraController : public IToursCameraController, private Eegeo::NonCopyable
                 {
                 public:
                     
-                    ToursCameraController(const Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
-                                          Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& touchController,
-                                          const Eegeo::Rendering::ScreenProperties& screenProperties);
+                    ToursCameraController(const std::shared_ptr<Eegeo::Streaming::ResourceCeilingProvider>& resourceCeilingProvider,
+                                          const std::shared_ptr<TourGlobeCameraTouchController>& touchController,
+                                          const std::shared_ptr<Eegeo::Rendering::ScreenProperties>& screenProperties);
                     
                     void Update(float dt);
                     
@@ -37,7 +51,7 @@ namespace ExampleApp
                     const Eegeo::Camera::RenderCamera GetRenderCamera() const { return m_camera; }
                     Eegeo::dv3 ComputeNonFlattenedCameraPosition() const { return m_camera.GetEcefLocation(); }
                     
-                    Eegeo::ITouchController& GetTouchController() const { return m_touchController; }
+                    Eegeo::ITouchController& GetTouchController() const { return *m_touchController; }
                     
                     void UpdateScreenProperties(const Eegeo::Rendering::ScreenProperties& screenProperties);
                     
@@ -46,13 +60,13 @@ namespace ExampleApp
                 private:
                     
                     Eegeo::Camera::RenderCamera m_camera;
-                    const Eegeo::Streaming::ResourceCeilingProvider& m_resourceCeilingProvider;
+                    const std::shared_ptr<const Eegeo::Streaming::ResourceCeilingProvider> m_resourceCeilingProvider;
                     
                     void UpdateCamera();
                     void UpdateFovAndClippingPlanes();
                     
                     IToursCameraMode* m_pCurrentMode;
-                    Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& m_touchController;
+                    const std::shared_ptr<Eegeo::Camera::GlobeCamera::GlobeCameraTouchController> m_touchController;
 
                 };
             }

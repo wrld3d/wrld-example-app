@@ -14,7 +14,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            AppModeModel::AppModeModel(ExampleAppMessaging::TMessageBus& messageBus)
+            AppModeModel::AppModeModel(const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
             : m_messageBus(messageBus)
             , m_appMode(WorldMode)
             , m_previousAppMode(WorldMode)
@@ -65,7 +65,7 @@ namespace ExampleApp
                     m_switchAppMode = false;
                     
                     m_appModeChangedCallbacks.ExecuteCallbacks();
-                    m_messageBus.Publish(AppModeChangedMessage(m_appMode));
+                    m_messageBus->Publish(AppModeChangedMessage(m_appMode));
                     m_pStateMachine->ChangeToState(m_appMode);
                 }
                 

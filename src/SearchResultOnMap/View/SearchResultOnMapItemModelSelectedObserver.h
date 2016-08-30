@@ -17,18 +17,18 @@ namespace ExampleApp
         {
             class SearchResultOnMapItemModelSelectedObserver : private Eegeo::NonCopyable
             {
-                SearchResultPoi::View::ISearchResultPoiViewModel& m_searchResultPoiViewModel;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<SearchResultPoi::View::ISearchResultPoiViewModel> m_searchResultPoiViewModel;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 Eegeo::Helpers::TCallback1<SearchResultOnMapItemModelSelectedObserver, const SearchResultOnMapItemModelSelectedMessage&> m_handlerBinding;
 
                 void OnSearchResultOnMapItemModelSelectedMessage(const SearchResultOnMapItemModelSelectedMessage& message);
 
-                const Menu::View::IMenuReactionModel& m_menuReaction;
+                const std::shared_ptr<const Menu::View::IMenuReactionModel> m_menuReaction;
 
             public:
-                SearchResultOnMapItemModelSelectedObserver(SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
-                        ExampleAppMessaging::TMessageBus& messageBus,
-                        const Menu::View::IMenuReactionModel& menuReaction);
+                SearchResultOnMapItemModelSelectedObserver(const std::shared_ptr<SearchResultPoi::View::ISearchResultPoiViewModel>& searchResultPoiViewModel,
+                                                           const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                                           const std::shared_ptr<Menu::View::IMenuReactionModel>& menuReaction);
 
                 ~SearchResultOnMapItemModelSelectedObserver();
             };

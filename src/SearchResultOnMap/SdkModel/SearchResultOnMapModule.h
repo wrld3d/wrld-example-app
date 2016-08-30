@@ -2,23 +2,7 @@
 
 #pragma once
 
-#include "Types.h"
-#include "Search.h"
-#include "ISearchResultOnMapModule.h"
-#include "SearchResultOnMap.h"
-#include "SearchResultPoi.h"
-#include "WorldPins.h"
-#include "Location.h"
-#include "Modality.h"
-#include "IIdentity.h"
-#include "Rendering.h"
-#include "Camera.h"
-#include "SearchResultOnMapItemModelSelectedObserver.h"
-#include "BidirectionalBus.h"
-#include "CategorySearch.h"
-#include "MyPins.h"
-#include "IMetricsService.h"
-#include "IMenuReactionModel.h"
+#include "IModule.h"
 
 namespace ExampleApp
 {
@@ -26,28 +10,10 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class SearchResultOnMapModule: public ISearchResultOnMapModule, private Eegeo::NonCopyable
+            class SearchResultOnMapModule : public IModule
             {
-            private:
-                ISearchResultOnMapModel* m_pSearchResultOnMapModel;
-                View::ISearchResultOnMapFactory* m_pSearchResultOnMapFactory;
-                View::SearchResultOnMapItemModelSelectedObserver* m_pSearchResultOnMapItemModelSelectedObserver;
-
             public:
-                SearchResultOnMapModule(Search::SdkModel::ISearchResultRepository& searchResultRepository,
-                                        SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
-                                        WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                        MyPins::SdkModel::IMyPinsService& myPinsService,
-                                        CategorySearch::ISearchResultIconCategoryMapper& searchResultOnMapIconCategoryMapper,
-                                        Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultMyPinsService,
-                                        ExampleAppMessaging::TMessageBus& messageBus,
-                                        Metrics::IMetricsService& metricsService,
-                                        const Menu::View::IMenuReactionModel& menuReaction);
-
-                ~SearchResultOnMapModule();
-
-                ISearchResultOnMapModel& GetSearchResultOnMapModel() const;
-
+                void Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder);
             };
         }
     }

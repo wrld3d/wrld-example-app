@@ -7,6 +7,7 @@
 #include "Yelp.h"
 #include "Web.h"
 #include "ICallback.h"
+#include "ApplicationConfiguration.h"
 #include "liboauthcpp.h"
 
 namespace ExampleApp
@@ -20,13 +21,10 @@ namespace ExampleApp
                 class YelpBusinessQueryFactory : private Eegeo::NonCopyable
                 {
                 public:
-                    YelpBusinessQueryFactory(
-                                             const std::string& yelpConsumerKey,
-                                             const std::string& yelpConsumerSecret,
-                                             const std::string& yelpOAuthToken,
-                                             const std::string& yelpOAuthTokenSecret,
-                                             const YelpBusinessJsonParser& yelpBusinessParser,
-                                             Eegeo::Web::IWebLoadRequestFactory& webRequestFactory);
+                    YelpBusinessQueryFactory(const std::shared_ptr<ExampleApp::ApplicationConfig::ApplicationConfiguration>& config,
+                                             const std::shared_ptr<YelpBusinessJsonParser>& yelpBusinessParser,
+                                             const std::shared_ptr<Eegeo::Web::IWebLoadRequestFactory>& webRequestFactory
+                                             );
                     
                     virtual ~YelpBusinessQueryFactory() {;}
                     
@@ -41,8 +39,8 @@ namespace ExampleApp
                     OAuth::Token m_token;
 
                     
-                    const YelpBusinessJsonParser& m_yelpBusinessParser;
-                    Eegeo::Web::IWebLoadRequestFactory& m_webRequestFactory;
+                    std::shared_ptr<const YelpBusinessJsonParser> m_yelpBusinessParser;
+                    std::shared_ptr<Eegeo::Web::IWebLoadRequestFactory> m_webRequestFactory;
                 };
             }
         }

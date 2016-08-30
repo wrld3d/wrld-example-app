@@ -12,41 +12,41 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            AppGlobeCameraWrapper::AppGlobeCameraWrapper(Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& gpsGlobeCameraController)
+            AppGlobeCameraWrapper::AppGlobeCameraWrapper(const std::shared_ptr<Eegeo::Camera::GlobeCamera::GpsGlobeCameraController>& gpsGlobeCameraController)
             : m_gpsGlobeCameraController(gpsGlobeCameraController)
             {
             }
             
             void AppGlobeCameraWrapper::Update(float dt)
             {
-                m_gpsGlobeCameraController.Update(dt);
+                m_gpsGlobeCameraController->Update(dt);
             }
             
             const Eegeo::Camera::CameraState AppGlobeCameraWrapper::GetCameraState() const
             {
-                return m_gpsGlobeCameraController.GetCameraState();
+                return m_gpsGlobeCameraController->GetCameraState();
             }
             
             const Eegeo::Camera::RenderCamera AppGlobeCameraWrapper::GetRenderCamera() const
             {
-                return m_gpsGlobeCameraController.GetRenderCamera();
+                return m_gpsGlobeCameraController->GetRenderCamera();
             }
             
             Eegeo::dv3 AppGlobeCameraWrapper::ComputeNonFlattenedCameraPosition() const
             {
-                return m_gpsGlobeCameraController.GetGlobeCameraController().ComputeNonFlattenedCameraPosition();
+                return m_gpsGlobeCameraController->GetGlobeCameraController().ComputeNonFlattenedCameraPosition();
             }
             
             Eegeo::ITouchController& AppGlobeCameraWrapper::GetTouchController() const
             {
-                return m_gpsGlobeCameraController.GetTouchController();
+                return m_gpsGlobeCameraController->GetTouchController();
             }
             
             float AppGlobeCameraWrapper::GetHeadingDegrees() const
             {
                 Eegeo::Space::EcefTangentBasis cameraInterestBasis;
-                float headingRadians = Eegeo::Camera::CameraHelpers::GetAbsoluteBearingRadians(m_gpsGlobeCameraController.GetInterestBasis().GetPointEcef(),
-                                                                                               m_gpsGlobeCameraController.GetInterestBasis().GetForward());
+                float headingRadians = Eegeo::Camera::CameraHelpers::GetAbsoluteBearingRadians(m_gpsGlobeCameraController->GetInterestBasis().GetPointEcef(),
+                                                                                               m_gpsGlobeCameraController->GetInterestBasis().GetForward());
                 
                 return Eegeo::Math::Rad2Deg(headingRadians);
             }

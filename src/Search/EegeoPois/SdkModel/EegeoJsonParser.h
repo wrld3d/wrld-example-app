@@ -19,11 +19,11 @@ namespace ExampleApp
             {
                 class EegeoJsonParser : public IEegeoParser, private Eegeo::NonCopyable
                 {
-                    const SearchResultPoi::SdkModel::ICategoryIconMapper& m_categoryIconMapper;
-                    const EegeoReadableTagMapper& m_tagReadableNameMapper;
+                    std::shared_ptr<const SearchResultPoi::SdkModel::ICategoryIconMapper> m_categoryIconMapper;
+                    std::shared_ptr<const EegeoReadableTagMapper> m_tagReadableNameMapper;
                 public:
-                    EegeoJsonParser(const SearchResultPoi::SdkModel::ICategoryIconMapper& tagIconMapper,
-                                    const EegeoReadableTagMapper& tagReadableNameMapper);
+                    EegeoJsonParser(const std::shared_ptr<SearchResultPoi::SdkModel::ICategoryIconMapper>& tagIconMapper,
+                                    const std::shared_ptr<EegeoReadableTagMapper>& tagReadableNameMapper);
                     
                     void ParseEegeoQueryResults(const std::string& serialized,
                                                 std::vector<Search::SdkModel::SearchResultModel>& out_results);

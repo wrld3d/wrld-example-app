@@ -2,7 +2,9 @@ set(headers ${headers} ../src/InteriorsExplorer/SdkModel
 )
 set(currsources
   ../src/InteriorsExplorer/SdkModel/CMakeLists.txt
-  ../src/InteriorsExplorer/SdkModel/IInteriorsExplorerModule.h
+  ../src/InteriorsExplorer/SdkModel/IInteriorCameraController.h
+  ../src/InteriorsExplorer/SdkModel/InteriorCameraController.h
+  ../src/InteriorsExplorer/SdkModel/InteriorCameraController.cpp
   ../src/InteriorsExplorer/SdkModel/InteriorExplorerUserInteractionModel.cpp
   ../src/InteriorsExplorer/SdkModel/InteriorExplorerUserInteractionModel.h
   ../src/InteriorsExplorer/SdkModel/InteriorsExplorerModel.cpp

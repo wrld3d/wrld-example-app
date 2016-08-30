@@ -9,8 +9,8 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            MyPinSelectionHandlerFactory::MyPinSelectionHandlerFactory(MyPins::SdkModel::IMyPinBoundObjectRepository& myPinBoundObjectRepository,
-                                                                       Metrics::IMetricsService& metricsService)
+            MyPinSelectionHandlerFactory::MyPinSelectionHandlerFactory(const std::shared_ptr<MyPins::SdkModel::IMyPinBoundObjectRepository>& myPinBoundObjectRepository,
+                                                                       const std::shared_ptr<Metrics::IMetricsService>& metricsService)
             : m_myPinBoundObjectRepository(myPinBoundObjectRepository)
             , m_metricsService(metricsService)
             {
@@ -19,7 +19,7 @@ namespace ExampleApp
             
             MyPinSelectionHandler* MyPinSelectionHandlerFactory::CreateMyPinSelectionHandler(MyPinModel& myPinModel) const
             {
-                return Eegeo_NEW(MyPinSelectionHandler)(myPinModel, m_myPinBoundObjectRepository, m_metricsService);
+                return Eegeo_NEW(MyPinSelectionHandler)(myPinModel, *m_myPinBoundObjectRepository, *m_metricsService);
             }
         }
     }

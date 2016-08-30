@@ -9,9 +9,9 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            SearchQueryObserver::SearchQueryObserver(ISearchService& searchService,
-                    ISearchQueryPerformer& searchQueryPerformer,
-                    ExampleAppMessaging::TMessageBus& messageBus)
+            SearchQueryObserver::SearchQueryObserver(const std::shared_ptr<ISearchService>& searchService,
+                                                     const std::shared_ptr<ISearchQueryPerformer>& searchQueryPerformer,
+                                                     const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
                 : m_searchService(searchService)
                 , m_searchQueryPerformer(searchQueryPerformer)
                 , m_messageBus(messageBus)
@@ -19,33 +19,33 @@ namespace ExampleApp
                 , m_searchQueryResponseCallback(this, &SearchQueryObserver::HandleSearchQueryResponseReceived)
                 , m_searchQueryResultsClearedCallback(this, &SearchQueryObserver::HandleSearchQueryCleared)
             {
-                m_searchService.InsertOnPerformedQueryCallback(m_searchQueryPerformedCallback);
-                m_searchService.InsertOnReceivedQueryResultsCallback(m_searchQueryResponseCallback);
+                m_searchService->InsertOnPerformedQueryCallback(m_searchQueryPerformedCallback);
+                m_searchService->InsertOnReceivedQueryResultsCallback(m_searchQueryResponseCallback);
                 
-                m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(m_searchQueryResultsClearedCallback);
+                m_searchQueryPerformer->InsertOnSearchResultsClearedCallback(m_searchQueryResultsClearedCallback);
             }
 
             SearchQueryObserver::~SearchQueryObserver()
             {
-                m_searchService.RemoveOnPerformedQueryCallback(m_searchQueryPerformedCallback);
-                m_searchService.RemoveOnReceivedQueryResultsCallback(m_searchQueryResponseCallback);
+                m_searchService->RemoveOnPerformedQueryCallback(m_searchQueryPerformedCallback);
+                m_searchService->RemoveOnReceivedQueryResultsCallback(m_searchQueryResponseCallback);
                 
-                m_searchQueryPerformer.RemoveOnSearchResultsClearedCallback(m_searchQueryResultsClearedCallback);
+                m_searchQueryPerformer->RemoveOnSearchResultsClearedCallback(m_searchQueryResultsClearedCallback);
             }
 
             void SearchQueryObserver::HandleSearchQueryPerformed(const SearchQuery& query)
             {
-                m_messageBus.Publish(SearchQueryPerformedMessage(query));
+                m_messageBus->Publish(SearchQueryPerformedMessage(query));
             }
 
             void SearchQueryObserver::HandleSearchQueryResponseReceived(const SearchQuery& query, const std::vector<SearchResultModel>& results)
             {
-                m_messageBus.Publish(SearchQueryResponseReceivedMessage(query, results));
+                m_messageBus->Publish(SearchQueryResponseReceivedMessage(query, results));
             }
 
             void SearchQueryObserver::HandleSearchQueryCleared()
             {
-                m_messageBus.Publish(SearchQueryRemovedMessage());
+                m_messageBus->Publish(SearchQueryRemovedMessage());
             }
         }
     }

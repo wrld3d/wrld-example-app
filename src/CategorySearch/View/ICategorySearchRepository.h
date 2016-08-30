@@ -18,6 +18,8 @@ namespace ExampleApp
 
                 virtual bool TryGetCategorySearchNameByQuery(const std::string& query, std::string& out_name) const = 0;
             };
+            
+            typedef std::vector<CategorySearchModel> TCategories;
 
             std::string GetPresentationStringForQuery(const ICategorySearchRepository& categorySearchRepository, const Search::SdkModel::SearchQuery& query);
         }

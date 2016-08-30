@@ -16,16 +16,16 @@ namespace ExampleApp
         {
             class SearchResultPoiViewOpenedMessageHandler : private Eegeo::NonCopyable
             {
-                ExampleAppMessaging::TMessageBus& m_messageBus;
-                ISearchResultPoiViewImageFetcher& m_searchResultPoiViewImageFetcher;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
+                const std::shared_ptr<ISearchResultPoiViewImageFetcher> m_searchResultPoiViewImageFetcher;
                 
                 Eegeo::Helpers::TCallback1<SearchResultPoiViewOpenedMessageHandler, const SearchResultPoiViewOpenedMessage&> m_handlerBinding;
                 
                 void OnSearchResultPoiViewOpenedMessage(const SearchResultPoiViewOpenedMessage& message);
                 
             public:
-                SearchResultPoiViewOpenedMessageHandler(ISearchResultPoiViewImageFetcher& searchResultPoiViewImageFetcher,
-                                                        ExampleAppMessaging::TMessageBus& messageBus);
+                SearchResultPoiViewOpenedMessageHandler(const std::shared_ptr<ISearchResultPoiViewImageFetcher>& searchResultPoiViewImageFetcher,
+                                                        const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
                 
                 ~SearchResultPoiViewOpenedMessageHandler();
             };

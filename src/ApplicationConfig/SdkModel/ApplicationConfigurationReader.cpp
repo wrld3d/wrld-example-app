@@ -8,7 +8,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            ApplicationConfigurationReader::ApplicationConfigurationReader(Eegeo::Helpers::IFileIO& fileIO)
+            ApplicationConfigurationReader::ApplicationConfigurationReader(const std::shared_ptr<Eegeo::Helpers::IFileIO>& fileIO)
             : m_fileIO(fileIO)
             {
                 
@@ -20,7 +20,7 @@ namespace ExampleApp
                 std::fstream stream;
                 std::string result;
                 
-                if(m_fileIO.OpenFile(stream, size, pathToConfiguration))
+                if(m_fileIO->OpenFile(stream, size, pathToConfiguration))
                 {
                     result = std::string((std::istreambuf_iterator<char>(stream)), (std::istreambuf_iterator<char>()));
                 }

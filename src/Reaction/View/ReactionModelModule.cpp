@@ -3,6 +3,9 @@
 #include "ReactionModelModule.h"
 #include "ReactionModel.h"
 #include "ReactionControllerModel.h"
+#include "ReactorIgnoredReactionModel.h"
+#include "ModalityIgnoredReactionModel.h"
+#include "ReactionControllerModel.h"
 
 namespace ExampleApp
 {
@@ -10,22 +13,19 @@ namespace ExampleApp
     {
         namespace View
         {
-            ReactionModelModule::ReactionModelModule(IReactionControllerModel& reactionControllerModel,
-                    const std::vector<OpenableControl::View::IOpenableControlViewModel*>& openables,
-                    const std::vector<ScreenControl::View::IScreenControlViewModel*>& reactors,
-                    Menu::View::IMenuIgnoredReactionModel& menuIgnoredReaction)
+            ReactionModelModule::ReactionModelModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+            : m_builder(builder)
             {
-                m_pModel = Eegeo_NEW(ReactionModel)(reactionControllerModel, openables, reactors, menuIgnoredReaction);
             }
-
-            ReactionModelModule::~ReactionModelModule()
+            
+            void ReactionModelModule::Register()
             {
-                Eegeo_DELETE m_pModel;
-            }
-
-            IReactionModel& ReactionModelModule::GetReactionModel() const
-            {
-                return *m_pModel;
+                m_builder->registerType<Menu::View::ReactorIgnoredReactionModel>().as<Menu::View::IReactorIgnoredReactionModel>().singleInstance();
+                m_builder->registerType<Menu::View::ModalityIgnoredReactionModel>().as<Menu::View::IModalityIgnoredReactionModel>().singleInstance();
+                m_builder->registerType<ScreenControl::View::TReactors>().singleInstance();
+                m_builder->registerType<OpenableControl::View::TOpenables>().singleInstance();
+                m_builder->registerType<ReactionControllerModel>().as<IReactionControllerModel>().singleInstance();
+                m_builder->registerType<ReactionModel>().as<IReactionModel>().singleInstance();
             }
         }
     }

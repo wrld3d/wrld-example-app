@@ -21,11 +21,11 @@ namespace ExampleApp
         namespace SdkModel
         {
             
-            InteriorsNavigationService::InteriorsNavigationService(Eegeo::Location::ILocationService& locationService,
-                                                                   Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
-                                                                   Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& cameraTouchController,
-                                                                   Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                                   const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel)
+            InteriorsNavigationService::InteriorsNavigationService(const std::shared_ptr<Eegeo::Location::ILocationService>& locationService,
+                                                                   const std::shared_ptr<Eegeo::Resources::Interiors::InteriorsCameraController>& interiorsCameraController,
+                                                                   const std::shared_ptr<Eegeo::Camera::GlobeCamera::GlobeCameraTouchController>& cameraTouchController,
+                                                                   const std::shared_ptr<Eegeo::Resources::Interiors::InteriorSelectionModel>& interiorSelectionModel,
+                                                                   const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel)
             : m_locationService(locationService)
             , m_interiorsCameraController(interiorsCameraController)
             , m_cameraTouchController(cameraTouchController)
@@ -34,19 +34,19 @@ namespace ExampleApp
             , m_interiorInteractionModel(interiorInteractionModel)
             , m_interiorSelectionModelChangedHandler(this, &InteriorsNavigationService::HandleInteriorSelectionModelChanged)
             {
-                m_interiorSelectionModel.RegisterSelectionChangedCallback(m_interiorSelectionModelChangedHandler);
+                m_interiorSelectionModel->RegisterSelectionChangedCallback(m_interiorSelectionModelChangedHandler);
             }
             
             InteriorsNavigationService::~InteriorsNavigationService()
             {
-                m_interiorSelectionModel.UnregisterSelectionChangedCallback(m_interiorSelectionModelChangedHandler);
+                m_interiorSelectionModel->UnregisterSelectionChangedCallback(m_interiorSelectionModelChangedHandler);
             }
                 
             void InteriorsNavigationService::SetGpsMode(Eegeo::Location::NavigationService::GpsMode mode)
             {
                 m_gpsMode = mode;
                 
-                Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCam = m_interiorsCameraController.GetGlobeCameraController();
+                Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCam = m_interiorsCameraController->GetGlobeCameraController();
                 Eegeo::Camera::GlobeCamera::GlobeCameraTouchSettings touchSettings = Eegeo::Camera::GlobeCamera::GlobeCameraTouchSettings::CreateDefault();
                 
                 touchSettings.PanEnabled = (m_gpsMode == Eegeo::Location::NavigationService::GpsModeOff);
@@ -71,17 +71,17 @@ namespace ExampleApp
                 
                 const float panThresholdSqrd = 100.0f;
                 
-                if(m_cameraTouchController.GetPanPixelDelta().Length() > panThresholdSqrd)
+                if(m_cameraTouchController->GetPanPixelDelta().Length() > panThresholdSqrd)
                 {
                     SetGpsMode(Eegeo::Location::NavigationService::GpsModeOff);
                 }
                 
-                double heading = m_interiorsCameraController.GetHeadingDegrees();
+                double heading = m_interiorsCameraController->GetHeadingDegrees();
                 const double rotationDampening = (double)Eegeo::Math::Clamp01(dt*3.0f);
                 
                 if(m_gpsMode == Eegeo::Location::NavigationService::GpsModeCompass)
                 {
-                    m_locationService.GetHeadingDegrees(m_targetHeading);
+                    m_locationService->GetHeadingDegrees(m_targetHeading);
                     
                     if(m_targetHeading < m_currentHeading)
                     {
@@ -107,7 +107,7 @@ namespace ExampleApp
                 
                 Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong(0.0f, 0.0f);
                 
-                if(m_locationService.GetLocation(latLong))
+                if(m_locationService->GetLocation(latLong))
                 {
                     m_currentLatitude = latLong.GetLatitudeInDegrees();
                     m_currentLongitude = latLong.GetLongitudeInDegrees();
@@ -120,25 +120,25 @@ namespace ExampleApp
                 
                 float targetAltitude = 0.0f;
                 
-                if (m_interiorInteractionModel.HasInteriorModel())
+                if (m_interiorInteractionModel->HasInteriorModel())
                 {
-                    const Eegeo::Resources::Interiors::InteriorsModel& interiorModel = *m_interiorInteractionModel.GetInteriorModel();
-                    targetAltitude = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(interiorModel, m_interiorInteractionModel.GetSelectedFloorIndex());
+                    const Eegeo::Resources::Interiors::InteriorsModel& interiorModel = *m_interiorInteractionModel->GetInteriorModel();
+                    targetAltitude = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(interiorModel, m_interiorInteractionModel->GetSelectedFloorIndex());
                 }
                 
-                m_interiorsCameraController.SetInterestLocation(Eegeo::Space::LatLongAltitude::FromDegrees(m_targetLatitude,
+                m_interiorsCameraController->SetInterestLocation(Eegeo::Space::LatLongAltitude::FromDegrees(m_targetLatitude,
                                                                                                                    m_targetLongitude,
                                                                                                                    targetAltitude).ToECEF());
-                m_interiorsCameraController.SetHeading(static_cast<float>(heading));
+                m_interiorsCameraController->SetHeading(static_cast<float>(heading));
             }
             
             void InteriorsNavigationService::ResetTargetLatLong()
             {
                 Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong::FromDegrees(0.0, 0.0);
                 
-                if(m_locationService.GetLocation(latLong))
+                if(m_locationService->GetLocation(latLong))
                 {
-                    m_currentHeading = m_interiorsCameraController.GetHeadingDegrees();
+                    m_currentHeading = m_interiorsCameraController->GetHeadingDegrees();
                     
                     m_currentLatitude = latLong.GetLatitudeInDegrees();
                     m_currentLongitude = latLong.GetLongitudeInDegrees();
@@ -153,12 +153,12 @@ namespace ExampleApp
                 Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong(0.0f, 0.0f);
                 
                 
-                if(m_locationService.GetLocation(latLong) && m_interiorInteractionModel.HasInteriorModel())
+                if(m_locationService->GetLocation(latLong) && m_interiorInteractionModel->HasInteriorModel())
                 {
-                    const Eegeo::Resources::Interiors::InteriorsModel& interiorsModel = *m_interiorInteractionModel.GetInteriorModel();
+                    const Eegeo::Resources::Interiors::InteriorsModel& interiorsModel = *m_interiorInteractionModel->GetInteriorModel();
                     const Eegeo::Geometry::Bounds3D& tangentBounds = interiorsModel.GetTangentSpaceBounds();
                     const Eegeo::dv3& boundsEcefOrigin = interiorsModel.GetTangentBasis().GetPointEcef();
-                    float targetAltitude = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(interiorsModel, m_interiorInteractionModel.GetSelectedFloorIndex());
+                    float targetAltitude = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(interiorsModel, m_interiorInteractionModel->GetSelectedFloorIndex());
                     
                     Eegeo::Geometry::SingleSphere toleranceSphere;
                     const Eegeo::v3 reletaivePoint = (Eegeo::Space::LatLongAltitude::FromRadians(latLong.GetLatitude(),
@@ -186,7 +186,7 @@ namespace ExampleApp
             
             void InteriorsNavigationService::HandleInteriorSelectionModelChanged(const Eegeo::Resources::Interiors::InteriorId& prevId)
             {
-                if (!m_interiorSelectionModel.IsInteriorSelected())
+                if (!m_interiorSelectionModel->IsInteriorSelected())
                 {
                     SetGpsMode(Eegeo::Location::NavigationService::GpsModeOff);
                 }

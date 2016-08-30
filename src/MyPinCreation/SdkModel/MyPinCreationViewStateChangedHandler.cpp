@@ -10,26 +10,26 @@ namespace ExampleApp
         namespace SdkModel
         {
             MyPinCreationViewStateChangedHandler::MyPinCreationViewStateChangedHandler(
-                IMyPinCreationModel& myPinCreationModel,
-                Search::SdkModel::ISearchRefreshService& searchRefreshService,
-                ExampleAppMessaging::TMessageBus& messageBus)
+                                                                                       const std::shared_ptr<IMyPinCreationModel>& myPinCreationModel,
+                                                                                       const std::shared_ptr<Search::SdkModel::ISearchRefreshService>& searchRefreshService,
+                                                                                       const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
                 : m_myPinCreationModel(myPinCreationModel)
                 , m_searchRefreshService(searchRefreshService)
                 , m_messageBus(messageBus)
                 , m_handler(this, &MyPinCreationViewStateChangedHandler::OnMyPinCreationViewStateChangedMessage)
             {
-                m_messageBus.SubscribeNative(m_handler);
+                m_messageBus->SubscribeNative(m_handler);
             }
 
             MyPinCreationViewStateChangedHandler::~MyPinCreationViewStateChangedHandler()
             {
-                m_messageBus.UnsubscribeNative(m_handler);
+                m_messageBus->UnsubscribeNative(m_handler);
             }
 
             void MyPinCreationViewStateChangedHandler::OnMyPinCreationViewStateChangedMessage(const MyPinCreationViewStateChangedMessage& message)
             {
-                m_myPinCreationModel.SetCreationStage(message.GetMyPinCreationStage());
-                m_searchRefreshService.SetEnabled(message.GetMyPinCreationStage() == MyPinCreation::Inactive);
+                m_myPinCreationModel->SetCreationStage(message.GetMyPinCreationStage());
+                m_searchRefreshService->SetEnabled(message.GetMyPinCreationStage() == MyPinCreation::Inactive);
             }
         }
     }

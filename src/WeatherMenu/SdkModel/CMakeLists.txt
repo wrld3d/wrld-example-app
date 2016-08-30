@@ -3,7 +3,6 @@ set(headers ${headers} ../src/WeatherMenu/SdkModel
 set(currsources
   ../src/WeatherMenu/SdkModel/CMakeLists.txt
   ../src/WeatherMenu/SdkModel/IWeatherController.h
-  ../src/WeatherMenu/SdkModel/IWeatherMenuModule.h
   ../src/WeatherMenu/SdkModel/IWeatherMenuStateModel.h
   ../src/WeatherMenu/SdkModel/WeatherController.cpp
   ../src/WeatherMenu/SdkModel/WeatherController.h

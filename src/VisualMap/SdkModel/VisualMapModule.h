@@ -2,13 +2,7 @@
 
 #pragma once
 
-#include "IVisualMapModule.h"
-#include "VisualMap.h"
-
-#include "Types.h"
-#include "Rendering.h"
-#include "CityThemes.h"
-
+#include "IModule.h"
 
 namespace ExampleApp
 {
@@ -16,22 +10,10 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class VisualMapModule : public IVisualMapModule, protected Eegeo::NonCopyable
+            class VisualMapModule : public IModule
             {
             public:
-                VisualMapModule(Eegeo::Resources::CityThemes::ICityThemesService& themesService,
-                                Eegeo::Resources::CityThemes::ICityThemesUpdater& themesUpdater,
-                                Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService);
-                
-                ~VisualMapModule();
-                
-                IVisualMapService& GetVisualMapService() const;
-                
-            private:
-                IVisualMapModel* m_pVisualMapModel;
-                IVisualMapStateHistory* m_pVisualMapStateHistory;
-                IVisualMapController* m_pVisualMapController;
-                IVisualMapService* m_pVisualMapService;
+                void Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder);
             };
         }
     }

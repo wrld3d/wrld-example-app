@@ -6,6 +6,7 @@
 #include "WorldPins.h"
 #include "ICallback.h"
 #include "InteriorsExplorer.h"
+#include "IInteriorCameraController.h"
 #include <map>
 #include <string>
 #include "BidirectionalBus.h"
@@ -21,12 +22,12 @@ namespace ExampleApp
             {
             public:
                 
-                InteriorWorldPinController(Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                           Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
-                                           WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                           Eegeo::Resources::Interiors::InteriorsCameraController& cameraController,
-                                           ExampleAppMessaging::TMessageBus& messageBus,
-                                           const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel);
+                InteriorWorldPinController(const std::shared_ptr<Eegeo::Resources::Interiors::InteriorSelectionModel>& interiorSelectionModel,
+                                           const std::shared_ptr<Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository>& markerRepository,
+                                           const std::shared_ptr<WorldPins::SdkModel::IWorldPinsService>& worldPinsService,
+                                           const std::shared_ptr<IInteriorCameraController>& cameraController,
+                                           const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                           const std::shared_ptr<InitialExperience::SdkModel::IInitialExperienceModel>& initialExperienceModel);
                 ~InteriorWorldPinController();
                 
                 const bool PinInteractionAllowed(const std::string& interiorId) const;
@@ -37,14 +38,14 @@ namespace ExampleApp
                 
             private:
 
-                Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
-                Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& m_markerRepository;
-                WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
-                Eegeo::Resources::Interiors::InteriorsCameraController& m_cameraController;
+                const std::shared_ptr<Eegeo::Resources::Interiors::InteriorSelectionModel> m_interiorSelectionModel;
+                const std::shared_ptr<Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository> m_markerRepository;
+                const std::shared_ptr<WorldPins::SdkModel::IWorldPinsService> m_worldPinsService;
+                const std::shared_ptr<IInteriorCameraController> m_cameraController;
                 std::map<std::string, WorldPins::SdkModel::WorldPinItemModel*> m_interiorIdToWorldPinMap;
                 std::map<std::string, WorldPins::SdkModel::WorldPinItemModel*> m_deferedRemovalMap;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
-                const InitialExperience::SdkModel::IInitialExperienceModel& m_initialExperienceModel;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
+                const std::shared_ptr<const InitialExperience::SdkModel::IInitialExperienceModel> m_initialExperienceModel;
                 bool m_menuIsDragging;
                 
                 Eegeo::Helpers::TCallback1<InteriorWorldPinController, const Eegeo::Resources::Interiors::Markers::InteriorMarkerModel&> m_markerAddedCallback;

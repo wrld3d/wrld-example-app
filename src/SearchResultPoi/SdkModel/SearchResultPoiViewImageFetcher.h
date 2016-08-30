@@ -17,15 +17,15 @@ namespace ExampleApp
         {
             class SearchResultPoiViewImageFetcher : public ISearchResultPoiViewImageFetcher, private Eegeo::NonCopyable
             {
-                Eegeo::Web::IWebLoadRequestFactory& m_webRequestFactory;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<Eegeo::Web::IWebLoadRequestFactory> m_webRequestFactory;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 Eegeo::Web::TWebLoadRequestCompletionCallback<SearchResultPoiViewImageFetcher> m_webRequestCallback;
                 
                 void OnImageFetchResponseReceived(Eegeo::Web::IWebResponse& webResponse);
                 
             public:
-                SearchResultPoiViewImageFetcher(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
-                                                ExampleAppMessaging::TMessageBus& messageBus);
+                SearchResultPoiViewImageFetcher(const std::shared_ptr<Eegeo::Web::IWebLoadRequestFactory>& webRequestFactory,
+                                                const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
                 
                 ~SearchResultPoiViewImageFetcher();
                 
