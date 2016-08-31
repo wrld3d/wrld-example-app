@@ -959,6 +959,11 @@
         }
         else
         {
+            if(_pSearchMenuScrollButtonContainer.hidden == true)
+            {
+                _pSearchMenuScrollButton.alpha = 0.0;
+                [UIView animateWithDuration:1.0 animations:^{_pSearchMenuScrollButton.alpha = 1.0;}];
+            }
             _pSearchMenuScrollButtonContainer.hidden = false;
             _pSearchMenuFadeImage.hidden = false;
         }
