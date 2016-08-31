@@ -16,7 +16,7 @@ import com.eegeo.searchmenu.SearchResultsScrollListener;
 import com.eegeo.searchmenu.SearchMenuResultsListAnimationConstants;
 import com.eegeo.animation.updatelisteners.ViewHeightAnimatorUpdateListener;
 import com.eegeo.menu.MenuListAnimationConstants;
-import com.eegeo.animation.updatelisteners.LinearLayoutViewHeightAnimatorUpdateListener;
+import com.eegeo.animation.updatelisteners.ViewHeightAnimatorUpdateListener;
 import com.eegeo.menu.MenuExpandableListAdapter;
 import com.eegeo.menu.MenuExpandableListOnClickListener;
 import com.eegeo.menu.MenuExpandableListView;
@@ -44,7 +44,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.util.Log;
 
 public class SearchMenuView extends MenuView implements TextView.OnEditorActionListener, OnFocusChangeListener, TextWatcher
 {
@@ -400,7 +399,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
 		m_searchList.setLayoutParams(params);
 		
     	ReversibleValueAnimator menuHeightAnimator = ReversibleValueAnimator.ofInt(oldHeight, height);
-    	menuHeightAnimator.addUpdateListener(new LinearLayoutViewHeightAnimatorUpdateListener(m_searchList));
+    	menuHeightAnimator.addUpdateListener(new ViewHeightAnimatorUpdateListener<LinearLayout.LayoutParams>(m_searchList));
     	menuHeightAnimator.addListener(new AnimatorListener()
     	{
 			@Override
