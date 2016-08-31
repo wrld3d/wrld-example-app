@@ -2,7 +2,12 @@
 
 package com.eegeo.searchmenu;
 
+import android.hardware.Camera.FaceDetectionListener;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.Button;
@@ -28,6 +33,17 @@ public class SearchResultsScrollListener implements OnScrollListener
 	{
 		m_searchResultsScrollable = scrollable;
 	}
+	
+    private void fadeInButtonAnimation()
+    {
+		Animation fadeIn = new AlphaAnimation(0, 1);
+		fadeIn.setInterpolator(new DecelerateInterpolator());
+		fadeIn.setDuration(SearchMenuResultsListAnimationConstants.SearchMenuResultsListScrollButtonAnimationSpeedMilliseconds);
+
+		AnimationSet animation = new AnimationSet(false);
+		animation.addAnimation(fadeIn);
+		m_searchResultsScrollButton.setAnimation(animation);
+    }
 
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) 
@@ -58,6 +74,11 @@ public class SearchResultsScrollListener implements OnScrollListener
 	    }
 		else if (m_searchResultsScrollable)
 		{
+			if (m_searchResultsFade.getVisibility() == View.INVISIBLE)
+			{
+				fadeInButtonAnimation();
+			}
+			
 			m_searchResultsFade.setVisibility(view.VISIBLE);
 			m_searchResultsScrollButton.setVisibility(view.VISIBLE);
 		}       
