@@ -202,15 +202,20 @@
     return NO;
 }
 
+- (void)clampScrollOffsetY:(CGPoint &)scrollOffset
+{
+    if (scrollOffset.y > m_pSearchMenuScrollView.contentSize.height - m_pSearchMenuScrollView.frame.size.height)
+    {
+        scrollOffset.y = m_pSearchMenuScrollView.contentSize.height - m_pSearchMenuScrollView.frame.size.height;
+    }
+}
+
 - (void)searchMenuScrollDown
 {
     CGPoint searchResultListScrollOffset = m_pSearchMenuScrollView.contentOffset;
     searchResultListScrollOffset.y += m_scrollSpeed;
 
-    if (searchResultListScrollOffset.y > m_pSearchMenuScrollView.contentSize.height - m_pSearchMenuScrollView.frame.size.height)
-    {
-        searchResultListScrollOffset.y = m_pSearchMenuScrollView.contentSize.height - m_pSearchMenuScrollView.frame.size.height;
-    }
+    [self clampScrollOffsetY:searchResultListScrollOffset];
 
     [UIView animateWithDuration:0.15
                           delay:0
@@ -224,6 +229,8 @@
 {
     CGPoint searchResultListScrollOffset = m_pSearchMenuScrollView.contentOffset;
     searchResultListScrollOffset.y += m_scrollSpeed;
+    
+    [self clampScrollOffsetY:searchResultListScrollOffset];
     
     [UIView animateWithDuration:0.15
                           delay:0
