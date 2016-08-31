@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/menu_list_item_icon"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="6dp"
         android:contentDescription="@string/content_desc_category_icon"
         android:scaleType="fitCenter"
