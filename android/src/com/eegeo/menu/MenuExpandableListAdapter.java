@@ -130,7 +130,7 @@ public class MenuExpandableListAdapter extends BaseExpandableListAdapter
 		else
 		{
 			MenuItemData menuItemData = (MenuItemData) getChild(groupPosition, childPosition);
-			itemView = inflateView(m_childViewId, menuItemData, true);
+			itemView = inflateView(m_childViewId, menuItemData);
 			
 			// IH: In order for animator to operate, layout params can't be null. So explicitly assign here.
 			//     If this isn't done, layout param setting is deferred until view is rendered, meaning animator 
@@ -197,7 +197,7 @@ public class MenuExpandableListAdapter extends BaseExpandableListAdapter
 		else
 		{
 			MenuItemData menuItemData = (MenuItemData)getGroup(groupPosition);
-			itemView = inflateView(m_groupViewId, menuItemData, false);		
+			itemView = inflateView(m_groupViewId, menuItemData);		
 			m_headerViewCache.put(key, itemView);
 		}
 
@@ -310,7 +310,7 @@ public class MenuExpandableListAdapter extends BaseExpandableListAdapter
 		}
 	}
 	
-	private View inflateView(int viewId, MenuItemData itemData, boolean isSmallIcon)
+	private View inflateView(int viewId, MenuItemData itemData)
 	{
 		View itemView = (View) m_inflater.inflate(viewId, null);
 
@@ -320,7 +320,7 @@ public class MenuExpandableListAdapter extends BaseExpandableListAdapter
 		ImageView itemIcon = (ImageView)itemView.findViewById(R.id.menu_list_item_icon);
 		if (itemIcon != null)
 		{
-			itemIcon.setImageResource(CategoryResources.getIconForResourceName(m_context, itemData.getIcon(), isSmallIcon));
+			itemIcon.setImageResource(CategoryResources.getSmallIconForResourceName(m_context, itemData.getIcon()));
 		}
 		
 		return itemView;

@@ -91,13 +91,12 @@ public class CategoryResources
     public static int getSmallIconForCategory(Activity activity, String category)
     {
         String matchedCategory = getCategoryMatch(category);
-        return getIconForResourceName(activity, matchedCategory, false);
+        return getSmallIconForResourceName(activity, matchedCategory);
     }
 
-    public static int getIconForResourceName(Activity activity, String resourceName, boolean isSmallIcon)
+    public static int getSmallIconForResourceName(Activity activity, String resourceName)
     {
-    	String iconPrefix = isSmallIcon ? "icon2_" : "icon1_";
-        String uri = "drawable/" + iconPrefix + resourceName;
+        String uri = "drawable/icon1_" + resourceName;
         int imageResource = activity.getResources().getIdentifier(uri, null, activity.getPackageName());
         return imageResource;
     }
