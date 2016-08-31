@@ -73,7 +73,17 @@ namespace ExampleApp
                                 
                                 for(rapidjson::SizeType categoryStringIndex = 0; categoryStringIndex < numYelpCategoryEntryStrings; ++ categoryStringIndex)
                                 {
-                                    if(categoryStringIndex%2 == 0)
+                                    /* Yelp data has category alias pairs; we're only interested in the first
+                                     * (more readable) one for generating human-readable categories, e.g.
+                                     "categories": [
+                                            [
+                                                "Mass Media", # friendly / readable
+                                                "massmedia"   # skip
+                                            ]
+                                        ]
+                                    */
+                                    const bool isReadableYelpCategory = categoryStringIndex % 2 == 0;
+                                    if(isReadableYelpCategory)
                                     {
                                         humanCategories.push_back(categoryEntry[categoryStringIndex].GetString());
                                     }
