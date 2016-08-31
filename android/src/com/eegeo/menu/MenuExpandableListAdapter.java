@@ -11,7 +11,7 @@ import org.json.JSONObject;
 
 import com.eegeo.categories.CategoryResources;
 import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.mobileexampleapp.R;
+import com.eegeo.ProjectSwallowApp.R;
 
 import android.util.Log;
 import android.view.LayoutInflater;

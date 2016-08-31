@@ -6,7 +6,7 @@ import com.eegeo.animation.updatelisteners.AbsListViewHeightAnimatorUpdateListen
 import com.eegeo.animation.updatelisteners.ViewRotateAnimatorUpdateListener;
 import com.eegeo.animation.updatelisteners.ViewScaleYAnimatorUpdateListener;
 import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.mobileexampleapp.R;
+import com.eegeo.ProjectSwallowApp.R;
 
 import android.animation.AnimatorListenerAdapter;
 import android.view.View;
