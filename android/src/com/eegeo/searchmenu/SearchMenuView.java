@@ -278,6 +278,17 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     	}
     }
     
+    public void fadeInButtonAnimation()
+    {
+		Animation fadeIn = new AlphaAnimation(0, 1);
+		fadeIn.setInterpolator(new DecelerateInterpolator());
+		fadeIn.setDuration(SearchMenuResultsListAnimationConstants.SearchMenuResultsListScrollButtonAnimationSpeedMilliseconds);
+
+		AnimationSet animation = new AnimationSet(false);
+		animation.addAnimation(fadeIn);
+		m_searchResultsScrollButton.setAnimation(animation);
+    }
+    
     @Override
     public void animateOffScreen()
     {
@@ -399,13 +410,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     		
     	if(resultCount > 0 && oldHeight == 0)
     	{
-    		Animation fadeIn = new AlphaAnimation(0, 1);
-    		fadeIn.setInterpolator(new DecelerateInterpolator());
-    		fadeIn.setDuration(SearchMenuResultsListAnimationConstants.SearchMenuResultsListScrollButtonAnimationSpeedMilliseconds);
-
-    		AnimationSet animation = new AnimationSet(false);
-    		animation.addAnimation(fadeIn);
-    		m_searchResultsScrollButton.setAnimation(animation);
+    		fadeInButtonAnimation();
     	}
     	}
     	else
