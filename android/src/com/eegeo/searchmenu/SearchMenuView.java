@@ -408,10 +408,10 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     		m_searchResultsScrollButton.setVisibility(View.VISIBLE);
     		m_searchResultsScrollable = true;
     		
-    	if(resultCount > 0 && oldHeight == 0)
-    	{
-    		fadeInButtonAnimation();
-    	}
+	    	if(resultCount > 0 && oldHeight == 0)
+	    	{
+	    		fadeInButtonAnimation();
+	    	}
     	}
     	else
     	{
