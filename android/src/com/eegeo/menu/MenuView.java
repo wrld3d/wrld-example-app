@@ -11,9 +11,6 @@ import android.os.Handler;
 import org.json.JSONObject;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ExpandableListView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.eegeo.ProjectSwallowApp.R;

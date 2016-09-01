@@ -9,14 +9,12 @@ import java.util.List;
 import com.eegeo.ProjectSwallowApp.R;
 import com.eegeo.animation.ReversibleValueAnimator;
 import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.menu.MenuListAdapter;
 import com.eegeo.menu.MenuView;
 import com.eegeo.searchmenu.SearchResultsScrollButtonTouchDownListener;
 import com.eegeo.searchmenu.SearchResultsScrollListener;
 import com.eegeo.searchmenu.SearchMenuResultsListAnimationConstants;
 import com.eegeo.animation.updatelisteners.ViewHeightAnimatorUpdateListener;
 import com.eegeo.menu.MenuListAnimationConstants;
-import com.eegeo.animation.updatelisteners.ViewHeightAnimatorUpdateListener;
 import com.eegeo.menu.MenuExpandableListAdapter;
 import com.eegeo.menu.MenuExpandableListOnClickListener;
 import com.eegeo.menu.MenuExpandableListView;
@@ -59,7 +57,6 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
 
     private ListView m_searchList = null;
     private SearchMenuAdapter m_searchListAdapter = null;
-    private MenuListAdapter m_listAdapter = null;
     private OnItemClickListener m_searchMenuItemSelectedListener = null;
     
     private EditText m_editText;
@@ -382,8 +379,6 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         final RelativeLayout mainSearchSubview = (RelativeLayout)m_view.findViewById(R.id.search_menu_view);
 
         final View topBar = (View)m_view.findViewById(R.id.search_menu_title_bar);
-        final View seperatorBars = (View)m_view.findViewById(R.id.search_menu_results_separator);
-        final View menuListContainer = (View)m_view.findViewById(R.id.search_menu_options_list_view);
         
         final float viewHeight = mainSearchSubview.getHeight();
         

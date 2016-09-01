@@ -9,7 +9,6 @@ import com.eegeo.categories.CategoryResources;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.ProjectSwallowApp.R;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
