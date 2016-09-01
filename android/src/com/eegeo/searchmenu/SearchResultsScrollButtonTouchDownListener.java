@@ -2,10 +2,13 @@
 
 package com.eegeo.searchmenu;
 
+import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.searchmenu.SearchMenuResultsListAnimationConstants;
 
 import android.annotation.SuppressLint;
 import android.os.Handler;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ListView;
@@ -14,18 +17,25 @@ public class SearchResultsScrollButtonTouchDownListener implements View.OnTouchL
 {
 	private ListView m_searchList = null;
     private final Handler m_handler = new Handler();
-
+	private MainActivity m_activity;
+    private float m_scaledDensity;
     
-	public SearchResultsScrollButtonTouchDownListener(ListView view) {
+	public SearchResultsScrollButtonTouchDownListener(ListView view, MainActivity activity) 
+	{
 		m_searchList = view;
+		m_activity = activity;
+        DisplayMetrics metrics =  m_activity.getResources().getDisplayMetrics();
+        m_scaledDensity = metrics.scaledDensity;
 	}
 
-    final Runnable m_action = new Runnable() {
+    final Runnable m_action = new Runnable() 
+    {
 		@SuppressLint("NewApi")
 		@Override public void run() {
             if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT)
             {   
-            	m_searchList.scrollListBy(SearchMenuResultsListAnimationConstants.SearchMenuResultsListScrollButtonSpeed);
+            	float screenIndependentPxPerSecond = (SearchMenuResultsListAnimationConstants.SearchMenuResultsListScrollButtonSpeed * m_scaledDensity);
+            	m_searchList.scrollListBy((int)(screenIndependentPxPerSecond));
             	m_searchList.setVerticalScrollBarEnabled(false);
             }
             m_handler.post(this);
@@ -33,7 +43,8 @@ public class SearchResultsScrollButtonTouchDownListener implements View.OnTouchL
     };
     
 	@Override
-	public boolean onTouch(View v, MotionEvent event) {
+	public boolean onTouch(View v, MotionEvent event) 
+	{
 		switch(event.getAction()) {
 			case MotionEvent.ACTION_DOWN:
 				m_handler.post(m_action);
