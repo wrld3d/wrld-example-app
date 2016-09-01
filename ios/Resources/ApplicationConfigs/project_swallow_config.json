@@ -27,7 +27,7 @@
                   {
                   "SenionMapKey": "70f77f56-78b7-42bb-b94f-3c2c6d8dd30a",
                   "SenionMapCustomerID": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a",
-                  "interior_id": "swallow_lon_citygatehouse",
+                  "InteriorId": "swallow_lon_citygatehouse",
                   "SenionidToFloorIndexMapping": [{
                                                   "SenionIndex": 0,
                                                   "FloorIindex": 1
@@ -38,7 +38,7 @@
                   }, {
                   "SenionMapKey": "27f5638e-0190-4318-97d8-364aac7a55ab",
                   "SenionMapCustomerID": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a",
-                  "interior_id": "swallow_lon_50finsbury",
+                  "InteriorId": "swallow_lon_50finsbury",
                   "SenionidToFloorIndexMapping": [{
                                                   "SenionIndex": 0,
                                                   "FloorIindex": 7
@@ -46,27 +46,25 @@
                   }, {
                   "SenionMapKey": "a6fd0f11-56fe-4fa1-8e42-f582f4e21a63",
                   "SenionMapCustomerID": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a",
-                  "interior_id": "westport_house",
+                  "InteriorId": "westport_house",
                   "SenionidToFloorIndexMapping": [{
                                                   "SenionIndex": 0,
                                                   "FloorIindex": 2
                                                   }]
                   }
                   ],
-    "Wifi_Restricted_Buildings": [{
-                                  "interior_id": "70f9b00f-8c4f-4570-9a23-62bd80a76f8a",
-                                  "allowed_wifi_ids": [{
-                                                       "ssid": "eeGeo 2.4GHz"
-                                                       }, {
-                                                       "ssid": "eeGeo Guest"
-                                                       }]
-                                  }, {
-                                  "interior_id": "westport_house",
-                                  "allowed_wifi_ids": [{
-                                                       "ssid": "eeGeo 5GHz"
-                                                       }, {
-                                                       "ssid": "eeGeo Guest"
-                                                       }]
-                                  }]
+    "WifiRestrictedBuildings": [{
+       "InteriorId": "swallow_lon_38finsbury",
+       "AllowedSSIDs": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
+    }, {
+       "InteriorId": "swallow_lon_citygatehouse",
+       "AllowedSSIDs": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
+    }, {
+       "InteriorId": "swallow_lon_50finsbury",
+       "AllowedSSIDs": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
+    }, {
+       "InteriorId": "swallow_lon_parkhouse",
+       "AllowedSSIDs": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
+    }]
     
 }

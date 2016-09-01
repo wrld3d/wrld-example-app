@@ -126,8 +126,8 @@ namespace ExampleApp
                     std::string mapKey = building["SenionMapKey"].GetString();
                     Eegeo_ASSERT(building.HasMember("SenionMapCustomerID"), "SenionMapCustomerID config not found");
                     std::string customerID = building["SenionMapCustomerID"].GetString();
-                    Eegeo_ASSERT(building.HasMember("interior_id"), "interior_id config not found");
-                    std::string interiorID = building["interior_id"].GetString();
+                    Eegeo_ASSERT(building.HasMember("InteriorId"), "InteriorId config not found");
+                    std::string interiorID = building["InteriorId"].GetString();
                     
                     Eegeo_ASSERT(building.HasMember("SenionidToFloorIndexMapping"), "Senion to local floor index config not found");
                     std::map<int,int> senionFloorMapping;
@@ -148,7 +148,7 @@ namespace ExampleApp
                 m_builder.SetBuildingInfoArray(buildingInfoList);
                 
                 std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*> restrictedBuildingModelArray;
-                const char* wifiRestrictedBuildingTag = "Wifi_Restricted_Buildings";
+                const char* wifiRestrictedBuildingTag = "WifiRestrictedBuildings";
                 
                 if (document.HasMember(wifiRestrictedBuildingTag))
                 {
@@ -158,21 +158,18 @@ namespace ExampleApp
                     {
                         const rapidjson::Value& restrictedBuilding = restrictedBuildingJsonArray[i];
 
-                        Eegeo_ASSERT(restrictedBuilding.HasMember("interior_id"), "interior_id config not found");
-                        std::string interiorID = restrictedBuilding["interior_id"].GetString();
+                        Eegeo_ASSERT(restrictedBuilding.HasMember("InteriorId"), "InteriorId config not found");
+                        std::string interiorId = restrictedBuilding["InteriorId"].GetString();
 
-                        const rapidjson::Value& allowedWifiIDsJsonArray = restrictedBuilding["allowed_wifi_ids"];
+                        const rapidjson::Value& allowedWifiIDsJsonArray = restrictedBuilding["AllowedSSIDs"];
                         std::vector<std::string> allowedWifiIDsModelArray;
                         for (rapidjson::SizeType i = 0; i < allowedWifiIDsJsonArray.Size(); i++)
                         {
-                            const rapidjson::Value& wifiSsId = allowedWifiIDsJsonArray[i];
-
-                            Eegeo_ASSERT(wifiSsId.HasMember("ssid"), "ssid config not found");
-                            std::string allowedWifiId = wifiSsId["ssid"].GetString();
+                            std::string allowedWifiId =  allowedWifiIDsJsonArray[i].GetString();
                             allowedWifiIDsModelArray.push_back(allowedWifiId);
 
                         }
-                        ExampleApp::ApplicationConfig::RestrictedBuildingInfo *restricitedBuildingInfo = Eegeo_NEW(ExampleApp::ApplicationConfig::RestrictedBuildingInfo)(interiorID, allowedWifiIDsModelArray);
+                        ExampleApp::ApplicationConfig::RestrictedBuildingInfo *restricitedBuildingInfo = Eegeo_NEW(ExampleApp::ApplicationConfig::RestrictedBuildingInfo)(interiorId, allowedWifiIDsModelArray);
                         restrictedBuildingModelArray.push_back(restricitedBuildingInfo);
                     }
                 }
