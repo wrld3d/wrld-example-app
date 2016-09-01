@@ -25,7 +25,7 @@ namespace ExampleApp
             {
                 builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                                    {
-                                                       return std::make_shared<View::WatermarkViewModel>(context.resolve<Eegeo::Helpers::IIdentityProvider>(), false);
+                                                       return std::make_shared<View::WatermarkViewModel>(context.resolve<Eegeo::Helpers::IIdentityProvider>(), true);
                                                    }).as<View::IWatermarkViewModel>().singleInstance();
                 builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                                    {
@@ -40,20 +40,19 @@ namespace ExampleApp
             void WatermarkModule::RegisterLeaves()
             {
                 RegisterLeaf<WatermarkInteriorStateChangedObserver>();
-            }
-            
-            /*            
-            void WatermarkModule::AddThirdPartyWatermarkData()
-            {
-                //m_pWatermarkDataRepository->AddWatermarkData("eegeo", m_pWatermarkDataFactory->CreateDefaultEegeo());
-
-                const View::WatermarkData& micelloWatermarkData = m_pWatermarkDataFactory->Create("micello_logo",
+                
+                auto repo = Resolve<View::IWatermarkDataRepository>();
+                auto factory = Resolve<View::IWatermarkDataFactory>();
+                repo->AddWatermarkData("eegeo", factory->CreateDefaultEegeo());
+                
+                const View::WatermarkData& micelloWatermarkData = factory->Create("micello_logo",
                                                                                                   "3D Interiors",
                                                                                                   "Our 3D Interior maps are built automatically from map data provided by our partner Micello.\nThis partnership gives us access to over 25,000 maps globally",
                                                                                                   "https://www.micello.com",
                                                                                                   false);
-                m_pWatermarkDataRepository->AddWatermarkData("micello", micelloWatermarkData);
-            } */
+
+                repo->AddWatermarkData("micello", micelloWatermarkData);
+            }
         }
     }
 }

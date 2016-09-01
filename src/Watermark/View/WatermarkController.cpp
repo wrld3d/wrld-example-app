@@ -13,7 +13,7 @@ namespace ExampleApp
         {
             void WatermarkController::OnSelected()
             {
-                m_metricsService.SetEvent("UIItem: Watermark Selected");
+                m_metricsService->SetEvent("UIItem: Watermark Selected");
             }
 
             void WatermarkController::OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel& viewModel, float& state)
@@ -23,34 +23,34 @@ namespace ExampleApp
                     return;
                 }
                 
-                ScreenControl::View::Apply(m_viewModel, m_view);
+                ScreenControl::View::Apply(*m_viewModel, *m_view);
             }
             
             void WatermarkController::OnHandleSetVisibility(const SetWatermarkVisibilityMessage& message)
             {
                 if(message.GetShouldSetVisible())
                 {
-                    m_viewModel.AddToScreen();
+                    m_viewModel->AddToScreen();
                 }
                 else
                 {
-                    m_viewModel.RemoveFromScreen();
+                    m_viewModel->RemoveFromScreen();
                 }
             }
             
             void WatermarkController::OnWatermarkModelChanged(const ExampleApp::Watermark::WatermarkModelChangedMessage& message)
             {
-                if (m_watermarkDataRepository.HasWatermarkDataForKey(message.GetWatermarkId()))
+                if (m_watermarkDataRepository->HasWatermarkDataForKey(message.GetWatermarkId()))
                 {
-                    const WatermarkData& watermarkDataForVendor = m_watermarkDataRepository.GetWatermarkDataWithKey(message.GetWatermarkId());
-                    m_view.UpdateWatermarkData(watermarkDataForVendor);
+                    const WatermarkData& watermarkDataForVendor = m_watermarkDataRepository->GetWatermarkDataWithKey(message.GetWatermarkId());
+                    m_view->UpdateWatermarkData(watermarkDataForVendor);
                 }
             }
             
             
             void WatermarkController::OnWatermarkAlignmentStateChanged(const WatermarkAlignmentStateChangedMessage& message)
             {
-                m_view.SetWatermarkAlignmentState(message.ShouldAlignBottom(), message.ShouldAlignBelowFloorDisplay());
+                m_view->SetWatermarkAlignmentState(message.ShouldAlignBottom(), message.ShouldAlignBelowFloorDisplay());
             }
             
             void WatermarkController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
@@ -59,22 +59,22 @@ namespace ExampleApp
                 m_appModeAllowsOpen = appMode == AppModes::SdkModel::WorldMode ||
                                       appMode == AppModes::SdkModel::InteriorMode;
                 
-                if(m_appModeAllowsOpen && !m_viewModel.IsFullyOnScreen())
+                if(m_appModeAllowsOpen && !m_viewModel->IsFullyOnScreen())
                 {
-                    m_viewModel.AddToScreen();
+                    m_viewModel->AddToScreen();
                 }
-                else if(!m_appModeAllowsOpen && !m_viewModel.IsFullyOffScreen())
+                else if(!m_appModeAllowsOpen && !m_viewModel->IsFullyOffScreen())
                 {
-                    m_viewModel.RemoveFromScreen();
+                    m_viewModel->RemoveFromScreen();
                 }
             }
             
             WatermarkController::WatermarkController(
-                IWatermarkViewModel& viewModel,
-                IWatermarkView& view,
-                IWatermarkDataRepository& watermarkDataRepository,
-                ExampleAppMessaging::TMessageBus& messageBus,
-                Metrics::IMetricsService& metricsService
+                                                     const std::shared_ptr<IWatermarkViewModel>& viewModel,
+                                                     const std::shared_ptr<IWatermarkView>& view,
+                                                     const std::shared_ptr<IWatermarkDataRepository>& watermarkDataRepository,
+                                                     const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                                     const std::shared_ptr<Metrics::IMetricsService>& metricsService
             )
                 : m_viewModel(viewModel)
                 , m_view(view)
@@ -89,22 +89,22 @@ namespace ExampleApp
                 , m_appModeChangedHandler(this, &WatermarkController::OnAppModeChanged)
                 , m_appModeAllowsOpen(true)
             {
-                m_view.InsertSelectedCallback(m_selectedCallback);
-                m_viewModel.InsertOnScreenStateChangedCallback(m_viewStateCallback);
-                m_messageBus.SubscribeUi(m_setVisibilityHandler);
-                m_messageBus.SubscribeUi(m_watermarkModelChangedHandler);
-                m_messageBus.SubscribeUi(m_watermarkAlignmentStateChangedHandler);
-                m_messageBus.SubscribeUi(m_appModeChangedHandler);
+                m_view->InsertSelectedCallback(m_selectedCallback);
+                m_viewModel->InsertOnScreenStateChangedCallback(m_viewStateCallback);
+                m_messageBus->SubscribeUi(m_setVisibilityHandler);
+                m_messageBus->SubscribeUi(m_watermarkModelChangedHandler);
+                m_messageBus->SubscribeUi(m_watermarkAlignmentStateChangedHandler);
+                m_messageBus->SubscribeUi(m_appModeChangedHandler);
             }
 
             WatermarkController::~WatermarkController()
             {
-                m_messageBus.UnsubscribeUi(m_setVisibilityHandler);
-                m_messageBus.UnsubscribeUi(m_watermarkAlignmentStateChangedHandler);
-                m_messageBus.UnsubscribeUi(m_watermarkModelChangedHandler);
-                m_messageBus.UnsubscribeUi(m_appModeChangedHandler);
-                m_viewModel.RemoveOnScreenStateChangedCallback(m_viewStateCallback);
-                m_view.RemoveSelectedCallback(m_selectedCallback);
+                m_messageBus->UnsubscribeUi(m_setVisibilityHandler);
+                m_messageBus->UnsubscribeUi(m_watermarkAlignmentStateChangedHandler);
+                m_messageBus->UnsubscribeUi(m_watermarkModelChangedHandler);
+                m_messageBus->UnsubscribeUi(m_appModeChangedHandler);
+                m_viewModel->RemoveOnScreenStateChangedCallback(m_viewStateCallback);
+                m_view->RemoveSelectedCallback(m_selectedCallback);
             }
         }
     }

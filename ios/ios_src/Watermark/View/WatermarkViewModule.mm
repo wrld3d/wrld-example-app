@@ -14,37 +14,32 @@ namespace ExampleApp
     {
         namespace View
         {
-            WatermarkViewModule::WatermarkViewModule(IWatermarkViewModel& viewModel,
-                                                     IWatermarkDataRepository& watermarkDataRepository,
-                                                     const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                                     ExampleAppMessaging::TMessageBus& messageBus,
-                                                     Metrics::IMetricsService& metricsService)
+            void WatermarkViewModule::Register(const TContainerBuilder& builder)
             {
-                WatermarkData defaultWatermarkData = watermarkDataRepository.GetWatermarkDataWithKey("eegeo");
-                m_pView = [[WatermarkView alloc] initWithDimensions
-                           :screenProperties.GetScreenWidth()
-                           :screenProperties.GetScreenHeight()
-                           :screenProperties.GetPixelScale()
-                           :defaultWatermarkData
-                          ];
-
-                m_pController = new WatermarkController(viewModel, *[m_pView getInterop], watermarkDataRepository, messageBus, metricsService);
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto screenProperties = context.resolve<Eegeo::Rendering::ScreenProperties>();
+                                                     auto view = [[WatermarkView alloc] initWithDimensions
+                                                                :screenProperties->GetScreenWidth()
+                                                                :screenProperties->GetScreenHeight()
+                                                                :screenProperties->GetPixelScale()];
+                                                     return std::make_shared<WatermarkViewWrapper>(view);
+                                                 }).singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto view = context.resolve<WatermarkViewWrapper>();
+                                                     auto interop = [view->Get() getInterop];
+                                                     return Hypodermic::makeExternallyOwned(*interop);
+                                                 }).as<IWatermarkView>().singleInstance();
+                builder->registerType<WatermarkController>().singleInstance();
             }
-
-            WatermarkViewModule::~WatermarkViewModule()
+            
+            void WatermarkViewModule::RegisterLeaves()
             {
-                delete m_pController;
-                [m_pView release];
-            }
-
-            WatermarkController& WatermarkViewModule::GetWatermarkController() const
-            {
-                return *m_pController;
-            }
-
-            WatermarkView& WatermarkViewModule::GetWatermarkView() const
-            {
-                return *m_pView;
+                RegisterLeaf<WatermarkController>();
+                auto defaultWatermarkData = Resolve<IWatermarkDataRepository>()->GetWatermarkDataWithKey("eegeo");
+                auto view = Resolve<WatermarkViewWrapper>()->Get();
+                [view updateWatermarkData:defaultWatermarkData];
             }
         }
     }

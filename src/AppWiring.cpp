@@ -16,6 +16,8 @@
 #include "WorldPinsModule.h"
 #include "InteriorsEntitiesPinsModule.h"
 #include "PoiRingModule.h"
+#include "WatermarkModule.h"
+#include "ViewControllerUpdaterModule.h"
 
 namespace ExampleApp
 {
@@ -52,6 +54,8 @@ namespace ExampleApp
         RegisterModule<WorldPins::SdkModel::WorldPinsModule>();
         RegisterModule<InteriorsEntitiesPins::SdkModel::InteriorsEntitiesPinsModule>();
         RegisterModule<MyPinCreation::PoiRing::SdkModel::PoiRingModule>();
+        RegisterModule<Watermark::SdkModel::WatermarkModule>();
+        RegisterModule<ViewControllerUpdater::View::ViewControllerUpdaterModule>();
         
         auto moduleSet = m_moduleContainer->resolve<TModules>();
         m_moduleRegistrationCallbacks.ExecuteCallbacks(*moduleSet);

@@ -59,6 +59,7 @@
 #include "ApplicationConfiguration.h"
 #include "AppWiring.h"
 #include "Hypodermic/ContainerBuilder.h"
+#include "ICallback.h"
 
 #include <memory>
 
@@ -86,6 +87,8 @@ public:
     void OnPause();
     void OnResume();
 
+    void OnLoadingScreenComplete();
+    
     void NotifyScreenPropertiesChanged(const std::shared_ptr<Eegeo::Rendering::ScreenProperties>& screenProperties);
     
     void HandleFailureToProvideWorkingApiKey();
@@ -97,6 +100,8 @@ public:
     void HandleInvalidConnectivityError();
 
 private:
+    Eegeo::Helpers::TCallback0<AppHost> m_loadingSreenCompleteCallback;
+    
     ExampleApp::ExampleAppMessaging::TMessageBus& GetMessageBus();
     ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus& GetSdkMessageBus();
 
@@ -130,7 +135,7 @@ private:
     ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsViewModule* m_pMyPinCreationDetailsViewModule;
     ExampleApp::MyPinDetails::View::IMyPinDetailsViewModule* m_pMyPinDetailsViewModule;
     ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
-    ExampleApp::Watermark::View::IWatermarkViewModule* m_pWatermarkViewModule;
+    //ExampleApp::Watermark::View::IWatermarkViewModule* m_pWatermarkViewModule;
     ExampleApp::Tours::View::TourWeb::ITourWebViewModule* m_pTourWebViewModule;
     ExampleApp::Tours::View::TourExplorer::ITourExplorerViewModule* m_pTourExplorerViewModule;
     ExampleApp::Tours::View::TourFullScreenImage::ITourFullScreenImageViewModule* m_pTourFullScreenImageViewModule;
@@ -153,8 +158,10 @@ private:
     Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<AppHost> m_failAlertHandler;
     Eegeo::Helpers::TCallback1<AppHost, const ExampleApp::UserInteraction::UserInteractionEnabledChangedMessage&> m_userInteractionEnabledChangedHandler;
 
-    void CreateApplicationViewModules(const Eegeo::Rendering::ScreenProperties& screenProperties);
+    void RegisterApplicationViewModules();
     void DestroyApplicationViewModules();
+    
+    void AddApplicationViews();
     
     void SetTouchExclusivity();
     

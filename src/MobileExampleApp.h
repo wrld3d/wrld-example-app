@@ -16,6 +16,8 @@
 #include "CameraFrustumStreamingVolume.h"
 #include "IInitialExperienceModel.h"
 #include "IWorldPinsInFocusController.h"
+#include "ICallback.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -34,7 +36,9 @@ namespace ExampleApp
         
         std::shared_ptr<Eegeo::Rendering::ScreenProperties> m_screenProperties;
         std::shared_ptr<Eegeo::Rendering::LoadingScreen> m_loadingScreen;
-       
+        
+        Eegeo::Helpers::CallbackCollection0 m_loadingScreenCallbacks;
+        
     public:
         MobileExampleApp(const std::shared_ptr<Eegeo::EegeoWorld>& world,
                          const std::shared_ptr<AppCamera::SdkModel::IAppCameraController>& appCameraController,
@@ -61,5 +65,11 @@ namespace ExampleApp
         void NotifyScreenPropertiesChanged(const std::shared_ptr<Eegeo::Rendering::ScreenProperties>& screenProperties);
 
         bool IsRunning() const;
+        
+        void InitialiseApplicationViewState(const TContainer& container);
+        
+        void RegisterLoadingScreenComplete(Eegeo::Helpers::ICallback0& callback);
+        
+        void UnregisterLoadingScreenComplete(Eegeo::Helpers::ICallback0& callback);
     };
 }

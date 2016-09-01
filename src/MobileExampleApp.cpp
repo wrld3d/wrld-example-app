@@ -3,6 +3,7 @@
 #include "MobileExampleApp.h"
 #include "CameraHelpers.h"
 #include "StreamingVolumeController.h"
+#include "IWatermarkViewModel.h"
 
 namespace ExampleApp
 {
@@ -168,7 +169,7 @@ namespace ExampleApp
                                                       cameraState.ProjectionMatrix(),
                                                       *m_streamingVolume,
                                                       *m_screenProperties);
-        
+
         m_world->Update(updateParameters);
        
         /*Eegeo::EegeoWorld& eegeoWorld(World());
@@ -250,18 +251,28 @@ namespace ExampleApp
             ToursModule().GetTourService().UpdateCurrentTour(dt);
         }*/
         
-        if ((m_loadingScreen != nullptr) && (UpdateLoadingScreen(dt, *m_world, *m_loadingScreen)))
+        if (m_loadingScreen != nullptr && (UpdateLoadingScreen(dt, *m_world, *m_loadingScreen)))
         {
+            m_loadingScreenCallbacks.ExecuteCallbacks();
             m_loadingScreen = nullptr;
-            /*MyPinsModule().GetMyPinsService().LoadAllPinsFromDisk();
-            
-            if(ToursEnabled())
-            {
-                AddTours();
-            }*/
         }
     }
+    
+    void MobileExampleApp::InitialiseApplicationViewState(const TContainer& container)
+    {
+        container->resolve<Watermark::View::IWatermarkViewModel>()->AddToScreen();
+    }
 
+    void MobileExampleApp::RegisterLoadingScreenComplete(Eegeo::Helpers::ICallback0& callback)
+    {
+        m_loadingScreenCallbacks.AddCallback(callback);
+    }
+    
+    void MobileExampleApp::UnregisterLoadingScreenComplete(Eegeo::Helpers::ICallback0& callback)
+    {
+        m_loadingScreenCallbacks.RemoveCallback(callback);
+    }
+    
     void MobileExampleApp::Draw (float dt)
     {
         Eegeo::Camera::RenderCamera renderCamera = m_cameraController->GetRenderCamera();

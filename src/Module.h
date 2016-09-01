@@ -32,6 +32,12 @@ namespace ExampleApp
             std::shared_ptr<T> ptr = m_container->resolve<T>();
             m_leaves.push_back(ptr);
         }
+
+        template <class T>
+        std::shared_ptr<T> Resolve()
+        {
+            return m_container->resolve<T>();
+        }
         
         void AssignContainer(const TContainer& container)
         {

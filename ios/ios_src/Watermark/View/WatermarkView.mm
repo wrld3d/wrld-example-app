@@ -17,7 +17,6 @@
 - (id) initWithDimensions:(float)width
                          :(float)height
                          :(float)pixelScale
-                         :(const ExampleApp::Watermark::View::WatermarkData&) watermarkData
 {
     if(self = [super init])
     {
@@ -74,7 +73,6 @@
         [self addSubview: self.pButton];
         
         [self.pButton addTarget:self action:@selector(onClick:) forControlEvents:UIControlEventTouchUpInside];
-        [self updateWatermarkData: watermarkData];
         
         [self.pButton setAlpha:0.8];
         

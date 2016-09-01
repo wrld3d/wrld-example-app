@@ -86,6 +86,8 @@
 #include "IOSMenuReactionModel.h"
 #include "Module.h"
 
+#include "IWatermarkViewModel.h"
+
 #include <memory>
 
 #import "UIView+TouchExclusivity.h"
@@ -192,6 +194,7 @@ AppHost::AppHost(
     ,m_pTourFullScreenImageViewModule(NULL)
     ,m_pTourExplorerViewModule(NULL)
     ,m_userInteractionEnabledChangedHandler(this, &AppHost::HandleUserInteractionEnabledChanged)
+    ,m_loadingSreenCompleteCallback(this, &AppHost::OnLoadingScreenComplete)
 {
     Eegeo::TtyHandler::TtyEnabled = true;
     
@@ -199,6 +202,7 @@ AppHost::AppHost(
     m_wiring->RegisterModule<iOSAbstractionIoCModule>();
     m_wiring->RegisterModuleInstance(std::make_shared<iOSAppModule>(screenProperties, applicationConfiguration, metricsService, m_viewController));
     m_wiring->RegisterDefaultModules();
+    RegisterApplicationViewModules();
     m_wiring->ResolveModules();
 
     m_pImageStore = [[ImageStore alloc]init];
@@ -213,13 +217,13 @@ AppHost::AppHost(
     
 //    m_container->resolve<ExampleApp::LinkOutObserver::LinkOutObserver>()->OnAppStart();
     m_app = m_wiring->BuildMobileExampleApp();
-    
-    CreateApplicationViewModules(screenProperties);
-
+    m_app->RegisterLoadingScreenComplete(m_loadingSreenCompleteCallback);
+   
     m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_wiring->Resolve<ExampleApp::IInputController>(), m_viewController, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), screenProperties.GetPixelScale());
 
     Eegeo::EffectHandler::Initialise();
     GetMessageBus().SubscribeUi(m_userInteractionEnabledChangedHandler);
+    AddApplicationViews();
 }
 
 ExampleApp::ExampleAppMessaging::TMessageBus& AppHost::GetMessageBus()
@@ -234,6 +238,8 @@ ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus& AppHost::GetSdkMessage
 
 AppHost::~AppHost()
 {
+    m_app->UnregisterLoadingScreenComplete(m_loadingSreenCompleteCallback);
+
     GetMessageBus().UnsubscribeUi(m_userInteractionEnabledChangedHandler);
     
     Eegeo_DELETE m_pAppInputDelegate;
@@ -246,6 +252,12 @@ AppHost::~AppHost()
 
     Eegeo::EffectHandler::Reset();
     Eegeo::EffectHandler::Shutdown();
+}
+
+void AppHost::OnLoadingScreenComplete()
+{
+    // temporary, move to another cross-platform type.
+    m_wiring->Resolve<ExampleApp::Watermark::View::IWatermarkViewModel>()->AddToScreen();
 }
 
 void AppHost::OnResume()
@@ -279,7 +291,7 @@ void AppHost::Update(float dt)
     }*/
 
     m_app->Update(dt);
-    //m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel().UpdateObjectsUiThread(dt);
+    m_wiring->Resolve<ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel>()->UpdateObjectsUiThread(dt);
 
     GetMessageBus().FlushToUi();
     GetMessageBus().FlushToNative();
@@ -295,8 +307,15 @@ bool AppHost::IsRunning()
     return m_app->IsRunning();
 }
 
-void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenProperties& screenProperties)
+void AppHost::AddApplicationViews()
 {
+    auto watermarkView = m_wiring->Resolve<WatermarkViewWrapper>()->Get();
+    [m_pView addSubview: watermarkView];
+}
+
+void AppHost::RegisterApplicationViewModules()
+{
+    m_wiring->RegisterModule<ExampleApp::Watermark::View::WatermarkViewModule>();
     /*m_pWatermarkViewModule = Eegeo_NEW(ExampleApp::Watermark::View::WatermarkViewModule)(app.WatermarkModule().GetWatermarkViewModel(),
                                                                                          app.WatermarkModule().GetWatermarkDataRepository(),
                                                                                          screenProperties,
@@ -464,7 +483,7 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pInitialExperienceIntroViewModule->GetIntroBackgroundView() removeFromSuperview];
 
     // HUD behind modal background layer.
-    [&m_pWatermarkViewModule->GetWatermarkView() removeFromSuperview];
+    //[&m_pWatermarkViewModule->GetWatermarkView() removeFromSuperview];
     [&m_pFlattenButtonViewModule->GetFlattenButtonView() removeFromSuperview];
     [&m_pCompassViewModule->GetCompassView() removeFromSuperview];
     [&m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView() removeFromSuperview];
@@ -538,7 +557,7 @@ void AppHost::DestroyApplicationViewModules()
     
     Eegeo_DELETE m_pInitialExperienceIntroViewModule;
     
-    Eegeo_DELETE m_pWatermarkViewModule;
+    //Eegeo_DELETE m_pWatermarkViewModule;
 }
 
 void AppHost::SetTouchExclusivity()

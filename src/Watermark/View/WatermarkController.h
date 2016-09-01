@@ -23,10 +23,12 @@ namespace ExampleApp
             class WatermarkController : private Eegeo::NonCopyable
             {
             private:
-                IWatermarkViewModel& m_viewModel;
-                IWatermarkView& m_view;
-                IWatermarkDataRepository& m_watermarkDataRepository;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<IWatermarkViewModel> m_viewModel;
+                const std::shared_ptr<IWatermarkView> m_view;
+                const std::shared_ptr<IWatermarkDataRepository> m_watermarkDataRepository;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
+                const std::shared_ptr<Metrics::IMetricsService> m_metricsService;
+                
                 bool m_appModeAllowsOpen;
 
                 Eegeo::Helpers::TCallback0<WatermarkController> m_selectedCallback;
@@ -35,7 +37,6 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<WatermarkController, const WatermarkModelChangedMessage&> m_watermarkModelChangedHandler;
                 Eegeo::Helpers::TCallback1<WatermarkController, const WatermarkAlignmentStateChangedMessage&> m_watermarkAlignmentStateChangedHandler;
                 Eegeo::Helpers::TCallback1<WatermarkController, const AppModes::AppModeChangedMessage&> m_appModeChangedHandler;
-                Metrics::IMetricsService& m_metricsService;
 
                 void OnSelected();
 
@@ -49,11 +50,11 @@ namespace ExampleApp
 
             public:
                 WatermarkController(
-                    IWatermarkViewModel& viewModel,
-                    IWatermarkView& view,
-                    IWatermarkDataRepository& watermarkDataRepository,
-                    ExampleAppMessaging::TMessageBus& messageBus,
-                    Metrics::IMetricsService& metricsService
+                                    const std::shared_ptr<IWatermarkViewModel>& viewModel,
+                                    const std::shared_ptr<IWatermarkView>& view,
+                                    const std::shared_ptr<IWatermarkDataRepository>& watermarkDataRepository,
+                                    const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                    const std::shared_ptr<Metrics::IMetricsService>& metricsService
                 );
 
                 ~WatermarkController();

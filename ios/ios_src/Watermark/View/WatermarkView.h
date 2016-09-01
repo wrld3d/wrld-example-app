@@ -9,6 +9,24 @@
 
 @class WatermarkView;
 
+class WatermarkViewWrapper : private Eegeo::NonCopyable
+{
+public:
+    WatermarkViewWrapper(WatermarkView* watermarkView)
+    : m_pView(watermarkView)
+    {
+    }
+    
+    ~WatermarkViewWrapper()
+    {
+        [m_pView release];
+    }
+    
+    WatermarkView* Get() const { return m_pView; }
+private:
+    WatermarkView* m_pView;
+};
+
 @interface WatermarkView : UIView
 {
     ExampleApp::Watermark::View::WatermarkViewInterop* m_pInterop;
@@ -41,8 +59,7 @@
 
 - (id) initWithDimensions:(float)width
                          :(float)height
-                         :(float)pixelScale
-                         :(const ExampleApp::Watermark::View::WatermarkData&) watermarkData;
+                         :(float)pixelScale;
 
 - (BOOL) consumesTouch:(UITouch *)touch;
 
