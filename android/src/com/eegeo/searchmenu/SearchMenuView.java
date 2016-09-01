@@ -9,6 +9,8 @@ import java.util.List;
 import com.eegeo.ProjectSwallowApp.R;
 import com.eegeo.animation.ReversibleValueAnimator;
 import com.eegeo.entrypointinfrastructure.MainActivity;
+import com.eegeo.menu.MenuItemSelectedListener;
+import com.eegeo.menu.MenuListAdapter;
 import com.eegeo.menu.MenuView;
 import com.eegeo.searchmenu.SearchResultsScrollButtonTouchDownListener;
 import com.eegeo.searchmenu.SearchResultsScrollListener;
@@ -181,7 +183,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         m_searchResultsScrollListener = new SearchResultsScrollListener(m_searchResultsScrollButton, m_searchResultsFade, m_searchResultsScrollable, m_searchList);       
         m_searchList.setOnScrollListener(m_searchResultsScrollListener);	
                 
-        m_searchResultsScrollButtonTouchDownListener = new SearchResultsScrollButtonTouchDownListener(m_searchList);
+        m_searchResultsScrollButtonTouchDownListener = new SearchResultsScrollButtonTouchDownListener(m_searchList, m_activity);
         m_searchResultsScrollButton.setOnTouchListener(m_searchResultsScrollButtonTouchDownListener);
     }
     
@@ -301,6 +303,17 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     		m_anchorArrow.setVisibility(View.VISIBLE);
     		m_searchMenuResultsSeparator.setVisibility(View.VISIBLE);
     	}
+    }
+    
+    public void fadeInButtonAnimation()
+    {
+		Animation fadeIn = new AlphaAnimation(0, 1);
+		fadeIn.setInterpolator(new DecelerateInterpolator());
+		fadeIn.setDuration(SearchMenuResultsListAnimationConstants.SearchMenuResultsListScrollButtonAnimationSpeedMilliseconds);
+
+		AnimationSet animation = new AnimationSet(false);
+		animation.addAnimation(fadeIn);
+		m_searchResultsScrollButton.setAnimation(animation);
     }
     
     @Override
@@ -439,16 +452,10 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     		m_searchResultsScrollButton.setVisibility(View.VISIBLE);
     		m_searchResultsScrollable = true;
     		
-    	if(resultCount > 0 && oldHeight == 0)
-    	{
-    		Animation fadeIn = new AlphaAnimation(0, 1);
-    		fadeIn.setInterpolator(new DecelerateInterpolator());
-    		fadeIn.setDuration(SearchMenuResultsListAnimationConstants.SearchMenuResultsListScrollButtonAnimationSpeedMilliseconds);
-
-    		AnimationSet animation = new AnimationSet(false);
-    		animation.addAnimation(fadeIn);
-    		m_searchResultsScrollButton.setAnimation(animation);
-    	}
+	    	if(resultCount > 0 && oldHeight == 0)
+	    	{
+	    		fadeInButtonAnimation();
+	    	}
     	}
     	else
     	{
