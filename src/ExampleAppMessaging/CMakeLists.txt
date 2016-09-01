@@ -2,7 +2,6 @@ set(headers ${headers} ../src/ExampleAppMessaging
 )
 set(currsources
   ../src/ExampleAppMessaging/BidirectionalBus.h
-  ../src/ExampleAppMessaging/IHandler.h
   ../src/ExampleAppMessaging/CMakeLists.txt
   ../src/ExampleAppMessaging/DispatchQueue.h
   ../src/ExampleAppMessaging/NativeToUiMessageCatalog.h
