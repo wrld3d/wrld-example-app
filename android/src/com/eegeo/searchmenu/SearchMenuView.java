@@ -9,7 +9,6 @@ import java.util.List;
 import com.eegeo.ProjectSwallowApp.R;
 import com.eegeo.animation.ReversibleValueAnimator;
 import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.menu.MenuItemSelectedListener;
 import com.eegeo.menu.MenuListAdapter;
 import com.eegeo.menu.MenuView;
 import com.eegeo.searchmenu.SearchResultsScrollButtonTouchDownListener;
