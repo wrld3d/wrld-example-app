@@ -99,18 +99,21 @@ namespace ExampleApp
             {
                 Eegeo_ASSERT(m_interiorInteractionModel.HasInteriorModel(), "Can't show interior explorer without a selected and streamed interior");
                 
-                m_interiorExitTutorialViewedCount = 0;
-
-				if(!m_persistentSettings.TryGetValue(InteriorExitTutorialViewedCount, m_interiorExitTutorialViewedCount))
+				if(!fromAnotherInterior)
 				{
 					m_interiorExitTutorialViewedCount = 0;
-				}
 
-				m_interiorChangeFloorTutorialViewedCount = 0;
+					if(!m_persistentSettings.TryGetValue(InteriorExitTutorialViewedCount, m_interiorExitTutorialViewedCount))
+					{
+						m_interiorExitTutorialViewedCount = 0;
+					}
 
-				if(!m_persistentSettings.TryGetValue(InteriorChangeFloorTutorialViewedCount, m_interiorChangeFloorTutorialViewedCount))
-				{
 					m_interiorChangeFloorTutorialViewedCount = 0;
+
+					if(!m_persistentSettings.TryGetValue(InteriorChangeFloorTutorialViewedCount, m_interiorChangeFloorTutorialViewedCount))
+					{
+						m_interiorChangeFloorTutorialViewedCount = 0;
+					}
 				}
 
                 if(!m_interiorExplorerEnabled)
