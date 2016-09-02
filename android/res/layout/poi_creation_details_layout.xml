@@ -57,7 +57,7 @@
 	                android:paddingTop="6dp"
 	                android:paddingLeft="4dp"
 	                android:textColor="@color/gold"
-	                android:textSize="15.0dp" />
+	                android:textSize="24sp" />
 	            
 	        </LinearLayout>
 	        
@@ -84,23 +84,24 @@
 	                android:layout_height="fill_parent"
 	                android:layout_alignParentLeft="true"
 	                android:layout_marginLeft="40dp"
-	                android:layout_marginTop="2dp"
+	                android:layout_marginTop="-4dp"
 	                android:gravity="center_vertical"
 	                android:text="@string/poi_creation_details_share"
 	                android:textColor="@color/grey"
-	                android:textStyle="italic" />
+	                android:textStyle="italic"
+	                android:textSize="16sp" />
 	            
 	            <TextView
 	                android:id="@+id/poi_creation_details_terms_conditions_link"
 	                android:layout_width="150dp"
 	                android:layout_height="fill_parent"
-	                android:layout_marginTop="3dp"
+	                android:layout_marginTop="-1dp"
 	                android:layout_marginLeft="5dp"
 	                android:layout_toRightOf="@id/my_pin_creation_details_share_text"
 	                android:gravity="center_vertical"
 	                android:text="@string/poi_creation_details_terms_conditions"
 	                android:textColor="@color/darkgrey" 
-	                android:textSize="10dp"/>
+	                android:textSize="12sp"/>
 	            
 	        </RelativeLayout>
         </LinearLayout>
