@@ -515,6 +515,11 @@ namespace
         
         [recognizer setTranslation:CGPointZero inView:self.pFloorChangeButton];
         
+        m_scrollRect.size = self.pFloorListView.bounds.size;
+    }
+    
+    if(recognizer.state == UIGestureRecognizerStateBegan)
+    {
         if(!self.pTimer)
         {
             self.pTimer = [NSTimer timerWithTimeInterval:1.0/60.0
@@ -525,11 +530,7 @@ namespace
         }
         [[NSRunLoop mainRunLoop] addTimer:self.pTimer forMode:NSDefaultRunLoopMode];
         m_scrollRect.origin = self.pFloorListView.contentOffset;
-        m_scrollRect.size = self.pFloorListView.bounds.size;
-    }
-    
-    if(recognizer.state == UIGestureRecognizerStateBegan)
-    {
+       
         [self showFloorLabels];
     }
     
@@ -604,7 +605,7 @@ namespace
     if(heightForFloorIndex < controlHalfHeightBounds)
     {
         // Stay within the top half of the control;
-        newY = topY + heightForFloorIndex + m_halfButtonHeight - m_floorDivisionHeight;
+        newY = heightForFloorIndex - m_halfButtonHeight + m_halfDivisionHeight;
         
     }
     else if(heightForFloorIndex >= self.pFloorListView.contentSize.height-(controlHalfHeightBounds+m_halfDivisionHeight))
