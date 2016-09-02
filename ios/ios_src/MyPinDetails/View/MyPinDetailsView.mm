@@ -180,8 +180,6 @@
                                    mainWindowHeight);
     
     const float headlineHeight = 50.f;
-    const float headlineIconSize = 36.f;
-    const float headlineIconPadding = (headlineHeight - headlineIconSize)/2.0f;
     const float closeButtonSectionHeight = 64.f;
     const float closeButtonSectionOffsetY = mainWindowHeight - closeButtonSectionHeight;
     const float contentSectionHeight = mainWindowHeight - (closeButtonSectionHeight + headlineHeight);
@@ -221,19 +219,19 @@
                                   closeButtonSectionHeight,
                                   closeButtonSectionHeight);
 
-    
-    self.pIconContainer.frame = CGRectMake(headlineIconPadding, headlineIconPadding, headlineIconSize, headlineIconSize);
-    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pIconContainer, "icon1_place", ExampleApp::Helpers::ImageHelpers::Centre);
+    const float iconImageSize = 33.f;
+    self.pIconContainer.frame = CGRectMake(labelsSectionOffsetX, labelsSectionOffsetX, iconImageSize, iconImageSize);
+    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pIconContainer, "button_create_poi_off", ExampleApp::Helpers::ImageHelpers::Centre);
 
-    const float titlePadding = 10.0f;
-    self.pTitleLabel.frame = CGRectMake(headlineIconSize + (headlineIconPadding*2.0f) + titlePadding,
-                                        0.f,
+    const float titlePadding = 23.0f;
+    self.pTitleLabel.frame = CGRectMake(iconImageSize + titlePadding,
+                                        4.f,
                                         mainWindowWidth - headlineHeight - titlePadding,
                                         headlineHeight);
     self.pTitleLabel.font = [UIFont systemFontOfSize:24.0f];
 
     m_headerLabelHeight = 20.f;
-    m_labelYSpacing = 8.f;
+    m_labelYSpacing = 7.f;
     float currentLabelY = m_labelYSpacing;
 
     m_headerTextPadding = 3.0f;
