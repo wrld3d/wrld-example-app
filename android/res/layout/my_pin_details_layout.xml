@@ -30,15 +30,15 @@
                 android:id="@+id/my_pin_details_view_title"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_margin="5dp"
-                android:layout_toRightOf="@id/my_pin_details_icon"
-                android:paddingTop="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="8dp"
+                android:paddingTop="6dp"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:singleLine="true"
-                android:text="INT"
+                android:text=""
                 android:textColor="@color/gold"
-                android:textSize="15sp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
             
         </LinearLayout>
@@ -65,7 +65,9 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:textSize="12dp"
+                    android:textSize="16sp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
                     android:paddingLeft="3dp"
                     android:background="@color/gold"
                     android:text="@string/header_description"/>
@@ -75,10 +77,10 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:padding="5dp"
+                    android:paddingTop="5dp"
                     android:paddingLeft="3dp"
                     android:textColor="@color/darkgrey"
-                    android:textSize="12dp" />
+                    android:textSize="16sp" />
                 
                  <!--  Image  -->
                 <TextView
@@ -86,7 +88,9 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:textSize="12dp"
+                    android:textSize="16sp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
                     android:paddingLeft="3dp"
                     android:background="@color/gold"
                     android:text="@string/header_image"/>
