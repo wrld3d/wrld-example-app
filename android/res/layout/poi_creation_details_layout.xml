@@ -1,9 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/poi_creation_details_main"
     android:layout_width="330dp"
     android:layout_height="550dp"
-    android:id="@+id/poi_creation_details_main"
-    android:layout_centerInParent="true">
+    android:layout_centerInParent="true"
+    android:layout_margin="5dp" >
     
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -33,10 +34,13 @@
 	            android:layout_marginTop="5dp">
 	            
 	            <ImageView
-	              	android:src="@drawable/button_create_poi_off"
-	              	android:layout_width="wrap_content"
-	              	android:layout_height="wrap_content"
-			    	android:background="@color/white"/>
+	                android:layout_width="50dp"
+	                android:layout_height="50dp"
+	                android:background="@color/white"
+	                android:paddingTop="11dp"
+	                android:paddingLeft="6dp"
+	                android:paddingBottom="6dp"
+	                android:src="@drawable/button_create_poi_off" />
 	            
 	            <EditText
 	                android:id="@+id/poi_creation_details_title_edit_text"
@@ -50,7 +54,8 @@
 	                android:lines="0"
 	                android:maxLength="100"
 	                android:maxLines="1"
-	                android:paddingLeft="10dp"
+	                android:paddingTop="6dp"
+	                android:paddingLeft="4dp"
 	                android:textColor="@color/gold"
 	                android:textSize="15.0dp" />
 	            
@@ -66,7 +71,7 @@
 	                android:id="@+id/poi_creation_details_share_togglebutton"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:layout_marginLeft="10dp"
+	                android:layout_marginLeft="11dp"
 	                android:layout_marginTop="5dp"
 	                android:background="@drawable/check_button_states"
 	                android:checked="true"

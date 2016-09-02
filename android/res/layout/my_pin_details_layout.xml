@@ -20,10 +20,11 @@
             <ImageView
                 android:id="@+id/my_pin_details_icon"
                 android:contentDescription="@string/my_pin_details_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="center"
-                android:src="@drawable/icon_create_poi" />
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+                android:layout_marginTop="9dp"
+                android:layout_marginLeft="9dp"
+                android:src="@drawable/button_create_poi_off" />
             
             <TextView
                 android:id="@+id/my_pin_details_view_title"
@@ -31,9 +32,11 @@
                 android:layout_height="fill_parent"
                 android:layout_margin="5dp"
                 android:layout_toRightOf="@id/my_pin_details_icon"
+                android:paddingTop="10dp"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:singleLine="true"
+                android:text="INT"
                 android:textColor="@color/gold"
                 android:textSize="15sp"
                 android:textStyle="bold" />
