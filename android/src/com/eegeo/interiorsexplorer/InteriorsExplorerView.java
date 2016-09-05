@@ -393,7 +393,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     
     private float getScrollSpeed(float t)
     {
-    	final float maxScrollSpeed = 15;
+    	final float maxScrollSpeed = 22;
     	
     	t = Math.max(-1, Math.min(1, t));
     	return t * Math.abs(t) * maxScrollSpeed;
@@ -564,7 +564,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
 				scrollDelta = getScrollSpeed(-localT);
 			}
 			
-			m_floorList.scrollListBy(-Math.round(scrollDelta));
+			m_floorList.scrollListBy(m_activity.dipAsPx(-Math.round(scrollDelta)));
 			
 			View firstVisibleChild = m_floorList.getChildAt(0);
 			float topY = (m_floorList.getFirstVisiblePosition() * ListItemHeight) - firstVisibleChild.getTop();
