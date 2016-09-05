@@ -24,8 +24,10 @@ import com.eegeo.menu.MenuListAnimationHandler;
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.text.TextUtils.TruncateAt;
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
@@ -82,6 +84,13 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     
     private MenuExpandableListAdapter m_expandableListAdapter = null;
     private MenuListAnimationHandler m_menuListAnimationHandler = null;
+    
+    private float m_scaledDensity;
+    private boolean m_fontScaleInitialized;
+    private float m_ssgS7EditTextWidth;
+    private float m_ssgS7ScaledDensity;
+    private float m_ssgS7EditTextPixelWidth;
+    private float m_editTextPixelWidth;
     	
     public SearchMenuView(MainActivity activity, long nativeCallerPointer)
     {
@@ -184,6 +193,8 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
                 
         m_searchResultsScrollButtonTouchDownListener = new SearchResultsScrollButtonTouchDownListener(m_searchList, m_activity);
         m_searchResultsScrollButton.setOnTouchListener(m_searchResultsScrollButtonTouchDownListener);
+        
+        m_fontScaleInitialized = false;
     }
     
     @Override
@@ -224,7 +235,27 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     public void onTextChanged(CharSequence s, int start, int before, int count)
     {
     	updateClearButtonVisibility();
+    	if (s.length() == 0)
+    	{
+    		scaleHintText();
+    	}
+    	else
+    	{
+            m_editText.setTextSize(18.0f);
+    	}
     } 
+    
+    public void scaleHintText()
+    {
+    	DisplayMetrics metrics =  m_activity.getResources().getDisplayMetrics();
+        m_scaledDensity = metrics.scaledDensity;
+        m_ssgS7EditTextWidth = 868.0f;
+        m_ssgS7ScaledDensity = 4.0f;
+        m_ssgS7EditTextPixelWidth = (m_ssgS7EditTextWidth/m_ssgS7ScaledDensity);
+        m_editTextPixelWidth = (float)m_editText.getWidth()/m_scaledDensity;
+        float textSizeScaleFactor = m_editTextPixelWidth / m_ssgS7EditTextPixelWidth;
+        m_editText.setTextSize(14.0f * textSizeScaleFactor);
+    }
     
     public void removeSearchKeyboard()
     {
@@ -470,6 +501,12 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
 	        m_searchResultsScrollButton.setX(m_searchResultsFade.getPaddingLeft()
 	        		- m_searchResultsScrollButton.getWidth()/2
 	        		+ (m_searchResultsFade.getWidth() - (m_searchResultsFade.getPaddingLeft() + m_searchResultsFade.getPaddingRight()))/2);
+    	}
+    	
+    	if (!m_fontScaleInitialized)
+    	{
+	    	scaleHintText();
+	        m_fontScaleInitialized = true;
     	}
     }
 

@@ -285,7 +285,17 @@
     self.pSearchEditBox.backgroundColor = [UIColor clearColor];
     self.pSearchEditBox.borderStyle = UITextBorderStyleNone;
     self.pSearchEditBox.returnKeyType = UIReturnKeySearch;
-    self.pSearchEditBox.placeholder = @"Search people, depts, groups, etc.";
+    
+    NSMutableParagraphStyle *style = [self.pSearchEditBox.defaultTextAttributes[NSParagraphStyleAttributeName] mutableCopy];
+    float iPhone6SearchEditBoxWidth = 272.0;
+    CGFloat fontScale = m_searchEditBoxWidth / iPhone6SearchEditBoxWidth;
+    float iPhone6FontSize = 15.1;
+    float placeHolderFontSizeScaled = iPhone6FontSize * fontScale;
+    style.minimumLineHeight = self.pSearchEditBox.font.lineHeight - (self.pSearchEditBox.font.lineHeight - [UIFont systemFontOfSize:placeHolderFontSizeScaled].lineHeight) / 2.0;
+    self.pSearchEditBox.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Search people, depts, groups, etc."
+                                                                                    attributes:@ {NSForegroundColorAttributeName: [UIColor colorWithRed:(104.0/255.0) green:(104.0/255.0) blue:(104.0/255.0) alpha:1],
+                                                                                    NSFontAttributeName : [UIFont systemFontOfSize:placeHolderFontSizeScaled],
+                                                                                    NSParagraphStyleAttributeName : style }];
     
     self.pSearchEditBoxClearButtonContainer = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, searchClearButtonSize + searchClearButtonRightInset, searchClearButtonSize)] autorelease];
     
