@@ -56,6 +56,8 @@ namespace ExampleAppWPF
 
         private Action<object, EventArgs> m_animationCompleteCallback;
 
+        private bool m_SearchMenuAnimated;
+
         protected abstract void RefreshListData(List<string> groups, List<bool> groupsExpandable, Dictionary<string, List<string>> groupToChildrenMap);
 
         private WindowInteractionTouchHandler m_touchHandler;
@@ -74,6 +76,7 @@ namespace ExampleAppWPF
             m_isAnimating = false;
             m_isOffScreen = true;
             m_touchHandler = new WindowInteractionTouchHandler(this);
+            m_SearchMenuAnimated = false;
         }
 
         protected void PerformLayout(object sender, SizeChangedEventArgs e)
@@ -177,7 +180,11 @@ namespace ExampleAppWPF
                 m_isOffScreen = true;
             }
 
-            PerformLayout(sender, null);
+            if (!m_SearchMenuAnimated)
+            {
+                PerformLayout(sender, null);
+            }
+            m_SearchMenuAnimated = false;
 
             m_animationCompleteCallback?.Invoke(sender, e);
         }
@@ -246,6 +253,7 @@ namespace ExampleAppWPF
                     if(m_offScreenPos < 0)
                     {
                         offScreenX -= (m_mainContainer.ActualWidth + m_menuIcon.ActualWidth) / 2;
+                        m_SearchMenuAnimated = true;
                     }
                     else
                     {
