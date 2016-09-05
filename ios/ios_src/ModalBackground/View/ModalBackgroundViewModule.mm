@@ -14,26 +14,28 @@ namespace ExampleApp
     {
         namespace View
         {
-            ModalBackgroundViewModule::ModalBackgroundViewModule(Modality::View::IModalityModel& modalityModel, const Eegeo::Rendering::ScreenProperties& screenProperties)
+            void ModalBackgroundViewModule::Register(const TContainerBuilder& builder)
             {
-                m_pView = [[ModalBackgroundView alloc] initWithParams:screenProperties.GetScreenWidth() :screenProperties.GetScreenHeight()];
-                m_pController = Eegeo_NEW(Modality::View::ModalBackgroundController)(*[m_pView getInterop], modalityModel);
-            }
-
-            ModalBackgroundViewModule::~ModalBackgroundViewModule()
-            {
-                Eegeo_DELETE m_pController;
-                [m_pView release];
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto screenProperties = context.resolve<Eegeo::Rendering::ScreenProperties>();
+                                                     auto view = [[ModalBackgroundView alloc] initWithParams
+                                                                  :screenProperties->GetScreenWidth()
+                                                                  :screenProperties->GetScreenHeight()];
+                                                     return std::make_shared<ModalBackgroundViewWrapper>(view);
+                                                 }).singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto view = context.resolve<ModalBackgroundViewWrapper>();
+                                                     auto interop = [view->Get() getInterop];
+                                                     return Hypodermic::makeExternallyOwned(*interop);
+                                                 }).as<Modality::View::IModalBackgroundView>().singleInstance();
+                builder->registerType<Modality::View::ModalBackgroundController>().singleInstance();
             }
             
-            Modality::View::IModalBackgroundView& ModalBackgroundViewModule::GetModalBackgroundViewInterop()
+            void ModalBackgroundViewModule::RegisterLeaves()
             {
-                return *[m_pView getInterop];
-            }
-
-            ModalBackgroundView& ModalBackgroundViewModule::GetModalBackgroundView()
-            {
-                return *m_pView;
+                RegisterLeaf<Modality::View::ModalBackgroundController>();
             }
         }
     }

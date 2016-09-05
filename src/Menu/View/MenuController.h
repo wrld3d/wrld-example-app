@@ -36,12 +36,12 @@ namespace ExampleApp
 
                 Eegeo::Helpers::TFunc0<MenuController, bool> m_tryDragFunc;
                 
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
 
             protected:
-                IMenuModel& m_model;
-                IMenuViewModel& m_viewModel;
-                IMenuView& m_view;
+                const std::shared_ptr<IMenuModel> m_model;
+                const std::shared_ptr<IMenuViewModel> m_viewModel;
+                const std::shared_ptr<IMenuView> m_view;
                 bool m_dragInProgress;
                 bool m_presentationDirty;
                 bool m_menuContentsChanged;
@@ -80,10 +80,10 @@ namespace ExampleApp
 
             public:
                 MenuController(
-                    IMenuModel& model,
-                    IMenuViewModel& viewModel,
-                    IMenuView& view,
-                    ExampleAppMessaging::TMessageBus& messageBus
+                               const std::shared_ptr<IMenuModel>& model,
+                               const std::shared_ptr<IMenuViewModel>& viewModel,
+                               const std::shared_ptr<IMenuView>& view,
+                               const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus
                 );
 
                 ~MenuController();

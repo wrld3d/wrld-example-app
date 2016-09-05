@@ -13,19 +13,14 @@ namespace ExampleApp
     {
         namespace View
         {
-            ReactionModelModule::ReactionModelModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
-            : m_builder(builder)
+            void ReactionModelModule::Register(const TContainerBuilder& builder)
             {
-            }
-            
-            void ReactionModelModule::Register()
-            {
-                m_builder->registerType<Menu::View::ReactorIgnoredReactionModel>().as<Menu::View::IReactorIgnoredReactionModel>().singleInstance();
-                m_builder->registerType<Menu::View::ModalityIgnoredReactionModel>().as<Menu::View::IModalityIgnoredReactionModel>().singleInstance();
-                m_builder->registerType<ScreenControl::View::TReactors>().singleInstance();
-                m_builder->registerType<OpenableControl::View::TOpenables>().singleInstance();
-                m_builder->registerType<ReactionControllerModel>().as<IReactionControllerModel>().singleInstance();
-                m_builder->registerType<ReactionModel>().as<IReactionModel>().singleInstance();
+                builder->registerType<Menu::View::ReactorIgnoredReactionModel>().as<Menu::View::IReactorIgnoredReactionModel>().singleInstance();
+                builder->registerType<Menu::View::ModalityIgnoredReactionModel>().as<Menu::View::IModalityIgnoredReactionModel>().singleInstance();
+                builder->registerType<ScreenControl::View::TReactors>().singleInstance();
+                builder->registerType<OpenableControl::View::TOpenables>().singleInstance();
+                builder->registerType<ReactionControllerModel>().as<IReactionControllerModel>().singleInstance();
+                builder->registerType<ReactionModel>().as<IReactionModel>().singleInstance();
             }
         }
     }

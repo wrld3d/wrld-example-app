@@ -9,6 +9,8 @@
 #include "SearchResultRepositoryObserver.h"
 #include "SearchResultSectionItemSelectedMessageHandler.h"
 #include "SearchResultViewClearedObserver.h"
+#include "SearchResultSectionController.h"
+#include "ISearchResultPoiViewModel.h"
 
 namespace ExampleApp
 {
@@ -23,7 +25,16 @@ namespace ExampleApp
                 builder->registerType<View::SearchResultRepositoryObserver>().singleInstance();
                 builder->registerType<SearchResultSectionItemSelectedMessageHandler>().singleInstance();
                 builder->registerType<SearchResultViewClearedObserver>().singleInstance();
-                builder->registerType<View::SearchResultSectionOrder>().singleInstance();
+                builder->registerType<View::SearchResultSectionOrder>().as<View::ISearchResultSectionOrder>().singleInstance();
+                builder->registerType<View::SearchResultSectionController>().singleInstance();
+            }
+            
+            void SearchResultSectionModule::RegisterLeaves()
+            {
+                RegisterLeaf<View::SearchResultRepositoryObserver>();
+                RegisterLeaf<SearchResultSectionItemSelectedMessageHandler>();
+                RegisterLeaf<SearchResultViewClearedObserver>();
+                RegisterLeaf<View::SearchResultSectionController>();
             }
             
             /*SearchResultSectionModule::SearchResultSectionModule(Menu::View::IMenuViewModel& searchMenuViewModel,

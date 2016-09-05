@@ -31,7 +31,8 @@ namespace ExampleApp
         void ResolveModules();
         
         const std::shared_ptr<MobileExampleApp> BuildMobileExampleApp();
-
+        const TContainer& GetContainer() const;
+        
         template <class T>
         std::shared_ptr< T > Resolve()
         {

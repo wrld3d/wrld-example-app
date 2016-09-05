@@ -2,14 +2,7 @@
 
 #pragma once
 
-#include "ISettingsMenuViewModule.h"
-
-#include "Types.h"
-#include "Menu.h"
-#include "Modality.h"
-#include "Rendering.h"
-#include "BidirectionalBus.h"
-#include "SettingsTableDataProvider.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -17,25 +10,11 @@ namespace ExampleApp
     {
         namespace View
         {
-            class SettingsMenuViewModule: public ISettingsMenuViewModule, private Eegeo::NonCopyable
+            class SettingsMenuViewModule: public Module
             {
-            private:
-                SettingsMenuController* m_pController;
-                SettingsMenuView* m_pView;
-                SettingsTableDataProvider* m_pDataProvider;
-
             public:
-                SettingsMenuViewModule(Menu::View::IMenuModel& settingsMenuModel,
-                                       Menu::View::IMenuViewModel& settingsMenuViewModel,
-                                       const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                       Modality::View::IModalBackgroundView& modalBackgroundView,
-                                       ExampleAppMessaging::TMessageBus& messageBus);
-
-                ~SettingsMenuViewModule();
-
-                Menu::View::MenuController& GetMenuController() const;
-
-                SettingsMenuView& GetSettingsMenuView() const;
+                void Register(const TContainerBuilder& builder);
+                void RegisterLeaves();
             };
         }
     }

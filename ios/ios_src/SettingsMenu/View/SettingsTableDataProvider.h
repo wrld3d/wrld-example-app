@@ -5,10 +5,19 @@
 #import <UIKit/UIKit.h>
 
 #include "CustomTableDataProvider.h"
+#include "ViewWrap.h"
+
+@class SettingsTableDataProvider;
+
+class SettingsTableDataProviderWrapper : public ViewWrap<SettingsTableDataProvider>
+{
+    using ViewWrap::ViewWrap;
+};
 
 @interface SettingsTableDataProvider : CustomTableDataProvider
 {
     
 }
+
 
 @end;

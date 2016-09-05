@@ -13,7 +13,7 @@ namespace ExampleApp
                 : m_openState(0.f)
                 , m_reactionControllerModel(reactionControllerModel)
             {
-
+                Eegeo_ASSERT(m_reactionControllerModel != nullptr);
             }
 
             OpenableControlViewModelBase::~OpenableControlViewModelBase()

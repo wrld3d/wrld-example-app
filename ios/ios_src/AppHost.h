@@ -22,7 +22,6 @@
 #include "ViewControllerUpdater.h"
 #include "SettingsMenuViewIncludes.h"
 #include "SearchMenuViewIncludes.h"
-#include "SearchResultSectionViewIncludes.h"
 #include "ModalBackgroundViewIncludes.h"
 #include "FlattenButtonViewIncludes.h"
 #include "SearchResultPoiViewIncludes.h"
@@ -60,6 +59,7 @@
 #include "AppWiring.h"
 #include "Hypodermic/ContainerBuilder.h"
 #include "ICallback.h"
+#include "IViewControllerUpdaterModel.h"
 
 #include <memory>
 
@@ -98,6 +98,19 @@ public:
     void HandleNoConnectivityWarning();
     
     void HandleInvalidConnectivityError();
+    
+    template <class T>
+    void AddSubview()
+    {
+        [m_pView addSubview: m_wiring->Resolve<T>()->Get()];
+    }
+    
+    template <class T>
+    void AddViewControllerUpdatable()
+    {
+        auto t = m_wiring->Resolve<T>();
+        m_wiring->Resolve<ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel>()->AddUpdateableObject(*t);
+    }
 
 private:
     Eegeo::Helpers::TCallback0<AppHost> m_loadingSreenCompleteCallback;
@@ -118,12 +131,12 @@ private:
     //Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory m_iOSAlertBoxFactory;
     //Eegeo::UI::NativeUIFactories m_iOSNativeUIFactories;
     
-    ExampleApp::SettingsMenu::View::ISettingsMenuViewModule* m_pSettingsMenuViewModule;
+    //ExampleApp::SettingsMenu::View::ISettingsMenuViewModule* m_pSettingsMenuViewModule;
     ExampleApp::SearchMenu::View::ISearchMenuViewModule* m_pSearchMenuViewModule;
-    ExampleApp::SearchResultSection::View::ISearchResultSectionViewModule* m_pSearchResultSectionViewModule;
-    ExampleApp::ModalBackground::View::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
+    //ExampleApp::SearchResultSection::View::ISearchResultSectionViewModule* m_pSearchResultSectionViewModule;
+    //ExampleApp::ModalBackground::View::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
     ExampleApp::FlattenButton::View::IFlattenButtonViewModule* m_pFlattenButtonViewModule;
-    ExampleApp::SearchResultPoi::View::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;
+    //ExampleApp::SearchResultPoi::View::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;
     ExampleApp::WorldPins::View::IWorldPinOnMapViewModule* m_pWorldPinOnMapViewModule;
     ExampleApp::Compass::View::ICompassViewModule* m_pCompassViewModule;
     //ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModule* m_pViewControllerUpdaterModule;

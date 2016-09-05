@@ -13,33 +13,18 @@ namespace ExampleApp
     {
         namespace View
         {
-            SearchResultPoiViewModule::SearchResultPoiViewModule(ISearchResultPoiViewModel& searchResultPoiViewModel,
-                                                                 ExampleAppMessaging::TMessageBus& messageBus,
-                                                                 Metrics::IMetricsService& metricsService)
+            void SearchResultPoiViewModule::Register(const TContainerBuilder &builder)
             {
-                m_pView = [[SearchResultPoiViewContainer alloc] initWithoutParams];
-                
-                m_pController = Eegeo_NEW(SearchResultPoiController)(*[m_pView getInterop],
-                                                                     searchResultPoiViewModel,
-                                                                     messageBus,
-                                                                     metricsService);
-            }
-
-            SearchResultPoiViewModule::~SearchResultPoiViewModule()
-            {
-                Eegeo_DELETE m_pController;
-                
-                [m_pView release];
-            }
-
-            SearchResultPoiController& SearchResultPoiViewModule::GetController() const
-            {
-                return *m_pController;
-            }
-
-            SearchResultPoiViewContainer& SearchResultPoiViewModule::GetView() const
-            {
-                return *m_pView;
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto view = [[SearchResultPoiViewContainer alloc] initWithoutParams];
+                                                     return std::make_shared<SearchResultPoiViewContainerWrapper>(view);
+                                                 }).singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto view = context.resolve<SearchResultPoiViewContainerWrapper>();
+                                                     return Hypodermic::makeExternallyOwned(*[view->Get() getInterop]);
+                                                 }).as<ISearchResultPoiView>().singleInstance();
             }
         }
     }

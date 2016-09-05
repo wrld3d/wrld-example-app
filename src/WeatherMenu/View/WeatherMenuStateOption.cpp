@@ -10,10 +10,10 @@ namespace ExampleApp
         namespace View
         {
             WeatherMenuStateOption::WeatherMenuStateOption(
-                SdkModel::WeatherMenuStateModel& weatherStateModel,
-                ExampleAppMessaging::TMessageBus& messageBus,
-                Metrics::IMetricsService& metricsService,
-                const AppModes::SdkModel::IAppModeModel& appModeModel)
+                                                           SdkModel::WeatherMenuStateModel& weatherStateModel,
+                                                           const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                                           const std::shared_ptr<Metrics::IMetricsService>& metricsService,
+                                                           const std::shared_ptr<AppModes::SdkModel::IAppModeModel>& appModeModel)
                 : m_weatherStateModel(weatherStateModel)
                 , m_messageBus(messageBus)
                 , m_metricsService(metricsService)
@@ -23,12 +23,12 @@ namespace ExampleApp
 
             void WeatherMenuStateOption::Select()
             {
-                m_metricsService.SetEvent("UIItem: Weather", "Name", m_weatherStateModel.GetName().c_str());
+                m_metricsService->SetEvent("UIItem: Weather", "Name", m_weatherStateModel.GetName().c_str());
                 
-                if (m_appModeModel.GetAppMode() == AppModes::SdkModel::WorldMode)
+                if (m_appModeModel->GetAppMode() == AppModes::SdkModel::WorldMode)
                 {
-                    m_messageBus.Publish(FlattenButton::FlattenButtonViewStateChangedMessage(false));
-                    m_messageBus.Publish(WeatherSelectedMessage(m_weatherStateModel));
+                    m_messageBus->Publish(FlattenButton::FlattenButtonViewStateChangedMessage(false));
+                    m_messageBus->Publish(WeatherSelectedMessage(m_weatherStateModel));
                 }
             }
         }

@@ -9,6 +9,9 @@
 #include "MenuViewModel.h"
 #include "OptionsMenuOption.h"
 #include "IReactionControllerModel.h"
+#include "SettingsMenu.h"
+#include "WeatherMenu.h"
+#include "OptionsViewModel.h"
 
 namespace ExampleApp
 {
@@ -16,67 +19,44 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class SettingsMenuModel : public Menu::View::MenuModel
+            namespace
             {
-            };
-            
-            class OptionsMenuModel : public Menu::View::MenuModel
-            {
-            };
-            
-            class AboutMenuModel : public Menu::View::MenuModel
-            {
-            };
-            
-            class SettingsMenuOptionsModel : public Menu::View::MenuOptionsModel
-            {
-            public:
-                SettingsMenuOptionsModel(const std::shared_ptr<SettingsMenuModel>& settingsMenuModel) : Menu::View::MenuOptionsModel(*settingsMenuModel)
+                void AddMenuSection(const std::shared_ptr<View::SettingsMenuViewModel>& viewModel,
+                                    const std::string& name,
+                                    const std::shared_ptr<Menu::View::IMenuModel>& menuModel,
+                                    bool isExpandable)
                 {
+                    Menu::View::MenuSectionViewModel* pMenuSection = Eegeo_NEW(Menu::View::MenuSectionViewModel)(name, "", menuModel, isExpandable);
+                    viewModel->AddSection(*pMenuSection);
                 }
-            };
+            }
             
-            class OptionsMenuOptionsModel : public Menu::View::MenuOptionsModel
+            void SettingsMenuModule::Register(const TContainerBuilder& builder)
             {
-            public:
-                OptionsMenuOptionsModel(const std::shared_ptr<OptionsMenuModel>& optionsMenuModel) : Menu::View::MenuOptionsModel(*optionsMenuModel)
-                {
-                }
-            };
-            
-            class AboutMenuOptionsModel : public Menu::View::MenuOptionsModel
-            {
-            public:
-                AboutMenuOptionsModel(const std::shared_ptr<AboutMenuModel>& aboutMenuModel) : Menu::View::MenuOptionsModel(*aboutMenuModel)
-                {
-                }
-            };
-            
-            class SettingsMenuViewModel : public Menu::View::MenuViewModel
-            {
-            public:
-                SettingsMenuViewModel(bool isInitiallyOnScreen,
-                                      const std::shared_ptr<Eegeo::Helpers::IIdentityProvider>& identity,
-                                      const std::shared_ptr<Reaction::View::IReactionControllerModel>& reactionControllerModel)
-                : Menu::View::MenuViewModel(isInitiallyOnScreen, identity->GetNextIdentity(), reactionControllerModel)
-                {
-                }
-            };
-            
-            void SettingsMenuModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
-            {
-                builder->registerType<SettingsMenuModel>().singleInstance();
-                builder->registerType<SettingsMenuOptionsModel>().singleInstance();
-                builder->registerType<OptionsMenuModel>().singleInstance();
-                builder->registerType<OptionsMenuOptionsModel>().singleInstance();
-                builder->registerType<AboutMenuModel>().singleInstance();
-                builder->registerType<AboutMenuOptionsModel>().singleInstance();
+                builder->registerType<View::SettingsMenuModel>().singleInstance();
+                builder->registerType<View::SettingsMenuOptionsModel>().singleInstance();
+                builder->registerType<View::OptionsMenuModel>().singleInstance();
+                builder->registerType<View::OptionsMenuOptionsModel>().singleInstance();
+                builder->registerType<View::AboutMenuModel>().singleInstance();
+                builder->registerType<View::AboutMenuOptionsModel>().singleInstance();
                 builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                                  {
-                                                     return std::make_shared<SettingsMenuViewModel>(false,
+                                                     return std::make_shared<View::SettingsMenuViewModel>(false,
                                                                                                    context.resolve<Eegeo::Helpers::IIdentityProvider>(),
                                                                                                    context.resolve<Reaction::View::IReactionControllerModel>());
                                                  }).singleInstance();
+            }
+            
+            void SettingsMenuModule::RegisterLeaves()
+            {
+                auto viewModel = Resolve<View::SettingsMenuViewModel>();
+                auto weatherMenuModel = Resolve<WeatherMenu::View::WeatherMenuModel>();
+                AddMenuSection(viewModel, "Weather", weatherMenuModel, true);
+                
+                auto optionsMenuModel = Resolve<View::OptionsMenuModel>();
+                auto optionsMenuOptionsModel = Resolve<View::OptionsMenuOptionsModel>();
+                optionsMenuOptionsModel->AddItem("Options", "Options", "", "", Eegeo_NEW(View::OptionsMenuOption)(viewModel, Resolve<Options::View::OptionsViewModel>()));
+                AddMenuSection(viewModel, "Options", optionsMenuModel, false);
             }
             
             /*

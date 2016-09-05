@@ -20,11 +20,11 @@ namespace ExampleApp
             {
             public:
 
-                MenuSectionViewModel(const std::string& name, const std::string& icon, IMenuModel& menuModel, bool isExpandable);
+                MenuSectionViewModel(const std::string& name, const std::string& icon, const std::shared_ptr<IMenuModel>& menuModel, bool isExpandable);
                 
                 IMenuModel& GetModel() const
                 {
-                    return m_menuModel;
+                    return *m_menuModel;
                 }
                 
                 const std::string& Name() const
@@ -71,7 +71,7 @@ namespace ExampleApp
                 std::string m_name;
                 std::string m_icon;
                 std::string m_details;
-                IMenuModel& m_menuModel;
+                const std::shared_ptr<IMenuModel> m_menuModel;
                 const bool m_isExpandable;
                 bool m_expanded;
                 

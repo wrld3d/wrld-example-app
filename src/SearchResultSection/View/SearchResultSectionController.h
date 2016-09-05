@@ -15,6 +15,7 @@
 #include "SearchResultModel.h"
 #include "IMenuReactionModel.h"
 #include "SearchResultPoi.h"
+#include "SearchMenuOptions.h"
 
 namespace ExampleApp
 {
@@ -25,13 +26,13 @@ namespace ExampleApp
             class SearchResultSectionController : public Eegeo::NonCopyable
             {
             private:
-                Menu::View::IMenuViewModel& m_searchMenuViewModel;
-                Menu::View::IMenuOptionsModel& m_menuOptions;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<Menu::View::IMenuViewModel> m_searchMenuViewModel;
+                const std::shared_ptr<Menu::View::IMenuOptionsModel> m_menuOptions;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 std::vector<Search::SdkModel::SearchResultModel> m_lastAddedResults;
-                ISearchResultSectionOrder& m_order;
-                const Menu::View::IMenuReactionModel& m_menuReaction;
-                SearchResultPoi::View::ISearchResultPoiViewModel& m_searchResultPoiViewModel;
+                const std::shared_ptr<ISearchResultSectionOrder> m_order;
+                const std::shared_ptr<const Menu::View::IMenuReactionModel> m_menuReaction;
+                const std::shared_ptr<SearchResultPoi::View::ISearchResultPoiViewModel> m_searchResultPoiViewModel;
                 
                 Eegeo::Helpers::TCallback1<SearchResultSectionController, const Search::SearchQueryResponseReceivedMessage&> m_searchResultReceivedHandler;
                 Eegeo::Helpers::TCallback1<SearchResultSectionController, const Search::SearchQueryRemovedMessage&> m_searchQueryRemovedHandler;
@@ -45,12 +46,12 @@ namespace ExampleApp
             protected:
                 
             public:
-                SearchResultSectionController(Menu::View::IMenuViewModel& searchMenuViewModel,
-                    Menu::View::IMenuOptionsModel& menuOptionsModel,
-                    ISearchResultSectionOrder& order,
-                    ExampleAppMessaging::TMessageBus& messageBus,
-                    const Menu::View::IMenuReactionModel& menuReaction,
-                    SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel);
+                SearchResultSectionController(const std::shared_ptr<SearchMenu::View::SearchMenuViewModel>& searchMenuViewModel,
+                                              const std::shared_ptr<SearchMenu::View::SearchMenuOptionsModel>& menuOptionsModel,
+                                              const std::shared_ptr<ISearchResultSectionOrder>& order,
+                                              const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                              const std::shared_ptr<Menu::View::IMenuReactionModel>& menuReaction,
+                                              const std::shared_ptr<SearchResultPoi::View::ISearchResultPoiViewModel>& searchResultPoiViewModel);
 
                 ~SearchResultSectionController();
             };

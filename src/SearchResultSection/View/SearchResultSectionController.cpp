@@ -45,13 +45,13 @@ namespace ExampleApp
                 for(int i = 0; i < m_lastAddedResults.size(); ++i)
                 {
                     const Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
-                    m_menuOptions.RemoveItem(model.GetIdentifier());
+                    m_menuOptions->RemoveItem(model.GetIdentifier());
                 }
                 
                 m_lastAddedResults = message.GetResults();
                 const std::vector<Search::SdkModel::SearchResultModel>& unorderedResults = message.GetResults();
                 
-                OrderWrapper orderWrapper(m_order);
+                OrderWrapper orderWrapper(*m_order);
                 std::stable_sort(m_lastAddedResults.begin(), m_lastAddedResults.end(), orderWrapper);
                 
                 for(int i = 0; i < m_lastAddedResults.size(); ++i)
@@ -59,7 +59,7 @@ namespace ExampleApp
                     const Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
                     std::string subtitle = model.GetSubtitle();
                     std::string category = model.GetCategory();                    
-                    m_menuOptions.AddItem(model.GetIdentifier(),
+                    m_menuOptions->AddItem(model.GetIdentifier(),
                                           model.GetTitle(),
                                           subtitle,
                                           category,
@@ -68,11 +68,11 @@ namespace ExampleApp
                                                                            model.IsInterior(),
                                                                            model.GetBuildingId(),
                                                                            model.GetFloor(),
-                                                                           m_searchMenuViewModel,
-                                                                           m_searchResultPoiViewModel,
+                                                                           *m_searchMenuViewModel,
+                                                                           *m_searchResultPoiViewModel,
                                                                            GetOriginalIndexForSearchResult(unorderedResults, model),
-                                                                           m_messageBus,
-                                                                           m_menuReaction));
+                                                                           *m_messageBus,
+                                                                           *m_menuReaction));
                 }
             }
             
@@ -81,20 +81,20 @@ namespace ExampleApp
                 for(int i = 0; i < m_lastAddedResults.size(); ++i)
                 {
                     const Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
-                    m_menuOptions.RemoveItem(model.GetIdentifier());
+                    m_menuOptions->RemoveItem(model.GetIdentifier());
                 }
 
                 m_lastAddedResults.clear();
             }
             
-            SearchResultSectionController::SearchResultSectionController(Menu::View::IMenuViewModel& searchMenuViewModel,
-                                                                         Menu::View::IMenuOptionsModel& menuOptions,
-                                                                         ISearchResultSectionOrder& order,
-                                                                         ExampleAppMessaging::TMessageBus& messageBus,
-                                                                         const Menu::View::IMenuReactionModel& menuReaction,
-                                                                         SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel)
+            SearchResultSectionController::SearchResultSectionController(const std::shared_ptr<SearchMenu::View::SearchMenuViewModel>& searchMenuViewModel,
+                                                                         const std::shared_ptr<SearchMenu::View::SearchMenuOptionsModel>& menuOptionsModel,
+                                                                         const std::shared_ptr<ISearchResultSectionOrder>& order,
+                                                                         const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                                                         const std::shared_ptr<Menu::View::IMenuReactionModel>& menuReaction,
+                                                                         const std::shared_ptr<SearchResultPoi::View::ISearchResultPoiViewModel>& searchResultPoiViewModel)
             : m_searchMenuViewModel(searchMenuViewModel)
-            , m_menuOptions(menuOptions)
+            , m_menuOptions(menuOptionsModel)
             , m_order(order)
             , m_messageBus(messageBus)
             , m_searchResultReceivedHandler(this, &SearchResultSectionController::OnSearchQueryResponseReceivedMessage)
@@ -102,14 +102,14 @@ namespace ExampleApp
             , m_menuReaction(menuReaction)
             , m_searchResultPoiViewModel(searchResultPoiViewModel)
             {
-                m_messageBus.SubscribeUi(m_searchResultReceivedHandler);
-                m_messageBus.SubscribeUi(m_searchQueryRemovedHandler);
+                m_messageBus->SubscribeUi(m_searchResultReceivedHandler);
+                m_messageBus->SubscribeUi(m_searchQueryRemovedHandler);
             }
 
             SearchResultSectionController::~SearchResultSectionController()
             {
-                m_messageBus.UnsubscribeUi(m_searchQueryRemovedHandler);
-                m_messageBus.UnsubscribeUi(m_searchResultReceivedHandler);
+                m_messageBus->UnsubscribeUi(m_searchQueryRemovedHandler);
+                m_messageBus->UnsubscribeUi(m_searchResultReceivedHandler);
             }
         }
     }

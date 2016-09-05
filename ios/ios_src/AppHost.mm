@@ -39,7 +39,6 @@
 #include "SearchResultPoiViewModule.h"
 #include "SearchResultPoiView.h"
 #include "SearchResultSectionModule.h"
-#include "SearchResultSectionViewModule.h"
 #include "CompassViewModule.h"
 #include "CompassView.h"
 #include "CompassModel.h"
@@ -87,6 +86,9 @@
 #include "Module.h"
 
 #include "IWatermarkViewModel.h"
+#include "SettingsMenuController.h"
+#include "IModalBackgroundView.h"
+#include "SearchResultPoiViewContainer.h"
 
 #include <memory>
 
@@ -256,8 +258,7 @@ AppHost::~AppHost()
 
 void AppHost::OnLoadingScreenComplete()
 {
-    // temporary, move to another cross-platform type.
-    m_wiring->Resolve<ExampleApp::Watermark::View::IWatermarkViewModel>()->AddToScreen();
+    m_app->InitialiseApplicationViewState(m_wiring->GetContainer());
 }
 
 void AppHost::OnResume()
@@ -284,11 +285,11 @@ void AppHost::Update(float dt)
         return;
     }
 
-    /*if(m_pApp->IsLoadingScreenComplete() && !m_requestedApplicationInitialiseViewState)
-    {
-        m_requestedApplicationInitialiseViewState = true;
-        m_pApp->InitialiseApplicationViewState();
-    }*/
+    //if(m_pApp->IsLoadingScreenComplete() && !m_requestedApplicationInitialiseViewState)
+    //{
+    //    m_requestedApplicationInitialiseViewState = true;
+    //    m_pApp->InitialiseApplicationViewState();
+    //}
 
     m_app->Update(dt);
     m_wiring->Resolve<ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel>()->UpdateObjectsUiThread(dt);
@@ -309,42 +310,23 @@ bool AppHost::IsRunning()
 
 void AppHost::AddApplicationViews()
 {
-    auto watermarkView = m_wiring->Resolve<WatermarkViewWrapper>()->Get();
-    [m_pView addSubview: watermarkView];
+    AddSubview<WatermarkViewWrapper>();
+    AddSubview<ModalBackgroundViewWrapper>();
+    AddSubview<SettingsMenuViewWrapper>();
+    AddSubview<SearchResultPoiViewContainerWrapper>();
+    
+    AddViewControllerUpdatable<ExampleApp::SettingsMenu::View::SettingsMenuController>();    
 }
 
 void AppHost::RegisterApplicationViewModules()
 {
     m_wiring->RegisterModule<ExampleApp::Watermark::View::WatermarkViewModule>();
-    /*m_pWatermarkViewModule = Eegeo_NEW(ExampleApp::Watermark::View::WatermarkViewModule)(app.WatermarkModule().GetWatermarkViewModel(),
-                                                                                         app.WatermarkModule().GetWatermarkDataRepository(),
-                                                                                         screenProperties,
-                                                                                         GetMessageBus(),
-                                                                                         *(m_container->resolve<ExampleApp::Metrics::IMetricsService>()));
+    m_wiring->RegisterModule<ExampleApp::ModalBackground::View::ModalBackgroundViewModule>();
+    m_wiring->RegisterModule<ExampleApp::SettingsMenu::View::SettingsMenuViewModule>();
+    m_wiring->RegisterModule<ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule>();
+    
 
-    m_pModalBackgroundViewModule = Eegeo_NEW(ExampleApp::ModalBackground::View::ModalBackgroundViewModule)(app.ModalityModule().GetModalityModel(), screenProperties);
-    
-    m_pSettingsMenuViewModule = Eegeo_NEW(ExampleApp::SettingsMenu::View::SettingsMenuViewModule)(app.SettingsMenuModule().GetSettingsMenuModel(),
-                                                                                                  app.SettingsMenuModule().GetSettingsMenuViewModel(),
-                                                                                                  screenProperties,
-                                                                                                  m_pModalBackgroundViewModule->GetModalBackgroundViewInterop(),
-                                                                                                  GetMessageBus());
-    
-    m_pSearchMenuViewModule = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchMenuViewModule)(app.SearchMenuModule().GetSearchMenuModel(),
-                                                                                            app.SearchMenuModule().GetSearchMenuViewModel(),
-                                                                                            app.SearchMenuModule().GetSearchSectionViewModel(),
-                                                                                            screenProperties,
-                                                                                            app.CategorySearchModule().GetCategorySearchRepository(),
-                                                                                            m_pModalBackgroundViewModule->GetModalBackgroundViewInterop(),
-                                                                                            GetMessageBus());
-    
-    m_pSearchResultSectionViewModule = Eegeo_NEW(ExampleApp::SearchResultSection::View::SearchResultSectionViewModule)(app.SearchMenuModule().GetSearchMenuViewModel(),
-                                                                                                                       app.SearchResultSectionModule().GetSearchResultSectionOptionsModel(),
-                                                                                                                       app.SearchResultSectionModule().GetSearchResultSectionOrder(),
-                                                                                                                       GetMessageBus(),
-                                                                                                                       *(m_container->resolve<ExampleApp::Menu::View::IMenuReactionModel>()),
-                                                                                                                       app.SearchResultPoiModule().GetSearchResultPoiViewModel());
-
+    /*
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
                                                                                                            GetMessageBus(),
                                                                                                            *(m_container->resolve<ExampleApp::Metrics::IMetricsService>()));
@@ -496,16 +478,16 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pInteriorsExplorerViewModule->GetView() removeFromSuperview];
 
     // Modal background layer.
-    [&m_pModalBackgroundViewModule->GetModalBackgroundView() removeFromSuperview];
+    //[&m_pModalBackgroundViewModule->GetModalBackgroundView() removeFromSuperview];
 
     // Menus & HUD layer.
-    [&m_pSettingsMenuViewModule->GetSettingsMenuView() removeFromSuperview];
+    //[&m_pSettingsMenuViewModule->GetSettingsMenuView() removeFromSuperview];
     [&m_pSearchMenuViewModule->GetSearchMenuView() removeFromSuperview];
 
     // Pop-up layer.
     [&m_pMyPinDetailsViewModule->GetMyPinDetailsView() removeFromSuperview];
     [&m_pMyPinCreationDetailsViewModule->GetMyPinCreationDetailsView() removeFromSuperview];
-    [&m_pSearchResultPoiViewModule->GetView() removeFromSuperview];
+    //[&m_pSearchResultPoiViewModule->GetView() removeFromSuperview];
     [&m_pAboutPageViewModule->GetAboutPageView() removeFromSuperview];
     [&m_pOptionsViewModule->GetOptionsView() removeFromSuperview];
     /*if(m_pApp->ToursEnabled())
@@ -543,15 +525,15 @@ void AppHost::DestroyApplicationViewModules()
     
     Eegeo_DELETE m_pTourWebViewModule;
     
-    Eegeo_DELETE m_pSearchResultPoiViewModule;
+    //Eegeo_DELETE m_pSearchResultPoiViewModule;
 
-    Eegeo_DELETE m_pModalBackgroundViewModule;
+    //Eegeo_DELETE m_pModalBackgroundViewModule;
 
-    Eegeo_DELETE m_pSearchResultSectionViewModule;
+    //Eegeo_DELETE m_pSearchResultSectionViewModule;
     
     Eegeo_DELETE m_pSearchMenuViewModule;
     
-    Eegeo_DELETE m_pSettingsMenuViewModule;
+    //Eegeo_DELETE m_pSettingsMenuViewModule;
 
     Eegeo_DELETE m_pFlattenButtonViewModule;
     

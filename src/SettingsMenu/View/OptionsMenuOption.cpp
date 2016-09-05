@@ -11,8 +11,8 @@ namespace ExampleApp
     {
         namespace View
         {
-            OptionsMenuOption::OptionsMenuOption(Menu::View::IMenuViewModel& containerMenu,
-                                                 Options::View::IOptionsViewModel& optionsViewModel)
+            OptionsMenuOption::OptionsMenuOption(const std::shared_ptr<Menu::View::IMenuViewModel>& containerMenu,
+                                                 const std::shared_ptr<Options::View::IOptionsViewModel>& optionsViewModel)
             : m_containerMenu(containerMenu)
             , m_optionsViewModel(optionsViewModel)
             {
@@ -26,8 +26,8 @@ namespace ExampleApp
             
             void OptionsMenuOption::Select()
             {
-                m_containerMenu.Close();
-                m_optionsViewModel.Open();
+                m_containerMenu->Close();
+                m_optionsViewModel->Open();
             }
         }
     }

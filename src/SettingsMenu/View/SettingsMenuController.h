@@ -11,6 +11,9 @@
 #include "ISettingsMenuView.h"
 #include "Menu.h"
 #include "Modality.h"
+#include "SettingsMenu.h"
+
+#include <memory>
 
 namespace ExampleApp
 {
@@ -21,8 +24,8 @@ namespace ExampleApp
             class SettingsMenuController : public Menu::View::MenuController
             {
             private:
-                ExampleAppMessaging::TMessageBus& m_messageBus;
-                Modality::View::IModalBackgroundView& m_modalBackgroundView;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
+                const std::shared_ptr<Modality::View::IModalBackgroundView> m_modalBackgroundView;
                 
                 Eegeo::Helpers::TCallback1<SettingsMenuController, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
                 Eegeo::Helpers::TCallback0<SettingsMenuController> m_onModalBackgroundTappedCallback;
@@ -35,11 +38,11 @@ namespace ExampleApp
                 
                 void OnModalBackgroundTapped();
             public:
-                SettingsMenuController(Menu::View::IMenuView& menuView,
-                                       Menu::View::IMenuModel& menuModel,
-                                       Menu::View::IMenuViewModel& menuViewModel,
-                                       Modality::View::IModalBackgroundView& modalBackgroundView,
-                                       ExampleAppMessaging::TMessageBus& messageBus);
+                SettingsMenuController(const std::shared_ptr<Menu::View::IMenuView>& menuView,
+                                       const std::shared_ptr<SettingsMenuModel>& menuModel,
+                                       const std::shared_ptr<SettingsMenuViewModel>& menuViewModel,
+                                       const std::shared_ptr<Modality::View::IModalBackgroundView>& modalBackgroundView,
+                                       const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
 
                 ~SettingsMenuController();
             };

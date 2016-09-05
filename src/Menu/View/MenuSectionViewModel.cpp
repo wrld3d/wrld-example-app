@@ -10,7 +10,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            MenuSectionViewModel::MenuSectionViewModel(const std::string& name, const std::string& icon, IMenuModel& menuModel, bool isExpandable)
+            MenuSectionViewModel::MenuSectionViewModel(const std::string& name, const std::string& icon, const std::shared_ptr<IMenuModel>& menuModel, bool isExpandable)
                 : m_name(name)
                 , m_icon(icon)
                 , m_menuModel(menuModel)
@@ -34,23 +34,23 @@ namespace ExampleApp
                     }
                     else
                     {
-                        return m_menuModel.GetItemCount() + 1; // Content + Header
+                        return m_menuModel->GetItemCount() + 1; // Content + Header
                     }
                 }
                 else
                 {
-                    return m_menuModel.GetItemCount();
+                    return m_menuModel->GetItemCount();
                 }
             }
 
             size_t MenuSectionViewModel::GetTotalItemCount() const
             {
-                return m_menuModel.GetItemCount();
+                return m_menuModel->GetItemCount();
             }
 
             MenuItemModel MenuSectionViewModel::GetItemAtIndex(int index) const
             {
-                return m_menuModel.GetItemAtIndex(index);
+                return m_menuModel->GetItemAtIndex(index);
             }
 
             void MenuSectionViewModel::Expand()

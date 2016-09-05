@@ -8,6 +8,8 @@
 #include "Options.h"
 #include "Types.h"
 
+#include <memory>
+
 namespace ExampleApp
 {
     namespace SettingsMenu
@@ -16,12 +18,12 @@ namespace ExampleApp
         {
             class OptionsMenuOption : public Menu::View::IMenuOption, private Eegeo::NonCopyable
             {
-                Menu::View::IMenuViewModel& m_containerMenu;
-                Options::View::IOptionsViewModel& m_optionsViewModel;
+                const std::shared_ptr<Menu::View::IMenuViewModel> m_containerMenu;
+                const std::shared_ptr<Options::View::IOptionsViewModel> m_optionsViewModel;
                 
             public:
-                OptionsMenuOption(Menu::View::IMenuViewModel& containerMenu,
-                                  Options::View::IOptionsViewModel& optionsViewModel);
+                OptionsMenuOption(const std::shared_ptr<Menu::View::IMenuViewModel>& containerMenu,
+                                  const std::shared_ptr<Options::View::IOptionsViewModel>& optionsViewModel);
                 
                 ~OptionsMenuOption();
                 

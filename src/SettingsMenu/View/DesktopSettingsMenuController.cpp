@@ -17,7 +17,7 @@ namespace ExampleApp
                                                            Modality::View::IModalBackgroundView& modalBackgroundView,
                                                            Menu::View::IMenuView& searchMenuView,
                                                            ExampleAppMessaging::TMessageBus& messageBus)
-            : Menu::View::MenuController(menuModel, menuViewModel, menuView, messageBus)
+            : Menu::View::MenuController(nullptr, nullptr, nullptr, nullptr)
             , m_messageBus(messageBus)
             , m_modalBackgroundView(modalBackgroundView)
             , m_appModeChangedCallback(this, &DesktopSettingsMenuController::OnAppModeChanged)
@@ -61,9 +61,9 @@ namespace ExampleApp
             {
                 m_currentAppMode = message.GetAppMode();
 
-                if (!m_viewModel.IsFullyClosed())
+                if (!m_viewModel->IsFullyClosed())
                 {
-                    m_viewModel.Close();
+                    m_viewModel->Close();
                 }
             }
             
@@ -71,7 +71,7 @@ namespace ExampleApp
             {
                 if (!m_appModeAllowsOpen)
                 {
-                    m_viewModel.Close();
+                    m_viewModel->Close();
                     return false;
                 }
                 
@@ -82,9 +82,9 @@ namespace ExampleApp
             {
                 if (!m_appModeAllowsOpen)
                 {
-                    if (m_viewModel.IsFullyOpen())
+                    if (m_viewModel->IsFullyOpen())
                     {
-                        m_viewModel.Close();
+                        m_viewModel->Close();
                     }
                     
                     return;
@@ -100,15 +100,15 @@ namespace ExampleApp
                     return;
                 }
                 
-                if(m_viewModel.IsFullyOpen())
+                if(m_viewModel->IsFullyOpen())
                 {
-                    m_viewModel.Close();
+                    m_viewModel->Close();
                 }
             }
             
             void DesktopSettingsMenuController::OnSearchResultPoiViewOpenedMessage(const ExampleApp::SearchResultPoi::SearchResultPoiViewOpenedMessage & message)
             {
-                m_viewModel.RemoveFromScreen();
+                m_viewModel->RemoveFromScreen();
                 
                 m_isControlOpen[Control::POICard] = true;
             }
@@ -117,7 +117,7 @@ namespace ExampleApp
             {
                 if (!m_isControlOpen[Control::SearchMenu])
                 {
-                    m_viewModel.AddToScreen();
+                    m_viewModel->AddToScreen();
                 }
                 
                 m_isControlOpen[Control::POICard] = false;
@@ -126,7 +126,7 @@ namespace ExampleApp
             
             void DesktopSettingsMenuController::OnSearchMenuOpened()
             {
-                m_viewModel.RemoveFromScreen();
+                m_viewModel->RemoveFromScreen();
                 m_isControlOpen[Control::SearchMenu] = true;
             }
             
@@ -134,7 +134,7 @@ namespace ExampleApp
             {
                 if (!m_isControlOpen[Control::POICard])
                 {
-                    m_viewModel.AddToScreen();
+                    m_viewModel->AddToScreen();
                 }
 
                 m_isControlOpen[Control::SearchMenu] = false;

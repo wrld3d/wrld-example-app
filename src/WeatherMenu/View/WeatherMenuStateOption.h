@@ -8,6 +8,8 @@
 #include "WeatherSelectedMessage.h"
 #include "IMetricsService.h"
 
+#include <memory>
+
 namespace ExampleApp
 {
     namespace WeatherMenu
@@ -18,20 +20,20 @@ namespace ExampleApp
             {
             public:
                 WeatherMenuStateOption(
-                    SdkModel::WeatherMenuStateModel& weatherStateModel,
-                    ExampleAppMessaging::TMessageBus& messageBus,
-                    Metrics::IMetricsService& metricsService,
-                    const AppModes::SdkModel::IAppModeModel& appModeModel);
+                                       SdkModel::WeatherMenuStateModel& weatherStateModel,
+                                       const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                       const std::shared_ptr<Metrics::IMetricsService>& metricsService,
+                                       const std::shared_ptr<AppModes::SdkModel::IAppModeModel>& appModeModel);
 
                 void Select();
 
             private:
 
                 SdkModel::WeatherMenuStateModel m_weatherStateModel;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 
-                Metrics::IMetricsService& m_metricsService;
-                const AppModes::SdkModel::IAppModeModel& m_appModeModel;
+                const std::shared_ptr<Metrics::IMetricsService> m_metricsService;
+                const std::shared_ptr<const AppModes::SdkModel::IAppModeModel> m_appModeModel;
             };
         }
     }

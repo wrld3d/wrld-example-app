@@ -6,6 +6,14 @@
 
 #include "MenuView.h"
 #include "SettingsMenuViewIncludes.h"
+#include "ViewWrap.h"
+
+@class SettingsMenuView;
+
+class SettingsMenuViewWrapper : public ViewWrap<SettingsMenuView>
+{
+    using ViewWrap::ViewWrap;
+};
 
 @interface SettingsMenuView : MenuView<UITextFieldDelegate>
 {

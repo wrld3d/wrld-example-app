@@ -12,12 +12,12 @@ namespace ExampleApp
     {
         namespace View
         {
-            DesktopSearchResultPoiController::DesktopSearchResultPoiController(ISearchResultPoiView& view,
-                                                                               ISearchResultPoiViewModel& viewModel,
-                                                                               ExampleAppMessaging::TMessageBus& messageBus,
-                                                                               Metrics::IMetricsService& metricsService,
-                                                                               MyPinCreation::View::IMyPinCreationInitiationView& pinCreationInitiationView,
-                                                                               Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel):
+            DesktopSearchResultPoiController::DesktopSearchResultPoiController(const std::shared_ptr<ISearchResultPoiView>& view,
+                                                                               const std::shared_ptr<ISearchResultPoiViewModel>& viewModel,
+                                                                               const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                                                               const std::shared_ptr<Metrics::IMetricsService>& metricsService,
+                                                                               const std::shared_ptr<MyPinCreation::View::IMyPinCreationInitiationView>& pinCreationInitiationView,
+                                                                               const std::shared_ptr<Eegeo::Resources::Interiors::InteriorSelectionModel>& interiorSelectionModel):
                 SearchResultPoiController(view,
                                           viewModel,
                                           messageBus,
@@ -27,16 +27,16 @@ namespace ExampleApp
                 , m_interiorChangedCallback(this, &DesktopSearchResultPoiController::OnInteriorSelectionChanged)
                 , m_interiorSelectionModel(interiorSelectionModel)
             {
-                m_pinCreationInitiationView.InsertSelectedCallback(m_onPinCreationSelected);
+                m_pinCreationInitiationView->InsertSelectedCallback(m_onPinCreationSelected);
                 
-                m_interiorSelectionModel.RegisterSelectionChangedCallback(m_interiorChangedCallback);
+                m_interiorSelectionModel->RegisterSelectionChangedCallback(m_interiorChangedCallback);
             }
 
             DesktopSearchResultPoiController::~DesktopSearchResultPoiController()
             {
-                m_pinCreationInitiationView.RemoveSelectedCallback(m_onPinCreationSelected);
+                m_pinCreationInitiationView->RemoveSelectedCallback(m_onPinCreationSelected);
 
-                m_interiorSelectionModel.UnregisterSelectionChangedCallback(m_interiorChangedCallback);
+                m_interiorSelectionModel->UnregisterSelectionChangedCallback(m_interiorChangedCallback);
             }
 
             void DesktopSearchResultPoiController::OnInteriorSelectionChanged(const Eegeo::Resources::Interiors::InteriorId& interiorId)

@@ -12,16 +12,17 @@ namespace ExampleApp
     {
         namespace View
         {
-            ModalityModule::ModalityModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
-            : m_builder(builder)
+            void ModalityModule::Register(const TContainerBuilder& builder)
             {
+                builder->registerType<ModalityModel>().as<IModalityModel>().singleInstance();
+                builder->registerType<ModalityController>().as<IModalityController>().singleInstance();
+                builder->registerType<ModalityObserver>().singleInstance();
             }
             
-            void ModalityModule::Register()
+            void ModalityModule::RegisterLeaves()
             {
-                m_builder->registerType<ModalityModel>().as<IModalityModel>().singleInstance();
-                m_builder->registerType<ModalityController>().as<IModalityController>().singleInstance();
-                m_builder->registerType<ModalityObserver>().singleInstance();
+                RegisterLeaf<ModalityObserver>();
+                RegisterLeaf<IModalityController>();
             }
         }
     }

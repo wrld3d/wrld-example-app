@@ -9,6 +9,14 @@
 #include "SearchResultModel.h"
 #include "SearchResultPoi.h"
 #include "SearchResultPoiView.h"
+#include "ViewWrap.h"
+
+@class SearchResultPoiViewContainer;
+
+class SearchResultPoiViewContainerWrapper : public ViewWrap<SearchResultPoiViewContainer>
+{
+    using ViewWrap::ViewWrap;
+};
 
 @interface SearchResultPoiViewContainer : UIView
 {

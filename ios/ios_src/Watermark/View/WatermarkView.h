@@ -6,25 +6,13 @@
 #import <UIKit/UIKit.h>
 #include "WatermarkViewIncludes.h"
 #include "IAppModeModel.h"
+#include "ViewWrap.h"
 
 @class WatermarkView;
 
-class WatermarkViewWrapper : private Eegeo::NonCopyable
+class WatermarkViewWrapper : public ViewWrap<WatermarkView>
 {
-public:
-    WatermarkViewWrapper(WatermarkView* watermarkView)
-    : m_pView(watermarkView)
-    {
-    }
-    
-    ~WatermarkViewWrapper()
-    {
-        [m_pView release];
-    }
-    
-    WatermarkView* Get() const { return m_pView; }
-private:
-    WatermarkView* m_pView;
+    using ViewWrap::ViewWrap;
 };
 
 @interface WatermarkView : UIView

@@ -32,14 +32,14 @@ namespace ExampleApp
                                                                 :static_cast<int>(searchMenuViewModel.SectionsCount())
                                                                 :m_pSearchResultsDataProvider];
 
-                m_pController = Eegeo_NEW(SearchMenuController)(searchMenuModel,
+                m_pController = NULL;/*Eegeo_NEW(SearchMenuController)(searchMenuModel,
                                                                 searchMenuViewModel,
                                                                 *[m_pView getInterop],
                                                                 *[m_pView getSearchMenuInterop],
                                                                 searchSectionViewModel,
                                                                 categorySearchRepository,
                                                                 modalBackgroundView,
-                                                                messageBus);
+                                                                messageBus);*/
             }
 
             SearchMenuViewModule::~SearchMenuViewModule()

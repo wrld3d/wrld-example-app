@@ -2,13 +2,7 @@
 
 #pragma once
 
-#include "Types.h"
-#include "SearchResultPoi.h"
-#include "ISearchResultPoiViewModule.h"
-#include "SearchResultPoiController.h"
-#include "SearchResultPoiViewContainer.h"
-#include "BidirectionalBus.h"
-#include "IMetricsService.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -16,22 +10,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            class SearchResultPoiViewModule: public ISearchResultPoiViewModule, private Eegeo::NonCopyable
+            class SearchResultPoiViewModule : public Module
             {
-            private:
-                SearchResultPoiViewContainer* m_pView;
-                SearchResultPoiController* m_pController;
-
             public:
-                SearchResultPoiViewModule(ISearchResultPoiViewModel& searchResultPoiViewModel,
-                                          ExampleAppMessaging::TMessageBus& messageBus,
-                                          Metrics::IMetricsService& metricsService);
-
-                ~SearchResultPoiViewModule();
-
-                SearchResultPoiController& GetController() const;
-
-                SearchResultPoiViewContainer& GetView() const;
+                void Register(const TContainerBuilder& builder);
             };
         }
     }

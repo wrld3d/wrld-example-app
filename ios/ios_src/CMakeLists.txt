@@ -18,6 +18,7 @@ set(currsources
   ios_src/Main.mm
   ios_src/ViewController.h
   ios_src/ViewController.mm
+  ios_src/ViewWrap.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\ios_src FILES ${currsources})
@@ -43,7 +44,6 @@ include(ios_src/Options/CMakeLists.txt)
 include(ios_src/PersistentSettings/CMakeLists.txt)
 include(ios_src/SearchMenu/CMakeLists.txt)
 include(ios_src/SearchResultPoi/CMakeLists.txt)
-include(ios_src/SearchResultSection/CMakeLists.txt)
 include(ios_src/SettingsMenu/CMakeLists.txt)
 include(ios_src/Surveys/CMakeLists.txt)
 include(ios_src/Tours/CMakeLists.txt)

@@ -18,11 +18,11 @@ namespace ExampleApp
             class SearchMenuController : public Menu::View::MenuController
             {
             private:
-                ISearchMenuView& m_searchMenuView;
-                Menu::View::IMenuSectionViewModel& m_searchSectionViewModel;
-                CategorySearch::View::ICategorySearchRepository& m_categorySearchRepository;
-                Modality::View::IModalBackgroundView& m_modalBackgroundView;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<ISearchMenuView> m_searchMenuView;
+                const std::shared_ptr<Menu::View::IMenuSectionViewModel> m_searchSectionViewModel;
+                const std::shared_ptr<CategorySearch::View::ICategorySearchRepository> m_categorySearchRepository;
+                const std::shared_ptr<Modality::View::IModalBackgroundView> m_modalBackgroundView;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 bool m_appModeAllowsOpen;
                 
                 Eegeo::Helpers::TCallback1<SearchMenuController, Menu::View::MenuItemModel> m_onSearchItemAddedCallback;
@@ -67,14 +67,14 @@ namespace ExampleApp
                 void UpdateOpenState();
                 
             public:
-                SearchMenuController(Menu::View::IMenuModel& model,
-                                     Menu::View::IMenuViewModel& viewModel,
-                                     Menu::View::IMenuView& view,
-                                     ISearchMenuView& searchMenuView,
-                                     Menu::View::IMenuSectionViewModel& searchSectionViewModel,
-                                     CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
-                                     Modality::View::IModalBackgroundView& modalBackgroundView,
-                                     ExampleAppMessaging::TMessageBus& messageBus);
+                SearchMenuController(const std::shared_ptr<Menu::View::IMenuModel>& model,
+                                     const std::shared_ptr<Menu::View::IMenuViewModel>& viewModel,
+                                     const std::shared_ptr<Menu::View::IMenuView>& view,
+                                     const std::shared_ptr<ISearchMenuView>& searchMenuView,
+                                     const std::shared_ptr<Menu::View::IMenuSectionViewModel>& searchSectionViewModel,
+                                     const std::shared_ptr<CategorySearch::View::ICategorySearchRepository>& categorySearchRepository,
+                                     const std::shared_ptr<Modality::View::IModalBackgroundView>& modalBackgroundView,
+                                     const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
                 
                 virtual ~SearchMenuController();
             };

@@ -19,66 +19,49 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class WeatherMenuModel : public Menu::View::MenuModel
+            namespace
             {
-            };
-            
-            class WeatherOptionsModel : public Menu::View::MenuOptionsModel
-            {
-            public:
-                WeatherOptionsModel(const std::shared_ptr<WeatherMenuModel>& menuModel)
-                : m_menuModel(menuModel)
-                , MenuOptionsModel(*menuModel)
-                {
-                }
-            private:
-                std::shared_ptr<WeatherMenuModel> m_menuModel;
-            };
+            }
             
             void WeatherMenuModule::Register(const TContainerBuilder& builder)
             {
                 builder->registerType<WeatherController>().as<IWeatherController>().singleInstance();
                 builder->registerType<WeatherSelectedMessageHandler>().singleInstance();
-                builder->registerType<WeatherMenuModel>().singleInstance();
-                builder->registerType<WeatherOptionsModel>().singleInstance();
-/*              m_builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
-                                                   {
-                                                       auto optionsModel = std::make_shared<Menu::View::MenuOptionsModel>(context.resolve<Menu::View::MenuModel>());
-                                                       auto fileIO = context.resolve<Eegeo::Helpers::IFileIO>();
-                                                       auto metricsService = context.resolve<Metrics::IMetricsService>();
-                                                       auto appModeModel = context.resolve<AppModes::SdkModel::IAppModeModel>();
-                                                       
-                                                       std::fstream stream;
-                                                       size_t size;
-                                                       
-                                                       if(!fileIO->OpenFile(stream, size, "weatherstates.json"))
-                                                       {
-                                                           Eegeo_ASSERT(false, "Failed to load weatherstates.json definitions file.");
-                                                       }
-                                                       
-                                                       std::string json((std::istreambuf_iterator<char>(stream)),
-                                                                        (std::istreambuf_iterator<char>()));
-                                                       
-                                                       std::vector<WeatherMenuStateModel> weatherStates;
-                                                       if(!WeatherMenuDataParser::ParseWeatherStates(json, weatherStates))
-                                                       {
-                                                           Eegeo_ASSERT(false, "Failed to parse weatherstates.json definitions file.");
-                                                       }
-
-                                                       for(std::vector<WeatherMenuStateModel>::iterator it = weatherStates.begin(); it != weatherStates.end(); it++)
-                                                       {
-                                                           WeatherMenuStateModel& weatherState = *it;
-                                                           optionsModel->AddItem(weatherState.GetName(),
-                                                                                 weatherState.GetName(), "", weatherState.GetIcon(),
-                                                                                 Eegeo_NEW(View::WeatherMenuStateOption)(weatherState, *context.resolve<ExampleAppMessaging::TMessageBus>(), *metricsService, *appModeModel));
-                                                       }
-                                                       return optionsModel;
-                                                   }).singleInstance();*/
+                builder->registerType<View::WeatherMenuModel>().singleInstance();
+                builder->registerType<View::WeatherOptionsModel>().singleInstance();
             }
             
             void WeatherMenuModule::RegisterLeaves()
             {
                 RegisterLeaf<WeatherSelectedMessageHandler>();
+
+                auto optionsModel = Resolve<View::WeatherOptionsModel>();
+                auto fileIO = Resolve<Eegeo::Helpers::IFileIO>();
+                
+                std::fstream stream;
+                size_t size;
+                
+                if(!fileIO->OpenFile(stream, size, "weatherstates.json"))
+                {
+                    Eegeo_ASSERT(false, "Failed to load weatherstates.json definitions file.");
+                }
+                
+                std::string json((std::istreambuf_iterator<char>(stream)),
+                                 (std::istreambuf_iterator<char>()));
+                
+                std::vector<WeatherMenuStateModel> weatherStates;
+                if(!WeatherMenuDataParser::ParseWeatherStates(json, weatherStates))
+                {
+                    Eegeo_ASSERT(false, "Failed to parse weatherstates.json definitions file.");
+                }
+                
+                for(std::vector<WeatherMenuStateModel>::iterator it = weatherStates.begin(); it != weatherStates.end(); it++)
+                {
+                    WeatherMenuStateModel& weatherState = *it;
+                    optionsModel->AddItem(weatherState.GetName(),
+                                          weatherState.GetName(), "", weatherState.GetIcon(),
+                                          Eegeo_NEW(View::WeatherMenuStateOption)(weatherState, Resolve<ExampleAppMessaging::TMessageBus>(), Resolve<Metrics::IMetricsService>(), Resolve<AppModes::SdkModel::IAppModeModel>()));
+                }
             }
         }
     }

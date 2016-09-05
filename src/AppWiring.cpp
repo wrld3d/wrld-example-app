@@ -18,6 +18,11 @@
 #include "PoiRingModule.h"
 #include "WatermarkModule.h"
 #include "ViewControllerUpdaterModule.h"
+#include "ModalityModule.h"
+#include "SettingsMenuModule.h"
+#include "ReactionModelModule.h"
+#include "WeatherMenuModule.h"
+#include "SearchResultPoiModule.h"
 
 namespace ExampleApp
 {
@@ -54,8 +59,13 @@ namespace ExampleApp
         RegisterModule<WorldPins::SdkModel::WorldPinsModule>();
         RegisterModule<InteriorsEntitiesPins::SdkModel::InteriorsEntitiesPinsModule>();
         RegisterModule<MyPinCreation::PoiRing::SdkModel::PoiRingModule>();
+        RegisterModule<WeatherMenu::SdkModel::WeatherMenuModule>();
         RegisterModule<Watermark::SdkModel::WatermarkModule>();
         RegisterModule<ViewControllerUpdater::View::ViewControllerUpdaterModule>();
+        RegisterModule<Modality::View::ModalityModule>();
+        RegisterModule<SettingsMenu::SdkModel::SettingsMenuModule>();
+        RegisterModule<Reaction::View::ReactionModelModule>();
+        RegisterModule<SearchResultPoi::View::SearchResultPoiModule>();
         
         auto moduleSet = m_moduleContainer->resolve<TModules>();
         m_moduleRegistrationCallbacks.ExecuteCallbacks(*moduleSet);
@@ -78,6 +88,11 @@ namespace ExampleApp
                 m_leaves.push_back(leaf);
             }
         }
+    }
+    
+    const TContainer& AppWiring::GetContainer() const
+    {
+        return m_appContainer;
     }
     
     const std::shared_ptr<MobileExampleApp> AppWiring::BuildMobileExampleApp()

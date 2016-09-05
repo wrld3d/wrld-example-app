@@ -5,6 +5,7 @@
 #include "Types.h"
 #include "Modality.h"
 #include "ICallback.h"
+#include <memory>
 
 namespace ExampleApp
 {
@@ -16,15 +17,15 @@ namespace ExampleApp
             {
             public:
 
-                ModalBackgroundController(IModalBackgroundView& view, IModalityModel& model);
+                ModalBackgroundController(const std::shared_ptr<IModalBackgroundView>& view, const std::shared_ptr<IModalityModel>& model);
                 ~ModalBackgroundController();
 
             private:
 
                 void OnModalityChanged();
 
-                IModalBackgroundView& m_view;
-                IModalityModel& m_model;
+                const std::shared_ptr<IModalBackgroundView> m_view;
+                const std::shared_ptr<IModalityModel> m_model;
 
                 Eegeo::Helpers::TCallback0<ModalBackgroundController> m_modalityChangedCallback;
             };

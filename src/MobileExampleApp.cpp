@@ -4,6 +4,7 @@
 #include "CameraHelpers.h"
 #include "StreamingVolumeController.h"
 #include "IWatermarkViewModel.h"
+#include "SettingsMenu.h"
 
 namespace ExampleApp
 {
@@ -261,6 +262,7 @@ namespace ExampleApp
     void MobileExampleApp::InitialiseApplicationViewState(const TContainer& container)
     {
         container->resolve<Watermark::View::IWatermarkViewModel>()->AddToScreen();
+        container->resolve<SettingsMenu::View::SettingsMenuViewModel>()->AddToScreen();
     }
 
     void MobileExampleApp::RegisterLoadingScreenComplete(Eegeo::Helpers::ICallback0& callback)

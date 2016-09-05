@@ -5,8 +5,14 @@
 #import <UIKit/UIKit.h>
 #include "AppRunner.h"
 #include "ModalBackgroundViewIncludes.h"
+#include "ViewWrap.h"
 
 @class ModalBackgroundView;
+
+class ModalBackgroundViewWrapper : public ViewWrap<ModalBackgroundView>
+{
+    using ViewWrap::ViewWrap;
+};
 
 @interface ModalBackgroundView : UIView<UIGestureRecognizerDelegate>
 {

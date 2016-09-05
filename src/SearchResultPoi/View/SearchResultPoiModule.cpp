@@ -12,6 +12,7 @@
 #include "ISearchResultMyPinsService.h"
 #include "ISearchResultIconCategoryMapper.h"
 #include "IWebLoadRequestFactory.h"
+#include "SearchResultPoiController.h"
 
 namespace ExampleApp
 {
@@ -30,12 +31,14 @@ namespace ExampleApp
                 builder->registerType<SdkModel::SearchResultPoiPinToggledMessageHandler>().singleInstance();
                 builder->registerType<SdkModel::SearchResultPoiViewImageFetcher>().as<SdkModel::ISearchResultPoiViewImageFetcher>().singleInstance();
                 builder->registerType<SdkModel::SearchResultPoiViewOpenedMessageHandler>().singleInstance();
+                builder->registerType<View::SearchResultPoiController>().singleInstance();
             }
             
             void SearchResultPoiModule::RegisterLeaves()
             {
                 RegisterLeaf<SdkModel::SearchResultPoiPinToggledMessageHandler>();
                 RegisterLeaf<SdkModel::SearchResultPoiViewOpenedMessageHandler>();
+                RegisterLeaf<View::SearchResultPoiController>();
             }
         }
     }

@@ -20,11 +20,10 @@ namespace ExampleApp
             class SearchResultPoiController : private Eegeo::NonCopyable
             {
             private:
-                ISearchResultPoiView& m_view;
-                ISearchResultPoiViewModel& m_viewModel;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
-                
-                Metrics::IMetricsService& m_metricsService;
+                const std::shared_ptr<ISearchResultPoiView> m_view;
+                const std::shared_ptr<ISearchResultPoiViewModel> m_viewModel;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
+                const std::shared_ptr<Metrics::IMetricsService> m_metricsService;
 
                 Eegeo::Helpers::TCallback0<SearchResultPoiController> m_viewOpenedCallback;
                 Eegeo::Helpers::TCallback0<SearchResultPoiController> m_viewClosedCallback;
@@ -41,16 +40,16 @@ namespace ExampleApp
                 void OnSearchResultImageLoaded(const SearchResultPoiViewImageDownloadCompletedMessage& message);
 
             protected:
-                ISearchResultPoiView& GetView() { return m_view; }
-                ISearchResultPoiViewModel& GetViewModel() { return m_viewModel; }
-                ExampleAppMessaging::TMessageBus& GetMessageBus() { return m_messageBus; }
+                ISearchResultPoiView& GetView() { return *m_view; }
+                ISearchResultPoiViewModel& GetViewModel() { return *m_viewModel; }
+                ExampleAppMessaging::TMessageBus& GetMessageBus() { return *m_messageBus; }
 
                 virtual void OnViewOpened();
             public:
-                SearchResultPoiController(ISearchResultPoiView& view,
-                                          ISearchResultPoiViewModel& viewModel,
-                                          ExampleAppMessaging::TMessageBus& messageBus,
-                                          Metrics::IMetricsService& metricsService);
+                SearchResultPoiController(const std::shared_ptr<ISearchResultPoiView>& view,
+                                          const std::shared_ptr<ISearchResultPoiViewModel>& viewModel,
+                                          const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                          const std::shared_ptr<Metrics::IMetricsService>& metricsService);
 
                 virtual ~SearchResultPoiController();
             };

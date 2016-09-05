@@ -12,45 +12,45 @@ namespace ExampleApp
         {   
             void SearchResultPoiController::OnViewOpened()
             {
-                if(!m_viewModel.TryAcquireReactorControl())
+                if(!m_viewModel->TryAcquireReactorControl())
                 {
-                    if (m_viewModel.IsOpen())
+                    if (m_viewModel->IsOpen())
                     {
-                        m_viewModel.Close();
+                        m_viewModel->Close();
                     }
                     return;
                 }
 
-                const Search::SdkModel::SearchResultModel& searchResultModel = m_viewModel.GetSearchResultModel();
+                const Search::SdkModel::SearchResultModel& searchResultModel = m_viewModel->GetSearchResultModel();
                 
-                m_metricsService.SetEvent("Opened POI",
+                m_metricsService->SetEvent("Opened POI",
                                           "Title", searchResultModel.GetTitle().c_str(),
                                           "Category", searchResultModel.GetCategory().c_str(),
                                           "Vicinity", searchResultModel.GetSubtitle().c_str());
                 
-                m_view.Show(searchResultModel, m_viewModel.IsPinned());
+                m_view->Show(searchResultModel, m_viewModel->IsPinned());
                 
                 std::string imageUrl = "";
                 Search::SdkModel::TryParseImageDetails(searchResultModel, imageUrl);
-                m_messageBus.Publish(SearchResultPoiViewOpenedMessage(imageUrl));
+                m_messageBus->Publish(SearchResultPoiViewOpenedMessage(imageUrl));
             }
 
             void SearchResultPoiController::OnViewClosed()
             {
-                m_view.Hide();
+                m_view->Hide();
 
-                m_messageBus.Publish(SearchResultPoiViewClosedMessage());
+                m_messageBus->Publish(SearchResultPoiViewClosedMessage());
             }
 
             void SearchResultPoiController::OnCloseButtonClicked()
             {
-                m_viewModel.Close();
+                m_viewModel->Close();
             }
             
             void SearchResultPoiController::OnPinToggledButtonClicked(Search::SdkModel::SearchResultModel& searchResultModel)
             {
-                m_viewModel.ToggleIsPinned();
-                m_messageBus.Publish(SearchResultPoiPinToggledMessage(searchResultModel));
+                m_viewModel->ToggleIsPinned();
+                m_messageBus->Publish(SearchResultPoiPinToggledMessage(searchResultModel));
             }
             
             void SearchResultPoiController::OnSearchResultImageLoaded(const SearchResultPoiViewImageDownloadCompletedMessage& message)
@@ -58,17 +58,17 @@ namespace ExampleApp
                 const std::vector<Byte>* pDownloadedImageData = message.GetImageBytes();
                 
                 // The view may have closed while we were waiting for the download.
-                if (m_viewModel.IsOpen())
+                if (m_viewModel->IsOpen())
                 {
                     std::string imageUrl = "";
-                    Search::SdkModel::TryParseImageDetails(m_viewModel.GetSearchResultModel(), imageUrl);
+                    Search::SdkModel::TryParseImageDetails(m_viewModel->GetSearchResultModel(), imageUrl);
                     
                     // We may have closed the view and opened a new view, so check it's the same image...
                     const bool isCorrectImageUrl = (imageUrl == message.GetImageUrl());
                 
                     if(isCorrectImageUrl)
                     {
-                        m_view.UpdateImage(message.GetImageUrl(), message.IsSuccess(), pDownloadedImageData);
+                        m_view->UpdateImage(message.GetImageUrl(), message.IsSuccess(), pDownloadedImageData);
                     }
                 }
                 
@@ -76,10 +76,10 @@ namespace ExampleApp
                 Eegeo_DELETE pDownloadedImageData;
             }
 
-            SearchResultPoiController::SearchResultPoiController(ISearchResultPoiView& view,
-                                                                 ISearchResultPoiViewModel& viewModel,
-                                                                 ExampleAppMessaging::TMessageBus& messageBus,
-                                                                 Metrics::IMetricsService& metricsService)
+            SearchResultPoiController::SearchResultPoiController(const std::shared_ptr<ISearchResultPoiView>& view,
+                                                                 const std::shared_ptr<ISearchResultPoiViewModel>& viewModel,
+                                                                 const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                                                 const std::shared_ptr<Metrics::IMetricsService>& metricsService)
                 : m_view(view)
                 , m_viewModel(viewModel)
                 , m_messageBus(messageBus)
@@ -90,20 +90,20 @@ namespace ExampleApp
                 , m_togglePinnedCallback(this, &SearchResultPoiController::OnPinToggledButtonClicked)
                 , m_imageLoadedHandlerBinding(this, &SearchResultPoiController::OnSearchResultImageLoaded)
             {
-                m_view.InsertClosedCallback(m_closeButtonCallback);
-                m_view.InsertTogglePinnedCallback(m_togglePinnedCallback);
-                m_viewModel.InsertOpenedCallback(m_viewOpenedCallback);
-                m_viewModel.InsertClosedCallback(m_viewClosedCallback);
-                m_messageBus.SubscribeUi(m_imageLoadedHandlerBinding);
+                m_view->InsertClosedCallback(m_closeButtonCallback);
+                m_view->InsertTogglePinnedCallback(m_togglePinnedCallback);
+                m_viewModel->InsertOpenedCallback(m_viewOpenedCallback);
+                m_viewModel->InsertClosedCallback(m_viewClosedCallback);
+                m_messageBus->SubscribeUi(m_imageLoadedHandlerBinding);
             }
             
             SearchResultPoiController::~SearchResultPoiController()
             {
-                m_messageBus.UnsubscribeUi(m_imageLoadedHandlerBinding);
-                m_viewModel.RemoveClosedCallback(m_viewClosedCallback);
-                m_viewModel.RemoveOpenedCallback(m_viewOpenedCallback);
-                m_view.RemoveTogglePinnedCallback(m_togglePinnedCallback);
-                m_view.RemoveClosedCallback(m_closeButtonCallback);
+                m_messageBus->UnsubscribeUi(m_imageLoadedHandlerBinding);
+                m_viewModel->RemoveClosedCallback(m_viewClosedCallback);
+                m_viewModel->RemoveOpenedCallback(m_viewOpenedCallback);
+                m_view->RemoveTogglePinnedCallback(m_togglePinnedCallback);
+                m_view->RemoveClosedCallback(m_closeButtonCallback);
             }
         }
     }
