@@ -89,6 +89,17 @@ public class SettingsMenuView extends MenuView
     		m_list.setEnabled(false);
     	}
     }
+    
+    @Override
+    public void onOffScreenAnimationComplete()
+    {
+    	super.onOffScreenAnimationComplete();
+    	
+    	if(!m_menuAnimationHandler.isOffScreen())
+    	{
+    		animateToIntermediateOnScreenState(0);
+    	}
+    }
 
     @Override
     protected void handleDragFinish(int xPx, int yPx)
