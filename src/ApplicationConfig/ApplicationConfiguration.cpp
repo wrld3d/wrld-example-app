@@ -58,6 +58,7 @@ namespace ExampleApp
         , m_myPinsWebServiceAuthToken(myPinsWebServiceAuthToken)
         , m_twitterAuthCode(twitterAuthCode)
         , m_isKioskTouchInputEnabled(isKioskTouchInputEnabled)
+        , m_pinDiameter(28.f)
         {
         }
         
@@ -104,6 +105,11 @@ namespace ExampleApp
         Eegeo::Space::LatLongAltitude ApplicationConfiguration::InterestLocation() const
         {
             return m_interestLocation;
+        }
+        
+        float ApplicationConfiguration::PinDiameter() const
+        {
+            return m_pinDiameter;
         }
         
         float ApplicationConfiguration::DistanceToInterestMetres() const

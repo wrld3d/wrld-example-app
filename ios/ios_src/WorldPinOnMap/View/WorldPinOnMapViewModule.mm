@@ -7,6 +7,7 @@
 #include "WorldPinOnMapViewInterop.h"
 #include "IModalityModel.h"
 #include "TourHovercardView.h"
+#include "ApplicationConfiguration.h"
 
 namespace ExampleApp
 {
@@ -14,36 +15,22 @@ namespace ExampleApp
     {
         namespace View
         {
-            WorldPinOnMapViewModule::WorldPinOnMapViewModule(IWorldPinInFocusViewModel& worldPinInFocusViewModel,
-                    ScreenControl::View::IScreenControlViewModel::IScreenControlViewModel& worldPinOnMapInFocusScreenControlViewModel,
-                    Modality::View::IModalityModel& modalityModel,
-                    float pinDiameter,
-                    float pixelScale,
-                    ImageStore* pImageStore)
+            void WorldPinOnMapViewModule::Register(const TContainerBuilder &builder)
             {
-                m_pView = [[WorldPinOnMapViewContainer alloc] initWithParams:pinDiameter :pixelScale :pImageStore];
-
-                m_pController = Eegeo_NEW(WorldPinOnMapController)(
-                                    *[m_pView getInterop],
-                                    worldPinInFocusViewModel,
-                                    worldPinOnMapInFocusScreenControlViewModel,
-                                    modalityModel);
-            }
-
-            WorldPinOnMapViewModule::~WorldPinOnMapViewModule()
-            {
-                Eegeo_DELETE m_pController;
-                [m_pTourView release];
-            }
-
-            WorldPinOnMapController& WorldPinOnMapViewModule::GetWorldPinOnMapController() const
-            {
-                return *m_pController;
-            }
-
-            WorldPinOnMapViewContainer& WorldPinOnMapViewModule::GetWorldPinOnMapView() const
-            {
-                return *m_pView;
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto screenProperties = context.resolve<Eegeo::Rendering::ScreenProperties>();
+                                                     auto store = context.resolve<ImageStoreWrapper>();
+                                                     auto appConfig = context.resolve<ApplicationConfig::ApplicationConfiguration>();
+                                                     auto view = [[WorldPinOnMapViewContainer alloc] initWithParams:appConfig->PinDiameter() :screenProperties->GetPixelScale() :store->Get()];
+                                                     return std::make_shared<WorldPinOnMapViewContainerWrapper>(view);
+                                                 }).singleInstance();
+                
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto view = context.resolve<WorldPinOnMapViewContainerWrapper>();
+                                                     return Hypodermic::makeExternallyOwned(*[view->Get() getInterop]);
+                                                 }).as<IWorldPinOnMapView>().singleInstance();
             }
         }
     }

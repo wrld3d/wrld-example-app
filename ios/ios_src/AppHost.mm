@@ -91,6 +91,7 @@
 #include "SearchResultPoiViewContainer.h"
 
 #include <memory>
+#include "ViewWrap.h"
 
 #import "UIView+TouchExclusivity.h"
 
@@ -129,6 +130,11 @@ public:
         {
             return Hypodermic::makeExternallyOwned(context.resolve<Eegeo::Modules::IPlatformAbstractionModule>()->GetHttpCache());
         }).singleInstance();
+        builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                         {
+                                             auto store = [[ImageStore alloc]init];
+                                             return std::make_shared<ImageStoreWrapper>(store);
+                                         }).singleInstance();
     }
 };
 
@@ -207,7 +213,7 @@ AppHost::AppHost(
     RegisterApplicationViewModules();
     m_wiring->ResolveModules();
 
-    m_pImageStore = [[ImageStore alloc]init];
+    //m_pImageStore = [[ImageStore alloc]init];
     
 //    m_containerBuilder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
 //                                                {
@@ -249,8 +255,8 @@ AppHost::~AppHost()
 
     DestroyApplicationViewModules();
     
-    [m_pImageStore release];
-    m_pImageStore = nil;
+    //[m_pImageStore release];
+    //m_pImageStore = nil;
 
     Eegeo::EffectHandler::Reset();
     Eegeo::EffectHandler::Shutdown();
@@ -309,6 +315,7 @@ void AppHost::AddApplicationViews()
     AddSubview<SettingsMenuViewWrapper>();
     AddSubview<SearchResultPoiViewContainerWrapper>();
     AddSubview<FlattenButtonViewWrapper>();
+    AddSubview<WorldPinOnMapViewContainerWrapper>();
     
     AddViewControllerUpdatable<ExampleApp::SettingsMenu::View::SettingsMenuController>();    
 }
@@ -320,19 +327,10 @@ void AppHost::RegisterApplicationViewModules()
     m_wiring->RegisterModule<ExampleApp::SettingsMenu::View::SettingsMenuViewModule>();
     m_wiring->RegisterModule<ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule>();
     m_wiring->RegisterModule<ExampleApp::FlattenButton::View::FlattenButtonViewModule>();
-    
+    m_wiring->RegisterModule<ExampleApp::WorldPins::View::WorldPinOnMapViewModule>();
 
-    /*
-    m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
-                                                                                                           GetMessageBus(),
-                                                                                                           *(m_container->resolve<ExampleApp::Metrics::IMetricsService>()));
-
-    m_pFlattenButtonViewModule = Eegeo_NEW(ExampleApp::FlattenButton::View::FlattenButtonViewModule)(
-                                     app.FlattenButtonModule().GetFlattenButtonViewModel(),
-                                     screenProperties,
-                                     GetMessageBus(),
-                                     *(m_container->resolve<ExampleApp::Metrics::IMetricsService>()));
-
+   
+/*
     m_pWorldPinOnMapViewModule = Eegeo_NEW(ExampleApp::WorldPins::View::WorldPinOnMapViewModule)(app.WorldPinsModule().GetWorldPinInFocusViewModel(),
                                  app.WorldPinsModule().GetScreenControlViewModel(),
                                  app.ModalityModule().GetModalityModel(),
@@ -456,7 +454,7 @@ void AppHost::RegisterApplicationViewModules()
 void AppHost::DestroyApplicationViewModules()
 {
     // 3d map view layer.
-    [&m_pWorldPinOnMapViewModule->GetWorldPinOnMapView() removeFromSuperview];
+    //[&m_pWorldPinOnMapViewModule->GetWorldPinOnMapView() removeFromSuperview];
     
     [&m_pInitialExperienceIntroViewModule->GetIntroBackgroundView() removeFromSuperview];
 
@@ -517,7 +515,7 @@ void AppHost::DestroyApplicationViewModules()
 
     Eegeo_DELETE m_pCompassViewModule;
 
-    Eegeo_DELETE m_pWorldPinOnMapViewModule;
+    //Eegeo_DELETE m_pWorldPinOnMapViewModule;
     
     Eegeo_DELETE m_pTourWebViewModule;
     

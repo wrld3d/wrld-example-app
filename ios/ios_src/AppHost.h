@@ -137,7 +137,7 @@ private:
     //ExampleApp::ModalBackground::View::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
     //ExampleApp::FlattenButton::View::IFlattenButtonViewModule* m_pFlattenButtonViewModule;
     //ExampleApp::SearchResultPoi::View::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;
-    ExampleApp::WorldPins::View::IWorldPinOnMapViewModule* m_pWorldPinOnMapViewModule;
+    //ExampleApp::WorldPins::View::IWorldPinOnMapViewModule* m_pWorldPinOnMapViewModule;
     ExampleApp::Compass::View::ICompassViewModule* m_pCompassViewModule;
     //ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModule* m_pViewControllerUpdaterModule;
     //ExampleApp::PersistentSettings::iOSPersistentSettingsModel m_iOSPersistentSettingsModel;
@@ -161,7 +161,7 @@ private:
     ExampleApp::Surveys::View::ISurveyViewModule* m_pSurveyViewModule;
     //ExampleApp::Menu::View::IMenuReactionModel* m_pMenuReactionModel;
     
-    ImageStore* m_pImageStore;
+    //ImageStore* m_pImageStore;
     
     //bool m_requestedApplicationInitialiseViewState;
 

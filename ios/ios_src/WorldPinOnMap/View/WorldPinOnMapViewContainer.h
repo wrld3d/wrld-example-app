@@ -13,8 +13,14 @@
 #include "TwitterWorldHovercard.h"
 #include "TwitterTourHovercard.h"
 #include "ImageStore.h"
+#include "ViewWrap.h"
 
 @class WorldPinOnMapViewContainer;
+
+class WorldPinOnMapViewContainerWrapper : public ViewWrap<WorldPinOnMapViewContainer>
+{
+    using ViewWrap::ViewWrap;
+};
 
 @interface WorldPinOnMapViewContainer : UIView
 {

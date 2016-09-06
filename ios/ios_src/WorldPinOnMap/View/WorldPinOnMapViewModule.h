@@ -2,15 +2,7 @@
 
 #pragma once
 
-#include "Types.h"
-#include "IWorldPinOnMapViewModule.h"
-#include "WorldPins.h"
-#include "IScreenControlViewModel.h"
-#include "Modality.h"
-#include "WorldPinOnMapViewIncludes.h"
-#include "IAppModeModel.h"
-#include "ImageStore.h"
-#include "TourHovercardView.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -18,27 +10,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            class WorldPinOnMapViewModule: public IWorldPinOnMapViewModule, private Eegeo::NonCopyable
+            class WorldPinOnMapViewModule: public Module
             {
-            private:
-                WorldPinOnMapViewContainer* m_pView;
-                WorldPinOnMapController* m_pController;
-                
-                TourHovercardView* m_pTourView;
-
             public:
-                WorldPinOnMapViewModule(IWorldPinInFocusViewModel& worldPinInFocusViewModel,
-                                        ScreenControl::View::IScreenControlViewModel::IScreenControlViewModel& worldPinOnMapInFocusScreenControlViewModel,
-                                        Modality::View::IModalityModel& modalityModel,
-                                        float pinDiameter,
-                                        float pixelScale,
-                                        ImageStore* pImageStore);
-                
-                ~WorldPinOnMapViewModule();
-
-                WorldPinOnMapController& GetWorldPinOnMapController() const;
-
-                WorldPinOnMapViewContainer& GetWorldPinOnMapView() const;
+                void Register(const TContainerBuilder& builder);
             };
         }
     }

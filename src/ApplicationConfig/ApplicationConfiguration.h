@@ -24,6 +24,7 @@ namespace ExampleApp
             Eegeo::Space::LatLongAltitude m_interestLocation;
             float m_distanceToInterestMetres;
             float m_orientationDegrees;
+            float m_pinDiameter;
             bool m_tryStartAtGpsLocation;
             bool m_shouldStartFullscreen;
             std::string m_googleAnalyticsReferrerToken;
@@ -90,6 +91,8 @@ namespace ExampleApp
             float DistanceToInterestMetres() const;
             
             float OrientationDegrees() const;
+            
+            float PinDiameter() const;
             
             bool TryStartAtGpsLocation() const;
 

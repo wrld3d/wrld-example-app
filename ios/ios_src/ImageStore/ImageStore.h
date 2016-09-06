@@ -6,8 +6,16 @@
 #include <string>
 #include <map>
 #include <vector>
+#include "ViewWrap.h"
 
 typedef void(^ImageLoadedCallback)(UIImage*);
+
+@class ImageStore;
+
+class ImageStoreWrapper : public ViewWrap<ImageStore>
+{
+    using ViewWrap::ViewWrap;
+};
 
 @interface ImageStore : NSObject <ImageFetchOperationDelegate>
 
