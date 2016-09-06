@@ -19,10 +19,9 @@ namespace ExampleApp
             {
             public:
 
-                WorldPinOnMapController(IWorldPinOnMapView& view,
-                                        IWorldPinInFocusViewModel& viewModel,
-                                        ScreenControl::View::IScreenControlViewModel& screenControlViewModel,
-                                        Modality::View::IModalityModel& modalityModel);
+                WorldPinOnMapController(const std::shared_ptr<IWorldPinOnMapView>& view,
+                                        const std::shared_ptr<IWorldPinInFocusViewModel>& viewModel,
+                                        const std::shared_ptr<Modality::View::IModalityModel>& modalityModel);
                 
                 ~WorldPinOnMapController();
 
@@ -35,10 +34,10 @@ namespace ExampleApp
                 void OnUpdated();
                 void OnScreenStateUpdated(ScreenControl::View::IScreenControlViewModel& screenControlViewModel, float& screenState);
 
-                IWorldPinOnMapView& m_view;
-                IWorldPinInFocusViewModel& m_viewModel;
+                const std::shared_ptr<IWorldPinOnMapView> m_view;
+                const std::shared_ptr<IWorldPinInFocusViewModel> m_viewModel;
+                const std::shared_ptr<Modality::View::IModalityModel> m_modalityModel;
                 ScreenControl::View::IScreenControlViewModel& m_screenControlViewModel;
-                Modality::View::IModalityModel& m_modalityModel;
 
                 Eegeo::Helpers::TCallback0<WorldPinOnMapController> m_viewSelectedCallback;
                 Eegeo::Helpers::TCallback0<WorldPinOnMapController> m_viewModelOpenedCallback;

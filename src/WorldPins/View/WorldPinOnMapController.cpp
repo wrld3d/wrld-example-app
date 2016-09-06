@@ -12,13 +12,12 @@ namespace ExampleApp
     {
         namespace View
         {
-            WorldPinOnMapController::WorldPinOnMapController(IWorldPinOnMapView& view,
-                                                             IWorldPinInFocusViewModel& viewModel,
-                                                             ScreenControl::View::IScreenControlViewModel& screenControlViewModel,
-                                                             Modality::View::IModalityModel& modalityModel)
+            WorldPinOnMapController::WorldPinOnMapController(const std::shared_ptr<IWorldPinOnMapView>& view,
+                                                             const std::shared_ptr<IWorldPinInFocusViewModel>& viewModel,
+                                                             const std::shared_ptr<Modality::View::IModalityModel>& modalityModel)
             : m_view(view)
             , m_viewModel(viewModel)
-            , m_screenControlViewModel(screenControlViewModel)
+            , m_screenControlViewModel(viewModel->GetScreenControlViewModel())
             , m_modalityModel(modalityModel)
             , m_viewSelectedCallback(this, &WorldPinOnMapController::OnSelected)
             , m_viewModelOpenedCallback(this, &WorldPinOnMapController::OnOpened)
@@ -26,13 +25,13 @@ namespace ExampleApp
             , m_viewModelUpdateCallback(this, &WorldPinOnMapController::OnUpdated)
             , m_viewModelScreenStateCallback(this, &WorldPinOnMapController::OnScreenStateUpdated)
             {
-                m_view.InsertSelectedCallback(m_viewSelectedCallback);
-                m_viewModel.InsertOpenedCallback(m_viewModelOpenedCallback);
-                m_viewModel.InsertClosedCallback(m_viewModelClosedCallback);
-                m_viewModel.InsertUpdateCallback(m_viewModelUpdateCallback);
+                m_view->InsertSelectedCallback(m_viewSelectedCallback);
+                m_viewModel->InsertOpenedCallback(m_viewModelOpenedCallback);
+                m_viewModel->InsertClosedCallback(m_viewModelClosedCallback);
+                m_viewModel->InsertUpdateCallback(m_viewModelUpdateCallback);
                 m_screenControlViewModel.InsertOnScreenStateChangedCallback(m_viewModelScreenStateCallback);
                 
-                if (m_viewModel.IsOpen())
+                if (m_viewModel->IsOpen())
                 {
                     OnOpened();
                 }
@@ -45,45 +44,45 @@ namespace ExampleApp
             WorldPinOnMapController::~WorldPinOnMapController()
             {
                 m_screenControlViewModel.RemoveOnScreenStateChangedCallback(m_viewModelScreenStateCallback);
-                m_viewModel.RemoveUpdateCallback(m_viewModelUpdateCallback);
-                m_viewModel.RemoveClosedCallback(m_viewModelClosedCallback);
-                m_viewModel.RemoveOpenedCallback(m_viewModelOpenedCallback);
-                m_view.RemoveSelectedCallback(m_viewSelectedCallback);
+                m_viewModel->RemoveUpdateCallback(m_viewModelUpdateCallback);
+                m_viewModel->RemoveClosedCallback(m_viewModelClosedCallback);
+                m_viewModel->RemoveOpenedCallback(m_viewModelOpenedCallback);
+                m_view->RemoveSelectedCallback(m_viewSelectedCallback);
             }
             
             void WorldPinOnMapController::OnSelected()
             {
-                if(!m_modalityModel.IsModalEnabled())
+                if(!m_modalityModel->IsModalEnabled())
                 {
-                    if(m_viewModel.IsOpen())
+                    if(m_viewModel->IsOpen())
                     {
-                        m_viewModel.SelectFocussedResult();
+                        m_viewModel->SelectFocussedResult();
                     }
                 }
             }
             
             void WorldPinOnMapController::OnOpened()
             {
-                m_view.Open(m_viewModel.GetWorldPinsInFocusModel(), m_modalityModel.GetModality());
+                m_view->Open(m_viewModel->GetWorldPinsInFocusModel(), m_modalityModel->GetModality());
                 
                 OnUpdated();
             }
             
             void WorldPinOnMapController::OnClosed()
             {
-                m_view.Close();
+                m_view->Close();
             }
             
             void WorldPinOnMapController::OnUpdated()
             {
-                m_view.UpdateScreenLocation(m_viewModel.ScreenLocation().GetX(), m_viewModel.ScreenLocation().GetY());
+                m_view->UpdateScreenLocation(m_viewModel->ScreenLocation().GetX(), m_viewModel->ScreenLocation().GetY());
             }
             
             void WorldPinOnMapController::OnScreenStateUpdated(ScreenControl::View::IScreenControlViewModel &screenControlViewModel, float &screenState)
             {
-                if(m_viewModel.IsOpen())
+                if(m_viewModel->IsOpen())
                 {
-                    m_view.UpdateScreenState(screenState);
+                    m_view->UpdateScreenState(screenState);
                 }
             }
         }

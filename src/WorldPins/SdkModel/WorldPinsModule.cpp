@@ -18,6 +18,9 @@
 #include "IFileIO.h"
 #include "InteriorInteractionModel.h"
 #include "InteriorTransitionModel.h"
+#include "WorldPinOnMapController.h"
+#include "IWorldPinOnMapView.h"
+#include "IModalityModel.h"
 
 namespace ExampleApp
 {
@@ -46,6 +49,7 @@ namespace ExampleApp
                 builder->registerType<WorldPinsInFocusController>().as<IWorldPinsInFocusController>().singleInstance();
                 builder->registerType<View::WorldPinInFocusObserver>().singleInstance();
                 builder->registerType<WorldPinsModalityObserver>().singleInstance();
+                builder->registerType<View::WorldPinOnMapController>().singleInstance();
                 builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                                  {
                                                      auto worldpinIconMapping = context.resolve<ExampleApp::WorldPins::SdkModel::IWorldPinIconMapping>();
@@ -75,6 +79,7 @@ namespace ExampleApp
             {
                 RegisterLeaf<WorldPinsModalityObserver>();
                 RegisterLeaf<View::WorldPinInFocusObserver>();
+                RegisterLeaf<View::WorldPinOnMapController>();
             }
         }
     }

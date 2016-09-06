@@ -5,6 +5,7 @@
 #include "ICallback.h"
 #include "VectorMath.h"
 #include "WorldPinsInFocusModel.h"
+#include "IScreenControlViewModel.h"
 
 namespace ExampleApp
 {
@@ -17,6 +18,8 @@ namespace ExampleApp
             public:
                 virtual ~IWorldPinInFocusViewModel() { }
 
+                virtual ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel() = 0;
+                
                 virtual const SdkModel::WorldPinsInFocusModel& GetWorldPinsInFocusModel() const = 0;
 
                 virtual bool IsOpen() const = 0;
