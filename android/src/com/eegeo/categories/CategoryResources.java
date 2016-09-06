@@ -59,9 +59,9 @@ public class CategoryResources
         {
         	return "toilets";
         }
-        if(category.contains("print_station"))
+        if(category.contains("printer"))
         {
-        	return "print_station";
+        	return "printer";
         }
         if(category.contains("emergency_exit"))
         {
