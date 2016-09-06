@@ -85,7 +85,7 @@ namespace ExampleApp
                 }
                 if(Contains(category, Search::Swallow::SearchConstants::PRINT_STATION_CATEGORY_NAME))
                 {
-                    return "icon1_print_station";
+                    return "icon1_printer";
                 }
                 if(Contains(category, Search::Swallow::SearchConstants::EMERGENCY_EXIT_CATEGORY_NAME))
                 {
