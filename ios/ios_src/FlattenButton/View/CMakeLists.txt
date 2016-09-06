@@ -10,7 +10,6 @@ set(currsources
   ios_src/FlattenButton/View/FlattenButtonViewInterop.mm
   ios_src/FlattenButton/View/FlattenButtonViewModule.h
   ios_src/FlattenButton/View/FlattenButtonViewModule.mm
-  ios_src/FlattenButton/View/IFlattenButtonViewModule.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\ios_src\\FlattenButton\\View FILES ${currsources})

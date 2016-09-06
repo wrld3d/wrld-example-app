@@ -13,6 +13,7 @@ namespace ExampleApp
             : m_mapModeModel(mapModeModel)
             , m_onMapModeChangedCallback(this, &FlattenButtonModel::OnMapModeChanged)
             {
+                Eegeo_ASSERT(m_mapModeModel != nullptr);
                 m_mapModeModel->AddMapModeChangedCallback(m_onMapModeChangedCallback);
             }
 

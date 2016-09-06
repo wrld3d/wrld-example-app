@@ -13,34 +13,23 @@ namespace ExampleApp
     {
         namespace View
         {
-            FlattenButtonViewModule::FlattenButtonViewModule(IFlattenButtonViewModel& viewModel,
-                                                                const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                                             ExampleAppMessaging::TMessageBus& messageBus,
-                                                             Metrics::IMetricsService& metricsService)
+            void FlattenButtonViewModule::Register(const TContainerBuilder& builder)
             {
-                m_pView = [[FlattenButtonView alloc] initWithDimensions
-                           :screenProperties.GetScreenWidth()
-                           :screenProperties.GetScreenHeight()
-                           :screenProperties.GetPixelScale()
-                          ];
-
-                m_pController = new FlattenButtonController(viewModel, *[m_pView getInterop], messageBus, metricsService);
-            }
-
-            FlattenButtonViewModule::~FlattenButtonViewModule()
-            {
-                delete m_pController;
-                [m_pView release];
-            }
-
-            FlattenButtonController& FlattenButtonViewModule::GetFlattenButtonController() const
-            {
-                return *m_pController;
-            }
-
-            FlattenButtonView& FlattenButtonViewModule::GetFlattenButtonView() const
-            {
-                return *m_pView;
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto screenProperties = context.resolve<Eegeo::Rendering::ScreenProperties>();
+                                                     auto view = [[FlattenButtonView alloc] initWithDimensions
+                                                                  :screenProperties->GetScreenWidth()
+                                                                  :screenProperties->GetScreenHeight()
+                                                                  :screenProperties->GetPixelScale()
+                                                                  ];
+                                                     return std::make_shared<FlattenButtonViewWrapper>(view);
+                                                 }).singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto view = context.resolve<FlattenButtonViewWrapper>();
+                                                     return Hypodermic::makeExternallyOwned(*[view->Get() getInterop]);
+                                                 }).as<IFlattenButtonView>().singleInstance();
             }
         }
     }

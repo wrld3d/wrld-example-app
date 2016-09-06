@@ -2,14 +2,7 @@
 
 #pragma once
 
-#include "Types.h"
-#include "FlattenButtonViewIncludes.h"
-#include "Rendering.h"
-#include "FlattenButton.h"
-#include "IFlattenButtonViewModule.h"
-#include "BidirectionalBus.h"
-#include "IMetricsService.h"
-#include "IAppModeModel.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -17,23 +10,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            class FlattenButtonViewModule: public IFlattenButtonViewModule, private Eegeo::NonCopyable
+            class FlattenButtonViewModule: public Module
             {
             private:
-                FlattenButtonController* m_pController;
-                FlattenButtonView* m_pView;
-
-            public:
-                FlattenButtonViewModule(IFlattenButtonViewModel& viewModel,
-                                        const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                        ExampleAppMessaging::TMessageBus& messageBus,
-                                        Metrics::IMetricsService& metricsService);
-
-                ~FlattenButtonViewModule();
-
-                FlattenButtonController& GetFlattenButtonController() const;
-
-                FlattenButtonView& GetFlattenButtonView() const;
+                void Register(const TContainerBuilder& builder);
             };
         }
     }

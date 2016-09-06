@@ -11,15 +11,15 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            MapModeModule::MapModeModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
-            : m_builder(builder)
+            void MapModeModule::Register(const TContainerBuilder& builder)
             {
+                builder->registerType<MapModeModel>().as<IMapModeModel>().singleInstance();
+                builder->registerType<MapModeController>().singleInstance();
             }
             
-            void MapModeModule::Register()
+            void MapModeModule::RegisterLeaves()
             {
-                m_builder->registerType<MapModeModel>().as<IMapModeModel>().singleInstance();
-                m_builder->registerType<MapModeController>().singleInstance();
+                RegisterLeaf<MapModeController>();
             }
         }
     }

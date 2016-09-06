@@ -23,6 +23,8 @@
 #include "ReactionModelModule.h"
 #include "WeatherMenuModule.h"
 #include "SearchResultPoiModule.h"
+#include "FlattenButtonModule.h"
+#include "MapModeModule.h"
 
 namespace ExampleApp
 {
@@ -66,6 +68,8 @@ namespace ExampleApp
         RegisterModule<SettingsMenu::SdkModel::SettingsMenuModule>();
         RegisterModule<Reaction::View::ReactionModelModule>();
         RegisterModule<SearchResultPoi::View::SearchResultPoiModule>();
+        RegisterModule<FlattenButton::SdkModel::FlattenButtonModule>();
+        RegisterModule<MapMode::SdkModel::MapModeModule>();
         
         auto moduleSet = m_moduleContainer->resolve<TModules>();
         m_moduleRegistrationCallbacks.ExecuteCallbacks(*moduleSet);

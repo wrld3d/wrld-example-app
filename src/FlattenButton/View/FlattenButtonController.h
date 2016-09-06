@@ -20,17 +20,16 @@ namespace ExampleApp
             class FlattenButtonController : private Eegeo::NonCopyable
             {
             private:
-                IFlattenButtonViewModel& m_viewModel;
-                IFlattenButtonView& m_view;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<IFlattenButtonViewModel> m_viewModel;
+                const std::shared_ptr<IFlattenButtonView> m_view;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
+                const std::shared_ptr<Metrics::IMetricsService> m_metricsService;
 
                 Eegeo::Helpers::TCallback1<FlattenButtonController, const FlattenButtonModelStateChangedMessage&> m_stateChangeHandler;
                 Eegeo::Helpers::TCallback1<FlattenButtonController, bool> m_toggledCallback;
                 Eegeo::Helpers::TCallback2<FlattenButtonController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
                 Eegeo::Helpers::TCallback1<FlattenButtonController, const MyPinCreation::MyPinCreationStateChangedMessage&> m_myPinCreationStateChangedMessageHandler;
                 Eegeo::Helpers::TCallback1<FlattenButtonController, const AppModes::AppModeChangedMessage&> m_appModeChangedHandler;
-
-                Metrics::IMetricsService& m_metricsService;
                 
                 bool m_appModeAllowsOpen;
                 
@@ -46,10 +45,10 @@ namespace ExampleApp
 
             public:
                 FlattenButtonController(
-                    IFlattenButtonViewModel& viewModel,
-                    IFlattenButtonView& view,
-                    ExampleAppMessaging::TMessageBus& messageBus,
-                    Metrics::IMetricsService& metricsService
+                                        const std::shared_ptr<IFlattenButtonViewModel>& viewModel,
+                                        const std::shared_ptr<IFlattenButtonView>& view,
+                                        const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                        const std::shared_ptr<Metrics::IMetricsService>& metricsService
                 );
 
                 ~FlattenButtonController();

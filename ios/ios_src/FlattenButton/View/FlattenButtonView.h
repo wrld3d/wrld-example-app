@@ -4,8 +4,14 @@
 
 #import <UIKit/UIKit.h>
 #include "FlattenButtonViewIncludes.h"
+#include "ViewWrap.h"
 
 @class FlattenButtonView;
+
+class FlattenButtonViewWrapper : public ViewWrap<FlattenButtonView>
+{
+    using ViewWrap::ViewWrap;
+};
 
 @interface FlattenButtonView : UIButton
 {

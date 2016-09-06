@@ -285,12 +285,6 @@ void AppHost::Update(float dt)
         return;
     }
 
-    //if(m_pApp->IsLoadingScreenComplete() && !m_requestedApplicationInitialiseViewState)
-    //{
-    //    m_requestedApplicationInitialiseViewState = true;
-    //    m_pApp->InitialiseApplicationViewState();
-    //}
-
     m_app->Update(dt);
     m_wiring->Resolve<ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel>()->UpdateObjectsUiThread(dt);
 
@@ -314,6 +308,7 @@ void AppHost::AddApplicationViews()
     AddSubview<ModalBackgroundViewWrapper>();
     AddSubview<SettingsMenuViewWrapper>();
     AddSubview<SearchResultPoiViewContainerWrapper>();
+    AddSubview<FlattenButtonViewWrapper>();
     
     AddViewControllerUpdatable<ExampleApp::SettingsMenu::View::SettingsMenuController>();    
 }
@@ -324,6 +319,7 @@ void AppHost::RegisterApplicationViewModules()
     m_wiring->RegisterModule<ExampleApp::ModalBackground::View::ModalBackgroundViewModule>();
     m_wiring->RegisterModule<ExampleApp::SettingsMenu::View::SettingsMenuViewModule>();
     m_wiring->RegisterModule<ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule>();
+    m_wiring->RegisterModule<ExampleApp::FlattenButton::View::FlattenButtonViewModule>();
     
 
     /*
@@ -466,7 +462,7 @@ void AppHost::DestroyApplicationViewModules()
 
     // HUD behind modal background layer.
     //[&m_pWatermarkViewModule->GetWatermarkView() removeFromSuperview];
-    [&m_pFlattenButtonViewModule->GetFlattenButtonView() removeFromSuperview];
+    //[&m_pFlattenButtonViewModule->GetFlattenButtonView() removeFromSuperview];
     [&m_pCompassViewModule->GetCompassView() removeFromSuperview];
     [&m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView() removeFromSuperview];
     [&m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView() removeFromSuperview];
@@ -535,7 +531,7 @@ void AppHost::DestroyApplicationViewModules()
     
     //Eegeo_DELETE m_pSettingsMenuViewModule;
 
-    Eegeo_DELETE m_pFlattenButtonViewModule;
+    //Eegeo_DELETE m_pFlattenButtonViewModule;
     
     Eegeo_DELETE m_pInitialExperienceIntroViewModule;
     

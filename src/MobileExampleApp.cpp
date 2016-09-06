@@ -5,6 +5,7 @@
 #include "StreamingVolumeController.h"
 #include "IWatermarkViewModel.h"
 #include "SettingsMenu.h"
+#include "IFlattenButtonViewModel.h"
 
 namespace ExampleApp
 {
@@ -263,6 +264,7 @@ namespace ExampleApp
     {
         container->resolve<Watermark::View::IWatermarkViewModel>()->AddToScreen();
         container->resolve<SettingsMenu::View::SettingsMenuViewModel>()->AddToScreen();
+        container->resolve<FlattenButton::View::IFlattenButtonViewModel>()->AddToScreen();
     }
 
     void MobileExampleApp::RegisterLoadingScreenComplete(Eegeo::Helpers::ICallback0& callback)

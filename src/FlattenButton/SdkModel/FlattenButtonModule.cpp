@@ -3,6 +3,7 @@
 #include "FlattenButtonModule.h"
 #include "FlattenButtonViewModel.h"
 #include "FlattenButtonModel.h"
+#include "FlattenButtonController.h"
 #include "FlattenButtonViewStateChangedObserver.h"
 #include "FlattenButtonModelStateChangedObserver.h"
 #include "IMapModeModel.h"
@@ -13,20 +14,23 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            FlattenButtonModule::FlattenButtonModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
-            : m_builder(builder)
+            void FlattenButtonModule::Register(const TContainerBuilder& builder)
             {
-            }
-            
-            void FlattenButtonModule::Register()
-            {
-                m_builder->registerType<FlattenButtonModel>().as<IFlattenButtonModel>().singleInstance();
-                m_builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                builder->registerType<FlattenButtonModel>().as<IFlattenButtonModel>().singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                                    {
                                                        return std::make_shared<View::FlattenButtonViewModel>(context.resolve<Eegeo::Helpers::IIdentityProvider>(), false);
                                                    }).as<View::IFlattenButtonViewModel>().singleInstance();
-                m_builder->registerType<FlattenButtonViewStateChangedObserver>().singleInstance();
-                m_builder->registerType<FlattenButtonModelStateChangedObserver>().singleInstance();
+                builder->registerType<FlattenButtonViewStateChangedObserver>().singleInstance();
+                builder->registerType<FlattenButtonModelStateChangedObserver>().singleInstance();
+                builder->registerType<View::FlattenButtonController>().singleInstance();
+            }
+            
+            void FlattenButtonModule::RegisterLeaves()
+            {
+                RegisterLeaf<View::FlattenButtonController>();
+                RegisterLeaf<FlattenButtonModelStateChangedObserver>();
+                RegisterLeaf<FlattenButtonViewStateChangedObserver>();
             }
         }
     }
