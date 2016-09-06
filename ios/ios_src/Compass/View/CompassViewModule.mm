@@ -12,34 +12,24 @@ namespace ExampleApp
     {
         namespace View
         {
-            CompassViewModule::CompassViewModule(ICompassViewModel& viewModel,
-                                                 const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                                 ExampleAppMessaging::TMessageBus& messageBus)
+            void CompassViewModule::Register(const TContainerBuilder& builder)
             {
-
-                m_pView = [[CompassView alloc] initWithParams
-                            :screenProperties.GetScreenWidth()
-                            :screenProperties.GetScreenHeight()
-                            :screenProperties.GetPixelScale()];
-
-                m_pController = Eegeo_NEW(CompassController)(*[m_pView getInterop], viewModel, messageBus);
-            }
-
-            CompassViewModule::~CompassViewModule()
-            {
-                Eegeo_DELETE m_pController;
-                [m_pView release];
-            }
-
-            CompassController& CompassViewModule::GetCompassController() const
-            {
-                return *m_pController;
-            }
-
-            CompassView& CompassViewModule::GetCompassView() const
-            {
-                return *m_pView;
-            }
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto screenProperties = context.resolve<Eegeo::Rendering::ScreenProperties>();
+                                                     auto view = [[CompassView alloc] initWithParams
+                                                                  :screenProperties->GetScreenWidth()
+                                                                  :screenProperties->GetScreenHeight()
+                                                                  :screenProperties->GetPixelScale()
+                                                                  ];
+                                                     return std::make_shared<CompassViewWrapper>(view);
+                                                 }).singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto view = context.resolve<CompassViewWrapper>();
+                                                     return Hypodermic::makeExternallyOwned(*[view->Get() getInterop]);
+                                                 }).as<ICompassView>().singleInstance();
+              }
         }
     }
 }

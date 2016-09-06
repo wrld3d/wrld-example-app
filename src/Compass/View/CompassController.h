@@ -19,9 +19,9 @@ namespace ExampleApp
             class CompassController : private Eegeo::NonCopyable
             {
             private:
-                ICompassView& m_view;
-                ICompassViewModel& m_viewModel;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<ICompassView> m_view;
+                const std::shared_ptr<ICompassViewModel> m_viewModel;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
 
                 Eegeo::Helpers::TCallback2<CompassController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
                 Eegeo::Helpers::TCallback1<CompassController, const CompassModeChangedMessage&> m_modeChangedHandler;
@@ -48,9 +48,9 @@ namespace ExampleApp
                 bool m_appModeAllowsOpen;
                 
             public:
-                CompassController(ICompassView& view,
-                                  ICompassViewModel& viewModel,
-                                  ExampleAppMessaging::TMessageBus& messageBus);
+                CompassController(const std::shared_ptr<ICompassView>& view,
+                                  const std::shared_ptr<ICompassViewModel>& viewModel,
+                                  const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
 
                 ~CompassController();
             };

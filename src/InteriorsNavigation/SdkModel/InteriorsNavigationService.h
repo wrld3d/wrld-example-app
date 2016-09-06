@@ -10,6 +10,7 @@
 #include "InteriorsExplorer.h"
 #include "Interiors.h"
 #include "ICallback.h"
+#include "IInteriorCameraController.h"
 #include <memory>
 
 namespace ExampleApp
@@ -24,7 +25,7 @@ namespace ExampleApp
                 
                 InteriorsNavigationService(const std::shared_ptr<Eegeo::Location::ILocationService>& locationService,
                                            const std::shared_ptr<Eegeo::Resources::Interiors::InteriorsCameraController>& interiorsCameraController,
-                                           const std::shared_ptr<Eegeo::Camera::GlobeCamera::GlobeCameraTouchController>& cameraTouchController,
+                                           const std::shared_ptr<InteriorsExplorer::SdkModel::IInteriorCameraController>& interiorCameraController,
                                            const std::shared_ptr<Eegeo::Resources::Interiors::InteriorSelectionModel>& interiorSelectionModel,
                                            const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel);
                 

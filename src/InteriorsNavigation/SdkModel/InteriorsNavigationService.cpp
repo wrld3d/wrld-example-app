@@ -23,17 +23,22 @@ namespace ExampleApp
             
             InteriorsNavigationService::InteriorsNavigationService(const std::shared_ptr<Eegeo::Location::ILocationService>& locationService,
                                                                    const std::shared_ptr<Eegeo::Resources::Interiors::InteriorsCameraController>& interiorsCameraController,
-                                                                   const std::shared_ptr<Eegeo::Camera::GlobeCamera::GlobeCameraTouchController>& cameraTouchController,
+                                                                   const std::shared_ptr<InteriorsExplorer::SdkModel::IInteriorCameraController>& interiorCameraController,
                                                                    const std::shared_ptr<Eegeo::Resources::Interiors::InteriorSelectionModel>& interiorSelectionModel,
                                                                    const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel)
             : m_locationService(locationService)
             , m_interiorsCameraController(interiorsCameraController)
-            , m_cameraTouchController(cameraTouchController)
+            , m_cameraTouchController(interiorCameraController->GetTouchController())
             , m_gpsMode(Eegeo::Location::NavigationService::GpsModeOff)
             , m_interiorSelectionModel(interiorSelectionModel)
             , m_interiorInteractionModel(interiorInteractionModel)
             , m_interiorSelectionModelChangedHandler(this, &InteriorsNavigationService::HandleInteriorSelectionModelChanged)
             {
+                Eegeo_ASSERT(m_locationService != nullptr);
+                Eegeo_ASSERT(m_interiorsCameraController != nullptr);
+                Eegeo_ASSERT(m_cameraTouchController != nullptr);
+                Eegeo_ASSERT(m_interiorSelectionModel != nullptr);
+                Eegeo_ASSERT(m_interiorInteractionModel != nullptr);
                 m_interiorSelectionModel->RegisterSelectionChangedCallback(m_interiorSelectionModelChangedHandler);
             }
             

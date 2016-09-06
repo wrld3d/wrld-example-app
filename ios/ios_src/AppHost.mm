@@ -177,7 +177,8 @@ public:
                                                     }).singleInstance();
         builder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
                                                     {
-                                                        return std::make_shared<AppLocationDelegate>(context.resolve<iOSLocationService>(), m_viewController);
+                                                        auto locationService = context.resolve<Eegeo::Location::ILocationService>();
+                                                        return std::make_shared<AppLocationDelegate>(locationService, m_viewController);
                                                     }).singleInstance();
     }
 private:
@@ -316,6 +317,7 @@ void AppHost::AddApplicationViews()
     AddSubview<SearchResultPoiViewContainerWrapper>();
     AddSubview<FlattenButtonViewWrapper>();
     AddSubview<WorldPinOnMapViewContainerWrapper>();
+    AddSubview<CompassViewWrapper>();
     
     AddViewControllerUpdatable<ExampleApp::SettingsMenu::View::SettingsMenuController>();    
 }
@@ -328,7 +330,7 @@ void AppHost::RegisterApplicationViewModules()
     m_wiring->RegisterModule<ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule>();
     m_wiring->RegisterModule<ExampleApp::FlattenButton::View::FlattenButtonViewModule>();
     m_wiring->RegisterModule<ExampleApp::WorldPins::View::WorldPinOnMapViewModule>();
-
+    m_wiring->RegisterModule<ExampleApp::Compass::View::CompassViewModule>();
    
 /*
     m_pWorldPinOnMapViewModule = Eegeo_NEW(ExampleApp::WorldPins::View::WorldPinOnMapViewModule)(app.WorldPinsModule().GetWorldPinInFocusViewModel(),
@@ -461,7 +463,7 @@ void AppHost::DestroyApplicationViewModules()
     // HUD behind modal background layer.
     //[&m_pWatermarkViewModule->GetWatermarkView() removeFromSuperview];
     //[&m_pFlattenButtonViewModule->GetFlattenButtonView() removeFromSuperview];
-    [&m_pCompassViewModule->GetCompassView() removeFromSuperview];
+    //[&m_pCompassViewModule->GetCompassView() removeFromSuperview];
     [&m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView() removeFromSuperview];
     [&m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView() removeFromSuperview];
     /*if(m_pApp->ToursEnabled())
@@ -513,7 +515,7 @@ void AppHost::DestroyApplicationViewModules()
     
     Eegeo_DELETE m_pAboutPageViewModule;
 
-    Eegeo_DELETE m_pCompassViewModule;
+    //Eegeo_DELETE m_pCompassViewModule;
 
     //Eegeo_DELETE m_pWorldPinOnMapViewModule;
     

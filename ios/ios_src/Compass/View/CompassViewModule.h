@@ -2,13 +2,7 @@
 
 #pragma once
 
-#include "Types.h"
-#include "CompassViewIncludes.h"
-#include "Rendering.h"
-#include "Compass.h"
-#include "ICompassViewModule.h"
-#include "BidirectionalBus.h"
-#include "CompassController.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -16,22 +10,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            class CompassViewModule: public ICompassViewModule, private Eegeo::NonCopyable
+            class CompassViewModule: public Module
             {
-            private:
-                CompassController* m_pController;
-                CompassView* m_pView;
-
             public:
-                CompassViewModule(ICompassViewModel& viewModel,
-                                  const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                  ExampleAppMessaging::TMessageBus& messageBus);
-
-                ~CompassViewModule();
-
-                CompassController& GetCompassController() const;
-
-                CompassView& GetCompassView() const;
+                void Register(const TContainerBuilder& builder);
             };
         }
     }

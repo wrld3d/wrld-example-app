@@ -10,7 +10,7 @@ namespace ExampleApp
         {
             void CompassController::OnViewCycled()
             {
-                m_messageBus.Publish(CompassViewCycledMessage());
+                m_messageBus->Publish(CompassViewCycledMessage());
             }
 
             void CompassController::OnCompassModeChangedMessage(const CompassModeChangedMessage& message)
@@ -18,13 +18,13 @@ namespace ExampleApp
                 switch (message.GetMode())
                 {
                 case  GpsMode::GpsDisabled:
-                    m_view.ShowGpsDisabledView();
+                    m_view->ShowGpsDisabledView();
                     break;
                 case GpsMode::GpsFollow:
-                    m_view.ShowGpsFollowView();
+                    m_view->ShowGpsFollowView();
                     break;
                 case GpsMode::GpsCompassMode:
-                    m_view.ShowGpsCompassModeView();
+                    m_view->ShowGpsCompassModeView();
                     break;
                 case GpsMode::GpsMode_Max:
                     Eegeo_ASSERT(false, "Invalid gps mode");
@@ -34,17 +34,17 @@ namespace ExampleApp
             
             void CompassController::OnCompassModeUnauthorizedMessage(const CompassModeUnauthorizedMessage& message)
             {
-                m_view.NotifyGpsUnauthorized();
+                m_view->NotifyGpsUnauthorized();
             }
 
             void CompassController::OnCompassHeadingChangedMessage(const CompassHeadingUpdateMessage& message)
             {
-                m_view.SetHeadingRadians(message.GetHeadingRadians());
+                m_view->SetHeadingRadians(message.GetHeadingRadians());
             }
 
             void CompassController::OnScreenStateChangedCallback(ScreenControl::View::IScreenControlViewModel &viewModel, float& onScreenState)
             {
-                ScreenControl::View::Apply(m_viewModel, m_view);
+                ScreenControl::View::Apply(*m_viewModel, *m_view);
             }
             
             void CompassController::OnMyPinCreationStateChangedMessage(const MyPinCreation::MyPinCreationStateChangedMessage& message)
@@ -53,11 +53,11 @@ namespace ExampleApp
                 {
                     case MyPinCreation::Inactive:
                     {
-                        m_viewModel.AddToScreen();
+                        m_viewModel->AddToScreen();
                     }break;
                     case MyPinCreation::Ring:
                     {
-                        m_viewModel.RemoveFromScreen();
+                        m_viewModel->RemoveFromScreen();
                     }break;
                     case MyPinCreation::Details:
                     {
@@ -75,17 +75,17 @@ namespace ExampleApp
                 
                 if(m_appModeAllowsOpen)
                 {
-                    m_viewModel.AddToScreen();
+                    m_viewModel->AddToScreen();
                 }
                 else
                 {
-                    m_viewModel.RemoveFromScreen();
+                    m_viewModel->RemoveFromScreen();
                 }
             }
             
-            CompassController::CompassController(  ICompassView& view,
-                                                   ICompassViewModel& viewModel,
-                                                   ExampleAppMessaging::TMessageBus& messageBus)
+            CompassController::CompassController(const std::shared_ptr<ICompassView>& view,
+                                                 const std::shared_ptr<ICompassViewModel>& viewModel,
+                                                 const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
                 : m_view(view)
                 , m_viewModel(viewModel)
                 , m_messageBus(messageBus)
@@ -98,28 +98,28 @@ namespace ExampleApp
                 , m_viewCycledCallback(this, &CompassController::OnViewCycled)
                 , m_appModeChangedHandler(this, &CompassController::OnAppModeChangedMessage)
             {
-                m_messageBus.SubscribeUi(m_modeChangedHandler);
-                m_messageBus.SubscribeUi(m_headingChangedHandler);
-                m_messageBus.SubscribeUi(m_myPinCreationStateChangedMessageHandler);
-                m_messageBus.SubscribeUi(m_modeUnauthorizedHandler);
-                m_messageBus.SubscribeUi(m_appModeChangedHandler);
+                m_messageBus->SubscribeUi(m_modeChangedHandler);
+                m_messageBus->SubscribeUi(m_headingChangedHandler);
+                m_messageBus->SubscribeUi(m_myPinCreationStateChangedMessageHandler);
+                m_messageBus->SubscribeUi(m_modeUnauthorizedHandler);
+                m_messageBus->SubscribeUi(m_appModeChangedHandler);
                 
-                m_view.InsertCycledCallback(m_viewCycledCallback);
-                m_viewModel.InsertOnScreenStateChangedCallback(m_viewStateCallback);
+                m_view->InsertCycledCallback(m_viewCycledCallback);
+                m_viewModel->InsertOnScreenStateChangedCallback(m_viewStateCallback);
 
-                m_view.SetOnScreenStateToIntermediateValue(m_viewModel.OnScreenState());
+                m_view->SetOnScreenStateToIntermediateValue(m_viewModel->OnScreenState());
             }
 
             CompassController::~CompassController()
             {
-                m_viewModel.RemoveOnScreenStateChangedCallback(m_viewStateCallback);
-                m_view.RemoveCycledCallback(m_viewCycledCallback);
+                m_viewModel->RemoveOnScreenStateChangedCallback(m_viewStateCallback);
+                m_view->RemoveCycledCallback(m_viewCycledCallback);
 
-                m_messageBus.UnsubscribeUi(m_appModeChangedHandler);
-                m_messageBus.UnsubscribeUi(m_modeUnauthorizedHandler);
-                m_messageBus.UnsubscribeUi(m_headingChangedHandler);
-                m_messageBus.UnsubscribeUi(m_modeChangedHandler);
-                m_messageBus.UnsubscribeUi(m_myPinCreationStateChangedMessageHandler);
+                m_messageBus->UnsubscribeUi(m_appModeChangedHandler);
+                m_messageBus->UnsubscribeUi(m_modeUnauthorizedHandler);
+                m_messageBus->UnsubscribeUi(m_headingChangedHandler);
+                m_messageBus->UnsubscribeUi(m_modeChangedHandler);
+                m_messageBus->UnsubscribeUi(m_myPinCreationStateChangedMessageHandler);
             }
         }
     }

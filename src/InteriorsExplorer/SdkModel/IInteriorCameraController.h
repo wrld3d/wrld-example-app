@@ -3,6 +3,9 @@
 #pragma once
 
 #include "VectorMathDecl.h"
+#include "InteriorsCameraController.h"
+#include "GlobeCameraTouchController.h"
+#include <memory>
 
 namespace ExampleApp
 {
@@ -21,6 +24,10 @@ namespace ExampleApp
                 
                 virtual void SetDistanceToInterest(float distanceMeters) = 0;
                 virtual const float GetDistanceToInterest() const = 0;
+                
+                virtual const std::shared_ptr<Eegeo::Resources::Interiors::InteriorsCameraController>& GetSdkController() const = 0;
+                
+                virtual const std::shared_ptr<Eegeo::Camera::GlobeCamera::GlobeCameraTouchController>& GetTouchController() const = 0;
             };
         }
     }

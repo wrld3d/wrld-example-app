@@ -22,6 +22,11 @@
 #include "IVisualMapService.h"
 #include "IMetricsService.h"
 #include "IWorldPinIconMapping.h"
+#include "GlobeCameraControllerFactory.h"
+#include "EnvironmentFlatteningService.h"
+#include "TerrainHeightProvider.h"
+#include "ResourceCeilingProvider.h"
+#include "IImmutableInteriorViewModel.h"
 
 namespace ExampleApp
 {
@@ -34,6 +39,30 @@ namespace ExampleApp
                 builder->registerType<InteriorExplorerUserInteractionModel>().singleInstance();
                 builder->registerType<InteriorVisibilityUpdater>().singleInstance();
                 builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto flatteningService = context.resolve<Eegeo::Rendering::EnvironmentFlatteningService>();
+                                                     Eegeo::Camera::GlobeCamera::GlobeCameraControllerFactory cameraControllerFactory(*context.resolve<Eegeo::Resources::Terrain::Heights::TerrainHeightProvider>(),
+                                                                                                                                      *flatteningService,
+                                                                                                                                      *context.resolve<Eegeo::Streaming::ResourceCeilingProvider>());
+
+                                                     
+                                                     const Eegeo::Resources::Interiors::InteriorsCameraConfiguration& interiorsCameraConfig(Eegeo::Resources::Interiors::InteriorsCameraController::CreateDefaultConfig());
+                                                     const Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration& globeCameraConfig = Eegeo::Resources::Interiors::InteriorsCameraControllerFactory::DefaultGlobeCameraControllerConfiguration();
+                                                     const Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration& globeCameraTouchConfig = Eegeo::Resources::Interiors::InteriorsCameraControllerFactory::DefaultGlobeCameraTouchControllerConfiguration();
+                                                     
+                                                     return std::make_shared<Eegeo::Resources::Interiors::InteriorsCameraControllerFactory>(
+                                                                                                                                                          interiorsCameraConfig,
+                                                                                                                                                          globeCameraConfig,
+                                                                                                                                                          globeCameraTouchConfig,
+                                                                                                                                                          cameraControllerFactory,
+                                                                                                                                                          *context.resolve<Eegeo::Rendering::ScreenProperties>(),
+                                                                                                                                                          *context.resolve<Eegeo::Resources::Interiors::InteriorInteractionModel>(),
+                                                                                                                                                          *context.resolve<Eegeo::Resources::Interiors::IImmutableInteriorViewModel>(),
+                                                                                                                                                          *flatteningService,
+                                                                                                                                                          true );
+                                                     
+                                                 }).singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                                    {
                                                        auto factory = context.resolve<Eegeo::Resources::Interiors::InteriorsCameraControllerFactory>();
                                                        auto touchController = std::shared_ptr<Eegeo::Camera::GlobeCamera::GlobeCameraTouchController>(factory->CreateTouchController());
@@ -41,6 +70,11 @@ namespace ExampleApp
                                                        auto sdkCameraController = std::shared_ptr<Eegeo::Resources::Interiors::InteriorsCameraController>(factory->CreateInteriorsCameraController(*touchController, *cameraController));
                                                        return std::make_shared<InteriorCameraController>(touchController, cameraController, sdkCameraController);
                                                    }).as<IInteriorCameraController>().singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto interiorCameraController = context.resolve<IInteriorCameraController>();
+                                                     return Hypodermic::makeExternallyOwned(*interiorCameraController->GetSdkController());
+                                                 }).singleInstance();
                 builder->registerType<InteriorWorldPinController>().singleInstance();
                 builder->registerType<InteriorsExplorerModel>().singleInstance();
                 builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)

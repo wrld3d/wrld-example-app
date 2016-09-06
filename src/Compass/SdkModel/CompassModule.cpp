@@ -14,6 +14,7 @@
 #include "InteriorSelectionModel.h"
 #include "IVisualMapService.h"
 #include "IAlertBoxFactory.h"
+#include "CompassController.h"
 
 namespace ExampleApp
 {
@@ -21,21 +22,24 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            CompassModule::CompassModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
-            : m_builder(builder)
+            void CompassModule::Register(const TContainerBuilder& builder)
             {
-            }
-            
-            void CompassModule::Register()
-            {
-                m_builder->registerType<CompassModel>().as<ICompassModel>().singleInstance();
-                m_builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                builder->registerType<CompassModel>().as<ICompassModel>().singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                                    {
                                                        return std::make_shared<View::CompassViewModel>(context.resolve<Eegeo::Helpers::IIdentityProvider>(), false);
                                                    }).as<View::ICompassViewModel>().singleInstance();
-                m_builder->registerType<CompassUpdateController>().as<ICompassUpdateController>().singleInstance();
-                m_builder->registerType<CompassModeObserver>().singleInstance();
-                m_builder->registerType<CompassViewCycledObserver>().singleInstance();
+                builder->registerType<CompassUpdateController>().as<ICompassUpdateController>().singleInstance();
+                builder->registerType<CompassModeObserver>().singleInstance();
+                builder->registerType<CompassViewCycledObserver>().singleInstance();
+                builder->registerType<View::CompassController>().singleInstance();
+            }
+            
+            void CompassModule::RegisterLeaves()
+            {
+                RegisterLeaf<View::CompassController>();
+                RegisterLeaf<CompassModeObserver>();
+                RegisterLeaf<CompassViewCycledObserver>();
             }
         }
     }

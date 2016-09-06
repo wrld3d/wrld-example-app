@@ -6,6 +6,8 @@
 #include "IWatermarkViewModel.h"
 #include "SettingsMenu.h"
 #include "IFlattenButtonViewModel.h"
+#include "ICompassViewModel.h"
+#include "NavigationService.h"
 
 namespace ExampleApp
 {
@@ -107,7 +109,9 @@ namespace ExampleApp
                                        const std::shared_ptr<Eegeo::Rendering::ScreenProperties>& screenProperties,
                                        const std::shared_ptr<Eegeo::Rendering::LoadingScreen>& loadingScreen,
                                        const std::shared_ptr<InitialExperience::SdkModel::IInitialExperienceModel>& initialExperienceModel,
-                                       const std::shared_ptr<WorldPins::SdkModel::IWorldPinsInFocusController>& worldPinsInFocusController)
+                                       const std::shared_ptr<WorldPins::SdkModel::IWorldPinsInFocusController>& worldPinsInFocusController,
+                                       const std::shared_ptr<Compass::SdkModel::ICompassUpdateController>& compassUpdateController,
+                                       const std::shared_ptr<Eegeo::Location::NavigationService>& navigationService)
     : m_world(world)
     , m_cameraController(appCameraController)
     , m_gpsCameraController(gpsCameraController)
@@ -119,6 +123,8 @@ namespace ExampleApp
     , m_loadingScreen(loadingScreen)
     , m_initialExperienceModel(initialExperienceModel)
     , m_worldPinsInFocusController(worldPinsInFocusController)
+    , m_compassUpdateController(compassUpdateController)
+    , m_navigationService(navigationService)
     {
         Eegeo_ASSERT(m_world != nullptr);
         Eegeo_ASSERT(m_cameraController != nullptr);
@@ -130,6 +136,8 @@ namespace ExampleApp
         Eegeo_ASSERT(m_loadingScreen != nullptr);
         Eegeo_ASSERT(m_initialExperienceModel != nullptr);
         Eegeo_ASSERT(m_worldPinsInFocusController != nullptr);
+        Eegeo_ASSERT(m_compassUpdateController != nullptr);
+        Eegeo_ASSERT(m_navigationService != nullptr);
         
         //AddLocalMaterials(m_platformAbstractions.GetFileIO(),
         //                  m_pWorld->GetMapModule().GetInteriorsMaterialsModule().GetInteriorsTextureResourceService(),
@@ -173,6 +181,13 @@ namespace ExampleApp
                                                       *m_screenProperties);
 
         m_world->Update(updateParameters);
+        
+        if (!m_world->Initialising() || (m_loadingScreen == nullptr && m_world->Initialising()))
+        {
+            m_compassUpdateController->Update(dt);
+        }
+        
+        m_navigationService->Update(dt);
        
         /*Eegeo::EegeoWorld& eegeoWorld(World());
         
@@ -265,6 +280,7 @@ namespace ExampleApp
         container->resolve<Watermark::View::IWatermarkViewModel>()->AddToScreen();
         container->resolve<SettingsMenu::View::SettingsMenuViewModel>()->AddToScreen();
         container->resolve<FlattenButton::View::IFlattenButtonViewModel>()->AddToScreen();
+        container->resolve<Compass::View::ICompassViewModel>()->AddToScreen();
     }
 
     void MobileExampleApp::RegisterLoadingScreenComplete(Eegeo::Helpers::ICallback0& callback)

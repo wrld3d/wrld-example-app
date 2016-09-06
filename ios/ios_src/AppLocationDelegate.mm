@@ -130,12 +130,13 @@ AppLocationDelegate* m_pAppLocationDelegate;
 
 @end
 
-AppLocationDelegate::AppLocationDelegate(const std::shared_ptr<Eegeo::iOS::iOSLocationService>& iOSLocationService,
+AppLocationDelegate::AppLocationDelegate(const std::shared_ptr<Eegeo::Location::ILocationService>& locationService,
         UIViewController& viewController)
-    : m_receivedPermissionResponse(false)
+    : m_iOSLocationService(std::static_pointer_cast<Eegeo::iOS::iOSLocationService>(locationService))
+    , m_receivedPermissionResponse(false)
 {
     m_pAppLocationDelegateLocationListener = [[AppLocationDelegateLocationListener alloc] init];
-    [m_pAppLocationDelegateLocationListener start:iOSLocationService :&viewController: this];
+    [m_pAppLocationDelegateLocationListener start:m_iOSLocationService :&viewController: this];
 }
 
 AppLocationDelegate::~AppLocationDelegate()
@@ -147,7 +148,8 @@ AppLocationDelegate::~AppLocationDelegate()
 void AppLocationDelegate::NotifyReceivedPermissionResponse()
 {
     int authResult = [CLLocationManager authorizationStatus];
-    m_piOSLocationService->SetAuthorized(authResult == kCLAuthorizationStatusAuthorizedAlways || authResult == kCLAuthorizationStatusAuthorizedWhenInUse);
+    auto permission = authResult == kCLAuthorizationStatusAuthorizedAlways || authResult == kCLAuthorizationStatusAuthorizedWhenInUse;
+    m_piOSLocationService->SetAuthorized(permission);
     m_receivedPermissionResponse = true;
 }
 

@@ -17,6 +17,7 @@
 #include "IInitialExperienceModel.h"
 #include "IWorldPinsInFocusController.h"
 #include "ICallback.h"
+#include "ICompassUpdateController.h"
 #include "Module.h"
 
 namespace ExampleApp
@@ -33,6 +34,8 @@ namespace ExampleApp
         const std::shared_ptr<Eegeo::Streaming::CameraFrustumStreamingVolume> m_streamingVolume;
         const std::shared_ptr<InitialExperience::SdkModel::IInitialExperienceModel> m_initialExperienceModel;
         const std::shared_ptr<WorldPins::SdkModel::IWorldPinsInFocusController> m_worldPinsInFocusController;
+        const std::shared_ptr<Compass::SdkModel::ICompassUpdateController> m_compassUpdateController;
+        const std::shared_ptr<Eegeo::Location::NavigationService> m_navigationService;
         
         std::shared_ptr<Eegeo::Rendering::ScreenProperties> m_screenProperties;
         std::shared_ptr<Eegeo::Rendering::LoadingScreen> m_loadingScreen;
@@ -50,7 +53,9 @@ namespace ExampleApp
                          const std::shared_ptr<Eegeo::Rendering::ScreenProperties>& screenProperties,
                          const std::shared_ptr<Eegeo::Rendering::LoadingScreen>& loadingScreen,
                          const std::shared_ptr<InitialExperience::SdkModel::IInitialExperienceModel>& initialExperienceModel,
-                         const std::shared_ptr<WorldPins::SdkModel::IWorldPinsInFocusController>& worldPinsInFocusController);
+                         const std::shared_ptr<WorldPins::SdkModel::IWorldPinsInFocusController>& worldPinsInFocusController,
+                         const std::shared_ptr<Compass::SdkModel::ICompassUpdateController>& compassUpdateController,
+                         const std::shared_ptr<Eegeo::Location::NavigationService>& navigationService);
 
         ~MobileExampleApp();
 

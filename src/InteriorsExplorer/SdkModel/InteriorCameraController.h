@@ -27,9 +27,20 @@ namespace ExampleApp
                 
                 void SetDistanceToInterest(float distanceMeters);
                 const float GetDistanceToInterest() const;
+                
+                const std::shared_ptr<Eegeo::Resources::Interiors::InteriorsCameraController>& GetSdkController() const
+                {
+                    return m_interiorsCameraController;
+                }
+
+                const std::shared_ptr<Eegeo::Camera::GlobeCamera::GlobeCameraTouchController>& GetTouchController() const
+                {
+                    return m_touchCameraController;
+                }
+                
             private:
-                const std::shared_ptr<const Eegeo::Camera::GlobeCamera::GlobeCameraTouchController> m_touchCameraController;
-                const std::shared_ptr<const Eegeo::Camera::GlobeCamera::GlobeCameraController> m_globeCameraController;
+                const std::shared_ptr<Eegeo::Camera::GlobeCamera::GlobeCameraTouchController> m_touchCameraController;
+                const std::shared_ptr<Eegeo::Camera::GlobeCamera::GlobeCameraController> m_globeCameraController;
                 const std::shared_ptr<Eegeo::Resources::Interiors::InteriorsCameraController> m_interiorsCameraController;
             };
         }

@@ -16,7 +16,7 @@ namespace ExampleApp
     {
     public:
         Module()
-        : m_container(nullptr)
+        : m_pContainer(nullptr)
         {
         }
         
@@ -28,20 +28,20 @@ namespace ExampleApp
         template <class T>
         void RegisterLeaf()
         {
-            Eegeo_ASSERT(m_container != nullptr);
-            std::shared_ptr<T> ptr = m_container->resolve<T>();
+            Eegeo_ASSERT(m_pContainer != nullptr);
+            std::shared_ptr<T> ptr = m_pContainer->resolve<T>();
             m_leaves.push_back(ptr);
         }
 
         template <class T>
         std::shared_ptr<T> Resolve()
         {
-            return m_container->resolve<T>();
+            return m_pContainer->resolve<T>();
         }
         
-        void AssignContainer(const TContainer& container)
+        void AssignContainer(Hypodermic::Container* container)
         {
-            m_container = container;
+            m_pContainer = container;
         }
         
         const TLeaves& GetLeaves() const
@@ -50,7 +50,7 @@ namespace ExampleApp
         }
         
     private:
-        TContainer m_container;
+        Hypodermic::Container* m_pContainer;
         TLeaves m_leaves;
     };
     

@@ -19,7 +19,7 @@ class AppLocationDelegate : protected Eegeo::NonCopyable
     AppLocationDelegateLocationListener* m_pAppLocationDelegateLocationListener;
     bool m_receivedPermissionResponse;
 public:
-    AppLocationDelegate(const std::shared_ptr<Eegeo::iOS::iOSLocationService>& iOSLocationService,
+    AppLocationDelegate(const std::shared_ptr<Eegeo::Location::ILocationService>& iOSLocationService,
                         UIViewController& viewController);
 
     ~AppLocationDelegate();
@@ -27,4 +27,6 @@ public:
     void NotifyReceivedPermissionResponse();
 
     bool HasReceivedPermissionResponse() const;
+private:
+    const std::shared_ptr<Eegeo::iOS::iOSLocationService> m_iOSLocationService;
 };

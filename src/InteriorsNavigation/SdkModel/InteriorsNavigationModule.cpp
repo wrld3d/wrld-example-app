@@ -14,14 +14,9 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            InteriorsNavigationModule::InteriorsNavigationModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
-            : m_builder(builder)
+            void InteriorsNavigationModule::Register(const TContainerBuilder& builder)
             {
-            }
-            
-            void InteriorsNavigationModule::Register()
-            {
-                m_builder->registerType<InteriorsNavigationService>().as<IInteriorsNavigationService>().singleInstance();
+                builder->registerType<InteriorsNavigationService>().as<IInteriorsNavigationService>().singleInstance();
             }
         }
     }

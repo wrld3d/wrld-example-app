@@ -32,6 +32,7 @@
 #include "PrecacheService.h"
 #include "JpegLoader.h"
 #include "IInteriorsLabelController.h"
+#include "IImmutableInteriorViewModel.h"
 
 namespace ExampleApp
 {
@@ -138,6 +139,11 @@ namespace ExampleApp
                                            {
                                                return Hypodermic::makeExternallyOwned(context.resolve<Eegeo::EegeoWorld>()->GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel());
                                            }).singleInstance();
+        
+        builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                         {
+                                             return Hypodermic::makeExternallyOwned(context.resolve<Eegeo::EegeoWorld>()->GetMapModule().GetInteriorsPresentationModule().GetInteriorViewModel());
+                                         }).singleInstance();
         
         builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                          {

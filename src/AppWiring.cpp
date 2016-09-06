@@ -25,6 +25,9 @@
 #include "SearchResultPoiModule.h"
 #include "FlattenButtonModule.h"
 #include "MapModeModule.h"
+#include "CompassModule.h"
+#include "NavigationService.h"
+#include "InteriorsNavigationModule.h"
 
 namespace ExampleApp
 {
@@ -70,6 +73,8 @@ namespace ExampleApp
         RegisterModule<SearchResultPoi::View::SearchResultPoiModule>();
         RegisterModule<FlattenButton::SdkModel::FlattenButtonModule>();
         RegisterModule<MapMode::SdkModel::MapModeModule>();
+        RegisterModule<Compass::SdkModel::CompassModule>();
+        RegisterModule<InteriorsNavigation::SdkModel::InteriorsNavigationModule>();
         
         auto moduleSet = m_moduleContainer->resolve<TModules>();
         m_moduleRegistrationCallbacks.ExecuteCallbacks(*moduleSet);
@@ -85,7 +90,7 @@ namespace ExampleApp
         m_appContainer = m_appContainerBuilder->build();
         for (auto module : *moduleSet)
         {
-            module->AssignContainer(m_appContainer);
+            module->AssignContainer(m_appContainer.get());
             module->RegisterLeaves();
             for (auto leaf : module->GetLeaves())
             {

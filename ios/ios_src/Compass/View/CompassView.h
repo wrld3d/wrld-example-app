@@ -4,8 +4,14 @@
 
 #import <UIKit/UIKit.h>
 #include "CompassViewIncludes.h"
+#include "ViewWrap.h"
 
 @class CompassView;
+
+class CompassViewWrapper : public ViewWrap<CompassView>
+{
+    using ViewWrap::ViewWrap;
+};
 
 @interface CompassView : UIView <UIGestureRecognizerDelegate>
 {
