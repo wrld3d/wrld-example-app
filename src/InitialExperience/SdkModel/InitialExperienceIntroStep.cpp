@@ -53,7 +53,14 @@ namespace ExampleApp
             
             bool InitialExperienceIntroStep::HasCompleted() const
             {
-                return GetKeyValue(m_persistentSettings, InitialExperienceModel_HasCompletedIntro);
+                bool result = GetKeyValue(m_persistentSettings, InitialExperienceModel_HasCompletedIntro);
+
+                if(result)
+                {
+                	m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(true));
+                }
+
+                return result;
             }
             
             void InitialExperienceIntroStep::PerformInitialExperience()
