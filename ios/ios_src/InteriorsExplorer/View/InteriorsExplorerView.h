@@ -36,6 +36,7 @@
     BOOL m_floorSelectionEnabled;
     float m_floorButtonParameter;
     float m_floorSelection;
+    BOOL m_isSliderAnimPlaying;
     
     CGRect m_scrollRect;
     
