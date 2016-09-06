@@ -5,6 +5,7 @@
 #include "ShowInitialExperienceIntroMessage.h"
 #include "IWatermarkViewModel.h"
 #include "SetWatermarkVisibilityMessage.h"
+#include "WorldPinVisibility.h"
 
 namespace
 {
@@ -39,6 +40,11 @@ namespace ExampleApp
             , m_currentlyShowingIntro(false)
             {
                 m_messageBus.SubscribeNative(m_dismissedMessageHandler);
+
+                if(HasCompleted())
+                {
+                	m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::All));
+                }
             }
             
             InitialExperienceIntroStep::~InitialExperienceIntroStep()
@@ -53,14 +59,7 @@ namespace ExampleApp
             
             bool InitialExperienceIntroStep::HasCompleted() const
             {
-                bool result = GetKeyValue(m_persistentSettings, InitialExperienceModel_HasCompletedIntro);
-
-                if(result)
-                {
-                	m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(true));
-                }
-
-                return result;
+                return GetKeyValue(m_persistentSettings, InitialExperienceModel_HasCompletedIntro);
             }
             
             void InitialExperienceIntroStep::PerformInitialExperience()
@@ -81,6 +80,7 @@ namespace ExampleApp
                 Eegeo_ASSERT(!HasCompleted(), "Cannot perform InitialExperienceDialogStep, has already completed.\n");
                 m_persistentSettings.SetValue(InitialExperienceModel_HasCompletedIntro, true);
                 m_messageBus.Publish(Watermark::SetWatermarkVisibilityMessage(true));
+                m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::All));
             }
             
             void InitialExperienceIntroStep::OnIntroDismissed(const InitialExperienceIntroDismissedMessage& message)
