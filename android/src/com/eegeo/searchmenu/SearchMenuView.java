@@ -52,6 +52,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     protected View m_progressSpinner = null;
     protected View m_anchorArrow = null;
     protected View m_searchMenuResultsSeparator = null;
+    protected View m_searchMenuResultCountContain = null;
 
     protected int m_totalHeightPx;
 
@@ -91,6 +92,8 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     private float m_ssgS7ScaledDensity;
     private float m_ssgS7EditTextPixelWidth;
     private float m_editTextPixelWidth;
+    
+    private boolean m_initializeOnSearchMenuOpenComplete;
     	
     public SearchMenuView(MainActivity activity, long nativeCallerPointer)
     {
@@ -135,6 +138,8 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         m_anchorArrow = m_view.findViewById(R.id.search_results_anchor_arrow);
         m_anchorArrow.setVisibility(View.GONE);
         
+        m_searchMenuResultCountContain = m_view.findViewById(R.id.search_menu_result_count_contain);
+          
         m_searchMenuResultsSeparator = m_view.findViewById(R.id.search_menu_results_separator);
         m_searchMenuResultsSeparator.setVisibility(View.GONE);
         
@@ -195,6 +200,8 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         m_searchResultsScrollButton.setOnTouchListener(m_searchResultsScrollButtonTouchDownListener);
         
         m_fontScaleInitialized = false;
+        
+        m_initializeOnSearchMenuOpenComplete = false;
     }
     
     @Override
@@ -417,6 +424,26 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     	m_pendingResults = null;
     }
     
+    private void initializeOnSearchMenuOpen()
+    {
+    	m_initializeOnSearchMenuOpenComplete = true;
+    	
+    	m_searchMenuResultCountContain.setVisibility(View.VISIBLE);
+    	
+    	if (m_searchResultsScrollButton.getX() == 0)
+    	{
+	        m_searchResultsScrollButton.setX(m_searchResultsFade.getPaddingLeft()
+	        		- m_searchResultsScrollButton.getWidth()/2
+	        		+ (m_searchResultsFade.getWidth() - (m_searchResultsFade.getPaddingLeft() + m_searchResultsFade.getPaddingRight()))/2);
+    	}
+    	
+    	if (!m_fontScaleInitialized)
+    	{
+	    	scaleHintText();
+	        m_fontScaleInitialized = true;
+    	}
+    }
+    
     private void updateSearchMenuHeight(final int resultCount)
     {   
         final RelativeLayout mainSearchSubview = (RelativeLayout)m_view.findViewById(R.id.search_menu_view);
@@ -496,17 +523,9 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     	
     	m_searchResultsScrollListener.UpdateScrollable(m_searchResultsScrollable);
     	
-    	if (m_searchResultsScrollButton.getX() == 0)
+    	if (!m_initializeOnSearchMenuOpenComplete)
     	{
-	        m_searchResultsScrollButton.setX(m_searchResultsFade.getPaddingLeft()
-	        		- m_searchResultsScrollButton.getWidth()/2
-	        		+ (m_searchResultsFade.getWidth() - (m_searchResultsFade.getPaddingLeft() + m_searchResultsFade.getPaddingRight()))/2);
-    	}
-    	
-    	if (!m_fontScaleInitialized)
-    	{
-	    	scaleHintText();
-	        m_fontScaleInitialized = true;
+    		initializeOnSearchMenuOpen();
     	}
     }
 

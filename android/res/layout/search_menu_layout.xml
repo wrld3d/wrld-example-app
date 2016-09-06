@@ -31,7 +31,8 @@
         android:id="@+id/search_menu_result_count_contain"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/ui_border" >
+        android:background="@color/ui_border"
+        android:visibility="invisible" >
         
 	        <ListView
 				android:id="@+id/search_menu_item_list"
@@ -56,7 +57,7 @@
 				android:paddingLeft="32dp"
 				android:layout_alignBottom="@+id/search_menu_item_list"
 				android:adjustViewBounds="true"
-				android:src="@drawable/search_results_fade">
+				android:src="@drawable/search_results_fade" >
 		    </ImageView>
 
 			<Button
