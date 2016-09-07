@@ -4,6 +4,7 @@
 #include "WindowsInitialExperiencePreLoadModel.h"
 #include "InitialExperienceIntroStep.h"
 //#include "InitialExperienceSearchResultAttractModeModel.h"
+#include "WorldPinVisibility.h"
 
 namespace ExampleApp
 {
@@ -34,6 +35,8 @@ namespace ExampleApp
                 std::vector<IInitialExperienceStep*> steps;
 
 				// TODO: Recreate MEA initial experience steps for windows...
+
+				m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::All));
 
                 return steps;
             }
