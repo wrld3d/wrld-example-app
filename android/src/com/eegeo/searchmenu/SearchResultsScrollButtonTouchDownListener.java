@@ -19,6 +19,7 @@ public class SearchResultsScrollButtonTouchDownListener implements View.OnTouchL
     private final Handler m_handler = new Handler();
 	private MainActivity m_activity;
     private float m_scaledDensity;
+    float m_screenIndependentPxPerSecond;
     
 	public SearchResultsScrollButtonTouchDownListener(ListView view, MainActivity activity) 
 	{
@@ -26,17 +27,22 @@ public class SearchResultsScrollButtonTouchDownListener implements View.OnTouchL
 		m_activity = activity;
         DisplayMetrics metrics =  m_activity.getResources().getDisplayMetrics();
         m_scaledDensity = metrics.scaledDensity;
+        m_screenIndependentPxPerSecond = (SearchMenuResultsListAnimationConstants.SearchMenuResultsListScrollButtonSpeed * m_scaledDensity);
 	}
 
     final Runnable m_action = new Runnable() 
     {
 		@SuppressLint("NewApi")
-		@Override public void run() {
+		@Override public void run() 
+		{			
             if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT)
             {   
-            	float screenIndependentPxPerSecond = (SearchMenuResultsListAnimationConstants.SearchMenuResultsListScrollButtonSpeed * m_scaledDensity);
-            	m_searchList.scrollListBy((int)(screenIndependentPxPerSecond));
+            	m_searchList.scrollListBy((int)(m_screenIndependentPxPerSecond));
             	m_searchList.setVerticalScrollBarEnabled(false);
+            }
+            else
+            {
+            	m_searchList.smoothScrollBy((int) m_screenIndependentPxPerSecond, 0);
             }
             m_handler.post(this);
         }
@@ -45,7 +51,8 @@ public class SearchResultsScrollButtonTouchDownListener implements View.OnTouchL
 	@Override
 	public boolean onTouch(View v, MotionEvent event) 
 	{
-		switch(event.getAction()) {
+		switch(event.getAction()) 
+		{
 			case MotionEvent.ACTION_DOWN:
 				m_handler.post(m_action);
 	            break;
