@@ -262,9 +262,17 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         m_ssgS7EditTextWidth = 868.0f;
         m_ssgS7ScaledDensity = 4.0f;
         m_ssgS7EditTextPixelWidth = (m_ssgS7EditTextWidth/m_ssgS7ScaledDensity);
-        m_editTextPixelWidth = (float)m_editText.getWidth()/m_scaledDensity;
+        m_editTextPixelWidth = m_editText.getWidth()/m_scaledDensity;
         float textSizeScaleFactor = m_editTextPixelWidth / m_ssgS7EditTextPixelWidth;
-        m_editText.setTextSize(14.0f * textSizeScaleFactor);
+        // Work around for text truncating on some devices under the following circumstances. Reducing text size a little to fix. MC
+        if (textSizeScaleFactor == 1.0f && m_editText.getWidth() != m_ssgS7EditTextWidth)
+        {
+        	m_editText.setTextSize(13.70f * textSizeScaleFactor);
+        }
+        else
+        {
+        	m_editText.setTextSize(14.0f * textSizeScaleFactor);
+        }
     }
     
     public void removeSearchKeyboard()
