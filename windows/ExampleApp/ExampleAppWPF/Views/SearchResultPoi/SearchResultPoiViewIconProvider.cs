@@ -8,7 +8,7 @@ namespace ExampleAppWPF
     {
         public static BitmapImage GetIconForCategory(string categoryName)
         {
-            var iconImagePath = string.Format("SearchResultPoiView/{0}.png", categoryName);
+            var iconImagePath = string.Format("icon1_{0}.png", categoryName);
             StartupResourceLoader.LoadImage(iconImagePath);
             var image = StartupResourceLoader.GetBitmap(iconImagePath);
             Debug.Assert(image != null, string.Format("unable to load image for {0}", categoryName));
