@@ -89,6 +89,7 @@
 #include "SettingsMenuController.h"
 #include "IModalBackgroundView.h"
 #include "SearchResultPoiViewContainer.h"
+#include "IInitialExperienceController.h"
 
 #include <memory>
 #include "ViewWrap.h"
@@ -165,6 +166,10 @@ public:
         builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                          {
                                              return Hypodermic::makeExternallyOwned(context.resolve<ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule>()->GetInitialExperienceModel());
+                                         }).singleInstance();
+        builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                         {
+                                             return Hypodermic::makeExternallyOwned(context.resolve<ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule>()->GetInitialExperienceController());
                                          }).singleInstance();
         builder->registerType<ExampleApp::LinkOutObserver::LinkOutObserver>().singleInstance();
         builder->registerType<ExampleApp::URLRequest::View::URLRequestHandler>().singleInstance();
@@ -311,13 +316,16 @@ bool AppHost::IsRunning()
 
 void AppHost::AddApplicationViews()
 {
+    AddSubview<WorldPinOnMapViewContainerWrapper>();
+    AddSubview<InitialExperienceIntroBackgroundViewWrapper>();
+    
     AddSubview<WatermarkViewWrapper>();
     AddSubview<ModalBackgroundViewWrapper>();
     AddSubview<SettingsMenuViewWrapper>();
     AddSubview<SearchResultPoiViewContainerWrapper>();
     AddSubview<FlattenButtonViewWrapper>();
-    AddSubview<WorldPinOnMapViewContainerWrapper>();
     AddSubview<CompassViewWrapper>();
+    AddSubview<InitialExperienceIntroViewWrapper>();
     
     AddViewControllerUpdatable<ExampleApp::SettingsMenu::View::SettingsMenuController>();    
 }
@@ -331,19 +339,9 @@ void AppHost::RegisterApplicationViewModules()
     m_wiring->RegisterModule<ExampleApp::FlattenButton::View::FlattenButtonViewModule>();
     m_wiring->RegisterModule<ExampleApp::WorldPins::View::WorldPinOnMapViewModule>();
     m_wiring->RegisterModule<ExampleApp::Compass::View::CompassViewModule>();
+    m_wiring->RegisterModule<ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule>();
    
 /*
-    m_pWorldPinOnMapViewModule = Eegeo_NEW(ExampleApp::WorldPins::View::WorldPinOnMapViewModule)(app.WorldPinsModule().GetWorldPinInFocusViewModel(),
-                                 app.WorldPinsModule().GetScreenControlViewModel(),
-                                 app.ModalityModule().GetModalityModel(),
-                                 app.PinDiameter(),
-                                 screenProperties.GetPixelScale(),
-                                 m_pImageStore);
-    
-    m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::View::CompassViewModule)(app.CompassModule().GetCompassViewModel(),
-                           screenProperties,
-                           GetMessageBus());
-
     m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewModule)(app.AboutPageModule().GetAboutPageViewModel(), *(m_container->resolve<ExampleApp::Metrics::IMetricsService>()));
     
     m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(app.OptionsModule().GetOptionsViewModel(),
@@ -458,7 +456,7 @@ void AppHost::DestroyApplicationViewModules()
     // 3d map view layer.
     //[&m_pWorldPinOnMapViewModule->GetWorldPinOnMapView() removeFromSuperview];
     
-    [&m_pInitialExperienceIntroViewModule->GetIntroBackgroundView() removeFromSuperview];
+    //[&m_pInitialExperienceIntroViewModule->GetIntroBackgroundView() removeFromSuperview];
 
     // HUD behind modal background layer.
     //[&m_pWatermarkViewModule->GetWatermarkView() removeFromSuperview];
@@ -493,7 +491,7 @@ void AppHost::DestroyApplicationViewModules()
     
     
     // Initial experience layer
-    [&m_pInitialExperienceIntroViewModule->GetIntroView() removeFromSuperview];
+    //[&m_pInitialExperienceIntroViewModule->GetIntroView() removeFromSuperview];
     
     Eegeo_DELETE m_pSurveyViewModule;
     
@@ -533,7 +531,7 @@ void AppHost::DestroyApplicationViewModules()
 
     //Eegeo_DELETE m_pFlattenButtonViewModule;
     
-    Eegeo_DELETE m_pInitialExperienceIntroViewModule;
+    //Eegeo_DELETE m_pInitialExperienceIntroViewModule;
     
     //Eegeo_DELETE m_pWatermarkViewModule;
 }

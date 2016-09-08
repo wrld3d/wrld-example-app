@@ -28,6 +28,7 @@
 #include "CompassModule.h"
 #include "NavigationService.h"
 #include "InteriorsNavigationModule.h"
+#include "IInitialExperienceController.h"
 
 namespace ExampleApp
 {

@@ -12,19 +12,30 @@ namespace ExampleApp
     {
         namespace View
         {
-            InitialExperienceIntroViewModule::InitialExperienceIntroViewModule(ExampleAppMessaging::TMessageBus& messageBus)
+            void InitialExperienceIntroViewModule::Register(const TContainerBuilder &builder)
             {
-                m_pBackgroundView = [[InitialExperienceIntroBackgroundView alloc] initView];
-                m_pView = [[InitialExperienceIntroView alloc] initView: m_pBackgroundView];
-                
-                m_pController = Eegeo_NEW(InitialExperienceIntroController)(*[m_pView getInterop], messageBus);
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto view = [[InitialExperienceIntroBackgroundView alloc] initView];
+                                                     return std::make_shared<InitialExperienceIntroBackgroundViewWrapper>(view);
+                                                 }).singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto backgroundView = context.resolve<InitialExperienceIntroBackgroundViewWrapper>();
+                                                     auto view = [[InitialExperienceIntroView alloc] initView: backgroundView->Get()];
+                                                     return std::make_shared<InitialExperienceIntroViewWrapper>(view);
+                                                 }).singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto view = context.resolve<InitialExperienceIntroViewWrapper>();
+                                                     return Hypodermic::makeExternallyOwned(*[view->Get() getInterop]);
+                                                 }).as<IInitialExperienceIntroView>().singleInstance();
+                builder->registerType<InitialExperienceIntroController>().singleInstance();
             }
             
-            InitialExperienceIntroViewModule::~InitialExperienceIntroViewModule()
+            void InitialExperienceIntroViewModule::RegisterLeaves()
             {
-                Eegeo_DELETE m_pController;
-                [m_pView release];
-                [m_pBackgroundView release];
+                RegisterLeaf<InitialExperienceIntroController>();
             }
         }
     }

@@ -4,9 +4,15 @@
 
 #import <UIKit/UIKit.h>
 #include "InitialExperienceIntroViewIncludes.h"
+#include "ViewWrap.h"
 #include <string>
 
 @class InitialExperienceIntroView;
+
+class InitialExperienceIntroViewWrapper : public ViewWrap<InitialExperienceIntroView>
+{
+    using ViewWrap::ViewWrap;
+};
 
 @interface InitialExperienceIntroView : UIView <UIGestureRecognizerDelegate>
 {

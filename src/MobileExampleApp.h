@@ -36,6 +36,7 @@ namespace ExampleApp
         const std::shared_ptr<WorldPins::SdkModel::IWorldPinsInFocusController> m_worldPinsInFocusController;
         const std::shared_ptr<Compass::SdkModel::ICompassUpdateController> m_compassUpdateController;
         const std::shared_ptr<Eegeo::Location::NavigationService> m_navigationService;
+        const std::shared_ptr<InitialExperience::SdkModel::IInitialExperienceController> m_initialExperienceController;
         
         std::shared_ptr<Eegeo::Rendering::ScreenProperties> m_screenProperties;
         std::shared_ptr<Eegeo::Rendering::LoadingScreen> m_loadingScreen;
@@ -55,7 +56,8 @@ namespace ExampleApp
                          const std::shared_ptr<InitialExperience::SdkModel::IInitialExperienceModel>& initialExperienceModel,
                          const std::shared_ptr<WorldPins::SdkModel::IWorldPinsInFocusController>& worldPinsInFocusController,
                          const std::shared_ptr<Compass::SdkModel::ICompassUpdateController>& compassUpdateController,
-                         const std::shared_ptr<Eegeo::Location::NavigationService>& navigationService);
+                         const std::shared_ptr<Eegeo::Location::NavigationService>& navigationService,
+                         const std::shared_ptr<InitialExperience::SdkModel::IInitialExperienceController>& initialExperienceController);
 
         ~MobileExampleApp();
 

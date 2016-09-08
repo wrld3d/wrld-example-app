@@ -2,10 +2,7 @@
 
 #pragma once
 
-#include "IInitialExperienceIntroViewModule.h"
-#include "InitialExperience.h"
-#include "InitialExperienceIntroViewIncludes.h"
-#include "BidirectionalBus.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -13,33 +10,11 @@ namespace ExampleApp
     {
         namespace View
         {
-            class InitialExperienceIntroViewModule : public IInitialExperienceIntroViewModule
+            class InitialExperienceIntroViewModule : public Module
             {
             public:
-                
-                InitialExperienceIntroViewModule(ExampleAppMessaging::TMessageBus& messageBus);
-                ~InitialExperienceIntroViewModule();
-                
-                InitialExperienceIntroController& GetIntroViewController() const
-                {
-                    return *m_pController;
-                }
-                
-                InitialExperienceIntroView& GetIntroView() const
-                {
-                    return *m_pView;
-                }
-                
-                InitialExperienceIntroBackgroundView& GetIntroBackgroundView() const
-                {
-                    return *m_pBackgroundView;
-                }
-                
-            private:
-                
-                InitialExperienceIntroController* m_pController;
-                InitialExperienceIntroView* m_pView;
-                InitialExperienceIntroBackgroundView* m_pBackgroundView;
+                void Register(const TContainerBuilder& builder);
+                void RegisterLeaves();
             };
         }
     }

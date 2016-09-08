@@ -10,30 +10,31 @@ namespace ExampleApp
     {
         namespace View
         {
-            InitialExperienceIntroController::InitialExperienceIntroController(IInitialExperienceIntroView& view, ExampleAppMessaging::TMessageBus& messageBus)
+            InitialExperienceIntroController::InitialExperienceIntroController(const std::shared_ptr<IInitialExperienceIntroView>& view,
+                                                                               const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
             : m_view(view)
             , m_messageBus(messageBus)
             , m_showIntroMessageHandler(this, &InitialExperienceIntroController::OnShowIntro)
             , m_viewDismissed(this, &InitialExperienceIntroController::OnViewDismissed)
             {
-                m_view.InsertDismissedCallback(m_viewDismissed);
-                m_messageBus.SubscribeUi(m_showIntroMessageHandler);
+                m_view->InsertDismissedCallback(m_viewDismissed);
+                m_messageBus->SubscribeUi(m_showIntroMessageHandler);
             }
             
             InitialExperienceIntroController::~InitialExperienceIntroController()
             {
-                m_messageBus.UnsubscribeUi(m_showIntroMessageHandler);
-                m_view.RemoveDismissedCallback(m_viewDismissed);
+                m_messageBus->UnsubscribeUi(m_showIntroMessageHandler);
+                m_view->RemoveDismissedCallback(m_viewDismissed);
             }
             
             void InitialExperienceIntroController::OnShowIntro(const ShowInitialExperienceIntroMessage& message)
             {
-                m_view.Show();
+                m_view->Show();
             }
             
             void InitialExperienceIntroController::OnViewDismissed()
             {
-                m_messageBus.Publish(InitialExperienceIntroDismissedMessage());
+                m_messageBus->Publish(InitialExperienceIntroDismissedMessage());
             }
 
         }
