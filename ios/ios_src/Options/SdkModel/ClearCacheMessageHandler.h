@@ -16,9 +16,10 @@ namespace ExampleApp
         {
             class ClearCacheMessageHandler : private Eegeo::NonCopyable
             {
-                Eegeo::Helpers::IHttpCache& m_iOSHttpCache;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
-                Eegeo::Concurrency::Tasks::IWorkPool& m_workPool;
+                const std::shared_ptr<Eegeo::Helpers::IHttpCache> m_iOSHttpCache;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
+                const std::shared_ptr<Eegeo::Concurrency::Tasks::IWorkPool> m_workPool;
+                
                 Eegeo::Helpers::TCallback1<ClearCacheMessageHandler, const ClearCacheMessage&> m_messageHandlerBinding;
                 
                 void OnConfirmedCacheClear(const ClearCacheMessage& message);
@@ -26,9 +27,9 @@ namespace ExampleApp
                 void DeleteCacheContents();
                 
             public:
-                ClearCacheMessageHandler(Eegeo::Helpers::IHttpCache& iOSHttpCache,
-                                         ExampleAppMessaging::TMessageBus& messageBus,
-                                         Eegeo::Concurrency::Tasks::IWorkPool& workPool);
+                ClearCacheMessageHandler(const std::shared_ptr<Eegeo::Helpers::IHttpCache>& iOSHttpCache,
+                                         const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                         const std::shared_ptr<Eegeo::Concurrency::Tasks::IWorkPool>& workPool);
                 
                 ~ClearCacheMessageHandler();
             };

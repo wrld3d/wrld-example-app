@@ -18,9 +18,9 @@ namespace ExampleApp
             class OptionsController : private Eegeo::NonCopyable
             {
             private:
-                IOptionsView& m_view;
-                IOptionsViewModel& m_viewModel;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<IOptionsView> m_view;
+                const std::shared_ptr<IOptionsViewModel> m_viewModel;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
 
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewModelOpened;
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewModelClosed;
@@ -44,9 +44,9 @@ namespace ExampleApp
                 
                 void OnViewClearCacheSelected();
             public:
-                OptionsController(IOptionsView& view,
-                                  IOptionsViewModel& viewModel,
-                                  ExampleAppMessaging::TMessageBus& messageBus);
+                OptionsController(const std::shared_ptr<IOptionsView>& view,
+                                  const std::shared_ptr<IOptionsViewModel>& viewModel,
+                                  const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
 
                 ~OptionsController();
             };

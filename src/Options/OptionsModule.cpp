@@ -7,17 +7,32 @@
 #include "CompletedCacheClearMessageHandler.h"
 #include "INetworkCapabilities.h"
 #include "IReactionControllerModel.h"
+#include "ClearCacheMessageHandler.h"
+#include "OptionsController.h"
+#include "ClearCacheMessageHandler.h"
+#include "IWorkPool.h"
 
 namespace ExampleApp
 {
     namespace Options
     {
-        void OptionsModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+        void OptionsModule::Register(const TContainerBuilder& builder)
         {
             builder->registerType<View::OptionsViewModel>().as<View::IOptionsViewModel>().singleInstance();
             builder->registerType<SdkModel::StreamOverWifiOnlyChangedMessageHandler>().singleInstance();
             builder->registerType<SdkModel::CacheEnabledChangedMessageHandler>().singleInstance();
             builder->registerType<View::CompletedCacheClearMessageHandler>().singleInstance();
+            builder->registerType<View::OptionsController>().singleInstance();
+            builder->registerType<SdkModel::ClearCacheMessageHandler>().singleInstance();
+        }
+        
+        void OptionsModule::RegisterLeaves()
+        {
+            RegisterLeaf<View::OptionsController>();
+            RegisterLeaf<SdkModel::ClearCacheMessageHandler>();
+            RegisterLeaf<SdkModel::CacheEnabledChangedMessageHandler>();
+            RegisterLeaf<View::CompletedCacheClearMessageHandler>();
+            RegisterLeaf<SdkModel::StreamOverWifiOnlyChangedMessageHandler>();
         }
     }
 }

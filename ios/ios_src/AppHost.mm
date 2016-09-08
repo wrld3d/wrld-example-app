@@ -326,6 +326,7 @@ void AppHost::AddApplicationViews()
     AddSubview<FlattenButtonViewWrapper>();
     AddSubview<CompassViewWrapper>();
     AddSubview<InitialExperienceIntroViewWrapper>();
+    AddSubview<OptionsViewWrapper>();
 
     AddSubview<AboutPageViewWrapper>();
     
@@ -343,10 +344,9 @@ void AppHost::RegisterApplicationViewModules()
     m_wiring->RegisterModule<ExampleApp::Compass::View::CompassViewModule>();
     m_wiring->RegisterModule<ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule>();
     m_wiring->RegisterModule<ExampleApp::AboutPage::View::AboutPageViewModule>();
+    m_wiring->RegisterModule<ExampleApp::Options::View::OptionsViewModule>();
    
 /*
-    m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewModule)(app.AboutPageModule().GetAboutPageViewModel(), *(m_container->resolve<ExampleApp::Metrics::IMetricsService>()));
-    
     m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(app.OptionsModule().GetOptionsViewModel(),
                                                                                    *(m_container->resolve<Eegeo::Helpers::IHttpCache>()),
                                                                                    GetMessageBus(),
@@ -486,7 +486,7 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pMyPinCreationDetailsViewModule->GetMyPinCreationDetailsView() removeFromSuperview];
     //[&m_pSearchResultPoiViewModule->GetView() removeFromSuperview];
     //[&m_pAboutPageViewModule->GetAboutPageView() removeFromSuperview];
-    [&m_pOptionsViewModule->GetOptionsView() removeFromSuperview];
+    //[&m_pOptionsViewModule->GetOptionsView() removeFromSuperview];
     /*if(m_pApp->ToursEnabled())
     {
         [&m_pTourWebViewModule->GetTourWebView() removeFromSuperview];
@@ -512,7 +512,7 @@ void AppHost::DestroyApplicationViewModules()
 
     Eegeo_DELETE m_pMyPinCreationConfirmationViewModule;
     
-    Eegeo_DELETE m_pOptionsViewModule;
+    //Eegeo_DELETE m_pOptionsViewModule;
     
     //Eegeo_DELETE m_pAboutPageViewModule;
 

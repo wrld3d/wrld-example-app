@@ -13,31 +13,18 @@ namespace ExampleApp
     {
         namespace View
         {
-            OptionsViewModule::OptionsViewModule(IOptionsViewModel& viewModel,
-                                                 Eegeo::Helpers::IHttpCache& httpCache,
-                                                 ExampleAppMessaging::TMessageBus& messageBus,
-                                                 Eegeo::Concurrency::Tasks::IWorkPool& workPool)
+            void OptionsViewModule::Register(const TContainerBuilder& builder)
             {
-                m_pView = [[OptionsView alloc] initView];
-                m_pController = Eegeo_NEW(OptionsController)(*[m_pView getInterop], viewModel, messageBus);
-                m_pClearCacheMessageHandler = Eegeo_NEW(SdkModel::ClearCacheMessageHandler)(httpCache, messageBus, workPool);
-            }
-
-            OptionsViewModule::~OptionsViewModule()
-            {
-                Eegeo_DELETE m_pClearCacheMessageHandler;
-                Eegeo_DELETE m_pController;
-                [m_pView release];
-            }
-
-            OptionsController& OptionsViewModule::GetOptionsController() const
-            {
-                return *m_pController;
-            }
-
-            OptionsView& OptionsViewModule::GetOptionsView() const
-            {
-                return *m_pView;
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto view = [[OptionsView alloc] initView];
+                                                     return std::make_shared<OptionsViewWrapper>(view);
+                                                 }).singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto view = context.resolve<OptionsViewWrapper>();
+                                                     return Hypodermic::makeExternallyOwned(*[view->Get() getInterop]);
+                                                 }).as<IOptionsView>().singleInstance();
             }
         }
     }

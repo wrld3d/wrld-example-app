@@ -2,17 +2,17 @@
 
 #pragma once
 
-#include "Types.h"
-#include "Hypodermic/ContainerBuilder.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
     namespace Options
     {
-        class OptionsModule
+        class OptionsModule : public Module
         {
         public:
-            void Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder);
+            void Register(const TContainerBuilder& builder);
+            void RegisterLeaves();
         };
     }
 }

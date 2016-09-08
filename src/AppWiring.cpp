@@ -30,6 +30,7 @@
 #include "InteriorsNavigationModule.h"
 #include "IInitialExperienceController.h"
 #include "AboutPageModule.h"
+#include "OptionsModule.h"
 
 namespace ExampleApp
 {
@@ -78,6 +79,7 @@ namespace ExampleApp
         RegisterModule<Compass::SdkModel::CompassModule>();
         RegisterModule<InteriorsNavigation::SdkModel::InteriorsNavigationModule>();
         RegisterModule<AboutPage::View::AboutPageModule>();
+        RegisterModule<Options::OptionsModule>();
         
         auto moduleSet = m_moduleContainer->resolve<TModules>();
         m_moduleRegistrationCallbacks.ExecuteCallbacks(*moduleSet);

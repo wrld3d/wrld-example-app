@@ -2,13 +2,7 @@
 
 #pragma once
 
-#include "Types.h"
-#include "Options.h"
-#include "IOptionsViewModule.h"
-#include "BidirectionalBus.h"
-#include "ClearCacheMessageHandler.h"
-#include "Helpers.h"
-#include "Tasks.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -16,24 +10,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            class OptionsViewModule: public IOptionsViewModule, private Eegeo::NonCopyable
+            class OptionsViewModule: public Module
             {
             private:
-                OptionsView* m_pView;
-                OptionsController* m_pController;
-                SdkModel::ClearCacheMessageHandler* m_pClearCacheMessageHandler;
-
-            public:
-                OptionsViewModule(IOptionsViewModel& viewModel,
-                                  Eegeo::Helpers::IHttpCache& httpCache,
-                                  ExampleAppMessaging::TMessageBus& messageBus,
-                                  Eegeo::Concurrency::Tasks::IWorkPool& workPool);
-
-                ~OptionsViewModule();
-
-                OptionsController& GetOptionsController() const;
-
-                OptionsView& GetOptionsView() const;
+                void Register(const TContainerBuilder& builder);
             };
         }
     }

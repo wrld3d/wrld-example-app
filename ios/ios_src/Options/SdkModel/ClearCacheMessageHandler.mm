@@ -11,26 +11,26 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            ClearCacheMessageHandler::ClearCacheMessageHandler(Eegeo::Helpers::IHttpCache& iOSHttpCache,
-                                                               ExampleAppMessaging::TMessageBus& messageBus,
-                                                               Eegeo::Concurrency::Tasks::IWorkPool& workPool)
+            ClearCacheMessageHandler::ClearCacheMessageHandler(const std::shared_ptr<Eegeo::Helpers::IHttpCache>& iOSHttpCache,
+                                                               const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                                               const std::shared_ptr<Eegeo::Concurrency::Tasks::IWorkPool>& workPool)
             : m_iOSHttpCache(iOSHttpCache)
             , m_messageBus(messageBus)
             , m_workPool(workPool)
             , m_messageHandlerBinding(this, &ClearCacheMessageHandler::OnConfirmedCacheClear)
             {
-                m_messageBus.SubscribeNative(m_messageHandlerBinding);
+                m_messageBus->SubscribeNative(m_messageHandlerBinding);
             }
             
             ClearCacheMessageHandler::~ClearCacheMessageHandler()
             {
-                m_messageBus.UnsubscribeNative(m_messageHandlerBinding);
+                m_messageBus->UnsubscribeNative(m_messageHandlerBinding);
             }
             
             void ClearCacheMessageHandler::DeleteCacheContents()
             {
-                CacheClearBackgroundTask* pTask(Eegeo_NEW(CacheClearBackgroundTask)(m_iOSHttpCache, m_messageBus));
-                m_workPool.QueueWork(pTask);
+                CacheClearBackgroundTask* pTask(Eegeo_NEW(CacheClearBackgroundTask)(*m_iOSHttpCache, *m_messageBus));
+                m_workPool->QueueWork(pTask);
             }
             
             void ClearCacheMessageHandler::OnConfirmedCacheClear(const ClearCacheMessage& message)

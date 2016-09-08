@@ -7,9 +7,15 @@
 #include "AppRunner.h"
 #include "UILabelledCheckboxView.h"
 #include "OptionsCacheClearSubView.h"
+#include "ViewWrap.h"
 
 @class OptionsView;
 @class OptionsViewController;
+
+class OptionsViewWrapper : public ViewWrap<OptionsView>
+{
+    using ViewWrap::ViewWrap;
+};
 
 @interface OptionsView : UIView <UIGestureRecognizerDelegate>
 {
