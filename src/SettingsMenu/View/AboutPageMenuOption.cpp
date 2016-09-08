@@ -11,8 +11,8 @@ namespace ExampleApp
     {
         namespace View
         {
-            AboutPageMenuOption::AboutPageMenuOption(Menu::View::IMenuViewModel& aboutOptionContainerMenu,
-                                                     AboutPage::View::IAboutPageViewModel& aboutPageViewModel)
+            AboutPageMenuOption::AboutPageMenuOption(const std::shared_ptr<Menu::View::IMenuViewModel>& aboutOptionContainerMenu,
+                                                     const std::shared_ptr<AboutPage::View::IAboutPageViewModel>& aboutPageViewModel)
             : m_aboutOptionContainerMenu(aboutOptionContainerMenu)
             , m_aboutPageViewModel(aboutPageViewModel)
             {
@@ -26,8 +26,8 @@ namespace ExampleApp
 
             void AboutPageMenuOption::Select()
             {
-                m_aboutOptionContainerMenu.Close();
-                m_aboutPageViewModel.Open();
+                m_aboutOptionContainerMenu->Close();
+                m_aboutPageViewModel->Open();
             }
         }
     }

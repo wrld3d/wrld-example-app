@@ -5,6 +5,7 @@
 #include "ApplicationConfiguration.h"
 #include "EegeoWorld.h"
 #include "IReactionControllerModel.h"
+#include "AboutPageController.h"
 
 namespace
 {
@@ -127,6 +128,12 @@ namespace ExampleApp
                                                                                                    platformRuntimeArchitecture,
                                                                                                    AboutPageText);
                                                    }).as<IAboutPageViewModel>().singleInstance();
+                builder->registerType<View::AboutPageController>().singleInstance();
+            }
+            
+            void AboutPageModule::RegisterLeaves()
+            {
+                RegisterLeaf<View::AboutPageController>();
             }
         }
     }

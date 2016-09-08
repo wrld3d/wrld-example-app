@@ -12,26 +12,18 @@ namespace ExampleApp
     {
         namespace View
         {
-            AboutPageViewModule::AboutPageViewModule(IAboutPageViewModel& aboutPageViewModel, Metrics::IMetricsService& metricsService)
+            void AboutPageViewModule::Register(const TContainerBuilder& builder)
             {
-                m_pView = [[AboutPageView alloc] initView];
-                m_pController = Eegeo_NEW(AboutPageController)(*[m_pView getInterop], aboutPageViewModel, metricsService);
-            }
-
-            AboutPageViewModule::~AboutPageViewModule()
-            {
-                Eegeo_DELETE m_pController;
-                [m_pView release];
-            }
-
-            AboutPageController& AboutPageViewModule::GetAboutPageController() const
-            {
-                return *m_pController;
-            }
-
-            AboutPageView& AboutPageViewModule::GetAboutPageView() const
-            {
-                return *m_pView;
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto view = [[AboutPageView alloc] initView];
+                                                     return std::make_shared<AboutPageViewWrapper>(view);
+                                                 }).singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto view = context.resolve<AboutPageViewWrapper>();
+                                                     return Hypodermic::makeExternallyOwned(*[view->Get() getInterop]);
+                                                 }).as<IAboutPageView>().singleInstance();
             }
         }
     }

@@ -7,6 +7,7 @@
 #include "AboutPage.h"
 #include "Menu.h"
 #include "Types.h"
+#include <memory>
 
 namespace ExampleApp
 {
@@ -16,12 +17,12 @@ namespace ExampleApp
         {
             class AboutPageMenuOption : public Menu::View::IMenuOption, private Eegeo::NonCopyable
             {
-                Menu::View::IMenuViewModel& m_aboutOptionContainerMenu;
-                AboutPage::View::IAboutPageViewModel& m_aboutPageViewModel;
+                const std::shared_ptr<Menu::View::IMenuViewModel> m_aboutOptionContainerMenu;
+                const std::shared_ptr<AboutPage::View::IAboutPageViewModel> m_aboutPageViewModel;
 
             public:
-                AboutPageMenuOption(Menu::View::IMenuViewModel& aboutOptionContainerMenu,
-                                    AboutPage::View::IAboutPageViewModel& aboutPageViewModel);
+                AboutPageMenuOption(const std::shared_ptr<Menu::View::IMenuViewModel>& aboutOptionContainerMenu,
+                                    const std::shared_ptr<AboutPage::View::IAboutPageViewModel>& aboutPageViewModel);
 
                 ~AboutPageMenuOption();
 

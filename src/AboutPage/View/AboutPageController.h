@@ -18,14 +18,14 @@ namespace ExampleApp
             class AboutPageController : private Eegeo::NonCopyable
             {
             private:
-                IAboutPageView& m_view;
-                IAboutPageViewModel& m_viewModel;
+                const std::shared_ptr<IAboutPageView> m_view;
+                const std::shared_ptr<IAboutPageViewModel> m_viewModel;
 
                 Eegeo::Helpers::TCallback0<AboutPageController> m_viewOpened;
                 Eegeo::Helpers::TCallback0<AboutPageController> m_viewClosed;
                 Eegeo::Helpers::TCallback0<AboutPageController> m_viewCloseTapped;
                 
-                Metrics::IMetricsService& m_metricsService;
+                const std::shared_ptr<Metrics::IMetricsService> m_metricsService;
 
                 void OnOpen();
 
@@ -33,7 +33,9 @@ namespace ExampleApp
 
                 void OnCloseTapped();
             public:
-                AboutPageController(IAboutPageView& view, IAboutPageViewModel& viewModel, Metrics::IMetricsService& metricsService);
+                AboutPageController(const std::shared_ptr<IAboutPageView>& view,
+                                    const std::shared_ptr<IAboutPageViewModel>& viewModel,
+                                    const std::shared_ptr<Metrics::IMetricsService>& metricsService);
 
                 ~AboutPageController();
             };

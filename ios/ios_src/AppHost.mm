@@ -326,6 +326,8 @@ void AppHost::AddApplicationViews()
     AddSubview<FlattenButtonViewWrapper>();
     AddSubview<CompassViewWrapper>();
     AddSubview<InitialExperienceIntroViewWrapper>();
+
+    AddSubview<AboutPageViewWrapper>();
     
     AddViewControllerUpdatable<ExampleApp::SettingsMenu::View::SettingsMenuController>();    
 }
@@ -340,6 +342,7 @@ void AppHost::RegisterApplicationViewModules()
     m_wiring->RegisterModule<ExampleApp::WorldPins::View::WorldPinOnMapViewModule>();
     m_wiring->RegisterModule<ExampleApp::Compass::View::CompassViewModule>();
     m_wiring->RegisterModule<ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule>();
+    m_wiring->RegisterModule<ExampleApp::AboutPage::View::AboutPageViewModule>();
    
 /*
     m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewModule)(app.AboutPageModule().GetAboutPageViewModel(), *(m_container->resolve<ExampleApp::Metrics::IMetricsService>()));
@@ -482,7 +485,7 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pMyPinDetailsViewModule->GetMyPinDetailsView() removeFromSuperview];
     [&m_pMyPinCreationDetailsViewModule->GetMyPinCreationDetailsView() removeFromSuperview];
     //[&m_pSearchResultPoiViewModule->GetView() removeFromSuperview];
-    [&m_pAboutPageViewModule->GetAboutPageView() removeFromSuperview];
+    //[&m_pAboutPageViewModule->GetAboutPageView() removeFromSuperview];
     [&m_pOptionsViewModule->GetOptionsView() removeFromSuperview];
     /*if(m_pApp->ToursEnabled())
     {
@@ -511,7 +514,7 @@ void AppHost::DestroyApplicationViewModules()
     
     Eegeo_DELETE m_pOptionsViewModule;
     
-    Eegeo_DELETE m_pAboutPageViewModule;
+    //Eegeo_DELETE m_pAboutPageViewModule;
 
     //Eegeo_DELETE m_pCompassViewModule;
 

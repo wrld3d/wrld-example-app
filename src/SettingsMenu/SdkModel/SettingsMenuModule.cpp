@@ -12,6 +12,7 @@
 #include "SettingsMenu.h"
 #include "WeatherMenu.h"
 #include "OptionsViewModel.h"
+#include "IAboutPageViewModel.h"
 
 namespace ExampleApp
 {
@@ -55,8 +56,14 @@ namespace ExampleApp
                 
                 auto optionsMenuModel = Resolve<View::OptionsMenuModel>();
                 auto optionsMenuOptionsModel = Resolve<View::OptionsMenuOptionsModel>();
-                optionsMenuOptionsModel->AddItem("Options", "Options", "", "", Eegeo_NEW(View::OptionsMenuOption)(viewModel, Resolve<Options::View::OptionsViewModel>()));
+                optionsMenuOptionsModel->AddItem("Options", "Options", "", "", Eegeo_NEW(View::OptionsMenuOption)(viewModel, Resolve<Options::View::IOptionsViewModel>()));
                 AddMenuSection(viewModel, "Options", optionsMenuModel, false);
+                
+                auto aboutMenuModel = Resolve<View::AboutMenuModel>();
+                auto aboutMenuOptionsModel = Resolve<View::AboutMenuOptionsModel>();
+                aboutMenuOptionsModel->AddItem("About", "About", "", "", Eegeo_NEW(View::AboutPageMenuOption)(viewModel, Resolve<AboutPage::View::IAboutPageViewModel>()));
+                
+                AddMenuSection(viewModel, "About", aboutMenuModel, false);
             }
             
             /*

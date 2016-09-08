@@ -5,9 +5,15 @@
 #import <UIKit/UIKit.h>
 #include "AboutPage.h"
 #include "AppRunner.h"
+#include "ViewWrap.h"
 
 @class AboutPageView;
 @class AboutPageViewController;
+
+class AboutPageViewWrapper : public ViewWrap<AboutPageView>
+{
+    using ViewWrap::ViewWrap;
+};
 
 @interface AboutPageView : UIView <UIGestureRecognizerDelegate>
 {
