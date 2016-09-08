@@ -78,7 +78,7 @@ namespace ExampleApp
         {
             if(!m_isRestrictedBuildingAlertShown)
             {
-                m_nativeUIFactories.AlertBoxFactory().CreateSingleOptionAlertBox("Indoor Map Not Available", "Sorry, that indoor map cannot be explored over your current WiFi network.", *m_pAlertBoxDismissedHandler);
+            	m_nativeUIFactories.AlertBoxFactory().CreateSingleOptionAlertBox("Indoor Map Not Available", "Sorry, that indoor map cannot be explored over your current network.", *m_pAlertBoxDismissedHandler);
                 
                 m_isRestrictedBuildingAlertShown = true;
             }
