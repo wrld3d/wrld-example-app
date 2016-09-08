@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="DirectionsMenuWayPointViewCell" rowHeight="56" id="KGk-i7-Jjw" customClass="DirectionsMenuWayPointViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="374" height="45"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="374" height="44.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AP6-hD-5bR">
+                        <rect key="frame" x="5" y="2" width="304" height="41"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DirectionCard_TurnRight.png" translatesAutoresizingMaskIntoConstraints="NO" id="pi9-vO-BHa">
+                                <rect key="frame" x="20" y="8" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="24" id="m4Q-Q9-uZb"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Westfield Valley Mall" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bN2-3p-J8O">
+                                <rect key="frame" x="59" y="3" width="235" height="21"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="South Entrance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vuh-k8-NU3">
+                                <rect key="frame" x="59" y="24" width="235" height="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="bN2-3p-J8O" firstAttribute="top" secondItem="pi9-vO-BHa" secondAttribute="top" constant="-5" id="4IJ-vJ-IvZ"/>
+                            <constraint firstItem="bN2-3p-J8O" firstAttribute="leading" secondItem="pi9-vO-BHa" secondAttribute="trailing" constant="15" id="FnU-ao-jBb"/>
+                            <constraint firstItem="pi9-vO-BHa" firstAttribute="centerY" secondItem="AP6-hD-5bR" secondAttribute="centerY" id="e3w-s4-3pU"/>
+                            <constraint firstItem="vuh-k8-NU3" firstAttribute="top" secondItem="bN2-3p-J8O" secondAttribute="bottom" id="nUs-QX-xCp"/>
+                            <constraint firstItem="pi9-vO-BHa" firstAttribute="height" secondItem="AP6-hD-5bR" secondAttribute="height" id="oLa-CQ-Dve"/>
+                            <constraint firstAttribute="trailing" secondItem="bN2-3p-J8O" secondAttribute="trailing" constant="10" id="rCS-XS-FUM"/>
+                            <constraint firstItem="vuh-k8-NU3" firstAttribute="leading" secondItem="bN2-3p-J8O" secondAttribute="leading" id="rVd-MW-1rV"/>
+                            <constraint firstItem="pi9-vO-BHa" firstAttribute="leading" secondItem="AP6-hD-5bR" secondAttribute="leading" constant="20" id="rdN-V0-4vZ"/>
+                            <constraint firstAttribute="trailing" secondItem="vuh-k8-NU3" secondAttribute="trailing" constant="10" id="ukP-Pw-iCH"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="oLa-CQ-Dve"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VyB-sb-p8I">
+                        <rect key="frame" x="313" y="2" width="56" height="41"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DirectionCard_NumberBackground.png" translatesAutoresizingMaskIntoConstraints="NO" id="mrT-U0-Okw">
+                                <rect key="frame" x="8" y="0.0" width="40" height="40"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rO1-u9-9uw">
+                                <rect key="frame" x="8" y="0.0" width="40" height="40"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="rO1-u9-9uw" firstAttribute="centerX" secondItem="mrT-U0-Okw" secondAttribute="centerX" id="0FG-0q-I95"/>
+                            <constraint firstItem="mrT-U0-Okw" firstAttribute="leading" secondItem="VyB-sb-p8I" secondAttribute="leading" id="29t-wv-5CR"/>
+                            <constraint firstItem="rO1-u9-9uw" firstAttribute="height" secondItem="mrT-U0-Okw" secondAttribute="height" id="DaH-Vy-h4J"/>
+                            <constraint firstItem="mrT-U0-Okw" firstAttribute="top" secondItem="VyB-sb-p8I" secondAttribute="top" id="DvZ-CG-7wE"/>
+                            <constraint firstItem="mrT-U0-Okw" firstAttribute="centerY" secondItem="VyB-sb-p8I" secondAttribute="centerY" id="PiU-oa-eIS"/>
+                            <constraint firstAttribute="bottom" secondItem="mrT-U0-Okw" secondAttribute="bottom" id="gni-z4-GaD"/>
+                            <constraint firstItem="rO1-u9-9uw" firstAttribute="centerY" secondItem="mrT-U0-Okw" secondAttribute="centerY" id="j0B-6g-2PG"/>
+                            <constraint firstItem="rO1-u9-9uw" firstAttribute="width" secondItem="mrT-U0-Okw" secondAttribute="width" id="qAQ-Hk-zVn"/>
+                            <constraint firstAttribute="trailing" secondItem="mrT-U0-Okw" secondAttribute="trailing" id="qxO-iN-H71"/>
+                            <constraint firstItem="mrT-U0-Okw" firstAttribute="centerX" secondItem="VyB-sb-p8I" secondAttribute="centerX" id="vKx-kH-w9J"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="29t-wv-5CR"/>
+                                <exclude reference="DvZ-CG-7wE"/>
+                                <exclude reference="gni-z4-GaD"/>
+                                <exclude reference="qxO-iN-H71"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstItem="AP6-hD-5bR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="2" id="1Cu-Ft-myK"/>
+                    <constraint firstAttribute="trailing" secondItem="AP6-hD-5bR" secondAttribute="trailing" constant="5" id="5xR-SC-IGd"/>
+                    <constraint firstItem="AP6-hD-5bR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="9Cs-e2-BhW"/>
+                    <constraint firstItem="VyB-sb-p8I" firstAttribute="centerY" secondItem="AP6-hD-5bR" secondAttribute="centerY" id="IOV-JD-p8s"/>
+                    <constraint firstItem="VyB-sb-p8I" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.15" id="QkX-7C-S2j"/>
+                    <constraint firstAttribute="bottom" secondItem="AP6-hD-5bR" secondAttribute="bottom" constant="2" id="Sdb-DN-NQH"/>
+                    <constraint firstAttribute="trailing" secondItem="VyB-sb-p8I" secondAttribute="trailing" constant="5" id="VTZ-Yh-PkD"/>
+                    <constraint firstItem="VyB-sb-p8I" firstAttribute="height" secondItem="AP6-hD-5bR" secondAttribute="height" id="Vb8-Z9-LMm"/>
+                    <constraint firstItem="VyB-sb-p8I" firstAttribute="leading" secondItem="AP6-hD-5bR" secondAttribute="trailing" constant="4" id="fhy-Ze-bqd"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="5xR-SC-IGd"/>
+                    </mask>
+                </variation>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="wayPointImageView" destination="pi9-vO-BHa" id="lLp-CX-h8Y"/>
+                <outlet property="wayPointMainTitlelbl" destination="bN2-3p-J8O" id="5Rl-wA-J4B"/>
+                <outlet property="wayPointNumberViewWidthConstraint" destination="QkX-7C-S2j" id="yBp-ur-8iE"/>
+                <outlet property="wayPointNumberlbl" destination="rO1-u9-9uw" id="iRu-ni-j8z"/>
+                <outlet property="wayPointSubCategorylbl" destination="vuh-k8-NU3" id="OZL-bI-pfc"/>
+            </connections>
+            <point key="canvasLocation" x="181" y="210.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="DirectionCard_NumberBackground.png" width="40" height="40"/>
+        <image name="DirectionCard_TurnRight.png" width="24" height="24"/>
+    </resources>
+</document>

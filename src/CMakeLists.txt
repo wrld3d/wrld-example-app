@@ -62,4 +62,7 @@ include(../src/WeatherMenu/CMakeLists.txt)
 include(../src/WorldAreaLoader/CMakeLists.txt)
 include(../src/WorldPins/CMakeLists.txt)
 include(../src/DoubleTapIndoorInteraction/CMakeLists.txt)
+include(../src/PathDrawing/CMakeLists.txt)
+include(../src/DirectionsMenuInitiation/CMakeLists.txt)
+include(../src/DirectionsMenu/CMakeLists.txt)
 

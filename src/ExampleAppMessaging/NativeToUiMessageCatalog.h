@@ -41,6 +41,7 @@
 #include "StartSearchSurveyMessage.h"
 #include "StartUxSurveyMessage.h"
 #include "InteriorsExplorerUINotifyMessage.h"
+#include "DirectionsMenuStateChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -84,6 +85,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Surveys::StartSearchSurveyMessage>
             , public Eegeo::Messaging::CatalogBinding<Surveys::StartUxSurveyMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerUINotifyMessage>
+            , public Eegeo::Messaging::CatalogBinding<DirectionsMenuInitiation::DirectionsMenuStateChangedMessage>
             , private Eegeo::NonCopyable
         {
 

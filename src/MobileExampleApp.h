@@ -87,6 +87,11 @@
 #include "IMenuIgnoredReactionModel.h"
 #include "DoubleTapIndoorInteraction.h"		
 #include "IRayCaster.h"
+#include "IPathDrawingModule.h"
+
+#include "DirectionsMenuInitiation.h"
+
+#include "DirectionsMenu.h"
 
 namespace ExampleApp
 {
@@ -119,6 +124,9 @@ namespace ExampleApp
         Eegeo::Helpers::IdentityProvider m_identityProvider;
         ExampleApp::SettingsMenu::SdkModel::ISettingsMenuModule* m_pSettingsMenuModule;
         ExampleApp::SearchMenu::SdkModel::ISearchMenuModule* m_pSearchMenuModule;
+        
+        ExampleApp::DirectionsMenu::SdkModel::IDirectionsMenuModule* m_pDirectionsMenuModule;
+
         ExampleApp::SearchResultSection::SdkModel::ISearchResultSectionModule* m_pSearchResultSectionModule;
         ExampleApp::Modality::View::IModalityModule* m_pModalityModule;
         ExampleApp::CategorySearch::SdkModel::ICategorySearchModule* m_pCategorySearchModule;
@@ -139,6 +147,9 @@ namespace ExampleApp
         ExampleApp::WorldAreaLoader::SdkModel::IWorldAreaLoaderModule* m_pWorldAreaLoaderModule;
         ExampleApp::AboutPage::View::IAboutPageModule* m_pAboutPageModule;
         ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule& m_initialExperienceModule;
+        
+        ExampleApp::DirectionsMenuInitiation::SdkModel::IDirectionsMenuInitiationModule* m_pDirectionsMenuInitiationModule;
+        
         ExampleApp::MyPinCreation::PoiRing::SdkModel::IPoiRingModule* m_pPoiRingModule;
         ExampleApp::MyPinCreation::SdkModel::IMyPinCreationModule* m_pMyPinCreationModule;
         ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsModule* m_pMyPinCreationDetailsModule;
@@ -177,6 +188,8 @@ namespace ExampleApp
         
         const bool m_interiorsEnabled;
 
+        ExampleApp::PathDrawing::SdkModel::IPathDrawingModule* m_pPathDrawingModule;
+        
         void CreateApplicationModelModules(Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                            const bool interiorsAffectedByFlattening);
 
@@ -347,7 +360,17 @@ namespace ExampleApp
         {
             return *m_pCategorySearchModule;
         }
-
+        
+        const ExampleApp::DirectionsMenuInitiation::SdkModel::IDirectionsMenuInitiationModule& DirectionsMenuInitiationModule() const
+        {
+            return *m_pDirectionsMenuInitiationModule;
+        }
+        
+        const ExampleApp::DirectionsMenu::SdkModel::IDirectionsMenuModule& DirectionsMenuModule() const
+        {
+            return *m_pDirectionsMenuModule;
+        }
+ 
         const ExampleApp::MyPinCreation::SdkModel::IMyPinCreationModule& MyPinCreationModule() const
         {
             return *m_pMyPinCreationModule;
@@ -362,7 +385,7 @@ namespace ExampleApp
         {
             return *m_pMyPinCreationDetailsModule;
         }
-
+        
         const ExampleApp::MyPins::SdkModel::IMyPinsModule& MyPinsModule() const
         {
             return *m_pMyPinsModule;
@@ -401,6 +424,16 @@ namespace ExampleApp
         const ExampleApp::Tours::SdkModel::TourInstances::TwitterFeed::ITwitterFeedTourModule& TwitterFeedTourModule() const
         {
             return *m_pTwitterFeedTourModule;
+        }
+        
+        const ExampleApp::PathDrawing::SdkModel::IPathDrawingModule& PathDrawingModule() const
+        {
+            return *m_pPathDrawingModule;
+        }
+        
+        const AppCamera::SdkModel::AppGlobeCameraWrapper& GlobeCameraWrapper() const
+        {
+            return *m_pGlobeCameraWrapper;
         }
         
         // A flag for opting in/out of tours

@@ -54,7 +54,8 @@ namespace ExampleApp
 
             void MyPinCreationInitiationController::OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel &viewModel, float &state)
             {
-                ScreenControl::View::Apply(m_viewModel, m_view);
+                //TODO: Uncomment to show My pins button
+                //ScreenControl::View::Apply(m_viewModel, m_view);
             }
             
             void MyPinCreationInitiationController::OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message)

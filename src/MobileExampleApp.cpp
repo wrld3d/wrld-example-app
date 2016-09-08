@@ -115,6 +115,10 @@
 #include "DoubleTapIndoorInteractionController.h"
 #include "IDoubleTapIndoorInteractionController.h"
 #include "AggregateCollisionBvhProvider.h"
+#include "PathDrawingModule.h"
+#include "DirectionsMenuInitiation.h"
+#include "DirectionsMenuInitiationModule.h"
+#include "DirectionsMenuModule.h"
 
 namespace ExampleApp
 {
@@ -270,6 +274,8 @@ namespace ExampleApp
         , m_pModalityIgnoredReactionModel(NULL)
         , m_pReactorIgnoredReactionModel(NULL)
         , m_pRayCaster(NULL)
+        ,m_pDirectionsMenuInitiationModule(NULL)
+        ,m_pDirectionsMenuModule(NULL)
     {
         m_metricsService.BeginSession(m_applicationConfiguration.FlurryAppKey(), EEGEO_PLATFORM_VERSION_NUMBER);
 
@@ -320,7 +326,7 @@ namespace ExampleApp
         Eegeo::Camera::GlobeCamera::GlobeCameraTouchSettings touchSettings = m_pGlobeCameraController->GetGlobeCameraController().GetTouchSettings();
         touchSettings.TiltEnabled = true;
         m_pGlobeCameraController->GetGlobeCameraController().SetTouchSettings(touchSettings);
-
+        
         Eegeo::Space::LatLongAltitude location = m_applicationConfiguration.InterestLocation();
         float cameraControllerOrientationDegrees = m_applicationConfiguration.OrientationDegrees();
         float cameraControllerDistanceFromInterestPointMeters = m_applicationConfiguration.DistanceToInterestMetres();
@@ -361,6 +367,14 @@ namespace ExampleApp
         m_pDoubleTapIndoorInteractionController = Eegeo_NEW(ExampleApp::DoubleTapIndoorInteraction::SdkModel::DoubleTapIndoorInteractionController)(m_pInteriorsExplorerModule->GetInteriorsCameraController(),*m_pCameraTransitionController,interiorsPresentationModule.GetInteriorInteractionModel(),*m_pRayCaster);        
         
         m_pLoadingScreen = CreateLoadingScreen(screenProperties, m_pWorld->GetRenderingModule(), m_pWorld->GetPlatformAbstractionModule());
+        
+        m_pPathDrawingModule = Eegeo_NEW(ExampleApp::PathDrawing::SdkModel::PathDrawingModule)(m_pWorldPinsModule->GetWorldPinsService()
+                                                                                               , m_pWorld->GetRoutesModule().GetRouteService()
+                                                                                               , *m_pWorld
+                                                                                               , *m_pGlobeCameraWrapper
+                                                                                               , m_pCategorySearchModule->GetSearchResultIconCategoryMapper()
+                                                                                               
+                                                                                               , m_messageBus);
         
         if(m_applicationConfiguration.TryStartAtGpsLocation())
         {
@@ -551,6 +565,10 @@ namespace ExampleApp
                                                                                             m_messageBus,
                                                                                             m_metricsService);
         
+        m_pDirectionsMenuModule = Eegeo_NEW(ExampleApp::DirectionsMenu::SdkModel::DirectionsMenuModule)(m_identityProvider,
+                                                                                                m_pReactionControllerModule->GetReactionControllerModel(),                                                                                                                         m_messageBus,
+                                                                                                m_metricsService);
+        
         Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
         Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
 
@@ -629,6 +647,13 @@ namespace ExampleApp
                                                                                                      interiorsAffectedByFlattening,
                                                                                                      m_pInteriorsEntitiesPinsModule->GetInteriorsEntitiesPinsController(),
                                                                                                      m_persistentSettings);
+        
+        m_pDirectionsMenuInitiationModule = Eegeo_NEW(ExampleApp::DirectionsMenuInitiation::SdkModel::DirectionsMenuInitiationModule)(m_identityProvider,
+                                                                                                                                                         m_pSearchMenuModule->GetSearchMenuViewModel(),
+                                                                                                                                      m_pSettingsMenuModule->GetSettingsMenuViewModel(),
+                                                                                                                                                                               m_pInteriorsExplorerModule->GetScreenControlViewModel(),
+                                                                                                                m_messageBus,
+                                                                                                                m_pReactionControllerModule->GetReactionControllerModel());
         
         m_pMyPinCreationModule = Eegeo_NEW(ExampleApp::MyPinCreation::SdkModel::MyPinCreationModule)(m_pMyPinsModule->GetMyPinsService(),
                                                                                                      m_identityProvider,
@@ -822,6 +847,10 @@ namespace ExampleApp
         
 
         Eegeo_DELETE m_pReactionControllerModule;
+        
+        Eegeo_DELETE m_pDirectionsMenuInitiationModule;
+        
+        Eegeo_DELETE m_pDirectionsMenuModule;
     }
 
     std::vector<ExampleApp::OpenableControl::View::IOpenableControlViewModel*> MobileExampleApp::GetOpenableControls() const
@@ -834,7 +863,9 @@ namespace ExampleApp
         openables.push_back(&MyPinCreationDetailsModule().GetObservableOpenableControl());
         openables.push_back(&MyPinDetailsModule().GetObservableOpenableControl());
         openables.push_back(&MyPinCreationModule().GetObservableOpenableControl());
+//      openables.push_back(&DirectionsMenuInitiationModule().GetObservableOpenableControl());
         openables.push_back(&OptionsModule().GetObservableOpenableControl());
+//        openables.push_back(&DirectionsMenuModule().GetDirectionsMenuViewModel());
         return openables;
     }
 
@@ -847,8 +878,10 @@ namespace ExampleApp
         reactors.push_back(&WorldPinsModule().GetScreenControlViewModel());
         reactors.push_back(&CompassModule().GetScreenControlViewModel());
         reactors.push_back(&MyPinCreationModule().GetInitiationScreenControlViewModel());
+        reactors.push_back(&DirectionsMenuInitiationModule().GetInitiationScreenControlViewModel());
         reactors.push_back(&WatermarkModule().GetScreenControlViewModel());
         reactors.push_back(&InteriorsExplorerModule().GetScreenControlViewModel());
+//        reactors.push_back(&DirectionsMenuModule().GetDirectionsMenuViewModel());
         if(m_enableTours)
         {
             reactors.push_back(&ToursModule().GetToursExplorerViewModel());
@@ -1094,6 +1127,8 @@ namespace ExampleApp
             ToursModule().GetTourService().UpdateCurrentTour(dt);
         }
         
+        m_pPathDrawingModule->Update(dt);
+        
         UpdateLoadingScreen(dt);
     }
 
@@ -1150,9 +1185,11 @@ namespace ExampleApp
         
         m_pSettingsMenuModule->GetSettingsMenuViewModel().AddToScreen();
         m_pSearchMenuModule->GetSearchMenuViewModel().AddToScreen();
+        m_pDirectionsMenuModule->GetDirectionsMenuViewModel().AddToScreen();
         m_pFlattenButtonModule->GetScreenControlViewModel().AddToScreen();
         m_pCompassModule->GetScreenControlViewModel().AddToScreen();
-        m_pMyPinCreationModule->GetInitiationScreenControlViewModel().AddToScreen();
+        //m_pMyPinCreationModule->GetInitiationScreenControlViewModel().AddToScreen();
+        m_pDirectionsMenuInitiationModule->GetInitiationScreenControlViewModel().AddToScreen();
         m_pWatermarkModule->GetWatermarkViewModel().AddToScreen();
     }
 

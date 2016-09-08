@@ -87,6 +87,14 @@
 
 #import "UIView+TouchExclusivity.h"
 
+#include "DirectionsMenuInitiationViewModule.h"
+#include "IDirectionsMenuInitiationModule.h"
+#include "IDirectionsMenuInitiationViewModule.h"
+#include "DirectionsMenuInitiationView.h"
+#include "IDirectionsMenuModule.h"
+#include "DirectionsMenuView.h"
+#include "DirectionsMenuViewModule.h"
+
 using namespace Eegeo::iOS;
 
 AppHost::AppHost(
@@ -256,7 +264,7 @@ void AppHost::Update(float dt)
 
     m_pApp->Update(dt);
     m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel().UpdateObjectsUiThread(dt);
-
+    
     m_messageBus.FlushToUi();
     m_messageBus.FlushToNative();
 }
@@ -297,6 +305,12 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                             m_pModalBackgroundViewModule->GetModalBackgroundViewInterop(),
                                                                                             m_messageBus);
     
+    m_pDirectionsMenuViewModule = Eegeo_NEW(ExampleApp::DirectionsMenu::View::DirectionsMenuViewModule)(app.DirectionsMenuModule().GetDirectionsMenuModel(),
+                                                                                               app.DirectionsMenuModule().GetDirectionsMenuViewModel(),
+                                                                                               screenProperties,
+                                                                                               m_pModalBackgroundViewModule->GetModalBackgroundViewInterop(),
+                                                                                               m_messageBus);
+    
     m_pSearchResultSectionViewModule = Eegeo_NEW(ExampleApp::SearchResultSection::View::SearchResultSectionViewModule)(app.SearchMenuModule().GetSearchMenuViewModel(),
                                                                                                                        app.SearchResultSectionModule().GetSearchResultSectionOptionsModel(),
                                                                                                                        app.SearchResultSectionModule().GetSearchResultSectionOrder(),
@@ -331,6 +345,12 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                    m_piOSPlatformAbstractionModule->GetiOSHttpCache(),
                                                                                    m_messageBus,
                                                                                    app.World().GetWorkPool());
+
+
+    
+    m_pDirectionsMenuInitiationViewModule = Eegeo_NEW(ExampleApp::DirectionsMenuInitiation::View::DirectionsMenuInitiationViewModule)(m_messageBus,
+                                            app.DirectionsMenuInitiationModule().GetDirectionsMenuInitiationViewModel(),                                                                                                                                                                               screenProperties,
+                                                                                                                           m_iOSFlurryMetricsService);
 
     m_pMyPinCreationInitiationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationInitiationViewModule)(m_messageBus,
                                            app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
@@ -386,6 +406,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                  m_iOSFlurryMetricsService,
                                                                                  *m_pURLRequestHandler);
     
+    
     // 3d map view layer.
     [m_pView addSubview: &m_pWorldPinOnMapViewModule->GetWorldPinOnMapView()];
     
@@ -396,6 +417,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     [m_pView addSubview: &m_pWatermarkViewModule->GetWatermarkView()];
     [m_pView addSubview: &m_pFlattenButtonViewModule->GetFlattenButtonView()];
     [m_pView addSubview: &m_pCompassViewModule->GetCompassView()];
+    [m_pView addSubview: &m_pDirectionsMenuInitiationViewModule->GetDirectionsMenuInitiationView()];
     [m_pView addSubview: &m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView()];
     [m_pView addSubview: &m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView()];
     if(m_pApp->ToursEnabled())
@@ -411,7 +433,8 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     // Menus & HUD layer.
     [m_pView addSubview: &m_pSettingsMenuViewModule->GetSettingsMenuView()];
     [m_pView addSubview: &m_pSearchMenuViewModule->GetSearchMenuView()];
-
+    [m_pView addSubview: &m_pDirectionsMenuViewModule->GetDirectionsMenuView()];
+    
     // Pop-up layer.
     [m_pView addSubview: &m_pSearchResultPoiViewModule->GetView()];
     [m_pView addSubview: &m_pAboutPageViewModule->GetAboutPageView()];
@@ -429,11 +452,15 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     // Initial experience layer
     [m_pView addSubview: &m_pInitialExperienceIntroViewModule->GetIntroView()];
 
+    //WayPointView *tempWayPoint = [[WayPointView alloc] init];
+    //[m_pView addSubview:[tempWayPoint getView]];
+    
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
     
     viewControllerUpdaterModel.AddUpdateableObject(m_pSettingsMenuViewModule->GetMenuController());
     viewControllerUpdaterModel.AddUpdateableObject(m_pSearchMenuViewModule->GetMenuController());
+    viewControllerUpdaterModel.AddUpdateableObject(m_pDirectionsMenuViewModule->GetMenuController());
     
     SetTouchExclusivity();
 }
@@ -449,6 +476,7 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pWatermarkViewModule->GetWatermarkView() removeFromSuperview];
     [&m_pFlattenButtonViewModule->GetFlattenButtonView() removeFromSuperview];
     [&m_pCompassViewModule->GetCompassView() removeFromSuperview];
+    [&m_pDirectionsMenuInitiationViewModule->GetDirectionsMenuInitiationView() removeFromSuperview];
     [&m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView() removeFromSuperview];
     [&m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView() removeFromSuperview];
     if(m_pApp->ToursEnabled())
@@ -464,6 +492,7 @@ void AppHost::DestroyApplicationViewModules()
     // Menus & HUD layer.
     [&m_pSettingsMenuViewModule->GetSettingsMenuView() removeFromSuperview];
     [&m_pSearchMenuViewModule->GetSearchMenuView() removeFromSuperview];
+    [&m_pDirectionsMenuViewModule->GetDirectionsMenuView() removeFromSuperview];
 
     // Pop-up layer.
     [&m_pMyPinDetailsViewModule->GetMyPinDetailsView() removeFromSuperview];
@@ -521,6 +550,8 @@ void AppHost::DestroyApplicationViewModules()
     Eegeo_DELETE m_pInitialExperienceIntroViewModule;
     
     Eegeo_DELETE m_pWatermarkViewModule;
+    
+    Eegeo_DELETE m_pDirectionsMenuViewModule;
 }
 
 void AppHost::SetTouchExclusivity()
