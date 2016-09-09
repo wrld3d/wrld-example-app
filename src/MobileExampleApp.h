@@ -48,7 +48,7 @@
 #include "IPlaceJumpController.h"
 #include "WeatherMenuModule.h"
 #include "CompassModule.h"
-#include "CategorySearch.h"
+#include "TagSearch.h"
 #include "WorldAreaLoader.h"
 #include "InitialExperience.h"
 #include "IInitialExperienceModule.h"
@@ -121,7 +121,7 @@ namespace ExampleApp
         ExampleApp::SearchMenu::SdkModel::ISearchMenuModule* m_pSearchMenuModule;
         ExampleApp::SearchResultSection::SdkModel::ISearchResultSectionModule* m_pSearchResultSectionModule;
         ExampleApp::Modality::View::IModalityModule* m_pModalityModule;
-        ExampleApp::CategorySearch::SdkModel::ICategorySearchModule* m_pCategorySearchModule;
+        ExampleApp::TagSearch::SdkModel::ITagSearchModule* m_pTagSearchModule;
         ExampleApp::MapMode::SdkModel::IMapModeModule* m_pMapModeModule;
         ExampleApp::FlattenButton::SdkModel::IFlattenButtonModule* m_pFlattenButtonModule;
         Search::SdkModel::ISearchModule* m_pSearchModule;
@@ -343,9 +343,9 @@ namespace ExampleApp
             return *m_pAboutPageModule;
         }
 
-        const ExampleApp::CategorySearch::SdkModel::ICategorySearchModule& CategorySearchModule() const
+        const ExampleApp::TagSearch::SdkModel::ITagSearchModule& TagSearchModule() const
         {
-            return *m_pCategorySearchModule;
+            return *m_pTagSearchModule;
         }
 
         const ExampleApp::MyPinCreation::SdkModel::IMyPinCreationModule& MyPinCreationModule() const

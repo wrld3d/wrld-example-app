@@ -4,7 +4,7 @@
 
 #include "MenuController.h"
 
-#include "CategorySearch.h"
+#include "TagSearch.h"
 #include "Modality.h"
 #include "SearchMenu.h"
 #include "IModalityController.h"
@@ -20,7 +20,7 @@ namespace ExampleApp
             private:
                 ISearchMenuView& m_searchMenuView;
                 Menu::View::IMenuSectionViewModel& m_searchSectionViewModel;
-                CategorySearch::View::ICategorySearchRepository& m_categorySearchRepository;
+                TagSearch::View::ITagSearchRepository& m_tagSearchRepository;
                 Modality::View::IModalBackgroundView& m_modalBackgroundView;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 bool m_appModeAllowsOpen;
@@ -72,7 +72,7 @@ namespace ExampleApp
                                      Menu::View::IMenuView& view,
                                      ISearchMenuView& searchMenuView,
                                      Menu::View::IMenuSectionViewModel& searchSectionViewModel,
-                                     CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
+                                     TagSearch::View::ITagSearchRepository& tagSearchRepository,
                                      Modality::View::IModalBackgroundView& modalBackgroundView,
                                      ExampleAppMessaging::TMessageBus& messageBus);
                 

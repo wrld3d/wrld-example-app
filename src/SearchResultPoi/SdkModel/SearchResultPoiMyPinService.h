@@ -7,7 +7,7 @@
 #include "SearchResultModel.h"
 #include "MyPins.h"
 #include "Search.h"
-#include "CategorySearch.h"
+#include "TagSearch.h"
 
 namespace ExampleApp
 {
@@ -19,12 +19,12 @@ namespace ExampleApp
             {
                 MyPins::SdkModel::IMyPinsService& m_myPinsService;
                 Search::SdkModel::MyPins::ISearchResultMyPinsService& m_searchResultMyPinsService;
-                CategorySearch::ISearchResultIconCategoryMapper& m_searchResultIconCategoryMapper;
+                TagSearch::ISearchResultIconKeyMapper& m_searchResultIconKeyMapper;
                 
             public:
                 SearchResultPoiMyPinService(MyPins::SdkModel::IMyPinsService& myPinsService,
                                             Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultMyPinsService,
-                                            CategorySearch::ISearchResultIconCategoryMapper& searchResultIconCategoryMapper);
+                                            TagSearch::ISearchResultIconKeyMapper& searchResultIconKeyMapper);
                 
                 ~SearchResultPoiMyPinService();
                 

@@ -1,0 +1,64 @@
+{
+  "items": [
+    {
+      "name": "Around Me",
+      "search_tag": "",
+      "icon_key": "aroundme"
+    },
+    {
+      "name": "Accommodation",
+      "search_tag": "accommodation",
+      "icon_key": "accommodation"
+    },
+    {
+      "name": "Art & Museum",
+      "search_tag": "art_museums",
+      "icon_key": "art_museums"
+    },
+    {
+      "name": "Business",
+      "search_tag": "business",
+      "icon_key": "business"
+    },
+    {
+      "name": "Entertainment",
+      "search_tag": "entertainment",
+      "icon_key": "entertainment"
+    },
+    {
+      "name": "Food & Drink",
+      "search_tag": "food_drink",
+      "icon_key": "food_drink"
+    },
+    {
+      "name": "General Amenities",
+      "search_tag": "amenities",
+      "icon_key": "amenities"
+    },
+    {
+      "name": "Health",
+      "search_tag": "health",
+      "icon_key": "health"
+    },
+    {
+      "name": "Shopping",
+      "search_tag": "shopping",
+      "icon_key": "shopping"
+    },
+    {
+      "name": "Sport & Leisure",
+      "search_tag": "sports_leisure",
+      "icon_key": "sports_leisure"
+    },
+    {
+      "name": "Tourist",
+      "search_tag": "tourism",
+      "icon_key": "tourism"
+    },
+    {
+      "name": "Transport",
+      "search_tag": "transport",
+      "icon_key": "transport"
+    }
+  ]
+}

@@ -22,7 +22,7 @@ namespace ExampleApp
                 {
                     Search::SdkModel::SearchResultModel CreateSearchResultModelFromTourStateModel(const TourStateModel& model)
                     {
-                        
+
                         Search::SdkModel::SearchResultModel searchResultModel(Search::SdkModel::SearchResultModel::CurrentVersion,
                                                                   "",
                                                                   model.Headline(),
@@ -33,8 +33,9 @@ namespace ExampleApp
                                                                   false,
                                                                   Eegeo::Resources::Interiors::InteriorId(""),
                                                                   0,
-                                                                  model.Icon(),
                                                                   std::vector<std::string>(),
+                                                                  std::vector<std::string>(),
+                                                                  model.Icon(),
                                                                   Search::ExampleTourVendorName,
                                                                   CreateJsonDataFromTourStateModel(model),
                                                                   Eegeo::Helpers::Time::MillisecondsSinceEpoch());

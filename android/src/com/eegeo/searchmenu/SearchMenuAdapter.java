@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.eegeo.mobileexampleapp.R;
-import com.eegeo.categories.CategoryResources;
+import com.eegeo.tags.TagResources;
 
 import android.app.Activity;
 import android.content.Context;
@@ -84,9 +84,9 @@ public class SearchMenuAdapter extends BaseAdapter
             TextView detailLabel = (TextView)contextView.findViewById(R.id.menu_list_item_detail);
             detailLabel.setText(data.optString("details"));
 
-            ImageView categoryIcon = (ImageView)contextView.findViewById(R.id.menu_list_item_icon);
-            String categoryIconString = data.has("icon") ? data.getString("icon") : m_defaultIconString;
-            categoryIcon.setImageResource(CategoryResources.getSearchResultIconForCategory(m_context, categoryIconString));
+            ImageView tagIcon = (ImageView)contextView.findViewById(R.id.menu_list_item_icon);
+            String tagIconString = data.has("icon") ? data.getString("icon") : m_defaultIconString;
+            tagIcon.setImageResource(TagResources.getSearchResultIconForTag(m_context, tagIconString));
             
         }
         catch(Exception exception)

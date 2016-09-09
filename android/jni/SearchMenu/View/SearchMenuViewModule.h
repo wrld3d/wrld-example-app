@@ -8,7 +8,7 @@
 #include "MenuViewIncludes.h"
 #include "IMenuViewModule.h"
 #include "Search.h"
-#include "CategorySearch.h"
+#include "TagSearch.h"
 #include "SearchMenu.h"
 #include "BidirectionalBus.h"
 #include "AppModes.h"
@@ -35,7 +35,7 @@ namespace ExampleApp
                     Menu::View::IMenuModel& menuModelModel,
                     Menu::View::IMenuViewModel& menuViewModel,
                     Menu::View::IMenuSectionViewModel& searchSectionViewModel,
-                    CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
+                    TagSearch::View::ITagSearchRepository& tagSearchRepository,
 					Menu::View::IMenuOptionsModel& menuOptionsModel,
                     Modality::View::IModalBackgroundView& modalBackgroundView,
                     ExampleAppMessaging::TMessageBus& messageBus

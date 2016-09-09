@@ -6,9 +6,9 @@ namespace ExampleApp
 {
     namespace SearchMenu
     {
-        SearchMenuPerformedSearchMessage::SearchMenuPerformedSearchMessage(const std::string& searchQuery, bool isCategory, bool isInterior)
+        SearchMenuPerformedSearchMessage::SearchMenuPerformedSearchMessage(const std::string& searchQuery, bool isTag, bool isInterior)
         : m_searchQuery(searchQuery)
-        , m_isCategory(isCategory)
+        , m_isTag(isTag)
         , m_isInterior(isInterior)
         {
             
@@ -19,9 +19,9 @@ namespace ExampleApp
             return m_searchQuery;
         }
         
-        bool SearchMenuPerformedSearchMessage::IsCategory() const
+        bool SearchMenuPerformedSearchMessage::IsTag() const
         {
-            return m_isCategory;
+            return m_isTag;
         }
         
         bool SearchMenuPerformedSearchMessage::IsInterior() const

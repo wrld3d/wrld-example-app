@@ -4,7 +4,7 @@
 #include "YelpSearchJsonParser.h"
 #include "YelpBusinessJsonParser.h"
 #include "YelpSearchService.h"
-#include "YelpCategoryMapper.h"
+#include "YelpCategoryToTagMapper.h"
 #include "YelpSearchConstants.h"
 #include "YelpSearchQueryFactory.h"
 #include "YelpBusinessQueryFactory.h"
@@ -19,6 +19,7 @@ namespace ExampleApp
                 Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                 Net::SdkModel::INetworkCapabilities& networkCapabilities,
                 Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
+                const std::vector<std::string>& appTags,
 				const std::string& yelpConsumerKey,
 				const std::string& yelpConsumerSecret,
 				const std::string& yelpOAuthToken,
@@ -31,9 +32,12 @@ namespace ExampleApp
             , m_pYelpBusinessJsonParser(NULL)
             , m_pYelpCategoryMapper(NULL)
             {
-                m_pYelpCategoryMapper = Eegeo_NEW(Yelp::SdkModel::YelpCategoryMapper)(webRequestFactory,
-                    Yelp::SearchConstants::GetYelpFoundationCategoryToApplicationCategoryMap(fileIO),
-                    Yelp::SearchConstants::GetDefaultCategory());
+                const auto& yelpData = Yelp::SearchConstants::ParseYelpData(fileIO, appTags, "yelp_map.json");
+
+                m_pYelpCategoryMapper = Eegeo_NEW(Yelp::SdkModel::YelpCategoryToTagMapper)(
+                        webRequestFactory,
+                        yelpData.yelpFoundationCategoryToAppTag,
+                        yelpData.defaultAppTag);
 
                 m_pYelpSearchJsonParser = Eegeo_NEW(Yelp::SdkModel::YelpSearchJsonParser)(*m_pYelpCategoryMapper);
                 
@@ -44,6 +48,7 @@ namespace ExampleApp
                     yelpConsumerSecret,
                     yelpOAuthToken,
                     yelpOAuthTokenSecret,
+                    yelpData.appTagToYelpCategory,
                     webRequestFactory);
                 
                 m_pYelpBusinessQueryFactory = Eegeo_NEW(Yelp::SdkModel::YelpBusinessQueryFactory)(
@@ -58,7 +63,7 @@ namespace ExampleApp
                                                                                 *m_pYelpBusinessQueryFactory,
                                                                                 *m_pYelpSearchJsonParser,
                                                                                 networkCapabilities,
-                                                                                Yelp::SearchConstants::GetCategories());
+                                                                                appTags);
             }
 
             YelpSearchServiceModule::~YelpSearchServiceModule()
@@ -74,11 +79,6 @@ namespace ExampleApp
             Search::SdkModel::ISearchService& YelpSearchServiceModule::GetSearchService() const
             {
                 return *m_pSearchService;
-            }
-
-            std::vector<CategorySearch::View::CategorySearchModel> YelpSearchServiceModule::GetCategorySearchModels() const
-            {
-                return Yelp::SearchConstants::GetCategorySearchModels();
             }
         }
     }

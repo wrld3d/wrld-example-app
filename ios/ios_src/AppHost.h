@@ -56,6 +56,7 @@
 #include "URLRequestHandler.h"
 #include "SurveyViewIncludes.h"
 #include "IMenuReactionModel.h"
+#include "TagSearchViewIncludes.h"
 
 @class ViewController;
 class AppInputDelegate;
@@ -109,6 +110,7 @@ private:
     ExampleApp::SettingsMenu::View::ISettingsMenuViewModule* m_pSettingsMenuViewModule;
     ExampleApp::SearchMenu::View::ISearchMenuViewModule* m_pSearchMenuViewModule;
     ExampleApp::SearchResultSection::View::ISearchResultSectionViewModule* m_pSearchResultSectionViewModule;
+    ExampleApp::TagSearch::View::ITagSearchViewModule* m_pTagSearchViewModule;
     ExampleApp::ModalBackground::View::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
     ExampleApp::FlattenButton::View::IFlattenButtonViewModule* m_pFlattenButtonViewModule;
     ExampleApp::SearchResultPoi::View::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;

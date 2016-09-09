@@ -5,7 +5,7 @@
 #include "ISearchMenuViewModule.h"
 
 #include "BidirectionalBus.h"
-#include "CategorySearch.h"
+#include "TagSearch.h"
 #include "CustomTableDataProvider.h"
 #include "Menu.h"
 #include "MenuController.h"
@@ -34,7 +34,7 @@ namespace ExampleApp
                                      Menu::View::IMenuViewModel& searchMenuViewModel,
                                      Menu::View::IMenuSectionViewModel& searchSectionViewModel,
                                      const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                     CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
+                                     TagSearch::View::ITagSearchRepository& tagSearchRepository,
                                      Modality::View::IModalBackgroundView& modalBackgroundView,
                                      ExampleAppMessaging::TMessageBus& messageBus);
                 

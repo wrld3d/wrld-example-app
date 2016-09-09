@@ -4,7 +4,7 @@
 
 #include <vector>
 #include "Search.h"
-#include "CategorySearchModel.h"
+#include "TagSearchModel.h"
 
 namespace ExampleApp
 {
@@ -18,8 +18,6 @@ namespace ExampleApp
                 virtual ~ISearchServiceModule() { }
                 
                 virtual ISearchService& GetSearchService() const = 0;
-                
-                virtual std::vector<CategorySearch::View::CategorySearchModel> GetCategorySearchModels() const = 0;
             };
         }
     }

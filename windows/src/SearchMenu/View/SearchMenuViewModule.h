@@ -5,7 +5,7 @@
 #include "ISearchMenuViewModule.h"
 
 #include "BidirectionalBus.h"
-#include "CategorySearch.h"
+#include "TagSearch.h"
 #include "Menu.h"
 #include "MenuController.h"
 #include "Modality.h"
@@ -32,7 +32,7 @@ namespace ExampleApp
                                      Menu::View::IMenuModel& searchMenuModel,
                                      Menu::View::IMenuViewModel& searchMenuViewModel,
                                      Menu::View::IMenuSectionViewModel& searchSectionViewModel,
-                                     CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
+                                     TagSearch::View::ITagSearchRepository& tagSearchRepository,
                                      Modality::View::IModalBackgroundView& modalBackgroundView,
                                      Modality::View::IModalityController& modalityController,
                                      ExampleAppMessaging::TMessageBus& messageBus,

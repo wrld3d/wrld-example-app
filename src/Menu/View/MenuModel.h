@@ -14,47 +14,45 @@ namespace ExampleApp
         {
             class MenuModel : public IMenuModel, private Eegeo::NonCopyable
             {
-                typedef MenuItemModel TModel;
-
-                Repository::RepositoryModel<TModel> m_repository;
+                Repository::RepositoryModel<MenuItemModel> m_repository;
 
             public:
-                void AddItem(const TModel& item)
+                void AddItem(const MenuItemModel& item) override
                 {
                     m_repository.AddItem(item);
                 }
 
-                void RemoveItem(const TModel& item)
+                void RemoveItem(const MenuItemModel& item) override
                 {
                     m_repository.RemoveItem(item);
                 }
 
-                size_t GetItemCount() const
+                size_t GetItemCount() const override
                 {
                     return m_repository.GetItemCount();
                 }
 
-                TModel GetItemAtIndex(size_t index)
+                MenuItemModel GetItemAtIndex(size_t index) override
                 {
                     return m_repository.GetItemAtIndex(index);
                 }
 
-                void InsertItemAddedCallback(Eegeo::Helpers::ICallback1<TModel>& callback)
+                void InsertItemAddedCallback(Eegeo::Helpers::ICallback1<MenuItemModel>& callback) override
                 {
                     m_repository.InsertItemAddedCallback(callback);
                 }
 
-                void RemoveItemAddedCallback(Eegeo::Helpers::ICallback1<TModel>& callback)
+                void RemoveItemAddedCallback(Eegeo::Helpers::ICallback1<MenuItemModel>& callback) override
                 {
                     m_repository.RemoveItemAddedCallback(callback);
                 }
 
-                void InsertItemRemovedCallback(Eegeo::Helpers::ICallback1<TModel>& callback)
+                void InsertItemRemovedCallback(Eegeo::Helpers::ICallback1<MenuItemModel>& callback) override
                 {
                     m_repository.InsertItemRemovedCallback(callback);
                 }
 
-                void RemoveItemRemovedCallback(Eegeo::Helpers::ICallback1<TModel>& callback)
+                void RemoveItemRemovedCallback(Eegeo::Helpers::ICallback1<MenuItemModel>& callback) override
                 {
                     m_repository.RemoveItemRemovedCallback(callback);
                 }

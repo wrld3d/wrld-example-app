@@ -6,7 +6,7 @@
 #include "ISearchResultOnMapFactory.h"
 #include "ISearchResultRepository.h"
 #include "SearchResultModel.h"
-#include "ISearchResultIconCategoryMapper.h"
+#include "ISearchResultIconKeyMapper.h"
 #include "WorldPinFocusData.h"
 #include "WorldPinInteriorData.h"
 #include "ISearchResultMyPinsService.h"
@@ -31,10 +31,10 @@ namespace ExampleApp
                                                            MyPins::SdkModel::IMyPinsService& myPinsService,
                                                            View::ISearchResultOnMapFactory& searchResultOnMapFactory,
                                                            Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultOnMapMyPinsService,
-                                                           CategorySearch::ISearchResultIconCategoryMapper& searchResultIconCategoryMapper,
+                                                           TagSearch::ISearchResultIconKeyMapper& searchResultIconKeyMapper,
                                                            Search::SdkModel::ISearchResultRepository& searchResultRepository)
             : m_searchResultRepository(searchResultRepository)
-            , m_searchResultIconCategoryMapper(searchResultIconCategoryMapper)
+            , m_searchResultIconKeyMapper(searchResultIconKeyMapper)
             , m_searchResultOnMapMyPinsService(searchResultOnMapMyPinsService)
             , m_searchResultOnMapFactory(searchResultOnMapFactory)
             , m_myPinsService(myPinsService)
@@ -177,7 +177,7 @@ namespace ExampleApp
                 
                 View::SearchResultOnMapItemModel* pSearchResultOnMapItemModel = m_searchResultOnMapFactory.CreateSearchResultOnMapItemModel(searchResultModel);
                 
-                const std::string& pinIconKey = m_searchResultIconCategoryMapper.GetIconKeyFromSearchResult(searchResultModel);
+                const std::string& pinIconKey = m_searchResultIconKeyMapper.GetIconKeyFromSearchResult(searchResultModel);
                 
                 std::string ratingsImage = "";
                 int reviewCount = 0;

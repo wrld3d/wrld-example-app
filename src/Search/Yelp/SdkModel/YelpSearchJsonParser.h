@@ -20,10 +20,10 @@ namespace ExampleApp
             {
                 class YelpSearchJsonParser : public Search::SdkModel::ISearchResultParser, private Eegeo::NonCopyable
                 {
-                    IYelpCategoryMapper& m_yelpCategoryMapper;
+                    IYelpCategoryToTagMapper& m_yelpCategoryMapper;
                     
                 public:
-                    YelpSearchJsonParser(IYelpCategoryMapper& yelpCategoryMapper);
+                    YelpSearchJsonParser(IYelpCategoryToTagMapper& yelpCategoryMapper);
                     
                     void ParseSearchResults(const std::string& serialized,
                                             std::vector<Search::SdkModel::SearchResultModel>& out_results);

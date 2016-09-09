@@ -20,7 +20,7 @@ namespace ExampleApp
                 private:
                     Search::SdkModel::ISearchService* m_pSearchService;
                     
-                    std::vector<CategorySearch::View::CategorySearchModel> m_categorySearchModels;
+                    std::vector<TagSearch::View::TagSearchModel> m_tagSearchModels;
                     
                 public:
                     CombinedSearchServiceModule(std::map<std::string, Search::SdkModel::ISearchServiceModule*> searchServiceModules,
@@ -29,9 +29,6 @@ namespace ExampleApp
                     ~CombinedSearchServiceModule();
                     
                     Search::SdkModel::ISearchService& GetSearchService() const;
-                    
-                    std::vector<CategorySearch::View::CategorySearchModel> GetCategorySearchModels() const;
-                    
                 };
             }
         }

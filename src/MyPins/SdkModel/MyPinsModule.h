@@ -12,7 +12,7 @@
 #include "BidirectionalBus.h"
 #include "SdkModelDomainEventBus.h"
 #include "CameraTransitions.h"
-#include "CategorySearch.h"
+#include "TagSearch.h"
 #include "Search.h"
 #include "IMetricsService.h"
 #include "Helpers.h"

@@ -19,12 +19,12 @@ namespace ExampleApp
                 class YelpBusinessJsonParser : private Eegeo::NonCopyable
                 {
                 public:
-                    YelpBusinessJsonParser(IYelpCategoryMapper& yelpCategoryMapper);
+                    YelpBusinessJsonParser(IYelpCategoryToTagMapper& yelpCategoryMapper);
                     
                     bool TryParse(const std::string& responseString, Search::SdkModel::SearchResultModel& out_result) const;
                     
                 private:
-                    IYelpCategoryMapper& m_yelpCategoryMapper;
+                    IYelpCategoryToTagMapper& m_yelpCategoryMapper;
                 };
             }
         }

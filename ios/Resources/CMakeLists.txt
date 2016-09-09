@@ -395,6 +395,8 @@ set(resources ${resources}
 		Resources/sub_menu_arrow_on.png
 		Resources/sub_menu_arrow_on@2x.png
 		Resources/sub_menu_arrow_on@3x.png
+		Resources/search_menu_items.json
+		Resources/search_tags.json
 		Resources/Textures
 		Resources/Textures/EmbeddedTheme
 		Resources/Textures/EmbeddedTheme/London_London_railDiffuse_repeat.pvr

@@ -17,7 +17,7 @@
     
     BOOL m_keyboardActive;
     BOOL m_returnPressed;
-    BOOL m_currentSearchIsCategory;
+    BOOL m_currentSearchIsTag;
     BOOL m_hasResults;
     BOOL m_searchInProgress;
     
@@ -55,7 +55,7 @@
     
     m_keyboardActive = false;
     m_returnPressed = false;
-    m_currentSearchIsCategory = false;
+    m_currentSearchIsTag = false;
     m_searchInProgress = false;
     
     m_scrollSpeed = 25.0f;
@@ -108,14 +108,14 @@
 }
 
 - (void) setEditText :(NSString*)searchText
-                     :(bool)isCategory
+                     :(bool)isTag
 {
     if(![m_pTextField isEditing])
     {
         [m_pTextField setText:searchText];
     }
     
-    m_currentSearchIsCategory = isCategory;
+    m_currentSearchIsTag = isTag;
     
     [self updateClearButtonVisibility];
 }
@@ -163,10 +163,10 @@
     m_keyboardActive = true;
     m_returnPressed = false;
     
-    if(m_currentSearchIsCategory)
+    if(m_currentSearchIsTag)
     {
         [textField setText:@""];
-        m_currentSearchIsCategory = false;
+        m_currentSearchIsTag = false;
         
         [self updateClearButtonVisibility];
     }

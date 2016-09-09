@@ -43,7 +43,7 @@ namespace ExampleApp
                                   YelpBusinessQueryFactory& yelpBusinessQueryFactory,
                                   Search::SdkModel::ISearchResultParser& searchResultParser,
                                   Net::SdkModel::INetworkCapabilities& networkCapabilities,
-                                  const std::vector<std::string>& availableCategories);
+                                  const std::vector<std::string>& handledTags);
                 
                 ~YelpSearchService();
                 
