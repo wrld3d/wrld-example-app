@@ -24,7 +24,7 @@ namespace ExampleApp
 
                 {
                     const std::vector<std::string>& humanReadableTags(searchResult.GetHumanReadableTags());
-                    humanReadableTagsJson.Reserve(humanReadableTags.size(), allocator);
+                    humanReadableTagsJson.Reserve(static_cast<rapidjson::SizeType>(humanReadableTags.size()), allocator);
 
                     for (const auto& v : humanReadableTags)
                     {
@@ -36,7 +36,7 @@ namespace ExampleApp
 
                 {
                     const std::vector<std::string>& tags(searchResult.GetTags());
-                    tagsJson.Reserve(tags.size(), allocator);
+                    tagsJson.Reserve(static_cast<rapidjson::SizeType>(tags.size()), allocator);
                     for(const auto& v : tags)
                     {
                         tagsJson.PushBack(rapidjson::Value(v.c_str(), allocator).Move(), allocator);
