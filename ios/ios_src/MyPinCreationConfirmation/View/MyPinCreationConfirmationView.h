@@ -4,8 +4,14 @@
 
 #import <UIKit/UIKit.h>
 #include "MyPinCreationConfirmationViewIncludes.h"
+#include "ViewWrap.h"
 
 @class MyPinCreationConfirmationView;
+
+class MyPinCreationConfirmationViewWrapper : public ViewWrap<MyPinCreationConfirmationView>
+{
+    using ViewWrap::ViewWrap;
+};
 
 @interface MyPinCreationConfirmationView : UIView
 {

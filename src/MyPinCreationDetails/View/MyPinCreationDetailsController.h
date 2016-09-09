@@ -21,10 +21,10 @@ namespace ExampleApp
             public:
 
                 MyPinCreationDetailsController(
-                    IMyPinCreationDetailsView& view,
-                    IMyPinCreationDetailsViewModel& viewModel,
-                    ExampleAppMessaging::TMessageBus& messageBus,
-                    Metrics::IMetricsService& metricsService
+                                               const std::shared_ptr<IMyPinCreationDetailsView>& view,
+                                               const std::shared_ptr<IMyPinCreationDetailsViewModel>& viewModel,
+                                               const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                               const std::shared_ptr<Metrics::IMetricsService>& metricsService
                 );
                 ~MyPinCreationDetailsController();
 
@@ -38,9 +38,9 @@ namespace ExampleApp
 
                 void OnNetworkStateChanged(const Net::ConnectivityChangedViewMessage& connectivityChangedMessage);
 
-                IMyPinCreationDetailsView& m_view;
-                IMyPinCreationDetailsViewModel& m_viewModel;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<IMyPinCreationDetailsView> m_view;
+                const std::shared_ptr<IMyPinCreationDetailsViewModel> m_viewModel;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
 
                 Eegeo::Helpers::TCallback0<MyPinCreationDetailsController> m_viewModelOpenedCallback;
                 Eegeo::Helpers::TCallback0<MyPinCreationDetailsController> m_viewModelClosedCallback;
@@ -50,7 +50,7 @@ namespace ExampleApp
 
                 Eegeo::Helpers::TCallback1<MyPinCreationDetailsController, const Net::ConnectivityChangedViewMessage&> m_networkStateChangeCallback;
                 
-                Metrics::IMetricsService& m_metricsService;
+                const std::shared_ptr<Metrics::IMetricsService> m_metricsService;
             };
         }
     }

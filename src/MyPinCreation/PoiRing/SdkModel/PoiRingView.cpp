@@ -52,7 +52,7 @@ namespace ExampleApp
                     const Eegeo::Rendering::VertexLayouts::VertexBinding& iconVertexBinding = vertexBindingPool->GetVertexBinding(vertexLayoutPool->GetForTexturedColoredVertex(),
                                                                                                                                  m_shader->GetVertexAttributes());
                     
-                    m_renderable = std::shared_ptr<Eegeo::Rendering::Renderables::BatchedSpriteRenderable>(Eegeo_NEW(Eegeo::Rendering::Renderables::BatchedSpriteRenderable)(Eegeo::Rendering::LayerIds::AfterAll,
+                    m_iconRenderable = std::shared_ptr<Eegeo::Rendering::Renderables::BatchedSpriteRenderable>(Eegeo_NEW(Eegeo::Rendering::Renderables::BatchedSpriteRenderable)(Eegeo::Rendering::LayerIds::AfterAll,
                                                                                                                                                                              m_material.get(),
                                                                                                                                                                              iconVertexBinding,
                                                                                                                                                                              *glBufferPool,

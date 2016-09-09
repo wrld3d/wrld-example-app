@@ -15,11 +15,11 @@ namespace ExampleApp
         namespace View
         {
             MyPinCreationInitiationController::MyPinCreationInitiationController(
-                IMyPinCreationInitiationViewModel& viewModel,
-                IMyPinCreationInitiationView& view,
-                IMyPinCreationConfirmationViewModel& confirmationViewModel,
-                ExampleAppMessaging::TMessageBus& messageBus,
-                Metrics::IMetricsService& metricsService)
+                                                                                 const std::shared_ptr<IMyPinCreationInitiationViewModel>& viewModel,
+                                                                                 const std::shared_ptr<IMyPinCreationInitiationView>& view,
+                                                                                 const std::shared_ptr<IMyPinCreationConfirmationViewModel>& confirmationViewModel,
+                                                                                 const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                                                                 const std::shared_ptr<Metrics::IMetricsService>& metricsService)
                 : m_view(view)
                 , m_viewModel(viewModel)
                 , m_confirmationViewModel(confirmationViewModel)
@@ -30,31 +30,31 @@ namespace ExampleApp
                 , m_viewStateCallback(this, &MyPinCreationInitiationController::OnViewStateChangeScreenControl)
                 , m_appModeChangedHandler(this, &MyPinCreationInitiationController::OnAppModeChangedMessage)
             {
-                m_view.InsertSelectedCallback(m_selectedCallback);
-                m_viewModel.InsertOnScreenStateChangedCallback(m_viewStateCallback);
-                m_messageBus.SubscribeUi(m_appModeChangedHandler);
+                m_view->InsertSelectedCallback(m_selectedCallback);
+                m_viewModel->InsertOnScreenStateChangedCallback(m_viewStateCallback);
+                m_messageBus->SubscribeUi(m_appModeChangedHandler);
             }
 
             MyPinCreationInitiationController::~MyPinCreationInitiationController()
             {
-                m_messageBus.UnsubscribeUi(m_appModeChangedHandler);
-                m_viewModel.RemoveOnScreenStateChangedCallback(m_viewStateCallback);
-                m_view.RemoveSelectedCallback(m_selectedCallback);
+                m_messageBus->UnsubscribeUi(m_appModeChangedHandler);
+                m_viewModel->RemoveOnScreenStateChangedCallback(m_viewStateCallback);
+                m_view->RemoveSelectedCallback(m_selectedCallback);
             }
 
             void MyPinCreationInitiationController::OnSelected()
             {
-                if(m_appModeAllowsOpen && m_confirmationViewModel.TryOpen())
+                if(m_appModeAllowsOpen && m_confirmationViewModel->TryOpen())
                 {
-                    m_metricsService.SetEvent("UIItem: MyPinCreation");
+                    m_metricsService->SetEvent("UIItem: MyPinCreation");
                     MyPinCreationViewStateChangedMessage message(ExampleApp::MyPinCreation::Ring);
-                    m_messageBus.Publish(message);
+                    m_messageBus->Publish(message);
                 }
             }
 
             void MyPinCreationInitiationController::OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel &viewModel, float &state)
             {
-                ScreenControl::View::Apply(m_viewModel, m_view);
+                ScreenControl::View::Apply(*m_viewModel, *m_view);
             }
             
             void MyPinCreationInitiationController::OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message)
@@ -63,11 +63,11 @@ namespace ExampleApp
                 
                 if(m_appModeAllowsOpen)
                 {
-                    m_viewModel.AddToScreen();
+                    m_viewModel->AddToScreen();
                 }
                 else
                 {
-                    m_viewModel.RemoveFromScreen();
+                    m_viewModel->RemoveFromScreen();
                 }
             }
 

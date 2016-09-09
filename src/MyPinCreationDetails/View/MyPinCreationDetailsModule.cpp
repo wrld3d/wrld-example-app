@@ -3,6 +3,8 @@
 #include "MyPinCreationDetailsModule.h"
 #include "MyPinCreationDetailsViewModel.h"
 #include "IReactionControllerModel.h"
+#include "MyPinCreationDetailsController.h"
+#include "IMyPinCreationDetailsView.h"
 
 namespace ExampleApp
 {
@@ -10,14 +12,15 @@ namespace ExampleApp
     {
         namespace View
         {
-            MyPinCreationDetailsModule::MyPinCreationDetailsModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
-            : m_builder(builder)
+            void MyPinCreationDetailsModule::Register(const TContainerBuilder& builder)
             {
+                builder->registerType<MyPinCreationDetailsViewModel>().as<IMyPinCreationDetailsViewModel>().singleInstance();
+                builder->registerType<View::MyPinCreationDetailsController>().singleInstance();
             }
             
-            void MyPinCreationDetailsModule::Register()
+            void MyPinCreationDetailsModule::RegisterLeaves()
             {
-                m_builder->registerType<MyPinCreationDetailsViewModel>().as<IMyPinCreationDetailsViewModel>().singleInstance();
+                RegisterLeaf<View::MyPinCreationDetailsController>();
             }
         }
     }

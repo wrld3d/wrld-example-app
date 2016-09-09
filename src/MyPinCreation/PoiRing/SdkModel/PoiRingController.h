@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Types.h"
 #include "MyPinCreation.h"
 #include "Interiors.h"
 #include "IPoiRingController.h"
@@ -21,7 +22,7 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                class PoiRingController : public IPoiRingController
+                class PoiRingController : private Eegeo::NonCopyable, public IPoiRingController
                 {
                 public:
                     PoiRingController(const std::shared_ptr<MyPinCreation::SdkModel::IMyPinCreationModel>& myPinCreationModel,

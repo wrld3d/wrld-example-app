@@ -12,6 +12,11 @@
 #include "ISearchRefreshService.h"
 #include "IReactionControllerModel.h"
 #include "IMenuViewModel.h"
+#include "MyPinCreationInitiationController.h"
+#include "MyPinCreationConfirmationController.h"
+#include "IMyPinCreationInitiationView.h"
+#include "IMyPinCreationConfirmationView.h"
+#include "IMyPinCreationDetailsViewModel.h"
 
 namespace ExampleApp
 {
@@ -34,6 +39,7 @@ namespace ExampleApp
                                                        return std::make_shared<View::MyPinCreationConfirmationViewModel>(context.resolve<Eegeo::Helpers::IIdentityProvider>()->GetNextIdentity(), false, context.resolve<Reaction::View::IReactionControllerModel>());
                                                    }).as<View::IMyPinCreationConfirmationViewModel>().singleInstance();
                 builder->registerType<View::MyPinCreationCompositeViewModel>().as<View::IMyPinCreationCompositeViewModel>().singleInstance();
+                builder->registerType<View::MyPinCreationInitiationController>().singleInstance();
             }
             
             void MyPinCreationModule::RegisterLeaves()
@@ -41,6 +47,9 @@ namespace ExampleApp
                 RegisterLeaf<MyPinCreationViewSavePinHandler>();
                 RegisterLeaf<MyPinCreationViewStateChangedHandler>();
                 RegisterLeaf<MyPinCreationModelObserver>();
+                RegisterLeaf<View::MyPinCreationInitiationController>();
+                RegisterLeaf<View::MyPinCreationConfirmationController>();
+                RegisterLeaf<View::IMyPinCreationCompositeViewModel>();
             }
         }
     }

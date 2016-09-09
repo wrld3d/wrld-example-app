@@ -28,17 +28,12 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            SearchModule::SearchModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
-            : m_builder(builder)
+            void SearchModule::Register(const TContainerBuilder& builder)
             {
-            }
-            
-            void SearchModule::Register()
-            {
-                Search::GeoNames::SdkModel::GeoNamesSearchServiceModule(m_builder).Register();
-                Search::EegeoPois::SdkModel::EegeoSearchServiceModule(m_builder).Register();
-                ExampleApp::Search::Yelp::YelpSearchServiceModule(m_builder).Register();
-                m_builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                //Search::GeoNames::SdkModel::GeoNamesSearchServiceModule(builder).Register();
+                //Search::EegeoPois::SdkModel::EegeoSearchServiceModule(builder).Register();
+                //ExampleApp::Search::Yelp::YelpSearchServiceModule(builder).Register();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                                    {
                                                        std::map<std::string, std::shared_ptr<Search::SdkModel::ISearchService>> searchServices;
                                                        searchServices[Search::GeoNamesVendorName] = context.resolve<ExampleApp::Search::GeoNames::SdkModel::GeoNamesSearchService>();
@@ -48,11 +43,11 @@ namespace ExampleApp
                                                                                                                                               context.resolve<Eegeo::Resources::Interiors::InteriorInteractionModel>());
                                                        
                                                    }).as<Search::SdkModel::ISearchService>().singleInstance();
-                m_builder->registerType<SearchResultRepository>().as<ISearchResultRepository>().singleInstance();
-                m_builder->registerType<MyPins::SearchResultMyPinsService>().as<MyPins::ISearchResultMyPinsService>().singleInstance();
-                m_builder->registerType<MyPins::MyPinsSearchResultRefreshService>().as<MyPins::IMyPinsSearchResultRefreshService>().singleInstance();
-                m_builder->registerType<SearchQueryPerformer>().as<ISearchQueryPerformer>().singleInstance();
-                m_builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                builder->registerType<SearchResultRepository>().as<ISearchResultRepository>().singleInstance();
+                builder->registerType<MyPins::SearchResultMyPinsService>().as<MyPins::ISearchResultMyPinsService>().singleInstance();
+                builder->registerType<MyPins::MyPinsSearchResultRefreshService>().as<MyPins::IMyPinsSearchResultRefreshService>().singleInstance();
+                builder->registerType<SearchQueryPerformer>().as<ISearchQueryPerformer>().singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                                    {
                                                        return std::make_shared<SearchRefreshService>(context.resolve<ISearchService>(),
                                                                                                      context.resolve<ISearchQueryPerformer>(),
@@ -63,7 +58,12 @@ namespace ExampleApp
                                                                                                      1100.f,
                                                                                                      50.f);
                                                    }).as<ISearchRefreshService>().singleInstance();\
-                m_builder->registerType<SearchQueryObserver>().singleInstance();
+                builder->registerType<SearchQueryObserver>().singleInstance();
+            }
+            
+            void SearchModule::RegisterLeaves()
+            {
+                RegisterLeaf<SearchQueryObserver>();
             }
         }
     }

@@ -16,16 +16,11 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                GeoNamesSearchServiceModule::GeoNamesSearchServiceModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
-                : m_builder(builder)
+                void GeoNamesSearchServiceModule::Register(const TContainerBuilder& builder)
                 {
-                }
-                
-                void GeoNamesSearchServiceModule::Register()
-                {
-                    m_builder->registerType<GeoNamesJsonParser>().as<IGeoNamesParser>().singleInstance();
-                    m_builder->registerType<GeoNamesSearchQueryFactory>().as<IGeoNamesSearchQueryFactory>().singleInstance();
-                    m_builder->registerType<GeoNamesSearchService>().singleInstance();
+                    builder->registerType<GeoNamesJsonParser>().as<IGeoNamesParser>().singleInstance();
+                    builder->registerType<GeoNamesSearchQueryFactory>().as<IGeoNamesSearchQueryFactory>().singleInstance();
+                    builder->registerType<GeoNamesSearchService>().singleInstance();
                 }
             }
         }

@@ -4,8 +4,14 @@
 
 #import <UIKit/UIKit.h>
 #include "MyPinCreationDetailsViewInterop.h"
+#include "ViewWrap.h"
 
 @class MyPinCreationDetailsView;
+
+class MyPinCreationDetailsViewWrapper : public ViewWrap<MyPinCreationDetailsView>
+{
+    using ViewWrap::ViewWrap;
+};
 
 @interface MyPinCreationDetailsView : UIView <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIPopoverControllerDelegate>
 {

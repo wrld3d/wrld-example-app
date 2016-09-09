@@ -31,6 +31,12 @@
 #include "IInitialExperienceController.h"
 #include "AboutPageModule.h"
 #include "OptionsModule.h"
+#include "MyPinsModule.h"
+#include "MyPinCreationDetailsModule.h"
+#include "SearchModule.h"
+#include "GeoNamesSearchServiceModule.h"
+#include "EegeoSearchServiceModule.h"
+#include "YelpSearchServiceModule.h"
 
 namespace ExampleApp
 {
@@ -62,6 +68,8 @@ namespace ExampleApp
         RegisterModule<Tours::ToursModule>();
         RegisterModule<InteriorsExplorer::SdkModel::InteriorsExplorerModule>();
         RegisterModule<MyPinCreation::SdkModel::MyPinCreationModule>();
+        RegisterModule<MyPinCreationDetails::View::MyPinCreationDetailsModule>();
+        RegisterModule<MyPins::SdkModel::MyPinsModule>();
         RegisterModule<VisualMap::SdkModel::VisualMapModule>();
         RegisterModule<WorldAreaLoader::SdkModel::WorldAreaLoaderModule>();
         RegisterModule<WorldPins::SdkModel::WorldPinsModule>();
@@ -80,6 +88,10 @@ namespace ExampleApp
         RegisterModule<InteriorsNavigation::SdkModel::InteriorsNavigationModule>();
         RegisterModule<AboutPage::View::AboutPageModule>();
         RegisterModule<Options::OptionsModule>();
+        RegisterModule<Search::SdkModel::SearchModule>();
+        RegisterModule<Search::GeoNames::SdkModel::GeoNamesSearchServiceModule>();
+        RegisterModule<Search::EegeoPois::SdkModel::EegeoSearchServiceModule>();
+        RegisterModule<Search::Yelp::YelpSearchServiceModule>();
         
         auto moduleSet = m_moduleContainer->resolve<TModules>();
         m_moduleRegistrationCallbacks.ExecuteCallbacks(*moduleSet);
@@ -100,6 +112,12 @@ namespace ExampleApp
             for (auto leaf : module->GetLeaves())
             {
                 m_leaves.push_back(leaf);
+            }
+            module->RegisterRenderableFilters();
+            auto filters = m_appContainer->resolve<Eegeo::Rendering::RenderableFilters>();
+            for (auto filter : module->GetRenderableFilters())
+            {
+                filters->AddRenderableFilter(*filter);
             }
         }
     }

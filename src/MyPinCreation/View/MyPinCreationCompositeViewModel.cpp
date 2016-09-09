@@ -18,9 +18,9 @@ namespace ExampleApp
             MyPinCreationCompositeViewModel::MyPinCreationCompositeViewModel(const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
                                                                              const std::shared_ptr<IMyPinCreationInitiationViewModel>& initiationViewModel,
                                                                              const std::shared_ptr<IMyPinCreationConfirmationViewModel>& confirmationViewModel,
-                                                                             const std::shared_ptr<ExampleApp::Menu::View::IMenuViewModel>& searchMenuViewModel,
-                                                                             const std::shared_ptr<ExampleApp::Menu::View::IMenuViewModel>& settingsMenuViewModel,
-                                                                             const std::shared_ptr<ScreenControl::View::IScreenControlViewModel>& interiorControlViewModel)
+                                                                             const std::shared_ptr<SearchMenu::View::SearchMenuViewModel>& searchMenuViewModel,
+                                                                             const std::shared_ptr<SettingsMenu::View::SettingsMenuViewModel>& settingsMenuViewModel,
+                                                                             const std::shared_ptr<InteriorsExplorer::View::InteriorsExplorerViewModel>& interiorControlViewModel)
                 : m_stateChangeHandler(this, &MyPinCreationCompositeViewModel::OnPoiRingStateChangedMessage)
                 , m_settingsMenuStateChangedCallback(this, &MyPinCreationCompositeViewModel::HandleSettingsMenuStateChanged)
                 , m_messageBus(messageBus)
@@ -30,6 +30,13 @@ namespace ExampleApp
                 , m_searchMenuViewModel(searchMenuViewModel)
                 , m_settingsMenuViewModel(settingsMenuViewModel)
             {
+                Eegeo_ASSERT(m_messageBus != nullptr);
+                Eegeo_ASSERT(m_initiationViewModel != nullptr);
+                Eegeo_ASSERT(m_confirmationViewModel != nullptr);
+                Eegeo_ASSERT(m_interiorControlViewModel != nullptr);
+                Eegeo_ASSERT(m_searchMenuViewModel != nullptr);
+                Eegeo_ASSERT(m_settingsMenuViewModel != nullptr);
+                
                 m_messageBus->SubscribeUi(m_stateChangeHandler);
                 m_settingsMenuViewModel->InsertOnScreenStateChangedCallback(m_settingsMenuStateChangedCallback);
             }

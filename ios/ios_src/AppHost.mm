@@ -185,6 +185,10 @@ public:
                                                         auto locationService = context.resolve<Eegeo::Location::ILocationService>();
                                                         return std::make_shared<AppLocationDelegate>(locationService, m_viewController);
                                                     }).singleInstance();
+        builder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
+                                         {
+                                             return std::make_shared<ViewControllerWrapper>(&m_viewController);
+                                         }).singleInstance();
     }
 private:
     Eegeo::Rendering::ScreenProperties m_screenProperties;
@@ -329,6 +333,10 @@ void AppHost::AddApplicationViews()
     AddSubview<OptionsViewWrapper>();
 
     AddSubview<AboutPageViewWrapper>();
+    AddSubview<MyPinCreationInitiationViewWrapper>();
+    AddSubview<MyPinCreationConfirmationViewWrapper>();
+    AddSubview<MyPinCreationDetailsViewWrapper>();
+    AddSubview<MyPinDetailsViewWrapper>();
     
     AddViewControllerUpdatable<ExampleApp::SettingsMenu::View::SettingsMenuController>();    
 }
@@ -345,26 +353,11 @@ void AppHost::RegisterApplicationViewModules()
     m_wiring->RegisterModule<ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule>();
     m_wiring->RegisterModule<ExampleApp::AboutPage::View::AboutPageViewModule>();
     m_wiring->RegisterModule<ExampleApp::Options::View::OptionsViewModule>();
-   
+    m_wiring->RegisterModule<ExampleApp::MyPinCreation::View::MyPinCreationInitiationViewModule>();
+    m_wiring->RegisterModule<ExampleApp::MyPinCreation::View::MyPinCreationConfirmationViewModule>();
+    m_wiring->RegisterModule<ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewModule>();
+    m_wiring->RegisterModule<ExampleApp::MyPinDetails::View::MyPinDetailsViewModule>();
 /*
-    m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(app.OptionsModule().GetOptionsViewModel(),
-                                                                                   *(m_container->resolve<Eegeo::Helpers::IHttpCache>()),
-                                                                                   GetMessageBus(),
-                                                                                   app.World().GetWorkPool());
-
-    m_pMyPinCreationInitiationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationInitiationViewModule)(GetMessageBus(),
-                                           app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
-                                           app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
-                                           screenProperties,
-                                           *(m_container->resolve<ExampleApp::Metrics::IMetricsService>()));
-
-    m_pMyPinCreationConfirmationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationConfirmationViewModule)(GetMessageBus(),
-            app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
-            app.MyPinCreationModule().GetMyPinCreationCompositeViewModel(),
-            app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
-            screenProperties,
-            *(m_container->resolve<ExampleApp::Metrics::IMetricsService>()));
-
     m_pMyPinCreationDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewModule)(
                                             GetMessageBus(),
                                             app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
@@ -392,10 +385,7 @@ void AppHost::RegisterApplicationViewModules()
         m_pTourFullScreenImageViewModule = Eegeo_NEW(ExampleApp::Tours::View::TourFullScreenImage::TourFullScreenImageViewModule)(app.ToursModule().GetTourFullScreenImageViewModel(),
                                                                                                                                   screenProperties);
     }
-    
-    m_pInitialExperienceIntroViewModule = Eegeo_NEW(ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule)(GetMessageBus());
-    
-    
+ 
     m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
                                                                                                                  GetMessageBus(),
                                                                                                                  screenProperties,
@@ -465,8 +455,8 @@ void AppHost::DestroyApplicationViewModules()
     //[&m_pWatermarkViewModule->GetWatermarkView() removeFromSuperview];
     //[&m_pFlattenButtonViewModule->GetFlattenButtonView() removeFromSuperview];
     //[&m_pCompassViewModule->GetCompassView() removeFromSuperview];
-    [&m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView() removeFromSuperview];
-    [&m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView() removeFromSuperview];
+    //[&m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView() removeFromSuperview];
+    //[&m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView() removeFromSuperview];
     /*if(m_pApp->ToursEnabled())
     {
         [&m_pTourFullScreenImageViewModule->GetTourFullScreenImageView() removeFromSuperview];
@@ -482,8 +472,8 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pSearchMenuViewModule->GetSearchMenuView() removeFromSuperview];
 
     // Pop-up layer.
-    [&m_pMyPinDetailsViewModule->GetMyPinDetailsView() removeFromSuperview];
-    [&m_pMyPinCreationDetailsViewModule->GetMyPinCreationDetailsView() removeFromSuperview];
+    //[&m_pMyPinDetailsViewModule->GetMyPinDetailsView() removeFromSuperview];
+    //[&m_pMyPinCreationDetailsViewModule->GetMyPinCreationDetailsView() removeFromSuperview];
     //[&m_pSearchResultPoiViewModule->GetView() removeFromSuperview];
     //[&m_pAboutPageViewModule->GetAboutPageView() removeFromSuperview];
     //[&m_pOptionsViewModule->GetOptionsView() removeFromSuperview];
@@ -506,11 +496,11 @@ void AppHost::DestroyApplicationViewModules()
     
     Eegeo_DELETE m_pTourExplorerViewModule;
     
-    Eegeo_DELETE m_pMyPinDetailsViewModule;
+    //Eegeo_DELETE m_pMyPinDetailsViewModule;
 
-    Eegeo_DELETE m_pMyPinCreationDetailsViewModule;
+    //Eegeo_DELETE m_pMyPinCreationDetailsViewModule;
 
-    Eegeo_DELETE m_pMyPinCreationConfirmationViewModule;
+    //Eegeo_DELETE m_pMyPinCreationConfirmationViewModule;
     
     //Eegeo_DELETE m_pOptionsViewModule;
     

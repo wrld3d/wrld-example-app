@@ -2,11 +2,7 @@
 
 #pragma once
 
-#include "Types.h"
-#include "MyPinDetails.h"
-#include "IMyPinDetailsViewModule.h"
-#include "BidirectionalBus.h"
-#include "Rendering.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -14,21 +10,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            class MyPinDetailsViewModule: public IMyPinDetailsViewModule, private Eegeo::NonCopyable
+            class MyPinDetailsViewModule: public Module
             {
-            private:
-                MyPinDetailsView* m_pView;
-                MyPinDetailsController* m_pController;
-
             public:
-                MyPinDetailsViewModule(ExampleAppMessaging::TMessageBus& messageBus,
-                                       IMyPinDetailsViewModel& MyPinDetailsViewModel,
-                                       const Eegeo::Rendering::ScreenProperties& screenProperties);
-
-                ~MyPinDetailsViewModule();
-
-                MyPinDetailsController& GetMyPinDetailsController() const;
-                MyPinDetailsView& GetMyPinDetailsView() const;
+                void Register(const TContainerBuilder& builder);
             };
         }
     }

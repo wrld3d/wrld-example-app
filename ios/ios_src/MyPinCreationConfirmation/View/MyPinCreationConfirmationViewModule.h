@@ -2,14 +2,7 @@
 
 #pragma once
 
-#include "Types.h"
-#include "MyPinCreationConfirmationViewIncludes.h"
-#include "Rendering.h"
-#include "MyPinCreation.h"
-#include "IMyPinCreationConfirmationViewModule.h"
-#include "MyPinCreationDetails.h"
-#include "BidirectionalBus.h"
-#include "IMetricsService.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -17,25 +10,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            class MyPinCreationConfirmationViewModule: public IMyPinCreationConfirmationViewModule, private Eegeo::NonCopyable
+            class MyPinCreationConfirmationViewModule: public Module
             {
-            private:
-                MyPinCreationConfirmationController* m_pController;
-                MyPinCreationConfirmationView* m_pView;
-
             public:
-                MyPinCreationConfirmationViewModule(ExampleAppMessaging::TMessageBus& messageBus,
-                                                    IMyPinCreationConfirmationViewModel& viewModel,
-                                                    IMyPinCreationCompositeViewModel& compositeViewModel,
-                                                    MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& detailsViewModel,
-                                                    const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                                    Metrics::IMetricsService& metricsService);
-
-                ~MyPinCreationConfirmationViewModule();
-
-                MyPinCreationConfirmationController& GetMyPinCreationConfirmationController() const;
-
-                MyPinCreationConfirmationView& GetMyPinCreationConfirmationView() const;
+                void Register(const TContainerBuilder& builder);
             };
         }
     }

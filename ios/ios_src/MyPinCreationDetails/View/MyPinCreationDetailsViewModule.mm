@@ -4,6 +4,7 @@
 #include "MyPinCreationDetailsView.h"
 #include "MyPinCreationDetailsController.h"
 #include "ScreenProperties.h"
+#include "ViewController.h"
 
 namespace ExampleApp
 {
@@ -11,34 +12,22 @@ namespace ExampleApp
     {
         namespace View
         {
-            MyPinCreationDetailsViewModule::MyPinCreationDetailsViewModule(ExampleAppMessaging::TMessageBus& messageBus,
-                                                                           IMyPinCreationDetailsViewModel& myPinCreationDetailsViewModel,
-                                                                           const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                                                           Metrics::IMetricsService& metricsService,
-                                                                           UIViewController* rootViewController)
+            void MyPinCreationDetailsViewModule::Register(const TContainerBuilder& builder)
             {
-                m_pView = [[MyPinCreationDetailsView alloc] initWithParams: screenProperties.GetScreenWidth()
-                                                                          : screenProperties.GetScreenHeight()
-                                                                          : rootViewController];
-
-                m_pController = Eegeo_NEW(MyPinCreationDetailsController)(*[m_pView getInterop], myPinCreationDetailsViewModel, messageBus, metricsService);
-            }
-
-            MyPinCreationDetailsViewModule::~MyPinCreationDetailsViewModule()
-            {
-                Eegeo_DELETE m_pController;
-
-                [m_pView release];
-            }
-
-            MyPinCreationDetailsController& MyPinCreationDetailsViewModule::GetMyPinCreationDetailsController() const
-            {
-                return *m_pController;
-            }
-
-            MyPinCreationDetailsView& MyPinCreationDetailsViewModule::GetMyPinCreationDetailsView() const
-            {
-                return *m_pView;
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto screenProperties = context.resolve<Eegeo::Rendering::ScreenProperties>();
+                                                     auto viewController = context.resolve<ViewControllerWrapper>();
+                                                     auto view = [[MyPinCreationDetailsView alloc] initWithParams: screenProperties->GetScreenWidth()
+                                                                                                               : screenProperties->GetScreenHeight()
+                                                                                                               : viewController->Get()];
+                                                     return std::make_shared<MyPinCreationDetailsViewWrapper>(view);
+                                                 }).singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto view = context.resolve<MyPinCreationDetailsViewWrapper>();
+                                                     return Hypodermic::makeExternallyOwned(*[view->Get() getInterop]);
+                                                 }).as<IMyPinCreationDetailsView>().singleInstance();
             }
         }
     }

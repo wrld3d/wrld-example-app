@@ -19,6 +19,7 @@
 #include "ICallback.h"
 #include "ICompassUpdateController.h"
 #include "Module.h"
+#include "IPoiRingController.h"
 
 namespace ExampleApp
 {
@@ -37,6 +38,7 @@ namespace ExampleApp
         const std::shared_ptr<Compass::SdkModel::ICompassUpdateController> m_compassUpdateController;
         const std::shared_ptr<Eegeo::Location::NavigationService> m_navigationService;
         const std::shared_ptr<InitialExperience::SdkModel::IInitialExperienceController> m_initialExperienceController;
+        const std::shared_ptr<MyPinCreation::PoiRing::SdkModel::IPoiRingController> m_poiRingController;
         
         std::shared_ptr<Eegeo::Rendering::ScreenProperties> m_screenProperties;
         std::shared_ptr<Eegeo::Rendering::LoadingScreen> m_loadingScreen;
@@ -57,7 +59,8 @@ namespace ExampleApp
                          const std::shared_ptr<WorldPins::SdkModel::IWorldPinsInFocusController>& worldPinsInFocusController,
                          const std::shared_ptr<Compass::SdkModel::ICompassUpdateController>& compassUpdateController,
                          const std::shared_ptr<Eegeo::Location::NavigationService>& navigationService,
-                         const std::shared_ptr<InitialExperience::SdkModel::IInitialExperienceController>& initialExperienceController);
+                         const std::shared_ptr<InitialExperience::SdkModel::IInitialExperienceController>& initialExperienceController,
+                         const std::shared_ptr<MyPinCreation::PoiRing::SdkModel::IPoiRingController>& poiRingController);
 
         ~MobileExampleApp();
 

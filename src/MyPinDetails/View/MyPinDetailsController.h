@@ -17,7 +17,9 @@ namespace ExampleApp
             {
             public:
 
-                MyPinDetailsController(IMyPinDetailsView& view, IMyPinDetailsViewModel& viewModel, ExampleAppMessaging::TMessageBus& messageBus);
+                MyPinDetailsController(const std::shared_ptr<IMyPinDetailsView>& view,
+                                       const std::shared_ptr<IMyPinDetailsViewModel>& viewModel,
+                                       const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
                 ~MyPinDetailsController();
 
             private:
@@ -28,9 +30,9 @@ namespace ExampleApp
                 void OnDismissed();
                 void OnRemovePin();
 
-                IMyPinDetailsView& m_view;
-                IMyPinDetailsViewModel& m_viewModel;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<IMyPinDetailsView>& m_view;
+                const std::shared_ptr<IMyPinDetailsViewModel>& m_viewModel;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus>& m_messageBus;
 
                 Eegeo::Helpers::TCallback0<MyPinDetailsController> m_viewModelOpenedCallback;
                 Eegeo::Helpers::TCallback0<MyPinDetailsController> m_viewModelClosedCallback;

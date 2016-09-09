@@ -33,6 +33,11 @@ namespace ExampleApp
                     builder->registerType<PoiRingController>().as<IPoiRingController>().singleInstance();
                     builder->registerType<PoiRingTouchController>().as<IPoiRingTouchController>().singleInstance();
                 }
+                
+                void PoiRingModule::RegisterRenderableFilters()
+                {
+                    RegisterRenderableFilter<PoiRing::SdkModel::PoiRingView>();
+                }
             }
         }
     }

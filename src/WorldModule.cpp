@@ -62,6 +62,10 @@ namespace ExampleApp
                                          {
                                              return Hypodermic::makeExternallyOwned(context.resolve<Eegeo::Modules::IPlatformAbstractionModule>()->GetWorkPool());
                                          }).singleInstance();
+        builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                         {
+                                             return Hypodermic::makeExternallyOwned(context.resolve<Eegeo::EegeoWorld>()->GetRenderingModule().GetRenderableFilters());
+                                         }).singleInstance();
         builder->registerType<Eegeo::Helpers::IdentityProvider>().as<Eegeo::Helpers::IIdentityProvider>().singleInstance();
         builder->registerType<Eegeo::Helpers::Jpeg::JpegLoader>().as<Eegeo::Helpers::Jpeg::IJpegLoader>().singleInstance();
 

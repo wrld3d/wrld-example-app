@@ -19,11 +19,11 @@ namespace ExampleApp
             class MyPinCreationInitiationController : private Eegeo::NonCopyable
             {
             public:
-                MyPinCreationInitiationController(IMyPinCreationInitiationViewModel& viewModel,
-                                                  IMyPinCreationInitiationView& view,
-                                                  IMyPinCreationConfirmationViewModel& confirmationViewModel,
-                                                  ExampleAppMessaging::TMessageBus& messageBus,
-                                                  Metrics::IMetricsService& metricsService);
+                MyPinCreationInitiationController(const std::shared_ptr<IMyPinCreationInitiationViewModel>& viewModel,
+                                                  const std::shared_ptr<IMyPinCreationInitiationView>& view,
+                                                  const std::shared_ptr<IMyPinCreationConfirmationViewModel>& confirmationViewModel,
+                                                  const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                                  const std::shared_ptr<Metrics::IMetricsService>& metricsService);
                 
                 ~MyPinCreationInitiationController();
 
@@ -32,12 +32,11 @@ namespace ExampleApp
 
             private:
 
-                IMyPinCreationInitiationViewModel& m_viewModel;
-                IMyPinCreationInitiationView& m_view;
-                IMyPinCreationConfirmationViewModel& m_confirmationViewModel;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
-                
-                Metrics::IMetricsService& m_metricsService;
+                const std::shared_ptr<IMyPinCreationInitiationViewModel> m_viewModel;
+                const std::shared_ptr<IMyPinCreationInitiationView> m_view;
+                const std::shared_ptr<IMyPinCreationConfirmationViewModel> m_confirmationViewModel;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
+                const std::shared_ptr<Metrics::IMetricsService> m_metricsService;
                 
                 Eegeo::Helpers::TCallback2<MyPinCreationInitiationController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
                 Eegeo::Helpers::TCallback0<MyPinCreationInitiationController> m_selectedCallback;

@@ -13,11 +13,11 @@ namespace ExampleApp
         namespace View
         {
             MyPinCreationConfirmationController::MyPinCreationConfirmationController(
-                IMyPinCreationConfirmationViewModel& viewModel,
-                IMyPinCreationConfirmationView& view,
-                MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& detailsViewModel,
-                ExampleAppMessaging::TMessageBus& messageBus,
-                Metrics::IMetricsService& metricsService)
+                                                                                     const std::shared_ptr<IMyPinCreationConfirmationViewModel>& viewModel,
+                                                                                     const std::shared_ptr<IMyPinCreationConfirmationView>& view,
+                                                                                     const std::shared_ptr<MyPinCreationDetails::View::IMyPinCreationDetailsViewModel>& detailsViewModel,
+                                                                                     const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                                                                     const std::shared_ptr<Metrics::IMetricsService>& metricsService)
                 : m_viewModel(viewModel)
                 , m_view(view)
                 , m_detailsViewModel(detailsViewModel)
@@ -27,41 +27,41 @@ namespace ExampleApp
                 , m_confirmedCallback(this, &MyPinCreationConfirmationController::OnConfirmed)
                 , m_viewStateCallback(this, &MyPinCreationConfirmationController::OnViewStateChangeScreenControl)
             {
-                m_viewModel.InsertOnScreenStateChangedCallback(m_viewStateCallback);
+                m_viewModel->InsertOnScreenStateChangedCallback(m_viewStateCallback);
 
-                m_view.InsertConfirmedCallback(m_confirmedCallback);
-                m_view.InsertDismissedCallback(m_dismissedCallback);
+                m_view->InsertConfirmedCallback(m_confirmedCallback);
+                m_view->InsertDismissedCallback(m_dismissedCallback);
 
-                m_view.SetOnScreenStateToIntermediateValue(m_viewModel.OnScreenState());
+                m_view->SetOnScreenStateToIntermediateValue(m_viewModel->OnScreenState());
             }
 
             MyPinCreationConfirmationController::~MyPinCreationConfirmationController()
             {
-                m_view.RemoveConfirmedCallback(m_confirmedCallback);
-                m_view.RemoveDismissedCallback(m_dismissedCallback);
+                m_view->RemoveConfirmedCallback(m_confirmedCallback);
+                m_view->RemoveDismissedCallback(m_dismissedCallback);
 
-                m_viewModel.RemoveOnScreenStateChangedCallback(m_viewStateCallback);
+                m_viewModel->RemoveOnScreenStateChangedCallback(m_viewStateCallback);
             }
 
             void MyPinCreationConfirmationController::OnConfirmed()
             {
-                m_metricsService.SetEvent("PinCreationConfirmation: Confirmed");
-                m_viewModel.Close();
-                m_messageBus.Publish(ExampleApp::MyPinCreation::MyPinCreationViewStateChangedMessage(ExampleApp::MyPinCreation::Details));
-                m_viewModel.RemoveFromScreen();
-                m_detailsViewModel.Open();
+                m_metricsService->SetEvent("PinCreationConfirmation: Confirmed");
+                m_viewModel->Close();
+                m_messageBus->Publish(ExampleApp::MyPinCreation::MyPinCreationViewStateChangedMessage(ExampleApp::MyPinCreation::Details));
+                m_viewModel->RemoveFromScreen();
+                m_detailsViewModel->Open();
             }
 
             void MyPinCreationConfirmationController::OnDismissed()
             {
-                m_metricsService.SetEvent("PinCreationConfirmation: Cancelled");
-                m_viewModel.Close();
-                m_messageBus.Publish(ExampleApp::MyPinCreation::MyPinCreationViewStateChangedMessage(ExampleApp::MyPinCreation::Inactive));
+                m_metricsService->SetEvent("PinCreationConfirmation: Cancelled");
+                m_viewModel->Close();
+                m_messageBus->Publish(ExampleApp::MyPinCreation::MyPinCreationViewStateChangedMessage(ExampleApp::MyPinCreation::Inactive));
             }
 
             void MyPinCreationConfirmationController::OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel &viewModel, float &state)
             {
-                ScreenControl::View::Apply(m_viewModel, m_view);
+                ScreenControl::View::Apply(*m_viewModel, *m_view);
             }
         }
     }

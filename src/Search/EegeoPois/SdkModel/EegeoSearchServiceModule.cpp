@@ -20,18 +20,13 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                EegeoSearchServiceModule::EegeoSearchServiceModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
-                : m_builder(builder)
+                void EegeoSearchServiceModule::Register(const TContainerBuilder& builder)
                 {
-                }
-                
-                void EegeoSearchServiceModule::Register()
-                {
-                    m_builder->registerType<EegeoSearchQueryFactory>().as<IEegeoSearchQueryFactory>().singleInstance();
-                    m_builder->registerType<EegeoCategoryIconMapper>().as<SearchResultPoi::SdkModel::ICategoryIconMapper>().singleInstance();
-                    m_builder->registerType<EegeoReadableTagMapper>().singleInstance();
-                    m_builder->registerType<EegeoJsonParser>().as<IEegeoParser>().singleInstance();
-                    m_builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                    builder->registerType<EegeoSearchQueryFactory>().as<IEegeoSearchQueryFactory>().singleInstance();
+                    builder->registerType<EegeoCategoryIconMapper>().as<SearchResultPoi::SdkModel::ICategoryIconMapper>().singleInstance();
+                    builder->registerType<EegeoReadableTagMapper>().singleInstance();
+                    builder->registerType<EegeoJsonParser>().as<IEegeoParser>().singleInstance();
+                    builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                                        {
                                                            std::vector<std::string> supportedCategories = Search::Yelp::SearchConstants::GetCategories();
                                                            return std::make_shared<EegeoSearchService>(

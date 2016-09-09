@@ -16,14 +16,9 @@ namespace ExampleApp
     {
         namespace Yelp
         {
-            YelpSearchServiceModule::YelpSearchServiceModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
-            : m_builder(builder)
+            void YelpSearchServiceModule::Register(const TContainerBuilder& builder)
             {
-            }
-            
-            void YelpSearchServiceModule::Register()
-            {
-                m_builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                                    {
                                                        return std::make_shared<Yelp::SdkModel::YelpCategoryMapper>(
                                                             context.resolve<Eegeo::Web::IWebLoadRequestFactory>(),
@@ -31,11 +26,11 @@ namespace ExampleApp
                                                             Yelp::SearchConstants::GetDefaultCategory()
                                                        );
                                                    }).singleInstance();
-                m_builder->registerType<Yelp::SdkModel::YelpSearchJsonParser>().singleInstance();
-                m_builder->registerType<Yelp::SdkModel::YelpBusinessJsonParser>().singleInstance();
-                m_builder->registerType<Yelp::SdkModel::YelpSearchQueryFactory>().singleInstance();
-                m_builder->registerType<Yelp::SdkModel::YelpBusinessQueryFactory>().singleInstance();
-                m_builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                builder->registerType<Yelp::SdkModel::YelpSearchJsonParser>().singleInstance();
+                builder->registerType<Yelp::SdkModel::YelpBusinessJsonParser>().singleInstance();
+                builder->registerType<Yelp::SdkModel::YelpSearchQueryFactory>().singleInstance();
+                builder->registerType<Yelp::SdkModel::YelpBusinessQueryFactory>().singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                                    {
                                                        return std::make_shared<Yelp::SdkModel::YelpSearchService>(
                                                             context.resolve<Yelp::SdkModel::YelpSearchQueryFactory>(),

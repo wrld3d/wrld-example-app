@@ -13,34 +13,23 @@ namespace ExampleApp
     {
         namespace View
         {
-            MyPinCreationConfirmationViewModule::MyPinCreationConfirmationViewModule(
-                ExampleApp::ExampleAppMessaging::TMessageBus& messageBus,
-                IMyPinCreationConfirmationViewModel& viewModel,
-                IMyPinCreationCompositeViewModel& compositeViewModel,
-                MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& detailsViewModel,
-                const Eegeo::Rendering::ScreenProperties& screenProperties,
-                Metrics::IMetricsService& metricsService)
+            void MyPinCreationConfirmationViewModule::Register(const TContainerBuilder& builder)
             {
-                m_pView = [[MyPinCreationConfirmationView alloc] initWithParams: screenProperties.GetScreenWidth(): screenProperties.GetScreenHeight(): screenProperties.GetPixelScale()];
-
-                m_pController = Eegeo_NEW(MyPinCreationConfirmationController)(viewModel, *[m_pView getInterop], detailsViewModel, messageBus, metricsService);
-            }
-
-            MyPinCreationConfirmationViewModule::~MyPinCreationConfirmationViewModule()
-            {
-                Eegeo_DELETE m_pController;
-
-                [m_pView release];
-            }
-
-            MyPinCreationConfirmationController& MyPinCreationConfirmationViewModule::GetMyPinCreationConfirmationController() const
-            {
-                return *m_pController;
-            }
-
-            MyPinCreationConfirmationView& MyPinCreationConfirmationViewModule::GetMyPinCreationConfirmationView() const
-            {
-                return *m_pView;
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto screenProperties = context.resolve<Eegeo::Rendering::ScreenProperties>();
+                                                     auto view = [[MyPinCreationConfirmationView alloc] initWithParams
+                                                                  :screenProperties->GetScreenWidth()
+                                                                  :screenProperties->GetScreenHeight()
+                                                                  :screenProperties->GetPixelScale()
+                                                                  ];
+                                                     return std::make_shared<MyPinCreationConfirmationViewWrapper>(view);
+                                                 }).singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto view = context.resolve<MyPinCreationConfirmationViewWrapper>();
+                                                     return Hypodermic::makeExternallyOwned(*[view->Get() getInterop]);
+                                                 }).as<IMyPinCreationConfirmationView>().singleInstance();
             }
         }
     }

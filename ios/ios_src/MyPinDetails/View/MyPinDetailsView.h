@@ -6,8 +6,14 @@
 #include "AppRunner.h"
 #include "MyPinModel.h"
 #include "MyPinDetailsViewIncludes.h"
+#include "ViewWrap.h"
 
 @class MyPinDetailsView;
+
+class MyPinDetailsViewWrapper : public ViewWrap<MyPinDetailsView>
+{
+    using ViewWrap::ViewWrap;
+};
 
 @interface MyPinDetailsView : UIView <UIAlertViewDelegate>
 {

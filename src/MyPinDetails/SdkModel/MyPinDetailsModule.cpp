@@ -8,6 +8,8 @@
 #include "IReactionControllerModel.h"
 #include "ISearchResultPoiViewModel.h"
 #include "IMyPinsService.h"
+#include "MyPinDetailsController.h"
+#include "IMyPinDetailsView.h"
 
 namespace ExampleApp
 {
@@ -15,17 +17,20 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            MyPinDetailsModule::MyPinDetailsModule(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
-            : m_builder(builder)
+            void MyPinDetailsModule::Register(const TContainerBuilder& builder)
             {
+                builder->registerType<View::MyPinDetailsViewModel>().as<View::IMyPinDetailsViewModel>().singleInstance();
+                builder->registerType<View::MyPinDetailsDisplayService>().as<View::IMyPinDetailsDisplayService>().singleInstance();
+                builder->registerType<View::MyPinDetailsModelSelectedObserver>().singleInstance();
+                builder->registerType<MyPinDetailsViewRemovePinHandler>().singleInstance();
+                builder->registerType<View::MyPinDetailsController>().singleInstance();
             }
             
-            void MyPinDetailsModule::Register()
+            void MyPinDetailsModule::RegisterLeaves()
             {
-                m_builder->registerType<View::MyPinDetailsViewModel>().as<View::IMyPinDetailsViewModel>().singleInstance();
-                m_builder->registerType<View::MyPinDetailsDisplayService>().as<View::IMyPinDetailsDisplayService>().singleInstance();
-                m_builder->registerType<View::MyPinDetailsModelSelectedObserver>().singleInstance();
-                m_builder->registerType<MyPinDetailsViewRemovePinHandler>().singleInstance();
+                RegisterLeaf<View::MyPinDetailsController>();
+                RegisterLeaf<MyPinDetailsViewRemovePinHandler>();
+                RegisterLeaf<View::MyPinDetailsModelSelectedObserver>();
             }
         }
     }

@@ -20,11 +20,11 @@ namespace ExampleApp
             {
             public:
 
-                MyPinCreationConfirmationController(IMyPinCreationConfirmationViewModel& viewModel,
-                                                    IMyPinCreationConfirmationView& view,
-                                                    MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& detailsViewModel,
-                                                    ExampleAppMessaging::TMessageBus& messageBus,
-                                                    Metrics::IMetricsService& metricsService);
+                MyPinCreationConfirmationController(const std::shared_ptr<IMyPinCreationConfirmationViewModel>& viewModel,
+                                                    const std::shared_ptr<IMyPinCreationConfirmationView>& view,
+                                                    const std::shared_ptr<MyPinCreationDetails::View::IMyPinCreationDetailsViewModel>& detailsViewModel,
+                                                    const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                                    const std::shared_ptr<Metrics::IMetricsService>& metricsService);
                 
                 ~MyPinCreationConfirmationController();
 
@@ -34,16 +34,16 @@ namespace ExampleApp
                 void OnConfirmed();
                 void OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel& viewModel, float& state);
 
-                IMyPinCreationConfirmationViewModel& m_viewModel;
-                IMyPinCreationConfirmationView& m_view;
-                MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& m_detailsViewModel;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<IMyPinCreationConfirmationViewModel> m_viewModel;
+                const std::shared_ptr<IMyPinCreationConfirmationView> m_view;
+                const std::shared_ptr<MyPinCreationDetails::View::IMyPinCreationDetailsViewModel> m_detailsViewModel;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
 
                 Eegeo::Helpers::TCallback2<MyPinCreationConfirmationController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
                 Eegeo::Helpers::TCallback0<MyPinCreationConfirmationController> m_dismissedCallback;
                 Eegeo::Helpers::TCallback0<MyPinCreationConfirmationController> m_confirmedCallback;
                 
-                Metrics::IMetricsService& m_metricsService;
+                const std::shared_ptr<Metrics::IMetricsService> m_metricsService;
             };
         }
     }

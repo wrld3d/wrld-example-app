@@ -15,10 +15,10 @@ namespace ExampleApp
         namespace View
         {
             MyPinCreationDetailsController::MyPinCreationDetailsController(
-                IMyPinCreationDetailsView& view,
-                IMyPinCreationDetailsViewModel& viewModel,
-                ExampleAppMessaging::TMessageBus& messageBus,
-                Metrics::IMetricsService& metricsService
+                                                                           const std::shared_ptr<IMyPinCreationDetailsView>& view,
+                                                                           const std::shared_ptr<IMyPinCreationDetailsViewModel>& viewModel,
+                                                                           const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                                                           const std::shared_ptr<Metrics::IMetricsService>& metricsService
             )
                 : m_view(view)
                 , m_viewModel(viewModel)
@@ -30,53 +30,53 @@ namespace ExampleApp
                 , m_viewModelClosedCallback(this, &MyPinCreationDetailsController::OnClosed)
                 , m_networkStateChangeCallback(this, &MyPinCreationDetailsController::OnNetworkStateChanged)
             {
-                m_viewModel.InsertClosedCallback(m_viewModelClosedCallback);
-                m_viewModel.InsertOpenedCallback(m_viewModelOpenedCallback);
+                m_viewModel->InsertClosedCallback(m_viewModelClosedCallback);
+                m_viewModel->InsertOpenedCallback(m_viewModelOpenedCallback);
 
-                m_view.InsertConfirmedCallback(m_viewConfirmedCallback);
-                m_view.InsertDismissedCallback(m_viewDismissedCallback);
+                m_view->InsertConfirmedCallback(m_viewConfirmedCallback);
+                m_view->InsertDismissedCallback(m_viewDismissedCallback);
 
-                m_messageBus.SubscribeUi(m_networkStateChangeCallback);
+                m_messageBus->SubscribeUi(m_networkStateChangeCallback);
             }
 
             MyPinCreationDetailsController::~MyPinCreationDetailsController()
             {
-                m_messageBus.UnsubscribeUi(m_networkStateChangeCallback);
+                m_messageBus->UnsubscribeUi(m_networkStateChangeCallback);
 
-                m_viewModel.RemoveClosedCallback(m_viewModelClosedCallback);
-                m_viewModel.RemoveOpenedCallback(m_viewModelOpenedCallback);
+                m_viewModel->RemoveClosedCallback(m_viewModelClosedCallback);
+                m_viewModel->RemoveOpenedCallback(m_viewModelOpenedCallback);
 
-                m_view.RemoveConfirmedCallback(m_viewConfirmedCallback);
-                m_view.RemoveDismissedCallback(m_viewDismissedCallback);
+                m_view->RemoveConfirmedCallback(m_viewConfirmedCallback);
+                m_view->RemoveDismissedCallback(m_viewDismissedCallback);
             }
 
             void MyPinCreationDetailsController::OnOpened()
             {
-                if(m_viewModel.TryAcquireReactorControl())
+                if(m_viewModel->TryAcquireReactorControl())
                 {
-                    m_metricsService.BeginTimedEvent("MyPinCreationDetailsDialogue");
-                    m_view.Open();
+                    m_metricsService->BeginTimedEvent("MyPinCreationDetailsDialogue");
+                    m_view->Open();
                 }
             }
 
             void MyPinCreationDetailsController::OnClosed()
             {
-                m_metricsService.EndTimedEvent("MyPinCreationDetailsDialogue");
-                m_view.Close();
+                m_metricsService->EndTimedEvent("MyPinCreationDetailsDialogue");
+                m_view->Close();
                 
                 ExampleApp::MyPinCreation::MyPinCreationViewStateChangedMessage message(ExampleApp::MyPinCreation::Inactive);
-                m_messageBus.Publish(message);
+                m_messageBus->Publish(message);
             }
 
             void MyPinCreationDetailsController::OnConfirmed()
             {
-                m_viewModel.Close();
+                m_viewModel->Close();
 
-                std::string title = m_view.GetTitle();
-                std::string description = m_view.GetDescription();
-                Byte* imageDataBytes = m_view.GetImageBuffer();
-                size_t imageSize = m_view.GetImageSize();
-                bool shouldShare = m_view.ShareSelected();
+                std::string title = m_view->GetTitle();
+                std::string description = m_view->GetDescription();
+                Byte* imageDataBytes = m_view->GetImageBuffer();
+                size_t imageSize = m_view->GetImageSize();
+                bool shouldShare = m_view->ShareSelected();
 
                 ExampleApp::MyPinCreation::MyPinCreationViewSavePinMessage message(title,
                         description,
@@ -84,21 +84,21 @@ namespace ExampleApp
                         imageSize,
                         shouldShare);
 
-                m_messageBus.Publish(message);
+                m_messageBus->Publish(message);
 
-                m_metricsService.SetEvent("MyPinCreationDetails: Confirmed",
+                m_metricsService->SetEvent("MyPinCreationDetails: Confirmed",
                                           "Image", imageDataBytes ? "yes" : "no",
                                           "Shared", shouldShare ? "yes" : "no");
             }
 
             void MyPinCreationDetailsController::OnDismissed()
             {
-                m_viewModel.Close();
+                m_viewModel->Close();
             }
 
             void MyPinCreationDetailsController::OnNetworkStateChanged(const Net::ConnectivityChangedViewMessage& connectivityChangedMessage)
             {
-                m_view.ConnectivityChanged(connectivityChangedMessage.IsConnected(), m_viewModel.IsOpen());
+                m_view->ConnectivityChanged(connectivityChangedMessage.IsConnected(), m_viewModel->IsOpen());
             }
         }
     }

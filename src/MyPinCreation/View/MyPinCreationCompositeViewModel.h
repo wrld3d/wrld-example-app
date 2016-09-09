@@ -11,7 +11,11 @@
 #include "Search.h"
 #include "BidirectionalBus.h"
 #include "MyPinCreationStateChangedMessage.h"
+#include "SearchMenuOptions.h"
+#include "SettingsMenu.h"
+#include "InteriorsExplorerViewModel.h"
 #include <memory>
+
 namespace ExampleApp
 {
     namespace MyPinCreation
@@ -25,9 +29,9 @@ namespace ExampleApp
                 MyPinCreationCompositeViewModel(const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
                                                 const std::shared_ptr<IMyPinCreationInitiationViewModel>& initiationViewModel,
                                                 const std::shared_ptr<IMyPinCreationConfirmationViewModel>& confirmationViewModel,
-                                                const std::shared_ptr<ExampleApp::Menu::View::IMenuViewModel>& searchMenuViewModel,
-                                                const std::shared_ptr<ExampleApp::Menu::View::IMenuViewModel>& settingsMenuViewModel,
-                                                const std::shared_ptr<ScreenControl::View::IScreenControlViewModel>& interiorControlViewModel);
+                                                const std::shared_ptr<SearchMenu::View::SearchMenuViewModel>& searchMenuViewModel,
+                                                const std::shared_ptr<SettingsMenu::View::SettingsMenuViewModel>& settingsMenuViewModel,
+                                                const std::shared_ptr<InteriorsExplorer::View::InteriorsExplorerViewModel>& interiorControlViewModel);
 
                 ~MyPinCreationCompositeViewModel();
 

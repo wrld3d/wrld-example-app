@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Types.h"
 #include "MyPinCreation.h"
 #include "VectorMath.h"
 #include "Camera.h"
@@ -21,7 +22,7 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                class PoiRingView : public Eegeo::Rendering::IRenderableFilter
+                class PoiRingView : private Eegeo::NonCopyable, public Eegeo::Rendering::IRenderableFilter
                 {
                 public:
                     PoiRingView(const std::shared_ptr<Eegeo::Rendering::Shaders::ShaderIdGenerator>& shaderIdGenerator,
@@ -44,10 +45,9 @@ namespace ExampleApp
 
                 private:
                     const std::shared_ptr<PoiRingRenderable> m_poiRingRenderable;
-                    const std::shared_ptr<Eegeo::Rendering::Renderables::BatchedSpriteRenderable> m_iconRenderable;
                     std::shared_ptr<Eegeo::Rendering::Shaders::BatchedSpriteShader> m_shader;
                     std::shared_ptr<Eegeo::Rendering::Materials::BatchedSpriteMaterial> m_material;
-                    std::shared_ptr<Eegeo::Rendering::Renderables::BatchedSpriteRenderable> m_renderable;
+                    std::shared_ptr<Eegeo::Rendering::Renderables::BatchedSpriteRenderable> m_iconRenderable;
                     
                     Eegeo::Helpers::GLHelpers::TextureInfo m_poiRingIconTexture;
 

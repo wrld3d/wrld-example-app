@@ -4,8 +4,14 @@
 
 #import <UIKit/UIKit.h>
 #include "MyPinCreationInitiationViewIncludes.h"
+#include "ViewWrap.h"
 
 @class MyPinCreationInitiationView;
+
+class MyPinCreationInitiationViewWrapper : public ViewWrap<MyPinCreationInitiationView>
+{
+    using ViewWrap::ViewWrap;
+};
 
 @interface MyPinCreationInitiationView : UIView
 {

@@ -13,29 +13,19 @@ namespace ExampleApp
     {
         namespace View
         {
-            MyPinDetailsViewModule::MyPinDetailsViewModule(ExampleAppMessaging::TMessageBus& messageBus,
-                    IMyPinDetailsViewModel& viewModel, const Eegeo::Rendering::ScreenProperties& screenProperties)
+            void MyPinDetailsViewModule::Register(const TContainerBuilder& builder)
             {
-                m_pView = [[MyPinDetailsView alloc] initWithParams:screenProperties.GetScreenWidth() :screenProperties.GetScreenHeight()];
-
-                m_pController = Eegeo_NEW(MyPinDetailsController)(*[m_pView getInterop], viewModel, messageBus);
-            }
-
-            MyPinDetailsViewModule::~MyPinDetailsViewModule()
-            {
-                Eegeo_DELETE m_pController;
-
-                [m_pView release];
-            }
-
-            MyPinDetailsController& MyPinDetailsViewModule::GetMyPinDetailsController() const
-            {
-                return *m_pController;
-            }
-
-            MyPinDetailsView& MyPinDetailsViewModule::GetMyPinDetailsView() const
-            {
-                return *m_pView;
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto screenProperties = context.resolve<Eegeo::Rendering::ScreenProperties>();
+                                                     auto view = [[MyPinDetailsView alloc] initWithParams:screenProperties->GetScreenWidth() :screenProperties->GetScreenHeight()];
+                                                     return std::make_shared<MyPinDetailsViewWrapper>(view);
+                                                 }).singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto view = context.resolve<MyPinDetailsViewWrapper>();
+                                                     return Hypodermic::makeExternallyOwned(*[view->Get() getInterop]);
+                                                 }).as<IMyPinDetailsView>().singleInstance();
             }
         }
     }

@@ -32,7 +32,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            void MyPinsModule::Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder)
+            void MyPinsModule::Register(const TContainerBuilder& builder)
             {
                 builder->registerType<View::MyPinsMenuModel>().singleInstance();
                 builder->registerType<View::MyPinsMenuOptionsModel>().singleInstance();
@@ -47,6 +47,13 @@ namespace ExampleApp
                 builder->registerType<View::MyPinAddedToMenuObserver>().singleInstance();
                 builder->registerType<MyPinsService>().as<IMyPinsService>().singleInstance();
                 builder->registerType<MyPinSelectedMessageHandler>().singleInstance();
+            }
+            
+            void MyPinsModule::RegisterLeaves()
+            {
+                RegisterLeaf<MyPinSelectedMessageHandler>();
+                RegisterLeaf<View::MyPinAddedToMenuObserver>();
+                RegisterLeaf<MyPinsRepositoryObserver>();
             }
         }
     }
