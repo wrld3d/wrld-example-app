@@ -9,7 +9,6 @@ import java.util.List;
 import com.eegeo.ProjectSwallowApp.R;
 import com.eegeo.animation.ReversibleValueAnimator;
 import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.menu.MenuListAdapter;
 import com.eegeo.menu.MenuView;
 import com.eegeo.searchmenu.SearchResultsScrollButtonTouchDownListener;
 import com.eegeo.searchmenu.SearchResultsScrollListener;
@@ -21,10 +20,8 @@ import com.eegeo.menu.MenuExpandableListOnClickListener;
 import com.eegeo.menu.MenuExpandableListView;
 import com.eegeo.menu.MenuListAnimationHandler;
 
-import android.animation.Animator;
-import android.animation.Animator.AnimatorListener;
+import android.os.Handler;
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextWatcher;
 import android.text.TextUtils.TruncateAt;
 import android.util.DisplayMetrics;
@@ -62,6 +59,9 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     private ListView m_searchList = null;
     private SearchMenuAdapter m_searchListAdapter = null;
     private OnItemClickListener m_searchMenuItemSelectedListener = null;
+    private SearchMenuListAnimationHandler m_searchMenuListAnimationHandler = null;
+    private SearchMenuListItemAnimationListener m_searchMenuListItemAnimationListener = null;
+    private int m_searchListItemsAnimated = 0;
     
     private EditText m_editText;
     private int m_disabledTextColor;
@@ -74,6 +74,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     
     private ArrayList<String> m_pendingResults = null;
     private int m_resultsCount = 0;
+    private int m_visibleItemsCount = 0;
     
     private SearchMenuAnimationHandler m_searchMenuAnimationHandler = null;
     
@@ -182,7 +183,9 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         m_list.setOnChildClickListener(m_expandableListOnClickListener);
         m_list.setOnGroupClickListener(m_expandableListOnClickListener);
         
-        m_searchListAdapter = new SearchMenuAdapter(m_activity, R.layout.search_menu_list_item);
+        m_searchMenuListAnimationHandler = new SearchMenuListAnimationHandler();
+        m_searchMenuListItemAnimationListener = new SearchMenuListItemAnimationListener(this);
+        m_searchListAdapter = new SearchMenuAdapter(m_activity, R.layout.search_menu_list_item, m_searchMenuListAnimationHandler, m_searchMenuListItemAnimationListener);
         m_searchList.setAdapter(m_searchListAdapter);
         
         m_searchMenuItemSelectedListener = new SearchMenuItemSelectedListener(m_nativeCallerPointer, this);
@@ -410,18 +413,35 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         }
     }
     
-    private void updateResults(ArrayList<String> searchResults)
+    private void updateResults(final ArrayList<String> searchResults)
     {
         m_resultsCount = searchResults.size();
+        m_searchListItemsAnimated = 0;
+        m_searchListAdapter.enableItemAnimations(true);
         
         if (m_resultsCount > 0)
         {
         	m_list.collapseAllGroups();
+        	
+        	updateSearchMenuHeight(m_resultsCount);
+        	m_searchListAdapter.setData(searchResults);
+        	m_searchListAdapter.triggerAnimations(true);
+        	m_pendingResults = null;
         }
-        
-    	updateSearchMenuHeight(m_resultsCount);
-    	m_searchListAdapter.setData(searchResults);
-    	m_pendingResults = null;
+        else
+        {
+        	m_searchListAdapter.triggerAnimations(false);
+        	
+        	new Handler().postDelayed(new Runnable()
+        	{
+				@Override
+				public void run()
+				{
+		        	updateSearchMenuHeight(m_resultsCount);
+		        	m_pendingResults = null;
+				}
+			}, Math.round(MenuListAnimationConstants.MenuItemScaleAnimationSpeedMilliseconds * 0.75f));
+        }
     }
     
     private void initializeOnSearchMenuOpen()
@@ -446,24 +466,12 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     
     private void updateSearchMenuHeight(final int resultCount)
     {   
-        final RelativeLayout mainSearchSubview = (RelativeLayout)m_view.findViewById(R.id.search_menu_view);
-
-        final View topBar = (View)m_view.findViewById(R.id.search_menu_title_bar);
-        
-        final float viewHeight = mainSearchSubview.getHeight();
-        
-        final int groupCount = m_expandableListAdapter.getGroupCount();
-        final int groupHeaderSize = (int)m_activity.getResources().getDimension(R.dimen.menu_item_header_height);
-        final int menuItemDividerHeightSize = (int)m_activity.getResources().getDimension(R.dimen.menu_item_divider_height);
-        final int menuListContainerCollapsedSize = groupCount * groupHeaderSize + ((groupCount - 1) * menuItemDividerHeightSize);
-        
-        final int totalMenuSeparatorSize = 2 * (int)m_activity.getResources().getDimension(R.dimen.menu_section_divider_height);
-
-        final float occupiedHeight = topBar.getHeight() + menuListContainerCollapsedSize + totalMenuSeparatorSize;
-        final float availableHeight = viewHeight - occupiedHeight;
+        final float availableHeight = getAvailableHeight();
         
     	final float cellHeight = m_activity.getResources().getDimension(R.dimen.search_menu_result_cell_height);
     	final float fullHeight = cellHeight * resultCount;
+    	
+    	m_visibleItemsCount = (int) Math.min(Math.ceil(availableHeight / cellHeight), resultCount);
     	
     	final float listDividerHeight = m_searchList.getDividerHeight();
 
@@ -471,33 +479,12 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     	
     	int oldHeight = m_searchList.getHeight();
     	ViewGroup.LayoutParams params = m_searchList.getLayoutParams();
+    	
 		params.height = oldHeight;
 		m_searchList.setLayoutParams(params);
 		
     	ReversibleValueAnimator menuHeightAnimator = ReversibleValueAnimator.ofInt(oldHeight, height);
     	menuHeightAnimator.addUpdateListener(new ViewHeightAnimatorUpdateListener<LinearLayout.LayoutParams>(m_searchList));
-    	menuHeightAnimator.addListener(new AnimatorListener()
-    	{
-			@Override
-			public void onAnimationStart(Animator animation) {}
-			
-			@Override
-			public void onAnimationRepeat(Animator animation) {}
-			
-			@Override
-			public void onAnimationEnd(Animator animation)
-			{
-				if(fullHeight < availableHeight)
-				{
-					ViewGroup.LayoutParams params = m_searchList.getLayoutParams();
-					params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-		    		m_searchList.setLayoutParams(params);
-				}
-			}
-			
-			@Override
-			public void onAnimationCancel(Animator animation) {}
-		});
     	menuHeightAnimator.setDuration(MenuListAnimationConstants.MenuListTotalAnimationSpeedMilliseconds);
     	menuHeightAnimator.start();
     	m_searchList.setSelection(0);
@@ -561,5 +548,43 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
 		
         m_list.setVisibility(View.GONE);
         m_searchList.setVisibility(View.GONE);
+	}
+	
+	public void onFinishedItemAnimation()
+	{
+		++m_searchListItemsAnimated;
+		
+		if(m_searchListItemsAnimated == m_visibleItemsCount && m_resultsCount > 0)
+		{
+			m_searchListAdapter.enableItemAnimations(false);
+			
+	        final float availableHeight = getAvailableHeight();
+			
+			if(m_searchList.getHeight() < availableHeight && m_resultsCount <= m_visibleItemsCount)
+			{
+				ViewGroup.LayoutParams params = m_searchList.getLayoutParams();
+				params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+	    		m_searchList.setLayoutParams(params);
+			}
+		}
+	}
+	
+	private float getAvailableHeight()
+	{
+		final RelativeLayout mainSearchSubview = (RelativeLayout)m_view.findViewById(R.id.search_menu_view);
+
+        final View topBar = (View)m_view.findViewById(R.id.search_menu_title_bar);
+        
+        final float viewHeight = mainSearchSubview.getHeight();
+        
+        final int groupCount = m_expandableListAdapter.getGroupCount();
+        final int groupHeaderSize = (int)m_activity.getResources().getDimension(R.dimen.menu_item_header_height);
+        final int menuItemDividerHeightSize = (int)m_activity.getResources().getDimension(R.dimen.menu_item_divider_height);
+        final int menuListContainerCollapsedSize = groupCount * groupHeaderSize + ((groupCount - 1) * menuItemDividerHeightSize);
+        
+        final int totalMenuSeparatorSize = 2 * (int)m_activity.getResources().getDimension(R.dimen.menu_section_divider_height);
+
+        final float occupiedHeight = topBar.getHeight() + menuListContainerCollapsedSize + totalMenuSeparatorSize;
+        return viewHeight - occupiedHeight;
 	}
 }
