@@ -42,6 +42,8 @@ public class MenuListAnimationHandler extends AnimatorListenerAdapter
 	
 	public void animateItemView(View view, boolean isExpanding, MenuListItemAnimationListener listener)
 	{
+		view.setPivotY(0);
+		
 		final int onePixel = m_mainActivity.dipAsPx(1);
         final int itemSize =  (int)m_mainActivity.getResources().getDimension(R.dimen.menu_subitem_height);
 				

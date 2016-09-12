@@ -14,7 +14,6 @@ import com.eegeo.searchmenu.SearchResultsScrollButtonTouchDownListener;
 import com.eegeo.searchmenu.SearchResultsScrollListener;
 import com.eegeo.searchmenu.SearchMenuResultsListAnimationConstants;
 import com.eegeo.animation.updatelisteners.ViewHeightAnimatorUpdateListener;
-import com.eegeo.menu.MenuListAnimationConstants;
 import com.eegeo.menu.MenuExpandableListAdapter;
 import com.eegeo.menu.MenuExpandableListOnClickListener;
 import com.eegeo.menu.MenuExpandableListView;
@@ -440,7 +439,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
 		        	updateSearchMenuHeight(m_resultsCount);
 		        	m_pendingResults = null;
 				}
-			}, Math.round(MenuListAnimationConstants.MenuItemScaleAnimationSpeedMilliseconds * 0.75f));
+			}, Math.round(SearchMenuResultsListAnimationConstants.SearchMenuItemScaleAnimationSpeedMilliseconds));
         }
     }
     
@@ -485,28 +484,13 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
 		
     	ReversibleValueAnimator menuHeightAnimator = ReversibleValueAnimator.ofInt(oldHeight, height);
     	menuHeightAnimator.addUpdateListener(new ViewHeightAnimatorUpdateListener<LinearLayout.LayoutParams>(m_searchList));
-    	menuHeightAnimator.setDuration(MenuListAnimationConstants.MenuListTotalAnimationSpeedMilliseconds);
+    	menuHeightAnimator.setDuration(SearchMenuResultsListAnimationConstants.SearchMenuListTotalAnimationSpeedMilliseconds);
     	menuHeightAnimator.start();
     	m_searchList.setSelection(0);
-
     	
-    	if(fullHeight > availableHeight + cellHeight)
-    	{
-    		m_searchResultsFade.setVisibility(View.VISIBLE);
-    		m_searchResultsScrollButton.setVisibility(View.VISIBLE);
-    		m_searchResultsScrollable = true;
-    		
-	    	if(resultCount > 0 && oldHeight == 0)
-	    	{
-	    		fadeInButtonAnimation();
-	    	}
-    	}
-    	else
-    	{
-    		m_searchResultsFade.setVisibility(View.INVISIBLE);
-    		m_searchResultsScrollButton.setVisibility(View.INVISIBLE);
-    		m_searchResultsScrollable = false;
-    	}
+    	m_searchResultsFade.setVisibility(View.INVISIBLE);
+    	m_searchResultsScrollButton.setVisibility(View.INVISIBLE);
+    	m_searchResultsScrollable = false;
     	
     	m_searchResultsScrollListener.UpdateScrollable(m_searchResultsScrollable);
     	
@@ -566,6 +550,19 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
 				params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
 	    		m_searchList.setLayoutParams(params);
 			}
+			
+			if(m_resultsCount > m_visibleItemsCount)
+	    	{
+				if(m_searchResultsFade.getVisibility() != View.VISIBLE)
+				{
+					m_searchResultsFade.setVisibility(View.VISIBLE);
+		    		m_searchResultsScrollButton.setVisibility(View.VISIBLE);
+		    		m_searchResultsScrollable = true;
+		    		m_searchResultsScrollListener.UpdateScrollable(m_searchResultsScrollable);
+					
+		    		fadeInButtonAnimation();
+				}
+	    	}
 		}
 	}
 	
