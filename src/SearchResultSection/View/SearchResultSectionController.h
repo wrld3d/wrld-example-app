@@ -44,6 +44,8 @@ namespace ExampleApp
                 
                 void OnSearchQueryRemovedMessage(const Search::SearchQueryRemovedMessage& message);
 
+                void AddSearchResultsToModel(const std::vector<Search::SdkModel::SearchResultModel>& unorderedResults);
+
             protected:
                 
             public:

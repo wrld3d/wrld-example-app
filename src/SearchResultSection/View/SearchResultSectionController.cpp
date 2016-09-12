@@ -62,6 +62,50 @@ namespace ExampleApp
                 }
             }
             
+            void SearchResultSectionController::AddSearchResultsToModel(const std::vector<Search::SdkModel::SearchResultModel>& unorderedResults)
+            {
+				for(int i = 0; i < m_lastAddedResults.size(); ++i)
+				{
+					const Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
+					std::string subtitle = model.GetSubtitle();
+					std::string category = model.GetCategory();
+					if (model.GetCategory() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
+					{
+						// Availability is no longer a subtitle as that affects search results.
+						Search::Swallow::SdkModel::SwallowMeetingRoomResultModel meetingRoomModel = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(model);
+						subtitle = meetingRoomModel.GetOfficeLocation();
+
+						category = GetMeetingRoomAvailablityIcon(meetingRoomModel.GetAvailability());
+					}
+					else if(model.GetCategory() == Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME)
+					{
+						Search::Swallow::SdkModel::SwallowWorkingGroupResultModel workingGroupmodel = Search::Swallow::SdkModel::SearchParser::TransformToSwallowWorkingGroupResult(model);
+						subtitle = workingGroupmodel.GetOfficeLocation();
+					}
+					else if(model.GetCategory() == Search::Swallow::SearchConstants::TOILETS_CATEGORY_NAME || model.GetCategory() == Search::Swallow::SearchConstants::PRINT_STATION_CATEGORY_NAME)
+					{
+						Search::Swallow::SdkModel::SwallowFacilityResultModel facilityModel = Search::Swallow::SdkModel::SearchParser::TransformToSwallowFacilityResult(model);
+						subtitle = facilityModel.GetOfficeLocation();
+					}
+
+					m_menuOptions.AddItem(model.GetIdentifier(),
+										  model.GetTitle(),
+										  subtitle,
+										  category,
+										  Eegeo_NEW(SearchResultItemModel)(model.GetIdentifier(),
+																		   model.GetTitle(),
+																		   model.GetLocation().ToECEF(),
+																		   model.IsInterior(),
+																		   model.GetBuildingId(),
+																		   model.GetFloor(),
+																		   m_searchMenuViewModel,
+																		   m_searchResultPoiViewModel,
+																		   GetOriginalIndexForSearchResult(unorderedResults, model),
+																		   m_messageBus,
+																		   m_menuReaction));
+				}
+            }
+
             void SearchResultSectionController::OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message)
             {
                 for(int i = 0; i < m_lastAddedResults.size(); ++i)
@@ -69,55 +113,16 @@ namespace ExampleApp
                     const Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
                     m_menuOptions.RemoveItem(model.GetIdentifier());
                 }
-                
+
                 m_lastAddedResults = message.GetResults();
                 const std::vector<Search::SdkModel::SearchResultModel>& unorderedResults = message.GetResults();
-                
+
                 OrderWrapper orderWrapper(m_order);
                 std::stable_sort(m_lastAddedResults.begin(), m_lastAddedResults.end(), orderWrapper);
-                
-                for(int i = 0; i < m_lastAddedResults.size(); ++i)
-                {
-                    const Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
-                    std::string subtitle = model.GetSubtitle();
-                    std::string category = model.GetCategory();
-                    if (model.GetCategory() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
-                    {
-                        // Availability is no longer a subtitle as that affects search results.
-                        Search::Swallow::SdkModel::SwallowMeetingRoomResultModel meetingRoomModel = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(model);
-                        subtitle = meetingRoomModel.GetOfficeLocation();
-                        
-                        category = GetMeetingRoomAvailablityIcon(meetingRoomModel.GetAvailability());
-                    }
-                    else if(model.GetCategory() == Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME)
-                    {
-                        Search::Swallow::SdkModel::SwallowWorkingGroupResultModel workingGroupmodel = Search::Swallow::SdkModel::SearchParser::TransformToSwallowWorkingGroupResult(model);
-                        subtitle = workingGroupmodel.GetOfficeLocation();
-                    }
-                    else if(model.GetCategory() == Search::Swallow::SearchConstants::TOILETS_CATEGORY_NAME || model.GetCategory() == Search::Swallow::SearchConstants::PRINT_STATION_CATEGORY_NAME)
-                    {
-                        Search::Swallow::SdkModel::SwallowFacilityResultModel facilityModel = Search::Swallow::SdkModel::SearchParser::TransformToSwallowFacilityResult(model);
-                        subtitle = facilityModel.GetOfficeLocation();
-                    }
-                    
-                    m_menuOptions.AddItem(model.GetIdentifier(),
-                                          model.GetTitle(),
-                                          subtitle,
-                                          category,
-                                          Eegeo_NEW(SearchResultItemModel)(model.GetIdentifier(),
-                                                                           model.GetTitle(),
-                                                                           model.GetLocation().ToECEF(),
-                                                                           model.IsInterior(),
-                                                                           model.GetBuildingId(),
-                                                                           model.GetFloor(),
-                                                                           m_searchMenuViewModel,
-                                                                           m_searchResultPoiViewModel,
-                                                                           GetOriginalIndexForSearchResult(unorderedResults, model),
-                                                                           m_messageBus,
-                                                                           m_menuReaction));
-                }
+
+                AddSearchResultsToModel(unorderedResults);
             }
-            
+
             void SearchResultSectionController::OnSearchQueryRemovedMessage(const Search::SearchQueryRemovedMessage& message)
             {
                 for(int i = 0; i < m_lastAddedResults.size(); ++i)
@@ -131,43 +136,42 @@ namespace ExampleApp
             
             void SearchResultSectionController::OnAvailabilityChanged(const ExampleApp::SearchResultOnMap::SearchResultMeetingAvailabilityChanged& message)
             {
+                const std::vector<Search::SdkModel::SearchResultModel>& unorderedResults = m_lastAddedResults;
+
                 for(int i = 0; i < m_lastAddedResults.size(); ++i)
-                {
-                    
-                    Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
-                    
+				{
+                	const Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
                     if(model.GetIdentifier() == message.GetModel().GetIdentifier())
                     {
-                        
-                        m_menuOptions.RemoveItem(model.GetIdentifier());
-                        std::string subtitle = model.GetSubtitle();
-                        
-                        if (model.GetCategory() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
-                        {
-                            subtitle = Search::Swallow::SdkModel::SearchParser::GetFormattedAvailabilityString(message.GetAvailability());
-                        }
-                        
-                        std::string categoryIcon = GetMeetingRoomAvailablityIcon(message.GetAvailability());
-                        
-                        m_menuOptions.AddItem(model.GetIdentifier(),
-                                              model.GetTitle(),
-                                              subtitle,
-                                              categoryIcon,
-                                            Eegeo_NEW(SearchResultItemModel)(model.GetIdentifier(),
-                                                                             model.GetTitle(),
-                                                                               model.GetLocation().ToECEF(),
-                                                                               model.IsInterior(),
-                                                                               model.GetBuildingId(),
-                                                                               model.GetFloor(),
-                                                                               m_searchMenuViewModel,
-                                                                             m_searchResultPoiViewModel,
-                                                                               GetOriginalIndexForSearchResult(m_lastAddedResults,model),
-                                                                               m_messageBus,
-                                                                             m_menuReaction));
+						int availability;
+						if (message.GetAvailability() == "available")
+						{
+							availability = 1;
+						}
+						if (message.GetAvailability() == "available_soon")
+						{
+							availability = 2;
+						}
+						if (message.GetAvailability() == "occupied")
+						{
+							availability = 3;
+						}
+						unorderedResults[i].SetAvailability(availability);
+						break;
                     }
-                    
+				}
+
+                for(int i = 0; i < m_lastAddedResults.size(); ++i)
+                {
+                    const Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
+                    m_menuOptions.RemoveItem(model.GetIdentifier());
                 }
-                
+
+                m_lastAddedResults = unorderedResults;
+                OrderWrapper orderWrapper(m_order);
+                std::stable_sort(m_lastAddedResults.begin(), m_lastAddedResults.end(), orderWrapper);
+
+                AddSearchResultsToModel(unorderedResults);
             }
 
 

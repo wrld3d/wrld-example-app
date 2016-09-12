@@ -8,6 +8,7 @@
 #include "ICallback.h"
 #include "MyPinSelectedMessage.h"
 #include "CameraTransitions.h"
+#include "IRestrictedBuildingService.h"
 
 namespace ExampleApp
 {
@@ -23,9 +24,11 @@ namespace ExampleApp
 
                 void OnMyPinSelectedMessage(const MyPinSelectedMessage& message);
 
+            private:
+                ExampleApp::WifiInfo::IRestrictedBuildingService& m_restrictedBuildingInformationService;
             public:
                 MyPinSelectedMessageHandler(CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
-                                            ExampleAppMessaging::TMessageBus& messageBus);
+                		ExampleAppMessaging::TMessageBus& messageBus, ExampleApp::WifiInfo::IRestrictedBuildingService& restrictedBuildingInformationService);
 
                 ~MyPinSelectedMessageHandler();
 

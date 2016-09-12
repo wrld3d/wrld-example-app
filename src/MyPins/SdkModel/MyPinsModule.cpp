@@ -38,7 +38,8 @@ namespace ExampleApp
                                        Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& myPinsSearchResultRefreshService,
                                        Metrics::IMetricsService& metricsService,
                                        const std::string& myPinsWebServiceUrl,
-                                       const std::string& myPinsWebServiceAuthToken,
+									   const std::string& myPinsWebServiceAuthToken,
+									   ExampleApp::WifiInfo::IRestrictedBuildingService& restrictedBuildingInformationService,
                                        const Menu::View::IMenuReactionModel& menuReaction,
                                        Menu::View::IMenuIgnoredReactionModel& ignoredMenuReaction)
                 : m_pMyPinsRepository(NULL)
@@ -97,7 +98,7 @@ namespace ExampleApp
                                                             worldPinsService);
                 
                 m_pMyPinSelectedMessageHandler = Eegeo_NEW(MyPinSelectedMessageHandler)(cameraTransitionController,
-                                                 messageBus);
+                						messageBus, restrictedBuildingInformationService);
 
             }
 

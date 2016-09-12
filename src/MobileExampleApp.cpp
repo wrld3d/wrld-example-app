@@ -631,6 +631,8 @@ namespace ExampleApp
                                  m_identityProvider,
                                  m_messageBus);
 
+        m_pRestrictedBuildingInfoService = Eegeo_NEW(ExampleApp::WifiInfo::RestrictedBuildingService)(m_applicationConfiguration.RestrictedBuildingsInfo(),m_platformAbstractions.GetConnectivityService(), m_pWorld->GetNativeUIFactories());
+
         
         m_pMyPinsModule = Eegeo_NEW(ExampleApp::MyPins::SdkModel::MyPinsModule)(m_pWorldPinsModule->GetWorldPinsService(),
                                                                                 m_platformAbstractions,
@@ -643,7 +645,8 @@ namespace ExampleApp
                                                                                 m_pSearchModule->GetMyPinsSearchResultRefreshService(),
                                                                                 m_metricsService,
                                                                                 m_applicationConfiguration.MyPinsWebServiceUrl(),
-                                                                                m_applicationConfiguration.MyPinsWebServiceAuthToken(),
+																				m_applicationConfiguration.MyPinsWebServiceAuthToken(),
+																				*m_pRestrictedBuildingInfoService,
                                                                                 m_menuReaction,
                                                                                 *m_pModalityIgnoredReactionModel);
         
@@ -719,8 +722,6 @@ namespace ExampleApp
                                                                                                                     m_pWorld->GetMapModule(),                                                                                                                    *m_pWorldPinsIconMapping,
                                                                                                                     m_screenProperties));
         }
-        
-        m_pRestrictedBuildingInfoService = Eegeo_NEW(ExampleApp::WifiInfo::RestrictedBuildingService)(m_applicationConfiguration.RestrictedBuildingsInfo(),m_platformAbstractions.GetConnectivityService(), m_pWorld->GetNativeUIFactories());
         
         m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                      interiorsPresentationModule.GetInteriorSelectionModel(),

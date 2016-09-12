@@ -12,10 +12,12 @@ namespace ExampleApp
         namespace SdkModel
         {
             MyPinSelectedMessageHandler::MyPinSelectedMessageHandler(CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
-                    ExampleAppMessaging::TMessageBus& messageBus)
+            		ExampleAppMessaging::TMessageBus& messageBus,
+					ExampleApp::WifiInfo::IRestrictedBuildingService& restrictedBuildingInformationService)
                 : m_cameraTransitionController(cameraTransitionController)
                 , m_messageBus(messageBus)
                 , m_handlerBinding(this, &MyPinSelectedMessageHandler::OnMyPinSelectedMessage)
+                , m_restrictedBuildingInformationService(restrictedBuildingInformationService)
             {
                 m_messageBus.SubscribeNative(m_handlerBinding);
             }
@@ -35,10 +37,17 @@ namespace ExampleApp
                 }
                 else
                 {
-                    m_cameraTransitionController.StartTransitionTo(message.GetPinLocation().ToECEF(),
+                	if(!m_restrictedBuildingInformationService.CanAccessBuildingWithCurrentNetwork(message.GetInteriorId().Value()))
+                	 {
+                		m_restrictedBuildingInformationService.ShowAlertMessage();
+                	 }
+                	 else
+                	 {
+                		 m_cameraTransitionController.StartTransitionTo(message.GetPinLocation().ToECEF(),
                                                                InteriorsExplorer::DefaultInteriorSearchResultTransitionInterestDistance,
                                                                message.GetInteriorId(),
                                                                message.GetFloorIndex());
+                	 }
                 }
             }
         }
