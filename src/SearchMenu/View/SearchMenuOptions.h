@@ -5,8 +5,10 @@
 #include "MenuModel.h"
 #include "MenuOptionsModel.h"
 #include "MenuViewModel.h"
+#include "MenuSectionViewModel.h"
 #include "IIdentity.h"
 #include "IReactionControllerModel.h"
+#include "SearchResultSectionOrder.h"
 #include <memory>
 
 namespace ExampleApp
@@ -31,7 +33,20 @@ namespace ExampleApp
             {
             public:
                 SearchMenuViewModel(const std::shared_ptr<Eegeo::Helpers::IIdentityProvider>& identity,
-                                    const std::shared_ptr<Reaction::View::IReactionControllerModel>& reactionControllerModel) : Menu::View::MenuViewModel(false, identity->GetNextIdentity(), reactionControllerModel)
+                                    const std::shared_ptr<Reaction::View::IReactionControllerModel>& reactionControllerModel)
+                : Menu::View::MenuViewModel(false, identity->GetNextIdentity(), reactionControllerModel)
+                {
+                }
+            };
+            
+            class SearchMenuSectionViewModel : public Menu::View::MenuSectionViewModel
+            {
+            public:
+                SearchMenuSectionViewModel(const std::string& name,
+                                           const std::string& icon,
+                                           const std::shared_ptr<SearchResultSection::View::SearchResultSectionMenuModel>& searchResultSection,
+                                           bool isExpandable)
+                : Menu::View::MenuSectionViewModel(name, icon, searchResultSection, isExpandable)
                 {
                 }
             };

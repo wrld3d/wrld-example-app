@@ -8,34 +8,21 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            CameraTransitionService::CameraTransitionService()
-            : m_pTransitionController(NULL)
+            CameraTransitionService::CameraTransitionService(const std::shared_ptr<CameraTransitionController>& cameraTransitionController)
+            : m_cameraTransitionController(cameraTransitionController)
             , m_transitioningChangedHandler(this, &CameraTransitionService::OnTransitioningChanged)
             {
-                
+                m_cameraTransitionController->InsertTransitioningChangedCallback(m_transitioningChangedHandler);
             }
             
             CameraTransitionService::~CameraTransitionService()
             {
-                if(HasValidController())
-                {
-                    m_pTransitionController->RemoveTransitioningChangedCallback(m_transitioningChangedHandler);
-                }
+                m_cameraTransitionController->RemoveTransitioningChangedCallback(m_transitioningChangedHandler);
             }
-            
-            void CameraTransitionService::SetTransitionController(ICameraTransitionController& transitionController)
-            {
-                if(HasValidController())
-                {
-                    m_pTransitionController->RemoveTransitioningChangedCallback(m_transitioningChangedHandler);
-                }
-                m_pTransitionController = &transitionController;
-                m_pTransitionController->InsertTransitioningChangedCallback(m_transitioningChangedHandler);
-            }
-            
+
             const bool CameraTransitionService::HasValidController() const
             {
-                return m_pTransitionController != NULL;
+                return m_cameraTransitionController != nullptr;
             }
             
             void CameraTransitionService::FailIfNoValidControllerSet()
@@ -48,7 +35,7 @@ namespace ExampleApp
                                    bool jumpIfFar)
             {
                 FailIfNoValidControllerSet();
-                m_pTransitionController->StartTransitionTo(newInterestPoint, distanceFromInterest, jumpIfFar);
+                m_cameraTransitionController->StartTransitionTo(newInterestPoint, distanceFromInterest, jumpIfFar);
             }
             
             void CameraTransitionService::StartTransitionTo(const Eegeo::dv3& newInterestPoint,
@@ -57,7 +44,7 @@ namespace ExampleApp
                                    bool jumpIfFar)
             {
                 FailIfNoValidControllerSet();
-                m_pTransitionController->StartTransitionTo(newInterestPoint, distanceFromInterest, newHeadingRadians, jumpIfFar);
+                m_cameraTransitionController->StartTransitionTo(newInterestPoint, distanceFromInterest, newHeadingRadians, jumpIfFar);
             }
             
             void CameraTransitionService::StartTransitionTo(const Eegeo::dv3& newInterestPoint,
@@ -67,7 +54,7 @@ namespace ExampleApp
                                    bool jumpIfFar)
             {
                 FailIfNoValidControllerSet();
-                m_pTransitionController->StartTransitionTo(newInterestPoint, distanceFromInterest, interiorId, targetFloorIndex, jumpIfFar);
+                m_cameraTransitionController->StartTransitionTo(newInterestPoint, distanceFromInterest, interiorId, targetFloorIndex, jumpIfFar);
             }
             
             void CameraTransitionService::StartTransitionTo(const Eegeo::dv3& newInterestPoint,
@@ -78,7 +65,7 @@ namespace ExampleApp
                                    bool jumpIfFar)
             {
                 FailIfNoValidControllerSet();
-                m_pTransitionController->StartTransitionTo(newInterestPoint, distanceFromInterest, newHeadingRadians, interiorId, targetFloorIndex, jumpIfFar);
+                m_cameraTransitionController->StartTransitionTo(newInterestPoint, distanceFromInterest, newHeadingRadians, interiorId, targetFloorIndex, jumpIfFar);
             }
             
             void CameraTransitionService::StartTransitionTo(float distanceFromInterest,
@@ -87,27 +74,27 @@ namespace ExampleApp
                                                             bool jumpIfFar)
             {
                 FailIfNoValidControllerSet();
-                m_pTransitionController->StartTransitionTo(distanceFromInterest, interiorId, targetFloorIndex);
+                m_cameraTransitionController->StartTransitionTo(distanceFromInterest, interiorId, targetFloorIndex);
             }
 
             
             void CameraTransitionService::StopCurrentTransition()
             {
                 FailIfNoValidControllerSet();
-                m_pTransitionController->StopCurrentTransition();
+                m_cameraTransitionController->StopCurrentTransition();
             }
             
             void CameraTransitionService::Update(float dt)
             {
                 if(HasValidController())
                 {
-                    m_pTransitionController->Update(dt);
+                    m_cameraTransitionController->Update(dt);
                 }
             }
             
             const bool CameraTransitionService::IsTransitioning() const
             {
-                return HasValidController() ? m_pTransitionController->IsTransitioning() : false;
+                return HasValidController() ? m_cameraTransitionController->IsTransitioning() : false;
             }
             
             void CameraTransitionService::InsertTransitioningChangedCallback(Eegeo::Helpers::ICallback0& callback)

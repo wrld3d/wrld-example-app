@@ -18,8 +18,8 @@ namespace ExampleApp
             class SearchResultRepositoryObserver : private Eegeo::NonCopyable
             {
             private:
-                const std::shared_ptr<Search::SdkModel::ISearchResultRepository>& m_searchResultRepository;
-                const std::shared_ptr<ExampleAppMessaging::TMessageBus>& m_messageBus;
+                const std::shared_ptr<Search::SdkModel::ISearchResultRepository> m_searchResultRepository;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
 
                 Eegeo::Helpers::TCallback1<SearchResultRepositoryObserver, Search::SdkModel::SearchResultModel*> m_addedCallback;
                 Eegeo::Helpers::TCallback1<SearchResultRepositoryObserver, Search::SdkModel::SearchResultModel*> m_removedCallback;

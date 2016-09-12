@@ -6,6 +6,12 @@
 #include "ScreenProperties.h"
 #include "SearchMenuView.h"
 #include "SearchMenuViewInterop.h"
+#include "SearchMenuOptions.h"
+#include "SearchMenuController.h"
+#include "CustomTableDataProvider.h"
+#include "SearchResultsTableDataProvider.h"
+#include "ICategorySearchRepository.h"
+#include "IModalBackgroundView.h"
 
 namespace ExampleApp
 {
@@ -13,52 +19,51 @@ namespace ExampleApp
     {
         namespace View
         {
-            SearchMenuViewModule::SearchMenuViewModule(Menu::View::IMenuModel& searchMenuModel,
-                                                       Menu::View::IMenuViewModel& searchMenuViewModel,
-                                                       Menu::View::IMenuSectionViewModel& searchSectionViewModel,
-                                                       const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                                       CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
-                                                       Modality::View::IModalBackgroundView& modalBackgroundView,
-                                                       ExampleAppMessaging::TMessageBus& messageBus)
+            void SearchMenuViewModule::Register(const TContainerBuilder& builder)
             {
-                m_pDataProvider = [CustomTableDataProvider alloc];
-                
-                m_pSearchResultsDataProvider = [SearchResultsTableDataProvider alloc];
-
-                m_pView = [[SearchMenuView alloc] initWithParams:screenProperties.GetScreenWidth()
-                                                                :screenProperties.GetScreenHeight()
-                                                                :screenProperties.GetPixelScale()
-                                                                :m_pDataProvider
-                                                                :static_cast<int>(searchMenuViewModel.SectionsCount())
-                                                                :m_pSearchResultsDataProvider];
-
-                m_pController = NULL;/*Eegeo_NEW(SearchMenuController)(searchMenuModel,
-                                                                searchMenuViewModel,
-                                                                *[m_pView getInterop],
-                                                                *[m_pView getSearchMenuInterop],
-                                                                searchSectionViewModel,
-                                                                categorySearchRepository,
-                                                                modalBackgroundView,
-                                                                messageBus);*/
-            }
-
-            SearchMenuViewModule::~SearchMenuViewModule()
-            {
-                Eegeo_DELETE m_pController;
-                
-                [m_pView release];
-                
-                [m_pDataProvider release];
-            }
-
-            Menu::View::MenuController& SearchMenuViewModule::GetMenuController() const
-            {
-                return *m_pController;
-            }
-
-            SearchMenuView& SearchMenuViewModule::GetSearchMenuView() const
-            {
-                return *m_pView;
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto view = [CustomTableDataProvider alloc];
+                                                     return std::make_shared<CustomTableDataProviderWrapper>(view);
+                                                 }).singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto view = [SearchResultsTableDataProvider alloc];
+                                                     return std::make_shared<SearchResultsTableDataProviderWrapper>(view);
+                                                 }).singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto screenProperties = context.resolve<Eegeo::Rendering::ScreenProperties>();
+                                                     auto dataProvider = context.resolve<CustomTableDataProviderWrapper>()->Get();
+                                                     auto searchDataProvider = context.resolve<SearchResultsTableDataProviderWrapper>()->Get();
+                                                     auto searchMenuViewModel = context.resolve<View::SearchMenuViewModel>();
+                                                     auto view = [[SearchMenuView alloc] initWithParams:screenProperties->GetScreenWidth()
+                                                                                                       :screenProperties->GetScreenHeight()
+                                                                                                       :screenProperties->GetPixelScale()
+                                                                                                       :dataProvider
+                                                                                                       :static_cast<int>(searchMenuViewModel->SectionsCount())
+                                                                                                       :searchDataProvider];
+                                                     return std::make_shared<SearchMenuViewWrapper>(view);
+                                                 }).singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto view = context.resolve<SearchMenuViewWrapper>();
+                                                     return Hypodermic::makeExternallyOwned(*[view->Get() getSearchMenuInterop]);
+                                                 }).as<ISearchMenuView>().singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto view = context.resolve<SearchMenuViewWrapper>();
+                                                     auto menuInterop = [view->Get() getInterop];
+                                                     return std::make_shared<SearchMenuController>(
+                                                                                                   context.resolve<SearchMenuModel>(),
+                                                                                                   context.resolve<SearchMenuViewModel>(),
+                                                                                                   Hypodermic::makeExternallyOwned(*menuInterop),
+                                                                                                   context.resolve<ISearchMenuView>(),
+                                                                                                   context.resolve<SearchMenuSectionViewModel>(),
+                                                                                                   context.resolve<CategorySearch::View::ICategorySearchRepository>(),
+                                                                                                   context.resolve<Modality::View::IModalBackgroundView>(),
+                                                                                                   context.resolve<ExampleAppMessaging::TMessageBus>());
+                                                 }).singleInstance();
             }
         }
     }

@@ -9,6 +9,7 @@
 #include "VectorMath.h"
 #include "CallbackCollection.h"
 #include "ICallback.h"
+#include "CameraTransitionController.h"
 
 namespace ExampleApp
 {
@@ -20,10 +21,8 @@ namespace ExampleApp
             {
             public:
                 
-                CameraTransitionService();
+                CameraTransitionService(const std::shared_ptr<CameraTransitionController>& cameraTransitionController);
                 ~CameraTransitionService();
-                
-                void SetTransitionController(ICameraTransitionController& transitionController);
                 
                 void StartTransitionTo(const Eegeo::dv3& newInterestPoint,
                                        float distanceFromInterest,
@@ -66,7 +65,7 @@ namespace ExampleApp
                 
                 void FailIfNoValidControllerSet();
                 
-                ICameraTransitionController* m_pTransitionController;
+                const std::shared_ptr<CameraTransitionController> m_cameraTransitionController;
                 
                 Eegeo::Helpers::CallbackCollection0 m_transitioningChangedCallbacks;
                 Eegeo::Helpers::TCallback0<CameraTransitionService> m_transitioningChangedHandler;

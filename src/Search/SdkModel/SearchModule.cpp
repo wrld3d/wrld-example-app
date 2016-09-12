@@ -30,9 +30,6 @@ namespace ExampleApp
         {
             void SearchModule::Register(const TContainerBuilder& builder)
             {
-                //Search::GeoNames::SdkModel::GeoNamesSearchServiceModule(builder).Register();
-                //Search::EegeoPois::SdkModel::EegeoSearchServiceModule(builder).Register();
-                //ExampleApp::Search::Yelp::YelpSearchServiceModule(builder).Register();
                 builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                                    {
                                                        std::map<std::string, std::shared_ptr<Search::SdkModel::ISearchService>> searchServices;
@@ -57,7 +54,7 @@ namespace ExampleApp
                                                                                                      100.f,
                                                                                                      1100.f,
                                                                                                      50.f);
-                                                   }).as<ISearchRefreshService>().singleInstance();\
+                                                   }).as<ISearchRefreshService>().singleInstance();
                 builder->registerType<SearchQueryObserver>().singleInstance();
             }
             

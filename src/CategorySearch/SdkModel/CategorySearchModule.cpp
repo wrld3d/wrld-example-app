@@ -18,30 +18,21 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class CategorySearchMenuModel : public Menu::View::MenuModel
-            {
-            };
-            
-            class CategorySearchMenuOptionsModel : public Menu::View::MenuOptionsModel
-            {
-            public:
-                CategorySearchMenuOptionsModel(const std::shared_ptr<CategorySearchMenuModel>& categorySearch) : Menu::View::MenuOptionsModel(*categorySearch)
-                {
-                }
-            };
-            
             void CategorySearchModule::Register(const TContainerBuilder& builder)
             {
                 builder->registerType<View::TCategories>().singleInstance();
                 builder->registerType<View::CategorySearchRepository>().as<View::ICategorySearchRepository>().singleInstance();
-                builder->registerType<CategorySearchMenuModel>().singleInstance();
-                builder->registerType<CategorySearchMenuOptionsModel>().singleInstance();
+                builder->registerType<View::CategorySearchMenuModel>().singleInstance();
+                builder->registerType<View::CategorySearchMenuOptionsModel>().singleInstance();
                 builder->registerType<CategorySearchSelectedMessageHandler>().singleInstance();
             }
             
             void CategorySearchModule::RegisterLeaves()
             {
                 RegisterLeaf<CategorySearchSelectedMessageHandler>();
+                
+                auto categorySearchRepository = Resolve<View::ICategorySearchRepository>>();
+                for (const auto& c : )
             }
             
             /*

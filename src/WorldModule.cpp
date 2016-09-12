@@ -33,6 +33,7 @@
 #include "JpegLoader.h"
 #include "IInteriorsLabelController.h"
 #include "IImmutableInteriorViewModel.h"
+#include "IWebLoadRequestFactory.h"
 
 namespace ExampleApp
 {
@@ -61,6 +62,14 @@ namespace ExampleApp
         builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                          {
                                              return Hypodermic::makeExternallyOwned(context.resolve<Eegeo::Modules::IPlatformAbstractionModule>()->GetWorkPool());
+                                         }).singleInstance();
+        builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                         {
+                                             return Hypodermic::makeExternallyOwned(context.resolve<Eegeo::Modules::IPlatformAbstractionModule>()->GetUrlEncoder());
+                                         }).singleInstance();
+        builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                         {
+                                             return Hypodermic::makeExternallyOwned(context.resolve<Eegeo::Modules::IPlatformAbstractionModule>()->GetWebLoadRequestFactory());
                                          }).singleInstance();
         builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                          {

@@ -9,6 +9,7 @@
 #include "MenuSectionViewModel.h"
 #include "SearchMenuPerformedSearchMessageHandler.h"
 #include "SearchMenuOptions.h"
+#include "PlaceJumpMenuOption.h"
 
 namespace ExampleApp
 {
@@ -21,7 +22,20 @@ namespace ExampleApp
                 builder->registerType<View::SearchMenuModel>().singleInstance();
                 builder->registerType<View::SearchMenuOptionsModel>().singleInstance();
                 builder->registerType<View::SearchMenuViewModel>().singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     return std::make_shared<View::SearchMenuSectionViewModel>("Search Results", "", context.resolve<SearchResultSection::View::SearchResultSectionMenuModel>(), false);
+                                                 }).singleInstance();
                 builder->registerType<SearchMenuPerformedSearchMessageHandler>();
+            }
+            
+            void SearchMenuModule::RegisterLeaves()
+            {
+                RegisterLeaf<SearchMenuPerformedSearchMessageHandler>();
+                
+                auto viewModel = Resolve<View::SearchMenuViewModel>();
+                Menu::View::MenuSectionViewModel* pMenuSection = Eegeo_NEW(Menu::View::MenuSectionViewModel)("Locations", "", Resolve<PlaceJumps::View::PlaceJumpMenuModel>(), true);
+                viewModel->AddSection(*pMenuSection);
             }
             
             /*

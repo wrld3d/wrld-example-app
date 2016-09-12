@@ -4,11 +4,18 @@
 
 #import <UIKit/UIKit.h>
 #include "IMenuView.h"
+#include "ViewWrap.h"
 #include "CustomTableRowSelectionDelegate.h"
 
 @class MenuView;
 @class MenuViewInterop;
 @class CustomTableView;
+@class CustomTableDataProvider;
+
+class CustomTableDataProviderWrapper : public ViewWrap<CustomTableDataProvider>
+{
+    using ViewWrap::ViewWrap;
+};
 
 @interface CustomTableDataProvider : UITableViewController<UITableViewDelegate, UITableViewDataSource>
 {

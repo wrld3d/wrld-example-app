@@ -16,11 +16,11 @@ namespace ExampleApp
     {
         namespace View
         {
-            SearchMenuController::SearchMenuController(const std::shared_ptr<Menu::View::IMenuModel>& model,
-                                                       const std::shared_ptr<Menu::View::IMenuViewModel>& viewModel,
+            SearchMenuController::SearchMenuController(const std::shared_ptr<SearchMenuModel>& model,
+                                                       const std::shared_ptr<SearchMenuViewModel>& viewModel,
                                                        const std::shared_ptr<Menu::View::IMenuView>& view,
                                                        const std::shared_ptr<ISearchMenuView>& searchMenuView,
-                                                       const std::shared_ptr<Menu::View::IMenuSectionViewModel>& searchSectionViewModel,
+                                                       const std::shared_ptr<SearchMenuSectionViewModel>& searchSectionViewModel,
                                                        const std::shared_ptr<CategorySearch::View::ICategorySearchRepository>& categorySearchRepository,
                                                        const std::shared_ptr<Modality::View::IModalBackgroundView>& modalBackgroundView,
                                                        const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)

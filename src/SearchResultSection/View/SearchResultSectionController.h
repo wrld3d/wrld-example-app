@@ -47,7 +47,7 @@ namespace ExampleApp
                 
             public:
                 SearchResultSectionController(const std::shared_ptr<SearchMenu::View::SearchMenuViewModel>& searchMenuViewModel,
-                                              const std::shared_ptr<SearchMenu::View::SearchMenuOptionsModel>& menuOptionsModel,
+                                              const std::shared_ptr<SearchResultSectionOptionsModel>& menuOptionsModel,
                                               const std::shared_ptr<ISearchResultSectionOrder>& order,
                                               const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
                                               const std::shared_ptr<Menu::View::IMenuReactionModel>& menuReaction,

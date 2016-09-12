@@ -25,7 +25,7 @@ namespace ExampleApp
                                                             Yelp::SearchConstants::GetYelpFoundationCategoryToApplicationCategoryMap(*(context.resolve<Eegeo::Helpers::IFileIO>())),
                                                             Yelp::SearchConstants::GetDefaultCategory()
                                                        );
-                                                   }).singleInstance();
+                                                   }).as<Yelp::SdkModel::IYelpCategoryMapper>().singleInstance();
                 builder->registerType<Yelp::SdkModel::YelpSearchJsonParser>().singleInstance();
                 builder->registerType<Yelp::SdkModel::YelpBusinessJsonParser>().singleInstance();
                 builder->registerType<Yelp::SdkModel::YelpSearchQueryFactory>().singleInstance();

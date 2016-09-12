@@ -132,7 +132,7 @@ private:
     //Eegeo::UI::NativeUIFactories m_iOSNativeUIFactories;
     
     //ExampleApp::SettingsMenu::View::ISettingsMenuViewModule* m_pSettingsMenuViewModule;
-    ExampleApp::SearchMenu::View::ISearchMenuViewModule* m_pSearchMenuViewModule;
+    //ExampleApp::SearchMenu::View::ISearchMenuViewModule* m_pSearchMenuViewModule;
     //ExampleApp::SearchResultSection::View::ISearchResultSectionViewModule* m_pSearchResultSectionViewModule;
     //ExampleApp::ModalBackground::View::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
     //ExampleApp::FlattenButton::View::IFlattenButtonViewModule* m_pFlattenButtonViewModule;

@@ -17,6 +17,7 @@ namespace ExampleApp
                 , m_isExpandable(isExpandable)
                 , m_expanded(false)
             {
+                Eegeo_ASSERT(m_menuModel != nullptr);
             }
 
             std::string MenuSectionViewModel::SerializeJson() const

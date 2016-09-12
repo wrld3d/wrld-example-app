@@ -12,6 +12,11 @@
 @class SearchMenuView;
 @class SearchResultsTableDataProvider;
 
+class SearchMenuViewWrapper : public ViewWrap<SearchMenuView>
+{
+    using ViewWrap::ViewWrap;
+};
+
 @interface SearchMenuView : MenuView<CustomTableRowSelectionDelegate>
 {
     

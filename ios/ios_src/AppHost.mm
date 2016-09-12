@@ -90,6 +90,9 @@
 #include "IModalBackgroundView.h"
 #include "SearchResultPoiViewContainer.h"
 #include "IInitialExperienceController.h"
+#include "SearchMenuController.h"
+#include "ISearchMenuView.h"
+#include "ICategorySearchRepository.h"
 
 #include <memory>
 #include "ViewWrap.h"
@@ -338,7 +341,10 @@ void AppHost::AddApplicationViews()
     AddSubview<MyPinCreationDetailsViewWrapper>();
     AddSubview<MyPinDetailsViewWrapper>();
     
-    AddViewControllerUpdatable<ExampleApp::SettingsMenu::View::SettingsMenuController>();    
+    AddSubview<SearchMenuViewWrapper>();
+    
+    AddViewControllerUpdatable<ExampleApp::SettingsMenu::View::SettingsMenuController>();
+    AddViewControllerUpdatable<ExampleApp::SearchMenu::View::SearchMenuController>();
 }
 
 void AppHost::RegisterApplicationViewModules()
@@ -357,19 +363,10 @@ void AppHost::RegisterApplicationViewModules()
     m_wiring->RegisterModule<ExampleApp::MyPinCreation::View::MyPinCreationConfirmationViewModule>();
     m_wiring->RegisterModule<ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewModule>();
     m_wiring->RegisterModule<ExampleApp::MyPinDetails::View::MyPinDetailsViewModule>();
+    m_wiring->RegisterModule<ExampleApp::SearchMenu::View::SearchMenuViewModule>();
 /*
-    m_pMyPinCreationDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewModule)(
-                                            GetMessageBus(),
-                                            app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
-                                            screenProperties,
-                                            *(m_container->resolve<ExampleApp::Metrics::IMetricsService>()),
-                                            &m_viewController);
-
-    m_pMyPinDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinDetails::View::MyPinDetailsViewModule)(GetMessageBus(),
-                                app.MyPinDetailsModule().GetMyPinDetailsViewModel(),
-                                screenProperties);
     
-    
+ 
     if(app.ToursEnabled())
     {
         m_pTourWebViewModule = Eegeo_NEW(ExampleApp::Tours::View::TourWeb::TourWebViewModule)(screenProperties);
@@ -469,7 +466,7 @@ void AppHost::DestroyApplicationViewModules()
 
     // Menus & HUD layer.
     //[&m_pSettingsMenuViewModule->GetSettingsMenuView() removeFromSuperview];
-    [&m_pSearchMenuViewModule->GetSearchMenuView() removeFromSuperview];
+    //[&m_pSearchMenuViewModule->GetSearchMenuView() removeFromSuperview];
 
     // Pop-up layer.
     //[&m_pMyPinDetailsViewModule->GetMyPinDetailsView() removeFromSuperview];
@@ -518,7 +515,7 @@ void AppHost::DestroyApplicationViewModules()
 
     //Eegeo_DELETE m_pSearchResultSectionViewModule;
     
-    Eegeo_DELETE m_pSearchMenuViewModule;
+    //Eegeo_DELETE m_pSearchMenuViewModule;
     
     //Eegeo_DELETE m_pSettingsMenuViewModule;
 

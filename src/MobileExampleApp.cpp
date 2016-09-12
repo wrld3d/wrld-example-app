@@ -10,6 +10,7 @@
 #include "NavigationService.h"
 #include "IInitialExperienceController.h"
 #include "IMyPinCreationInitiationViewModel.h"
+#include "SearchMenuOptions.h"
 
 namespace ExampleApp
 {
@@ -115,7 +116,8 @@ namespace ExampleApp
                                        const std::shared_ptr<Compass::SdkModel::ICompassUpdateController>& compassUpdateController,
                                        const std::shared_ptr<Eegeo::Location::NavigationService>& navigationService,
                                        const std::shared_ptr<InitialExperience::SdkModel::IInitialExperienceController>& initialExperienceController,
-                                       const std::shared_ptr<MyPinCreation::PoiRing::SdkModel::IPoiRingController>& poiRingController)
+                                       const std::shared_ptr<MyPinCreation::PoiRing::SdkModel::IPoiRingController>& poiRingController,
+                                       const std::shared_ptr<CameraTransitions::SdkModel::ICameraTransitionController>& cameraTransitionService)
     : m_world(world)
     , m_cameraController(appCameraController)
     , m_gpsCameraController(gpsCameraController)
@@ -131,6 +133,7 @@ namespace ExampleApp
     , m_navigationService(navigationService)
     , m_initialExperienceController(initialExperienceController)
     , m_poiRingController(poiRingController)
+    , m_cameraTransitionService(cameraTransitionService)
     {
         Eegeo_ASSERT(m_world != nullptr);
         Eegeo_ASSERT(m_cameraController != nullptr);
@@ -147,6 +150,7 @@ namespace ExampleApp
         Eegeo_ASSERT(m_initialExperienceModel != nullptr);
         Eegeo_ASSERT(m_initialExperienceController != nullptr);
         Eegeo_ASSERT(m_poiRingController != nullptr);
+        Eegeo_ASSERT(m_cameraTransitionService != nullptr);
         
         //AddLocalMaterials(m_platformAbstractions.GetFileIO(),
         //                  m_pWorld->GetMapModule().GetInteriorsMaterialsModule().GetInteriorsTextureResourceService(),
@@ -173,6 +177,7 @@ namespace ExampleApp
     void MobileExampleApp::Update(float dt)
     {
         m_world->EarlyUpdate(dt);
+        m_cameraTransitionService->Update(dt);
         m_cameraController->Update(dt);
         m_appModeModel->Update(dt);
         
@@ -296,6 +301,7 @@ namespace ExampleApp
         container->resolve<FlattenButton::View::IFlattenButtonViewModel>()->AddToScreen();
         container->resolve<Compass::View::ICompassViewModel>()->AddToScreen();
         container->resolve<MyPinCreation::View::IMyPinCreationInitiationViewModel>()->AddToScreen();
+        container->resolve<SearchMenu::View::SearchMenuViewModel>()->AddToScreen();
     }
 
     void MobileExampleApp::RegisterLoadingScreenComplete(Eegeo::Helpers::ICallback0& callback)

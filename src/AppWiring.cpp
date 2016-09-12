@@ -37,6 +37,9 @@
 #include "GeoNamesSearchServiceModule.h"
 #include "EegeoSearchServiceModule.h"
 #include "YelpSearchServiceModule.h"
+#include "SearchMenuModule.h"
+#include "SearchResultSectionModule.h"
+#include "PlaceJumpsModule.h"
 
 namespace ExampleApp
 {
@@ -92,6 +95,9 @@ namespace ExampleApp
         RegisterModule<Search::GeoNames::SdkModel::GeoNamesSearchServiceModule>();
         RegisterModule<Search::EegeoPois::SdkModel::EegeoSearchServiceModule>();
         RegisterModule<Search::Yelp::YelpSearchServiceModule>();
+        RegisterModule<SearchMenu::SdkModel::SearchMenuModule>();
+        RegisterModule<SearchResultSection::SdkModel::SearchResultSectionModule>();
+        RegisterModule<PlaceJumps::SdkModel::PlaceJumpsModule>();
         
         auto moduleSet = m_moduleContainer->resolve<TModules>();
         m_moduleRegistrationCallbacks.ExecuteCallbacks(*moduleSet);
@@ -100,22 +106,22 @@ namespace ExampleApp
     void AppWiring::ResolveModules()
     {
         auto moduleSet = m_moduleContainer->resolve<TModules>();
-        for (auto module : *moduleSet)
+        for (const auto& module : *moduleSet)
         {
             module->Register(m_appContainerBuilder);
         }
         m_appContainer = m_appContainerBuilder->build();
-        for (auto module : *moduleSet)
+        for (const auto& module : *moduleSet)
         {
             module->AssignContainer(m_appContainer.get());
             module->RegisterLeaves();
-            for (auto leaf : module->GetLeaves())
+            for (const auto& leaf : module->GetLeaves())
             {
                 m_leaves.push_back(leaf);
             }
             module->RegisterRenderableFilters();
-            auto filters = m_appContainer->resolve<Eegeo::Rendering::RenderableFilters>();
-            for (auto filter : module->GetRenderableFilters())
+            const auto& filters = m_appContainer->resolve<Eegeo::Rendering::RenderableFilters>();
+            for (const auto& filter : module->GetRenderableFilters())
             {
                 filters->AddRenderableFilter(*filter);
             }
