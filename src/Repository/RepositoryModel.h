@@ -39,6 +39,11 @@ namespace ExampleApp
             {
                 return m_items.at(index);
             }
+            
+            const TItem GetItemAtIndexConst(size_t index) const
+            {
+                return m_items.atConst(index);
+            }
 
             void InsertItemAddedCallback(Eegeo::Helpers::ICallback1<TItem>& callback)
             {

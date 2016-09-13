@@ -91,6 +91,11 @@ namespace ExampleApp
                     return m_repository.GetItemAtIndex(index);
                 }
                 
+                const SearchTag GetItemAtIndexConst(size_t index) const
+                {
+                    return m_repository.GetItemAtIndexConst(index);
+                }
+                
                 void InsertItemAddedCallback(Eegeo::Helpers::ICallback1<SearchTag>& callback) override
                 {
                     m_repository.InsertItemAddedCallback(callback);
@@ -129,7 +134,7 @@ namespace ExampleApp
                 {
                     for (size_t i = 0; i<GetItemCount(); ++i)
                     {
-                        const auto& t = GetItemAtIndex(i);
+                        const auto& t = GetItemAtIndexConst(i);
                         if (t.GetTag() == tagName)
                         {
                             return true;
