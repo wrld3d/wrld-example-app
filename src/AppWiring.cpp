@@ -40,6 +40,7 @@
 #include "SearchMenuModule.h"
 #include "SearchResultSectionModule.h"
 #include "PlaceJumpsModule.h"
+#include "TagSearchModule.h"
 
 namespace ExampleApp
 {
@@ -98,6 +99,7 @@ namespace ExampleApp
         RegisterModule<SearchMenu::SdkModel::SearchMenuModule>();
         RegisterModule<SearchResultSection::SdkModel::SearchResultSectionModule>();
         RegisterModule<PlaceJumps::SdkModel::PlaceJumpsModule>();
+        RegisterModule<TagSearch::SdkModel::TagSearchModule>();
         
         auto moduleSet = m_moduleContainer->resolve<TModules>();
         m_moduleRegistrationCallbacks.ExecuteCallbacks(*moduleSet);

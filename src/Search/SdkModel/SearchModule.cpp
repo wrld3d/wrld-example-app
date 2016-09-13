@@ -28,6 +28,7 @@
 #include "YelpBusinessJsonParser.h"
 #include "IYelpCategoryToTagMapper.h"
 #include "ISearchResultParser.h"
+#include "YelpSearchJsonParser.h"
 
 namespace ExampleApp
 {

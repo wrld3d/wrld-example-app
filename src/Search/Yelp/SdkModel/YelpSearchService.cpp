@@ -15,6 +15,7 @@
 #include "YelpBusinessQueryFactory.h"
 #include "YelpBusinessJsonParser.h"
 #include "YelpBusinessQuery.h"
+#include "YelpSearchJsonParser.h"
 
 namespace ExampleApp
 {
@@ -26,7 +27,7 @@ namespace ExampleApp
             {
                 YelpSearchService::YelpSearchService(const std::shared_ptr<YelpSearchQueryFactory>& searchQueryFactory,
                                                      const std::shared_ptr<YelpBusinessQueryFactory>& yelpBusinessQueryFactory,
-                                                     const std::shared_ptr<Search::SdkModel::ISearchResultParser>& searchResultParser,
+                                                     const std::shared_ptr<YelpSearchJsonParser>& searchResultParser,
                                                      const std::shared_ptr<Net::SdkModel::INetworkCapabilities>& networkCapabilities,
                                                      const std::shared_ptr<Search::SdkModel::SearchTagRepository>& searchTags)
                 : Search::SdkModel::SearchServiceBase(searchTags)
@@ -39,6 +40,10 @@ namespace ExampleApp
                 , m_pCurrentRequest(NULL)
                 , m_hasActiveQuery(false)
                 {
+                    Eegeo_ASSERT(m_searchQueryFactory != nullptr);
+                    Eegeo_ASSERT(m_yelpBusinessQueryFactory != nullptr);
+                    Eegeo_ASSERT(m_searchResultParser != nullptr);
+                    Eegeo_ASSERT(m_networkCapabilities != nullptr);
                 }
                 
                 YelpSearchService::~YelpSearchService()

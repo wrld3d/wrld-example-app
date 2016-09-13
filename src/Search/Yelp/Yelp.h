@@ -14,6 +14,7 @@ namespace ExampleApp
                 class IYelpSearchQuery;
                 class YelpSearchQueryFactory;
 				class YelpSearchResultModel;
+                class YelpSearchJsonParser;
                 class YelpBusinessJsonParser;
                 class YelpBusinessQueryFactory;
                 class YelpBusinessQuery;

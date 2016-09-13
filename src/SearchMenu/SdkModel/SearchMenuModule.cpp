@@ -10,6 +10,7 @@
 #include "SearchMenuPerformedSearchMessageHandler.h"
 #include "SearchMenuOptions.h"
 #include "PlaceJumpMenuOption.h"
+#include "TagSearchMenuOption.h"
 
 namespace ExampleApp
 {
@@ -34,8 +35,11 @@ namespace ExampleApp
                 RegisterLeaf<SearchMenuPerformedSearchMessageHandler>();
                 
                 auto viewModel = Resolve<View::SearchMenuViewModel>();
-                Menu::View::MenuSectionViewModel* pMenuSection = Eegeo_NEW(Menu::View::MenuSectionViewModel)("Locations", "", Resolve<PlaceJumps::View::PlaceJumpMenuModel>(), true);
-                viewModel->AddSection(*pMenuSection);
+                Menu::View::MenuSectionViewModel* pTagSearchSection = Eegeo_NEW(Menu::View::MenuSectionViewModel)("Find", "", Resolve<TagSearch::View::TagSearchMenuModel>(), true);
+                viewModel->AddSection(*pTagSearchSection);
+
+                Menu::View::MenuSectionViewModel* pPlaceJumpSection = Eegeo_NEW(Menu::View::MenuSectionViewModel)("Locations", "", Resolve<PlaceJumps::View::PlaceJumpMenuModel>(), true);
+                viewModel->AddSection(*pPlaceJumpSection);
             }
             
             /*

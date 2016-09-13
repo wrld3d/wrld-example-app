@@ -42,7 +42,7 @@ namespace ExampleApp
             public:
                 YelpSearchService(const std::shared_ptr<YelpSearchQueryFactory>& searchQueryFactory,
                                   const std::shared_ptr<YelpBusinessQueryFactory>& yelpBusinessQueryFactory,
-                                  const std::shared_ptr<Search::SdkModel::ISearchResultParser>& searchResultParser,
+                                  const std::shared_ptr<YelpSearchJsonParser>& searchResultParser,
                                   const std::shared_ptr<Net::SdkModel::INetworkCapabilities>& networkCapabilities,
                                   const std::shared_ptr<Search::SdkModel::SearchTagRepository>& searchTags);
                 

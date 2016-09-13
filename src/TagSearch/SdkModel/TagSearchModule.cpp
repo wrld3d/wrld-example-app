@@ -7,6 +7,9 @@
 #include "TagSearchRepositoryObserver.h"
 #include "TagSearchSelectedMessageHandler.h"
 #include "SearchResultIconKeyMapper.h"
+#include "TagSearchModelFactory.h"
+#include "IFileIO.h"
+#include "TagSearchSectionController.h"
 
 namespace ExampleApp
 {
@@ -21,12 +24,24 @@ namespace ExampleApp
                 builder->registerType<View::TagSearchRepository>().as<View::ITagSearchRepository>().singleInstance();
                 builder->registerType<TagSearchRepositoryObserver>().singleInstance();
                 builder->registerType<SearchResultIconKeyMapper>().as<ISearchResultIconKeyMapper>().singleInstance();
+                builder->registerType<View::TagSearchSectionController>().singleInstance();
             }
             
             void TagSearchModule::RegisterLeaves()
             {
                 RegisterLeaf<TagSearchRepositoryObserver>();
                 RegisterLeaf<TagSearchSelectedMessageHandler>();
+                RegisterLeaf<View::TagSearchSectionController>();
+                
+                const auto& tagSearchModels = TagSearch::View::CreateTagSearchModelsFromFile(
+                                                                                             *Resolve<Eegeo::Helpers::IFileIO>(),
+                                                                                             "search_menu_items.json");
+                
+                const auto& repository = Resolve<View::ITagSearchRepository>();
+                for (const auto& t : tagSearchModels)
+                {
+                    repository->AddItem(t);
+                }
             }
             
             /*

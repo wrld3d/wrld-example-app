@@ -13,10 +13,10 @@ namespace ExampleApp
         namespace View
         {
             TagSearchSectionController::TagSearchSectionController(
-                    Menu::View::IMenuOptionsModel& menuOptionsModel,
-                    Menu::View::IMenuViewModel& menuViewModel,
-                    ExampleAppMessaging::TMessageBus& messageBus,
-                    const Menu::View::IMenuReactionModel& menuReaction)
+                                                                   const std::shared_ptr<TagSearch::View::TagSearchMenuOptionsModel>& menuOptionsModel,
+                                                                   const std::shared_ptr<SearchMenu::View::SearchMenuViewModel>& menuViewModel,
+                                                                   const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                                                   const std::shared_ptr<Menu::View::IMenuReactionModel>& menuReaction)
             : m_menuOptionsModel(menuOptionsModel)
             , m_menuViewModel(menuViewModel)
             , m_messageBus(messageBus)
@@ -24,14 +24,14 @@ namespace ExampleApp
             , m_tagSearchAddedMessageHandler(this, &TagSearchSectionController::OnTagSearchAddedMessage)
             , m_tagSearchRemovedMessageHandler(this, &TagSearchSectionController::OnTagSearchRemovedMessage)
             {
-                m_messageBus.SubscribeUi(m_tagSearchAddedMessageHandler);
-                m_messageBus.SubscribeUi(m_tagSearchRemovedMessageHandler);
+                m_messageBus->SubscribeUi(m_tagSearchAddedMessageHandler);
+                m_messageBus->SubscribeUi(m_tagSearchRemovedMessageHandler);
             }
 
             TagSearchSectionController::~TagSearchSectionController()
             {
-                m_messageBus.UnsubscribeUi(m_tagSearchAddedMessageHandler);
-                m_messageBus.UnsubscribeUi(m_tagSearchRemovedMessageHandler);
+                m_messageBus->UnsubscribeUi(m_tagSearchAddedMessageHandler);
+                m_messageBus->UnsubscribeUi(m_tagSearchRemovedMessageHandler);
             }
 
             void TagSearchSectionController::OnTagSearchAddedMessage(const TagSearch::TagSearchAddedMessage& message)
@@ -45,13 +45,13 @@ namespace ExampleApp
 
                 auto* option = TagSearchMenuOptionFactory::CreateTagSearchMenuOption(
                         tagSearchModel,
-                        m_menuViewModel,
-                        m_messageBus,
-                        m_menuReaction);
+                        *m_menuViewModel,
+                        *m_messageBus,
+                        *m_menuReaction);
 
                 const std::string details = "";
 
-                m_menuOptionsModel.AddItem(
+                m_menuOptionsModel->AddItem(
                         tagSearchModel.Name(),
                         tagSearchModel.Name(),
                         details,
@@ -61,7 +61,7 @@ namespace ExampleApp
 
             void TagSearchSectionController::OnTagSearchRemovedMessage(const TagSearch::TagSearchRemovedMessage& message)
             {
-                m_menuOptionsModel.RemoveItem(message.Model().Name());
+                m_menuOptionsModel->RemoveItem(message.Model().Name());
             }
         }
     }
