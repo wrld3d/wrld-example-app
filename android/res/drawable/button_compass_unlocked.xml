@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:drawable="@drawable/compass_new_locate_down"
+    <item android:drawable="@drawable/compass_new_unlocked_down"
        	  android:state_pressed="true"/>
-    <item android:drawable="@drawable/compass_new_locate"/>
+    <item android:drawable="@drawable/compass_new_unlocked"/>
 </selector>
