@@ -143,6 +143,29 @@ set(resources ${resources}
 		Resources/compass_point_on.png
 		Resources/compass_point_on@2x.png
 		Resources/compass_point_on@3x.png
+		Resources/CompassNew.png
+		Resources/CompassNew@0.75x.png
+		Resources/CompassNew@1.5x.png
+		Resources/CompassNew@2x.png
+		Resources/CompassNew@3x.png
+		Resources/CompassNewLocate.png
+		Resources/CompassNewLocate@0.75x.png
+		Resources/CompassNewLocate@1.5x.png
+		Resources/CompassNewLocate@2x.png
+		Resources/CompassNewLocate@3x.png
+		Resources/CompassNewLocked.png
+		Resources/CompassNewLocked@0.75x.png
+		Resources/CompassNewLocked@1.5x.png
+		Resources/CompassNewLocked@2x.png
+		Resources/CompassNewLocked@3x.png
+		Resources/CompassNewLocked_Down.png
+		Resources/CompassNewLocked_Down@0.75x.png
+		Resources/CompassNewLocked_Down@1.5x.png
+		Resources/CompassNewLocked_Down@2x.png
+		Resources/CompassNewLocked_Down@3x.png
+		Resources/CompassNewLocate_Down.png		Resources/CompassNewLocate_Down@0.75x.png		Resources/CompassNewLocate_Down@1.5x.png		Resources/CompassNewLocate_Down@2x.png		Resources/CompassNewLocate_Down@3x.png
+		Resources/CompassNewUnlocked_Down.png		Resources/CompassNewUnlocked_Down@0.75x.png		Resources/CompassNewUnlocked_Down@1.5x.png		Resources/CompassNewUnlocked_Down@2x.png		Resources/CompassNewUnlocked_Down@3x.png
+		Resources/CompassNewUnlocked.png		Resources/CompassNewUnlocked@0.75x.png		Resources/CompassNewUnlocked@1.5x.png		Resources/CompassNewUnlocked@2x.png		Resources/CompassNewUnlocked@3x.png
 		Resources/DejaVuSansBold.fnt
 		Resources/DejaVuSansBold_0.png
 		Resources/eegeo_logo.png
