@@ -5,6 +5,7 @@
 #include "Search.h"
 #include "ISearchService.h"
 #include "CallbackCollection.h"
+#include "SearchTags.h"
 
 #include <vector>
 
@@ -20,7 +21,7 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection2<const SearchQuery&, const std::vector<SearchResultModel>& > m_queryResponseReceivedCallbacks;
 
             protected:
-                SearchServiceBase(const std::vector<std::string>& handledTags);
+                SearchServiceBase(const std::shared_ptr<Search::SdkModel::SearchTagRepository>& searchTags);
 
                 ~SearchServiceBase();
 
@@ -28,7 +29,7 @@ namespace ExampleApp
 
                 void ExecutQueryResponseReceivedCallbacks(const SearchQuery& query, const std::vector<SearchResultModel>& results);
                 
-                std::vector<std::string> m_handledTags;
+                const std::shared_ptr<const Search::SdkModel::SearchTagRepository> m_searchTags;
 
             public:
                 

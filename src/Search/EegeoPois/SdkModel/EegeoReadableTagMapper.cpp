@@ -11,17 +11,18 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                EegeoReadableTagMapper::EegeoReadableTagMapper(const std::shared_ptr<Search::SdkModel::SearchTags>& searchTags)
+                EegeoReadableTagMapper::EegeoReadableTagMapper(const std::shared_ptr<Search::SdkModel::SearchTagRepository>& searchTags)
                 {
-                    for(const auto& i : searchTags->tags)
+                    for(size_t i = 0; i<searchTags->GetItemCount(); ++i)
                     {
-                        Eegeo_ASSERT(m_tagsToReadableNamesMap.find(i.tag) == m_tagsToReadableNamesMap.end(),
-                            "A mapping already exists for tag %s", i.tag.c_str());
+                        const auto& t = searchTags->GetItemAtIndex(i);
+                        Eegeo_ASSERT(m_tagsToReadableNamesMap.find(t.GetTag()) == m_tagsToReadableNamesMap.end(),
+                            "A mapping already exists for tag %s", t.GetTag().c_str());
 
-                        m_tagsToReadableNamesMap.insert(std::make_pair(i.tag, i.readableTag));
+                        m_tagsToReadableNamesMap.insert(std::make_pair(t.GetTag(), t.GetReadableTag()));
                     }
 
-                    m_unknownTagName = searchTags->defaultReadableTag;
+                    m_unknownTagName = searchTags->GetDefaultReadableTag();
                 }
                 
                 const std::string& EegeoReadableTagMapper::GetNameForTag(const std::string& tag) const

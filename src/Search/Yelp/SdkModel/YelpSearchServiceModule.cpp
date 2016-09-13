@@ -30,17 +30,7 @@ namespace ExampleApp
                 builder->registerType<Yelp::SdkModel::YelpBusinessJsonParser>().singleInstance();
                 builder->registerType<Yelp::SdkModel::YelpSearchQueryFactory>().singleInstance();
                 builder->registerType<Yelp::SdkModel::YelpBusinessQueryFactory>().singleInstance();
-                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
-                                                   {
-                                                       const std::vector<std::string> appTags; //TODO: replace...
-                                                       return std::make_shared<Yelp::SdkModel::YelpSearchService>(
-                                                            context.resolve<Yelp::SdkModel::YelpSearchQueryFactory>(),
-                                                            context.resolve<Yelp::SdkModel::YelpBusinessQueryFactory>(),
-                                                            context.resolve<Yelp::SdkModel::YelpSearchJsonParser>(),
-                                                            context.resolve<Net::SdkModel::INetworkCapabilities>(),
-                                                            appTags
-                                                       );
-                                                   }).singleInstance();
+                builder->registerType<Yelp::SdkModel::YelpSearchService>().singleInstance();
             }
         }
     }

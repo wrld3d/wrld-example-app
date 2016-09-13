@@ -20,7 +20,7 @@ namespace ExampleApp
                 GeoNamesSearchService::GeoNamesSearchService(const std::shared_ptr<IGeoNamesSearchQueryFactory>& geoNamesSearchQueryFactory,
                                                              const std::shared_ptr<IGeoNamesParser>& geoNamesParser,
                                                              const std::shared_ptr<Net::SdkModel::INetworkCapabilities>& networkCapabilities)
-                : Search::SdkModel::SearchServiceBase(std::vector<std::string>())
+                : Search::SdkModel::SearchServiceBase(nullptr)
                 , m_geoNamesSearchQueryFactory(geoNamesSearchQueryFactory)
                 , m_geoNamesParser(geoNamesParser)
                 , m_networkCapabilities(networkCapabilities)

@@ -18,7 +18,7 @@ namespace ExampleApp
                 class EegeoReadableTagMapper : private Eegeo::NonCopyable
                 {
                 public:
-                    EegeoReadableTagMapper(const std::shared_ptr<Search::SdkModel::SearchTags>& searchTags);
+                    EegeoReadableTagMapper(const std::shared_ptr<Search::SdkModel::SearchTagRepository>& searchTags);
                     
                     const std::string& GetNameForTag(const std::string& tag) const;
                     

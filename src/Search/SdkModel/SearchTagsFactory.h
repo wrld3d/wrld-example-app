@@ -13,8 +13,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            SearchTags CreateSearchTagsFromFile(Eegeo::Helpers::IFileIO& fileIO, const std::string& fileName);
-            void CreateSearchTagsFromFileInPlace(Eegeo::Helpers::IFileIO& fileIO, const std::string& fileName, SearchTags& searchTags);
+            void PopulateSearchTagsFromFile(Eegeo::Helpers::IFileIO& fileIO, const std::string& fileName, SearchTagRepository& searchTags);
         }
     }
 }

@@ -21,6 +21,13 @@
 #include "INetworkCapabilities.h"
 #include "InteriorInteractionModel.h"
 #include "ICameraTransitionController.h"
+#include "IEegeoSearchQueryFactory.h"
+#include "IEegeoParser.h"
+#include "YelpSearchQueryFactory.h"
+#include "YelpBusinessQueryFactory.h"
+#include "YelpBusinessJsonParser.h"
+#include "IYelpCategoryToTagMapper.h"
+#include "ISearchResultParser.h"
 
 namespace ExampleApp
 {

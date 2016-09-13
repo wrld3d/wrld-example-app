@@ -11,14 +11,15 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                EegeoTagIconMapper::EegeoTagIconMapper(const std::shared_ptr<Search::SdkModel::SearchTags>& searchTags)
+                EegeoTagIconMapper::EegeoTagIconMapper(const std::shared_ptr<Search::SdkModel::SearchTagRepository>& searchTags)
                     : m_searchTags(searchTags)
                 {
-                    for(const auto& tag : searchTags->tags)
+                    for(size_t i = 0; i<searchTags->GetItemCount(); ++i)
                     {
-                        Eegeo_ASSERT(m_tagToTagIconKeyMapping.find(tag.tag) == m_tagToTagIconKeyMapping.end(),
-                                     "A tag => icon_key mapping already exists for key: %s", tag.tag.c_str());
-                        m_tagToTagIconKeyMapping[tag.tag] = tag.iconKey;
+                        const auto& tag = searchTags->GetItemAtIndex(i);
+                        Eegeo_ASSERT(m_tagToTagIconKeyMapping.find(tag.GetTag()) == m_tagToTagIconKeyMapping.end(),
+                                     "A tag => icon_key mapping already exists for key: %s", tag.GetTag().c_str());
+                        m_tagToTagIconKeyMapping[tag.GetTag()] = tag.GetIconKey();
                     }
                 }
 
@@ -40,7 +41,7 @@ namespace ExampleApp
                         }
                     }
 
-                    return m_searchTags->defaultIconKey;
+                    return m_searchTags->GetDefaultIconKey();
                 }
             }
         }

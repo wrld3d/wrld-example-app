@@ -11,7 +11,6 @@
 #include "IWebLoadRequestFactory.h"
 #include "InteriorInteractionModel.h"
 #include "INetworkCapabilities.h"
-#include "EegeoTagIconMapperFactory.h"
 #include "SearchTagsFactory.h"
 
 namespace ExampleApp
@@ -27,23 +26,14 @@ namespace ExampleApp
                     builder->registerType<EegeoSearchQueryFactory>().as<IEegeoSearchQueryFactory>().singleInstance();
                     builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                                      {
-                                                         auto searchTags = std::make_shared<Search::SdkModel::SearchTags>();
-                                                         Search::SdkModel::CreateSearchTagsFromFileInPlace(*context.resolve<Eegeo::Helpers::IFileIO>(), "search_tags.json", *searchTags);
+                                                         auto searchTags = std::make_shared<Search::SdkModel::SearchTagRepository>();
+                                                         Search::SdkModel::PopulateSearchTagsFromFile(*context.resolve<Eegeo::Helpers::IFileIO>(), "search_tags.json", *searchTags);
                                                          return searchTags;
                                                      }).singleInstance();
                     builder->registerType<EegeoTagIconMapper>().as<SearchResultPoi::SdkModel::ITagIconMapper>().singleInstance();
                     builder->registerType<EegeoReadableTagMapper>().singleInstance();
                     builder->registerType<EegeoJsonParser>().as<IEegeoParser>().singleInstance();
-                    builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
-                                                       {
-                                                           std::vector<std::string> appTags;
-                                                           return std::make_shared<EegeoSearchService>(
-                                                                context.resolve<IEegeoSearchQueryFactory>(),
-                                                                context.resolve<IEegeoParser>(),
-                                                                context.resolve<Net::SdkModel::INetworkCapabilities>(),
-                                                                appTags
-                                                           );
-                                                       }).singleInstance();
+                    builder->registerType<EegeoSearchService>().singleInstance();
                 }
             }
         }

@@ -4,7 +4,6 @@
 #include "document.h"
 #include "Types.h"
 #include "FileHelpers.h"
-#include "SearchResultModel.h"
 
 namespace ExampleApp
 {
@@ -12,10 +11,10 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            void CreateSearchTagsFromFileInPlace(
+            void PopulateSearchTagsFromFile(
                                                 Eegeo::Helpers::IFileIO& fileIO,
                                                 const std::string& fileName,
-                                                SearchTags& searchTags)
+                                                SearchTagRepository& searchTags)
             {
                 const std::string& jsonText = Helpers::FileHelpers::GetFileContentsAsString(fileIO, fileName);
                 rapidjson::Document document;
@@ -42,8 +41,8 @@ namespace ExampleApp
                 
                 const auto& tagsArray = document[tagsKeyName];
                 Eegeo_ASSERT(tagsArray.IsArray(), "value of %s was not an array", tagsKeyName);
-                searchTags.defaultReadableTag = defaultReadableTag;
-                searchTags.defaultIconKey = defaultIconKey;
+                searchTags.SetDefaultReadableTag(defaultReadableTag);
+                searchTags.SetDefaultIconKey(defaultIconKey);
                 
                 for (rapidjson::Value::ConstValueIterator itr = tagsArray.Begin(); itr != tagsArray.End(); ++itr)
                 {
@@ -66,16 +65,9 @@ namespace ExampleApp
                     Eegeo_ASSERT(tagElem[iconKeyJsonKeyName].IsString(), "value of %s was not a string", iconKeyJsonKeyName);
                     const TagIconKey iconKey = tagElem[iconKeyJsonKeyName].GetString();
                     
-                    searchTags.tags.emplace_back(SearchTag(tag, readableTag, iconKey));
+                    SearchTag t(tag, readableTag, iconKey);
+                    searchTags.AddItem(t);
                 }
-            }
-            
-            SearchTags CreateSearchTagsFromFile(
-                    Eegeo::Helpers::IFileIO& fileIO, const std::string& fileName)
-            {
-                SearchTags searchTags = {};
-                CreateSearchTagsFromFileInPlace(fileIO, fileName, searchTags);
-                return searchTags;
             }
         }
     }

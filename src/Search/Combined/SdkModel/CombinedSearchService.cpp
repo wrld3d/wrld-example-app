@@ -14,7 +14,7 @@ namespace ExampleApp
             {
                 CombinedSearchService::CombinedSearchService(const std::map<std::string, std::shared_ptr<Search::SdkModel::ISearchService>>& searchServices,
                                                              const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel)
-                : SearchServiceBase(std::vector<std::string>())
+                : SearchServiceBase(nullptr)
                 , m_searchServices(searchServices)
                 , m_searchQueryResponseCallback(this, &CombinedSearchService::OnSearchResponseRecieved)
                 , m_pendingResultsLeft(0)

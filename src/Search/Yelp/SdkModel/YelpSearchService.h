@@ -14,6 +14,7 @@
 #include "WebLoadRequestCompletionCallback.h"
 #include "SearchResultModel.h"
 #include "NetIncludes.h"
+#include "SearchTags.h"
 
 
 namespace ExampleApp
@@ -43,7 +44,7 @@ namespace ExampleApp
                                   const std::shared_ptr<YelpBusinessQueryFactory>& yelpBusinessQueryFactory,
                                   const std::shared_ptr<Search::SdkModel::ISearchResultParser>& searchResultParser,
                                   const std::shared_ptr<Net::SdkModel::INetworkCapabilities>& networkCapabilities,
-                                  const std::vector<std::string>& handledTags);
+                                  const std::shared_ptr<Search::SdkModel::SearchTagRepository>& searchTags);
                 
                 ~YelpSearchService();
                 

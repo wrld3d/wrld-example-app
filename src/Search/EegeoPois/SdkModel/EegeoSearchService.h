@@ -7,6 +7,7 @@
 #include "EegeoPois.h"
 #include "NetIncludes.h"
 #include "SearchQuery.h"
+#include "SearchTags.h"
 
 #include <vector>
 #include <string>
@@ -35,7 +36,7 @@ namespace ExampleApp
                     EegeoSearchService(const std::shared_ptr<IEegeoSearchQueryFactory>& EegeoSearchQueryFactory,
                                        const std::shared_ptr<IEegeoParser>& EegeoParser,
                                        const std::shared_ptr<Net::SdkModel::INetworkCapabilities>& networkCapabilities,
-                                       const std::vector<std::string>& handledTags);
+                                       const std::shared_ptr<Search::SdkModel::SearchTagRepository>& searchTags);
                     
                     ~EegeoSearchService();
                     

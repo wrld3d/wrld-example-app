@@ -25,10 +25,10 @@ namespace ExampleApp
 
                 private:
                     TTagToTagIconKey m_tagToTagIconKeyMapping;
-                    const std::shared_ptr<Search::SdkModel::SearchTags> m_searchTags;
+                    const std::shared_ptr<Search::SdkModel::SearchTagRepository> m_searchTags;
                     
                 public:
-                    EegeoTagIconMapper(const std::shared_ptr<Search::SdkModel::SearchTags>& searchTags);
+                    EegeoTagIconMapper(const std::shared_ptr<Search::SdkModel::SearchTagRepository>& searchTags);
 
                     ~EegeoTagIconMapper();
 

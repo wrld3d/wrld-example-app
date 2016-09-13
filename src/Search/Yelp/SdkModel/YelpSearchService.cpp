@@ -28,8 +28,8 @@ namespace ExampleApp
                                                      const std::shared_ptr<YelpBusinessQueryFactory>& yelpBusinessQueryFactory,
                                                      const std::shared_ptr<Search::SdkModel::ISearchResultParser>& searchResultParser,
                                                      const std::shared_ptr<Net::SdkModel::INetworkCapabilities>& networkCapabilities,
-                                                     const std::vector<std::string>& handledTags)
-                : Search::SdkModel::SearchServiceBase(handledTags)
+                                                     const std::shared_ptr<Search::SdkModel::SearchTagRepository>& searchTags)
+                : Search::SdkModel::SearchServiceBase(searchTags)
                 , m_searchQueryFactory(searchQueryFactory)
                 , m_yelpBusinessQueryFactory(yelpBusinessQueryFactory)
                 , m_searchResultParser(searchResultParser)
