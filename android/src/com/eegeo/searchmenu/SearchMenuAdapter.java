@@ -3,6 +3,7 @@
 package com.eegeo.searchmenu;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.eegeo.ProjectSwallowApp.R;
@@ -28,12 +29,24 @@ public class SearchMenuAdapter extends BaseAdapter
     private List<String> m_nameData;
     private Activity m_context;
     private final String m_defaultIconString = "misc";
+    
+    private SearchMenuListAnimationHandler m_searchMenuListAnimationHandler = null;
+    private SearchMenuListItemAnimationListener m_searchMenuListItemAnimationListener = null;
+    
+    private HashMap<String, View> m_viewCache;
+    
+    private boolean m_itemAnimationsEnabled = false;
 
-    public SearchMenuAdapter(Activity context, int itemViewId)
+    public SearchMenuAdapter(Activity context, int itemViewId, SearchMenuListAnimationHandler searchMenuListAnimationHandler, SearchMenuListItemAnimationListener searchMenuListItemAnimationListener)
     {
         m_context = context;
         m_itemViewId = itemViewId;
         m_nameData = new ArrayList<String>();
+        
+        m_searchMenuListAnimationHandler = searchMenuListAnimationHandler;
+        m_searchMenuListItemAnimationListener = searchMenuListItemAnimationListener;
+        
+        m_viewCache = new HashMap<String, View>();
     }
 
     public void setData(List<String> nameData)
@@ -63,19 +76,35 @@ public class SearchMenuAdapter extends BaseAdapter
     @Override
     public View getView(int index, View contextView, ViewGroup parent)
     {
-        final String json = (String)getItem(index);
-
-        if(contextView == null)
-        {
-            LayoutInflater inflater = (LayoutInflater)m_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            contextView = inflater.inflate(m_itemViewId, null);
-        }
+    	View itemView;
+		
+		String key = Integer.toString(index);
+		
+		if(m_viewCache.containsKey(key))
+		{
+			itemView = m_viewCache.get(key);
+		}
+		else
+		{
+	        LayoutInflater inflater = (LayoutInflater)m_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	        itemView = inflater.inflate(m_itemViewId, null);
+	        
+	        if(m_itemAnimationsEnabled)
+	        {
+		        itemView.setScaleY(0);
+		        m_searchMenuListAnimationHandler.animateItemView(itemView, true, m_searchMenuListItemAnimationListener);
+	        }
+	        
+	        m_viewCache.put(key, itemView);
+		}
+		
+		final String json = (String)getItem(index);
         
         try
         {
             JSONObject data = new JSONObject(json);
 
-            TextView nameLabel = (TextView)contextView.findViewById(R.id.menu_list_item_name);
+            TextView nameLabel = (TextView)itemView.findViewById(R.id.menu_list_item_name);
 
             nameLabel.setText(data.optString("name"));
             nameLabel.setEllipsize(TruncateAt.END);
@@ -83,7 +112,7 @@ public class SearchMenuAdapter extends BaseAdapter
             nameLabel.setSingleLine();
 
             String detailString = data.optString("details");
-            TextView detailLabel = (TextView)contextView.findViewById(R.id.menu_list_item_detail);
+            TextView detailLabel = (TextView)itemView.findViewById(R.id.menu_list_item_detail);
             detailLabel.setText(detailString);
             
             if(detailString == "")
@@ -95,7 +124,7 @@ public class SearchMenuAdapter extends BaseAdapter
             	nameLabel.setPadding(0, 0, 0, 0);
             }
             
-            ImageView categoryIcon = (ImageView)contextView.findViewById(R.id.menu_list_item_icon);
+            ImageView categoryIcon = (ImageView)itemView.findViewById(R.id.menu_list_item_icon);
             String categoryIconString = data.has("icon") ? data.getString("icon") : m_defaultIconString;
             categoryIcon.setImageResource(CategoryResources.getSmallIconForResourceName(m_context, categoryIconString));
             
@@ -105,6 +134,34 @@ public class SearchMenuAdapter extends BaseAdapter
             Log.e("Eegeo", "SearchMenuAdapter: Failed to read json data object: " + exception.getMessage());
         }
 
-        return contextView;
+        return itemView;
+    }
+    
+    public void triggerAnimations(boolean isExpanding)
+    {
+    	int count = getCount();
+    	for (int i = 0; i < count; ++i)
+		{
+			String key = Integer.toString(i);
+			if(m_viewCache.containsKey(key))
+			{
+				View itemView = m_viewCache.get(key);
+				
+				if(isExpanding)
+				{
+					itemView.setScaleY(0);
+				}
+				
+				if(m_itemAnimationsEnabled)
+				{
+					m_searchMenuListAnimationHandler.animateItemView(itemView, isExpanding, m_searchMenuListItemAnimationListener);
+				}
+			}
+		}
+    }
+    
+    public void enableItemAnimations(boolean enable)
+    {
+    	m_itemAnimationsEnabled = enable;
     }
 }
