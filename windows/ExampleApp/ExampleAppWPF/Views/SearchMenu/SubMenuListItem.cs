@@ -32,8 +32,8 @@ namespace ExampleAppWPF
 
             if (parsed.TryGetValue("icon", out iconField))
             {
-                var iconCategoryName = iconField.Value<string>();
-                m_icon = SearchMenuResultIconProvider.GetIconForCategory(iconCategoryName);
+                var iconName = iconField.Value<string>();
+                m_icon = SearchMenuResultIconProvider.GetIconForTag(iconName);
             }
 
             JToken detailsField;

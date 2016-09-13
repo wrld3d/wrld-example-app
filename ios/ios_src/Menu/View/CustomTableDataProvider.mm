@@ -9,6 +9,7 @@
 #include "document.h"
 #include "MenuViewInterop.h"
 #include "MenuSectionViewModel.h"
+#include "MenuItemModel.h"
 #include "ImageHelpers.h"
 #include "UIHelpers.h"
 

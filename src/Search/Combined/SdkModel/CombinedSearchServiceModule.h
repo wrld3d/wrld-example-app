@@ -20,14 +20,14 @@ namespace ExampleApp
                 private:
                     std::shared_ptr<Search::SdkModel::ISearchService> m_searchService;
                     
-                    std::vector<CategorySearch::View::CategorySearchModel> m_categorySearchModels;
+                    std::vector<TagSearch::View::TagSearchModel> m_tagSearchModels;
                     
                 public:
                     CombinedSearchServiceModule(std::map<std::string, std::shared_ptr<Search::SdkModel::ISearchServiceModule>>& searchServiceModules,
                                                 const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel);
                     
                     ~CombinedSearchServiceModule();
-                    
+
                     const std::shared_ptr<Search::SdkModel::ISearchService> GetSearchService() const;
                     
                     std::vector<CategorySearch::View::CategorySearchModel> GetCategorySearchModels() const;

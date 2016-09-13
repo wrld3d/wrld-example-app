@@ -5,12 +5,14 @@
 #include "EegeoJsonParser.h"
 #include "EegeoSearchQueryFactory.h"
 #include "EegeoSearchService.h"
-#include "EegeoCategoryIconMapper.h"
+#include "EegeoTagIconMapper.h"
 #include "EegeoReadableTagMapper.h"
 #include "YelpSearchConstants.h"
 #include "IWebLoadRequestFactory.h"
 #include "InteriorInteractionModel.h"
 #include "INetworkCapabilities.h"
+#include "EegeoTagIconMapperFactory.h"
+#include "SearchTagsFactory.h"
 
 namespace ExampleApp
 {
@@ -23,17 +25,23 @@ namespace ExampleApp
                 void EegeoSearchServiceModule::Register(const TContainerBuilder& builder)
                 {
                     builder->registerType<EegeoSearchQueryFactory>().as<IEegeoSearchQueryFactory>().singleInstance();
-                    builder->registerType<EegeoCategoryIconMapper>().as<SearchResultPoi::SdkModel::ICategoryIconMapper>().singleInstance();
+                    builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                     {
+                                                         auto searchTags = std::make_shared<Search::SdkModel::SearchTags>();
+                                                         Search::SdkModel::CreateSearchTagsFromFileInPlace(*context.resolve<Eegeo::Helpers::IFileIO>(), "search_tags.json", *searchTags);
+                                                         return searchTags;
+                                                     }).singleInstance();
+                    builder->registerType<EegeoTagIconMapper>().as<SearchResultPoi::SdkModel::ITagIconMapper>().singleInstance();
                     builder->registerType<EegeoReadableTagMapper>().singleInstance();
                     builder->registerType<EegeoJsonParser>().as<IEegeoParser>().singleInstance();
                     builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                                        {
-                                                           std::vector<std::string> supportedCategories = Search::Yelp::SearchConstants::GetCategories();
+                                                           std::vector<std::string> appTags;
                                                            return std::make_shared<EegeoSearchService>(
                                                                 context.resolve<IEegeoSearchQueryFactory>(),
                                                                 context.resolve<IEegeoParser>(),
                                                                 context.resolve<Net::SdkModel::INetworkCapabilities>(),
-                                                                supportedCategories
+                                                                appTags
                                                            );
                                                        }).singleInstance();
                 }

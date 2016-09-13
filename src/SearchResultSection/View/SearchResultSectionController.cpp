@@ -4,6 +4,7 @@
 
 #include <algorithm>
 
+#include "IMenuOptionsModel.h"
 #include "IAppModeModel.h"
 #include "ISearchResultSectionOrder.h"
 #include "SearchResultItemModel.h"
@@ -58,11 +59,12 @@ namespace ExampleApp
                 {
                     const Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
                     std::string subtitle = model.GetSubtitle();
-                    std::string category = model.GetCategory();                    
+
+                    ExampleApp::Search::SdkModel::TagIconKey iconKey = model.GetIconKey();
                     m_menuOptions->AddItem(model.GetIdentifier(),
                                           model.GetTitle(),
                                           subtitle,
-                                          category,
+                                          iconKey,
                                           Eegeo_NEW(SearchResultItemModel)(model.GetTitle(),
                                                                            model.GetLocation().ToECEF(),
                                                                            model.IsInterior(),

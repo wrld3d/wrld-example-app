@@ -17,6 +17,7 @@
 #include "InteriorInteractionModel.h"
 
 #include "ICameraTransitionController.h"
+#include "IPersistentSettingsModel.h"
 
 namespace ExampleApp
 {
@@ -31,6 +32,8 @@ namespace ExampleApp
                 const std::string MetricEventInteriorSelected = "Interior Selected";
                 const std::string MetricEventInteriorFloorSelected = "Interior Floor Selected";
                 const std::string MetricEventInteriorExitPressed = "Interior Exit Pressed";
+				const std::string InteriorExitTutorialViewedCount = "InteriorsExplorerModel_InteriorExitTutorialViewedCount";
+				const std::string InteriorChangeFloorTutorialViewedCount = "InteriorsExplorerModel_InteriorChangeFloorTutorialViewedCount";
                 
                 std::string ToFloorName(const Eegeo::Resources::Interiors::InteriorsFloorModel* pFloorModel)
                 {
@@ -42,7 +45,8 @@ namespace ExampleApp
                                                            const std::shared_ptr<Eegeo::Resources::Interiors::InteriorSelectionModel>& interiorSelectionModel,
                                                            const std::shared_ptr<VisualMap::SdkModel::IVisualMapService>& visualMapService,
                                                            const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
-                                                           const std::shared_ptr<Metrics::IMetricsService>& metricsService)
+                                                           const std::shared_ptr<Metrics::IMetricsService>& metricsService,
+                                                           const std::shared_ptr<PersistentSettings::IPersistentSettingsModel>& persistentSettings)
             : m_interiorInteractionModel(interiorInteractionModel)
             , m_interiorSelectionModel(interiorSelectionModel)
             , m_visualMapService(visualMapService)
@@ -54,6 +58,9 @@ namespace ExampleApp
             , m_floorSelectionDraggedCallback(this, &InteriorsExplorerModel::OnFloorSelectionDragged)
             , m_interiorExplorerEnabled(false)
             , m_currentInteriorFloorIndex(0)
+            , m_persistentSettings(persistentSettings)
+            , m_interiorExitTutorialViewedCount(0)
+			, m_interiorChangeFloorTutorialViewedCount(0)
             {
                 m_interiorInteractionModel->RegisterInteractionStateChangedCallback(m_interactionModelStateChangedCallback);
                 
@@ -92,6 +99,23 @@ namespace ExampleApp
             {
                 Eegeo_ASSERT(m_interiorInteractionModel->HasInteriorModel(), "Can't show interior explorer without a selected and streamed interior");
                 
+				if(!fromAnotherInterior)
+				{
+					m_interiorExitTutorialViewedCount = 0;
+
+					if(!m_persistentSettings->TryGetValue(InteriorExitTutorialViewedCount, m_interiorExitTutorialViewedCount))
+					{
+						m_interiorExitTutorialViewedCount = 0;
+					}
+
+					m_interiorChangeFloorTutorialViewedCount = 0;
+
+					if(!m_persistentSettings->TryGetValue(InteriorChangeFloorTutorialViewedCount, m_interiorChangeFloorTutorialViewedCount))
+					{
+						m_interiorChangeFloorTutorialViewedCount = 0;
+					}
+				}
+
                 if(!m_interiorExplorerEnabled)
                 {
                     // stop the state stack from growing when going from interior to another interior.
@@ -119,6 +143,26 @@ namespace ExampleApp
                     PublishInteriorExplorerStateChange();
                 }
             }
+            
+            int InteriorsExplorerModel::GetInteriorExitTutorialViewedCount()
+            {
+                return m_interiorExitTutorialViewedCount;
+            }
+            
+            void InteriorsExplorerModel::RecordHasViewedInteriorExitTutorial()
+            {
+                ++m_interiorExitTutorialViewedCount;
+            }
+
+			int InteriorsExplorerModel::GetInteriorChangeFloorTutorialViewedCount()
+			{
+				return m_interiorChangeFloorTutorialViewedCount;
+			}
+
+			void InteriorsExplorerModel::RecordHasViewedInteriorChangeFloorTutorial()
+			{
+				++m_interiorChangeFloorTutorialViewedCount;
+			}
             
            
             void InteriorsExplorerModel::HandleInteractionModelStateChanged()
@@ -152,6 +196,9 @@ namespace ExampleApp
             
             void InteriorsExplorerModel::Exit()
             {
+            	m_persistentSettings->SetValue(InteriorExitTutorialViewedCount, m_interiorExitTutorialViewedCount);
+				m_persistentSettings->SetValue(InteriorChangeFloorTutorialViewedCount, m_interiorChangeFloorTutorialViewedCount);
+
                 HideInteriorExplorer();
                 m_metricsService->SetEvent(MetricEventInteriorExitPressed);
                 m_interiorExplorerExitedCallbacks.ExecuteCallbacks();

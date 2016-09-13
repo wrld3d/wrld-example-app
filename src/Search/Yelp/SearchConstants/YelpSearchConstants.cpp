@@ -2,6 +2,9 @@
 
 #include "YelpSearchConstants.h"
 #include "Document.h"
+#include "FileHelpers.h"
+#include "Types.h"
+
 
 //
 // Yelp categories from http://www.yelp.com/developers/documentumentation/v2/all_category_list
@@ -17,125 +20,127 @@ namespace ExampleApp
             {
                 namespace
                 {
-                    std::string GetFileContents(Eegeo::Helpers::IFileIO& fileIO, const std::string& fileName)
+                    void ParseYelpFoundationCategoryToApplicationTagMap(
+                            const rapidjson::Document& document,
+                            const std::vector<std::string>& appTags,
+                            std::map<std::string, std::string>& out_yelpFoundationCategoryToAppTag)
                     {
-                        std::string contents;
+                        const char* appTagToYelpCategoriesKey = "app_tag_to_yelp_leaf_categories";
 
-                        std::fstream file;
-                        std::size_t size;
+                        Eegeo_ASSERT(document.HasMember(appTagToYelpCategoriesKey),
+                                "Key doesn't exist: %s\n", appTagToYelpCategoriesKey)
 
-                        if (fileIO.OpenFile(file, size, fileName, std::ios::in))
+                        const auto& appTagToYelpCategoriesJsonObj = document[appTagToYelpCategoriesKey];
+
+                        for (std::vector<std::string>::const_iterator appTagIter = appTags.begin();
+                             appTagIter != appTags.end();
+                             ++appTagIter)
                         {
-                            contents = std::string((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-                        }
+                            const auto& appTag = *appTagIter;
 
-                        return contents;
+                            const bool appTagToYelpCategoryMappingExists = appTagToYelpCategoriesJsonObj.HasMember(appTag.c_str());
+                            if (!appTagToYelpCategoryMappingExists)
+                            {
+                                continue;
+                            }
+
+                            const auto& yelpCategories = appTagToYelpCategoriesJsonObj[appTag.c_str()];
+
+                            if (!yelpCategories.IsArray())
+                            {
+                                continue;
+                            }
+
+                            for (rapidjson::Value::ConstValueIterator yelpCategoriesIter = yelpCategories.Begin();
+                                 yelpCategoriesIter != yelpCategories.End();
+                                 ++yelpCategoriesIter)
+                            {
+                                Eegeo_ASSERT(yelpCategoriesIter->IsString());
+                                const char* yelpCategory = yelpCategoriesIter->GetString();
+
+                                /*
+                                TODO tags: this assert trips -- our mapping data is mapping yelp categories multiple times
+                                e.g., culturalcenter appears in both 'art_museums' and 'entertainment'.
+
+                                Eegeo_ASSERT(
+                                        out_yelpFoundationCategoryToAppTag.find(yelpCategory) == out_yelpFoundationCategoryToAppTag.end(),
+                                        "yelp category %s already exists in map", yelpCategory);
+                                */
+
+                                out_yelpFoundationCategoryToAppTag.insert(std::make_pair(yelpCategory, appTag));
+                            }
+                        }
+                    }
+
+                    void ParseYelpAppTagToYelpCategoryMap(
+                            const rapidjson::Document& document,
+                            std::map<std::string, std::string>& out_appTagToYelpCategory)
+                    {
+                        const char* appTagToYelpRootCategoriesKey = "app_tag_to_yelp_root_category";
+
+                        Eegeo_ASSERT(document.HasMember(appTagToYelpRootCategoriesKey),
+                                "Key doesn't exist: %s\n", appTagToYelpRootCategoriesKey)
+
+                        const auto& appTagToYelpRootCategories = document[appTagToYelpRootCategoriesKey];
+
+                        for (auto appTagIter = appTagToYelpRootCategories.MemberBegin();
+                             appTagIter != appTagToYelpRootCategories.MemberEnd();
+                             ++appTagIter)
+                        {
+                            Eegeo_ASSERT(appTagIter->name.IsString());
+                            const auto& appTag = appTagIter->name.GetString();
+
+                            Eegeo_ASSERT(appTagIter->value.IsString());
+                            const auto& yelpCategory = appTagIter->value.GetString();
+
+                            Eegeo_ASSERT(
+                                    out_appTagToYelpCategory.find(appTag) == out_appTagToYelpCategory.end(),
+                                    "app tag %s already exists in map", appTag);
+                            out_appTagToYelpCategory[appTag] = yelpCategory;
+                        }
                     }
                 }
-                
-                std::string GetDefaultCategory() { return "misc"; }
 
-                std::map<std::string, std::string> GetYelpFoundationCategoryToApplicationCategoryMap(Eegeo::Helpers::IFileIO& fileIO)
+                void ParseYelpDataInPlace(
+                                                      Eegeo::Helpers::IFileIO& fileIO,
+                                                      const std::vector<std::string>& appTags,
+                                                      const std::string& fileName,
+                                                      YelpCategoryMappingData& yelpData)
                 {
-                    std::map<std::string, std::string> yelpToApplicationCategoryMap;
-
-                    std::string contents = GetFileContents(fileIO, "yelp_map.json");
-
+                    const std::string& contents = Helpers::FileHelpers::GetFileContentsAsString(fileIO, fileName);
                     rapidjson::Document document;
-
+                    
                     if (document.Parse<0>(contents.c_str()).HasParseError())
                     {
-                        Eegeo_TTY("Warning: Cannot parse Yelp Category Map!!");
-                        return yelpToApplicationCategoryMap;
-                    }
-
-                    std::vector<std::string> categories = GetCategories();
-
-                    for (std::vector<std::string>::const_iterator it = categories.begin();
-                        it != categories.end();
-                        ++it)
-                    {
-                        const std::string& category = (*it);
-
-                        if (!document.HasMember(category.c_str()))
-                        {
-                            continue;
-                        }
-                        
-                        rapidjson::GenericValue<rapidjson::UTF8<> >& list = document[category.c_str()];
-
-                        if (!list.IsArray())
-                        {
-                            continue;
-                        }
-                        
-                        for (rapidjson::Value::ValueIterator iter = list.Begin();
-                            iter != list.End();
-                            ++iter)
-                        {
-                            yelpToApplicationCategoryMap.insert(std::make_pair(iter->GetString(), category));
-                        }
+                        Eegeo_TTY("Warning: Cannot parse Yelp file: %s!", fileName.c_str());
+                        return;
                     }
                     
-                    return yelpToApplicationCategoryMap;
-                }
-                
-                std::vector<CategorySearch::View::CategorySearchModel> GetCategorySearchModels()
-                {
-                    const bool showCategoriesInSearchMenu = true;
+                    ParseYelpFoundationCategoryToApplicationTagMap(
+                                                                   document, appTags, yelpData.yelpFoundationCategoryToAppTag);
                     
-                    std::vector<ExampleApp::CategorySearch::View::CategorySearchModel> categories;
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Around Me", "", true, "aroundme", showCategoriesInSearchMenu));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Accommodation", "accommodation", true, "accommodation", showCategoriesInSearchMenu));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Art & Museum", "art_museums", true, "art_museums", showCategoriesInSearchMenu));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Business", "business", true, "business", showCategoriesInSearchMenu));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Entertainment", "entertainment", true, "entertainment", showCategoriesInSearchMenu));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Food & Drink", "food_drink", true, "food_drink", showCategoriesInSearchMenu));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("General Amenities", "amenities", true, "amenities", showCategoriesInSearchMenu));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Health", "health", true, "health", showCategoriesInSearchMenu));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Shopping", "shopping", true, "shopping", showCategoriesInSearchMenu));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Sport & Leisure", "sports_leisure", true, "sports_leisure", showCategoriesInSearchMenu));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Tourist", "tourism", true, "tourism", showCategoriesInSearchMenu));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Transport", "transport", true, "transport", showCategoriesInSearchMenu));
-
-                    return categories;
+                    ParseYelpAppTagToYelpCategoryMap(document, yelpData.appTagToYelpCategory);
+                    
+                    const char* defaultAppTagKey = "default_app_tag";
+                    
+                    Eegeo_ASSERT(document.HasMember(defaultAppTagKey),
+                                 "cannot find default category: %s", defaultAppTagKey);
+                    
+                    Eegeo_ASSERT(document[defaultAppTagKey].IsString(), "default category is not a string");
+                    
+                    yelpData.defaultAppTag = document[defaultAppTagKey].GetString();
                 }
                 
-                std::vector<std::string> GetCategories()
+                // it basically gets the fine-grained yelp category ("roller disco") and maps it to a known eegeo tag type ("entertainment")
+                // we use this when we get a yelp search result back, so we can map it to the appropriate app tag.
+                YelpCategoryMappingData ParseYelpData(
+                        Eegeo::Helpers::IFileIO& fileIO,
+                        const std::vector<std::string>& appTags,
+                        const std::string& fileName)
                 {
-                    std::vector<std::string> categories;
-                    categories.push_back("");
-                    categories.push_back("accommodation");
-                    categories.push_back("art_museums");
-                    categories.push_back("business");
-                    categories.push_back("entertainment");
-                    categories.push_back("food_drink");
-                    categories.push_back("amenities");
-                    categories.push_back("health");
-                    categories.push_back("shopping");
-                    categories.push_back("sports_leisure");
-                    categories.push_back("tourism");
-                    categories.push_back("transport");
-                    return categories;
-                }
-
-                std::map<std::string, std::string> GetApplicationToYelpCategoryMap()
-                {
-                    std::map<std::string, std::string> applicationMap;
-
-                    applicationMap["accommodation"] = "hotels";
-                    applicationMap["art_museums"] = "museums";
-                    applicationMap["business"] = "professional";
-                    applicationMap["entertainment"] = "arts";
-                    applicationMap["food_drink"] = "food";
-                    applicationMap["amenities"] = "homeservices";
-                    applicationMap["health"] = "health";
-                    applicationMap["shopping"] = "shopping";
-                    applicationMap["sports_leisure"] = "active";
-                    applicationMap["tourism"] = "tours";
-                    applicationMap["transport"] = "transport";
-
-                    return applicationMap;
+                    YelpCategoryMappingData yelpData;
+                    ParseYelpDataInPlace(fileIO, appTags, fileName, yelpData);
+                    return yelpData;
                 }
             }
         }

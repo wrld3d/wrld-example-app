@@ -36,7 +36,7 @@ namespace ExampleAppWPF
             public static double Width = 0.24;
 
             public static double TopPanelH = 0.05;
-            public static double CategoryIconW = 0.027;
+            public static double TagIconW = 0.027;
 
             public static double TitleFontSize = 0.026;
             public static double TitleH = 0.04;

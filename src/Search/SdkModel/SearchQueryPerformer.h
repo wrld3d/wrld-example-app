@@ -44,10 +44,10 @@ namespace ExampleApp
                     return m_previousQuery;
                 }
 
-                void PerformSearchQuery(const std::string& query, bool isCategory, bool tryInteriorSearch);
-                void PerformSearchQuery(const std::string& query, bool isCategory, bool tryInteriorSearch, float radius);
-                void PerformSearchQuery(const std::string& query, bool isCategory, bool tryInteriorSearch, const Eegeo::Space::LatLongAltitude& location);
-                void PerformSearchQuery(const std::string& query, bool isCategory, bool tryInteriorSearch, const Eegeo::Space::LatLongAltitude& location, float radius);
+                void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch);
+                void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, float radius);
+                void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, const Eegeo::Space::LatLongAltitude& location);
+                void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, const Eegeo::Space::LatLongAltitude& location, float radius);
 
                 void RemoveSearchQueryResults();
 
@@ -59,7 +59,8 @@ namespace ExampleApp
 
                 void RemoveExistingSearchResults();
 
-                void HandleSearchResultsResponseReceived(const SearchQuery& query,
+                void HandleSearchResultsResponseReceived(
+                        const SearchQuery& query,
                         const std::vector<SearchResultModel>& results);
 
             };

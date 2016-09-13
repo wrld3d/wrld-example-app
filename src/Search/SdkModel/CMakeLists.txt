@@ -26,6 +26,9 @@ set(currsources
   ../src/Search/SdkModel/SearchResultRepository.h
   ../src/Search/SdkModel/SearchServiceBase.cpp
   ../src/Search/SdkModel/SearchServiceBase.h
+  ../src/Search/SdkModel/SearchTags.h
+  ../src/Search/SdkModel/SearchTagsFactory.h
+  ../src/Search/SdkModel/SearchTagsFactory.cpp
   ../src/Search/SdkModel/SerializeSearchResultModelToJson.cpp
 )
 set(sources ${sources} ${currsources})

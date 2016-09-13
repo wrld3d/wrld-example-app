@@ -36,13 +36,13 @@ namespace ExampleApp
             : m_messageBus(messageBus)
             , m_persistentSettingsModel(persistentSettingsModel)
             , m_onSearchPerformedMessage(this, &SurveyObserver::OnSearchPerformedMessage)
-            , m_onCategorySearchPerformedMessage(this, &SurveyObserver::OnCategorySearchPerformedMessage)
+            , m_onTagSearchPerformedMessage(this, &SurveyObserver::OnTagSearchPerformedMessage)
             , m_onSearchResultSelected(this, &SurveyObserver::OnSearchResultSelected)
             , m_onWeatherSelected(this, &SurveyObserver::OnWeatherSelected)
             , m_onPinCreated(this, &SurveyObserver::OnPinCreated)
             {
                 m_messageBus->SubscribeNative(m_onSearchPerformedMessage);
-                m_messageBus->SubscribeNative(m_onCategorySearchPerformedMessage);
+                m_messageBus->SubscribeNative(m_onTagSearchPerformedMessage);
                 m_messageBus->SubscribeNative(m_onSearchResultSelected);
                 m_messageBus->SubscribeNative(m_onWeatherSelected);
                 m_messageBus->SubscribeNative(m_onPinCreated);
@@ -51,7 +51,7 @@ namespace ExampleApp
             SurveyObserver::~SurveyObserver()
             {
                 m_messageBus->UnsubscribeNative(m_onSearchPerformedMessage);
-                m_messageBus->UnsubscribeNative(m_onCategorySearchPerformedMessage);
+                m_messageBus->UnsubscribeNative(m_onTagSearchPerformedMessage);
                 m_messageBus->UnsubscribeNative(m_onSearchResultSelected);
                 m_messageBus->UnsubscribeNative(m_onWeatherSelected);
                 m_messageBus->UnsubscribeNative(m_onPinCreated);
@@ -85,7 +85,7 @@ namespace ExampleApp
                 SetSurveyConditionsFlag(SearchPerformed);
             }
             
-            void SurveyObserver::OnCategorySearchPerformedMessage(const CategorySearch::CategorySearchSelectedMessage& message)
+            void SurveyObserver::OnTagSearchPerformedMessage(const TagSearch::TagSearchSelectedMessage& message)
             {
                 if(SurveyOffered())
                 {

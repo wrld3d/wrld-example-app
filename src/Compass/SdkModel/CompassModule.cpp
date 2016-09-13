@@ -15,6 +15,7 @@
 #include "IVisualMapService.h"
 #include "IAlertBoxFactory.h"
 #include "CompassController.h"
+#include "IPersistentSettingsModel.h"
 
 namespace ExampleApp
 {

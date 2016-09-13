@@ -180,18 +180,18 @@
 {
     m_yCursor = 10.f;
     const float titleContainerWidth = m_controlContainerWidth;
-    const float titleContainerHeight = 70.f;
+    const float titleContainerHeight = 47.f;
 
     self.pTitleContainer.frame = CGRectMake(0, m_yCursor, titleContainerWidth, titleContainerHeight);
     self.pTitleContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
 
-    const float titleImageSize = static_cast<float>(self.pTitleContainer.frame.size.height);
-    self.pTitleImage.frame = CGRectMake(0, 0, titleImageSize, titleImageSize);
+    const float titleImageSize = 33.f;
+    self.pTitleImage.frame = CGRectMake(12, 12, titleImageSize, titleImageSize);
     self.pTitleImage.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
 
-    const float textPadding = 10.f;
+    const float textPadding = 22.f;
     const float titleTextX = titleImageSize + textPadding;
-    self.pTitleText.frame = CGRectMake(titleTextX, 0, titleContainerWidth - titleTextX, titleContainerHeight);
+    self.pTitleText.frame = CGRectMake(titleTextX, 5, titleContainerWidth - titleTextX, titleContainerHeight);
 
     self.pTitleText.font = [UIFont systemFontOfSize:25.0f];
     self.pTitleText.textColor = ExampleApp::Helpers::ColorPalette::UiTextTitleColor;
@@ -220,7 +220,7 @@
 
     const float shareBarY = 5.f;
     const float checkboxSize = 20.f;
-    const float checkBoxX = 20.f;
+    const float checkBoxX = 12.f;
 
     self.pCheckbox.frame = CGRectMake(checkBoxX, shareBarY + 5.f, checkboxSize, checkboxSize);
     [self.pCheckbox setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_checkbox_off") forState:UIControlStateNormal];
@@ -228,7 +228,7 @@
 
     const float shareLabelWidth = 45.f;
     const float shareLabelHeight = 30.f;
-    const float shareLabelPadding = 5.f;
+    const float shareLabelPadding = 12.f;
     const float shareLabelX = checkBoxX + checkboxSize + shareLabelPadding;
 
     self.pShareLabel.frame = CGRectMake(shareLabelX, shareBarY, shareLabelWidth, shareLabelHeight);
@@ -239,7 +239,7 @@
     const float termsLabelWidth = 150.f;
     const float termsLabelHeight = 30.f;
     const float termsLabelX = shareLabelX + shareLabelWidth + 2.f;
-    self.pTermsLabel.frame = CGRectMake(termsLabelX, shareBarY + 2.f, termsLabelWidth, termsLabelHeight);
+    self.pTermsLabel.frame = CGRectMake(termsLabelX, shareBarY + 1.f, termsLabelWidth, termsLabelHeight);
 
     self.pTermsLabel.text = @"(Terms & Conditions)";
     self.pTermsLabel.font = [UIFont systemFontOfSize: 12.f];
@@ -253,8 +253,8 @@
     const float scrollViewY = shareBarY + checkboxSize + scrollBoxPadding;
     self.pBodyScrollView.frame = CGRectMake(0, scrollViewY, m_controlContainerWidth, bodyContainerHeight);
 
-    const float poiDescriptionBoxX = 20.f;
-    const float poiDescriptionBoxY = 20.f;
+    const float poiDescriptionBoxX = 12.f;
+    const float poiDescriptionBoxY = 24.f;
     const float poiDescriptionBoxHeight = 120.f;
     const float poiDescriptionBoxWidth = m_controlContainerWidth - (2 * poiDescriptionBoxX);
     self.pPoiDescriptionBox.frame = CGRectMake(poiDescriptionBoxX, poiDescriptionBoxY, poiDescriptionBoxWidth, poiDescriptionBoxHeight);
@@ -278,8 +278,8 @@
     self.pDescriptionPlaceholder.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyLightColor;
     self.pDescriptionPlaceholder.text = @"Tell us about your pin...";
 
-    const float poiImageY = poiDescriptionBoxHeight + poiDescriptionBoxY + 30.f;
-    const float poiImageX = 20.f;
+    const float poiImageY = poiDescriptionBoxHeight + poiDescriptionBoxY + 24.f;
+    const float poiImageX = 12.f;
     m_maxImageWidth = m_controlContainerWidth - (2 * poiImageX);
     const float poiImageHeight = m_maxImageWidth * 0.75f;
     self.pPoiImage.frame = CGRectMake(poiImageX, poiImageY, m_maxImageWidth, poiImageHeight);

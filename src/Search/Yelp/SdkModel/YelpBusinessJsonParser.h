@@ -19,12 +19,12 @@ namespace ExampleApp
                 class YelpBusinessJsonParser : private Eegeo::NonCopyable
                 {
                 public:
-                    YelpBusinessJsonParser(const std::shared_ptr<IYelpCategoryMapper>& yelpCategoryMapper);
+                    YelpBusinessJsonParser(const std::shared_ptr<IYelpCategoryToTagMapper>& yelpCategoryMapper);
                     
                     bool TryParse(const std::string& responseString, Search::SdkModel::SearchResultModel& out_result) const;
                     
                 private:
-                    std::shared_ptr<IYelpCategoryMapper> m_yelpCategoryMapper;
+                    std::shared_ptr<IYelpCategoryToTagMapper> m_yelpCategoryMapper;
                 };
             }
         }

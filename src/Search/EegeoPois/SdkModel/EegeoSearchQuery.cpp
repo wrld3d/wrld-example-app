@@ -36,7 +36,7 @@ namespace ExampleApp
                     std::stringstream urlstream;
                     urlstream.setf(std::ios_base::fixed);
                     urlstream << serviceUrl;
-                    if (query.IsCategory())
+                    if (query.IsTag())
                     {
                         urlstream << "/tag?";
                         if (!encodedQuery.empty())

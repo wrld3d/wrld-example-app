@@ -3,6 +3,8 @@ set(headers ${headers} ../src/Helpers
 set(currsources
   ../src/Helpers/CMakeLists.txt
   ../src/Helpers/AppColorHelpers.h
+  ../src/Helpers/FileHelpers.h
+  ../src/Helpers/FileHelpers.cpp
   ../src/Helpers/ImagePathHelpers.h
   ../src/Helpers/InteriorHeightHelpers.cpp
   ../src/Helpers/InteriorHeightHelpers.h

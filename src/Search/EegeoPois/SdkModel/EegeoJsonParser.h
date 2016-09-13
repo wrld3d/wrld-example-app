@@ -6,7 +6,7 @@
 #include "Types.h"
 #include "SearchResultModel.h"
 #include "EegeoSearchResultModel.h"
-#include "ICategoryIconMapper.h"
+#include "ITagIconMapper.h"
 #include "EegeoPois.h"
 
 namespace ExampleApp
@@ -19,12 +19,13 @@ namespace ExampleApp
             {
                 class EegeoJsonParser : public IEegeoParser, private Eegeo::NonCopyable
                 {
-                    std::shared_ptr<const SearchResultPoi::SdkModel::ICategoryIconMapper> m_categoryIconMapper;
+                private:
+                    std::shared_ptr<const SearchResultPoi::SdkModel::ITagIconMapper> m_tagIconMapper;
                     std::shared_ptr<const EegeoReadableTagMapper> m_tagReadableNameMapper;
                 public:
-                    EegeoJsonParser(const std::shared_ptr<SearchResultPoi::SdkModel::ICategoryIconMapper>& tagIconMapper,
+                    EegeoJsonParser(const std::shared_ptr<SearchResultPoi::SdkModel::ITagIconMapper>& tagIconMapper,
                                     const std::shared_ptr<EegeoReadableTagMapper>& tagReadableNameMapper);
-                    
+
                     void ParseEegeoQueryResults(const std::string& serialized,
                                                 std::vector<Search::SdkModel::SearchResultModel>& out_results);
                 };

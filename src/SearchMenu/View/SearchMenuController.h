@@ -4,7 +4,7 @@
 
 #include "MenuController.h"
 
-#include "CategorySearch.h"
+#include "TagSearch.h"
 #include "Modality.h"
 #include "SearchMenu.h"
 #include "SearchMenuOptions.h"
@@ -21,7 +21,7 @@ namespace ExampleApp
             private:
                 const std::shared_ptr<ISearchMenuView> m_searchMenuView;
                 const std::shared_ptr<Menu::View::IMenuSectionViewModel> m_searchSectionViewModel;
-                const std::shared_ptr<CategorySearch::View::ICategorySearchRepository> m_categorySearchRepository;
+                const std::shared_ptr<TagSearch::View::ITagSearchRepository> m_tagSearchRepository;
                 const std::shared_ptr<Modality::View::IModalBackgroundView> m_modalBackgroundView;
                 const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 bool m_appModeAllowsOpen;
@@ -73,10 +73,9 @@ namespace ExampleApp
                                      const std::shared_ptr<Menu::View::IMenuView>& view,
                                      const std::shared_ptr<ISearchMenuView>& searchMenuView,
                                      const std::shared_ptr<SearchMenuSectionViewModel>& searchSectionViewModel,
-                                     const std::shared_ptr<CategorySearch::View::ICategorySearchRepository>& categorySearchRepository,
+                                     const std::shared_ptr<TagSearch::View::ITagSearchRepository>& tagSearchRepository,
                                      const std::shared_ptr<Modality::View::IModalBackgroundView>& modalBackgroundView,
                                      const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
-                
                 virtual ~SearchMenuController();
             };
         }

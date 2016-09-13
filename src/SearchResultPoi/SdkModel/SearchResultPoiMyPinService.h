@@ -7,7 +7,7 @@
 #include "SearchResultModel.h"
 #include "MyPins.h"
 #include "Search.h"
-#include "CategorySearch.h"
+#include "TagSearch.h"
 
 namespace ExampleApp
 {
@@ -19,12 +19,12 @@ namespace ExampleApp
             {
                 const std::shared_ptr<MyPins::SdkModel::IMyPinsService> m_myPinsService;
                 const std::shared_ptr<Search::SdkModel::MyPins::ISearchResultMyPinsService> m_searchResultMyPinsService;
-                const std::shared_ptr<CategorySearch::ISearchResultIconCategoryMapper> m_searchResultIconCategoryMapper;
+                const std::shared_ptr<TagSearch::ISearchResultIconKeyMapper> m_searchResultIconKeyMapper;
                 
             public:
                 SearchResultPoiMyPinService(const std::shared_ptr<MyPins::SdkModel::IMyPinsService>& myPinsService,
                                             const std::shared_ptr<Search::SdkModel::MyPins::ISearchResultMyPinsService>& searchResultMyPinsService,
-                                            const std::shared_ptr<CategorySearch::ISearchResultIconCategoryMapper>& searchResultIconCategoryMapper);
+                                            const std::shared_ptr<TagSearch::ISearchResultIconKeyMapper>& searchResultIconKeyMapper);
                 
                 ~SearchResultPoiMyPinService();
                 

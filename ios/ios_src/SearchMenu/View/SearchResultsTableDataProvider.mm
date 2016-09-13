@@ -11,6 +11,7 @@
 #include "MenuSectionViewModel.h"
 #include "ImageHelpers.h"
 #include "UIHelpers.h"
+#include "MenuItemModel.h"
 
 static NSString *CellIdentifier = @"searchCell";
 

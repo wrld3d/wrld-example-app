@@ -35,7 +35,7 @@ namespace ExampleApp
                     EegeoSearchService(const std::shared_ptr<IEegeoSearchQueryFactory>& EegeoSearchQueryFactory,
                                        const std::shared_ptr<IEegeoParser>& EegeoParser,
                                        const std::shared_ptr<Net::SdkModel::INetworkCapabilities>& networkCapabilities,
-                                       const std::vector<std::string>& availableCategories);
+                                       const std::vector<std::string>& handledTags);
                     
                     ~EegeoSearchService();
                     

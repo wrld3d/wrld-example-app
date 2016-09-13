@@ -7,7 +7,7 @@
 #include "Types.h"
 #include "ISearchResultOnMapModel.h"
 #include "SearchResultOnMap.h"
-#include "CategorySearch.h"
+#include "TagSearch.h"
 #include "Search.h"
 #include "WorldPins.h"
 #include "MyPins.h"
@@ -40,7 +40,7 @@ namespace ExampleApp
                 const std::shared_ptr<Search::SdkModel::MyPins::ISearchResultMyPinsService> m_searchResultOnMapMyPinsService;
                 const std::shared_ptr<MyPins::SdkModel::IMyPinsService> m_myPinsService;
                 const std::shared_ptr<Search::SdkModel::ISearchResultRepository> m_searchResultRepository;
-                const std::shared_ptr<CategorySearch::ISearchResultIconCategoryMapper> m_searchResultIconCategoryMapper;
+                const std::shared_ptr<TagSearch::ISearchResultIconKeyMapper> m_searchResultIconKeyMapper;
                 const std::shared_ptr<View::ISearchResultOnMapFactory> m_searchResultOnMapFactory;
                 const std::shared_ptr<WorldPins::SdkModel::IWorldPinsService> m_worldPinsService;
 
@@ -49,7 +49,7 @@ namespace ExampleApp
                                        const std::shared_ptr<MyPins::SdkModel::IMyPinsService>& myPinsService,
                                        const std::shared_ptr<View::ISearchResultOnMapFactory>& searchResultOnMapFactory,
                                        const std::shared_ptr<Search::SdkModel::MyPins::ISearchResultMyPinsService>& searchResultOnMapMyPinsService,
-                                       const std::shared_ptr<CategorySearch::ISearchResultIconCategoryMapper>& searchResultIconCategoryMapper,
+                                       const std::shared_ptr<TagSearch::ISearchResultIconKeyMapper>& searchResultIconKeyMapper,
                                        const std::shared_ptr<Search::SdkModel::ISearchResultRepository>& searchResultRepository);
 
                 ~SearchResultOnMapModel();

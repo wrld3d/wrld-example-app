@@ -92,19 +92,13 @@ public class SettingsMenuView extends MenuView
     }
     
     @Override
-    public void animateToClosedOnScreen() {
-
-    	super.animateToClosedOnScreen();
+    public void onOffScreenAnimationComplete()
+    {
+    	super.onOffScreenAnimationComplete();
     	
-    	if(m_menuState == MenuState.OFF_SCREEN)
+    	if(!m_menuAnimationHandler.isOffScreen())
     	{
-	    	m_animating = true;
-	    	
-	    	m_menuAnimationHandler.playToClosedOnScreen();
-	    	
-	    	m_list.setEnabled(false);
-	    	
-	    	m_menuState = MenuState.CLOSED_ON_SCREEN;
+    		animateToIntermediateOnScreenState(0);
     	}
     }
 

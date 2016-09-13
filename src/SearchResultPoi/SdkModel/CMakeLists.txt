@@ -2,11 +2,11 @@ set(headers ${headers} ../src/SearchResultPoi/SdkModel
 )
 set(currsources
   ../src/SearchResultPoi/SdkModel/CMakeLists.txt
-  ../src/SearchResultPoi/SdkModel/EegeoCategoryIconMapper.cpp
-  ../src/SearchResultPoi/SdkModel/EegeoCategoryIconMapper.h
+  ../src/SearchResultPoi/SdkModel/EegeoTagIconMapper.cpp
+  ../src/SearchResultPoi/SdkModel/EegeoTagIconMapper.h
   ../src/SearchResultPoi/SdkModel/ISearchResultPoiMyPinService.h
   ../src/SearchResultPoi/SdkModel/ISearchResultPoiViewImageFetcher.h
-  ../src/SearchResultPoi/SdkModel/ICategoryIconMapper.h
+  ../src/SearchResultPoi/SdkModel/ITagIconMapper.h
   ../src/SearchResultPoi/SdkModel/SearchResultPoiMyPinService.cpp
   ../src/SearchResultPoi/SdkModel/SearchResultPoiMyPinService.h
   ../src/SearchResultPoi/SdkModel/SearchResultPoiPinToggledMessageHandler.cpp

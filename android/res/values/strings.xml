@@ -17,11 +17,11 @@
     <string name="header_description">Description</string>
     <string name="header_image">Image</string>
     <string name="header_country">Country</string>
-    <string name="header_categories">Categories</string>
+    <string name="header_tags">Tags</string>
     <string name="header_reviews">Reviews</string>
     
     <string name="content_desc_compass_lock">This icon represents that the compass is now locked to the device\'s heading.</string>
-    <string name="content_desc_category_icon">This icon represents a specific place of interest category</string>
+    <string name="content_desc_tag_icon">This icon represents a specific place of interest tag</string>
     
     <string name="icon_me">Drag or tap this tab to open the User Options menu</string>
     <string name="icon_search">Drag or tap this tab to open the Search and Environment menu</string>

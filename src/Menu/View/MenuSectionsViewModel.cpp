@@ -1,7 +1,6 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "MenuSectionsViewModel.h"
-#include <vector>
 #include <algorithm>
 
 namespace ExampleApp
@@ -14,7 +13,7 @@ namespace ExampleApp
             {
                 size_t numberOfCells = 0;
 
-                for (int i = 0; i < set.size(); ++i)
+                for (size_t i = 0; i < set.size(); ++i)
                 {
                     const IMenuSectionViewModel& section = *set.at(i);
                     numberOfCells += section.GetTotalItemCount();
@@ -35,7 +34,8 @@ namespace ExampleApp
 
             IMenuSectionViewModel& MenuSectionsViewModel::GetMenuSection(int index) const
             {
-                return *m_menuSections.at(index);
+                Eegeo_ASSERT(index >= 0, "index was negative");
+                return *m_menuSections.at(static_cast<size_t>(index));
             }
         }
     }

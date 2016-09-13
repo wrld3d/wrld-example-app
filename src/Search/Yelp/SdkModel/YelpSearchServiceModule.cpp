@@ -4,7 +4,7 @@
 #include "YelpSearchJsonParser.h"
 #include "YelpBusinessJsonParser.h"
 #include "YelpSearchService.h"
-#include "YelpCategoryMapper.h"
+#include "YelpCategoryToTagMapper.h"
 #include "YelpSearchConstants.h"
 #include "YelpSearchQueryFactory.h"
 #include "YelpBusinessQueryFactory.h"
@@ -19,25 +19,26 @@ namespace ExampleApp
             void YelpSearchServiceModule::Register(const TContainerBuilder& builder)
             {
                 builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
-                                                   {
-                                                       return std::make_shared<Yelp::SdkModel::YelpCategoryMapper>(
-                                                            context.resolve<Eegeo::Web::IWebLoadRequestFactory>(),
-                                                            Yelp::SearchConstants::GetYelpFoundationCategoryToApplicationCategoryMap(*(context.resolve<Eegeo::Helpers::IFileIO>())),
-                                                            Yelp::SearchConstants::GetDefaultCategory()
-                                                       );
-                                                   }).as<Yelp::SdkModel::IYelpCategoryMapper>().singleInstance();
+                                                 {
+                                                     auto yelpData = std::make_shared<SearchConstants::YelpCategoryMappingData>();
+                                                     const std::vector<std::string> appTags; //TODO: replace...
+                                                     SearchConstants::ParseYelpDataInPlace(*context.resolve<Eegeo::Helpers::IFileIO>(), appTags, "yelp_map.json", *yelpData);
+                                                     return yelpData;
+                                                 }).singleInstance();
+                builder->registerType<Yelp::SdkModel::YelpCategoryToTagMapper>().as<Yelp::SdkModel::IYelpCategoryToTagMapper>().singleInstance();
                 builder->registerType<Yelp::SdkModel::YelpSearchJsonParser>().singleInstance();
                 builder->registerType<Yelp::SdkModel::YelpBusinessJsonParser>().singleInstance();
                 builder->registerType<Yelp::SdkModel::YelpSearchQueryFactory>().singleInstance();
                 builder->registerType<Yelp::SdkModel::YelpBusinessQueryFactory>().singleInstance();
                 builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                                    {
+                                                       const std::vector<std::string> appTags; //TODO: replace...
                                                        return std::make_shared<Yelp::SdkModel::YelpSearchService>(
                                                             context.resolve<Yelp::SdkModel::YelpSearchQueryFactory>(),
                                                             context.resolve<Yelp::SdkModel::YelpBusinessQueryFactory>(),
                                                             context.resolve<Yelp::SdkModel::YelpSearchJsonParser>(),
                                                             context.resolve<Net::SdkModel::INetworkCapabilities>(),
-                                                            Yelp::SearchConstants::GetCategories()
+                                                            appTags
                                                        );
                                                    }).singleInstance();
             }

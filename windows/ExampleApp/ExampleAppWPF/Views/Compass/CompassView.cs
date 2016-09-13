@@ -40,8 +40,7 @@ namespace ExampleAppWPF
             mainWindow.SizeChanged += PerformLayout;
             mainWindow.MainGrid.Children.Add(this);
             ShowGpsDisabledView();
-            m_touchHandler = new WindowInteractionTouchHandler(this);
-            TouchEnter += (o, e) => { mainWindow.PopAllTouchEvents(); };
+            m_touchHandler = new WindowInteractionTouchHandler(this, false, true, true);
         }
 
         public override void OnApplyTemplate()

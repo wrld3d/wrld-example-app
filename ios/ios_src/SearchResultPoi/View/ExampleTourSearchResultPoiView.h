@@ -49,7 +49,7 @@
 @property (nonatomic, retain) UIView* pHeadlineContainer;
 @property (nonatomic, retain) UIView* pContentContainer;
 @property (nonatomic, retain) UIScrollView* pLabelsContainer;
-@property (nonatomic, retain) UIView* pCategoryIconContainer;
+@property (nonatomic, retain) UIView* pTagIconContainer;
 @property (nonatomic, retain) UILabel* pTitleLabel;
 @property (nonatomic, retain) UIView* pTourInfoHeaderContainer;
 @property (nonatomic, retain) UILabel* pTourInfoHeaderLabel;

@@ -22,7 +22,7 @@ import android.widget.TextView;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.helpers.TintablePinToggleButton;
 import com.eegeo.mobileexampleapp.R;
-import com.eegeo.categories.CategoryResources;
+import com.eegeo.tags.TagResources;
 
 public class YelpSearchResultPoiView implements View.OnClickListener 
 {
@@ -38,12 +38,12 @@ public class YelpSearchResultPoiView implements View.OnClickListener
     private TextView m_addressHeader = null;
     private TextView m_phoneView = null;
     private TextView m_phoneHeader = null;
-    private TextView m_humanReadableCategoriesView = null;
-    private TextView m_humanReadableCategoriesHeader = null;
+    private TextView m_humanReadableTagsView = null;
+    private TextView m_humanReadableTagsHeader = null;
     private TextView m_reviewsView = null;
     private TextView m_reviewsHeader = null;
     private	ImageView m_webVendorStyleLinkButton = null;
-    private ImageView m_categoryIcon = null;
+    private ImageView m_tagIcon = null;
 	private ImageView m_poiImage = null;
 	private ImageView m_poiRatingImage = null;
 	private ImageView m_poiRatingOverImage = null;
@@ -74,12 +74,12 @@ public class YelpSearchResultPoiView implements View.OnClickListener
         m_addressHeader = (TextView)m_view.findViewById(R.id.search_result_poi_view_address_header);
         m_phoneView = (TextView)m_view.findViewById(R.id.search_result_poi_view_phone);
         m_phoneHeader = (TextView)m_view.findViewById(R.id.search_result_poi_view_phone_header);
-        m_humanReadableCategoriesView = (TextView)m_view.findViewById(R.id.search_result_poi_view_categories);
-        m_humanReadableCategoriesHeader = (TextView)m_view.findViewById(R.id.search_result_poi_view_categories_header);
+        m_humanReadableTagsView = (TextView)m_view.findViewById(R.id.search_result_poi_view_tags);
+        m_humanReadableTagsHeader = (TextView)m_view.findViewById(R.id.search_result_poi_view_tags_header);
         m_reviewsView = (TextView)m_view.findViewById(R.id.search_result_poi_view_reviews);
         m_reviewsHeader = (TextView)m_view.findViewById(R.id.search_result_poi_view_reviews_header);
         m_webVendorStyleLinkButton = (ImageView)m_view.findViewById(R.id.search_result_poi_view_web_vendor_link_style);
-        m_categoryIcon = (ImageView)m_view.findViewById(R.id.search_result_poi_view_category_icon);
+        m_tagIcon = (ImageView)m_view.findViewById(R.id.search_result_poi_view_tag_icon);
         m_poiImageProgressBar = m_view.findViewById(R.id.search_result_poi_view_image_progress);
 		m_poiImage = (ImageView)m_view.findViewById(R.id.search_result_poi_view_image);
 		m_poiRatingImage = (ImageView)m_view.findViewById(R.id.search_result_poi_view_rating_image);
@@ -113,8 +113,8 @@ public class YelpSearchResultPoiView implements View.OnClickListener
     		final String address,
     		final String phone, 
     		final String url,
-    		final String category,
-    		final String[] humanReadableCategories,
+    		final String iconKey,
+    		final String[] humanReadableTags,
     		final String imageUrl,
     		final String ratingImageUrl,
     		final String vendor,
@@ -166,23 +166,23 @@ public class YelpSearchResultPoiView implements View.OnClickListener
         	m_webVendorStyleLinkButton.setVisibility(View.GONE);
         }
 
-        if(humanReadableCategories.length > 0)
+        if(humanReadableTags.length > 0)
         {
-        	m_humanReadableCategoriesHeader.setVisibility(View.VISIBLE);
-        	m_humanReadableCategoriesView.setVisibility(View.VISIBLE);
+        	m_humanReadableTagsHeader.setVisibility(View.VISIBLE);
+        	m_humanReadableTagsView.setVisibility(View.VISIBLE);
         	
         	String output = new String();
-        	output += humanReadableCategories[0]; 
-        	for(int i = 1; i < humanReadableCategories.length; ++ i)
+        	output += humanReadableTags[0]; 
+        	for(int i = 1; i < humanReadableTags.length; ++ i)
         	{
-        		output += ("\n" + humanReadableCategories[i]);
+        		output += ("\n" + humanReadableTags[i]);
         	}
-        	m_humanReadableCategoriesView.setText(output);
+        	m_humanReadableTagsView.setText(output);
         }
         else
         {
-        	m_humanReadableCategoriesHeader.setVisibility(View.GONE);
-            m_humanReadableCategoriesView.setVisibility(View.GONE);
+        	m_humanReadableTagsHeader.setVisibility(View.GONE);
+            m_humanReadableTagsView.setVisibility(View.GONE);
         }
 
         if(reviews.length > 0)
@@ -235,8 +235,8 @@ public class YelpSearchResultPoiView implements View.OnClickListener
             }   
         }
         
-        int iconId = CategoryResources.getSmallIconForCategory(m_activity, category);
-        m_categoryIcon.setImageResource(iconId);
+        int iconId = TagResources.getSmallIconForTag(m_activity, iconKey);
+        m_tagIcon.setImageResource(iconId);
 
         m_closeButton.setEnabled(true);
         m_togglePinnedWrapper.setPinToggleState(isPinned);

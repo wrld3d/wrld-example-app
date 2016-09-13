@@ -6,6 +6,7 @@
 #include "InteriorsExplorerViewIncludes.h"
 #include "ICallback.h"
 #include "CallbackCollection.h"
+#include "InteriorsExplorerTutorialView.h"
 
 #include <vector>
 
@@ -19,8 +20,9 @@ namespace ExampleApp
             {
             public:
                 
-                InteriorsExplorerViewInterop(InteriorsExplorerView* pView)
+                InteriorsExplorerViewInterop(InteriorsExplorerView* pView, InteriorsExplorerTutorialView* pTutorialView)
                 : m_pView(pView)
+                , m_pTutorialView(pTutorialView)
                 {
                 }
                 
@@ -33,6 +35,10 @@ namespace ExampleApp
                 void SetFloorName(const std::string& name);
                 void SetSelectedFloorIndex(int index);
                 void UpdateFloors(const std::vector<std::string>& floorShortNames, int currentlySelectedFloorIndex);
+                
+                void AddTutorialDialogs(bool showExitDialog, bool showChangeFloorDialog);
+                void RemoveTutorialDialogs();
+                bool GetCanShowChangeFloorTutorialDialog();
                 
                 void InsertDismissedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveDismissedCallback(Eegeo::Helpers::ICallback0& callback);
@@ -56,6 +62,7 @@ namespace ExampleApp
                 
                 Eegeo::Helpers::CallbackCollection0 m_dismissedCallbacks;
                 InteriorsExplorerView* m_pView;
+                InteriorsExplorerTutorialView* m_pTutorialView;
             };
         }
     }

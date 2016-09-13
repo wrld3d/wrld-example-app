@@ -47,7 +47,7 @@
 #include "iOSInitialExperienceModule.h"
 #include "AboutPageViewModule.h"
 #include "AboutPageView.h"
-#include "CategorySearchModule.h"
+#include "TagSearchModule.h"
 #include "MyPinCreationInitiationViewModule.h"
 #include "MyPinCreationInitiationView.h"
 #include "MyPinCreationConfirmationViewModule.h"
@@ -92,7 +92,7 @@
 #include "IInitialExperienceController.h"
 #include "SearchMenuController.h"
 #include "ISearchMenuView.h"
-#include "ICategorySearchRepository.h"
+#include "ITagSearchRepository.h"
 
 #include <memory>
 #include "ViewWrap.h"

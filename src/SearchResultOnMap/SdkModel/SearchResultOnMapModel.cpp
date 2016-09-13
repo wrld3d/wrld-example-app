@@ -6,7 +6,7 @@
 #include "ISearchResultOnMapFactory.h"
 #include "ISearchResultRepository.h"
 #include "SearchResultModel.h"
-#include "ISearchResultIconCategoryMapper.h"
+#include "ISearchResultIconKeyMapper.h"
 #include "WorldPinFocusData.h"
 #include "WorldPinInteriorData.h"
 #include "ISearchResultMyPinsService.h"
@@ -31,10 +31,10 @@ namespace ExampleApp
                                                            const std::shared_ptr<MyPins::SdkModel::IMyPinsService>& myPinsService,
                                                            const std::shared_ptr<View::ISearchResultOnMapFactory>& searchResultOnMapFactory,
                                                            const std::shared_ptr<Search::SdkModel::MyPins::ISearchResultMyPinsService>& searchResultOnMapMyPinsService,
-                                                           const std::shared_ptr<CategorySearch::ISearchResultIconCategoryMapper>& searchResultIconCategoryMapper,
+                                                           const std::shared_ptr<TagSearch::ISearchResultIconKeyMapper>& searchResultIconKeyMapper,
                                                            const std::shared_ptr<Search::SdkModel::ISearchResultRepository>& searchResultRepository)
             : m_searchResultRepository(searchResultRepository)
-            , m_searchResultIconCategoryMapper(searchResultIconCategoryMapper)
+            , m_searchResultIconKeyMapper(searchResultIconKeyMapper)
             , m_searchResultOnMapMyPinsService(searchResultOnMapMyPinsService)
             , m_searchResultOnMapFactory(searchResultOnMapFactory)
             , m_myPinsService(myPinsService)
@@ -177,7 +177,7 @@ namespace ExampleApp
                 
                 View::SearchResultOnMapItemModel* pSearchResultOnMapItemModel = m_searchResultOnMapFactory->CreateSearchResultOnMapItemModel(searchResultModel);
                 
-                const std::string& pinIconKey = m_searchResultIconCategoryMapper->GetIconKeyFromSearchResult(searchResultModel);
+                const std::string& pinIconKey = m_searchResultIconKeyMapper->GetIconKeyFromSearchResult(searchResultModel);
                 
                 std::string ratingsImage = "";
                 int reviewCount = 0;

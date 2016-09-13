@@ -25,6 +25,7 @@
 #include "BiDirectionalBus.h"
 #include "SdkModelDomainEventBus.h"
 #include "InputController.h"
+#include "IPersistentSettingsModel.h"
 
 namespace ExampleApp
 {

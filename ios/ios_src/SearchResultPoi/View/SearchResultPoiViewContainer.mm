@@ -49,7 +49,7 @@
 {
     Eegeo_ASSERT(m_pCurrentActiveVendorView == NULL);
 
-    self->m_pCurrentActiveVendorView = [self createSearchResultPoiViewForVendor:pModel->GetVendor() :pModel->GetCategory()];
+    self->m_pCurrentActiveVendorView = [self createSearchResultPoiViewForVendor:pModel->GetVendor()];
     [[self superview] addSubview: self->m_pCurrentActiveVendorView];
     [self->m_pCurrentActiveVendorView layoutSubviews];
     [self->m_pCurrentActiveVendorView setContent:pModel :isPinned];
@@ -79,7 +79,7 @@
     return m_pInterop;
 }
 
-- (UIView<SearchResultPoiView>*) createSearchResultPoiViewForVendor:(const std::string&)vendor :(const std::string&)category
+- (UIView<SearchResultPoiView>*) createSearchResultPoiViewForVendor:(const std::string&)vendor
 {
     if(vendor == ExampleApp::Search::YelpVendorName)
     {

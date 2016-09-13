@@ -1,6 +1,9 @@
 set(resources ${resources}
 		Resources/ApplicationConfigs
 		Resources/ApplicationConfigs/standard_config.json
+        	Resources/Alert_Tutorial_icon.png
+        	Resources/Alert_Tutorial_icon@2x.png
+        	Resources/Alert_Tutorial_icon@3x.png
 		Resources/Arrow.png
 		Resources/arrow1.png
 		Resources/arrow1@2x.png
@@ -14,6 +17,9 @@ set(resources ${resources}
 		Resources/arrow3_right.png
 		Resources/arrow3_right@2x.png
 		Resources/arrow3_right@3x.png
+        	Resources/arrow3_right_blue.png
+        	Resources/arrow3_right_blue@2x.png
+        	Resources/arrow3_right_blue@3x.png
 		Resources/arrow3_up.png
 		Resources/arrow3_up@2x.png
 		Resources/arrow3_up@3x.png
@@ -349,6 +355,21 @@ set(resources ${resources}
 		Resources/search_results_spinner.png
 		Resources/search_results_spinner@2x.png
 		Resources/search_results_spinner@3x.png
+		Resources/SearchResults_Fade.png
+		Resources/SearchResults_Fade@0.75x.png
+		Resources/SearchResults_Fade@1.5x.png
+		Resources/SearchResults_Fade@2x.png
+		Resources/SearchResults_Fade@3x.png
+		Resources/SearchResults_ScrollButton_Down.png
+		Resources/SearchResults_ScrollButton_Down@0.75x.png
+		Resources/SearchResults_ScrollButton_Down@1.5x.png
+		Resources/SearchResults_ScrollButton_Down@2x.png
+		Resources/SearchResults_ScrollButton_Down@3x.png
+		Resources/SearchResults_ScrollButton.png
+		Resources/SearchResults_ScrollButton@0.75x.png
+		Resources/SearchResults_ScrollButton@1.5x.png
+		Resources/SearchResults_ScrollButton@2x.png
+		Resources/SearchResults_ScrollButton@3x.png
 		Resources/SearchResultOnMap
 		Resources/SearchResultOnMap/pin_sheet_0.png
 		Resources/SearchResultOnMap/pin_sheet_0@2x.png
@@ -374,6 +395,8 @@ set(resources ${resources}
 		Resources/sub_menu_arrow_on.png
 		Resources/sub_menu_arrow_on@2x.png
 		Resources/sub_menu_arrow_on@3x.png
+		Resources/search_menu_items.json
+		Resources/search_tags.json
 		Resources/Textures
 		Resources/Textures/EmbeddedTheme
 		Resources/Textures/EmbeddedTheme/London_London_railDiffuse_repeat.pvr

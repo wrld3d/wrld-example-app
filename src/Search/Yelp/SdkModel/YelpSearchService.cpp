@@ -28,8 +28,8 @@ namespace ExampleApp
                                                      const std::shared_ptr<YelpBusinessQueryFactory>& yelpBusinessQueryFactory,
                                                      const std::shared_ptr<Search::SdkModel::ISearchResultParser>& searchResultParser,
                                                      const std::shared_ptr<Net::SdkModel::INetworkCapabilities>& networkCapabilities,
-                                                     const std::vector<std::string>& availableCategories)
-                : Search::SdkModel::SearchServiceBase(availableCategories)
+                                                     const std::vector<std::string>& handledTags)
+                : Search::SdkModel::SearchServiceBase(handledTags)
                 , m_searchQueryFactory(searchQueryFactory)
                 , m_yelpBusinessQueryFactory(yelpBusinessQueryFactory)
                 , m_searchResultParser(searchResultParser)
@@ -45,9 +45,7 @@ namespace ExampleApp
                 {
                     CancelInFlightQueries();
                 }
-                
-                
-                
+
                 void YelpSearchService::CancelInFlightQueries()
                 {
                     if(m_pCurrentRequest != NULL)
@@ -63,7 +61,6 @@ namespace ExampleApp
                         ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, results);
                     }
                 }
-                
                 
                 void YelpSearchService::PerformLocationQuerySearch(const Search::SdkModel::SearchQuery& searchQuery)
                 {

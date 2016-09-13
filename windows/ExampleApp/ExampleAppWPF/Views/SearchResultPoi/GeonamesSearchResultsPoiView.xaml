@@ -49,7 +49,7 @@
 
                             <!--Title Bar-->
                             <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Center">
-                                <Image Name="CategoryIcon" Stretch="Uniform" Width="36" Height="36" />
+                                <Image Name="TagIcon" Stretch="Uniform" Width="36" Height="36" />
                                 <Border BorderBrush="{x:Null}" BorderThickness="0" Width="200" Height="30">
                                     <TextBlock Name="TitleText" VerticalAlignment="Center" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:GeoNamesSearchResultsPoiView}}, Path=Title}" FontSize="12" Foreground="{StaticResource Gold}" FontWeight="Bold" TextTrimming="CharacterEllipsis" Padding="6,0,6,0"/>
                                 </Border>

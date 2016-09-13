@@ -28,6 +28,9 @@ namespace ExampleApp
                 mSetFloorPanelEnabled.SetupMethod(m_uiViewClass, m_uiView, "SetFloorPanelEnabled");
                 mDestroy.SetupMethod(m_uiViewClass, m_uiView, "Destroy");
                 mPlaySliderAnim.SetupMethod(m_uiViewClass, m_uiView, "PlaySliderShakeAnim");
+				mAddTutorialDialogs.SetupMethod(m_uiViewClass, m_uiView, "AddTutorialDialogs");
+				mRemoveTutorialDialogs.SetupMethod(m_uiViewClass, m_uiView, "RemoveTutorialDialogs");
+				mGetCanShowChangeFloorTutorialDialog.SetupMethod(m_uiViewClass, m_uiView, "GetCanShowChangeFloorTutorialDialog");
             }
 
             void InteriorsExplorerView::UpdateFloors(const std::vector<std::string>& floorShortNames, int currentlySelectedFloorIndex)
@@ -97,6 +100,21 @@ namespace ExampleApp
             {
             }
 
+			void InteriorsExplorerView::AddTutorialDialogs(bool showExitDialog, bool showChangeFloorDialog)
+			{
+				mAddTutorialDialogs(showExitDialog, showChangeFloorDialog);
+			}
+
+			void InteriorsExplorerView::RemoveTutorialDialogs()
+			{
+				mRemoveTutorialDialogs();
+			}
+
+			bool InteriorsExplorerView::GetCanShowChangeFloorTutorialDialog()
+			{
+				return (bool) mGetCanShowChangeFloorTutorialDialog.Call<System::Boolean^>();
+			}
+
             void InteriorsExplorerView::InsertDismissedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 m_dismissedCallbacks.AddCallback(callback);
@@ -131,7 +149,6 @@ namespace ExampleApp
             {
                 mPlaySliderAnim();
             }
-
 
             InteriorsExplorerView::~InteriorsExplorerView()
             {

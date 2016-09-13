@@ -1,6 +1,6 @@
 #!/bin/bash
 
-usage() { echo "Usage: $0 -p android|ios|windows [-c]"; echo "  -p -> platform, ios, android or windows (required)"; echo "  -c -> cpp03 support"; 1>&2; exit 1; }
+usage() { echo "Usage: $0 -p android|ios|windows [-c]"; echo "  -p -> platform, ios, android or windows (required)"; 1>&2; exit 1; }
 
 baseUrl="http://s3.amazonaws.com/eegeo-static/"
 srcPackageName="INVALID"
@@ -8,7 +8,7 @@ destPackageName="./sdk.package.tar.gz"
 includeDestination="INVALID"
 sdkDestination="INVALID"
 
-while getopts "p:c" o; do
+while getopts "p:" o; do
     case "${o}" in
         p)
             p=${OPTARG}
@@ -19,9 +19,6 @@ while getopts "p:c" o; do
 		  fi
                fi
             fi
-            ;;
-        c)
-            c="cpp03"
             ;;
         *)
             usage
@@ -49,7 +46,7 @@ elif [ "$p" == "windows" ]; then
 
 fi
 
-if [[ ( "$c" == "cpp03" ) || ( "$p" == "windows" ) ]]; then
+if [ "$p" == "windows" ]; then
    srcPackageName="$srcPackageName.tar.gz"
 else
    srcPackageName="$srcPackageName.cpp11.tar.gz"

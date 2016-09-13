@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.eegeo.mobileexampleapp.R;
-import com.eegeo.categories.CategoryResources;
+import com.eegeo.tags.TagResources;
 
 import android.R.color;
 import android.app.Activity;

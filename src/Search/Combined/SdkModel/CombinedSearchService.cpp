@@ -40,13 +40,13 @@ namespace ExampleApp
                     }
                 }
                 
-                bool CombinedSearchService::CanHandleCategory(const std::string& category) const
+                bool CombinedSearchService::CanHandleTag(const std::string& tag) const
                 {
                     std::map<std::string, std::shared_ptr<Search::SdkModel::ISearchService>>::const_iterator iter;
                     
                     for (iter = m_searchServices.begin(); iter != m_searchServices.end(); ++iter)
                     {
-                        if((*iter).second->CanHandleCategory(category))
+                        if((*iter).second->CanHandleTag(tag))
                         {
                             return true;
                         }
@@ -68,18 +68,18 @@ namespace ExampleApp
                         }
                     }
                     
-                    const bool isCategory = query.IsCategory();
-                    const bool canPerformCategory = isCategory && searchService.CanHandleCategory(query.Query());
-                    
-                    if (canPerformCategory)
+                    const bool isTag = query.IsTag();
+                    const bool canPerformTag = isTag && searchService.CanHandleTag(query.Query());
+
+                    if (canPerformTag)
                     {
                         return true;
                     }
-                    else if (!isCategory)
+                    else if (!isTag)
                     {
                         return true;
                     }
-                    
+
                     return false;
                 }
                 

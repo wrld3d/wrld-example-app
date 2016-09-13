@@ -46,15 +46,15 @@ namespace ExampleApp
                 }
                 
                 YelpSearchQueryFactory::YelpSearchQueryFactory(const std::shared_ptr<ExampleApp::ApplicationConfig::ApplicationConfiguration>& config,
+                                                               const std::shared_ptr<SearchConstants::YelpCategoryMappingData>& yelpMappingData,
                                                                const std::shared_ptr<Eegeo::Web::IWebLoadRequestFactory>& webRequestFactory)
                 : m_webRequestFactory(webRequestFactory)
                 , m_consumer(config->YelpConsumerKey(), config->YelpConsumerSecret())
                 , m_token(config->YelpOAuthToken(), config->YelpOAuthTokenSecret())
+                , m_yelpMappingData(yelpMappingData)
                 , m_client(&m_consumer, &m_token)
                 , m_apiUrl("https://api.yelp.com/v2/search")
                 {
-
-                    m_applicationToYelpCategoryMap = Yelp::SearchConstants::GetApplicationToYelpCategoryMap();
                 }
 
                 YelpSearchQueryFactory::~YelpSearchQueryFactory()
@@ -68,11 +68,11 @@ namespace ExampleApp
                     std::string searchTerm = "";
                     std::string categoryFilter = "";
                     
-                    if (searchQuery.IsCategory())
+                    if (searchQuery.IsTag())
                     {
-                        std::map<std::string, std::string>::const_iterator category = m_applicationToYelpCategoryMap.find(searchQuery.Query());
+                        std::map<std::string, std::string>::const_iterator category = m_yelpMappingData->appTagToYelpCategory.find(searchQuery.Query());
                         
-                        if (category != m_applicationToYelpCategoryMap.end())
+                        if (category != m_yelpMappingData->appTagToYelpCategory.end())
                         {
                             categoryFilter = category->second;
                         }
@@ -82,7 +82,7 @@ namespace ExampleApp
                         searchTerm = searchQuery.Query();
                     }
                     
-                    int radiusFilter = (int)((searchQuery.Radius() > MaxRadiusMetres || !searchQuery.IsCategory()) ? MaxRadiusMetres : searchQuery.Radius());
+                    int radiusFilter = (int)((searchQuery.Radius() > MaxRadiusMetres || !searchQuery.IsTag()) ? MaxRadiusMetres : searchQuery.Radius());
                     
                     std::map<std::string, std::string> params;
                     std::stringstream conversionStream;

@@ -12,13 +12,15 @@ namespace ExampleApp
     {
         namespace View
         {
-            InteriorsExplorerViewModule::InteriorsExplorerViewModule(InteriorsExplorerViewModel& viewModel,
+            InteriorsExplorerViewModule::InteriorsExplorerViewModule(SdkModel::InteriorsExplorerModel& model,
+            														 InteriorsExplorerViewModel& viewModel,
                                                                      ExampleAppMessaging::TMessageBus& messageBus,
 																	 AndroidNativeState& nativeState)
             {
             	m_pView = Eegeo_NEW(InteriorsExplorerView)(nativeState);
 
-            	m_pController = Eegeo_NEW(InteriorsExplorerController)(*m_pView,
+            	m_pController = Eegeo_NEW(InteriorsExplorerController)(model,
+            														   *m_pView,
                                                                        viewModel,
                                                                        messageBus);
             }

@@ -27,6 +27,7 @@
 #include "TerrainHeightProvider.h"
 #include "ResourceCeilingProvider.h"
 #include "IImmutableInteriorViewModel.h"
+#include "IPersistentSettingsModel.h"
 
 namespace ExampleApp
 {
@@ -44,8 +45,6 @@ namespace ExampleApp
                                                      Eegeo::Camera::GlobeCamera::GlobeCameraControllerFactory cameraControllerFactory(*context.resolve<Eegeo::Resources::Terrain::Heights::TerrainHeightProvider>(),
                                                                                                                                       *flatteningService,
                                                                                                                                       *context.resolve<Eegeo::Streaming::ResourceCeilingProvider>());
-
-                                                     
                                                      const Eegeo::Resources::Interiors::InteriorsCameraConfiguration& interiorsCameraConfig(Eegeo::Resources::Interiors::InteriorsCameraController::CreateDefaultConfig());
                                                      const Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration& globeCameraConfig = Eegeo::Resources::Interiors::InteriorsCameraControllerFactory::DefaultGlobeCameraControllerConfiguration();
                                                      const Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration& globeCameraTouchConfig = Eegeo::Resources::Interiors::InteriorsCameraControllerFactory::DefaultGlobeCameraTouchControllerConfiguration();

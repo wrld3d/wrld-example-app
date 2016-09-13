@@ -1,20 +1,17 @@
 #!/bin/sh
 
-usage() { echo "Usage: $0 -p android [-c]"; echo "  -p -> platform, ios or android (required)"; echo "  -c -> cpp03 support"; 1>&2; exit 1; }
+usage() { echo "Usage: $0 -p android"; echo "  -p -> platform, ios or android (required)"; 1>&2; exit 1; }
 
 projectPath=$(pwd)/./
 ndkbuild_arguments=""
 
-while getopts "p:c" o; do
+while getopts "p:" o; do
     case "${o}" in
         p)
             p=${OPTARG}
             if [ "$p" != "android" ]; then
                usage
             fi
-            ;;
-        c)
-            c="cpp03"
             ;;
         *)
             usage
@@ -25,12 +22,6 @@ shift $((OPTIND-1))
 
 if [ -z "${p}" ]; then
     usage
-fi
-
-if [ "$c" == "cpp03" ]; then
-    echo "Building for cpp03"
-    # note the leading space. on windows, ndk-build.cmd seems to tokenise on spaces    
-    ndkbuild_arguments=" COMPILE_CPP_03=1"
 fi
 
 # running on msys (basically the git provided shell we use on windows)

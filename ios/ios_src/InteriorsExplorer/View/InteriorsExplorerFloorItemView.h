@@ -9,18 +9,20 @@
 
 @class InteriorsExplorerFloorItemView;
 
-@interface InteriorsExplorerFloorItemView : UIView
+@interface InteriorsExplorerFloorItemView : UITableViewCell
 {
     
 }
 
-- (id) initWithParams:(float)labelWidth :(float)labelSpacing :(float)divisionWidth :(float)height :(float)pixelScale :(NSString*)floorName :(BOOL)isBottom :(BOOL)isTop;
+- (id) initWithParams:(float)labelWidth :(float)labelSpacing :(float)divisionWidth :(float)height :(float)pixelScale :(NSString*)reuseIdentifier;
 
-- (void) showName;
-
-- (void) hideName;
+- (void) setFloor :(NSString*)floorName :(BOOL)isTop :(BOOL)isBottom;
 
 @property(nonatomic, retain) UILabel* pFloorNameLabel;
 @property(nonatomic, retain) UIView* pLines;
+
+@property(nonatomic, retain) CAShapeLayer* pDivisionShape;
+@property(nonatomic, retain) CAShapeLayer* pTopDivisionShape;
+@property(nonatomic, retain) CAShapeLayer* pBottomDivisionShape;
 
 @end

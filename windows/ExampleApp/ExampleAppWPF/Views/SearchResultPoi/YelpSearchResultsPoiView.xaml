@@ -170,7 +170,7 @@
                                     </Grid.ColumnDefinitions>
 
                                     <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Center" >
-                                        <Image Name="CategoryIcon" Stretch="Uniform" Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=CategoryIcon}"/>
+                                        <Image Name="TagIcon" Stretch="Uniform" Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=TagIcon}"/>
                                         <TextBlock Name="Title" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=TitleText}"  MaxWidth="350" VerticalAlignment="Center" FontSize="28" Margin="4,-4,0,0"  Foreground="{DynamicResource PrimaryBG_Over_Colour}" FontFamily="{DynamicResource PrimaryUIFont}" TextTrimming="CharacterEllipsis"/>
                                     </StackPanel>
                                     <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="Auto"  Background="{StaticResource Gold}" Grid.Column="1">
@@ -274,13 +274,13 @@
                                             <!-- Details Divider -->
                                             <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="2" Background="{StaticResource Gold}" Margin="0,20"/>
 
-                                            <!--Categories-->
+                                            <!--Tags-->
                                             <Grid Width="Auto" Height="Auto" Margin="5,0,0,0" >
-                                                <Canvas Name="CategoryLabelIcon" Margin="0,2,0,0">
+                                                <Canvas Name="TagLabelIcon" Margin="0,2,0,0">
                                                     <!-- Layer 3/<Compound Path> -->
                                                     <Path Fill="#ff5f5f5f" Data="F1 M 12.439,3.558 C 11.854,2.973 11.854,2.023 12.439,1.437 C 13.025,0.851 13.975,0.851 14.561,1.437 C 15.146,2.023 15.146,2.973 14.561,3.558 C 13.975,4.144 13.025,4.144 12.439,3.558 Z M 15.994,7.102 L 16.000,1.552 C 16.000,0.700 15.310,0.010 14.458,0.010 L 8.892,0.000 C 8.259,-0.000 7.465,0.315 7.017,0.763 L 0.463,7.317 C -0.140,7.920 -0.161,8.966 0.441,9.569 L 6.450,15.577 C 6.751,15.878 7.157,15.996 7.553,15.996 C 7.948,15.996 8.355,15.812 8.656,15.511 L 15.211,8.956 C 15.658,8.508 15.994,7.735 15.994,7.102 Z"/>
                                                 </Canvas>
-                                                <TextBlock Name="Categories" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=HumanReadableCategoriesText}" FontSize="18" Margin="25,-4,0,0" Foreground="{StaticResource DarkGrey}" FontFamily="{DynamicResource PrimaryUIFont}"/>
+                                                <TextBlock Name="Tags" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=HumanReadableTagsText}" FontSize="18" Margin="25,-4,0,0" Foreground="{StaticResource DarkGrey}" FontFamily="{DynamicResource PrimaryUIFont}"/>
                                             </Grid>
 
                                             <!-- Reviews Divider -->

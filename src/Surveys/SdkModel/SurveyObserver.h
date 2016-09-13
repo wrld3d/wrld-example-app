@@ -5,7 +5,7 @@
 #include "Types.h"
 
 #include "BidirectionalBus.h"
-#include "CategorySearchSelectedMessage.h"
+#include "TagSearchSelectedMessage.h"
 #include "ICallback.h"
 #include "MyPinCreationViewSavePinMessage.h"
 #include "PersistentSettings.h"
@@ -26,13 +26,13 @@ namespace ExampleApp
                 std::shared_ptr<PersistentSettings::IPersistentSettingsModel> m_persistentSettingsModel;
                 
                 Eegeo::Helpers::TCallback1<SurveyObserver, const SearchMenu::SearchMenuPerformedSearchMessage&> m_onSearchPerformedMessage;
-                Eegeo::Helpers::TCallback1<SurveyObserver, const CategorySearch::CategorySearchSelectedMessage&> m_onCategorySearchPerformedMessage;
+                Eegeo::Helpers::TCallback1<SurveyObserver, const TagSearch::TagSearchSelectedMessage&> m_onTagSearchPerformedMessage;
                 Eegeo::Helpers::TCallback1<SurveyObserver, const SearchResultSection::SearchResultSectionItemSelectedMessage&> m_onSearchResultSelected;
                 Eegeo::Helpers::TCallback1<SurveyObserver, const WeatherMenu::WeatherSelectedMessage&> m_onWeatherSelected;
                 Eegeo::Helpers::TCallback1<SurveyObserver, const MyPinCreation::MyPinCreationViewSavePinMessage&> m_onPinCreated;
                 
                 void OnSearchPerformedMessage(const SearchMenu::SearchMenuPerformedSearchMessage& message);
-                void OnCategorySearchPerformedMessage(const CategorySearch::CategorySearchSelectedMessage& message);
+                void OnTagSearchPerformedMessage(const TagSearch::TagSearchSelectedMessage& message);
                 void OnSearchResultSelected(const SearchResultSection::SearchResultSectionItemSelectedMessage& message);
                 void OnWeatherSelected(const WeatherMenu::WeatherSelectedMessage& message);
                 void OnPinCreated(const MyPinCreation::MyPinCreationViewSavePinMessage& message);

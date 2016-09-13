@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "InteriorsExplorerController.h"
+#include "InteriorsExplorerModel.h"
 #include "InteriorsExplorerViewModel.h"
 #include "IInteriorsExplorerView.h"
 #include "IMenuViewModel.h"
@@ -16,10 +17,12 @@ namespace ExampleApp
     {
         namespace View
         {
-            InteriorsExplorerController::InteriorsExplorerController(IInteriorsExplorerView& view,
+            InteriorsExplorerController::InteriorsExplorerController(SdkModel::InteriorsExplorerModel& model,
+                                                                     IInteriorsExplorerView& view,
                                                                      InteriorsExplorerViewModel& viewModel,
                                                                      ExampleAppMessaging::TMessageBus& messageBus)
-            : m_view(view)
+            : m_model(model)
+            , m_view(view)
             , m_viewModel(viewModel)
             , m_messageBus(messageBus)
             , m_appMode(AppModes::SdkModel::WorldMode)
@@ -92,6 +95,25 @@ namespace ExampleApp
                     m_view.SetTouchEnabled(true);
                     
                     OnFloorSelected(InteriorsExplorerFloorSelectedMessage(message.GetSelectedFloorIndex(), message.GetSelectedFloorName()));
+                    
+					const int maxTutorialViews = 2;
+					bool showExitTutorial = m_model.GetInteriorExitTutorialViewedCount() < maxTutorialViews;
+					bool showChangeFloorTutorial = m_model.GetInteriorChangeFloorTutorialViewedCount() < maxTutorialViews && m_view.GetCanShowChangeFloorTutorialDialog();
+
+					if(showExitTutorial || showChangeFloorTutorial)
+					{
+						m_view.AddTutorialDialogs(showExitTutorial, showChangeFloorTutorial);
+
+						if(showExitTutorial)
+						{
+							m_model.RecordHasViewedInteriorExitTutorial();
+						}
+
+						if(showChangeFloorTutorial)
+						{
+							m_model.RecordHasViewedInteriorChangeFloorTutorial();
+						}
+					}
                     
                     m_viewModel.AddToScreen();
                 }

@@ -10,7 +10,7 @@
 #include "IIdentity.h"
 #include "IWorldPinsService.h"
 #include "IMyPinsService.h"
-#include "ISearchResultIconCategoryMapper.h"
+#include "ISearchResultIconKeyMapper.h"
 #include "ISearchResultRepository.h"
 
 namespace ExampleApp
@@ -18,7 +18,7 @@ namespace ExampleApp
     namespace SearchResultOnMap
     {
         namespace SdkModel
-        {   
+        {
             void SearchResultOnMapModule::Register(const TContainerBuilder& builder)
             {
                 builder->registerType<View::SearchResultOnMapFactory>().as<View::ISearchResultOnMapFactory>().singleInstance();

@@ -119,6 +119,39 @@ namespace ExampleApp
 				env->CallVoidMethod(m_uiView, setSelectedFloorIndex, index);
             }
 
+            void InteriorsExplorerView::AddTutorialDialogs(bool showExitDialog, bool showChangeFloorDialog)
+            {
+            	ASSERT_UI_THREAD
+
+				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				JNIEnv* env = attached.envForThread;
+
+				jmethodID addTutorialDialogs = env->GetMethodID(m_uiViewClass, "addTutorialDialogs", "(ZZ)V");
+				env->CallVoidMethod(m_uiView, addTutorialDialogs, showExitDialog, showChangeFloorDialog);
+            }
+
+            void InteriorsExplorerView::RemoveTutorialDialogs()
+            {
+            	ASSERT_UI_THREAD
+
+				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				JNIEnv* env = attached.envForThread;
+
+				jmethodID removeTutorialDialogs = env->GetMethodID(m_uiViewClass, "removeTutorialDialogs", "()V");
+				env->CallVoidMethod(m_uiView, removeTutorialDialogs);
+            }
+
+            bool InteriorsExplorerView::GetCanShowChangeFloorTutorialDialog()
+			{
+				ASSERT_UI_THREAD
+
+				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				JNIEnv* env = attached.envForThread;
+
+				jmethodID getCanShowChangeFloorTutorialDialog = env->GetMethodID(m_uiViewClass, "getCanShowChangeFloorTutorialDialog", "()Z");
+				return env->CallBooleanMethod(m_uiView, getCanShowChangeFloorTutorialDialog);
+			}
+
             void InteriorsExplorerView::InsertDismissedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 ASSERT_UI_THREAD

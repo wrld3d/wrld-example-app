@@ -1,0 +1,97 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  	xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
+   	android:layout_width="wrap_content"
+	android:orientation="horizontal">
+
+	<LinearLayout
+		android:orientation="horizontal"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content">
+
+		<LinearLayout
+			android:orientation="horizontal"
+			android:layout_width="189dp"
+			android:layout_height="10dp"
+			android:background="@color/gold"
+			android:id="@+id/interiors_explorer_tutorial_dialog_outer_background"></LinearLayout>
+
+		<RelativeLayout
+			android:layout_width="24dp"
+			android:layout_height="14dp"
+			android:layout_gravity="center_vertical"
+			android:background="@drawable/arrow3_right_blue"
+			android:layout_alignWithParentIfMissing="false"
+			android:layout_centerVertical="true"
+			android:layout_toRightOf="@+id/linearLayout"
+			android:layout_marginLeft="-1dp" />
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:orientation="horizontal"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="2dp">
+
+		<LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+			android:id="@+id/interiors_explorer_tutorial_dialog_inner_background">
+
+			<RelativeLayout
+				android:layout_width="18dp"
+				android:layout_height="18dp"
+				android:layout_alignWithParentIfMissing="false"
+				android:layout_centerVertical="true"
+				android:background="@drawable/alert_tutorial_icon"
+				android:layout_marginLeft="9dp"
+				android:layout_marginTop="12dp"
+				android:layout_marginRight="9dp" />
+
+			<LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+				android:layout_marginTop="9dp">
+
+                <TextView
+					android:id="@+id/interiors_explorer_tutorial_dialog_title"
+					android:layout_width="fill_parent"
+					android:layout_height="22dp"
+					android:gravity="center_vertical"
+					android:singleLine="true"
+					android:ellipsize="end"
+					android:textColor="@color/gold"
+					android:textSize="16sp"
+					android:text="Change Floors" />
+
+                <TextView
+					android:id="@+id/interiors_explorer_tutorial_dialog_description"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:ellipsize="end"
+					android:gravity="top|left"
+					android:singleLine="false"
+					android:text="Slide the elevator button\nup and down to move\nbetween floors."
+					android:textColor="@color/black"
+					android:textSize="13sp"
+					android:paddingBottom="12dp" />
+			</LinearLayout>
+
+        </LinearLayout>
+
+		<RelativeLayout
+            android:layout_width="20dp"
+            android:layout_height="10dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/arrow3_right"
+            android:layout_alignWithParentIfMissing="false"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/linearLayout"
+			android:layout_marginLeft="-1dp" />
+	</LinearLayout>
+
+</RelativeLayout>

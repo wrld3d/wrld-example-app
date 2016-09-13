@@ -7,7 +7,7 @@
 #include "Types.h"
 #include "BidirectionalBus.h"
 #include "SdkModelDomainEventBus.h"
-#include "CategorySearch.h"
+#include "TagSearch.h"
 #include "Search.h"
 #include "Web.h"
 

@@ -10,7 +10,7 @@
 #include "SearchMenuController.h"
 #include "CustomTableDataProvider.h"
 #include "SearchResultsTableDataProvider.h"
-#include "ICategorySearchRepository.h"
+#include "ITagSearchRepository.h"
 #include "IModalBackgroundView.h"
 
 namespace ExampleApp
@@ -60,7 +60,7 @@ namespace ExampleApp
                                                                                                    Hypodermic::makeExternallyOwned(*menuInterop),
                                                                                                    context.resolve<ISearchMenuView>(),
                                                                                                    context.resolve<SearchMenuSectionViewModel>(),
-                                                                                                   context.resolve<CategorySearch::View::ICategorySearchRepository>(),
+                                                                                                   context.resolve<TagSearch::View::ITagSearchRepository>(),
                                                                                                    context.resolve<Modality::View::IModalBackgroundView>(),
                                                                                                    context.resolve<ExampleAppMessaging::TMessageBus>());
                                                  }).singleInstance();

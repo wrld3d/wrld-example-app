@@ -29,6 +29,7 @@
     
     bool m_resultsVisible;
     bool m_titleContainersRequireRefresh;
+    bool m_resultsScrollable;
     
     float m_anchorAnimationDurationSeconds;
     
@@ -96,6 +97,9 @@
 @property (nonatomic, retain) SearchMenuResultsSpinner* pSearchEditBoxResultsSpinner;
 @property (nonatomic, retain) UIView* pSearchTableSeparator;
 @property (nonatomic, retain) UIImageView* pAnchorArrowImage;
+@property (nonatomic, retain) UIView* pSearchMenuScrollButtonContainer;
+@property (nonatomic, retain) UIButton* pSearchMenuScrollButton;
+@property (nonatomic, retain) UIImageView* pSearchMenuFadeImage;
 
 @end
 
@@ -136,6 +140,7 @@
     
     m_resultsVisible = false;
     m_titleContainersRequireRefresh = false;
+    m_resultsScrollable = false;
     
     m_anchorAnimationDurationSeconds = 0.1f;
     
@@ -173,6 +178,9 @@
     
     const float searchClearButtonSize = 24.0f * m_pixelScale;
     const float searchClearButtonRightInset = 6.0f * m_pixelScale;
+    
+    const float searchResultsScrollButtonSize = 48.0f * m_pixelScale;
+    const float searchResultFadeImageHeight = 52.0f * m_pixelScale;
     
     const float anchorArrowSize = 14.0f * m_pixelScale;
     const float ancorArrowCenterInset = 21.0f * m_pixelScale;
@@ -319,6 +327,7 @@
     self.pTableViewContainer.backgroundColor = [UIColor clearColor];
     self.pTableViewContainer.scrollEnabled = YES;
     self.pTableViewContainer.userInteractionEnabled = YES;
+    self.pTableViewContainer.delaysContentTouches = false;
     
     m_anchorArrowWidth = anchorArrowSize;
     m_anchorArrowClosedHeight = 0.0f;
@@ -329,12 +338,26 @@
     self.pAnchorArrowImage.frame = CGRectMake(anchorArrowX, anchorArrowY, m_anchorArrowWidth, m_anchorArrowClosedHeight);
     self.pAnchorArrowImage.clipsToBounds = YES;
     
+    CGRect myframe = self.pSearchResultsTableContainerView.frame;
+    
+    self.pSearchMenuFadeImage = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SearchResults_Fade"]] autorelease];
+    self.pSearchMenuFadeImage.contentMode = UIViewContentModeScaleAspectFill;
+    self.pSearchMenuFadeImage.frame = CGRectMake(tableCellWidth/2 + m_searchCountLabelWidth - (tableCellWidth/2), myframe.size.height/2, tableCellWidth, searchResultFadeImageHeight);
+    self.pSearchMenuFadeImage.clipsToBounds = YES;
+    
     self.pSearchResultsTableContainerView = [[[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, m_menuContainerWidth, 0.0f)] autorelease];
     self.pSearchResultsTableContainerView.bounces = NO;
     self.pSearchResultsTableContainerView.contentSize = CGSizeMake(m_menuContainerWidth, 0.0f);
     self.pSearchResultsTableContainerView.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
     self.pSearchResultsTableContainerView.scrollEnabled = YES;
     self.pSearchResultsTableContainerView.userInteractionEnabled = YES;
+    self.pSearchResultsTableContainerView.delegate = self;
+    
+    self.pSearchMenuScrollButtonContainer = [[[UIView alloc] initWithFrame:CGRectMake(tableCellWidth/2 + m_searchCountLabelWidth - (searchResultsScrollButtonSize/2) , myframe.size.height/2, searchResultsScrollButtonSize, searchResultsScrollButtonSize)] autorelease];
+    
+    self.pSearchMenuScrollButton = [[[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, searchResultsScrollButtonSize, searchResultsScrollButtonSize)] autorelease];
+    [self.pSearchMenuScrollButton setImage:[UIImage imageNamed:@"SearchResults_ScrollButton"] forState:UIControlStateNormal];
+    [self.pSearchMenuScrollButton setImage:[UIImage imageNamed:@"SearchResults_ScrollButton_Down"] forState:UIControlStateHighlighted];
     
     const float tableX = 0.0f;
     const float tableY = 0.0f;
@@ -390,13 +413,18 @@
     
     [self.pTableViewContainer addSubview:self.pSearchResultsTableContainerView];
     [self.pSearchResultsTableContainerView addSubview:self.pSearchResultsTableView];
+    [self.pTableViewContainer addSubview:self.pSearchMenuFadeImage];
+    [self.pSearchMenuScrollButtonContainer addSubview:self.pSearchMenuScrollButton];
+    [self.pTableViewContainer addSubview:self.pSearchMenuScrollButtonContainer];
     
     self.frame = CGRectMake(0, 0, m_screenWidth, m_screenHeight);
     
     self.pInputDelegate = [[[SearchMenuInputDelegate alloc] initWithTextField:self.pSearchEditBox
                                                                   clearButton:self.pSearchEditBoxClearButton
                                                                resultsSpinner:self.pSearchEditBoxResultsSpinner
-                                                                      interop:m_pSearchMenuInterop] autorelease];
+                                                                      interop:m_pSearchMenuInterop
+                                                                searchMenuScrollButton:self.pSearchMenuScrollButton
+                                                                searchMenuScrollView:self.pSearchResultsTableContainerView]autorelease];
 }
 
 - (void)dealloc
@@ -447,6 +475,15 @@
 
     [self.pDragTab removeFromSuperview];
     [self.pDragTab release];
+    
+    [self.pSearchMenuFadeImage removeFromSuperview];
+    [self.pSearchMenuFadeImage release];
+    
+    [self.pSearchMenuScrollButton removeFromSuperview];
+    [self.pSearchMenuScrollButton release];
+    
+    [self.pSearchMenuScrollButtonContainer removeFromSuperview];
+    [self.pSearchMenuScrollButtonContainer release];
 
     Eegeo_DELETE m_pAnchorAnimationController;
     
@@ -794,6 +831,7 @@
     float totalTableHeight = 0.0f;
     float onScreenSearchResultsTableHeight;
     float tableY;
+    float maxOnScreenSearchResultsTableHeight = 0.0f;
     
     for(int i = 0; i < [self.pTableViewMap count]; ++i)
     {
@@ -812,7 +850,7 @@
     
     if(searchResultsTableContentHeight > 0.0f)
     {
-        const float maxOnScreenSearchResultsTableHeight = fmaxf(0.0f, m_maxScreenSpace - totalTableHeight - m_tableSpacing);
+        maxOnScreenSearchResultsTableHeight = fmaxf(0.0f, m_maxScreenSpace - totalTableHeight - m_tableSpacing);
         
         onScreenSearchResultsTableHeight = fminf(maxOnScreenSearchResultsTableHeight, searchResultsTableContentHeight);
         tableY = (onScreenSearchResultsTableHeight > 0.0f) ? onScreenSearchResultsTableHeight + m_tableSpacing : 0.0f;
@@ -845,6 +883,23 @@
     frame.size.height = onScreenSearchResultsTableHeight;
     self.pSearchResultsTableContainerView.frame = frame;
     
+    if (m_resultsVisible && m_resultsScrollable && !self.isTableAnimating) {
+        CGRect buttonFrame = self.pSearchMenuScrollButtonContainer.frame;
+        buttonFrame.origin.y = onScreenSearchResultsTableHeight - (buttonFrame.size.height * m_pixelScale);
+        self.pSearchMenuScrollButtonContainer.frame = buttonFrame;
+        _pSearchMenuScrollButtonContainer.hidden = false;
+        
+        buttonFrame = self.pSearchMenuFadeImage.frame;
+        buttonFrame.origin.y = onScreenSearchResultsTableHeight - (buttonFrame.size.height * m_pixelScale);
+        self.pSearchMenuFadeImage.frame = buttonFrame;
+        _pSearchMenuFadeImage.hidden = false;
+    }
+    else
+    {
+        _pSearchMenuScrollButtonContainer.hidden = true;
+        _pSearchMenuFadeImage.hidden = true;
+    }
+
     [self.pSearchResultsTableContainerView setContentSize:CGSizeMake(self.pSearchResultsTableView.frame.size.width, searchResultsTableContentHeight)];
     
     frame = self.pTableViewContainer.frame;
@@ -853,9 +908,14 @@
     
     [self.pTableViewContainer setContentSize:CGSizeMake(self.pTableViewContainer.frame.size.width, tableY + totalTableHeight)];
     
-    frame = self.pMenuContainer.frame;
-    frame.size.height = tableViewContainerHeight + m_tableSpacing;
-    self.pMenuContainer.frame = frame;
+    if (searchResultsTableContentHeight > maxOnScreenSearchResultsTableHeight)
+    {
+        m_resultsScrollable = true;
+    }
+    else
+    {
+        m_resultsScrollable = false;
+    }
 }
 
 - (float) getHeightForTable:(CustomTableView*)tableView
@@ -888,6 +948,25 @@
 - (void)onRowSelected
 {
     [self.pInputDelegate removeSeachKeyboard];
+}
+
+-(void)scrollViewDidScroll:(UIScrollView *)sender
+{
+        if(self.pSearchResultsTableContainerView.contentOffset.y + self.pSearchResultsTableContainerView.frame.size.height == self.pSearchResultsTableContainerView.contentSize.height)
+        {
+            _pSearchMenuScrollButtonContainer.hidden = true;
+            _pSearchMenuFadeImage.hidden = true;
+        }
+        else
+        {
+            if(_pSearchMenuScrollButtonContainer.hidden == true)
+            {
+                _pSearchMenuScrollButton.alpha = 0.0;
+                [UIView animateWithDuration:1.0 animations:^{_pSearchMenuScrollButton.alpha = 1.0;}];
+            }
+            _pSearchMenuScrollButtonContainer.hidden = false;
+            _pSearchMenuFadeImage.hidden = false;
+        }
 }
 
 @end

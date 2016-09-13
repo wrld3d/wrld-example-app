@@ -13,6 +13,7 @@
 #include "BidirectionalBus.h"
 #include "PlaceJumpSelectedMessage.h"
 #include "IMetricsService.h"
+#include "MenuOptionsModel.h"
 #include "IMenuReactionModel.h"
 
 namespace ExampleApp

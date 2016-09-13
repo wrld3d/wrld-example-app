@@ -9,12 +9,12 @@ namespace ExampleApp
         namespace SdkModel
         {
             SearchQuery::SearchQuery(const std::string& query,
-                                     bool isCategory,
+                                     bool isTag,
                                      bool tryInteriorSearch,
                                      const Eegeo::Space::LatLongAltitude& where,
                                      float radius)
                 : m_query(query)
-                , m_isCategory(isCategory)
+                , m_isTag(isTag)
                 , m_tryInteriorSearch(tryInteriorSearch)
                 , m_where(where)
                 , m_radius(radius)
@@ -31,9 +31,9 @@ namespace ExampleApp
                 return m_query;
             }
 
-            bool SearchQuery::IsCategory() const
+            bool SearchQuery::IsTag() const
             {
-                return m_isCategory;
+                return m_isTag;
             }
             
             bool SearchQuery::ShouldTryInteriorSearch() const

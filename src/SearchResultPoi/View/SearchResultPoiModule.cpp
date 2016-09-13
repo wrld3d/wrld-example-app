@@ -10,9 +10,9 @@
 #include "IReactionControllerModel.h"
 #include "IMyPinsService.h"
 #include "ISearchResultMyPinsService.h"
-#include "ISearchResultIconCategoryMapper.h"
 #include "IWebLoadRequestFactory.h"
 #include "SearchResultPoiController.h"
+#include "ISearchResultIconKeyMapper.h"
 
 namespace ExampleApp
 {
@@ -22,11 +22,8 @@ namespace ExampleApp
         {
             void SearchResultPoiModule::Register(const TContainerBuilder& builder)
             {
-#ifdef EEGEO_WIN
                 builder->registerType<DesktopSearchResultPoiViewModel>().as<ISearchResultPoiViewModel>().singleInstance();
-#else
                 builder->registerType<SearchResultPoiViewModel>().as<ISearchResultPoiViewModel>().singleInstance();
-#endif
                 builder->registerType<SdkModel::SearchResultPoiMyPinService>().as<SdkModel::ISearchResultPoiMyPinService>().singleInstance();
                 builder->registerType<SdkModel::SearchResultPoiPinToggledMessageHandler>().singleInstance();
                 builder->registerType<SdkModel::SearchResultPoiViewImageFetcher>().as<SdkModel::ISearchResultPoiViewImageFetcher>().singleInstance();

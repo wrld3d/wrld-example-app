@@ -4,7 +4,7 @@
 #include "IMyPinsService.h"
 #include "ISearchResultMyPinsService.h"
 #include "SearchResultPoiMyPinService.h"
-#include "ISearchResultIconCategoryMapper.h"
+#include "ISearchResultIconKeyMapper.h"
 
 namespace ExampleApp
 {
@@ -14,10 +14,10 @@ namespace ExampleApp
         {   
             SearchResultPoiMyPinService::SearchResultPoiMyPinService(const std::shared_ptr<MyPins::SdkModel::IMyPinsService>& myPinsService,
                                                                      const std::shared_ptr<Search::SdkModel::MyPins::ISearchResultMyPinsService>& searchResultMyPinsService,
-                                                                     const std::shared_ptr<CategorySearch::ISearchResultIconCategoryMapper>& searchResultIconCategoryMapper)
+                                                                     const std::shared_ptr<TagSearch::ISearchResultIconKeyMapper>& searchResultIconKeyMapper)
             : m_myPinsService(myPinsService)
             , m_searchResultMyPinsService(searchResultMyPinsService)
-            , m_searchResultIconCategoryMapper(searchResultIconCategoryMapper)
+            , m_searchResultIconKeyMapper(searchResultIconKeyMapper)
             {
                 
             }
@@ -39,7 +39,7 @@ namespace ExampleApp
                 else
                 {
                     // The pin doesn't exist, so we must add it...
-                    const std::string& pinIconKey = m_searchResultIconCategoryMapper->GetIconKeyFromSearchResult(searchResult);
+                    const std::string& pinIconKey = m_searchResultIconKeyMapper->GetIconKeyFromSearchResult(searchResult);
                     m_myPinsService->SaveSearchResultPoiPin(searchResult, pinIconKey);
                 }
             }

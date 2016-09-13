@@ -56,7 +56,8 @@
 #include "AndroidInitialExperienceModule.h"
 #include "ViewControllerUpdaterModule.h"
 #include "ViewControllerUpdaterModel.h"
-#include "CategorySearchModule.h"
+#include "TagSearchModule.h"
+#include "TagSearchViewModule.h"
 #include "ScreenProperties.h"
 #include "MyPinCreationViewModule.h"
 #include "IMyPinCreationModule.h"
@@ -143,6 +144,7 @@ AppHost::AppHost(
     ,m_pViewControllerUpdaterModule(NULL)
 	,m_pAndroidFlurryMetricsService(NULL)
 	,m_pInitialExperienceIntroViewModule(NULL)
+    ,m_pTagSearchViewModule(NULL)
 	,m_failAlertHandler(this, &AppHost::HandleStartupFailure)
 	,m_userInteractionEnabledChangedHandler(this, &AppHost::HandleUserInteractionEnabledChanged)
 {
@@ -480,11 +482,17 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                         app.SearchMenuModule().GetSearchMenuModel(),
                                         app.SearchMenuModule().GetSearchMenuViewModel(),
 										app.SearchMenuModule().GetSearchSectionViewModel(),
-                                        app.CategorySearchModule().GetCategorySearchRepository(),
+                                        app.TagSearchModule().GetTagSearchRepository(),
 	                                    app.SearchMenuModule().GetSearchMenuOptionsModel(),
 										m_pModalBackgroundViewModule->GetModalBackgroundView(),
                                         m_messageBus
                                     );
+
+    m_pTagSearchViewModule = ExampleApp::TagSearch::View::TagSearchViewModule::Create(
+            app.TagSearchModule().GetTagSearchMenuOptionsModel(),
+            app.SettingsMenuModule().GetSettingsMenuViewModel(),
+            m_messageBus,
+            *m_pMenuReactionModel);
 
     m_pSettingsMenuViewModule = Eegeo_NEW(ExampleApp::SettingsMenu::View::SettingsMenuViewModule)(
     											"com/eegeo/settingsmenu/SettingsMenuView",
@@ -544,7 +552,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 								);
 
     m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(
-			 app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
+    		app.InteriorsExplorerModule().GetInteriorsExplorerModel(),
+			app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
             m_messageBus,
             m_nativeState);
 
@@ -591,6 +600,8 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
         Eegeo_DELETE m_pModalBackgroundViewModule;
 
         Eegeo_DELETE m_pSettingsMenuViewModule;
+
+        Eegeo_DELETE m_pTagSearchViewModule;
 
         Eegeo_DELETE m_pSearchMenuViewModule;
 

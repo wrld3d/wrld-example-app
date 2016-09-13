@@ -17,9 +17,8 @@ class SearchMenuViewWrapper : public ViewWrap<SearchMenuView>
     using ViewWrap::ViewWrap;
 };
 
-@interface SearchMenuView : MenuView<CustomTableRowSelectionDelegate>
+@interface SearchMenuView : MenuView<CustomTableRowSelectionDelegate, UIScrollViewDelegate>
 {
-    
 }
 
 - (id)initWithParams:(float)width

@@ -21,11 +21,11 @@ namespace ExampleApp
 
 		property System::String^ JsonData { System::String^ get(); }
 
-		property System::String^ Category { System::String^ get(); }
+		property System::String^ IconKey { System::String^ get(); }
 
 		property System::String^ Vendor { System::String^ get(); }
 
-		property array<System::String^>^ HumanReadableCategories { array<System::String^>^ get(); }
+		property array<System::String^>^ HumanReadableTags { array<System::String^>^ get(); }
 	};
 }
 

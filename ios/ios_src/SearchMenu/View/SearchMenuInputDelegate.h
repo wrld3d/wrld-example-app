@@ -11,8 +11,10 @@
 
 - (id)initWithTextField:(UITextField*)textField
             clearButton:(UIButton*)clearButton
-         resultsSpinner:(SearchMenuResultsSpinner*)resultsSpinner
-                interop:(ExampleApp::SearchMenu::View::SearchMenuViewInterop*)interop;
+            resultsSpinner:(SearchMenuResultsSpinner*)resultsSpinner
+            interop:(ExampleApp::SearchMenu::View::SearchMenuViewInterop*)interop
+            searchMenuScrollButton:(UIButton*)searchMenuScrollButton
+            searchMenuScrollView:(UIScrollView*)searchMenuScrollView;
 
 - (void) setSearchInProgress;
 
@@ -21,7 +23,7 @@
 - (void) removeSeachKeyboard;
 
 - (void) setEditText :(NSString*)searchText
-                     :(bool)isCategory;
+                     :(bool)isTag;
 
 - (void) clearSearch;
 

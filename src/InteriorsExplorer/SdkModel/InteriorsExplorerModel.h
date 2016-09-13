@@ -15,6 +15,7 @@
 #include "AppModes.h"
 #include "InteriorsExplorer.h"
 #include "VisualMap.h"
+#include "PersistentSettings.h"
 
 namespace ExampleApp
 {
@@ -29,7 +30,9 @@ namespace ExampleApp
                                        const std::shared_ptr<Eegeo::Resources::Interiors::InteriorSelectionModel>& interiorSelectionModel,
                                        const std::shared_ptr<VisualMap::SdkModel::IVisualMapService>& visualMapService,
                                        const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
-                                       const std::shared_ptr<Metrics::IMetricsService>& metricsService);
+                                       const std::shared_ptr<Metrics::IMetricsService>& metricsService,
+                                       const std::shared_ptr<PersistentSettings::IPersistentSettingsModel>& persistentSettings);
+
                 ~InteriorsExplorerModel();
                 
                 void SelectFloor(int floor);
@@ -41,6 +44,11 @@ namespace ExampleApp
                 
                 void ChangeToInteriorMapState();
                 void ResumePreviousMapState();
+                
+                int GetInteriorExitTutorialViewedCount();
+                void RecordHasViewedInteriorExitTutorial();
+				int GetInteriorChangeFloorTutorialViewedCount();
+				void RecordHasViewedInteriorChangeFloorTutorial();
                 
                 void InsertInteriorExplorerEnteredCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveInteriorExplorerEnteredCallback(Eegeo::Helpers::ICallback0& callback);
@@ -64,6 +72,10 @@ namespace ExampleApp
                 const std::shared_ptr<VisualMap::SdkModel::IVisualMapService> m_visualMapService;
                 const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 const std::shared_ptr<Metrics::IMetricsService> m_metricsService;
+                const std::shared_ptr<PersistentSettings::IPersistentSettingsModel> m_persistentSettings;
+                
+                int m_interiorExitTutorialViewedCount;
+				int m_interiorChangeFloorTutorialViewedCount;
                 
                 Eegeo::Helpers::TCallback0<InteriorsExplorerModel> m_interactionModelStateChangedCallback;
                 

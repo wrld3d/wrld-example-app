@@ -24,3 +24,5 @@ obj
 **/*.sln
 ios/XcodeBuild/
 **/ApplicationConfigs/staging_config.json
+**/.vscode/
+

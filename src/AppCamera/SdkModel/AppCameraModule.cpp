@@ -25,6 +25,7 @@
 #include "InteriorsExplorerModel.h"
 #include "IVisualMapService.h"
 #include "IMetricsService.h"
+#include "IPersistentSettingsModel.h"
 
 namespace ExampleApp
 {

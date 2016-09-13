@@ -10,6 +10,7 @@
 #include "TweetStateData.h"
 #include "BidirectionalBus.h"
 #include "InteriorsExplorer.h"
+#include <map>
 
 namespace ExampleApp
 {

@@ -31,7 +31,7 @@ namespace ExampleApp
                     const std::string emptyYelpOAuthToken;
                     const std::string emptyYelpOAuthTokenSecret;
                     const std::string emptyGeoNamesUserName;
-                    const std::string eegeoSearchServiceUrl = "http://poi.eegeo.com/v1";
+                    const std::string eegeoSearchServiceUrl = "https://poi.eegeo.com/v1.1";
                     const std::string emptyMyPinsWebServiceUrl;
                     const std::string emptyMyPinsWebServiceAuthToken;
                     const std::string emptyTwitterAuthCode;

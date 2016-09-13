@@ -33,7 +33,7 @@ namespace ExampleAppWPF
 
         private const float m_maxWaitPercentage = 1.1f;
 
-        private const float m_oversampleScale = 1.0f;
+        private const float m_oversampleScale = 1.5f;
 
         List<KeyValuePair<int, bool>> m_zeroIndexedTouchIds;
 
@@ -125,6 +125,7 @@ namespace ExampleAppWPF
             MouseWheel += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandleZoomEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), e.Delta, Keyboard.Modifiers); };
             MouseLeave += (o, e) => { if (m_isMouseInputActive) m_mapImage.SetAllInputEventsToPointerUp((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y)); };
             MouseMove += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandleMouseMoveEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
+            MouseEnter += (o, e) => { if (m_isMouseInputActive) { EnableInput(); } };
 
             KeyDown += OnKeyDown;
 
@@ -134,7 +135,7 @@ namespace ExampleAppWPF
             TouchDown += OnTouchDown;
             TouchUp += OnTouchUp;
             TouchMove += OnTouchMove;
-            MapHost.TouchLeave += (o, e) =>
+            TouchLeave += (o, e) =>
             {
                 if (m_isTouchInputActive)
                 {
@@ -146,12 +147,19 @@ namespace ExampleAppWPF
             Dispatcher.Hooks.DispatcherInactive += new EventHandler(DispatcherInactive);
 
         }
-
         public void PopAllTouchEvents()
         {
-            if (!m_isTouchInputActive)
+            if (m_isTouchInputActive)
             {
                 m_mapImage.PopAllTouchEvents();
+            }
+        }
+
+        public void PopAllMouseEvents()
+        {
+            if (m_isMouseInputActive)
+            {
+                m_mapImage.SetAllInputEventsToPointerUp(0, 0);
             }
         }
 

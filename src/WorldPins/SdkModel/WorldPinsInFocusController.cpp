@@ -45,7 +45,7 @@ namespace ExampleApp
                 , m_visibilityMessageHandlerBinding(this, &WorldPinsInFocusController::OnWorldPinsVisibilityMessage)
                 , m_selectedFocussedMessageHandlerBinding(this, &WorldPinsInFocusController::OnSelectedFocussedMessage)
                 , m_pLastFocussedModel(NULL)
-                , m_focusEnabled(true)
+                , m_focusEnabled(false)
                 , m_screenOversampleScale(screenProperties->GetOversampleScale())
             {
                 Eegeo_ASSERT(m_worldPinsRepository != nullptr);

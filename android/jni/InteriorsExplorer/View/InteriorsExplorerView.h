@@ -33,6 +33,10 @@ namespace ExampleApp
                 void SetSelectedFloorIndex(int index);
                 void UpdateFloors(const std::vector<std::string>& floorShortNames, int currentlySelectedFloorIndex);
 
+                void AddTutorialDialogs(bool showExitDialog, bool showChangeFloorDialog);
+                void RemoveTutorialDialogs();
+                bool GetCanShowChangeFloorTutorialDialog();
+
                 void InsertDismissedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveDismissedCallback(Eegeo::Helpers::ICallback0& callback);
                 void InsertFloorSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback);
@@ -51,6 +55,7 @@ namespace ExampleApp
             private:
                 jclass m_uiViewClass;
                 jobject m_uiView;
+                jobject m_uiTutorialView;
 
                 Eegeo::Helpers::CallbackCollection1<int> m_selectedFloorCallbacks;
                 Eegeo::Helpers::CallbackCollection1<float> m_floorSelectionDraggedCallbacks;

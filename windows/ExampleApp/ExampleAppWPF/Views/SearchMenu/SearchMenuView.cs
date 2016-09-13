@@ -3,11 +3,11 @@ using ExampleAppWPF.Views.SearchMenu;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
@@ -19,7 +19,7 @@ namespace ExampleAppWPF
         private TextBox m_editText;
         private MenuListAdapter m_adapter;
         private Grid m_searchBox;
-        
+
         private ListBox m_resultsList;
         private MenuListAdapter m_resultListAdapter;
         private Grid m_resultsSpinner;
@@ -29,12 +29,15 @@ namespace ExampleAppWPF
         private ScrollViewer m_resultsOptionsView;
         private FrameworkElement m_searchArrow;
         private FrameworkElement m_resultsSeparator;
+        private RepeatButton m_searchResultsScrollButton;
+        private Image m_searchResultsFade;
+        private Grid m_searchResultsButtonAndFadeContainer;
 
         private Grid m_resultsCountContainer;
 
         private bool m_searchInFlight;
         private bool m_hasResults;
-        private bool m_hasCategorySearch;
+        private bool m_hasTagSearch;
 
         private ControlClickHandler m_menuListClickHandler;
         private ControlClickHandler m_resultsListClickHandler;
@@ -65,9 +68,16 @@ namespace ExampleAppWPF
 
             m_searchInFlight = false;
             m_hasResults = false;
-            m_hasCategorySearch = false;
-            m_touchHandler = new WindowInteractionTouchHandler(this);
-            TouchEnter += (o, e) => { mainWindow.PopAllTouchEvents(); };
+            m_hasTagSearch = false;
+            m_touchHandler = new WindowInteractionTouchHandler(this, true, false, true);
+
+            MouseEnter += (o, e) =>
+            {
+                mainWindow.PopAllMouseEvents();
+                mainWindow.DisableInput();
+            };
+
+            MouseLeave += (o, e) => { mainWindow.EnableInput(); };
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -131,6 +141,7 @@ namespace ExampleAppWPF
             m_resultsOptionsView.TouchDown += OnResultsListTouchDown;
             m_resultsOptionsView.TouchUp += OnResultsListTouchUp;
             m_resultsOptionsView.ManipulationBoundaryFeedback += OnResultsListBoundaryFeedback;
+            m_resultsOptionsView.ScrollChanged += OnSearchResultsScrolled;
 
             m_resultsSpinner = (Grid)GetTemplateChild("SearchResultsSpinner");
             m_resultsCount = (TextBlock)GetTemplateChild("SearchResultCount");
@@ -140,6 +151,12 @@ namespace ExampleAppWPF
             m_searchBox = (Grid)GetTemplateChild("SearchBox");
             m_searchArrow = (FrameworkElement)GetTemplateChild("SearchArrow");
             m_resultsSeparator = (FrameworkElement)GetTemplateChild("ResultsListSeparator");
+            m_searchResultsFade = (Image)GetTemplateChild("SearchResultsFade");
+            m_searchResultsButtonAndFadeContainer = (Grid)GetTemplateChild("SearchResultsButtonAndFadeContainer");
+
+            m_searchResultsScrollButton = (RepeatButton)GetTemplateChild("SearchResultsScrollButton");
+            m_searchResultsScrollButton.Click += OnResultsScrollButtonMouseDown;
+            m_searchResultsScrollButton.PreviewMouseWheel += OnResultsMenuScrollWheel;
 
             m_resultsClearButton = (Button)GetTemplateChild("SearchClear");
             m_resultsClearButton.Click += OnResultsClear;
@@ -162,6 +179,7 @@ namespace ExampleAppWPF
             m_editText.GotFocus += OnSearchBoxSelected;
             m_editText.LostFocus += OnSearchBoxUnSelected;
             m_editText.TextChanged += OnSearchBoxTextChanged;
+            
 
             m_mainContainer = (Grid)GetTemplateChild("SerchMenuMainContainer");
 
@@ -187,10 +205,29 @@ namespace ExampleAppWPF
             m_searchInputTextClose = ((Storyboard)Template.Resources["CloseSearchInputBoxText"]).Clone();
 
             m_searchArrowOpen = ((Storyboard)Template.Resources["OpenSearchArrow"]).Clone();
-            m_searchArrowClosed  = ((Storyboard)Template.Resources["CloseSearchArrow"]).Clone();
+            m_searchArrowClosed = ((Storyboard)Template.Resources["CloseSearchArrow"]).Clone();
 
             m_adapter = new MenuListAdapter(false, m_list, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SubMenuItemPanel");
             m_resultListAdapter = new MenuListAdapter(false, m_resultsList, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SearchResultPanel");
+        }
+
+        private void OnSearchResultsScrolled(object sender, RoutedEventArgs e)
+        {
+            if (m_resultsOptionsView.VerticalOffset == m_resultsOptionsView.ScrollableHeight)
+            {
+                m_searchResultsButtonAndFadeContainer.Visibility = Visibility.Collapsed;
+                m_searchResultsScrollButton.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                m_searchResultsButtonAndFadeContainer.Visibility = Visibility.Visible;
+                m_searchResultsScrollButton.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void OnResultsScrollButtonMouseDown(object sender, RoutedEventArgs e)
+        {
+            m_resultsOptionsView.ScrollToVerticalOffset(m_resultsOptionsView.VerticalOffset+10);
         }
 
         private void OnResultsListBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
@@ -201,11 +238,13 @@ namespace ExampleAppWPF
         private void OnResultsListTouchUp(object sender, TouchEventArgs e)
         {
             m_resultsOptionsView.ReleaseTouchCapture(e.TouchDevice);
+            m_resultsOptionsView.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
         }
 
         private void OnResultsListTouchDown(object sender, TouchEventArgs e)
         {
             m_resultsOptionsView.CaptureTouch(e.TouchDevice);
+            m_resultsOptionsView.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
         }
 
         private void OnSearchBoxTextChanged(object sender, TextChangedEventArgs e)
@@ -275,7 +314,7 @@ namespace ExampleAppWPF
 
         private void OnSearchBoxSelected(object sender, RoutedEventArgs e)
         {
-            if (m_hasCategorySearch)
+            if (m_hasTagSearch)
             {
                 m_editText.Text = string.Empty;
             }
@@ -299,7 +338,7 @@ namespace ExampleAppWPF
         private void ClearSearch()
         {
             m_hasResults = false;
-            m_hasCategorySearch = false;
+            m_hasTagSearch = false;
 
             if (m_resultsList.Items?.Count > 0)
             {
@@ -326,7 +365,9 @@ namespace ExampleAppWPF
         {
             if (e.Key == Key.Enter)
             {
-                string queryText = m_editText.Text;
+                Encoding enc = Encoding.GetEncoding("Windows-1252");
+                byte[] bytes = Encoding.UTF8.GetBytes(m_editText.Text);
+                string queryText = enc.GetString(bytes);
 
                 if (queryText.Length > 0)
                 {
@@ -340,7 +381,7 @@ namespace ExampleAppWPF
             }
         }
 
-        public void SetSearchSection(string category, string[] searchResults)
+        public void SetSearchSection(string tag, string[] searchResults)
         {
             var groups = new List<string>(searchResults.Length);
             var groupsExpandable = new List<bool>(searchResults.Length);
@@ -356,8 +397,8 @@ namespace ExampleAppWPF
                 item.Details = jObject["details"] != null ? jObject["details"].Value<string>() : string.Empty;
 
                 JToken iconStringToken;
-                var iconCategoryName = jObject.TryGetValue("icon", out iconStringToken) ? iconStringToken.Value<string>() : "";
-                item.Icon = SearchMenuResultIconProvider.GetIconForCategory(iconCategoryName);
+                var iconTagName = jObject.TryGetValue("icon", out iconStringToken) ? iconStringToken.Value<string>() : "";
+                item.Icon = SearchMenuResultIconProvider.GetIconForTag(iconTagName);
                 itemsSource.Add(item);
 
                 groups.Add(str);
@@ -418,7 +459,7 @@ namespace ExampleAppWPF
                 m_searchArrowOpen.Begin(m_searchArrow);
 
                 base.AnimateToOpenOnScreen();
-                m_mainWindow.EnableInput(); 
+                m_mainWindow.EnableInput();
             }
         }
 
@@ -437,13 +478,15 @@ namespace ExampleAppWPF
             });
         }
 
-        public void SetEditText(string text, bool isCategory)
+        public void SetEditText(string text, bool isTag)
         {
             if(!m_editText.IsFocused)
             {
-                m_editText.Text = text;
+                byte[] bytes = Encoding.Default.GetBytes(text);
+                string encodedText = Encoding.UTF8.GetString(bytes);
+                m_editText.Text = encodedText;
             }
-            m_hasCategorySearch = isCategory;
+            m_hasTagSearch = isTag;
             
         }
         
@@ -453,9 +496,13 @@ namespace ExampleAppWPF
             {
                 m_resultsCount.Text = count.ToString();
                 m_resultsCountContainer.Visibility = Visibility.Visible;
+                m_searchResultsScrollButton.Visibility = Visibility.Visible;
+                m_resultsOptionsView.ScrollToTop();
             }
             else
             {
+                m_searchResultsButtonAndFadeContainer.Visibility = Visibility.Collapsed;
+                m_searchResultsScrollButton.Visibility = Visibility.Hidden;
                 m_resultsCountContainer.Visibility = Visibility.Hidden;
                 m_resultsSpinner.Visibility = Visibility.Hidden;
                 ClearSearchResultsListBox();
@@ -468,6 +515,7 @@ namespace ExampleAppWPF
         protected override void RefreshListData(List<string> groups, List<bool> groupsExpandable, Dictionary<string, List<string>> groupToChildrenMap)
         {
             m_adapter.SetData(m_list.ItemsSource, groups, groupsExpandable, groupToChildrenMap);
+            m_resultsOptionsView.MaxHeight = CalcResultOptionsViewMaxHeight();
         }
     }
 }
