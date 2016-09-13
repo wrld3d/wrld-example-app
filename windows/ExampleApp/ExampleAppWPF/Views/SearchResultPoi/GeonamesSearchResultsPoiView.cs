@@ -68,10 +68,8 @@ namespace ExampleAppWPF
         public override void DisplayPoiInfo(Object modelObject, bool isPinned)
         {
             m_model = modelObject as ExampleApp.SearchResultModelCLI;
-
-            Image categoryIcon = (Image)GetTemplateChild("CategoryIcon");
-            categoryIcon.Source = StartupResourceLoader.GetBitmap(SearchResultCategoryMapper.GetIconImageName(m_model.Category));
-            m_categoryIcon.Source = StartupResourceLoader.GetBitmap(SearchResultCategoryMapper.GetIconImageName(m_model.Category));
+            
+            m_categoryIcon.Source = SearchResultCategoryMapper.GetIconForCategory("misc");
 
             m_closing = false;
 

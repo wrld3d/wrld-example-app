@@ -210,7 +210,7 @@ namespace ExampleAppWPF
             PhoneText = yelpResultModel.Phone;
             HumanReadableCategoriesText = string.Join(Environment.NewLine, model.HumanReadableCategories);
             ReviewText = string.Join(Environment.NewLine, yelpResultModel.Reviews);
-            CategoryIcon = StartupResourceLoader.GetBitmap(SearchResultCategoryMapper.GetIconImageName(model.Category));
+            CategoryIcon = SearchResultCategoryMapper.GetIconForCategory(model.Category);
             PoiViewRatingCountText = yelpResultModel.ReviewCount > 0 ? yelpResultModel.ReviewCount.ToString() : string.Empty;
             RatingsImage = null;
 

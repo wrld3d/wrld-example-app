@@ -1,68 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System.Diagnostics;
+using System.Windows.Media.Imaging;
 
 namespace ExampleAppWPF
 {
     public static class SearchResultCategoryMapper
     {
-        private static Dictionary<string, string> CategoryToIconIndex;
-
-        static SearchResultCategoryMapper()
+        public static BitmapImage GetIconForCategory(string categoryName)
         {
-            CategoryToIconIndex = new Dictionary<string, string>();
+            var iconImagePath = string.Format("icon1_{0}.png", categoryName);
+            StartupResourceLoader.LoadImage(iconImagePath);
+            var image = StartupResourceLoader.GetBitmap(iconImagePath);
+            Debug.Assert(image != null, string.Format("unable to load image for {0}", categoryName));
 
-            CategoryToIconIndex.Add("caf\u00E9/pub", "coffee.png");
-            CategoryToIconIndex.Add("coffee", "coffee.png");
-
-            CategoryToIconIndex.Add("restaurant", "restaurant.png");
-            CategoryToIconIndex.Add("restaurants", "restaurant.png");
-            CategoryToIconIndex.Add("fast food", "restaurant.png");
-            CategoryToIconIndex.Add("food", "restaurant.png");
-
-            CategoryToIconIndex.Add("nightlife", "nightlife.png");
-            CategoryToIconIndex.Add("night life", "nightlife.png");
-
-            CategoryToIconIndex.Add("park", "park.png");
-            CategoryToIconIndex.Add("parks", "park.png");
-
-            CategoryToIconIndex.Add("theatre", "theatre.png");
-            CategoryToIconIndex.Add("theater", "theatre.png");
-
-            CategoryToIconIndex.Add("hotel", "hotel.png");
-            CategoryToIconIndex.Add("hotels", "hotel.png");
-            CategoryToIconIndex.Add("hotel/motel", "hotel.png");
-
-            CategoryToIconIndex.Add("bank", "bank.png");
-            CategoryToIconIndex.Add("banks", "bank.png");
-
-            CategoryToIconIndex.Add("museum", "museum.png");
-            CategoryToIconIndex.Add("museums", "museum.png");
-            CategoryToIconIndex.Add("arts", "museum.png");
-            
-            CategoryToIconIndex.Add("meeting_room", "meeting_room.png");
-            
-            CategoryToIconIndex.Add("working_group", "working_group.png");
-            CategoryToIconIndex.Add("department", "working_group.png");
-
-            CategoryToIconIndex.Add("stationery", "stationery.png");
-
-            CategoryToIconIndex.Add("toilets", "toilets.png");
-
-            CategoryToIconIndex.Add("print_station", "print_station.png");
-        }
-
-        public static string GetIconImageName(string categoryName)
-        {
-            string imageName = null;
-            CategoryToIconIndex.TryGetValue(categoryName, out imageName);
-
-            if (imageName == null)
-            {
-                return "none.png";
-            }
-            else
-            {
-                return imageName;
-            }
+            return image;
         }
     }
 }
