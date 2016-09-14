@@ -50,6 +50,7 @@
 #include "InteriorSelectionModel.h"
 #include "InteriorInteractionModel.h"
 #include "InteriorMarkerModelRepository.h"
+#include "IInteriorsEntitiesPinsController.h"
 
 namespace ExampleApp
 {

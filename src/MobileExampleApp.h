@@ -24,6 +24,7 @@
 #include "InteriorVisibilityUpdater.h"
 #include "InteriorWorldPinController.h"
 #include "WorldPins.h"
+#include "InteriorsEntitiesPins.h"
 
 namespace ExampleApp
 {
@@ -51,6 +52,7 @@ namespace ExampleApp
         const std::shared_ptr<InteriorsExplorer::SdkModel::InteriorVisibilityUpdater> m_interiorsVisibilityUpdater;
         const std::shared_ptr<InteriorsExplorer::SdkModel::InteriorWorldPinController> m_interiorWorldPinController;
         const std::shared_ptr<WorldPins::SdkModel::InteriorPinsPlatformServices> m_interiorPinsPlatformServices;
+        const std::shared_ptr<InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController> m_interiorsEntitiesPinsController;
         
         std::shared_ptr<Eegeo::Rendering::ScreenProperties> m_screenProperties;
         std::shared_ptr<Eegeo::Rendering::LoadingScreen> m_loadingScreen;
@@ -80,7 +82,8 @@ namespace ExampleApp
                          const std::shared_ptr<WorldPins::SdkModel::IWorldPinsInFocusController>& worldPinsInFocusController,
                          const std::shared_ptr<InteriorsExplorer::SdkModel::InteriorVisibilityUpdater>& interiorsVisibilityUpdater,
                          const std::shared_ptr<InteriorsExplorer::SdkModel::InteriorWorldPinController>& interiorWorldPinController,
-                         const std::shared_ptr<WorldPins::SdkModel::InteriorPinsPlatformServices>& interiorPinsPlatformServices);
+                         const std::shared_ptr<WorldPins::SdkModel::InteriorPinsPlatformServices>& interiorPinsPlatformServices,
+                         const std::shared_ptr<InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController>& interiorsEntitiesPinsController);
 
         ~MobileExampleApp();
 

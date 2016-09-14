@@ -19,6 +19,7 @@
 #include "PinsModule.h"
 #include "InteriorVisibilityUpdater.h"
 #include "InteriorWorldPinController.h"
+#include "IInteriorsEntitiesPinsController.h"
 
 namespace ExampleApp
 {
@@ -132,7 +133,8 @@ namespace ExampleApp
                                        const std::shared_ptr<WorldPins::SdkModel::IWorldPinsInFocusController>& worldPinsInFocusController,
                                        const std::shared_ptr<InteriorsExplorer::SdkModel::InteriorVisibilityUpdater>& interiorsVisibilityUpdater,
                                        const std::shared_ptr<InteriorsExplorer::SdkModel::InteriorWorldPinController>& interiorWorldPinController,
-                                       const std::shared_ptr<WorldPins::SdkModel::InteriorPinsPlatformServices>& interiorPinsPlatformServices)
+                                       const std::shared_ptr<WorldPins::SdkModel::InteriorPinsPlatformServices>& interiorPinsPlatformServices,
+                                       const std::shared_ptr<InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController>& interiorsEntitiesPinsController)
     : m_world(world)
     , m_cameraController(appCameraController)
     , m_gpsCameraController(gpsCameraController)
@@ -156,6 +158,7 @@ namespace ExampleApp
     , m_interiorsVisibilityUpdater(interiorsVisibilityUpdater)
     , m_interiorWorldPinController(interiorWorldPinController)
     , m_interiorPinsPlatformServices(interiorPinsPlatformServices)
+    , m_interiorsEntitiesPinsController(interiorsEntitiesPinsController)
     {
         Eegeo_ASSERT(m_world != nullptr);
         Eegeo_ASSERT(m_cameraController != nullptr);
@@ -180,6 +183,7 @@ namespace ExampleApp
         Eegeo_ASSERT(m_interiorsVisibilityUpdater != nullptr);
         Eegeo_ASSERT(m_interiorWorldPinController != nullptr);
         Eegeo_ASSERT(m_interiorPinsPlatformServices != nullptr);
+        Eegeo_ASSERT(m_interiorsEntitiesPinsController != nullptr);
         
         //AddLocalMaterials(m_platformAbstractions.GetFileIO(),
         //                  m_pWorld->GetMapModule().GetInteriorsMaterialsModule().GetInteriorsTextureResourceService(),
@@ -239,6 +243,7 @@ namespace ExampleApp
             m_worldPinsService->Update(dt);
             m_worldPinsScaleController->Update(dt, renderCamera);
             m_worldPinsFloorHeightController->Update(dt);
+            m_interiorsEntitiesPinsController->Update(dt);
             m_compassUpdateController->Update(dt);
             
             if(!m_initialExperienceModel->HasCompletedInitialExperience() && m_loadingScreen == nullptr)
