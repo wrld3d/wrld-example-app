@@ -11,6 +11,7 @@ namespace ExampleApp
             class IGpsMarkerController;
             class GpsMarkerModel;
             class GpsMarkerView;
+            class GpsMarkerViewFactory;
         }
     }
 }

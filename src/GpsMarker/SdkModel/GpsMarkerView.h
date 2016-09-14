@@ -6,6 +6,8 @@
 #include "Rendering.h"
 #include "VectorMathDecl.h"
 #include "Camera.h"
+#include "GpsMarker.h"
+#include <memory>
 
 namespace ExampleApp
 {
@@ -17,7 +19,7 @@ namespace ExampleApp
             {
             public:
                 
-                GpsMarkerView(Eegeo::Rendering::Renderables::BatchedSpriteRenderable& iconRenderable);
+                GpsMarkerView(const std::shared_ptr<GpsMarkerViewFactory>& factory);
                 ~GpsMarkerView();
                 
                 void SetVisible(bool visible);

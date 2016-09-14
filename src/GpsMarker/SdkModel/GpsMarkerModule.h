@@ -2,9 +2,7 @@
 
 #pragma once
 
-#include "Rendering.h"
-#include "GlHelpers.h"
-#include "Hypodermic/ContainerBuilder.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -12,13 +10,12 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class GpsMarkerModule
+            class GpsMarkerModule : public Module
             {
             public:
-                ~GpsMarkerModule();
-                void Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& m_builder);
-            private:
-                Eegeo::Helpers::GLHelpers::TextureInfo m_gpsIconTexture;
+                void Register(const TContainerBuilder& m_builder);
+                void RegisterLeaves();
+                void RegisterRenderableFilters();
             };
         }
     }

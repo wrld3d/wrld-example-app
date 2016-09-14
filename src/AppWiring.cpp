@@ -51,6 +51,8 @@
 #include "InteriorInteractionModel.h"
 #include "InteriorMarkerModelRepository.h"
 #include "IInteriorsEntitiesPinsController.h"
+#include "GpsMarkerModule.h"
+#include "IGpsMarkerController.h"
 
 namespace ExampleApp
 {
@@ -64,6 +66,15 @@ namespace ExampleApp
     
     AppWiring::~AppWiring()
     {
+        auto moduleSet = m_moduleContainer->resolve<TModules>();
+        for (const auto& module : *moduleSet)
+        {
+            const auto& filters = m_appContainer->resolve<Eegeo::Rendering::RenderableFilters>();
+            for (const auto& filter : module->GetRenderableFilters())
+            {
+                filters->RemoveRenderableFilter(*filter);
+            }
+        }
     }
     
     void AppWiring::RegisterModuleInstance(const std::shared_ptr<Module> module)
@@ -111,6 +122,7 @@ namespace ExampleApp
         RegisterModule<PlaceJumps::SdkModel::PlaceJumpsModule>();
         RegisterModule<TagSearch::SdkModel::TagSearchModule>();
         RegisterModule<SearchResultOnMap::SdkModel::SearchResultOnMapModule>();
+        RegisterModule<GpsMarker::SdkModel::GpsMarkerModule>();
 
         auto moduleSet = m_moduleContainer->resolve<TModules>();
         m_moduleRegistrationCallbacks.ExecuteCallbacks(*moduleSet);

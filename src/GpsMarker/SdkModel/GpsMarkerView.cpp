@@ -7,6 +7,7 @@
 #include "VectorMath.h"
 #include "RenderCamera.h"
 #include "TransformHelpers.h"
+#include "GpsMarkerViewFactory.h"
 
 namespace ExampleApp
 {
@@ -14,8 +15,8 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            GpsMarkerView::GpsMarkerView(Eegeo::Rendering::Renderables::BatchedSpriteRenderable& iconRenderable)
-            : m_iconRenderable(iconRenderable)
+            GpsMarkerView::GpsMarkerView(const std::shared_ptr<GpsMarkerViewFactory>& factory)
+            : m_iconRenderable(factory->GetRenderable())
             , m_transitionParam(1.0f)
             , m_scaleParam(1.0f)
             , m_visible(true)

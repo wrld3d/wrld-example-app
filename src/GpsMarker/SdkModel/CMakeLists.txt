@@ -10,6 +10,8 @@ set(currsources
   ../src/GpsMarker/SdkModel/GpsMarkerModule.h
   ../src/GpsMarker/SdkModel/GpsMarkerView.cpp
   ../src/GpsMarker/SdkModel/GpsMarkerView.h
+  ../src/GpsMarker/SdkModel/GpsMarkerViewFactory.h
+  ../src/GpsMarker/SdkModel/GpsMarkerViewFactory.cpp
   ../src/GpsMarker/SdkModel/IGpsMarkerController.h
 )
 set(sources ${sources} ${currsources})

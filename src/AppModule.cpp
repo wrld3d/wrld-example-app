@@ -34,6 +34,7 @@
 #include "IWorldPinsScaleController.h"
 #include "IWorldPinsFloorHeightController.h"
 #include "InteriorMarkerModelRepository.h"
+#include "IGpsMarkerController.h"
 
 namespace ExampleApp
 {
