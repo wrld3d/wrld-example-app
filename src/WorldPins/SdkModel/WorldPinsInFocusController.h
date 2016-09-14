@@ -23,13 +23,13 @@ namespace ExampleApp
             private:
                 const std::shared_ptr<IWorldPinsRepository> m_worldPinsRepository;
                 const std::shared_ptr<IWorldPinsService> m_worldPinsService;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
 
                 const IWorldPinsInFocusModel* m_pLastFocussedModel;
 
                 bool m_focusEnabled;
                 const float m_screenOversampleScale;
 
-                const std::shared_ptr<ExampleAppMessaging::TMessageBus>& m_messageBus;
                 Eegeo::Helpers::TCallback1<WorldPinsInFocusController, const WorldPinsVisibilityMessage&> m_visibilityMessageHandlerBinding;
                 Eegeo::Helpers::TCallback1<WorldPinsInFocusController, const WorldPinsSelectedFocussedMessage&> m_selectedFocussedMessageHandlerBinding;
 

@@ -57,6 +57,7 @@ namespace ExampleApp
             
             void WorldPinsModule::RegisterLeaves()
             {
+                RegisterLeaf<IWorldPinsInFocusController>();
                 RegisterLeaf<WorldPinsModalityObserver>();
                 RegisterLeaf<View::WorldPinInFocusObserver>();
                 RegisterLeaf<View::WorldPinOnMapController>();
