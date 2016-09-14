@@ -36,8 +36,7 @@ namespace ExampleApp
             public:
                 
                 InteriorsEntitiesPinsController(const std::shared_ptr<Eegeo::Resources::Interiors::Entities::InteriorsEntitiesRepository>& interiorsEntitiesRepository,
-                                                const std::shared_ptr<Eegeo::Pins::PinController>& pinController,
-                                                const std::shared_ptr<Eegeo::Pins::PinRepository>& pinRepository,
+                                                const std::shared_ptr<ExampleApp::WorldPins::SdkModel::InteriorPinsPlatformServices>& platformServices,
                                                 const std::shared_ptr<ExampleApp::WorldPins::SdkModel::IWorldPinIconMapping>& pinIconMapper,
                                                 const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel,
                                                 const std::shared_ptr<Eegeo::Resources::Interiors::InteriorTransitionModel>& interiorTransitionModel,

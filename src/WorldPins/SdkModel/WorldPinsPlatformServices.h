@@ -35,6 +35,11 @@ namespace ExampleApp
                 std::shared_ptr<Eegeo::Pins::PinRepository> m_pinsRepository;
                 std::shared_ptr<Eegeo::Pins::PinController> m_pinsController;
             };
+            
+            class InteriorPinsPlatformServices : public WorldPinsPlatformServices
+            {
+                using WorldPinsPlatformServices::WorldPinsPlatformServices;
+            };
         }
     }
 }

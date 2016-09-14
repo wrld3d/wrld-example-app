@@ -8,6 +8,7 @@
 #include "LodRefinementConfig.h"
 #include "QuadTreeCube.h"
 #include "CityThemesModule.h"
+#include "InteriorsModelModule.h"
 #include "ILocationService.h"
 #include "WebConnectivityValidator.h"
 #include "TerrainHeightProvider.h"
@@ -34,6 +35,8 @@
 #include "IInteriorsLabelController.h"
 #include "IImmutableInteriorViewModel.h"
 #include "IWebLoadRequestFactory.h"
+#include "InteriorMarkerModelRepository.h"
+#include "InteriorsEntitiesRepository.h"
 
 namespace ExampleApp
 {
@@ -156,6 +159,15 @@ namespace ExampleApp
                                            {
                                                return Hypodermic::makeExternallyOwned(context.resolve<Eegeo::EegeoWorld>()->GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel());
                                            }).singleInstance();
+        builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                         {
+                                             return Hypodermic::makeExternallyOwned(context.resolve<Eegeo::EegeoWorld>()->GetMapModule().GetInteriorsModelModule().GetInteriorMarkerModelRepository());
+                                         }).singleInstance();
+        
+        builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                         {
+                                             return Hypodermic::makeExternallyOwned(context.resolve<Eegeo::EegeoWorld>()->GetMapModule().GetInteriorsModelModule().GetInteriorsEntitiesRepository());
+                                         }).singleInstance();
         
         builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                          {

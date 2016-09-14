@@ -93,6 +93,7 @@
 #include "SearchMenuController.h"
 #include "ISearchMenuView.h"
 #include "ITagSearchRepository.h"
+#include "IWorldAreaLoaderModel.h"
 
 #include <memory>
 #include "ViewWrap.h"
@@ -166,10 +167,6 @@ public:
         builder->registerType<iOSConnectivityService>().as<Eegeo::Web::IConnectivityService>().singleInstance();
         builder->registerType<ExampleApp::PersistentSettings::iOSPersistentSettingsModel>().as<ExampleApp::PersistentSettings::IPersistentSettingsModel>().singleInstance();
         builder->registerType<ExampleApp::InitialExperience::iOSInitialExperienceModule>().as<ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule>().singleInstance();
-        builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
-                                         {
-                                             return Hypodermic::makeExternallyOwned(context.resolve<ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule>()->GetInitialExperienceModel());
-                                         }).singleInstance();
         builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                          {
                                              return Hypodermic::makeExternallyOwned(context.resolve<ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule>()->GetInitialExperienceController());
@@ -342,6 +339,8 @@ void AppHost::AddApplicationViews()
     AddSubview<MyPinDetailsViewWrapper>();
     
     AddSubview<SearchMenuViewWrapper>();
+    AddSubview<InteriorsExplorerViewWrapper>();
+    AddSubview<InteriorsExplorerTutorialViewWrapper>();
     
     AddViewControllerUpdatable<ExampleApp::SettingsMenu::View::SettingsMenuController>();
     AddViewControllerUpdatable<ExampleApp::SearchMenu::View::SearchMenuController>();
@@ -364,6 +363,7 @@ void AppHost::RegisterApplicationViewModules()
     m_wiring->RegisterModule<ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewModule>();
     m_wiring->RegisterModule<ExampleApp::MyPinDetails::View::MyPinDetailsViewModule>();
     m_wiring->RegisterModule<ExampleApp::SearchMenu::View::SearchMenuViewModule>();
+    m_wiring->RegisterModule<ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule>();
 /*
     
  
@@ -459,7 +459,7 @@ void AppHost::DestroyApplicationViewModules()
         [&m_pTourFullScreenImageViewModule->GetTourFullScreenImageView() removeFromSuperview];
         [&m_pTourExplorerViewModule->GetTourExplorerView() removeFromSuperview];
     }*/
-    [&m_pInteriorsExplorerViewModule->GetView() removeFromSuperview];
+    //[&m_pInteriorsExplorerViewModule->GetView() removeFromSuperview];
 
     // Modal background layer.
     //[&m_pModalBackgroundViewModule->GetModalBackgroundView() removeFromSuperview];
@@ -485,7 +485,7 @@ void AppHost::DestroyApplicationViewModules()
     
     Eegeo_DELETE m_pSurveyViewModule;
     
-    Eegeo_DELETE m_pInteriorsExplorerViewModule;
+    //Eegeo_DELETE m_pInteriorsExplorerViewModule;
     
     //Eegeo_DELETE m_pViewControllerUpdaterModule;
     

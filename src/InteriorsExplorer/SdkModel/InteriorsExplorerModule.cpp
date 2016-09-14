@@ -28,6 +28,8 @@
 #include "ResourceCeilingProvider.h"
 #include "IImmutableInteriorViewModel.h"
 #include "IPersistentSettingsModel.h"
+#include "InteriorsExplorerController.h"
+#include "IInteriorsExplorerView.h"
 
 namespace ExampleApp
 {
@@ -82,12 +84,15 @@ namespace ExampleApp
                                                    }).singleInstance();
                 builder->registerType<InteriorsExplorerFloorDraggedObserver>().singleInstance();
                 builder->registerType<InteriorsUINotificationService>().singleInstance();
+                builder->registerType<View::InteriorsExplorerController>().singleInstance();
             }
             
             void InteriorsExplorerModule::RegisterLeaves()
             {
                 RegisterLeaf<InteriorsExplorerFloorDraggedObserver>();
                 RegisterLeaf<InteriorsUINotificationService>();
+                RegisterLeaf<View::InteriorsExplorerController>();
+                RegisterLeaf<InteriorWorldPinController>();
             }
         }
     }

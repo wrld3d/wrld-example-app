@@ -4,6 +4,7 @@
 #include "InitialExperience.h"
 #include "InitialExperienceModel.h"
 #include "InitialExperienceController.h"
+#include "IWorldAreaLoaderModel.h"
 
 namespace ExampleApp
 {
@@ -11,11 +12,15 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            InitialExperienceModuleBase::InitialExperienceModuleBase(const std::shared_ptr<PersistentSettings::IPersistentSettingsModel>& persistentSettings)
+            InitialExperienceModuleBase::InitialExperienceModuleBase(const std::shared_ptr<PersistentSettings::IPersistentSettingsModel>& persistentSettings,
+                                                                     const std::shared_ptr<WorldAreaLoader::SdkModel::IWorldAreaLoaderModel>& worldAreaLoaderModel)
                 : m_pInitialExperienceModel(NULL)
                 , m_pInitialExperienceController(NULL)
                 , m_persistentSettings(persistentSettings)
+                , m_worldAreaLoaderModel(worldAreaLoaderModel)
             {
+                Eegeo_ASSERT(m_persistentSettings != nullptr);
+                Eegeo_ASSERT(m_worldAreaLoaderModel != nullptr);
             }
 
             InitialExperienceModuleBase::~InitialExperienceModuleBase()
@@ -28,11 +33,11 @@ namespace ExampleApp
                 return *m_persistentSettings;
             }
 
-            void InitialExperienceModuleBase::InitialiseWithApplicationModels(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel &worldAreaLoaderModel)
+            void InitialExperienceModuleBase::InitialiseWithApplicationModels()
             {
                 Eegeo_ASSERT(m_pInitialExperienceModel == NULL, "Cannot call InitialExperienceModule::InitialiseWithApplicationModels twice.\n");
 
-                std::vector<IInitialExperienceStep*> steps = CreateSteps(worldAreaLoaderModel);
+                std::vector<IInitialExperienceStep*> steps = CreateSteps(*m_worldAreaLoaderModel);
 
                 const int lastCameraLockedStep = 0;
                 

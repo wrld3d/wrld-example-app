@@ -7,8 +7,14 @@
 #include "InteriorsExplorerTutorialView.h"
 #include <string>
 #include <vector>
+#include "ViewWrap.h"
 
 @class InteriorsExplorerView;
+
+class InteriorsExplorerViewWrapper : public ViewWrap<InteriorsExplorerView>
+{
+    using ViewWrap::ViewWrap;
+};
 
 @interface InteriorsExplorerView : UIView<UITableViewDataSource, UITableViewDelegate>
 {

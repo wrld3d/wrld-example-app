@@ -26,6 +26,14 @@
 #include "SdkModelDomainEventBus.h"
 #include "InputController.h"
 #include "IPersistentSettingsModel.h"
+#include "IInitialExperienceModule.h"
+#include "MobileExampleApp.h"
+#include "NavigationService.h"
+#include "IInitialExperienceController.h"
+#include "WorldPinsPlatformServices.h"
+#include "IWorldPinsScaleController.h"
+#include "IWorldPinsFloorHeightController.h"
+#include "InteriorMarkerModelRepository.h"
 
 namespace ExampleApp
 {
@@ -36,5 +44,12 @@ namespace ExampleApp
         builder->registerType<ExampleApp::ExampleAppMessaging::TMessageBus>().singleInstance();
         builder->registerType<ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus>().singleInstance();
         builder->registerType<ExampleApp::InputController>().as<ExampleApp::IInputController>().singleInstance();
+        builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                         {
+                                             auto module = context.resolve<ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule>();
+                                             module->InitialiseWithApplicationModels();
+                                             return Hypodermic::makeExternallyOwned(module->GetInitialExperienceModel());
+                                         }).singleInstance();
+        builder->registerType<ExampleApp::MobileExampleApp>().singleInstance();
     }
 }

@@ -36,6 +36,12 @@ namespace ExampleApp
             , m_menuIsDragging(false)
             , m_initialExperienceModel(initialExperienceModel)
             {
+                Eegeo_ASSERT(m_interiorSelectionModel != nullptr);
+                Eegeo_ASSERT(m_markerRepository != nullptr);
+                Eegeo_ASSERT(m_worldPinsService != nullptr);
+                Eegeo_ASSERT(m_cameraController != nullptr);
+                Eegeo_ASSERT(m_messageBus != nullptr);
+                Eegeo_ASSERT(m_initialExperienceModel != nullptr);
                 m_markerRepository->RegisterNotifyAddedCallback(m_markerAddedCallback);
                 m_markerRepository->RegisterNotifyRemovedCallback(m_markerRemovedCallback);
                 

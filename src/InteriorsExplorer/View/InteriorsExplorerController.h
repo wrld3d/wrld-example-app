@@ -19,14 +19,14 @@ namespace ExampleApp
     {
         namespace View
         {
-            class InteriorsExplorerController
+            class InteriorsExplorerController : private Eegeo::NonCopyable
             {
             public:
                 
-                InteriorsExplorerController(SdkModel::InteriorsExplorerModel& model,
-                                            IInteriorsExplorerView& view,
-                                            InteriorsExplorerViewModel& viewModel,
-                                            ExampleAppMessaging::TMessageBus& messageBus);
+                InteriorsExplorerController(const std::shared_ptr<SdkModel::InteriorsExplorerModel>& model,
+                                            const std::shared_ptr<IInteriorsExplorerView>& view,
+                                            const std::shared_ptr<InteriorsExplorerViewModel>& viewModel,
+                                            const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
                 
                 ~InteriorsExplorerController();
                 
@@ -41,9 +41,9 @@ namespace ExampleApp
                 void OnAppModeChanged(const AppModes::AppModeChangedMessage& message);
                 void OnInteriorsUINotificationRequired(const InteriorsExplorerUINotifyMessage& message);
                 
-                SdkModel::InteriorsExplorerModel& m_model;
-                IInteriorsExplorerView& m_view;
-                InteriorsExplorerViewModel& m_viewModel;
+                const std::shared_ptr<SdkModel::InteriorsExplorerModel> m_model;
+                const std::shared_ptr<IInteriorsExplorerView> m_view;
+                const std::shared_ptr<InteriorsExplorerViewModel> m_viewModel;
                 
                 Eegeo::Helpers::TCallback0<InteriorsExplorerController> m_dismissedCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, int> m_selectFloorCallback;
@@ -56,7 +56,7 @@ namespace ExampleApp
                 
                 AppModes::SdkModel::AppMode m_appMode;
                 
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
             };
         }
     }

@@ -46,6 +46,10 @@
 #include "IWorldPinsScaleController.h"
 #include "IWorldPinsFloorHeightController.h"
 #include "SearchResultOnMapModule.h"
+#include "InteriorTransitionModel.h"
+#include "InteriorSelectionModel.h"
+#include "InteriorInteractionModel.h"
+#include "InteriorMarkerModelRepository.h"
 
 namespace ExampleApp
 {
@@ -69,9 +73,10 @@ namespace ExampleApp
 
     void AppWiring::RegisterDefaultModules()
     {
+        RegisterModule<WorldAreaLoader::SdkModel::WorldAreaLoaderModule>();
         RegisterModule<WorldModule>();
-        RegisterModule<LoadingScreenModule>();
         RegisterModule<AppModule>();
+        RegisterModule<LoadingScreenModule>();
         RegisterModule<Net::SdkModel::NetworkModule>();
         RegisterModule<AppCamera::SdkModel::AppCameraModule>();
         RegisterModule<Tours::ToursModule>();
@@ -80,7 +85,6 @@ namespace ExampleApp
         RegisterModule<MyPinCreationDetails::View::MyPinCreationDetailsModule>();
         RegisterModule<MyPins::SdkModel::MyPinsModule>();
         RegisterModule<VisualMap::SdkModel::VisualMapModule>();
-        RegisterModule<WorldAreaLoader::SdkModel::WorldAreaLoaderModule>();
         RegisterModule<WorldPins::SdkModel::WorldPinsModule>();
         RegisterModule<InteriorsEntitiesPins::SdkModel::InteriorsEntitiesPinsModule>();
         RegisterModule<MyPinCreation::PoiRing::SdkModel::PoiRingModule>();
@@ -106,7 +110,7 @@ namespace ExampleApp
         RegisterModule<PlaceJumps::SdkModel::PlaceJumpsModule>();
         RegisterModule<TagSearch::SdkModel::TagSearchModule>();
         RegisterModule<SearchResultOnMap::SdkModel::SearchResultOnMapModule>();
-        
+
         auto moduleSet = m_moduleContainer->resolve<TModules>();
         m_moduleRegistrationCallbacks.ExecuteCallbacks(*moduleSet);
     }
@@ -144,8 +148,6 @@ namespace ExampleApp
     const std::shared_ptr<MobileExampleApp> AppWiring::BuildMobileExampleApp()
     {
         Eegeo_ASSERT(m_appContainer != nullptr, "Call ResolveModules before BuildMobileExampleApp");
-        auto initialExperience = m_appContainer->resolve<InitialExperience::SdkModel::IInitialExperienceModule>();
-        initialExperience->InitialiseWithApplicationModels(*m_appContainer->resolve<WorldAreaLoader::SdkModel::IWorldAreaLoaderModel>());
         return m_appContainer->resolve<MobileExampleApp>();
     }
     

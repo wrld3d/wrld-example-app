@@ -19,6 +19,7 @@ namespace ExampleApp
         {
         public:
             iOSInitialExperienceModule(const std::shared_ptr<PersistentSettings::IPersistentSettingsModel>& persistentSettings,
+                                       const std::shared_ptr<WorldAreaLoader::SdkModel::IWorldAreaLoaderModel>& worldAreaLoaderModel,
                                        const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
 
             ~iOSInitialExperienceModule();

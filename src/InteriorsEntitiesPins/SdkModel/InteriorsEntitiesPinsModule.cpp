@@ -20,6 +20,7 @@
 #include "EegeoWorld.h"
 #include "InteriorInteractionModel.h"
 #include "InteriorTransitionModel.h"
+#include "WorldPinsPlatformServices.h"
 
 namespace ExampleApp
 {
@@ -29,27 +30,7 @@ namespace ExampleApp
         {
             void InteriorsEntitiesPinsModule::Register(const TContainerBuilder& builder)
             {
-                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
-                                                   {
-                                                       auto world = context.resolve<Eegeo::EegeoWorld>();
-                                                       auto worldPinMapping = context.resolve<WorldPins::SdkModel::IWorldPinIconMapping>();
-                                                       auto module = Eegeo::Pins::PinsModule::CreateWithAtlas(world->GetRenderingModule(),
-                                                                                                              *(context.resolve<Eegeo::Modules::IPlatformAbstractionModule>()),
-                                                                                                              world->GetMapModule(),
-                                                                                                              worldPinMapping->GetTextureInfo().textureId,
-                                                                                                              worldPinMapping->GetTexturePageLayout(),
-                                                                                                              Eegeo::Rendering::LayerIds::AfterWorld,
-                                                                                                              *(context.resolve<Eegeo::Rendering::ScreenProperties>()));
-                                                       return std::shared_ptr<Eegeo::Pins::PinsModule>(module);
-                                                   }).singleInstance();
-                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
-                                                   {
-                                                       return Hypodermic::makeExternallyOwned(context.resolve<Eegeo::Pins::PinsModule>()->GetController());
-                                                   }).singleInstance();
-                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
-                                                   {
-                                                       return Hypodermic::makeExternallyOwned(context.resolve<Eegeo::Pins::PinsModule>()->GetRepository());
-                                                   }).singleInstance();
+                builder->registerType<WorldPins::SdkModel::InteriorPinsPlatformServices>().singleInstance();
                 builder->registerType<InteriorsEntitiesPinsController>().as<IInteriorsEntitiesPinsController>().singleInstance();
             }
         }

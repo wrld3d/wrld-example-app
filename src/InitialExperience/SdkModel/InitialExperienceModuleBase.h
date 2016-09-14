@@ -22,15 +22,17 @@ namespace ExampleApp
                 IInitialExperienceController* m_pInitialExperienceController;
 
                 const std::shared_ptr<PersistentSettings::IPersistentSettingsModel> m_persistentSettings;
+                const std::shared_ptr<WorldAreaLoader::SdkModel::IWorldAreaLoaderModel> m_worldAreaLoaderModel;
 
             public:
-                InitialExperienceModuleBase(const std::shared_ptr<PersistentSettings::IPersistentSettingsModel>& persistentSettings);
+                InitialExperienceModuleBase(const std::shared_ptr<PersistentSettings::IPersistentSettingsModel>& persistentSettings,
+                                            const std::shared_ptr<WorldAreaLoader::SdkModel::IWorldAreaLoaderModel>& worldAreaLoaderModel);
 
                 ~InitialExperienceModuleBase();
 
-                void InitialiseWithApplicationModels(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel);
-
                 void TearDown();
+                
+                void InitialiseWithApplicationModels();
 
                 IInitialExperienceModel& GetInitialExperienceModel() const;
 
@@ -41,6 +43,7 @@ namespace ExampleApp
                 PersistentSettings::IPersistentSettingsModel& GetPersistentSettings() const;
 
                 virtual std::vector<IInitialExperienceStep*> CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel &worldAreaLoaderModel)  = 0;
+                
             };
         }
     }

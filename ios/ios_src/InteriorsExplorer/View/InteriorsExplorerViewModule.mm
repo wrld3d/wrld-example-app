@@ -12,48 +12,35 @@ namespace ExampleApp
     {
         namespace View
         {
-            InteriorsExplorerViewModule::InteriorsExplorerViewModule(SdkModel::InteriorsExplorerModel& model,
-                                                                     InteriorsExplorerViewModel& viewModel,
-                                                                     ExampleAppMessaging::TMessageBus& messageBus,
-                                                                     const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                                                     Eegeo::Helpers::IdentityProvider& identityProvider)
+            void InteriorsExplorerViewModule::Register(const TContainerBuilder& builder)
             {
-                const int screenWidth = screenProperties.GetScreenWidth();
-                const int screenHeight = screenProperties.GetScreenHeight();
-                const int pixelScale = screenProperties.GetPixelScale();
-                
-                m_pTutorialView = [[InteriorsExplorerTutorialView alloc] initWithParams: screenWidth : screenHeight : pixelScale];
-                
-                m_pView = [[InteriorsExplorerView alloc] initWithParams: screenWidth : screenHeight : pixelScale : *m_pTutorialView ];
-                
-                m_pController = Eegeo_NEW(InteriorsExplorerController)(model,
-                                                                       *[m_pView getInterop],
-                                                                       viewModel,
-                                                                       messageBus);
-            }
-            
-            InteriorsExplorerViewModule::~InteriorsExplorerViewModule()
-            {
-                Eegeo_DELETE m_pController;
-                
-                [m_pView release];
-                
-                [m_pTutorialView release];
-            }
-            
-            InteriorsExplorerController& InteriorsExplorerViewModule::GetController() const
-            {
-                return *m_pController;
-            }
-            
-            InteriorsExplorerView& InteriorsExplorerViewModule::GetView() const
-            {
-                return *m_pView;
-            }
-            
-            InteriorsExplorerTutorialView& InteriorsExplorerViewModule::GetTutorialView() const
-            {
-                return *m_pTutorialView;
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto screenProperties = context.resolve<Eegeo::Rendering::ScreenProperties>();
+                                                     auto view = [[InteriorsExplorerTutorialView alloc] initWithParams
+                                                                  :screenProperties->GetScreenWidth()
+                                                                  :screenProperties->GetScreenHeight()
+                                                                  :screenProperties->GetPixelScale()
+                                                                  ];
+                                                     return std::make_shared<InteriorsExplorerTutorialViewWrapper>(view);
+                                                 }).singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto screenProperties = context.resolve<Eegeo::Rendering::ScreenProperties>();
+                                                     auto tutorialView = context.resolve<InteriorsExplorerTutorialViewWrapper>();
+                                                     auto view = [[InteriorsExplorerView alloc] initWithParams
+                                                                  :screenProperties->GetScreenWidth()
+                                                                  :screenProperties->GetScreenHeight()
+                                                                  :screenProperties->GetPixelScale()
+                                                                  :*tutorialView->Get()
+                                                                  ];
+                                                     return std::make_shared<InteriorsExplorerViewWrapper>(view);
+                                                 }).singleInstance();
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                                 {
+                                                     auto view = context.resolve<InteriorsExplorerViewWrapper>();
+                                                     return Hypodermic::makeExternallyOwned(*[view->Get() getInterop]);
+                                                 }).as<IInteriorsExplorerView>().singleInstance();
             }
         }
     }

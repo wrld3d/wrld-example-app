@@ -17,10 +17,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            InteriorsExplorerController::InteriorsExplorerController(SdkModel::InteriorsExplorerModel& model,
-                                                                     IInteriorsExplorerView& view,
-                                                                     InteriorsExplorerViewModel& viewModel,
-                                                                     ExampleAppMessaging::TMessageBus& messageBus)
+            InteriorsExplorerController::InteriorsExplorerController(const std::shared_ptr<SdkModel::InteriorsExplorerModel>& model,
+                                                                     const std::shared_ptr<IInteriorsExplorerView>& view,
+                                                                     const std::shared_ptr<InteriorsExplorerViewModel>& viewModel,
+                                                                     const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
             : m_model(model)
             , m_view(view)
             , m_viewModel(viewModel)
@@ -35,55 +35,55 @@ namespace ExampleApp
             , m_appModeChangedCallback(this, &InteriorsExplorerController::OnAppModeChanged)
             , m_interiorsUINotificationCallback(this, &InteriorsExplorerController::OnInteriorsUINotificationRequired)
             {
-                m_messageBus.SubscribeUi(m_stateChangedCallback);
-                m_messageBus.SubscribeUi(m_floorSelectedCallback);
-                m_messageBus.SubscribeUi(m_appModeChangedCallback);
-                m_messageBus.SubscribeUi(m_interiorsUINotificationCallback);
+                m_messageBus->SubscribeUi(m_stateChangedCallback);
+                m_messageBus->SubscribeUi(m_floorSelectedCallback);
+                m_messageBus->SubscribeUi(m_appModeChangedCallback);
+                m_messageBus->SubscribeUi(m_interiorsUINotificationCallback);
                 
-                m_viewModel.InsertOnScreenStateChangedCallback(m_viewStateCallback);
+                m_viewModel->InsertOnScreenStateChangedCallback(m_viewStateCallback);
                 
-                m_view.InsertDismissedCallback(m_dismissedCallback);
-                m_view.InsertFloorSelectedCallback(m_selectFloorCallback);
-                m_view.InsertFloorSelectionDraggedCallback(m_draggingFloorSelectionCallback);
+                m_view->InsertDismissedCallback(m_dismissedCallback);
+                m_view->InsertFloorSelectedCallback(m_selectFloorCallback);
+                m_view->InsertFloorSelectionDraggedCallback(m_draggingFloorSelectionCallback);
             }
         
             InteriorsExplorerController::~InteriorsExplorerController()
             {
-                m_view.RemoveFloorSelectionDraggedCallback(m_draggingFloorSelectionCallback);
-                m_view.RemoveDismissedCallback(m_dismissedCallback);
-                m_view.RemoveFloorSelectedCallback(m_selectFloorCallback);
+                m_view->RemoveFloorSelectionDraggedCallback(m_draggingFloorSelectionCallback);
+                m_view->RemoveDismissedCallback(m_dismissedCallback);
+                m_view->RemoveFloorSelectedCallback(m_selectFloorCallback);
                 
-                m_viewModel.RemoveOnScreenStateChangedCallback(m_viewStateCallback);
+                m_viewModel->RemoveOnScreenStateChangedCallback(m_viewStateCallback);
                 
-                m_messageBus.UnsubscribeUi(m_interiorsUINotificationCallback);
-                m_messageBus.UnsubscribeUi(m_stateChangedCallback);
-                m_messageBus.UnsubscribeUi(m_floorSelectedCallback);
-                m_messageBus.UnsubscribeUi(m_appModeChangedCallback);
+                m_messageBus->UnsubscribeUi(m_interiorsUINotificationCallback);
+                m_messageBus->UnsubscribeUi(m_stateChangedCallback);
+                m_messageBus->UnsubscribeUi(m_floorSelectedCallback);
+                m_messageBus->UnsubscribeUi(m_appModeChangedCallback);
             }
             
             void InteriorsExplorerController::OnDismiss()
             {
-                m_messageBus.Publish(InteriorsExplorerExitMessage());
-                m_view.SetTouchEnabled(false);
+                m_messageBus->Publish(InteriorsExplorerExitMessage());
+                m_view->SetTouchEnabled(false);
             }
             
             void InteriorsExplorerController::OnSelectFloor(int& selected)
             {
-                m_messageBus.Publish(InteriorsExplorerSelectFloorMessage(selected));
+                m_messageBus->Publish(InteriorsExplorerSelectFloorMessage(selected));
             }
             
             void InteriorsExplorerController::OnFloorSelectionDragged(float &dragParam)
             {
-                m_messageBus.Publish(InteriorsExplorerFloorSelectionDraggedMessage(dragParam));
+                m_messageBus->Publish(InteriorsExplorerFloorSelectionDraggedMessage(dragParam));
             }
             
             void InteriorsExplorerController::OnFloorSelected(const InteriorsExplorerFloorSelectedMessage& message)
             {
-                m_view.SetFloorName(message.GetFloorName());
+                m_view->SetFloorName(message.GetFloorName());
                 
-                if(m_viewModel.IsFullyOnScreen())
+                if(m_viewModel->IsFullyOnScreen())
                 {
-                    m_view.SetSelectedFloorIndex(message.GetFloorIndex());
+                    m_view->SetSelectedFloorIndex(message.GetFloorIndex());
                 }
             }
             
@@ -91,41 +91,41 @@ namespace ExampleApp
             {
                 if(message.IsInteriorVisible())
                 {
-                    m_view.UpdateFloors(message.GetFloorShortNames(), message.GetSelectedFloorIndex());
-                    m_view.SetTouchEnabled(true);
+                    m_view->UpdateFloors(message.GetFloorShortNames(), message.GetSelectedFloorIndex());
+                    m_view->SetTouchEnabled(true);
                     
                     OnFloorSelected(InteriorsExplorerFloorSelectedMessage(message.GetSelectedFloorIndex(), message.GetSelectedFloorName()));
                     
 					const int maxTutorialViews = 2;
-					bool showExitTutorial = m_model.GetInteriorExitTutorialViewedCount() < maxTutorialViews;
-					bool showChangeFloorTutorial = m_model.GetInteriorChangeFloorTutorialViewedCount() < maxTutorialViews && m_view.GetCanShowChangeFloorTutorialDialog();
+					bool showExitTutorial = m_model->GetInteriorExitTutorialViewedCount() < maxTutorialViews;
+					bool showChangeFloorTutorial = m_model->GetInteriorChangeFloorTutorialViewedCount() < maxTutorialViews && m_view->GetCanShowChangeFloorTutorialDialog();
 
 					if(showExitTutorial || showChangeFloorTutorial)
 					{
-						m_view.AddTutorialDialogs(showExitTutorial, showChangeFloorTutorial);
+						m_view->AddTutorialDialogs(showExitTutorial, showChangeFloorTutorial);
 
 						if(showExitTutorial)
 						{
-							m_model.RecordHasViewedInteriorExitTutorial();
+							m_model->RecordHasViewedInteriorExitTutorial();
 						}
 
 						if(showChangeFloorTutorial)
 						{
-							m_model.RecordHasViewedInteriorChangeFloorTutorial();
+							m_model->RecordHasViewedInteriorChangeFloorTutorial();
 						}
 					}
                     
-                    m_viewModel.AddToScreen();
+                    m_viewModel->AddToScreen();
                 }
                 else
                 {
-                    m_viewModel.RemoveFromScreen();
+                    m_viewModel->RemoveFromScreen();
                 }
             }
             
             void InteriorsExplorerController::OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel &viewModel, float &state)
             {
-                ScreenControl::View::Apply(m_viewModel, m_view);
+                ScreenControl::View::Apply(*m_viewModel, *m_view);
             }
             
             void InteriorsExplorerController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
@@ -135,7 +135,7 @@ namespace ExampleApp
 
             void InteriorsExplorerController::OnInteriorsUINotificationRequired(const InteriorsExplorerUINotifyMessage & message)
             {
-                m_view.PlaySliderAnim();
+                m_view->PlaySliderAnim();
             }
         }
     }

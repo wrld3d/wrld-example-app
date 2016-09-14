@@ -155,7 +155,7 @@ private:
     //ExampleApp::InitialExperience::View::IInitialExperienceIntroViewModule* m_pInitialExperienceIntroViewModule;
     //ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
     //ExampleApp::Metrics::iOSFlurryMetricsService& m_iOSFlurryMetricsService;
-    ExampleApp::InteriorsExplorer::View::IInteriorsExplorerViewModule* m_pInteriorsExplorerViewModule;
+    //ExampleApp::InteriorsExplorer::View::IInteriorsExplorerViewModule* m_pInteriorsExplorerViewModule;
     //ExampleApp::LinkOutObserver::LinkOutObserver* m_pLinkOutObserver;
     //ExampleApp::URLRequest::View::URLRequestHandler* m_pURLRequestHandler;
     ExampleApp::Surveys::View::ISurveyViewModule* m_pSurveyViewModule;

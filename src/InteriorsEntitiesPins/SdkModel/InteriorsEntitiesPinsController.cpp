@@ -20,6 +20,7 @@
 #include "SerializedJsonHelpers.h"
 #include "InteriorHelpers.h"
 #include "InteriorsEntitiesHelpers.h"
+#include "WorldPinsPlatformServices.h"
 
 #include <math.h>
 
@@ -30,15 +31,14 @@ namespace ExampleApp
         namespace SdkModel
         {
             InteriorsEntitiesPinsController::InteriorsEntitiesPinsController(const std::shared_ptr<Eegeo::Resources::Interiors::Entities::InteriorsEntitiesRepository>& interiorsEntitiesRepostiory,
-                                                                             const std::shared_ptr<Eegeo::Pins::PinController>& pinController,
-                                                                             const std::shared_ptr<Eegeo::Pins::PinRepository>& pinRepository,
+                                                                             const std::shared_ptr<ExampleApp::WorldPins::SdkModel::InteriorPinsPlatformServices>& platformServices,
                                                                              const std::shared_ptr<ExampleApp::WorldPins::SdkModel::IWorldPinIconMapping>& pinIconMapper,
                                                                              const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel,
                                                                              const std::shared_ptr<Eegeo::Resources::Interiors::InteriorTransitionModel>& interiorTransitionModel,
                                                                              const std::shared_ptr<Eegeo::Resources::Interiors::Entities::IInteriorsLabelController>& interiorsLabelsController)
             : m_interiorsEntitiesRepository(interiorsEntitiesRepostiory)
-            , m_pinController(pinController)
-            , m_pinRepository(pinRepository)
+            , m_pinController(platformServices->GetPinController())
+            , m_pinRepository(platformServices->GetPinRepository())
             , m_interiorInteractionModel(interiorInteractionModel)
             , m_interiorTransitionModel(interiorTransitionModel)
             , m_interiorsLabelsController(interiorsLabelsController)

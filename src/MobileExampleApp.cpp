@@ -17,6 +17,8 @@
 #include "IWorldPinsFloorHeightController.h"
 #include "PinController.h"
 #include "PinsModule.h"
+#include "InteriorVisibilityUpdater.h"
+#include "InteriorWorldPinController.h"
 
 namespace ExampleApp
 {
@@ -118,7 +120,6 @@ namespace ExampleApp
                                        const std::shared_ptr<Eegeo::Rendering::ScreenProperties>& screenProperties,
                                        const std::shared_ptr<Eegeo::Rendering::LoadingScreen>& loadingScreen,
                                        const std::shared_ptr<InitialExperience::SdkModel::IInitialExperienceModel>& initialExperienceModel,
-                                       const std::shared_ptr<WorldPins::SdkModel::IWorldPinsInFocusController>& worldPinsInFocusController,
                                        const std::shared_ptr<Compass::SdkModel::ICompassUpdateController>& compassUpdateController,
                                        const std::shared_ptr<Eegeo::Location::NavigationService>& navigationService,
                                        const std::shared_ptr<InitialExperience::SdkModel::IInitialExperienceController>& initialExperienceController,
@@ -127,7 +128,11 @@ namespace ExampleApp
                                        const std::shared_ptr<WorldPins::SdkModel::WorldPinsPlatformServices>& worldPinsPlatformServices,
                                        const std::shared_ptr<WorldPins::SdkModel::IWorldPinsService>& worldPinsService,
                                        const std::shared_ptr<WorldPins::SdkModel::IWorldPinsScaleController>& worldPinsScaleController,
-                                       const std::shared_ptr<WorldPins::SdkModel::IWorldPinsFloorHeightController>& worldPinsFloorHeightController)
+                                       const std::shared_ptr<WorldPins::SdkModel::IWorldPinsFloorHeightController>& worldPinsFloorHeightController,
+                                       const std::shared_ptr<WorldPins::SdkModel::IWorldPinsInFocusController>& worldPinsInFocusController,
+                                       const std::shared_ptr<InteriorsExplorer::SdkModel::InteriorVisibilityUpdater>& interiorsVisibilityUpdater,
+                                       const std::shared_ptr<InteriorsExplorer::SdkModel::InteriorWorldPinController>& interiorWorldPinController,
+                                       const std::shared_ptr<WorldPins::SdkModel::InteriorPinsPlatformServices>& interiorPinsPlatformServices)
     : m_world(world)
     , m_cameraController(appCameraController)
     , m_gpsCameraController(gpsCameraController)
@@ -148,6 +153,9 @@ namespace ExampleApp
     , m_worldPinsService(worldPinsService)
     , m_worldPinsScaleController(worldPinsScaleController)
     , m_worldPinsFloorHeightController(worldPinsFloorHeightController)
+    , m_interiorsVisibilityUpdater(interiorsVisibilityUpdater)
+    , m_interiorWorldPinController(interiorWorldPinController)
+    , m_interiorPinsPlatformServices(interiorPinsPlatformServices)
     {
         Eegeo_ASSERT(m_world != nullptr);
         Eegeo_ASSERT(m_cameraController != nullptr);
@@ -169,6 +177,9 @@ namespace ExampleApp
         Eegeo_ASSERT(m_worldPinsService != nullptr);
         Eegeo_ASSERT(m_worldPinsScaleController != nullptr);
         Eegeo_ASSERT(m_worldPinsFloorHeightController != nullptr);
+        Eegeo_ASSERT(m_interiorsVisibilityUpdater != nullptr);
+        Eegeo_ASSERT(m_interiorWorldPinController != nullptr);
+        Eegeo_ASSERT(m_interiorPinsPlatformServices != nullptr);
         
         //AddLocalMaterials(m_platformAbstractions.GetFileIO(),
         //                  m_pWorld->GetMapModule().GetInteriorsMaterialsModule().GetInteriorsTextureResourceService(),
@@ -198,6 +209,8 @@ namespace ExampleApp
         m_cameraTransitionService->Update(dt);
         m_cameraController->Update(dt);
         m_appModeModel->Update(dt);
+        m_interiorsVisibilityUpdater->Update(dt);
+        m_interiorWorldPinController->Update(dt);
         
         Eegeo::Camera::RenderCamera renderCamera = m_cameraController->GetRenderCamera();
         Eegeo::Camera::CameraState cameraState = m_cameraController->GetCameraState();
@@ -217,6 +230,9 @@ namespace ExampleApp
         m_world->Update(updateParameters);
         m_worldPinsPlatformServices->GetPinsModule()->Update(dt, renderCamera);
         m_worldPinsPlatformServices->GetPinController()->Update(dt, renderCamera);
+        m_interiorPinsPlatformServices->GetPinsModule()->Update(dt, renderCamera);
+        m_interiorPinsPlatformServices->GetPinController()->Update(dt, renderCamera);
+        
         
         if (!m_world->Initialising() || (m_loadingScreen == nullptr && m_world->Initialising()))
         {
@@ -372,6 +388,7 @@ namespace ExampleApp
         }
         
         m_worldPinsPlatformServices->GetPinsModule()->UpdateScreenProperties(*m_screenProperties);
+        m_interiorPinsPlatformServices->GetPinsModule()->UpdateScreenProperties(*m_screenProperties);
 
 		/*m_pPinsModule->UpdateScreenProperties(m_screenProperties);
 

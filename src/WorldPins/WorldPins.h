@@ -21,6 +21,7 @@ namespace ExampleApp
             class IWorldPinIconMappingFactory;
             class IWorldPinIconMapping;
             class WorldPinsPlatformServices;
+            class InteriorPinsPlatformServices;
         }
 
         namespace View

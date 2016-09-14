@@ -4,8 +4,14 @@
 
 #import <UIKit/UIKit.h>
 #include "InteriorsExplorerViewIncludes.h"
+#include "ViewWrap.h"
 
 @class InteriorsExplorerTutorialView;
+
+class InteriorsExplorerTutorialViewWrapper : public ViewWrap<InteriorsExplorerTutorialView>
+{
+    using ViewWrap::ViewWrap;
+};
 
 @interface InteriorsExplorerTutorialView : UIView <UIGestureRecognizerDelegate>
 {

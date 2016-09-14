@@ -18,7 +18,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class InteriorWorldPinController
+            class InteriorWorldPinController : private Eegeo::NonCopyable
             {
             public:
                 
