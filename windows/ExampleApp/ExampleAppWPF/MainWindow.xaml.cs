@@ -129,6 +129,7 @@ namespace ExampleAppWPF
             MouseWheel += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandleZoomEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), e.Delta, Keyboard.Modifiers); };
             MouseLeave += (o, e) => { if (m_isMouseInputActive) m_mapImage.SetAllInputEventsToPointerUp((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y)); };
             MouseMove += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandleMouseMoveEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
+            MouseEnter += (o, e) => { if (m_isMouseInputActive) { EnableInput(); } };
 
             MapHost.KeyDown += MainWindowOnKeyDown;
             KeyDown += MainWindowOnKeyDown;
@@ -139,7 +140,7 @@ namespace ExampleAppWPF
             TouchDown += OnTouchDown;
             TouchUp += OnTouchUp;
             TouchMove += OnTouchMove;
-            MapHost.TouchLeave += (o, e) =>
+            TouchLeave += (o, e) =>
             {
                 if (m_isTouchInputActive)
                 {
@@ -153,11 +154,19 @@ namespace ExampleAppWPF
 
         public void PopAllTouchEvents()
         {
-            if (!m_isTouchInputActive)
+            if (m_isTouchInputActive)
             {
                 m_mapImage.PopAllTouchEvents();
             }
         }
+
+        public void PopAllMouseEvents()
+         {
+             if (m_isMouseInputActive)
+             {
+                 m_mapImage.SetAllInputEventsToPointerUp(0, 0);
+             }
+         }
 
         private void SetFullScreen(bool isFullScreen)
         {

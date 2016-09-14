@@ -61,8 +61,7 @@ namespace ExampleAppWPF
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
             mainWindow.SizeChanged += PerformLayout;
             mainWindow.MainGrid.Children.Add(this);
-            m_touchHandler = new WindowInteractionTouchHandler(this);
-            TouchEnter += (o, e) => { mainWindow.PopAllTouchEvents(); };
+            m_touchHandler = new WindowInteractionTouchHandler(this, false, true, true);
         }
 
         private void MyPinCreationButtonView_Click(object sender, RoutedEventArgs e)
