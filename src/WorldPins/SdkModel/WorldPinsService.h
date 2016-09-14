@@ -39,8 +39,7 @@ namespace ExampleApp
             public:
                 WorldPinsService(const std::shared_ptr<IWorldPinsRepository>& worldPinsRepository,
                                  const std::shared_ptr<IWorldPinsFactory>& worldPinsFactory,
-                                 const std::shared_ptr<Eegeo::Pins::PinRepository>& pinRepository,
-                                 const std::shared_ptr<Eegeo::Pins::PinController>& pinController,
+                                 const std::shared_ptr<WorldPinsPlatformServices>& worldPinsPlaftormServices,
                                  const std::shared_ptr<Eegeo::Rendering::EnvironmentFlatteningService>& environmentFlatteningService,
                                  const std::shared_ptr<IWorldPinIconMapping>& worldPinIconMapping);
 

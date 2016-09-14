@@ -20,14 +20,14 @@ namespace ExampleApp
             class WorldPinsFloorHeightController : public IWorldPinsFloorHeightController, private Eegeo::NonCopyable
             {
             private:
-                const std::shared_ptr<IWorldPinsRepository>& m_worldPinsRepository;
-                const std::shared_ptr<Eegeo::Pins::PinRepository>& m_pinRepository;
-                const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& m_interiorInteractionModel;
+                const std::shared_ptr<IWorldPinsRepository> m_worldPinsRepository;
+                const std::shared_ptr<Eegeo::Pins::PinRepository> m_pinRepository;
+                const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel> m_interiorInteractionModel;
                 const bool m_interiorsAffectedByFlattening;
                 
             public:
                 WorldPinsFloorHeightController(const std::shared_ptr<IWorldPinsRepository>& worldPinsRepository,
-                                               const std::shared_ptr<Eegeo::Pins::PinRepository>& pinRepository,
+                                               const std::shared_ptr<WorldPinsPlatformServices>& platformServices,
                                                const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel,
                                                const std::shared_ptr<Eegeo::Config::PlatformConfig>& platformConfig);
                 

@@ -11,6 +11,12 @@
 #include "IInitialExperienceController.h"
 #include "IMyPinCreationInitiationViewModel.h"
 #include "SearchMenuOptions.h"
+#include "WorldPinsPlatformServices.h"
+#include "IWorldPinsService.h"
+#include "IWorldPinsScaleController.h"
+#include "IWorldPinsFloorHeightController.h"
+#include "PinController.h"
+#include "PinsModule.h"
 
 namespace ExampleApp
 {
@@ -117,7 +123,11 @@ namespace ExampleApp
                                        const std::shared_ptr<Eegeo::Location::NavigationService>& navigationService,
                                        const std::shared_ptr<InitialExperience::SdkModel::IInitialExperienceController>& initialExperienceController,
                                        const std::shared_ptr<MyPinCreation::PoiRing::SdkModel::IPoiRingController>& poiRingController,
-                                       const std::shared_ptr<CameraTransitions::SdkModel::ICameraTransitionController>& cameraTransitionService)
+                                       const std::shared_ptr<CameraTransitions::SdkModel::ICameraTransitionController>& cameraTransitionService,
+                                       const std::shared_ptr<WorldPins::SdkModel::WorldPinsPlatformServices>& worldPinsPlatformServices,
+                                       const std::shared_ptr<WorldPins::SdkModel::IWorldPinsService>& worldPinsService,
+                                       const std::shared_ptr<WorldPins::SdkModel::IWorldPinsScaleController>& worldPinsScaleController,
+                                       const std::shared_ptr<WorldPins::SdkModel::IWorldPinsFloorHeightController>& worldPinsFloorHeightController)
     : m_world(world)
     , m_cameraController(appCameraController)
     , m_gpsCameraController(gpsCameraController)
@@ -134,6 +144,10 @@ namespace ExampleApp
     , m_initialExperienceController(initialExperienceController)
     , m_poiRingController(poiRingController)
     , m_cameraTransitionService(cameraTransitionService)
+    , m_worldPinsPlatformServices(worldPinsPlatformServices)
+    , m_worldPinsService(worldPinsService)
+    , m_worldPinsScaleController(worldPinsScaleController)
+    , m_worldPinsFloorHeightController(worldPinsFloorHeightController)
     {
         Eegeo_ASSERT(m_world != nullptr);
         Eegeo_ASSERT(m_cameraController != nullptr);
@@ -151,6 +165,10 @@ namespace ExampleApp
         Eegeo_ASSERT(m_initialExperienceController != nullptr);
         Eegeo_ASSERT(m_poiRingController != nullptr);
         Eegeo_ASSERT(m_cameraTransitionService != nullptr);
+        Eegeo_ASSERT(m_worldPinsPlatformServices != nullptr);
+        Eegeo_ASSERT(m_worldPinsService != nullptr);
+        Eegeo_ASSERT(m_worldPinsScaleController != nullptr);
+        Eegeo_ASSERT(m_worldPinsFloorHeightController != nullptr);
         
         //AddLocalMaterials(m_platformAbstractions.GetFileIO(),
         //                  m_pWorld->GetMapModule().GetInteriorsMaterialsModule().GetInteriorsTextureResourceService(),
@@ -197,9 +215,14 @@ namespace ExampleApp
         m_poiRingController->Update(dt, renderCamera, ecefInterestPoint);
         
         m_world->Update(updateParameters);
+        m_worldPinsPlatformServices->GetPinsModule()->Update(dt, renderCamera);
+        m_worldPinsPlatformServices->GetPinController()->Update(dt, renderCamera);
         
         if (!m_world->Initialising() || (m_loadingScreen == nullptr && m_world->Initialising()))
         {
+            m_worldPinsService->Update(dt);
+            m_worldPinsScaleController->Update(dt, renderCamera);
+            m_worldPinsFloorHeightController->Update(dt);
             m_compassUpdateController->Update(dt);
             
             if(!m_initialExperienceModel->HasCompletedInitialExperience() && m_loadingScreen == nullptr)
@@ -347,6 +370,8 @@ namespace ExampleApp
         {
             m_loadingScreen->NotifyScreenDimensionsChanged(screenProperties->GetScreenWidth(), screenProperties->GetScreenHeight());
         }
+        
+        m_worldPinsPlatformServices->GetPinsModule()->UpdateScreenProperties(*m_screenProperties);
 
 		/*m_pPinsModule->UpdateScreenProperties(m_screenProperties);
 

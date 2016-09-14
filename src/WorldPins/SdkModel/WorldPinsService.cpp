@@ -12,6 +12,7 @@
 #include "EarthConstants.h"
 #include "Logger.h"
 #include "WorldPinIconMapping.h"
+#include "WorldPinsPlatformServices.h"
 
 namespace ExampleApp
 {
@@ -21,14 +22,13 @@ namespace ExampleApp
         {
             WorldPinsService::WorldPinsService(const std::shared_ptr<IWorldPinsRepository>& worldPinsRepository,
                                                const std::shared_ptr<IWorldPinsFactory>& worldPinsFactory,
-                                               const std::shared_ptr<Eegeo::Pins::PinRepository>& pinRepository,
-                                               const std::shared_ptr<Eegeo::Pins::PinController>& pinController,
+                                               const std::shared_ptr<WorldPinsPlatformServices>& worldPinsPlaftormServices,
                                                const std::shared_ptr<Eegeo::Rendering::EnvironmentFlatteningService>& flatteningService,
                                                const std::shared_ptr<IWorldPinIconMapping>& worldPinIconMapping)
                 : m_worldPinsRepository(worldPinsRepository)
                 , m_worldPinsFactory(worldPinsFactory)
-                , m_pinRepository(pinRepository)
-                , m_pinController(pinController)
+                , m_pinRepository(worldPinsPlaftormServices->GetPinRepository())
+                , m_pinController(worldPinsPlaftormServices->GetPinController())
                 , m_environmentFlatteningService(flatteningService)
                 , m_worldPinIconMapping(worldPinIconMapping)
                 , m_pinAlreadySelected(false)

@@ -20,6 +20,7 @@ namespace ExampleApp
             class IWorldPinsInFocusController;
             class IWorldPinIconMappingFactory;
             class IWorldPinIconMapping;
+            class WorldPinsPlatformServices;
         }
 
         namespace View

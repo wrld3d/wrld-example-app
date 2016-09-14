@@ -29,6 +29,7 @@ namespace ExampleApp
             void SearchResultOnMapModule::RegisterLeaves()
             {
                 RegisterLeaf<View::SearchResultOnMapItemModelSelectedObserver>();
+                RegisterLeaf<ISearchResultOnMapModel>();
             }
         }
     }

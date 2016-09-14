@@ -9,6 +9,7 @@
 #include "InteriorsModel.h"
 #include "PinRepository.h"
 #include "Pin.h"
+#include "WorldPinsPlatformServices.h"
 
 #include "InteriorHeightHelpers.h"
 
@@ -19,11 +20,11 @@ namespace ExampleApp
         namespace SdkModel
         {
             WorldPinsFloorHeightController::WorldPinsFloorHeightController(const std::shared_ptr<IWorldPinsRepository>& worldPinsRepository,
-                                                                           const std::shared_ptr<Eegeo::Pins::PinRepository>& pinRepository,
+                                                                           const std::shared_ptr<WorldPinsPlatformServices>& platformServices,
                                                                            const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel,
                                                                            const std::shared_ptr<Eegeo::Config::PlatformConfig>& platformConfig)
                 : m_worldPinsRepository(worldPinsRepository)
-                , m_pinRepository(pinRepository)
+                , m_pinRepository(platformServices->GetPinRepository())
                 , m_interiorInteractionModel(interiorInteractionModel)
                 , m_interiorsAffectedByFlattening(platformConfig->OptionsConfig.InteriorsAffectedByFlattening)
             {

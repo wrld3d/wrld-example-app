@@ -21,6 +21,7 @@
 #include "WorldPinOnMapController.h"
 #include "IWorldPinOnMapView.h"
 #include "IModalityModel.h"
+#include "WorldPinsPlatformServices.h"
 
 namespace ExampleApp
 {
@@ -28,6 +29,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+            
             void WorldPinsModule::Register(const TContainerBuilder& builder)
             {
                 builder->registerType<WorldPinsFactory>().as<IWorldPinsFactory>().singleInstance();
@@ -50,29 +52,7 @@ namespace ExampleApp
                 builder->registerType<View::WorldPinInFocusObserver>().singleInstance();
                 builder->registerType<WorldPinsModalityObserver>().singleInstance();
                 builder->registerType<View::WorldPinOnMapController>().singleInstance();
-                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
-                                                 {
-                                                     auto worldpinIconMapping = context.resolve<ExampleApp::WorldPins::SdkModel::IWorldPinIconMapping>();
-                                                     auto world = context.resolve<Eegeo::EegeoWorld>();
-                                                     return std::shared_ptr<Eegeo::Pins::PinsModule>(Eegeo::Pins::PinsModule::CreateWithAtlas(
-                                                                                                    world->GetRenderingModule(),
-                                                                                                    *(context.resolve<Eegeo::Modules::IPlatformAbstractionModule>()),
-                                                                                                    world->GetMapModule(),
-                                                                                                    worldpinIconMapping->GetTextureInfo().textureId,
-                                                                                                    worldpinIconMapping->GetTexturePageLayout(),
-                                                                                                    Eegeo::Rendering::LayerIds::InteriorEntities,
-                                                                                                    *(context.resolve<Eegeo::Rendering::ScreenProperties>())));
-                                                 }).singleInstance();
-                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
-                                                 {
-                                                     auto pinsModule = context.resolve<Eegeo::Pins::PinsModule>();
-                                                     return std::shared_ptr<Eegeo::Pins::PinRepository>(&pinsModule->GetRepository());
-                                                 }).singleInstance();
-                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
-                                                 {
-                                                     auto pinsModule = context.resolve<Eegeo::Pins::PinsModule>();
-                                                     return std::shared_ptr<Eegeo::Pins::PinController>(&pinsModule->GetController());
-                                                 }).singleInstance();
+                builder->registerType<WorldPinsPlatformServices>().singleInstance();
             }
             
             void WorldPinsModule::RegisterLeaves()

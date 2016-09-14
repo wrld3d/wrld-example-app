@@ -41,6 +41,11 @@
 #include "SearchResultSectionModule.h"
 #include "PlaceJumpsModule.h"
 #include "TagSearchModule.h"
+#include "WorldPinsPlatformServices.h"
+#include "IWorldPinsService.h"
+#include "IWorldPinsScaleController.h"
+#include "IWorldPinsFloorHeightController.h"
+#include "SearchResultOnMapModule.h"
 
 namespace ExampleApp
 {
@@ -100,6 +105,7 @@ namespace ExampleApp
         RegisterModule<SearchResultSection::SdkModel::SearchResultSectionModule>();
         RegisterModule<PlaceJumps::SdkModel::PlaceJumpsModule>();
         RegisterModule<TagSearch::SdkModel::TagSearchModule>();
+        RegisterModule<SearchResultOnMap::SdkModel::SearchResultOnMapModule>();
         
         auto moduleSet = m_moduleContainer->resolve<TModules>();
         m_moduleRegistrationCallbacks.ExecuteCallbacks(*moduleSet);

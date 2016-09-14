@@ -11,6 +11,8 @@ set(currsources
   ../src/WorldPins/SdkModel/IWorldPinsScaleController.h
   ../src/WorldPins/SdkModel/IWorldPinsService.h
   ../src/WorldPins/SdkModel/IWorldPinVisibilityStateChangedHandler.h
+  ../src/WorldPins/SdkModel/WorldPinsPlatformServices.h
+  ../src/WorldPins/SdkModel/WorldPinsPlatformServices.cpp
   ../src/WorldPins/SdkModel/WorldPinFocusData.h
   ../src/WorldPins/SdkModel/WorldPinInteriorData.h
   ../src/WorldPins/SdkModel/WorldPinItemModel.cpp

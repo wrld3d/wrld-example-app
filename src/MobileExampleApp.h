@@ -21,6 +21,7 @@
 #include "Module.h"
 #include "IPoiRingController.h"
 #include "CameraTransitionController.h"
+#include "WorldPins.h"
 
 namespace ExampleApp
 {
@@ -41,6 +42,10 @@ namespace ExampleApp
         const std::shared_ptr<InitialExperience::SdkModel::IInitialExperienceController> m_initialExperienceController;
         const std::shared_ptr<MyPinCreation::PoiRing::SdkModel::IPoiRingController> m_poiRingController;
         const std::shared_ptr<CameraTransitions::SdkModel::ICameraTransitionController> m_cameraTransitionService;
+        const std::shared_ptr<WorldPins::SdkModel::WorldPinsPlatformServices> m_worldPinsPlatformServices;
+        const std::shared_ptr<WorldPins::SdkModel::IWorldPinsService> m_worldPinsService;
+        const std::shared_ptr<WorldPins::SdkModel::IWorldPinsScaleController> m_worldPinsScaleController;
+        const std::shared_ptr<WorldPins::SdkModel::IWorldPinsFloorHeightController> m_worldPinsFloorHeightController;
         
         std::shared_ptr<Eegeo::Rendering::ScreenProperties> m_screenProperties;
         std::shared_ptr<Eegeo::Rendering::LoadingScreen> m_loadingScreen;
@@ -63,7 +68,11 @@ namespace ExampleApp
                          const std::shared_ptr<Eegeo::Location::NavigationService>& navigationService,
                          const std::shared_ptr<InitialExperience::SdkModel::IInitialExperienceController>& initialExperienceController,
                          const std::shared_ptr<MyPinCreation::PoiRing::SdkModel::IPoiRingController>& poiRingController,
-                         const std::shared_ptr<CameraTransitions::SdkModel::ICameraTransitionController>& cameraTransitionService);
+                         const std::shared_ptr<CameraTransitions::SdkModel::ICameraTransitionController>& cameraTransitionService,
+                         const std::shared_ptr<WorldPins::SdkModel::WorldPinsPlatformServices>& worldPinsPlatformServices,
+                         const std::shared_ptr<WorldPins::SdkModel::IWorldPinsService>& worldPinsService,
+                         const std::shared_ptr<WorldPins::SdkModel::IWorldPinsScaleController>& worldPinsScaleController,
+                         const std::shared_ptr<WorldPins::SdkModel::IWorldPinsFloorHeightController>& worldPinsFloorHeightController);
 
         ~MobileExampleApp();
 
