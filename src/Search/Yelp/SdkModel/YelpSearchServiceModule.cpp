@@ -9,6 +9,7 @@
 #include "YelpSearchQueryFactory.h"
 #include "YelpBusinessQueryFactory.h"
 #include "INetworkCapabilities.h"
+#include "SearchTags.h"
 
 namespace ExampleApp
 {
@@ -21,7 +22,13 @@ namespace ExampleApp
                 builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                                  {
                                                      auto yelpData = std::make_shared<SearchConstants::YelpCategoryMappingData>();
-                                                     const std::vector<std::string> appTags; //TODO: replace...
+                                                     std::vector<std::string> appTags;
+                                                     const auto& repo = context.resolve<Search::SdkModel::SearchTagRepository>();
+                                                     for (size_t i = 0; i<repo->GetItemCount(); ++i)
+                                                     {
+                                                         const auto& t = repo->GetItemAtIndex(i);
+                                                         appTags.emplace_back(t.GetTag());
+                                                     }
                                                      SearchConstants::ParseYelpDataInPlace(*context.resolve<Eegeo::Helpers::IFileIO>(), appTags, "yelp_map.json", *yelpData);
                                                      return yelpData;
                                                  }).singleInstance();
