@@ -87,12 +87,10 @@ namespace ExampleApp
     {
         RegisterModule<WorldAreaLoader::SdkModel::WorldAreaLoaderModule>();
         RegisterModule<WorldModule>();
-        RegisterModule<AppModule>();
         RegisterModule<LoadingScreenModule>();
         RegisterModule<Net::SdkModel::NetworkModule>();
         RegisterModule<AppCamera::SdkModel::AppCameraModule>();
         RegisterModule<Tours::ToursModule>();
-        RegisterModule<InteriorsExplorer::SdkModel::InteriorsExplorerModule>();
         RegisterModule<MyPinCreation::SdkModel::MyPinCreationModule>();
         RegisterModule<MyPinCreationDetails::View::MyPinCreationDetailsModule>();
         RegisterModule<MyPins::SdkModel::MyPinsModule>();
@@ -123,6 +121,8 @@ namespace ExampleApp
         RegisterModule<TagSearch::SdkModel::TagSearchModule>();
         RegisterModule<SearchResultOnMap::SdkModel::SearchResultOnMapModule>();
         RegisterModule<GpsMarker::SdkModel::GpsMarkerModule>();
+        RegisterModule<AppModule>();
+        RegisterModule<InteriorsExplorer::SdkModel::InteriorsExplorerModule>();
 
         auto moduleSet = m_moduleContainer->resolve<TModules>();
         m_moduleRegistrationCallbacks.ExecuteCallbacks(*moduleSet);

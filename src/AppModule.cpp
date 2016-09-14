@@ -48,9 +48,13 @@ namespace ExampleApp
         builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                          {
                                              auto module = context.resolve<ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule>();
-                                             module->InitialiseWithApplicationModels();
                                              return Hypodermic::makeExternallyOwned(module->GetInitialExperienceModel());
                                          }).singleInstance();
         builder->registerType<ExampleApp::MobileExampleApp>().singleInstance();
+    }
+    
+    void AppModule::RegisterLeaves()
+    {
+        Resolve<ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule>()->InitialiseWithApplicationModels();
     }
 }
