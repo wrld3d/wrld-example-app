@@ -15,6 +15,7 @@ set(currsources
   ../src/PlatformAbstractionsFacade.h
   ../src/LoadingScreenModule.h
   ../src/LoadingScreenModule.cpp
+  ../src/LoadingScreenCompleteMessage.h
   ../src/AppModule.h
   ../src/AppModule.cpp
   ../src/AppWiring.h

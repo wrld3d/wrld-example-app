@@ -54,6 +54,7 @@
 #include "GpsMarkerModule.h"
 #include "IGpsMarkerController.h"
 #include "MyPinDetailsModule.h"
+#include "MobileExampleApp.h"
 
 namespace ExampleApp
 {

@@ -2,6 +2,11 @@
 
 #pragma once
 
+namespace ExampleApp
+{
+    class MobileExampleApp;
+}
+
 #include <map>
 #include <string>
 #include <vector>
@@ -16,7 +21,6 @@
 #include "AppInputDelegate.h"
 #include "AppLocationDelegate.h"
 #include "Modules.h"
-#include "MobileExampleApp.h"
 #include "InitialExperience.h"
 #include "iOSPersistentSettingsModel.h"
 #include "ViewControllerUpdater.h"

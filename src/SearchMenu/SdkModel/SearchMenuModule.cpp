@@ -11,6 +11,7 @@
 #include "SearchMenuOptions.h"
 #include "PlaceJumpMenuOption.h"
 #include "TagSearchMenuOption.h"
+#include "MyPinMenuOption.h"
 
 namespace ExampleApp
 {
@@ -40,6 +41,9 @@ namespace ExampleApp
 
                 Menu::View::MenuSectionViewModel* pPlaceJumpSection = Eegeo_NEW(Menu::View::MenuSectionViewModel)("Locations", "", Resolve<PlaceJumps::View::PlaceJumpMenuModel>(), true);
                 viewModel->AddSection(*pPlaceJumpSection);
+                
+                Menu::View::MenuSectionViewModel* pMyPinsSection = Eegeo_NEW(Menu::View::MenuSectionViewModel)("My Pins", "", Resolve<MyPins::View::MyPinsMenuModel>(), true);
+                viewModel->AddSection(*pMyPinsSection);
             }
             
             void SearchMenuModule::RegisterOpenablesAndReactors()

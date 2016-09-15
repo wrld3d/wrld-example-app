@@ -15,7 +15,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            MyPinAddedToMenuObserver::MyPinAddedToMenuObserver(const std::shared_ptr<Menu::View::IMenuViewModel>& menuViewModel,
+            MyPinAddedToMenuObserver::MyPinAddedToMenuObserver(const std::shared_ptr<SettingsMenu::View::SettingsMenuViewModel>& menuViewModel,
                                                                const std::shared_ptr<View::MyPinsMenuOptionsModel>& menuOptionsModel,
                                                                const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
                                                                const std::shared_ptr<Menu::View::IMenuReactionModel>& menuReaction,
@@ -27,6 +27,11 @@ namespace ExampleApp
                 , m_menuReaction(menuReaction)
                 , m_ignoredMenuReaction(ignoredMenuReaction)
             {
+                Eegeo_ASSERT(m_menuViewModel != nullptr);
+                Eegeo_ASSERT(m_menuOptionsModel != nullptr);
+                Eegeo_ASSERT(m_messageBus != nullptr);
+                Eegeo_ASSERT(m_menuReaction != nullptr);
+                Eegeo_ASSERT(m_ignoredMenuReaction != nullptr);
                 m_messageBus->SubscribeUi(m_handlerBinding);
             }
 

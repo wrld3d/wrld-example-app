@@ -84,7 +84,7 @@
 #include "SurveyViewModule.h"
 #include "IOSMenuReactionModel.h"
 #include "Module.h"
-
+#include "MobileExampleApp.h"
 #include "IWatermarkViewModel.h"
 #include "SettingsMenuController.h"
 #include "IModalBackgroundView.h"

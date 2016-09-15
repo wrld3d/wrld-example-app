@@ -2,9 +2,13 @@
 
 #pragma once
 
+namespace ExampleApp
+{
+    class MobileExampleApp;
+}
+
 #include "Types.h"
 #include "Hypodermic/ContainerBuilder.h"
-#include "MobileExampleApp.h"
 #include "ICallback.h"
 #include "Module.h"
 

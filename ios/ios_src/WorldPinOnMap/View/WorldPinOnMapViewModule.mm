@@ -8,6 +8,7 @@
 #include "IModalityModel.h"
 #include "TourHovercardView.h"
 #include "ApplicationConfiguration.h"
+#include "ScreenProperties.h"
 
 namespace ExampleApp
 {

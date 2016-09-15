@@ -10,6 +10,7 @@
 #include "IMenuReactionModel.h"
 #include "IMenuIgnoredReactionModel.h"
 #include "MyPinMenuOption.h"
+#include "SettingsMenu.h"
 #include <memory>
 
 namespace ExampleApp
@@ -21,7 +22,7 @@ namespace ExampleApp
             class MyPinAddedToMenuObserver : private Eegeo::NonCopyable
             {
             public:
-                MyPinAddedToMenuObserver(const std::shared_ptr<Menu::View::IMenuViewModel>& menuViewModel,
+                MyPinAddedToMenuObserver(const std::shared_ptr<SettingsMenu::View::SettingsMenuViewModel>& menuViewModel,
                                          const std::shared_ptr<View::MyPinsMenuOptionsModel>& menuOptionsModel,
                                          const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
                                          const std::shared_ptr<Menu::View::IMenuReactionModel>& menuReaction,

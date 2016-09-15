@@ -19,7 +19,7 @@ namespace ExampleApp
             public:
                 typedef MyPinModel* TModel;
 
-                MyPinsRepositoryObserver(const std::shared_ptr<MyPinsRepository>& myPinsRepository,
+                MyPinsRepositoryObserver(const std::shared_ptr<IMyPinsRepository>& myPinsRepository,
                                          const std::shared_ptr<IMyPinBoundObjectRepository>& myPinBoundObjectRepository,
                                          const std::shared_ptr<MyPinsFileIO>& myPinsFileIO,
                                          const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
@@ -27,7 +27,7 @@ namespace ExampleApp
                 ~MyPinsRepositoryObserver();
 
             private:
-                const std::shared_ptr<MyPinsRepository> m_myPinsRepository;
+                const std::shared_ptr<IMyPinsRepository> m_myPinsRepository;
                 const std::shared_ptr<IMyPinBoundObjectRepository> m_myPinBoundObjectRepository;
                 const std::shared_ptr<MyPinsFileIO> m_myPinsFileIO;
                 const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;

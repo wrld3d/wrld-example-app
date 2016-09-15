@@ -3,6 +3,7 @@
 #include "AppRunner.h"
 #include "Graphics.h"
 #include "App.h"
+#include "ScreenProperties.h"
 
 AppRunner::AppRunner
 (

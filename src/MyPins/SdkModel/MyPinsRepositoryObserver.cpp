@@ -17,7 +17,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            MyPinsRepositoryObserver::MyPinsRepositoryObserver(const std::shared_ptr<MyPinsRepository>& myPinsRepository,
+            MyPinsRepositoryObserver::MyPinsRepositoryObserver(const std::shared_ptr<IMyPinsRepository>& myPinsRepository,
                                                                const std::shared_ptr<IMyPinBoundObjectRepository>& myPinBoundObjectRepository,
                                                                const std::shared_ptr<MyPinsFileIO>& myPinsFileIO,
                                                                const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)

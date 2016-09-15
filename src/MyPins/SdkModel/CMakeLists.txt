@@ -15,6 +15,8 @@ set(currsources
   ../src/MyPins/SdkModel/MyPinBoundObjectRepository.h
   ../src/MyPins/SdkModel/MyPinModel.cpp
   ../src/MyPins/SdkModel/MyPinModel.h
+  ../src/MyPins/SdkModel/MyPinsLoadingMessageHandler.h
+  ../src/MyPins/SdkModel/MyPinsLoadingMessageHandler.cpp
   ../src/MyPins/SdkModel/MyPinSelectedMessageHandler.cpp
   ../src/MyPins/SdkModel/MyPinSelectedMessageHandler.h
   ../src/MyPins/SdkModel/MyPinSelectionHandler.cpp

@@ -25,6 +25,7 @@
 #include "IWorldPinsService.h"
 #include "ICameraTransitionController.h"
 #include "ModalityIgnoredReactionModel.h"
+#include "MyPinsLoadingMessageHandler.h"
 
 namespace ExampleApp
 {
@@ -47,10 +48,12 @@ namespace ExampleApp
                 builder->registerType<View::MyPinAddedToMenuObserver>().singleInstance();
                 builder->registerType<MyPinsService>().as<IMyPinsService>().singleInstance();
                 builder->registerType<MyPinSelectedMessageHandler>().singleInstance();
+                builder->registerType<MyPinsLoadingMessageHandler>().singleInstance();
             }
             
             void MyPinsModule::RegisterLeaves()
             {
+                RegisterLeaf<MyPinsLoadingMessageHandler>();
                 RegisterLeaf<MyPinSelectedMessageHandler>();
                 RegisterLeaf<View::MyPinAddedToMenuObserver>();
                 RegisterLeaf<MyPinsRepositoryObserver>();

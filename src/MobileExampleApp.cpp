@@ -21,6 +21,7 @@
 #include "InteriorWorldPinController.h"
 #include "IInteriorsEntitiesPinsController.h"
 #include "IGpsMarkerController.h"
+#include "LoadingScreenCompleteMessage.h"
 
 namespace ExampleApp
 {
@@ -136,7 +137,8 @@ namespace ExampleApp
                                        const std::shared_ptr<InteriorsExplorer::SdkModel::InteriorWorldPinController>& interiorWorldPinController,
                                        const std::shared_ptr<WorldPins::SdkModel::InteriorPinsPlatformServices>& interiorPinsPlatformServices,
                                        const std::shared_ptr<InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController>& interiorsEntitiesPinsController,
-                                       const std::shared_ptr<GpsMarker::SdkModel::IGpsMarkerController>& gpsMarkerController)
+                                       const std::shared_ptr<GpsMarker::SdkModel::IGpsMarkerController>& gpsMarkerController,
+                                       const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
     : m_world(world)
     , m_cameraController(appCameraController)
     , m_gpsCameraController(gpsCameraController)
@@ -162,6 +164,7 @@ namespace ExampleApp
     , m_interiorPinsPlatformServices(interiorPinsPlatformServices)
     , m_interiorsEntitiesPinsController(interiorsEntitiesPinsController)
     , m_gpsMarkerController(gpsMarkerController)
+    , m_messageBus(messageBus)
     {
         Eegeo_ASSERT(m_world != nullptr);
         Eegeo_ASSERT(m_cameraController != nullptr);
@@ -188,6 +191,7 @@ namespace ExampleApp
         Eegeo_ASSERT(m_interiorPinsPlatformServices != nullptr);
         Eegeo_ASSERT(m_interiorsEntitiesPinsController != nullptr);
         Eegeo_ASSERT(m_gpsMarkerController != nullptr);
+        Eegeo_ASSERT(m_messageBus != nullptr);
         //AddLocalMaterials(m_platformAbstractions.GetFileIO(),
         //                  m_pWorld->GetMapModule().GetInteriorsMaterialsModule().GetInteriorsTextureResourceService(),
         //                  m_pWorld->GetMapModule().GetInteriorsMaterialsModule().GetInteriorsMaterialDtoRepository());
@@ -338,6 +342,7 @@ namespace ExampleApp
         if (m_loadingScreen != nullptr && (UpdateLoadingScreen(dt, *m_world, *m_loadingScreen)))
         {
             m_loadingScreenCallbacks.ExecuteCallbacks();
+            m_messageBus->Publish(LoadingScreenCompleteMessage());
             m_loadingScreen = nullptr;
         }
     }
