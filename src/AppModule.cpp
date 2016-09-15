@@ -35,6 +35,8 @@
 #include "IWorldPinsFloorHeightController.h"
 #include "InteriorMarkerModelRepository.h"
 #include "IGpsMarkerController.h"
+#include "ErrorHandler.h"
+#include "IEegeoErrorHandler.h"
 
 namespace ExampleApp
 {
@@ -51,10 +53,12 @@ namespace ExampleApp
                                              return Hypodermic::makeExternallyOwned(module->GetInitialExperienceModel());
                                          }).singleInstance();
         builder->registerType<ExampleApp::MobileExampleApp>().singleInstance();
+        builder->registerType<ErrorHandler>().as<Eegeo::IEegeoErrorHandler>().singleInstance();
     }
     
     void AppModule::RegisterLeaves()
     {
+        RegisterLeaf<ErrorHandler>();
         Resolve<ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule>()->InitialiseWithApplicationModels();
     }
 }

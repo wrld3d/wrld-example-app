@@ -22,6 +22,8 @@ set(currsources
   ../src/AppWiring.cpp
   ../src/WorldModule.h
   ../src/WorldModule.cpp
+  ../src/ErrorHandler.h
+  ../src/ErrorHandler.cpp
 )
 set(sources ${sources} ${currsources})
 source_group(\\src FILES ${currsources})

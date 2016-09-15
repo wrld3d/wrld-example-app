@@ -95,107 +95,14 @@
 #include "ITagSearchRepository.h"
 #include "IWorldAreaLoaderModel.h"
 
+#include "iOSAbstractionIoCModule.h"
+#include "iOSAppModule.h"
 #include <memory>
 #include "ViewWrap.h"
 
 #import "UIView+TouchExclusivity.h"
 
 using namespace Eegeo::iOS;
-
-class iOSAbstractionIoCModule : public ExampleApp::Module
-{
-public:
-    void Register(const ExampleApp::TContainerBuilder& builder)
-    {
-        builder->registerType<Eegeo::UI::NativeInput::iOS::iOSInputBoxFactory>().as<Eegeo::UI::NativeInput::IInputBoxFactory>().singleInstance();
-        builder->registerType<Eegeo::UI::NativeInput::iOS::iOSKeyboardInputFactory>().as<Eegeo::UI::NativeInput::IKeyboardInputFactory>().singleInstance();
-        builder->registerType<Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory>().as<Eegeo::UI::NativeAlerts::IAlertBoxFactory>().singleInstance();
-        
-        builder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
-        {
-            return std::make_shared<Eegeo::UI::NativeUIFactories>(*(context.resolve<Eegeo::UI::NativeAlerts::IAlertBoxFactory>()),
-                                                                  *(context.resolve<Eegeo::UI::NativeInput::IInputBoxFactory>()),
-                                                                  *(context.resolve<Eegeo::UI::NativeInput::IKeyboardInputFactory>()));
-        }).singleInstance();
-        
-        builder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
-        {
-            auto appConfig = context.resolve<ExampleApp::ApplicationConfig::ApplicationConfiguration>();
-            return std::make_shared<Eegeo::iOS::iOSPlatformAbstractionModule>(*(context.resolve<Eegeo::Helpers::Jpeg::IJpegLoader>()), appConfig->EegeoApiKey());
-        }).as<Eegeo::Modules::IPlatformAbstractionModule>().singleInstance();
-        
-        // TODO, template out?
-        
-        builder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
-        {
-            return Hypodermic::makeExternallyOwned(context.resolve<Eegeo::Modules::IPlatformAbstractionModule>()->GetTextureFileLoader());
-        }).singleInstance();
-        
-        builder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
-        {
-            return Hypodermic::makeExternallyOwned(context.resolve<Eegeo::Modules::IPlatformAbstractionModule>()->GetHttpCache());
-        }).singleInstance();
-        builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
-                                         {
-                                             auto store = [[ImageStore alloc]init];
-                                             return std::make_shared<ImageStoreWrapper>(store);
-                                         }).singleInstance();
-    }
-};
-
-class iOSAppModule : public ExampleApp::Module
-{
-public:
-    iOSAppModule(
-                        Eegeo::Rendering::ScreenProperties screenProperties,
-                        ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
-                        ExampleApp::Metrics::iOSFlurryMetricsService& metricsService,
-                        ViewController& viewController)
-    : m_screenProperties(screenProperties)
-    , m_applicationConfiguration(applicationConfiguration)
-    , m_metricsService(metricsService)
-    , m_viewController(viewController)
-    {
-    }
-    
-    void Register(const ExampleApp::TContainerBuilder& builder)
-    {
-        builder->registerExternallyOwnedInstance(m_metricsService).as<ExampleApp::Metrics::IMetricsService>();
-        builder->registerExternallyOwnedInstance(m_screenProperties);
-        builder->registerExternallyOwnedInstance(m_applicationConfiguration);
-        builder->registerType<iOSLocationService>().as<Eegeo::Location::ILocationService>().singleInstance();
-        builder->registerType<iOSConnectivityService>().as<Eegeo::Web::IConnectivityService>().singleInstance();
-        builder->registerType<ExampleApp::PersistentSettings::iOSPersistentSettingsModel>().as<ExampleApp::PersistentSettings::IPersistentSettingsModel>().singleInstance();
-        builder->registerType<ExampleApp::InitialExperience::iOSInitialExperienceModule>().as<ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule>().singleInstance();
-        builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
-                                         {
-                                             return Hypodermic::makeExternallyOwned(context.resolve<ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule>()->GetInitialExperienceController());
-                                         }).singleInstance();
-        builder->registerType<ExampleApp::LinkOutObserver::LinkOutObserver>().singleInstance();
-        builder->registerType<ExampleApp::URLRequest::View::URLRequestHandler>().singleInstance();
-        builder->registerType<ExampleApp::Menu::View::IOSMenuReactionModel>().as<ExampleApp::Menu::View::IMenuReactionModel>().singleInstance();
-        builder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
-                                                    {
-                                                        Eegeo::iOS::iOSPlatformConfigBuilder iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion());
-                                                        return std::make_shared<Eegeo::Config::PlatformConfig>(ExampleApp::ApplicationConfig::SdkModel::BuildPlatformConfig(iOSPlatformConfigBuilder, *context.resolve<ExampleApp::ApplicationConfig::ApplicationConfiguration>()));
-                                                        
-                                                    }).singleInstance();
-        builder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
-                                                    {
-                                                        auto locationService = context.resolve<Eegeo::Location::ILocationService>();
-                                                        return std::make_shared<AppLocationDelegate>(locationService, m_viewController);
-                                                    }).singleInstance();
-        builder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
-                                         {
-                                             return std::make_shared<ViewControllerWrapper>(&m_viewController);
-                                         }).singleInstance();
-    }
-private:
-    Eegeo::Rendering::ScreenProperties m_screenProperties;
-    ExampleApp::ApplicationConfig::ApplicationConfiguration& m_applicationConfiguration;
-    ExampleApp::Metrics::iOSFlurryMetricsService& m_metricsService;
-    ViewController& m_viewController;
-};
 
 AppHost::AppHost(
     ViewController& viewController,
@@ -207,7 +114,6 @@ AppHost::AppHost(
 
     :m_pView(pView)
     ,m_viewController(viewController)
-    ,m_failAlertHandler(this, &AppHost::HandleStartupFailure)
     ,m_pTourWebViewModule(NULL)
     ,m_pTourFullScreenImageViewModule(NULL)
     ,m_pTourExplorerViewModule(NULL)
@@ -217,23 +123,12 @@ AppHost::AppHost(
     Eegeo::TtyHandler::TtyEnabled = true;
     
     m_wiring = std::make_shared<ExampleApp::AppWiring>();
-    m_wiring->RegisterModule<iOSAbstractionIoCModule>();
-    m_wiring->RegisterModuleInstance(std::make_shared<iOSAppModule>(screenProperties, applicationConfiguration, metricsService, m_viewController));
+    m_wiring->RegisterModule<ExampleApp::iOS::iOSAbstractionIoCModule>();
+    m_wiring->RegisterModuleInstance(std::make_shared<ExampleApp::iOS::iOSAppModule>(screenProperties, applicationConfiguration, metricsService, m_viewController));
     m_wiring->RegisterDefaultModules();
     RegisterApplicationViewModules();
     m_wiring->ResolveModules();
-
-    //m_pImageStore = [[ImageStore alloc]init];
     
-//    m_containerBuilder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
-//                                                {
-//                                                    return std::shared_ptr<AppHost::AppHost>(this); // Danger: shared from this, enable_shared_from_this, or better extract out a sane error handler..
-//                                                }).as<Eegeo::IEegeoErrorHandler>().singleInstance();
-    
-    
-    // TODO : More to put in the container past here...
-    
-//    m_container->resolve<ExampleApp::LinkOutObserver::LinkOutObserver>()->OnAppStart();
     m_app = m_wiring->BuildMobileExampleApp();
     m_app->RegisterLoadingScreenComplete(m_loadingSreenCompleteCallback);
    
@@ -264,9 +159,6 @@ AppHost::~AppHost()
     m_pAppInputDelegate = NULL;
 
     DestroyApplicationViewModules();
-    
-    //[m_pImageStore release];
-    //m_pImageStore = nil;
 
     Eegeo::EffectHandler::Reset();
     Eegeo::EffectHandler::Shutdown();
@@ -364,210 +256,22 @@ void AppHost::RegisterApplicationViewModules()
     m_wiring->RegisterModule<ExampleApp::MyPinDetails::View::MyPinDetailsViewModule>();
     m_wiring->RegisterModule<ExampleApp::SearchMenu::View::SearchMenuViewModule>();
     m_wiring->RegisterModule<ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule>();
-/*
-    
- 
-    if(app.ToursEnabled())
-    {
-        m_pTourWebViewModule = Eegeo_NEW(ExampleApp::Tours::View::TourWeb::TourWebViewModule)(screenProperties);
-        
-        m_pTourExplorerViewModule = Eegeo_NEW(ExampleApp::Tours::View::TourExplorer::TourExplorerViewModule)
-                                                                                           (GetMessageBus(),
-                                                                                            app.ToursModule().GetToursExplorerViewModel(),
-                                                                                            *(m_container->resolve<ExampleApp::URLRequest::View::URLRequestHandler>()),
-                                                                                            app.ToursModule().GetToursExplorerCompositeViewController(),
-                                                                                            screenProperties,
-                                                                                            m_pImageStore);
-    
-        m_pTourFullScreenImageViewModule = Eegeo_NEW(ExampleApp::Tours::View::TourFullScreenImage::TourFullScreenImageViewModule)(app.ToursModule().GetTourFullScreenImageViewModel(),
-                                                                                                                                  screenProperties);
-    }
- 
-    m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
-                                                                                                                 GetMessageBus(),
-                                                                                                                 screenProperties,
-                                                                                                                 app.GetIdentityProvider());
-    
-    m_pSurveyViewModule = Eegeo_NEW(ExampleApp::Surveys::View::SurveyViewModule)(GetMessageBus(),
-                                                                                 *(m_container->resolve<ExampleApp::Metrics::IMetricsService>()),
-                                                                                 *(m_container->resolve<ExampleApp::URLRequest::View::URLRequestHandler>()));
-    
-    // 3d map view layer.
-    [m_pView addSubview: &m_pWorldPinOnMapViewModule->GetWorldPinOnMapView()];
-    
-    // Initial Experience background
-    [m_pView addSubview: &m_pInitialExperienceIntroViewModule->GetIntroBackgroundView()];
-
-    // HUD behind modal background layer.
-    [m_pView addSubview: &m_pWatermarkViewModule->GetWatermarkView()];
-    [m_pView addSubview: &m_pFlattenButtonViewModule->GetFlattenButtonView()];
-    [m_pView addSubview: &m_pCompassViewModule->GetCompassView()];
-    [m_pView addSubview: &m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView()];
-    [m_pView addSubview: &m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView()];
-    if(m_pApp->ToursEnabled())
-    {
-        [m_pView addSubview: &m_pTourFullScreenImageViewModule->GetTourFullScreenImageView()];
-        [m_pView addSubview: &m_pTourExplorerViewModule->GetTourExplorerView()];
-    }
-    [m_pView addSubview: &m_pInteriorsExplorerViewModule->GetView()];
-
-    // Modal background layer.
-    [m_pView addSubview: &m_pModalBackgroundViewModule->GetModalBackgroundView()];
-
-    // Menus & HUD layer.
-    [m_pView addSubview: &m_pSettingsMenuViewModule->GetSettingsMenuView()];
-    [m_pView addSubview: &m_pSearchMenuViewModule->GetSearchMenuView()];
-
-    // Pop-up layer.
-    [m_pView addSubview: &m_pSearchResultPoiViewModule->GetView()];
-    [m_pView addSubview: &m_pAboutPageViewModule->GetAboutPageView()];
-    [m_pView addSubview: &m_pOptionsViewModule->GetOptionsView()];
-    [m_pView addSubview: &m_pMyPinCreationDetailsViewModule->GetMyPinCreationDetailsView()];
-    [m_pView addSubview: &m_pMyPinDetailsViewModule->GetMyPinDetailsView()];
-    if(m_pApp->ToursEnabled())
-    {
-        [m_pView addSubview: &m_pTourWebViewModule->GetTourWebView()];
-    }
-    
-    // Initial experience layer
-    [m_pView addSubview: &m_pInitialExperienceIntroViewModule->GetIntroView()];
-
-    m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
-    ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
-    
-    viewControllerUpdaterModel.AddUpdateableObject(m_pSettingsMenuViewModule->GetMenuController());
-    viewControllerUpdaterModel.AddUpdateableObject(m_pSearchMenuViewModule->GetMenuController());
-    
-    SetTouchExclusivity(); */
 }
 
 void AppHost::DestroyApplicationViewModules()
 {
-    // 3d map view layer.
-    //[&m_pWorldPinOnMapViewModule->GetWorldPinOnMapView() removeFromSuperview];
-    
-    //[&m_pInitialExperienceIntroViewModule->GetIntroBackgroundView() removeFromSuperview];
-
-    // HUD behind modal background layer.
-    //[&m_pWatermarkViewModule->GetWatermarkView() removeFromSuperview];
-    //[&m_pFlattenButtonViewModule->GetFlattenButtonView() removeFromSuperview];
-    //[&m_pCompassViewModule->GetCompassView() removeFromSuperview];
-    //[&m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView() removeFromSuperview];
-    //[&m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView() removeFromSuperview];
-    /*if(m_pApp->ToursEnabled())
-    {
-        [&m_pTourFullScreenImageViewModule->GetTourFullScreenImageView() removeFromSuperview];
-        [&m_pTourExplorerViewModule->GetTourExplorerView() removeFromSuperview];
-    }*/
-    //[&m_pInteriorsExplorerViewModule->GetView() removeFromSuperview];
-
-    // Modal background layer.
-    //[&m_pModalBackgroundViewModule->GetModalBackgroundView() removeFromSuperview];
-
-    // Menus & HUD layer.
-    //[&m_pSettingsMenuViewModule->GetSettingsMenuView() removeFromSuperview];
-    //[&m_pSearchMenuViewModule->GetSearchMenuView() removeFromSuperview];
-
-    // Pop-up layer.
-    //[&m_pMyPinDetailsViewModule->GetMyPinDetailsView() removeFromSuperview];
-    //[&m_pMyPinCreationDetailsViewModule->GetMyPinCreationDetailsView() removeFromSuperview];
-    //[&m_pSearchResultPoiViewModule->GetView() removeFromSuperview];
-    //[&m_pAboutPageViewModule->GetAboutPageView() removeFromSuperview];
-    //[&m_pOptionsViewModule->GetOptionsView() removeFromSuperview];
-    /*if(m_pApp->ToursEnabled())
-    {
-        [&m_pTourWebViewModule->GetTourWebView() removeFromSuperview];
-    }*/
-    
-    
-    // Initial experience layer
-    //[&m_pInitialExperienceIntroViewModule->GetIntroView() removeFromSuperview];
-    
     Eegeo_DELETE m_pSurveyViewModule;
-    
-    //Eegeo_DELETE m_pInteriorsExplorerViewModule;
-    
-    //Eegeo_DELETE m_pViewControllerUpdaterModule;
     
     Eegeo_DELETE m_pTourFullScreenImageViewModule;
     
     Eegeo_DELETE m_pTourExplorerViewModule;
     
-    //Eegeo_DELETE m_pMyPinDetailsViewModule;
-
-    //Eegeo_DELETE m_pMyPinCreationDetailsViewModule;
-
-    //Eegeo_DELETE m_pMyPinCreationConfirmationViewModule;
-    
-    //Eegeo_DELETE m_pOptionsViewModule;
-    
-    //Eegeo_DELETE m_pAboutPageViewModule;
-
-    //Eegeo_DELETE m_pCompassViewModule;
-
-    //Eegeo_DELETE m_pWorldPinOnMapViewModule;
-    
     Eegeo_DELETE m_pTourWebViewModule;
-    
-    //Eegeo_DELETE m_pSearchResultPoiViewModule;
-
-    //Eegeo_DELETE m_pModalBackgroundViewModule;
-
-    //Eegeo_DELETE m_pSearchResultSectionViewModule;
-    
-    //Eegeo_DELETE m_pSearchMenuViewModule;
-    
-    //Eegeo_DELETE m_pSettingsMenuViewModule;
-
-    //Eegeo_DELETE m_pFlattenButtonViewModule;
-    
-    //Eegeo_DELETE m_pInitialExperienceIntroViewModule;
-    
-    //Eegeo_DELETE m_pWatermarkViewModule;
 }
 
 void AppHost::SetTouchExclusivity()
 {
     [m_pView setTouchExclusivity:m_pView];
-}
-
-void AppHost::HandleFailureToProvideWorkingApiKey()
-{
-    m_wiring->Resolve<Eegeo::UI::NativeAlerts::IAlertBoxFactory>()->CreateSingleOptionAlertBox
-    (
-     "Bad API Key",
-     "You must provide a valid API key to the constructor of EegeoWorld. See the readme file for details.",
-     m_failAlertHandler
-     );
-}
-
-void AppHost::HandleFailureToDownloadBootstrapResources()
-{
-    std::string message =
-        m_wiring->Resolve<ExampleApp::Net::SdkModel::INetworkCapabilities>()->StreamOverWifiOnly()
-        ? "Unable to download required data! Please ensure you have a Wi-fi connection the next time you attempt to run this application."
-        : "Unable to download required data! Please ensure you have an Internet connection the next time you attempt to run this application.";
-
-    m_wiring->Resolve<Eegeo::UI::NativeAlerts::IAlertBoxFactory>()->CreateSingleOptionAlertBox("Error", message, m_failAlertHandler);
-}
-
-void AppHost::HandleNoConnectivityWarning()
-{
-}
-
-void AppHost::HandleInvalidConnectivityError()
-{
-    m_wiring->Resolve<Eegeo::UI::NativeAlerts::IAlertBoxFactory>()->CreateSingleOptionAlertBox
-    (
-     "Network error",
-     "Unable to access web reliably. Please check your connection is valid & authenticated.",
-     m_failAlertHandler
-     );
-}
-
-void AppHost::HandleStartupFailure()
-{
-    exit(1);
 }
 
 void AppHost::HandleUserInteractionEnabledChanged(const ExampleApp::UserInteraction::UserInteractionEnabledChangedMessage& message)

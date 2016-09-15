@@ -6,6 +6,10 @@ set(currsources
   ios_src/AppDelegate.mm
   ios_src/AppHost.h
   ios_src/AppHost.mm
+  ios_src/iOSAbstractionIoCModule.h
+  ios_src/iOSAbstractionIoCModule.mm
+  ios_src/iOSAppModule.h
+  ios_src/iOSAppModule.mm
   ios_src/AppInputDelegate.h
   ios_src/AppInputDelegate.mm
   ios_src/AppLocationDelegate.h

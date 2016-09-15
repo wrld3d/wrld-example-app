@@ -71,7 +71,7 @@ namespace ExampleApp
 class AppInputDelegate;
 class AppLocationDelegate;
 
-class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
+class AppHost : protected Eegeo::NonCopyable
 {
 public:
     AppHost(
@@ -94,14 +94,6 @@ public:
     void OnLoadingScreenComplete();
     
     void NotifyScreenPropertiesChanged(const std::shared_ptr<Eegeo::Rendering::ScreenProperties>& screenProperties);
-    
-    void HandleFailureToProvideWorkingApiKey();
-    
-    void HandleFailureToDownloadBootstrapResources();
-    
-    void HandleNoConnectivityWarning();
-    
-    void HandleInvalidConnectivityError();
     
     template <class T>
     void AddSubview()
@@ -128,51 +120,11 @@ private:
     std::shared_ptr<ExampleApp::AppWiring> m_wiring;
     std::shared_ptr<ExampleApp::MobileExampleApp> m_app;
 
-    //AppLocationDelegate* m_pAppLocationDelegate;
-
-    //Eegeo::UI::NativeInput::iOS::iOSInputBoxFactory m_iOSInputBoxFactory;
-    //Eegeo::UI::NativeInput::iOS::iOSKeyboardInputFactory m_iOSKeyboardInputFactory;
-    //Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory m_iOSAlertBoxFactory;
-    //Eegeo::UI::NativeUIFactories m_iOSNativeUIFactories;
-    
-    //ExampleApp::SettingsMenu::View::ISettingsMenuViewModule* m_pSettingsMenuViewModule;
-    //ExampleApp::SearchMenu::View::ISearchMenuViewModule* m_pSearchMenuViewModule;
-    //ExampleApp::SearchResultSection::View::ISearchResultSectionViewModule* m_pSearchResultSectionViewModule;
-    //ExampleApp::ModalBackground::View::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
-    //ExampleApp::FlattenButton::View::IFlattenButtonViewModule* m_pFlattenButtonViewModule;
-    //ExampleApp::SearchResultPoi::View::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;
-    //ExampleApp::WorldPins::View::IWorldPinOnMapViewModule* m_pWorldPinOnMapViewModule;
-    //ExampleApp::Compass::View::ICompassViewModule* m_pCompassViewModule;
-    //ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModule* m_pViewControllerUpdaterModule;
-    //ExampleApp::PersistentSettings::iOSPersistentSettingsModel m_iOSPersistentSettingsModel;
-    //ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule* m_pInitialExperienceModule;
-    //ExampleApp::AboutPage::View::IAboutPageViewModule* m_pAboutPageViewModule;
-    //ExampleApp::MyPinCreation::View::IMyPinCreationInitiationViewModule* m_pMyPinCreationInitiationViewModule;
-    //ExampleApp::MyPinCreation::View::IMyPinCreationConfirmationViewModule* m_pMyPinCreationConfirmationViewModule;
-    //ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsViewModule* m_pMyPinCreationDetailsViewModule;
-    //ExampleApp::MyPinDetails::View::IMyPinDetailsViewModule* m_pMyPinDetailsViewModule;
-    //ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
-    //ExampleApp::Watermark::View::IWatermarkViewModule* m_pWatermarkViewModule;
     ExampleApp::Tours::View::TourWeb::ITourWebViewModule* m_pTourWebViewModule;
     ExampleApp::Tours::View::TourExplorer::ITourExplorerViewModule* m_pTourExplorerViewModule;
     ExampleApp::Tours::View::TourFullScreenImage::ITourFullScreenImageViewModule* m_pTourFullScreenImageViewModule;
-    //ExampleApp::InitialExperience::View::IInitialExperienceIntroViewModule* m_pInitialExperienceIntroViewModule;
-    //ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
-    //ExampleApp::Metrics::iOSFlurryMetricsService& m_iOSFlurryMetricsService;
-    //ExampleApp::InteriorsExplorer::View::IInteriorsExplorerViewModule* m_pInteriorsExplorerViewModule;
-    //ExampleApp::LinkOutObserver::LinkOutObserver* m_pLinkOutObserver;
-    //ExampleApp::URLRequest::View::URLRequestHandler* m_pURLRequestHandler;
     ExampleApp::Surveys::View::ISurveyViewModule* m_pSurveyViewModule;
-    //ExampleApp::Menu::View::IMenuReactionModel* m_pMenuReactionModel;
     
-    //ImageStore* m_pImageStore;
-    
-    //bool m_requestedApplicationInitialiseViewState;
-
-    //ExampleApp::ExampleAppMessaging::TMessageBus m_messageBus;
-    //ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus m_sdkModelDomainEventBus;
-    
-    Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<AppHost> m_failAlertHandler;
     Eegeo::Helpers::TCallback1<AppHost, const ExampleApp::UserInteraction::UserInteractionEnabledChangedMessage&> m_userInteractionEnabledChangedHandler;
 
     void RegisterApplicationViewModules();
@@ -182,7 +134,6 @@ private:
     
     void SetTouchExclusivity();
     
-    void HandleStartupFailure();
     void HandleUserInteractionEnabledChanged(const ExampleApp::UserInteraction::UserInteractionEnabledChangedMessage& message);
 };
 
