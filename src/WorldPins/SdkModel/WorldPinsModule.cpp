@@ -62,6 +62,11 @@ namespace ExampleApp
                 RegisterLeaf<View::WorldPinInFocusObserver>();
                 RegisterLeaf<View::WorldPinOnMapController>();
             }
+            
+            void WorldPinsModule::RegisterOpenablesAndReactors()
+            {
+                RegisterReactor(&Resolve<View::IWorldPinInFocusViewModel>()->GetScreenControlViewModel());
+            }
         }
     }
 }

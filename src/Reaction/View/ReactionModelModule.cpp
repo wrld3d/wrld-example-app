@@ -22,6 +22,11 @@ namespace ExampleApp
                 builder->registerType<ReactionControllerModel>().as<IReactionControllerModel>().singleInstance();
                 builder->registerType<ReactionModel>().as<IReactionModel>().singleInstance();
             }
+            
+            void ReactionModelModule::RegisterLeaves()
+            {
+                RegisterLeaf<IReactionModel>();
+            }
         }
     }
 }

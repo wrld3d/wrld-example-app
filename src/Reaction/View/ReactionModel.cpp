@@ -21,37 +21,35 @@ namespace ExampleApp
                 , m_openables(openables)
                 , m_reactors(reactors)
                 , m_menuIgnoredReaction(menuIgnoredReaction)
-                , m_pMenuOpenStateChangedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<ReactionModel, OpenableControl::View::IOpenableControlViewModel&, float>))(this, &ReactionModel::MenuOpenStateChangeHandler))
+                , m_menuOpenStateChangedCallback(this, &ReactionModel::MenuOpenStateChangeHandler)
+                , m_openableAdded(this, &ReactionModel::OnOpenableAdded)
+                , m_openableRemoved(this, &ReactionModel::OnOpenableRemoved)
             {
-                for(OpenableControl::View::TOpenables::const_iterator it = m_openables->begin();
-                        it != m_openables->end();
-                        ++ it)
-                {
-                    OpenableControl::View::IOpenableControlViewModel& openable = **it;
-                    openable.InsertOpenStateChangedCallback(*m_pMenuOpenStateChangedCallback);
-                }
+                m_openables->InsertItemAddedCallback(m_openableAdded);
+                m_openables->InsertItemRemovedCallback(m_openableRemoved);
             }
 
             ReactionModel::~ReactionModel()
             {
-                for(OpenableControl::View::TOpenables::const_iterator it = m_openables->begin();
-                        it != m_openables->end();
-                        ++ it)
-                {
-                    OpenableControl::View::IOpenableControlViewModel& openable = **it;
-                    openable.RemoveOpenStateChangedCallback(*m_pMenuOpenStateChangedCallback);
-                }
-
-                Eegeo_DELETE m_pMenuOpenStateChangedCallback;
+                m_openables->RemoveItemRemovedCallback(m_openableRemoved);
+                m_openables->RemoveItemAddedCallback(m_openableAdded);
+            }
+            
+            void ReactionModel::OnOpenableAdded(OpenableControl::View::IOpenableControlViewModel*& openable)
+            {
+                openable->InsertOpenStateChangedCallback(m_menuOpenStateChangedCallback);
+            }
+            
+            void ReactionModel::OnOpenableRemoved(OpenableControl::View::IOpenableControlViewModel*& openable)
+            {
+                openable->RemoveOpenStateChangedCallback(m_menuOpenStateChangedCallback);
             }
 
             void ReactionModel::UpdateOnScreenStatesInReactionToMenuOpenStateChange(OpenableControl::View::IOpenableControlViewModel& changingViewModel, float openState)
             {
-                for(ScreenControl::View::TReactors::const_iterator it = m_reactors->begin();
-                        it != m_reactors->end();
-                        ++ it)
+                for(size_t i = 0; i<m_reactors->GetItemCount(); ++i)
                 {
-                    ScreenControl::View::IScreenControlViewModel& reactor = **it;
+                    ScreenControl::View::IScreenControlViewModel& reactor = *m_reactors->GetItemAtIndex(i);
 
                     if(reactor != changingViewModel)
                     {

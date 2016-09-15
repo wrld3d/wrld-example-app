@@ -51,6 +51,12 @@ namespace ExampleApp
                 RegisterLeaf<View::MyPinCreationConfirmationController>();
                 RegisterLeaf<View::IMyPinCreationCompositeViewModel>();
             }
+            
+            void MyPinCreationModule::RegisterOpenablesAndReactors()
+            {
+                RegisterOpenable(&Resolve<View::IMyPinCreationConfirmationViewModel>()->GetOpenableControlViewModel());
+                RegisterReactor(&Resolve<View::IMyPinCreationInitiationViewModel>()->GetScreenControlViewModel());
+            }
         }
     }
 }

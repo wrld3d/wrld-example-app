@@ -22,8 +22,11 @@ namespace ExampleApp
         {
             void SearchResultPoiModule::Register(const TContainerBuilder& builder)
             {
+#ifdef EEGEO_WIN
                 builder->registerType<DesktopSearchResultPoiViewModel>().as<ISearchResultPoiViewModel>().singleInstance();
+#else
                 builder->registerType<SearchResultPoiViewModel>().as<ISearchResultPoiViewModel>().singleInstance();
+#endif
                 builder->registerType<SdkModel::SearchResultPoiMyPinService>().as<SdkModel::ISearchResultPoiMyPinService>().singleInstance();
                 builder->registerType<SdkModel::SearchResultPoiPinToggledMessageHandler>().singleInstance();
                 builder->registerType<SdkModel::SearchResultPoiViewImageFetcher>().as<SdkModel::ISearchResultPoiViewImageFetcher>().singleInstance();
@@ -36,6 +39,11 @@ namespace ExampleApp
                 RegisterLeaf<SdkModel::SearchResultPoiPinToggledMessageHandler>();
                 RegisterLeaf<SdkModel::SearchResultPoiViewOpenedMessageHandler>();
                 RegisterLeaf<View::SearchResultPoiController>();
+            }
+            
+            void SearchResultPoiModule::RegisterOpenablesAndReactors()
+            {
+                RegisterOpenable(&Resolve<ISearchResultPoiViewModel>()->GetOpenableControl());
             }
         }
     }

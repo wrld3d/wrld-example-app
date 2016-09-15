@@ -12,47 +12,32 @@ namespace ExampleApp
         namespace View
         {
             ModalityController::ModalityController(const std::shared_ptr<IModalityModel>& modalityModel,
-                                                   const std::shared_ptr<OpenableControl::View::TOpenables>& viewModels,
+                                                   const std::shared_ptr<OpenableControl::View::TOpenables>& openables,
                                                    const std::shared_ptr<Menu::View::IModalityIgnoredReactionModel>& ignoredReactionModel)
                 : m_modalityModel(modalityModel)
-                , m_pMenuOpenStateChangedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<ModalityController, OpenableControl::View::IOpenableControlViewModel&, float>))(this, &ModalityController::MenuOpenStateChangeHandler))
-                , m_viewModels(viewModels)
+                , m_menuOpenStateChangedCallback(this, &ModalityController::MenuOpenStateChangeHandler)
+                , m_openableAdded(this, &ModalityController::OnOpenableAdded)
+                , m_openableRemoved(this, &ModalityController::OnOpenableRemoved)
+                , m_openables(openables)
                 , m_ignoredReactionModel(ignoredReactionModel)
             {
-
-                for(OpenableControl::View::TOpenables::const_iterator it = m_viewModels->begin();
-                        it != m_viewModels->end();
-                        ++ it)
-                {
-                    OpenableControl::View::IOpenableControlViewModel& viewModel = **it;
-                    viewModel.InsertOpenStateChangedCallback(*m_pMenuOpenStateChangedCallback);
-                }
+                m_openables->InsertItemAddedCallback(m_openableAdded);
+                m_openables->InsertItemRemovedCallback(m_openableRemoved);
             }
 
             ModalityController::~ModalityController()
             {
-                for(OpenableControl::View::TOpenables::const_iterator it = m_viewModels->begin();
-                        it != m_viewModels->end();
-                        ++ it)
-                {
-                    OpenableControl::View::IOpenableControlViewModel& viewModel = **it;
-                    viewModel.RemoveOpenStateChangedCallback(*m_pMenuOpenStateChangedCallback);
-                }
-
-                m_viewModels->clear();
-
-                Eegeo_DELETE m_pMenuOpenStateChangedCallback;
+                m_openables->RemoveItemRemovedCallback(m_openableRemoved);
+                m_openables->RemoveItemAddedCallback(m_openableAdded);
             }
 
             float ModalityController::GetModality() const
             {
                 float max = 0.f;
 
-                for(OpenableControl::View::TOpenables::const_iterator it = m_viewModels->begin();
-                        it != m_viewModels->end();
-                        ++ it)
+                for(size_t i = 0; i < m_openables->GetItemCount(); ++i)
                 {
-                    OpenableControl::View::IOpenableControlViewModel& viewModel = **it;
+                    OpenableControl::View::IOpenableControlViewModel& viewModel = *m_openables->GetItemAtIndex(i);
 
                     if(viewModel.OpenState() > max)
                     {
@@ -61,6 +46,16 @@ namespace ExampleApp
                 }
 
                 return max;
+            }
+            
+            void ModalityController::OnOpenableAdded(OpenableControl::View::IOpenableControlViewModel*& openable)
+            {
+                openable->InsertOpenStateChangedCallback(m_menuOpenStateChangedCallback);
+            }
+            
+            void ModalityController::OnOpenableRemoved(OpenableControl::View::IOpenableControlViewModel*& openable)
+            {
+                openable->RemoveOpenStateChangedCallback(m_menuOpenStateChangedCallback);
             }
 
             void ModalityController::MenuOpenStateChangeHandler(OpenableControl::View::IOpenableControlViewModel& viewModel, float& openState)

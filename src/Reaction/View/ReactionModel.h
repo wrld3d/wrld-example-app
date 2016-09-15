@@ -26,8 +26,10 @@ namespace ExampleApp
                 const std::shared_ptr<ScreenControl::View::TReactors> m_reactors;
 
                 const std::shared_ptr<Menu::View::IMenuIgnoredReactionModel> m_menuIgnoredReaction;
-
-                Eegeo::Helpers::ICallback2<OpenableControl::View::IOpenableControlViewModel&, float>* m_pMenuOpenStateChangedCallback;
+                
+                Eegeo::Helpers::TCallback1<ReactionModel, OpenableControl::View::IOpenableControlViewModel*> m_openableAdded;
+                Eegeo::Helpers::TCallback1<ReactionModel, OpenableControl::View::IOpenableControlViewModel*> m_openableRemoved;
+                Eegeo::Helpers::TCallback2<ReactionModel, OpenableControl::View::IOpenableControlViewModel&, float> m_menuOpenStateChangedCallback;
 
             public:
                 ReactionModel(const std::shared_ptr<IReactionControllerModel>& reactionControllerModel,
@@ -38,7 +40,10 @@ namespace ExampleApp
                 ~ReactionModel();
 
             private:
-
+                void OnOpenableAdded(OpenableControl::View::IOpenableControlViewModel*& openable);
+                
+                void OnOpenableRemoved(OpenableControl::View::IOpenableControlViewModel*& openable);
+                
                 void UpdateOnScreenStatesInReactionToMenuOpenStateChange(OpenableControl::View::IOpenableControlViewModel& viewModel, float openState);
 
                 void MenuOpenStateChangeHandler(OpenableControl::View::IOpenableControlViewModel& viewModel, float& openState);

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "ICallback.h"
+#include "IOpenableControlViewModel.h"
 
 namespace ExampleApp
 {
@@ -30,7 +31,8 @@ namespace ExampleApp
                 virtual void InsertClosedCallback(Eegeo::Helpers::ICallback0& closedCallback) = 0;
 
                 virtual void RemoveClosedCallback(Eegeo::Helpers::ICallback0& closedCallback) = 0;
-
+                
+                virtual OpenableControl::View::IOpenableControlViewModel& GetOpenableControl() = 0;
             };
         }
     }

@@ -42,6 +42,11 @@ namespace ExampleApp
                 RegisterLeaf<CompassModeObserver>();
                 RegisterLeaf<CompassViewCycledObserver>();
             }
+            
+            void CompassModule::RegisterOpenablesAndReactors()
+            {
+                RegisterReactor(&Resolve<View::ICompassViewModel>()->GetScreenControlViewModel());
+            }
         }
     }
 }

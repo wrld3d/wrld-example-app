@@ -13,8 +13,8 @@ namespace ExampleApp
             class IWatermarkViewModel : public ScreenControl::View::IScreenControlViewModel
             {
             public:
-
                 virtual ~IWatermarkViewModel() { }
+                virtual ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel() = 0;
             };
         }
     }

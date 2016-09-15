@@ -66,6 +66,12 @@ namespace ExampleApp
                 AddMenuSection(viewModel, "About", aboutMenuModel, false);
             }
             
+            void SettingsMenuModule::RegisterOpenablesAndReactors()
+            {
+                RegisterOpenable(Resolve<View::SettingsMenuViewModel>().get());
+                RegisterReactor(Resolve<View::SettingsMenuViewModel>().get());
+            }
+            
             /*
             SettingsMenuModule::SettingsMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
                                                    Reaction::View::IReactionControllerModel& reactionControllerModel,

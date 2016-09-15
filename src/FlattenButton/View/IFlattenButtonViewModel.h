@@ -15,6 +15,7 @@ namespace ExampleApp
             public:
 
                 virtual ~IFlattenButtonViewModel() { }
+                virtual ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel() = 0;
             };
         }
     }

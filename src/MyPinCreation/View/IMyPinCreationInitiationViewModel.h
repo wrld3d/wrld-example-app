@@ -18,6 +18,7 @@ namespace ExampleApp
 
                 virtual bool ShouldOffsetViewButton() const = 0;
                 virtual void SetShouldOffsetViewButton(bool shouldOffset) = 0;
+                virtual ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel() = 0;
             };
         }
     }

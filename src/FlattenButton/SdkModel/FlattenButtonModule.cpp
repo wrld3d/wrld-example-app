@@ -32,6 +32,11 @@ namespace ExampleApp
                 RegisterLeaf<FlattenButtonModelStateChangedObserver>();
                 RegisterLeaf<FlattenButtonViewStateChangedObserver>();
             }
+            
+            void FlattenButtonModule::RegisterOpenablesAndReactors()
+            {
+                RegisterReactor(&Resolve<View::IFlattenButtonViewModel>()->GetScreenControlViewModel());
+            }
         }
     }
 }

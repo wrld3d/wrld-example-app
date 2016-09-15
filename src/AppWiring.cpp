@@ -145,10 +145,24 @@ namespace ExampleApp
                 m_leaves.push_back(leaf);
             }
             module->RegisterRenderableFilters();
+            module->RegisterOpenablesAndReactors();
+        }
+        for (const auto& module: *moduleSet)
+        {
             const auto& filters = m_appContainer->resolve<Eegeo::Rendering::RenderableFilters>();
             for (const auto& filter : module->GetRenderableFilters())
             {
                 filters->AddRenderableFilter(*filter);
+            }
+            const auto& openables = m_appContainer->resolve<OpenableControl::View::TOpenables>();
+            for (const auto& openable : module->GetOpenables())
+            {
+                openables->AddItem(openable);
+            }
+            const auto& reactors = m_appContainer->resolve<ScreenControl::View::TReactors>();
+            for (const auto& reactor : module->GetReactors())
+            {
+                reactors->AddItem(reactor);
             }
         }
     }

@@ -32,6 +32,11 @@ namespace ExampleApp
                 RegisterLeaf<MyPinDetailsViewRemovePinHandler>();
                 RegisterLeaf<View::MyPinDetailsModelSelectedObserver>();
             }
+            
+            void MyPinDetailsModule::RegisterOpenablesAndReactors()
+            {
+                RegisterOpenable(&Resolve<View::IMyPinDetailsViewModel>()->GetOpenableControl());
+            }
         }
     }
 }

@@ -4,6 +4,7 @@
 
 #include "ICallback.h"
 #include "IIdentity.h"
+#include "RepositoryModel.h"
 
 #include <vector>
 
@@ -37,7 +38,58 @@ namespace ExampleApp
                 virtual bool IsAddedToScreen() const = 0;
             };
             
-            typedef std::vector<ScreenControl::View::IScreenControlViewModel*> TReactors;
+            class TReactors : public Repository::IRepositoryModel<ScreenControl::View::IScreenControlViewModel*>
+            {
+            private:
+                typedef ScreenControl::View::IScreenControlViewModel* TModel;
+                Repository::RepositoryModel<TModel> m_repository;
+                
+            public:
+                void AddItem(const TModel& item) override
+                {
+                    m_repository.AddItem(item);
+                }
+                
+                void RemoveItem(const TModel& item) override
+                {
+                    m_repository.RemoveItem(item);
+                }
+                
+                size_t GetItemCount() const override
+                {
+                    return m_repository.GetItemCount();
+                }
+                
+                TModel GetItemAtIndex(size_t index) override
+                {
+                    return m_repository.GetItemAtIndex(index);
+                }
+                
+                const TModel GetItemAtIndexConst(size_t index) const
+                {
+                    return m_repository.GetItemAtIndexConst(index);
+                }
+                
+                void InsertItemAddedCallback(Eegeo::Helpers::ICallback1<TModel>& callback) override
+                {
+                    m_repository.InsertItemAddedCallback(callback);
+                }
+                
+                void RemoveItemAddedCallback(Eegeo::Helpers::ICallback1<TModel>& callback) override
+                {
+                    m_repository.RemoveItemAddedCallback(callback);
+                }
+                
+                void InsertItemRemovedCallback(Eegeo::Helpers::ICallback1<TModel>& callback) override
+                {
+                    m_repository.InsertItemRemovedCallback(callback);
+                }
+                
+                void RemoveItemRemovedCallback(Eegeo::Helpers::ICallback1<TModel>& callback) override
+                {
+                    m_repository.RemoveItemRemovedCallback(callback);
+                }
+            };
         }
     }
 }

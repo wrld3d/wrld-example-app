@@ -94,6 +94,11 @@ namespace ExampleApp
                 RegisterLeaf<View::InteriorsExplorerController>();
                 RegisterLeaf<InteriorWorldPinController>();
             }
+            
+            void InteriorsExplorerModule::RegisterOpenablesAndReactors()
+            {
+                RegisterReactor(Resolve<View::InteriorsExplorerViewModel>().get());
+            }
         }
     }
 }

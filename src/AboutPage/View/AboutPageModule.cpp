@@ -135,6 +135,11 @@ namespace ExampleApp
             {
                 RegisterLeaf<View::AboutPageController>();
             }
+            
+            void AboutPageModule::RegisterOpenablesAndReactors()
+            {
+                RegisterOpenable(&Resolve<IAboutPageViewModel>()->GetOpenableControl());
+            }
         }
     }
 }

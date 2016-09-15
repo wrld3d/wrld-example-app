@@ -20,14 +20,15 @@ namespace ExampleApp
             class ModalityController : public IModalityController, private Eegeo::NonCopyable
             {
                 const std::shared_ptr<IModalityModel> m_modalityModel;
-                const std::shared_ptr<OpenableControl::View::TOpenables> m_viewModels;
-                Eegeo::Helpers::ICallback2<OpenableControl::View::IOpenableControlViewModel&, float>* m_pMenuOpenStateChangedCallback;
-
+                const std::shared_ptr<OpenableControl::View::TOpenables> m_openables;
+                Eegeo::Helpers::TCallback2<ModalityController, OpenableControl::View::IOpenableControlViewModel&, float> m_menuOpenStateChangedCallback;
+                Eegeo::Helpers::TCallback1<ModalityController, OpenableControl::View::IOpenableControlViewModel*> m_openableAdded;
+                Eegeo::Helpers::TCallback1<ModalityController, OpenableControl::View::IOpenableControlViewModel*> m_openableRemoved;
                 const std::shared_ptr<Menu::View::IMenuIgnoredReactionModel> m_ignoredReactionModel;
 
             public:
                 ModalityController(const std::shared_ptr<IModalityModel>& modalityModel,
-                                   const std::shared_ptr<OpenableControl::View::TOpenables>& viewModels,
+                                   const std::shared_ptr<OpenableControl::View::TOpenables>& openables,
                                    const std::shared_ptr<Menu::View::IModalityIgnoredReactionModel>& ignoredReactionModel);
 
                 ~ModalityController();
@@ -35,7 +36,8 @@ namespace ExampleApp
             private:
 
                 float GetModality() const;
-
+                void OnOpenableAdded(OpenableControl::View::IOpenableControlViewModel*& openable);
+                void OnOpenableRemoved(OpenableControl::View::IOpenableControlViewModel*& openable);
                 void MenuOpenStateChangeHandler(OpenableControl::View::IOpenableControlViewModel& viewModel, float& openState);
             };
         }

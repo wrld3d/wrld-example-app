@@ -22,6 +22,11 @@ namespace ExampleApp
             {
                 RegisterLeaf<View::MyPinCreationDetailsController>();
             }
+            
+            void MyPinCreationDetailsModule::RegisterOpenablesAndReactors()
+            {
+                RegisterOpenable(&Resolve<IMyPinCreationDetailsViewModel>()->GetOpenableControl());
+            }
         }
     }
 }

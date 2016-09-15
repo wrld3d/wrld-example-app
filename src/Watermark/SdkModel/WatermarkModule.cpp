@@ -54,6 +54,11 @@ namespace ExampleApp
 
                 repo->AddWatermarkData("micello", micelloWatermarkData);
             }
+            
+            void WatermarkModule::RegisterOpenablesAndReactors()
+            {
+                RegisterReactor(&Resolve<View::IWatermarkViewModel>()->GetScreenControlViewModel());
+            }
         }
     }
 }

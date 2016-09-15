@@ -42,6 +42,12 @@ namespace ExampleApp
                 viewModel->AddSection(*pPlaceJumpSection);
             }
             
+            void SearchMenuModule::RegisterOpenablesAndReactors()
+            {
+                RegisterOpenable(Resolve<View::SearchMenuViewModel>().get());
+                RegisterReactor(Resolve<View::SearchMenuViewModel>().get());
+            }
+            
             /*
              
             TODO: fix up this...

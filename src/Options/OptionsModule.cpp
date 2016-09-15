@@ -34,5 +34,10 @@ namespace ExampleApp
             RegisterLeaf<View::CompletedCacheClearMessageHandler>();
             RegisterLeaf<SdkModel::StreamOverWifiOnlyChangedMessageHandler>();
         }
+        
+        void OptionsModule::RegisterOpenablesAndReactors()
+        {
+            RegisterOpenable(&Resolve<View::IOptionsViewModel>()->GetOpenableControl());
+        }
     }
 }

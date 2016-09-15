@@ -3,6 +3,7 @@
 #pragma once
 
 #include "IScreenControlViewModel.h"
+#include "IOpenableControlViewModel.h"
 
 namespace ExampleApp
 {
@@ -13,10 +14,10 @@ namespace ExampleApp
             class IMyPinCreationConfirmationViewModel : public ScreenControl::View::IScreenControlViewModel
             {
             public:
-
                 virtual ~IMyPinCreationConfirmationViewModel() { }
                 virtual bool TryOpen() = 0;
                 virtual void Close() = 0;
+                virtual OpenableControl::View::IOpenableControlViewModel& GetOpenableControlViewModel() = 0;
             };
         }
     }

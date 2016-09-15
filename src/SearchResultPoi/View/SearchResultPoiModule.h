@@ -15,7 +15,7 @@ namespace ExampleApp
             public:
                 void Register(const TContainerBuilder& builder);
                 void RegisterLeaves();
-
+                void RegisterOpenablesAndReactors();
             };
         }
     }

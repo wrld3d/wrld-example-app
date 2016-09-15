@@ -5,6 +5,8 @@
 #include "Hypodermic/ContainerBuilder.h"
 #include "Types.h"
 #include "IRenderableFilter.h"
+#include "IOpenableControlViewModel.h"
+#include "IScreenControlViewModel.h"
 #include <vector>
 
 namespace ExampleApp
@@ -13,6 +15,8 @@ namespace ExampleApp
     typedef std::shared_ptr<Hypodermic::Container> TContainer;
     typedef std::vector<std::shared_ptr<void>> TLeaves;
     typedef std::vector<std::shared_ptr<Eegeo::Rendering::IRenderableFilter>> TRenderableFilters;
+    typedef std::vector<OpenableControl::View::IOpenableControlViewModel*> TOpenableTypes;
+    typedef std::vector<ScreenControl::View::IScreenControlViewModel*> TReactorTypes;
     
     class Module : private Eegeo::NonCopyable
     {
@@ -25,8 +29,15 @@ namespace ExampleApp
         virtual ~Module() { };
         
         virtual void Register(const TContainerBuilder& builder) = 0;
+        
+        // Opportunity for Modules to register any 'leaf' types, i.e. message handlers, observers, that are not dependencies of other types
         virtual void RegisterLeaves() { };
+        
+        // Opportunity for Modules to register any RenderableFilters
         virtual void RegisterRenderableFilters() { };
+        
+        // Opportunity for Modules to register any openables and/or reactors
+        virtual void RegisterOpenablesAndReactors() { };
         
         template <class T>
         void RegisterLeaf()
@@ -43,7 +54,17 @@ namespace ExampleApp
             auto ptr = m_pContainer->resolve<T>();
             m_renderableFilters.push_back(ptr);
         }
+        
+        void RegisterOpenable(OpenableControl::View::IOpenableControlViewModel* openable)
+        {
+            m_openables.push_back(openable);
+        }
 
+        void RegisterReactor(ScreenControl::View::IScreenControlViewModel* reactor)
+        {
+            m_reactors.push_back(reactor);
+        }
+        
         template <class T>
         std::shared_ptr<T> Resolve()
         {
@@ -65,10 +86,22 @@ namespace ExampleApp
             return m_renderableFilters;
         }
         
+        const TOpenableTypes& GetOpenables() const
+        {
+            return m_openables;
+        }
+        
+        const TReactorTypes& GetReactors() const
+        {
+            return m_reactors;
+        }
+        
     private:
         Hypodermic::Container* m_pContainer;
         TLeaves m_leaves;
         TRenderableFilters m_renderableFilters;
+        TOpenableTypes m_openables;
+        TReactorTypes m_reactors;
     };
     
     typedef std::vector<const std::shared_ptr<Module>> TModules;

@@ -3,7 +3,7 @@
 #pragma once
 
 #include "ICallback.h"
-
+#include "IOpenableControlViewModel.h"
 #include <string>
 
 namespace ExampleApp
@@ -48,6 +48,8 @@ namespace ExampleApp
                 virtual void InsertCacheClearCeremonyCompletedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 
                 virtual void RemoveCacheClearCeremonyCompletedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                
+                virtual OpenableControl::View::IOpenableControlViewModel& GetOpenableControl() = 0;
             };
         }
     }
