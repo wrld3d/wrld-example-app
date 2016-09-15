@@ -332,6 +332,15 @@ public class MenuExpandableListAdapter extends BaseExpandableListAdapter
 		}
 		
 		ImageView itemIcon = (ImageView)itemView.findViewById(R.id.menu_list_item_icon);
+		
+		if (itemData.getText().equals("Meeting Rooms") ||
+		        itemData.getText().equals("Facilities & Amenities") ||
+		        itemData.getText().equals("Buildings"))
+		{
+		    View arrowView = itemView.findViewById(R.id.menu_list_openable_shape);
+		    arrowView.setVisibility(View.INVISIBLE);
+		}
+		
 		if (itemIcon != null)
 		{
 			itemIcon.setImageResource(CategoryResources.getSmallIconForResourceName(m_context, itemData.getIcon()));

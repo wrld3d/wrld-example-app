@@ -17,7 +17,7 @@
             android:gravity="left|center_vertical"
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
             android:textColor="@drawable/menu_item_states"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:text=""/>
 
         <ImageView
