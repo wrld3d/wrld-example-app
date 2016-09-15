@@ -18,7 +18,7 @@
     <uses-feature android:name="android.hardware.camera"
         android:required="true"/>
 
-    <application android:icon="@mipmap/icon" android:label="Project Swallow App" android:theme="@android:style/Theme.NoTitleBar">
+    <application android:icon="@mipmap/icon" android:label="BWAY" android:theme="@android:style/Theme.NoTitleBar">
        
         <activity android:name="com.eegeo.ProjectSwallowApp.BackgroundThreadActivity"
                   android:label="BWAY"
