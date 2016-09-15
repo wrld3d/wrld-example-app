@@ -29,13 +29,13 @@
     
     <string name="eegeo_logo">Eegeo company logo</string>
     
-    <string name="pin_confirmation_title">Drag the marker to place your pin</string>
+    <string name="pin_confirmation_title">Drag the marker to place your report</string>
     <string name="poi_creation_details_terms_conditions">(Terms &amp; Conditions)</string>
     <string name="poi_creation_details_share">Share</string>
-    <string name="poi_creation_details_title_hint">Name your pin...</string>
-    <string name="poi_creation_details_description_hint">Tell us about your pin...</string>
+    <string name="poi_creation_details_title_hint">Name your report...</string>
+    <string name="poi_creation_details_description_hint">Tell us about your report...</string>
     <string name="poi_creation_details_image">The current image representing your Point of Interest.</string>
-    <string name="my_pin_details_icon">Icon for My Pin details dialog box</string>
+    <string name="my_pin_details_icon">Icon for My Report details dialog box</string>
     
     <string name="placeholder">Lorem ipsum dolor sit amet.</string>
     <string name="settings_header">Settings</string>
