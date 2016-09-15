@@ -25,7 +25,9 @@
 #include "InteriorWorldPinController.h"
 #include "WorldPins.h"
 #include "InteriorsEntitiesPins.h"
+#include "IInteriorsNavigationService.h"
 #include "GpsMarker.h"
+#include "Search.h"
 
 namespace ExampleApp
 {
@@ -55,6 +57,8 @@ namespace ExampleApp
         const std::shared_ptr<WorldPins::SdkModel::InteriorPinsPlatformServices> m_interiorPinsPlatformServices;
         const std::shared_ptr<InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController> m_interiorsEntitiesPinsController;
         const std::shared_ptr<GpsMarker::SdkModel::IGpsMarkerController> m_gpsMarkerController;
+        const std::shared_ptr<Search::SdkModel::ISearchRefreshService> m_searchRefreshService;
+        const std::shared_ptr<InteriorsNavigation::SdkModel::IInteriorsNavigationService> m_interiorsNavigationService;
         const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
         
         std::shared_ptr<Eegeo::Rendering::ScreenProperties> m_screenProperties;
@@ -88,6 +92,8 @@ namespace ExampleApp
                          const std::shared_ptr<WorldPins::SdkModel::InteriorPinsPlatformServices>& interiorPinsPlatformServices,
                          const std::shared_ptr<InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController>& interiorsEntitiesPinsController,
                          const std::shared_ptr<GpsMarker::SdkModel::IGpsMarkerController>& gpsMarkerController,
+                         const std::shared_ptr<Search::SdkModel::ISearchRefreshService>& searchRefreshService,
+                         const std::shared_ptr<InteriorsNavigation::SdkModel::IInteriorsNavigationService>& interiorsNavigationService,
                          const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
 
         ~MobileExampleApp();

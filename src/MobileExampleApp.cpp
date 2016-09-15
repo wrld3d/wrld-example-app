@@ -22,6 +22,8 @@
 #include "IInteriorsEntitiesPinsController.h"
 #include "IGpsMarkerController.h"
 #include "LoadingScreenCompleteMessage.h"
+#include "IInteriorsNavigationService.h"
+#include "ISearchRefreshService.h"
 
 namespace ExampleApp
 {
@@ -138,6 +140,8 @@ namespace ExampleApp
                                        const std::shared_ptr<WorldPins::SdkModel::InteriorPinsPlatformServices>& interiorPinsPlatformServices,
                                        const std::shared_ptr<InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController>& interiorsEntitiesPinsController,
                                        const std::shared_ptr<GpsMarker::SdkModel::IGpsMarkerController>& gpsMarkerController,
+                                       const std::shared_ptr<Search::SdkModel::ISearchRefreshService>& searchRefreshService,
+                                       const std::shared_ptr<InteriorsNavigation::SdkModel::IInteriorsNavigationService>& interiorsNavigationService,
                                        const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
     : m_world(world)
     , m_cameraController(appCameraController)
@@ -164,6 +168,8 @@ namespace ExampleApp
     , m_interiorPinsPlatformServices(interiorPinsPlatformServices)
     , m_interiorsEntitiesPinsController(interiorsEntitiesPinsController)
     , m_gpsMarkerController(gpsMarkerController)
+    , m_searchRefreshService(searchRefreshService)
+    , m_interiorsNavigationService(interiorsNavigationService)
     , m_messageBus(messageBus)
     {
         Eegeo_ASSERT(m_world != nullptr);
@@ -191,7 +197,9 @@ namespace ExampleApp
         Eegeo_ASSERT(m_interiorPinsPlatformServices != nullptr);
         Eegeo_ASSERT(m_interiorsEntitiesPinsController != nullptr);
         Eegeo_ASSERT(m_gpsMarkerController != nullptr);
+        Eegeo_ASSERT(m_interiorsNavigationService != nullptr);
         Eegeo_ASSERT(m_messageBus != nullptr);
+        Eegeo_ASSERT(m_searchRefreshService != nullptr);
         //AddLocalMaterials(m_platformAbstractions.GetFileIO(),
         //                  m_pWorld->GetMapModule().GetInteriorsMaterialsModule().GetInteriorsTextureResourceService(),
         //                  m_pWorld->GetMapModule().GetInteriorsMaterialsModule().GetInteriorsMaterialDtoRepository());
@@ -243,7 +251,7 @@ namespace ExampleApp
         m_worldPinsPlatformServices->GetPinController()->Update(dt, renderCamera);
         m_interiorPinsPlatformServices->GetPinsModule()->Update(dt, renderCamera);
         m_interiorPinsPlatformServices->GetPinController()->Update(dt, renderCamera);
-        
+        m_searchRefreshService->TryRefreshSearch(dt, ecefInterestPoint, cameraState.LocationEcef());
         
         if (!m_world->Initialising() || (m_loadingScreen == nullptr && m_world->Initialising()))
         {
@@ -261,6 +269,7 @@ namespace ExampleApp
         }
         
         m_navigationService->Update(dt);
+        m_interiorsNavigationService->Update(dt);
        
         /*Eegeo::EegeoWorld& eegeoWorld(World());
         
