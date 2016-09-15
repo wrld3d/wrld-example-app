@@ -30,9 +30,9 @@ namespace ExampleApp
                 void OnDismissed();
                 void OnRemovePin();
 
-                const std::shared_ptr<IMyPinDetailsView>& m_view;
-                const std::shared_ptr<IMyPinDetailsViewModel>& m_viewModel;
-                const std::shared_ptr<ExampleAppMessaging::TMessageBus>& m_messageBus;
+                const std::shared_ptr<IMyPinDetailsView> m_view;
+                const std::shared_ptr<IMyPinDetailsViewModel> m_viewModel;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
 
                 Eegeo::Helpers::TCallback0<MyPinDetailsController> m_viewModelOpenedCallback;
                 Eegeo::Helpers::TCallback0<MyPinDetailsController> m_viewModelClosedCallback;

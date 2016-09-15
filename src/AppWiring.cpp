@@ -53,6 +53,7 @@
 #include "IInteriorsEntitiesPinsController.h"
 #include "GpsMarkerModule.h"
 #include "IGpsMarkerController.h"
+#include "MyPinDetailsModule.h"
 
 namespace ExampleApp
 {
@@ -121,6 +122,7 @@ namespace ExampleApp
         RegisterModule<TagSearch::SdkModel::TagSearchModule>();
         RegisterModule<SearchResultOnMap::SdkModel::SearchResultOnMapModule>();
         RegisterModule<GpsMarker::SdkModel::GpsMarkerModule>();
+        RegisterModule<MyPinDetails::SdkModel::MyPinDetailsModule>();
         RegisterModule<AppModule>();
         RegisterModule<InteriorsExplorer::SdkModel::InteriorsExplorerModule>();
 
