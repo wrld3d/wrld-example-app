@@ -221,7 +221,7 @@ AppHost::AppHost(
 
     const std::string& deviceModel = nativeState.GetDeviceModel();
     const Eegeo::Config::PlatformConfig& defaultPlatformConfig = Eegeo::Windows::WindowsPlatformConfigBuilder(deviceModel).Build();
-    const Eegeo::Config::PlatformConfig& platformConfig = ExampleApp::PlatformConfigBuilder::Build(defaultPlatformConfig, applicationConfiguration, "Textures/EmbeddedTheme");
+    const Eegeo::Config::PlatformConfig& platformConfig = ExampleApp::PlatformConfigBuilder::Build(defaultPlatformConfig, applicationConfiguration, "EmbeddedTheme");
 
     m_shouldStartFullscreen = applicationConfiguration.ShouldStartFullscreen();
 
