@@ -15,7 +15,7 @@ namespace ExampleApp
             platformConfig.CoverageTreeConfig.ManifestUrl = applicationConfiguration.CoverageTreeManifestURL();
             platformConfig.CityThemesConfig.StreamedManifestUrl = applicationConfiguration.ThemeManifestURL();
             
-            platformConfig.CityThemesConfig.EmbeddedThemeManifestFile = "embedded_manifest.txt";
+            platformConfig.CityThemesConfig.EmbeddedThemeManifestFile = "embedded_manifest.bin";
             platformConfig.CityThemesConfig.EmbeddedThemeTexturePath = embeddedThemeTexturePath;
             platformConfig.CityThemesConfig.EmbeddedThemeNameContains = "Summer";
             platformConfig.CityThemesConfig.EmbeddedThemeStateName = "DayDefault";

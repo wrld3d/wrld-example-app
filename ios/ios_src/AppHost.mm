@@ -142,7 +142,7 @@ AppHost::AppHost(
     
     const Eegeo::Config::PlatformConfig& defaultConfig = Eegeo::iOS::iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion()).Build();
 
-    const Eegeo::Config::PlatformConfig& platformConfig = ExampleApp::PlatformConfigBuilder::Build(defaultConfig, applicationConfiguration, "Textures/EmbeddedTheme");
+    const Eegeo::Config::PlatformConfig& platformConfig = ExampleApp::PlatformConfigBuilder::Build(defaultConfig, applicationConfiguration, "EmbeddedTheme");
 
     
     m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::iOSInitialExperienceModule)(m_iOSPersistentSettingsModel, m_messageBus);

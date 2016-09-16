@@ -176,7 +176,7 @@ set(resources ${resources}
 		Resources/eegeo_logo.png
 		Resources/eegeo_logo@2x.png
 		Resources/eegeo_logo@3x.png
-		Resources/embedded_manifest.txt
+		Resources/embedded_manifest.bin
 		Resources/floor_selection_bottom.png
 		Resources/floor_selection_bottom@2x.png
 		Resources/floor_selection_bottom@3x.png
@@ -492,8 +492,7 @@ set(resources ${resources}
 		Resources/sub_menu_arrow_on.png
 		Resources/sub_menu_arrow_on@2x.png
 		Resources/sub_menu_arrow_on@3x.png
-		Resources/Textures
-		Resources/Textures/EmbeddedTheme
+		Resources/EmbeddedTheme
 		Resources/Tours
 		Resources/Tours/browser_back.png
 		Resources/Tours/browser_forward.png
