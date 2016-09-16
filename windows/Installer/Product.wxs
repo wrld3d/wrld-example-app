@@ -292,7 +292,7 @@
         <File Id="filM.TLZ5yMGrw3iDqr9zMrclXzn2w" KeyPath="yes" Source="payload\Resources\eegeo_logo.png" />
       </Component>
       <Component Id="cmpnTRxa4Z9ZoKnlX1v2hRg9Tzy9IA" Directory="RESOURCEFOLDER" Guid="{B57E949B-2B9B-4F02-9ADD-0318560D9AAA}">
-        <File Id="filIUQEaB957FVc4IsSgVRzqNa2pqE" KeyPath="yes" Source="payload\Resources\embedded_manifest.txt" />
+        <File Id="filIUQEaB957FVc4IsSgVRzqNa2pqE" KeyPath="yes" Source="payload\Resources\embedded_manifest.bin" />
       </Component>
       <Component Id="cmp3JaUFyOXJZINKlT9urrwZXaCVOI" Directory="RESOURCEFOLDER" Guid="{A57DDA0A-4711-4391-9BA8-DAC42BF5439E}">
         <File Id="filmBaXvMkOr0._TZTLkhGFYwXi3DY" KeyPath="yes" Source="payload\Resources\floor_selection_button.png" />
@@ -577,190 +577,190 @@
         <File Id="filTNs_xwzpJc._BgyCpbFtzVkuIIA" KeyPath="yes" Source="payload\Resources\Interiors\interiors_pin@3x.png" />
       </Component>
       <Component Id="cmpD9F8ADD33F7E807FD4F99A016565C721" Directory="THEMEFOLDER" Guid="{A7642B48-F459-47B4-8AB1-B638846FA241}">
-		<File Id="fil5B337BC21611277A2F4FE7E5F3D0B665" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\Default_water_reflection_cube_map_negX.png" />
+		<File Id="fil5B337BC21611277A2F4FE7E5F3D0B665" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\Default_water_reflection_cube_map_negX.png" />
 	  </Component>
 	  <Component Id="cmpA1702BD5BDEB47EEC66C8E71FF22548E" Directory="THEMEFOLDER" Guid="{9B3FE085-C248-4DA1-9C3C-069C0ABB2C00}">
-		<File Id="fil56B60B8D4247A8288E77B6EFC96755EE" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\Default_water_reflection_cube_map_negY.png" />
+		<File Id="fil56B60B8D4247A8288E77B6EFC96755EE" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\Default_water_reflection_cube_map_negY.png" />
 	  </Component>
 	  <Component Id="cmp7EFE547DCE997B3BF3978F97E30034E2" Directory="THEMEFOLDER" Guid="{91A9281B-77C9-4669-8490-1ED9116EDE05}">
-		<File Id="filB58471CE4BFCB07244EEBFC13D2BCBE6" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\Default_water_reflection_cube_map_negZ.png" />
+		<File Id="filB58471CE4BFCB07244EEBFC13D2BCBE6" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\Default_water_reflection_cube_map_negZ.png" />
 	  </Component>
 	  <Component Id="cmpD37D937407FFC485485CB472F30BE5D4" Directory="THEMEFOLDER" Guid="{9B21BB79-60FE-48F0-8BF3-1C907D6836D1}">
-		<File Id="fil2170D329A5CB6ADFD7C274E9E9DBB2F9" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\Default_water_reflection_cube_map_posX.png" />
+		<File Id="fil2170D329A5CB6ADFD7C274E9E9DBB2F9" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\Default_water_reflection_cube_map_posX.png" />
 	  </Component>
 	  <Component Id="cmp1E704EA634855989BD74B9B37BA2E05B" Directory="THEMEFOLDER" Guid="{7C147449-F77C-4F96-8FE7-92076F5B057C}">
-		<File Id="filA817C42BB5107C36B20D5E46AF3866A5" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\Default_water_reflection_cube_map_posY.png" />
+		<File Id="filA817C42BB5107C36B20D5E46AF3866A5" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\Default_water_reflection_cube_map_posY.png" />
 	  </Component>
 	  <Component Id="cmp0C44E88324A8EFA167D6D19289FB333D" Directory="THEMEFOLDER" Guid="{4CF8A01B-BF71-4BE9-B5DC-7F8712F51AAC}">
-		<File Id="fil3A62819D88CFF99795D7DEFCCB7A53D4" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\Default_water_reflection_cube_map_posZ.png" />
+		<File Id="fil3A62819D88CFF99795D7DEFCCB7A53D4" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\Default_water_reflection_cube_map_posZ.png" />
 	  </Component>
       <Component Id="cmpF5OBSoC5fpEJWjx14GiRm.P_eSc" Directory="THEMEFOLDER" Guid="{65A48B0B-5E0F-4E0B-AB44-C0D0A4773940}">
-        <File Id="filmBqIkgjWQJiUdumEpsvv3Zhv454" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\London_London_railDiffuse_repeat.dds" />
+        <File Id="filmBqIkgjWQJiUdumEpsvv3Zhv454" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\London_London_railDiffuse_repeat.dds" />
       </Component>
       <Component Id="cmph1Xsl0iEjTomYFeHHKoyCd73C.g" Directory="THEMEFOLDER" Guid="{1DAFE19D-312C-4D75-BA07-BEE76B686431}">
-        <File Id="fil_uxkEKUTg_u4XsLW0OrYcGrGisg" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\London_London_roadDiffuse_repeat.dds" />
+        <File Id="fil_uxkEKUTg_u4XsLW0OrYcGrGisg" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\London_London_roadDiffuse_repeat.dds" />
       </Component>
       <Component Id="cmpDwrflJwZdFL0_13QLX.jlwAnKww" Directory="THEMEFOLDER" Guid="{E02B2298-6713-4603-8968-0AA86C0380C3}">
-        <File Id="filws8lkd0alaizOV5WoJLcXjUKSys" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\London_London_wallDiffuse.dds" />
+        <File Id="filws8lkd0alaizOV5WoJLcXjUKSys" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\London_London_wallDiffuse.dds" />
       </Component>
       <Component Id="cmpC_WlOuY_XeF_lZuQcH7JgY06I_s" Directory="THEMEFOLDER" Guid="{D1A2BDAF-079E-49A8-BD36-40ABBAEBF392}">
-        <File Id="filKnL8oI_5MW1i7IvA7fx61zTMBr8" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_ldn_trains_01.dds" />
+        <File Id="filKnL8oI_5MW1i7IvA7fx61zTMBr8" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_ldn_trains_01.dds" />
       </Component>
       <Component Id="cmpvZ0I90jRJWA.pewnjPbdh2UWmus" Directory="THEMEFOLDER" Guid="{C00DD5A3-8430-4973-BABD-7630FD26F76A}">
-        <File Id="fil8MsQmhGG5Crhp737flyJaA0GdxQ" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_placeholder_no_data.dds" />
+        <File Id="fil8MsQmhGG5Crhp737flyJaA0GdxQ" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_placeholder_no_data.dds" />
       </Component>
       <Component Id="cmpY5vA16lY6F02zEbsinGgphTDDAg" Directory="THEMEFOLDER" Guid="{7395D0A2-1D6A-46DE-98CB-9DC49E25969C}">
-        <File Id="filLABTZP6Z7HQ6wf7XnXl3taqCaIc" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_sf_planes_01.dds" />
+        <File Id="filLABTZP6Z7HQ6wf7XnXl3taqCaIc" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_sf_planes_01.dds" />
       </Component>
       <Component Id="cmp_IbFXUOrM_lbfxw.nOh7TSnRy_M" Directory="THEMEFOLDER" Guid="{0A8E963F-737A-4592-B724-6C4BABC07CAF}">
-        <File Id="filYscrSvI9qLzdQau5a8_Dum3YI0Y" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_sf_vehicles_01.dds" />
+        <File Id="filYscrSvI9qLzdQau5a8_Dum3YI0Y" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_sf_vehicles_01.dds" />
       </Component>
       <Component Id="cmpOQfxBwRG.RJKtWcJCegfhf._tdc" Directory="THEMEFOLDER" Guid="{425B0B94-7FA2-4E12-82F0-F15671338F62}">
-        <File Id="fil5OMo1_Ui0BRbdFdMXMzU0i.nEo4" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture0.dds" />
+        <File Id="fil5OMo1_Ui0BRbdFdMXMzU0i.nEo4" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture0.dds" />
       </Component>
       <Component Id="cmp8yZuH3qcoYq01W9Zd4GFzUBxixk" Directory="THEMEFOLDER" Guid="{6A675AA7-BDFC-4500-918C-9AE9CC88C981}">
-        <File Id="filaW6jOMCXlO49DkDXoXqs2s4vczE" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture0_LOD.dds" />
+        <File Id="filaW6jOMCXlO49DkDXoXqs2s4vczE" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture0_LOD.dds" />
       </Component>
       <Component Id="cmpFl1kGLUnK.yC_u.4XgEtxGxUSiM" Directory="THEMEFOLDER" Guid="{31B92F52-F67D-4EDA-BD91-E134FB03FDCD}">
-        <File Id="fil3CrYy_.foH_UTxZ31S2Lpckn66A" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture1.dds" />
+        <File Id="fil3CrYy_.foH_UTxZ31S2Lpckn66A" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture1.dds" />
       </Component>
       <Component Id="cmppCPHNF8qKN0lIs1Bd1xx6P9PG_g" Directory="THEMEFOLDER" Guid="{83036521-D343-4FAE-B588-734CDD89E63A}">
-        <File Id="filxffBReUcpQEegQtqBKbEdUXyvto" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture10.dds" />
+        <File Id="filxffBReUcpQEegQtqBKbEdUXyvto" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture10.dds" />
       </Component>
       <Component Id="cmp0qThuRc7gLfz837saJDmGnOcvrY" Directory="THEMEFOLDER" Guid="{6E926EA3-FE67-4199-AAAA-605BDA9FA2F9}">
-        <File Id="filBlk994f1d0eTKWdms3oq9V7kc2w" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture10_LOD.dds" />
+        <File Id="filBlk994f1d0eTKWdms3oq9V7kc2w" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture10_LOD.dds" />
       </Component>
       <Component Id="cmptVsirIG8cyLAMrldKvKHo6pjlJA" Directory="THEMEFOLDER" Guid="{3E09376C-05E8-4F52-900E-52F3DF50FA1F}">
-        <File Id="filxkNoCJhBboyRuhu12.Lb1q5TV9I" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture11.dds" />
+        <File Id="filxkNoCJhBboyRuhu12.Lb1q5TV9I" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture11.dds" />
       </Component>
       <Component Id="cmprJGG65wUigh3vssOeuiuvkTIaFs" Directory="THEMEFOLDER" Guid="{99CC0A69-6E52-4ACC-AF20-8B2FB13E3174}">
-        <File Id="filaPkZc7kp7.QMTZm5K2vkiQoofB8" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture11_LOD.dds" />
+        <File Id="filaPkZc7kp7.QMTZm5K2vkiQoofB8" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture11_LOD.dds" />
       </Component>
       <Component Id="cmpL3Z3bdP97KerhmR4GmBXv7HyRuA" Directory="THEMEFOLDER" Guid="{89696602-EC96-4613-8907-BAF900959075}">
-        <File Id="filDYs.aOeqNSImAGCOYnc8r4BDUPc" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture12.dds" />
+        <File Id="filDYs.aOeqNSImAGCOYnc8r4BDUPc" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture12.dds" />
       </Component>
       <Component Id="cmpgoABwTsyub5dkVU3CpxNDQBT0eQ" Directory="THEMEFOLDER" Guid="{0E3FFD96-8E9E-4448-BD39-883373A5803D}">
-        <File Id="filL3i2v7jzQLeQd7EmL55r6Bt8seY" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture12_LOD.dds" />
+        <File Id="filL3i2v7jzQLeQd7EmL55r6Bt8seY" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture12_LOD.dds" />
       </Component>
       <Component Id="cmpYWpawJiDei3msScpd3e07UYCKHE" Directory="THEMEFOLDER" Guid="{203A9EDC-8A2D-4C88-823B-A25A1C9A1612}">
-        <File Id="fil2yfzmOB9LOX7gstZuST9Vbhj._o" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture13.dds" />
+        <File Id="fil2yfzmOB9LOX7gstZuST9Vbhj._o" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture13.dds" />
       </Component>
       <Component Id="cmpX3npD50rbCUP7yjP0hSbVzsCcCg" Directory="THEMEFOLDER" Guid="{2818C076-068B-426F-9D69-05739AD30FDE}">
-        <File Id="filFqGYv2DpP42jQZ0dzEF013Ym1nc" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture13_LOD.dds" />
+        <File Id="filFqGYv2DpP42jQZ0dzEF013Ym1nc" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture13_LOD.dds" />
       </Component>
       <Component Id="cmpzYPJZcZGAzzAHMMz7vctHfqxW8k" Directory="THEMEFOLDER" Guid="{F66FEAB0-C94B-456F-B4DD-33151FC48B9C}">
-        <File Id="filkSncEqjBBoUQNU0k5jy9KxhDHYU" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture14.dds" />
+        <File Id="filkSncEqjBBoUQNU0k5jy9KxhDHYU" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture14.dds" />
       </Component>
       <Component Id="cmpiyQEUIiXSDBFgwVdGJYXtMRWIQc" Directory="THEMEFOLDER" Guid="{6024CDA7-19DD-4A03-A617-79F045F6B2A8}">
-        <File Id="filaFE_Q.U05pq61s.hdzkSd8mNCaM" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture14_LOD.dds" />
+        <File Id="filaFE_Q.U05pq61s.hdzkSd8mNCaM" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture14_LOD.dds" />
       </Component>
       <Component Id="cmp2cijQkuqelCorfG9P4MzM6tXi3s" Directory="THEMEFOLDER" Guid="{4AEDE83C-3973-4980-B4E1-4470DF910A55}">
-        <File Id="filRj5y9mP279B4uP7ho3_xec26UBQ" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture15.dds" />
+        <File Id="filRj5y9mP279B4uP7ho3_xec26UBQ" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture15.dds" />
       </Component>
       <Component Id="cmpi8RDZkQqHvdezQqhVHzO9MLrkMQ" Directory="THEMEFOLDER" Guid="{AA549DE0-8FC6-4B8B-8A8E-E217B605067B}">
-        <File Id="filXCFBF9KJNbYV1R09kFaoZz8wFAM" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture15_LOD.dds" />
+        <File Id="filXCFBF9KJNbYV1R09kFaoZz8wFAM" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture15_LOD.dds" />
       </Component>
       <Component Id="cmp8usfwXVvOiL7kd5qTwSsSE_reOY" Directory="THEMEFOLDER" Guid="{2C6BDE6D-99D7-44C8-9CC0-353CFFD5B90B}">
-        <File Id="file887NGbCrP3nnYDHF7TUi6lfwVQ" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture16.dds" />
+        <File Id="file887NGbCrP3nnYDHF7TUi6lfwVQ" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture16.dds" />
       </Component>
       <Component Id="cmpDUJN6amMHrcaQ9S33OETXqXP.Ew" Directory="THEMEFOLDER" Guid="{A75FC167-B2B3-47DD-9FD6-C31176C9A89B}">
-        <File Id="fil5m4xl0sIGu7c7iUU6nppenUeyKA" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture16_LOD.dds" />
+        <File Id="fil5m4xl0sIGu7c7iUU6nppenUeyKA" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture16_LOD.dds" />
       </Component>
       <Component Id="cmphsU7rzZmpvWqdXAAG9lMWIsjDA0" Directory="THEMEFOLDER" Guid="{2EDA2E45-01DD-4FEC-BF65-16A9CCA2E8AE}">
-        <File Id="filQFsnN5E6Yq8mhIa.SCj0k1i5Bq0" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture17.dds" />
+        <File Id="filQFsnN5E6Yq8mhIa.SCj0k1i5Bq0" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture17.dds" />
       </Component>
       <Component Id="cmp3upxRKWtep1Za60aT.HhrJzqMvA" Directory="THEMEFOLDER" Guid="{D0BE2148-405C-4104-8ED2-664D32CA0965}">
-        <File Id="fillyhlrHBF8Z5owR48oDVxpqmVheY" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture17_LOD.dds" />
+        <File Id="fillyhlrHBF8Z5owR48oDVxpqmVheY" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture17_LOD.dds" />
       </Component>
       <Component Id="cmpTws02IbsJj8vMB3hlctLSrn2jl0" Directory="THEMEFOLDER" Guid="{AEF7FC21-938A-460E-8F18-021D027F1641}">
-        <File Id="fill_RQ0ayqe5D2ByzfDubv.IzLayU" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture18.dds" />
+        <File Id="fill_RQ0ayqe5D2ByzfDubv.IzLayU" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture18.dds" />
       </Component>
       <Component Id="cmpAXiY4xaU1nn1KcZjJI1DhPc2MOw" Directory="THEMEFOLDER" Guid="{38EA0842-8AA9-4990-9B66-F0000CC8F120}">
-        <File Id="filY1ZmJ7BgWXb.rapvSRt_2AUrX2U" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture18_LOD.dds" />
+        <File Id="filY1ZmJ7BgWXb.rapvSRt_2AUrX2U" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture18_LOD.dds" />
       </Component>
       <Component Id="cmppuOzYoamcGkIXXYB.vnWuakmzPI" Directory="THEMEFOLDER" Guid="{C741EE87-61D2-42DC-96A9-47ACED897EA2}">
-        <File Id="fildv_yPqZAPOJuKVRK10xXhRos9bE" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture1_LOD.dds" />
+        <File Id="fildv_yPqZAPOJuKVRK10xXhRos9bE" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture1_LOD.dds" />
       </Component>
       <Component Id="cmpna6XXIawDvgoEN6fjL4dUiWAolk" Directory="THEMEFOLDER" Guid="{BC22B207-EC9E-47B2-A031-84E72F3A7120}">
-        <File Id="fil7lAOuPpZcx8JN2n8c57hh9Whhlo" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture2.dds" />
+        <File Id="fil7lAOuPpZcx8JN2n8c57hh9Whhlo" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture2.dds" />
       </Component>
       <Component Id="cmpOT2z0A0UOGe_x2Q1hKknByXlivU" Directory="THEMEFOLDER" Guid="{FB4D01FB-72F7-49C4-9054-286C30F21313}">
-        <File Id="filYeRQhaPViXhoPC2Xp2ErkypBBeQ" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture2_LOD.dds" />
+        <File Id="filYeRQhaPViXhoPC2Xp2ErkypBBeQ" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture2_LOD.dds" />
       </Component>
       <Component Id="cmpK1b2ndo0hv51uyGV6bY6S3guEmE" Directory="THEMEFOLDER" Guid="{4CB0C4AD-A436-4DB1-A64A-230ABCC33886}">
-        <File Id="filDOeLuPS0QrDgdqHDAof3uftaz.8" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture3.dds" />
+        <File Id="filDOeLuPS0QrDgdqHDAof3uftaz.8" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture3.dds" />
       </Component>
       <Component Id="cmp6rK.B2jyHUkwY_apln_yJfxlBsI" Directory="THEMEFOLDER" Guid="{EB9876A7-6444-4AE8-8DDA-2395DEC1158B}">
-        <File Id="filo9x8ou2K00g9wjf_9cFJb17dgn0" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture3_LOD.dds" />
+        <File Id="filo9x8ou2K00g9wjf_9cFJb17dgn0" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture3_LOD.dds" />
       </Component>
       <Component Id="cmpdl5XmC0L6JIYfgAc6vcZ0ChBCj0" Directory="THEMEFOLDER" Guid="{7E35A912-7857-4AD6-89E5-9AD17B04F66F}">
-        <File Id="filOemCrzLf_4tlOImk8yl0UzW0p10" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture4.dds" />
+        <File Id="filOemCrzLf_4tlOImk8yl0UzW0p10" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture4.dds" />
       </Component>
       <Component Id="cmpibXS0IcI3zE44bqQqY.Os25fy44" Directory="THEMEFOLDER" Guid="{E52EB50D-1878-422A-A241-B7F9FA5D7B1E}">
-        <File Id="filLDNeuPlgI0KSwzQSGoemGPdK0Is" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture4_LOD.dds" />
+        <File Id="filLDNeuPlgI0KSwzQSGoemGPdK0Is" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture4_LOD.dds" />
       </Component>
       <Component Id="cmpbgCovtAGnrn7KMUzeLCgPTwW3g8" Directory="THEMEFOLDER" Guid="{418B9433-4DA9-40FE-A8D9-2AC6EA9E1D9C}">
-        <File Id="filJLg.MAgokHdLzDZ6ZCQLY1WF2Xs" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture5.dds" />
+        <File Id="filJLg.MAgokHdLzDZ6ZCQLY1WF2Xs" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture5.dds" />
       </Component>
       <Component Id="cmp3_TX_vweCArg3Sas9RY81MO59kY" Directory="THEMEFOLDER" Guid="{FDF966A6-CFFC-4A5C-B452-B9D4065A0032}">
-        <File Id="filqSsygKKdUVid69Y75pP4aV_lIz4" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture5_LOD.dds" />
+        <File Id="filqSsygKKdUVid69Y75pP4aV_lIz4" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture5_LOD.dds" />
       </Component>
       <Component Id="cmpanJ3NIHt6ZfboIrFqwWKSe80djU" Directory="THEMEFOLDER" Guid="{7B2ED95F-F2D1-4DA4-8578-95B3D3AB5CAD}">
-        <File Id="filZHQHw7_YEuo5RSITDLMWeLEFUoE" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture6.dds" />
+        <File Id="filZHQHw7_YEuo5RSITDLMWeLEFUoE" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture6.dds" />
       </Component>
       <Component Id="cmpSj0v8IFbbad9Q6XlPTqOFlX8L28" Directory="THEMEFOLDER" Guid="{392E907E-A26A-457E-BB43-8F8B82F93A0E}">
-        <File Id="filWevLYMHp13fFG1zDAkftkT0.zRs" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture6_LOD.dds" />
+        <File Id="filWevLYMHp13fFG1zDAkftkT0.zRs" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture6_LOD.dds" />
       </Component>
       <Component Id="cmpN1WA0.0wWbnuIuH9K3TNNitAiSg" Directory="THEMEFOLDER" Guid="{4B13BC14-6668-446F-8EBC-5A0215904EF1}">
-        <File Id="filYib66opfBXpRJhcZkfDJ9pbRgMc" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture7.dds" />
+        <File Id="filYib66opfBXpRJhcZkfDJ9pbRgMc" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture7.dds" />
       </Component>
       <Component Id="cmpGvtpUDK3Ra3rVt.mXw0uUnUifoc" Directory="THEMEFOLDER" Guid="{DA9A4E8A-10C8-4BB2-B61B-25E6FF9AF117}">
-        <File Id="filDv6Oiwe7fPCqmIP2BP4Ry9NrUZI" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture7_LOD.dds" />
+        <File Id="filDv6Oiwe7fPCqmIP2BP4Ry9NrUZI" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture7_LOD.dds" />
       </Component>
       <Component Id="cmpL1FSGSJ18eH_l..e7ssstEtjSfg" Directory="THEMEFOLDER" Guid="{C93A5ABA-DDC3-4EB5-825E-E18011A83981}">
-        <File Id="filfc0r0vm4AezlgtkQUxFJOOmKlyM" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture8.dds" />
+        <File Id="filfc0r0vm4AezlgtkQUxFJOOmKlyM" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture8.dds" />
       </Component>
       <Component Id="cmpzjybzvB5zjERVPOr2Jg8pWmRE6Q" Directory="THEMEFOLDER" Guid="{13BFFFC2-D1E0-430E-9660-232E83C7267D}">
-        <File Id="fil_rC5TLQBTrU6y0Et8fLJ5ukM2Ng" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture8_LOD.dds" />
+        <File Id="fil_rC5TLQBTrU6y0Et8fLJ5ukM2Ng" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture8_LOD.dds" />
       </Component>
       <Component Id="cmp4PK_HRjb6lvO3YqDbUkLOU4_FNQ" Directory="THEMEFOLDER" Guid="{AE439DA0-0FBE-40CD-90FE-365277A58C37}">
-        <File Id="filS4CjAGlCMOcleoP_84hH6krUOAU" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture9.dds" />
+        <File Id="filS4CjAGlCMOcleoP_84hH6krUOAU" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture9.dds" />
       </Component>
       <Component Id="cmp_Xa3eOKQ5RE_km7swNXzL9GmeuI" Directory="THEMEFOLDER" Guid="{B5314A76-2073-412D-80EB-795C7BDF57CB}">
-        <File Id="filuZqVM8eEbptJkUzHkl.n4PZSsdM" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_TerrainTexture9_LOD.dds" />
+        <File Id="filuZqVM8eEbptJkUzHkl.n4PZSsdM" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_TerrainTexture9_LOD.dds" />
       </Component>
       <Component Id="cmpMARGrKZs9a8iqM5Py__jAxP1iO0" Directory="THEMEFOLDER" Guid="{C94A8500-CEF5-44A2-B46D-95E64787AA8B}">
-        <File Id="filMXc8nj7ZP5z_j1CYngsOyweBM9Y" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_trees_01.dds" />
+        <File Id="filMXc8nj7ZP5z_j1CYngsOyweBM9Y" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_trees_01.dds" />
       </Component>
       <Component Id="cmpV3REBkR7SBGuyC6yrF8wmtrsE.g" Directory="THEMEFOLDER" Guid="{9FAC60C1-9073-46A9-B535-C75FC9F513B2}">
-        <File Id="fil8KQg7UkhiL0snwJ.jV0rJSAYcI8" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_trees_top_01.dds" />
+        <File Id="fil8KQg7UkhiL0snwJ.jV0rJSAYcI8" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_trees_top_01.dds" />
       </Component>
       <Component Id="cmpbAIAP5Ane0IctUSVg13dvR_BFdY" Directory="THEMEFOLDER" Guid="{B85FBFD1-720E-431A-A7DF-AB9E2891FE89}">
-        <File Id="filGhMV_XAlOCfQJviiaj9DI_IBGqU" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_VehicleModels_recce_trams.dds" />
+        <File Id="filGhMV_XAlOCfQJviiaj9DI_IBGqU" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_VehicleModels_recce_trams.dds" />
       </Component>
       <Component Id="cmptoLN41uHLuXOgDVyW6Kqwfe6iX4" Directory="THEMEFOLDER" Guid="{C4D4BEBC-FA8B-4739-AE84-C586790BF603}">
-        <File Id="filSNRB8DnnqP3VBsB6zyt4B.h3Eh0" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_Water_01.dds" />
+        <File Id="filSNRB8DnnqP3VBsB6zyt4B.h3Eh0" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_Water_01.dds" />
       </Component>
       <Component Id="cmpf2esx1GnN2tudb61JEjeFcRsTrw" Directory="THEMEFOLDER" Guid="{7B645636-3ECD-4DDA-AB47-76716DED4F7F}">
-        <File Id="fil588tjSSGiKzPH6q4pxn69K1t7UU" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_Water_01_LOD.dds" />
+        <File Id="fil588tjSSGiKzPH6q4pxn69K1t7UU" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_Water_01_LOD.dds" />
       </Component>
       <Component Id="cmpfmnY3lXFCwxr.cMOPHjcDrDVrLs" Directory="THEMEFOLDER" Guid="{09B46F3D-1907-49F9-B065-9AEF23E3CEB9}">
-        <File Id="filSA9f0T8cBaisObcC7RUOMzB7e90" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_Water_02.dds" />
+        <File Id="filSA9f0T8cBaisObcC7RUOMzB7e90" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_Water_02.dds" />
       </Component>
       <Component Id="cmpYuCu9dUC8wxEnS3l9Qr3UCawlSs" Directory="THEMEFOLDER" Guid="{614525B2-9A2A-466B-BD88-7BE4EA44260B}">
-        <File Id="filHvTcqU.TW3CIR94HNanNHY.HN9w" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_Water_02_LOD.dds" />
+        <File Id="filHvTcqU.TW3CIR94HNanNHY.HN9w" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_Water_02_LOD.dds" />
       </Component>
       <Component Id="cmptRctVht2hUemV_d6367Bw.MMLW0" Directory="THEMEFOLDER" Guid="{37B5F4FF-DBA8-4CED-8F2E-ACA9D5396ABE}">
-        <File Id="filcgAyo3v0N6qmUAP5fn_yRmRLTjE" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_Water_03.dds" />
+        <File Id="filcgAyo3v0N6qmUAP5fn_yRmRLTjE" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_Water_03.dds" />
       </Component>
       <Component Id="cmpKydwffsRi7ciBuf6Py6TyDcI0Ng" Directory="THEMEFOLDER" Guid="{9DD13D32-1A33-41B2-87AA-F324A115E38C}">
-        <File Id="filBfwRsHU0.f98cqPIZVGzdqOD9.A" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_Water_03_LOD.dds" />
+        <File Id="filBfwRsHU0.f98cqPIZVGzdqOD9.A" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_Water_03_LOD.dds" />
       </Component>
       <Component Id="cmpxRqEQ9iD7mX_cWWJ7nSCNl2FzgY" Directory="THEMEFOLDER" Guid="{00744C6A-AD5F-4A4D-8421-A38E85827899}">
-        <File Id="filR6Npa.PkrF3qG6GYKhQ0aWBii5U" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_water_normalmap.dds" />
+        <File Id="filR6Npa.PkrF3qG6GYKhQ0aWBii5U" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_water_normalmap.dds" />
       </Component>
       <Component Id="cmpvhtPOhPzZjgoQAodGPsEWSrCv10" Directory="THEMEFOLDER" Guid="{B1D56CCA-3686-4653-A94D-A31533B26DEA}">
-        <File Id="fil0AOjvAynuoc5V_miHiZtkJjgpYw" KeyPath="yes" Source="payload\Resources\Textures\EmbeddedTheme\SanFrancisco_water_reflectionmap.dds" />
+        <File Id="fil0AOjvAynuoc5V_miHiZtkJjgpYw" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_water_reflectionmap.dds" />
       </Component>
       <Component Id="cmpxy4iC7uLgdOW_mRPCLx.VvBS8uA" Directory="YELPFOLDER" Guid="{0BCC3361-67B8-4358-A62B-D70E83167849}">
         <File Id="fil1w6ZWTazrxu2HCx9WiFnakS05qA" KeyPath="yes" Source="payload\Resources\Yelp\stars_0_0.png" />
