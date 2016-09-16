@@ -183,7 +183,7 @@ set(resources ${resources}
 		Resources/eegeo_logo.png
 		Resources/eegeo_logo@2x.png
 		Resources/eegeo_logo@3x.png
-		Resources/embedded_manifest.txt
+		Resources/embedded_manifest.bin
 		Resources/floor_selection_bottom.png
 		Resources/floor_selection_bottom@2x.png
 		Resources/floor_selection_bottom@3x.png
@@ -669,64 +669,7 @@ set(resources ${resources}
 		Resources/sub_menu_arrow_on@3x.png
 		Resources/search_menu_items.json
 		Resources/search_tags.json
-		Resources/Textures
-		Resources/Textures/EmbeddedTheme
-		Resources/Textures/EmbeddedTheme/London_London_railDiffuse_repeat.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_ldn_trains_01.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_placeholder_no_data.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_SanFran_roadDiffuse_repeat.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_SanFran_wallDiffuse.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_sf_planes_01.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_sf_vehicles_01.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture0.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture0_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture1.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture10.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture10_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture11.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture11_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture12.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture12_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture13.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture13_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture14.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture14_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture15.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture15_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture16.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture16_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture17.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture17_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture18.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture18_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture1_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture2.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture2_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture3.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture3_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture4.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture4_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture5.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture5_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture6.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture6_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture7.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture7_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture8.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture8_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture9.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture9_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_trees_01.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_trees_top_01.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_VehicleModels_recce_trams.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_Water_01.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_Water_01_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_Water_02.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_Water_02_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_Water_03.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_Water_03_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_water_normalmap.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_water_reflectionmap.pvr
+		Resources/EmbeddedTheme
 		Resources/Tours
 		Resources/Tours/browser_back.png
 		Resources/Tours/browser_forward.png

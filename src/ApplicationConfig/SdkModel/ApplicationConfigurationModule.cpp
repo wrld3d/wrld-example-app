@@ -43,7 +43,7 @@ namespace ExampleApp
                         combinedVersionString,
                         Eegeo::Config::CoverageTreeManifestUrlDefault,
                         Eegeo::Config::CityThemesManifestUrlDefault,
-                        "Textures/EmbeddedTheme",
+                        "EmbeddedTheme",
                         Eegeo::Space::LatLongAltitude(0.0f, 0.0f, 0.0f),
                         1000.f,
                         0.f,
