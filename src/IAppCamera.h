@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "ITouchController.h"
 #include "VectorMath.h"
+#include "ScreenProperties.h"
 
 namespace ExampleApp
 {

@@ -24,6 +24,7 @@
 #include "LoadingScreenCompleteMessage.h"
 #include "IInteriorsNavigationService.h"
 #include "ISearchRefreshService.h"
+#include "InteriorsCameraController.h"
 
 namespace ExampleApp
 {
@@ -142,6 +143,9 @@ namespace ExampleApp
                                        const std::shared_ptr<GpsMarker::SdkModel::IGpsMarkerController>& gpsMarkerController,
                                        const std::shared_ptr<Search::SdkModel::ISearchRefreshService>& searchRefreshService,
                                        const std::shared_ptr<InteriorsNavigation::SdkModel::IInteriorsNavigationService>& interiorsNavigationService,
+                                       const std::shared_ptr<Metrics::IMetricsService>& metricsService,
+                                       const std::shared_ptr<Eegeo::Resources::Interiors::InteriorsCameraController>& interiorCameraController,
+                                       const std::shared_ptr<Eegeo::Camera::GlobeCamera::GpsGlobeCameraController>& gpsGlobeCameraController,
                                        const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
     : m_world(world)
     , m_cameraController(appCameraController)
@@ -170,7 +174,11 @@ namespace ExampleApp
     , m_gpsMarkerController(gpsMarkerController)
     , m_searchRefreshService(searchRefreshService)
     , m_interiorsNavigationService(interiorsNavigationService)
+    , m_metricsService(metricsService)
+    , m_interiorCameraController(interiorCameraController)
+    , m_gpsGlobeCameraController(gpsGlobeCameraController)
     , m_messageBus(messageBus)
+    , m_setMetricsLocation(false)
     {
         Eegeo_ASSERT(m_world != nullptr);
         Eegeo_ASSERT(m_cameraController != nullptr);
@@ -198,6 +206,9 @@ namespace ExampleApp
         Eegeo_ASSERT(m_interiorsEntitiesPinsController != nullptr);
         Eegeo_ASSERT(m_gpsMarkerController != nullptr);
         Eegeo_ASSERT(m_interiorsNavigationService != nullptr);
+        Eegeo_ASSERT(m_metricsService != nullptr);
+        Eegeo_ASSERT(m_interiorCameraController != nullptr);
+        Eegeo_ASSERT(m_gpsGlobeCameraController != nullptr);
         Eegeo_ASSERT(m_messageBus != nullptr);
         Eegeo_ASSERT(m_searchRefreshService != nullptr);
         //AddLocalMaterials(m_platformAbstractions.GetFileIO(),
@@ -266,87 +277,21 @@ namespace ExampleApp
             {
                 m_initialExperienceController->Update(dt);
             }
-        }
-        
-        m_navigationService->Update(dt);
-        m_interiorsNavigationService->Update(dt);
-       
-        /*Eegeo::EegeoWorld& eegeoWorld(World());
-        
-        m_pCurrentTouchController = &m_pAppCameraModule->GetController().GetTouchController();
-
-        eegeoWorld.EarlyUpdate(dt);
-
-        m_pCameraTransitionService->Update(dt);
-        m_pAppCameraModule->GetController().Update(dt);
-        
-        m_pAppModeModel->Update(dt);
-        
-        m_pInteriorsExplorerModule->Update(dt);
-        
-        Eegeo::Camera::RenderCamera renderCamera = m_pAppCameraModule->GetController().GetRenderCamera();
-        Eegeo::Camera::CameraState cameraState = m_pAppCameraModule->GetController().GetCameraState();
-        
-        Eegeo::dv3 ecefInterestPoint(cameraState.InterestPointEcef());
-
-        Eegeo::EegeoUpdateParameters updateParameters(dt,
-                cameraState.LocationEcef(),
-                cameraState.InterestPointEcef(),
-                cameraState.ViewMatrix(),
-                cameraState.ProjectionMatrix(),
-                GetUpdatedStreamingVolume(cameraState, renderCamera),
-                m_screenProperties);
-
-        eegeoWorld.Update(updateParameters);
-
-        m_pSearchModule->GetSearchRefreshService().TryRefreshSearch(dt, ecefInterestPoint, cameraState.LocationEcef());
-
-        m_pPinsModule->GetController().Update(dt, renderCamera);
-        
-        if(!eegeoWorld.Initialising() || (m_pLoadingScreen == NULL && eegeoWorld.Initialising()))
-        {
-            WorldPinsModule().GetWorldPinsService().Update(dt);
-            WorldPinsModule().GetWorldPinsScaleController().Update(dt, renderCamera);
-            WorldPinsModule().GetWorldPinsFloorHeightController().Update(dt);
             
-            CompassModule().GetCompassUpdateController().Update(dt);
-            CompassModule().GetCompassUpdateController().Update(dt);
-            m_pGpsMarkerModule->GetGpsMarkerController().Update(dt, renderCamera);
-            
-            if (m_interiorsEnabled)
-            {
-                Eegeo_ASSERT(m_pInteriorsEntitiesPinsModule != NULL);
-                
-                m_pInteriorsEntitiesPinsModule->GetPinsModule().Update(dt, renderCamera);
-                m_pInteriorsEntitiesPinsModule->GetInteriorsEntitiesPinsController().Update(dt);
-            }
-            
-            InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel = m_initialExperienceModule.GetInitialExperienceModel();
-            if(!initialExperienceModel.HasCompletedInitialExperience() && IsLoadingScreenComplete())
-            {
-                InitialExperience::SdkModel::IInitialExperienceController& initialExperienceController = m_initialExperienceModule.GetInitialExperienceController();
-                initialExperienceController.Update(dt);
-            }
-  
             if (!m_setMetricsLocation)
             {
                 Eegeo::dv3 gpsLocation;
-                if(m_pNavigationService->TryGetGpsLocationOnTerrain(gpsLocation))
+                if(m_navigationService->TryGetGpsLocationOnTerrain(gpsLocation))
                 {
                     Eegeo::Space::LatLong ll = Eegeo::Space::LatLong::FromECEF(gpsLocation);
-                    m_metricsService.SetPosition(ll.GetLatitudeInDegrees(), ll.GetLongitudeInDegrees(), 0.f, 0.f);
+                    m_metricsService->SetPosition(ll.GetLatitudeInDegrees(), ll.GetLongitudeInDegrees(), 0.f, 0.f);
                     m_setMetricsLocation = true;
                 }
             }
         }
-
-        m_pNavigationService->Update(dt);
-        m_pInteriorsNavigationService->Update(dt);
         
-        if(ToursEnabled())
-        {
-            ToursModule().GetTourService().UpdateCurrentTour(dt);
-        }*/
+        m_navigationService->Update(dt);
+        m_interiorsNavigationService->Update(dt);
         
         if (m_loadingScreen != nullptr && (UpdateLoadingScreen(dt, *m_world, *m_loadingScreen)))
         {
@@ -412,12 +357,8 @@ namespace ExampleApp
         
         m_worldPinsPlatformServices->GetPinsModule()->UpdateScreenProperties(*m_screenProperties);
         m_interiorPinsPlatformServices->GetPinsModule()->UpdateScreenProperties(*m_screenProperties);
-
-		/*m_pPinsModule->UpdateScreenProperties(m_screenProperties);
-
-        m_pGlobeCameraController->UpdateScreenProperties(m_screenProperties);
-
-		m_pInteriorsExplorerModule->GetInteriorsCameraController().UpdateScreenProperties(m_screenProperties);*/
+        m_interiorCameraController->UpdateScreenProperties(*m_screenProperties);
+        m_gpsGlobeCameraController->UpdateScreenProperties(*m_screenProperties);
     }
     
     bool MobileExampleApp::IsRunning() const
