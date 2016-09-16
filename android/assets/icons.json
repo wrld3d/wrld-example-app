@@ -5,6 +5,10 @@
             "file": "icon1_accommodation.png"
         }, 
         {
+            "name": "airport", 
+            "file": "icon1_airport.png"
+        }, 
+        {
             "name": "aroundme", 
             "file": "icon1_aroundme.png"
         }, 
@@ -13,8 +17,36 @@
             "file": "icon1_art_museums.png"
         }, 
         {
+            "name": "atm", 
+            "file": "icon1_atm.png"
+        }, 
+        {
+            "name": "bank", 
+            "file": "icon1_bank.png"
+        }, 
+        {
+            "name": "bed_breakfast", 
+            "file": "icon1_bed_breakfast.png"
+        }, 
+        {
+            "name": "beer", 
+            "file": "icon1_beer.png"
+        }, 
+        {
+            "name": "burgers", 
+            "file": "icon1_burgers.png"
+        }, 
+        {
+            "name": "bus", 
+            "file": "icon1_bus.png"
+        }, 
+        {
             "name": "business", 
             "file": "icon1_business.png"
+        }, 
+        {
+            "name": "camping", 
+            "file": "icon1_camping.png"
         }, 
         {
             "name": "entertainment", 
@@ -153,12 +185,292 @@
             "file": "icon1_reception.png"
         }, 
         {
-            "name": "stationary", 
-            "file": "icon1_stationary.png"
+            "name": "stationery", 
+            "file": "icon1_stationery.png"
         }, 
         {
             "name": "person", 
             "file": "icon1_person.png"
+        }, 
+        {
+            "name": "department", 
+            "file": "icon1_department.png"
+        }, 
+        {
+            "name": "meeting_room_available", 
+            "file": "icon1_meeting_room_available.png"
+        }, 
+        {
+            "name": "meeting_room_available_soon", 
+            "file": "icon1_meeting_room_available_soon.png"
+        }, 
+        {
+            "name": "meeting_room", 
+            "file": "icon1_meeting_room.png"
+        }, 
+        {
+            "name": "meeting_room_unavailable", 
+            "file": "icon1_meeting_room_unavailable.png"
+        }, 
+        {
+            "name": "working_group", 
+            "file": "icon1_working_group.png"
+        }, 
+        {
+            "name": "casino", 
+            "file": "icon1_casino.png"
+        }, 
+        {
+            "name": "historic_monument", 
+            "file": "icon1_historic_monument.png"
+        }, 
+        {
+            "name": "charge_point", 
+            "file": "icon1_charge_point.png"
+        }, 
+        {
+            "name": "childcare", 
+            "file": "icon1_childcare.png"
+        }, 
+        {
+            "name": "christianity", 
+            "file": "icon1_christianity.png"
+        }, 
+        {
+            "name": "cinema", 
+            "file": "icon1_cinema.png"
+        }, 
+        {
+            "name": "cocktail", 
+            "file": "icon1_cocktail.png"
+        }, 
+        {
+            "name": "coffee", 
+            "file": "icon1_coffee.png"
+        }, 
+        {
+            "name": "cycling", 
+            "file": "icon1_cycling.png"
+        }, 
+        {
+            "name": "dentist", 
+            "file": "icon1_dentist.png"
+        }, 
+        {
+            "name": "donuts", 
+            "file": "icon1_donuts.png"
+        }, 
+        {
+            "name": "education", 
+            "file": "icon1_education.png"
+        }, 
+        {
+            "name": "facebook", 
+            "file": "icon1_facebook.png"
+        }, 
+        {
+            "name": "farm", 
+            "file": "icon1_farm.png"
+        }, 
+        {
+            "name": "ferry", 
+            "file": "icon1_ferry.png"
+        }, 
+        {
+            "name": "fire_extinguisher", 
+            "file": "icon1_fire_extinguisher.png"
+        }, 
+        {
+            "name": "fishing", 
+            "file": "icon1_fishing.png"
+        }, 
+        {
+            "name": "florist", 
+            "file": "icon1_florist.png"
+        }, 
+        {
+            "name": "football", 
+            "file": "icon1_football.png"
+        }, 
+        {
+            "name": "petrol_station", 
+            "file": "icon1_petrol_station.png"
+        }, 
+        {
+            "name": "golf", 
+            "file": "icon1_golf.png"
+        }, 
+        {
+            "name": "google_plus", 
+            "file": "icon1_google_plus.png"
+        }, 
+        {
+            "name": "groceries", 
+            "file": "icon1_groceries.png"
+        }, 
+        {
+            "name": "hospital", 
+            "file": "icon1_hospital.png"
+        }, 
+        {
+            "name": "hostel", 
+            "file": "icon1_hostel.png"
+        }, 
+        {
+            "name": "hotel", 
+            "file": "icon1_hotel.png"
+        }, 
+        {
+            "name": "islam", 
+            "file": "icon1_islam.png"
+        }, 
+        {
+            "name": "judaism", 
+            "file": "icon1_judaism.png"
+        }, 
+        {
+            "name": "library", 
+            "file": "icon1_library.png"
+        }, 
+        {
+            "name": "lifeguard", 
+            "file": "icon1_lifeguard.png"
+        }, 
+        {
+            "name": "limo", 
+            "file": "icon1_limo.png"
+        }, 
+        {
+            "name": "link", 
+            "file": "icon1_link.png"
+        }, 
+        {
+            "name": "lodge", 
+            "file": "icon1_lodge.png"
+        }, 
+        {
+            "name": "music", 
+            "file": "icon1_music.png"
+        }, 
+        {
+            "name": "office", 
+            "file": "icon1_office.png"
+        }, 
+        {
+            "name": "parking", 
+            "file": "icon1_parking.png"
+        }, 
+        {
+            "name": "park", 
+            "file": "icon1_park.png"
+        }, 
+        {
+            "name": "payphone", 
+            "file": "icon1_payphone.png"
+        }, 
+        {
+            "name": "pharmacy", 
+            "file": "icon1_pharmacy.png"
+        }, 
+        {
+            "name": "picasa", 
+            "file": "icon1_picasa.png"
+        }, 
+        {
+            "name": "pizza", 
+            "file": "icon1_pizza.png"
+        }, 
+        {
+            "name": "playing_field", 
+            "file": "icon1_playing_field.png"
+        }, 
+        {
+            "name": "police", 
+            "file": "icon1_police.png"
+        }, 
+        {
+            "name": "post_office", 
+            "file": "icon1_post_office.png"
+        }, 
+        {
+            "name": "race_track", 
+            "file": "icon1_race_track.png"
+        }, 
+        {
+            "name": "place_of_worship", 
+            "file": "icon1_place_of_worship.png"
+        }, 
+        {
+            "name": "sailing", 
+            "file": "icon1_sailing.png"
+        }, 
+        {
+            "name": "shooting", 
+            "file": "icon1_shooting.png"
+        }, 
+        {
+            "name": "skiing", 
+            "file": "icon1_skiing.png"
+        }, 
+        {
+            "name": "spa", 
+            "file": "icon1_spa.png"
+        }, 
+        {
+            "name": "sports_field", 
+            "file": "icon1_sports_field.png"
+        }, 
+        {
+            "name": "subway", 
+            "file": "icon1_subway.png"
+        }, 
+        {
+            "name": "taxi", 
+            "file": "icon1_taxi.png"
+        }, 
+        {
+            "name": "town_hall", 
+            "file": "icon1_town_hall.png"
+        }, 
+        {
+            "name": "train", 
+            "file": "icon1_train.png"
+        }, 
+        {
+            "name": "tram", 
+            "file": "icon1_tram.png"
+        }, 
+        {
+            "name": "twitter", 
+            "file": "icon1_twitter.png"
+        }, 
+        {
+            "name": "university", 
+            "file": "icon1_university.png"
+        }, 
+        {
+            "name": "vet", 
+            "file": "icon1_vet.png"
+        }, 
+        {
+            "name": "vimeo", 
+            "file": "icon1_vimeo.png"
+        }, 
+        {
+            "name": "wikipedia", 
+            "file": "icon1_wikipedia.png"
+        }, 
+        {
+            "name": "wine", 
+            "file": "icon1_wine.png"
+        }, 
+        {
+            "name": "youtube", 
+            "file": "icon1_youtube.png"
+        }, 
+        {
+            "name": "zoo", 
+            "file": "icon1_zoo.png"
         }
     ]
 }
