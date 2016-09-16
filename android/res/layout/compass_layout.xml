@@ -7,7 +7,26 @@
         android:id="@+id/compass_outer_shape"
         android:layout_height="wrap_content"
     	android:layout_width="wrap_content"
+    	android:layout_centerInParent="true"
     	android:background="@drawable/button_compass_container" >
+    </RelativeLayout>
+    
+    <RelativeLayout 
+        android:id="@+id/compass_new_locked"
+        android:layout_height="wrap_content"
+    	android:layout_width="wrap_content"
+    	android:layout_centerInParent="true"
+    	android:background="@drawable/button_compass_locked"
+    	android:visibility="invisible" >
+    </RelativeLayout>
+    
+        <RelativeLayout 
+        android:id="@+id/compass_new_unlocked"
+        android:layout_height="wrap_content"
+    	android:layout_width="wrap_content"
+    	android:layout_centerInParent="true"
+    	android:background="@drawable/button_compass_unlocked"
+    	android:visibility="invisible" >
     </RelativeLayout>
     
     <RelativeLayout
@@ -15,7 +34,7 @@
 	    android:layout_height="wrap_content"
 	    android:layout_width="wrap_content" 
 	    android:layout_centerInParent="true"
-	    android:background="@drawable/button_compass_arrow">
+	    android:background="@drawable/button_compass_default">
 	</RelativeLayout>
 	
     <ImageView

@@ -17,10 +17,11 @@ class CompassViewWrapper : public ViewWrap<CompassView>
 {
     ExampleApp::Compass::View::CompassViewInterop* m_pInterop;
 
-    UIColor* m_gpsIndicatorColour;
-
     float m_width;
     float m_height;
+    
+    float m_innerHeight;
+    float m_innerWidth;
 
     float m_screenWidth;
     float m_screenHeight;

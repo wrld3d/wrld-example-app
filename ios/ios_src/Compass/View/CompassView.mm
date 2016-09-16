@@ -15,15 +15,17 @@ enum CompassViewState
 
 @interface CompassView()
 {
-    UIImage* m_pOuterShapeImage;
-    UIImage* m_pOuterShapeHighlightImage;
-    UIImage* m_pPointImage;
-    UIImage* m_pPointHighlightImage;
-    
-    UIColor* m_indicatorColor;
-    UIColor* m_indicatorHighlightColor;
+    UIImage* m_pCompassDefaultImage;
+    UIImage* m_pCompassDefaultHighlightImage;
+    UIImage* m_CompassRingImage;
+    UIImage* m_pCompassLockedImage;
+    UIImage* m_pCompassLockedHighlightedImage;
+    UIImage* m_pCompassUnlockedImage;
+    UIImage* m_pCompassUnlockedHighlightedImage;
     
     CompassViewState m_compassViewState;
+    
+    bool m_disabledStateHighlighted;
 }
 
 @end
@@ -40,30 +42,31 @@ enum CompassViewState
         m_screenWidth = width/pixelScale;
         m_screenHeight = height/pixelScale;
         
-        m_indicatorColor = ExampleApp::Helpers::ColorPalette::CompassControlColor;
-        m_indicatorHighlightColor = ExampleApp::Helpers::ColorPalette::CompassControlHighlightColor;
-        
-        m_gpsIndicatorColour = m_indicatorColor;
-        
         m_compassViewState = Disabled;
         
         //control positioning
         m_width = 80.f;
         m_height = 80.f;
         
-        m_yPosBase = m_yPosActive = m_screenHeight - (8 * m_pixelScale) - m_height;
+        m_innerHeight = 80.0f/1.5f;
+        m_innerWidth = 80.0f/1.5f;
+        
+        m_yPosBase = m_yPosActive = m_screenHeight - (8 * m_pixelScale) - m_innerHeight - (m_height - m_innerHeight)/2;
         m_yPosInactive = m_screenHeight + m_height;
         
-        self.frame = CGRectMake(((m_screenWidth * 0.5f) - (m_width * 0.5f)), m_yPosInactive, m_width, m_height);
+        self.frame = CGRectMake(((m_screenWidth * 0.5f) - (m_innerWidth * 0.5f)), m_yPosInactive, m_width, m_height);
         
-        self->m_pOuterShapeImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_compass_off") retain];
-        self->m_pOuterShapeHighlightImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_compass_on") retain];
-        self->m_pPointImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"compass_point_off") retain];
-        self->m_pPointHighlightImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"compass_point_on") retain];
+        self->m_pCompassDefaultImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"CompassNewLocate") retain];
+        self->m_pCompassDefaultHighlightImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"CompassNewLocate_Down") retain];
+        self->m_CompassRingImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"CompassNew") retain];
+        self->m_pCompassLockedImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"CompassNewLocked") retain];
+        self->m_pCompassLockedHighlightedImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"CompassNewLocked_Down") retain];
+        self->m_pCompassUnlockedImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"CompassNewUnlocked") retain];
+        self->m_pCompassUnlockedHighlightedImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"CompassNewUnlocked_Down") retain];
         
         //outer shape
-        self.pOuterShape = [[[UIImageView alloc] initWithFrame:CGRectMake(0.f, 0.f, m_width, m_height)] autorelease];
-        self.pOuterShape.image = m_pOuterShapeImage;
+        self.pOuterShape = [[[UIImageView alloc] initWithFrame:CGRectMake(0.f, 0.f, m_innerWidth, m_innerHeight)] autorelease];
+        self.pOuterShape.image = m_pCompassDefaultImage;
         [self addSubview: self.pOuterShape];
 
         //inner shape
@@ -80,16 +83,15 @@ enum CompassViewState
         [circleLayer setLineWidth:1.0f];
         [[self.pInnerShape layer] addSublayer:circleLayer];
         [self addSubview: self.pInnerShape];
-        
-        //compass point
-        float pointWidth = 7.f;
-        float pointHeight = 26.f;
-        self.pPoint = [[[UIImageView alloc] initWithFrame:CGRectMake(0.f, 0.f, pointWidth, pointHeight)] autorelease];
-        self.pPoint.image = m_pPointImage;
+
+        self.pPoint = [[[UIImageView alloc] initWithFrame:CGRectMake(0.f, 0.f, m_width, m_height)] autorelease];
+        self.pPoint.image = m_CompassRingImage;
         self.pPoint.center = self.pOuterShape.center;
         [self addSubview: self.pPoint];
         
         self.hidden = YES;
+        
+        m_disabledStateHighlighted = false;
     }
 
     return self;
@@ -108,10 +110,13 @@ enum CompassViewState
     [self.pPoint removeFromSuperview];
     [self.pPoint release];
     
-    [self->m_pOuterShapeImage release];
-    [self->m_pOuterShapeHighlightImage release];
-    [self->m_pPointImage release];
-    [self->m_pPointHighlightImage release];
+    [self->m_pCompassDefaultImage release];
+    [self->m_pCompassDefaultHighlightImage release];
+    [self->m_CompassRingImage release];
+    [self->m_pCompassLockedImage release];
+    [self->m_pCompassLockedHighlightedImage release];
+    [self->m_pCompassUnlockedImage release];
+    [self->m_pCompassUnlockedHighlightedImage release];
 
     [super dealloc];
 }
@@ -145,7 +150,6 @@ enum CompassViewState
     {
         m_pInterop->OnCycle();
     }
-    
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -156,6 +160,11 @@ enum CompassViewState
 - (void) showGpsDisabledView
 {
     m_compassViewState = Disabled;
+    
+    if (!m_disabledStateHighlighted)
+    {
+        self.pOuterShape.image = m_pCompassDefaultImage;
+    }
     
     for (CAShapeLayer *layer in self.pInnerShape.layer.sublayers)
     {
@@ -168,10 +177,9 @@ enum CompassViewState
 {
     m_compassViewState = Follow;
     
-    for (CAShapeLayer *layer in self.pInnerShape.layer.sublayers)
+    if (!m_disabledStateHighlighted)
     {
-        [layer setStrokeColor:[m_gpsIndicatorColour CGColor]];
-        [layer setFillColor:[[UIColor clearColor] CGColor]];
+        self.pOuterShape.image = m_pCompassLockedImage;
     }
 }
 
@@ -179,10 +187,9 @@ enum CompassViewState
 {
     m_compassViewState = Compass;
     
-    for (CAShapeLayer *layer in self.pInnerShape.layer.sublayers)
+    if (!m_disabledStateHighlighted)
     {
-        [layer setStrokeColor:[m_gpsIndicatorColour CGColor]];
-        [layer setFillColor:[m_gpsIndicatorColour CGColor]];
+        self.pOuterShape.image = m_pCompassUnlockedImage;
     }
 }
 
@@ -201,7 +208,7 @@ enum CompassViewState
 {
     self.pPoint.transform = CGAffineTransformTranslate(CGAffineTransformRotate(CGAffineTransformIdentity,
                                                                                -angleRadians),
-                                                       0, -24.f);
+                                                       0, 0.f);
 }
 
 - (ExampleApp::Compass::View::CompassViewInterop *)getInterop
@@ -273,19 +280,6 @@ enum CompassViewState
 
 - (void) setHighlighted:(BOOL)highlighted
 {
-    if(highlighted)
-    {
-        self.pOuterShape.image = m_pOuterShapeHighlightImage;
-        self.pPoint.image = m_pPointHighlightImage;
-        m_gpsIndicatorColour = m_indicatorHighlightColor;
-    }
-    else
-    {
-        self.pOuterShape.image = m_pOuterShapeImage;
-        self.pPoint.image = m_pPointImage;
-        m_gpsIndicatorColour = m_indicatorColor;
-    }
-    
     switch(m_compassViewState)
     {
         case Disabled:
@@ -299,6 +293,41 @@ enum CompassViewState
             break;
         default:
             Eegeo_ASSERT(false, "Unhandled compass view state");
+    }
+    
+    if(highlighted)
+    {
+        m_disabledStateHighlighted = true;
+        
+        if (m_compassViewState == Follow)
+        {
+            self.pOuterShape.image = m_pCompassLockedHighlightedImage;
+        }
+        else if (m_compassViewState == Disabled)
+        {
+            self.pOuterShape.image = m_pCompassDefaultHighlightImage;
+        }
+        else if (m_compassViewState == Compass)
+        {
+            self.pOuterShape.image = m_pCompassUnlockedHighlightedImage;
+        }
+    }
+    else
+    {
+        m_disabledStateHighlighted = false;
+        
+        if (m_compassViewState == Follow)
+        {
+            self.pOuterShape.image = m_pCompassUnlockedImage;
+        }
+        else if (m_compassViewState == Disabled)
+        {
+            self.pOuterShape.image = m_pCompassLockedImage;
+        }
+        else if (m_compassViewState == Compass)
+        {
+            self.pOuterShape.image = m_pCompassLockedImage;
+        }
     }
 }
 

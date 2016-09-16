@@ -55,6 +55,7 @@
 #include "IGpsMarkerController.h"
 #include "MyPinDetailsModule.h"
 #include "MobileExampleApp.h"
+#include "ISearchRefreshService.h"
 
 namespace ExampleApp
 {

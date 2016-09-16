@@ -37,6 +37,7 @@
 #include "IGpsMarkerController.h"
 #include "ErrorHandler.h"
 #include "IEegeoErrorHandler.h"
+#include "ISearchRefreshService.h"
 
 namespace ExampleApp
 {
