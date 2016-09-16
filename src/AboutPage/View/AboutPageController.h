@@ -9,6 +9,9 @@
 #include "IAboutPageView.h"
 #include "IMetricsService.h"
 
+#include <iostream>
+#include <memory>
+
 namespace ExampleApp
 {
     namespace AboutPage

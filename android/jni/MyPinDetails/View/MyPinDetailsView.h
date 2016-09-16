@@ -17,7 +17,7 @@ namespace ExampleApp
             class MyPinDetailsView: public IMyPinDetailsView
             {
             public:
-                MyPinDetailsView(AndroidNativeState& nativeState);
+                MyPinDetailsView(const std::shared_ptr<AndroidNativeState>& nativeState);
                 ~MyPinDetailsView();
 
                 void OpenWithModel(
@@ -36,7 +36,7 @@ namespace ExampleApp
                 void RemoveRemovePinCallback(Eegeo::Helpers::ICallback0& callback);
 
             private:
-                AndroidNativeState& m_nativeState;
+                const std::shared_ptr<AndroidNativeState> m_nativeState;
 
                 jclass m_uiViewClass;
                 jobject m_uiView;

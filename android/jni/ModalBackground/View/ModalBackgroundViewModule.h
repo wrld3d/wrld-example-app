@@ -2,12 +2,13 @@
 
 #pragma once
 
-#include "IModalBackgroundViewModule.h"
-#include "AndroidNativeState.h"
-#include "Types.h"
-#include "Modality.h"
-#include "ModalBackgroundViewIncludes.h"
-#include "BidirectionalBus.h"
+//#include "IModalBackgroundViewModule.h"
+//#include "AndroidNativeState.h"
+//#include "Types.h"
+//#include "Modality.h"
+//#include "ModalBackgroundViewIncludes.h"
+//#include "BidirectionalBus.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -15,22 +16,24 @@ namespace ExampleApp
     {
         namespace View
         {
-            class ModalBackgroundViewModule: public IModalBackgroundViewModule, private Eegeo::NonCopyable
+            class ModalBackgroundViewModule: public Module
             {
-            private:
-                ModalBackgroundAggregateView* m_pView;
-                Modality::View::ModalBackgroundController* m_pController;
-
             public:
-                ModalBackgroundViewModule(
-                    AndroidNativeState& nativeState,
-                    Modality::View::IModalityModel& modalityModel,
-                    ExampleAppMessaging::TMessageBus& messageBus
-                );
-
-                ~ModalBackgroundViewModule();
-
-                Modality::View::IModalBackgroundView& GetModalBackgroundView() const;
+            	void Register(const TContainerBuilder& builder);
+//            private:
+//                ModalBackgroundAggregateView* m_pView;
+//                Modality::View::ModalBackgroundController* m_pController;
+//
+//            public:
+//                ModalBackgroundViewModule(
+//                    AndroidNativeState& nativeState,
+//                    Modality::View::IModalityModel& modalityModel,
+//                    ExampleAppMessaging::TMessageBus& messageBus
+//                );
+//
+//                ~ModalBackgroundViewModule();
+//
+//                Modality::View::IModalBackgroundView& GetModalBackgroundView() const;
             };
         }
     }

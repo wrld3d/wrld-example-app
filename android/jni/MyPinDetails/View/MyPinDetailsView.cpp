@@ -10,16 +10,16 @@ namespace ExampleApp
     {
         namespace View
         {
-            MyPinDetailsView::MyPinDetailsView(AndroidNativeState& nativeState)
+            MyPinDetailsView::MyPinDetailsView(const std::shared_ptr<AndroidNativeState>& nativeState)
                 :m_nativeState(nativeState)
             {
                 ASSERT_UI_THREAD
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jstring strClassName = env->NewStringUTF("com.eegeo.mypindetails.MyPinDetailsView");
-                jclass uiClass = m_nativeState.LoadClass(env, strClassName);
+                jclass uiClass = m_nativeState->LoadClass(env, strClassName);
                 env->DeleteLocalRef(strClassName);
 
                 m_uiViewClass = static_cast<jclass>(env->NewGlobalRef(uiClass));
@@ -28,7 +28,7 @@ namespace ExampleApp
                 jobject instance = env->NewObject(
                                        m_uiViewClass,
                                        uiViewCtor,
-                                       m_nativeState.activity,
+                                       m_nativeState->activity,
                                        (jlong)(this)
                                    );
 

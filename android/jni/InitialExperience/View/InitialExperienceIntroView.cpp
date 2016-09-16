@@ -9,17 +9,18 @@ namespace ExampleApp
 	{
 		namespace View
 		{
-			InitialExperienceIntroView::InitialExperienceIntroView(AndroidNativeState& nativeState, ExampleAppMessaging::TMessageBus& messageBus)
+			InitialExperienceIntroView::InitialExperienceIntroView(const std::shared_ptr<AndroidNativeState>& nativeState,
+					 const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
 			: m_nativeState(nativeState)
 			, m_messageBus(messageBus)
 			{
 				ASSERT_UI_THREAD
 
-				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
 				jstring strClassName = env->NewStringUTF("com/eegeo/initialexperience/intro/InitialExperienceIntroView");
-				jclass uiClass = m_nativeState.LoadClass(env, strClassName);
+				jclass uiClass = m_nativeState->LoadClass(env, strClassName);
 				env->DeleteLocalRef(strClassName);
 
 				m_uiViewClass = static_cast<jclass>(env->NewGlobalRef(uiClass));
@@ -28,7 +29,7 @@ namespace ExampleApp
 				jobject instance = env->NewObject(
 									   m_uiViewClass,
 									   uiViewCtor,
-									   m_nativeState.activity,
+									   m_nativeState->activity,
 									   (jlong)(this)
 								   );
 
@@ -39,7 +40,7 @@ namespace ExampleApp
 			{
 				ASSERT_UI_THREAD
 
-				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 				JNIEnv* env = attached.envForThread;
 				jmethodID removeHudMethod = env->GetMethodID(m_uiViewClass, "destroy", "()V");
 				env->CallVoidMethod(m_uiView, removeHudMethod);
@@ -51,26 +52,26 @@ namespace ExampleApp
 			{
 				ASSERT_UI_THREAD
 
-				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
 				jmethodID showDialogMethod = env->GetMethodID(m_uiViewClass, "show", "()V");
 				env->CallVoidMethod(m_uiView, showDialogMethod);
 
-				m_messageBus.Publish(Modality::UpdateNativeModalBackgroundMessage(1.0f, true));
+				m_messageBus->Publish(Modality::UpdateNativeModalBackgroundMessage(1.0f, true));
 			}
 
 			void InitialExperienceIntroView::Dismiss()
 			{
 				ASSERT_UI_THREAD
 
-				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
 				jmethodID dismissDialogMethod = env->GetMethodID(m_uiViewClass, "dismiss", "()V");
 				env->CallVoidMethod(m_uiView, dismissDialogMethod);
 
-				m_messageBus.Publish(Modality::UpdateNativeModalBackgroundMessage(0.0f, false));
+				m_messageBus->Publish(Modality::UpdateNativeModalBackgroundMessage(0.0f, false));
 			}
 
 			void InitialExperienceIntroView::OnDismiss()

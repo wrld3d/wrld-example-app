@@ -16,7 +16,7 @@ namespace ExampleApp
             class MyPinCreationConfirmationView: public IMyPinCreationConfirmationView
             {
             public:
-                MyPinCreationConfirmationView(AndroidNativeState& nativeState);
+                MyPinCreationConfirmationView(const std::shared_ptr<AndroidNativeState>& nativeState);
                 ~MyPinCreationConfirmationView();
 
                 void OnDismissed();
@@ -33,7 +33,7 @@ namespace ExampleApp
 
             private:
 
-                AndroidNativeState& m_nativeState;
+                const std::shared_ptr<AndroidNativeState> m_nativeState;
 
                 jclass m_uiViewClass;
                 jobject m_uiView;

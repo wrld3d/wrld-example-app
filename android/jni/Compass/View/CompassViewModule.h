@@ -2,12 +2,7 @@
 
 #pragma once
 
-#include "ICompassViewModule.h"
-#include "AndroidNativeState.h"
-#include "Types.h"
-#include "Compass.h"
-#include "CompassViewIncludes.h"
-#include "BidirectionalBus.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -15,20 +10,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            class CompassViewModule: public ICompassViewModule, private Eegeo::NonCopyable
+            class CompassViewModule : public Module
             {
-            private:
-                CompassView* m_pView;
-                CompassController* m_pController;
-
             public:
-                CompassViewModule(
-                    AndroidNativeState& nativeState,
-                    ICompassViewModel& viewModel,
-                    ExampleAppMessaging::TMessageBus& messageBus
-                );
-
-                ~CompassViewModule();
+            	void Register(const TContainerBuilder& builder);
             };
         }
     }

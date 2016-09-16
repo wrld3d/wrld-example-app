@@ -15,7 +15,7 @@ namespace ExampleApp
             {
             public:
                 ModalBackgroundNativeView(
-                    Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator,
+                    const std::shared_ptr<Eegeo::Rendering::Shaders::ShaderIdGenerator>& shaderIdGenerator,
                     Eegeo::Rendering::Materials::MaterialIdGenerator& materialIdGenerator,
                     Eegeo::Rendering::GlBufferPool& glBufferPool,
                     Eegeo::Rendering::VertexLayouts::VertexLayoutPool& vertexLayoutPool,

@@ -18,7 +18,7 @@ namespace ExampleApp
             class ModalBackgroundAggregateView: public Modality::View::IModalBackgroundView
             {
             public:
-                ModalBackgroundAggregateView(AndroidNativeState& nativeState, ExampleAppMessaging::TMessageBus& messageBus);
+                ModalBackgroundAggregateView(const std::shared_ptr<AndroidNativeState>& nativeState, ExampleAppMessaging::TMessageBus& messageBus);
                 ~ModalBackgroundAggregateView();
 
                 void SetFullyActive();
@@ -32,7 +32,7 @@ namespace ExampleApp
 
             private:
 
-                AndroidNativeState& m_nativeState;
+                const std::shared_ptr<AndroidNativeState> m_nativeState;
 
                 jclass m_uiViewClass;
                 jobject m_uiView;

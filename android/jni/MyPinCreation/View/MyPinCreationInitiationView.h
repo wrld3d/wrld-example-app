@@ -18,7 +18,7 @@ namespace ExampleApp
             class MyPinCreationInitiationView: public IMyPinCreationInitiationView
             {
             public:
-                MyPinCreationInitiationView(AndroidNativeState& nativeState);
+                MyPinCreationInitiationView(const std::shared_ptr<AndroidNativeState>& nativeState);
                 ~MyPinCreationInitiationView();
 
                 void OnSelected();
@@ -32,7 +32,7 @@ namespace ExampleApp
 
             private:
 
-                AndroidNativeState& m_nativeState;
+                const std::shared_ptr<AndroidNativeState> m_nativeState;
 
                 jclass m_uiViewClass;
                 jobject m_uiView;

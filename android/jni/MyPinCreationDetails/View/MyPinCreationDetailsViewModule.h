@@ -2,15 +2,16 @@
 
 #pragma once
 
-#include "IMyPinCreationDetailsViewModule.h"
-#include "Types.h"
-#include "AndroidNativeState.h"
-#include "MyPinCreationDetails.h"
-#include "MyPinCreation.h"
-#include "MyPinCreationDetailsViewIncludes.h"
-#include "BidirectionalBus.h"
-#include "IConnectivityService.h"
-#include "IMetricsService.h"
+//#include "IMyPinCreationDetailsViewModule.h"
+//#include "Types.h"
+//#include "AndroidNativeState.h"
+//#include "MyPinCreationDetails.h"
+//#include "MyPinCreation.h"
+//#include "MyPinCreationDetailsViewIncludes.h"
+//#include "BidirectionalBus.h"
+//#include "IConnectivityService.h"
+//#include "IMetricsService.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -18,21 +19,23 @@ namespace ExampleApp
     {
         namespace View
         {
-            class MyPinCreationDetailsViewModule : public IMyPinCreationDetailsViewModule, private Eegeo::NonCopyable
+            class MyPinCreationDetailsViewModule : public Module
             {
-            private:
-                MyPinCreationDetailsView* m_pView;
-                MyPinCreationDetailsController* m_pController;
-
             public:
-                MyPinCreationDetailsViewModule(
-                    AndroidNativeState& nativeState,
-                    MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& viewModel,
-                    ExampleAppMessaging::TMessageBus& messageBus,
-                    Metrics::IMetricsService& metricsService
-                );
-
-                ~MyPinCreationDetailsViewModule();
+            	void Register(const TContainerBuilder& builder);
+//            private:
+//                MyPinCreationDetailsView* m_pView;
+//                MyPinCreationDetailsController* m_pController;
+//
+//            public:
+//                MyPinCreationDetailsViewModule(
+//                    AndroidNativeState& nativeState,
+//                    MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& viewModel,
+//                    ExampleAppMessaging::TMessageBus& messageBus,
+//                    Metrics::IMetricsService& metricsService
+//                );
+//
+//                ~MyPinCreationDetailsViewModule();
             };
         }
     }

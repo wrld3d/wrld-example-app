@@ -9,6 +9,7 @@
 #include "AndroidNativeState.h"
 
 #include <string>
+#include <memory>
 
 namespace ExampleApp
 {
@@ -20,14 +21,14 @@ namespace ExampleApp
             {
             private:
                 Eegeo::Helpers::CallbackCollection0 m_callbacks;
-                AndroidNativeState& m_nativeState;
+                const std::shared_ptr<AndroidNativeState> m_nativeState;
 
                 jclass m_uiViewClass;
                 jobject m_uiView;
 
                 void CallVoidMethod(const std::string& methodName);
             public:
-                CompassView(AndroidNativeState& nativeState);
+                CompassView(const std::shared_ptr<AndroidNativeState>& nativeState);
                 ~CompassView();
 
                 void OnCycle();

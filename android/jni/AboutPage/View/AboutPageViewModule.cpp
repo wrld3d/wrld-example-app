@@ -12,36 +12,11 @@ namespace ExampleApp
     {
         namespace View
         {
-            AboutPageViewModule::AboutPageViewModule(
-                AndroidNativeState& nativeState,
-                IAboutPageViewModel& aboutPageViewModel,
-                Metrics::IMetricsService& metricsService
-            )
-            {
-                ASSERT_UI_THREAD
-                m_pView = Eegeo_NEW(AboutPageView)(nativeState);
-                m_pController = Eegeo_NEW(AboutPageController)(*m_pView, aboutPageViewModel, metricsService);
-            }
-
-            AboutPageViewModule::~AboutPageViewModule()
-            {
-                ASSERT_UI_THREAD
-
-                Eegeo_DELETE(m_pController);
-                Eegeo_DELETE(m_pView);
-            }
-
-            AboutPageController& AboutPageViewModule::GetAboutPageController() const
-            {
-                ASSERT_UI_THREAD
-                return *m_pController;
-            }
-
-            AboutPageView& AboutPageViewModule::GetAboutPageView() const
-            {
-                ASSERT_UI_THREAD
-                return *m_pView;
-            }
+        	void AboutPageViewModule::Register(const TContainerBuilder& builder)
+        	{
+        		ASSERT_UI_THREAD
+        		builder->registerType<AboutPageView>().as<IAboutPageView>().singleInstance();
+        	}
         }
     }
 }

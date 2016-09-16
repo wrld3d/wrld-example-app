@@ -13,41 +13,46 @@ namespace ExampleApp
     {
         namespace View
         {
-            MenuViewModule::MenuViewModule(
-                const std::string& viewName,
-                AndroidNativeState& nativeState,
-                IMenuModel& menuModel,
-                IMenuViewModel& menuViewModel,
-                ExampleAppMessaging::TMessageBus& messageBus
-            )
-            {
-                ASSERT_UI_THREAD
-
-                m_pView = Eegeo_NEW(MenuView)(nativeState, viewName);
-                m_pController = Eegeo_NEW(MenuController)(menuModel, menuViewModel, *m_pView, messageBus);
-            }
-
-            MenuViewModule::~MenuViewModule()
-            {
-                ASSERT_UI_THREAD
-
-                Eegeo_DELETE m_pController;
-                Eegeo_DELETE m_pView;
-            }
-
-            MenuController& MenuViewModule::GetMenuController() const
-            {
-                ASSERT_UI_THREAD
-
-                return *m_pController;
-            }
-
-            IMenuView& MenuViewModule::GetMenuView() const
-            {
-                ASSERT_UI_THREAD
-
-                return *m_pView;
-            }
+			void MenuViewModule::Register(const TContainerBuilder& builder)
+			{
+				ASSERT_UI_THREAD
+				builder->registerType<FlattenButtonView>().as<IFlattenButtonView>().singleInstance();
+			}
+//            MenuViewModule::MenuViewModule(
+//                const std::string& viewName,
+//                AndroidNativeState& nativeState,
+//                IMenuModel& menuModel,
+//                IMenuViewModel& menuViewModel,
+//                ExampleAppMessaging::TMessageBus& messageBus
+//            )
+//            {
+//                ASSERT_UI_THREAD
+//
+//                m_pView = Eegeo_NEW(MenuView)(nativeState, viewName);
+//                m_pController = Eegeo_NEW(MenuController)(menuModel, menuViewModel, *m_pView, messageBus);
+//            }
+//
+//            MenuViewModule::~MenuViewModule()
+//            {
+//                ASSERT_UI_THREAD
+//
+//                Eegeo_DELETE m_pController;
+//                Eegeo_DELETE m_pView;
+//            }
+//
+//            MenuController& MenuViewModule::GetMenuController() const
+//            {
+//                ASSERT_UI_THREAD
+//
+//                return *m_pController;
+//            }
+//
+//            IMenuView& MenuViewModule::GetMenuView() const
+//            {
+//                ASSERT_UI_THREAD
+//
+//                return *m_pView;
+//            }
         }
     }
 }

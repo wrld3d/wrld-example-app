@@ -9,7 +9,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            MyPinCreationConfirmationView::MyPinCreationConfirmationView(AndroidNativeState& androidNativeState)
+            MyPinCreationConfirmationView::MyPinCreationConfirmationView(const std::shared_ptr<AndroidNativeState>& androidNativeState)
                 : m_nativeState(androidNativeState)
             {
                 ASSERT_UI_THREAD

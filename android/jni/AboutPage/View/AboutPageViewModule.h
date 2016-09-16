@@ -2,12 +2,7 @@
 
 #pragma once
 
-#include "AndroidNativeState.h"
-#include "Types.h"
-#include "AboutPage.h"
-#include "AboutPageViewIncludes.h"
-#include "IAboutPageViewModule.h"
-#include "IMetricsService.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -15,24 +10,11 @@ namespace ExampleApp
     {
         namespace View
         {
-            class AboutPageViewModule: public IAboutPageViewModule, private Eegeo::NonCopyable
-            {
-            private:
-                AboutPageView* m_pView;
-                AboutPageController* m_pController;
-
-            public:
-                AboutPageViewModule(
-                    AndroidNativeState& nativeState,
-                    IAboutPageViewModel& aboutPageViewModel,
-                    Metrics::IMetricsService& metricsService
-                );
-
-                ~AboutPageViewModule();
-
-                AboutPageController& GetAboutPageController() const;
-                AboutPageView& GetAboutPageView() const;
-            };
+			class AboutPageViewModule : public Module
+			{
+			public:
+				void Register(const TContainerBuilder& builder);
+			};
         }
     }
 }

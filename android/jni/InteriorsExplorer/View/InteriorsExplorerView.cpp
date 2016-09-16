@@ -13,7 +13,7 @@ namespace ExampleApp
     {
         namespace View
         {
-        InteriorsExplorerView::InteriorsExplorerView(AndroidNativeState &state)
+        InteriorsExplorerView::InteriorsExplorerView(const std::shared_ptr<AndroidNativeState>& state)
 				: m_nativeState(state)
 				, m_uiViewClass(NULL)
 				, m_uiView(NULL)

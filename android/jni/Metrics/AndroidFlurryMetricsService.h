@@ -12,7 +12,7 @@ namespace ExampleApp
 		class AndroidFlurryMetricsService : public IMetricsService
 		{
 		public:
-			AndroidFlurryMetricsService(AndroidNativeState* pNativeState);
+			AndroidFlurryMetricsService(const std::shared_ptr<AndroidNativeState>& nativeState);
 
 			~AndroidFlurryMetricsService();
 
@@ -43,7 +43,7 @@ namespace ExampleApp
 			bool IsEnabled() const;
 
 		private:
-			AndroidNativeState* m_pNativeState;
+			const std::shared_ptr<AndroidNativeState> m_nativeState;
 			jclass m_flurryClass;
 			bool m_enabled;
 		};

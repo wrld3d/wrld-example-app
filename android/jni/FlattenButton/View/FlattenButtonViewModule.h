@@ -2,14 +2,15 @@
 
 #pragma once
 
-#include "IFlattenButtonViewModule.h"
-#include "AndroidNativeState.h"
-#include "Types.h"
-#include "FLattenButton.h"
-#include "FlattenButtonViewIncludes.h"
-#include "FlattenButtonView.h"
-#include "FlattenButtonController.h"
-#include "IMetricsService.h"
+//#include "IFlattenButtonViewModule.h"
+//#include "AndroidNativeState.h"
+//#include "Types.h"
+//#include "FLattenButton.h"
+//#include "FlattenButtonViewIncludes.h"
+//#include "FlattenButtonView.h"
+//#include "FlattenButtonController.h"
+//#include "IMetricsService.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -17,22 +18,27 @@ namespace ExampleApp
     {
         namespace View
         {
-            class FlattenButtonViewModule: public IFlattenButtonViewModule, private Eegeo::NonCopyable
-            {
-            private:
-                FlattenButtonView* m_pView;
-                FlattenButtonController* m_pController;
-
-            public:
-                FlattenButtonViewModule(
-                    AndroidNativeState& nativeState,
-                    IFlattenButtonViewModel& viewModel,
-                    ExampleAppMessaging::TMessageBus& messageBus,
-                    Metrics::IMetricsService& metricsService
-                );
-
-                ~FlattenButtonViewModule();
-            };
+			class FlattenButtonViewModule : public Module
+			{
+			public:
+				void Register(const TContainerBuilder& builder);
+			};
+//            class FlattenButtonViewModule: public IFlattenButtonViewModule, private Eegeo::NonCopyable
+//            {
+//            private:
+//                FlattenButtonView* m_pView;
+//                FlattenButtonController* m_pController;
+//
+//            public:
+//                FlattenButtonViewModule(
+//                    AndroidNativeState& nativeState,
+//                    IFlattenButtonViewModel& viewModel,
+//                    ExampleAppMessaging::TMessageBus& messageBus,
+//                    Metrics::IMetricsService& metricsService
+//                );
+//
+//                ~FlattenButtonViewModule();
+//            };
         }
     }
 }

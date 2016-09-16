@@ -18,12 +18,12 @@ namespace ExampleApp
             {
             private:
                 Eegeo::Helpers::CallbackCollection1<bool> m_callbacks;
-                AndroidNativeState& m_nativeState;
+                const std::shared_ptr<AndroidNativeState> m_nativeState;
 
                 jclass m_uiViewClass;
                 jobject m_uiView;
             public:
-                FlattenButtonView(AndroidNativeState& nativeState);
+                FlattenButtonView(const std::shared_ptr<AndroidNativeState>& nativeState);
                 ~FlattenButtonView();
 
                 void SetToggled(bool toggled);

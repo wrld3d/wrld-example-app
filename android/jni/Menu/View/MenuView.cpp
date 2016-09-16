@@ -18,7 +18,7 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView, jmethod);
             }
 
-            MenuView::MenuView(AndroidNativeState& nativeState,
+            MenuView::MenuView(const std::shared_ptr<AndroidNativeState>& nativeState,
                                const std::string& viewClassName)
                     : m_nativeState(nativeState)
                     , m_pTryDragFunc(NULL)

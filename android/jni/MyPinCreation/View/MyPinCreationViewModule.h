@@ -2,14 +2,15 @@
 
 #pragma once
 
-#include "IMyPinCreationViewModule.h"
-#include "Types.h"
-#include "AndroidNativeState.h"
-#include "MyPinCreation.h"
-#include "MyPinCreationDetails.h"
-#include "MyPinCreationViewIncludes.h"
-#include "BidirectionalBus.h"
-#include "IMetricsService.h"
+//#include "IMyPinCreationViewModule.h"
+//#include "Types.h"
+//#include "AndroidNativeState.h"
+//#include "MyPinCreation.h"
+//#include "MyPinCreationDetails.h"
+//#include "MyPinCreationViewIncludes.h"
+//#include "BidirectionalBus.h"
+//#include "IMetricsService.h"
+#include "Module"
 
 namespace ExampleApp
 {
@@ -17,26 +18,28 @@ namespace ExampleApp
     {
         namespace View
         {
-            class MyPinCreationViewModule : public IMyPinCreationViewModule, private Eegeo::NonCopyable
+            class MyPinCreationViewModule : public Module
             {
-            private:
-                MyPinCreationInitiationView* m_pInitiationView;
-                MyPinCreationInitiationController* m_pInitiationController;
-
-                MyPinCreationConfirmationView* m_pConfirmationView;
-                MyPinCreationConfirmationController* m_pConfirmationController;
-
             public:
-                MyPinCreationViewModule(
-                    AndroidNativeState& nativeState,
-                    IMyPinCreationInitiationViewModel& initiationViewModel,
-                    IMyPinCreationConfirmationViewModel& confirmationViewModel,
-                    MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& detailsViewModel,
-                    ExampleAppMessaging::TMessageBus& messageBus,
-                    Metrics::IMetricsService& metricsService
-                );
-
-                ~MyPinCreationViewModule();
+            	void Register(const TContainerBuilder& builder);
+//            private:
+//                MyPinCreationInitiationView* m_pInitiationView;
+//                MyPinCreationInitiationController* m_pInitiationController;
+//
+//                MyPinCreationConfirmationView* m_pConfirmationView;
+//                MyPinCreationConfirmationController* m_pConfirmationController;
+//
+//            public:
+//                MyPinCreationViewModule(
+//                    AndroidNativeState& nativeState,
+//                    IMyPinCreationInitiationViewModel& initiationViewModel,
+//                    IMyPinCreationConfirmationViewModel& confirmationViewModel,
+//                    MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& detailsViewModel,
+//                    ExampleAppMessaging::TMessageBus& messageBus,
+//                    Metrics::IMetricsService& metricsService
+//                );
+//
+//                ~MyPinCreationViewModule();
             };
         }
     }

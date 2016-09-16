@@ -30,7 +30,7 @@ namespace ExampleApp
 
                 void CallVoidVoidFunction(const char* func);
             protected:
-                AndroidNativeState& m_nativeState;
+                const std::shared_ptr<AndroidNativeState> m_nativeState;
 
                 jclass m_uiViewClass;
                 jobject m_uiView;
@@ -38,7 +38,7 @@ namespace ExampleApp
                 TSections m_currentSections;
 
             public:
-                MenuView(AndroidNativeState& nativeState,
+                MenuView(const std::shared_ptr<AndroidNativeState>& nativeState,
                          const std::string& viewClassName);
 
                 virtual ~MenuView();

@@ -2,13 +2,14 @@
 
 #pragma once
 
-#include <string>
-#include "AndroidNativeState.h"
-#include "Types.h"
-#include "Menu.h"
-#include "MenuViewIncludes.h"
-#include "IMenuViewModule.h"
-#include "MenuController.h"
+//#include <string>
+//#include "AndroidNativeState.h"
+//#include "Types.h"
+//#include "Menu.h"
+//#include "MenuViewIncludes.h"
+//#include "IMenuViewModule.h"
+//#include "MenuController.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -16,25 +17,27 @@ namespace ExampleApp
     {
         namespace View
         {
-            class MenuViewModule: public IMenuViewModule, private Eegeo::NonCopyable
+            class MenuViewModule: public Module
             {
             private:
-                MenuView* m_pView;
-                MenuController* m_pController;
-
-            public:
-                MenuViewModule(
-                    const std::string& viewName,
-                    AndroidNativeState& nativeState,
-                    IMenuModel& menuModelModel,
-                    IMenuViewModel& menuViewModel,
-                    ExampleAppMessaging::TMessageBus& messageBus
-                );
-
-                ~MenuViewModule();
-
-                MenuController& GetMenuController() const;
-                IMenuView& GetMenuView() const;
+            	void Register(const TContainerBuilder& builder);
+//            private:
+//                MenuView* m_pView;
+//                MenuController* m_pController;
+//
+//            public:
+//                MenuViewModule(
+//                    const std::string& viewName,
+//                    AndroidNativeState& nativeState,
+//                    IMenuModel& menuModelModel,
+//                    IMenuViewModel& menuViewModel,
+//                    ExampleAppMessaging::TMessageBus& messageBus
+//                );
+//
+//                ~MenuViewModule();
+//
+//                MenuController& GetMenuController() const;
+//                IMenuView& GetMenuView() const;
             };
         }
     }

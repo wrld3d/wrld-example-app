@@ -6,15 +6,15 @@ namespace ExampleApp
 {
 	namespace Metrics
 	{
-		AndroidFlurryMetricsService::AndroidFlurryMetricsService(AndroidNativeState* pNativeState)
-		: m_pNativeState(pNativeState)
+		AndroidFlurryMetricsService::AndroidFlurryMetricsService(const std::shared_ptr<AndroidNativeState>& nativeState)
+		: m_nativeState(nativeState)
 		, m_enabled(false)
 		{
-			AndroidSafeNativeThreadAttachment attached(*m_pNativeState);
+			AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
 			jstring strClassName = env->NewStringUTF("com/eegeo/flurry/FlurryWrapper");
-			jclass flurryClass = m_pNativeState->LoadClass(env, strClassName);
+			jclass flurryClass = m_nativeState->LoadClass(env, strClassName);
 
 			m_flurryClass = static_cast<jclass>(env->NewGlobalRef(flurryClass));
 
@@ -23,7 +23,7 @@ namespace ExampleApp
 
 		AndroidFlurryMetricsService::~AndroidFlurryMetricsService()
 		{
-			AndroidSafeNativeThreadAttachment attached(*m_pNativeState);
+			AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
 			env->DeleteGlobalRef(m_flurryClass);
@@ -31,14 +31,14 @@ namespace ExampleApp
 
 		void AndroidFlurryMetricsService::BeginSession(const std::string& apiKey, const std::string& appVersion)
 		{
-			AndroidSafeNativeThreadAttachment attached(*m_pNativeState);
+			AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
 			jstring apiKeyStr = env->NewStringUTF(apiKey.c_str());
 			jstring appVersionStr = env->NewStringUTF(appVersion.c_str());
 
 			jmethodID beginMethod = env->GetStaticMethodID(m_flurryClass, "begin", "(Lcom/eegeo/entrypointinfrastructure/MainActivity;Ljava/lang/String;Ljava/lang/String;)V");
-			env->CallStaticVoidMethod(m_flurryClass, beginMethod, m_pNativeState->activity, apiKeyStr, appVersionStr);
+			env->CallStaticVoidMethod(m_flurryClass, beginMethod, m_nativeState->activity, apiKeyStr, appVersionStr);
 
 			env->DeleteLocalRef(apiKeyStr);
 			env->DeleteLocalRef(appVersionStr);
@@ -48,7 +48,7 @@ namespace ExampleApp
 
 		void AndroidFlurryMetricsService::SetPosition(double latitude, double longitude, double horizAccuracy, double vertAccuracy)
 		{
-			AndroidSafeNativeThreadAttachment attached(*m_pNativeState);
+			AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
 			jmethodID setPositionMethod = env->GetStaticMethodID(m_flurryClass, "setPosition", "(FF)V");
@@ -57,7 +57,7 @@ namespace ExampleApp
 
 		void AndroidFlurryMetricsService::SetEvent(const std::string& eventString)
 		{
-			AndroidSafeNativeThreadAttachment attached(*m_pNativeState);
+			AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
 			jstring eventStr = env->NewStringUTF(eventString.c_str());
@@ -70,7 +70,7 @@ namespace ExampleApp
 
 		void AndroidFlurryMetricsService::SetEvent(const std::string& eventString, const std::string& key, const std::string& value)
 		{
-			AndroidSafeNativeThreadAttachment attached(*m_pNativeState);
+			AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
 			jstring eventStr = env->NewStringUTF(eventString.c_str());
@@ -87,7 +87,7 @@ namespace ExampleApp
 
 		void AndroidFlurryMetricsService::SetEvent(const std::string& eventString, const std::string& key1, const std::string& value1, const std::string& key2, const std::string& value2)
 		{
-			AndroidSafeNativeThreadAttachment attached(*m_pNativeState);
+			AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
 			jstring eventStr = env->NewStringUTF(eventString.c_str());
@@ -108,7 +108,7 @@ namespace ExampleApp
 
 		void AndroidFlurryMetricsService::SetEvent(const std::string& eventString, const std::string& key1, const std::string& value1, const std::string& key2, const std::string& value2, const std::string& key3, const std::string& value3)
 		{
-			AndroidSafeNativeThreadAttachment attached(*m_pNativeState);
+			AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
 			jstring eventStr = env->NewStringUTF(eventString.c_str());
@@ -133,7 +133,7 @@ namespace ExampleApp
 
 		void AndroidFlurryMetricsService::BeginTimedEvent(const std::string& eventString)
 		{
-			AndroidSafeNativeThreadAttachment attached(*m_pNativeState);
+			AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
 			jstring eventStr = env->NewStringUTF(eventString.c_str());
@@ -146,7 +146,7 @@ namespace ExampleApp
 
 		void AndroidFlurryMetricsService::BeginTimedEvent(const std::string& eventString, const std::string& key1, const std::string& value1)
 		{
-			AndroidSafeNativeThreadAttachment attached(*m_pNativeState);
+			AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
 			jstring eventStr = env->NewStringUTF(eventString.c_str());
@@ -163,7 +163,7 @@ namespace ExampleApp
 
 		void AndroidFlurryMetricsService::EndTimedEvent(const std::string& eventString)
 		{
-			AndroidSafeNativeThreadAttachment attached(*m_pNativeState);
+			AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
 			jstring eventStr = env->NewStringUTF(eventString.c_str());
@@ -176,7 +176,7 @@ namespace ExampleApp
 
 		void AndroidFlurryMetricsService::EndTimedEvent(const std::string& eventString, const std::string& key1, const std::string& value1)
 		{
-			AndroidSafeNativeThreadAttachment attached(*m_pNativeState);
+			AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
 			jstring eventStr = env->NewStringUTF(eventString.c_str());

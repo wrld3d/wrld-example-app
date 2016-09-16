@@ -11,6 +11,13 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+
+			void ModalBackgroundNativeViewModule::Reigster(const TContainerBuilder& builder)
+			{
+				builder->registerType<ModalBackgroundNativeView>().singleInstance();
+			}
+
+        /*
             ModalBackgroundNativeViewModule::ModalBackgroundNativeViewModule(
                 Eegeo::Modules::Core::RenderingModule& renderingModule,
                 ExampleAppMessaging::TMessageBus& messageBus
@@ -48,7 +55,7 @@ namespace ExampleApp
             void ModalBackgroundNativeViewModule::Update(float dt)
             {
             	m_pModalBackgroundView->Update(dt);
-            }
+            }*/
         }
     }
 }

@@ -150,13 +150,39 @@ AppHost::AppHost(
 {
     ASSERT_NATIVE_THREAD
 
+//	---> this is what we want..
+//	m_wiring = std::make_shared<ExampleApp::AppWiring>();
+//	m_wiring->RegisterModule<ExampleApp::Android::AndroidAbstractionIoCModule>();
+//	m_wiring->RegisterModuleInstance(std::make_shared<ExampleApp::Android::AndroidAppModule>(screenProperties, applicationConfiguration, metricsService, m_viewController));
+//	m_wiring->RegisterDefaultModules();
+//	RegisterApplicationViewModules();
+//	m_wiring->ResolveModules();
+//
+//	most of this below here will be deleted: ...
+//**********************************************************************************
     Eegeo_ASSERT(resourceBuildShareContext != EGL_NO_CONTEXT);
 
     Eegeo::TtyHandler::TtyEnabled = true;
     Eegeo::AssertHandler::BreakOnAssert = true;
 
-    m_pAndroidLocationService = Eegeo_NEW(AndroidLocationService)(&nativeState);
-    m_pAndroidConnectivityService = Eegeo_NEW(AndroidConnectivityService)(&nativeState);
+    //builder->registerType<AndroidLocationService>().as<ExampleApp::Metrics::ILocationService>().singleInstance();
+
+    ---> AndroidLocationService
+//    builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+//			 {
+//				 auto nativeState = context.resolve<AndroidNativeState>();
+//				 return std::make_shared<AndroidLocationService>(nativeState.get());
+//			 }).as<ILocationService>().singleInstance();
+//
+//    builder->registerInstanceFactory([](Hypodermic::ComponentContext& context))
+//    		{
+//    			auto nativeState = context.resolve<AndroidNativeState>();
+//    			return std::make_shared<AndroidConnectivityService>(nativeState.get());
+//    		}).as<IConnectivityService>().singleInstance();
+
+
+    //m_pAndroidLocationService = Eegeo_NEW(AndroidLocationService)(&nativeState);
+    //m_pAndroidConnectivityService = Eegeo_NEW(AndroidConnectivityService)(&nativeState);
 
     m_pJpegLoader = Eegeo_NEW(Eegeo::Helpers::Jpeg::JpegLoader)();
 
@@ -184,6 +210,14 @@ AppHost::AppHost(
 
     m_pInputProcessor = Eegeo_NEW(Eegeo::Android::Input::AndroidInputProcessor)(&m_inputHandler, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
 
+    ---> AndroidAppModule
+//    builder->registerType<AndroidInputHandler>().as<IAndroidInputHandler>().singleInstance();
+//    builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+//    		{
+//    			auto inputHandler = context.resolve<IAndroidInputHandler>();
+//    			auto screenProperties = contexgt.resolve<Eegeo::Rendering::ScreenProperties>();
+//    			return std::make_shared<Eegeo::Android::Input::AndroidInputProcessor>(inputHandler.get(), screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
+//    		}).singleInstance();
     m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::SdkModel::AndroidInitialExperienceModule)(
                                      m_nativeState,
                                      m_androidPersistentSettingsModel,
@@ -195,9 +229,11 @@ AppHost::AppHost(
     		m_pAndroidPlatformAbstractionModule->GetHttpCache(),
     		m_androidPersistentSettingsModel);
 
-    m_pAndroidFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::AndroidFlurryMetricsService)(&m_nativeState);
+    //m_pAndroidFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::AndroidFlurryMetricsService)(&m_nativeState);
+    builder->registerType<ExampleApp::Metrics::AndroidFlurryMetricsService>().as<ExampleApp::Metrics::IMetricsService>().singleInstance();
 
-    m_pMenuReactionModel = Eegeo_NEW(ExampleApp::Menu::View::AndroidMenuReactionModel)();
+    //m_pMenuReactionModel = Eegeo_NEW(ExampleApp::Menu::View::AndroidMenuReactionModel)();
+    builder->registerType<AndroidMenuReactionModel>().as<ExampleApp::Menu::View::IMenuReactionModel>().singleInstance();
 
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
     			 applicationConfiguration,

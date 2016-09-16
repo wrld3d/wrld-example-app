@@ -17,14 +17,14 @@ namespace ExampleApp
             class AboutPageView : public IAboutPageView, private Eegeo::NonCopyable
             {
             private:
-                AndroidNativeState& m_nativeState;
+            	const std::shared_ptr<AndroidNativeState> m_nativeState;
                 jclass m_uiViewClass;
                 jobject m_uiView;
 
                 Eegeo::Helpers::CallbackCollection0 m_callbacks;
 
             public:
-                AboutPageView(AndroidNativeState& nativeState);
+                AboutPageView(const std::shared_ptr<AndroidNativeState>& nativeState);
 
                 ~AboutPageView();
 

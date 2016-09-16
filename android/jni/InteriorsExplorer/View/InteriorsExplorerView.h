@@ -20,7 +20,7 @@ namespace ExampleApp
             {
             public:
 
-                InteriorsExplorerView(AndroidNativeState& nativeState);
+                InteriorsExplorerView(const std::shared_ptr<AndroidNativeState>& nativeState);
                 ~InteriorsExplorerView();
 
                 void OnDismissed();
@@ -60,7 +60,7 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection1<int> m_selectedFloorCallbacks;
                 Eegeo::Helpers::CallbackCollection1<float> m_floorSelectionDraggedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_dismissedCallbacks;
-                AndroidNativeState& m_nativeState;
+                const std::shared_ptr<AndroidNativeState> m_nativeState;
             };
         }
     }
