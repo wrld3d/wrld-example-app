@@ -577,22 +577,7 @@
         <File Id="filTNs_xwzpJc._BgyCpbFtzVkuIIA" KeyPath="yes" Source="payload\Resources\Interiors\interiors_pin@3x.png" />
       </Component>
       <Component Id="cmpD9F8ADD33F7E807FD4F99A016565C721" Directory="THEMEFOLDER" Guid="{A7642B48-F459-47B4-8AB1-B638846FA241}">
-		<File Id="fil5B337BC21611277A2F4FE7E5F3D0B665" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\Default_water_reflection_cube_map_negX.png" />
-	  </Component>
-	  <Component Id="cmpA1702BD5BDEB47EEC66C8E71FF22548E" Directory="THEMEFOLDER" Guid="{9B3FE085-C248-4DA1-9C3C-069C0ABB2C00}">
-		<File Id="fil56B60B8D4247A8288E77B6EFC96755EE" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\Default_water_reflection_cube_map_negY.png" />
-	  </Component>
-	  <Component Id="cmp7EFE547DCE997B3BF3978F97E30034E2" Directory="THEMEFOLDER" Guid="{91A9281B-77C9-4669-8490-1ED9116EDE05}">
-		<File Id="filB58471CE4BFCB07244EEBFC13D2BCBE6" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\Default_water_reflection_cube_map_negZ.png" />
-	  </Component>
-	  <Component Id="cmpD37D937407FFC485485CB472F30BE5D4" Directory="THEMEFOLDER" Guid="{9B21BB79-60FE-48F0-8BF3-1C907D6836D1}">
-		<File Id="fil2170D329A5CB6ADFD7C274E9E9DBB2F9" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\Default_water_reflection_cube_map_posX.png" />
-	  </Component>
-	  <Component Id="cmp1E704EA634855989BD74B9B37BA2E05B" Directory="THEMEFOLDER" Guid="{7C147449-F77C-4F96-8FE7-92076F5B057C}">
-		<File Id="filA817C42BB5107C36B20D5E46AF3866A5" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\Default_water_reflection_cube_map_posY.png" />
-	  </Component>
-	  <Component Id="cmp0C44E88324A8EFA167D6D19289FB333D" Directory="THEMEFOLDER" Guid="{4CF8A01B-BF71-4BE9-B5DC-7F8712F51AAC}">
-		<File Id="fil3A62819D88CFF99795D7DEFCCB7A53D4" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\Default_water_reflection_cube_map_posZ.png" />
+		<File Id="fil5B337BC21611277A2F4FE7E5F3D0B665" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\Default_water_reflection_cube_map_cubemap.dds" />
 	  </Component>
       <Component Id="cmpF5OBSoC5fpEJWjx14GiRm.P_eSc" Directory="THEMEFOLDER" Guid="{65A48B0B-5E0F-4E0B-AB44-C0D0A4773940}">
         <File Id="filmBqIkgjWQJiUdumEpsvv3Zhv454" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\London_London_railDiffuse_repeat.dds" />
