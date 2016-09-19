@@ -143,12 +143,47 @@ set(resources ${resources}
 		Resources/compass_point_on.png
 		Resources/compass_point_on@2x.png
 		Resources/compass_point_on@3x.png
+		Resources/CompassNew.png
+		Resources/CompassNew@0.75x.png
+		Resources/CompassNew@1.5x.png
+		Resources/CompassNew@2x.png
+		Resources/CompassNew@3x.png
+		Resources/CompassNewLocate.png
+		Resources/CompassNewLocate@0.75x.png
+		Resources/CompassNewLocate@1.5x.png
+		Resources/CompassNewLocate@2x.png
+		Resources/CompassNewLocate@3x.png
+		Resources/CompassNewLocked.png
+		Resources/CompassNewLocked@0.75x.png
+		Resources/CompassNewLocked@1.5x.png
+		Resources/CompassNewLocked@2x.png
+		Resources/CompassNewLocked@3x.png
+		Resources/CompassNewLocked_Down.png
+		Resources/CompassNewLocked_Down@0.75x.png
+		Resources/CompassNewLocked_Down@1.5x.png
+		Resources/CompassNewLocked_Down@2x.png
+		Resources/CompassNewLocked_Down@3x.png
+		Resources/CompassNewLocate_Down.png
+		Resources/CompassNewLocate_Down@0.75x.png
+		Resources/CompassNewLocate_Down@1.5x.png
+		Resources/CompassNewLocate_Down@2x.png
+		Resources/CompassNewLocate_Down@3x.png
+		Resources/CompassNewUnlocked_Down.png
+		Resources/CompassNewUnlocked_Down@0.75x.png
+		Resources/CompassNewUnlocked_Down@1.5x.png
+		Resources/CompassNewUnlocked_Down@2x.png
+		Resources/CompassNewUnlocked_Down@3x.png
+		Resources/CompassNewUnlocked.png
+		Resources/CompassNewUnlocked@0.75x.png
+		Resources/CompassNewUnlocked@1.5x.png
+		Resources/CompassNewUnlocked@2x.png
+		Resources/CompassNewUnlocked@3x.png
 		Resources/DejaVuSansBold.fnt
 		Resources/DejaVuSansBold_0.png
 		Resources/eegeo_logo.png
 		Resources/eegeo_logo@2x.png
 		Resources/eegeo_logo@3x.png
-		Resources/embedded_manifest.txt
+		Resources/embedded_manifest.bin
 		Resources/floor_selection_bottom.png
 		Resources/floor_selection_bottom@2x.png
 		Resources/floor_selection_bottom@3x.png
@@ -161,126 +196,363 @@ set(resources ${resources}
 		Resources/gps_marker.png
 		Resources/gps_marker@2x.png
 		Resources/gps_marker@3x.png
-		Resources/icon1_aroundme.png
-		Resources/icon1_aroundme@2x.png
-		Resources/icon1_aroundme@3x.png
-		Resources/icon1_accommodation.png
-		Resources/icon1_accommodation@2x.png
-		Resources/icon1_accommodation@3x.png
-		Resources/icon1_amenities.png
-		Resources/icon1_amenities@2x.png
-		Resources/icon1_amenities@3x.png
-		Resources/icon1_art_museums.png
-		Resources/icon1_art_museums@2x.png
-		Resources/icon1_art_museums@3x.png
-		Resources/icon1_business.png
-		Resources/icon1_business@2x.png
-		Resources/icon1_business@3x.png
-		Resources/icon1_autumn.png
-		Resources/icon1_autumn@2x.png
-		Resources/icon1_autumn@3x.png
-		Resources/icon1_dawn.png
-		Resources/icon1_dawn@2x.png
-		Resources/icon1_dawn@3x.png
-		Resources/icon1_day.png
-		Resources/icon1_day@2x.png
-		Resources/icon1_day@3x.png
+        Resources/icon1_accommodation.png
+        Resources/icon1_accommodation@2x.png
+        Resources/icon1_accommodation@3x.png
+        Resources/icon1_airport.png
+        Resources/icon1_airport@2x.png
+        Resources/icon1_airport@3x.png
+        Resources/icon1_amenities.png
+        Resources/icon1_amenities@2x.png
+        Resources/icon1_amenities@3x.png
+        Resources/icon1_aroundme.png
+        Resources/icon1_aroundme@2x.png
+        Resources/icon1_aroundme@3x.png
+        Resources/icon1_art_museums.png
+        Resources/icon1_art_museums@2x.png
+        Resources/icon1_art_museums@3x.png
+        Resources/icon1_atm.png
+        Resources/icon1_atm@2x.png
+        Resources/icon1_atm@3x.png
+        Resources/icon1_autumn.png
+        Resources/icon1_autumn@2x.png
+        Resources/icon1_autumn@3x.png
+        Resources/icon1_bank.png
+        Resources/icon1_bank@2x.png
+        Resources/icon1_bank@3x.png
+        Resources/icon1_bed_breakfast.png
+        Resources/icon1_bed_breakfast@2x.png
+        Resources/icon1_bed_breakfast@3x.png
+        Resources/icon1_beer.png
+        Resources/icon1_beer@2x.png
+        Resources/icon1_beer@3x.png
+        Resources/icon1_burgers.png
+        Resources/icon1_burgers@2x.png
+        Resources/icon1_burgers@3x.png
+        Resources/icon1_bus.png
+        Resources/icon1_bus@2x.png
+        Resources/icon1_bus@3x.png
+        Resources/icon1_business.png
+        Resources/icon1_business@2x.png
+        Resources/icon1_business@3x.png
+        Resources/icon1_camping.png
+        Resources/icon1_camping@2x.png
+        Resources/icon1_camping@3x.png
+        Resources/icon1_casino.png
+        Resources/icon1_casino@2x.png
+        Resources/icon1_casino@3x.png
+        Resources/icon1_charge_point.png
+        Resources/icon1_charge_point@2x.png
+        Resources/icon1_charge_point@3x.png
+        Resources/icon1_childcare.png
+        Resources/icon1_childcare@2x.png
+        Resources/icon1_childcare@3x.png
+        Resources/icon1_christianity.png
+        Resources/icon1_christianity@2x.png
+        Resources/icon1_christianity@3x.png
+        Resources/icon1_cinema.png
+        Resources/icon1_cinema@2x.png
+        Resources/icon1_cinema@3x.png
+        Resources/icon1_clear.png
+        Resources/icon1_clear@2x.png
+        Resources/icon1_clear@3x.png
+        Resources/icon1_cocktail.png
+        Resources/icon1_cocktail@2x.png
+        Resources/icon1_cocktail@3x.png
+        Resources/icon1_coffee.png
+        Resources/icon1_coffee@2x.png
+        Resources/icon1_coffee@3x.png
+        Resources/icon1_cycling.png
+        Resources/icon1_cycling@2x.png
+        Resources/icon1_cycling@3x.png
+        Resources/icon1_dawn.png
+        Resources/icon1_dawn@2x.png
+        Resources/icon1_dawn@3x.png
+        Resources/icon1_day.png
+        Resources/icon1_day@2x.png
+        Resources/icon1_day@3x.png
         Resources/icon1_defibrillator.png
         Resources/icon1_defibrillator@2x.png
         Resources/icon1_defibrillator@3x.png
+        Resources/icon1_dentist.png
+        Resources/icon1_dentist@2x.png
+        Resources/icon1_dentist@3x.png
+        Resources/icon1_department.png
+        Resources/icon1_department@2x.png
+        Resources/icon1_department@3x.png
         Resources/icon1_disabled_access.png
         Resources/icon1_disabled_access@2x.png
         Resources/icon1_disabled_access@3x.png
-		Resources/icon1_dusk.png
-		Resources/icon1_dusk@2x.png
-		Resources/icon1_dusk@3x.png
+        Resources/icon1_donuts.png
+        Resources/icon1_donuts@2x.png
+        Resources/icon1_donuts@3x.png
+        Resources/icon1_dusk.png
+        Resources/icon1_dusk@2x.png
+        Resources/icon1_dusk@3x.png
+        Resources/icon1_education.png
+        Resources/icon1_education@2x.png
+        Resources/icon1_education@3x.png
         Resources/icon1_elevator.png
         Resources/icon1_elevator@2x.png
         Resources/icon1_elevator@3x.png
-		Resources/icon1_entertainment.png
-		Resources/icon1_entertainment@2x.png
-		Resources/icon1_entertainment@3x.png
-		Resources/icon1_fog.png
-		Resources/icon1_fog@2x.png
-		Resources/icon1_fog@3x.png
-		Resources/icon1_food_drink.png
-		Resources/icon1_food_drink@2x.png
-		Resources/icon1_food_drink@3x.png
-		Resources/icon1_health.png
-		Resources/icon1_health@2x.png
-		Resources/icon1_health@3x.png
-		Resources/icon1_misc.png
-		Resources/icon1_misc@2x.png
-		Resources/icon1_misc@3x.png
-        Resources/icon1_my_pins.png
-        Resources/icon1_my_pins@2x.png
-        Resources/icon1_my_pins@3x.png
-		Resources/icon1_night.png
-		Resources/icon1_night@2x.png
-		Resources/icon1_night@3x.png
-		Resources/icon1_sun.png
-		Resources/icon1_sun@2x.png
-		Resources/icon1_sun@3x.png
-		Resources/icon1_rain.png
-		Resources/icon1_rain@2x.png
-		Resources/icon1_rain@3x.png
-		Resources/icon1_shopping.png
-		Resources/icon1_shopping@2x.png
-		Resources/icon1_shopping@3x.png
-		Resources/icon1_snow.png
-		Resources/icon1_snow@2x.png
-		Resources/icon1_snow@3x.png
-		Resources/icon1_spring.png
-		Resources/icon1_spring@2x.png
-		Resources/icon1_spring@3x.png
-		Resources/icon1_sports_leisure.png
-		Resources/icon1_sports_leisure@2x.png
-		Resources/icon1_sports_leisure@3x.png
-		Resources/icon1_summer.png
-		Resources/icon1_summer@2x.png
-        Resources/icon1_summer@3x.png
-        Resources/icon1_tourism.png
-        Resources/icon1_tourism@2x.png
-        Resources/icon1_tourism@3x.png
         Resources/icon1_emergency_exit.png
         Resources/icon1_emergency_exit@2x.png
         Resources/icon1_emergency_exit@3x.png
+        Resources/icon1_entertainment.png
+        Resources/icon1_entertainment@2x.png
+        Resources/icon1_entertainment@3x.png
         Resources/icon1_escalator.png
         Resources/icon1_escalator@2x.png
         Resources/icon1_escalator@3x.png
+        Resources/icon1_facebook.png
+        Resources/icon1_facebook@2x.png
+        Resources/icon1_facebook@3x.png
+        Resources/icon1_farm.png
+        Resources/icon1_farm@2x.png
+        Resources/icon1_farm@3x.png
+        Resources/icon1_ferry.png
+        Resources/icon1_ferry@2x.png
+        Resources/icon1_ferry@3x.png
         Resources/icon1_fire.png
         Resources/icon1_fire@2x.png
         Resources/icon1_fire@3x.png
+        Resources/icon1_fire_extinguisher.png
+        Resources/icon1_fire_extinguisher@2x.png
+        Resources/icon1_fire_extinguisher@3x.png
         Resources/icon1_first_aid.png
         Resources/icon1_first_aid@2x.png
         Resources/icon1_first_aid@3x.png
+        Resources/icon1_fishing.png
+        Resources/icon1_fishing@2x.png
+        Resources/icon1_fishing@3x.png
+        Resources/icon1_florist.png
+        Resources/icon1_florist@2x.png
+        Resources/icon1_florist@3x.png
+        Resources/icon1_fog.png
+        Resources/icon1_fog@2x.png
+        Resources/icon1_fog@3x.png
+        Resources/icon1_food_drink.png
+        Resources/icon1_food_drink@2x.png
+        Resources/icon1_food_drink@3x.png
+        Resources/icon1_football.png
+        Resources/icon1_football@2x.png
+        Resources/icon1_football@3x.png
+        Resources/icon1_golf.png
+        Resources/icon1_golf@2x.png
+        Resources/icon1_golf@3x.png
+        Resources/icon1_google_plus.png
+        Resources/icon1_google_plus@2x.png
+        Resources/icon1_google_plus@3x.png
+        Resources/icon1_groceries.png
+        Resources/icon1_groceries@2x.png
+        Resources/icon1_groceries@3x.png
+        Resources/icon1_health.png
+        Resources/icon1_health@2x.png
+        Resources/icon1_health@3x.png
+        Resources/icon1_historic_monument.png
+        Resources/icon1_historic_monument@2x.png
+        Resources/icon1_historic_monument@3x.png
+        Resources/icon1_hospital.png
+        Resources/icon1_hospital@2x.png
+        Resources/icon1_hospital@3x.png
+        Resources/icon1_hostel.png
+        Resources/icon1_hostel@2x.png
+        Resources/icon1_hostel@3x.png
+        Resources/icon1_hotel.png
+        Resources/icon1_hotel@2x.png
+        Resources/icon1_hotel@3x.png
+        Resources/icon1_islam.png
+        Resources/icon1_islam@2x.png
+        Resources/icon1_islam@3x.png
+        Resources/icon1_judaism.png
+        Resources/icon1_judaism@2x.png
+        Resources/icon1_judaism@3x.png
+        Resources/icon1_library.png
+        Resources/icon1_library@2x.png
+        Resources/icon1_library@3x.png
+        Resources/icon1_lifeguard.png
+        Resources/icon1_lifeguard@2x.png
+        Resources/icon1_lifeguard@3x.png
+        Resources/icon1_limo.png
+        Resources/icon1_limo@2x.png
+        Resources/icon1_limo@3x.png
+        Resources/icon1_link.png
+        Resources/icon1_link@2x.png
+        Resources/icon1_link@3x.png
+        Resources/icon1_lodge.png
+        Resources/icon1_lodge@2x.png
+        Resources/icon1_lodge@3x.png
+        Resources/icon1_meeting_room.png
+        Resources/icon1_meeting_room@2x.png
+        Resources/icon1_meeting_room@3x.png
+        Resources/icon1_meeting_room_available.png
+        Resources/icon1_meeting_room_available@2x.png
+        Resources/icon1_meeting_room_available@3x.png
+        Resources/icon1_meeting_room_available_soon.png
+        Resources/icon1_meeting_room_available_soon@2x.png
+        Resources/icon1_meeting_room_available_soon@3x.png
+        Resources/icon1_meeting_room_unavailable.png
+        Resources/icon1_meeting_room_unavailable@2x.png
+        Resources/icon1_meeting_room_unavailable@3x.png
+        Resources/icon1_misc.png
+        Resources/icon1_misc@2x.png
+        Resources/icon1_misc@3x.png
+        Resources/icon1_music.png
+        Resources/icon1_music@2x.png
+        Resources/icon1_music@3x.png
+        Resources/icon1_my_pins.png
+        Resources/icon1_my_pins@2x.png
+        Resources/icon1_my_pins@3x.png
+        Resources/icon1_night.png
+        Resources/icon1_night@2x.png
+        Resources/icon1_night@3x.png
+        Resources/icon1_office.png
+        Resources/icon1_office@2x.png
+        Resources/icon1_office@3x.png
+        Resources/icon1_park.png
+        Resources/icon1_park@2x.png
+        Resources/icon1_park@3x.png
+        Resources/icon1_parking.png
+        Resources/icon1_parking@2x.png
+        Resources/icon1_parking@3x.png
+        Resources/icon1_payphone.png
+        Resources/icon1_payphone@2x.png
+        Resources/icon1_payphone@3x.png
         Resources/icon1_person.png
         Resources/icon1_person@2x.png
         Resources/icon1_person@3x.png
+        Resources/icon1_petrol_station.png
+        Resources/icon1_petrol_station@2x.png
+        Resources/icon1_petrol_station@3x.png
+        Resources/icon1_pharmacy.png
+        Resources/icon1_pharmacy@2x.png
+        Resources/icon1_pharmacy@3x.png
+        Resources/icon1_picasa.png
+        Resources/icon1_picasa@2x.png
+        Resources/icon1_picasa@3x.png
+        Resources/icon1_pizza.png
+        Resources/icon1_pizza@2x.png
+        Resources/icon1_pizza@3x.png
+        Resources/icon1_place_of_worship.png
+        Resources/icon1_place_of_worship@2x.png
+        Resources/icon1_place_of_worship@3x.png
+        Resources/icon1_playing_field.png
+        Resources/icon1_playing_field@2x.png
+        Resources/icon1_playing_field@3x.png
+        Resources/icon1_police.png
+        Resources/icon1_police@2x.png
+        Resources/icon1_police@3x.png
+        Resources/icon1_post_office.png
+        Resources/icon1_post_office@2x.png
+        Resources/icon1_post_office@3x.png
         Resources/icon1_printer.png
         Resources/icon1_printer@2x.png
         Resources/icon1_printer@3x.png
+        Resources/icon1_race_track.png
+        Resources/icon1_race_track@2x.png
+        Resources/icon1_race_track@3x.png
+        Resources/icon1_rain.png
+        Resources/icon1_rain@2x.png
+        Resources/icon1_rain@3x.png
         Resources/icon1_reception.png
         Resources/icon1_reception@2x.png
         Resources/icon1_reception@3x.png
+        Resources/icon1_sailing.png
+        Resources/icon1_sailing@2x.png
+        Resources/icon1_sailing@3x.png
+        Resources/icon1_shooting.png
+        Resources/icon1_shooting@2x.png
+        Resources/icon1_shooting@3x.png
+        Resources/icon1_shopping.png
+        Resources/icon1_shopping@2x.png
+        Resources/icon1_shopping@3x.png
+        Resources/icon1_skiing.png
+        Resources/icon1_skiing@2x.png
+        Resources/icon1_skiing@3x.png
+        Resources/icon1_snow.png
+        Resources/icon1_snow@2x.png
+        Resources/icon1_snow@3x.png
+        Resources/icon1_spa.png
+        Resources/icon1_spa@2x.png
+        Resources/icon1_spa@3x.png
+        Resources/icon1_sports_field.png
+        Resources/icon1_sports_field@2x.png
+        Resources/icon1_sports_field@3x.png
+        Resources/icon1_sports_leisure.png
+        Resources/icon1_sports_leisure@2x.png
+        Resources/icon1_sports_leisure@3x.png
+        Resources/icon1_spring.png
+        Resources/icon1_spring@2x.png
+        Resources/icon1_spring@3x.png
         Resources/icon1_stairs.png
         Resources/icon1_stairs@2x.png
         Resources/icon1_stairs@3x.png
         Resources/icon1_stationary.png
         Resources/icon1_stationary@2x.png
         Resources/icon1_stationary@3x.png
+        Resources/icon1_stationery.png
+        Resources/icon1_stationery@2x.png
+        Resources/icon1_stationery@3x.png
+        Resources/icon1_subway.png
+        Resources/icon1_subway@2x.png
+        Resources/icon1_subway@3x.png
+        Resources/icon1_summer.png
+        Resources/icon1_summer@2x.png
+        Resources/icon1_summer@3x.png
+        Resources/icon1_sun.png
+        Resources/icon1_sun@2x.png
+        Resources/icon1_sun@3x.png
+        Resources/icon1_taxi.png
+        Resources/icon1_taxi@2x.png
+        Resources/icon1_taxi@3x.png
         Resources/icon1_toilets.png
         Resources/icon1_toilets@2x.png
         Resources/icon1_toilets@3x.png
-		Resources/icon1_clear.png
-		Resources/icon1_clear@2x.png
-        Resources/icon1_clear@3x.png
-		Resources/icon1_transport.png
-		Resources/icon1_transport@2x.png
-		Resources/icon1_transport@3x.png
-		Resources/icon1_winter.png
-		Resources/icon1_winter@2x.png
-		Resources/icon1_winter@3x.png
+        Resources/icon1_tourism.png
+        Resources/icon1_tourism@2x.png
+        Resources/icon1_tourism@3x.png
+        Resources/icon1_town_hall.png
+        Resources/icon1_town_hall@2x.png
+        Resources/icon1_town_hall@3x.png
+        Resources/icon1_train.png
+        Resources/icon1_train@2x.png
+        Resources/icon1_train@3x.png
+        Resources/icon1_tram.png
+        Resources/icon1_tram@2x.png
+        Resources/icon1_tram@3x.png
+        Resources/icon1_transport.png
+        Resources/icon1_transport@2x.png
+        Resources/icon1_transport@3x.png
+        Resources/icon1_twitter.png
+        Resources/icon1_twitter@2x.png
+        Resources/icon1_twitter@3x.png
+        Resources/icon1_university.png
+        Resources/icon1_university@2x.png
+        Resources/icon1_university@3x.png
+        Resources/icon1_vet.png
+        Resources/icon1_vet@2x.png
+        Resources/icon1_vet@3x.png
+        Resources/icon1_vimeo.png
+        Resources/icon1_vimeo@2x.png
+        Resources/icon1_vimeo@3x.png
+        Resources/icon1_wikipedia.png
+        Resources/icon1_wikipedia@2x.png
+        Resources/icon1_wikipedia@3x.png
+        Resources/icon1_wine.png
+        Resources/icon1_wine@2x.png
+        Resources/icon1_wine@3x.png
+        Resources/icon1_winter.png
+        Resources/icon1_winter@2x.png
+        Resources/icon1_winter@3x.png
+        Resources/icon1_working_group.png
+        Resources/icon1_working_group@2x.png
+        Resources/icon1_working_group@3x.png
+        Resources/icon1_youtube.png
+        Resources/icon1_youtube@2x.png
+        Resources/icon1_youtube@3x.png
+        Resources/icon1_zoo.png
+        Resources/icon1_zoo@2x.png
+        Resources/icon1_zoo@3x.png
 		Resources/image_blank.png
 		Resources/image_blank@2x.png
 		Resources/image_blank@3x.png
@@ -395,64 +667,9 @@ set(resources ${resources}
 		Resources/sub_menu_arrow_on.png
 		Resources/sub_menu_arrow_on@2x.png
 		Resources/sub_menu_arrow_on@3x.png
-		Resources/Textures
-		Resources/Textures/EmbeddedTheme
-		Resources/Textures/EmbeddedTheme/London_London_railDiffuse_repeat.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_ldn_trains_01.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_placeholder_no_data.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_SanFran_roadDiffuse_repeat.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_SanFran_wallDiffuse.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_sf_planes_01.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_sf_vehicles_01.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture0.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture0_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture1.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture10.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture10_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture11.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture11_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture12.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture12_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture13.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture13_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture14.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture14_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture15.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture15_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture16.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture16_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture17.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture17_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture18.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture18_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture1_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture2.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture2_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture3.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture3_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture4.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture4_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture5.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture5_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture6.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture6_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture7.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture7_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture8.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture8_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture9.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_TerrainTexture9_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_trees_01.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_trees_top_01.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_VehicleModels_recce_trams.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_Water_01.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_Water_01_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_Water_02.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_Water_02_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_Water_03.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_Water_03_LOD.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_water_normalmap.pvr
-		Resources/Textures/EmbeddedTheme/SanFrancisco_water_reflectionmap.pvr
+		Resources/search_menu_items.json
+		Resources/search_tags.json
+		Resources/EmbeddedTheme
 		Resources/Tours
 		Resources/Tours/browser_back.png
 		Resources/Tours/browser_forward.png

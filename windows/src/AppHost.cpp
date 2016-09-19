@@ -54,7 +54,7 @@
 #include "WindowsInitialExperienceModule.h"
 #include "ViewControllerUpdaterModule.h"
 #include "ViewControllerUpdaterModel.h"
-#include "CategorySearchModule.h"
+#include "TagSearchModule.h"
 #include "ScreenProperties.h"
 #include "MyPinCreationViewModule.h"
 #include "IMyPinCreationModule.h"
@@ -88,6 +88,7 @@
 #include "SurveyViewModule.h"
 #include "SearchResultPoiView.h"
 #include "WindowsMenuReactionModel.h"
+#include "TagSearchViewModule.h"
 #include "IMyPinCreationInitiationViewModel.h"
 #include "WindowsApplicationConfigurationVersionProvider.h"
 
@@ -138,6 +139,7 @@ AppHost::AppHost(
     , m_pMenuReaction(NULL)
     , m_shouldStartFullscreen(false)
     , m_maxDeviceTouchCount(maxDeviceTouchCount)
+	, m_pTagSearchViewModule(NULL)
 {
     ASSERT_NATIVE_THREAD
          
@@ -498,12 +500,18 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         app.SearchMenuModule().GetSearchMenuModel(),
         app.SearchMenuModule().GetSearchMenuViewModel(),
         app.SearchMenuModule().GetSearchSectionViewModel(),
-        app.CategorySearchModule().GetCategorySearchRepository(),
+        app.TagSearchModule().GetTagSearchRepository(),
         m_pModalBackgroundViewModule->GetView(),
         app.ModalityModule().GetModalityController(),
         m_messageBus,
         app.ReactionModelModule().GetReactionModel()
         );
+
+	m_pTagSearchViewModule = ExampleApp::TagSearch::View::TagSearchViewModule::Create(
+		app.TagSearchModule().GetTagSearchMenuOptionsModel(),
+		app.SettingsMenuModule().GetSettingsMenuViewModel(),
+		m_messageBus,
+		*m_pMenuReaction);
 
     m_pSettingsMenuViewModule = Eegeo_NEW(ExampleApp::SettingsMenu::View::SettingsMenuViewModule)(
         "ExampleAppWPF.SettingsMenuView",
@@ -614,6 +622,8 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
             Eegeo_DELETE m_pModalBackgroundViewModule;
 
             Eegeo_DELETE m_pSearchResultSectionViewModule;
+
+			Eegeo_DELETE m_pTagSearchViewModule;
 
             Eegeo_DELETE m_pSearchMenuViewModule;
 

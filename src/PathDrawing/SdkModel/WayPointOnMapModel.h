@@ -10,7 +10,7 @@
 #include "Space.h"
 #include "Types.h"
 #include "WorldPins.h"
-#include "CategorySearch.h"
+#include "TagSearch.h"
 #include "IWayPointsRepository.h"
 
 namespace ExampleApp
@@ -42,7 +42,7 @@ namespace ExampleApp
                 virtual ~WayPointOnMapModel();
                 
                 WayPointOnMapModel(WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                   CategorySearch::ISearchResultIconCategoryMapper& searchResultIconCategoryMapper,
+                                   TagSearch::ISearchResultIconKeyMapper& searchResultIconCategoryMapper,
                                    PathDrawing::SdkModel::IWayPointsRepository& wayPointsRepository);
                 
                 

@@ -313,7 +313,7 @@
                             <Grid Grid.Row="2">
                                 <StackPanel  Orientation="Vertical" >
                                     <Grid>
-                                        <ScrollViewer Width="250" Background="{StaticResource PrimaryBG_colour}" Name="ResultsMenuOptionsView" PanningRatio="3" PanningDeceleration="0" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+                                        <ScrollViewer Width="250" Background="{StaticResource PrimaryBG_colour}" Name="ResultsMenuOptionsView" PanningRatio="3" PanningDeceleration="0" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden" CanContentScroll="True">
                                             <ListBox Name="SearchResultsList" Template="{StaticResource ListBoxControlTemplateNoPadding}" Background="{StaticResource PrimaryBG_colour}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0" Focusable="False">
                                                 <ListBox.Resources>
                                                     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
@@ -401,7 +401,7 @@
                                                 <RowDefinition Height="auto"/>
                                             </Grid.RowDefinitions>
 
-                                            <Grid Width="211" Height="56" Grid.Row="1" Margin="22,0,0,0" HorizontalAlignment="Left">
+                                            <Grid Width="225" Height="56" Grid.Row="1" Margin="22,0,0,0" HorizontalAlignment="Left">
                                                 <Image IsHitTestVisible="False" Grid.Row="1" Grid.Column="0" Name="SearchResultsFade" Source="/Assets/search_results_fade.png" HorizontalAlignment="Left" VerticalAlignment="Bottom" Visibility="Visible">
                                                 </Image>
                                             </Grid>

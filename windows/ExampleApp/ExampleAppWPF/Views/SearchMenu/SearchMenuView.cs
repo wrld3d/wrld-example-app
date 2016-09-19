@@ -3,13 +3,11 @@ using ExampleAppWPF.Views.SearchMenu;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
@@ -39,7 +37,7 @@ namespace ExampleAppWPF
 
         private bool m_searchInFlight;
         private bool m_hasResults;
-        private bool m_hasCategorySearch;
+        private bool m_hasTagSearch;
 
         private ControlClickHandler m_menuListClickHandler;
         private ControlClickHandler m_resultsListClickHandler;
@@ -70,7 +68,7 @@ namespace ExampleAppWPF
 
             m_searchInFlight = false;
             m_hasResults = false;
-            m_hasCategorySearch = false;
+            m_hasTagSearch = false;
             m_touchHandler = new WindowInteractionTouchHandler(this, true, false, true);
 
             MouseEnter += (o, e) =>
@@ -240,11 +238,13 @@ namespace ExampleAppWPF
         private void OnResultsListTouchUp(object sender, TouchEventArgs e)
         {
             m_resultsOptionsView.ReleaseTouchCapture(e.TouchDevice);
+            m_resultsOptionsView.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
         }
 
         private void OnResultsListTouchDown(object sender, TouchEventArgs e)
         {
             m_resultsOptionsView.CaptureTouch(e.TouchDevice);
+            m_resultsOptionsView.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
         }
 
         private void OnSearchBoxTextChanged(object sender, TextChangedEventArgs e)
@@ -314,7 +314,7 @@ namespace ExampleAppWPF
 
         private void OnSearchBoxSelected(object sender, RoutedEventArgs e)
         {
-            if (m_hasCategorySearch)
+            if (m_hasTagSearch)
             {
                 m_editText.Text = string.Empty;
             }
@@ -338,7 +338,7 @@ namespace ExampleAppWPF
         private void ClearSearch()
         {
             m_hasResults = false;
-            m_hasCategorySearch = false;
+            m_hasTagSearch = false;
 
             if (m_resultsList.Items?.Count > 0)
             {
@@ -381,7 +381,7 @@ namespace ExampleAppWPF
             }
         }
 
-        public void SetSearchSection(string category, string[] searchResults)
+        public void SetSearchSection(string tag, string[] searchResults)
         {
             var groups = new List<string>(searchResults.Length);
             var groupsExpandable = new List<bool>(searchResults.Length);
@@ -397,8 +397,8 @@ namespace ExampleAppWPF
                 item.Details = jObject["details"] != null ? jObject["details"].Value<string>() : string.Empty;
 
                 JToken iconStringToken;
-                var iconCategoryName = jObject.TryGetValue("icon", out iconStringToken) ? iconStringToken.Value<string>() : "";
-                item.Icon = SearchMenuResultIconProvider.GetIconForCategory(iconCategoryName);
+                var iconTagName = jObject.TryGetValue("icon", out iconStringToken) ? iconStringToken.Value<string>() : "";
+                item.Icon = SearchMenuResultIconProvider.GetIconForTag(iconTagName);
                 itemsSource.Add(item);
 
                 groups.Add(str);
@@ -478,13 +478,15 @@ namespace ExampleAppWPF
             });
         }
 
-        public void SetEditText(string text, bool isCategory)
+        public void SetEditText(string text, bool isTag)
         {
             if(!m_editText.IsFocused)
             {
-                m_editText.Text = text;
+                byte[] bytes = Encoding.Default.GetBytes(text);
+                string encodedText = Encoding.UTF8.GetString(bytes);
+                m_editText.Text = encodedText;
             }
-            m_hasCategorySearch = isCategory;
+            m_hasTagSearch = isTag;
             
         }
         

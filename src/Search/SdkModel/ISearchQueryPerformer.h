@@ -22,13 +22,13 @@ namespace ExampleApp
 
                 virtual const SearchQuery& GetPreviousSearchQuery() const = 0;
 
-                virtual void PerformSearchQuery(const std::string& query, bool isCategory, bool tryInteriorSearch) = 0;
+                virtual void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch) = 0;
 
-                virtual void PerformSearchQuery(const std::string& query, bool isCategory, bool tryInteriorSearch, float radius) = 0;
+                virtual void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, float radius) = 0;
 
-                virtual void PerformSearchQuery(const std::string& query, bool isCategory, bool tryInteriorSearch, const Eegeo::Space::LatLongAltitude& location) = 0;
+                virtual void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, const Eegeo::Space::LatLongAltitude& location) = 0;
                 
-                virtual void PerformSearchQuery(const std::string& query, bool isCategory, bool tryInteriorSearch, const Eegeo::Space::LatLongAltitude& location, float radius) = 0;
+                virtual void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, const Eegeo::Space::LatLongAltitude& location, float radius) = 0;
 
                 virtual void RemoveSearchQueryResults() = 0;
 

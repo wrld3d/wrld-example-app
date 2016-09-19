@@ -11,20 +11,17 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                EegeoReadableTagMapper::EegeoReadableTagMapper()
+                EegeoReadableTagMapper::EegeoReadableTagMapper(const Search::SdkModel::SearchTags& searchTags)
                 {
-                    m_tagsToReadableNamesMap.insert(std::make_pair("accommodation","Accommodation"));
-                    m_tagsToReadableNamesMap.insert(std::make_pair("art_museums","Art & Museum"));
-                    m_tagsToReadableNamesMap.insert(std::make_pair("business","Business"));
-                    m_tagsToReadableNamesMap.insert(std::make_pair("entertainment","Entertainment"));
-                    m_tagsToReadableNamesMap.insert(std::make_pair("food_drink","Food & Drink"));
-                    m_tagsToReadableNamesMap.insert(std::make_pair("amenities","General Amenities"));
-                    m_tagsToReadableNamesMap.insert(std::make_pair("health","Health"));
-                    m_tagsToReadableNamesMap.insert(std::make_pair("shopping","Shopping"));
-                    m_tagsToReadableNamesMap.insert(std::make_pair("sports_leisure","Sport & Leisure"));
-                    m_tagsToReadableNamesMap.insert(std::make_pair("tourism","Tourist"));
-                    m_tagsToReadableNamesMap.insert(std::make_pair("transport","Transport"));
-                    m_unknownTagName = "Unknown";
+                    for(const auto& i : searchTags.tags)
+                    {
+                        Eegeo_ASSERT(m_tagsToReadableNamesMap.find(i.tag) == m_tagsToReadableNamesMap.end(),
+                            "A mapping already exists for tag %s", i.tag.c_str());
+
+                        m_tagsToReadableNamesMap.insert(std::make_pair(i.tag, i.readableTag));
+                    }
+
+                    m_unknownTagName = searchTags.defaultReadableTag;
                 }
                 
                 const std::string& EegeoReadableTagMapper::GetNameForTag(const std::string& tag) const

@@ -17,14 +17,12 @@ namespace ExampleApp
                 : m_pSearchService(NULL)
                 {
                     std::map<std::string,Search::SdkModel::ISearchService*> searchServices;
-                    
+
                     for(std::map<std::string, Search::SdkModel::ISearchServiceModule*>::const_iterator it = searchServiceModules.begin(); it != searchServiceModules.end(); ++it)
                     {
                         searchServices[(*it).first] = &(*it).second->GetSearchService();
-                        std::vector<CategorySearch::View::CategorySearchModel> categorySearchModels = (*it).second->GetCategorySearchModels();
-                        m_categorySearchModels.insert(m_categorySearchModels.end(), categorySearchModels.begin(), categorySearchModels.end());
                     }
-                    
+
                     m_pSearchService = Eegeo_NEW(CombinedSearchService)(searchServices, interiorInteractionModel);
                 }
                 
@@ -36,11 +34,6 @@ namespace ExampleApp
                 Search::SdkModel::ISearchService& CombinedSearchServiceModule::GetSearchService() const
                 {
                     return *m_pSearchService;
-                }
-                
-                std::vector<CategorySearch::View::CategorySearchModel> CombinedSearchServiceModule::GetCategorySearchModels() const
-                {
-                    return m_categorySearchModels;
                 }
             }
         }

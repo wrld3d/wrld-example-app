@@ -13,7 +13,7 @@
 #include "SearchQueryResponseReceivedMessage.h"
 #include "BidirectionalBus.h"
 #include "WorldPins.h"
-#include "CategorySearch.h"
+#include "TagSearch.h"
 #include "WayPointOnMapModel.h"
 #include "DirectionsMenuStateChangedMessage.h"
 
@@ -29,15 +29,13 @@ namespace ExampleApp
                 IPathDrawingController* m_pPathDrawingController;
                 WayPointOnMapModel* m_pWayPointOnMapModel;
                 
-//                Eegeo::Helpers::TCallback1<PathDrawingModule, const DirectionsMenuInitiation::DirectionsMenuStateChangedMessage&> m_searchResultReceivedHandler;
-                
             public:
 
                 PathDrawingModule(WorldPins::SdkModel::IWorldPinsService& worldPinsService
                                   , Eegeo::Routes::RouteService& routeService
                                   , Eegeo::EegeoWorld& eegeoWorld
                                   , AppCamera::SdkModel::AppGlobeCameraWrapper& cameraWrapper
-                                  , CategorySearch::ISearchResultIconCategoryMapper& searchResultIconCategoryMapper
+                                  , TagSearch::ISearchResultIconKeyMapper& searchResultIconCategoryMapper
                                   , ExampleAppMessaging::TMessageBus& messageBus);
 
                 virtual ~PathDrawingModule();
@@ -45,9 +43,7 @@ namespace ExampleApp
                 IWayPointsRepository& GetWayPointsRepository() const;
                 
                 void Update(float dt);
-                
-//                void OnSearchQueryResponseReceivedMessage(const DirectionsMenuInitiation::DirectionsMenuStateChangedMessage& message);
-                
+                                
             };
         }
     }

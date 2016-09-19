@@ -18,7 +18,7 @@
             android:background="@color/white">
             
             <ImageView
-                android:id="@+id/search_result_poi_view_category_icon"
+                android:id="@+id/search_result_poi_view_tag_icon"
                 android:contentDescription=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
                 android:layout_width="200dp"
                 android:layout_height="36dp"
                 android:layout_margin="5dp"
-                android:layout_toRightOf="@id/search_result_poi_view_category_icon"
+                android:layout_toRightOf="@id/search_result_poi_view_tag_icon"
                 android:gravity="center_vertical"
                 android:singleLine="true"
                 android:ellipsize="end"

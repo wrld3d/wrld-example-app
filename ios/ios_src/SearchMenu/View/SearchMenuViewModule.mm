@@ -17,7 +17,7 @@ namespace ExampleApp
                                                        Menu::View::IMenuViewModel& searchMenuViewModel,
                                                        Menu::View::IMenuSectionViewModel& searchSectionViewModel,
                                                        const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                                       CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
+                                                       TagSearch::View::ITagSearchRepository& tagSearchRepository,
                                                        Modality::View::IModalBackgroundView& modalBackgroundView,
                                                        ExampleAppMessaging::TMessageBus& messageBus)
             {
@@ -37,7 +37,7 @@ namespace ExampleApp
                                                                 *[m_pView getInterop],
                                                                 *[m_pView getSearchMenuInterop],
                                                                 searchSectionViewModel,
-                                                                categorySearchRepository,
+                                                                tagSearchRepository,
                                                                 modalBackgroundView,
                                                                 messageBus);
             }

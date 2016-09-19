@@ -17,7 +17,7 @@
     
     BOOL m_keyboardActive;
     BOOL m_returnPressed;
-    BOOL m_currentSearchIsCategory;
+    BOOL m_currentSearchIsTag;
     BOOL m_hasResults;
     BOOL m_searchInProgress;
     
@@ -55,10 +55,10 @@
     
     m_keyboardActive = false;
     m_returnPressed = false;
-    m_currentSearchIsCategory = false;
+    m_currentSearchIsTag = false;
     m_searchInProgress = false;
     
-    m_scrollSpeed = 1.5f;
+    m_scrollSpeed = 25.0f;
     
     [[NSNotificationCenter defaultCenter]addObserver:self
                                             selector:@selector(keyboardDidChangeFrame:)
@@ -108,14 +108,14 @@
 }
 
 - (void) setEditText :(NSString*)searchText
-                     :(bool)isCategory
+                     :(bool)isTag
 {
     if(![m_pTextField isEditing])
     {
         [m_pTextField setText:searchText];
     }
     
-    m_currentSearchIsCategory = isCategory;
+    m_currentSearchIsTag = isTag;
     
     [self updateClearButtonVisibility];
 }
@@ -163,10 +163,10 @@
     m_keyboardActive = true;
     m_returnPressed = false;
     
-    if(m_currentSearchIsCategory)
+    if(m_currentSearchIsTag)
     {
         [textField setText:@""];
-        m_currentSearchIsCategory = false;
+        m_currentSearchIsTag = false;
         
         [self updateClearButtonVisibility];
     }
@@ -202,16 +202,27 @@
     return NO;
 }
 
+- (void)clampScrollOffsetY:(CGPoint &)scrollOffset
+{
+    if (scrollOffset.y > m_pSearchMenuScrollView.contentSize.height - m_pSearchMenuScrollView.frame.size.height)
+    {
+        scrollOffset.y = m_pSearchMenuScrollView.contentSize.height - m_pSearchMenuScrollView.frame.size.height;
+    }
+}
+
 - (void)searchMenuScrollDown
 {
     CGPoint searchResultListScrollOffset = m_pSearchMenuScrollView.contentOffset;
     searchResultListScrollOffset.y += m_scrollSpeed;
 
-    if (searchResultListScrollOffset.y > m_pSearchMenuScrollView.contentSize.height - m_pSearchMenuScrollView.frame.size.height) {
-        searchResultListScrollOffset.y = m_pSearchMenuScrollView.contentSize.height - m_pSearchMenuScrollView.frame.size.height;
-    }
+    [self clampScrollOffsetY:searchResultListScrollOffset];
 
-    m_pSearchMenuScrollView.contentOffset = searchResultListScrollOffset;
+    [UIView animateWithDuration:0.15
+                          delay:0
+                        options:UIViewAnimationCurveLinear
+                     animations:^ {
+        m_pSearchMenuScrollView.contentOffset = searchResultListScrollOffset;
+    } completion:nil];
 }
 
 - (void)searchMenuScrollStart
@@ -219,14 +230,16 @@
     CGPoint searchResultListScrollOffset = m_pSearchMenuScrollView.contentOffset;
     searchResultListScrollOffset.y += m_scrollSpeed;
     
-    m_pSearchMenuScrollView.contentOffset = searchResultListScrollOffset;
-
-    searchMenuScrollUpdateTimer = [NSTimer timerWithTimeInterval:1.0/120.0
-                                                          target:self
-                                                        selector:@selector(searchMenuScrollDown)
-                                                        userInfo:nil
-                                                         repeats:YES];
-    [[NSRunLoop mainRunLoop] addTimer:searchMenuScrollUpdateTimer forMode:NSDefaultRunLoopMode];
+    [self clampScrollOffsetY:searchResultListScrollOffset];
+    
+    [UIView animateWithDuration:0.15
+                          delay:0
+                        options:UIViewAnimationCurveLinear
+                     animations:^ {
+                         m_pSearchMenuScrollView.contentOffset = searchResultListScrollOffset;
+                     } completion:nil];
+    
+    searchMenuScrollUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(searchMenuScrollDown) userInfo:nil repeats:YES];
 }
 
 - (void)searchMenuScrollStop

@@ -14,7 +14,7 @@ namespace ExampleApp
         {
             
             WayPointOnMapModel::WayPointOnMapModel(WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                               CategorySearch::ISearchResultIconCategoryMapper& searchResultIconCategoryMapper,
+                               TagSearch::ISearchResultIconKeyMapper& searchResultIconCategoryMapper,
                                PathDrawing::SdkModel::IWayPointsRepository& wayPointsRepository)
             : m_onWayPointAddedCallBack(this, &WayPointOnMapModel::OnWayPointAdded)
             , m_onWayPointRemovedCallBack(this, &WayPointOnMapModel::OnWayPointRemoved)

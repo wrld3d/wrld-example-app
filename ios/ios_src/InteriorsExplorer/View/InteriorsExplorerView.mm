@@ -161,6 +161,8 @@ namespace
         m_halfDivisionHeight = m_floorDivisionHeight/2.0f;
         m_halfButtonHeight=static_cast<float>(self.pFloorChangeButton.frame.size.height/2.0f);
         
+        m_isSliderAnimPlaying = false;
+        
         [self hideFloorLabels];
         [self setHidden:YES];
         [self setArrowState:NO :NO];
@@ -321,6 +323,8 @@ namespace
     
     CGFloat posLeft = xPos - 5.0f;
     CGFloat posRight = xPos + 10.0f;
+    
+    m_isSliderAnimPlaying = true;
 
     [UIView animateWithDuration:1.1 delay:0.0 usingSpringWithDamping:0.3 initialSpringVelocity:0.2 options:UIViewKeyframeAnimationOptionCalculationModeCubicPaced animations:^{
         
@@ -342,7 +346,9 @@ namespace
             self.pFloorPanel.frame = floorFrame;
         } completion:nil];
         
-    } completion:nil];
+    } completion:^(BOOL finished){
+        m_isSliderAnimPlaying = false;
+    }];
 }
 
 - (bool) GetCanShowChangeFloorTutorialDialog
@@ -515,6 +521,11 @@ namespace
         
         [recognizer setTranslation:CGPointZero inView:self.pFloorChangeButton];
         
+        m_scrollRect.size = self.pFloorListView.bounds.size;
+    }
+    
+    if(recognizer.state == UIGestureRecognizerStateBegan)
+    {
         if(!self.pTimer)
         {
             self.pTimer = [NSTimer timerWithTimeInterval:1.0/60.0
@@ -525,11 +536,7 @@ namespace
         }
         [[NSRunLoop mainRunLoop] addTimer:self.pTimer forMode:NSDefaultRunLoopMode];
         m_scrollRect.origin = self.pFloorListView.contentOffset;
-        m_scrollRect.size = self.pFloorListView.bounds.size;
-    }
-    
-    if(recognizer.state == UIGestureRecognizerStateBegan)
-    {
+       
         [self showFloorLabels];
     }
     
@@ -604,7 +611,7 @@ namespace
     if(heightForFloorIndex < controlHalfHeightBounds)
     {
         // Stay within the top half of the control;
-        newY = topY + heightForFloorIndex + m_halfButtonHeight - m_floorDivisionHeight;
+        newY = heightForFloorIndex - m_halfButtonHeight + m_halfDivisionHeight;
         
     }
     else if(heightForFloorIndex >= self.pFloorListView.contentSize.height-(controlHalfHeightBounds+m_halfDivisionHeight))

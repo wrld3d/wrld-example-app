@@ -42,13 +42,17 @@
 #include "StartUxSurveyMessage.h"
 #include "InteriorsExplorerUINotifyMessage.h"
 #include "DirectionsMenuStateChangedMessage.h"
+#include "TagSearchAddedMessage.h"
+#include "TagSearchRemovedMessage.h"
 
 namespace ExampleApp
 {
     namespace ExampleAppMessaging
     {
         class NativeToUiMessageCatalog
-            : public Eegeo::Messaging::CatalogBinding<SearchResultSection::SearchResultAddedMessage>
+            : public Eegeo::Messaging::CatalogBinding<TagSearch::TagSearchAddedMessage>
+            , public Eegeo::Messaging::CatalogBinding<TagSearch::TagSearchRemovedMessage>
+            , public Eegeo::Messaging::CatalogBinding<SearchResultSection::SearchResultAddedMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultSection::SearchResultRemovedMessage>
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryPerformedMessage>
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryRemovedMessage>

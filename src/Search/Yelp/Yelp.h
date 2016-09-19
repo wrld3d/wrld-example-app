@@ -10,7 +10,7 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                class IYelpCategoryMapper;
+                class IYelpCategoryToTagMapper;
                 class IYelpSearchQuery;
                 class YelpSearchQueryFactory;
 				class YelpSearchResultModel;

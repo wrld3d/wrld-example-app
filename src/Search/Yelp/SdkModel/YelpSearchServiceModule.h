@@ -24,13 +24,14 @@ namespace ExampleApp
                 Yelp::SdkModel::YelpBusinessQueryFactory* m_pYelpBusinessQueryFactory;
                 Search::SdkModel::ISearchResultParser* m_pYelpSearchJsonParser;
                 Yelp::SdkModel::YelpBusinessJsonParser* m_pYelpBusinessJsonParser;
-                Yelp::SdkModel::IYelpCategoryMapper* m_pYelpCategoryMapper;
+                Yelp::SdkModel::IYelpCategoryToTagMapper* m_pYelpCategoryMapper;
 
             public:
                 YelpSearchServiceModule(
                     Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                     Net::SdkModel::INetworkCapabilities& networkCapabilities,
                     Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
+                    const std::vector<std::string>& appTags,
 					const std::string& yelpConsumerKey,
 					const std::string& yelpConsumerSecret,
 					const std::string& yelpOAuthToken,
@@ -40,8 +41,6 @@ namespace ExampleApp
                 ~YelpSearchServiceModule();
 
                 Search::SdkModel::ISearchService& GetSearchService() const;
-
-                std::vector<CategorySearch::View::CategorySearchModel> GetCategorySearchModels() const;
             };
         }
     }

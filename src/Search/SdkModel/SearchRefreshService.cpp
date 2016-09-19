@@ -156,7 +156,7 @@ namespace ExampleApp
                 {
                     const Eegeo::Space::LatLongAltitude& currentLocation = Eegeo::Space::LatLongAltitude::FromECEF(interestPointEcef);
                     const SearchQuery& previousQuery = m_searchQueryPerformer.GetPreviousSearchQuery();
-                    m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), previousQuery.ShouldTryInteriorSearch(), currentLocation);
+                    m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsTag(), previousQuery.ShouldTryInteriorSearch(), currentLocation);
 
                     if (m_interiorInteractionModel.HasInteriorModel())
                     {
@@ -178,9 +178,9 @@ namespace ExampleApp
                 {
                     const SearchQuery& previousQuery = m_searchQueryPerformer.GetPreviousSearchQuery();
                     
-                    if (previousQuery.IsCategory())
+                    if (previousQuery.IsTag())
                     {
-                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), previousQuery.ShouldTryInteriorSearch());
+                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsTag(), previousQuery.ShouldTryInteriorSearch());
                         m_secondsSincePreviousRefresh = 0.f;
 
                         m_interiorHasChanged = true;

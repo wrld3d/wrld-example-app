@@ -71,9 +71,9 @@ const int DeletePinAlertViewTag = 2;
         self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pControlContainer addSubview: self.pHeadlineContainer];
         
-        self.pCategoryIconContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pCategoryIconContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
-        [self.pHeadlineContainer addSubview: self.pCategoryIconContainer];
+        self.pTagIconContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pTagIconContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
+        [self.pHeadlineContainer addSubview: self.pTagIconContainer];
         
         self.pTitleLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextTitleColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
         [self.pHeadlineContainer addSubview: self.pTitleLabel];
@@ -126,15 +126,15 @@ const int DeletePinAlertViewTag = 2;
         
         [self.pLabelsContainer addSubview: self.pWebContent];
         
-        self.pCategoriesHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pCategoriesHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
-        [self.pLabelsContainer addSubview: self.pCategoriesHeaderContainer];
+        self.pTagsHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pTagsHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
+        [self.pLabelsContainer addSubview: self.pTagsHeaderContainer];
         
-        self.pCategoriesHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextHeaderColor :ExampleApp::Helpers::ColorPalette::UiBorderColor];
-        [self.pCategoriesHeaderContainer addSubview: self.pCategoriesHeaderLabel];
+        self.pTagsHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextHeaderColor :ExampleApp::Helpers::ColorPalette::UiBorderColor];
+        [self.pTagsHeaderContainer addSubview: self.pTagsHeaderLabel];
         
-        self.pCategoriesContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextCopyColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
-        [self.pLabelsContainer addSubview: self.pCategoriesContent];
+        self.pTagsContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextCopyColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
+        [self.pLabelsContainer addSubview: self.pTagsContent];
        
         m_pGradientMask = [[CAGradientLayer layer] retain];
         m_pGradientMask.colors = @[(id)[UIColor clearColor].CGColor,
@@ -176,8 +176,8 @@ const int DeletePinAlertViewTag = 2;
     [self.pContentContainer removeFromSuperview];
     [self.pContentContainer release];
     
-    [self.pCategoryIconContainer removeFromSuperview];
-    [self.pCategoryIconContainer release];
+    [self.pTagIconContainer removeFromSuperview];
+    [self.pTagIconContainer release];
     
     [self.pTitleLabel removeFromSuperview];
     [self.pTitleLabel release];
@@ -209,14 +209,14 @@ const int DeletePinAlertViewTag = 2;
     [self.pWebContent removeFromSuperview];
     [self.pWebContent release];
     
-    [self.pCategoriesHeaderContainer removeFromSuperview];
-    [self.pCategoriesHeaderContainer release];
+    [self.pTagsHeaderContainer removeFromSuperview];
+    [self.pTagsHeaderContainer release];
     
-    [self.pCategoriesHeaderLabel removeFromSuperview];
-    [self.pCategoriesHeaderLabel release];
+    [self.pTagsHeaderLabel removeFromSuperview];
+    [self.pTagsHeaderLabel release];
     
-    [self.pCategoriesContent removeFromSuperview];
-    [self.pCategoriesContent release];
+    [self.pTagsContent removeFromSuperview];
+    [self.pTagsContent release];
     
     [self.pPreviewImage removeFromSuperview];
     //[self.pPreviewImage release];
@@ -293,7 +293,7 @@ const int DeletePinAlertViewTag = 2;
                                        closeButtonSectionHeight,
                                        closeButtonSectionHeight);
     
-    self.pCategoryIconContainer.frame = CGRectMake(0.f, 0.f, headlineHeight, headlineHeight);
+    self.pTagIconContainer.frame = CGRectMake(0.f, 0.f, headlineHeight, headlineHeight);
     const float titlePadding = 10.0f;
     self.pTitleLabel.frame = CGRectMake(headlineHeight + titlePadding,
                                         0.f,
@@ -382,35 +382,35 @@ const int DeletePinAlertViewTag = 2;
         currentLabelY += labelYSpacing + self.pAddressContent.frame.size.height;
     }
     
-    if(!m_model.GetHumanReadableCategories().empty())
+    if(!m_model.GetHumanReadableTags().empty())
     {
-        self.pCategoriesHeaderContainer.frame = CGRectMake(0.f, currentLabelY, m_labelsSectionWidth, headerLabelHeight + 2 * headerTextPadding);
-        self.pCategoriesHeaderContainer.hidden = false;
+        self.pTagsHeaderContainer.frame = CGRectMake(0.f, currentLabelY, m_labelsSectionWidth, headerLabelHeight + 2 * headerTextPadding);
+        self.pTagsHeaderContainer.hidden = false;
         
-        self.pCategoriesHeaderLabel.frame = CGRectMake(headerTextPadding, headerTextPadding, m_labelsSectionWidth - headerTextPadding, headerLabelHeight);
-        self.pCategoriesHeaderLabel.text = @"Categories";
-        self.pCategoriesHeaderLabel.hidden = false;
-        currentLabelY += labelYSpacing + self.pCategoriesHeaderContainer.frame.size.height;
+        self.pTagsHeaderLabel.frame = CGRectMake(headerTextPadding, headerTextPadding, m_labelsSectionWidth - headerTextPadding, headerLabelHeight);
+        self.pTagsHeaderLabel.text = @"Tags";
+        self.pTagsHeaderLabel.hidden = false;
+        currentLabelY += labelYSpacing + self.pTagsHeaderContainer.frame.size.height;
         
-        self.pCategoriesContent.frame = CGRectMake(headerTextPadding, currentLabelY, m_labelsSectionWidth - headerTextPadding, 85.f);
-        self.pCategoriesContent.text = @"";
-        self.pCategoriesContent.numberOfLines = 0;
-        self.pCategoriesContent.adjustsFontSizeToFitWidth = NO;
-        self.pCategoriesContent.lineBreakMode = NSLineBreakByTruncatingTail;
+        self.pTagsContent.frame = CGRectMake(headerTextPadding, currentLabelY, m_labelsSectionWidth - headerTextPadding, 85.f);
+        self.pTagsContent.text = @"";
+        self.pTagsContent.numberOfLines = 0;
+        self.pTagsContent.adjustsFontSizeToFitWidth = NO;
+        self.pTagsContent.lineBreakMode = NSLineBreakByTruncatingTail;
         
-        std::string categoriesText;
-        const std::vector<std::string>& categoriesList(m_model.GetHumanReadableCategories());
-        for(size_t i = 0; i < categoriesList.size()-1; ++i)
+        std::string tagsText;
+        const std::vector<std::string>& tagsList(m_model.GetHumanReadableTags());
+        for(size_t i = 0; i < tagsList.size()-1; ++i)
         {
-            categoriesText += categoriesList[i] + "\n";
+            tagsText += tagsList[i] + "\n";
         }
-        categoriesText += categoriesList.back();
+        tagsText += tagsList.back();
         
-        self.pCategoriesContent.text = [NSString stringWithUTF8String:categoriesText.c_str()];
-        self.pCategoriesContent.hidden = false;
-        [self.pCategoriesContent sizeToFit];
+        self.pTagsContent.text = [NSString stringWithUTF8String:tagsText.c_str()];
+        self.pTagsContent.hidden = false;
+        [self.pTagsContent sizeToFit];
         
-        currentLabelY += labelYSpacing + self.pCategoriesContent.frame.size.height;
+        currentLabelY += labelYSpacing + self.pTagsContent.frame.size.height;
     }
     
     
@@ -429,9 +429,9 @@ const int DeletePinAlertViewTag = 2;
     
     self.pTitleLabel.text = [NSString stringWithUTF8String:pModel->GetTitle().c_str()];
     
-    [self.pCategoryIconContainer.subviews makeObjectsPerformSelector: @selector(removeFromSuperview)];
-    std::string categoryIcon = ExampleApp::Helpers::IconResources::GetSmallIconForCategory(pModel->GetCategory());
-    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pCategoryIconContainer, categoryIcon, ExampleApp::Helpers::ImageHelpers::Centre);
+    [self.pTagIconContainer.subviews makeObjectsPerformSelector: @selector(removeFromSuperview)];
+    std::string tagIcon = ExampleApp::Helpers::IconResources::GetSmallIconForTag(pModel->GetIconKey());
+    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pTagIconContainer, tagIcon, ExampleApp::Helpers::ImageHelpers::Centre);
     
     self.pAddressHeaderContainer.hidden = true;
     self.pAddressContent.hidden = true;
@@ -440,8 +440,8 @@ const int DeletePinAlertViewTag = 2;
     self.pWebHeaderContainer.hidden = true;
     self.pWebContent.hidden = true;
     self.pPreviewImage.hidden = true;
-    self.pCategoriesHeaderContainer.hidden = true;
-    self.pCategoriesContent.hidden = true;
+    self.pTagsHeaderContainer.hidden = true;
+    self.pTagsContent.hidden = true;
     
     const CGFloat previewImagePlaceholderSize = 64.f;
     m_imageWidth = m_imageHeight = previewImagePlaceholderSize;

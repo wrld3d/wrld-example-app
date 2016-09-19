@@ -10,7 +10,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_margin="6dp"
-	        android:contentDescription="@string/content_desc_category_icon"
+	        android:contentDescription="@string/content_desc_tag_icon"
 	        android:scaleType="fitCenter"
 	        android:layout_centerVertical="true"
 	        android:src="@drawable/icon1_aroundme" />

@@ -65,9 +65,9 @@ namespace ExampleApp
                 }
             }
 
-            void SearchMenuView::SetEditText(const std::string& searchText, bool isCategory)
+            void SearchMenuView::SetEditText(const std::string& searchText, bool isTag)
             {
-                mSetEditText(gcnew System::String(searchText.c_str()), isCategory);
+                mSetEditText(gcnew System::String(searchText.c_str()), isTag);
             }
 
             void SearchMenuView::SetSearchResultCount(int searchResultCount)

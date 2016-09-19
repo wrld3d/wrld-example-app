@@ -7,7 +7,7 @@
 #include "Types.h"
 #include "ISearchResultOnMapModel.h"
 #include "SearchResultOnMap.h"
-#include "CategorySearch.h"
+#include "TagSearch.h"
 #include "Search.h"
 #include "WorldPins.h"
 #include "MyPins.h"
@@ -40,7 +40,7 @@ namespace ExampleApp
                 Search::SdkModel::MyPins::ISearchResultMyPinsService& m_searchResultOnMapMyPinsService;
                 MyPins::SdkModel::IMyPinsService& m_myPinsService;
                 Search::SdkModel::ISearchResultRepository& m_searchResultRepository;
-                CategorySearch::ISearchResultIconCategoryMapper& m_searchResultIconCategoryMapper;
+                TagSearch::ISearchResultIconKeyMapper& m_searchResultIconKeyMapper;
                 View::ISearchResultOnMapFactory& m_searchResultOnMapFactory;
                 WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
 
@@ -49,7 +49,7 @@ namespace ExampleApp
                                        MyPins::SdkModel::IMyPinsService& myPinsService,
                                        View::ISearchResultOnMapFactory& searchResultOnMapFactory,
                                        Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultOnMapMyPinsService,
-                                       CategorySearch::ISearchResultIconCategoryMapper& searchResultIconCategoryMapper,
+                                       TagSearch::ISearchResultIconKeyMapper& searchResultIconKeyMapper,
                                        Search::SdkModel::ISearchResultRepository& searchResultRepository);
 
                 ~SearchResultOnMapModel();

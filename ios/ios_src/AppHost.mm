@@ -42,7 +42,7 @@
 #include "iOSInitialExperienceModule.h"
 #include "AboutPageViewModule.h"
 #include "AboutPageView.h"
-#include "CategorySearchModule.h"
+#include "TagSearchModule.h"
 #include "MyPinCreationInitiationViewModule.h"
 #include "MyPinCreationInitiationView.h"
 #include "MyPinCreationConfirmationViewModule.h"
@@ -84,6 +84,7 @@
 #include "UserInteractionEnabledChangedMessage.h"
 #include "SurveyViewModule.h"
 #include "IOSMenuReactionModel.h"
+#include "TagSearchViewModule.h"
 
 #import "UIView+TouchExclusivity.h"
 
@@ -126,6 +127,7 @@ AppHost::AppHost(
     ,m_pLinkOutObserver(NULL)
     ,m_pURLRequestHandler(NULL)
     ,m_pMenuReactionModel(NULL)
+    ,m_pTagSearchViewModule(NULL)
 {
     Eegeo::TtyHandler::TtyEnabled = true;
     
@@ -301,9 +303,15 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                             app.SearchMenuModule().GetSearchMenuViewModel(),
                                                                                             app.SearchMenuModule().GetSearchSectionViewModel(),
                                                                                             screenProperties,
-                                                                                            app.CategorySearchModule().GetCategorySearchRepository(),
+                                                                                            app.TagSearchModule().GetTagSearchRepository(),
                                                                                             m_pModalBackgroundViewModule->GetModalBackgroundViewInterop(),
                                                                                             m_messageBus);
+
+    m_pTagSearchViewModule = ExampleApp::TagSearch::View::TagSearchViewModule::Create(
+            app.TagSearchModule().GetTagSearchMenuOptionsModel(),
+            app.SettingsMenuModule().GetSettingsMenuViewModel(),
+            m_messageBus,
+            *m_pMenuReactionModel);
     
     m_pDirectionsMenuViewModule = Eegeo_NEW(ExampleApp::DirectionsMenu::View::DirectionsMenuViewModule)(app.DirectionsMenuModule().GetDirectionsMenuModel(),
                                                                                                app.DirectionsMenuModule().GetDirectionsMenuViewModel(),
@@ -540,7 +548,9 @@ void AppHost::DestroyApplicationViewModules()
     Eegeo_DELETE m_pModalBackgroundViewModule;
 
     Eegeo_DELETE m_pSearchResultSectionViewModule;
-    
+
+    Eegeo_DELETE m_pTagSearchViewModule;
+
     Eegeo_DELETE m_pSearchMenuViewModule;
     
     Eegeo_DELETE m_pSettingsMenuViewModule;

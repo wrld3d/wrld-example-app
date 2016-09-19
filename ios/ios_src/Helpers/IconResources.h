@@ -10,7 +10,7 @@ namespace ExampleApp
     {
         namespace IconResources
         {
-            std::string GetSmallIconForCategory(const std::string& category);
+            std::string GetSmallIconForTag(const std::string& tag);
 
             std::string GetSmallIconPathForResourceName(const std::string& resource);
 

@@ -25,7 +25,7 @@
 #include "WorldAreaLoaderModule.h"
 #include "IInitialExperienceModel.h"
 #include "IInitialExperienceController.h"
-#include "CategorySearchModule.h"
+#include "TagSearchModule.h"
 #include "AboutPageModule.h"
 #include "RenderContext.h"
 #include "ScreenProperties.h"
@@ -119,6 +119,9 @@
 #include "DirectionsMenuInitiation.h"
 #include "DirectionsMenuInitiationModule.h"
 #include "DirectionsMenuModule.h"
+#include "TagSearchModelFactory.h"
+#include "SearchTagsFactory.h"
+#include "ITagSearchRepository.h"
 
 namespace ExampleApp
 {
@@ -191,6 +194,20 @@ namespace ExampleApp
                 }
             }
         }
+
+        void AddTagSearchModels(
+                Eegeo::Helpers::IFileIO& fileIO,
+                TagSearch::View::ITagSearchRepository& repository)
+        {
+            const auto& tagSearchModels = TagSearch::View::CreateTagSearchModelsFromFile(
+                    fileIO,
+                    "search_menu_items.json");
+
+            for (const auto& t : tagSearchModels)
+            {
+                repository.AddItem(t);
+            }
+        }
     }
 
     MobileExampleApp::MobileExampleApp(
@@ -224,7 +241,7 @@ namespace ExampleApp
         , m_pSearchMenuModule(NULL)
         , m_pSearchResultSectionModule(NULL)
         , m_pModalityModule(NULL)
-        , m_pCategorySearchModule(NULL)
+        , m_pTagSearchModule(NULL)
         , m_pMapModeModule(NULL)
         , m_pFlattenButtonModule(NULL)
         , m_pSearchModule(NULL)
@@ -364,7 +381,7 @@ namespace ExampleApp
                                                                                                                        m_messageBus);
         m_pCameraTransitionService->SetTransitionController(*m_pCameraTransitionController);
         
-        m_pDoubleTapIndoorInteractionController = Eegeo_NEW(ExampleApp::DoubleTapIndoorInteraction::SdkModel::DoubleTapIndoorInteractionController)(m_pInteriorsExplorerModule->GetInteriorsCameraController(),*m_pCameraTransitionController,interiorsPresentationModule.GetInteriorInteractionModel(),*m_pRayCaster);        
+        m_pDoubleTapIndoorInteractionController = Eegeo_NEW(ExampleApp::DoubleTapIndoorInteraction::SdkModel::DoubleTapIndoorInteractionController)(m_pInteriorsExplorerModule->GetInteriorsCameraController(),*m_pCameraTransitionController,interiorsPresentationModule.GetInteriorInteractionModel(),*m_pRayCaster,*m_pAppModeModel);
         
         m_pLoadingScreen = CreateLoadingScreen(screenProperties, m_pWorld->GetRenderingModule(), m_pWorld->GetPlatformAbstractionModule());
         
@@ -372,7 +389,7 @@ namespace ExampleApp
                                                                                                , m_pWorld->GetRoutesModule().GetRouteService()
                                                                                                , *m_pWorld
                                                                                                , *m_pGlobeCameraWrapper
-                                                                                               , m_pCategorySearchModule->GetSearchResultIconCategoryMapper()
+                                                                                               , m_pTagSearchModule->GetSearchResultIconKeyMapper()
                                                                                                
                                                                                                , m_messageBus);
         
@@ -440,27 +457,38 @@ namespace ExampleApp
                                                                                                                                     m_networkCapabilities,
                                                                                                                                     m_applicationConfiguration.GeoNamesUserName());
         }
+
+        const auto& searchTags = Search::SdkModel::CreateSearchTagsFromFile(
+                m_platformAbstractions.GetFileIO(), "search_tags.json");
+
         const bool useEegeoPois = true;
         if(useEegeoPois)
         {
-            std::vector<std::string> supportedCategories = Search::Yelp::SearchConstants::GetCategories();
-            m_searchServiceModules[Search::EegeoVendorName] = Eegeo_NEW(Search::EegeoPois::SdkModel::EegeoSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
-                                                                                                                               m_platformAbstractions.GetUrlEncoder(),
-                                                                                                                               m_networkCapabilities,
-                                                                                                                               supportedCategories,
-                                                                                                                               m_applicationConfiguration.EegeoSearchServiceUrl(),
-                                                                                                                               m_applicationConfiguration.EegeoApiKey(),
-                                                                                                                               world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel()
-                                                                                                                               );
+            m_searchServiceModules[Search::EegeoVendorName] = Eegeo_NEW(Search::EegeoPois::SdkModel::EegeoSearchServiceModule)(
+                    m_platformAbstractions.GetWebLoadRequestFactory(),
+                    m_platformAbstractions.GetUrlEncoder(),
+                    m_networkCapabilities,
+                    searchTags,
+                    m_applicationConfiguration.EegeoSearchServiceUrl(),
+                    m_applicationConfiguration.EegeoApiKey(),
+                    world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel());
         }
-		
-		const bool useYelpSearch = true;
+
+        std::vector<std::string> appTags;
+        appTags.reserve(searchTags.tags.size());
+        for(const auto& i : searchTags.tags)
+        {
+            appTags.push_back(i.tag);
+        }
+
+        const bool useYelpSearch = true;
         if (useYelpSearch)
         {
             m_searchServiceModules[ExampleApp::Search::YelpVendorName] = Eegeo_NEW(ExampleApp::Search::Yelp::YelpSearchServiceModule)(
                 m_platformAbstractions.GetWebLoadRequestFactory(),
                 m_networkCapabilities,
                 m_platformAbstractions.GetUrlEncoder(),
+                appTags,
                 m_applicationConfiguration.YelpConsumerKey(),
                 m_applicationConfiguration.YelpConsumerSecret(),
                 m_applicationConfiguration.YelpOAuthToken(),
@@ -468,7 +496,7 @@ namespace ExampleApp
                 m_platformAbstractions.GetFileIO()
                 );
         }
-        
+
         m_pSearchServiceModule = Eegeo_NEW(Search::Combined::SdkModel::CombinedSearchServiceModule)(m_searchServiceModules, m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel());
         
         m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(m_pSearchServiceModule->GetSearchService(),
@@ -520,13 +548,10 @@ namespace ExampleApp
                               m_metricsService,
                               m_menuReaction);
 
-        m_pCategorySearchModule = Eegeo_NEW(ExampleApp::CategorySearch::SdkModel::CategorySearchModule(
-                                                m_pSearchServiceModule->GetCategorySearchModels(),
-                                                SearchModule().GetSearchQueryPerformer(),
-                                                m_pSettingsMenuModule->GetSettingsMenuViewModel(),
-                                                m_messageBus,
-                                                m_metricsService,
-                                                m_menuReaction));
+        m_pTagSearchModule = TagSearch::SdkModel::TagSearchModule::Create(
+                SearchModule().GetSearchQueryPerformer(),
+                m_messageBus,
+                m_metricsService);
 
         m_pMapModeModule = Eegeo_NEW(MapMode::SdkModel::MapModeModule)(m_pVisualMapModule->GetVisualMapService());
 
@@ -551,13 +576,14 @@ namespace ExampleApp
                                                                                 m_menuReaction,
                                                                                 *m_pModalityIgnoredReactionModel);
         
-        m_pSearchResultPoiModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiModule)(m_identityProvider,
-                                                                                                       m_pReactionControllerModule->GetReactionControllerModel(),
-                                                                                                       m_pMyPinsModule->GetMyPinsService(),
-                                                                                                       m_pSearchModule->GetSearchResultMyPinsService(),
-                                                                                                       m_pCategorySearchModule->GetSearchResultIconCategoryMapper(),
-                                                                                                       world.GetPlatformAbstractionModule().GetWebLoadRequestFactory(),
-                                                                                                       m_messageBus);
+        m_pSearchResultPoiModule =
+                Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiModule)(m_identityProvider,
+                                                                                    m_pReactionControllerModule->GetReactionControllerModel(),
+                                                                                    m_pMyPinsModule->GetMyPinsService(),
+                                                                                    m_pSearchModule->GetSearchResultMyPinsService(),
+                                                                                    m_pTagSearchModule->GetSearchResultIconKeyMapper(),
+                                                                                    world.GetPlatformAbstractionModule().GetWebLoadRequestFactory(),
+                                                                                    m_messageBus);
         
         m_pSearchMenuModule = Eegeo_NEW(ExampleApp::SearchMenu::SdkModel::SearchMenuModule)(m_identityProvider,
                                                                                             m_pReactionControllerModule->GetReactionControllerModel(),
@@ -585,7 +611,7 @@ namespace ExampleApp
                                                                                                      m_pSearchResultPoiModule->GetSearchResultPoiViewModel(),
                                                                                                      m_pWorldPinsModule->GetWorldPinsService(),
                                                                                                      m_pMyPinsModule->GetMyPinsService(),
-                                                                                                     m_pCategorySearchModule->GetSearchResultIconCategoryMapper(),
+                                                                                                     m_pTagSearchModule->GetSearchResultIconKeyMapper(),
                                                                                                      m_pSearchModule->GetSearchResultMyPinsService(),
                                                                                                      m_messageBus,
                                                                                                      m_metricsService,
@@ -730,7 +756,7 @@ namespace ExampleApp
                                                                                 *m_pReactorIgnoredReactionModel);
         
         m_pSearchMenuModule->SetSearchSection("Search Results", m_pSearchResultSectionModule->GetSearchResultSectionModel());
-        m_pSearchMenuModule->AddMenuSection("Find", m_pCategorySearchModule->GetCategorySearchMenuModel(), true);
+        m_pSearchMenuModule->AddMenuSection("Find", m_pTagSearchModule->GetTagSearchMenuModel(), true);
         m_pSearchMenuModule->AddMenuSection("Locations", m_pPlaceJumpsModule->GetPlaceJumpsMenuModel(), true);
         m_pSearchMenuModule->AddMenuSection("My Pins", m_pMyPinsModule->GetMyPinsMenuModel(), true);
     }
@@ -805,7 +831,7 @@ namespace ExampleApp
 
         Eegeo_DELETE m_pMapModeModule;
 
-        Eegeo_DELETE m_pCategorySearchModule;
+        Eegeo_DELETE m_pTagSearchModule;
         
         Eegeo_DELETE m_pSettingsMenuModule;
         
@@ -1214,13 +1240,17 @@ namespace ExampleApp
         {
             Eegeo_DELETE m_pLoadingScreen;
             m_pLoadingScreen = NULL;
-            
+
+            // Note: we're doing this here in a hacky way, as the views aren't constructed when the MEA ctor runs
+            // ... doing it a little later ensures the view will get the notifications when items are added.
             MyPinsModule().GetMyPinsService().LoadAllPinsFromDisk();
             
             if(ToursEnabled())
             {
                 AddTours();
             }
+
+            AddTagSearchModels(m_platformAbstractions.GetFileIO(), m_pTagSearchModule->GetTagSearchRepository());
         }
     }
     

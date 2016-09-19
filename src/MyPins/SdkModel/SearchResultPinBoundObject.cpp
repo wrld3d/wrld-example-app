@@ -1,7 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "SearchResultPinBoundObject.h"
-#include "ICategorySearchRepository.h"
+#include "ITagSearchRepository.h"
 #include "MyPinsFileIO.h"
 #include "SearchResultMyPinDetailsModelSelectedMessage.h"
 #include "IWebLoadRequest.h"
@@ -10,7 +10,7 @@
 #include "TimeHelpers.h"
 #include "IMyPinsSearchResultRefreshService.h"
 #include "IMyPinsService.h"
-#include "SearchResultIconCategoryMapper.h"
+#include "SearchResultIconKeyMapper.h"
 #include "SearchVendorNames.h"
 
 namespace ExampleApp

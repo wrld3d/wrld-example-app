@@ -58,6 +58,7 @@
 #include "IMenuReactionModel.h"
 #include "DirectionsMenuInitiationViewIncludes.h"
 #include "DirectionsMenuViewIncludes.h"
+#include "TagSearchViewIncludes.h"
 
 
 @class ViewController;
@@ -113,6 +114,7 @@ private:
     ExampleApp::DirectionsMenu::View::IDirectionsMenuViewModule* m_pDirectionsMenuViewModule;
     ExampleApp::SearchMenu::View::ISearchMenuViewModule* m_pSearchMenuViewModule;
     ExampleApp::SearchResultSection::View::ISearchResultSectionViewModule* m_pSearchResultSectionViewModule;
+    ExampleApp::TagSearch::View::ITagSearchViewModule* m_pTagSearchViewModule;
     ExampleApp::ModalBackground::View::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
     ExampleApp::FlattenButton::View::IFlattenButtonViewModule* m_pFlattenButtonViewModule;
     ExampleApp::SearchResultPoi::View::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;

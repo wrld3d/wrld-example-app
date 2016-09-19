@@ -1,4 +1,4 @@
-// Copyright (c) 2015 eeGeo. All rights reserved.
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 

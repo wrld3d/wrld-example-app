@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace ExampleAppWPF
 {
@@ -18,8 +17,8 @@ namespace ExampleAppWPF
         private string m_titleText;
         private string m_poiViewRatingCountText;
         private string m_reviewText;
-        private string m_humanReadableCategoriesText;
-        private ImageSource m_categoryIcon;
+        private string m_humanReadableTagsText;
+        private ImageSource m_tagIcon;
         private ImageSource m_ratingsImage;
         private Visibility m_ratingCountVisibility;
         private string m_url;
@@ -51,29 +50,29 @@ namespace ExampleAppWPF
                 OnPropertyChanged("ReviewText");
             }
         }
-        public string HumanReadableCategoriesText
+        public string HumanReadableTagsText
         {
             get
             {
-                return m_humanReadableCategoriesText;
+                return m_humanReadableTagsText;
             }
             set
             {
-                m_humanReadableCategoriesText = value;
-                OnPropertyChanged("HumanReadableCategoriesText");
+                m_humanReadableTagsText = value;
+                OnPropertyChanged("HumanReadableTagsText");
             }
         }
         
-        public ImageSource CategoryIcon
+        public ImageSource TagIcon
         {
             get
             {
-                return m_categoryIcon;
+                return m_tagIcon;
             }
             set
             {
-                m_categoryIcon = value;
-                OnPropertyChanged("CategoryIcon");
+                m_tagIcon = value;
+                OnPropertyChanged("TagIcon");
             }
         }
         
@@ -114,9 +113,9 @@ namespace ExampleAppWPF
             m_closing = false;
 
             TitleText = model.Title;
-            HumanReadableCategoriesText = string.Join(Environment.NewLine, model.HumanReadableCategories);
+            HumanReadableTagsText = string.Join(Environment.NewLine, model.HumanReadableTags);
             ReviewText = model.Subtitle;
-            CategoryIcon = SearchResultPoiViewIconProvider.GetIconForCategory(model.Category);
+            TagIcon = SearchResultPoiViewIconProvider.GetIconForTag(model.IconKey);
 
             ShowAll();
         }

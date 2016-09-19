@@ -19,7 +19,7 @@ namespace ExampleApp
                 Menu::View::IMenuModel& menuModel,
                 Menu::View::IMenuViewModel& menuViewModel,
                 Menu::View::IMenuSectionViewModel& searchSectionViewModel,
-                CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
+                TagSearch::View::ITagSearchRepository& tagSearchRepository,
 				Menu::View::IMenuOptionsModel& menuOptionsModel,
                 Modality::View::IModalBackgroundView& modalBackgroundView,
                 ExampleAppMessaging::TMessageBus& messageBus
@@ -36,7 +36,7 @@ namespace ExampleApp
 									*view,
 									*view,
 									searchSectionViewModel,
-                                    categorySearchRepository,
+                                    tagSearchRepository,
 									modalBackgroundView,
                                     messageBus
                                 );

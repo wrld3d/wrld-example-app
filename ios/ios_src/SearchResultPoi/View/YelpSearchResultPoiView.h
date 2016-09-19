@@ -62,7 +62,7 @@
 @property (nonatomic, retain) UIView* pHeadlineContainer;
 @property (nonatomic, retain) UIView* pContentContainer;
 @property (nonatomic, retain) UIScrollView* pLabelsContainer;
-@property (nonatomic, retain) UIView* pCategoryIconContainer;
+@property (nonatomic, retain) UIView* pTagIconContainer;
 @property (nonatomic, retain) UILabel* pTitleLabel;
 @property (nonatomic, retain) UIView* pAddressHeaderContainer;
 @property (nonatomic, retain) UILabel* pAddressHeaderLabel;
@@ -70,9 +70,9 @@
 @property (nonatomic, retain) UIView* pPhoneHeaderContainer;
 @property (nonatomic, retain) UILabel* pPhoneHeaderLabel;
 @property (nonatomic, retain) UILabel* pPhoneContent;
-@property (nonatomic, retain) UIView* pCategoriesHeaderContainer;
-@property (nonatomic, retain) UILabel* pCategoriesHeaderLabel;
-@property (nonatomic, retain) UILabel* pCategoriesContent;
+@property (nonatomic, retain) UIView* pTagsHeaderContainer;
+@property (nonatomic, retain) UILabel* pTagsHeaderLabel;
+@property (nonatomic, retain) UILabel* pTagsContent;
 @property (nonatomic, retain) UIView* pReviewsHeaderContainer;
 @property (nonatomic, retain) UILabel* pReviewsHeaderLabel;
 @property (nonatomic, retain) UILabel* pReviewsContent;

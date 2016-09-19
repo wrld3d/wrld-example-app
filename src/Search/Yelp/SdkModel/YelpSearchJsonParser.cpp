@@ -18,7 +18,7 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                YelpSearchJsonParser::YelpSearchJsonParser(IYelpCategoryMapper& yelpCategoryMapper)
+                YelpSearchJsonParser::YelpSearchJsonParser(IYelpCategoryToTagMapper& yelpCategoryMapper)
                 : m_yelpCategoryMapper(yelpCategoryMapper)
                 {
                     

@@ -63,16 +63,12 @@ namespace ExampleApp
 
             bool MenuController::TryDrag()
             {
-                if(m_viewModel.TryAcquireReactorControl())
-                {
-                    return true;
-                }
-                return false;
+                return m_viewModel.TryAcquireReactorControl();
             }
 
             void MenuController::RefreshPresentation()
             {
-                const int numSections = static_cast<int>(m_viewModel.SectionsCount());
+                const size_t numSections = m_viewModel.SectionsCount();
                 TSections sections;
                 sections.reserve(numSections);
 
@@ -265,7 +261,7 @@ namespace ExampleApp
                 }
                 else
                 {
-                    int index = section.IsExpandable() ? itemIndex - 1 : itemIndex;
+                    const int index = section.IsExpandable() ? itemIndex - 1 : itemIndex;
                     section.GetItemAtIndex(index).MenuOption().Select();
                 }
             }
@@ -320,9 +316,9 @@ namespace ExampleApp
                 {
                     IMenuSectionViewModel& section(m_viewModel.GetMenuSection(static_cast<int>(i)));
                     section.InsertExpandedChangedCallback(m_onMenuSectionExpandedStateChanged);
-                    IMenuModel& model = section.GetModel();
-                    model.InsertItemAddedCallback(m_onItemAddedCallback);
-                    model.InsertItemRemovedCallback(m_onItemRemovedCallback);
+                    IMenuModel& menuModel = section.GetModel();
+                    menuModel.InsertItemAddedCallback(m_onItemAddedCallback);
+                    menuModel.InsertItemRemovedCallback(m_onItemRemovedCallback);
                 }
             }
 

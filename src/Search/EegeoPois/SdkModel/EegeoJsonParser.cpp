@@ -60,7 +60,7 @@ namespace ExampleApp
                      }
 
                     Search::SdkModel::SearchResultModel ParseSearchResultFromJsonObject(const rapidjson::Value& json,
-                                                                                        const SearchResultPoi::SdkModel::ICategoryIconMapper& tagIconMapper,
+                                                                                        const SearchResultPoi::SdkModel::ITagIconMapper& tagIconMapper,
                                                                                         const EegeoReadableTagMapper& tagNameMapper)
                     {
                         Eegeo::Space::LatLong location = Eegeo::Space::LatLong::FromDegrees(json["lat"].GetDouble(),
@@ -75,7 +75,7 @@ namespace ExampleApp
                         std::vector<std::string> tags = SplitIntoTags(json["tags"].GetString(), ' ');
                         std::vector<std::string> readableTags = GetNamesForTags(tags, tagNameMapper);
 
-                        std::string category = tagIconMapper.GetIconForCategories(tags);
+                        const Search::SdkModel::TagIconKey& tagIconKey = tagIconMapper.GetIconKeyForTags(tags);
                         
                         std::string userData = "";
                         
@@ -86,7 +86,7 @@ namespace ExampleApp
                             json["user_data"].Accept(writer);
                             userData = strbuf.GetString();
                         }
-                        
+
                         return ExampleApp::Search::SdkModel::SearchResultModel(ExampleApp::Search::SdkModel::SearchResultModel::CurrentVersion,
                                                                                idStream.str(),
                                                                                json["title"].GetString(),
@@ -96,17 +96,20 @@ namespace ExampleApp
                                                                                indoor,
                                                                                interiorId,
                                                                                json["floor_id"].GetInt(),
-                                                                               category,
+                                                                               tags,
                                                                                readableTags,
+                                                                               tagIconKey,
                                                                                ExampleApp::Search::EegeoVendorName,
                                                                                userData,
                                                                                Eegeo::Helpers::Time::MillisecondsSinceEpoch());
                     }
                 }
                 
-                EegeoJsonParser::EegeoJsonParser(const SearchResultPoi::SdkModel::ICategoryIconMapper &categoryIconMapper, const EegeoReadableTagMapper& tagReadableNameMapper)
-                :m_categoryIconMapper(categoryIconMapper)
-                ,m_tagReadableNameMapper(tagReadableNameMapper)
+                EegeoJsonParser::EegeoJsonParser(
+                        const SearchResultPoi::SdkModel::ITagIconMapper &tagIconMapper,
+                        const EegeoReadableTagMapper& tagReadableNameMapper)
+                : m_tagIconMapper(tagIconMapper)
+                , m_tagReadableNameMapper(tagReadableNameMapper)
                 {
 
                 }
@@ -123,7 +126,7 @@ namespace ExampleApp
                         for(int i = 0; i < numEntries; ++i)
                         {
                             const rapidjson::Value& json = document[i];
-                            Search::SdkModel::SearchResultModel result(ParseSearchResultFromJsonObject(json, m_categoryIconMapper, m_tagReadableNameMapper));
+                            Search::SdkModel::SearchResultModel result(ParseSearchResultFromJsonObject(json, m_tagIconMapper, m_tagReadableNameMapper));
                             out_results.push_back(result);
                         }
                     }

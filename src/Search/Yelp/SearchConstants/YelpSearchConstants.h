@@ -6,7 +6,7 @@
 #include <string>
 #include <map>
 #include "Search.h"
-#include "CategorySearchModel.h"
+#include "TagSearchModel.h"
 #include "IFileIO.h"
 
 namespace ExampleApp
@@ -17,15 +17,17 @@ namespace ExampleApp
         {
             namespace SearchConstants
             {
-                std::string GetDefaultCategory();
-                
-                std::map<std::string, std::string> GetYelpFoundationCategoryToApplicationCategoryMap(Eegeo::Helpers::IFileIO& fileIO);
-                
-                std::vector<CategorySearch::View::CategorySearchModel> GetCategorySearchModels();
-                
-                std::vector<std::string> GetCategories();
+                struct YelpCategoryMappingData
+                {
+                    std::map<std::string, std::string> yelpFoundationCategoryToAppTag;
+                    std::map<std::string, std::string> appTagToYelpCategory;
+                    std::string defaultAppTag;
+                };
 
-                std::map<std::string, std::string> GetApplicationToYelpCategoryMap();
+                YelpCategoryMappingData ParseYelpData(
+                        Eegeo::Helpers::IFileIO& fileIO,
+                        const std::vector<std::string>& appTags,
+                        const std::string& fileName);
             }
         }
     }
