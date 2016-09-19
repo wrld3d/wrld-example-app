@@ -71,7 +71,6 @@ namespace ExampleAppWPF
         {
             var result = subtitle.Replace("\n", "");
             result = result.Replace("\t", "");
-            result = result.Replace(" ", "");
             result = result.Replace("\r", "");
 
             if(result.Length > MaxSubtitleLength)
