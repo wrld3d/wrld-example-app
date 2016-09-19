@@ -6,6 +6,7 @@
 #include "AndroidNativeState.h"
 #include "ICallback.h"
 #include "CallbackCollection.h"
+#include "ApplicationConfiguration.h"
 
 namespace ExampleApp
 {
@@ -16,7 +17,7 @@ namespace ExampleApp
             class WorldPinOnMapView: public IWorldPinOnMapView
             {
             public:
-                WorldPinOnMapView(AndroidNativeState& nativeState, float pinDiameter);
+                WorldPinOnMapView(const std::shared_ptr<AndroidNativeState>& nativeState, const std::shared_ptr<ApplicationConfig::ApplicationConfiguration>& appConfig);
                 ~WorldPinOnMapView();
 
                 void Open(const WorldPins::SdkModel::IWorldPinsInFocusModel& worldPinsInFocusModel,
@@ -31,7 +32,7 @@ namespace ExampleApp
 
             private:
 
-                AndroidNativeState& m_nativeState;
+                const std::shared_ptr<AndroidNativeState> m_nativeState;
                 jclass m_uiViewClass;
                 jobject m_uiView;
                 const float m_pinOffset;

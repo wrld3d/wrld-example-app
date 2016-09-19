@@ -2,15 +2,16 @@
 
 #pragma once
 
-#include <string>
-#include "AndroidNativeState.h"
-#include "Types.h"
-#include "Menu.h"
-#include "MenuViewIncludes.h"
-#include "IMenuViewModule.h"
-#include "Search.h"
-#include "BidirectionalBus.h"
-#include "Modality.h"
+//#include <string>
+//#include "AndroidNativeState.h"
+//#include "Types.h"
+//#include "Menu.h"
+//#include "MenuViewIncludes.h"
+//#include "IMenuViewModule.h"
+//#include "Search.h"
+//#include "BidirectionalBus.h"
+//#include "Modality.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -18,26 +19,28 @@ namespace ExampleApp
     {
         namespace View
         {
-            class SettingsMenuViewModule: public Menu::View::IMenuViewModule, private Eegeo::NonCopyable
+            class SettingsMenuViewModule: public Module
             {
-            private:
-                Menu::View::MenuView* m_pView;
-                Menu::View::MenuController* m_pController;
-
             public:
-                SettingsMenuViewModule(
-                    const std::string& viewName,
-                    AndroidNativeState& nativeState,
-                    Menu::View::IMenuModel& menuModelModel,
-                    Menu::View::IMenuViewModel& menuViewModel,
-					Modality::View::IModalBackgroundView& modalBackgroundView,
-                    ExampleAppMessaging::TMessageBus& messageBus
-                );
-
-                ~SettingsMenuViewModule();
-
-                Menu::View::MenuController& GetMenuController() const;
-                Menu::View::IMenuView& GetMenuView() const;
+            	void Register(const TContainerBuilder& builder);
+//            private:
+//                Menu::View::MenuView* m_pView;
+//                Menu::View::MenuController* m_pController;
+//
+//            public:
+//                SettingsMenuViewModule(
+//                    const std::string& viewName,
+//                    AndroidNativeState& nativeState,
+//                    Menu::View::IMenuModel& menuModelModel,
+//                    Menu::View::IMenuViewModel& menuViewModel,
+//					Modality::View::IModalBackgroundView& modalBackgroundView,
+//                    ExampleAppMessaging::TMessageBus& messageBus
+//                );
+//
+//                ~SettingsMenuViewModule();
+//
+//                Menu::View::MenuController& GetMenuController() const;
+//                Menu::View::IMenuView& GetMenuView() const;
             };
         }
     }

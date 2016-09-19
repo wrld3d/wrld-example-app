@@ -99,8 +99,8 @@ public:
 private:
     bool m_isPaused;
     Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;
-    Eegeo::Android::AndroidLocationService* m_pAndroidLocationService;
-    Eegeo::Android::AndroidConnectivityService* m_pAndroidConnectivityService;
+//    Eegeo::Android::AndroidLocationService* m_pAndroidLocationService;
+//    Eegeo::Android::AndroidConnectivityService* m_pAndroidConnectivityService;
 
     AndroidNativeState& m_nativeState;
     AppInputDelegate* m_pAppInputDelegate;
@@ -111,7 +111,7 @@ private:
     Eegeo::UI::NativeAlerts::Android::AndroidAlertBoxFactory m_androidAlertBoxFactory;
     Eegeo::UI::NativeUIFactories m_androidNativeUIFactories;
 
-    Eegeo::Android::Input::AndroidInputProcessor* m_pInputProcessor;
+//    Eegeo::Android::Input::AndroidInputProcessor* m_pInputProcessor;
 
     ExampleApp::ModalBackground::SdkModel::IModalBackgroundNativeViewModule* m_pModalBackgroundNativeViewModule;
 

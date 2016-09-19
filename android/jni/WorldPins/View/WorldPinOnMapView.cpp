@@ -12,18 +12,18 @@ namespace ExampleApp
     {
         namespace View
         {
-            WorldPinOnMapView::WorldPinOnMapView(AndroidNativeState& nativeState, float pinDiameter)
+            WorldPinOnMapView::WorldPinOnMapView(const std::shared_ptr<AndroidNativeState>& nativeState, const std::shared_ptr<ApplicationConfig::ApplicationConfiguration>& appConfig)
                 : m_nativeState(nativeState)
-                , m_pinOffset((pinDiameter * Helpers::ImageHelpers::GetPixelScale()))
+                , m_pinOffset((appConfig->PinDiameter() * Helpers::ImageHelpers::GetPixelScale()))
             	, m_showingEnlargedPin(false)
             {
                 ASSERT_UI_THREAD
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jstring strClassName = env->NewStringUTF("com/eegeo/worldpinonmapview/WorldPinOnMapView");
-                jclass uiClass = m_nativeState.LoadClass(env, strClassName);
+                jclass uiClass = m_nativeState->LoadClass(env, strClassName);
                 env->DeleteLocalRef(strClassName);
 
                 m_uiViewClass = static_cast<jclass>(env->NewGlobalRef(uiClass));
@@ -32,7 +32,7 @@ namespace ExampleApp
                 jobject instance = env->NewObject(
                                        m_uiViewClass,
                                        uiViewCtor,
-                                       m_nativeState.activity,
+                                       m_nativeState->activity,
                                        (jlong)(this)
                                    );
 
@@ -43,7 +43,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
                 jmethodID removeHudMethod = env->GetMethodID(m_uiViewClass, "destroy", "()V");
                 env->CallVoidMethod(m_uiView, removeHudMethod);
@@ -58,7 +58,7 @@ namespace ExampleApp
 
 				m_showingEnlargedPin = worldPinsInFocusModel.GetVendor() == ExampleApp::Search::InteriorVendorName;
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jstring titleStr = env->NewStringUTF(worldPinsInFocusModel.GetTitle().c_str());
@@ -77,7 +77,7 @@ namespace ExampleApp
             void WorldPinOnMapView::Close()
             {
                 ASSERT_UI_THREAD
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jmethodID dismiss = env->GetMethodID(m_uiViewClass, "dismiss", "()V");
@@ -89,7 +89,7 @@ namespace ExampleApp
                 ASSERT_UI_THREAD
                 float offsetY = posY - (m_showingEnlargedPin ? m_pinOffset*1.5f : m_pinOffset);
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jmethodID updateScreenLocation = env->GetMethodID(m_uiViewClass, "updateScreenLocation", "(FF)V");
@@ -99,7 +99,7 @@ namespace ExampleApp
             void WorldPinOnMapView::UpdateScreenState(float screenState)
             {
                 ASSERT_UI_THREAD
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jmethodID updateScreenVisibility = env->GetMethodID(m_uiViewClass, "updateScreenVisibility", "(F)V");

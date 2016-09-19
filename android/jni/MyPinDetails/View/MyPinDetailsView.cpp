@@ -39,7 +39,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
                 jmethodID removeHudMethod = env->GetMethodID(m_uiViewClass, "destroy", "()V");
                 env->CallVoidMethod(m_uiView, removeHudMethod);
@@ -84,7 +84,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jstring titleStr = env->NewStringUTF(title.c_str());
@@ -103,7 +103,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jmethodID dismissPoiInfo = env->GetMethodID(m_uiViewClass, "dismiss", "()V");

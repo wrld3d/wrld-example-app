@@ -9,8 +9,8 @@ namespace ExampleApp
     {
         namespace View
         {
-            SettingsMenuView::SettingsMenuView(AndroidNativeState& nativeState,
-                                               const std::string& viewClassName)
+            SettingsMenuView::SettingsMenuView(const std::shared_ptr<AndroidNativeState>& nativeState,
+            		const std::string& viewClassName)
                 : Menu::View::MenuView(nativeState, viewClassName)
             {
 

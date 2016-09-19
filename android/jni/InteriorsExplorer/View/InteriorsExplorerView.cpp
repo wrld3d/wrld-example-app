@@ -20,11 +20,11 @@ namespace ExampleApp
 			{
 				ASSERT_UI_THREAD
 
-				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
 				jstring strClassName = env->NewStringUTF("com.eegeo.interiorsexplorer.InteriorsExplorerView");
-				jclass uiClass = m_nativeState.LoadClass(env, strClassName);
+				jclass uiClass = m_nativeState->LoadClass(env, strClassName);
 				env->DeleteLocalRef(strClassName);
 
 				m_uiViewClass = static_cast<jclass>(env->NewGlobalRef(uiClass));
@@ -33,7 +33,7 @@ namespace ExampleApp
 				jobject instance = env->NewObject(
 									   m_uiViewClass,
 									   uiViewCtor,
-									   m_nativeState.activity,
+									   m_nativeState->activity,
 									   (jlong)(this)
 								   );
 
@@ -42,7 +42,7 @@ namespace ExampleApp
 
 			InteriorsExplorerView::~InteriorsExplorerView()
 			{
-				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
 				jmethodID destroy = env->GetMethodID(m_uiViewClass, "destroy", "()V");
@@ -74,7 +74,7 @@ namespace ExampleApp
             void InteriorsExplorerView::UpdateFloors(const std::vector<std::string>& floorShortNames, int currentlySelectedFloorIndex)
             {
                 ASSERT_UI_THREAD
-            	AndroidSafeNativeThreadAttachment attached(m_nativeState);
+            	AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
 				jobjectArray floorNamesArray = env->NewObjectArray(floorShortNames.size(), env->FindClass("java/lang/String"), 0);
@@ -97,7 +97,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-            	AndroidSafeNativeThreadAttachment attached(m_nativeState);
+            	AndroidSafeNativeThreadAttachment attached(*m_nativeState);
             	JNIEnv* env = attached.envForThread;
 
             	jstring nameStr = env->NewStringUTF(name.c_str());
@@ -112,7 +112,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-            	AndroidSafeNativeThreadAttachment attached(m_nativeState);
+            	AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
 				jmethodID setSelectedFloorIndex = env->GetMethodID(m_uiViewClass, "setSelectedFloorIndex", "(I)V");
@@ -123,7 +123,7 @@ namespace ExampleApp
             {
             	ASSERT_UI_THREAD
 
-				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
 				jmethodID addTutorialDialogs = env->GetMethodID(m_uiViewClass, "addTutorialDialogs", "(ZZ)V");
@@ -134,7 +134,7 @@ namespace ExampleApp
             {
             	ASSERT_UI_THREAD
 
-				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
 				jmethodID removeTutorialDialogs = env->GetMethodID(m_uiViewClass, "removeTutorialDialogs", "()V");
@@ -145,7 +145,7 @@ namespace ExampleApp
 			{
 				ASSERT_UI_THREAD
 
-				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
 				jmethodID getCanShowChangeFloorTutorialDialog = env->GetMethodID(m_uiViewClass, "getCanShowChangeFloorTutorialDialog", "()Z");
@@ -198,7 +198,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-            	AndroidSafeNativeThreadAttachment attached(m_nativeState);
+            	AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
 				jmethodID animateToIntermediateOnScreenState = env->GetMethodID(m_uiViewClass, "animateToIntermediateOnScreenState", "(F)V");
@@ -209,7 +209,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-            	AndroidSafeNativeThreadAttachment attached(m_nativeState);
+            	AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
 				jmethodID animateToActive = env->GetMethodID(m_uiViewClass, "animateToActive", "()V");
@@ -220,7 +220,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-            	AndroidSafeNativeThreadAttachment attached(m_nativeState);
+            	AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
 				jmethodID animateToInactive = env->GetMethodID(m_uiViewClass, "animateToInactive", "()V");
@@ -231,7 +231,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-            	AndroidSafeNativeThreadAttachment attached(m_nativeState);
+            	AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
 				jmethodID setTouchEnabled = env->GetMethodID(m_uiViewClass, "setTouchEnabled", "(Z)V");
@@ -242,7 +242,7 @@ namespace ExampleApp
 			{
 				ASSERT_UI_THREAD
 
-				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
 				jmethodID playSliderAnim = env->GetMethodID(m_uiViewClass, "playShakeSliderAnim", "()V");

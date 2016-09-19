@@ -17,7 +17,7 @@ namespace ExampleApp
             class OptionsView : public IOptionsView, private Eegeo::NonCopyable
             {
             private:
-                AndroidNativeState& m_nativeState;
+            	const std::shared_ptr<AndroidNativeState> m_nativeState;
                 jclass m_uiViewClass;
                 jobject m_uiView;
 
@@ -27,7 +27,7 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_clearCacheCallbacks;
 
             public:
-                OptionsView(AndroidNativeState& nativeState);
+                OptionsView(const std::shared_ptr<AndroidNativeState>& nativeState);
 
                 ~OptionsView();
 

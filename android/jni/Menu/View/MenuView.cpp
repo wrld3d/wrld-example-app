@@ -11,7 +11,7 @@ namespace ExampleApp
         {
             void MenuView::CallVoidVoidFunction(const char* func)
             {
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jmethodID jmethod = env->GetMethodID(m_uiViewClass, func, "()V");
@@ -25,11 +25,11 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jstring strClassName = env->NewStringUTF(viewClassName.c_str());
-                jclass uiClass = m_nativeState.LoadClass(env, strClassName);
+                jclass uiClass = m_nativeState->LoadClass(env, strClassName);
                 env->DeleteLocalRef(strClassName);
 
                 m_uiViewClass = static_cast<jclass>(env->NewGlobalRef(uiClass));
@@ -39,7 +39,7 @@ namespace ExampleApp
                 jobject instance = env->NewObject(
                         m_uiViewClass,
                         uiViewCtor,
-                        m_nativeState.activity,
+                        m_nativeState->activity,
                         (jlong)(this)
                 );
 
@@ -51,7 +51,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
                 jmethodID removeHudMethod = env->GetMethodID(m_uiViewClass, "destroy", "()V");
                 env->CallVoidMethod(m_uiView, removeHudMethod);
@@ -73,7 +73,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
                 static jmethodID normalisedAnimationProgressMethod = env->GetMethodID(m_uiViewClass, "normalisedAnimationProgress", "()F");
                 const float normalisedAnimationProgress = env->CallFloatMethod(m_uiView, normalisedAnimationProgressMethod);
@@ -84,7 +84,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
                 static jmethodID isAnimatingMethod = env->GetMethodID(m_uiViewClass, "isAnimating", "()Z");
                 const bool isAnimating = env->CallBooleanMethod(m_uiView, isAnimatingMethod);
@@ -95,7 +95,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
                 static jmethodID updateAnimationMethod = env->GetMethodID(m_uiViewClass, "updateAnimation", "(F)V");
                 env->CallVoidMethod(m_uiView, updateAnimationMethod, dt);
@@ -112,11 +112,11 @@ namespace ExampleApp
 
                 m_currentSections = sections;
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jstring strClassName = env->NewStringUTF("java/lang/String");
-                jclass strClass = m_nativeState.LoadClass(env, strClassName);
+                jclass strClass = m_nativeState->LoadClass(env, strClassName);
                 env->DeleteLocalRef(strClassName);
 
                 const size_t numSections = sections.size();
@@ -197,7 +197,7 @@ namespace ExampleApp
             void MenuView::SetOnScreenStateToIntermediateValue(float value)
             {
                 ASSERT_UI_THREAD
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
                 jmethodID animateToIntermediateOpenStateOnScreen = env->GetMethodID(m_uiViewClass, "animateToIntermediateOnScreenState", "(F)V");
                 env->CallVoidMethod(m_uiView, animateToIntermediateOpenStateOnScreen, value);

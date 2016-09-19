@@ -18,8 +18,8 @@ namespace ExampleApp
             class SettingsMenuView : public Menu::View::MenuView, public ISettingsMenuView
             {
             public:
-                SettingsMenuView(AndroidNativeState& nativeState,
-                                 const std::string& viewClassName);
+                SettingsMenuView(const std::shared_ptr<AndroidNativeState>& nativeState,
+                		const std::string& viewClassName);
             };
         }
     }

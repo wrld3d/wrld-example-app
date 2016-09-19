@@ -14,11 +14,11 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jstring strClassName = env->NewStringUTF("com.eegeo.mypincreation.MyPinCreationButtonView");
-                jclass uiClass = m_nativeState.LoadClass(env, strClassName);
+                jclass uiClass = m_nativeState->LoadClass(env, strClassName);
                 env->DeleteLocalRef(strClassName);
 
                 m_uiViewClass = static_cast<jclass>(env->NewGlobalRef(uiClass));
@@ -27,7 +27,7 @@ namespace ExampleApp
                 jobject instance = env->NewObject(
                                        m_uiViewClass,
                                        uiViewCtor,
-                                       m_nativeState.activity,
+                                       m_nativeState->activity,
                                        (jlong)(this)
                                    );
 
@@ -38,7 +38,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
                 jmethodID removeHudMethod = env->GetMethodID(m_uiViewClass, "destroy", "()V");
                 env->CallVoidMethod(m_uiView, removeHudMethod);
@@ -67,7 +67,7 @@ namespace ExampleApp
             void MyPinCreationInitiationView::SetFullyOffScreen()
             {
                 ASSERT_UI_THREAD
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jmethodID method = env->GetMethodID(m_uiViewClass, "animateToInactive", "()V");
@@ -77,7 +77,7 @@ namespace ExampleApp
             void MyPinCreationInitiationView::SetFullyOnScreen()
             {
                 ASSERT_UI_THREAD
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jmethodID method = env->GetMethodID(m_uiViewClass, "animateToActive", "()V");
@@ -87,7 +87,7 @@ namespace ExampleApp
             void MyPinCreationInitiationView::SetOnScreenStateToIntermediateValue(float screenValue)
             {
                 ASSERT_UI_THREAD
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jmethodID method = env->GetMethodID(m_uiViewClass, "animateToIntermediateOnScreenState", "(F)V");
@@ -97,7 +97,7 @@ namespace ExampleApp
             void MyPinCreationInitiationView::ShouldOffsetButton(bool shouldOffset)
             {
                 ASSERT_UI_THREAD
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jmethodID method = env->GetMethodID(m_uiViewClass, "shouldOffsetButton", "(Z)V");

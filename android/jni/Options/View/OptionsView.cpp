@@ -14,11 +14,11 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jstring strClassName = env->NewStringUTF("com/eegeo/options/OptionsView");
-                jclass uiClass = m_nativeState.LoadClass(env, strClassName);
+                jclass uiClass = m_nativeState->LoadClass(env, strClassName);
                 env->DeleteLocalRef(strClassName);
 
                 m_uiViewClass = static_cast<jclass>(env->NewGlobalRef(uiClass));
@@ -27,7 +27,7 @@ namespace ExampleApp
                 jobject instance = env->NewObject(
                                        m_uiViewClass,
                                        uiViewCtor,
-                                       m_nativeState.activity,
+                                       m_nativeState->activity,
                                        (jlong)(this)
                                    );
 
@@ -38,7 +38,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
                 jmethodID removeHudMethod = env->GetMethodID(m_uiViewClass, "destroy", "()V");
                 env->CallVoidMethod(m_uiView, removeHudMethod);
@@ -50,7 +50,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jmethodID isStreamOverWifiOnlySelected = env->GetMethodID(m_uiViewClass, "isStreamOverWifiOnlySelected", "()Z");
@@ -62,7 +62,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jmethodID isCacheEnabledSelected = env->GetMethodID(m_uiViewClass, "isCacheEnabledSelected", "()Z");
@@ -74,7 +74,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jmethodID setStreamOverWifiOnlySelected = env->GetMethodID(m_uiViewClass, "setStreamOverWifiOnlySelected", "(Z)V");
@@ -85,7 +85,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jmethodID setCacheEnabledSelected = env->GetMethodID(m_uiViewClass, "setCacheEnabledSelected", "(Z)V");
@@ -96,7 +96,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jmethodID openOptions = env->GetMethodID(m_uiViewClass, "openOptions", "()V");
@@ -107,7 +107,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jmethodID closeOptions = env->GetMethodID(m_uiViewClass, "closeOptions", "()V");
@@ -118,7 +118,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jmethodID concludeCacheClearCeremony = env->GetMethodID(m_uiViewClass, "concludeCacheClearCeremony", "()V");

@@ -185,6 +185,9 @@ AppHost::AppHost(
     //m_pAndroidConnectivityService = Eegeo_NEW(AndroidConnectivityService)(&nativeState);
 
     m_pJpegLoader = Eegeo_NEW(Eegeo::Helpers::Jpeg::JpegLoader)();
+    builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)){
+    	return std::make_shared<Eegeo::Helpers::Jpeg::JpegLoader>
+    }).as<IJpegLoader>().singleInstance();
 
     std::set<std::string> customApplicationAssetDirectories;
     customApplicationAssetDirectories.insert("SearchResultOnMap");
@@ -215,7 +218,7 @@ AppHost::AppHost(
 //    builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
 //    		{
 //    			auto inputHandler = context.resolve<IAndroidInputHandler>();
-//    			auto screenProperties = contexgt.resolve<Eegeo::Rendering::ScreenProperties>();
+//    			auto screenProperties = context.resolve<Eegeo::Rendering::ScreenProperties>();
 //    			return std::make_shared<Eegeo::Android::Input::AndroidInputProcessor>(inputHandler.get(), screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
 //    		}).singleInstance();
     m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::SdkModel::AndroidInitialExperienceModule)(
@@ -224,10 +227,12 @@ AppHost::AppHost(
                                      m_messageBus
                                  );
 
-    m_pNetworkCapabilities = Eegeo_NEW(ExampleApp::Net::SdkModel::NetworkCapabilities)(
-    		*m_pAndroidConnectivityService,
-    		m_pAndroidPlatformAbstractionModule->GetHttpCache(),
-    		m_androidPersistentSettingsModel);
+//    m_pNetworkCapabilities = Eegeo_NEW(ExampleApp::Net::SdkModel::NetworkCapabilities)(
+//    		*m_pAndroidConnectivityService,
+//    		m_pAndroidPlatformAbstractionModule->GetHttpCache(),
+//    		m_androidPersistentSettingsModel);
+
+
 
     //m_pAndroidFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::AndroidFlurryMetricsService)(&m_nativeState);
     builder->registerType<ExampleApp::Metrics::AndroidFlurryMetricsService>().as<ExampleApp::Metrics::IMetricsService>().singleInstance();

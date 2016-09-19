@@ -18,7 +18,7 @@ namespace ExampleApp
             class SearchResultPoiView : public ISearchResultPoiView, Eegeo::NonCopyable
             {
             private:
-                AndroidNativeState& m_nativeState;
+            	const std::shared_ptr<AndroidNativeState> m_nativeState;
                 Eegeo::Helpers::CallbackCollection0 m_closedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<Search::SdkModel::SearchResultModel> m_togglePinClickedCallbacks;
 
@@ -27,7 +27,7 @@ namespace ExampleApp
                 Search::SdkModel::SearchResultModel m_model;
 
             public:
-                SearchResultPoiView(AndroidNativeState& nativeState);
+                SearchResultPoiView(const std::shared_ptr<AndroidNativeState>& nativeState);
 
                 ~SearchResultPoiView();
 

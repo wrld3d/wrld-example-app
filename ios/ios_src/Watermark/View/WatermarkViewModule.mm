@@ -31,15 +31,6 @@ namespace ExampleApp
                                                      auto interop = [view->Get() getInterop];
                                                      return Hypodermic::makeExternallyOwned(*interop);
                                                  }).as<IWatermarkView>().singleInstance();
-                builder->registerType<WatermarkController>().singleInstance();
-            }
-            
-            void WatermarkViewModule::RegisterLeaves()
-            {
-                RegisterLeaf<WatermarkController>();
-                auto defaultWatermarkData = Resolve<IWatermarkDataRepository>()->GetWatermarkDataWithKey("eegeo");
-                auto view = Resolve<WatermarkViewWrapper>()->Get();
-                [view updateWatermarkData:defaultWatermarkData];
             }
         }
     }

@@ -11,11 +11,11 @@ namespace ExampleApp
     {
         namespace View
         {
-        void ModalBackground::Register(const TContainerBuilder& builder)
-        {
-        	ASSERT_UI_THREAD
-			builder->registerType<ModalBackgroundView>().as<IModalBackgroundView>().singleInstance();
-        }
+			void ModalBackground::Register(const TContainerBuilder& builder)
+			{
+				ASSERT_UI_THREAD
+				builder->registerType<ModalBackgroundView>().as<IModalBackgroundView>().singleInstance();
+			}
 //            ModalBackgroundViewModule::ModalBackgroundViewModule(
 //                AndroidNativeState& nativeState,
 //                Modality::View::IModalityModel& modalityModel,

@@ -15,6 +15,7 @@
 #include "IVisualMapService.h"
 #include "IMetricsService.h"
 #include "IPersistentSettingsModel.h"
+#include "WatermarkController.h"
 
 namespace ExampleApp
 {
@@ -36,10 +37,12 @@ namespace ExampleApp
                 builder->registerType<View::WatermarkDataRepository>().as<View::IWatermarkDataRepository>().singleInstance();
                 builder->registerType<WatermarkModel>().singleInstance();
                 builder->registerType<WatermarkInteriorStateChangedObserver>().singleInstance();
+                builder->registerType<View::WatermarkController>().singleInstance();
             }
-            
+
             void WatermarkModule::RegisterLeaves()
             {
+                RegisterLeaf<View::WatermarkController>();
                 RegisterLeaf<WatermarkInteriorStateChangedObserver>();
                 
                 auto repo = Resolve<View::IWatermarkDataRepository>();
@@ -53,6 +56,11 @@ namespace ExampleApp
                                                                                                   false);
 
                 repo->AddWatermarkData("micello", micelloWatermarkData);
+                
+
+                auto defaultWatermarkData = repo->GetWatermarkDataWithKey("eegeo");
+                auto view = Resolve<View::IWatermarkView>();
+                view->UpdateWatermarkData(defaultWatermarkData);
             }
             
             void WatermarkModule::RegisterOpenablesAndReactors()

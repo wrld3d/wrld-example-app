@@ -9,16 +9,16 @@ namespace ExampleApp
     {
         namespace View
         {
-            MyPinCreationDetailsView::MyPinCreationDetailsView(AndroidNativeState& nativeState)
+            MyPinCreationDetailsView::MyPinCreationDetailsView(const std::shared_ptr<AndroidNativeState>& nativeState)
                 : m_nativeState(nativeState)
             {
                 ASSERT_UI_THREAD
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jstring strClassName = env->NewStringUTF("com.eegeo.mypincreationdetails.MyPinCreationDetailsView");
-                jclass uiClass = m_nativeState.LoadClass(env, strClassName);
+                jclass uiClass = m_nativeState->LoadClass(env, strClassName);
                 env->DeleteLocalRef(strClassName);
 
                 m_uiViewClass = static_cast<jclass>(env->NewGlobalRef(uiClass));
@@ -27,7 +27,7 @@ namespace ExampleApp
                 jobject instance = env->NewObject(
                                        m_uiViewClass,
                                        uiViewCtor,
-                                       m_nativeState.activity,
+                                       m_nativeState->activity,
                                        (jlong)(this)
                                    );
 
@@ -38,7 +38,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
                 jmethodID removeHudMethod = env->GetMethodID(m_uiViewClass, "destroy", "()V");
                 env->CallVoidMethod(m_uiView, removeHudMethod);
@@ -49,7 +49,7 @@ namespace ExampleApp
             void MyPinCreationDetailsView::Open()
             {
                 ASSERT_UI_THREAD
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jmethodID showDetailsMethod = env->GetMethodID(m_uiViewClass, "show", "()V");
@@ -59,7 +59,7 @@ namespace ExampleApp
             void MyPinCreationDetailsView::Close()
             {
                 ASSERT_UI_THREAD
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jmethodID dismissDetailsMethod = env->GetMethodID(m_uiViewClass, "dismiss", "()V");
@@ -105,7 +105,7 @@ namespace ExampleApp
             std::string MyPinCreationDetailsView::GetTitle() const
             {
                 ASSERT_UI_THREAD
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jmethodID method = env->GetMethodID(m_uiViewClass, "getTitle", "()Ljava/lang/String;");
@@ -121,7 +121,7 @@ namespace ExampleApp
             std::string MyPinCreationDetailsView::GetDescription() const
             {
                 ASSERT_UI_THREAD
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jmethodID method = env->GetMethodID(m_uiViewClass, "getDescription", "()Ljava/lang/String;");
@@ -137,7 +137,7 @@ namespace ExampleApp
             bool MyPinCreationDetailsView::ShareSelected() const
             {
                 ASSERT_UI_THREAD
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jmethodID method = env->GetMethodID(m_uiViewClass, "getShouldShare", "()Z");
@@ -149,7 +149,7 @@ namespace ExampleApp
             Byte* MyPinCreationDetailsView::GetImageBuffer() const
             {
                 ASSERT_UI_THREAD
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jmethodID method = env->GetMethodID(m_uiViewClass, "getImageBuffer", "()[B");
@@ -171,7 +171,7 @@ namespace ExampleApp
             size_t MyPinCreationDetailsView::GetImageSize() const
             {
                 ASSERT_UI_THREAD
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jmethodID method = env->GetMethodID(m_uiViewClass, "getImageBufferSize", "()I");
@@ -183,7 +183,7 @@ namespace ExampleApp
             void MyPinCreationDetailsView::ConnectivityChanged(const bool hasConnectivity, const bool shouldVerifyShareSettings)
             {
                 ASSERT_UI_THREAD
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jmethodID setConnectivityMethod = env->GetMethodID(m_uiViewClass, "setHasNetworkConnectivity", "(ZZ)V");

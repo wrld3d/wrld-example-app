@@ -16,7 +16,7 @@ namespace ExampleApp
 			void MenuViewModule::Register(const TContainerBuilder& builder)
 			{
 				ASSERT_UI_THREAD
-				builder->registerType<FlattenButtonView>().as<IFlattenButtonView>().singleInstance();
+				builder->registerType<MenuView>().as<IMenuView>().singleInstance();
 			}
 //            MenuViewModule::MenuViewModule(
 //                const std::string& viewName,

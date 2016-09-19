@@ -22,8 +22,8 @@ namespace ExampleApp
                 void CallVoidVoidMethod(const char* func);
 
             public:
-                SearchMenuView(AndroidNativeState& nativeState,
-                               const std::string& viewClassName);
+                SearchMenuView(const std::shared_ptr<AndroidNativeState>& nativeState,
+                		       const std::string& viewClassName);
 
                 void SetSearchSection(Menu::View::IMenuSectionViewModel& searchSection);
 

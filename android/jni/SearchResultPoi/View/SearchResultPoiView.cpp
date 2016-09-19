@@ -14,7 +14,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            SearchResultPoiView::SearchResultPoiView(AndroidNativeState& nativeState)
+            SearchResultPoiView::SearchResultPoiView(const std::shared_ptr<AndroidNativeState>& nativeState)
                 : m_nativeState(nativeState)
             	, m_uiViewClass(NULL)
                 , m_uiView(NULL)
@@ -56,7 +56,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                AndroidSafeNativeThreadAttachment attached(*m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
                 jmethodID dismissPoiInfo = env->GetMethodID(m_uiViewClass, "dismissPoiInfo", "()V");
@@ -75,7 +75,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-    			AndroidSafeNativeThreadAttachment attached(m_nativeState);
+    			AndroidSafeNativeThreadAttachment attached(*m_nativeState);
     			JNIEnv* env = attached.envForThread;
 
     			unsigned int imgSize = hasImage ? pImageBytes->size() : 0;
@@ -154,7 +154,7 @@ namespace ExampleApp
             	Search::Yelp::SdkModel::YelpSearchResultModel yelpModel;
             	yelpModel = Search::Yelp::SdkModel::Helpers::TransformToYelpSearchResult(model);
 
-            	AndroidSafeNativeThreadAttachment attached(m_nativeState);
+            	AndroidSafeNativeThreadAttachment attached(*m_nativeState);
             	JNIEnv* env = attached.envForThread;
 
             	jobjectArray humanReadableTagsArray = CreateJavaArray(model.GetHumanReadableTags());
@@ -205,7 +205,7 @@ namespace ExampleApp
             	m_uiViewClass = CreateJavaClass(viewClass);
             	m_uiView = CreateJavaObject(m_uiViewClass);
 
-            	AndroidSafeNativeThreadAttachment attached(m_nativeState);
+            	AndroidSafeNativeThreadAttachment attached(*m_nativeState);
             	JNIEnv* env = attached.envForThread;
 
             	jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
@@ -237,7 +237,7 @@ namespace ExampleApp
 
             	const Search::EegeoPois::SdkModel::EegeoSearchResultModel& eegeoSearchResultModel = Search::EegeoPois::SdkModel::TransformToEegeoSearchResult(model);
 
-            	AndroidSafeNativeThreadAttachment attached(m_nativeState);
+            	AndroidSafeNativeThreadAttachment attached(*m_nativeState);
             	JNIEnv* env = attached.envForThread;
 
             	jobjectArray humanReadableTagsArray = CreateJavaArray(model.GetHumanReadableTags());
@@ -277,11 +277,11 @@ namespace ExampleApp
 
             jclass SearchResultPoiView::CreateJavaClass(const std::string& viewClass)
             {
-            	AndroidSafeNativeThreadAttachment attached(m_nativeState);
+            	AndroidSafeNativeThreadAttachment attached(*m_nativeState);
             	JNIEnv* env = attached.envForThread;
 
             	jstring strClassName = env->NewStringUTF(viewClass.c_str());
-            	jclass uiClass = m_nativeState.LoadClass(env, strClassName);
+            	jclass uiClass = m_nativeState->LoadClass(env, strClassName);
             	env->DeleteLocalRef(strClassName);
 
             	return static_cast<jclass>(env->NewGlobalRef(uiClass));
@@ -289,7 +289,7 @@ namespace ExampleApp
 
             jobject SearchResultPoiView::CreateJavaObject(jclass uiViewClass)
             {
-            	AndroidSafeNativeThreadAttachment attached(m_nativeState);
+            	AndroidSafeNativeThreadAttachment attached(*m_nativeState);
             	JNIEnv* env = attached.envForThread;
 
             	jmethodID uiViewCtor = env->GetMethodID(uiViewClass, "<init>", "(Lcom/eegeo/entrypointinfrastructure/MainActivity;J)V");
@@ -297,7 +297,7 @@ namespace ExampleApp
             	jobject instance = env->NewObject(
             			uiViewClass,
 						uiViewCtor,
-						m_nativeState.activity,
+						m_nativeState->activity,
 						(jlong)(this)
             	);
 
@@ -306,7 +306,7 @@ namespace ExampleApp
 
             jobjectArray SearchResultPoiView::CreateJavaArray(const std::vector<std::string>& stringVector)
             {
-            	AndroidSafeNativeThreadAttachment attached(m_nativeState);
+            	AndroidSafeNativeThreadAttachment attached(*m_nativeState);
             	JNIEnv* env = attached.envForThread;
 
             	jobjectArray jniStringArray = env->NewObjectArray(

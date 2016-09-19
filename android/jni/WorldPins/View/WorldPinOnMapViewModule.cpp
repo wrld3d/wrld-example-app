@@ -11,34 +11,39 @@ namespace ExampleApp
     {
         namespace View
         {
-            WorldPinOnMapViewModule::WorldPinOnMapViewModule(
-                AndroidNativeState& nativeState,
-                IWorldPinInFocusViewModel& worldPinInFocusViewModel,
-                ScreenControl::View::IScreenControlViewModel& worldPinOnMapInFocusScreenControlViewModel,
-                Modality::View::IModalityModel& modalityModel,
-                float pinDiameter
-            )
-            {
-                ASSERT_UI_THREAD
-
-                m_pView = Eegeo_NEW(WorldPinOnMapView)(nativeState, pinDiameter);
-                m_pController = Eegeo_NEW(WorldPinOnMapController)(*m_pView, worldPinInFocusViewModel, worldPinOnMapInFocusScreenControlViewModel, modalityModel);
-            }
-
-            WorldPinOnMapViewModule::~WorldPinOnMapViewModule()
-            {
-                ASSERT_UI_THREAD
-
-                Eegeo_DELETE m_pController;
-                Eegeo_DELETE m_pView;
-            }
-
-            WorldPinOnMapController& WorldPinOnMapViewModule::GetWorldPinOnMapController() const
-            {
-                ASSERT_UI_THREAD
-
-                return *m_pController;
-            }
+			void WorldPinOnMapViewModule::Register(const TContainerBuilder& builder)
+			{
+				ASSERT_UI_THREAD
+				builder->registerType<WorldPinOnMapView>().as<IWorldPinOnMapView>().singleInstance();
+			}
+//            WorldPinOnMapViewModule::WorldPinOnMapViewModule(
+//                AndroidNativeState& nativeState,
+//                IWorldPinInFocusViewModel& worldPinInFocusViewModel,
+//                ScreenControl::View::IScreenControlViewModel& worldPinOnMapInFocusScreenControlViewModel,
+//                Modality::View::IModalityModel& modalityModel,
+//                float pinDiameter
+//            )
+//            {
+//                ASSERT_UI_THREAD
+//
+//                m_pView = Eegeo_NEW(WorldPinOnMapView)(nativeState, pinDiameter);
+//                m_pController = Eegeo_NEW(WorldPinOnMapController)(*m_pView, worldPinInFocusViewModel, worldPinOnMapInFocusScreenControlViewModel, modalityModel);
+//            }
+//
+//            WorldPinOnMapViewModule::~WorldPinOnMapViewModule()
+//            {
+//                ASSERT_UI_THREAD
+//
+//                Eegeo_DELETE m_pController;
+//                Eegeo_DELETE m_pView;
+//            }
+//
+//            WorldPinOnMapController& WorldPinOnMapViewModule::GetWorldPinOnMapController() const
+//            {
+//                ASSERT_UI_THREAD
+//
+//                return *m_pController;
+//            }
         }
     }
 }

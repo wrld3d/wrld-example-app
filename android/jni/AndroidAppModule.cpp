@@ -25,18 +25,6 @@ namespace ExampleApp
 {
     namespace Android
     {
-    	AndroidAppModule::AndroidAppModule(
-//                                   Eegeo::Rendering::ScreenProperties screenProperties,
-//                                   ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
-//                                   ExampleApp::Metrics::iOSFlurryMetricsService& metricsService
-    									Eegeo::Android::AndroidLocationService& androidLocationService,
-    			            		   	Eegeo::Android::AndroidConnectivityService& androidConnectivityService,
-										Eegeo::Android::Input::AndroidInputProcessor& androidInputProcessor)
-        : m_pAndroidLocationService(androidLocationService)
-        , m_pAndroidConnectivityService(androidConnectivityService)
-    	, m_pAndroidInputProcessor(androidInputProcessor)
-        {
-        }
     	void AndroidAppModule::Register(const TContainerBuilder& builder)
         {
             builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
@@ -58,6 +46,14 @@ namespace ExampleApp
 						auto screenProperties = contexgt.resolve<Eegeo::Rendering::ScreenProperties>();
 						return std::make_shared<Eegeo::Android::Input::AndroidInputProcessor>(inputHandler.get(), screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
 					}).singleInstance();
+		    builder->registerInstanceFactory([](Hypodermic::ComponentContext& context))
+				{
+					auto androidConnectivityService* = context.resolve<IAndroidConnectivityService>();
+					auto androidPlatformAbstractionModule = context.resolve<IAndroidPlatformAbstractionModule>();
+					auto androidPersistentSettingsModel = context.resolve<IAndroidPersistentSettingsModel>();
+					return std::make_shared<ExampleApp::Net::SdkModel::NetworkCapabilities>(*androidConnectivityService.get(), androidPlatofrmAbstractionModule.get(), androidPersistentSettingsModel.get());
+				}).singleInstance();
+				}
 //            builder->registerExternallyOwnedInstance(m_metricsService).as<ExampleApp::Metrics::IMetricsService>();
 //            builder->registerExternallyOwnedInstance(m_screenProperties);
 //            builder->registerExternallyOwnedInstance(m_applicationConfiguration);

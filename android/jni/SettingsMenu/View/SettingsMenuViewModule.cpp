@@ -13,49 +13,59 @@ namespace ExampleApp
     {
         namespace View
         {
-            SettingsMenuViewModule::SettingsMenuViewModule(
-                const std::string& viewName,
-                AndroidNativeState& nativeState,
-                Menu::View::IMenuModel& menuModel,
-                Menu::View::IMenuViewModel& menuViewModel,
-				Modality::View::IModalBackgroundView& modalBackgroundView,
-                ExampleAppMessaging::TMessageBus& messageBus
-            )
-            {
-                ASSERT_UI_THREAD
-
-                SettingsMenuView* view = Eegeo_NEW(SettingsMenuView)(nativeState, viewName);
-                m_pView = view;
-
-                m_pController = Eegeo_NEW(SettingsMenuController)(
-                                    *view,
-                                    menuModel,
-                                    menuViewModel,
-									modalBackgroundView,
-                                    messageBus
-                                );
-            }
-
-            SettingsMenuViewModule::~SettingsMenuViewModule()
-            {
-                ASSERT_UI_THREAD
-
-                Eegeo_DELETE m_pController;
-                Eegeo_DELETE m_pView;
-            }
-
-            Menu::View::MenuController& SettingsMenuViewModule::GetMenuController() const
-            {
-                ASSERT_UI_THREAD
-
-                return *m_pController;
-            }
-
-            Menu::View::IMenuView& SettingsMenuViewModule::GetMenuView() const
-            {
-                ASSERT_UI_THREAD
-                return *m_pView;
-            }
+			void SettingsMenuViewModule::Register(const TContainerBuilder& builder)
+			{
+				ASSERT_UI_THREAD
+				builder->registerType<SettingsMenuView>().as<ISettingsMenuView>().singleInstance();
+				builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+						{
+							const std::string viewName = "com/eegeo/settingsmenu/SettingsMenuView";
+							return std::make_shared<SettingsMenuView>(context.resolve<AndroidNativeState>(), viewName);
+						}).singleInstance();
+			}
+//            SettingsMenuViewModule::SettingsMenuViewModule(
+//                const std::string& viewName,
+//                AndroidNativeState& nativeState,
+//                Menu::View::IMenuModel& menuModel,
+//                Menu::View::IMenuViewModel& menuViewModel,
+//				Modality::View::IModalBackgroundView& modalBackgroundView,
+//                ExampleAppMessaging::TMessageBus& messageBus
+//            )
+//            {
+//                ASSERT_UI_THREAD
+//
+//                SettingsMenuView* view = Eegeo_NEW(SettingsMenuView)(nativeState, viewName);
+//                m_pView = view;
+//
+//                m_pController = Eegeo_NEW(SettingsMenuController)(
+//                                    *view,
+//                                    menuModel,
+//                                    menuViewModel,
+//									modalBackgroundView,
+//                                    messageBus
+//                                );
+//            }
+//
+//            SettingsMenuViewModule::~SettingsMenuViewModule()
+//            {
+//                ASSERT_UI_THREAD
+//
+//                Eegeo_DELETE m_pController;
+//                Eegeo_DELETE m_pView;
+//            }
+//
+//            Menu::View::MenuController& SettingsMenuViewModule::GetMenuController() const
+//            {
+//                ASSERT_UI_THREAD
+//
+//                return *m_pController;
+//            }
+//
+//            Menu::View::IMenuView& SettingsMenuViewModule::GetMenuView() const
+//            {
+//                ASSERT_UI_THREAD
+//                return *m_pView;
+//            }
         }
     }
 }

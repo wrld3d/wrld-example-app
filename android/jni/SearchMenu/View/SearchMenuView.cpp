@@ -19,7 +19,7 @@ namespace ExampleApp
 				env->CallVoidMethod(m_uiView, jmethod);
 			}
 
-            SearchMenuView::SearchMenuView(AndroidNativeState& nativeState,
+            SearchMenuView::SearchMenuView(const std::shared_ptr<AndroidNativeState>& nativeState,
                                            const std::string& viewClassName)
                 : Menu::View::MenuView(nativeState, viewClassName)
             {
