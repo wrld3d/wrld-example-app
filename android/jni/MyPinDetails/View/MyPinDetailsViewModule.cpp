@@ -3,6 +3,7 @@
 #include "MyPinDetailsViewModule.h"
 #include "MyPinDetailsView.h"
 #include "MyPinDetailsController.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {

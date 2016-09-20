@@ -11,7 +11,8 @@ namespace ExampleApp
     {
         namespace View
         {
-            ModalBackgroundAggregateView::ModalBackgroundAggregateView(const std::shared_ptr<AndroidNativeState>& nativeState, ExampleAppMessaging::TMessageBus& messageBus)
+            ModalBackgroundAggregateView::ModalBackgroundAggregateView(const std::shared_ptr<AndroidNativeState>& nativeState,
+					 const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
                 : m_nativeState(nativeState)
                 , m_messageBus(messageBus)
             {
@@ -71,7 +72,7 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView, animateToIntermediateActivityState, modality);
 
                 // Publish message to native view.
-                m_messageBus.Publish(Modality::UpdateNativeModalBackgroundMessage(modality, false));
+                m_messageBus->Publish(Modality::UpdateNativeModalBackgroundMessage(modality, false));
             }
 
             void ModalBackgroundAggregateView::InsertTappedCallback(Eegeo::Helpers::ICallback0& callback)

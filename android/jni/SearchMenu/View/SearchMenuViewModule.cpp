@@ -16,61 +16,13 @@ namespace ExampleApp
 			void SearchMenuViewModule::Register(const TContainerBuilder& builder)
 			{
 				ASSERT_UI_THREAD
-				builder->registerType<SearchMenuView>().as<ISearchMenuView>().singleInstance();
+
 				builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
 						{
 							const std::string viewName = "com/eegeo/searchmenu/SearchMenuView";
 							return std::make_shared<SearchMenuView>(context.resolve<AndroidNativeState>(), viewName);
-						}).singleInstance();
+						}).as<ISearchMenuView>().singleInstance();
 			}
-//            SearchMenuViewModule::SearchMenuViewModule(
-//                const std::string& viewName,
-//                AndroidNativeState& nativeState,
-//                Menu::View::IMenuModel& menuModel,
-//                Menu::View::IMenuViewModel& menuViewModel,
-//                Menu::View::IMenuSectionViewModel& searchSectionViewModel,
-//                TagSearch::View::ITagSearchRepository& tagSearchRepository,
-//				Menu::View::IMenuOptionsModel& menuOptionsModel,
-//                Modality::View::IModalBackgroundView& modalBackgroundView,
-//                ExampleAppMessaging::TMessageBus& messageBus
-//            )
-//            {
-//                ASSERT_UI_THREAD
-//
-//                SearchMenuView* view = Eegeo_NEW(SearchMenuView)(nativeState, viewName);
-//                m_pView = view;
-//
-//                m_pController = Eegeo_NEW(SearchMenu::View::SearchMenuController)(
-//                                    menuModel,
-//                                    menuViewModel,
-//									*view,
-//									*view,
-//									searchSectionViewModel,
-//                                    tagSearchRepository,
-//									modalBackgroundView,
-//                                    messageBus
-//                                );
-//            }
-//
-//            SearchMenuViewModule::~SearchMenuViewModule()
-//            {
-//                ASSERT_UI_THREAD
-//
-//                Eegeo_DELETE m_pController;
-//                Eegeo_DELETE m_pView;
-//            }
-//
-//            Menu::View::MenuController& SearchMenuViewModule::GetMenuController() const
-//            {
-//                ASSERT_UI_THREAD
-//                return *m_pController;
-//            }
-//
-//            Menu::View::IMenuView& SearchMenuViewModule::GetMenuView() const
-//            {
-//                ASSERT_UI_THREAD
-//                return *m_pView;
-//            }
         }
     }
 }

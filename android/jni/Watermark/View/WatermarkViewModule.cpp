@@ -4,6 +4,7 @@
 #include "AndroidAppThreadAssertionMacros.h"
 #include "IWatermarkDataRepository.h"
 #include "WatermarkData.h"
+#include "WatermarkView.h"
 
 namespace ExampleApp
 {
@@ -16,34 +17,6 @@ namespace ExampleApp
 				ASSERT_UI_THREAD
 				builder->registerType<WatermarkView>().as<IWatermarkView>().singleInstance();
 			}
-//            WatermarkViewModule::WatermarkViewModule(
-//                AndroidNativeState& nativeState,
-//                IWatermarkViewModel& viewModel,
-//				IWatermarkDataRepository& watermarkDataRepository,
-//                ExampleAppMessaging::TMessageBus& messageBus,
-//                Metrics::IMetricsService& metricsService
-//            )
-//            {
-//                ASSERT_UI_THREAD
-//
-//				const WatermarkData& defaultWatermarkData = watermarkDataRepository.GetWatermarkDataWithKey("eegeo");
-//                m_pView = Eegeo_NEW(WatermarkView)(nativeState, defaultWatermarkData);
-//
-//                m_pController = Eegeo_NEW(WatermarkController)(
-//                                    viewModel,
-//                                    *m_pView,
-//									watermarkDataRepository,
-//                                    messageBus,
-//                                    metricsService);
-//
-//            }
-//
-//            WatermarkViewModule::~WatermarkViewModule()
-//            {
-//                ASSERT_UI_THREAD
-//                Eegeo_DELETE m_pController;
-//                Eegeo_DELETE m_pView;
-//            }
         }
     }
 }

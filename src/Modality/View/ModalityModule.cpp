@@ -5,6 +5,8 @@
 #include "ModalityController.h"
 #include "ModalityObserver.h"
 #include "ModalityIgnoredReactionModel.h"
+#include "ModalBackgroundController.h"
+#include "IModalBackgroundView.h"
 
 namespace ExampleApp
 {
@@ -17,10 +19,12 @@ namespace ExampleApp
                 builder->registerType<ModalityModel>().as<IModalityModel>().singleInstance();
                 builder->registerType<ModalityController>().as<IModalityController>().singleInstance();
                 builder->registerType<ModalityObserver>().singleInstance();
+                builder->registerType<Modality::View::ModalBackgroundController>().singleInstance();
             }
             
             void ModalityModule::RegisterLeaves()
             {
+                RegisterLeaf<Modality::View::ModalBackgroundController>();
                 RegisterLeaf<ModalityObserver>();
                 RegisterLeaf<IModalityController>();
             }

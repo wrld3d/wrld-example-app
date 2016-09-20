@@ -30,12 +30,6 @@ namespace ExampleApp
                                                      auto interop = [view->Get() getInterop];
                                                      return Hypodermic::makeExternallyOwned(*interop);
                                                  }).as<Modality::View::IModalBackgroundView>().singleInstance();
-                builder->registerType<Modality::View::ModalBackgroundController>().singleInstance();
-            }
-            
-            void ModalBackgroundViewModule::RegisterLeaves()
-            {
-                RegisterLeaf<Modality::View::ModalBackgroundController>();
             }
         }
     }

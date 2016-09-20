@@ -5,6 +5,7 @@
 #include "ScreenProperties.h"
 #include "InteriorsExplorerView.h"
 #include "InteriorsExplorerController.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
@@ -17,35 +18,6 @@ namespace ExampleApp
 				ASSERT_UI_THREAD
 				builder->registerType<InteriorsExplorerView>().as<IInteriorsExplorerView>().singleInstance();
 			}
-//            InteriorsExplorerViewModule::InteriorsExplorerViewModule(SdkModel::InteriorsExplorerModel& model,
-//            														 InteriorsExplorerViewModel& viewModel,
-//                                                                     ExampleAppMessaging::TMessageBus& messageBus,
-//																	 AndroidNativeState& nativeState)
-//            {
-//            	m_pView = Eegeo_NEW(InteriorsExplorerView)(nativeState);
-//
-//            	m_pController = Eegeo_NEW(InteriorsExplorerController)(model,
-//            														   *m_pView,
-//                                                                       viewModel,
-//                                                                       messageBus);
-//            }
-//
-//            InteriorsExplorerViewModule::~InteriorsExplorerViewModule()
-//            {
-//                Eegeo_DELETE m_pController;
-//
-//                Eegeo_DELETE m_pView;
-//            }
-//
-//            InteriorsExplorerController& InteriorsExplorerViewModule::GetController() const
-//            {
-//                return *m_pController;
-//            }
-//
-//            InteriorsExplorerView& InteriorsExplorerViewModule::GetView() const
-//            {
-//                return *m_pView;
-//            }
         }
     }
 }

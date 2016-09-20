@@ -2,11 +2,6 @@
 
 #pragma once
 
-//#include "IMyPinDetailsViewModule.h"
-//#include "MyPinDetailsViewIncludes.h"
-//#include "AndroidNativeState.h"
-//#include "MyPinDetails.h"
-//#include "BidirectionalBus.h"
 #include "Module.h"
 
 namespace ExampleApp
@@ -15,21 +10,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            class MyPinDetailsViewModule : public IMyPinDetailsViewModule
+            class MyPinDetailsViewModule : public Module
             {
             public:
             	void Register(const TContainerBuilder& builder);
-//            public:
-//                MyPinDetailsViewModule(
-//                    AndroidNativeState& nativeState,
-//                    IMyPinDetailsViewModel& viewModel,
-//                    ExampleAppMessaging::TMessageBus& messageBus);
-//                ~MyPinDetailsViewModule();
-//
-//            private:
-//
-//                MyPinDetailsView* m_pView;
-//                MyPinDetailsController* m_pController;
             };
         }
     }

@@ -18,7 +18,8 @@ namespace ExampleApp
             class ModalBackgroundAggregateView: public Modality::View::IModalBackgroundView
             {
             public:
-                ModalBackgroundAggregateView(const std::shared_ptr<AndroidNativeState>& nativeState, ExampleAppMessaging::TMessageBus& messageBus);
+                ModalBackgroundAggregateView(const std::shared_ptr<AndroidNativeState>& nativeState,
+                							 const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
                 ~ModalBackgroundAggregateView();
 
                 void SetFullyActive();
@@ -38,7 +39,7 @@ namespace ExampleApp
                 jobject m_uiView;
 
                 Eegeo::Helpers::CallbackCollection0 m_tappedCallbacks;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
             };
         }
     }

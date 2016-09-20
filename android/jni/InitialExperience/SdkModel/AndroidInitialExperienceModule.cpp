@@ -11,11 +11,12 @@ namespace ExampleApp
         namespace SdkModel
         {
             AndroidInitialExperienceModule::AndroidInitialExperienceModule(
-                AndroidNativeState& nativeState,
-                PersistentSettings::IPersistentSettingsModel& persistentSettings,
-                ExampleAppMessaging::TMessageBus& messageBus
+            										   const std::shared_ptr<AndroidNativeState>& nativeState,
+                                                       const std::shared_ptr<PersistentSettings::IPersistentSettingsModel>& persistentSettings,
+                                                       const std::shared_ptr<WorldAreaLoader::SdkModel::IWorldAreaLoaderModel>& worldAreaLoaderModel,
+                                                       const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus
             )
-                : InitialExperienceModuleBase(persistentSettings)
+                : InitialExperienceModuleBase(persistentSettings, worldAreaLoaderModel)
                 , m_nativeState(nativeState)
             	, m_messageBus(messageBus)
             {
@@ -31,11 +32,11 @@ namespace ExampleApp
             {
                 std::vector<IInitialExperienceStep*> steps;
 
-                IInitialExperienceStep* pIntroStep = Eegeo_NEW(InitialExperienceIntroStep)(m_messageBus, GetPersistentSettings());
+                IInitialExperienceStep* pIntroStep = Eegeo_NEW(InitialExperienceIntroStep)(*m_messageBus, GetPersistentSettings());
                 steps.push_back(pIntroStep);
 
                 IInitialExperienceStep* pWorldAreaLoaderStep = Eegeo_NEW(PreLoad::SdkModel::AndroidInitialExperiencePreLoadModel)(
-                            m_nativeState,
+                            *m_nativeState,
                             worldAreaLoaderModel,
                             GetPersistentSettings()
                         );

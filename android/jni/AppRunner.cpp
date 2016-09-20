@@ -5,6 +5,7 @@
 #include "AndroidThreadHelper.h"
 #include "AndroidAppThreadAssertionMacros.h"
 #include "ImagePathHelpers.h"
+#include "ScreenProperties.h"
 
 AppRunner::AppRunner
 (
@@ -121,11 +122,10 @@ bool AppRunner::TryBindDisplay()
         if(m_pAppHost != NULL)
         {
             m_pAppHost->SetSharedSurface(m_displayService.GetSharedSurface());
-            const Eegeo::Rendering::ScreenProperties& screenProperties = Eegeo::Rendering::ScreenProperties::Make(
-                        m_displayService.GetDisplayWidth(),
-                        m_displayService.GetDisplayHeight(),
-                        ExampleApp::Helpers::ImageHelpers::GetPixelScale(),
-                        m_pNativeState->deviceDpi);
+            auto screenProperties = std::make_shared<Eegeo::Rendering::ScreenProperties>(m_displayService.GetDisplayWidth(),
+                                                                                         m_displayService.GetDisplayHeight(),
+                                                                                         ExampleApp::Helpers::ImageHelpers::GetPixelScale(),
+                                                                                         m_pNativeState->deviceDpi);
             m_pAppHost->NotifyScreenPropertiesChanged(screenProperties);
             m_pAppHost->SetViewportOffset(0, 0);
         }

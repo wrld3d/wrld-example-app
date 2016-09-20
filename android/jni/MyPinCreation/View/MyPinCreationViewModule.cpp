@@ -5,6 +5,7 @@
 #include "MyPinCreationInitiationController.h"
 #include "MyPinCreationConfirmationView.h"
 #include "MyPinCreationConfirmationController.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {

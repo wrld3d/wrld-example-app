@@ -17,7 +17,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            class SearchResultPoiViewModule: public Module
+            class SearchResultPoiViewModule : public Module
             {
             public:
             	void Register(const TContainerBuilder& builder);

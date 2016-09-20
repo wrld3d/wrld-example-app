@@ -11,6 +11,7 @@
 #include "OptionsController.h"
 #include "ClearCacheMessageHandler.h"
 #include "IWorkPool.h"
+#include "IOptionsView.h"
 
 namespace ExampleApp
 {

@@ -1,6 +1,6 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-#include "AndroidNativeState.h"
+/*#include "AndroidNativeState.h"
 #include "Menu.h"
 #include "MenuViewModule.h"
 #include "MenuController.h"
@@ -56,3 +56,4 @@ namespace ExampleApp
         }
     }
 }
+*/

@@ -3,13 +3,18 @@
 #pragma once
 
 #include "Types.h"
-#include "MobileExampleApp.h"
 #include "IAndroidInputHandler.h"
+#include <memory>
+
+namespace ExampleApp
+{
+	class InputController;
+}
 
 class AppInputDelegate : public Eegeo::Android::Input::IAndroidInputHandler, protected Eegeo::NonCopyable
 {
 public:
-    AppInputDelegate(ExampleApp::MobileExampleApp& exampleApp);
+    AppInputDelegate(const std::shared_ptr<ExampleApp::InputController>& inputController);
     ~AppInputDelegate();
 
     void Event_TouchRotate 			(const AppInterface::RotateData& data);
@@ -42,7 +47,7 @@ public:
     }
 
 private:
-    ExampleApp::MobileExampleApp& m_exampleApp;
+    const std::shared_ptr<ExampleApp::InputController>& m_inputController;
 };
 
 

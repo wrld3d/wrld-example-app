@@ -2,15 +2,7 @@
 
 #pragma once
 
-//#include "IMyPinCreationViewModule.h"
-//#include "Types.h"
-//#include "AndroidNativeState.h"
-//#include "MyPinCreation.h"
-//#include "MyPinCreationDetails.h"
-//#include "MyPinCreationViewIncludes.h"
-//#include "BidirectionalBus.h"
-//#include "IMetricsService.h"
-#include "Module"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -22,24 +14,6 @@ namespace ExampleApp
             {
             public:
             	void Register(const TContainerBuilder& builder);
-//            private:
-//                MyPinCreationInitiationView* m_pInitiationView;
-//                MyPinCreationInitiationController* m_pInitiationController;
-//
-//                MyPinCreationConfirmationView* m_pConfirmationView;
-//                MyPinCreationConfirmationController* m_pConfirmationController;
-//
-//            public:
-//                MyPinCreationViewModule(
-//                    AndroidNativeState& nativeState,
-//                    IMyPinCreationInitiationViewModel& initiationViewModel,
-//                    IMyPinCreationConfirmationViewModel& confirmationViewModel,
-//                    MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& detailsViewModel,
-//                    ExampleAppMessaging::TMessageBus& messageBus,
-//                    Metrics::IMetricsService& metricsService
-//                );
-//
-//                ~MyPinCreationViewModule();
             };
         }
     }

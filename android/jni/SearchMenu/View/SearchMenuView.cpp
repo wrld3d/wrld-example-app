@@ -2,6 +2,7 @@
 
 #include "SearchMenuView.h"
 #include "AndroidAppThreadAssertionMacros.h"
+#include "AndroidNativeState.h"
 
 namespace ExampleApp
 {
@@ -12,7 +13,7 @@ namespace ExampleApp
         	void SearchMenuView::CallVoidVoidMethod(const char* func)
 			{
 				ASSERT_UI_THREAD
-				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
 				jmethodID jmethod = env->GetMethodID(m_uiViewClass, func, "()V");
@@ -29,11 +30,11 @@ namespace ExampleApp
             {
             	ASSERT_UI_THREAD
 
-				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
 				jstring strClassName = env->NewStringUTF("java/lang/String");
-				jclass strClass = m_nativeState.LoadClass(env, strClassName);
+				jclass strClass = m_nativeState->LoadClass(env, strClassName);
 				env->DeleteLocalRef(strClassName);
 
 				int searchResultCount = searchSection.Size();
@@ -82,7 +83,7 @@ namespace ExampleApp
 			{
 				ASSERT_UI_THREAD
 
-				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
 				jmethodID setEditTextMethod = env->GetMethodID(m_uiViewClass, "setEditText", "(Ljava/lang/String;Z)V");
@@ -96,7 +97,7 @@ namespace ExampleApp
 			{
 				ASSERT_UI_THREAD
 
-				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				AndroidSafeNativeThreadAttachment attached(*m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
 				jmethodID setSearchResultCountMethod = env->GetMethodID(m_uiViewClass, "setSearchResultCount", "(I)V");

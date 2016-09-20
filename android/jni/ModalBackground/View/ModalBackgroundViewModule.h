@@ -20,20 +20,6 @@ namespace ExampleApp
             {
             public:
             	void Register(const TContainerBuilder& builder);
-//            private:
-//                ModalBackgroundAggregateView* m_pView;
-//                Modality::View::ModalBackgroundController* m_pController;
-//
-//            public:
-//                ModalBackgroundViewModule(
-//                    AndroidNativeState& nativeState,
-//                    Modality::View::IModalityModel& modalityModel,
-//                    ExampleAppMessaging::TMessageBus& messageBus
-//                );
-//
-//                ~ModalBackgroundViewModule();
-//
-//                Modality::View::IModalBackgroundView& GetModalBackgroundView() const;
             };
         }
     }

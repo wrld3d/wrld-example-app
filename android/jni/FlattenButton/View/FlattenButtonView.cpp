@@ -18,7 +18,7 @@ namespace ExampleApp
                 JNIEnv* env = attached.envForThread;
 
                 jstring strClassName = env->NewStringUTF("com.eegeo.flattenbutton.FlattenButtonView");
-                jclass uiClass = *m_nativeState.LoadClass(env, strClassName);
+                jclass uiClass = m_nativeState->LoadClass(env, strClassName);
                 env->DeleteLocalRef(strClassName);
 
                 m_uiViewClass = static_cast<jclass>(env->NewGlobalRef(uiClass));

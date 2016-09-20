@@ -2,6 +2,12 @@
 
 #pragma once
 
+namespace ExampleApp
+{
+	class AppWiring;
+	class MobileExampleApp;
+}
+
 #include <map>
 #include <string>
 #include <vector>
@@ -52,12 +58,9 @@
 #include "AndroidFlurryMetricsService.h"
 #include "ICallback.h"
 #include "UserInteraction.h"
-#include "IInteriorsExplorerViewModule.h"
-#include "SearchResultSectionViewIncludes.h"
 #include "IMenuReactionModel.h"
-#include "TagSearchViewIncludes.h"
 
-class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
+class AppHost : protected Eegeo::NonCopyable
 {
 public:
     AppHost(
@@ -81,7 +84,7 @@ public:
     void OnPause();
     void OnResume();
 
-    void NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties);
+    void NotifyScreenPropertiesChanged(const std::shared_ptr<Eegeo::Rendering::ScreenProperties>& screenProperties);
 
     void HandleFailureToProvideWorkingApiKey();
 
@@ -97,11 +100,11 @@ public:
     void SetViewportOffset(float x, float y);
 
 private:
-    bool m_isPaused;
-    Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;
-//    Eegeo::Android::AndroidLocationService* m_pAndroidLocationService;
-//    Eegeo::Android::AndroidConnectivityService* m_pAndroidConnectivityService;
+    void RegisterApplicationViewModules();
 
+    ExampleApp::ExampleAppMessaging::TMessageBus& GetMessageBus();
+
+    bool m_isPaused;
     AndroidNativeState& m_nativeState;
     AppInputDelegate* m_pAppInputDelegate;
 
@@ -111,47 +114,14 @@ private:
     Eegeo::UI::NativeAlerts::Android::AndroidAlertBoxFactory m_androidAlertBoxFactory;
     Eegeo::UI::NativeUIFactories m_androidNativeUIFactories;
 
-//    Eegeo::Android::Input::AndroidInputProcessor* m_pInputProcessor;
-
-    ExampleApp::ModalBackground::SdkModel::IModalBackgroundNativeViewModule* m_pModalBackgroundNativeViewModule;
-
-
-    Eegeo::Android::AndroidPlatformAbstractionModule* m_pAndroidPlatformAbstractionModule;
-    ExampleApp::Menu::View::IMenuViewModule* m_pSettingsMenuViewModule;
-    ExampleApp::Menu::View::IMenuViewModule* m_pSearchMenuViewModule;
-    ExampleApp::SearchResultSection::View::ISearchResultSectionViewModule* m_pSearchResultSectionViewModule;
-    ExampleApp::TagSearch::View::ITagSearchViewModule* m_pTagSearchViewModule;
-    ExampleApp::ModalBackground::View::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
-    ExampleApp::FlattenButton::View::IFlattenButtonViewModule* m_pFlattenButtonViewModule;
-    ExampleApp::SearchResultPoi::View::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;
-    ExampleApp::WorldPins::View::IWorldPinOnMapViewModule* m_pWorldPinOnMapViewModule;
-    ExampleApp::AboutPage::View::IAboutPageViewModule* m_pAboutPageViewModule;
-    ExampleApp::Compass::View::ICompassViewModule* m_pCompassViewModule;
-    ExampleApp::MyPinCreation::View::IMyPinCreationViewModule* m_pMyPinCreationViewModule;
-    ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsViewModule* m_pMyPinCreationDetailsViewModule;
-    ExampleApp::MyPinDetails::View::IMyPinDetailsViewModule* m_pMyPinDetailsViewModule;
-    ExampleApp::InteriorsExplorer::View::IInteriorsExplorerViewModule* m_pInteriorsExplorerViewModule;
-    ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule* m_pInitialExperienceIntroViewModule; // TODO: Interface.
-    ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
-    ExampleApp::Watermark::View::IWatermarkViewModule* m_pWatermarkViewModule;
-    ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
-    ExampleApp::Metrics::AndroidFlurryMetricsService* m_pAndroidFlurryMetricsService;
-
-    ExampleApp::Menu::View::IMenuReactionModel* m_pMenuReactionModel;
-
-    ExampleApp::MobileExampleApp* m_pApp;
-
-    ExampleApp::PersistentSettings::AndroidPersistentSettingsModel m_androidPersistentSettingsModel;
-    ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule* m_pInitialExperienceModule;
+    std::shared_ptr<ExampleApp::AppWiring> m_wiring;
+    std::shared_ptr<ExampleApp::MobileExampleApp> m_app;
 
     bool m_createdUIModules;
     bool m_requestedApplicationInitialiseViewState;
     bool m_uiCreatedMessageReceivedOnNativeThread;
-    ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModule* m_pViewControllerUpdaterModule;
 
-    ExampleApp::ExampleAppMessaging::TMessageBus m_messageBus;
     ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus m_sdkDomainEventBus;
-    Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<AppHost> m_failAlertHandler;
     Eegeo::Helpers::TCallback1<AppHost, const ExampleApp::UserInteraction::UserInteractionEnabledChangedMessage&> m_userInteractionEnabledChangedHandler;
 
     void DispatchRevealUiMessageToUiThreadFromNativeThread();
@@ -161,10 +131,7 @@ private:
 
     void SetTouchExclusivity();
 
-    void HandleStartupFailure();
     void HandleUserInteractionEnabledChanged(const ExampleApp::UserInteraction::UserInteractionEnabledChangedMessage& message);
-    void HandleNoConnectivityWarning();
-    void HandleInvalidConnectivityError();
 
     void PublishNetworkConnectivityStateToUIThread();
 };

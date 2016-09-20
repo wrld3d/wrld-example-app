@@ -3,6 +3,7 @@
 #include "InitialExperienceIntroViewModule.h"
 #include "InitialExperienceIntroView.h"
 #include "InitialExperienceIntroController.h"
+#include "AndroidAppThreadAssertionMacros.h"
 
 namespace ExampleApp
 {
@@ -15,17 +16,6 @@ namespace ExampleApp
 				ASSERT_UI_THREAD
 				builder->registerType<InitialExperienceIntroView>().as<IInitialExperienceIntroView>().singleInstance();
 			}
-//			InitialExperienceIntroViewModule::InitialExperienceIntroViewModule(AndroidNativeState& nativeState, ExampleAppMessaging::TMessageBus& messageBus)
-//			{
-//				m_pView = Eegeo_NEW(InitialExperienceIntroView)(nativeState, messageBus);
-//				m_pController = Eegeo_NEW(InitialExperienceIntroController)(*m_pView, messageBus);
-//			}
-//
-//			InitialExperienceIntroViewModule::~InitialExperienceIntroViewModule()
-//			{
-//				Eegeo_DELETE m_pController;
-//				Eegeo_DELETE m_pView;
-//			}
 		}
 	}
 }

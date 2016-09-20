@@ -3,6 +3,10 @@ set(headers ${headers} ../src/Options/SdkModel
 set(currsources
   ../src/Options/SdkModel/CacheEnabledChangedMessageHandler.cpp
   ../src/Options/SdkModel/CacheEnabledChangedMessageHandler.h
+  ../src/Options/SdkModel/ClearCacheMessageHandler.cpp
+  ../src/Options/SdkModel/ClearCacheMessageHandler.h
+  ../src/Options/SdkModel/CacheClearBackgroundTask.h
+  ../src/Options/SdkModel/CacheClearBackgroundTask.cpp
   ../src/Options/SdkModel/CMakeLists.txt
   ../src/Options/SdkModel/OptionsSdkIncludes.h
   ../src/Options/SdkModel/StreamOverWifiOnlyChangedMessageHandler.cpp

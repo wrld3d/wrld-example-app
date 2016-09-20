@@ -4,6 +4,7 @@
 
 #include "Rendering.h"
 #include "IRenderableFilter.h"
+#include <memory>
 
 namespace ExampleApp
 {
@@ -16,10 +17,10 @@ namespace ExampleApp
             public:
                 ModalBackgroundNativeView(
                     const std::shared_ptr<Eegeo::Rendering::Shaders::ShaderIdGenerator>& shaderIdGenerator,
-                    Eegeo::Rendering::Materials::MaterialIdGenerator& materialIdGenerator,
-                    Eegeo::Rendering::GlBufferPool& glBufferPool,
-                    Eegeo::Rendering::VertexLayouts::VertexLayoutPool& vertexLayoutPool,
-                    Eegeo::Rendering::VertexLayouts::VertexBindingPool& vertexBindingPool);
+                    const std::shared_ptr<Eegeo::Rendering::Materials::MaterialIdGenerator>& materialIdGenerator,
+                    const std::shared_ptr<Eegeo::Rendering::GlBufferPool>& glBufferPool,
+                    const std::shared_ptr<Eegeo::Rendering::VertexLayouts::VertexLayoutPool>& vertexLayoutPool,
+                    const std::shared_ptr<Eegeo::Rendering::VertexLayouts::VertexBindingPool>& vertexBindingPool);
 
                 virtual ~ModalBackgroundNativeView();
 
@@ -35,9 +36,9 @@ namespace ExampleApp
                 float m_fixedTransition;
                 float m_setAlpha;
 
-                Eegeo::Rendering::Shaders::ColorShader* m_pShader;
-                Eegeo::Rendering::Materials::ColorMaterial* m_pMaterial;
-                Eegeo::Rendering::Renderables::WorldMeshRenderable* m_pModalBackgroundRenderable;
+                std::shared_ptr<Eegeo::Rendering::Shaders::ColorShader> m_shader;
+                std::shared_ptr<Eegeo::Rendering::Materials::ColorMaterial> m_material;
+                std::shared_ptr<Eegeo::Rendering::Renderables::WorldMeshRenderable> m_modalBackgroundRenderable;
                 float m_baseAlpha;
             };
         }

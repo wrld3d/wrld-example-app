@@ -4,86 +4,105 @@
 #include "AndroidLocationService.h"
 #include "AndroidConnectivityService.h"
 #include "AndroidInputProcessor.h"
-//#include "iOSAppModule.h"
-//#include "iOSLocationService.h"
-//#include "iOSConnectivityService.h"
-//#include "iOSPersistentSettingsModel.h"
-//#include "iOSInitialExperienceModule.h"
-//#include "IInitialExperienceModule.h"
-//#include "LinkOutObserver.h"
-//#include "URLRequestHandler.h"
-//#include "IOSMenuReactionModel.h"
-//#include "iOSPlatformConfigBuilder.h"
-//#include "PlatformConfig.h"
-//#include "AppLocationDelegate.h"
-//#include "App.h"
-//#include "ApplicationConfigurationModule.h"
-//#include "IWorldAreaLoaderModel.h"
-//#include "IInitialExperienceController.h"
+#include "AndroidFlurryMetricsService.h"
+#include "ApplicationConfiguration.h"
+#include "AndroidInputHandler.h"
+#include "AndroidFileIO.h"
+#include "ApplicationConfigurationModule.h"
+#include "AndroidApplicationConfigurationVersionProvider.h"
+#include "ApiKey.h"
+#include "AndroidInputHandler.h"
+#include "ScreenProperties.h"
+#include "NetworkCapabilities.h"
+#include "AndroidPlatformAbstractionModule.h"
+#include "IJpegLoader.h"
+#include "AndroidInitialExperienceModule.h"
+#include "IInitialExperienceModule.h"
+#include "IWorldAreaLoaderModel.h"
+#include "IPersistentSettingsModel.h"
+namespace
+{
+	ExampleApp::ApplicationConfig::ApplicationConfiguration LoadApplicationConfiguration(AndroidNativeState& nativeState, const std::set<std::string>& customApplicationAssetDirectories)
+	{
+	    Eegeo::Android::AndroidFileIO tempFileIO(&nativeState, customApplicationAssetDirectories);
+	    ExampleApp::ApplicationConfig::SdkModel::AndroidApplicationConfigurationVersionProvider versionProvider(nativeState);
+
+	    return ExampleApp::ApplicationConfig::SdkModel::LoadAppConfig(
+	    		tempFileIO,
+	    		versionProvider,
+	    		ExampleApp::ApplicationConfigurationPath);
+	}
+}
 
 namespace ExampleApp
 {
     namespace Android
     {
+    	AndroidAppModule::AndroidAppModule(AndroidNativeState& nativeState,
+    									   Eegeo::Rendering::ScreenProperties& screenProperties,
+    			        				   EGLDisplay& display,
+    			        			       EGLSurface& shareSurface,
+    			        			       EGLContext& resourceBuildShareContext)
+    	: m_nativeState(nativeState)
+    	, m_screenProperties(screenProperties)
+    	, m_display(display)
+    	, m_shareSurface(shareSurface)
+    	, m_resourceBuildShareContext(resourceBuildShareContext)
+    	{
+    	}
+
     	void AndroidAppModule::Register(const TContainerBuilder& builder)
         {
+			std::set<std::string> customApplicationAssetDirectories;
+			customApplicationAssetDirectories.insert("SearchResultOnMap");
+			customApplicationAssetDirectories.insert("ApplicationConfigs");
+
+    		builder->registerExternallyOwnedInstance(m_nativeState);
+    		builder->registerExternallyOwnedInstance(m_screenProperties);
+
+    	    builder->registerType<ExampleApp::Metrics::AndroidFlurryMetricsService>().as<ExampleApp::Metrics::IMetricsService>().singleInstance();
+            builder->registerType<ExampleApp::InitialExperience::SdkModel::AndroidInitialExperienceModule>().as<ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule>().singleInstance();
+
+    		builder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
+    				{
+						const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration = LoadApplicationConfiguration(*context.resolve<AndroidNativeState>(), customApplicationAssetDirectories);
+						return std::make_shared<ExampleApp::ApplicationConfig::ApplicationConfiguration>(applicationConfiguration);
+    				}).singleInstance();
+
             builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
         			 {
         				 auto nativeState = context.resolve<AndroidNativeState>();
-        				 return std::make_shared<AndroidLocationService>(nativeState.get());
-        			 }).as<ILocationService>().singleInstance();
+        				 return std::make_shared<Eegeo::Android::AndroidLocationService>(nativeState.get());
+        			 }).as<Eegeo::Location::ILocationService>().singleInstance();
 
-            builder->registerInstanceFactory([](Hypodermic::ComponentContext& context))
+            builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
             		{
             			auto nativeState = context.resolve<AndroidNativeState>();
-            			return std::make_shared<AndroidConnectivityService>(nativeState.get());
-            		}).as<IConnectivityService>().singleInstance();
+            			return std::make_shared<Eegeo::Android::AndroidConnectivityService>(nativeState.get());
+            		}).as<Eegeo::Web::IConnectivityService>().singleInstance();
 
-			builder->registerType<AndroidInputHandler>().as<IAndroidInputHandler>().singleInstance();
+			builder->registerType<Eegeo::Android::Input::AndroidInputHandler>().as<Eegeo::Android::Input::IAndroidInputHandler>().singleInstance();
 			builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
 					{
-						auto inputHandler = context.resolve<IAndroidInputHandler>();
-						auto screenProperties = contexgt.resolve<Eegeo::Rendering::ScreenProperties>();
-						return std::make_shared<Eegeo::Android::Input::AndroidInputProcessor>(inputHandler.get(), screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
+						auto inputHandler = context.resolve<Eegeo::Android::Input::IAndroidInputHandler>();
+						auto screenProperties = context.resolve<Eegeo::Rendering::ScreenProperties>();
+						return std::make_shared<Eegeo::Android::Input::AndroidInputProcessor>(inputHandler.get(), screenProperties->GetScreenWidth(), screenProperties->GetScreenHeight());
 					}).singleInstance();
-		    builder->registerInstanceFactory([](Hypodermic::ComponentContext& context))
-				{
-					auto androidConnectivityService* = context.resolve<IAndroidConnectivityService>();
-					auto androidPlatformAbstractionModule = context.resolve<IAndroidPlatformAbstractionModule>();
-					auto androidPersistentSettingsModel = context.resolve<IAndroidPersistentSettingsModel>();
-					return std::make_shared<ExampleApp::Net::SdkModel::NetworkCapabilities>(*androidConnectivityService.get(), androidPlatofrmAbstractionModule.get(), androidPersistentSettingsModel.get());
-				}).singleInstance();
-				}
-//            builder->registerExternallyOwnedInstance(m_metricsService).as<ExampleApp::Metrics::IMetricsService>();
-//            builder->registerExternallyOwnedInstance(m_screenProperties);
-//            builder->registerExternallyOwnedInstance(m_applicationConfiguration);
-//            builder->registerType<Eegeo::iOS::iOSLocationService>().as<Eegeo::Location::ILocationService>().singleInstance();
-//
-//            builder->registerType<Eegeo::iOS::iOSConnectivityService>().as<Eegeo::Web::IConnectivityService>().singleInstance();
-//            builder->registerType<ExampleApp::PersistentSettings::iOSPersistentSettingsModel>().as<ExampleApp::PersistentSettings::IPersistentSettingsModel>().singleInstance();
-//            builder->registerType<ExampleApp::InitialExperience::iOSInitialExperienceModule>().as<ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule>().singleInstance();
-//            builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
-//                                             {
-//                                                 return Hypodermic::makeExternallyOwned(context.resolve<ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule>()->GetInitialExperienceController());
-//                                             }).singleInstance();
-//            builder->registerType<ExampleApp::LinkOutObserver::LinkOutObserver>().singleInstance();
-//            builder->registerType<ExampleApp::URLRequest::View::URLRequestHandler>().singleInstance();
-//            builder->registerType<ExampleApp::Menu::View::IOSMenuReactionModel>().as<ExampleApp::Menu::View::IMenuReactionModel>().singleInstance();
-//            builder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
-//                                             {
-//                                                 Eegeo::iOS::iOSPlatformConfigBuilder iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion());
-//                                                 return std::make_shared<Eegeo::Config::PlatformConfig>(ExampleApp::ApplicationConfig::SdkModel::BuildPlatformConfig(iOSPlatformConfigBuilder, *context.resolve<ExampleApp::ApplicationConfig::ApplicationConfiguration>()));
-//
-//                                             }).singleInstance();
-//            builder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
-//                                             {
-//                                                 auto locationService = context.resolve<Eegeo::Location::ILocationService>();
-//                                                 return std::make_shared<AppLocationDelegate>(locationService, m_viewController);
-//                                             }).singleInstance();
-//            builder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
-//                                             {
-//                                                 return std::make_shared<ViewControllerWrapper>(&m_viewController);
-//                                             }).singleInstance();
+
+			builder->registerInstanceFactory([&, this](Hypodermic::ComponentContext& context)
+					{
+			 	 	 	 auto nativeState = context.resolve<AndroidNativeState>();
+			 	 	 	 auto jpegLoader = context.resolve<Eegeo::Helpers::Jpeg::IJpegLoader>();
+                         auto appConfig = context.resolve<ExampleApp::ApplicationConfig::ApplicationConfiguration>();
+						 return std::make_shared<Eegeo::Android::AndroidPlatformAbstractionModule>(*nativeState,
+								 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	  *jpegLoader,
+																								  m_display,
+																								  m_resourceBuildShareContext,
+																								  m_shareSurface,
+																								  appConfig->EegeoApiKey(),
+																								  customApplicationAssetDirectories);
+					}).as<Eegeo::Modules::IPlatformAbstractionModule>().singleInstance();
+
         }
     }
 }

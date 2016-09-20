@@ -9,7 +9,7 @@ namespace ExampleApp
     {
         namespace View
         {
-        	OptionsView::OptionsView(AndroidNativeState& nativeState)
+        	OptionsView::OptionsView(const std::shared_ptr<AndroidNativeState>& nativeState)
             : m_nativeState(nativeState)
             {
                 ASSERT_UI_THREAD

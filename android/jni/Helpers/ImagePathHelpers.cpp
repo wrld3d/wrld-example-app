@@ -4,6 +4,7 @@
 #include "AndroidImagePathHelpers.h"
 #include "Logger.h"
 
+#include <cstdlib>
 #include <vector>
 #include <algorithm>
 

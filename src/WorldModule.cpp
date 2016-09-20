@@ -37,6 +37,11 @@
 #include "IWebLoadRequestFactory.h"
 #include "InteriorMarkerModelRepository.h"
 #include "InteriorsEntitiesRepository.h"
+#include "NativeUIFactories.h"
+#include "IAlertBoxFactory.h"
+#include "IInputBoxFactory.h"
+#include "IKeyboardInputFactory.h"
+#include "IHttpCache.h"
 
 namespace ExampleApp
 {
@@ -129,6 +134,22 @@ namespace ExampleApp
                                                                                                                        *(context.resolve<Eegeo::Rendering::EnvironmentFlatteningService>()));
                                            }).singleInstance();
         
+        builder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
+                                         {
+                                             return std::make_shared<Eegeo::UI::NativeUIFactories>(*(context.resolve<Eegeo::UI::NativeAlerts::IAlertBoxFactory>()),
+                                                                                                   *(context.resolve<Eegeo::UI::NativeInput::IInputBoxFactory>()),
+                                                                                                   *(context.resolve<Eegeo::UI::NativeInput::IKeyboardInputFactory>()));
+                                         }).singleInstance();
+        
+        builder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
+                                         {
+                                             return Hypodermic::makeExternallyOwned(context.resolve<Eegeo::Modules::IPlatformAbstractionModule>()->GetTextureFileLoader());
+                                         }).singleInstance();
+        
+        builder->registerInstanceFactory([&](Hypodermic::ComponentContext& context)
+                                         {
+                                             return Hypodermic::makeExternallyOwned(context.resolve<Eegeo::Modules::IPlatformAbstractionModule>()->GetHttpCache());
+                                         }).singleInstance();
         
         builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                            {
@@ -168,7 +189,10 @@ namespace ExampleApp
                                          {
                                              return Hypodermic::makeExternallyOwned(context.resolve<Eegeo::EegeoWorld>()->GetMapModule().GetInteriorsModelModule().GetInteriorsEntitiesRepository());
                                          }).singleInstance();
-        
+        builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                         {
+                                             return Hypodermic::makeExternallyOwned(context.resolve<Eegeo::EegeoWorld>()->GetWebConnectivityValidator());
+                                         }).singleInstance();
         builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                          {
                                              return Hypodermic::makeExternallyOwned(context.resolve<Eegeo::EegeoWorld>()->GetMapModule().GetInteriorsPresentationModule().GetInteriorViewModel());

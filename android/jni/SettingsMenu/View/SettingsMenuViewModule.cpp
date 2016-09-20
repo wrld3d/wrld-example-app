@@ -16,12 +16,11 @@ namespace ExampleApp
 			void SettingsMenuViewModule::Register(const TContainerBuilder& builder)
 			{
 				ASSERT_UI_THREAD
-				builder->registerType<SettingsMenuView>().as<ISettingsMenuView>().singleInstance();
 				builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
 						{
 							const std::string viewName = "com/eegeo/settingsmenu/SettingsMenuView";
 							return std::make_shared<SettingsMenuView>(context.resolve<AndroidNativeState>(), viewName);
-						}).singleInstance();
+						}).as<ISettingsMenuView>().singleInstance();
 			}
 //            SettingsMenuViewModule::SettingsMenuViewModule(
 //                const std::string& viewName,
