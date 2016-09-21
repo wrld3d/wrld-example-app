@@ -52,9 +52,7 @@
               <Directory Id="APPCONFIGFOLDER" Name="ApplicationConfigs"/>
               <Directory Id="INTERIORSFOLDER" Name="Interiors"/>
               <Directory Id="PINSFOLDER" Name="SearchResultOnMap"/>
-              <Directory Id="TEXTURESFOLDER" Name="Textures">
-                <Directory Id="THEMEFOLDER" Name="EmbeddedTheme"/>
-              </Directory>
+              <Directory Id="THEMEFOLDER" Name="EmbeddedTheme"/>
               <Directory Id="YELPFOLDER" Name="Yelp"/>
             </Directory>
           </Directory>
