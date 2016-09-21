@@ -23,5 +23,38 @@
     "WebProxyEnabled":false,
     "WebProxyIpAddress":"",
     "WebProxyPort": 0,
-    "WebProxyIgnorePattern":""
+    "WebProxyIgnorePattern":"",
+	"IsKioskTouchInputEnabled":false,
+	"StartAppInFullscreen":false,
+    "Buildings": [
+                  
+                  {
+                  "SenionMapKey": "70f77f56-78b7-42bb-b94f-3c2c6d8dd30a",
+                  "SenionMapCustomerID": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a",
+                  "InteriorId": "swallow_lon_citygatehouse",
+                  "SenionidToFloorIndexMapping": [{
+                                                  "SenionIndex": 0,
+                                                  "FloorIindex": 1
+                                                  }, {
+                                                  "SenionIndex": 1,
+                                                  "FloorIindex": 2
+                                                  }]
+                  }, {
+                  "SenionMapKey": "27f5638e-0190-4318-97d8-364aac7a55ab",
+                  "SenionMapCustomerID": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a",
+                  "InteriorId": "swallow_lon_50finsbury",
+                  "SenionidToFloorIndexMapping": [{
+                                                  "SenionIndex": 0,
+                                                  "FloorIindex": 7
+                                                  }]
+                  }, {
+                  "SenionMapKey": "a6fd0f11-56fe-4fa1-8e42-f582f4e21a63",
+                  "SenionMapCustomerID": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a",
+                  "InteriorId": "westport_house",
+                  "SenionidToFloorIndexMapping": [{
+                                                  "SenionIndex": 0,
+                                                  "FloorIindex": 2
+                                                  }]
+                  }
+                  ]
 }
