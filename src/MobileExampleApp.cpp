@@ -118,6 +118,7 @@
 #include "TagSearchModelFactory.h"
 #include "SearchTagsFactory.h"
 #include "ITagSearchRepository.h"
+#include "InteriorsHighlightVisibilityController.h"
 
 namespace ExampleApp
 {
@@ -287,6 +288,7 @@ namespace ExampleApp
         , m_pModalityIgnoredReactionModel(NULL)
         , m_pReactorIgnoredReactionModel(NULL)
         , m_pRayCaster(NULL)
+        , m_pInteriorsHighlightVisibilityController(NULL)
     {
         m_metricsService.BeginSession(m_applicationConfiguration.FlurryAppKey(), EEGEO_PLATFORM_VERSION_NUMBER);
 
@@ -361,6 +363,16 @@ namespace ExampleApp
         
         CreateApplicationModelModules(nativeUIFactories, platformConfig.OptionsConfig.InteriorsAffectedByFlattening);
         
+        namespace IntHighlights = InteriorsExplorer::SdkModel::Highlights;
+  
+        m_pInteriorsHighlightVisibilityController = Eegeo_NEW(IntHighlights::InteriorsHighlightVisibilityController)(
+                                                                                                                     mapModule.GetInteriorsPresentationModule().GetInteriorInteractionModel(),
+                                                                                                                     m_searchServiceModules[Search::EegeoVendorName]->GetSearchService(),
+                                                                                                                     m_pSearchModule->GetSearchQueryPerformer(),
+                                                                                                                     m_pSearchModule->GetSearchResultRepository(),
+                                                                                                                     mapModule.GetInteriorsPresentationModule().GetInteriorsLabelsController(),
+                                                                                                                     m_messageBus);
+        
         m_pCameraTransitionController = Eegeo_NEW(ExampleApp::CameraTransitions::SdkModel::CameraTransitionController)(*m_pGlobeCameraController,
                                                                                                                        m_pInteriorsExplorerModule->GetInteriorsCameraController(),
                                                                                                                        *m_pNavigationService,
@@ -402,6 +414,7 @@ namespace ExampleApp
         DestroyApplicationModelModules();
         Eegeo_DELETE m_pRayCaster;
         Eegeo_DELETE m_pCameraTransitionService;
+        Eegeo_DELETE m_pInteriorsHighlightVisibilityController;
         Eegeo_DELETE m_pCameraTransitionController;
         Eegeo_DELETE m_pDoubleTapIndoorInteractionController;
         Eegeo_DELETE m_pNavigationService;
