@@ -139,6 +139,8 @@ namespace ExampleApp
                     std::string phone = "";
                     std::string webUrl = "";
                     std::string imageUrl = "";
+                    std::string description = "";
+                    std::string address = "";
                     
                     if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
                     {
@@ -153,6 +155,16 @@ namespace ExampleApp
                             webUrl = json["web"].GetString();
                         }
                         
+                        if(json.HasMember("address"))
+                        {
+                            address = json["address"].GetString();
+                        }
+                        
+                        if(json.HasMember("description"))
+                        {
+                            description = json["description"].GetString();
+                        }
+                        
                         if(json.HasMember("image_url"))
                         {
                             imageUrl = json["image_url"].GetString();
@@ -160,12 +172,13 @@ namespace ExampleApp
                             Eegeo_ASSERT(lastSlashIndex != std::string::npos, "The image_url is not well formed: %s.\n",
                                          imageUrl.c_str());
                         }
-
                     }
                     
                     return EegeoSearchResultModel(phone,
-                                                 webUrl,
-                                                 imageUrl);
+                                                  webUrl,
+                                                  address,
+                                                  description,
+                                                  imageUrl);
                 }
                 
                 bool TryParseImageDetails(const Search::SdkModel::SearchResultModel& searchResultModel, std::string& out_imageUrl)

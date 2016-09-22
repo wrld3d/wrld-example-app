@@ -14,22 +14,37 @@ namespace ExampleApp
                 : m_phone("")
                 , m_webUrl("")
                 , m_imageUrl("")
+                , m_address("")
+                , m_description("")
                 {
-                    
                 }
                 
                 EegeoSearchResultModel::EegeoSearchResultModel(const std::string& phone,
-                                                     const std::string& webUrl,
-                                                     const std::string& imageUrl)
+                                                               const std::string& webUrl,
+                                                               const std::string& address,
+                                                               const std::string& description,
+                                                               const std::string& imageUrl)
                     : m_phone(phone)
                     , m_webUrl(webUrl)
                     , m_imageUrl(imageUrl)
+                    , m_address(address)
+                    , m_description(description)
                 {
                 }
 
                 EegeoSearchResultModel::~EegeoSearchResultModel()
                 {
 
+                }
+                
+                const std::string& EegeoSearchResultModel::GetDescription() const
+                {
+                    return m_description;
+                }
+                
+                const std::string& EegeoSearchResultModel::GetAddress() const
+                {
+                    return m_address;
                 }
 
                 const std::string& EegeoSearchResultModel::GetPhone() const
