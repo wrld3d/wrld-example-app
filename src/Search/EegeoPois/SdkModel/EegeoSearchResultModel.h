@@ -21,12 +21,16 @@ namespace ExampleApp
                     std::string m_phone;
                     std::string m_webUrl;
                     std::string m_imageUrl;
+                    std::string m_address;
+                    std::string m_description;
                     
                 public:
                     
                     EegeoSearchResultModel(const std::string& phone,
-                                      const std::string& webUrl,
-                                      const std::string& imageUrl);
+                                           const std::string& webUrl,
+                                           const std::string& address,
+                                           const std::string& description,
+                                           const std::string& imageUrl);
                     
                     EegeoSearchResultModel();
                     
@@ -35,6 +39,10 @@ namespace ExampleApp
                     const std::string& GetPhone() const;
 
                     const std::string& GetWebUrl() const;
+                    
+                    const std::string& GetAddress() const;
+                    
+                    const std::string& GetDescription() const;
                     
                     bool HasImage() const;
                     

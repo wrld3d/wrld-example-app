@@ -357,13 +357,13 @@ const int DeletePinAlertViewTag = 2;
         currentLabelY += labelYSpacing + self.pPhoneContent.frame.size.height;
     }
     
-    if(!m_model.GetSubtitle().empty())
+    if(!m_eegeoModel.GetDescription().empty())
     {
         self.pAddressHeaderContainer.frame = CGRectMake(0.f, currentLabelY, m_labelsSectionWidth, headerLabelHeight + 2 * headerTextPadding);
         self.pAddressHeaderContainer.hidden = false;
         
         self.pAddressHeaderLabel.frame = CGRectMake(headerTextPadding, headerTextPadding, m_labelsSectionWidth - headerTextPadding, headerLabelHeight);
-        self.pAddressHeaderLabel.text = @"Address";
+        self.pAddressHeaderLabel.text = @"Description";
         self.pAddressHeaderLabel.hidden = false;
         currentLabelY += labelYSpacing + self.pAddressHeaderContainer.frame.size.height;
         
@@ -373,7 +373,7 @@ const int DeletePinAlertViewTag = 2;
         self.pAddressContent.adjustsFontSizeToFitWidth = NO;
         self.pAddressContent.lineBreakMode = NSLineBreakByTruncatingTail;
         
-        std::string addressText = m_model.GetSubtitle();
+        std::string addressText = m_eegeoModel.GetDescription();
         Eegeo::Helpers::SearchReplace(addressText,", ", "\n");
         self.pAddressContent.text = [NSString stringWithUTF8String:addressText.c_str()];
         self.pAddressContent.hidden = false;
