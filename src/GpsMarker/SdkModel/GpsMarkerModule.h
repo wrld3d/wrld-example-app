@@ -9,6 +9,7 @@
 #include "Modules.h"
 #include "Location.h"
 #include "BidirectionalBus.h"
+#include "VisualMapService.h"
 
 namespace ExampleApp
 {
@@ -21,10 +22,12 @@ namespace ExampleApp
             public:
                 
                 GpsMarkerModule(Eegeo::Modules::Core::RenderingModule& renderingModule,
+                                Eegeo::Rendering::SceneModels::SceneModelFactory& sceneModelFactory,
                                 Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
                                 Eegeo::Location::ILocationService& locationService,
                                 Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
                                 Eegeo::Modules::Map::MapModule& mapModule,
+                                VisualMap::SdkModel::IVisualMapService& visualMapService,
                                 ExampleAppMessaging::TMessageBus& messageBus);
                 ~GpsMarkerModule();
                 

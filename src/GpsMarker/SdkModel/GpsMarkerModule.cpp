@@ -18,6 +18,8 @@
 #include "TerrainModelModule.h"
 #include "ImagePathHelpers.h"
 #include "MapModule.h"
+#include "AsyncLoadersModule.h"
+#include "LocalAsyncTextureLoader.h"
 
 namespace ExampleApp
 {
@@ -26,10 +28,12 @@ namespace ExampleApp
         namespace SdkModel
         {
             GpsMarkerModule::GpsMarkerModule(Eegeo::Modules::Core::RenderingModule& renderingModule,
+                                             Eegeo::Rendering::SceneModels::SceneModelFactory& sceneModelFactory,
                                              Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
                                              Eegeo::Location::ILocationService& locationService,
                                              Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
                                              Eegeo::Modules::Map::MapModule& mapModule,
+                                             VisualMap::SdkModel::IVisualMapService& visualMapService,
                                              ExampleAppMessaging::TMessageBus& messageBus)
             : m_renderableFilters(renderingModule.GetRenderableFilters())
             {
@@ -59,8 +63,12 @@ namespace ExampleApp
                                                                                                          Eegeo::Rendering::Renderables::BatchedSpriteAnchor::Bottom);
                 
                 m_pModel = Eegeo_NEW(GpsMarkerModel)(locationService, terrainModelModule.GetTerrainHeightProvider());
-                m_pView = Eegeo_NEW(GpsMarkerView)(*m_pGpsIconRenderable);
-                m_pController = Eegeo_NEW(GpsMarkerController)(*m_pModel, *m_pView, mapModule.GetEnvironmentFlatteningService(), messageBus);
+                m_pView = Eegeo_NEW(GpsMarkerView)(renderingModule,
+                                                   sceneModelFactory,
+                                                   platformAbstractions.GetFileIO(),
+                                                   platformAbstractions.GetTextureFileLoader(),
+                                                   *m_pGpsIconRenderable);
+                m_pController = Eegeo_NEW(GpsMarkerController)(*m_pModel, *m_pView, mapModule.GetEnvironmentFlatteningService(), visualMapService, messageBus);
                 
                 m_renderableFilters.AddRenderableFilter(*m_pView);
 

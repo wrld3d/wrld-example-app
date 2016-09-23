@@ -4,6 +4,7 @@
 #include "ILocationService.h"
 #include "LatLongAltitude.h"
 #include "TerrainHeightProvider.h"
+#include "MathsHelpers.h"
 
 namespace ExampleApp
 {
@@ -17,6 +18,8 @@ namespace ExampleApp
             , m_terrainHeightProvider(terrainHeightProvider)
             , m_hasLocation(false)
             , m_currentLocationEcef(Eegeo::dv3::Zero())
+            , m_currentHeadingRadians(0)
+            , m_currentHeadingVelocity(0)
             {
                 
             }
@@ -46,6 +49,41 @@ namespace ExampleApp
                 m_currentLocationEcef = ecefPositionFlat + (ecefPositionFlat.Norm() * terrainHeight);
                 m_hasLocation = true;
                 return true;
+            }
+            
+            void GpsMarkerModel::UpdateHeading(float dt)
+            {
+                double headingDegrees = 0;
+                m_locationService.GetHeadingDegrees(headingDegrees);
+                headingDegrees -= 180;
+                
+                double headingRadians = Eegeo::Math::Deg2Rad(headingDegrees);
+                
+                if(headingRadians < m_currentHeadingRadians)
+                {
+                    float test = m_currentHeadingRadians - Eegeo::Math::kPI * 2;
+                    if(Eegeo::Math::Abs(headingRadians - test) < m_currentHeadingRadians - headingRadians)
+                    {
+                        m_currentHeadingRadians = test;
+                    }
+                }
+                else
+                {
+                    float test = m_currentHeadingRadians + Eegeo::Math::kPI * 2;
+                    if(Eegeo::Math::Abs(headingRadians - test) < headingRadians - m_currentHeadingRadians)
+                    {
+                        m_currentHeadingRadians = test;
+                    }
+                }
+                
+                Eegeo::Helpers::MathsHelpers::AlphaBetaFilter(headingRadians, m_currentHeadingRadians, m_currentHeadingVelocity, m_currentHeadingRadians, m_currentHeadingVelocity, dt);
+            }
+            
+            const double GpsMarkerModel::GetSmoothedHeadingDegrees() const
+            {
+                double smoothedHeadingDegrees = Eegeo::Math::Rad2Deg(m_currentHeadingRadians);
+                
+                return smoothedHeadingDegrees;
             }
         }
     }

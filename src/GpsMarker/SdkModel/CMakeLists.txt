@@ -4,6 +4,14 @@ set(currsources
   ../src/GpsMarker/SdkModel/CMakeLists.txt
   ../src/GpsMarker/SdkModel/GpsMarkerController.cpp
   ../src/GpsMarker/SdkModel/GpsMarkerController.h
+  ../src/GpsMarker/SdkModel/GpsMarkerHiddenMaterial.cpp
+  ../src/GpsMarker/SdkModel/GpsMarkerHiddenMaterial.h
+  ../src/GpsMarker/SdkModel/GpsMarkerHighlightMaterial.cpp
+  ../src/GpsMarker/SdkModel/GpsMarkerHighlightMaterial.h
+  ../src/GpsMarker/SdkModel/GpsMarkerMaterial.cpp
+  ../src/GpsMarker/SdkModel/GpsMarkerMaterial.h
+  ../src/GpsMarker/SdkModel/GpsMarkerStencilClearMaterial.cpp
+  ../src/GpsMarker/SdkModel/GpsMarkerStencilClearMaterial.h
   ../src/GpsMarker/SdkModel/GpsMarkerModel.cpp
   ../src/GpsMarker/SdkModel/GpsMarkerModel.h
   ../src/GpsMarker/SdkModel/GpsMarkerModule.cpp

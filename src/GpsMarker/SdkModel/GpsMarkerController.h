@@ -8,6 +8,7 @@
 #include "ICallback.h"
 #include "ModalityChangedMessage.h"
 #include "Rendering.h"
+#include "IVisualMapService.h"
 
 namespace ExampleApp
 {
@@ -22,6 +23,7 @@ namespace ExampleApp
                 GpsMarkerController(GpsMarkerModel& model,
                                     GpsMarkerView& view,
                                     Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
+                                    VisualMap::SdkModel::IVisualMapService& visualMapService,
                                     ExampleAppMessaging::TMessageBus& messageBus);
                 ~GpsMarkerController();
                 
@@ -37,13 +39,23 @@ namespace ExampleApp
                 GpsMarkerView& m_view;
                 
                 Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
+                VisualMap::SdkModel::IVisualMapService& m_visualMapService;
                 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Helpers::TCallback1<GpsMarkerController, const Modality::ModalityChangedMessage&> m_modalityChangedHandlerBinding;
                 Eegeo::Helpers::TCallback1<GpsMarkerController, const GpsMarkerVisibilityMessage&> m_visibilityChangedHandlerBinding;
+                Eegeo::Helpers::TCallback1<GpsMarkerController, const InteriorsExplorer::InteriorsExplorerStateChangedMessage&> m_interiorsExplorerStateChangedCallback;
                 
                 void OnModalityChangedMessage(const Modality::ModalityChangedMessage& message);
                 void OnVisbilityChangedMessage(const GpsMarkerVisibilityMessage& message);
+                void OnInteriorsExplorerStateChangedMessage(const InteriorsExplorer::InteriorsExplorerStateChangedMessage& message);
+                
+                void CreateModelViewProjectionMatrix(Eegeo::m44& out_modelViewProjection,
+                                                     const Eegeo::dv3& location,
+                                                     const float heading,
+                                                     const Eegeo::m44& transformMatrix,
+                                                     const Eegeo::Camera::RenderCamera& renderCamera);
+                const std::string GetCurrentVisualMapTime();
             };
         }
     }
