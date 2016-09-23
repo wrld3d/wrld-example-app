@@ -161,6 +161,7 @@ namespace ExampleApp
         VisualMap::SdkModel::IVisualMapModule* m_pVisualMapModule;
         Surveys::SdkModel::ISurveyModule* m_pSurveyModule;
         InteriorsExplorer::SdkModel::Highlights::InteriorsHighlightVisibilityController* m_pInteriorsHighlightVisibilityController;
+        InteriorsExplorer::SdkModel::Highlights::InteriorsEntityIdHighlightVisibilityController* m_pInteriorsEntityIdHighlightVisibilityController;
         
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
         Net::SdkModel::ConnectivityChangedObserver* m_pConnectivityChangedObserver;
