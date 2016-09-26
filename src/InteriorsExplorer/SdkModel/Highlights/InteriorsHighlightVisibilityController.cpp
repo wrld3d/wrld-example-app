@@ -28,7 +28,8 @@ namespace ExampleApp
                                                                                                Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                                                                                Search::SdkModel::ISearchResultRepository& searchResultRepository,
                                                                                                Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& labelController,
-                                                                                               ExampleAppMessaging::TMessageBus& messageBus)
+                                                                                               ExampleAppMessaging::TMessageBus& messageBus,
+                                                                                               IHighlightColorMapper& highlightColorMapper)
                 : m_interiorInteractionModel(interiorInteractionModel)
                 , m_interiorslabelsController(labelController)
                 , m_searchService(searchService)
@@ -40,6 +41,7 @@ namespace ExampleApp
                 , m_interiorInteractionModelChangedHandler(this, &InteriorsHighlightVisibilityController::OnInteriorInteractionModelChanged)
                 , m_availabilityChangedHandlerBinding(this, &InteriorsHighlightVisibilityController::OnAvailabilityChanged)
                 , m_interiorLabelsBuiltHandler(this, &InteriorsHighlightVisibilityController::OnInteriorLabelsBuilt)
+                , m_highlightColorMapper(highlightColorMapper)
                 {
                     m_searchService.InsertOnReceivedQueryResultsCallback(m_searchResultsHandler);
                     m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
@@ -188,28 +190,15 @@ namespace ExampleApp
                     {
                         if (!json.Parse<0>(resultsItt->GetJsonData().c_str()).HasParseError() && json.HasMember("highlighted"))
                         {
-
                             highlightedRoomId = json["highlighted"].GetString();
 
                             for (std::map<std::string, Eegeo::Rendering::Renderables::InteriorHighlightRenderable*>::iterator renderItt = m_currentHighlightRenderables.begin();
                                  renderItt != m_currentHighlightRenderables.end();
                                  ++renderItt)
                             {
-                                Eegeo::v4 color(0.0f, 1.0f, 0.0f, 0.4f);
-
                                 if( renderItt->second->GetRenderableId().compare("entity_highlight " + highlightedRoomId) == 0)
                                 {
-                                    if(json.HasMember("highlight_color"))
-                                    {
-                                        const rapidjson::Value& highlightColor = json["highlight_color"];
-                                        assert(highlightColor.IsArray());
-                                        
-                                        if(highlightColor.Size() == 4)
-                                        {
-                                            color.Set(highlightColor[0].GetDouble(), highlightColor[1].GetDouble(), highlightColor[2].GetDouble(), highlightColor[3].GetDouble());
-                                        }
-                                    }
-                                    renderItt->second->SetDiffuseColor(color);
+                                    renderItt->second->SetDiffuseColor(m_highlightColorMapper.GetColor(*resultsItt, "highlight_color"));
                                 }
                             }
                         }
