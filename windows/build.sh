@@ -95,7 +95,8 @@ temp_config_folder=
 
 if [ ! -z "${secret_key}" ]; then
 
-	temp_config_folder=temp_config
+	git checkout -- ${config_folder}
+	temp_config_folder=config_bak
 	rm -vr ${temp_config_folder}/
 	mv -v ${config_folder}/ ${temp_config_folder}/
 	mkdir ${config_folder}/
@@ -127,18 +128,5 @@ else
 	echo "COMPILE WINDOWS PROJECT FAILED" >&2
 fi
 
-if [ ! -z ${temp_config_folder} ]; then	
-
-	rm -vr ${config_folder}/
-	mv -fv ${temp_config_folder}/ ${config_folder}/
-	
-	if [ $? -ne 0 ] ; then
-		echo "failed to restore config folder" >&2
-		exit 1
-	fi
-	
-	rm -rf ${temp_config_folder}
-
-fi
 
 exit $resultcode
