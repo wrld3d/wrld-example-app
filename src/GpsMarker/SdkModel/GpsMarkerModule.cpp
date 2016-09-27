@@ -12,6 +12,7 @@
 #include "VertexBindingPool.h"
 #include "VertexLayoutPool.h"
 #include "GpsMarkerView.h"
+#include "GpsMarkerAnchorView.h"
 #include "GpsMarkerModel.h"
 #include "GpsMarkerController.h"
 #include "RenderableFilters.h"
@@ -63,22 +64,27 @@ namespace ExampleApp
                                                                                                          Eegeo::Rendering::Renderables::BatchedSpriteAnchor::Bottom);
                 
                 m_pModel = Eegeo_NEW(GpsMarkerModel)(locationService, terrainModelModule.GetTerrainHeightProvider());
+                m_pAnchorView = Eegeo_NEW(GpsMarkerAnchorView)(renderingModule,
+                                                               sceneModelFactory,
+                                                               platformAbstractions.GetFileIO());
                 m_pView = Eegeo_NEW(GpsMarkerView)(renderingModule,
                                                    sceneModelFactory,
                                                    platformAbstractions.GetFileIO(),
                                                    platformAbstractions.GetTextureFileLoader(),
                                                    *m_pGpsIconRenderable);
-                m_pController = Eegeo_NEW(GpsMarkerController)(*m_pModel, *m_pView, mapModule.GetEnvironmentFlatteningService(), visualMapService, messageBus);
+                m_pController = Eegeo_NEW(GpsMarkerController)(*m_pModel, *m_pView, *m_pAnchorView, mapModule.GetEnvironmentFlatteningService(), visualMapService, messageBus);
                 
                 m_renderableFilters.AddRenderableFilter(*m_pView);
-
+                m_renderableFilters.AddRenderableFilter(*m_pAnchorView);
             }
             
             GpsMarkerModule::~GpsMarkerModule()
             {
+                m_renderableFilters.RemoveRenderableFilter(*m_pAnchorView);
                 m_renderableFilters.RemoveRenderableFilter(*m_pView);
                 
                 Eegeo_DELETE m_pController;
+                Eegeo_DELETE m_pAnchorView;
                 Eegeo_DELETE m_pView;
                 Eegeo_DELETE m_pModel;
                 Eegeo_DELETE m_pGpsIconRenderable;

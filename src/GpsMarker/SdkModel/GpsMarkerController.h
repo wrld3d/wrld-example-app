@@ -22,6 +22,7 @@ namespace ExampleApp
                 
                 GpsMarkerController(GpsMarkerModel& model,
                                     GpsMarkerView& view,
+                                    GpsMarkerAnchorView& anchorView,
                                     Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                     VisualMap::SdkModel::IVisualMapService& visualMapService,
                                     ExampleAppMessaging::TMessageBus& messageBus);
@@ -37,6 +38,7 @@ namespace ExampleApp
                 
                 GpsMarkerModel& m_model;
                 GpsMarkerView& m_view;
+                GpsMarkerAnchorView& m_anchorView;
                 
                 Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
                 VisualMap::SdkModel::IVisualMapService& m_visualMapService;
@@ -47,14 +49,16 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<GpsMarkerController, const InteriorsExplorer::InteriorsExplorerStateChangedMessage&> m_interiorsExplorerStateChangedCallback;
                 
                 void OnModalityChangedMessage(const Modality::ModalityChangedMessage& message);
-                void OnVisbilityChangedMessage(const GpsMarkerVisibilityMessage& message);
+                void OnVisibilityChangedMessage(const GpsMarkerVisibilityMessage& message);
                 void OnInteriorsExplorerStateChangedMessage(const InteriorsExplorer::InteriorsExplorerStateChangedMessage& message);
                 
                 void CreateModelViewProjectionMatrix(Eegeo::m44& out_modelViewProjection,
                                                      const Eegeo::dv3& location,
                                                      const float heading,
-                                                     const Eegeo::m44& transformMatrix,
-                                                     const Eegeo::Camera::RenderCamera& renderCamera);
+                                                     const Eegeo::v3& cameraRelativeLocation,
+                                                     const Eegeo::v3& scale,
+                                                     const Eegeo::Camera::RenderCamera& renderCamera,
+                                                     bool flipUpDirection);
                 const std::string GetCurrentVisualMapTime();
             };
         }

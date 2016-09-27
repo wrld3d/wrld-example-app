@@ -1,15 +1,12 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-#include "GpsMarkerView.h"
+#include "GpsMarkerAnchorView.h"
 #include "RenderQueue.h"
-#include "BatchedSpriteRenderable.h"
 #include "Colors.h"
 #include "VectorMath.h"
 #include "RenderCamera.h"
 #include "TransformHelpers.h"
 #include "RenderingModule.h"
-#include "TexturedUniformColoredShader.h"
-#include "TexturedUniformColoredMaterial.h"
 #include "ColorShader.h"
 #include "ColorMaterial.h"
 #include "ShaderIdGenerator.h"
@@ -47,61 +44,48 @@ namespace ExampleApp
                 }
             }
             
-            GpsMarkerView::GpsMarkerView(Eegeo::Modules::Core::RenderingModule& renderingModule,
-                                         Eegeo::Rendering::SceneModels::SceneModelFactory& sceneModelFactory,
-                                         Eegeo::Helpers::IFileIO& fileIO,
-                                         Eegeo::Helpers::ITextureFileLoader& textureLoader,
-                                         Eegeo::Rendering::Renderables::BatchedSpriteRenderable& iconRenderable)
-            : m_iconRenderable(iconRenderable)
-            , m_transitionParam(0.0f)
+            GpsMarkerAnchorView::GpsMarkerAnchorView(Eegeo::Modules::Core::RenderingModule& renderingModule,
+                                                     Eegeo::Rendering::SceneModels::SceneModelFactory& sceneModelFactory,
+                                                     Eegeo::Helpers::IFileIO& fileIO)
+            : m_transitionParam(0.0f)
             , m_scaleParam(1.0f)
             , m_visible(false)
             {
-                CreateMaterials(renderingModule, textureLoader, "Sphere_8bit.pvr");
+                CreateMaterials(renderingModule);
                 
                 ExtractRenderablesFromModelFile(renderingModule,
                                                 sceneModelFactory,
                                                 fileIO,
-                                                "Sphere.POD");
+                                                "Stalk.POD");
             }
             
-            GpsMarkerView::~GpsMarkerView()
+            GpsMarkerAnchorView::~GpsMarkerAnchorView()
             {
                 Eegeo_DELETE m_pMeshRepo;
                 Eegeo_DELETE m_pTriStripMeshRepo;
                 
-                Eegeo_DELETE m_pMarkerSphere;
-                Eegeo_DELETE m_pMarkerArrow;
-                Eegeo_DELETE m_pMarkerShader;
-                Eegeo_DELETE m_pMarkerMaterial;
-                
-                Eegeo_DELETE m_pMarkerHiddenSphere;
-                Eegeo_DELETE m_pMarkerHiddenArrow;
-                Eegeo_DELETE m_pMarkerHiddenShader;
-                Eegeo_DELETE m_pMarkerHiddenMaterial;
-                
                 Eegeo_DELETE m_pMarkerHighlightSphere;
-                Eegeo_DELETE m_pMarkerHighlightArrow;
+                Eegeo_DELETE m_pMarkerHighlightCylinder;
                 Eegeo_DELETE m_pMarkerHighlightShader;
                 Eegeo_DELETE m_pMarkerHighlightMaterial;
                 
                 Eegeo_DELETE m_pMarkerStencilClearSphere;
-                Eegeo_DELETE m_pMarkerStencilClearArrow;
+                Eegeo_DELETE m_pMarkerStencilClearCylinder;
                 Eegeo_DELETE m_pMarkerStencilClearShader;
                 Eegeo_DELETE m_pMarkerStencilClearMaterial;
             }
             
-            void GpsMarkerView::SetVisible(bool visible)
+            void GpsMarkerAnchorView::SetVisible(bool visible)
             {
                 m_visible = visible;
             }
             
-            void GpsMarkerView::SetScale(float scaleParam)
+            void GpsMarkerAnchorView::SetScale(float scaleParam)
             {
                 m_scaleParam = Eegeo::Math::Clamp01(scaleParam);
             }
             
-            void GpsMarkerView::Update(float dt)
+            void GpsMarkerAnchorView::Update(float dt)
             {
                 if(m_visible && m_transitionParam < 1.0f)
                 {
@@ -112,64 +96,32 @@ namespace ExampleApp
                     m_transitionParam -= dt * 4.0f;
                 }
                 m_transitionParam = Eegeo::Math::Clamp01(m_transitionParam);
-                
-                m_iconRenderable.Reset();
             }
             
-            void GpsMarkerView::DrawIconAtEcefPosition(const Eegeo::Camera::RenderCamera& renderCamera, const Eegeo::dv3& ecefPosition)
+            void GpsMarkerAnchorView::EnqueueRenderables(const Eegeo::Rendering::RenderContext &renderContext, Eegeo::Rendering::RenderQueue &renderQueue)
             {
                 if(!m_visible && m_transitionParam == 0.0f)
                 {
                     return;
                 }
-                
-                m_iconRenderable.SetModelViewProjection(renderCamera.GetViewProjectionMatrix());
-                
-                const float iconConstantScale = 0.3f;
-                const float iconScale = Eegeo::Helpers::TransformHelpers::ComputeModelScaleForConstantScreenSize(renderCamera, ecefPosition) * iconConstantScale * m_transitionParam * m_scaleParam;
-                
-                m_iconRenderable.AddSprite(renderCamera,
-                                           ecefPosition,
-                                           Eegeo::v2(0, 0),
-                                           Eegeo::v2(1, 1),
-                                           Eegeo::Rendering::Colors::WHITE,
-                                           Eegeo::v2(iconScale, iconScale));
-            }
-            
-            void GpsMarkerView::EnqueueRenderables(const Eegeo::Rendering::RenderContext &renderContext, Eegeo::Rendering::RenderQueue &renderQueue)
-            {
-                if(!m_visible && m_transitionParam == 0.0f)
-                {
-                    return;
-                }
-                
-                renderQueue.EnqueueRenderable(m_pMarkerSphere);
-                renderQueue.EnqueueRenderable(m_pMarkerArrow);
-                
-                renderQueue.EnqueueRenderable(m_pMarkerHiddenSphere);
-                renderQueue.EnqueueRenderable(m_pMarkerHiddenArrow);
                 
                 renderQueue.EnqueueRenderable(m_pMarkerHighlightSphere);
-                renderQueue.EnqueueRenderable(m_pMarkerHighlightArrow);
+                renderQueue.EnqueueRenderable(m_pMarkerHighlightCylinder);
                 
                 renderQueue.EnqueueRenderable(m_pMarkerStencilClearSphere);
-                renderQueue.EnqueueRenderable(m_pMarkerStencilClearArrow);
+                renderQueue.EnqueueRenderable(m_pMarkerStencilClearCylinder);
             }
             
-            void GpsMarkerView::SetMarkerTransform(const Eegeo::m44 &modelViewProjection, const Eegeo::m44& modelViewProjectionArrow) const
+            void GpsMarkerAnchorView::SetMarkerTransform(const Eegeo::m44 &modelViewProjectionSphere, const Eegeo::m44 &modelViewProjectionCylinder) const
             {
-                m_pMarkerSphere->SetModelViewProjection(modelViewProjection);
-                m_pMarkerHiddenSphere->SetModelViewProjection(modelViewProjection);
-                m_pMarkerHighlightSphere->SetModelViewProjection(modelViewProjection);
-                m_pMarkerStencilClearSphere->SetModelViewProjection(modelViewProjection);
+                m_pMarkerHighlightSphere->SetModelViewProjection(modelViewProjectionSphere);
+                m_pMarkerHighlightCylinder->SetModelViewProjection(modelViewProjectionCylinder);
                 
-                m_pMarkerArrow->SetModelViewProjection(modelViewProjectionArrow);
-                m_pMarkerHiddenArrow->SetModelViewProjection(modelViewProjectionArrow);
-                m_pMarkerHighlightArrow->SetModelViewProjection(modelViewProjectionArrow);
-                m_pMarkerStencilClearArrow->SetModelViewProjection(modelViewProjectionArrow);
+                m_pMarkerStencilClearSphere->SetModelViewProjection(modelViewProjectionSphere);
+                m_pMarkerStencilClearCylinder->SetModelViewProjection(modelViewProjectionCylinder);
             }
             
-            void GpsMarkerView::SetMarkerStyle(const std::string& currentVisualMapTime) const
+            void GpsMarkerAnchorView::SetMarkerStyle(const std::string& currentVisualMapTime) const
             {
                 Eegeo::v4 highlightColor = HighlightColorDefault;
                 
@@ -181,7 +133,7 @@ namespace ExampleApp
                 m_pMarkerHighlightMaterial->SetColor(highlightColor);
             }
             
-            void GpsMarkerView::UpdateMarkerRenderingLayer(bool inInterior)
+            void GpsMarkerAnchorView::UpdateMarkerRenderingLayer(bool inInterior)
             {
                 Eegeo::Rendering::LayerIds::Values layerId = Eegeo::Rendering::LayerIds::AfterWorldOpaque;
                 
@@ -191,18 +143,10 @@ namespace ExampleApp
                 }
                 
                 m_pMarkerHighlightSphere->SetLayer(layerId);
-                m_pMarkerHighlightArrow->SetLayer(layerId);
-                
-                m_pMarkerSphere->SetLayer(layerId);
-                m_pMarkerArrow->SetLayer(layerId);
-                
-                m_pMarkerHiddenSphere->SetLayer(layerId);
-                m_pMarkerHiddenArrow->SetLayer(layerId);
+                m_pMarkerHighlightCylinder->SetLayer(layerId);
             }
             
-            void GpsMarkerView::CreateMaterials(const Eegeo::Modules::Core::RenderingModule& renderingModule,
-                                                      Eegeo::Helpers::ITextureFileLoader& textureLoader,
-                                                      const std::string textureFileName)
+            void GpsMarkerAnchorView::CreateMaterials(const Eegeo::Modules::Core::RenderingModule& renderingModule)
             {
                 Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator = renderingModule.GetShaderIdGenerator();
                 Eegeo::Rendering::Materials::MaterialIdGenerator& materialIdGenerator = renderingModule.GetMaterialIdGenerator();
@@ -210,38 +154,19 @@ namespace ExampleApp
                 m_pMarkerHighlightShader = Eegeo::Rendering::Shaders::ColorShader::Create(shaderIdGenerator.GetNextId());
                 
                 m_pMarkerHighlightMaterial = Eegeo_NEW(GpsMarkerHighlightMaterial)(materialIdGenerator.GetNextId(),
-                                                                                   "GpsMarkerHighlightMaterial",
+                                                                                   "GpsMarkerAnchorHighlightMaterial",
                                                                                    *m_pMarkerHighlightShader,
                                                                                    HighlightColorDefault);
-                
-                m_pMarkerShader = Eegeo::Rendering::Shaders::TexturedUniformColoredShader::Create(shaderIdGenerator.GetNextId());
-                
-                Eegeo::Helpers::GLHelpers::TextureInfo markerTextureInfo;
-                bool success = textureLoader.LoadTexture(markerTextureInfo, textureFileName);
-                Eegeo_ASSERT(success, "Gps Marker texture file must exist");
-                
-                m_pMarkerMaterial = Eegeo_NEW(GpsMarkerMaterial)(materialIdGenerator.GetNextId(),
-                                                                 "GpsMarkerMaterial",
-                                                                 *m_pMarkerShader,
-                                                                 markerTextureInfo.textureId,
-                                                                 Eegeo::v4(1.f, 1.f, 1.f, 1.f));
-                
-                m_pMarkerHiddenShader = Eegeo::Rendering::Shaders::ColorShader::Create(shaderIdGenerator.GetNextId());
-                
-                m_pMarkerHiddenMaterial = Eegeo_NEW(GpsMarkerHiddenMaterial)(materialIdGenerator.GetNextId(),
-                                                                             "GpsMarkerHiddenMaterial",
-                                                                             *m_pMarkerHiddenShader,
-                                                                             HiddenColor);
                 
                 m_pMarkerStencilClearShader = Eegeo::Rendering::Shaders::ColorShader::Create(shaderIdGenerator.GetNextId());
                 
                 m_pMarkerStencilClearMaterial = Eegeo_NEW(GpsMarkerStencilClearMaterial)(materialIdGenerator.GetNextId(),
-                                                                                         "GpsMarkerStencilClearMaterial",
+                                                                                         "GpsMarkerAnchorStencilClearMaterial",
                                                                                          *m_pMarkerStencilClearShader,
                                                                                          Eegeo::v4(1.f, 1.f, 1.f, 1.f));
             }
             
-            void GpsMarkerView::ExtractRenderablesFromModelFile(Eegeo::Modules::Core::RenderingModule& renderingModule,
+            void GpsMarkerAnchorView::ExtractRenderablesFromModelFile(Eegeo::Modules::Core::RenderingModule& renderingModule,
                                                                       Eegeo::Rendering::SceneModels::SceneModelFactory& sceneModelFactory,
                                                                       Eegeo::Helpers::IFileIO& fileIO,
                                                                       const std::string modelFilename)
@@ -249,7 +174,7 @@ namespace ExampleApp
                 size_t size;
                 std::fstream stream;
                 bool success = fileIO.OpenFile(stream, size, modelFilename, std::ifstream::in | std::ifstream::binary);
-                Eegeo_ASSERT(success, "Gps Marker model file must exist");
+                Eegeo_ASSERT(success, "Gps Marker Anchor model file must exist");
                 
                 const Eegeo::IO::POD::PODFile* pPODfile = Eegeo::IO::POD::PODFileParser::ParseFileFromPODStream(stream, (u32)size);
                 const Eegeo::IO::POD::PODScene* pPODScene = pPODfile->GetScene(0);
@@ -280,51 +205,25 @@ namespace ExampleApp
                             Eegeo::Rendering::Renderables::WorldMeshRenderable* worldMeshRenderable1 = NULL;
                             Eegeo::Rendering::Renderables::WorldMeshRenderable* worldMeshRenderable2 = NULL;
                             
-                            if(meshId == 0 || meshId == 2)
-                            {
-                                CreateMeshRenderables(mesh,
-                                                      m_pMarkerHighlightShader->GetVertexAttributes(),
-                                                      m_pMarkerStencilClearShader->GetVertexAttributes(),
-                                                      renderingModule,
-                                                      worldMeshRenderable1,
-                                                      worldMeshRenderable2,
-                                                      m_pMarkerHighlightMaterial,
-                                                      m_pMarkerStencilClearMaterial);
-                                worldMeshRenderable2->SetLayer(Eegeo::Rendering::LayerIds::AfterWorldShadow);
+                            CreateMeshRenderables(mesh,
+                                                  m_pMarkerHighlightShader->GetVertexAttributes(),
+                                                  m_pMarkerStencilClearShader->GetVertexAttributes(),
+                                                  renderingModule,
+                                                  worldMeshRenderable1,
+                                                  worldMeshRenderable2,
+                                                  m_pMarkerHighlightMaterial,
+                                                  m_pMarkerStencilClearMaterial);
+                            worldMeshRenderable2->SetLayer(Eegeo::Rendering::LayerIds::AfterWorldShadow);
                                 
-                                if(meshId == 0)
-                                {
-                                    m_pMarkerHighlightSphere = worldMeshRenderable1;
-                                    m_pMarkerStencilClearSphere = worldMeshRenderable2;
-                                }
-                                else
-                                {
-                                    m_pMarkerHighlightArrow = worldMeshRenderable1;
-                                    m_pMarkerStencilClearArrow = worldMeshRenderable2;
-                                }
+                            if(meshId == 0)
+                            {
+                                m_pMarkerHighlightSphere = worldMeshRenderable1;
+                                m_pMarkerStencilClearSphere = worldMeshRenderable2;
                             }
-                            else if(meshId == 1 || meshId == 3)
+                            else
                             {
-                                CreateMeshRenderables(mesh,
-                                                      m_pMarkerShader->GetVertexAttributes(),
-                                                      m_pMarkerHiddenShader->GetVertexAttributes(),
-                                                      renderingModule,
-                                                      worldMeshRenderable1,
-                                                      worldMeshRenderable2,
-                                                      m_pMarkerMaterial,
-                                                      m_pMarkerHiddenMaterial);
-                                
-                                if(meshId == 1)
-                                {
-                                    m_pMarkerSphere = worldMeshRenderable1;
-                                    m_pMarkerHiddenSphere = worldMeshRenderable2;
-                                }
-                                else
-                                {
-                                    m_pMarkerArrow = worldMeshRenderable1;
-                                    m_pMarkerHiddenArrow = worldMeshRenderable2;
-                                }
-                                
+                                m_pMarkerHighlightCylinder = worldMeshRenderable1;
+                                m_pMarkerStencilClearCylinder = worldMeshRenderable2;
                             }
                         }
                     }
@@ -332,7 +231,7 @@ namespace ExampleApp
                 
             }
             
-            void GpsMarkerView::CreateMeshRenderables(const Eegeo::Rendering::SceneModels::SceneModelMeshResource& mesh,
+            void GpsMarkerAnchorView::CreateMeshRenderables(const Eegeo::Rendering::SceneModels::SceneModelMeshResource& mesh,
                                                             const Eegeo::Rendering::VertexLayouts::VertexAttribs& vertexAttribs1,
                                                             const Eegeo::Rendering::VertexLayouts::VertexAttribs& vertexAttribs2,
                                                             const Eegeo::Modules::Core::RenderingModule& renderingModule,

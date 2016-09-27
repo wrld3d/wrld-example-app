@@ -37,6 +37,7 @@ namespace ExampleApp
                 
                 GpsMarkerModel* m_pModel;
                 GpsMarkerView* m_pView;
+                GpsMarkerAnchorView* m_pAnchorView;
                 IGpsMarkerController* m_pController;
                 
                 Eegeo::Rendering::Shaders::BatchedSpriteShader* m_pSpriteShader;

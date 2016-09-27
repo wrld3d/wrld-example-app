@@ -3,6 +3,7 @@
 #include "GpsMarkerController.h"
 #include "GpsMarkerModel.h"
 #include "GpsMarkerView.h"
+#include "GpsMarkerAnchorView.h"
 #include "VectorMath.h"
 #include "EnvironmentFlatteningService.h"
 #include "RenderCamera.h"
@@ -22,24 +23,27 @@ namespace ExampleApp
             
             GpsMarkerController::GpsMarkerController(GpsMarkerModel& model,
                                                      GpsMarkerView& view,
+                                                     GpsMarkerAnchorView& anchorView,
                                                      Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                      VisualMap::SdkModel::IVisualMapService& visualMapService,
                                                      ExampleAppMessaging::TMessageBus& messageBus)
             : m_model(model)
             , m_view(view)
+            , m_anchorView(anchorView)
             , m_environmentFlatteningService(environmentFlatteningService)
             , m_visualMapService(visualMapService)
             , m_messageBus(messageBus)
             , m_updateTime(0.0f)
             , m_visibilityCount(1)
             , m_modalityChangedHandlerBinding(this, &GpsMarkerController::OnModalityChangedMessage)
-            , m_visibilityChangedHandlerBinding(this, &GpsMarkerController::OnVisbilityChangedMessage)
+            , m_visibilityChangedHandlerBinding(this, &GpsMarkerController::OnVisibilityChangedMessage)
             , m_interiorsExplorerStateChangedCallback(this, &GpsMarkerController::OnInteriorsExplorerStateChangedMessage)
             {
                 m_messageBus.SubscribeNative(m_modalityChangedHandlerBinding);
                 m_messageBus.SubscribeNative(m_visibilityChangedHandlerBinding);
                 m_messageBus.SubscribeUi(m_interiorsExplorerStateChangedCallback);
-                m_view.SetVisible(true);
+                m_view.SetVisible(false);
+                m_anchorView.SetVisible(false);
             }
             
             GpsMarkerController::~GpsMarkerController()
@@ -51,19 +55,23 @@ namespace ExampleApp
             
             void GpsMarkerController::OnModalityChangedMessage(const Modality::ModalityChangedMessage &message)
             {
-                m_view.SetScale(1.0f - message.Modality());
+                float scale = 1.0f - message.Modality();
+                m_view.SetScale(scale);
+                m_anchorView.SetScale(scale);
             }
             
-            void GpsMarkerController::OnVisbilityChangedMessage(const ExampleApp::GpsMarker::GpsMarkerVisibilityMessage &message)
+            void GpsMarkerController::OnVisibilityChangedMessage(const ExampleApp::GpsMarker::GpsMarkerVisibilityMessage &message)
             {
                 m_visibilityCount += message.ShouldSetVisible() ? 1 : -1;
                 Eegeo_ASSERT(m_visibilityCount <= 1, "Gps Marker sent visibility message to make visible before visibility message to be made invisible");
                 m_view.SetVisible(m_visibilityCount == 1);
+                m_anchorView.SetVisible(m_visibilityCount == 1);
             }
             
             void GpsMarkerController::OnInteriorsExplorerStateChangedMessage(const InteriorsExplorer::InteriorsExplorerStateChangedMessage &message)
             {
                 m_view.UpdateMarkerRenderingLayer(message.IsInteriorVisible());
+                m_anchorView.UpdateMarkerRenderingLayer(message.IsInteriorVisible());
             }
             
             void GpsMarkerController::Update(float dt, const Eegeo::Camera::RenderCamera &renderCamera)
@@ -77,6 +85,7 @@ namespace ExampleApp
                 
                 m_model.UpdateHeading(dt);
                 m_view.Update(dt);
+                m_anchorView.Update(dt);
                 
                 Eegeo::dv3 currentLocationEcef = m_model.GetCurrentLocationEcef();
                 Eegeo::dv3 scaledPoint = m_environmentFlatteningService.GetScaledPointEcef(currentLocationEcef, m_environmentFlatteningService.GetCurrentScale());
@@ -85,30 +94,71 @@ namespace ExampleApp
                 {
                     return;
                 }
+                else if(m_visibilityCount == 1)
+                {
+                    m_view.SetVisible(true);
+                    m_anchorView.SetVisible(true);
+                }
+                
+                Eegeo::v3 markerUp = scaledPoint.Norm().ToSingle();
                 
                 float scale = Eegeo::Helpers::TransformHelpers::ComputeModelScaleForConstantScreenSize(renderCamera, scaledPoint) * 0.025f;
-                Eegeo::m44 transformMatrix = Eegeo::m44::CreateIdentity();
-                transformMatrix.Scale(scale);
+                Eegeo::v3 markerScale = Eegeo::v3(scale, scale, scale);
                 
                 const Eegeo::dv3& ecefCameraPosition = renderCamera.GetEcefLocation();
                 Eegeo::v3 cameraRelativeModelOrigin = (scaledPoint - ecefCameraPosition).ToSingle();
-                transformMatrix.SetRow(3, Eegeo::v4(cameraRelativeModelOrigin, 1) + Eegeo::v4(scaledPoint.Norm().ToSingle() * 5, 0));
                 
-                Eegeo::m44 modelViewProjection;
-                CreateModelViewProjectionMatrix(modelViewProjection, scaledPoint, 225, transformMatrix, renderCamera);
+                Eegeo::m44 modelViewProjectionSphere;
+                CreateModelViewProjectionMatrix(modelViewProjectionSphere,
+                                                scaledPoint,
+                                                225,
+                                                cameraRelativeModelOrigin + markerUp * 4.5f,
+                                                markerScale,
+                                                renderCamera,
+                                                true);
                 Eegeo::m44 modelViewProjectionArrow;
-                CreateModelViewProjectionMatrix(modelViewProjectionArrow, scaledPoint, m_model.GetSmoothedHeadingDegrees(), transformMatrix, renderCamera);
-                m_view.SetMarkerTransform(modelViewProjection, modelViewProjectionArrow);
+                CreateModelViewProjectionMatrix(modelViewProjectionArrow,
+                                                scaledPoint,
+                                                m_model.GetSmoothedHeadingDegrees(),
+                                                cameraRelativeModelOrigin + markerUp * 4.5f,
+                                                markerScale,
+                                                renderCamera,
+                                                true);
+                m_view.SetMarkerTransform(modelViewProjectionSphere, modelViewProjectionArrow);
+                
+                float scaleAnchor = 0.1f;
+                float scaleAnchorCylinder = 0.4f;
+                Eegeo::m44 modelViewProjectionAnchorSphere;
+                CreateModelViewProjectionMatrix(modelViewProjectionAnchorSphere,
+                                                scaledPoint,
+                                                0,
+                                                cameraRelativeModelOrigin + markerUp,
+                                                Eegeo::v3(scaleAnchor, scaleAnchor, scaleAnchor),
+                                                renderCamera,
+                                                false);
+                
+                Eegeo::m44 modelViewProjectionAnchorCyclinder;
+                CreateModelViewProjectionMatrix(modelViewProjectionAnchorCyclinder,
+                                                scaledPoint,
+                                                0,
+                                                cameraRelativeModelOrigin + markerUp * 0.8f,
+                                                Eegeo::v3(scaleAnchor, scaleAnchorCylinder, scaleAnchor),
+                                                renderCamera,
+                                                false);
+                m_anchorView.SetMarkerTransform(modelViewProjectionAnchorSphere, modelViewProjectionAnchorCyclinder);
                 
                 const std::string currentTime = GetCurrentVisualMapTime();
                 m_view.SetMarkerStyle(currentTime);
+                m_anchorView.SetMarkerStyle(currentTime);
             }
             
             void GpsMarkerController::CreateModelViewProjectionMatrix(Eegeo::m44& out_modelViewProjection,
                                                                       const Eegeo::dv3& location,
                                                                       const float heading,
-                                                                      const Eegeo::m44& transformMatrix,
-                                                                      const Eegeo::Camera::RenderCamera& renderCamera)
+                                                                      const Eegeo::v3& cameraRelativeLocation,
+                                                                      const Eegeo::v3& scale,
+                                                                      const Eegeo::Camera::RenderCamera& renderCamera,
+                                                                      bool flipUpDirection)
             {
                 Eegeo::Space::EcefTangentBasis cameraInterestBasis;
                 Eegeo::Camera::CameraHelpers::EcefTangentBasisFromPointAndHeading(location,
@@ -116,10 +166,11 @@ namespace ExampleApp
                                                                                   cameraInterestBasis);
                 
                 Eegeo::m33 basisOrientation;
-                basisOrientation.SetFromBasis(-cameraInterestBasis.GetRight(), -cameraInterestBasis.GetUp(), cameraInterestBasis.GetForward());
+                basisOrientation.SetFromBasis(-cameraInterestBasis.GetRight(), cameraInterestBasis.GetUp() * (flipUpDirection ? -1 : 1), cameraInterestBasis.GetForward());
                 
-                Eegeo::m44 model;
-                Eegeo::m44::Mul(model, transformMatrix, basisOrientation.ToM44());
+                Eegeo::m44 model = Eegeo::m44::CreateScale(scale);
+                Eegeo::m44::Mul(model, basisOrientation.ToM44(), model);
+                model.SetRow(3, Eegeo::v4(cameraRelativeLocation, 1));
                 
                 Eegeo::m44 viewProjection = renderCamera.GetViewProjectionMatrix();
                 
