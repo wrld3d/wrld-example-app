@@ -19,6 +19,7 @@ namespace ExampleApp
 
             class IDirectionsMenuInitiationView;
             class DirectionsMenuInitiationController;
+            class DirectionInitiationStateChangedObserver;
         }
     }
 }

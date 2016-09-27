@@ -28,16 +28,18 @@ namespace ExampleApp
         , m_pWayPointsRepository(wayPointsRepository)
         , m_createdRoutes(false)
         , m_messageBus(messageBus)
-        , m_searchResultReceivedHandler(this, &PathDrawingController::OnSearchQueryResponseReceivedMessage)
+        , m_directionResultReceivedHandler(this, &PathDrawingController::OnSearchQueryResponseReceivedMessage)
+        , m_directionsMenuStateChangedCallback(this, &PathDrawingController::OnDirectionsMenuStateChanged)
         {
             m_routeThicknessPolicy.SetScaleFactor(1.0f);
             
-            m_messageBus.SubscribeUi(m_searchResultReceivedHandler);
+            m_messageBus.SubscribeUi(m_directionResultReceivedHandler);
+            m_messageBus.SubscribeUi(m_directionsMenuStateChangedCallback);
         }
         
         PathDrawingController::~PathDrawingController()
         {
-            m_messageBus.UnsubscribeUi(m_searchResultReceivedHandler);
+            m_messageBus.UnsubscribeUi(m_directionResultReceivedHandler);
             
         }
         
@@ -55,15 +57,12 @@ namespace ExampleApp
             }
         }
         
-        void PathDrawingController::OnSearchQueryResponseReceivedMessage(const DirectionsMenuInitiation::DirectionsMenuStateChangedMessage& message)
+        void PathDrawingController::OnSearchQueryResponseReceivedMessage(const DirectionResultSection::DirectionQueryResponseReceivedMessage& message)
         {
+//            RemoveRoutePlan();
             if(!m_createdRoutes)
             {
                 CreateRoutePlan();
-            }
-            else
-            {
-                RemoveRoutePlan();
             }
         }
         
@@ -208,6 +207,15 @@ namespace ExampleApp
             
             m_createdRoutes = true;
         }
+        
+        void PathDrawingController::OnDirectionsMenuStateChanged(const DirectionsMenuInitiation::DirectionsMenuStateChangedMessage& message)
+        {
+            if(message.GetDirectionsMenuStage() == DirectionsMenuInitiation::Inactive)
+            {
+                RemoveRoutePlan();
+            }
+        }
+        
         
         void PathDrawingController::RemoveRoutePlan()
         {

@@ -59,7 +59,7 @@
 #include "DirectionsMenuInitiationViewIncludes.h"
 #include "DirectionsMenuViewIncludes.h"
 #include "TagSearchViewIncludes.h"
-
+#include "IDirectionResultSectionViewModule.h"
 
 @class ViewController;
 class AppInputDelegate;
@@ -144,6 +144,7 @@ private:
     ExampleApp::URLRequest::View::URLRequestHandler* m_pURLRequestHandler;
     ExampleApp::Surveys::View::ISurveyViewModule* m_pSurveyViewModule;
     ExampleApp::Menu::View::IMenuReactionModel* m_pMenuReactionModel;
+    ExampleApp::DirectionResultSection::View::IDirectionResultSectionViewModule* m_pDirectionResultSectionViewModule;
     
     ImageStore* m_pImageStore;
     

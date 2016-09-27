@@ -122,6 +122,7 @@
 #include "TagSearchModelFactory.h"
 #include "SearchTagsFactory.h"
 #include "ITagSearchRepository.h"
+#include "DirectionsResultSectionModule.h"
 
 namespace ExampleApp
 {
@@ -293,6 +294,7 @@ namespace ExampleApp
         , m_pRayCaster(NULL)
         ,m_pDirectionsMenuInitiationModule(NULL)
         ,m_pDirectionsMenuModule(NULL)
+        ,m_pDirectionResultSectionModule(NULL)
     {
         m_metricsService.BeginSession(m_applicationConfiguration.FlurryAppKey(), EEGEO_PLATFORM_VERSION_NUMBER);
 
@@ -390,7 +392,6 @@ namespace ExampleApp
                                                                                                , *m_pWorld
                                                                                                , *m_pGlobeCameraWrapper
                                                                                                , m_pTagSearchModule->GetSearchResultIconKeyMapper()
-                                                                                               
                                                                                                , m_messageBus);
         
         if(m_applicationConfiguration.TryStartAtGpsLocation())
@@ -595,6 +596,8 @@ namespace ExampleApp
                                                                                                 m_pReactionControllerModule->GetReactionControllerModel(),                                                                                                                         m_messageBus,
                                                                                                 m_metricsService);
         
+
+        
         Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
         Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
 
@@ -606,6 +609,13 @@ namespace ExampleApp
                                                                                                            interiorsModelModule.GetInteriorMarkerModelRepository(),
                                                                                                            m_pAppCameraModule->GetController(),
                                                                                                            m_messageBus);
+        //TODO: Creat new repository for direction moudle query performer
+        m_pDirectionResultSectionModule = Eegeo_NEW(ExampleApp::DirectionResultSection::SdkModel::DirectionsResultSectionModule)(m_pDirectionsMenuModule->GetDirectionsMenuViewModel(),m_pSearchModule->GetSearchResultRepository(),m_pSearchModule->GetSearchQueryPerformer(),*m_pCameraTransitionService,interiorsPresentationModule.GetInteriorInteractionModel(),
+                                                                                                                    interiorsModelModule.GetInteriorMarkerModelRepository(),
+                                                                                                                    m_pAppCameraModule->GetController(),
+                                                                                                                    m_messageBus);
+        
+        m_pDirectionsMenuModule->SetSearchSection("", m_pDirectionResultSectionModule->GetSearchResultSectionModel());
         
         m_pSearchResultOnMapModule = Eegeo_NEW(SearchResultOnMap::SdkModel::SearchResultOnMapModule)(m_pSearchModule->GetSearchResultRepository(),
                                                                                                      m_pSearchResultPoiModule->GetSearchResultPoiViewModel(),
@@ -820,6 +830,8 @@ namespace ExampleApp
         Eegeo_DELETE m_pSearchMenuModule;
 
         Eegeo_DELETE m_pSearchResultSectionModule;
+        
+        Eegeo_DELETE m_pDirectionResultSectionModule;
 
         Eegeo_DELETE m_pSearchResultOnMapModule;
 

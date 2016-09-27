@@ -3,7 +3,7 @@
 #pragma once
 
 #import <UIKit/UIKit.h>
-
+#include "IMenuView.h"
 
 
 @interface DirectionsMenuStaticView : UIView  <UITableViewDelegate, UITableViewDataSource>
@@ -12,17 +12,18 @@
 }
 
 
-@property (retain, nonatomic) IBOutlet UIView *headerView;
-@property (retain, nonatomic) IBOutlet UIView *bottomBarView;
-@property (retain, nonatomic) IBOutlet UIView *scrollContentView;
-@property (retain, nonatomic) IBOutlet UIView *hideOptionsView;
-@property (retain, nonatomic) IBOutlet UITableView *wayPointsTableView;
-@property (retain, nonatomic) IBOutlet NSLayoutConstraint *contentHeightConstraint;
-@property (retain, nonatomic) IBOutlet NSLayoutConstraint *endHeightConstraint;
-@property (retain, nonatomic) IBOutlet UIButton *optionsButton;
 @property (retain, nonatomic) IBOutlet UIButton *exitDirectionsBtn;
 @property (retain, nonatomic) IBOutlet UITextField *endRouteTextField;
 @property (retain, nonatomic) IBOutlet UITextField *startRouteTextField;
+@property (retain, nonatomic) IBOutlet UIView *headerView;
+@property (retain, nonatomic) IBOutlet UIView *bottomBarView;
+@property (retain, nonatomic) IBOutlet UIView *hideOptionsView;
 
-- (IBAction)optionsAction:(id)sender;
+@property (nonatomic) int resultCount;
+
+- (void)updateSearchResultsSection:(ExampleApp::Menu::View::IMenuSectionViewModel*)section;
+-(float)getEstimatedHeight;
+
+-(void)SetSearchMenuView:(UIView *)parentView;
+
 @end

@@ -11,6 +11,7 @@
 #include "IPathDrawingController.h"
 #include "AppGlobeCameraWrapper.h"
 #include "IWayPointsRepository.h"
+#include "DirectionQueryResponseReceivedMessage.h"
 #include "DirectionsMenuStateChangedMessage.h"
 #include "BidirectionalBus.h"
 
@@ -27,7 +28,9 @@ namespace ExampleApp
             Eegeo::EegeoWorld& m_world;
             AppCamera::SdkModel::AppGlobeCameraWrapper& m_cameraWrapper;
             ExampleAppMessaging::TMessageBus& m_messageBus;
-            Eegeo::Helpers::TCallback1<PathDrawingController, const DirectionsMenuInitiation::DirectionsMenuStateChangedMessage&> m_searchResultReceivedHandler;
+            Eegeo::Helpers::TCallback1<PathDrawingController, const DirectionResultSection::DirectionQueryResponseReceivedMessage&> m_directionResultReceivedHandler;
+            Eegeo::Helpers::TCallback1<PathDrawingController, const DirectionsMenuInitiation::DirectionsMenuStateChangedMessage&> m_directionsMenuStateChangedCallback;
+
             
             bool m_createdRoutes;
             std::vector<Eegeo::Routes::Route*> m_routes;
@@ -37,7 +40,9 @@ namespace ExampleApp
             
             void RemoveRoutePlan();
             
-            void OnSearchQueryResponseReceivedMessage(const DirectionsMenuInitiation::DirectionsMenuStateChangedMessage& message);
+            void OnSearchQueryResponseReceivedMessage(const DirectionResultSection::DirectionQueryResponseReceivedMessage& message);
+            
+            void OnDirectionsMenuStateChanged(const DirectionsMenuInitiation::DirectionsMenuStateChangedMessage& message);
             
         public:
             PathDrawingController(Eegeo::Routes::RouteService& routeService

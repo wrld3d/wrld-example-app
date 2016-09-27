@@ -14,12 +14,14 @@ namespace ExampleApp
         {
             
             WayPointOnMapModel::WayPointOnMapModel(WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                               TagSearch::ISearchResultIconKeyMapper& searchResultIconCategoryMapper,
-                               PathDrawing::SdkModel::IWayPointsRepository& wayPointsRepository)
+                                                   TagSearch::ISearchResultIconKeyMapper& searchResultIconCategoryMapper,
+                                                   PathDrawing::SdkModel::IWayPointsRepository& wayPointsRepository,
+                                                   ExampleAppMessaging::TMessageBus& messageBus)
             : m_onWayPointAddedCallBack(this, &WayPointOnMapModel::OnWayPointAdded)
             , m_onWayPointRemovedCallBack(this, &WayPointOnMapModel::OnWayPointRemoved)
             , m_worldPinsService(worldPinsService)
             , m_wayPointsRepository(wayPointsRepository)
+            , m_messageBus(messageBus)
             {
                 wayPointsRepository.InsertItemAddedCallback(m_onWayPointAddedCallBack);
                 wayPointsRepository.InsertItemRemovedCallback(m_onWayPointRemovedCallBack);
@@ -48,7 +50,7 @@ namespace ExampleApp
                 WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData(Eegeo::Resources::Interiors::InteriorId::NullId(), 0);
                 
                 ExampleApp::WorldPins::SdkModel::WorldPinItemModel *pinItemModel =
-                m_worldPinsService.AddPin(Eegeo_NEW(WayPointSelectionHandler())
+                m_worldPinsService.AddPin(Eegeo_NEW(WayPointSelectionHandler(m_messageBus))
                                           , NULL
                                           , worldPinFocusData
                                           , false

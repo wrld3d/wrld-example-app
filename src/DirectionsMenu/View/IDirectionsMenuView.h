@@ -17,6 +17,8 @@ namespace ExampleApp
             public:
                 virtual ~IDirectionsMenuView() { }
                 
+                virtual void SetSearchSection(Menu::View::IMenuSectionViewModel& searchSection) = 0;
+                
                 virtual void RemoveSeachKeyboard() = 0;
                 
                 virtual void SetSearchInProgress(bool inProgress) = 0;
@@ -32,6 +34,7 @@ namespace ExampleApp
                 
                 virtual void InsertSearchClearedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveSearchClearedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                virtual void OnExitDirectionsClicked() = 0;
                 
                 virtual void InsertExitDirectionsCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveExitDirectionsCallback(Eegeo::Helpers::ICallback0& callback) = 0;

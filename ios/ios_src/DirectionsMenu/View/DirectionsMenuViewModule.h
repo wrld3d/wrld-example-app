@@ -27,6 +27,7 @@ namespace ExampleApp
             public:
                 DirectionsMenuViewModule(Menu::View::IMenuModel& searchMenuModel,
                                          Menu::View::IMenuViewModel& searchMenuViewModel,
+                                        Menu::View::IMenuSectionViewModel& searchSectionViewModel,
                                          const Eegeo::Rendering::ScreenProperties& screenProperties,
                                          Modality::View::IModalBackgroundView& modalBackgroundView,
                                          ExampleAppMessaging::TMessageBus& messageBus);

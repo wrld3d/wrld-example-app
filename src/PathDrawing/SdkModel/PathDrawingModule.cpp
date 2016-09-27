@@ -32,7 +32,8 @@ namespace ExampleApp
                 
                 m_pWayPointOnMapModel = Eegeo_NEW(ExampleApp::PathDrawing::SdkModel::WayPointOnMapModel)(worldPinsService
                                                                                                          , searchResultIconCategoryMapper
-                                                                                                         , *m_pWayPointsRepository);
+                                                                                                         , *m_pWayPointsRepository
+                                                                                                         , messageBus);
                             }
             
             PathDrawingModule::~PathDrawingModule()

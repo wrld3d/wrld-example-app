@@ -32,21 +32,17 @@ namespace ExampleApp
                 {
                 }
                 
+                virtual void SetSearchSection(Menu::View::IMenuSectionViewModel& searchSection)
+                {
+                    [m_pView SetSearchSection:&searchSection];
+                }
+                
                 void RemoveSeachKeyboard()
                 {
-//                    [m_pView.pInputDelegate removeSeachKeyboard];
                 }
 
                 void SetSearchInProgress(bool inProgress)
                 {
-//                    if(inProgress)
-//                    {
-//                        [m_pView.pInputDelegate setSearchInProgress];
-//                    }
-//                    else
-//                    {
-//                        [m_pView.pInputDelegate setSearchEnded];
-//                    }
                 }
                 
                 void SetStartEditText(const std::string& searchText, bool isCategory)
@@ -66,7 +62,7 @@ namespace ExampleApp
                 
                 void CollapseAll()
                 {
-                    [m_pView collapseAll];
+                    [m_pView CollapseAll];
                 }
                 
                 void InsertSearchPeformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)
@@ -92,6 +88,11 @@ namespace ExampleApp
                 void OnSearchCleared()
                 {
                     m_searchClearedCallbacks.ExecuteCallbacks();
+                }
+                
+                void OnExitDirectionsClicked()
+                {
+                    m_exitDirectionsCallbacks.ExecuteCallbacks();
                 }
                 
                 void InsertWayPointSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback)

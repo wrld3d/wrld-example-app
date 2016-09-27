@@ -39,6 +39,10 @@
 
 - (void) animateToY:(float)y;
 
+- (void) SetBtnStateInActive;
+
+- (void) SetBtnStateActive;
+
 @property (nonatomic, retain) UIButton* pPoiCreateButton;
 
 @end

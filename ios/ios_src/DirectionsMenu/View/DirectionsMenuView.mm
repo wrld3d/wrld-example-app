@@ -19,8 +19,14 @@
 #include "DirectionsMenuWayPointViewCell.h"
 #include "DirectionsMenuStaticView.h"
 #include "DirectionsMenuViewInterop.h"
+#include "MenuSectionViewModel.h"
 
-@interface DirectionsMenuView()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+#include "IMenuModel.h"
+#include "Interiors.h"
+#include "SearchResultItemModel.h"
+#include "VectorMath.h"
+
+@interface DirectionsMenuView()<UITextFieldDelegate>
 {
     
     ExampleApp::Helpers::UIAnimation::ViewAnimationController* m_pOnScreenResultsAnimationController;
@@ -37,17 +43,15 @@
     float m_animationDurationSeconds;
     
     float m_maxScreenSpace;
-    DirectionsMenuStaticView *directionsMenuView;
-    
+    DirectionsMenuStaticView *m_pDirectionsMenuView;
 }
 
 @property (nonatomic, retain) UIView* pSearchMenuScrollButtonContainer;
 @property (nonatomic, retain) UIButton* pSearchMenuScrollButton;
 @property (nonatomic, retain) UIImageView* pSearchMenuFadeImage;
 
-@property (nonatomic, retain) UITableView *wayPointsTableView;
-@property (nonatomic, retain) UITextField *startRouteTextField;
-@property (nonatomic, retain) UITextField *endRouteTextField;
+@property (nonatomic, retain) UITextField *pStartRouteTextField;
+@property (nonatomic, retain) UITextField *pEndRouteTextField;
 
 @end
 
@@ -74,7 +78,6 @@
 {
     m_pDirectionsMenuInterop = Eegeo_NEW(ExampleApp::DirectionsMenu::View::DirectionsMenuViewInterop)(self);
     
-    resultCount = 0;
     m_pOnScreenResultsAnimationController = NULL;
     m_pAnchorAnimationController = NULL;
     
@@ -110,10 +113,12 @@
     self.pTitleContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     
     m_maxScreenSpace = m_screenHeight - (upperMargin + m_tableSpacing + m_screenHeight/6);
-    
-    m_menuContainerWidth = m_screenWidth;
-    //m_menuContainerHeight = m_maxScreenSpace;
-    //m_menuContainerHeight = 260.0f;
+
+    if(isPhone)
+        m_menuContainerWidth = m_screenWidth;
+    else
+        m_menuContainerWidth = m_screenWidth / 3;
+
     m_menuContainerOffScreenX = -m_menuContainerWidth;
     m_menuContainerOffScreenY = upperMargin;
     m_menuContainerClosedOnScreenX = m_menuContainerOffScreenX;
@@ -121,9 +126,10 @@
     m_menuContainerOpenOnScreenX = 0.0f;
     m_menuContainerOpenOnScreenY = m_menuContainerOffScreenY;
     
-     directionsMenuView = [[[NSBundle mainBundle] loadNibNamed:@"DirectionsMenuStaticView" owner:self options:nil] objectAtIndex:0];
+     m_pDirectionsMenuView = [[[NSBundle mainBundle] loadNibNamed:@"DirectionsMenuStaticView" owner:self options:nil] objectAtIndex:0];
     
-    float estimatedHeight = [self getEstimatedHeight];
+    float estimatedHeight = [m_pDirectionsMenuView getEstimatedHeight];
+    [m_pDirectionsMenuView SetSearchMenuView:self];
 
     m_menuContainerHeight = (estimatedHeight< m_maxScreenSpace) ? estimatedHeight : m_maxScreenSpace;
     
@@ -135,26 +141,16 @@
     [self.pMenuContainer setBackgroundColor:[UIColor clearColor]];
     
 
-    [directionsMenuView setFrame:CGRectMake(0, 0, self.pMenuContainer.frame.size.width, self.pMenuContainer.frame.size.height)];
+    [m_pDirectionsMenuView setFrame:CGRectMake(0, 0, self.pMenuContainer.frame.size.width, self.pMenuContainer.frame.size.height)];
     
-    _startRouteTextField = directionsMenuView.startRouteTextField;
-    _endRouteTextField = directionsMenuView.endRouteTextField;
+    _pStartRouteTextField = m_pDirectionsMenuView.startRouteTextField;
+    _pEndRouteTextField = m_pDirectionsMenuView.endRouteTextField;
     
-    _startRouteTextField.delegate = self;
-    _endRouteTextField.delegate = self;
+    _pEndRouteTextField.delegate = self;
     
-    self.wayPointsTableView = (UITableView *)[directionsMenuView viewWithTag:10];
-    self.wayPointsTableView.delegate = self;
-    self.wayPointsTableView.dataSource = self;
-
+    [m_pDirectionsMenuView.exitDirectionsBtn addTarget:self action:@selector(ExitDirectionsClicked) forControlEvents:UIControlEventTouchUpInside];
     
-    UINib *wayPointsCellNib = [UINib nibWithNibName:@"DirectionsMenuWayPointViewCell" bundle: [NSBundle mainBundle]];
-    [self.wayPointsTableView registerNib:wayPointsCellNib forCellReuseIdentifier:@"DirectionsMenuWayPointViewCell"];
-    
-    
-    [directionsMenuView.exitDirectionsBtn addTarget:self action:@selector(ExitDirectionsClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.pMenuContainer addSubview:directionsMenuView];
+    [self.pMenuContainer addSubview:m_pDirectionsMenuView];
     
     self.frame = CGRectMake(0, 0, m_screenWidth, m_screenHeight);
     
@@ -221,7 +217,7 @@
 
 }
 
-- (void) collapseAll
+- (void) CollapseAll
 {
     [m_pDataProvider collapseAll];
 }
@@ -279,9 +275,11 @@
     return 200;
 }
 
-- (void) setSearchSection:(ExampleApp::Menu::View::IMenuSectionViewModel*)searchSection
+- (void) SetSearchSection:(ExampleApp::Menu::View::IMenuSectionViewModel*)searchSection
 {
-
+    [m_pDirectionsMenuView updateSearchResultsSection:searchSection];
+    
+    [self updateContainerFrame];
 }
 
 - (void)onSectionExpanded
@@ -313,125 +311,51 @@
         }
 }
 
-#define  UITableViewDataSource
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return resultCount;
-}
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    DirectionsMenuWayPointViewCell *cell = (DirectionsMenuWayPointViewCell*)[self.wayPointsTableView dequeueReusableCellWithIdentifier:@"DirectionsMenuWayPointViewCell"];
-        [cell.wayPointNumberlbl setText:[NSString stringWithFormat:@"%li",(long)indexPath.row+1]];
-    if(indexPath.row == 0)
-    {
-        [cell.wayPointImageView setImage:[UIImage imageNamed:@"DirectionCard_RouteStart"]];
-        [cell.wayPointMainTitlelbl setText:@"Westfield Valley Mall"];
-        [cell.wayPointSubCategorylbl setText:@"South Entrance"];
-
-    }
-    else if (indexPath.row == 1)
-    {
-        [cell.wayPointImageView setImage:[UIImage imageNamed:@"DirectionCard_EnterMallSelected"]];
-        [cell.wayPointMainTitlelbl setText:@"50 yd"];
-        [cell.wayPointSubCategorylbl setText:@"Enter Mall"];
-
-
-    }
-    else if (indexPath.row == 2)
-    {
-        [cell.wayPointImageView setImage:[UIImage imageNamed:@"DirectionCard_StraightAhead"]];
-        [cell.wayPointMainTitlelbl setText:@"40 yd"];
-        [cell.wayPointSubCategorylbl setText:@"Turn left along main concourse"];
-
-    }
-    else if (indexPath.row == 3)
-    {
-        [cell.wayPointImageView setImage:[UIImage imageNamed:@"DirectionCard_TurnLeft"]];
-        [cell.wayPointMainTitlelbl setText:@"Turn Left"];
-        [cell.wayPointSubCategorylbl setText:@"Then 400 yd along main course"];
-
-    }
-    else if (indexPath.row == 4)
-    {
-        [cell.wayPointImageView setImage:[UIImage imageNamed:@"DirectionCard_ElevatorSelected"]];
-        [cell.wayPointMainTitlelbl setText:@"Elevator to 2nd floor"];
-        [cell.wayPointSubCategorylbl setText:@""];
-
-    }
-    else if (indexPath.row == 5)
-    {
-        [cell.wayPointImageView setImage:[UIImage imageNamed:@"DirectionCard_TurnRight"]];
-        [cell.wayPointMainTitlelbl setText:@"Turn Right"];
-        [cell.wayPointSubCategorylbl setText:@"Then 50 yd along main concourse"];
-
-    }
-    else if (indexPath.row == 6)
-    {
-        [cell.wayPointImageView setImage:[UIImage imageNamed:@"DirectionCard_VeerLeft.png"]];
-        [cell.wayPointMainTitlelbl setText:@"Left"];
-        [cell.wayPointSubCategorylbl setText:@"The 50 yd along main concourse"];
-
-    }
-    
-    return cell;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    return 45;
-}
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
 
-    if(textField == _startRouteTextField)
+    if(textField == _pStartRouteTextField)
     {
-        [_endRouteTextField becomeFirstResponder];
+        [_pEndRouteTextField becomeFirstResponder];
     }
-    else if(textField == _endRouteTextField)
+    else if(textField == _pEndRouteTextField)
     {
         [self EndRouteEntered];
-        [_endRouteTextField resignFirstResponder];
-        [_startRouteTextField resignFirstResponder];
+        [_pEndRouteTextField resignFirstResponder];
+        [_pStartRouteTextField resignFirstResponder];
     }
     return YES;
 }
 
 #define MenuViewCallbacks
 
--(void)ExitDirectionsClicked:(id)sender {
+-(void)ExitDirectionsClicked {
     
     if([self canInteract])
     {
-        [self getInterop]->HandleViewClicked();
+        m_pDirectionsMenuInterop->OnExitDirectionsClicked();
     }
 
 }
 
+
 -(void)EndRouteEntered  {
     
     m_pDirectionsMenuInterop->SearchPerformed("");
-
-    NSLog(@"End Route Clicked");
-    
-    resultCount = 7;
-    [self.wayPointsTableView reloadData];
-    
-    [self.pMenuContainer setFrame:CGRectMake(self.pMenuContainer.frame.origin.x, self.pMenuContainer.frame.origin.y, self.pMenuContainer.frame.size.width, [self getEstimatedHeight])];
-    [directionsMenuView setFrame:CGRectMake(0,0, self.pMenuContainer.frame.size.width, [self getEstimatedHeight])];
-        
-        [UIView animateWithDuration:0.5
-                         animations:^{
-                             [self layoutIfNeeded];
-                         }];
 }
 
--(float)getEstimatedHeight  {
+-(void)updateContainerFrame {
+    
+    float updatedEstimatedHeight = [m_pDirectionsMenuView getEstimatedHeight];
+    
+    [self.pMenuContainer setFrame:CGRectMake(self.pMenuContainer.frame.origin.x, self.pMenuContainer.frame.origin.y, self.pMenuContainer.frame.size.width, updatedEstimatedHeight)];
+    
+    [m_pDirectionsMenuView setFrame:CGRectMake(0,0, self.pMenuContainer.frame.size.width, updatedEstimatedHeight)];
+    
+    [UIView animateWithDuration:0.5
+                     animations:^{
+                         [self layoutIfNeeded];
+                     }];
 
-    return directionsMenuView.headerView.bounds.size.height + directionsMenuView.bottomBarView.bounds.size.height + (45 * m_pixelScale * resultCount) + (directionsMenuView.hideOptionsView.bounds.size.height);
 }
 
 @end

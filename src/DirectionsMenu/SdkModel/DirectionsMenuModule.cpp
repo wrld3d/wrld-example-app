@@ -5,6 +5,7 @@
 #include "IReactionControllerModel.h"
 #include "MenuModel.h"
 #include "MenuViewModel.h"
+#include "MenuSectionViewModel.h"
 
 namespace ExampleApp
 {
@@ -18,6 +19,7 @@ namespace ExampleApp
                                                Metrics::IMetricsService& metricsService)
             : m_pMenuModel(NULL)
             , m_pMenuViewModel(NULL)
+            , m_pSearchSectionViewModel(NULL)
             {
                 m_pMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                 
@@ -32,6 +34,13 @@ namespace ExampleApp
                 Eegeo_DELETE m_pMenuModel;
             }
             
+            void DirectionsMenuModule::SetSearchSection(const std::string& name,
+                                                    Menu::View::IMenuModel& menuModel)
+            {
+                m_pSearchSectionViewModel = Eegeo_NEW(Menu::View::MenuSectionViewModel)(name, "", menuModel, false);
+            }
+
+            
             Menu::View::IMenuModel& DirectionsMenuModule::GetDirectionsMenuModel() const
             {
                 return *m_pMenuModel;
@@ -40,6 +49,12 @@ namespace ExampleApp
             Menu::View::IMenuViewModel& DirectionsMenuModule::GetDirectionsMenuViewModel() const
             {
                 return *m_pMenuViewModel;
+            }
+            Menu::View::IMenuSectionViewModel& DirectionsMenuModule::GetSearchSectionViewModel() const
+            {
+                Eegeo_ASSERT(m_pSearchSectionViewModel != NULL, "Search section view model not set, please call SetSearchSection before calling this function");
+                
+                return *m_pSearchSectionViewModel;
             }
         }
     }

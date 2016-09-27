@@ -24,6 +24,7 @@ namespace ExampleApp
             private:
                 Menu::View::IMenuModel* m_pMenuModel;
                 Menu::View::IMenuViewModel* m_pMenuViewModel;
+                Menu::View::IMenuSectionViewModel* m_pSearchSectionViewModel;
 
             public:
                 DirectionsMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
@@ -31,11 +32,16 @@ namespace ExampleApp
                                  ExampleAppMessaging::TMessageBus& messageBus,
                                  Metrics::IMetricsService& metricsService);
                 
+                
                 ~DirectionsMenuModule();
+                
+                void SetSearchSection(const std::string& name,
+                                      Menu::View::IMenuModel& menuModel);
 
                 Menu::View::IMenuModel& GetDirectionsMenuModel() const;
                 
                 Menu::View::IMenuViewModel& GetDirectionsMenuViewModel() const;
+                Menu::View::IMenuSectionViewModel& GetSearchSectionViewModel() const;
             };
         }
     }

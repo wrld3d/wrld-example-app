@@ -1,8 +1,8 @@
 {
     "Name": "Mobile Example App",
-    "EegeoApiKey": "57f76102ad3f9f406b750e8dfb7bb543",
-    "StartLocationLatitude": 56.459676,
-    "StartLocationLongitude": -2.977240,
+    "EegeoApiKey": "",
+    "StartLocationLatitude": 37.7858,
+    "StartLocationLongitude": -122.401,
     "StartLocationAltitude": 2.7,
     "StartLocationDistance": 1781.0,
     "StartLocationOrientationDegrees": 0.0,

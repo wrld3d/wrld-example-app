@@ -20,6 +20,8 @@ namespace ExampleApp
                 Modality::View::IModalBackgroundView& m_modalBackgroundView;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 IDirectionsMenuView& m_directionsMenuView;
+                Menu::View::IMenuSectionViewModel& m_searchSectionViewModel;
+                
                 Eegeo::Helpers::TCallback1<DirectionsMenuController, const std::string&> m_searchPerformedCallbacks;
                 Eegeo::Helpers::TCallback0<DirectionsMenuController> m_searchClearedCallbacks;
                 Eegeo::Helpers::TCallback1<DirectionsMenuController, int> m_wayPointSelectedCallbacks;
@@ -31,6 +33,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<DirectionsMenuController, const DirectionsMenuInitiation::DirectionsMenuStateChangedMessage&> m_directionsMenuStateChangedCallback;
                 
                 Eegeo::Helpers::TCallback0<DirectionsMenuController> m_onModalBackgroundTappedCallback;
+                Eegeo::Helpers::TCallback1<DirectionsMenuController, Menu::View::MenuItemModel> m_onSearchItemAddedCallback;
+                Eegeo::Helpers::TCallback1<DirectionsMenuController, Menu::View::MenuItemModel> m_onSearchItemRemovedCallback;
                 
                 void OnOpenStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& openState);
                 
@@ -52,6 +56,10 @@ namespace ExampleApp
                 
                 void OnExitDirectionsClicked();
                 
+                void OnSearchItemAdded(Menu::View::MenuItemModel& item);
+                
+                void OnSearchItemRemoved(Menu::View::MenuItemModel& item);
+                
             protected:
                 
                 virtual void RefreshPresentation();
@@ -63,6 +71,7 @@ namespace ExampleApp
                                          Menu::View::IMenuViewModel& viewModel,
                                          Menu::View::IMenuView& view,
                                          DirectionsMenu::View::IDirectionsMenuView& directionsMenuView,
+                                         Menu::View::IMenuSectionViewModel& searchSectionViewModel,
                                          Modality::View::IModalBackgroundView& modalBackgroundView,
                                          ExampleAppMessaging::TMessageBus& messageBus);
                 

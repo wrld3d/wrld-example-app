@@ -11,6 +11,8 @@ set(currsources
   ios_src/DirectionsMenuInitiation/View/DirectionsMenuInitiationViewInterop.mm
   ios_src/DirectionsMenuInitiation/View/DirectionsMenuInitiationViewModule.h
   ios_src/DirectionsMenuInitiation/View/DirectionsMenuInitiationViewModule.mm
+  ios_src/DirectionsMenuInitiation/View/DirectionInitiationStateChangedObserver.h
+  ios_src/DirectionsMenuInitiation/View/DirectionInitiationStateChangedObserver.mm
 )
 set(sources ${sources} ${currsources})
 source_group(\\ios_src\\DirectionsMenuInitiation\\View FILES ${currsources})

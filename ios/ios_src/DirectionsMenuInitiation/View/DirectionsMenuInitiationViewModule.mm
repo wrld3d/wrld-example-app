@@ -6,6 +6,7 @@
 #include "DirectionsMenuInitiationController.h"
 #include "DirectionsMenuInitiationViewInterop.h"
 #include "ScreenProperties.h"
+#include "DirectionInitiationStateChangedObserver.h"
 
 namespace ExampleApp
 {
@@ -23,6 +24,8 @@ namespace ExampleApp
 
 
                 m_pController = Eegeo_NEW(DirectionsMenuInitiationController)(viewModel, *[m_pView getInterop], messageBus, metricsService);
+                
+                m_pObserver =  Eegeo_NEW(DirectionInitiationStateChangedObserver)(m_pView,messageBus);
             }
 
             DirectionsMenuInitiationViewModule::~DirectionsMenuInitiationViewModule()

@@ -11,7 +11,6 @@
 
 @interface DirectionsMenuView : MenuView<UIScrollViewDelegate>
 {
-    int resultCount;
 }
 
 - (id)initWithParams:(float)width
@@ -20,7 +19,10 @@
 
 - (ExampleApp::DirectionsMenu::View::DirectionsMenuViewInterop*) getDirectionsMenuInterop;
 
-- (void) collapseAll;
+- (void)CollapseAll;
+
+- (void)SetSearchSection:(ExampleApp::Menu::View::IMenuSectionViewModel*)searchSection;
+-(void)ExitDirectionsClicked;
 
 @property (nonatomic, retain) UIScrollView* pSearchResultsTableContainerView;
 

@@ -10,6 +10,7 @@ set(currsources
   ../src/DirectionsMenuInitiation/View/DirectionsMenuInitiationViewModel.cpp
   ../src/DirectionsMenuInitiation/View/IDirectionsMenuInitiationView.h
   ../src/DirectionsMenuInitiation/View/IDirectionsMenuInitiationViewModel.h
+
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\DirectionsMenuInitiation\\View FILES ${currsources})

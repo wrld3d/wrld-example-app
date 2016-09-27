@@ -95,6 +95,8 @@
 #include "IDirectionsMenuModule.h"
 #include "DirectionsMenuView.h"
 #include "DirectionsMenuViewModule.h"
+#include "DirectionResultSectionViewModule.h"
+#include "DirectionsResultSectionModule.h"
 
 using namespace Eegeo::iOS;
 
@@ -315,9 +317,19 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     
     m_pDirectionsMenuViewModule = Eegeo_NEW(ExampleApp::DirectionsMenu::View::DirectionsMenuViewModule)(app.DirectionsMenuModule().GetDirectionsMenuModel(),
                                                                                                app.DirectionsMenuModule().GetDirectionsMenuViewModel(),
-                                                                                               screenProperties,
+                                                                                                        app.DirectionsMenuModule().GetSearchSectionViewModel(),
+                                                            screenProperties,
                                                                                                m_pModalBackgroundViewModule->GetModalBackgroundViewInterop(),
                                                                                                m_messageBus);
+
+    
+    //TODO: Search result poi moudle
+    
+    m_pDirectionResultSectionViewModule = Eegeo_NEW(ExampleApp::DirectionResultSection::View::DirectionResultSectionViewModule)(app.DirectionsMenuModule().GetDirectionsMenuViewModel(),
+                                                                                                                                app.DirectionResultSectionModule().GetSearchResultSectionOptionsModel(),
+                                                                                                                                m_messageBus,
+                                                                                                                                *m_pMenuReactionModel,
+                                                                                                                                app.SearchResultPoiModule().GetSearchResultPoiViewModel());
     
     m_pSearchResultSectionViewModule = Eegeo_NEW(ExampleApp::SearchResultSection::View::SearchResultSectionViewModule)(app.SearchMenuModule().GetSearchMenuViewModel(),
                                                                                                                        app.SearchResultSectionModule().GetSearchResultSectionOptionsModel(),
@@ -372,6 +384,8 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
             app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
             screenProperties,
             m_iOSFlurryMetricsService);
+    
+    
 
     m_pMyPinCreationDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewModule)(
                                             m_messageBus,
@@ -548,6 +562,8 @@ void AppHost::DestroyApplicationViewModules()
     Eegeo_DELETE m_pModalBackgroundViewModule;
 
     Eegeo_DELETE m_pSearchResultSectionViewModule;
+    
+    Eegeo_DELETE m_pDirectionResultSectionViewModule;
 
     Eegeo_DELETE m_pTagSearchViewModule;
 

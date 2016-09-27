@@ -65,4 +65,6 @@ include(../src/DoubleTapIndoorInteraction/CMakeLists.txt)
 include(../src/PathDrawing/CMakeLists.txt)
 include(../src/DirectionsMenuInitiation/CMakeLists.txt)
 include(../src/DirectionsMenu/CMakeLists.txt)
+include(../src/DirectionResultSection/CMakeLists.txt)
+
 

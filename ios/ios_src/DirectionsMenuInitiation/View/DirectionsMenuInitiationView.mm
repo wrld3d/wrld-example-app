@@ -46,8 +46,7 @@
 
 - (void) onClick:(UIButton *)sender
 {
-    [sender setSelected:!sender.selected];
-    
+//    [sender setSelected:!sender.selected];
     m_pInterop->OnToggle(sender.selected);
 }
 
@@ -92,6 +91,17 @@
     }
 
     [self animateToY:m_yPosInactive];
+}
+
+-(void)SetBtnStateActive
+{
+    [self.pPoiCreateButton setSelected:YES];
+}
+
+-(void)SetBtnStateInActive
+{
+    
+    [self.pPoiCreateButton setSelected:NO];
 }
 
 - (void) setOnScreenStateToIntermediateValue:(float)onScreenState

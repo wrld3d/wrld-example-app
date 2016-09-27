@@ -12,6 +12,7 @@
 #include "WorldPins.h"
 #include "TagSearch.h"
 #include "IWayPointsRepository.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -26,6 +27,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<WayPointOnMapModel, WayPoint*> m_onWayPointRemovedCallBack;
                 PathDrawing::SdkModel::IWayPointsRepository& m_wayPointsRepository;
                 WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
+                ExampleAppMessaging::TMessageBus& m_messageBus;
 
                 void OnWayPointAdded(WayPoint*& wayPoint);
                 void AddWayPointView(WayPoint*& wayPoint);
@@ -43,7 +45,8 @@ namespace ExampleApp
                 
                 WayPointOnMapModel(WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                    TagSearch::ISearchResultIconKeyMapper& searchResultIconCategoryMapper,
-                                   PathDrawing::SdkModel::IWayPointsRepository& wayPointsRepository);
+                                   PathDrawing::SdkModel::IWayPointsRepository& wayPointsRepository,
+                                   ExampleAppMessaging::TMessageBus& messageBus);
                 
                 
                 

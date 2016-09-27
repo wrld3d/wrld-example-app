@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -34,7 +34,7 @@
                             <rect key="frame" x="60" y="19" width="288" height="36"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e9H-KK-9eI">
-                                    <rect key="frame" x="20" y="8" width="42.5" height="21"/>
+                                    <rect key="frame" x="20" y="8" width="43" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -81,7 +81,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Pizza My Heart" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hDf-y3-L7w">
-                                            <rect key="frame" x="58" y="4" width="221.5" height="29"/>
+                                            <rect key="frame" x="58" y="4" width="222" height="29"/>
                                             <color key="textColor" red="0.054901960780000002" green="0.18823529410000001" blue="0.42352941179999998" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
@@ -98,7 +98,7 @@
                                     </constraints>
                                 </view>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="center" lineBreakMode="characterWrap" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AeA-cS-OeV">
-                                    <rect key="frame" x="60" y="60" width="24.5" height="48"/>
+                                    <rect key="frame" x="60" y="60" width="25" height="48"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -112,13 +112,13 @@
                                     </constraints>
                                 </view>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="mins" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R7O-gU-BZQ">
-                                    <rect key="frame" x="90" y="63" width="36.5" height="20.5"/>
+                                    <rect key="frame" x="90" y="63" width="37" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 sec" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g5U-1C-0sZ">
-                                    <rect key="frame" x="90" y="83" width="49.5" height="20.5"/>
+                                    <rect key="frame" x="90" y="83" width="50" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -231,6 +231,10 @@
                         <tableView clipsSubviews="YES" tag="10" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Muq-xI-IPR">
                             <rect key="frame" x="0.0" y="45" width="360" height="471"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <outlet property="dataSource" destination="iN0-l3-epB" id="HhA-je-VQj"/>
+                                <outlet property="delegate" destination="iN0-l3-epB" id="KzL-my-WBd"/>
+                            </connections>
                         </tableView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -291,16 +295,18 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="bottomBarView" destination="Ye0-LY-NfE" id="9dc-Px-gIo"/>
+                <outlet property="bottomBarView" destination="Ye0-LY-NfE" id="4Tf-Tc-5dc"/>
                 <outlet property="endHeightConstraint" destination="M44-9j-AB3" id="r4R-U2-CzK"/>
+                <outlet property="endRouteBgView" destination="ycf-Uf-8Rr" id="Nhy-Un-kcC"/>
                 <outlet property="endRouteTextField" destination="hDf-y3-L7w" id="ZmD-H9-afS"/>
                 <outlet property="exitDirectionsBtn" destination="6Rc-ba-g8g" id="b5c-Xc-WWD"/>
-                <outlet property="headerView" destination="gyb-Hn-ca1" id="aMk-MN-BT4"/>
-                <outlet property="hideOptionsView" destination="oKx-rg-azB" id="HVU-Uh-YBO"/>
+                <outlet property="headerView" destination="gyb-Hn-ca1" id="lFu-hN-LsF"/>
+                <outlet property="hideOptionsView" destination="oKx-rg-azB" id="xHl-vg-u4Y"/>
                 <outlet property="optionsButton" destination="Wce-Y8-pGa" id="gEn-G9-sFT"/>
-                <outlet property="scrollContentView" destination="pQy-bF-sHb" id="arH-kd-Yrf"/>
+                <outlet property="reverseButton" destination="PZ9-8w-jwC" id="aMI-ge-oqH"/>
+                <outlet property="startRouteBgView" destination="4AZ-5v-gdH" id="S33-SS-tM5"/>
                 <outlet property="startRouteTextField" destination="b3N-Kh-zAY" id="sf9-jf-QJf"/>
-                <outlet property="wayPointsTableView" destination="Muq-xI-IPR" id="gU4-hj-Kp3"/>
+                <outlet property="wayPointsTableView" destination="Muq-xI-IPR" id="4wP-N0-aBF"/>
             </connections>
             <point key="canvasLocation" x="539" y="419"/>
         </view>

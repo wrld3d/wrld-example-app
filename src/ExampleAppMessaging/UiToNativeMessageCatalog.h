@@ -37,6 +37,8 @@
 #include "CurrentTourCardTappedMessage.h"
 #include "MenuSectionExpandedChangedMessage.h"
 #include "WorldPinsSelectedFocussedMessage.h"
+#include "DirectionMenuFindDirectionMessage.h"
+#include "DirectionResultSectionItemSelectedMessage.h"
 
 namespace ExampleApp
 {
@@ -76,6 +78,8 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Tours::CurrentTourCardTappedMessage>
             , public Eegeo::Messaging::CatalogBinding<Menu::MenuSectionExpandedChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<WorldPins::WorldPinsSelectedFocussedMessage>
+            , public Eegeo::Messaging::CatalogBinding<DirectionsMenu::DirectionMenuFindDirectionMessage>
+            , public Eegeo::Messaging::CatalogBinding<DirectionResultSection::DirectionResultSectionItemSelectedMessage>
             , private Eegeo::NonCopyable
         {
 

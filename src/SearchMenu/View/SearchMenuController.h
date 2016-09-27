@@ -20,6 +20,7 @@ namespace ExampleApp
             private:
                 ISearchMenuView& m_searchMenuView;
                 Menu::View::IMenuSectionViewModel& m_searchSectionViewModel;
+                
                 TagSearch::View::ITagSearchRepository& m_tagSearchRepository;
                 Modality::View::IModalBackgroundView& m_modalBackgroundView;
                 ExampleAppMessaging::TMessageBus& m_messageBus;

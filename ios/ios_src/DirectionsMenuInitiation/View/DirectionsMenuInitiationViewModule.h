@@ -22,7 +22,7 @@ namespace ExampleApp
             private:
                 DirectionsMenuInitiationController* m_pController;
                 DirectionsMenuInitiationView* m_pView;
-
+                DirectionInitiationStateChangedObserver* m_pObserver;
 
             public:
                 DirectionsMenuInitiationViewModule(ExampleAppMessaging::TMessageBus& messageBus,

@@ -5,6 +5,8 @@
 #include "IMenuOption.h"
 #include "IModalBackgroundView.h"
 #include "IDirectionsMenuView.h"
+#include "SearchResultSectionItemSelectedMessage.h"
+#include "DirectionQueryResponseReceivedMessage.h"
 
 namespace ExampleApp
 {
@@ -16,10 +18,12 @@ namespace ExampleApp
                                      Menu::View::IMenuViewModel& viewModel,
                                      Menu::View::IMenuView& view,
                                      DirectionsMenu::View::IDirectionsMenuView& directionsMenuView,
+                                    Menu::View::IMenuSectionViewModel& searchSectionViewModel,
                                      Modality::View::IModalBackgroundView& modalBackgroundView,
                                      ExampleAppMessaging::TMessageBus& messageBus)
                         : Menu::View::MenuController(model, viewModel, view, messageBus)
                         , m_directionsMenuView(directionsMenuView)
+                        , m_searchSectionViewModel(searchSectionViewModel)
                         , m_modalBackgroundView(modalBackgroundView)
                         , m_messageBus(messageBus)
                         , m_appModeAllowsOpen(true)
@@ -31,6 +35,8 @@ namespace ExampleApp
                         , m_exitDirectionsCallbacks(this, &DirectionsMenuController::OnExitDirectionsClicked)
                         , m_onModalBackgroundTappedCallback(this, &DirectionsMenuController::OnModalBackgroundTapped)
                         , m_onOpenStateChangedCallback(this, &DirectionsMenuController::OnOpenStateChanged)
+                        , m_onSearchItemAddedCallback(this, &DirectionsMenuController::OnSearchItemAdded)
+                        , m_onSearchItemRemovedCallback(this, &DirectionsMenuController::OnSearchItemRemoved)
 
             {
                 m_directionsMenuView.InsertSearchPeformedCallback(m_searchPerformedCallbacks);
@@ -38,14 +44,17 @@ namespace ExampleApp
                 m_directionsMenuView.InsertWayPointSelectedCallback(m_wayPointSelectedCallbacks);
                 m_directionsMenuView.InsertExitDirectionsCallback(m_exitDirectionsCallbacks);
                 
+                Menu::View::IMenuModel& searchSectionMenuModel = m_searchSectionViewModel.GetModel();
+                searchSectionMenuModel.InsertItemAddedCallback(m_onSearchItemAddedCallback);
+                searchSectionMenuModel.InsertItemRemovedCallback(m_onSearchItemRemovedCallback);
+                
+                
                 m_viewModel.InsertOpenStateChangedCallback(m_onOpenStateChangedCallback);
                 m_modalBackgroundView.InsertTappedCallback(m_onModalBackgroundTappedCallback);
                 m_messageBus.SubscribeUi(m_appModeChangedCallback);
                 m_messageBus.SubscribeUi(m_directionsMenuStateChangedCallback);
                 
             }
-            
-
             
             DirectionsMenuController::~DirectionsMenuController()
             {
@@ -58,6 +67,16 @@ namespace ExampleApp
                 m_directionsMenuView.RemoveExitDirectionsCallback(m_exitDirectionsCallbacks);
             }
             
+            void DirectionsMenuController::OnSearchItemAdded(Menu::View::MenuItemModel& item)
+            {
+                m_presentationDirty = true;
+            }
+            
+            void DirectionsMenuController::OnSearchItemRemoved(Menu::View::MenuItemModel& item)
+            {
+                m_presentationDirty = true;
+            }
+            
             void DirectionsMenuController::OnOpenStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& openState)
             {
                 if(openState != 1.f)
@@ -68,7 +87,9 @@ namespace ExampleApp
             
             void DirectionsMenuController::OnSearch(const std::string& searchQuery)
             {
-            
+                // Publish message Here
+                m_messageBus.Publish(DirectionResultSection::DirectionQueryResponseReceivedMessage("temp Query String"));
+                
             }
             
             void DirectionsMenuController::OnSearchCleared()
@@ -78,12 +99,23 @@ namespace ExampleApp
             
             void DirectionsMenuController::OnWayPointItemSelected(int& index)
             {
-            
+               //#TODO remove below code and trigger select of searchResultItemModel to navigate to specific point of route
+                Eegeo::Resources::Interiors::InteriorId m_interiorId = Eegeo::Resources::Interiors::InteriorId();
+                Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong::FromDegrees(56.457860, -2.970793);
+                m_messageBus.Publish(ExampleApp::SearchResultSection::SearchResultSectionItemSelectedMessage(latLong.ToECEF(),
+                                                                            false,
+                                                                            m_interiorId,
+                                                                            0,
+                                                                            index));
+                
             }
             
             void DirectionsMenuController::OnExitDirectionsClicked()
             {
-            
+                MenuController::OnViewClicked();
+             
+                DirectionsMenuInitiation::DirectionsMenuStateChangedMessage message(ExampleApp::DirectionsMenuInitiation::Inactive);
+                m_messageBus.Publish(message);
             }
             
             void DirectionsMenuController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
@@ -93,7 +125,9 @@ namespace ExampleApp
             
             void DirectionsMenuController::OnDirectionsMenuStateChanged(const DirectionsMenuInitiation::DirectionsMenuStateChangedMessage& message)
             {
-                MenuController::OnViewClicked();
+                if (message.GetDirectionsMenuStage() == DirectionsMenuInitiation::Active) {
+                    MenuController::OnViewClicked();
+                }
             }
             
             bool DirectionsMenuController::TryDrag()
@@ -125,7 +159,7 @@ namespace ExampleApp
                 
                 if(!m_viewModel.IsFullyClosed())
                 {
- 
+                    m_directionsMenuView.SetSearchSection(m_searchSectionViewModel);
                 }
             }
 
