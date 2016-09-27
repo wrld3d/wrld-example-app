@@ -188,9 +188,9 @@ namespace ExampleApp
                     
                     for(std::vector<Search::SdkModel::SearchResultModel>::const_iterator resultsItt = results.begin(); resultsItt != results.end(); ++resultsItt)
                     {
-                        if (!json.Parse<0>(resultsItt->GetJsonData().c_str()).HasParseError() && json.HasMember("highlighted"))
+                        if (!json.Parse<0>(resultsItt->GetJsonData().c_str()).HasParseError() && json.HasMember("highlight"))
                         {
-                            highlightedRoomId = json["highlighted"].GetString();
+                            highlightedRoomId = json["highlight"].GetString();
 
                             for (std::map<std::string, Eegeo::Rendering::Renderables::InteriorHighlightRenderable*>::iterator renderItt = m_currentHighlightRenderables.begin();
                                  renderItt != m_currentHighlightRenderables.end();

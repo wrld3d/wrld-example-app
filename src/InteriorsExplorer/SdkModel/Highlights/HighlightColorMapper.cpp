@@ -21,10 +21,10 @@ namespace ExampleApp
                         
                         if (entity_highlight_color.Size() == 4)
                         {
-                            highlightColor.Set(entity_highlight_color[0].GetDouble(),
-                                               entity_highlight_color[1].GetDouble(),
-                                               entity_highlight_color[2].GetDouble(),
-                                               entity_highlight_color[3].GetDouble());
+                            highlightColor.Set(entity_highlight_color[0].GetDouble()/255.0,
+                                               entity_highlight_color[1].GetDouble()/255.0,
+                                               entity_highlight_color[2].GetDouble()/255.0,
+                                               entity_highlight_color[3].GetDouble()/255.0);
                         }
                     }
                     return highlightColor;
