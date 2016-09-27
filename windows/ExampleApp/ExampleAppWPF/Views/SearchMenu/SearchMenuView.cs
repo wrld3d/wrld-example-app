@@ -103,8 +103,9 @@ namespace ExampleAppWPF
             var searchBoxBackgroundDefaultHeight = m_backgroundRectangle.ActualHeight;
             var menuOptionsViewDefaultHeight = m_menuOptionsView.ActualHeight;
             var separatorHeight = m_resultsSeparator.ActualHeight;
+            var seperatorCount = 4;
 
-            return Math.Max(0.0, menuViewHeight - searchBoxBackgroundDefaultHeight - menuOptionsViewDefaultHeight + 2 * separatorHeight);
+            return Math.Max(0.0, menuViewHeight - searchBoxBackgroundDefaultHeight - menuOptionsViewDefaultHeight - seperatorCount * separatorHeight);
         }
 
         private double CalcMenuOptionsViewMaxHeight()
