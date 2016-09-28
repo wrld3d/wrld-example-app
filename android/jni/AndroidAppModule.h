@@ -21,9 +21,11 @@ namespace ExampleApp
         			         EGLContext& resourceBuildShareContext);
 
             void Register(const TContainerBuilder& builder);
+            void RegisterLeaves();
         private:
             AndroidNativeState& m_nativeState;
             Eegeo::Rendering::ScreenProperties m_screenProperties;
+			std::set<std::string> m_customApplicationAssetDirectories;
             EGLDisplay m_display;
             EGLSurface m_shareSurface;
             EGLContext m_resourceBuildShareContext;
