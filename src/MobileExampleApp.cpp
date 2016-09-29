@@ -615,7 +615,7 @@ namespace ExampleApp
                                                                                                                     m_pAppCameraModule->GetController(),
                                                                                                                     m_messageBus);
         
-        m_pDirectionsMenuModule->SetSearchSection("", m_pDirectionResultSectionModule->GetSearchResultSectionModel());
+        m_pDirectionsMenuModule->SetDirectionsSection("", m_pDirectionResultSectionModule->GetDirectionsResultSectionModel());
         
         m_pSearchResultOnMapModule = Eegeo_NEW(SearchResultOnMap::SdkModel::SearchResultOnMapModule)(m_pSearchModule->GetSearchResultRepository(),
                                                                                                      m_pSearchResultPoiModule->GetSearchResultPoiViewModel(),

@@ -5,7 +5,7 @@
 #include <map>
 #include <string>
 #include "ICallback.h"
-#include "WayPoint.h"
+#include "WayPointModel.h"
 #include "WayPointType.h"
 #include "Space.h"
 #include "Types.h"
@@ -23,21 +23,21 @@ namespace ExampleApp
             class WayPointOnMapModel : private Eegeo::NonCopyable
             {
             private:
-                Eegeo::Helpers::TCallback1<WayPointOnMapModel, WayPoint*> m_onWayPointAddedCallBack;
-                Eegeo::Helpers::TCallback1<WayPointOnMapModel, WayPoint*> m_onWayPointRemovedCallBack;
+                Eegeo::Helpers::TCallback1<WayPointOnMapModel, WayPointModel*> m_onWayPointAddedCallBack;
+                Eegeo::Helpers::TCallback1<WayPointOnMapModel, WayPointModel*> m_onWayPointRemovedCallBack;
                 PathDrawing::SdkModel::IWayPointsRepository& m_wayPointsRepository;
                 WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 
-                void OnWayPointAdded(WayPoint*& wayPoint);
-                void AddWayPointView(WayPoint*& wayPoint);
+                void OnWayPointAdded(WayPointModel*& wayPoint);
+                void AddWayPointView(WayPointModel*& wayPoint);
                 
-                void OnWayPointRemoved(WayPoint*& wayPoint);
-                void RemoveWayPointView(WayPoint*& wayPoint);
+                void OnWayPointRemoved(WayPointModel*& wayPoint);
+                void RemoveWayPointView(WayPointModel*& wayPoint);
                 
-                typedef std::map<ExampleApp::PathDrawing::WayPoint*, ExampleApp::WorldPins::SdkModel::WorldPinItemModel*>::iterator mapIt;
+                typedef std::map<ExampleApp::PathDrawing::WayPointModel*, ExampleApp::WorldPins::SdkModel::WorldPinItemModel*>::iterator mapIt;
                 
-                std::map<ExampleApp::PathDrawing::WayPoint*, ExampleApp::WorldPins::SdkModel::WorldPinItemModel*> m_wayPointsToPinModel;
+                std::map<ExampleApp::PathDrawing::WayPointModel*, ExampleApp::WorldPins::SdkModel::WorldPinItemModel*> m_wayPointsToPinModel;
                 
                 public:
                 

@@ -44,9 +44,9 @@ namespace ExampleApp
                 
                 ~DirectionsResultSectionModule();
                 
-                Menu::View::IMenuOptionsModel& GetSearchResultSectionOptionsModel() const;
+                Menu::View::IMenuOptionsModel& GetDirectionsResultSectionOptionsModel() const;
                 
-                Menu::View::IMenuModel& GetSearchResultSectionModel() const;
+                Menu::View::IMenuModel& GetDirectionsResultSectionModel() const;
                 
                 ExampleApp::SearchResultSection::View::ISearchResultSectionOrder& GetSearchResultSectionOrder() const;
             };

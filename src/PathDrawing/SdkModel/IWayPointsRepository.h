@@ -3,7 +3,7 @@
 #pragma once
 
 #include "IRepositoryModel.h"
-#include "WayPoint.h"
+#include "WayPointModel.h"
 
 namespace ExampleApp
 {
@@ -11,7 +11,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class IWayPointsRepository : public Repository::IRepositoryModel<WayPoint*>
+            class IWayPointsRepository : public Repository::IRepositoryModel<WayPointModel*>
             {
             };
         }

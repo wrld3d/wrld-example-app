@@ -48,12 +48,12 @@ namespace ExampleApp
                 Eegeo_DELETE m_pModel;
             }
             
-            Menu::View::IMenuOptionsModel& DirectionsResultSectionModule::GetSearchResultSectionOptionsModel() const
+            Menu::View::IMenuOptionsModel& DirectionsResultSectionModule::GetDirectionsResultSectionOptionsModel() const
             {
                 return *m_pMenuOptionsModel;
             }
             
-            Menu::View::IMenuModel& DirectionsResultSectionModule::GetSearchResultSectionModel() const
+            Menu::View::IMenuModel& DirectionsResultSectionModule::GetDirectionsResultSectionModel() const
             {
                 return *m_pModel;
             }

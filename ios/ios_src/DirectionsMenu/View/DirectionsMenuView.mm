@@ -340,7 +340,7 @@
 
 -(void)EndRouteEntered  {
     
-    m_pDirectionsMenuInterop->SearchPerformed("");
+    m_pDirectionsMenuInterop->SearchPerformed("");  
 }
 
 -(void)updateContainerFrame {

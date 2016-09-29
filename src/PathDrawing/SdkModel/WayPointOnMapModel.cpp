@@ -33,12 +33,12 @@ namespace ExampleApp
                 m_wayPointsRepository.RemoveItemRemovedCallback(m_onWayPointRemovedCallBack);
             }
             
-            void WayPointOnMapModel::OnWayPointAdded(WayPoint*& wayPoint)
+            void WayPointOnMapModel::OnWayPointAdded(WayPointModel*& wayPoint)
             {
                 AddWayPointView(wayPoint);
             }
             
-            void WayPointOnMapModel::AddWayPointView(WayPoint*& wayPoint)
+            void WayPointOnMapModel::AddWayPointView(WayPointModel*& wayPoint)
             {
                 WorldPins::SdkModel::WorldPinFocusData worldPinFocusData("",
                                                                       "",
@@ -66,12 +66,12 @@ namespace ExampleApp
                 m_wayPointsToPinModel.insert(std::make_pair(wayPoint, pinItemModel));
             }
             
-            void WayPointOnMapModel::OnWayPointRemoved(WayPoint*& wayPoint)
+            void WayPointOnMapModel::OnWayPointRemoved(WayPointModel*& wayPoint)
             {
                 RemoveWayPointView(wayPoint);
             }
             
-            void WayPointOnMapModel::RemoveWayPointView(WayPoint*& wayPoint)
+            void WayPointOnMapModel::RemoveWayPointView(WayPointModel*& wayPoint)
             {
                 mapIt it = m_wayPointsToPinModel.find(wayPoint);
                 

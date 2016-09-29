@@ -170,31 +170,31 @@ namespace ExampleApp
             int pointId = 0;
             
             Eegeo::Space::LatLong latLongStart = Eegeo::Space::LatLong::FromDegrees(56.459676, -2.977240);
-            WayPoint* pointStart = wayPointsFactory->CreateWayPoint(++pointId
+            WayPointModel* pointStart = wayPointsFactory->CreateWayPoint(++pointId
                                                                     , ExampleApp::PathDrawing::WayPointType::Start
                                                                     , latLongStart
                                                                     , "");
             
             Eegeo::Space::LatLong latLong1 = Eegeo::Space::LatLong::FromDegrees(56.457827, -2.972691);
-            WayPoint* point1 = wayPointsFactory->CreateWayPoint(++pointId
+            WayPointModel* point1 = wayPointsFactory->CreateWayPoint(++pointId
                                                                 , ExampleApp::PathDrawing::WayPointType::CheckPoint
                                                                 , latLong1
                                                                 , "");
             
             Eegeo::Space::LatLong latLong2 = Eegeo::Space::LatLong::FromDegrees(56.457860, -2.970793);
-            WayPoint* point2 = wayPointsFactory->CreateWayPoint(++pointId
+            WayPointModel* point2 = wayPointsFactory->CreateWayPoint(++pointId
                                                                 , ExampleApp::PathDrawing::WayPointType::CheckPoint
                                                                 , latLong2
                                                                 , "");
             
             Eegeo::Space::LatLong latLong3 = Eegeo::Space::LatLong::FromDegrees(56.461427, -2.963596);
-            WayPoint* point3 = wayPointsFactory->CreateWayPoint(++pointId
+            WayPointModel* point3 = wayPointsFactory->CreateWayPoint(++pointId
                                                                 , ExampleApp::PathDrawing::WayPointType::CheckPoint
                                                                 , latLong3
                                                                 , "");
             
             Eegeo::Space::LatLong latLongEnd = Eegeo::Space::LatLong::FromDegrees(56.460882, -2.962729);
-            WayPoint* pointEnd = wayPointsFactory->CreateWayPoint(++pointId
+            WayPointModel* pointEnd = wayPointsFactory->CreateWayPoint(++pointId
                                                                   , ExampleApp::PathDrawing::WayPointType::End
                                                                   , latLongEnd
                                                                   , "");
@@ -228,7 +228,7 @@ namespace ExampleApp
             
             while (m_pWayPointsRepository.GetItemCount() != 0)
             {
-                WayPoint* waypoint = m_pWayPointsRepository.GetItemAtIndex(0);
+                WayPointModel* waypoint = m_pWayPointsRepository.GetItemAtIndex(0);
                 m_pWayPointsRepository.RemoveItem(waypoint);
             }
            m_createdRoutes = false;

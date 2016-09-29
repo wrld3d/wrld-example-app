@@ -11,7 +11,7 @@ namespace ExampleApp
 {
     namespace PathDrawing
     {
-        class WayPoint : protected Eegeo::NonCopyable
+        class WayPointModel : protected Eegeo::NonCopyable
         {
         private:
             const int m_wpId;
@@ -20,7 +20,7 @@ namespace ExampleApp
             const Eegeo::Space::LatLong& m_location;
        
         public:
-            WayPoint(const int wpId
+            WayPointModel(const int wpId
                      , const ExampleApp::PathDrawing::WayPointType::Values m_type
                      , Eegeo::Space::LatLong& m_location
                      , const std::string& m_title);
@@ -30,7 +30,7 @@ namespace ExampleApp
             const ExampleApp::PathDrawing::WayPointType::Values GetType();
             const Eegeo::Space::LatLong& GetLocation();
             
-            virtual ~WayPoint() { }
+            virtual ~WayPointModel() { }
         };
         
     }

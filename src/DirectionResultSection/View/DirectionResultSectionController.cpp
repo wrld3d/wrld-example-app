@@ -32,17 +32,17 @@ namespace ExampleApp
             
             void DirectionResultSectionController::OnSearchQueryResponseReceivedMessage(const DirectionQueryResponseReceivedMessage& message)
             {
+                //TODO:This static numbers will be replaced with vector lastAddedResults
                 
-                const Eegeo::Space::LatLong& latlong = Eegeo::Space::LatLong::FromDegrees(0.0, 0.0);
+                const Eegeo::Space::LatLong& latlong = Eegeo::Space::LatLong::FromDegrees(56.457860, -2.970793);
                 
-                for(int i = 0; i < 7; ++i)
+                for(int i = 0; i < 4; ++i)
                 {
                     m_menuOptions.RemoveItem(std::to_string(i));
                 }
                 
-                for(int i = 0; i < 7; ++i)
+                for(int i = 0; i < 4; ++i)
                 {
-                
                     std::string subtitle = "sub";
                     ExampleApp::Search::SdkModel::TagIconKey iconKey1 = "default";
                     Eegeo::Resources::Interiors::InteriorId m_buildingId("");
@@ -65,14 +65,13 @@ namespace ExampleApp
             }
             void DirectionResultSectionController::OnSearchQueryRemovedMessage(const Search::SearchQueryRemovedMessage& message)
             {
-                printf("ssss");
             }
             
             void DirectionResultSectionController::OnDirectionsMenuStateChanged(const DirectionsMenuInitiation::DirectionsMenuStateChangedMessage& message)
             {
                 if(message.GetDirectionsMenuStage() == DirectionsMenuInitiation::Inactive)
                 {
-                    for(int i = 0; i < 7; ++i)
+                    for(int i = 0; i < 4; ++i)
                     {
                         m_menuOptions.RemoveItem(std::to_string(i));
                     }

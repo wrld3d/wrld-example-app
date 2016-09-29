@@ -99,14 +99,8 @@ namespace ExampleApp
             
             void DirectionsMenuController::OnWayPointItemSelected(int& index)
             {
-               //#TODO remove below code and trigger select of searchResultItemModel to navigate to specific point of route
-                Eegeo::Resources::Interiors::InteriorId m_interiorId = Eegeo::Resources::Interiors::InteriorId();
-                Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong::FromDegrees(56.457860, -2.970793);
-                m_messageBus.Publish(ExampleApp::SearchResultSection::SearchResultSectionItemSelectedMessage(latLong.ToECEF(),
-                                                                            false,
-                                                                            m_interiorId,
-                                                                            0,
-                                                                            index));
+                
+                m_searchSectionViewModel.GetItemAtIndex(index).MenuOption().Select();
                 
             }
             

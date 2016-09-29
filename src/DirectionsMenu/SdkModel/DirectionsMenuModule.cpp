@@ -34,7 +34,7 @@ namespace ExampleApp
                 Eegeo_DELETE m_pMenuModel;
             }
             
-            void DirectionsMenuModule::SetSearchSection(const std::string& name,
+            void DirectionsMenuModule::SetDirectionsSection(const std::string& name,
                                                     Menu::View::IMenuModel& menuModel)
             {
                 m_pSearchSectionViewModel = Eegeo_NEW(Menu::View::MenuSectionViewModel)(name, "", menuModel, false);
@@ -50,7 +50,7 @@ namespace ExampleApp
             {
                 return *m_pMenuViewModel;
             }
-            Menu::View::IMenuSectionViewModel& DirectionsMenuModule::GetSearchSectionViewModel() const
+            Menu::View::IMenuSectionViewModel& DirectionsMenuModule::GetDirectionsSectionViewModel() const
             {
                 Eegeo_ASSERT(m_pSearchSectionViewModel != NULL, "Search section view model not set, please call SetSearchSection before calling this function");
                 

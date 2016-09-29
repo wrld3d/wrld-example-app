@@ -35,13 +35,13 @@ namespace ExampleApp
                 
                 ~DirectionsMenuModule();
                 
-                void SetSearchSection(const std::string& name,
+                void SetDirectionsSection(const std::string& name,
                                       Menu::View::IMenuModel& menuModel);
 
                 Menu::View::IMenuModel& GetDirectionsMenuModel() const;
                 
                 Menu::View::IMenuViewModel& GetDirectionsMenuViewModel() const;
-                Menu::View::IMenuSectionViewModel& GetSearchSectionViewModel() const;
+                Menu::View::IMenuSectionViewModel& GetDirectionsSectionViewModel() const;
             };
         }
     }

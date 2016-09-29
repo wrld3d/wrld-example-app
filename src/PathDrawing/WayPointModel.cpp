@@ -1,13 +1,13 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-#include "WayPoint.h"
+#include "WayPointModel.h"
 
 namespace ExampleApp
 {
     namespace PathDrawing
     {
         
-        WayPoint::WayPoint(const int wpId
+        WayPointModel::WayPointModel(const int wpId
                            , const ExampleApp::PathDrawing::WayPointType::Values type
                            , Eegeo::Space::LatLong& location
                            , const std::string& title)
@@ -18,22 +18,22 @@ namespace ExampleApp
         {
         }
         
-        const int WayPoint::GetWpId()
+        const int WayPointModel::GetWpId()
         {
             return m_wpId;
         }
 
-        const std::string WayPoint::GetTitle()
+        const std::string WayPointModel::GetTitle()
         {
             return m_title;
         }
         
-        const ExampleApp::PathDrawing::WayPointType::Values WayPoint::GetType()
+        const ExampleApp::PathDrawing::WayPointType::Values WayPointModel::GetType()
         {
             return m_type;
         }
         
-        const Eegeo::Space::LatLong& WayPoint::GetLocation()
+        const Eegeo::Space::LatLong& WayPointModel::GetLocation()
         {
             return m_location;
         }

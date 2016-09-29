@@ -17,9 +17,9 @@ namespace ExampleApp
             public:
                 virtual ~IDirectionsResultSectionModule() { }
                 
-                virtual Menu::View::IMenuOptionsModel& GetSearchResultSectionOptionsModel() const = 0;
+                virtual Menu::View::IMenuOptionsModel& GetDirectionsResultSectionOptionsModel() const = 0;
                 
-                virtual Menu::View::IMenuModel& GetSearchResultSectionModel() const = 0;
+                virtual Menu::View::IMenuModel& GetDirectionsResultSectionModel() const = 0;
                 
                 virtual ExampleApp::SearchResultSection::View::ISearchResultSectionOrder& GetSearchResultSectionOrder() const = 0;
             };

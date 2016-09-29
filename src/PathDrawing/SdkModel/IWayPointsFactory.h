@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "WayPoint.h"
+#include "WayPointModel.h"
 #include "WayPointType.h"
 #include "Space.h"
 #include <string>
@@ -18,7 +18,7 @@ namespace ExampleApp
             public:
                 virtual ~IWayPointsFactory() { }
                 
-                virtual ExampleApp::PathDrawing::WayPoint* CreateWayPoint(const int wpId
+                virtual ExampleApp::PathDrawing::WayPointModel* CreateWayPoint(const int wpId
                                                                           , const ExampleApp::PathDrawing::WayPointType::Values m_type
                                                                           , Eegeo::Space::LatLong& m_location
                                                                           , const std::string& m_title = "") = 0;

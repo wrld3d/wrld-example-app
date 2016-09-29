@@ -317,7 +317,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     
     m_pDirectionsMenuViewModule = Eegeo_NEW(ExampleApp::DirectionsMenu::View::DirectionsMenuViewModule)(app.DirectionsMenuModule().GetDirectionsMenuModel(),
                                                                                                app.DirectionsMenuModule().GetDirectionsMenuViewModel(),
-                                                                                                        app.DirectionsMenuModule().GetSearchSectionViewModel(),
+                                                                                                        app.DirectionsMenuModule().GetDirectionsSectionViewModel(),
                                                             screenProperties,
                                                                                                m_pModalBackgroundViewModule->GetModalBackgroundViewInterop(),
                                                                                                m_messageBus);
@@ -326,7 +326,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     //TODO: Search result poi moudle
     
     m_pDirectionResultSectionViewModule = Eegeo_NEW(ExampleApp::DirectionResultSection::View::DirectionResultSectionViewModule)(app.DirectionsMenuModule().GetDirectionsMenuViewModel(),
-                                                                                                                                app.DirectionResultSectionModule().GetSearchResultSectionOptionsModel(),
+                                                                                                                                app.DirectionResultSectionModule().GetDirectionsResultSectionOptionsModel(),
                                                                                                                                 m_messageBus,
                                                                                                                                 *m_pMenuReactionModel,
                                                                                                                                 app.SearchResultPoiModule().GetSearchResultPoiViewModel());

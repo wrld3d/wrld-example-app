@@ -5,7 +5,7 @@
 #include "Types.h"
 #include "RepositoryModel.h"
 #include "IWayPointsRepository.h"
-#include "WayPoint.h"
+#include "WayPointModel.h"
 
 namespace ExampleApp
 {
@@ -15,7 +15,7 @@ namespace ExampleApp
         {
             class WayPointsRepository : public IWayPointsRepository, private Eegeo::NonCopyable
             {
-                typedef WayPoint* TModel;
+                typedef WayPointModel* TModel;
 
                 Repository::RepositoryModel<TModel> m_repository;
 
