@@ -10,7 +10,9 @@
 #include "Modules.h"
 #include "SceneModelFactory.h"
 #include "RenderCamera.h"
+#include "GpsMarkerShader.h"
 #include "GpsMarkerMaterial.h"
+#include "GpsMarkerNotHiddenMaterial.h"
 #include "GpsMarkerHiddenMaterial.h"
 #include "GpsMarkerHighlightMaterial.h"
 #include "GpsMarkerStencilClearMaterial.h"
@@ -21,6 +23,21 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+            namespace GpsMarkerViewStyle
+            {
+                const Eegeo::v4 HiddenColor = Eegeo::v4(0.3f, 0.3f, 0.3f, 0.5f);
+                
+                const Eegeo::v4 HighlightColorDefault = Eegeo::v4(1.f, 1.f, 1.f, 1.f);
+                const Eegeo::v4 HighlightColorNight = Eegeo::v4(1.f, 0.78f, 0.13f, 1.f);
+                const Eegeo::v4 HighlightColorSnow = Eegeo::v4(0.54f, 1.f, 1.f, 1.f);
+                const Eegeo::v4 HighlightColorFlattened = Eegeo::v4(0.07f, 0.34f, 0.69f, 1.f);
+                
+                const Eegeo::v4 MainColorFlattened = Eegeo::v4(0.04f, 0.68f, 1.f, 1.f);
+                
+                const std::string TimeNameNight = "Night";
+                const std::string WeatherNameSnow = "Snowy";
+            }
+            
             class GpsMarkerView : public Eegeo::Rendering::IRenderableFilter
             {
             public:
@@ -38,7 +55,7 @@ namespace ExampleApp
                 void DrawIconAtEcefPosition(const Eegeo::Camera::RenderCamera& renderCamera, const Eegeo::dv3& ecefPosition);
                 void EnqueueRenderables(const Eegeo::Rendering::RenderContext& renderContext, Eegeo::Rendering::RenderQueue& renderQueue);
                 void SetMarkerTransform(const Eegeo::m44& modelViewProjection, const Eegeo::m44& modelViewProjectionArrow) const;
-                void SetMarkerStyle(const std::string& currentVisualMapTime) const;
+                void SetMarkerStyle(const std::string& currentVisualMapTime, const std::string& currentVisualMapWeather, const int environmentScale);
                 void UpdateMarkerRenderingLayer(bool inInterior);
                 
             private:
@@ -47,14 +64,25 @@ namespace ExampleApp
                 bool m_visible;
                 float m_transitionParam;
                 float m_scaleParam;
+                bool m_isInInterior;
+                
+                Eegeo::v4 m_highlightColor;
+                Eegeo::v4 m_hiddenColor;
+                float m_colorLerpValue;
+                float m_textureLerpValue;
                 
                 Eegeo::Rendering::SceneModels::SceneModelFactory::TMeshRepo* m_pMeshRepo;
                 Eegeo::Rendering::SceneModels::SceneModelFactory::TTriStripMeshRepo* m_pTriStripMeshRepo;
                 
                 Eegeo::Rendering::Renderables::WorldMeshRenderable* m_pMarkerSphere;
                 Eegeo::Rendering::Renderables::WorldMeshRenderable* m_pMarkerArrow;
-                Eegeo::Rendering::Shaders::TexturedUniformColoredShader* m_pMarkerShader;
+                GpsMarkerShader* m_pMarkerShader;
                 GpsMarkerMaterial* m_pMarkerMaterial;
+                
+                Eegeo::Rendering::Renderables::WorldMeshRenderable* m_pMarkerNotHiddenSphere;
+                Eegeo::Rendering::Renderables::WorldMeshRenderable* m_pMarkerNotHiddenArrow;
+                GpsMarkerShader* m_pMarkerNotHiddenShader;
+                GpsMarkerNotHiddenMaterial* m_pMarkerNotHiddenMaterial;
                 
                 Eegeo::Rendering::Renderables::WorldMeshRenderable* m_pMarkerHiddenSphere;
                 Eegeo::Rendering::Renderables::WorldMeshRenderable* m_pMarkerHiddenArrow;
@@ -73,7 +101,8 @@ namespace ExampleApp
                 
                 void CreateMaterials(const Eegeo::Modules::Core::RenderingModule& renderingModule,
                                      Eegeo::Helpers::ITextureFileLoader& textureLoader,
-                                     const std::string textureFilename);
+                                     const std::string textureFilenameDay,
+                                     const std::string textureFilenameNight);
                 
                 void ExtractRenderablesFromModelFile(Eegeo::Modules::Core::RenderingModule& renderingModule,
                                                      Eegeo::Rendering::SceneModels::SceneModelFactory& sceneModelFactory,
@@ -81,13 +110,10 @@ namespace ExampleApp
                                                      const std::string modelFilename);
                 
                 void CreateMeshRenderables(const Eegeo::Rendering::SceneModels::SceneModelMeshResource& mesh,
-                                           const Eegeo::Rendering::VertexLayouts::VertexAttribs& vertexAttribs1,
-                                           const Eegeo::Rendering::VertexLayouts::VertexAttribs& vertexAttribs2,
                                            const Eegeo::Modules::Core::RenderingModule& renderingModule,
-                                           Eegeo::Rendering::Renderables::WorldMeshRenderable* &meshRenderable1,
-                                           Eegeo::Rendering::Renderables::WorldMeshRenderable* &meshRenderable2,
-                                           Eegeo::Rendering::Materials::IMaterial* material1,
-                                           Eegeo::Rendering::Materials::IMaterial* material2) const;
+                                           const Eegeo::Rendering::VertexLayouts::VertexAttribs& vertexAttribs,
+                                           Eegeo::Rendering::Renderables::WorldMeshRenderable* &meshRenderable,
+                                           Eegeo::Rendering::Materials::IMaterial* material) const;
             };
         }
     }

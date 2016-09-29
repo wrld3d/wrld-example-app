@@ -147,9 +147,12 @@ namespace ExampleApp
                                                 false);
                 m_anchorView.SetMarkerTransform(modelViewProjectionAnchorSphere, modelViewProjectionAnchorCyclinder);
                 
-                const std::string currentTime = GetCurrentVisualMapTime();
-                m_view.SetMarkerStyle(currentTime);
-                m_anchorView.SetMarkerStyle(currentTime);
+                std::string currentTime;
+                std::string currentWeather;
+                GetCurrentVisualMapTime(currentTime, currentWeather);
+                bool isFlattened = m_environmentFlatteningService.IsFlattened();
+                m_view.SetMarkerStyle(currentTime, currentWeather, isFlattened ? m_environmentFlatteningService.GetCurrentScale() : 1);
+                m_anchorView.SetMarkerStyle(currentTime, currentWeather, isFlattened ? m_environmentFlatteningService.GetCurrentScale() : 1);
             }
             
             void GpsMarkerController::CreateModelViewProjectionMatrix(Eegeo::m44& out_modelViewProjection,
@@ -177,14 +180,14 @@ namespace ExampleApp
                 Eegeo::m44::Mul(out_modelViewProjection, viewProjection, model);
             }
             
-            const std::string GpsMarkerController::GetCurrentVisualMapTime()
+            void GpsMarkerController::GetCurrentVisualMapTime(std::string& currentTime, std::string& currentWeather)
             {
                 const std::string& state = m_visualMapService.GetCurrentVisualMapState().GetState();
                 std::string::const_reverse_iterator iter = std::find_if(state.rbegin(), state.rend(), ::isupper);
                 size_t index = state.size() - std::distance(state.rbegin(), iter) - 1;
                 
-                const std::string time = state.substr(0, index);
-                return time;
+                currentTime = state.substr(0, index);
+                currentWeather = state.substr(index);
             }
         }
     }

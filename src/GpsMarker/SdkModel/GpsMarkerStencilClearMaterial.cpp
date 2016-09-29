@@ -29,7 +29,6 @@ namespace ExampleApp
                 
                 glState.DepthTest.Disable();
                 glState.DepthMask(GL_FALSE);
-                glState.CullFaceMode(GL_BACK);
                 
                 glState.StencilTest.Enable();
                 glState.StencilOpSeparate(GL_FRONT_AND_BACK, GL_ZERO, GL_ZERO, GL_ZERO);

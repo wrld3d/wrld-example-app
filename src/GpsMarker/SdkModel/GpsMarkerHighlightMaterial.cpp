@@ -2,6 +2,7 @@
 
 #include "GpsMarkerHighlightMaterial.h"
 #include "WorldMeshRenderable.h"
+#include "StencilMapLayerMask.h"
 
 namespace ExampleApp
 {
@@ -27,6 +28,11 @@ namespace ExampleApp
                 glState.DepthMask(GL_FALSE);
                 glState.DepthTest.Disable();
                 glState.CullFaceMode(GL_BACK);
+                
+                glState.StencilTest.Enable();
+                glState.StencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+                glState.StencilFunc(GL_NOTEQUAL, 0, 0xffffffff);
+                glState.StencilMask(0xffffffff);
             }
             
             void GpsMarkerHighlightMaterial::SetStatePerRenderable(const Eegeo::Rendering::RenderableBase *renderableBase, Eegeo::Rendering::GLState &glState) const

@@ -32,13 +32,15 @@ namespace ExampleApp
                 void Update(float dt);
                 void EnqueueRenderables(const Eegeo::Rendering::RenderContext& renderContext, Eegeo::Rendering::RenderQueue& renderQueue);
                 void SetMarkerTransform(const Eegeo::m44& modelViewProjectionSphere, const Eegeo::m44& modelViewProjectionCylinder) const;
-                void SetMarkerStyle(const std::string& currentVisualMapTime) const;
+                void SetMarkerStyle(const std::string& currentVisualMapTime, const std::string& currentVisualMapWeather, const int environmentScale);
                 void UpdateMarkerRenderingLayer(bool inInterior);
                 
             private:
                 bool m_visible;
                 float m_transitionParam;
                 float m_scaleParam;
+                bool m_isInInterior;
+                Eegeo::v4 m_highlightColor;
                 
                 Eegeo::Rendering::SceneModels::SceneModelFactory::TMeshRepo* m_pMeshRepo;
                 Eegeo::Rendering::SceneModels::SceneModelFactory::TTriStripMeshRepo* m_pTriStripMeshRepo;
@@ -46,7 +48,7 @@ namespace ExampleApp
                 Eegeo::Rendering::Renderables::WorldMeshRenderable* m_pMarkerHighlightSphere;
                 Eegeo::Rendering::Renderables::WorldMeshRenderable* m_pMarkerHighlightCylinder;
                 Eegeo::Rendering::Shaders::ColorShader* m_pMarkerHighlightShader;
-                GpsMarkerHighlightMaterial* m_pMarkerHighlightMaterial;
+                Eegeo::Rendering::Materials::ColorMaterial* m_pMarkerHighlightMaterial;
                 
                 Eegeo::Rendering::Renderables::WorldMeshRenderable* m_pMarkerStencilClearSphere;
                 Eegeo::Rendering::Renderables::WorldMeshRenderable* m_pMarkerStencilClearCylinder;

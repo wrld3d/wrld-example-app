@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "GpsMarkerAnchorView.h"
+#include "GpsMarkerView.h"
 #include "RenderQueue.h"
 #include "Colors.h"
 #include "VectorMath.h"
@@ -29,13 +30,6 @@ namespace ExampleApp
         {
             namespace
             {
-                const Eegeo::v4 HiddenColor = Eegeo::v4(0.4f, 0.4f, 0.4f, 1.f);
-                
-                const Eegeo::v4 HighlightColorDefault = Eegeo::v4(1.f, 1.f, 1.f, 1.f);
-                const Eegeo::v4 HighlightColorNight = Eegeo::v4(1.f, 1.f, 0.f, 1.f);
-                
-                const std::string TimeNameNight = "Night";
-                
                 std::string GetFullMeshName(const std::string& filename, int meshId)
                 {
                     std::stringstream ss;
@@ -50,6 +44,8 @@ namespace ExampleApp
             : m_transitionParam(0.0f)
             , m_scaleParam(1.0f)
             , m_visible(false)
+            , m_isInInterior(false)
+            , m_highlightColor(GpsMarkerViewStyle::HighlightColorDefault)
             {
                 CreateMaterials(renderingModule);
                 
@@ -96,6 +92,10 @@ namespace ExampleApp
                     m_transitionParam -= dt * 4.0f;
                 }
                 m_transitionParam = Eegeo::Math::Clamp01(m_transitionParam);
+                
+                Eegeo::v4 currentHighlightColor = m_pMarkerHighlightMaterial->GetColor();
+                Eegeo::v4 newHighlightColor = Eegeo::v4::Lerp(currentHighlightColor, m_highlightColor, dt);
+                m_pMarkerHighlightMaterial->SetColor(newHighlightColor);
             }
             
             void GpsMarkerAnchorView::EnqueueRenderables(const Eegeo::Rendering::RenderContext &renderContext, Eegeo::Rendering::RenderQueue &renderQueue)
@@ -105,11 +105,14 @@ namespace ExampleApp
                     return;
                 }
                 
-                renderQueue.EnqueueRenderable(m_pMarkerHighlightSphere);
-                renderQueue.EnqueueRenderable(m_pMarkerHighlightCylinder);
+                if(m_isInInterior)
+                {
+                    renderQueue.EnqueueRenderable(m_pMarkerHighlightSphere);
+                    renderQueue.EnqueueRenderable(m_pMarkerHighlightCylinder);
                 
-                renderQueue.EnqueueRenderable(m_pMarkerStencilClearSphere);
-                renderQueue.EnqueueRenderable(m_pMarkerStencilClearCylinder);
+                    renderQueue.EnqueueRenderable(m_pMarkerStencilClearSphere);
+                    renderQueue.EnqueueRenderable(m_pMarkerStencilClearCylinder);
+                }
             }
             
             void GpsMarkerAnchorView::SetMarkerTransform(const Eegeo::m44 &modelViewProjectionSphere, const Eegeo::m44 &modelViewProjectionCylinder) const
@@ -121,20 +124,28 @@ namespace ExampleApp
                 m_pMarkerStencilClearCylinder->SetModelViewProjection(modelViewProjectionCylinder);
             }
             
-            void GpsMarkerAnchorView::SetMarkerStyle(const std::string& currentVisualMapTime) const
+            void GpsMarkerAnchorView::SetMarkerStyle(const std::string& currentVisualMapTime, const std::string& currentVisualMapWeather, const int environmentScale)
             {
-                Eegeo::v4 highlightColor = HighlightColorDefault;
+                m_highlightColor = GpsMarkerViewStyle::HighlightColorDefault;
                 
-                if(currentVisualMapTime.compare(TimeNameNight) == 0)
+                if(environmentScale <= 0.0f && !m_isInInterior)
                 {
-                    highlightColor = HighlightColorNight;
+                    m_highlightColor = GpsMarkerViewStyle::HighlightColorFlattened;
                 }
-                
-                m_pMarkerHighlightMaterial->SetColor(highlightColor);
+                else if(currentVisualMapTime.compare(GpsMarkerViewStyle::TimeNameNight) == 0)
+                {
+                    m_highlightColor = GpsMarkerViewStyle::HighlightColorNight;
+                }
+                else if(currentVisualMapWeather.compare(GpsMarkerViewStyle::WeatherNameSnow) == 0)
+                {
+                    m_highlightColor = GpsMarkerViewStyle::HighlightColorSnow;
+                }
             }
             
             void GpsMarkerAnchorView::UpdateMarkerRenderingLayer(bool inInterior)
             {
+                m_isInInterior = inInterior;
+                
                 Eegeo::Rendering::LayerIds::Values layerId = Eegeo::Rendering::LayerIds::AfterWorldOpaque;
                 
                 if(inInterior)
@@ -153,10 +164,10 @@ namespace ExampleApp
                 
                 m_pMarkerHighlightShader = Eegeo::Rendering::Shaders::ColorShader::Create(shaderIdGenerator.GetNextId());
                 
-                m_pMarkerHighlightMaterial = Eegeo_NEW(GpsMarkerHighlightMaterial)(materialIdGenerator.GetNextId(),
-                                                                                   "GpsMarkerAnchorHighlightMaterial",
-                                                                                   *m_pMarkerHighlightShader,
-                                                                                   HighlightColorDefault);
+                m_pMarkerHighlightMaterial = Eegeo_NEW(Eegeo::Rendering::Materials::ColorMaterial)(materialIdGenerator.GetNextId(),
+                                                                                                   "GpsMarkerAnchorHighlightMaterial",
+                                                                                                   *m_pMarkerHighlightShader,
+                                                                                                   GpsMarkerViewStyle::HighlightColorDefault);
                 
                 m_pMarkerStencilClearShader = Eegeo::Rendering::Shaders::ColorShader::Create(shaderIdGenerator.GetNextId());
                 

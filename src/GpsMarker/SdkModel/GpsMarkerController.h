@@ -59,7 +59,7 @@ namespace ExampleApp
                                                      const Eegeo::v3& scale,
                                                      const Eegeo::Camera::RenderCamera& renderCamera,
                                                      bool flipUpDirection);
-                const std::string GetCurrentVisualMapTime();
+                void GetCurrentVisualMapTime(std::string& currentTime, std::string& currentWeather);
             };
         }
     }

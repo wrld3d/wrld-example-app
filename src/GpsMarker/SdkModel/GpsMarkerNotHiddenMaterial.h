@@ -11,15 +11,15 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class GpsMarkerMaterial : protected Eegeo::NonCopyable, public Eegeo::Rendering::Materials::IMaterial
+            class GpsMarkerNotHiddenMaterial : protected Eegeo::NonCopyable, public Eegeo::Rendering::Materials::IMaterial
             {
             public:
-                GpsMarkerMaterial(const Eegeo::Rendering::TMaterialId materialId,
-                                  const std::string& name,
-                                  GpsMarkerShader& shader,
-                                  Eegeo::Rendering::TTextureId textureDayId,
-                                  Eegeo::Rendering::TTextureId textureNightId,
-                                  const Eegeo::v4& initialColor);
+                GpsMarkerNotHiddenMaterial(const Eegeo::Rendering::TMaterialId materialId,
+                                           const std::string& name,
+                                           GpsMarkerShader& shader,
+                                           Eegeo::Rendering::TTextureId textureDayId,
+                                           Eegeo::Rendering::TTextureId textureNightId,
+                                           const Eegeo::v4& initialColor);
                 
                 const Eegeo::Rendering::TMaterialId GetId() const { return m_id; }
                 const Eegeo::Rendering::Shader& GetShader() const { return m_shader; }

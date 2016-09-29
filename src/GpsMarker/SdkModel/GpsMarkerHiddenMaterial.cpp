@@ -25,6 +25,10 @@ namespace ExampleApp
             {
                 m_shader.Use(glState);
                 
+                glState.Blend.Enable();
+                glState.BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                glState.BlendEquation(GL_FUNC_ADD);
+                
                 glState.DepthFunc(GL_GREATER);
                 glState.DepthMask(GL_FALSE);
                 

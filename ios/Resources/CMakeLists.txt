@@ -649,6 +649,7 @@ set(resources ${resources}
         Resources/SearchResultOnMap/pin_sheet.json
         Resources/Sphere.POD
         Resources/Sphere_8bit.pvr
+        Resources/Sphere_Night_8bit.pvr
         Resources/Stalk.POD
 		Resources/SplashScreen
 		Resources/SplashScreen/Icon-60@2x.png
