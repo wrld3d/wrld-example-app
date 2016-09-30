@@ -5,6 +5,7 @@
 #include "Types.h"
 #include "IWorldPinSelectionHandler.h"
 #include "BidirectionalBus.h"
+#include "WayPointModel.h"
 
 namespace ExampleApp
 {
@@ -14,9 +15,10 @@ namespace ExampleApp
         {
             class WayPointSelectionHandler : public WorldPins::SdkModel::IWorldPinSelectionHandler, private Eegeo::NonCopyable
             {
+                WayPointModel &m_wayPointModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
             public:
-                WayPointSelectionHandler(ExampleAppMessaging::TMessageBus& messageBus);
+                WayPointSelectionHandler(WayPointModel& wayPointModel,ExampleAppMessaging::TMessageBus& messageBus);
                 
                 virtual ~WayPointSelectionHandler();
 

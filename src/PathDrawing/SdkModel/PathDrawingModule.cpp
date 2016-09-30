@@ -13,7 +13,7 @@ namespace ExampleApp
         namespace SdkModel
         {
 
-            PathDrawingModule::PathDrawingModule(WorldPins::SdkModel::IWorldPinsService& worldPinsService
+            PathDrawingModule::PathDrawingModule(Menu::View::IMenuSectionViewModel& searchSectionViewModel,WorldPins::SdkModel::IWorldPinsService& worldPinsService
                                                                  , Eegeo::Routes::RouteService& routeService
                                                                  , AppCamera::SdkModel::AppGlobeCameraWrapper& cameraWrapper
                                                                  , TagSearch::ISearchResultIconKeyMapper& searchResultIconCategoryMapper
@@ -21,8 +21,7 @@ namespace ExampleApp
             
             {
                 m_pWayPointsRepository = Eegeo_NEW(WayPointsRepository);
-
-                m_pPathDrawingController = Eegeo_NEW(ExampleApp::PathDrawing::PathDrawingController)(routeService
+                m_pPathDrawingController = Eegeo_NEW(ExampleApp::PathDrawing::PathDrawingController)(searchSectionViewModel,                                                                                                     routeService
                                                                                                      , cameraWrapper
                                                                                                      , *m_pWayPointsRepository
                                                                                                      , messageBus);

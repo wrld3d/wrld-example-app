@@ -37,6 +37,7 @@ namespace ExampleApp
                         , m_onOpenStateChangedCallback(this, &DirectionsMenuController::OnOpenStateChanged)
                         , m_onSearchItemAddedCallback(this, &DirectionsMenuController::OnSearchItemAdded)
                         , m_onSearchItemRemovedCallback(this, &DirectionsMenuController::OnSearchItemRemoved)
+                        , m_directionsMenuHighlightItemCallback(this, &DirectionsMenuController::OnDirectionsHighlightItem)
 
             {
                 m_directionsMenuView.InsertSearchPeformedCallback(m_searchPerformedCallbacks);
@@ -53,6 +54,7 @@ namespace ExampleApp
                 m_modalBackgroundView.InsertTappedCallback(m_onModalBackgroundTappedCallback);
                 m_messageBus.SubscribeUi(m_appModeChangedCallback);
                 m_messageBus.SubscribeUi(m_directionsMenuStateChangedCallback);
+                m_messageBus.SubscribeUi(m_directionsMenuHighlightItemCallback);
                 
             }
             
@@ -105,11 +107,19 @@ namespace ExampleApp
             {
             
             }
+                                         
+            void DirectionsMenuController::OnDirectionsHighlightItem(const DirectionsMenuInitiation::DirectionsMenuItemHighlightMessage& message)
+            {
+                
+                m_directionsMenuView.HighlightListItem(message.GetSelectedItemIndex());
+                MenuController::OnViewClicked();
+            }
             
             void DirectionsMenuController::OnWayPointItemSelected(int& index)
             {
                 
                 m_searchSectionViewModel.GetItemAtIndex(index).MenuOption().Select();
+                m_directionsMenuView.HighlightListItem(index);
                 
             }
             

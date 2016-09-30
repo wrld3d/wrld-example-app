@@ -386,12 +386,11 @@ namespace ExampleApp
         m_pDoubleTapIndoorInteractionController = Eegeo_NEW(ExampleApp::DoubleTapIndoorInteraction::SdkModel::DoubleTapIndoorInteractionController)(m_pInteriorsExplorerModule->GetInteriorsCameraController(),*m_pCameraTransitionController,interiorsPresentationModule.GetInteriorInteractionModel(),*m_pRayCaster,*m_pAppModeModel);
         
         m_pLoadingScreen = CreateLoadingScreen(screenProperties, m_pWorld->GetRenderingModule(), m_pWorld->GetPlatformAbstractionModule());
-        
-        m_pPathDrawingModule = Eegeo_NEW(ExampleApp::PathDrawing::SdkModel::PathDrawingModule)(m_pWorldPinsModule->GetWorldPinsService()
-                                                                                               , m_pWorld->GetRoutesModule().GetRouteService()
-                                                                                               , *m_pGlobeCameraWrapper
-                                                                                               , m_pTagSearchModule->GetSearchResultIconKeyMapper()
-                                                                                               , m_messageBus);
+
+        m_pPathDrawingModule = Eegeo_NEW(ExampleApp::PathDrawing::SdkModel::PathDrawingModule)(DirectionsMenuModule().GetDirectionsSectionViewModel(),                                                                                               m_pWorldPinsModule->GetWorldPinsService(),
+                                                                                            m_pWorld->GetRoutesModule().GetRouteService(), *m_pGlobeCameraWrapper,
+                                                                                               m_pTagSearchModule->GetSearchResultIconKeyMapper(),
+                                                                                            m_messageBus);
         
         if(m_applicationConfiguration.TryStartAtGpsLocation())
         {

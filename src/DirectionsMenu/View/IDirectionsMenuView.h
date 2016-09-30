@@ -27,6 +27,8 @@ namespace ExampleApp
                 
                 virtual void SetEndEditText(const std::string& searchText, bool isCategory) = 0;
                 
+                virtual void HighlightListItem(const int index) = 0;
+                
                 virtual void CollapseAll() = 0;
                 
                 virtual void InsertSearchPeformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback) = 0;

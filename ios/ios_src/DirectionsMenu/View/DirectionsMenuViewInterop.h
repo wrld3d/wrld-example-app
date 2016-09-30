@@ -65,6 +65,11 @@ namespace ExampleApp
                     [m_pView CollapseAll];
                 }
                 
+                void HighlightListItem(const int index)
+                {
+                    [m_pView HighlightItemIndex:index];
+                }
+                
                 void InsertSearchPeformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)
                 {
                     m_searchPerformedCallbacks.AddCallback(callback);

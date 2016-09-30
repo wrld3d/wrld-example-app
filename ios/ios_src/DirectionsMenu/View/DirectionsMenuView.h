@@ -21,8 +21,11 @@
 
 - (void)CollapseAll;
 
+- (void)HighlightItemIndex:(int)itemIndex;
+
 - (void)SetSearchSection:(ExampleApp::Menu::View::IMenuSectionViewModel*)searchSection;
--(void)ExitDirectionsClicked;
+
+- (void)ExitDirectionsClicked;
 
 @property (nonatomic, retain) UIScrollView* pSearchResultsTableContainerView;
 

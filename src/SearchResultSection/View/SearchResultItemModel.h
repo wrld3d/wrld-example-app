@@ -52,6 +52,11 @@ namespace ExampleApp
                 ~SearchResultItemModel();
 
                 void Select();
+                
+                int GetItemIndex();
+                
+                Eegeo::dv3 GetLocationEcef();
+
             };
         }
     }

@@ -1,7 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "WayPointSelectionHandler.h"
-#include "DirectionsMenuStateChangedMessage.h"
+#include "DirectionsMenuItemHighlightMessage.h"
 
 namespace ExampleApp
 {
@@ -9,8 +9,10 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            WayPointSelectionHandler::WayPointSelectionHandler(ExampleAppMessaging::TMessageBus& messageBus)
-            : m_messageBus(messageBus)
+            WayPointSelectionHandler::WayPointSelectionHandler(WayPointModel& wayPointModel,ExampleAppMessaging::TMessageBus& messageBus)
+            :m_wayPointModel(wayPointModel)
+            ,m_messageBus(messageBus)
+            
             {
             
             }
@@ -22,8 +24,7 @@ namespace ExampleApp
             
             void WayPointSelectionHandler::SelectPin()
             {
-                //TODO Open menu if closed and highlight way point in menu
-                DirectionsMenuInitiation::DirectionsMenuStateChangedMessage message(ExampleApp::DirectionsMenuInitiation::Active);
+                DirectionsMenuInitiation::DirectionsMenuItemHighlightMessage message(m_wayPointModel.GetWpId());
                 m_messageBus.Publish(message);
             }
         }

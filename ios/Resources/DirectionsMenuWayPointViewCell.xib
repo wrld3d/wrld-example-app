@@ -15,8 +15,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AP6-hD-5bR">
-                        <rect key="frame" x="5" y="2" width="304" height="41"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AP6-hD-5bR">
+                        <rect key="frame" x="5" y="2" width="304" height="40"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DirectionCard_TurnRight.png" translatesAutoresizingMaskIntoConstraints="NO" id="pi9-vO-BHa">
                                 <rect key="frame" x="20" y="8" width="24" height="24"/>
@@ -54,8 +54,8 @@
                             </mask>
                         </variation>
                     </view>
-                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VyB-sb-p8I">
-                        <rect key="frame" x="313" y="2" width="56" height="41"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VyB-sb-p8I">
+                        <rect key="frame" x="313" y="2" width="56" height="40"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DirectionCard_NumberBackground.png" translatesAutoresizingMaskIntoConstraints="NO" id="mrT-U0-Okw">
                                 <rect key="frame" x="8" y="0.0" width="40" height="40"/>
@@ -109,6 +109,7 @@
                 </variation>
             </tableViewCellContentView>
             <connections>
+                <outlet property="mainContainerView" destination="AP6-hD-5bR" id="G16-yx-WEf"/>
                 <outlet property="wayPointImageView" destination="pi9-vO-BHa" id="lLp-CX-h8Y"/>
                 <outlet property="wayPointMainTitlelbl" destination="bN2-3p-J8O" id="5Rl-wA-J4B"/>
                 <outlet property="wayPointNumberViewWidthConstraint" destination="QkX-7C-S2j" id="yBp-ur-8iE"/>

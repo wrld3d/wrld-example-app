@@ -50,7 +50,7 @@ namespace ExampleApp
                 WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData(Eegeo::Resources::Interiors::InteriorId::NullId(), 0);
                 
                 ExampleApp::WorldPins::SdkModel::WorldPinItemModel *pinItemModel =
-                m_worldPinsService.AddPin(Eegeo_NEW(WayPointSelectionHandler(m_messageBus))
+                m_worldPinsService.AddPin(Eegeo_NEW(WayPointSelectionHandler(*wayPoint,m_messageBus))
                                           , NULL
                                           , worldPinFocusData
                                           , false

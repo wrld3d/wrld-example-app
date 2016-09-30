@@ -5,6 +5,8 @@ set(currsources
   ../src/DirectionsMenuInitiation/DirectionsMenuInitiation.h
   ../src/DirectionsMenuInitiation/DirectionsMenuStateChangedMessage.cpp  ../src/DirectionsMenuInitiation/DirectionsMenuStateChangedMessage.h
   ../src/DirectionsMenuInitiation/DirectionsMenuStage.h
+  ../src/DirectionsMenuInitiation/DirectionsMenuItemHighlightMessage.h
+  ../src/DirectionsMenuInitiation/DirectionsMenuItemHighlightMessage.cpp
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\DirectionsMenuInitiation FILES ${currsources})

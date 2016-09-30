@@ -45,6 +45,8 @@
 #include "TagSearchAddedMessage.h"
 #include "TagSearchRemovedMessage.h"
 #include "DirectionQueryResponseReceivedMessage.h"
+#include "DirectionsMenuItemHighlightMessage.h"
+
 namespace ExampleApp
 {
     namespace ExampleAppMessaging
@@ -91,6 +93,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerUINotifyMessage>
             , public Eegeo::Messaging::CatalogBinding<DirectionsMenuInitiation::DirectionsMenuStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<DirectionResultSection::DirectionQueryResponseReceivedMessage>
+            , public Eegeo::Messaging::CatalogBinding<DirectionsMenuInitiation::DirectionsMenuItemHighlightMessage>
             , private Eegeo::NonCopyable
         {
 

@@ -156,6 +156,11 @@
     
 }
 
+- (void)HighlightItemIndex:(int)itemIndex   {
+    
+    [m_pDirectionsMenuView SetHighlightItem:itemIndex];
+}
+
 - (void)dealloc
 {
     [self.pSearchResultsTableContainerView removeFromSuperview];

@@ -27,10 +27,16 @@ namespace ExampleApp
             Eegeo::Routes::RouteService& m_routeService;
             AppCamera::SdkModel::AppGlobeCameraWrapper& m_cameraWrapper;
             ExampleAppMessaging::TMessageBus& m_messageBus;
+            
+            Menu::View::IMenuSectionViewModel& m_searchSectionViewModel;
+            
             Eegeo::Helpers::TCallback1<PathDrawingController, const DirectionResultSection::DirectionQueryResponseReceivedMessage&> m_directionResultReceivedHandler;
             Eegeo::Helpers::TCallback1<PathDrawingController, const DirectionsMenuInitiation::DirectionsMenuStateChangedMessage&> m_directionsMenuStateChangedCallback;
             ExampleApp::PathDrawing::PathDrawingOptionsModel* m_pPathDrawingSettings;
 
+            
+            Eegeo::Helpers::TCallback1<PathDrawingController, Menu::View::MenuItemModel> m_onDirectionItemAddedCallback;
+            Eegeo::Helpers::TCallback1<PathDrawingController, Menu::View::MenuItemModel> m_onDirectionItemRemovedCallback;
             
             bool m_createdRoutes;
             std::vector<Eegeo::Routes::Route*> m_routes;
@@ -44,8 +50,15 @@ namespace ExampleApp
             
             void OnDirectionsMenuStateChanged(const DirectionsMenuInitiation::DirectionsMenuStateChangedMessage& message);
             
+            void OnSearchItemAdded(Menu::View::MenuItemModel& item);
+            
+            void OnSearchItemRemoved(Menu::View::MenuItemModel& item);
+            
         public:
-            PathDrawingController(Eegeo::Routes::RouteService& routeService
+
+
+            PathDrawingController(Menu::View::IMenuSectionViewModel& searchSectionViewModel,
+                                  Eegeo::Routes::RouteService& routeService
                                   , AppCamera::SdkModel::AppGlobeCameraWrapper& cameraWrapper
                                   , PathDrawing::SdkModel::IWayPointsRepository& wayPointsRepository
                                   , ExampleAppMessaging::TMessageBus& messageBus);

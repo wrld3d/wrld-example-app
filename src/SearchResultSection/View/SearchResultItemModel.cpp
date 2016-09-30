@@ -58,6 +58,16 @@ namespace ExampleApp
                                                                             m_floorIndex,
                                                                             m_itemIndex));
             }
+            
+            int SearchResultItemModel::GetItemIndex()
+            {
+                return m_itemIndex;
+            }
+            
+            Eegeo::dv3 SearchResultItemModel::GetLocationEcef()
+            {
+                return m_searchResultModelLocationEcef;
+            }
         }
     }
 }

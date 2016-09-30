@@ -6,6 +6,9 @@
 #include "WayPointsRepository.h"
 #include "WayPointType.h"
 #include "LatLongAltitude.h"
+#include "IMenuSectionViewModel.h"
+#include "IMenuModel.h"
+#include "SearchResultItemModel.h"
 
 using namespace Eegeo;
 using namespace Eegeo::Routes;
@@ -15,7 +18,10 @@ namespace ExampleApp
     namespace PathDrawing
     {
         
-        PathDrawingController::PathDrawingController(Eegeo::Routes::RouteService& routeService
+
+        PathDrawingController::PathDrawingController(Menu::View::IMenuSectionViewModel& searchSectionViewModel,
+                                                     Eegeo::Routes::RouteService& routeService
+
                                                      , AppCamera::SdkModel::AppGlobeCameraWrapper& cameraWrapper
                                                      , PathDrawing::SdkModel::IWayPointsRepository& wayPointsRepository
                                                      , ExampleAppMessaging::TMessageBus& messageBus)
@@ -24,14 +30,23 @@ namespace ExampleApp
         , m_pWayPointsRepository(wayPointsRepository)
         , m_createdRoutes(false)
         , m_messageBus(messageBus)
+        , m_searchSectionViewModel(searchSectionViewModel)
         , m_directionResultReceivedHandler(this, &PathDrawingController::OnSearchQueryResponseReceivedMessage)
         , m_directionsMenuStateChangedCallback(this, &PathDrawingController::OnDirectionsMenuStateChanged)
+        , m_onDirectionItemAddedCallback(this, &PathDrawingController::OnSearchItemAdded)
+        , m_onDirectionItemRemovedCallback(this, &PathDrawingController::OnSearchItemRemoved)
         {
             m_pPathDrawingSettings = Eegeo_NEW(ExampleApp::PathDrawing::PathDrawingOptionsModel)();
             m_routeThicknessPolicy.SetScaleFactor(1.0f);
             
             m_messageBus.SubscribeUi(m_directionResultReceivedHandler);
             m_messageBus.SubscribeUi(m_directionsMenuStateChangedCallback);
+            
+            Menu::View::IMenuModel& searchSectionMenuModel = m_searchSectionViewModel.GetModel();
+            searchSectionMenuModel.InsertItemAddedCallback(m_onDirectionItemAddedCallback);
+            searchSectionMenuModel.InsertItemRemovedCallback(m_onDirectionItemRemovedCallback);
+            
+            
         }
         
         PathDrawingController::~PathDrawingController()
@@ -41,6 +56,24 @@ namespace ExampleApp
             m_messageBus.UnsubscribeUi(m_directionsMenuStateChangedCallback);
 
         }
+        
+        void PathDrawingController::OnSearchItemAdded(Menu::View::MenuItemModel& item)
+        {
+            ExampleApp::SearchResultSection::View::SearchResultItemModel &searchItem = (ExampleApp::SearchResultSection::View::SearchResultItemModel&)item.MenuOption();
+
+            Eegeo::Space::LatLong latLongStart = Eegeo::Space::LatLong::FromECEF(searchItem.GetLocationEcef());
+            WayPointModel* point = Eegeo_NEW(ExampleApp::PathDrawing::WayPointModel)(searchItem.GetItemIndex()
+                                                                         , ExampleApp::PathDrawing::WayPointType::CheckPoint
+                                                                         , latLongStart
+                                                                         , "");
+            m_pWayPointsRepository.AddItem(point);
+        }
+        
+        void PathDrawingController::OnSearchItemRemoved(Menu::View::MenuItemModel& item)
+        {
+
+        }
+
         
         void PathDrawingController::Update(float dt)
         {
@@ -55,7 +88,7 @@ namespace ExampleApp
         
         void PathDrawingController::OnSearchQueryResponseReceivedMessage(const DirectionResultSection::DirectionQueryResponseReceivedMessage& message)
         {
-//            RemoveRoutePlan();
+            
             if(!m_createdRoutes)
             {
                 CreateRoutePlan();
@@ -155,45 +188,7 @@ namespace ExampleApp
             .FinishRoute();
             
             m_routes.push_back(m_routeService.CreateRoute(otherPoints, routeStyle, false));
-            
-            
-            int pointId = 0;
-            
-            Eegeo::Space::LatLong latLongStart = Eegeo::Space::LatLong::FromDegrees(56.459676, -2.977240);
-            WayPointModel* pointStart = Eegeo_NEW(ExampleApp::PathDrawing::WayPointModel)(++pointId
-                                                     , ExampleApp::PathDrawing::WayPointType::Start
-                                                     , latLongStart
-                                                     , "");
-            Eegeo::Space::LatLong latLong1 = Eegeo::Space::LatLong::FromDegrees(56.457827, -2.972691);
-            WayPointModel* point1 = Eegeo_NEW(ExampleApp::PathDrawing::WayPointModel)(++pointId
-                                                                , ExampleApp::PathDrawing::WayPointType::CheckPoint
-                                                                , latLong1
-                                                                , "");
-            
-            Eegeo::Space::LatLong latLong2 = Eegeo::Space::LatLong::FromDegrees(56.457860, -2.970793);
-            WayPointModel* point2 = Eegeo_NEW(ExampleApp::PathDrawing::WayPointModel)(++pointId
-                                                                , ExampleApp::PathDrawing::WayPointType::CheckPoint
-                                                                , latLong2
-                                                                , "");
-            
-            Eegeo::Space::LatLong latLong3 = Eegeo::Space::LatLong::FromDegrees(56.461427, -2.963596);
-            WayPointModel* point3 = Eegeo_NEW(ExampleApp::PathDrawing::WayPointModel)(++pointId
-                                                                , ExampleApp::PathDrawing::WayPointType::CheckPoint
-                                                                , latLong3
-                                                                , "");
-            
-            Eegeo::Space::LatLong latLongEnd = Eegeo::Space::LatLong::FromDegrees(56.460882, -2.962729);
-            WayPointModel* pointEnd = Eegeo_NEW(ExampleApp::PathDrawing::WayPointModel)(++pointId
-                                                                  , ExampleApp::PathDrawing::WayPointType::End
-                                                                  , latLongEnd
-                                                                  , "");
-            
-            m_pWayPointsRepository.AddItem(pointStart);
-            m_pWayPointsRepository.AddItem(point1);
-            m_pWayPointsRepository.AddItem(point2);
-            m_pWayPointsRepository.AddItem(point3);
-            m_pWayPointsRepository.AddItem(pointEnd);
-            
+        
             m_createdRoutes = true;
         }
         

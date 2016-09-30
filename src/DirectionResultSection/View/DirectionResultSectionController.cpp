@@ -40,7 +40,7 @@ namespace ExampleApp
             {
                 //TODO:This static numbers will be replaced with vector lastAddedResults
                 
-                const Eegeo::Space::LatLong& latlong = Eegeo::Space::LatLong::FromDegrees(56.457860, -2.970793);
+                
                 
                 for(int i = 0; i < 4; ++i)
                 {
@@ -49,6 +49,32 @@ namespace ExampleApp
                 
                 for(int i = 0; i < 4; ++i)
                 {
+                    double lat = 0.0;
+                    double lng = 0.0;
+                    
+                    if(i==0)
+                    {
+                        lat = 56.459676;
+                        lng = -2.977240;
+                    }
+                    else if(i==1)
+                    {
+                        lat = 56.457827;
+                        lng = -2.972691;
+                    }
+                    else if(i==2)
+                    {
+                        lat = 56.457860;
+                        lng = -2.970793;
+                    }
+                    else if(i==3)
+                    {
+                        lat = 56.461427;
+                        lng = -2.963596;
+                    }
+                    
+                    const Eegeo::Space::LatLong& latlong = Eegeo::Space::LatLong::FromDegrees(lat, lng);
+                    
                     std::string subtitle = "sub";
                     ExampleApp::Search::SdkModel::TagIconKey iconKey1 = "default";
                     Eegeo::Resources::Interiors::InteriorId m_buildingId("");
@@ -63,7 +89,7 @@ namespace ExampleApp
                                                                            2,
                                                                            m_directionMenuViewModel,
                                                                            m_searchResultPoiViewModel,
-                                                                           0,
+                                                                           i,
                                                                            m_messageBus,
                                                                            m_menuReaction));
                 }                

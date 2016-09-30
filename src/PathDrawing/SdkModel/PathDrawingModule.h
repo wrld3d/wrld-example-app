@@ -31,7 +31,8 @@ namespace ExampleApp
                 
             public:
 
-                PathDrawingModule(WorldPins::SdkModel::IWorldPinsService& worldPinsService
+                PathDrawingModule(Menu::View::IMenuSectionViewModel& searchSectionViewModel,
+                                  WorldPins::SdkModel::IWorldPinsService& worldPinsService
                                   , Eegeo::Routes::RouteService& routeService
                                   , AppCamera::SdkModel::AppGlobeCameraWrapper& cameraWrapper
                                   , TagSearch::ISearchResultIconKeyMapper& searchResultIconCategoryMapper

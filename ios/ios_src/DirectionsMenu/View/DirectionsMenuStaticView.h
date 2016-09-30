@@ -22,4 +22,6 @@
 -(float)getEstimatedHeight;
 -(void)SetSearchMenuView:(UIView *)parentView;
 
+-(void)SetHighlightItem:(int)highlightItem;
+
 @end

@@ -11,6 +11,7 @@
 {
     ExampleApp::Menu::View::IMenuSectionViewModel* m_pSearchResultsSection;
     UIView *m_pView;
+    int selectedIndex;
 }
 
 @property (retain, nonatomic) IBOutlet UIView *startRouteBgView;
@@ -40,6 +41,8 @@
     
     _wayPointsTableView.delegate = self;
     _wayPointsTableView.dataSource = self;
+    
+    selectedIndex = -1;
     
     UINib *wayPointsCellNib = [UINib nibWithNibName:@"DirectionsMenuWayPointViewCell" bundle: [NSBundle mainBundle]];
     [self.wayPointsTableView registerNib:wayPointsCellNib forCellReuseIdentifier:@"DirectionsMenuWayPointViewCell"];
@@ -100,12 +103,14 @@
     {
         return m_pSearchResultsSection->Size();        
     }
-
 }
+
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    ExampleApp::Menu::View::MenuItemModel item = m_pSearchResultsSection->GetItemAtIndex(static_cast<int>(indexPath.row));
     
     DirectionsMenuWayPointViewCell *cell = (DirectionsMenuWayPointViewCell*)[self.wayPointsTableView dequeueReusableCellWithIdentifier:@"DirectionsMenuWayPointViewCell"];
     [cell.wayPointNumberlbl setText:[NSString stringWithFormat:@"%li",(long)indexPath.row+1]];
@@ -114,6 +119,15 @@
     {
         ExampleApp::Menu::View::MenuItemModel item = m_pSearchResultsSection->GetItemAtIndex(static_cast<int>(indexPath.row));
         std::string json = item.SerializeJson();
+    }
+    
+    if(indexPath.row == selectedIndex)
+    {
+        [cell.mainContainerView setBackgroundColor:[UIColor colorWithRed:16.0f/255.0f green:64.0f/255.0f blue:160.0f/255.0f alpha:1.0f]];
+    }
+    else
+    {
+        [cell.mainContainerView setBackgroundColor:[UIColor colorWithRed:248.0f/255.0f green:248.0f/255.0f blue:248.0f/255.0f alpha:1.0f]];
     }
     
     if(indexPath.row == 0)
@@ -190,6 +204,12 @@
 -(void)SetSearchMenuView:(UIView *)_parentView   {
     
     m_pView = _parentView;
+}
+
+-(void)SetHighlightItem:(int)highlightItem  {
+    
+    selectedIndex = highlightItem;
+    [_wayPointsTableView reloadData];
 }
 
 -(float)getEstimatedHeight {

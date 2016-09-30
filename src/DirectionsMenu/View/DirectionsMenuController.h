@@ -7,6 +7,7 @@
 #include "DirectionsMenu.h"
 #include "IModalityController.h"
 #include "DirectionsMenuStateChangedMessage.h"
+#include "DirectionsMenuItemHighlightMessage.h"
 
 namespace ExampleApp
 {
@@ -31,6 +32,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback2<DirectionsMenuController, OpenableControl::View::IOpenableControlViewModel&, float> m_onOpenStateChangedCallback;
                 Eegeo::Helpers::TCallback1<DirectionsMenuController, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
                 Eegeo::Helpers::TCallback1<DirectionsMenuController, const DirectionsMenuInitiation::DirectionsMenuStateChangedMessage&> m_directionsMenuStateChangedCallback;
+                Eegeo::Helpers::TCallback1<DirectionsMenuController, const DirectionsMenuInitiation::DirectionsMenuItemHighlightMessage&> m_directionsMenuHighlightItemCallback;
                 
                 Eegeo::Helpers::TCallback0<DirectionsMenuController> m_onModalBackgroundTappedCallback;
                 Eegeo::Helpers::TCallback1<DirectionsMenuController, Menu::View::MenuItemModel> m_onSearchItemAddedCallback;
@@ -41,6 +43,7 @@ namespace ExampleApp
                 void OnAppModeChanged(const AppModes::AppModeChangedMessage& message);
                 
                 void OnDirectionsMenuStateChanged(const DirectionsMenuInitiation::DirectionsMenuStateChangedMessage& message);
+                void OnDirectionsHighlightItem(const DirectionsMenuInitiation::DirectionsMenuItemHighlightMessage& message);
                 
                 bool TryDrag();
                 
