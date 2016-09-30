@@ -4,8 +4,6 @@ set(currsources
   ../src/PathDrawing/SdkModel/CMakeLists.txt
   ../src/PathDrawing/SdkModel/IWayPointsFactory.h
   ../src/PathDrawing/SdkModel/WayPointType.h
-  ../src/PathDrawing/SdkModel/WayPointsFactory.h
-  ../src/PathDrawing/SdkModel/WayPointsFactory.cpp
   ../src/PathDrawing/SdkModel/WayPointsRepository.h
   ../src/PathDrawing/SdkModel/IWayPointsRepository.h
   ../src/PathDrawing/SdkModel/IPathDrawingModule.h

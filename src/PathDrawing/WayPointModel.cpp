@@ -10,8 +10,8 @@ namespace ExampleApp
         WayPointModel::WayPointModel(const int wpId
                            , const ExampleApp::PathDrawing::WayPointType::Values type
                            , Eegeo::Space::LatLong& location
-                           , const std::string& title)
-        : m_wpId(wpId)
+                           , const std::string title)
+        : m_id(wpId)
         , m_type(type)
         , m_location(location)
         , m_title(title)
@@ -20,7 +20,7 @@ namespace ExampleApp
         
         const int WayPointModel::GetWpId()
         {
-            return m_wpId;
+            return m_id;
         }
 
         const std::string WayPointModel::GetTitle()

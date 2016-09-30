@@ -3,12 +3,8 @@
 #pragma once
 
 #include "IDirectionsMenuModule.h"
-
-#include <vector>
-
 #include "BidirectionalBus.h"
 #include "IIdentity.h"
-#include "Metrics.h"
 #include "Reaction.h"
 #include "DirectionsMenu.h"
 #include "Types.h"
@@ -29,14 +25,14 @@ namespace ExampleApp
             public:
                 DirectionsMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
                                  ExampleApp::Reaction::View::IReactionControllerModel& reactionControllerModel,
-                                 ExampleAppMessaging::TMessageBus& messageBus,
-                                 Metrics::IMetricsService& metricsService);
+                                 ExampleAppMessaging::TMessageBus& messageBus);
                 
                 
                 ~DirectionsMenuModule();
                 
                 void SetDirectionsSection(const std::string& name,
                                       Menu::View::IMenuModel& menuModel);
+                void DeleteSearchSectionViewModel();
 
                 Menu::View::IMenuModel& GetDirectionsMenuModel() const;
                 

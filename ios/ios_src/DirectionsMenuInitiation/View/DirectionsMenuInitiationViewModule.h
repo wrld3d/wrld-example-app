@@ -3,13 +3,11 @@
 #pragma once
 
 #include "Types.h"
-#include "DirectionsMenuInitiationViewIncludes.h"
+#include "Metrics.h"
 #include "Rendering.h"
+#include "BidirectionalBus.h"
 #include "DirectionsMenuInitiation.h"
 #include "IDirectionsMenuInitiationViewModule.h"
-#include "BidirectionalBus.h"
-#include "IMetricsService.h"
-#include "IAppModeModel.h"
 
 namespace ExampleApp
 {

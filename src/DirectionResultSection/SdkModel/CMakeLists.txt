@@ -7,10 +7,6 @@ set(currsources
   ../src/DirectionResultSection/SdkModel/IDirectionsResultSectionModule.h
   ../src/DirectionResultSection/SdkModel/DirectionResultSectionWayPointSelectedMessageHandler.cpp
   ../src/DirectionResultSection/SdkModel/DirectionResultSectionWayPointSelectedMessageHandler.h
-  ../src/DirectionResultSection/SdkModel/DirectionResultViewClearedObserver.cpp
-  ../src/DirectionResultSection/SdkModel/DirectionResultViewClearedObserver.h
-
-
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\DirectionResultSection\\SdkModel FILES ${currsources})

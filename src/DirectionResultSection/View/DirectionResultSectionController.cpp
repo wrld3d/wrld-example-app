@@ -30,6 +30,12 @@ namespace ExampleApp
                 m_messageBus.SubscribeUi(m_directionsMenuStateChangedCallback);
             }
             
+            DirectionResultSectionController::~DirectionResultSectionController()
+            {
+                m_messageBus.UnsubscribeUi(m_directionResultReceivedHandler);
+                m_messageBus.UnsubscribeUi(m_directionsMenuStateChangedCallback);
+            }
+            
             void DirectionResultSectionController::OnSearchQueryResponseReceivedMessage(const DirectionQueryResponseReceivedMessage& message)
             {
                 //TODO:This static numbers will be replaced with vector lastAddedResults
@@ -76,11 +82,6 @@ namespace ExampleApp
                         m_menuOptions.RemoveItem(std::to_string(i));
                     }
                 }
-            }
-            
-            DirectionResultSectionController::~DirectionResultSectionController()
-            {
-            
             }
         }
     }

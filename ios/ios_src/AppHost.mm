@@ -43,7 +43,6 @@
 #include "AboutPageViewModule.h"
 #include "AboutPageView.h"
 #include "TagSearchModule.h"
-#include "MyPinCreationInitiationViewModule.h"
 #include "MyPinCreationInitiationView.h"
 #include "MyPinCreationConfirmationViewModule.h"
 #include "MyPinCreationConfirmationView.h"
@@ -372,11 +371,6 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                             app.DirectionsMenuInitiationModule().GetDirectionsMenuInitiationViewModel(),                                                                                                                                                                               screenProperties,
                                                                                                                            m_iOSFlurryMetricsService);
 
-    m_pMyPinCreationInitiationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationInitiationViewModule)(m_messageBus,
-                                           app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
-                                           app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
-                                           screenProperties,
-                                           m_iOSFlurryMetricsService);
 
     m_pMyPinCreationConfirmationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationConfirmationViewModule)(m_messageBus,
             app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
@@ -440,7 +434,6 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     [m_pView addSubview: &m_pFlattenButtonViewModule->GetFlattenButtonView()];
     [m_pView addSubview: &m_pCompassViewModule->GetCompassView()];
     [m_pView addSubview: &m_pDirectionsMenuInitiationViewModule->GetDirectionsMenuInitiationView()];
-    [m_pView addSubview: &m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView()];
     [m_pView addSubview: &m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView()];
     if(m_pApp->ToursEnabled())
     {
@@ -499,7 +492,6 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pFlattenButtonViewModule->GetFlattenButtonView() removeFromSuperview];
     [&m_pCompassViewModule->GetCompassView() removeFromSuperview];
     [&m_pDirectionsMenuInitiationViewModule->GetDirectionsMenuInitiationView() removeFromSuperview];
-    [&m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView() removeFromSuperview];
     [&m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView() removeFromSuperview];
     if(m_pApp->ToursEnabled())
     {
@@ -578,6 +570,8 @@ void AppHost::DestroyApplicationViewModules()
     Eegeo_DELETE m_pWatermarkViewModule;
     
     Eegeo_DELETE m_pDirectionsMenuViewModule;
+    
+    Eegeo_DELETE m_pDirectionsMenuInitiationViewModule;
 }
 
 void AppHost::SetTouchExclusivity()

@@ -46,7 +46,6 @@
 
 - (void) onClick:(UIButton *)sender
 {
-//    [sender setSelected:!sender.selected];
     m_pInterop->OnToggle(sender.selected);
 }
 

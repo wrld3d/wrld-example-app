@@ -2,9 +2,7 @@
 
 #include "PathDrawingController.h"
 #include "RouteBuilder.h"
-#include "VectorMath.h"
 #include "RouteStyle.h"
-#include "WayPointsFactory.h"
 #include "WayPointsRepository.h"
 #include "WayPointType.h"
 #include "LatLongAltitude.h"
@@ -18,12 +16,10 @@ namespace ExampleApp
     {
         
         PathDrawingController::PathDrawingController(Eegeo::Routes::RouteService& routeService
-                                                     , Eegeo::EegeoWorld& eegeoWorld
                                                      , AppCamera::SdkModel::AppGlobeCameraWrapper& cameraWrapper
                                                      , PathDrawing::SdkModel::IWayPointsRepository& wayPointsRepository
                                                      , ExampleAppMessaging::TMessageBus& messageBus)
         : m_routeService(routeService)
-        , m_world(eegeoWorld)
         , m_cameraWrapper(cameraWrapper)
         , m_pWayPointsRepository(wayPointsRepository)
         , m_createdRoutes(false)
@@ -31,6 +27,7 @@ namespace ExampleApp
         , m_directionResultReceivedHandler(this, &PathDrawingController::OnSearchQueryResponseReceivedMessage)
         , m_directionsMenuStateChangedCallback(this, &PathDrawingController::OnDirectionsMenuStateChanged)
         {
+            m_pPathDrawingSettings = Eegeo_NEW(ExampleApp::PathDrawing::PathDrawingOptionsModel)();
             m_routeThicknessPolicy.SetScaleFactor(1.0f);
             
             m_messageBus.SubscribeUi(m_directionResultReceivedHandler);
@@ -39,22 +36,21 @@ namespace ExampleApp
         
         PathDrawingController::~PathDrawingController()
         {
+            Eegeo_DELETE m_pPathDrawingSettings;
             m_messageBus.UnsubscribeUi(m_directionResultReceivedHandler);
-            
+            m_messageBus.UnsubscribeUi(m_directionsMenuStateChangedCallback);
+
         }
         
         void PathDrawingController::Update(float dt)
         {
-            if(m_world.Initialising())
-            {
-                return;
-            }
-
+            
             if(m_createdRoutes)
             {
                 float altitude = m_cameraWrapper.GetRenderCamera().GetAltitude();
                 m_routeThicknessPolicy.SetAltitude(altitude);
             }
+            
         }
         
         void PathDrawingController::OnSearchQueryResponseReceivedMessage(const DirectionResultSection::DirectionQueryResponseReceivedMessage& message)
@@ -68,19 +64,15 @@ namespace ExampleApp
         
         void PathDrawingController::CreateRoutePlan()
         {
-            const float routeWidth = 4.f;
-            const float routeSpeedMetersPerSecond = 40.f;
             
-            const Eegeo::v4 routePrimaryColor(1, 0.62f, 0, 1);
-            const Eegeo::v4 routeSecondaryColor(1, 1, 1, 1);
             
-            const float altitudeMeters = 1.f;
+            const float altitudeMeters = m_pPathDrawingSettings->GetRouteAltitudeMeter();;
             
             Eegeo::Routes::Style::RouteStyle routeStyle(&m_routeThicknessPolicy, Eegeo::Routes::Style::RouteStyle::DebugStyleNone);
             
             RouteBuilder builder;
             
-            std::vector<RouteVertex> points = builder.Start(routePrimaryColor, routeWidth, routeSpeedMetersPerSecond, Routes::Road)
+            std::vector<RouteVertex> points = builder.Start(m_pPathDrawingSettings->GetRoutePrimaryColor(), m_pPathDrawingSettings->GetRouteWidth(), m_pPathDrawingSettings->GetRouteSpeed(), Routes::Road)
             .AddPoint(56.459676, -2.977240, altitudeMeters)
             .AddPoint(56.459178, -2.975524, altitudeMeters)
             .AddPoint(56.458467, -2.973764, altitudeMeters)
@@ -98,7 +90,7 @@ namespace ExampleApp
             
             m_routes.push_back(m_routeService.CreateRoute(points, routeStyle, false));
             
-            std::vector<RouteVertex> otherPoints = builder.Start(routeSecondaryColor, routeWidth, routeSpeedMetersPerSecond, Routes::Road)
+            std::vector<RouteVertex> otherPoints = builder.Start(m_pPathDrawingSettings->GetRouteSecondaryColor(), m_pPathDrawingSettings->GetRouteWidth(), m_pPathDrawingSettings->GetRouteSpeed(), Routes::Road)
             .AddPoint(56.459892, -2.977749,altitudeMeters)
             .AddPoint(56.460158, -2.977831,altitudeMeters)
             .AddPoint(56.460606, -2.977981,altitudeMeters)
@@ -165,36 +157,33 @@ namespace ExampleApp
             m_routes.push_back(m_routeService.CreateRoute(otherPoints, routeStyle, false));
             
             
-            SdkModel::WayPointsFactory *wayPointsFactory = Eegeo_NEW(ExampleApp::PathDrawing::SdkModel::WayPointsFactory)();
-            
             int pointId = 0;
             
             Eegeo::Space::LatLong latLongStart = Eegeo::Space::LatLong::FromDegrees(56.459676, -2.977240);
-            WayPointModel* pointStart = wayPointsFactory->CreateWayPoint(++pointId
-                                                                    , ExampleApp::PathDrawing::WayPointType::Start
-                                                                    , latLongStart
-                                                                    , "");
-            
+            WayPointModel* pointStart = Eegeo_NEW(ExampleApp::PathDrawing::WayPointModel)(++pointId
+                                                     , ExampleApp::PathDrawing::WayPointType::Start
+                                                     , latLongStart
+                                                     , "");
             Eegeo::Space::LatLong latLong1 = Eegeo::Space::LatLong::FromDegrees(56.457827, -2.972691);
-            WayPointModel* point1 = wayPointsFactory->CreateWayPoint(++pointId
+            WayPointModel* point1 = Eegeo_NEW(ExampleApp::PathDrawing::WayPointModel)(++pointId
                                                                 , ExampleApp::PathDrawing::WayPointType::CheckPoint
                                                                 , latLong1
                                                                 , "");
             
             Eegeo::Space::LatLong latLong2 = Eegeo::Space::LatLong::FromDegrees(56.457860, -2.970793);
-            WayPointModel* point2 = wayPointsFactory->CreateWayPoint(++pointId
+            WayPointModel* point2 = Eegeo_NEW(ExampleApp::PathDrawing::WayPointModel)(++pointId
                                                                 , ExampleApp::PathDrawing::WayPointType::CheckPoint
                                                                 , latLong2
                                                                 , "");
             
             Eegeo::Space::LatLong latLong3 = Eegeo::Space::LatLong::FromDegrees(56.461427, -2.963596);
-            WayPointModel* point3 = wayPointsFactory->CreateWayPoint(++pointId
+            WayPointModel* point3 = Eegeo_NEW(ExampleApp::PathDrawing::WayPointModel)(++pointId
                                                                 , ExampleApp::PathDrawing::WayPointType::CheckPoint
                                                                 , latLong3
                                                                 , "");
             
             Eegeo::Space::LatLong latLongEnd = Eegeo::Space::LatLong::FromDegrees(56.460882, -2.962729);
-            WayPointModel* pointEnd = wayPointsFactory->CreateWayPoint(++pointId
+            WayPointModel* pointEnd = Eegeo_NEW(ExampleApp::PathDrawing::WayPointModel)(++pointId
                                                                   , ExampleApp::PathDrawing::WayPointType::End
                                                                   , latLongEnd
                                                                   , "");
@@ -230,6 +219,7 @@ namespace ExampleApp
             {
                 WayPointModel* waypoint = m_pWayPointsRepository.GetItemAtIndex(0);
                 m_pWayPointsRepository.RemoveItem(waypoint);
+                Eegeo_DELETE waypoint;
             }
            m_createdRoutes = false;
         }

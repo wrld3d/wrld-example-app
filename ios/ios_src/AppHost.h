@@ -59,7 +59,7 @@
 #include "DirectionsMenuInitiationViewIncludes.h"
 #include "DirectionsMenuViewIncludes.h"
 #include "TagSearchViewIncludes.h"
-#include "IDirectionResultSectionViewModule.h"
+#include "DirectionResultSectionViewModule.h"
 
 @class ViewController;
 class AppInputDelegate;
@@ -127,7 +127,6 @@ private:
     
     ExampleApp::DirectionsMenuInitiation::View::IDirectionsMenuInitiationViewModule* m_pDirectionsMenuInitiationViewModule;
     
-    ExampleApp::MyPinCreation::View::IMyPinCreationInitiationViewModule* m_pMyPinCreationInitiationViewModule;
     ExampleApp::MyPinCreation::View::IMyPinCreationConfirmationViewModule* m_pMyPinCreationConfirmationViewModule;
     ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsViewModule* m_pMyPinCreationDetailsViewModule;
     ExampleApp::MyPinDetails::View::IMyPinDetailsViewModule* m_pMyPinDetailsViewModule;
@@ -144,7 +143,7 @@ private:
     ExampleApp::URLRequest::View::URLRequestHandler* m_pURLRequestHandler;
     ExampleApp::Surveys::View::ISurveyViewModule* m_pSurveyViewModule;
     ExampleApp::Menu::View::IMenuReactionModel* m_pMenuReactionModel;
-    ExampleApp::DirectionResultSection::View::IDirectionResultSectionViewModule* m_pDirectionResultSectionViewModule;
+    ExampleApp::DirectionResultSection::View::DirectionResultSectionViewModule* m_pDirectionResultSectionViewModule;
     
     ImageStore* m_pImageStore;
     

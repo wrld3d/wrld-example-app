@@ -1,9 +1,8 @@
-
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "DirectionsMenuStaticView.h"
 #include "DirectionsMenuWayPointViewCell.h"
 #include "MenuSectionViewModel.h"
-
 #include "DirectionsMenuView.h"
 #include "DirectionsMenuViewInterop.h"
 #include "UIColors.h"
@@ -13,9 +12,9 @@
     ExampleApp::Menu::View::IMenuSectionViewModel* m_pSearchResultsSection;
     UIView *m_pView;
 }
+
 @property (retain, nonatomic) IBOutlet UIView *startRouteBgView;
 @property (retain, nonatomic) IBOutlet UIView *endRouteBgView;
-
 @property (retain, nonatomic) IBOutlet NSLayoutConstraint *contentHeightConstraint;
 @property (retain, nonatomic) IBOutlet NSLayoutConstraint *endHeightConstraint;
 @property (retain, nonatomic) IBOutlet UIButton *optionsButton;
@@ -115,7 +114,6 @@
     {
         ExampleApp::Menu::View::MenuItemModel item = m_pSearchResultsSection->GetItemAtIndex(static_cast<int>(indexPath.row));
         std::string json = item.SerializeJson();
-        //[self populateCellWithJson :json :cell];
     }
     
     if(indexPath.row == 0)
@@ -212,54 +210,15 @@
     if (!document.Parse<0>(json.c_str()).HasParseError())
     {
         std::string name = document["name"].GetString();
-        
-        //const float imageSize = 36.0f;
-        //const float imageInset = 6.0f;
-        
         const std::string icon = document.HasMember("icon") ? document["icon"].GetString() : "misc";
-//        const std::string iconResourceName = ExampleApp::Helpers::IconResources::GetSmallIconPathForResourceName(icon);
-        
-//        cell.imageView.image = ExampleApp::Helpers::ImageHelpers::LoadImage(iconResourceName);
-//        cell.imageView.contentMode = UIViewContentModeScaleToFill;
-//        CGRect imageFrame = CGRectMake(imageInset,
-//                                       imageInset,
-//                                       imageSize,
-//                                       imageSize);
-        
-//        const float textInsetX = 48.0f;
-//        const float textY = 4.0f;
-//        const float detailTextY = 24.0f;
-//        const float textWidth = [m_pView.pSearchResultsTableView getCellWidth] - textInsetX;
-        
         cell.textLabel.text = [NSString stringWithUTF8String:name.c_str()];
-//        cell.textLabel.font = [UIFont systemFontOfSize:15.0f];
-//        cell.textLabel.textColor = ExampleApp::Helpers::ColorPalette::TableSearchTextColor;
-//        [cell.textLabel sizeToFit];
-        
-//        CGRect textFrame = CGRectMake(textInsetX,
-//                                      textY,
-//                                      textWidth,
-//                                      cell.textLabel.frame.size.height);
-        
         std::string details = "";
         if (document.HasMember("details"))
         {
             details = document["details"].GetString();
         }
-        
         cell.detailTextLabel.text = [NSString stringWithUTF8String:details.c_str()];
-//        cell.detailTextLabel.font = [UIFont systemFontOfSize:11.0f];
-//        cell.detailTextLabel.textColor = ExampleApp::Helpers::ColorPalette::TableSearchDetailTextColor;
-//        [cell.detailTextLabel sizeToFit];
-        
-//        CGRect detailTextFrame = CGRectMake(textInsetX,
-//                                            detailTextY,
-//                                            textWidth,
-//                                            cell.detailTextLabel.frame.size.height);
-//        
-//        [(CustomTableViewCell*)cell setContentFrames:imageFrame
-//                                                    :textFrame
-//                                                    :detailTextFrame];
+
     }
 }
 

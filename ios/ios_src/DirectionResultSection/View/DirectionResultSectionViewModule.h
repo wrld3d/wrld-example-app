@@ -4,7 +4,6 @@
 
 #include "Types.h"
 #include "DirectionResultSectionController.h"
-#include "IDirectionResultSectionViewModule.h"
 
 namespace ExampleApp
 {
@@ -12,7 +11,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            class DirectionResultSectionViewModule : public IDirectionResultSectionViewModule, private Eegeo::NonCopyable
+            class DirectionResultSectionViewModule : private Eegeo::NonCopyable
             {
             private:
                 DirectionResultSectionController* m_pDirectionController;

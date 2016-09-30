@@ -14,16 +14,16 @@ namespace ExampleApp
         class WayPointModel : protected Eegeo::NonCopyable
         {
         private:
-            const int m_wpId;
-            const std::string& m_title;
+            const int m_id;
+            const std::string m_title;
             const ExampleApp::PathDrawing::WayPointType::Values m_type;
             const Eegeo::Space::LatLong& m_location;
        
         public:
             WayPointModel(const int wpId
-                     , const ExampleApp::PathDrawing::WayPointType::Values m_type
-                     , Eegeo::Space::LatLong& m_location
-                     , const std::string& m_title);
+                     , const ExampleApp::PathDrawing::WayPointType::Values type
+                     , Eegeo::Space::LatLong& location
+                     , const std::string title);
             
             const int GetWpId();
             const std::string GetTitle();

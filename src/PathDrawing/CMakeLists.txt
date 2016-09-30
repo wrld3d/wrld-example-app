@@ -7,6 +7,8 @@ set(currsources
   ../src/PathDrawing/IPathDrawingController.h
   ../src/PathDrawing/WayPointModel.h
   ../src/PathDrawing/WayPointModel.cpp
+  ../src/PathDrawing/PathDrawingOptionsModel.h
+  ../src/PathDrawing/PathDrawingOptionsModel.cpp
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\PathDrawing FILES ${currsources})

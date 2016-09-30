@@ -33,7 +33,6 @@ namespace ExampleApp
 
                 PathDrawingModule(WorldPins::SdkModel::IWorldPinsService& worldPinsService
                                   , Eegeo::Routes::RouteService& routeService
-                                  , Eegeo::EegeoWorld& eegeoWorld
                                   , AppCamera::SdkModel::AppGlobeCameraWrapper& cameraWrapper
                                   , TagSearch::ISearchResultIconKeyMapper& searchResultIconCategoryMapper
                                   , ExampleAppMessaging::TMessageBus& messageBus);
@@ -41,6 +40,9 @@ namespace ExampleApp
                 virtual ~PathDrawingModule();
 
                 IWayPointsRepository& GetWayPointsRepository() const;
+                
+                IPathDrawingController& GetPathDrawingController() const;
+                
                 
                 void Update(float dt);
                                 

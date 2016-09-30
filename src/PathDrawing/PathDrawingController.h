@@ -14,7 +14,7 @@
 #include "DirectionQueryResponseReceivedMessage.h"
 #include "DirectionsMenuStateChangedMessage.h"
 #include "BidirectionalBus.h"
-
+#include "PathDrawingOptionsModel.h"
 namespace ExampleApp
 {
     namespace PathDrawing
@@ -25,11 +25,11 @@ namespace ExampleApp
         private:
             PathDrawing::SdkModel::IWayPointsRepository& m_pWayPointsRepository;
             Eegeo::Routes::RouteService& m_routeService;
-            Eegeo::EegeoWorld& m_world;
             AppCamera::SdkModel::AppGlobeCameraWrapper& m_cameraWrapper;
             ExampleAppMessaging::TMessageBus& m_messageBus;
             Eegeo::Helpers::TCallback1<PathDrawingController, const DirectionResultSection::DirectionQueryResponseReceivedMessage&> m_directionResultReceivedHandler;
             Eegeo::Helpers::TCallback1<PathDrawingController, const DirectionsMenuInitiation::DirectionsMenuStateChangedMessage&> m_directionsMenuStateChangedCallback;
+            ExampleApp::PathDrawing::PathDrawingOptionsModel* m_pPathDrawingSettings;
 
             
             bool m_createdRoutes;
@@ -46,7 +46,6 @@ namespace ExampleApp
             
         public:
             PathDrawingController(Eegeo::Routes::RouteService& routeService
-                                  , Eegeo::EegeoWorld& eegeoWorld
                                   , AppCamera::SdkModel::AppGlobeCameraWrapper& cameraWrapper
                                   , PathDrawing::SdkModel::IWayPointsRepository& wayPointsRepository
                                   , ExampleAppMessaging::TMessageBus& messageBus);

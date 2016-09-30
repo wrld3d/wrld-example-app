@@ -32,6 +32,8 @@ namespace ExampleApp
             {
                 Eegeo_DELETE m_pController;
 
+                Eegeo_DELETE m_pObserver;
+                
                 [m_pView release];
             }
 

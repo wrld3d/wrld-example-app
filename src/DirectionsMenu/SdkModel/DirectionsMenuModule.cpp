@@ -15,8 +15,7 @@ namespace ExampleApp
         {
             DirectionsMenuModule::DirectionsMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
                                                ExampleApp::Reaction::View::IReactionControllerModel& reactionControllerModel,
-                                             ExampleAppMessaging::TMessageBus& messageBus,
-                                               Metrics::IMetricsService& metricsService)
+                                             ExampleAppMessaging::TMessageBus& messageBus)
             : m_pMenuModel(NULL)
             , m_pMenuViewModel(NULL)
             , m_pSearchSectionViewModel(NULL)
@@ -30,13 +29,23 @@ namespace ExampleApp
             
             DirectionsMenuModule::~DirectionsMenuModule()
             {
+                DeleteSearchSectionViewModel();
                 Eegeo_DELETE m_pMenuViewModel;
                 Eegeo_DELETE m_pMenuModel;
+            }
+            void DirectionsMenuModule::DeleteSearchSectionViewModel()
+            {
+                if (m_pSearchSectionViewModel != NULL)
+                {
+                    Eegeo_DELETE m_pSearchSectionViewModel;
+                }
             }
             
             void DirectionsMenuModule::SetDirectionsSection(const std::string& name,
                                                     Menu::View::IMenuModel& menuModel)
             {
+
+                DeleteSearchSectionViewModel();
                 m_pSearchSectionViewModel = Eegeo_NEW(Menu::View::MenuSectionViewModel)(name, "", menuModel, false);
             }
 

@@ -389,7 +389,6 @@ namespace ExampleApp
         
         m_pPathDrawingModule = Eegeo_NEW(ExampleApp::PathDrawing::SdkModel::PathDrawingModule)(m_pWorldPinsModule->GetWorldPinsService()
                                                                                                , m_pWorld->GetRoutesModule().GetRouteService()
-                                                                                               , *m_pWorld
                                                                                                , *m_pGlobeCameraWrapper
                                                                                                , m_pTagSearchModule->GetSearchResultIconKeyMapper()
                                                                                                , m_messageBus);
@@ -429,6 +428,8 @@ namespace ExampleApp
         Eegeo_DELETE m_pConnectivityChangedObserver;
         
         Eegeo_DELETE m_pWorld;
+        Eegeo_DELETE m_pPathDrawingModule;
+    
     }
 
     void MobileExampleApp::CreateApplicationModelModules(Eegeo::UI::NativeUIFactories& nativeUIFactories,
@@ -593,8 +594,7 @@ namespace ExampleApp
                                                                                             m_metricsService);
         
         m_pDirectionsMenuModule = Eegeo_NEW(ExampleApp::DirectionsMenu::SdkModel::DirectionsMenuModule)(m_identityProvider,
-                                                                                                m_pReactionControllerModule->GetReactionControllerModel(),                                                                                                                         m_messageBus,
-                                                                                                m_metricsService);
+                                                                                                m_pReactionControllerModule->GetReactionControllerModel(),                                                                                                                         m_messageBus);
         
 
         
@@ -889,6 +889,7 @@ namespace ExampleApp
         Eegeo_DELETE m_pDirectionsMenuInitiationModule;
         
         Eegeo_DELETE m_pDirectionsMenuModule;
+        
     }
 
     std::vector<ExampleApp::OpenableControl::View::IOpenableControlViewModel*> MobileExampleApp::GetOpenableControls() const
@@ -1164,8 +1165,10 @@ namespace ExampleApp
         {
             ToursModule().GetTourService().UpdateCurrentTour(dt);
         }
-        
-        m_pPathDrawingModule->Update(dt);
+        if(!m_pWorld->Initialising())
+        {
+            m_pPathDrawingModule->GetPathDrawingController().Update(dt);
+        }
         
         UpdateLoadingScreen(dt);
     }

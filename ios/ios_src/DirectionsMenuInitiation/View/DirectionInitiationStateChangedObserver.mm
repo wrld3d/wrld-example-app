@@ -19,6 +19,7 @@ namespace ExampleApp
                 
             DirectionInitiationStateChangedObserver::~DirectionInitiationStateChangedObserver()
             {
+                m_messageBus.UnsubscribeUi(m_directionsMenuStateChangedCallback);
             }
             
             void DirectionInitiationStateChangedObserver::OnDirectionsMenuStateChanged(const DirectionsMenuInitiation::DirectionsMenuStateChangedMessage& message){

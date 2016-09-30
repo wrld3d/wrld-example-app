@@ -8,9 +8,7 @@
 
 @interface DirectionsMenuStaticView : UIView  <UITableViewDelegate, UITableViewDataSource>
 {
-    
 }
-
 
 @property (retain, nonatomic) IBOutlet UIButton *exitDirectionsBtn;
 @property (retain, nonatomic) IBOutlet UITextField *endRouteTextField;
@@ -18,12 +16,10 @@
 @property (retain, nonatomic) IBOutlet UIView *headerView;
 @property (retain, nonatomic) IBOutlet UIView *bottomBarView;
 @property (retain, nonatomic) IBOutlet UIView *hideOptionsView;
-
 @property (nonatomic) int resultCount;
 
 - (void)updateSearchResultsSection:(ExampleApp::Menu::View::IMenuSectionViewModel*)section;
 -(float)getEstimatedHeight;
-
 -(void)SetSearchMenuView:(UIView *)parentView;
 
 @end

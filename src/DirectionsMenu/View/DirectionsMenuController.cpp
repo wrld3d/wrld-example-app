@@ -65,6 +65,15 @@ namespace ExampleApp
                 m_directionsMenuView.RemoveSearchClearedCallback(m_searchClearedCallbacks);
                 m_directionsMenuView.RemoveWayPointSelectedCallback(m_wayPointSelectedCallbacks);
                 m_directionsMenuView.RemoveExitDirectionsCallback(m_exitDirectionsCallbacks);
+                
+                Menu::View::IMenuModel& searchSectionMenuModel = m_searchSectionViewModel.GetModel();
+                searchSectionMenuModel.RemoveItemAddedCallback(m_onSearchItemAddedCallback);
+                searchSectionMenuModel.RemoveItemAddedCallback(m_onSearchItemRemovedCallback);
+
+
+                
+                m_messageBus.UnsubscribeUi(m_appModeChangedCallback);
+                m_messageBus.UnsubscribeUi(m_directionsMenuStateChangedCallback);
             }
             
             void DirectionsMenuController::OnSearchItemAdded(Menu::View::MenuItemModel& item)

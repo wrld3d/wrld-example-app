@@ -1,7 +1,6 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "PathDrawingModule.h"
-#include "WayPointsFactory.h"
 #include "WayPointsRepository.h"
 #include "LatLongAltitude.h"
 #include "WayPointType.h"
@@ -16,7 +15,6 @@ namespace ExampleApp
 
             PathDrawingModule::PathDrawingModule(WorldPins::SdkModel::IWorldPinsService& worldPinsService
                                                                  , Eegeo::Routes::RouteService& routeService
-                                                                 , Eegeo::EegeoWorld& eegeoWorld
                                                                  , AppCamera::SdkModel::AppGlobeCameraWrapper& cameraWrapper
                                                                  , TagSearch::ISearchResultIconKeyMapper& searchResultIconCategoryMapper
                                                                  , ExampleAppMessaging::TMessageBus& messageBus)
@@ -25,7 +23,6 @@ namespace ExampleApp
                 m_pWayPointsRepository = Eegeo_NEW(WayPointsRepository);
 
                 m_pPathDrawingController = Eegeo_NEW(ExampleApp::PathDrawing::PathDrawingController)(routeService
-                                                                                                     , eegeoWorld
                                                                                                      , cameraWrapper
                                                                                                      , *m_pWayPointsRepository
                                                                                                      , messageBus);
@@ -40,6 +37,7 @@ namespace ExampleApp
             {                
                 Eegeo_DELETE m_pWayPointsRepository;
                 Eegeo_DELETE m_pPathDrawingController;
+                Eegeo_DELETE m_pWayPointOnMapModel;
             }
 
             IWayPointsRepository& PathDrawingModule::GetWayPointsRepository() const
@@ -47,9 +45,14 @@ namespace ExampleApp
                 return *m_pWayPointsRepository;
             }
             
+            IPathDrawingController& PathDrawingModule::GetPathDrawingController() const
+            {
+                return *m_pPathDrawingController;
+            }
+            
             void PathDrawingModule::Update(float dt)
             {
-                m_pPathDrawingController->Update(dt);
+                
             }
         }
     }
