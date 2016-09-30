@@ -431,12 +431,12 @@ namespace ExampleApp
         
         Eegeo_DELETE m_pStreamingVolume;
 
-        DestroyApplicationModelModules();
-        Eegeo_DELETE m_pRayCaster;
-        Eegeo_DELETE m_pCameraTransitionService;
         Eegeo_DELETE m_pInteriorsHighlightVisibilityController;
         Eegeo_DELETE m_pInteriorsEntityIdHighlightVisibilityController;
         Eegeo_DELETE m_pHighlightColorMapper;
+        DestroyApplicationModelModules();
+        Eegeo_DELETE m_pRayCaster;
+        Eegeo_DELETE m_pCameraTransitionService;
         Eegeo_DELETE m_pCameraTransitionController;
         Eegeo_DELETE m_pDoubleTapIndoorInteractionController;
         Eegeo_DELETE m_pNavigationService;
