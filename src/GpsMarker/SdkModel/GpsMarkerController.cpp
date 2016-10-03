@@ -12,6 +12,7 @@
 #include "MathsHelpers.h"
 #include "TransformHelpers.h"
 #include "VisualMapState.h"
+#include "ScaleHelpers.h"
 
 namespace ExampleApp
 {
@@ -105,9 +106,7 @@ namespace ExampleApp
                 
                 Eegeo::v3 markerUp = scaledPoint.Norm().ToSingle();
                 
-                const float scaleModifier = ((m_screenPixelScale * m_screenOversampleScale * 2) / renderCamera.GetViewportHeight());
-                const float scaleForPoint = Eegeo::Helpers::TransformHelpers::ComputeModelScaleForConstantScreenSizeWithVerticalFoV(renderCamera, scaledPoint);
-                const float scale = scaleModifier * scaleForPoint * 4.25f;
+				const float scale = ExampleApp::Helpers::ScaleHelpers::ComputeModelScaleForScreenWithPixelScaling(renderCamera, scaledPoint, m_screenPixelScale, m_screenOversampleScale) * 4.25f;
                 Eegeo::v3 markerScale = Eegeo::v3(scale, scale, scale);
                 
                 const Eegeo::dv3& ecefCameraPosition = renderCamera.GetEcefLocation();
