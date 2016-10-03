@@ -22,7 +22,7 @@
 
 namespace
 {
-    const bool AllowPinning = false;
+    const bool AllowPinning = true;
     const int DeletePinAlertViewTag = 1;
 }
 

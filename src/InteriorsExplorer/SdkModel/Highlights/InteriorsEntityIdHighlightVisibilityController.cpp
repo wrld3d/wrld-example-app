@@ -32,8 +32,23 @@ namespace ExampleApp
             {
                 namespace
                 {
-                    std::vector<std::string> GetDeskIdsFromSearchResultModel(const Search::SdkModel::SearchResultModel& selectedSearchResult)
+                    std::vector<std::string> GetEntityIdsFromSearchResultModel(const Search::SdkModel::SearchResultModel& selectedSearchResult)
                     {
+                        rapidjson::Document json;
+                        std::string highlightedEntityId = "";
+                        
+                        if (!json.Parse<0>(selectedSearchResult.GetJsonData().c_str()).HasParseError() && json.HasMember("entity_highlight"))
+                        {
+                            std::vector<std::string> entities;
+                            const rapidjson::Value& entity_highlight = json["entity_highlight"];
+                            assert(entity_highlight.IsArray());
+                            
+                            for (int i  = 0; i < entity_highlight.Size(); i++)
+                            {
+                                entities.push_back(entity_highlight[i].GetString());
+                            }
+                            return entities;
+                        }
                         return std::vector<std::string>();
                     }
                     
@@ -59,7 +74,8 @@ namespace ExampleApp
                     Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                     Search::SdkModel::ISearchResultRepository& searchResultRepository,
                     ExampleAppMessaging::TMessageBus& messageBus,
-                    Eegeo::Resources::Interiors::InteriorsInstanceRepository& interiorsInstanceRepository)
+                    Eegeo::Resources::Interiors::InteriorsInstanceRepository& interiorsInstanceRepository,
+                    IHighlightColorMapper& highlightColorMapper)
                 : m_interiorsEntityIdHighlightController(interiorsEntityIdHighlightController)
                 , m_searchQueryPerformer(searchQueryPerformer)
                 , m_searchResultsHandler(this, &InteriorsEntityIdHighlightVisibilityController::OnSearchResultsLoaded)
@@ -69,6 +85,7 @@ namespace ExampleApp
                 , m_interiorsInstanceRepository(interiorsInstanceRepository)
                 , m_interiorsInstanceRepositoryChangedHandler(this, &InteriorsEntityIdHighlightVisibilityController::OnInteriorsInstanceRepositoryChanged)
                 , m_searchResultsIndex(-1)
+                , m_highlightColorMapper(highlightColorMapper)
                 {
                     m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
                     m_messageBus.SubscribeNative(m_handleSearchResultSectionItemSelectedMessageBinding);
@@ -111,9 +128,13 @@ namespace ExampleApp
                 void InteriorsEntityIdHighlightVisibilityController::OnSearchItemSelected(const SearchResultSection::SearchResultSectionItemSelectedMessage& message)
                 {
                     if (message.ItemIndex() >= m_searchResults.size())
+                    {
                         m_searchResultsIndex = -1;
+                    }
                     else
+                    {
                         m_searchResultsIndex = message.ItemIndex();
+                    }
                     
                     RefreshHighlights();
                 }
@@ -156,15 +177,13 @@ namespace ExampleApp
                     {
                         const Search::SdkModel::SearchResultModel& selectedSearchResult = m_searchResults.at(m_searchResultsIndex);
 
-                        const std::vector<std::string>& deskIds = GetDeskIdsFromSearchResultModel(selectedSearchResult);
+                        std::vector<std::string> filteredEntityIds = GetEntityIdsFromSearchResultModel(selectedSearchResult);
                         
-                        std::vector<std::string> filteredDeskIds;
-                        
-                        std::remove_copy_if(deskIds.begin(), deskIds.end(), std::back_inserter(filteredDeskIds), std::not1(IsInteriorInstancePresentForId(m_interiorsInstanceRepository)));
+                        filteredEntityIds.erase(std::remove_if(filteredEntityIds.begin(), filteredEntityIds.end(), std::not1(IsInteriorInstancePresentForId(m_interiorsInstanceRepository))), filteredEntityIds.end());
 
-                        m_interiorsEntityIdHighlightController.HighlightEntityIds(filteredDeskIds, m_lastHighlightedRenderables);
+                        m_interiorsEntityIdHighlightController.SetDefaultHighlightColour(m_highlightColorMapper.GetColor(selectedSearchResult, "entity_highlight_color"));
+                        m_interiorsEntityIdHighlightController.HighlightEntityIds(filteredEntityIds, m_lastHighlightedRenderables);
                     }
-
                 }
             }
         }

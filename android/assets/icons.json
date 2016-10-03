@@ -445,10 +445,6 @@
             "file": "icon1_twitter.png"
         }, 
         {
-            "name": "university", 
-            "file": "icon1_university.png"
-        }, 
-        {
             "name": "vet", 
             "file": "icon1_vet.png"
         }, 
@@ -471,6 +467,30 @@
         {
             "name": "zoo", 
             "file": "icon1_zoo.png"
+        }, 
+        {
+            "name": "forest", 
+            "file": "icon1_forest.png"
+        }, 
+        {
+            "name": "lake", 
+            "file": "icon1_lake.png"
+        }, 
+        {
+            "name": "mountain", 
+            "file": "icon1_mountain.png"
+        }, 
+        {
+            "name": "river", 
+            "file": "icon1_river.png"
+        }, 
+        {
+            "name": "female", 
+            "file": "icon1_female.png"
+        }, 
+        {
+            "name": "male", 
+            "file": "icon1_male.png"
         }
     ]
 }

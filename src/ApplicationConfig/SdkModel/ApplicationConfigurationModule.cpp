@@ -60,6 +60,7 @@ namespace ExampleApp
                         emptyMyPinsWebServiceUrl,
                         emptyMyPinsWebServiceAuthToken,
                         emptyTwitterAuthCode,
+                        false,
                         false);
                 }
             }
@@ -84,6 +85,9 @@ namespace ExampleApp
                 platformConfig.CityThemesConfig.StreamedManifestUrl = appConfig.ThemeManifestURL();
                 platformConfig.CityThemesConfig.EmbeddedThemeTexturePath = appConfig.EmbeddedThemeTexturePath();
 
+                platformConfig.OptionsConfig.EnableLabels = appConfig.UseLabels();
+                platformConfig.MapLayersConfig.FontsModuleConfig.EnvironmentFontFilename = appConfig.UseLabels() ? "IPAexGothic_sdf.fnt" : "IPAexGothic32_A8_icons.fnt";
+                
                 return platformConfig;
             }
             

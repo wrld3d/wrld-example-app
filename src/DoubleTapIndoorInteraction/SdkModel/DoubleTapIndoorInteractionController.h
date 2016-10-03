@@ -6,10 +6,16 @@
 #include "Interiors.h"
 #include "IRayCaster.h"
 #include "IAppModeModel.h"
+#include "EarthConstants.h"
+#include "TerrainRayPicker.h"
+#include "IntersectionTests.h"
+#include "TerrainModelModule.h"
 #include "EnvironmentRayCaster.h"
+#include "InteriorHeightHelpers.h"
+#include "InteriorTransitionModel.h"
 #include "ICameraTransitionController.h"
 #include "IDoubleTapIndoorInteractionController.h"
-
+#include "IAppCameraController.h"
 
 
 namespace ExampleApp
@@ -19,12 +25,6 @@ namespace ExampleApp
         namespace SdkModel
         {
             
-            enum ZoomState
-            {
-                Far = 0,
-                Optimized,
-                Close
-            };
             
             class DoubleTapIndoorInteractionController : public IDoubleTapIndoorInteractionController {
             
@@ -34,28 +34,31 @@ namespace ExampleApp
                 DoubleTapIndoorInteractionController(Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
                                                      ExampleApp::CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                                                      Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                                     Eegeo::Collision::IRayCaster& rayCaster,
-                                                     ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel);
+                                                     ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
+                                                     Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
+                                                     Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
+                                                     AppCamera::SdkModel::IAppCameraController& iCameraController);
                 ~DoubleTapIndoorInteractionController();
                 void OnDoubleTap(const AppInterface::TapData& data);
                 
             private:
                 
-                Eegeo::Collision::IRayCaster& m_enovRayCaster;
+                const int m_closeDistanceOffSet;
+                const int m_optimizedDistanceOffSet;
                 ExampleApp::AppModes::SdkModel::IAppModeModel& m_appModeModel;
-                Eegeo::Helpers::TCallback0<DoubleTapIndoorInteractionController> m_appModeChangedCallback;
+                Eegeo::Resources::Terrain::Collision::TerrainRayPicker* m_pTerrainRayPicker;
+                Eegeo::Resources::Interiors::InteriorTransitionModel& m_interiorTransitionModel;
                 Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 Eegeo::Resources::Interiors::InteriorsCameraController& m_interiorsCameraController;
                 ExampleApp::CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionController;
-                
-                
-                
-                void OnAppModeChanged();
-                void ZoomInTo(float distance,const AppInterface::TapData& data);
+                AppCamera::SdkModel::IAppCameraController& m_iCameraController;
+    
+                float CalcRecommendedOverviewDistanceForFloor();
+                void ZoomIn(float distance,const AppInterface::TapData& data);
                 float CalculateCloseDistanceWithRespectTo(float optimizedDistance);
-                float CalcRecommendedOverviewDistanceForFloor(const Eegeo::Geometry::Bounds3D& floorTangentSpaceBounds, float fieldOfViewRadians);
+                bool PerformRayPick(const Eegeo::dv3 &rayOrigin,Eegeo::dv3 &rayDirection,Eegeo::dv3 &out_rayIntersectionPoint,double &out_intersectionParam,float &out_terrainHeight,float &out_heightAboveTerrain);
+ 
 
-                ZoomState m_states;
 
             };
             
