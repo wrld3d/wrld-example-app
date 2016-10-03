@@ -13,7 +13,6 @@
 #include "ShaderIdGenerator.h"
 #include "MaterialIdGenerator.h"
 #include "SceneModelFactory.h"
-#include "WorldMeshRenderable.h"
 #include "PODfile.h"
 #include "PODFileParser.h"
 #include "PODNode.h"
@@ -30,6 +29,8 @@ namespace ExampleApp
         {
             namespace
             {
+				const bool RenderableOwnsMesh = false;
+
                 std::string GetFullMeshName(const std::string& filename, int meshId)
                 {
                     std::stringstream ss;
@@ -69,6 +70,12 @@ namespace ExampleApp
                 Eegeo_DELETE m_pMarkerStencilClearCylinder;
                 Eegeo_DELETE m_pMarkerStencilClearShader;
                 Eegeo_DELETE m_pMarkerStencilClearMaterial;
+
+				if(!RenderableOwnsMesh)
+				{
+                    Eegeo_DELETE m_pSphereMesh;
+                    Eegeo_DELETE m_pCylinderMesh;
+				}
             }
             
             void GpsMarkerAnchorView::SetVisible(bool visible)
@@ -213,8 +220,8 @@ namespace ExampleApp
                         {
                             Eegeo::Rendering::SceneModels::SceneModelMeshResource& mesh = m_pMeshRepo->UseResource(meshName);
                             
-                            Eegeo::Rendering::Renderables::WorldMeshRenderable* worldMeshRenderable1 = NULL;
-                            Eegeo::Rendering::Renderables::WorldMeshRenderable* worldMeshRenderable2 = NULL;
+                            GpsMarkerMeshRenderable* worldMeshRenderable1 = NULL;
+                            GpsMarkerMeshRenderable* worldMeshRenderable2 = NULL;
                             
                             CreateMeshRenderables(mesh,
                                                   m_pMarkerHighlightShader->GetVertexAttributes(),
@@ -228,11 +235,15 @@ namespace ExampleApp
                                 
                             if(meshId == 0)
                             {
+								m_pSphereMesh = mesh.GetMesh();
+
                                 m_pMarkerHighlightSphere = worldMeshRenderable1;
                                 m_pMarkerStencilClearSphere = worldMeshRenderable2;
                             }
                             else
                             {
+								m_pCylinderMesh = mesh.GetMesh();
+
                                 m_pMarkerHighlightCylinder = worldMeshRenderable1;
                                 m_pMarkerStencilClearCylinder = worldMeshRenderable2;
                             }
@@ -246,26 +257,28 @@ namespace ExampleApp
                                                             const Eegeo::Rendering::VertexLayouts::VertexAttribs& vertexAttribs1,
                                                             const Eegeo::Rendering::VertexLayouts::VertexAttribs& vertexAttribs2,
                                                             const Eegeo::Modules::Core::RenderingModule& renderingModule,
-                                                            Eegeo::Rendering::Renderables::WorldMeshRenderable* &meshRenderable1,
-                                                            Eegeo::Rendering::Renderables::WorldMeshRenderable* &meshRenderable2,
+                                                            GpsMarkerMeshRenderable* &meshRenderable1,
+                                                            GpsMarkerMeshRenderable* &meshRenderable2,
                                                             Eegeo::Rendering::Materials::IMaterial* material1,
                                                             Eegeo::Rendering::Materials::IMaterial* material2) const
             {
                 const Eegeo::Rendering::VertexLayouts::VertexBinding& vertexBinding1 = renderingModule.GetVertexBindingPool().GetVertexBinding(mesh.GetMesh()->GetVertexLayout(), vertexAttribs1);
                 
-                meshRenderable1 = Eegeo_NEW(Eegeo::Rendering::Renderables::WorldMeshRenderable)(Eegeo::Rendering::LayerIds::AfterWorldOpaque,
-                                                                                                material1,
-                                                                                                vertexBinding1,
-                                                                                                mesh.GetMesh(),
-                                                                                                Eegeo::dv3::Zero());
+                meshRenderable1 = Eegeo_NEW(GpsMarkerMeshRenderable)(Eegeo::Rendering::LayerIds::AfterWorldOpaque,
+                                                                     material1,
+                                                                     vertexBinding1,
+                                                                     mesh.GetMesh(),
+                                                                     Eegeo::dv3::Zero(),
+                                                                     RenderableOwnsMesh);
                 
                 const Eegeo::Rendering::VertexLayouts::VertexBinding& vertexBinding2 = renderingModule.GetVertexBindingPool().GetVertexBinding(mesh.GetMesh()->GetVertexLayout(), vertexAttribs2);
                 
-                meshRenderable2 = Eegeo_NEW(Eegeo::Rendering::Renderables::WorldMeshRenderable)(Eegeo::Rendering::LayerIds::AfterWorldOpaque,
-                                                                                                material2,
-                                                                                                vertexBinding2,
-                                                                                                mesh.GetMesh(),
-                                                                                                Eegeo::dv3::Zero());
+                meshRenderable2 = Eegeo_NEW(GpsMarkerMeshRenderable)(Eegeo::Rendering::LayerIds::AfterWorldOpaque,
+                                                                     material2,
+                                                                     vertexBinding2,
+                                                                     mesh.GetMesh(),
+                                                                     Eegeo::dv3::Zero(),
+                                                                     RenderableOwnsMesh);
             }
         }
     }

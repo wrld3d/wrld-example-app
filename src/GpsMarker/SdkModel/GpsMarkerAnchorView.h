@@ -12,6 +12,7 @@
 #include "RenderCamera.h"
 #include "GpsMarkerHighlightMaterial.h"
 #include "GpsMarkerStencilClearMaterial.h"
+#include "GpsMarkerMeshRenderable.h"
 
 namespace ExampleApp
 {
@@ -45,13 +46,16 @@ namespace ExampleApp
                 Eegeo::Rendering::SceneModels::SceneModelFactory::TMeshRepo* m_pMeshRepo;
                 Eegeo::Rendering::SceneModels::SceneModelFactory::TTriStripMeshRepo* m_pTriStripMeshRepo;
                 
-                Eegeo::Rendering::Renderables::WorldMeshRenderable* m_pMarkerHighlightSphere;
-                Eegeo::Rendering::Renderables::WorldMeshRenderable* m_pMarkerHighlightCylinder;
+                Eegeo::Rendering::Mesh* m_pSphereMesh;
+                Eegeo::Rendering::Mesh* m_pCylinderMesh;
+
+                GpsMarkerMeshRenderable* m_pMarkerHighlightSphere;
+                GpsMarkerMeshRenderable* m_pMarkerHighlightCylinder;
                 Eegeo::Rendering::Shaders::ColorShader* m_pMarkerHighlightShader;
                 Eegeo::Rendering::Materials::ColorMaterial* m_pMarkerHighlightMaterial;
                 
-                Eegeo::Rendering::Renderables::WorldMeshRenderable* m_pMarkerStencilClearSphere;
-                Eegeo::Rendering::Renderables::WorldMeshRenderable* m_pMarkerStencilClearCylinder;
+                GpsMarkerMeshRenderable* m_pMarkerStencilClearSphere;
+                GpsMarkerMeshRenderable* m_pMarkerStencilClearCylinder;
                 Eegeo::Rendering::Shaders::ColorShader* m_pMarkerStencilClearShader;
                 GpsMarkerStencilClearMaterial* m_pMarkerStencilClearMaterial;
                 
@@ -66,8 +70,8 @@ namespace ExampleApp
                                            const Eegeo::Rendering::VertexLayouts::VertexAttribs& vertexAttribs1,
                                            const Eegeo::Rendering::VertexLayouts::VertexAttribs& vertexAttribs2,
                                            const Eegeo::Modules::Core::RenderingModule& renderingModule,
-                                           Eegeo::Rendering::Renderables::WorldMeshRenderable* &meshRenderable1,
-                                           Eegeo::Rendering::Renderables::WorldMeshRenderable* &meshRenderable2,
+                                           GpsMarkerMeshRenderable* &meshRenderable1,
+                                           GpsMarkerMeshRenderable* &meshRenderable2,
                                            Eegeo::Rendering::Materials::IMaterial* material1,
                                            Eegeo::Rendering::Materials::IMaterial* material2) const;
             };

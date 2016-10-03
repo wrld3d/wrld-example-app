@@ -25,6 +25,7 @@ namespace ExampleApp
                                     GpsMarkerAnchorView& anchorView,
                                     Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                     VisualMap::SdkModel::IVisualMapService& visualMapService,
+                                    const Eegeo::Rendering::ScreenProperties& screenProperties,
                                     ExampleAppMessaging::TMessageBus& messageBus);
                 ~GpsMarkerController();
                 
@@ -35,6 +36,9 @@ namespace ExampleApp
                 const static float DefaultUpdatePeriod;
                 float m_updateTime;
                 int m_visibilityCount;
+
+                float m_screenPixelScale;
+                float m_screenOversampleScale;
                 
                 GpsMarkerModel& m_model;
                 GpsMarkerView& m_view;

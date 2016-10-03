@@ -12,6 +12,7 @@ set(currsources
   ../src/GpsMarker/SdkModel/GpsMarkerHighlightMaterial.h
   ../src/GpsMarker/SdkModel/GpsMarkerMaterial.cpp
   ../src/GpsMarker/SdkModel/GpsMarkerMaterial.h
+  ../src/GpsMarker/SdkModel/GpsMarkerMeshRenderable.h
   ../src/GpsMarker/SdkModel/GpsMarkerNotHiddenMaterial.cpp
   ../src/GpsMarker/SdkModel/GpsMarkerNotHiddenMaterial.h
   ../src/GpsMarker/SdkModel/GpsMarkerStencilClearMaterial.cpp

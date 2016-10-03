@@ -15,7 +15,6 @@
 #include "ShaderIdGenerator.h"
 #include "MaterialIdGenerator.h"
 #include "SceneModelFactory.h"
-#include "WorldMeshRenderable.h"
 #include "PODfile.h"
 #include "PODFileParser.h"
 #include "PODNode.h"
@@ -32,6 +31,8 @@ namespace ExampleApp
         {
             namespace
             {
+				const bool RenderableOwnsMesh = false;
+
                 std::string GetFullMeshName(const std::string& filename, int meshId)
                 {
                     std::stringstream ss;
@@ -92,6 +93,14 @@ namespace ExampleApp
                 Eegeo_DELETE m_pMarkerStencilClearArrow;
                 Eegeo_DELETE m_pMarkerStencilClearShader;
                 Eegeo_DELETE m_pMarkerStencilClearMaterial;
+
+				if(!RenderableOwnsMesh)
+				{
+                    Eegeo_DELETE m_pSphereMesh;
+                    Eegeo_DELETE m_pArrowMesh;
+                    Eegeo_DELETE m_pSphereHighlightMesh;
+                    Eegeo_DELETE m_pArrowHighlightMesh;
+				}
             }
             
             void GpsMarkerView::SetVisible(bool visible)
@@ -340,67 +349,75 @@ namespace ExampleApp
                             
                             if(meshId == 0 || meshId == 2)
                             {
-                                Eegeo::Rendering::Renderables::WorldMeshRenderable* worldMeshRenderable = NULL;
+                                GpsMarkerMeshRenderable* gpsMarkerMeshRenderable = NULL;
                                 CreateMeshRenderables(mesh,
                                                       renderingModule,
                                                       m_pMarkerHighlightShader->GetVertexAttributes(),
-                                                      worldMeshRenderable,
+                                                      gpsMarkerMeshRenderable,
                                                       m_pMarkerHighlightMaterial);
-                                worldMeshRenderable->SetLayer(Eegeo::Rendering::LayerIds::BeforeWorldTranslucency);
+                                gpsMarkerMeshRenderable->SetLayer(Eegeo::Rendering::LayerIds::BeforeWorldTranslucency);
                                 
                                 if(meshId == 0)
                                 {
-                                    m_pMarkerHighlightSphere = worldMeshRenderable;
+                                    m_pSphereHighlightMesh = mesh.GetMesh();
+
+                                    m_pMarkerHighlightSphere = gpsMarkerMeshRenderable;
                                 }
                                 else
                                 {
-                                    m_pMarkerHighlightArrow = worldMeshRenderable;
+                                    m_pArrowHighlightMesh = mesh.GetMesh();
+
+                                    m_pMarkerHighlightArrow = gpsMarkerMeshRenderable;
                                 }
                             }
                             else if(meshId == 1 || meshId == 3)
                             {
-                                Eegeo::Rendering::Renderables::WorldMeshRenderable* worldMeshRenderable1 = NULL;
+                                GpsMarkerMeshRenderable* gpsMarkerMeshRenderable1 = NULL;
                                 CreateMeshRenderables(mesh,
                                                       renderingModule,
                                                       m_pMarkerShader->GetVertexAttributes(),
-                                                      worldMeshRenderable1,
+                                                      gpsMarkerMeshRenderable1,
                                                       m_pMarkerMaterial);
                                 
-                                Eegeo::Rendering::Renderables::WorldMeshRenderable* worldMeshRenderable2 = NULL;
+                                GpsMarkerMeshRenderable* gpsMarkerMeshRenderable2 = NULL;
                                 CreateMeshRenderables(mesh,
                                                       renderingModule,
                                                       m_pMarkerNotHiddenShader->GetVertexAttributes(),
-                                                      worldMeshRenderable2,
+                                                      gpsMarkerMeshRenderable2,
                                                       m_pMarkerNotHiddenMaterial);
                                 
-                                Eegeo::Rendering::Renderables::WorldMeshRenderable* worldMeshRenderable3 = NULL;
+                                GpsMarkerMeshRenderable* gpsMarkerMeshRenderable3 = NULL;
                                 CreateMeshRenderables(mesh,
                                                       renderingModule,
                                                       m_pMarkerHiddenShader->GetVertexAttributes(),
-                                                      worldMeshRenderable3,
+                                                      gpsMarkerMeshRenderable3,
                                                       m_pMarkerHiddenMaterial);
                                 
-                                Eegeo::Rendering::Renderables::WorldMeshRenderable* worldMeshRenderable4 = NULL;
+                                GpsMarkerMeshRenderable* gpsMarkerMeshRenderable4 = NULL;
                                 CreateMeshRenderables(mesh,
                                                       renderingModule,
                                                       m_pMarkerStencilClearShader->GetVertexAttributes(),
-                                                      worldMeshRenderable4,
+                                                      gpsMarkerMeshRenderable4,
                                                       m_pMarkerStencilClearMaterial);
-                                worldMeshRenderable4->SetLayer(Eegeo::Rendering::LayerIds::AfterWorldShadow);
+                                gpsMarkerMeshRenderable4->SetLayer(Eegeo::Rendering::LayerIds::AfterWorldShadow);
                                 
                                 if(meshId == 1)
                                 {
-                                    m_pMarkerSphere = worldMeshRenderable1;
-                                    m_pMarkerNotHiddenSphere = worldMeshRenderable2;
-                                    m_pMarkerHiddenSphere = worldMeshRenderable3;
-                                    m_pMarkerStencilClearSphere = worldMeshRenderable4;
+                                    m_pSphereMesh = mesh.GetMesh();
+
+                                    m_pMarkerSphere = gpsMarkerMeshRenderable1;
+                                    m_pMarkerNotHiddenSphere = gpsMarkerMeshRenderable2;
+                                    m_pMarkerHiddenSphere = gpsMarkerMeshRenderable3;
+                                    m_pMarkerStencilClearSphere = gpsMarkerMeshRenderable4;
                                 }
                                 else
                                 {
-                                    m_pMarkerArrow = worldMeshRenderable1;
-                                    m_pMarkerNotHiddenArrow = worldMeshRenderable2;
-                                    m_pMarkerHiddenArrow = worldMeshRenderable3;
-                                    m_pMarkerStencilClearArrow = worldMeshRenderable4;
+                                    m_pArrowMesh = mesh.GetMesh();
+
+                                    m_pMarkerArrow = gpsMarkerMeshRenderable1;
+                                    m_pMarkerNotHiddenArrow = gpsMarkerMeshRenderable2;
+                                    m_pMarkerHiddenArrow = gpsMarkerMeshRenderable3;
+                                    m_pMarkerStencilClearArrow = gpsMarkerMeshRenderable4;
                                 }
                             }
                         }
@@ -411,16 +428,17 @@ namespace ExampleApp
             void GpsMarkerView::CreateMeshRenderables(const Eegeo::Rendering::SceneModels::SceneModelMeshResource& mesh,
                                                       const Eegeo::Modules::Core::RenderingModule& renderingModule,
                                                       const Eegeo::Rendering::VertexLayouts::VertexAttribs& vertexAttribs,
-                                                      Eegeo::Rendering::Renderables::WorldMeshRenderable* &meshRenderable,
+                                                      GpsMarkerMeshRenderable* &meshRenderable,
                                                       Eegeo::Rendering::Materials::IMaterial* material) const
             {
                 const Eegeo::Rendering::VertexLayouts::VertexBinding& vertexBinding = renderingModule.GetVertexBindingPool().GetVertexBinding(mesh.GetMesh()->GetVertexLayout(), vertexAttribs);
                 
-                meshRenderable = Eegeo_NEW(Eegeo::Rendering::Renderables::WorldMeshRenderable)(Eegeo::Rendering::LayerIds::AfterWorldOpaque,
-                                                                                               material,
-                                                                                               vertexBinding,
-                                                                                               mesh.GetMesh(),
-                                                                                               Eegeo::dv3::Zero());
+                meshRenderable = Eegeo_NEW(GpsMarkerMeshRenderable)(Eegeo::Rendering::LayerIds::AfterWorldOpaque,
+                                                                    material,
+                                                                    vertexBinding,
+                                                                    mesh.GetMesh(),
+                                                                    Eegeo::dv3::Zero(),
+                                                                    RenderableOwnsMesh);
             }
         }
     }

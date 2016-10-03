@@ -12,6 +12,7 @@
 #include "MathsHelpers.h"
 #include "TransformHelpers.h"
 #include "VisualMapState.h"
+#include "ScaleHelpers.h"
 
 namespace ExampleApp
 {
@@ -26,6 +27,7 @@ namespace ExampleApp
                                                      GpsMarkerAnchorView& anchorView,
                                                      Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                      VisualMap::SdkModel::IVisualMapService& visualMapService,
+                                                     const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                      ExampleAppMessaging::TMessageBus& messageBus)
             : m_model(model)
             , m_view(view)
@@ -35,6 +37,8 @@ namespace ExampleApp
             , m_messageBus(messageBus)
             , m_updateTime(0.0f)
             , m_visibilityCount(1)
+            , m_screenPixelScale(screenProperties.GetPixelScale())
+            , m_screenOversampleScale(screenProperties.GetOversampleScale())
             , m_modalityChangedHandlerBinding(this, &GpsMarkerController::OnModalityChangedMessage)
             , m_visibilityChangedHandlerBinding(this, &GpsMarkerController::OnVisibilityChangedMessage)
             , m_interiorsExplorerStateChangedCallback(this, &GpsMarkerController::OnInteriorsExplorerStateChangedMessage)
@@ -102,7 +106,7 @@ namespace ExampleApp
                 
                 Eegeo::v3 markerUp = scaledPoint.Norm().ToSingle();
                 
-                float scale = Eegeo::Helpers::TransformHelpers::ComputeModelScaleForConstantScreenSize(renderCamera, scaledPoint) * 0.025f;
+				const float scale = ExampleApp::Helpers::ScaleHelpers::ComputeModelScaleForScreenWithPixelScaling(renderCamera, scaledPoint, m_screenPixelScale, m_screenOversampleScale) * 4.25f;
                 Eegeo::v3 markerScale = Eegeo::v3(scale, scale, scale);
                 
                 const Eegeo::dv3& ecefCameraPosition = renderCamera.GetEcefLocation();
