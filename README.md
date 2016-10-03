@@ -92,4 +92,4 @@ See the [eeGeo API reference](http://cdn1.eegeo.com/docs/mobile-sdk/namespaces.h
 
 ## License
 
-The eeGeo 3D Maps SDK is released under the Eegeo Platform SDK Evaluation license. See the [LICENSE.md](https://github.com/eegeo/eegeo-example-app/blob/master/LICENSE.md) file for details.
+The eeGeo 3D Maps Example App is released under the Simplified BSD License. See the [LICENSE.md](https://github.com/eegeo/eegeo-example-app/blob/master/LICENSE.md) file for details.
