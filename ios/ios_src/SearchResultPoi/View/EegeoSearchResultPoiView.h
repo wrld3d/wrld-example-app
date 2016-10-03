@@ -54,28 +54,40 @@
 
 - (void) setActiveStateToIntermediateValue:(float)activeState;
 
-@property (nonatomic, retain) UIView* pCloseButtonContainer;
+
 @property (nonatomic, retain) UIButton* pCloseButton;
+@property (nonatomic, retain) UIView* pCloseButtonContainer;
 @property (nonatomic, retain) UIButton* pPinButton;
+@property (nonatomic, retain) UIView* pDropPinContainer;
+@property (nonatomic, retain) UILabel* pDropPinLabel;
 @property (nonatomic, retain) UIView* pControlContainer;
-@property (nonatomic, retain) UIView* pHeadlineContainer;
-@property (nonatomic, retain) UIView* pContentContainer;
+@property (nonatomic, retain) UIView* pTitleCardContainer;
+@property (nonatomic, retain) UIView* pDetailsCardContainer;
+@property (nonatomic, retain) UIScrollView* pTagsCardContainer;;
 @property (nonatomic, retain) UIScrollView* pLabelsContainer;
 @property (nonatomic, retain) UIView* pTagIconContainer;
 @property (nonatomic, retain) UILabel* pTitleLabel;
-@property (nonatomic, retain) UIView* pAddressHeaderContainer;
-@property (nonatomic, retain) UILabel* pAddressHeaderLabel;
 @property (nonatomic, retain) UILabel* pAddressContent;
-@property (nonatomic, retain) UIView* pPhoneHeaderContainer;
-@property (nonatomic, retain) UILabel* pPhoneHeaderLabel;
 @property (nonatomic, retain) UILabel* pPhoneContent;
-@property (nonatomic, retain) UIView* pTagsHeaderContainer;
-@property (nonatomic, retain) UILabel* pTagsHeaderLabel;
 @property (nonatomic, retain) UILabel* pTagsContent;
 @property (nonatomic, retain) UIImageView* pPreviewImage;
 @property (nonatomic, retain) UIActivityIndicatorView* pPreviewImageSpinner;
-@property (nonatomic, retain) UIView* pWebHeaderContainer;
-@property (nonatomic, retain) UILabel* pWebHeaderLabel;
 @property (nonatomic, retain) UILabel* pWebContent;
+@property (nonatomic, retain) UILabel* pDescriptionContent;
+
+@property (nonatomic, retain) UIImageView* pAddressIconContainer;
+@property (nonatomic, retain) UIImageView* pPhoneIconContainer;
+@property (nonatomic, retain) UIImageView* pWebIconContainer;
+@property (nonatomic, retain) UIImageView* pTagsIconContainer;
+@property (nonatomic, retain) UIImageView* pDescriptionIconContainer;
+@property (nonatomic, retain) UIImageView* pFacebookIconContainer;
+@property (nonatomic, retain) UIImageView* pTwitterIconContainer;
+@property (nonatomic, retain) UIImageView* pEmailIconContainer;
+@property (nonatomic, retain) UIImageView* pFadeContainer;
+
+@property (nonatomic, retain) UIView* pTitleCardHeaderLine;
+@property (nonatomic, retain) UIView* pDetailsCardHeaderLine;
+@property (nonatomic, retain) UIView* pTagsCardHeaderLine;
+@property (nonatomic, retain) UIView* pDescriptionCardHeaderLine;
 
 @end

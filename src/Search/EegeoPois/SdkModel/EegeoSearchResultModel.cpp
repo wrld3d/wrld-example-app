@@ -16,6 +16,9 @@ namespace ExampleApp
                 , m_imageUrl("")
                 , m_address("")
                 , m_description("")
+                , m_facebookUrl("")
+                , m_twitterUrl("")
+                , m_email("")
                 {
                 }
                 
@@ -23,12 +26,18 @@ namespace ExampleApp
                                                                const std::string& webUrl,
                                                                const std::string& address,
                                                                const std::string& description,
-                                                               const std::string& imageUrl)
+                                                               const std::string& imageUrl,
+                                                               const std::string& facebookUrl,
+                                                               const std::string& twitterUrl,
+                                                               const std::string& email)
                     : m_phone(phone)
                     , m_webUrl(webUrl)
                     , m_imageUrl(imageUrl)
                     , m_address(address)
                     , m_description(description)
+                    , m_facebookUrl(facebookUrl)
+                    , m_twitterUrl(twitterUrl)
+                    , m_email(email)
                 {
                 }
 
@@ -56,7 +65,22 @@ namespace ExampleApp
                 {
                     return m_webUrl;
                 }
-
+                
+                const std::string& EegeoSearchResultModel::GetFacebookUrl() const
+                {
+                    return m_facebookUrl;
+                }
+                
+                const std::string& EegeoSearchResultModel::GetTwitterUrl() const
+                {
+                    return m_twitterUrl;
+                }
+                
+                const std::string& EegeoSearchResultModel::GetEmail() const
+                {
+                    return m_email;
+                }
+                
                 bool EegeoSearchResultModel::HasImage() const
                 {
                     return !m_imageUrl.empty();

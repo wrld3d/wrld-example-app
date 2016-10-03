@@ -23,6 +23,9 @@ namespace ExampleApp
                     std::string m_imageUrl;
                     std::string m_address;
                     std::string m_description;
+                    std::string m_facebookUrl;
+                    std::string m_twitterUrl;
+                    std::string m_email;
                     
                 public:
                     
@@ -30,7 +33,10 @@ namespace ExampleApp
                                            const std::string& webUrl,
                                            const std::string& address,
                                            const std::string& description,
-                                           const std::string& imageUrl);
+                                           const std::string& imageUrl,
+                                           const std::string& facebookUrl,
+                                           const std::string& twitterUrl,
+                                           const std::string& email);
                     
                     EegeoSearchResultModel();
                     
@@ -43,6 +49,12 @@ namespace ExampleApp
                     const std::string& GetAddress() const;
                     
                     const std::string& GetDescription() const;
+                    
+                    const std::string& GetFacebookUrl() const;
+                    
+                    const std::string& GetTwitterUrl() const;
+                    
+                    const std::string& GetEmail() const;
                     
                     bool HasImage() const;
                     

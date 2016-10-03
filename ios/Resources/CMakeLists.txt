@@ -28,12 +28,16 @@ set(resources ${resources}
 		Resources/banner_logo.png
 		Resources/banner_logo@2x.png
 		Resources/banner_logo@3x.png
-		Resources/button_add_pin_off.png
-		Resources/button_add_pin_off@2x.png
-		Resources/button_add_pin_off@3x.png
-		Resources/button_add_pin_on.png
-		Resources/button_add_pin_on@2x.png
-		Resources/button_add_pin_on@3x.png
+                Resources/button_add_pin_off.png
+                Resources/button_add_pin_off@0.75x.png
+                Resources/button_add_pin_off@1.5x.png
+                Resources/button_add_pin_off@2x.png
+                Resources/button_add_pin_off@3x.png
+                Resources/button_add_pin_on.png
+                Resources/button_add_pin_on@0.75x.png
+                Resources/button_add_pin_on@1.5x.png
+                Resources/button_add_pin_on@2x.png
+                Resources/button_add_pin_on@3x.png
 		Resources/button_checkbox_off.png
 		Resources/button_checkbox_off@2x.png
 		Resources/button_checkbox_off@3x.png
@@ -112,12 +116,16 @@ set(resources ${resources}
 		Resources/button_photo_on.png
 		Resources/button_photo_on@2x.png
 		Resources/button_photo_on@3x.png
-		Resources/button_remove_pin_off.png
-		Resources/button_remove_pin_off@2x.png
-		Resources/button_remove_pin_off@3x.png
-		Resources/button_remove_pin_on.png
-		Resources/button_remove_pin_on@2x.png
-		Resources/button_remove_pin_on@3x.png
+                Resources/button_remove_pin_off.png
+                Resources/button_remove_pin_off@0.75x.png
+                Resources/button_remove_pin_off@1.5x.png
+                Resources/button_remove_pin_off@2x.png
+                Resources/button_remove_pin_off@3x.png
+                Resources/button_remove_pin_on.png
+                Resources/button_remove_pin_on@0.75x.png
+                Resources/button_remove_pin_on@1.5x.png
+                Resources/button_remove_pin_on@2x.png
+                Resources/button_remove_pin_on@3x.png
 		Resources/button_search_off.png
 		Resources/button_search_off@2x.png
 		Resources/button_search_off@3x.png
@@ -178,12 +186,67 @@ set(resources ${resources}
 		Resources/CompassNewUnlocked@1.5x.png
 		Resources/CompassNewUnlocked@2x.png
 		Resources/CompassNewUnlocked@3x.png
+                Resources/contact_icon_twitter.png
+                Resources/contact_icon_twitter@0.75x.png
+                Resources/contact_icon_twitter@1.5x.png
+                Resources/contact_icon_twitter@2x.png
+                Resources/contact_icon_twitter@3x.png
+                Resources/contact_icon_email.png
+                Resources/contact_icon_email@1.5x.png
+                Resources/contact_icon_email@2x.png
+                Resources/contact_icon_email@3x.png
+                Resources/contact_icon_email@0.75x.png
+                Resources/contact_icon_facebook.png
+                Resources/contact_icon_facebook@0.75x.png
+                Resources/contact_icon_facebook.png@2x.png
+                Resources/contact_icon_facebook@3x.png
+                Resources/contact_icon_facebook@1.5x.png
+                Resources/detail_icon_description_active.png
+                Resources/detail_icon_description_active@0.75x.png
+                Resources/detail_icon_description_active@1.5x.png
+                Resources/detail_icon_description_active@2x.png
+                Resources/detail_icon_description_active@3x.png
+                Resources/detail_icon_description.png
+                Resources/detail_icon_description@0.75x.png
+                Resources/detail_icon_description@1.5x.png
+                Resources/detail_icon_description@2x.png
+                Resources/detail_icon_description@3x.png
+                Resources/detail_icon_email.png
+                Resources/detail_icon_email@0.75x.png
+                Resources/detail_icon_email@1.5x.png
+                Resources/detail_icon_email@2x.png
+                Resources/detail_icon_email@3x.png
+                Resources/detail_icon_email_active.png
+                Resources/detail_icon_email_active@0.75x.png
+                Resources/detail_icon_email_active@1.5x.png
+                Resources/detail_icon_email_active@2x.png
+                Resources/detail_icon_email_active@3x.png
+                Resources/detail_icon_web_link_active.png
+                Resources/detail_icon_web_link_active@0.75x.png
+                Resources/detail_icon_web_link_active@1.5x.png
+                Resources/detail_icon_web_link_active@2x.png
+                Resources/detail_icon_web_link_active@3x.png
+                Resources/detail_icon_web_link.png
+                Resources/detail_icon_web_link@0.75x.png
+                Resources/detail_icon_web_link@1.5x.png
+                Resources/detail_icon_web_link@2x.png
+                Resources/detail_icon_web_link@3x.png
 		Resources/DejaVuSansBold.fnt
 		Resources/DejaVuSansBold_0.png
 		Resources/eegeo_logo.png
 		Resources/eegeo_logo@2x.png
 		Resources/eegeo_logo@3x.png
 		Resources/embedded_manifest.bin
+                Resources/exit_blue_x_button.png
+                Resources/exit_blue_x_button@0.75x.png
+                Resources/exit_blue_x_button@1.5x.png
+                Resources/exit_blue_x_button@2x.png
+                Resources/exit_blue_x_button@3x.png
+                Resources/exit_dark_blue_x_button.png
+                Resources/exit_dark_blue_x_button@0.75x.png
+                Resources/exit_dark_blue_x_button@1.5x.png
+                Resources/exit_dark_blue_x_button@2x.png
+                Resources/exit_dark_blue_x_button@3x.png
 		Resources/floor_selection_bottom.png
 		Resources/floor_selection_bottom@2x.png
 		Resources/floor_selection_bottom@3x.png
@@ -600,6 +663,36 @@ set(resources ${resources}
 		Resources/poi_marker.png
 		Resources/poi_marker@2x.png
 		Resources/poi_marker@3x.png
+                Resources/poi_tag_active@3x.png
+                Resources/poi_tag_active@2x.png
+                Resources/poi_tag_active@1.5x.png
+                Resources/poi_tag_active@0.75x.png
+                Resources/poi_tag_active.png
+                Resources/poi_tag@3x.png
+                Resources/poi_tag@2x.png
+                Resources/poi_tag@1.5x.png
+                Resources/poi_tag@0.75x.png
+                Resources/poi_tag.png
+                Resources/poi_phone_active@3x.png
+                Resources/poi_phone_active@2x.png
+                Resources/poi_phone_active@1.5x.png
+                Resources/poi_phone_active@0.75x.png
+                Resources/poi_phone_active.png
+                Resources/poi_phone@3x.png
+                Resources/poi_phone@2x.png
+                Resources/poi_phone@1.5x.png
+                Resources/poi_phone@0.75x.png
+                Resources/poi_phone.png
+                Resources/poi_address_active@3x.png
+                Resources/poi_address_active@2x.png
+                Resources/poi_address_active@1.5x.png
+                Resources/poi_address_active@0.75x.png
+                Resources/poi_address_active.png
+                Resources/poi_address@3x.png
+                Resources/poi_address@2x.png
+                Resources/poi_address@1.5x.png
+                Resources/poi_address@0.75x.png
+                Resources/poi_address.png
         Resources/poi_placeholder.png
         Resources/poi_placeholder@2x.png
         Resources/poi_placeholder@3x.png
