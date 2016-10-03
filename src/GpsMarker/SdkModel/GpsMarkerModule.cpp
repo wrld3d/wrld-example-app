@@ -35,6 +35,7 @@ namespace ExampleApp
                                              Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
                                              Eegeo::Modules::Map::MapModule& mapModule,
                                              VisualMap::SdkModel::IVisualMapService& visualMapService,
+                                             const Eegeo::Rendering::ScreenProperties& screenProperties,
                                              ExampleAppMessaging::TMessageBus& messageBus)
             : m_renderableFilters(renderingModule.GetRenderableFilters())
             {
@@ -72,7 +73,7 @@ namespace ExampleApp
                                                    platformAbstractions.GetFileIO(),
                                                    platformAbstractions.GetTextureFileLoader(),
                                                    *m_pGpsIconRenderable);
-                m_pController = Eegeo_NEW(GpsMarkerController)(*m_pModel, *m_pView, *m_pAnchorView, mapModule.GetEnvironmentFlatteningService(), visualMapService, messageBus);
+                m_pController = Eegeo_NEW(GpsMarkerController)(*m_pModel, *m_pView, *m_pAnchorView, mapModule.GetEnvironmentFlatteningService(), visualMapService, screenProperties, messageBus);
                 
                 m_renderableFilters.AddRenderableFilter(*m_pView);
                 m_renderableFilters.AddRenderableFilter(*m_pAnchorView);

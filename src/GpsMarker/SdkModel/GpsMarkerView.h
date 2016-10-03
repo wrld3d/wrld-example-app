@@ -16,6 +16,7 @@
 #include "GpsMarkerHiddenMaterial.h"
 #include "GpsMarkerHighlightMaterial.h"
 #include "GpsMarkerStencilClearMaterial.h"
+#include "GpsMarkerMeshRenderable.h"
 
 namespace ExampleApp
 {
@@ -74,28 +75,33 @@ namespace ExampleApp
                 Eegeo::Rendering::SceneModels::SceneModelFactory::TMeshRepo* m_pMeshRepo;
                 Eegeo::Rendering::SceneModels::SceneModelFactory::TTriStripMeshRepo* m_pTriStripMeshRepo;
                 
-                Eegeo::Rendering::Renderables::WorldMeshRenderable* m_pMarkerSphere;
-                Eegeo::Rendering::Renderables::WorldMeshRenderable* m_pMarkerArrow;
+                Eegeo::Rendering::Mesh* m_pSphereMesh;
+                Eegeo::Rendering::Mesh* m_pArrowMesh;
+                Eegeo::Rendering::Mesh* m_pSphereHighlightMesh;
+                Eegeo::Rendering::Mesh* m_pArrowHighlightMesh;
+
+                GpsMarkerMeshRenderable* m_pMarkerSphere;
+                GpsMarkerMeshRenderable* m_pMarkerArrow;
                 GpsMarkerShader* m_pMarkerShader;
                 GpsMarkerMaterial* m_pMarkerMaterial;
                 
-                Eegeo::Rendering::Renderables::WorldMeshRenderable* m_pMarkerNotHiddenSphere;
-                Eegeo::Rendering::Renderables::WorldMeshRenderable* m_pMarkerNotHiddenArrow;
+                GpsMarkerMeshRenderable* m_pMarkerNotHiddenSphere;
+                GpsMarkerMeshRenderable* m_pMarkerNotHiddenArrow;
                 GpsMarkerShader* m_pMarkerNotHiddenShader;
                 GpsMarkerNotHiddenMaterial* m_pMarkerNotHiddenMaterial;
                 
-                Eegeo::Rendering::Renderables::WorldMeshRenderable* m_pMarkerHiddenSphere;
-                Eegeo::Rendering::Renderables::WorldMeshRenderable* m_pMarkerHiddenArrow;
+                GpsMarkerMeshRenderable* m_pMarkerHiddenSphere;
+                GpsMarkerMeshRenderable* m_pMarkerHiddenArrow;
                 Eegeo::Rendering::Shaders::ColorShader* m_pMarkerHiddenShader;
                 GpsMarkerHiddenMaterial* m_pMarkerHiddenMaterial;
                 
-                Eegeo::Rendering::Renderables::WorldMeshRenderable* m_pMarkerHighlightSphere;
-                Eegeo::Rendering::Renderables::WorldMeshRenderable* m_pMarkerHighlightArrow;
+                GpsMarkerMeshRenderable* m_pMarkerHighlightSphere;
+                GpsMarkerMeshRenderable* m_pMarkerHighlightArrow;
                 Eegeo::Rendering::Shaders::ColorShader* m_pMarkerHighlightShader;
                 GpsMarkerHighlightMaterial* m_pMarkerHighlightMaterial;
                 
-                Eegeo::Rendering::Renderables::WorldMeshRenderable* m_pMarkerStencilClearSphere;
-                Eegeo::Rendering::Renderables::WorldMeshRenderable* m_pMarkerStencilClearArrow;
+                GpsMarkerMeshRenderable* m_pMarkerStencilClearSphere;
+                GpsMarkerMeshRenderable* m_pMarkerStencilClearArrow;
                 Eegeo::Rendering::Shaders::ColorShader* m_pMarkerStencilClearShader;
                 GpsMarkerStencilClearMaterial* m_pMarkerStencilClearMaterial;
                 
@@ -112,7 +118,7 @@ namespace ExampleApp
                 void CreateMeshRenderables(const Eegeo::Rendering::SceneModels::SceneModelMeshResource& mesh,
                                            const Eegeo::Modules::Core::RenderingModule& renderingModule,
                                            const Eegeo::Rendering::VertexLayouts::VertexAttribs& vertexAttribs,
-                                           Eegeo::Rendering::Renderables::WorldMeshRenderable* &meshRenderable,
+                                           GpsMarkerMeshRenderable* &meshRenderable,
                                            Eegeo::Rendering::Materials::IMaterial* material) const;
             };
         }

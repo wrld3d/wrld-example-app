@@ -28,6 +28,7 @@ namespace ExampleApp
                                 Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
                                 Eegeo::Modules::Map::MapModule& mapModule,
                                 VisualMap::SdkModel::IVisualMapService& visualMapService,
+                                const Eegeo::Rendering::ScreenProperties& screenProperties,
                                 ExampleAppMessaging::TMessageBus& messageBus);
                 ~GpsMarkerModule();
                 

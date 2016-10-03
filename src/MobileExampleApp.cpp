@@ -523,6 +523,7 @@ namespace ExampleApp
                                                                                          m_pWorld->GetTerrainModelModule(),
                                                                                          m_pWorld->GetMapModule(),
                                                                                          m_pVisualMapModule->GetVisualMapService(),
+                                                                                         m_screenProperties,
                                                                                          m_messageBus);
 
         m_pSurveyModule = Eegeo_NEW(Surveys::SdkModel::SurveyModule)(m_messageBus,
