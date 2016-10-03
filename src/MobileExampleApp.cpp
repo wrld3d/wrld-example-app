@@ -303,7 +303,7 @@ namespace ExampleApp
                                                 screenProperties,
                                                 locationService,
                                                 nativeUIFactories,
-                                                Eegeo::EnvironmentCharacterSet::JapanPlaceNames,
+                                                Eegeo::EnvironmentCharacterSet::UseFontModuleConfig,
                                                 platformConfig,
                                                 NULL,
                                                 &errorHandler
@@ -929,7 +929,7 @@ namespace ExampleApp
                                                        mapModule,
                                                        pinTextureInfo.textureId,
                                                        atlasTexturePageLayout,
-                                                       Eegeo::Rendering::LayerIds::InteriorEntities,
+                                                       Eegeo::Rendering::LayerIds::Pins,
                                                        m_screenProperties);
     }
     

@@ -38,6 +38,7 @@ namespace ExampleApp
             std::string m_myPinsWebServiceAuthToken;
             std::string m_twitterAuthCode;
             bool m_isKioskTouchInputEnabled;
+            bool m_useLabels;
 
         public:
             
@@ -66,7 +67,8 @@ namespace ExampleApp
                 const std::string& myPinsWebServiceUrl,
                 const std::string& myPinsWebServiceAuthToken,
                 const std::string& twitterAuthCode,
-                const bool isKioskTouchInputEnabled
+                const bool isKioskTouchInputEnabled,
+                bool m_useLabels
             );
             
             std::string Name() const;
@@ -118,6 +120,8 @@ namespace ExampleApp
             std::string TwitterAuthCode() const;
 
             bool IsKioskTouchInputEnabled() const;
+            
+            bool UseLabels() const;
         };
     }
 }

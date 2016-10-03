@@ -659,7 +659,17 @@ set(resources ${resources}
 		Resources/SearchResults_ScrollButton@0.75x.png
 		Resources/SearchResults_ScrollButton@1.5x.png
 		Resources/SearchResults_ScrollButton@2x.png
-		Resources/SearchResults_ScrollButton@3x.png
+        Resources/SearchResults_ScrollButton@3x.png
+        Resources/Labels
+        Resources/Labels/label_style_sheet.json
+        Resources/IPAexGothic_sdf_0.png
+        Resources/IPAexGothic_sdf_1.png
+        Resources/IPAexGothic_sdf_2.png
+        Resources/IPAexGothic_sdf_3.png
+        Resources/IPAexGothic_sdf_4.png
+        Resources/IPAexGothic_sdf_5.png
+        Resources/IPAexGothic_sdf_6.png
+        Resources/IPAexGothic_sdf.fnt
 		Resources/SearchResultOnMap
 		Resources/SearchResultOnMap/pin_sheet_0.png
 		Resources/SearchResultOnMap/pin_sheet_0@2x.png
