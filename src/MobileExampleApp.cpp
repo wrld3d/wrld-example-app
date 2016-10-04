@@ -495,13 +495,6 @@ namespace ExampleApp
                                                                                                                                world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel());
         }
         
-        std::vector<std::string> appTags;
-        appTags.reserve(searchTags.tags.size());
-        for(const auto& i : searchTags.tags)
-        {
-            appTags.push_back(i.tag);
-        }
-        
         const bool useYelpSearch = true;
         if (useYelpSearch)
         {
@@ -509,7 +502,7 @@ namespace ExampleApp
                                                                                                                                       m_platformAbstractions.GetWebLoadRequestFactory(),
                                                                                                                                       m_networkCapabilities,
                                                                                                                                       m_platformAbstractions.GetUrlEncoder(),
-                                                                                                                                      appTags,
+                                                                                                                                      searchTags,
                                                                                                                                       m_applicationConfiguration.YelpConsumerKey(),
                                                                                                                                       m_applicationConfiguration.YelpConsumerSecret(),
                                                                                                                                       m_applicationConfiguration.YelpOAuthToken(),

@@ -35,7 +35,7 @@ namespace ExampleApp
                                                                                     serviceUrl,
                                                                                     apiKey);
 
-                    m_pTagIconMapper = CreateTagIconMapper(searchTags);
+                    m_pTagIconMapper = TagSearch::SdkModel::CreateTagIconMapper(searchTags);
 
                     m_pReadableTagMapper = Eegeo_NEW(EegeoReadableTagMapper)(searchTags);
 

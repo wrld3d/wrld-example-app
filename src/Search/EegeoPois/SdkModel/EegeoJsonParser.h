@@ -6,8 +6,8 @@
 #include "Types.h"
 #include "SearchResultModel.h"
 #include "EegeoSearchResultModel.h"
-#include "ITagIconMapper.h"
 #include "EegeoPois.h"
+#include "TagSearch.h"
 
 namespace ExampleApp
 {
@@ -20,11 +20,11 @@ namespace ExampleApp
                 class EegeoJsonParser : public IEegeoParser, private Eegeo::NonCopyable
                 {
                 private:
-                    const SearchResultPoi::SdkModel::ITagIconMapper& m_tagIconMapper;
+                    const TagSearch::SdkModel::ITagIconMapper& m_tagIconMapper;
                     const EegeoReadableTagMapper& m_tagReadableNameMapper;
 
                 public:
-                    EegeoJsonParser(const SearchResultPoi::SdkModel::ITagIconMapper& tagIconMapper,
+                    EegeoJsonParser(const TagSearch::SdkModel::ITagIconMapper& tagIconMapper,
                                     const EegeoReadableTagMapper& tagReadableNameMapper);
                     
                     void ParseEegeoQueryResults(const std::string& serialized,

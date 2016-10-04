@@ -93,7 +93,7 @@
     { "tag": "tram", "readable_tag": "Tram", "icon_key": "tram" },
     { "tag": "transport", "readable_tag": "Transport", "icon_key": "transport" },
     { "tag": "twitter", "readable_tag": "Twitter", "icon_key": "twitter" },
-    { "tag": "university", "readable_tag": "University", "icon_key": "university" },
+    { "tag": "university", "readable_tag": "University", "icon_key": "education" },
     { "tag": "vet", "readable_tag": "Vet", "icon_key": "vet" },
     { "tag": "vimeo", "readable_tag": "Vimeo", "icon_key": "vimeo" },
     { "tag": "wikipedia", "readable_tag": "Wikipedia", "icon_key": "wikipedia" },
