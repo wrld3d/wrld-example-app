@@ -3,6 +3,7 @@
 #pragma once
 
 #include "VectorMath.h"
+#include "RenderCamera.h"
 
 namespace ExampleApp
 {

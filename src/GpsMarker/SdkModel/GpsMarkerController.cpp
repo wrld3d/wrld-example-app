@@ -13,6 +13,7 @@
 #include "TransformHelpers.h"
 #include "VisualMapState.h"
 #include "ScaleHelpers.h"
+#include "ScreenProperties.h"
 
 namespace ExampleApp
 {
