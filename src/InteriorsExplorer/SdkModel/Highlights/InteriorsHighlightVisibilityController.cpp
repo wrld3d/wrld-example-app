@@ -28,7 +28,8 @@ namespace ExampleApp
                                                                                                Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                                                                                Search::SdkModel::ISearchResultRepository& searchResultRepository,
                                                                                                Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& labelController,
-                                                                                               ExampleAppMessaging::TMessageBus& messageBus)
+                                                                                               ExampleAppMessaging::TMessageBus& messageBus,
+                                                                                               IHighlightColorMapper& highlightColorMapper)
                 : m_interiorInteractionModel(interiorInteractionModel)
                 , m_interiorslabelsController(labelController)
                 , m_searchService(searchService)
@@ -40,6 +41,7 @@ namespace ExampleApp
                 , m_interiorInteractionModelChangedHandler(this, &InteriorsHighlightVisibilityController::OnInteriorInteractionModelChanged)
                 , m_availabilityChangedHandlerBinding(this, &InteriorsHighlightVisibilityController::OnAvailabilityChanged)
                 , m_interiorLabelsBuiltHandler(this, &InteriorsHighlightVisibilityController::OnInteriorLabelsBuilt)
+                , m_highlightColorMapper(highlightColorMapper)
                 {
                     m_searchService.InsertOnReceivedQueryResultsCallback(m_searchResultsHandler);
                     m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
@@ -77,8 +79,7 @@ namespace ExampleApp
                 void InteriorsHighlightVisibilityController::DeactivateLabels()
                 {
                     namespace IE = Eegeo::Resources::Interiors::Entities;
-                    
-                    
+
                     const IE::TFloorIndexToModelsMap& floorIndexToModels = m_interiorslabelsController.GetFloorIndexToModels();
                     
                     for (IE::TFloorIndexToModelsMap::const_iterator it = floorIndexToModels.begin(); it != floorIndexToModels.end(); ++it)
@@ -100,7 +101,6 @@ namespace ExampleApp
                 void InteriorsHighlightVisibilityController::OnSearchResultCleared()
                 {
                     DeactivateHighlightRenderables();
-                    m_highlightAvailabilityData.clear();
                 }
                 
                 void InteriorsHighlightVisibilityController::OnInteriorInteractionModelChanged()
@@ -110,8 +110,6 @@ namespace ExampleApp
                     
                     if (m_interiorInteractionModel.HasInteriorModel())
                     {
-                        ShowLabelsForCurrentResults();
-                        
                         const EegeoInteriors::InteriorsModel& model = *m_interiorInteractionModel.GetInteriorModel();
                         
                         for(EegeoInteriors::TFloorModelVector::const_iterator floors = model.GetFloors().begin();
@@ -123,7 +121,6 @@ namespace ExampleApp
                             for (int cellIndex = 0; cellIndex < floorCells->GetCellCount(); ++cellIndex)
                             {
                                 EegeoInteriors::InteriorsFloorCell* cell = floorCells->GetFloorCells()[cellIndex];
-                                
                                 std::vector<EegeoRenderables::InteriorHighlightRenderable*> renderables = cell->GetHighlightRenderables();
                                 
                                 for (std::vector<EegeoRenderables::InteriorHighlightRenderable*>::iterator renderableIterator = renderables.begin();
@@ -133,6 +130,11 @@ namespace ExampleApp
                                     AddHighlight(**renderableIterator);
                                 }
                             }
+                        }
+                        
+                        if(m_currentHighlightRenderables.size() > 0)
+                        {
+                            ShowLabelsForCurrentResults();
                         }
                     }
                     else
@@ -151,32 +153,12 @@ namespace ExampleApp
                     {
                         std::string roomName = id.substr(highlightPrefix.length());
                         m_currentHighlightRenderables.insert(std::make_pair(roomName, &renderable));
-                        std::map<std::string, std::string>::iterator availabilityData = m_highlightAvailabilityData.find(roomName);
-                        
-                        if (availabilityData != m_highlightAvailabilityData.end())
-                        {
-                            ConfigureRenderableForAvailability(renderable, availabilityData->second);
-                        }
                     }
-                }
-                
-                void InteriorsHighlightVisibilityController::ConfigureRenderableForAvailability(Eegeo::Rendering::Renderables::InteriorHighlightRenderable& renderable, const std::string& availability)
-                {
-                    const Eegeo::v4 available(0.0f, 1.0f, 0.0f, 0.4f);
-                    const Eegeo::v4 availableSoon(1.0f, 0.8f, 0.0f, 0.4f);
-                    const Eegeo::v4 occupied(1.0f, 0.0f, 0.0f, 0.4f);
-                    const Eegeo::v4 unknown(1.0f, 1.0f, 1.0f, 0.0f);
                 }
                 
                 void InteriorsHighlightVisibilityController::OnSearchResultsLoaded(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results)
                 {
                     DeactivateHighlightRenderables();
-                    m_highlightAvailabilityData.clear();
-                    
-                    for(std::vector<Search::SdkModel::SearchResultModel>::const_iterator it = results.begin(); it != results.end(); ++it)
-                    {
-                    }
-                    
                     ShowLabelsForResults(results);
                 }
                 
@@ -184,6 +166,7 @@ namespace ExampleApp
                 {
                     std::vector<Search::SdkModel::SearchResultModel> results;
                     results.reserve(m_searchResultRepository.GetItemCount());
+                    
                     for(int i = 0; i < m_searchResultRepository.GetItemCount(); i++)
                     {
                         Search::SdkModel::SearchResultModel* pResult = m_searchResultRepository.GetItemAtIndex(i);
@@ -195,31 +178,31 @@ namespace ExampleApp
                 
                 void InteriorsHighlightVisibilityController::ShowLabelsForResults(const std::vector<Search::SdkModel::SearchResultModel> &results)
                 {
-                    namespace IE = Eegeo::Resources::Interiors::Entities;
-                    
-                    const IE::TFloorIndexToModelsMap& floorIndexToModels = m_interiorslabelsController.GetFloorIndexToModels();
-                    
-                    for (IE::TFloorIndexToModelsMap::const_iterator it = floorIndexToModels.begin(); it != floorIndexToModels.end(); ++it)
+                    if (m_interiorInteractionModel.HasInteriorModel() && m_currentHighlightRenderables.size() == 0)
                     {
-                        const IE::TModelVector& modelVector = (*it).second;
-                        
-                        for (IE::TModelVector::const_iterator modelIt = modelVector.begin(); modelIt != modelVector.end(); ++modelIt)
-                        {
-                            bool resultFoundForModel = false;
-                            
-                            for (std::vector<Search::SdkModel::SearchResultModel>::const_iterator searchIt = results.begin(); searchIt != results.end(); ++searchIt)
-                            {
-                                if(modelIt->second->GetName().find((*searchIt).GetTitle().c_str()) == 0)
-                                {
-                                    resultFoundForModel = true;
-                                    break;
-                                }
-                            }
-                            
-                            modelIt->second->SetEnabled(resultFoundForModel);
-                        }
+                        OnInteriorInteractionModelChanged();
                     }
                     
+                    rapidjson::Document json;
+                    std::string highlightedRoomId = "";
+                    
+                    for(std::vector<Search::SdkModel::SearchResultModel>::const_iterator resultsItt = results.begin(); resultsItt != results.end(); ++resultsItt)
+                    {
+                        if (!json.Parse<0>(resultsItt->GetJsonData().c_str()).HasParseError() && json.HasMember("highlight"))
+                        {
+                            highlightedRoomId = json["highlight"].GetString();
+
+                            for (std::map<std::string, Eegeo::Rendering::Renderables::InteriorHighlightRenderable*>::iterator renderItt = m_currentHighlightRenderables.begin();
+                                 renderItt != m_currentHighlightRenderables.end();
+                                 ++renderItt)
+                            {
+                                if( renderItt->second->GetRenderableId().compare("entity_highlight " + highlightedRoomId) == 0)
+                                {
+                                    renderItt->second->SetDiffuseColor(m_highlightColorMapper.GetColor(*resultsItt, "highlight_color"));
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

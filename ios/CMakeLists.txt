@@ -90,7 +90,8 @@ set_xcode_property (${executable_name} DEBUG_INFORMATION_FORMAT[variant=Release]
 
 set_xcode_property (${executable_name} GCC_TREAT_WARNINGS_AS_ERRORS "YES")
 set_xcode_property (${executable_name} CODE_SIGN_IDENTITY "iPhone Developer")
-set_xcode_property (${executable_name} IPHONEOS_DEPLOYMENT_TARGET "5.0")
+set_xcode_property (${executable_name} DEVELOPMENT_TEAM "")
+set_xcode_property (${executable_name} IPHONEOS_DEPLOYMENT_TARGET "6.0")
 set_xcode_property (${executable_name} TARGETED_DEVICE_FAMILY "1,2")
 set_xcode_property (${executable_name} ENABLE_BITCODE "No")
 set_xcode_property (${executable_name} INSTALL_PATH "/Applications")

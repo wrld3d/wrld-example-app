@@ -6,10 +6,16 @@
 #include "Interiors.h"
 #include "IRayCaster.h"
 #include "IAppModeModel.h"
+#include "EarthConstants.h"
+#include "TerrainRayPicker.h"
+#include "IntersectionTests.h"
+#include "TerrainModelModule.h"
 #include "EnvironmentRayCaster.h"
+#include "InteriorHeightHelpers.h"
+#include "InteriorTransitionModel.h"
 #include "ICameraTransitionController.h"
 #include "IDoubleTapIndoorInteractionController.h"
-
+#include "IAppCameraController.h"
 
 
 namespace ExampleApp
@@ -19,44 +25,41 @@ namespace ExampleApp
         namespace SdkModel
         {
             
-            enum ZoomState
-            {
-                Far = 0,
-                Optimized,
-                Close
-            };
             
             class DoubleTapIndoorInteractionController : public IDoubleTapIndoorInteractionController {
-                
+            
                 
             public:
                 
                 DoubleTapIndoorInteractionController(const std::shared_ptr<Eegeo::Resources::Interiors::InteriorsCameraController>& interiorsCameraController,
                                                      const std::shared_ptr<ExampleApp::CameraTransitions::SdkModel::ICameraTransitionController>& cameraTransitionController,
                                                      const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel,
-                                                     const std::shared_ptr<Eegeo::Collision::IRayCaster>& rayCaster,
-                                                     const std::shared_ptr<ExampleApp::AppModes::SdkModel::IAppModeModel>& appModeModel);
+                                                     const std::shared_ptr<ExampleApp::AppModes::SdkModel::IAppModeModel>& appModeModel,
+                                                     const std::shared_ptr<Eegeo::Resources::Interiors::InteriorTransitionModel>& interiorTransitionModel,
+                                                     const std::shared_ptr<Eegeo::Collision::IRayPicker>& rayPicker,
+                                                     const std::shared_ptr<AppCamera::SdkModel::IAppCameraController>& iCameraController);
                 ~DoubleTapIndoorInteractionController();
                 void OnDoubleTap(const AppInterface::TapData& data);
                 
             private:
                 
-                const std::shared_ptr<Eegeo::Collision::IRayCaster> m_enovRayCaster;
+                const int m_closeDistanceOffSet;
+                const int m_optimizedDistanceOffSet;
                 const std::shared_ptr<ExampleApp::AppModes::SdkModel::IAppModeModel> m_appModeModel;
-                Eegeo::Helpers::TCallback0<DoubleTapIndoorInteractionController> m_appModeChangedCallback;
+                const std::shared_ptr<Eegeo::Collision::IRayPicker> m_rayPicker;
+                const std::shared_ptr<Eegeo::Resources::Interiors::InteriorTransitionModel> m_interiorTransitionModel;
                 const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel> m_interiorInteractionModel;
                 const std::shared_ptr<Eegeo::Resources::Interiors::InteriorsCameraController> m_interiorsCameraController;
                 const std::shared_ptr<ExampleApp::CameraTransitions::SdkModel::ICameraTransitionController> m_cameraTransitionController;
-                
-                
-                
-                void OnAppModeChanged();
-                void ZoomInTo(float distance,const AppInterface::TapData& data);
+                const std::shared_ptr<AppCamera::SdkModel::IAppCameraController> m_iCameraController;
+    
+                float CalcRecommendedOverviewDistanceForFloor();
+                void ZoomIn(float distance,const AppInterface::TapData& data);
                 float CalculateCloseDistanceWithRespectTo(float optimizedDistance);
-                float CalcRecommendedOverviewDistanceForFloor(const Eegeo::Geometry::Bounds3D& floorTangentSpaceBounds, float fieldOfViewRadians);
-                
-                ZoomState m_states;
-                
+                bool PerformRayPick(const Eegeo::dv3 &rayOrigin,Eegeo::dv3 &rayDirection,Eegeo::dv3 &out_rayIntersectionPoint,double &out_intersectionParam,float &out_terrainHeight,float &out_heightAboveTerrain);
+ 
+
+
             };
             
         }

@@ -11,28 +11,33 @@ namespace
 {
     const std::string AboutPageText =   "Powered by eeGeo's 3D Mapping Platform"
                                         "\n\nEEGEO DUNDEE"
-                                        "\n\nTechnical Director"
+                                        "\n\nChief Technical Officer"
                                         "\nOliver Norton"
                                         
-                                        "\n\nTechnical Lead"
+                                        "\n\nSVP Software Development"
                                         "\nTim Jenks"
-                                        
-                                        "\n\nSenior Software Engineers"
-                                        "\nJohn Bell"
+    
+                                        "\n\nTechnical Lead"
                                         "\nMalcolm Brown"
-                                        "\nJonty Dawson"
                                         "\nScott Murray"
+                                                                        
+                                        "\n\nSenior Software Engineer"
+                                        "\nJohn Bell"
+                                        "\nJonty Dawson"
                                         "\nMark Simpson"
+                                        "\nJudith Underwood"
                                         
                                         "\n\nSoftware Engineer"
                                         "\nIan Hutchinson"
-                                        
-                                        "\n\nJunior Software Engineer"
                                         "\nPaul Harris"
                                         "\nVimarsh Raina"
+
+                                        "\n\nJunior Software Engineer"
+                                        "\nCalum Leask"
                                         
                                         "\n\nContract Software Engineer"
-                                        "\nIan Reynolds"
+                                        "\nBlair McSorley"
+                                        "\nMichael Chan"
 
                                         "\n\nLead Artist"
                                         "\nSteve Morrison"
@@ -40,54 +45,57 @@ namespace
                                         "\n\nSenior Artist"
                                         "\nGary Thomson"
                                         
-                                        "\n\nArtist"
-                                        "\nNicky Rhodes"
-                                        
-                                        "\n\nContract Artist"
+                                        "\n\nJunior Artist"
                                         "\nAntony Connell"
 
                                         "\n\nUX Designer"
                                         "\nMike McKenna"
+
+                                        "\n\nContract UX Designer"
+                                        "\nDanilo Pasquariello"
                                         
                                         "\n\nSystem Test Lead"
                                         "\nDavid Murdoch"
-                                        
+
                                         "\n\nSenior System Tester"
-                                        "\nScott Buchanan"
+                                        "\nKyle Welsh"
                                         
                                         "\n\nSystem Tester"
-                                        "\nKyle Welsh"
                                         "\nMatthew Ross"
-                                        "\nRyan Smith"                  
+                                        "\nRyan Smith"      
                                         
                                         "\n\nProducer"
                                         "\nPiers Duplock"
                                         
-                                        "\n\n\nEEGEO SAN FRANCISCO"
-                                        "\n\nBusiness Development Director"
+                                        "\n\n\nEEGEO CALIFORNIA"
+                                        "\n\nSVP Product Strategy"
                                         "\nBart Denny"
                                         
-                                        "\n\nFinance"
-                                        "\nJeremy Arnaud"
-                                        
+                                        "\n\nChief Commercial Officer"
+                                        "\nNeil Fishenden"
+
+                                        "\n\nChief Marketing Officer"
+                                        "\nFaizaan Ghauri"
+
                                         "\n\n\nEEGEO LONDON"
                                         "\n\nChief Executive Officer"
                                         "\nIan Hetherington"
                                         
-                                        "\n\nChief Commercial Officer"
-                                        "\nJeremy Copp"
-                                        
                                         "\n\n\nAdditional Thanks"
-                                        "\nJody Gallagher"
+                                        "\nScott Buchanan"
+                                        "\nJody Gallagher"                                
                                         "\nTom Haygarth"
                                         "\nSalvador Lopez"
+                                        "\nEilidh Macleod"
                                         "\nMike McLarty"
                                         "\nFrancisco Mendonca"
                                         "\nRyan Reid"
+                                        "\nIan Reynolds"
+                                        "\nNicky Rhodes"
                                         
                                         "\n\nSource data courtesy of:"
                                         
-                                        "\n\nTomTom Global Content. ©2006-2014 TomTom."
+                                        "\n\nTomTom Global Content. ©2006-2016 TomTom."
                                         "\n\nOrdnance Survey MasterMap & NTF © Crown copyright and database rights 2014 Ordnance Survey 100050219."
                                         "\n\nNASA SRTM and Bluemarble - NASA Visible Earth."
                                         "\n\nNASA ASTER 30m DTM - ASTER Global DEM data obtained from https://lpdaac.usgs.gov, maintained by the NASA Land Processes Distributed Active Archive Center (LP DAAC) at the USGS/Earth Resources Observation and Science (EROS) Center, Sioux Falls, South Dakota. 2012. ASTER GDEM is a product of METI and NASA."

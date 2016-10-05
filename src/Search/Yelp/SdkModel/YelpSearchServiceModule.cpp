@@ -10,6 +10,7 @@
 #include "YelpBusinessQueryFactory.h"
 #include "INetworkCapabilities.h"
 #include "SearchTags.h"
+#include "ITagIconMapper.h"
 
 namespace ExampleApp
 {

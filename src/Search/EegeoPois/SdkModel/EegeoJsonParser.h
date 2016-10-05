@@ -20,10 +20,10 @@ namespace ExampleApp
                 class EegeoJsonParser : public IEegeoParser, private Eegeo::NonCopyable
                 {
                 private:
-                    std::shared_ptr<const SearchResultPoi::SdkModel::ITagIconMapper> m_tagIconMapper;
+                    std::shared_ptr<const TagSearch::SdkModel::ITagIconMapper> m_tagIconMapper;
                     std::shared_ptr<const EegeoReadableTagMapper> m_tagReadableNameMapper;
                 public:
-                    EegeoJsonParser(const std::shared_ptr<SearchResultPoi::SdkModel::ITagIconMapper>& tagIconMapper,
+                    EegeoJsonParser(const std::shared_ptr<TagSearch::SdkModel::ITagIconMapper>& tagIconMapper,
                                     const std::shared_ptr<EegeoReadableTagMapper>& tagReadableNameMapper);
 
                     void ParseEegeoQueryResults(const std::string& serialized,

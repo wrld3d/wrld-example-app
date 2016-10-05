@@ -9,6 +9,7 @@
 #include "Rendering.h"
 #include "SearchResultSection.h"
 #include "BidirectionalBus.h"
+#include "HighlightColorMapper.h"
 
 
 namespace ExampleApp
@@ -28,7 +29,8 @@ namespace ExampleApp
                         Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                         Search::SdkModel::ISearchResultRepository& searchResultRepository,
                         ExampleAppMessaging::TMessageBus& messageBus,
-                        Eegeo::Resources::Interiors::InteriorsInstanceRepository& interiorsInstanceRepository);
+                        Eegeo::Resources::Interiors::InteriorsInstanceRepository& interiorsInstanceRepository,
+                                                                   IHighlightColorMapper& highlightColorMapper);
                     
                     ~InteriorsEntityIdHighlightVisibilityController();
                     
@@ -40,7 +42,6 @@ namespace ExampleApp
                     void OnInteriorsInstanceRepositoryChanged();
                     void ClearHighlights();
                     void RefreshHighlights();
-                    
 
                     std::vector<Search::SdkModel::SearchResultModel> m_searchResults;
                     int m_searchResultsIndex;
@@ -59,6 +60,8 @@ namespace ExampleApp
                     Eegeo::Resources::Interiors::InteriorsInstanceRepository& m_interiorsInstanceRepository;
                     
                     Eegeo::Helpers::TCallback0<InteriorsEntityIdHighlightVisibilityController> m_interiorsInstanceRepositoryChangedHandler;
+                    
+                    IHighlightColorMapper& m_highlightColorMapper;
                 };
             }
         }

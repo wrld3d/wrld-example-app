@@ -85,7 +85,13 @@ namespace ExampleApp
                 {
                     startFullscreen = document["StartAppInFullscreen"].GetBool();
                 }
-
+                
+                bool useLabels = false;
+                if (document.HasMember("UseLabels"))
+                {
+                    useLabels = document["UseLabels"].GetBool();
+                }
+                
                 return ApplicationConfiguration(
                     name,
                     eegeoApiKey,
@@ -111,7 +117,8 @@ namespace ExampleApp
                     myPinsWebServiceUrl,
                     myPinsWebServiceAuthToken,
                     twitterAuthCode,
-                    isKioskTouchInputEnabled
+                    isKioskTouchInputEnabled,
+                    useLabels
                 );
             }
         }

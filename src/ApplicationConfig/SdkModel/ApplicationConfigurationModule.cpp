@@ -43,7 +43,7 @@ namespace ExampleApp
                         combinedVersionString,
                         Eegeo::Config::CoverageTreeManifestUrlDefault,
                         Eegeo::Config::CityThemesManifestUrlDefault,
-                        "Textures/EmbeddedTheme",
+                        "EmbeddedTheme",
                         Eegeo::Space::LatLongAltitude(0.0f, 0.0f, 0.0f),
                         1000.f,
                         0.f,
@@ -60,6 +60,7 @@ namespace ExampleApp
                         emptyMyPinsWebServiceUrl,
                         emptyMyPinsWebServiceAuthToken,
                         emptyTwitterAuthCode,
+                        false,
                         false);
                 }
             }
@@ -88,6 +89,9 @@ namespace ExampleApp
                 platformConfig.CityThemesConfig.StreamedManifestUrl = appConfig.ThemeManifestURL();
                 platformConfig.CityThemesConfig.EmbeddedThemeTexturePath = appConfig.EmbeddedThemeTexturePath();
 
+                platformConfig.OptionsConfig.EnableLabels = appConfig.UseLabels();
+                platformConfig.MapLayersConfig.FontsModuleConfig.EnvironmentFontFilename = appConfig.UseLabels() ? "IPAexGothic_sdf.fnt" : "IPAexGothic32_A8_icons.fnt";
+                
                 return platformConfig;
             }
             

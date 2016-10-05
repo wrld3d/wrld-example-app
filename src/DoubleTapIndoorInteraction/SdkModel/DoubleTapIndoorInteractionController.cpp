@@ -7,11 +7,12 @@
 #include "InteriorsModel.h"
 #include "InteriorsFloorModel.h"
 #include "EnvironmentRayCaster.h"
+#include "TerrainHeightProvider.h"
 #include "InteriorInteractionModel.h"
 #include "InteriorsCameraController.h"
 #include "ICameraTransitionController.h"
+#include "CollisionMeshResourceRepository.h"
 #include "DoubleTapIndoorInteractionController.h"
-
 
 namespace ExampleApp
 {
@@ -22,87 +23,141 @@ namespace ExampleApp
             DoubleTapIndoorInteractionController::DoubleTapIndoorInteractionController(const std::shared_ptr<Eegeo::Resources::Interiors::InteriorsCameraController>& interiorsCameraController,
                                                                                        const std::shared_ptr<ExampleApp::CameraTransitions::SdkModel::ICameraTransitionController>& cameraTransitionController,
                                                                                        const std::shared_ptr<Eegeo::Resources::Interiors::InteriorInteractionModel>& interiorInteractionModel,
-                                                                                       const std::shared_ptr<Eegeo::Collision::IRayCaster>& rayCaster,
-                                                                                       const std::shared_ptr<ExampleApp::AppModes::SdkModel::IAppModeModel>& appModeModel)
+                                                                                       const std::shared_ptr<ExampleApp::AppModes::SdkModel::IAppModeModel>& appModeModel,
+                                                                                       const std::shared_ptr<Eegeo::Resources::Interiors::InteriorTransitionModel>& interiorTransitionModel,
+                                                                                       const std::shared_ptr<Eegeo::Collision::IRayPicker>& rayPicker,
+                                                                                       const std::shared_ptr<AppCamera::SdkModel::IAppCameraController>& iCameraController)
             : m_interiorsCameraController(interiorsCameraController)
             , m_cameraTransitionController(cameraTransitionController)
             , m_interiorInteractionModel(interiorInteractionModel)
-            , m_enovRayCaster(rayCaster)
             , m_appModeModel(appModeModel)
-            , m_appModeChangedCallback(this, &DoubleTapIndoorInteractionController::OnAppModeChanged)
-            {
-                m_appModeModel->RegisterAppModeChangedCallback(m_appModeChangedCallback);
-                m_states = Far;
-            }
+            , m_interiorTransitionModel(interiorTransitionModel)
+            , m_closeDistanceOffSet(10)
+            , m_optimizedDistanceOffSet(100)
+            , m_iCameraController(iCameraController)
             
+            {
+            }
+
             DoubleTapIndoorInteractionController::~DoubleTapIndoorInteractionController()
             {
             }
             
             void DoubleTapIndoorInteractionController::OnDoubleTap(const AppInterface::TapData& data)
             {
-                const Eegeo::Geometry::Bounds3D &bounds = m_interiorInteractionModel->GetSelectedFloorModel()->GetTangentSpaceBounds();
-                const float fov = m_interiorsCameraController->GetRenderCamera().GetFOV();
-                float optimizedDistance = CalcRecommendedOverviewDistanceForFloor(bounds,fov);
-                
-                if (m_states == Far)
+
+                float optimizedDistance = CalcRecommendedOverviewDistanceForFloor();
+                float camerDistanceFrom = m_interiorsCameraController->GetDistanceToInterest();
+                Eegeo::Resources::Interiors::InteriorId interiorID = m_interiorInteractionModel->GetInteriorModel()->GetId();
+
+                float closeDistacne = CalculateCloseDistanceWithRespectTo(optimizedDistance);
+
+                if ((camerDistanceFrom < optimizedDistance  && camerDistanceFrom >= (closeDistacne + m_closeDistanceOffSet)) || (camerDistanceFrom > optimizedDistance && camerDistanceFrom  < (optimizedDistance + m_optimizedDistanceOffSet)))
                 {
-                    Eegeo::Resources::Interiors::InteriorId interiorID = m_interiorInteractionModel->GetInteriorModel()->GetId();
-                    int selectedFloor = m_interiorInteractionModel->GetSelectedFloorIndex();
-                    m_cameraTransitionController->StartTransitionTo(optimizedDistance, interiorID, selectedFloor);
-                    m_states = Optimized;
-                    
-                }
-                else if(m_states == Optimized)
-                {
-                    float closeDistacne = CalculateCloseDistanceWithRespectTo(optimizedDistance);
-                    ZoomInTo(closeDistacne, data);
-                    m_states = Close;
+                    ZoomIn(closeDistacne, data);
                 }
                 else
                 {
-                    
-                    ZoomInTo(optimizedDistance, data);
-                    m_states = Optimized;
+                    ZoomIn(optimizedDistance, data);
                 }
+
+  
             }
-            
-            void DoubleTapIndoorInteractionController::ZoomInTo(float distance,const AppInterface::TapData& data)
+            void DoubleTapIndoorInteractionController::ZoomIn(float distance,const AppInterface::TapData& data)
             {
-                Eegeo::Resources::Interiors::InteriorId interiorID = m_interiorInteractionModel->GetInteriorModel()->GetId();
-                int selectedFloor = m_interiorInteractionModel->GetSelectedFloorIndex();
-                const Eegeo::Camera::RenderCamera& renderCamera = m_interiorsCameraController->GetRenderCamera();
-                
+                const Eegeo::Camera::RenderCamera& renderCamera = m_iCameraController->GetRenderCamera();
                 float screenPixelX = data.point.GetX();
                 float screenPixelY = data.point.GetY();
                 
                 Eegeo::dv3 rayDirection;
                 Eegeo::Camera::CameraHelpers::GetScreenPickRay(renderCamera, screenPixelX, screenPixelY, rayDirection);
-                const Eegeo::dv3& rayOrigin = renderCamera.GetEcefLocation();
-                const Eegeo::Collision::RayCasterResult& pickResult = m_enovRayCaster->CastRay(rayOrigin, rayDirection,Eegeo::Collision::CollisionGroup::CollideAll);
-                m_cameraTransitionController->StartTransitionTo(pickResult.intersectionPointEcef,distance, interiorID, selectedFloor);
+                const Eegeo::dv3& rayOrigin = m_iCameraController->GetNonFlattenedCameraPosition();
+
                 
+                Eegeo::dv3 rayIntersectionPoint;
+                double intersectionParam;
+                float terrainHeight;
+                float heightAboveTerrain;
+                bool rayPick = PerformRayPick(rayOrigin, rayDirection, rayIntersectionPoint, intersectionParam, terrainHeight, heightAboveTerrain);
+                
+                if (rayPick)
+                {
+                    Eegeo::Resources::Interiors::InteriorId interiorID = m_interiorInteractionModel->GetInteriorModel()->GetId();
+                    int selectedFloor = m_interiorInteractionModel->GetSelectedFloorIndex();
+                    m_cameraTransitionController->StartTransitionTo(rayIntersectionPoint,distance, interiorID, selectedFloor);
+                }
+            }
+            
+            bool DoubleTapIndoorInteractionController::PerformRayPick(const Eegeo::dv3 &rayOrigin,
+                                                        Eegeo::dv3 &rayDirection,
+                                                        Eegeo::dv3 &out_rayIntersectionPoint,
+                                                        double &out_intersectionParam,
+                                                        float &out_terrainHeight,
+                                                        float &out_heightAboveTerrain)
+            {
+                bool rayPick = false;
+                
+                if(m_appModeModel->GetAppMode() == AppModes::SdkModel::InteriorMode && m_interiorTransitionModel->InteriorIsVisible())
+                {
+                    
+                    const Eegeo::Resources::Interiors::InteriorsModel* interiorsModel = m_interiorInteractionModel->GetInteriorModel();
+                    
+                    Eegeo_ASSERT(interiorsModel, "Couldn't get current interiorsModel");
+                    
+                    const Eegeo::dv3 originNormal = interiorsModel->GetTangentBasis().GetUp();
+                    
+                    const int selectedFloorIndex = m_interiorInteractionModel->GetSelectedFloorIndex();
+                    
+                    float floorHeightAboveSeaLevel = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(*interiorsModel, selectedFloorIndex);
+                    
+                    const Eegeo::dv3 point = originNormal * (floorHeightAboveSeaLevel + Eegeo::Space::EarthConstants::Radius);
+                    
+                    out_terrainHeight = interiorsModel->GetTangentSpaceBounds().GetMin().y;
+                    out_heightAboveTerrain = floorHeightAboveSeaLevel - out_terrainHeight;
+                    rayPick = Eegeo::Geometry::IntersectionTests::RayIntersectsWithPlane(rayOrigin, rayDirection, originNormal, point, out_intersectionParam, out_rayIntersectionPoint);
+                }
+                else
+                {
+                    rayPick = m_rayPicker->TryGetRayIntersection(rayOrigin, rayDirection, out_rayIntersectionPoint, out_intersectionParam);
+                    if(rayPick)
+                    {
+                        out_terrainHeight = static_cast<float>(out_rayIntersectionPoint.Length() - Eegeo::Space::EarthConstants::Radius);
+                        out_heightAboveTerrain = 0.0f;
+                    }
+                }
+                if(!rayPick)
+                {
+                    rayPick = Eegeo::Geometry::IntersectionTests::GetRayEarthSphereIntersection(rayOrigin, rayDirection, out_rayIntersectionPoint, Eegeo::Space::EarthConstants::RadiusSquared);
+                    if(rayPick)
+                    {
+                        out_terrainHeight = 0.0f;
+                        out_heightAboveTerrain = 0.0f;
+                        out_intersectionParam = (out_rayIntersectionPoint - rayOrigin).Length();
+                    }
+                }
+                
+                return rayPick;
             }
             
             //TODO: This function will be removed when it will be exposed in SDK::InteroirHelper by dandee team
-            float DoubleTapIndoorInteractionController::CalcRecommendedOverviewDistanceForFloor(const Eegeo::Geometry::Bounds3D& floorTangentSpaceBounds, float fieldOfViewRadians)
+            float DoubleTapIndoorInteractionController::CalcRecommendedOverviewDistanceForFloor()
             {
-                float diagonalLength = Eegeo::v2(floorTangentSpaceBounds.Size().x,floorTangentSpaceBounds.Size().z).Length();
-                return ((diagonalLength * 0.5f) / tanf(fieldOfViewRadians*0.5f));
                 
+                const Eegeo::Camera::RenderCamera& renderCamera = m_iCameraController->GetRenderCamera();
+                const bool isLandscapeOrientation = renderCamera.GetAspect() > 1.0f;
+                const float verticalFovRadians = renderCamera.GetFOV();
+                const float horizontalFovRadians = isLandscapeOrientation ? verticalFovRadians * Eegeo::Camera::RenderCamera::NominalAspectRatio : verticalFovRadians * renderCamera.GetAspect();
+                
+                const Eegeo::Geometry::Bounds3D &bounds = m_interiorInteractionModel->GetSelectedFloorModel()->GetTangentSpaceBounds();
+                
+                float diagonalLength = Eegeo::v2(bounds.Size().x,bounds.Size().z).Length();
+
+                return ((diagonalLength * 0.5f) / tanf(horizontalFovRadians*0.5f));
             }
             
             float DoubleTapIndoorInteractionController::CalculateCloseDistanceWithRespectTo(float optimizedDistance)
             {
-                return optimizedDistance*0.5;
-            }
-            
-            void DoubleTapIndoorInteractionController::OnAppModeChanged()
-            {
-                if (m_appModeModel->GetAppMode() == AppModes::SdkModel::InteriorMode)
-                {
-                    m_states = Far;
-                }
+                return optimizedDistance*0.36;
             }
         }
     }

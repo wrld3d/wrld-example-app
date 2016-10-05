@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include "HighlightColorMapper.h"
 
 namespace ExampleApp
 {
@@ -29,7 +30,8 @@ namespace ExampleApp
                                                            Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                                            Search::SdkModel::ISearchResultRepository& searchResultRepository,
                                                            Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& labelController,
-                                                           ExampleAppMessaging::TMessageBus& messageBus);
+                                                           ExampleAppMessaging::TMessageBus& messageBus,
+                                                           IHighlightColorMapper& highlightColorMapper);
                     
                     ~InteriorsHighlightVisibilityController();
                     
@@ -41,7 +43,6 @@ namespace ExampleApp
                     void OnInteriorLabelsBuilt();
                     void OnAvailabilityChanged();
                     
-                    void ConfigureRenderableForAvailability(Eegeo::Rendering::Renderables::InteriorHighlightRenderable& renderable, const std::string& availability);
                     void DeactivateHighlightRenderables();
                     void AddHighlight(Eegeo::Rendering::Renderables::InteriorHighlightRenderable& renderable);
                     
@@ -63,8 +64,9 @@ namespace ExampleApp
                     
                     Eegeo::Helpers::TCallback0<InteriorsHighlightVisibilityController> m_availabilityChangedHandlerBinding;
                     
-                    std::map<std::string, std::string> m_highlightAvailabilityData;
                     std::map<std::string, Eegeo::Rendering::Renderables::InteriorHighlightRenderable*> m_currentHighlightRenderables;
+                    
+                    IHighlightColorMapper& m_highlightColorMapper;
                 };
             }
         }

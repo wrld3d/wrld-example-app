@@ -29,6 +29,7 @@
 #include "IYelpCategoryToTagMapper.h"
 #include "ISearchResultParser.h"
 #include "YelpSearchJsonParser.h"
+#include "ITagIconMapper.h"
 
 namespace ExampleApp
 {

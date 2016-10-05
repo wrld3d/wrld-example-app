@@ -7,6 +7,7 @@
 #include "Yelp.h"
 #include "ISearchResultParser.h"
 #include "Types.h"
+#include "TagSearch.h"
 
 #include <document.h>
 
@@ -20,10 +21,12 @@ namespace ExampleApp
             {
                 class YelpSearchJsonParser : public Search::SdkModel::ISearchResultParser, private Eegeo::NonCopyable
                 {
-                    std::shared_ptr<IYelpCategoryToTagMapper> m_yelpCategoryMapper;
+                    const std::shared_ptr<IYelpCategoryToTagMapper> m_yelpCategoryMapper;
+                    const std::shared_ptr<const TagSearch::SdkModel::ITagIconMapper> m_tagIconMapper;
                     
                 public:
-                    YelpSearchJsonParser(const std::shared_ptr<IYelpCategoryToTagMapper>& yelpCategoryMapper);
+                    YelpSearchJsonParser(const std::shared_ptr<IYelpCategoryToTagMapper>& yelpCategoryMapper,
+                                         const std::shared_ptr<TagSearch::SdkModel::ITagIconMapper>& tagIconMapper);
                     
                     void ParseSearchResults(const std::string& serialized,
                                             std::vector<Search::SdkModel::SearchResultModel>& out_results);

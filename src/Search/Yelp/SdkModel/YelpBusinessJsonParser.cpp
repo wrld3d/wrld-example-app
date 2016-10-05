@@ -15,8 +15,10 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                YelpBusinessJsonParser::YelpBusinessJsonParser(const std::shared_ptr<IYelpCategoryToTagMapper>& yelpCategoryMapper)
+                YelpBusinessJsonParser::YelpBusinessJsonParser(const std::shared_ptr<IYelpCategoryToTagMapper>& yelpCategoryMapper,
+                                                               const std::shared_ptr<TagSearch::SdkModel::ITagIconMapper>& tagIconMapper)
                 : m_yelpCategoryMapper(yelpCategoryMapper)
+                , m_tagIconMapper(tagIconMapper)
                 {
                     
                 }
@@ -30,7 +32,7 @@ namespace ExampleApp
                     
                     if (success)
                     {
-                        out_result = Helpers::ParseYelpSearchResultFromJsonObject(document, *m_yelpCategoryMapper);
+                        out_result = Helpers::ParseYelpSearchResultFromJsonObject(document, *m_yelpCategoryMapper, *m_tagIconMapper);
                     }
                     else
                     {

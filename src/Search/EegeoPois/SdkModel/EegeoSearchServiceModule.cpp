@@ -30,7 +30,6 @@ namespace ExampleApp
                                                          Search::SdkModel::PopulateSearchTagsFromFile(*context.resolve<Eegeo::Helpers::IFileIO>(), "search_tags.json", *searchTags);
                                                          return searchTags;
                                                      }).singleInstance();
-                    builder->registerType<EegeoTagIconMapper>().as<SearchResultPoi::SdkModel::ITagIconMapper>().singleInstance();
                     builder->registerType<EegeoReadableTagMapper>().singleInstance();
                     builder->registerType<EegeoJsonParser>().as<IEegeoParser>().singleInstance();
                     builder->registerType<EegeoSearchService>().singleInstance();

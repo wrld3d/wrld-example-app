@@ -9,6 +9,7 @@ namespace ExampleApp
         namespace SdkModel
         {
             class ITagSearchModule;
+            class ITagIconMapper;
         }
 
         namespace View
