@@ -2,14 +2,6 @@
 
 #pragma once
 
-//#include "IFlattenButtonViewModule.h"
-//#include "AndroidNativeState.h"
-//#include "Types.h"
-//#include "FLattenButton.h"
-//#include "FlattenButtonViewIncludes.h"
-//#include "FlattenButtonView.h"
-//#include "FlattenButtonController.h"
-//#include "IMetricsService.h"
 #include "Module.h"
 
 namespace ExampleApp
@@ -22,23 +14,8 @@ namespace ExampleApp
 			{
 			public:
 				void Register(const TContainerBuilder& builder);
+				void RegisterLeaves();
 			};
-//            class FlattenButtonViewModule: public IFlattenButtonViewModule, private Eegeo::NonCopyable
-//            {
-//            private:
-//                FlattenButtonView* m_pView;
-//                FlattenButtonController* m_pController;
-//
-//            public:
-//                FlattenButtonViewModule(
-//                    AndroidNativeState& nativeState,
-//                    IFlattenButtonViewModel& viewModel,
-//                    ExampleAppMessaging::TMessageBus& messageBus,
-//                    Metrics::IMetricsService& metricsService
-//                );
-//
-//                ~FlattenButtonViewModule();
-//            };
         }
     }
 }

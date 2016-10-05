@@ -26,11 +26,15 @@ namespace ExampleApp
                 builder->registerType<View::FlattenButtonController>().singleInstance();
             }
             
-            void FlattenButtonModule::RegisterLeaves()
+            void FlattenButtonModule::RegisterNativeLeaves()
             {
-                RegisterLeaf<View::FlattenButtonController>();
                 RegisterLeaf<FlattenButtonModelStateChangedObserver>();
                 RegisterLeaf<FlattenButtonViewStateChangedObserver>();
+            }
+            
+            void FlattenButtonModule::RegisterUiLeaves()
+            {
+                RegisterLeaf<View::FlattenButtonController>();
             }
             
             void FlattenButtonModule::RegisterOpenablesAndReactors()

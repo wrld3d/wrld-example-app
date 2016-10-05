@@ -29,10 +29,15 @@ namespace ExampleApp
             auto moduleSet = m_moduleContainer->resolve<TModules>();
             moduleSet->push_back(std::make_shared<T>());
         }
-        
+
         void RegisterModuleInstance(const std::shared_ptr<Module> module);
         void RegisterDefaultModules();
+        
+        void ApplyModuleRegistrations();
+        void BuildContainer();
         void ResolveModules();
+        void ResolveNativeLeaves();
+        void ResolveUiLeaves();
         
         const std::shared_ptr<MobileExampleApp> BuildMobileExampleApp();
         const TContainer& GetContainer() const;
@@ -43,7 +48,16 @@ namespace ExampleApp
             return m_appContainer->resolve<T>();
         }
         
+        template <class T>
+		std::shared_ptr< T > ResolveLeaf()
+		{
+			auto ptr = m_appContainer->resolve<T>();
+			m_leaves.push_back(ptr);
+			return ptr;
+		}
+
     private:
+
         const std::shared_ptr<Hypodermic::ContainerBuilder> m_moduleContainerBuilder;
         std::shared_ptr<Hypodermic::Container> m_moduleContainer;
 

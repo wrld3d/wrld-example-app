@@ -66,7 +66,7 @@ namespace ExampleApp
                 builder->registerType<SearchQueryObserver>().singleInstance();
             }
             
-            void SearchModule::RegisterLeaves()
+            void SearchModule::RegisterNativeLeaves()
             {
                 RegisterLeaf<SearchQueryObserver>();
             }

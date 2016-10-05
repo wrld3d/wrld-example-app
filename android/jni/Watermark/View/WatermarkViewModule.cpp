@@ -17,6 +17,12 @@ namespace ExampleApp
 				ASSERT_UI_THREAD
 				builder->registerType<WatermarkView>().as<IWatermarkView>().singleInstance();
 			}
+
+			void WatermarkViewModule::RegisterLeaves()
+			{
+				ASSERT_UI_THREAD
+				RegisterLeaf<IWatermarkView>();
+			}
         }
     }
 }

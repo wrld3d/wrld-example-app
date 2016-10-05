@@ -14,7 +14,8 @@ namespace ExampleApp
             {
             public:
                 void Register(const std::shared_ptr<Hypodermic::ContainerBuilder>& builder);
-                void RegisterLeaves();
+                void RegisterNativeLeaves();
+                void RegisterUiLeaves();
             };
         }
     }

@@ -36,11 +36,15 @@ namespace ExampleApp
                 builder->registerType<View::CompassController>().singleInstance();
             }
             
-            void CompassModule::RegisterLeaves()
+            void CompassModule::RegisterNativeLeaves()
             {
-                RegisterLeaf<View::CompassController>();
                 RegisterLeaf<CompassModeObserver>();
                 RegisterLeaf<CompassViewCycledObserver>();
+            }
+            
+            void CompassModule::RegisterUiLeaves()
+            {
+                RegisterLeaf<View::CompassController>();
             }
             
             void CompassModule::RegisterOpenablesAndReactors()

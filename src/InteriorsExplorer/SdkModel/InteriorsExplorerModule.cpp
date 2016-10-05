@@ -87,12 +87,16 @@ namespace ExampleApp
                 builder->registerType<View::InteriorsExplorerController>().singleInstance();
             }
             
-            void InteriorsExplorerModule::RegisterLeaves()
+            void InteriorsExplorerModule::RegisterNativeLeaves()
             {
                 RegisterLeaf<InteriorsExplorerFloorDraggedObserver>();
                 RegisterLeaf<InteriorsUINotificationService>();
-                RegisterLeaf<View::InteriorsExplorerController>();
                 RegisterLeaf<InteriorWorldPinController>();
+            }
+            
+            void InteriorsExplorerModule::RegisterUiLeaves()
+            {
+                RegisterLeaf<View::InteriorsExplorerController>();
             }
             
             void InteriorsExplorerModule::RegisterOpenablesAndReactors()

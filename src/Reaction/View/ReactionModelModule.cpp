@@ -23,7 +23,7 @@ namespace ExampleApp
                 builder->registerType<ReactionModel>().as<IReactionModel>().singleInstance();
             }
             
-            void ReactionModelModule::RegisterLeaves()
+            void ReactionModelModule::RegisterNativeLeaves()
             {
                 RegisterLeaf<IReactionModel>();
             }

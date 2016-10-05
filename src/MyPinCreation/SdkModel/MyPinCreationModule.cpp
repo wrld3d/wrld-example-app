@@ -42,11 +42,15 @@ namespace ExampleApp
                 builder->registerType<View::MyPinCreationInitiationController>().singleInstance();
             }
             
-            void MyPinCreationModule::RegisterLeaves()
+            void MyPinCreationModule::RegisterNativeLeaves()
             {
                 RegisterLeaf<MyPinCreationViewSavePinHandler>();
                 RegisterLeaf<MyPinCreationViewStateChangedHandler>();
                 RegisterLeaf<MyPinCreationModelObserver>();
+            }
+            
+            void MyPinCreationModule::RegisterUiLeaves()
+            {
                 RegisterLeaf<View::MyPinCreationInitiationController>();
                 RegisterLeaf<View::MyPinCreationConfirmationController>();
                 RegisterLeaf<View::IMyPinCreationCompositeViewModel>();

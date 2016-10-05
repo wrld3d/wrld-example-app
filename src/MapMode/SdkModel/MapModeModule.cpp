@@ -17,7 +17,7 @@ namespace ExampleApp
                 builder->registerType<MapModeController>().singleInstance();
             }
             
-            void MapModeModule::RegisterLeaves()
+            void MapModeModule::RegisterNativeLeaves()
             {
                 RegisterLeaf<MapModeController>();
             }

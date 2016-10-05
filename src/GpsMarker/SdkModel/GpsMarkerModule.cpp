@@ -34,7 +34,7 @@ namespace ExampleApp
                 RegisterRenderableFilter<GpsMarkerView>();
             }
             
-            void GpsMarkerModule::RegisterLeaves()
+            void GpsMarkerModule::RegisterNativeLeaves()
             {
                 RegisterLeaf<GpsMarkerViewFactory>();
             }

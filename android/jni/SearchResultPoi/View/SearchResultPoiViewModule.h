@@ -2,13 +2,6 @@
 
 #pragma once
 
-//#include "AndroidNativeState.h"
-//#include "Types.h"
-//#include "SearchResultPoi.h"
-//#include "SearchResultPoiViewIncludes.h"
-//#include "ISearchResultPoiViewModule.h"
-//#include "BidirectionalBus.h"
-//#include "IMetricsService.h"
 #include "Module.h"
 
 namespace ExampleApp
@@ -21,22 +14,7 @@ namespace ExampleApp
             {
             public:
             	void Register(const TContainerBuilder& builder);
-//            private:
-//                SearchResultPoiView* m_pView;
-//                SearchResultPoiController* m_pController;
-//
-//            public:
-//                SearchResultPoiViewModule(
-//                    AndroidNativeState& nativeState,
-//                    ISearchResultPoiViewModel& searchResultPoiViewModel,
-//                    ExampleAppMessaging::TMessageBus& messageBus,
-//                    Metrics::IMetricsService& metricsService
-//                );
-//
-//                ~SearchResultPoiViewModule();
-//
-//                SearchResultPoiView& GetView() const;
-//                SearchResultPoiController& GetController() const;
+            	void RegisterLeaves();
             };
         }
     }

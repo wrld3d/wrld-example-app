@@ -27,13 +27,17 @@ namespace ExampleApp
             builder->registerType<SdkModel::ClearCacheMessageHandler>().singleInstance();
         }
         
-        void OptionsModule::RegisterLeaves()
+        void OptionsModule::RegisterNativeLeaves()
         {
-            RegisterLeaf<View::OptionsController>();
             RegisterLeaf<SdkModel::ClearCacheMessageHandler>();
             RegisterLeaf<SdkModel::CacheEnabledChangedMessageHandler>();
-            RegisterLeaf<View::CompletedCacheClearMessageHandler>();
             RegisterLeaf<SdkModel::StreamOverWifiOnlyChangedMessageHandler>();
+        }
+        
+        void OptionsModule::RegisterUiLeaves()
+        {
+            RegisterLeaf<View::OptionsController>();
+            RegisterLeaf<View::CompletedCacheClearMessageHandler>();
         }
         
         void OptionsModule::RegisterOpenablesAndReactors()

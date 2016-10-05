@@ -60,7 +60,7 @@ namespace ExampleApp
                                                  }).singleInstance();
             }
             
-            void SettingsMenuViewModule::RegisterLeaves()
+            void SettingsMenuViewModule::RegisterUiLeaves()
             {
                 RegisterLeaf<SettingsMenuController>();
             }

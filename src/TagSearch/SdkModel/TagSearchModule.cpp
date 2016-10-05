@@ -27,11 +27,10 @@ namespace ExampleApp
                 builder->registerType<View::TagSearchSectionController>().singleInstance();
             }
             
-            void TagSearchModule::RegisterLeaves()
+            void TagSearchModule::RegisterNativeLeaves()
             {
                 RegisterLeaf<TagSearchRepositoryObserver>();
                 RegisterLeaf<TagSearchSelectedMessageHandler>();
-                RegisterLeaf<View::TagSearchSectionController>();
                 
                 const auto& tagSearchModels = TagSearch::View::CreateTagSearchModelsFromFile(
                                                                                              *Resolve<Eegeo::Helpers::IFileIO>(),
@@ -42,6 +41,11 @@ namespace ExampleApp
                 {
                     repository->AddItem(t);
                 }
+            }
+            
+            void TagSearchModule::RegisterUiLeaves()
+            {
+                RegisterLeaf<View::TagSearchSectionController>();
             }
             
             /*

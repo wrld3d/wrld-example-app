@@ -87,6 +87,7 @@
 #include "AppWiring.h"
 #include "MobileExampleApp.h"
 #include "AndroidAppModule.h"
+#include "IPersistentSettingsModel.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -104,18 +105,18 @@ AppHost::AppHost(
     ,m_androidKeyboardInputFactory(&nativeState, m_inputHandler)
     ,m_androidAlertBoxFactory(&nativeState)
     ,m_androidNativeUIFactories(m_androidAlertBoxFactory, m_androidInputBoxFactory, m_androidKeyboardInputFactory)
-    ,m_createdUIModules(false)
+    ,m_registeredUIModules(false)
+    ,m_resolvedUIModules(false)
+    ,m_reoslvedNativeModules(false)
     ,m_requestedApplicationInitialiseViewState(false)
     ,m_uiCreatedMessageReceivedOnNativeThread(false)
 	,m_userInteractionEnabledChangedHandler(this, &AppHost::HandleUserInteractionEnabledChanged)
     ,m_app(nullptr)
     ,m_wiring(nullptr)
+    ,m_resolvedNativeTypes(false)
 {
     ASSERT_NATIVE_THREAD
 
-//
-//	most of this below here will be deleted: ...
-//**********************************************************************************
     Eegeo_ASSERT(resourceBuildShareContext != EGL_NO_CONTEXT);
 
     Eegeo::TtyHandler::TtyEnabled = true;
@@ -125,8 +126,7 @@ AppHost::AppHost(
     m_wiring = std::make_shared<ExampleApp::AppWiring>();
     m_wiring->RegisterModuleInstance(std::make_shared<ExampleApp::Android::AndroidAppModule>(nativeState, screenProperties, display, shareSurface, resourceBuildShareContext));
     m_wiring->RegisterDefaultModules();
-    RegisterApplicationViewModules();
-    m_wiring->ResolveModules();
+    m_wiring->ApplyModuleRegistrations();
 }
 
 AppHost::~AppHost()
@@ -137,11 +137,6 @@ AppHost::~AppHost()
 
     Eegeo_DELETE m_pAppInputDelegate;
     m_pAppInputDelegate = NULL;
-}
-
-void AppHost::RegisterApplicationViewModules()
-{
-
 }
 
 void AppHost::OnResume()
@@ -163,6 +158,7 @@ void AppHost::OnPause()
 
 void AppHost::NotifyScreenPropertiesChanged(const std::shared_ptr<Eegeo::Rendering::ScreenProperties>& screenProperties)
 {
+	Eegeo_ASSERT(m_app != nullptr);
 	m_app->NotifyScreenPropertiesChanged(screenProperties);
 }
 
@@ -192,7 +188,7 @@ void AppHost::Update(float dt)
 {
     ASSERT_NATIVE_THREAD
 
-    if(m_isPaused)
+    if(m_isPaused || m_app == nullptr)
     {
         return;
     }
@@ -215,7 +211,7 @@ void AppHost::Draw(float dt)
 {
     ASSERT_NATIVE_THREAD
 
-    if(m_isPaused)
+    if(m_isPaused || m_app == nullptr)
     {
         return;
     }
@@ -229,8 +225,26 @@ void AppHost::HandleApplicationUiCreatedOnNativeThread()
 {
     ASSERT_NATIVE_THREAD
 
-    m_uiCreatedMessageReceivedOnNativeThread = true;
-    PublishNetworkConnectivityStateToUIThread();
+	if(!m_resolvedNativeTypes)
+	{
+		m_wiring->BuildContainer();
+		m_wiring->ResolveLeaf<ExampleApp::ApplicationConfig::ApplicationConfiguration>();
+		m_wiring->ResolveLeaf<Eegeo::Modules::IPlatformAbstractionModule>();
+		m_wiring->ResolveLeaf<Eegeo::Web::IConnectivityService>();
+		m_wiring->ResolveLeaf<ExampleApp::PersistentSettings::IPersistentSettingsModel>();
+		m_wiring->ResolveLeaf<ExampleApp::Net::SdkModel::INetworkCapabilities>();
+		m_wiring->ResolveLeaf<Eegeo::EegeoWorld>();
+		Eegeo_TTY("ResolveLeaf native Thread");
+		m_resolvedNativeTypes = true;
+	}
+	else
+	{
+		m_uiCreatedMessageReceivedOnNativeThread = true;
+		m_wiring->ResolveModules();
+		m_reoslvedNativeModules = true;
+
+		PublishNetworkConnectivityStateToUIThread();
+	}
 }
 
 void AppHost::PublishNetworkConnectivityStateToUIThread()
@@ -280,7 +294,7 @@ void AppHost::CreateUiFromUiThread()
 {
     ASSERT_UI_THREAD
 
-    Eegeo_ASSERT(!m_createdUIModules);
+    Eegeo_ASSERT(!m_registeredUIModules);
     CreateApplicationViewModulesFromUiThread();
     DispatchUiCreatedMessageToNativeThreadFromUiThread();
 }
@@ -289,10 +303,24 @@ void AppHost::UpdateUiViewsFromUiThread(float dt)
 {
     ASSERT_UI_THREAD
 
-    GetMessageBus().FlushToUi();
+	if (m_app != nullptr)
+	{
+		GetMessageBus().FlushToUi();
+	}
 
-    if(m_createdUIModules)
+    if(m_registeredUIModules)
     {
+    	if (!m_resolvedUIModules && m_resolvedNativeTypes)
+    	{
+    		Eegeo_TTY("UpdateUiViewsFromUiThread ResolveUiModules");
+    		m_wiring->ResolveUiModules();
+    		m_resolvedUIModules = true;
+    		DispatchUiCreatedMessageToNativeThreadFromUiThread();
+    	}
+    	else if (m_resolvedUIModules && m_reoslvedNativeModules && m_app == nullptr)
+    	{
+    		m_app = m_wiring->BuildMobileExampleApp();
+    	}
     	//todo:
         //m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel().UpdateObjectsUiThread(dt);
     }
@@ -314,7 +342,25 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     ASSERT_UI_THREAD
 
     //TODO:
-    m_createdUIModules = true;
+	m_registeredUIModules = true;
+
+    m_wiring->RegisterUiModule<ExampleApp::Watermark::View::WatermarkViewModule>();
+    m_wiring->RegisterUiModule<ExampleApp::WorldPins::View::WorldPinOnMapViewModule>();
+    m_wiring->RegisterUiModule<ExampleApp::FlattenButton::View::FlattenButtonViewModule>();
+    m_wiring->RegisterUiModule<ExampleApp::MyPinCreation::View::MyPinCreationViewModule>();
+    m_wiring->RegisterUiModule<ExampleApp::Compass::View::CompassViewModule>();
+    m_wiring->RegisterUiModule<ExampleApp::ModalBackground::View::ModalBackgroundViewModule>();
+    m_wiring->RegisterUiModule<ExampleApp::SearchMenu::View::SearchMenuViewModule>();
+    m_wiring->RegisterUiModule<ExampleApp::SettingsMenu::View::SettingsMenuViewModule>();
+    m_wiring->RegisterUiModule<ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule>();
+    m_wiring->RegisterUiModule<ExampleApp::AboutPage::View::AboutPageViewModule>();
+    m_wiring->RegisterUiModule<ExampleApp::Options::View::OptionsViewModule>();
+    m_wiring->RegisterUiModule<ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewModule>();
+    m_wiring->RegisterUiModule<ExampleApp::MyPinDetails::View::MyPinDetailsViewModule>();
+    m_wiring->RegisterUiModule<ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule>();
+    m_wiring->RegisterUiModule<ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule>();
+    m_wiring->RegisterUiModule<ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule>();
+    m_wiring->ApplyUiModuleRegistrations();
 
     //ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
 
@@ -323,14 +369,14 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     SetTouchExclusivity();
 
-    GetMessageBus().SubscribeUi(m_userInteractionEnabledChangedHandler);
+    //GetMessageBus().SubscribeUi(m_userInteractionEnabledChangedHandler);
 }
 
 void AppHost::DestroyApplicationViewModulesFromUiThread()
 {
     ASSERT_UI_THREAD
 
-    if(m_createdUIModules)
+    if(m_resolvedUIModules)
     {
     	GetMessageBus().UnsubscribeUi(m_userInteractionEnabledChangedHandler);
 
@@ -371,7 +417,8 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
         Eegeo_DELETE m_pWatermarkViewModule;
         */
     }
-    m_createdUIModules = false;
+    m_resolvedUIModules = false;
+    m_registeredUIModules = false;
 }
 
 void AppHost::SetTouchExclusivity()
@@ -392,7 +439,7 @@ void AppHost::HandleUserInteractionEnabledChanged(const ExampleApp::UserInteract
 	ASSERT_UI_THREAD
 
 	AndroidSafeNativeThreadAttachment attached(m_nativeState);
-	                JNIEnv* env = attached.envForThread;
+	JNIEnv* env = attached.envForThread;
 
 	const std::string methodName = "setTouchEnabled";
 	jmethodID touchEnabledMethod = env->GetMethodID(m_nativeState.activityClass, methodName.c_str(), "(Z)V");
@@ -401,6 +448,7 @@ void AppHost::HandleUserInteractionEnabledChanged(const ExampleApp::UserInteract
 
 ExampleApp::ExampleAppMessaging::TMessageBus& AppHost::GetMessageBus()
 {
+	Eegeo_ASSERT(m_resolvedUIModules);
     return *(m_wiring->Resolve<ExampleApp::ExampleAppMessaging::TMessageBus>());
 }
 

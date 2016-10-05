@@ -59,9 +59,41 @@
 
 namespace ExampleApp
 {
+	namespace
+	{
+		void ResolveModuleSet(Hypodermic::Container& container, TModules& moduleSet)
+		{
+			for (const auto& module : moduleSet)
+			{
+				module->AssignContainer(&container);
+				module->RegisterRenderableFilters();
+				module->RegisterOpenablesAndReactors();
+			}
+			for (const auto& module: moduleSet)
+			{
+				const auto& filters = container.resolve<Eegeo::Rendering::RenderableFilters>();
+				for (const auto& filter : module->GetRenderableFilters())
+				{
+					filters->AddRenderableFilter(*filter);
+				}
+				const auto& openables = container.resolve<OpenableControl::View::TOpenables>();
+				for (const auto& openable : module->GetOpenables())
+				{
+					openables->AddItem(openable);
+				}
+				const auto& reactors = container.resolve<ScreenControl::View::TReactors>();
+				for (const auto& reactor : module->GetReactors())
+				{
+					reactors->AddItem(reactor);
+				}
+			}
+		}
+	}
+
     AppWiring::AppWiring()
     : m_moduleContainerBuilder(std::make_shared<Hypodermic::ContainerBuilder>())
     , m_appContainerBuilder(std::make_shared<Hypodermic::ContainerBuilder>())
+    , m_appContainer(nullptr)
     {
         m_moduleContainerBuilder->registerType<TModules>().singleInstance();
         m_moduleContainer = m_moduleContainerBuilder->build();
@@ -131,46 +163,62 @@ namespace ExampleApp
         auto moduleSet = m_moduleContainer->resolve<TModules>();
         m_moduleRegistrationCallbacks.ExecuteCallbacks(*moduleSet);
     }
-    
-    void AppWiring::ResolveModules()
+
+    void AppWiring::ApplyModuleRegistrations()
     {
+    	Eegeo_ASSERT(m_appContainer == nullptr);
         auto moduleSet = m_moduleContainer->resolve<TModules>();
         for (const auto& module : *moduleSet)
         {
             module->Register(m_appContainerBuilder);
         }
-        m_appContainer = m_appContainerBuilder->build();
-        for (const auto& module : *moduleSet)
-        {
-            module->AssignContainer(m_appContainer.get());
-            module->RegisterLeaves();
-            for (const auto& leaf : module->GetLeaves())
-            {
-                m_leaves.push_back(leaf);
-            }
-            module->RegisterRenderableFilters();
-            module->RegisterOpenablesAndReactors();
-        }
-        for (const auto& module: *moduleSet)
-        {
-            const auto& filters = m_appContainer->resolve<Eegeo::Rendering::RenderableFilters>();
-            for (const auto& filter : module->GetRenderableFilters())
-            {
-                filters->AddRenderableFilter(*filter);
-            }
-            const auto& openables = m_appContainer->resolve<OpenableControl::View::TOpenables>();
-            for (const auto& openable : module->GetOpenables())
-            {
-                openables->AddItem(openable);
-            }
-            const auto& reactors = m_appContainer->resolve<ScreenControl::View::TReactors>();
-            for (const auto& reactor : module->GetReactors())
-            {
-                reactors->AddItem(reactor);
-            }
-        }
+    }
+
+    void AppWiring::BuildContainer()
+    {
+    	if (m_appContainer == nullptr)
+    	{
+    		m_appContainer = m_appContainerBuilder->build();
+    	}
+    }
+
+    void AppWiring::ResolveModules()
+    {
+    	BuildContainer();
+    	ResolveModuleSet(*m_appContainer, *m_moduleContainer->resolve<TModules>());
     }
     
+	void AppWiring::ResolveUiLeaves()
+    {
+        BuildContainer();
+        auto moduleSet = m_moduleContainer->resolve<TModules>();
+        for (const auto& module : *moduleSet)
+		{
+			module->AssignContainer(m_appContainer.get());
+			module->RegisterUiLeaves();
+			for (const auto& leaf : module->GetLeaves())
+			{
+				m_leaves.push_back(leaf);
+			}
+		}
+	}
+
+	void AppWiring::ResolveNativeLeaves()
+	{
+        BuildContainer();
+        auto moduleSet = m_moduleContainer->resolve<TModules>();
+        for (const auto& module : *moduleSet)
+		{
+			module->AssignContainer(m_appContainer.get());
+			module->RegisterNativeLeaves();
+			for (const auto& leaf : module->GetLeaves())
+			{
+				m_leaves.push_back(leaf);
+			}
+		}
+	}
+
+
     const TContainer& AppWiring::GetContainer() const
     {
         return m_appContainer;

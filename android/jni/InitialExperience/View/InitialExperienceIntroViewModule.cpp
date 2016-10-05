@@ -16,6 +16,12 @@ namespace ExampleApp
 				ASSERT_UI_THREAD
 				builder->registerType<InitialExperienceIntroView>().as<IInitialExperienceIntroView>().singleInstance();
 			}
+
+			void InitialExperienceIntroViewModule::RegisterLeaves()
+			{
+				ASSERT_UI_THREAD
+				RegisterLeaf<IInitialExperienceIntroView>();
+			}
 		}
 	}
 }

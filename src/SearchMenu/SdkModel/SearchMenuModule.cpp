@@ -31,7 +31,7 @@ namespace ExampleApp
                 builder->registerType<SearchMenuPerformedSearchMessageHandler>();
             }
             
-            void SearchMenuModule::RegisterLeaves()
+            void SearchMenuModule::RegisterNativeLeaves()
             {
                 RegisterLeaf<SearchMenuPerformedSearchMessageHandler>();
                 

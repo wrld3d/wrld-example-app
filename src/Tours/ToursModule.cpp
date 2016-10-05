@@ -55,7 +55,7 @@ namespace ExampleApp
             builder->registerType<View::TourFullScreenImage::TourFullScreenImageCeremonyEndedObserver>().singleInstance();
         }
         
-        void ToursModule::RegisterLeaves()
+        void ToursModule::RegisterNativeLeaves()
         {
             RegisterLeaf<SdkModel::TourAddedObserver>();
             RegisterLeaf<SdkModel::TourRemovedObserver>();

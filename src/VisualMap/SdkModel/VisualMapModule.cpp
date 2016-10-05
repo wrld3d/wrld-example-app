@@ -30,7 +30,7 @@ namespace ExampleApp
                 builder->registerType<VisualMapService>().as<IVisualMapService>().singleInstance();
             }
             
-            void VisualMapModule::RegisterLeaves()
+            void VisualMapModule::RegisterNativeLeaves()
             {
                 RegisterLeaf<IVisualMapController>();
             }

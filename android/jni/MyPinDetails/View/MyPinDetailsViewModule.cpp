@@ -16,20 +16,12 @@ namespace ExampleApp
 				ASSERT_UI_THREAD
 				builder->registerType<MyPinDetailsView>().as<IMyPinDetailsView>().singleInstance();
 			}
-//            MyPinDetailsViewModule::MyPinDetailsViewModule(
-//                AndroidNativeState& nativeState,
-//                IMyPinDetailsViewModel& myPinDetailsViewModel,
-//                ExampleAppMessaging::TMessageBus& messageBus)
-//            {
-//                m_pView = Eegeo_NEW(MyPinDetailsView)(nativeState);
-//                m_pController = Eegeo_NEW(MyPinDetailsController)(*m_pView, myPinDetailsViewModel, messageBus);
-//            }
-//
-//            MyPinDetailsViewModule::~MyPinDetailsViewModule()
-//            {
-//                Eegeo_DELETE m_pController;
-//                Eegeo_DELETE m_pView;
-//            }
+
+        	void MyPinDetailsViewModule::RegisterLeaves()
+        	{
+				ASSERT_UI_THREAD
+        		RegisterLeaf<IMyPinDetailsView>();
+        	}
         }
     }
 }

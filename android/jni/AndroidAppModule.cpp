@@ -19,8 +19,12 @@
 #include "AndroidInitialExperienceModule.h"
 #include "IInitialExperienceModule.h"
 #include "IWorldAreaLoaderModel.h"
+#include "AndroidPersistentSettingsModel.h"
 #include "IPersistentSettingsModel.h"
 #include "AndroidAppThreadAssertionMacros.h"
+#include "AndroidAlertBoxFactory.h"
+#include "AndroidKeyboardInputFactory.h"
+#include "AndroidInputBoxFactory.h"
 
 namespace
 {
@@ -70,6 +74,30 @@ namespace ExampleApp
             builder->registerType<ExampleApp::InitialExperience::SdkModel::AndroidInitialExperienceModule>().as<ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule>().singleInstance();
 
             builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+            		{
+				 	 	 auto nativeState = context.resolve<AndroidNativeState>();
+				 	 	 return std::make_shared<Eegeo::UI::NativeAlerts::Android::AndroidAlertBoxFactory>(nativeState.get());
+            		}).as<Eegeo::UI::NativeAlerts::IAlertBoxFactory>().singleInstance();
+
+            builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+            		{
+				 	 	 auto nativeState = context.resolve<AndroidNativeState>();
+						 auto inputHandler = context.resolve<Eegeo::Android::Input::IAndroidInputHandler>();
+				 	 	 return std::make_shared<Eegeo::UI::NativeInput::Android::AndroidKeyboardInputFactory>(nativeState.get(), *inputHandler);
+            		}).as<Eegeo::UI::NativeInput::IKeyboardInputFactory>().singleInstance();
+
+            builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+            		{
+				 	 	 auto nativeState = context.resolve<AndroidNativeState>();
+				 	 	 return std::make_shared<Eegeo::UI::NativeInput::Android::AndroidInputBoxFactory>(nativeState.get());
+            		}).as<Eegeo::UI::NativeInput::IInputBoxFactory>().singleInstance();
+
+            builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+            		{
+				 	 	 auto nativeState = context.resolve<AndroidNativeState>();
+				 	 	 return std::make_shared<Eegeo::UI::NativeAlerts::Android::AndroidAlertBoxFactory>(nativeState.get());
+            		}).as<Eegeo::UI::NativeAlerts::IAlertBoxFactory>().singleInstance();
+            builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
         			 {
         				 auto nativeState = context.resolve<AndroidNativeState>();
       					 Eegeo_ASSERT(nativeState != nullptr);
@@ -97,6 +125,7 @@ namespace ExampleApp
 						return std::make_shared<Eegeo::Android::Input::AndroidInputProcessor>(inputHandler.get(), screenProperties->GetScreenWidth(), screenProperties->GetScreenHeight());
 					}).singleInstance();
 
+			builder->registerType<PersistentSettings::AndroidPersistentSettingsModel>().as<PersistentSettings::IPersistentSettingsModel>().singleInstance();
 			builder->registerInstanceFactory([this](Hypodermic::ComponentContext& context)
 					{
 			 	 	 	 auto nativeState = context.resolve<AndroidNativeState>();

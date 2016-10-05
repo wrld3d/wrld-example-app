@@ -23,6 +23,12 @@ namespace ExampleApp
 							return std::make_shared<SearchMenuView>(context.resolve<AndroidNativeState>(), viewName);
 						}).as<ISearchMenuView>().singleInstance();
 			}
+
+			void SearchMenuViewModule::RegisterLeaves()
+			{
+				ASSERT_UI_THREAD
+				RegisterLeaf<ISearchMenuView>();
+			}
         }
     }
 }

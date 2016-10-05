@@ -16,6 +16,12 @@ namespace ExampleApp
 				ASSERT_UI_THREAD
 				builder->registerType<ModalBackgroundAggregateView>().as<Modality::View::IModalBackgroundView>().singleInstance();
 			}
+
+			void ModalBackgroundViewModule::RegisterLeaves()
+			{
+				ASSERT_UI_THREAD
+				RegisterLeaf<Modality::View::IModalBackgroundView>();
+			}
         }
     }
 }

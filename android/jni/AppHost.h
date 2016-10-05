@@ -59,6 +59,7 @@ namespace ExampleApp
 #include "ICallback.h"
 #include "UserInteraction.h"
 #include "IMenuReactionModel.h"
+#include <atomic>
 
 class AppHost : protected Eegeo::NonCopyable
 {
@@ -100,8 +101,6 @@ public:
     void SetViewportOffset(float x, float y);
 
 private:
-    void RegisterApplicationViewModules();
-
     ExampleApp::ExampleAppMessaging::TMessageBus& GetMessageBus();
 
     bool m_isPaused;
@@ -117,7 +116,10 @@ private:
     std::shared_ptr<ExampleApp::AppWiring> m_wiring;
     std::shared_ptr<ExampleApp::MobileExampleApp> m_app;
 
-    bool m_createdUIModules;
+    bool m_registeredUIModules;
+    bool m_resolvedUIModules;
+    bool m_resolvedNativeTypes;
+    std::atomic<bool> m_reoslvedNativeModules;
     bool m_requestedApplicationInitialiseViewState;
     bool m_uiCreatedMessageReceivedOnNativeThread;
 

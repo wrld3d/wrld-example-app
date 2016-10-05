@@ -22,11 +22,15 @@ namespace ExampleApp
                 builder->registerType<Modality::View::ModalBackgroundController>().singleInstance();
             }
             
-            void ModalityModule::RegisterLeaves()
+            void ModalityModule::RegisterNativeLeaves()
             {
-                RegisterLeaf<Modality::View::ModalBackgroundController>();
                 RegisterLeaf<ModalityObserver>();
                 RegisterLeaf<IModalityController>();
+            }
+            
+            void ModalityModule::RegisterUiLeaves()
+            {
+                RegisterLeaf<Modality::View::ModalBackgroundController>();
             }
         }
     }

@@ -40,7 +40,13 @@ namespace ExampleApp
                 builder->registerType<View::WatermarkController>().singleInstance();
             }
 
-            void WatermarkModule::RegisterLeaves()
+            void WatermarkModule::RegisterUiLeaves()
+            {
+            	RegisterLeaf<View::WatermarkController>();
+            	RegisterLeaf<View::WatermarkDataRepository>();
+            }
+
+            void WatermarkModule::RegisterNativeLeaves()
             {
                 RegisterLeaf<View::WatermarkController>();
                 RegisterLeaf<WatermarkInteriorStateChangedObserver>();

@@ -51,12 +51,16 @@ namespace ExampleApp
                 builder->registerType<MyPinsLoadingMessageHandler>().singleInstance();
             }
             
-            void MyPinsModule::RegisterLeaves()
+            void MyPinsModule::RegisterNativeLeaves()
             {
                 RegisterLeaf<MyPinsLoadingMessageHandler>();
                 RegisterLeaf<MyPinSelectedMessageHandler>();
-                RegisterLeaf<View::MyPinAddedToMenuObserver>();
                 RegisterLeaf<MyPinsRepositoryObserver>();
+            }
+            
+            void MyPinsModule::RegisterUiLeaves()
+            {
+                RegisterLeaf<View::MyPinAddedToMenuObserver>();
             }
         }
     }

@@ -6,6 +6,7 @@
 #include "AndroidNativeState.h"
 #include "Types.h"
 #include "IPersistentSettingsModel.h"
+#include <memory>
 
 namespace ExampleApp
 {
@@ -13,12 +14,12 @@ namespace ExampleApp
     {
         class AndroidPersistentSettingsModel : public IPersistentSettingsModel, private Eegeo::NonCopyable
         {
-            AndroidNativeState& m_nativeState;
+            const std::shared_ptr<AndroidNativeState> m_nativeState;
             jclass m_jniApiClass;
             jobject m_jniApiInstance;
 
         public:
-            AndroidPersistentSettingsModel(AndroidNativeState& nativeState);
+            AndroidPersistentSettingsModel(const std::shared_ptr<AndroidNativeState>& nativeState);
 
             ~AndroidPersistentSettingsModel();
 

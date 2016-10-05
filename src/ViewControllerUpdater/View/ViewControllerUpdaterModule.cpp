@@ -14,7 +14,7 @@ namespace ExampleApp
                 builder->registerType<ViewControllerUpdaterModel>().as<IViewControllerUpdaterModel>().singleInstance();
             }
             
-            void ViewControllerUpdaterModule::RegisterLeaves()
+            void ViewControllerUpdaterModule::RegisterNativeLeaves()
             {
                 RegisterLeaf<IViewControllerUpdaterModel>();
             }

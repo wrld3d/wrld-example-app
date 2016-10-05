@@ -33,7 +33,7 @@ namespace ExampleApp
                 builder->registerType<InitialExperienceIntroController>().singleInstance();
             }
             
-            void InitialExperienceIntroViewModule::RegisterLeaves()
+            void InitialExperienceIntroViewModule::RegisterNativeLeaves()
             {
                 RegisterLeaf<InitialExperienceIntroController>();
             }

@@ -48,7 +48,7 @@ namespace ExampleApp
                                                  }).singleInstance();
             }
             
-            void SettingsMenuModule::RegisterLeaves()
+            void SettingsMenuModule::RegisterNativeLeaves()
             {
                 auto viewModel = Resolve<View::SettingsMenuViewModel>();
                 auto weatherMenuModel = Resolve<WeatherMenu::View::WeatherMenuModel>();

@@ -131,7 +131,7 @@ namespace ExampleApp
                 builder->registerType<View::AboutPageController>().singleInstance();
             }
             
-            void AboutPageModule::RegisterLeaves()
+            void AboutPageModule::RegisterUiLeaves()
             {
                 RegisterLeaf<View::AboutPageController>();
             }

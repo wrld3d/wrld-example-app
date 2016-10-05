@@ -16,6 +16,7 @@ namespace ExampleApp
             , m_messageBus(messageBus)
             , m_connectivityChangeCallback(this, &ConnectivityChangedObserver::HandleConnectivityChanged)
             {
+            	Eegeo_ASSERT(m_connectivityValidator != nullptr);
                 m_connectivityValidator->RegisterStateChangedCallback(m_connectivityChangeCallback);
             }
             

@@ -28,7 +28,7 @@ namespace ExampleApp
                                                    }).singleInstance();
             }
             
-            void NetworkModule::RegisterLeaves()
+            void NetworkModule::RegisterNativeLeaves()
             {
                 RegisterLeaf<ConnectivityChangedObserver>();
             }

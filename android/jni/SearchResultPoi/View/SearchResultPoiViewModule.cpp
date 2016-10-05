@@ -17,6 +17,11 @@ namespace ExampleApp
 				ASSERT_UI_THREAD
 				builder->registerType<SearchResultPoiView>().as<ISearchResultPoiView>().singleInstance();
 			}
+
+			void SearchResultPoiViewModule::RegisterLeaves()
+			{
+				RegisterLeaf<SearchResultPoiView>();
+			}
         }
     }
 }

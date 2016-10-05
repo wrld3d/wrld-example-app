@@ -14,7 +14,7 @@ namespace ExampleApp
             {
             public:
                 void Register(const TContainerBuilder& m_builder);
-                void RegisterLeaves();
+                void RegisterNativeLeaves();
                 void RegisterRenderableFilters();
             };
         }

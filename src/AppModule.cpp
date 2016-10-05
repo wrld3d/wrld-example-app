@@ -57,7 +57,7 @@ namespace ExampleApp
         builder->registerType<ErrorHandler>().as<Eegeo::IEegeoErrorHandler>().singleInstance();
     }
     
-    void AppModule::RegisterLeaves()
+    void AppModule::RegisterNativeLeaves()
     {
         RegisterLeaf<ErrorHandler>();
         Resolve<ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule>()->InitialiseWithApplicationModels();

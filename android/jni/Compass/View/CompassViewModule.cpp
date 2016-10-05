@@ -16,6 +16,12 @@ namespace ExampleApp
         		ASSERT_UI_THREAD
         		builder->registerType<CompassView>().as<ICompassView>().singleInstance();
         	}
+
+			void CompassViewModule::RegisterLeaves()
+			{
+        		ASSERT_UI_THREAD
+				RegisterLeaf<ICompassView>();
+			}
         }
     }
 }

@@ -26,10 +26,14 @@ namespace ExampleApp
                 builder->registerType<View::SearchResultOnMapItemModelSelectedObserver>().singleInstance();
             }
             
-            void SearchResultOnMapModule::RegisterLeaves()
+            void SearchResultOnMapModule::RegisterNativeLeaves()
+            {
+                RegisterLeaf<ISearchResultOnMapModel>();
+            }
+            
+            void SearchResultOnMapModule::RegisterUiLeaves()
             {
                 RegisterLeaf<View::SearchResultOnMapItemModelSelectedObserver>();
-                RegisterLeaf<ISearchResultOnMapModel>();
             }
         }
     }

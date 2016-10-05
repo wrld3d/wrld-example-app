@@ -31,8 +31,13 @@ namespace ExampleApp
         virtual void Register(const TContainerBuilder& builder) = 0;
         
         // Opportunity for Modules to register any 'leaf' types, i.e. message handlers, observers, that are not dependencies of other types
-        virtual void RegisterLeaves() { };
+        // Specifically on Android, this gives modules an opportunity to construct types with Native-affinity on the Native context.
+        virtual void RegisterNativeLeaves() { };
         
+        // Opportunity for Modules to register any 'leaf' types, i.e. message handlers, observers, that are not dependencies of other types, that are 'view' or 'ui' types
+        // Specifically on Android, this gives modules an opportunity to construct types with UI-affinity on the UI context
+        virtual void RegisterUiLeaves() { };
+
         // Opportunity for Modules to register any RenderableFilters
         virtual void RegisterRenderableFilters() { };
         

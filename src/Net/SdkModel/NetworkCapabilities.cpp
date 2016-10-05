@@ -26,6 +26,9 @@ namespace ExampleApp
             , m_connectedToWifi(QueryIsConnectedToWifi())
             , m_connectionChangedCallback(this, &NetworkCapabilities::HandleConnectionChanged)
             {
+            	Eegeo_ASSERT(m_connectivityService != nullptr);
+            	Eegeo_ASSERT(m_httpCache != nullptr);
+            	Eegeo_ASSERT(m_persistentSettings != nullptr);
                 if(!m_persistentSettings->TryGetValue(NetworkCapabilities_OnlyStreamOverWifi_Key, m_streamOverWifiOnly))
                 {
                     m_streamOverWifiOnly = false;

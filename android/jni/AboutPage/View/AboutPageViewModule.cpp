@@ -17,6 +17,12 @@ namespace ExampleApp
         		ASSERT_UI_THREAD
         		builder->registerType<AboutPageView>().as<IAboutPageView>().singleInstance();
         	}
+
+			void AboutPageViewModule::RegisterLeaves()
+			{
+        		ASSERT_UI_THREAD
+				RegisterLeaf<IAboutPageView>();
+			}
         }
     }
 }

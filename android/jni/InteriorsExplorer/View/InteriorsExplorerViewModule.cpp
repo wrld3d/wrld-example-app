@@ -18,6 +18,12 @@ namespace ExampleApp
 				ASSERT_UI_THREAD
 				builder->registerType<InteriorsExplorerView>().as<IInteriorsExplorerView>().singleInstance();
 			}
+
+			void InteriorsExplorerViewModule::RegisterLeaves()
+			{
+				ASSERT_UI_THREAD
+				RegisterLeaf<IInteriorsExplorerView>();
+			}
         }
     }
 }

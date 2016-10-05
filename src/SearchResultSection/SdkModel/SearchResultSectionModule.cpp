@@ -29,11 +29,15 @@ namespace ExampleApp
                 builder->registerType<View::SearchResultSectionController>().singleInstance();
             }
             
-            void SearchResultSectionModule::RegisterLeaves()
+            void SearchResultSectionModule::RegisterNativeLeaves()
             {
-                RegisterLeaf<View::SearchResultRepositoryObserver>();
                 RegisterLeaf<SearchResultSectionItemSelectedMessageHandler>();
                 RegisterLeaf<SearchResultViewClearedObserver>();
+            }
+            
+            void SearchResultSectionModule::RegisterUiLeaves()
+            {
+                RegisterLeaf<View::SearchResultRepositoryObserver>();
                 RegisterLeaf<View::SearchResultSectionController>();
             }
         }

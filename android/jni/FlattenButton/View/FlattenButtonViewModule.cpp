@@ -16,6 +16,12 @@ namespace ExampleApp
 				ASSERT_UI_THREAD
 				builder->registerType<FlattenButtonView>().as<IFlattenButtonView>().singleInstance();
 			}
+
+			void FlattenButtonViewModule::RegisterLeaves()
+			{
+				ASSERT_UI_THREAD
+				RegisterLeaf<IFlattenButtonView>();
+			}
         }
     }
 }

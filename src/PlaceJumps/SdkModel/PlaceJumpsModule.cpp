@@ -29,7 +29,7 @@ namespace ExampleApp
                 builder->registerType<PlaceJumpSelectedMessageHandler>().singleInstance();
             }
             
-            void PlaceJumpsModule::RegisterLeaves()
+            void PlaceJumpsModule::RegisterNativeLeaves()
             {
                 RegisterLeaf<PlaceJumpSelectedMessageHandler>();
                 

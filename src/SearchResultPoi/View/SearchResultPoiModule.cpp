@@ -34,10 +34,14 @@ namespace ExampleApp
                 builder->registerType<View::SearchResultPoiController>().singleInstance();
             }
             
-            void SearchResultPoiModule::RegisterLeaves()
+            void SearchResultPoiModule::RegisterNativeLeaves()
             {
                 RegisterLeaf<SdkModel::SearchResultPoiPinToggledMessageHandler>();
                 RegisterLeaf<SdkModel::SearchResultPoiViewOpenedMessageHandler>();
+            }
+            
+            void SearchResultPoiModule::RegisterUiLeaves()
+            {
                 RegisterLeaf<View::SearchResultPoiController>();
             }
             

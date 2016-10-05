@@ -31,7 +31,13 @@ namespace ExampleApp
                 builder->registerType<View::WeatherOptionsModel>().singleInstance();
             }
             
-            void WeatherMenuModule::RegisterLeaves()
+            void WeatherMenuModule::RegisterUiLeaves()
+            {
+            	RegisterLeaf<View::WeatherMenuModel>();
+            	RegisterLeaf<View::WeatherOptionsModel>();
+            }
+
+            void WeatherMenuModule::RegisterNativeLeaves()
             {
                 RegisterLeaf<WeatherSelectedMessageHandler>();
 

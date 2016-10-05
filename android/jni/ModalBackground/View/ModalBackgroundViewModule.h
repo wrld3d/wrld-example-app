@@ -2,12 +2,6 @@
 
 #pragma once
 
-//#include "IModalBackgroundViewModule.h"
-//#include "AndroidNativeState.h"
-//#include "Types.h"
-//#include "Modality.h"
-//#include "ModalBackgroundViewIncludes.h"
-//#include "BidirectionalBus.h"
 #include "Module.h"
 
 namespace ExampleApp
@@ -20,6 +14,7 @@ namespace ExampleApp
             {
             public:
             	void Register(const TContainerBuilder& builder);
+            	void RegisterLeaves();
             };
         }
     }

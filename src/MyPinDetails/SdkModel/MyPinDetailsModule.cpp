@@ -26,10 +26,14 @@ namespace ExampleApp
                 builder->registerType<View::MyPinDetailsController>().singleInstance();
             }
             
-            void MyPinDetailsModule::RegisterLeaves()
+            void MyPinDetailsModule::RegisterNativeLeaves()
+            {
+                RegisterLeaf<MyPinDetailsViewRemovePinHandler>();
+            }
+            
+            void MyPinDetailsModule::RegisterUiLeaves()
             {
                 RegisterLeaf<View::MyPinDetailsController>();
-                RegisterLeaf<MyPinDetailsViewRemovePinHandler>();
                 RegisterLeaf<View::MyPinDetailsModelSelectedObserver>();
             }
             

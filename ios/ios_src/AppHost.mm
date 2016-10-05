@@ -127,6 +127,9 @@ AppHost::AppHost(
     m_wiring->RegisterModuleInstance(std::make_shared<ExampleApp::iOS::iOSAppModule>(screenProperties, applicationConfiguration, metricsService, m_viewController));
     m_wiring->RegisterDefaultModules();
     RegisterApplicationViewModules();
+    m_wiring->ApplyModuleRegistrations();
+    m_wiring->ResolveNativeLeaves();
+    m_wiring->ResolveUiLeaves();
     m_wiring->ResolveModules();
     
     m_app = m_wiring->BuildMobileExampleApp();

@@ -18,7 +18,7 @@ namespace ExampleApp
                 builder->registerType<View::MyPinCreationDetailsController>().singleInstance();
             }
             
-            void MyPinCreationDetailsModule::RegisterLeaves()
+            void MyPinCreationDetailsModule::RegisterUiLeaves()
             {
                 RegisterLeaf<View::MyPinCreationDetailsController>();
             }

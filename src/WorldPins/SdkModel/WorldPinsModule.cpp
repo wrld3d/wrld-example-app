@@ -55,14 +55,18 @@ namespace ExampleApp
                 builder->registerType<WorldPinsPlatformServices>().singleInstance();
             }
             
-            void WorldPinsModule::RegisterLeaves()
+            void WorldPinsModule::RegisterNativeLeaves()
             {
                 RegisterLeaf<IWorldPinsInFocusController>();
                 RegisterLeaf<WorldPinsModalityObserver>();
+            }
+            
+            void WorldPinsModule::RegisterUiLeaves()
+            {
                 RegisterLeaf<View::WorldPinInFocusObserver>();
                 RegisterLeaf<View::WorldPinOnMapController>();
             }
-            
+
             void WorldPinsModule::RegisterOpenablesAndReactors()
             {
                 RegisterReactor(&Resolve<View::IWorldPinInFocusViewModel>()->GetScreenControlViewModel());
