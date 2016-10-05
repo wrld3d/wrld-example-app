@@ -63,7 +63,8 @@
 @property (nonatomic, retain) UIView* pControlContainer;
 @property (nonatomic, retain) UIView* pTitleCardContainer;
 @property (nonatomic, retain) UIView* pDetailsCardContainer;
-@property (nonatomic, retain) UIScrollView* pTagsCardContainer;;
+@property (nonatomic, retain) UIView* pTagsCardContainer;
+@property (nonatomic, retain) UIView* pDescriptionCardContainer;
 @property (nonatomic, retain) UIScrollView* pLabelsContainer;
 @property (nonatomic, retain) UIView* pTagIconContainer;
 @property (nonatomic, retain) UILabel* pTitleLabel;
