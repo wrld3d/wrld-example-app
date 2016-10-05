@@ -17,6 +17,7 @@
 #include "TimeHelpers.h"
 #include "YelpSearchResultModel.h"
 #include "SearchVendorNames.h"
+#include "ITagIconMapper.h"
 
 using namespace rapidjson;
 
@@ -49,7 +50,8 @@ namespace ExampleApp
                 namespace Helpers
                 {
                     ExampleApp::Search::SdkModel::SearchResultModel ParseYelpSearchResultFromJsonObject(const Value& json,
-                                                                                                        ExampleApp::Search::Yelp::SdkModel::IYelpCategoryToTagMapper& yelpCategoryMapper)
+                                                                                                        ExampleApp::Search::Yelp::SdkModel::IYelpCategoryToTagMapper& yelpCategoryMapper,
+                                                                                                        const TagSearch::SdkModel::ITagIconMapper& tagIconMapper)
                     {
                         Result entry;
                         
@@ -140,8 +142,9 @@ namespace ExampleApp
                         rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
                         json.Accept(writer);
 
-                        // TODO tags: should I be directly using this as the icon key, or do I need to map it?
-                        ExampleApp::Search::SdkModel::TagIconKey tagIconKey = entry.mappedAppTag;
+                        std::vector<std::string> appTags;
+                        appTags.push_back(entry.mappedAppTag);
+                        ExampleApp::Search::SdkModel::TagIconKey tagIconKey = tagIconMapper.GetIconKeyForTags(appTags);
                         
                         return ExampleApp::Search::SdkModel::SearchResultModel(ExampleApp::Search::SdkModel::SearchResultModel::CurrentVersion,
                                                                                entry.uniqueId,

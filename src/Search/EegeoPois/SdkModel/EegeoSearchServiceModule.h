@@ -33,7 +33,7 @@ namespace ExampleApp
                     IEegeoParser* m_pEegeoParser;
                     Search::SdkModel::ISearchService* m_pSearchService;
 
-                    SearchResultPoi::SdkModel::ITagIconMapper *m_pTagIconMapper;
+                    TagSearch::SdkModel::ITagIconMapper *m_pTagIconMapper;
                     EegeoReadableTagMapper *m_pReadableTagMapper;
                 public:
                     EegeoSearchServiceModule(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,

@@ -10,6 +10,8 @@
 #include "UrlHelpers.h"
 #include "ISearchServiceModule.h"
 #include "IFileIO.h"
+#include "TagSearch.h"
+#include "SearchTags.h"
 
 namespace ExampleApp
 {
@@ -25,13 +27,14 @@ namespace ExampleApp
                 Search::SdkModel::ISearchResultParser* m_pYelpSearchJsonParser;
                 Yelp::SdkModel::YelpBusinessJsonParser* m_pYelpBusinessJsonParser;
                 Yelp::SdkModel::IYelpCategoryToTagMapper* m_pYelpCategoryMapper;
+                TagSearch::SdkModel::ITagIconMapper *m_pTagIconMapper;
 
             public:
                 YelpSearchServiceModule(
                     Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                     Net::SdkModel::INetworkCapabilities& networkCapabilities,
                     Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
-                    const std::vector<std::string>& appTags,
+                    const Search::SdkModel::SearchTags& searchTags,
 					const std::string& yelpConsumerKey,
 					const std::string& yelpConsumerSecret,
 					const std::string& yelpOAuthToken,

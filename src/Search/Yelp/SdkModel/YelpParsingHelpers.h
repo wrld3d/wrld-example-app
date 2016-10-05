@@ -4,6 +4,7 @@
 
 #include "Search.h"
 #include "Yelp.h"
+#include "TagSearch.h"
 
 #include <document.h>
 
@@ -18,7 +19,8 @@ namespace ExampleApp
                 namespace Helpers
                 {
                     ExampleApp::Search::SdkModel::SearchResultModel ParseYelpSearchResultFromJsonObject(const rapidjson::Value& json,
-                                                                                                        ExampleApp::Search::Yelp::SdkModel::IYelpCategoryToTagMapper& yelpCategoryMapper);
+                                                                                                        ExampleApp::Search::Yelp::SdkModel::IYelpCategoryToTagMapper& yelpCategoryMapper,
+                                                                                                        const TagSearch::SdkModel::ITagIconMapper& tagIconMapper);
                     
                     YelpSearchResultModel TransformToYelpSearchResult(const Search::SdkModel::SearchResultModel& searchResultModel);
                     

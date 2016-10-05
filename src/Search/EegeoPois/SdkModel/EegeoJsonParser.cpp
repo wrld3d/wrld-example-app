@@ -5,7 +5,7 @@
 #include "TimeHelpers.h"
 #include "InteriorId.h"
 #include "EegeoReadableTagMapper.h"
-
+#include "ITagIconMapper.h"
 #include "document.h"
 #include "writer.h"
 #include "stringbuffer.h"
@@ -60,7 +60,7 @@ namespace ExampleApp
                      }
 
                     Search::SdkModel::SearchResultModel ParseSearchResultFromJsonObject(const rapidjson::Value& json,
-                                                                                        const SearchResultPoi::SdkModel::ITagIconMapper& tagIconMapper,
+                                                                                        const TagSearch::SdkModel::ITagIconMapper& tagIconMapper,
                                                                                         const EegeoReadableTagMapper& tagNameMapper)
                     {
                         std::string title = "";
@@ -177,7 +177,7 @@ namespace ExampleApp
                 }
                 
                 EegeoJsonParser::EegeoJsonParser(
-                        const SearchResultPoi::SdkModel::ITagIconMapper &tagIconMapper,
+                        const TagSearch::SdkModel::ITagIconMapper &tagIconMapper,
                         const EegeoReadableTagMapper& tagReadableNameMapper)
                 : m_tagIconMapper(tagIconMapper)
                 , m_tagReadableNameMapper(tagReadableNameMapper)

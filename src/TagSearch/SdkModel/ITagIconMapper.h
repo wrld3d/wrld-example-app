@@ -8,7 +8,7 @@
 
 namespace ExampleApp
 {
-    namespace SearchResultPoi
+    namespace TagSearch
     {
         namespace SdkModel
         {
