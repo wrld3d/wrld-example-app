@@ -26,6 +26,7 @@
 #include "AndroidKeyboardInputFactory.h"
 #include "AndroidInputBoxFactory.h"
 #include "AndroidMenuReactionModel.h"
+#include "IInitialExperienceController.h"
 
 namespace
 {
@@ -73,7 +74,10 @@ namespace ExampleApp
             builder->registerType<ExampleApp::Menu::View::AndroidMenuReactionModel>().as<ExampleApp::Menu::View::IMenuReactionModel>().singleInstance();
     	    builder->registerType<ExampleApp::Metrics::AndroidFlurryMetricsService>().as<ExampleApp::Metrics::IMetricsService>().singleInstance();
             builder->registerType<ExampleApp::InitialExperience::SdkModel::AndroidInitialExperienceModule>().as<ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule>().singleInstance();
-
+            builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                             {
+                                                 return Hypodermic::makeExternallyOwned(context.resolve<ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule>()->GetInitialExperienceController());
+                                             }).singleInstance();
             builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
             		{
 				 	 	 auto nativeState = context.resolve<AndroidNativeState>();

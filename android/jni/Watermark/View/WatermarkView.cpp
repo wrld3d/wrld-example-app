@@ -3,6 +3,7 @@
 #include "WatermarkView.h"
 #include "AndroidAppThreadAssertionMacros.h"
 #include "WatermarkData.h"
+#include "IWatermarkDataRepository.h"
 
 namespace ExampleApp
 {
@@ -14,6 +15,7 @@ namespace ExampleApp
                 : m_nativeState(nativeState)
                 , m_uiView(nullptr)
             {
+            	Eegeo_TTY("WatermarkView::ctor begin");
                 ASSERT_UI_THREAD
 
                 AndroidSafeNativeThreadAttachment attached(*m_nativeState);
@@ -24,10 +26,40 @@ namespace ExampleApp
                 env->DeleteLocalRef(strClassName);
 
                 m_uiViewClass = static_cast<jclass>(env->NewGlobalRef(uiClass));
+
+				jmethodID uiViewCtor = env->GetMethodID(m_uiViewClass, "<init>", "(Lcom/eegeo/entrypointinfrastructure/MainActivity;JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
+
+                jstring jniImageAssetNameString = env->NewStringUTF("eegeo_logo");
+                jstring jniPopupTitleString = env->NewStringUTF("");
+                jstring jniPopupBodyString = env->NewStringUTF("");
+                jstring jniWebUrlString = env->NewStringUTF("");
+                jboolean jniShouldShowShadow = false;
+
+				jobject instance = env->NewObject(
+									   m_uiViewClass,
+									   uiViewCtor,
+									   m_nativeState->activity,
+									   (jlong)(this),
+									   jniImageAssetNameString,
+									   jniPopupTitleString,
+									   jniPopupBodyString,
+									   jniWebUrlString,
+									   jniShouldShowShadow
+								   );
+
+				env->DeleteLocalRef(jniImageAssetNameString);
+				env->DeleteLocalRef(jniPopupTitleString);
+				env->DeleteLocalRef(jniPopupBodyString);
+				env->DeleteLocalRef(jniWebUrlString);
+
+				m_uiView = env->NewGlobalRef(instance);
+            	Eegeo_TTY("WatermarkView::ctor end");
             }
 
             WatermarkView::~WatermarkView()
             {
+            	Eegeo_TTY("WatermarkView::dtor begin");
+
                 ASSERT_UI_THREAD
 
                 AndroidSafeNativeThreadAttachment attached(*m_nativeState);
@@ -36,6 +68,7 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView, removeHudMethod);
                 env->DeleteGlobalRef(m_uiView);
                 env->DeleteGlobalRef(m_uiViewClass);
+            	Eegeo_TTY("WatermarkView::dtor end");
             }
 
             void WatermarkView::OnSelected()
@@ -104,38 +137,14 @@ namespace ExampleApp
                 jstring jniWebUrlString = env->NewStringUTF(watermarkData.WebUrl().c_str());
                 jboolean jniShouldShowShadow = watermarkData.ShouldShowShadow();
 
-                if (m_uiView == nullptr)
-                {
-					jmethodID uiViewCtor = env->GetMethodID(m_uiViewClass, "<init>", "(Lcom/eegeo/entrypointinfrastructure/MainActivity;JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
-
-					jobject instance = env->NewObject(
-										   m_uiViewClass,
-										   uiViewCtor,
-										   m_nativeState->activity,
-										   (jlong)(this),
-										   jniImageAssetNameString,
-										   jniPopupTitleString,
-										   jniPopupBodyString,
-										   jniWebUrlString,
-										   jniShouldShowShadow
-									   );
-
-					env->DeleteLocalRef(jniImageAssetNameString);
-					env->DeleteLocalRef(jniPopupTitleString);
-					env->DeleteLocalRef(jniPopupBodyString);
-					env->DeleteLocalRef(jniWebUrlString);
-
-					m_uiView = env->NewGlobalRef(instance);
-                } else {
-					jmethodID updateWatermarkData = env->GetMethodID(m_uiViewClass, "updateWatermarkData", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
-					env->CallVoidMethod(m_uiView,
-										updateWatermarkData,
-										jniImageAssetNameString,
-										jniPopupTitleString,
-										jniPopupBodyString,
-										jniWebUrlString,
-										jniShouldShowShadow);
-                }
+				jmethodID updateWatermarkData = env->GetMethodID(m_uiViewClass, "updateWatermarkData", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
+				env->CallVoidMethod(m_uiView,
+									updateWatermarkData,
+									jniImageAssetNameString,
+									jniPopupTitleString,
+									jniPopupBodyString,
+									jniWebUrlString,
+									jniShouldShowShadow);
 
                 env->DeleteLocalRef(jniImageAssetNameString);
                 env->DeleteLocalRef(jniPopupTitleString);
