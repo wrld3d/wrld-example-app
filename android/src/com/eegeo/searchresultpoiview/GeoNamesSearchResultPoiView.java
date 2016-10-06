@@ -2,15 +2,15 @@
 
 package com.eegeo.searchresultpoiview;
 
+import com.eegeo.entrypointinfrastructure.MainActivity;
+import com.eegeo.helpers.TintablePinToggleButton;
+import com.eegeo.mobileexampleapp.R;
+import com.eegeo.tags.TagResources;
+
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.eegeo.tags.TagResources;
-import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.helpers.TintablePinToggleButton;
-import com.eegeo.mobileexampleapp.R;
 
 public class GeoNamesSearchResultPoiView 
 {

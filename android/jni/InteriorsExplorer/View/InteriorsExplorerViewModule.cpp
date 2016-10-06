@@ -15,14 +15,15 @@ namespace ExampleApp
         {
 			void InteriorsExplorerViewModule::Register(const TContainerBuilder& builder)
 			{
-				ASSERT_UI_THREAD
 				builder->registerType<InteriorsExplorerView>().as<IInteriorsExplorerView>().singleInstance();
 			}
 
-			void InteriorsExplorerViewModule::RegisterLeaves()
+			void InteriorsExplorerViewModule::RegisterUiLeaves()
 			{
+				Eegeo_TTY("InteriorsExplorerViewModule::RegisterUiLeaves begin");
 				ASSERT_UI_THREAD
 				RegisterLeaf<IInteriorsExplorerView>();
+				Eegeo_TTY("InteriorsExplorerViewModule::RegisterUiLeaves end");
 			}
         }
     }

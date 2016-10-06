@@ -3,12 +3,10 @@
 package com.eegeo.searchmenu;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.searchmenu.SearchMenuResultsListAnimationConstants;
 
 import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ListView;

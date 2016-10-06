@@ -2,10 +2,10 @@
 
 package com.eegeo.persistentstate;
 
+import com.eegeo.entrypointinfrastructure.MainActivity;
+
 import android.content.Context;
 import android.content.SharedPreferences;
-
-import com.eegeo.entrypointinfrastructure.MainActivity;
 
 public class PersistentState
 {

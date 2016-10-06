@@ -2,10 +2,10 @@
 
 package com.eegeo.initialexperience.preload;
 
+import com.eegeo.entrypointinfrastructure.MainActivity;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-
-import com.eegeo.entrypointinfrastructure.MainActivity;
 
 public class PreLoadInitialExperience
 {

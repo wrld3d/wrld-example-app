@@ -6,6 +6,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.eegeo.entrypointinfrastructure.MainActivity;
+import com.eegeo.helpers.IActivityIntentResultHandler;
+import com.eegeo.helpers.IRuntimePermissionResultHandler;
+import com.eegeo.mobileexampleapp.R;
+import com.eegeo.photos.PhotoIntentDispatcher;
+import com.eegeo.runtimepermissions.RuntimePermissionDispatcher;
+
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,16 +39,6 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-
-import com.eegeo.helpers.IActivityIntentResultHandler;
-import com.eegeo.helpers.IRuntimePermissionResultHandler;
-import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.mobileexampleapp.R;
-import com.eegeo.photos.PhotoIntentDispatcher;
-import com.eegeo.runtimepermissions.RuntimePermissionDispatcher;
-
-import android.Manifest;
-import android.app.Activity;
 
 public class MyPinCreationDetailsView implements View.OnClickListener, IActivityIntentResultHandler, IRuntimePermissionResultHandler
 {

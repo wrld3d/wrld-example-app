@@ -118,8 +118,6 @@ private:
 
     bool m_registeredUIModules;
     bool m_resolvedUIModules;
-    bool m_resolvedNativeTypes;
-    std::atomic<bool> m_reoslvedNativeModules;
     bool m_requestedApplicationInitialiseViewState;
     bool m_uiCreatedMessageReceivedOnNativeThread;
 

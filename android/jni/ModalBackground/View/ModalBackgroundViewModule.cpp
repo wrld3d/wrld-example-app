@@ -13,14 +13,15 @@ namespace ExampleApp
         {
 			void ModalBackgroundViewModule::Register(const TContainerBuilder& builder)
 			{
-				ASSERT_UI_THREAD
 				builder->registerType<ModalBackgroundAggregateView>().as<Modality::View::IModalBackgroundView>().singleInstance();
 			}
 
-			void ModalBackgroundViewModule::RegisterLeaves()
+			void ModalBackgroundViewModule::RegisterUiLeaves()
 			{
+				Eegeo_TTY("ModalBackgroundViewModule::RegisterUiLeaves begin");
 				ASSERT_UI_THREAD
 				RegisterLeaf<Modality::View::IModalBackgroundView>();
+				Eegeo_TTY("ModalBackgroundViewModule::RegisterUiLeaves end");
 			}
         }
     }

@@ -17,6 +17,7 @@ namespace ExampleApp
                 , m_pinOffset((appConfig->PinDiameter() * Helpers::ImageHelpers::GetPixelScale()))
             	, m_showingEnlargedPin(false)
             {
+                Eegeo_TTY("WorldPinOnMapView begin");
                 ASSERT_UI_THREAD
 
                 AndroidSafeNativeThreadAttachment attached(*m_nativeState);
@@ -37,6 +38,7 @@ namespace ExampleApp
                                    );
 
                 m_uiView = env->NewGlobalRef(instance);
+                Eegeo_TTY("WorldPinOnMapView end");
             }
 
             WorldPinOnMapView::~WorldPinOnMapView()

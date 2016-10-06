@@ -3,15 +3,15 @@ package com.eegeo.options;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.eegeo.entrypointinfrastructure.MainActivity;
+import com.eegeo.mobileexampleapp.R;
+
 import android.os.SystemClock;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.mobileexampleapp.R;
 
 public class OptionsCacheClearSubView 
 {

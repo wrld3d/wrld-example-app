@@ -13,14 +13,15 @@ namespace ExampleApp
         {
 			void WorldPinOnMapViewModule::Register(const TContainerBuilder& builder)
 			{
-				ASSERT_UI_THREAD
 				builder->registerType<WorldPinOnMapView>().as<IWorldPinOnMapView>().singleInstance();
 			}
 
-			void WorldPinOnMapViewModule::RegisterLeaves()
+			void WorldPinOnMapViewModule::RegisterUiLeaves()
 			{
+				Eegeo_TTY("WorldPinOnMapViewModule::RegisterUiLeaves begin");
 				ASSERT_UI_THREAD
 				RegisterLeaf<IWorldPinOnMapView>();
+				Eegeo_TTY("WorldPinOnMapViewModule::RegisterUiLeaves end");
 			}
         }
     }

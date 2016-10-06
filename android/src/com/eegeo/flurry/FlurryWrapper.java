@@ -1,7 +1,7 @@
 package com.eegeo.flurry;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.flurry.android.FlurryAgent;

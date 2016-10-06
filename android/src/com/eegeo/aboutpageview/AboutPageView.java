@@ -2,14 +2,14 @@
 
 package com.eegeo.aboutpageview;
 
+import com.eegeo.entrypointinfrastructure.MainActivity;
+import com.eegeo.mobileexampleapp.R;
+
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
-
-import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.mobileexampleapp.R;
 
 public class AboutPageView implements View.OnClickListener
 {

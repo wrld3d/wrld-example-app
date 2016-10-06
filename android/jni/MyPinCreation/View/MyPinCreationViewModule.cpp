@@ -15,16 +15,17 @@ namespace ExampleApp
         {
 			void MyPinCreationViewModule::Register(const TContainerBuilder& builder)
 			{
-				ASSERT_UI_THREAD
 				builder->registerType<MyPinCreationInitiationView>().as<IMyPinCreationInitiationView>().singleInstance();
 				builder->registerType<MyPinCreationConfirmationView>().as<IMyPinCreationConfirmationView>().singleInstance();
 			}
 
-			void MyPinCreationViewModule::RegisterLeaves()
+			void MyPinCreationViewModule::RegisterUiLeaves()
 			{
+				Eegeo_TTY("MyPinCreationViewModule::RegisterUiLeaves begin");
 				ASSERT_UI_THREAD
 				RegisterLeaf<IMyPinCreationInitiationView>();
 				RegisterLeaf<IMyPinCreationConfirmationView>();
+				Eegeo_TTY("MyPinCreationViewModule::RegisterUiLeaves end");
 			}
         }
     }

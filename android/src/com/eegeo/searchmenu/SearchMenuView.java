@@ -15,13 +15,10 @@ import com.eegeo.menu.MenuExpandableListView;
 import com.eegeo.menu.MenuListAnimationHandler;
 import com.eegeo.menu.MenuView;
 import com.eegeo.mobileexampleapp.R;
-import com.eegeo.searchmenu.SearchResultsScrollButtonTouchDownListener;
-import com.eegeo.searchmenu.SearchResultsScrollListener;
-import com.eegeo.searchmenu.SearchMenuResultsListAnimationConstants;
 
 import android.text.Editable;
-import android.text.TextWatcher;
 import android.text.TextUtils.TruncateAt;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;

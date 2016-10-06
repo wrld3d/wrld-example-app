@@ -2,10 +2,10 @@
 
 package com.eegeo.menu;
 
-import android.view.View;
-
 import com.eegeo.animation.ReversibleAnimatorSet;
 import com.eegeo.entrypointinfrastructure.MainActivity;
+
+import android.view.View;
 
 public abstract class MenuAnimationHandler
 {

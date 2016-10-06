@@ -14,13 +14,14 @@ namespace ExampleApp
         {
 			void SearchResultPoiViewModule::Register(const TContainerBuilder& builder)
 			{
-				ASSERT_UI_THREAD
 				builder->registerType<SearchResultPoiView>().as<ISearchResultPoiView>().singleInstance();
 			}
 
-			void SearchResultPoiViewModule::RegisterLeaves()
+			void SearchResultPoiViewModule::RegisterUiLeaves()
 			{
+				Eegeo_TTY("SearchResultPoiViewModule::RegisterUiLeaves begin");
 				RegisterLeaf<SearchResultPoiView>();
+				Eegeo_TTY("SearchResultPoiViewModule::RegisterUiLeaves end");
 			}
         }
     }

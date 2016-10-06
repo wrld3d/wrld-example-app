@@ -4,25 +4,23 @@ package com.eegeo.searchresultpoiview;
 
 import java.util.regex.Pattern;
 
+import com.eegeo.entrypointinfrastructure.MainActivity;
+import com.eegeo.helpers.TintablePinToggleButton;
+import com.eegeo.mobileexampleapp.R;
+import com.eegeo.tags.TagResources;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.text.util.Linkify;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.helpers.TintablePinToggleButton;
-import com.eegeo.mobileexampleapp.R;
-import com.eegeo.tags.TagResources;
 
 public class EegeoSearchResultPoiView implements View.OnClickListener 
 {

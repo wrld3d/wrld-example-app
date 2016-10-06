@@ -2,11 +2,6 @@
 
 package com.eegeo.settingsmenu;
 
-import android.animation.TimeInterpolator;
-import android.animation.ValueAnimator.AnimatorUpdateListener;
-import android.view.View;
-import android.widget.RelativeLayout;
-
 import com.eegeo.animation.CircleInOutTimeInterpolator;
 import com.eegeo.animation.ReversibleAnimatorSet;
 import com.eegeo.animation.ReversibleValueAnimator;
@@ -18,6 +13,11 @@ import com.eegeo.menu.MenuAnimationHandler;
 import com.eegeo.menu.MenuOffScreenAnimatorListener;
 import com.eegeo.menu.MenuView;
 import com.eegeo.mobileexampleapp.R;
+
+import android.animation.TimeInterpolator;
+import android.animation.ValueAnimator.AnimatorUpdateListener;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 public class SettingsMenuAnimationHandler extends MenuAnimationHandler
 {

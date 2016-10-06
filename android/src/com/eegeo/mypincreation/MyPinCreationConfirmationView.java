@@ -2,13 +2,12 @@
 
 package com.eegeo.mypincreation;
 
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.mobileexampleapp.R;
+
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 public class MyPinCreationConfirmationView implements View.OnClickListener
 {

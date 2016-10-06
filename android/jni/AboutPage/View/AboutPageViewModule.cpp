@@ -14,14 +14,15 @@ namespace ExampleApp
         {
         	void AboutPageViewModule::Register(const TContainerBuilder& builder)
         	{
-        		ASSERT_UI_THREAD
         		builder->registerType<AboutPageView>().as<IAboutPageView>().singleInstance();
         	}
 
-			void AboutPageViewModule::RegisterLeaves()
+			void AboutPageViewModule::RegisterUiLeaves()
 			{
+				Eegeo_TTY("AboutPageViewModule::RegisterUiLeaves begin");
         		ASSERT_UI_THREAD
 				RegisterLeaf<IAboutPageView>();
+				Eegeo_TTY("AboutPageViewModule::RegisterUiLeaves end");
 			}
         }
     }

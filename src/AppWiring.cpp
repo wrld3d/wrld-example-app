@@ -190,16 +190,19 @@ namespace ExampleApp
     
 	void AppWiring::ResolveUiLeaves()
     {
+		int i = 0;
         BuildContainer();
         auto moduleSet = m_moduleContainer->resolve<TModules>();
         for (const auto& module : *moduleSet)
 		{
+			Eegeo_TTY("ResolveUiLeaves for module %d", i);
 			module->AssignContainer(m_appContainer.get());
 			module->RegisterUiLeaves();
 			for (const auto& leaf : module->GetLeaves())
 			{
 				m_leaves.push_back(leaf);
 			}
+			++i;
 		}
 	}
 

@@ -15,8 +15,6 @@ namespace ExampleApp
         {
 			void SearchMenuViewModule::Register(const TContainerBuilder& builder)
 			{
-				ASSERT_UI_THREAD
-
 				builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
 						{
 							const std::string viewName = "com/eegeo/searchmenu/SearchMenuView";
@@ -24,10 +22,12 @@ namespace ExampleApp
 						}).as<ISearchMenuView>().singleInstance();
 			}
 
-			void SearchMenuViewModule::RegisterLeaves()
+			void SearchMenuViewModule::RegisterUiLeaves()
 			{
+				Eegeo_TTY("SearchMenuViewModule::RegisterUiLeaves begin");
 				ASSERT_UI_THREAD
 				RegisterLeaf<ISearchMenuView>();
+				Eegeo_TTY("SearchMenuViewModule::RegisterUiLeaves end");
 			}
         }
     }

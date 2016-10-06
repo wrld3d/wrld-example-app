@@ -1,13 +1,13 @@
 package com.eegeo.options;
 
+import com.eegeo.entrypointinfrastructure.MainActivity;
+import com.eegeo.mobileexampleapp.R;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-
-import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.mobileexampleapp.R;
 
 public class OptionsView 
 {

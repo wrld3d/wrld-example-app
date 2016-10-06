@@ -2,6 +2,10 @@
 
 package com.eegeo.entrypointinfrastructure;
 
+import com.eegeo.mobileexampleapp.R;
+import com.eegeo.photos.PhotoIntentDispatcher;
+import com.eegeo.runtimepermissions.RuntimePermissionDispatcher;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -13,10 +17,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
-
-import com.eegeo.mobileexampleapp.R;
-import com.eegeo.photos.PhotoIntentDispatcher;
-import com.eegeo.runtimepermissions.RuntimePermissionDispatcher;
 
 public abstract class MainActivity extends Activity implements SurfaceHolder.Callback, INativeMessageRunner
 {

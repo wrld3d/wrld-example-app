@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.eegeo.tags.TagResources;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.mobileexampleapp.R;
+import com.eegeo.tags.TagResources;
 
 import android.view.LayoutInflater;
 import android.view.View;

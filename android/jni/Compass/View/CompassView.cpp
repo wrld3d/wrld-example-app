@@ -12,6 +12,7 @@ namespace ExampleApp
             CompassView::CompassView(const std::shared_ptr<AndroidNativeState>& nativeState)
                 : m_nativeState(nativeState)
             {
+            	Eegeo_TTY("CompassView begin");
                 ASSERT_UI_THREAD
 
                 AndroidSafeNativeThreadAttachment attached(*m_nativeState);
@@ -32,6 +33,7 @@ namespace ExampleApp
                                    );
 
                 m_uiView = env->NewGlobalRef(instance);
+            	Eegeo_TTY("CompassView end");
             }
 
             CompassView::~CompassView()

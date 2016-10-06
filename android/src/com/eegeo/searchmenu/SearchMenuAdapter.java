@@ -5,6 +5,8 @@ package com.eegeo.searchmenu;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import com.eegeo.mobileexampleapp.R;
 import com.eegeo.tags.TagResources;
 
@@ -18,8 +20,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.json.*;
 
 public class SearchMenuAdapter extends BaseAdapter
 {

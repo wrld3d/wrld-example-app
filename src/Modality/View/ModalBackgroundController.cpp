@@ -15,6 +15,7 @@ namespace ExampleApp
                 , m_model(model)
                 , m_modalityChangedCallback(this, &ModalBackgroundController::OnModalityChanged)
             {
+                Eegeo_ASSERT(m_view != nullptr);
                 m_model->InsertModalityChangedCallback(m_modalityChangedCallback);
             }
 

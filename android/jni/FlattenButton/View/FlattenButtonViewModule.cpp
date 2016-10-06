@@ -10,17 +10,17 @@ namespace ExampleApp
     {
         namespace View
         {
-
 			void FlattenButtonViewModule::Register(const TContainerBuilder& builder)
 			{
-				ASSERT_UI_THREAD
 				builder->registerType<FlattenButtonView>().as<IFlattenButtonView>().singleInstance();
 			}
 
-			void FlattenButtonViewModule::RegisterLeaves()
+			void FlattenButtonViewModule::RegisterUiLeaves()
 			{
+				Eegeo_TTY("FlattenButtonViewModule::RegisterUiLeaves begin");
 				ASSERT_UI_THREAD
 				RegisterLeaf<IFlattenButtonView>();
+				Eegeo_TTY("FlattenButtonViewModule::RegisterUiLeaves end");
 			}
         }
     }

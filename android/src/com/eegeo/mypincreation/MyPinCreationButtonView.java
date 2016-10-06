@@ -2,15 +2,15 @@
 
 package com.eegeo.mypincreation;
 
+import com.eegeo.entrypointinfrastructure.MainActivity;
+import com.eegeo.mobileexampleapp.R;
+
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-
-import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.mobileexampleapp.R;
 
 public class MyPinCreationButtonView implements View.OnClickListener, AnimatorListener
 {

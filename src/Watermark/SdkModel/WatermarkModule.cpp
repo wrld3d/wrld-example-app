@@ -42,15 +42,12 @@ namespace ExampleApp
 
             void WatermarkModule::RegisterUiLeaves()
             {
+                Eegeo_TTY("WatermarkModule::RegisterUiLeaves begin");
             	RegisterLeaf<View::WatermarkController>();
             	RegisterLeaf<View::WatermarkDataRepository>();
-            }
+                RegisterLeaf<View::IWatermarkDataRepository>();
+                RegisterLeaf<View::IWatermarkDataFactory>();
 
-            void WatermarkModule::RegisterNativeLeaves()
-            {
-                RegisterLeaf<View::WatermarkController>();
-                RegisterLeaf<WatermarkInteriorStateChangedObserver>();
-                
                 auto repo = Resolve<View::IWatermarkDataRepository>();
                 auto factory = Resolve<View::IWatermarkDataFactory>();
                 repo->AddWatermarkData("eegeo", factory->CreateDefaultEegeo());
@@ -62,11 +59,17 @@ namespace ExampleApp
                                                                                                   false);
 
                 repo->AddWatermarkData("micello", micelloWatermarkData);
-                
 
                 auto defaultWatermarkData = repo->GetWatermarkDataWithKey("eegeo");
                 auto view = Resolve<View::IWatermarkView>();
+                Eegeo_TTY("WatermarkModule::RegisterUiLeaves UpdateWatermarkData");
                 view->UpdateWatermarkData(defaultWatermarkData);
+                Eegeo_TTY("WatermarkModule::RegisterUiLeaves end");
+            }
+
+            void WatermarkModule::RegisterNativeLeaves()
+            {
+                RegisterLeaf<WatermarkInteriorStateChangedObserver>();
             }
             
             void WatermarkModule::RegisterOpenablesAndReactors()

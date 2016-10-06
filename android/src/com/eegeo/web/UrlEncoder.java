@@ -3,8 +3,8 @@
 package com.eegeo.web;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 
 public class UrlEncoder
 {

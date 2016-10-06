@@ -15,14 +15,15 @@ namespace ExampleApp
         {
 			void OptionsViewModule::Register(const TContainerBuilder& builder)
 			{
-				ASSERT_UI_THREAD
 				builder->registerType<OptionsView>().as<IOptionsView>().singleInstance();
 			}
 
-			void OptionsViewModule::RegisterLeaves()
+			void OptionsViewModule::RegisterUiLeaves()
 			{
+				Eegeo_TTY("OptionsViewModule::RegisterUiLeaves begin");
 				ASSERT_UI_THREAD
 				RegisterLeaf<IOptionsView>();
+				Eegeo_TTY("OptionsViewModule::RegisterUiLeaves end");
 			}
         }
     }

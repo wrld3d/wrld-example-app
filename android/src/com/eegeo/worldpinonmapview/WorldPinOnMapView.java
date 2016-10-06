@@ -2,6 +2,9 @@
 
 package com.eegeo.worldpinonmapview;
 
+import com.eegeo.entrypointinfrastructure.MainActivity;
+import com.eegeo.mobileexampleapp.R;
+
 import android.animation.Animator;
 import android.graphics.drawable.Drawable;
 import android.view.View;
@@ -9,11 +12,8 @@ import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.RelativeLayout.LayoutParams;
-
-import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.mobileexampleapp.R;
+import android.widget.TextView;
 
 public class WorldPinOnMapView implements View.OnClickListener
 {

@@ -13,14 +13,15 @@ namespace ExampleApp
         {
         	void CompassViewModule::Register(const TContainerBuilder& builder)
         	{
-        		ASSERT_UI_THREAD
         		builder->registerType<CompassView>().as<ICompassView>().singleInstance();
         	}
 
-			void CompassViewModule::RegisterLeaves()
+			void CompassViewModule::RegisterUiLeaves()
 			{
+				Eegeo_TTY("CompassViewModule::RegisterUiLeaves begin");
         		ASSERT_UI_THREAD
 				RegisterLeaf<ICompassView>();
+				Eegeo_TTY("CompassViewModule::RegisterUiLeaves end");
 			}
         }
     }

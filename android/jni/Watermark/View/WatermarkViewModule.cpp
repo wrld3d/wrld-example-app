@@ -14,14 +14,15 @@ namespace ExampleApp
         {
 			void WatermarkViewModule::Register(const TContainerBuilder& builder)
 			{
-				ASSERT_UI_THREAD
 				builder->registerType<WatermarkView>().as<IWatermarkView>().singleInstance();
 			}
 
-			void WatermarkViewModule::RegisterLeaves()
+			void WatermarkViewModule::RegisterUiLeaves()
 			{
+				Eegeo_TTY("WatermarkViewModule::RegisterUiLeaves begin");
 				ASSERT_UI_THREAD
 				RegisterLeaf<IWatermarkView>();
+				Eegeo_TTY("WatermarkViewModule::RegisterUiLeaves end");
 			}
         }
     }

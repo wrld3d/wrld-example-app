@@ -2,11 +2,11 @@
 
 package com.eegeo.modalbackground;
 
-import android.view.View;
-import android.widget.RelativeLayout;
-
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.mobileexampleapp.R;
+
+import android.view.View;
+import android.widget.RelativeLayout;
 
 public class ModalBackgroundView implements View.OnClickListener
 {

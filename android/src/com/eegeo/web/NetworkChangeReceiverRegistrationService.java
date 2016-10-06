@@ -5,8 +5,6 @@ package com.eegeo.web;
 import android.app.Activity;
 import android.content.IntentFilter;
 
-import com.eegeo.web.NetworkChangeReceiver;
-
 public class NetworkChangeReceiverRegistrationService
 {
     private Activity m_activity;

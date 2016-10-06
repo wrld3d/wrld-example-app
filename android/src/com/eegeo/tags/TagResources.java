@@ -2,8 +2,6 @@
 
 package com.eegeo.tags;
 
-import java.util.Locale;
-
 import android.app.Activity;
 
 public class TagResources

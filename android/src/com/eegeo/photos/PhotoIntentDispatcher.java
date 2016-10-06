@@ -9,6 +9,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import com.eegeo.entrypointinfrastructure.MainActivity;
+import com.eegeo.helpers.IActivityIntentResultHandler;
+
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -16,9 +19,6 @@ import android.net.Uri;
 import android.os.Build.VERSION_CODES;
 import android.os.Environment;
 import android.provider.MediaStore;
-
-import com.eegeo.helpers.IActivityIntentResultHandler;
-import com.eegeo.entrypointinfrastructure.MainActivity;
 
 // This class handles the dispatching of intents related to fetching an image via photo or gallery selection.
 public class PhotoIntentDispatcher

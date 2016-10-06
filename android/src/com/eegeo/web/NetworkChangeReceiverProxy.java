@@ -5,7 +5,6 @@ package com.eegeo.web;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import com.eegeo.web.NetworkChangeReceiver;
 
 public class NetworkChangeReceiverProxy extends BroadcastReceiver
 {

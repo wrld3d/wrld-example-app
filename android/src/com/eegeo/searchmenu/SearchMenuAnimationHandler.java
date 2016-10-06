@@ -2,10 +2,6 @@
 
 package com.eegeo.searchmenu;
 
-import android.animation.TimeInterpolator;
-import android.animation.ValueAnimator.AnimatorUpdateListener;
-import android.view.View;
-
 import com.eegeo.animation.BackOutTimeInterpolator;
 import com.eegeo.animation.CircleInOutTimeInterpolator;
 import com.eegeo.animation.ReversibleAnimatorSet;
@@ -18,6 +14,10 @@ import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.menu.MenuAnimationHandler;
 import com.eegeo.menu.MenuView;
 import com.eegeo.mobileexampleapp.R;
+
+import android.animation.TimeInterpolator;
+import android.animation.ValueAnimator.AnimatorUpdateListener;
+import android.view.View;
 
 public class SearchMenuAnimationHandler extends MenuAnimationHandler
 {

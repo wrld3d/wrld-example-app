@@ -13,14 +13,15 @@ namespace ExampleApp
         {
 			void MyPinDetailsViewModule::Register(const TContainerBuilder& builder)
 			{
-				ASSERT_UI_THREAD
 				builder->registerType<MyPinDetailsView>().as<IMyPinDetailsView>().singleInstance();
 			}
 
-        	void MyPinDetailsViewModule::RegisterLeaves()
+        	void MyPinDetailsViewModule::RegisterUiLeaves()
         	{
+				Eegeo_TTY("MyPinDetailsViewModule::RegisterUiLeaves begin");
 				ASSERT_UI_THREAD
         		RegisterLeaf<IMyPinDetailsView>();
+				Eegeo_TTY("MyPinDetailsViewModule::RegisterUiLeaves end");
         	}
         }
     }

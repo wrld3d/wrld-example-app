@@ -2,8 +2,6 @@
 
 package com.eegeo.searchmenu;
 
-import com.eegeo.searchmenu.SearchMenuViewJniMethods;
-
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;

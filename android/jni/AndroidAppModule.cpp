@@ -25,6 +25,7 @@
 #include "AndroidAlertBoxFactory.h"
 #include "AndroidKeyboardInputFactory.h"
 #include "AndroidInputBoxFactory.h"
+#include "AndroidMenuReactionModel.h"
 
 namespace
 {
@@ -69,7 +70,7 @@ namespace ExampleApp
 
     		builder->registerExternallyOwnedInstance(m_nativeState);
     		builder->registerExternallyOwnedInstance(m_screenProperties);
-
+            builder->registerType<ExampleApp::Menu::View::AndroidMenuReactionModel>().as<ExampleApp::Menu::View::IMenuReactionModel>().singleInstance();
     	    builder->registerType<ExampleApp::Metrics::AndroidFlurryMetricsService>().as<ExampleApp::Metrics::IMetricsService>().singleInstance();
             builder->registerType<ExampleApp::InitialExperience::SdkModel::AndroidInitialExperienceModule>().as<ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule>().singleInstance();
 

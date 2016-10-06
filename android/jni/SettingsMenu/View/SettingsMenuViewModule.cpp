@@ -15,7 +15,6 @@ namespace ExampleApp
         {
 			void SettingsMenuViewModule::Register(const TContainerBuilder& builder)
 			{
-				ASSERT_UI_THREAD
 				builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
 						{
 							const std::string viewName = "com/eegeo/settingsmenu/SettingsMenuView";
@@ -23,10 +22,12 @@ namespace ExampleApp
 						}).as<ISettingsMenuView>().singleInstance();
 			}
 
-			void SettingsMenuViewModule::RegisterLeaves()
+			void SettingsMenuViewModule::RegisterUiLeaves()
 			{
+				Eegeo_TTY("SettingsMenuViewModule::RegisterUiLeaves begin");
 				ASSERT_UI_THREAD
 				RegisterLeaf<ISettingsMenuView>();
+				Eegeo_TTY("SettingsMenuViewModule::RegisterUiLeaves end");
 			}
         }
     }

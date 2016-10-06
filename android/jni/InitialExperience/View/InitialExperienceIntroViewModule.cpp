@@ -13,14 +13,15 @@ namespace ExampleApp
 		{
 			void InitialExperienceIntroViewModule::Register(const TContainerBuilder& builder)
 			{
-				ASSERT_UI_THREAD
 				builder->registerType<InitialExperienceIntroView>().as<IInitialExperienceIntroView>().singleInstance();
 			}
 
-			void InitialExperienceIntroViewModule::RegisterLeaves()
+			void InitialExperienceIntroViewModule::RegisterUiLeaves()
 			{
+				Eegeo_TTY("InitialExperienceIntroViewModule::RegisterUiLeaves begin");
 				ASSERT_UI_THREAD
 				RegisterLeaf<IInitialExperienceIntroView>();
+				Eegeo_TTY("InitialExperienceIntroViewModule::RegisterUiLeaves end");
 			}
 		}
 	}
