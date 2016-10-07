@@ -5,6 +5,9 @@
 #include "Types.h"
 #include "IAndroidInputHandler.h"
 #include <memory>
+#include "AndroidInputProcessor.h"
+#include "IAndroidInputHandler.h"
+#include "IInputController.h"
 
 namespace ExampleApp
 {
@@ -14,8 +17,14 @@ namespace ExampleApp
 class AppInputDelegate : public Eegeo::Android::Input::IAndroidInputHandler, protected Eegeo::NonCopyable
 {
 public:
-    AppInputDelegate(const std::shared_ptr<ExampleApp::InputController>& inputController);
+    AppInputDelegate(const std::shared_ptr<ExampleApp::IInputController>& inputController,
+    		 	 	 const std::shared_ptr<Eegeo::Android::Input::AndroidInputProcessor>& inputProcessor,
+					 const std::shared_ptr<Eegeo::Android::Input::IAndroidInputHandler>& inputHandler);
     ~AppInputDelegate();
+
+    void HandleTouchInputEvent(const Eegeo::Android::Input::TouchInputEvent& event);
+    void Update(float dt);
+    void SetViewportOffset(float x, float y);
 
     void Event_TouchRotate 			(const AppInterface::RotateData& data);
     void Event_TouchRotate_Start	(const AppInterface::RotateData& data);
@@ -47,7 +56,9 @@ public:
     }
 
 private:
-    const std::shared_ptr<ExampleApp::InputController>& m_inputController;
+    const std::shared_ptr<ExampleApp::IInputController> m_inputController;
+ 	const std::shared_ptr<Eegeo::Android::Input::AndroidInputProcessor> m_inputProcessor;
+	const std::shared_ptr<Eegeo::Android::Input::IAndroidInputHandler> m_inputHandler;
 };
 
 

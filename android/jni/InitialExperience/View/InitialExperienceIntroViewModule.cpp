@@ -14,12 +14,14 @@ namespace ExampleApp
 			void InitialExperienceIntroViewModule::Register(const TContainerBuilder& builder)
 			{
 				builder->registerType<InitialExperienceIntroView>().as<IInitialExperienceIntroView>().singleInstance();
+				builder->registerType<InitialExperienceIntroController>().singleInstance();
 			}
 
 			void InitialExperienceIntroViewModule::RegisterUiLeaves()
 			{
 				ASSERT_UI_THREAD
 				RegisterLeaf<IInitialExperienceIntroView>();
+				RegisterLeaf<InitialExperienceIntroController>();
 			}
 		}
 	}

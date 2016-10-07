@@ -27,6 +27,8 @@
 #include "AndroidInputBoxFactory.h"
 #include "AndroidMenuReactionModel.h"
 #include "IInitialExperienceController.h"
+#include "AppInputDelegate.h"
+#include "IInputController.h"
 
 namespace
 {
@@ -90,6 +92,8 @@ namespace ExampleApp
 						 auto inputHandler = context.resolve<Eegeo::Android::Input::IAndroidInputHandler>();
 				 	 	 return std::make_shared<Eegeo::UI::NativeInput::Android::AndroidKeyboardInputFactory>(nativeState.get(), *inputHandler);
             		}).as<Eegeo::UI::NativeInput::IKeyboardInputFactory>().singleInstance();
+
+            builder->registerType<AppInputDelegate>().singleInstance();
 
             builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
             		{

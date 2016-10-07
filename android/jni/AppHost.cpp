@@ -101,6 +101,7 @@
 #include "ITagSearchRepository.h"
 #include "ISearchMenuView.h"
 #include "SearchMenu.h"
+#include "InputController.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -114,10 +115,6 @@ AppHost::AppHost(
 )
     :m_isPaused(false)
     ,m_nativeState(nativeState)
-    ,m_androidInputBoxFactory(&nativeState)
-    ,m_androidKeyboardInputFactory(&nativeState, m_inputHandler)
-    ,m_androidAlertBoxFactory(&nativeState)
-    ,m_androidNativeUIFactories(m_androidAlertBoxFactory, m_androidInputBoxFactory, m_androidKeyboardInputFactory)
     ,m_registeredUIModules(false)
     ,m_resolvedUIModules(false)
     ,m_uiCreatedMessageReceivedOnNativeThread(false)
@@ -125,6 +122,7 @@ AppHost::AppHost(
     ,m_loadingScreenCallback(this, &AppHost::OnLoadingScreenComplete)
     ,m_app(nullptr)
     ,m_wiring(nullptr)
+    ,m_appInputDelegate(nullptr)
 {
     ASSERT_NATIVE_THREAD
 
@@ -132,7 +130,6 @@ AppHost::AppHost(
 
     Eegeo::TtyHandler::TtyEnabled = true;
     Eegeo::AssertHandler::BreakOnAssert = true;
-
 
     m_wiring = std::make_shared<ExampleApp::AppWiring>();
     m_wiring->RegisterModuleInstance(std::make_shared<ExampleApp::Android::AndroidAppModule>(nativeState, screenProperties, display, shareSurface, resourceBuildShareContext));
@@ -167,11 +164,6 @@ AppHost::~AppHost()
 {
     ASSERT_NATIVE_THREAD
 
-    m_inputHandler.RemoveDelegateInputHandler(m_pAppInputDelegate);
-
-    Eegeo_DELETE m_pAppInputDelegate;
-    m_pAppInputDelegate = NULL;
-
     if (m_app != nullptr)
     {
     	m_app->UnregisterLoadingScreenComplete(m_loadingScreenCallback);
@@ -205,21 +197,20 @@ void AppHost::SetSharedSurface(EGLSurface sharedSurface)
 {
     ASSERT_NATIVE_THREAD
 
-	std::static_pointer_cast<Eegeo::Android::AndroidPlatformAbstractionModule>(m_wiring->Resolve<Eegeo::Modules::IPlatformAbstractionModule>())->UpdateSurface(sharedSurface);
+	std::dynamic_pointer_cast<Eegeo::Android::AndroidPlatformAbstractionModule>(m_wiring->Resolve<Eegeo::Modules::IPlatformAbstractionModule>())->UpdateSurface(sharedSurface);
 }
 
 void AppHost::SetViewportOffset(float x, float y)
 {
     ASSERT_NATIVE_THREAD
 
-    m_inputHandler.SetViewportOffset(x, y);
+	m_appInputDelegate->SetViewportOffset(x, y);
 }
 
 void AppHost::HandleTouchInputEvent(const Eegeo::Android::Input::TouchInputEvent& event)
 {
-    ASSERT_NATIVE_THREAD
-
-    m_wiring->Resolve<Eegeo::Android::Input::AndroidInputProcessor>()->HandleInput(event);
+	ASSERT_NATIVE_THREAD
+	m_appInputDelegate->HandleTouchInputEvent(event);
 }
 
 void AppHost::Update(float dt)
@@ -254,7 +245,7 @@ void AppHost::Draw(float dt)
 
     m_app->Draw(dt);
 
-    m_wiring->Resolve<Eegeo::Android::Input::AndroidInputProcessor>()->Update(dt);
+    m_appInputDelegate->Update(dt);
 }
 
 void AppHost::HandleApplicationUiCreatedOnNativeThread()
@@ -264,6 +255,7 @@ void AppHost::HandleApplicationUiCreatedOnNativeThread()
 	m_wiring->ResolveModules();
 	m_app = m_wiring->BuildMobileExampleApp();
 	m_app->RegisterLoadingScreenComplete(m_loadingScreenCallback);
+	m_appInputDelegate = m_wiring->Resolve<AppInputDelegate>();
 	GetMessageBus().SubscribeUi(m_userInteractionEnabledChangedHandler);
 	m_uiCreatedMessageReceivedOnNativeThread = true;
 	PublishNetworkConnectivityStateToUIThread();

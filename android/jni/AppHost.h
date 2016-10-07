@@ -118,14 +118,7 @@ private:
 
     bool m_isPaused;
     AndroidNativeState& m_nativeState;
-    AppInputDelegate* m_pAppInputDelegate;
-
-    Eegeo::Android::Input::AndroidInputHandler m_inputHandler;
-    Eegeo::UI::NativeInput::Android::AndroidInputBoxFactory m_androidInputBoxFactory;
-    Eegeo::UI::NativeInput::Android::AndroidKeyboardInputFactory m_androidKeyboardInputFactory;
-    Eegeo::UI::NativeAlerts::Android::AndroidAlertBoxFactory m_androidAlertBoxFactory;
-    Eegeo::UI::NativeUIFactories m_androidNativeUIFactories;
-
+    std::shared_ptr<AppInputDelegate> m_appInputDelegate;
     std::shared_ptr<ExampleApp::AppWiring> m_wiring;
     std::shared_ptr<ExampleApp::MobileExampleApp> m_app;
 
