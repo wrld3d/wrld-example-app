@@ -7,13 +7,16 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CompassView}">
                     <Canvas Name="ImageCanvas">
-                        <Image Name="ButtonImage" Source="/Assets/button_compass_off.png" Width="70" Height="70"/>
-                        <Image Name="CompassArrow" Source="/Assets/compass_point_off.png" Width="9" Height="25" Visibility="Collapsed" />
+                        <Image Name="CompassNewLocate" Source="/Assets/compass_new_locate.png" Width="46.67" Height="46.67"/>
+                        <Image Name="CompassNewLocked" Source="/Assets/compass_new_locked.png" Width="46.67" Height="46.67"/>
+                        <Image Name="CompassNewUnlocked" Source="/Assets/compass_new_unlocked.png" Width="46.67" Height="46.67"/>
+                        <Image Name="CompassNew" Source="/Assets/compass_new.png" Width="70" Height="70" Visibility="Collapsed" Margin="-35, -35, 0, 0"/>
                     </Canvas>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="ButtonImage" Property="Source" Value="/Assets/button_compass_on.png"/>
-                            <Setter TargetName="CompassArrow" Property="Source" Value="/Assets/compass_point_on.png" />
+                            <Setter TargetName="CompassNewLocate" Property="Source" Value="/Assets/compass_new_locate_down.png"/>
+                            <Setter TargetName="CompassNewLocked" Property="Source" Value="/Assets/compass_new_locked_down.png"/>
+                            <Setter TargetName="CompassNewUnlocked" Property="Source" Value="/Assets/compass_new_unlocked_down.png"/>
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -21,7 +24,9 @@
                                 <Condition Property="IsPressed" Value="False"/>
                             </MultiTrigger.Conditions>
                             <MultiTrigger.Setters>
-                                <Setter TargetName="ButtonImage" Property="Source" Value="/Assets/button_compass_over.png"/>
+                                <Setter TargetName="CompassNewLocate" Property="Source" Value="/Assets/compass_new_locate_over.png"/>
+                                <Setter TargetName="CompassNewLocked" Property="Source" Value="/Assets/compass_new_locked_over.png"/>
+                                <Setter TargetName="CompassNewUnlocked" Property="Source" Value="/Assets/compass_new_unlocked_over.png"/>
                             </MultiTrigger.Setters>
                         </MultiTrigger>
                     </ControlTemplate.Triggers>

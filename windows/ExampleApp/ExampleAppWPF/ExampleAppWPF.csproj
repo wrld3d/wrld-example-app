@@ -696,6 +696,44 @@
     <Resource Include="Assets\search_results_scroll_button.png" />
     <Resource Include="Assets\search_results_scroll_button_down.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\compass_new_locate_over.png">
+      <Link>Assets\compass_new_locate_over.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\compass_new_locked_over.png">
+      <Link>Assets\compass_new_locked_over.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\compass_new.png">
+      <Link>Assets\compass_new.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\compass_new_locate.png">
+      <Link>Assets\compass_new_locate.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\compass_new_locate_down.png">
+      <Link>Assets\compass_new_locate_down.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\compass_new_locked.png">
+      <Link>Assets\compass_new_locked.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\compass_new_locked_down.png">
+      <Link>Assets\compass_new_locked_down.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\compass_new_unlocked.png">
+      <Link>Assets\compass_new_unlocked.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\compass_new_unlocked_down.png">
+      <Link>Assets\compass_new_unlocked_down.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\compass_new_unlocked_over.png">
+      <Link>Assets\compass_new_unlocked_over.png</Link>
+    </Resource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)..\..\Resources" "$(TargetDir)Resources" /e /y /i /r
