@@ -19,10 +19,8 @@ namespace ExampleApp
 
 			void AboutPageViewModule::RegisterUiLeaves()
 			{
-				Eegeo_TTY("AboutPageViewModule::RegisterUiLeaves begin");
         		ASSERT_UI_THREAD
 				RegisterLeaf<IAboutPageView>();
-				Eegeo_TTY("AboutPageViewModule::RegisterUiLeaves end");
 			}
         }
     }

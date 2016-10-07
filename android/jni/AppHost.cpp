@@ -28,6 +28,7 @@
 #include "SettingsMenuModule.h"
 #include "ModalityModule.h"
 #include "ModalBackgroundViewModule.h"
+#include "ModalBackgroundNativeView.h"
 #include "ModalBackgroundNativeViewModule.h"
 #include "MenuModel.h"
 #include "MenuViewModel.h"
@@ -88,6 +89,18 @@
 #include "MobileExampleApp.h"
 #include "AndroidAppModule.h"
 #include "IPersistentSettingsModel.h"
+#include "ShaderIdGenerator.h"
+#include "MaterialIdGenerator.h"
+#include "GlBufferPool.h"
+#include "VertexLayoutPool.h"
+#include "VertexBindingPool.h"
+#include "SearchMenuController.h"
+#include "SettingsMenuController.h"
+#include "IModalBackgroundView.h"
+#include "SettingsMenu.h"
+#include "ITagSearchRepository.h"
+#include "ISearchMenuView.h"
+#include "SearchMenu.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -107,9 +120,9 @@ AppHost::AppHost(
     ,m_androidNativeUIFactories(m_androidAlertBoxFactory, m_androidInputBoxFactory, m_androidKeyboardInputFactory)
     ,m_registeredUIModules(false)
     ,m_resolvedUIModules(false)
-    ,m_requestedApplicationInitialiseViewState(false)
     ,m_uiCreatedMessageReceivedOnNativeThread(false)
 	,m_userInteractionEnabledChangedHandler(this, &AppHost::HandleUserInteractionEnabledChanged)
+    ,m_loadingScreenCallback(this, &AppHost::OnLoadingScreenComplete)
     ,m_app(nullptr)
     ,m_wiring(nullptr)
 {
@@ -123,6 +136,7 @@ AppHost::AppHost(
 
     m_wiring = std::make_shared<ExampleApp::AppWiring>();
     m_wiring->RegisterModuleInstance(std::make_shared<ExampleApp::Android::AndroidAppModule>(nativeState, screenProperties, display, shareSurface, resourceBuildShareContext));
+    m_wiring->RegisterDefaultModules();
     m_wiring->RegisterModule<ExampleApp::Watermark::View::WatermarkViewModule>();
     m_wiring->RegisterModule<ExampleApp::WorldPins::View::WorldPinOnMapViewModule>();
     m_wiring->RegisterModule<ExampleApp::FlattenButton::View::FlattenButtonViewModule>();
@@ -139,7 +153,6 @@ AppHost::AppHost(
     m_wiring->RegisterModule<ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule>();
     m_wiring->RegisterModule<ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule>();
     m_wiring->RegisterModule<ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule>();
-    m_wiring->RegisterDefaultModules();
     m_wiring->ApplyModuleRegistrations();
     m_wiring->BuildContainer();
 	m_wiring->ResolveLeaf<ExampleApp::ApplicationConfig::ApplicationConfiguration>();
@@ -158,6 +171,11 @@ AppHost::~AppHost()
 
     Eegeo_DELETE m_pAppInputDelegate;
     m_pAppInputDelegate = NULL;
+
+    if (m_app != nullptr)
+    {
+    	m_app->UnregisterLoadingScreenComplete(m_loadingScreenCallback);
+    }
 }
 
 void AppHost::OnResume()
@@ -187,8 +205,7 @@ void AppHost::SetSharedSurface(EGLSurface sharedSurface)
 {
     ASSERT_NATIVE_THREAD
 
-    // TODO:
-    //m_pAndroidPlatformAbstractionModule->UpdateSurface(sharedSurface);
+	std::static_pointer_cast<Eegeo::Android::AndroidPlatformAbstractionModule>(m_wiring->Resolve<Eegeo::Modules::IPlatformAbstractionModule>())->UpdateSurface(sharedSurface);
 }
 
 void AppHost::SetViewportOffset(float x, float y)
@@ -218,14 +235,12 @@ void AppHost::Update(float dt)
 
     m_app->Update(dt);
 
-    // TODO:
-    //m_pModalBackgroundNativeViewModule->Update(dt);
+    //m_wiring->Resolve<ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeView>()->Update(dt);
+}
 
-    //if(m_pApp->IsLoadingScreenComplete() && !m_requestedApplicationInitialiseViewState)
-    //{
-    //    m_requestedApplicationInitialiseViewState = true;
-    //    DispatchRevealUiMessageToUiThreadFromNativeThread();
-    //}
+void AppHost::OnLoadingScreenComplete()
+{
+	DispatchRevealUiMessageToUiThreadFromNativeThread();
 }
 
 void AppHost::Draw(float dt)
@@ -238,23 +253,20 @@ void AppHost::Draw(float dt)
     }
 
     m_app->Draw(dt);
-    //TODO:
+
     m_wiring->Resolve<Eegeo::Android::Input::AndroidInputProcessor>()->Update(dt);
 }
 
 void AppHost::HandleApplicationUiCreatedOnNativeThread()
 {
     ASSERT_NATIVE_THREAD
-	Eegeo_TTY("HandleApplicationUiCreatedOnNativeThread begin");
-
 	m_wiring->ResolveNativeLeaves();
 	m_wiring->ResolveModules();
 	m_app = m_wiring->BuildMobileExampleApp();
-
-	Eegeo_TTY("ResolveLeaf native Thread");
+	m_app->RegisterLoadingScreenComplete(m_loadingScreenCallback);
+	GetMessageBus().SubscribeUi(m_userInteractionEnabledChangedHandler);
 	m_uiCreatedMessageReceivedOnNativeThread = true;
 	PublishNetworkConnectivityStateToUIThread();
-	Eegeo_TTY("HandleApplicationUiCreatedOnNativeThread end");
 }
 
 void AppHost::PublishNetworkConnectivityStateToUIThread()
@@ -267,10 +279,8 @@ void AppHost::PublishNetworkConnectivityStateToUIThread()
     const bool connectionIsValid = m_wiring->Resolve<Eegeo::Web::WebConnectivityValidator>()->IsValid();
     GetMessageBus().Publish(ExampleApp::Net::ConnectivityChangedViewMessage(connectionIsValid));
 
-    //TODO:
-    //const Eegeo::Web::WebConnectivityValidator& webConnectivityValidator = m_pApp->World().GetWebConnectivityValidator();
-    //const bool connectionIsValid = webConnectivityValidator.IsValid();
-    //m_messageBus.Publish(ExampleApp::Net::ConnectivityChangedViewMessage(connectionIsValid));
+    auto validator = m_wiring->Resolve<Eegeo::Web::WebConnectivityValidator>();
+    GetMessageBus().Publish(ExampleApp::Net::ConnectivityChangedViewMessage(validator->IsValid()));
 }
 
 void AppHost::DispatchRevealUiMessageToUiThreadFromNativeThread()
@@ -287,14 +297,10 @@ void AppHost::DispatchUiCreatedMessageToNativeThreadFromUiThread()
 {
     ASSERT_UI_THREAD
 
-	Eegeo_TTY("DispatchUiCreatedMessageToNativeThreadFromUiThread begin");
-
     AndroidSafeNativeThreadAttachment attached(m_nativeState);
     JNIEnv* env = attached.envForThread;
     jmethodID dispatchUiCreatedMessageToNativeThreadFromUiThread = env->GetMethodID(m_nativeState.activityClass, "dispatchUiCreatedMessageToNativeThreadFromUiThread", "(J)V");
     env->CallVoidMethod(m_nativeState.activity, dispatchUiCreatedMessageToNativeThreadFromUiThread, (jlong)(this));
-
-    Eegeo_TTY("DispatchUiCreatedMessageToNativeThreadFromUiThread end");
 }
 
 void AppHost::RevealUiFromUiThread()
@@ -326,6 +332,10 @@ void AppHost::UpdateUiViewsFromUiThread(float dt)
     {
         CreateUiFromUiThread();
     }
+    else
+    {
+    	m_wiring->Resolve<ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel>()->UpdateObjectsUiThread(dt);
+    }
 }
 
 void AppHost::DestroyUiFromUiThread()
@@ -337,24 +347,12 @@ void AppHost::DestroyUiFromUiThread()
 
 void AppHost::CreateApplicationViewModulesFromUiThread()
 {
-	Eegeo_TTY("CreateApplicationViewModulesFromUiThread begin");
     ASSERT_UI_THREAD
     m_wiring->ResolveUiLeaves();
+    AddViewControllerUpdatable<ExampleApp::SettingsMenu::View::SettingsMenuController>();
+    AddViewControllerUpdatable<ExampleApp::SearchMenu::View::SearchMenuController>();
 	m_resolvedUIModules = true;
-
-    //TODO:
-
-
-
-    //ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
-
-    //viewControllerUpdaterModel.AddUpdateableObject(m_pSettingsMenuViewModule->GetMenuController());
-    //viewControllerUpdaterModel.AddUpdateableObject(m_pSearchMenuViewModule->GetMenuController());
-
     SetTouchExclusivity();
-	Eegeo_TTY("CreateApplicationViewModulesFromUiThread end");
-
-    //GetMessageBus().SubscribeUi(m_userInteractionEnabledChangedHandler);
 }
 
 void AppHost::DestroyApplicationViewModulesFromUiThread()
@@ -397,6 +395,7 @@ void AppHost::HandleUserInteractionEnabledChanged(const ExampleApp::UserInteract
 ExampleApp::ExampleAppMessaging::TMessageBus& AppHost::GetMessageBus()
 {
 	Eegeo_ASSERT(m_resolvedUIModules);
-    return *(m_wiring->Resolve<ExampleApp::ExampleAppMessaging::TMessageBus>());
+    auto messageBus = m_wiring->Resolve<ExampleApp::ExampleAppMessaging::TMessageBus>();
+    return *messageBus;
 }
 

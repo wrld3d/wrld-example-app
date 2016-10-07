@@ -19,9 +19,8 @@ namespace ExampleApp
 
 			void SearchResultPoiViewModule::RegisterUiLeaves()
 			{
-				Eegeo_TTY("SearchResultPoiViewModule::RegisterUiLeaves begin");
+				ASSERT_UI_THREAD
 				RegisterLeaf<SearchResultPoiView>();
-				Eegeo_TTY("SearchResultPoiViewModule::RegisterUiLeaves end");
 			}
         }
     }

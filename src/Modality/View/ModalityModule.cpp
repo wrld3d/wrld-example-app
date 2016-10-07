@@ -30,9 +30,7 @@ namespace ExampleApp
             
             void ModalityModule::RegisterUiLeaves()
             {
-                Eegeo_TTY("ModalityModule::RegisterUiLeaves begin");
                 RegisterLeaf<Modality::View::ModalBackgroundController>();
-                Eegeo_TTY("ModalityModule::RegisterUiLeaves end");
             }
         }
     }

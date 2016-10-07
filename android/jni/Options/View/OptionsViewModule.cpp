@@ -20,10 +20,8 @@ namespace ExampleApp
 
 			void OptionsViewModule::RegisterUiLeaves()
 			{
-				Eegeo_TTY("OptionsViewModule::RegisterUiLeaves begin");
 				ASSERT_UI_THREAD
 				RegisterLeaf<IOptionsView>();
-				Eegeo_TTY("OptionsViewModule::RegisterUiLeaves end");
 			}
         }
     }

@@ -104,7 +104,6 @@ namespace ExampleApp
             void MenuView::UpdateMenuSectionViews(TSections& sections, bool contentsChanged)
             {
                 ASSERT_UI_THREAD
-
                 if (!contentsChanged)
                 {
                     return;

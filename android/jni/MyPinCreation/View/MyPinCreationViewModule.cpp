@@ -21,11 +21,9 @@ namespace ExampleApp
 
 			void MyPinCreationViewModule::RegisterUiLeaves()
 			{
-				Eegeo_TTY("MyPinCreationViewModule::RegisterUiLeaves begin");
 				ASSERT_UI_THREAD
 				RegisterLeaf<IMyPinCreationInitiationView>();
 				RegisterLeaf<IMyPinCreationConfirmationView>();
-				Eegeo_TTY("MyPinCreationViewModule::RegisterUiLeaves end");
 			}
         }
     }

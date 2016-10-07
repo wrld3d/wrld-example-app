@@ -33,10 +33,8 @@ namespace ExampleApp
             
             void WeatherMenuModule::RegisterUiLeaves()
             {
-                Eegeo_TTY("WeatherMenuModule::RegisterUiLeaves begin");
             	RegisterLeaf<View::WeatherMenuModel>();
             	RegisterLeaf<View::WeatherOptionsModel>();
-                Eegeo_TTY("WeatherMenuModule::RegisterUiLeaves end");
             }
 
             void WeatherMenuModule::RegisterNativeLeaves()

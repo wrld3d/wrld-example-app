@@ -20,10 +20,8 @@ namespace ExampleApp
 
 			void InteriorsExplorerViewModule::RegisterUiLeaves()
 			{
-				Eegeo_TTY("InteriorsExplorerViewModule::RegisterUiLeaves begin");
 				ASSERT_UI_THREAD
 				RegisterLeaf<IInteriorsExplorerView>();
-				Eegeo_TTY("InteriorsExplorerViewModule::RegisterUiLeaves end");
 			}
         }
     }

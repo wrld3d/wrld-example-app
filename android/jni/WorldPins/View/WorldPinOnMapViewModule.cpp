@@ -18,10 +18,8 @@ namespace ExampleApp
 
 			void WorldPinOnMapViewModule::RegisterUiLeaves()
 			{
-				Eegeo_TTY("WorldPinOnMapViewModule::RegisterUiLeaves begin");
 				ASSERT_UI_THREAD
 				RegisterLeaf<IWorldPinOnMapView>();
-				Eegeo_TTY("WorldPinOnMapViewModule::RegisterUiLeaves end");
 			}
         }
     }

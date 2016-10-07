@@ -15,7 +15,6 @@ namespace ExampleApp
                 : m_nativeState(nativeState)
                 , m_uiView(nullptr)
             {
-            	Eegeo_TTY("WatermarkView::ctor begin");
                 ASSERT_UI_THREAD
 
                 AndroidSafeNativeThreadAttachment attached(*m_nativeState);
@@ -53,13 +52,10 @@ namespace ExampleApp
 				env->DeleteLocalRef(jniWebUrlString);
 
 				m_uiView = env->NewGlobalRef(instance);
-            	Eegeo_TTY("WatermarkView::ctor end");
             }
 
             WatermarkView::~WatermarkView()
             {
-            	Eegeo_TTY("WatermarkView::dtor begin");
-
                 ASSERT_UI_THREAD
 
                 AndroidSafeNativeThreadAttachment attached(*m_nativeState);
@@ -68,7 +64,6 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView, removeHudMethod);
                 env->DeleteGlobalRef(m_uiView);
                 env->DeleteGlobalRef(m_uiViewClass);
-            	Eegeo_TTY("WatermarkView::dtor end");
             }
 
             void WatermarkView::OnSelected()

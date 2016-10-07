@@ -18,10 +18,8 @@ namespace ExampleApp
 
 			void CompassViewModule::RegisterUiLeaves()
 			{
-				Eegeo_TTY("CompassViewModule::RegisterUiLeaves begin");
         		ASSERT_UI_THREAD
 				RegisterLeaf<ICompassView>();
-				Eegeo_TTY("CompassViewModule::RegisterUiLeaves end");
 			}
         }
     }

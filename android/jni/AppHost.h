@@ -4,7 +4,6 @@
 
 namespace ExampleApp
 {
-	class AppWiring;
 	class MobileExampleApp;
 }
 
@@ -59,7 +58,8 @@ namespace ExampleApp
 #include "ICallback.h"
 #include "UserInteraction.h"
 #include "IMenuReactionModel.h"
-#include <atomic>
+#include "AppWiring.h"
+#include "IViewControllerUpdaterModel.h"
 
 class AppHost : protected Eegeo::NonCopyable
 {
@@ -100,7 +100,20 @@ public:
     void SetSharedSurface(EGLSurface sharedSurface);
     void SetViewportOffset(float x, float y);
 
+    template <class T>
+    void AddViewControllerUpdatable()
+    {
+        auto t = m_wiring->Resolve<T>();
+        auto controller = m_wiring->Resolve<ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel>();
+        Eegeo_ASSERT(t != nullptr);
+        Eegeo_ASSERT(controller != nullptr);
+        controller->AddUpdateableObject(*t);
+    }
+
 private:
+    Eegeo::Helpers::TCallback0<AppHost> m_loadingScreenCallback;
+    void OnLoadingScreenComplete();
+
     ExampleApp::ExampleAppMessaging::TMessageBus& GetMessageBus();
 
     bool m_isPaused;
@@ -118,7 +131,6 @@ private:
 
     bool m_registeredUIModules;
     bool m_resolvedUIModules;
-    bool m_requestedApplicationInitialiseViewState;
     bool m_uiCreatedMessageReceivedOnNativeThread;
 
     ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus m_sdkDomainEventBus;

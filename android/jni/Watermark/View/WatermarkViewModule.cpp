@@ -19,10 +19,8 @@ namespace ExampleApp
 
 			void WatermarkViewModule::RegisterUiLeaves()
 			{
-				Eegeo_TTY("WatermarkViewModule::RegisterUiLeaves begin");
 				ASSERT_UI_THREAD
 				RegisterLeaf<IWatermarkView>();
-				Eegeo_TTY("WatermarkViewModule::RegisterUiLeaves end");
 			}
         }
     }

@@ -18,10 +18,8 @@ namespace ExampleApp
 
 			void InitialExperienceIntroViewModule::RegisterUiLeaves()
 			{
-				Eegeo_TTY("InitialExperienceIntroViewModule::RegisterUiLeaves begin");
 				ASSERT_UI_THREAD
 				RegisterLeaf<IInitialExperienceIntroView>();
-				Eegeo_TTY("InitialExperienceIntroViewModule::RegisterUiLeaves end");
 			}
 		}
 	}

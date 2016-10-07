@@ -18,10 +18,8 @@ namespace ExampleApp
 
 			void MyPinCreationDetailsViewModule::RegisterUiLeaves()
 			{
-				Eegeo_TTY("MyPinCreationDetailsViewModule::RegisterUiLeaves begin");
 				ASSERT_UI_THREAD
 				RegisterLeaf<IMyPinCreationDetailsView>();
-				Eegeo_TTY("MyPinCreationDetailsViewModule::RegisterUiLeaves end");
 			}
         }
     }

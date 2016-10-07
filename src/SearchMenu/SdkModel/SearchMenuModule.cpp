@@ -34,18 +34,21 @@ namespace ExampleApp
             void SearchMenuModule::RegisterNativeLeaves()
             {
                 RegisterLeaf<SearchMenuPerformedSearchMessageHandler>();
-                
+            }
+            
+            void SearchMenuModule::RegisterUiLeaves()
+            {
                 auto viewModel = Resolve<View::SearchMenuViewModel>();
                 Menu::View::MenuSectionViewModel* pTagSearchSection = Eegeo_NEW(Menu::View::MenuSectionViewModel)("Find", "", Resolve<TagSearch::View::TagSearchMenuModel>(), true);
                 viewModel->AddSection(*pTagSearchSection);
 
                 Menu::View::MenuSectionViewModel* pPlaceJumpSection = Eegeo_NEW(Menu::View::MenuSectionViewModel)("Locations", "", Resolve<PlaceJumps::View::PlaceJumpMenuModel>(), true);
                 viewModel->AddSection(*pPlaceJumpSection);
-                
+
                 Menu::View::MenuSectionViewModel* pMyPinsSection = Eegeo_NEW(Menu::View::MenuSectionViewModel)("My Pins", "", Resolve<MyPins::View::MyPinsMenuModel>(), true);
                 viewModel->AddSection(*pMyPinsSection);
             }
-            
+
             void SearchMenuModule::RegisterOpenablesAndReactors()
             {
                 RegisterOpenable(Resolve<View::SearchMenuViewModel>().get());

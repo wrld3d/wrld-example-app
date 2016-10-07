@@ -17,10 +17,8 @@ namespace ExampleApp
 
 			void FlattenButtonViewModule::RegisterUiLeaves()
 			{
-				Eegeo_TTY("FlattenButtonViewModule::RegisterUiLeaves begin");
 				ASSERT_UI_THREAD
 				RegisterLeaf<IFlattenButtonView>();
-				Eegeo_TTY("FlattenButtonViewModule::RegisterUiLeaves end");
 			}
         }
     }

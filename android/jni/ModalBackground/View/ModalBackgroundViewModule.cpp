@@ -18,10 +18,8 @@ namespace ExampleApp
 
 			void ModalBackgroundViewModule::RegisterUiLeaves()
 			{
-				Eegeo_TTY("ModalBackgroundViewModule::RegisterUiLeaves begin");
 				ASSERT_UI_THREAD
 				RegisterLeaf<Modality::View::IModalBackgroundView>();
-				Eegeo_TTY("ModalBackgroundViewModule::RegisterUiLeaves end");
 			}
         }
     }

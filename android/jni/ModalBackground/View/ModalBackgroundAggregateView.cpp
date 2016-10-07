@@ -16,7 +16,6 @@ namespace ExampleApp
                 : m_nativeState(nativeState)
                 , m_messageBus(messageBus)
             {
-            	Eegeo_TTY("ModalBackgroundAggregateView begin");
                 ASSERT_UI_THREAD
 
                 AndroidSafeNativeThreadAttachment attached(*m_nativeState);
@@ -37,7 +36,6 @@ namespace ExampleApp
                                    );
 
                 m_uiView = env->NewGlobalRef(instance);
-            	Eegeo_TTY("ModalBackgroundAggregateView end");
             }
 
             ModalBackgroundAggregateView::~ModalBackgroundAggregateView()
