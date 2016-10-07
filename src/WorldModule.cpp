@@ -42,6 +42,8 @@
 #include "IInputBoxFactory.h"
 #include "IKeyboardInputFactory.h"
 #include "IHttpCache.h"
+#include "AsyncLoadersModule.h"
+#include "LocalAsyncTextureLoader.h"
 
 namespace ExampleApp
 {
@@ -96,6 +98,11 @@ namespace ExampleApp
                                                return Hypodermic::makeExternallyOwned(context.resolve<Eegeo::EegeoWorld>()->GetTerrainModelModule().GetTerrainHeightProvider());
                                            }).singleInstance();
         
+        builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                                           {
+                                               return Hypodermic::makeExternallyOwned(context.resolve<Eegeo::EegeoWorld>()->GetAsyncLoadersModule().GetLocalAsyncTextureLoader());
+                                           }).singleInstance();
+
         builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
                                            {
                                                return Hypodermic::makeExternallyOwned(context.resolve<Eegeo::EegeoWorld>()->GetMapModule().GetEnvironmentFlatteningService());
@@ -249,5 +256,16 @@ namespace ExampleApp
                                          {
                                              return Hypodermic::makeExternallyOwned(context.resolve<Eegeo::EegeoWorld>()->GetStreamingModule().GetPrecachingService());
                                          }).singleInstance();
+    }
+
+    void WorldModule::RegisterNativeLeaves()
+    {
+        RegisterLeaf<Eegeo::Modules::IPlatformAbstractionModule>();
+        RegisterLeaf<Eegeo::Helpers::Jpeg::IJpegLoader>();
+        RegisterLeaf<Eegeo::Rendering::ScreenProperties>();
+        RegisterLeaf<Eegeo::Location::ILocationService>();
+        RegisterLeaf<Eegeo::UI::NativeUIFactories>();
+        RegisterLeaf<Eegeo::Config::PlatformConfig>();
+		RegisterLeaf<Eegeo::IEegeoErrorHandler>();
     }
 }
