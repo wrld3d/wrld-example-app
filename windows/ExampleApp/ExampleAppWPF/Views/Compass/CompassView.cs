@@ -13,8 +13,10 @@ namespace ExampleAppWPF
     {
         private IntPtr m_nativeCallerPointer;
         private double m_stateChangeAnimationTimeMilliseconds = 200;
-        private Image m_compassPoint = new Image();
-        private Image m_compassInner = new Image();
+        private Image m_compassNew = new Image();
+        private Image m_compassNewLocate = new Image();
+        private Image m_compassNewLocked = new Image();
+        private Image m_compassNewUnlocked = new Image();
 
         private double m_yPosActive;
         private double m_yPosInactive;
@@ -45,15 +47,16 @@ namespace ExampleAppWPF
 
         public override void OnApplyTemplate()
         {
-            m_compassPoint = (Image)GetTemplateChild("CompassArrow");
-            m_compassInner.Visibility = Visibility.Collapsed;
+            m_compassNew = (Image)GetTemplateChild("CompassNew");
+            m_compassNewLocate = (Image)GetTemplateChild("CompassNewLocate");
+            m_compassNewLocked = (Image)GetTemplateChild("CompassNewLocked");
+            m_compassNewUnlocked = (Image)GetTemplateChild("CompassNewUnlocked");
 
-            m_compassInner.Width = 30.0;
-            m_compassInner.Height = 30.0;
-            m_compassInner.RenderTransform = new TranslateTransform((Width - m_compassInner.Width) * 0.5, (Height - m_compassInner.Height) * 0.5);
+            m_compassNewLocate.RenderTransform = new TranslateTransform((70.0 - m_compassNewLocate.Width)/2, (70.0 - m_compassNewLocate.Height)/2);
+            m_compassNewLocked.RenderTransform = new TranslateTransform((70.0 - m_compassNewLocked.Width) / 2, (70.0 - m_compassNewLocked.Height) / 2);
+            m_compassNewUnlocked.RenderTransform = new TranslateTransform((70.0 - m_compassNewUnlocked.Width) / 2, (70.0 - m_compassNewUnlocked.Height) / 2);
 
             var canvas = (Canvas)GetTemplateChild("ImageCanvas");
-            canvas.Children.Add(m_compassInner);
         }
 
         private void CompassView_Click(object sender, RoutedEventArgs e)
@@ -71,9 +74,6 @@ namespace ExampleAppWPF
 
             double viewHeight = ActualHeight;
             double viewWidth = ActualWidth;
-
-            double pointWidth = m_compassPoint.Width;
-            double pointHeight = m_compassPoint.Height;
 
             m_compassPointOffsetX = (viewWidth) * 0.5;
             m_compassPointOffsetY = (viewHeight) * 0.5;
@@ -135,45 +135,48 @@ namespace ExampleAppWPF
 
         public void UpdateHeading(float headingAngleRadians)
         {
-            float verticalPointOffsetPx = ((float)m_compassPoint.Height * 0.5f) + 7.0f;
+            float verticalPointOffsetPx = ((float)m_compassNew.Height * 0.5f) + 7.0f;
             float theta = -headingAngleRadians;
             float sinTheta = (float)Math.Sin(theta);
             float cosTheta = (float)Math.Cos(theta);
-            float x = (float)(-m_compassPoint.Width * 0.5);
+            float x = (float)(-m_compassNew.Width * 0.5);
             float y = (float)ConversionHelpers.AndroidToWindowsDip(-verticalPointOffsetPx);
-            float newX = x * cosTheta - y * sinTheta;
-            float newY = y * cosTheta + x * sinTheta;
+            float newX =  cosTheta  * sinTheta;
+            float newY =  cosTheta  * sinTheta;
 
             var translateTransform = new TranslateTransform(
-                m_compassPointOffsetX + newX,
+            m_compassPointOffsetX + newX,
                 m_compassPointOffsetY + newY);
 
             var rotateTransform = new RotateTransform(
-                -headingAngleRadians * 180 / Math.PI);
+                -headingAngleRadians * 180 / Math.PI, m_compassNew.Width/2, m_compassNew.Height / 2);
 
             var transformGroup = new TransformGroup();
             transformGroup.Children.Add(rotateTransform);
             transformGroup.Children.Add(translateTransform);
-            
-            m_compassPoint.RenderTransform = transformGroup;
-            m_compassPoint.Visibility = Visibility.Visible;
+            m_compassNew.RenderTransform = transformGroup;
+            m_compassNew.Visibility = Visibility.Visible;
         }
 
         public void ShowGpsDisabledView()
         {
-            m_compassInner.Visibility = Visibility.Collapsed;
+            m_compassNewLocate.Visibility = Visibility.Visible;
+            m_compassNewLocked.Visibility = Visibility.Hidden;
+            m_compassNewUnlocked.Visibility = Visibility.Hidden;
         }
 
         public void ShowGpsFollowView()
         {
-            m_compassInner.Visibility = Visibility.Visible;
-            CreateBitmap(false);
+            m_compassNewLocate.Visibility = Visibility.Hidden;
+            m_compassNewLocked.Visibility = Visibility.Visible;
+            m_compassNewUnlocked.Visibility = Visibility.Hidden;
         }
 
         public void ShowGpsCompassModeView()
         {
-            m_compassInner.Visibility = Visibility.Visible;
-            CreateBitmap(true);
+            m_compassNewLocate.Visibility = Visibility.Hidden;
+            m_compassNewLocked.Visibility = Visibility.Hidden;
+            m_compassNewUnlocked.Visibility = Visibility.Visible;
         }
 
         public void NotifyGpsUnauthorized()
@@ -182,39 +185,6 @@ namespace ExampleAppWPF
                 "GPS Compass inaccessible: Location Services are not enabled for this application. You can change this in your device settings.",
                 "Location Services disabled",
                 MessageBoxButton.OK);
-        }
-
-        private void GetScreenDpi(out double dpiX, out double dpiY)
-        {
-            dpiX = 96.0;
-            dpiY = 96.0;
-
-            var source = PresentationSource.FromVisual(this);
-
-            if (source != null)
-            {
-                dpiX *= source.CompositionTarget.TransformFromDevice.M11;
-                dpiY *= source.CompositionTarget.TransformFromDevice.M22;
-            }
-        }
-
-        private void CreateBitmap(bool filled)
-        {
-            double innerDiameter = m_compassInner.Width;
-            var circle = new Ellipse();
-            circle.Width = innerDiameter/2;
-            circle.Height = innerDiameter/2;
-            circle.Fill = filled ? Brushes.White : Brushes.Transparent;
-            circle.Stroke = filled ? Brushes.Transparent : Brushes.White;
-
-            double dpiX, dpiY;
-            GetScreenDpi(out dpiX, out dpiY);
-            var bitmap = new RenderTargetBitmap((int)innerDiameter, (int)innerDiameter,
-                dpiX, dpiY, PixelFormats.Pbgra32);
-            circle.Arrange(new Rect(new Size(innerDiameter, innerDiameter)));
-            bitmap.Render(circle);
-            m_compassInner.Source = bitmap;
-            m_compassInner.InvalidateVisual();
         }
     }
 }
