@@ -38,6 +38,7 @@ namespace ExampleApp
                 , m_appModeChangedCallback(this, &CompassModel::OnAppModeChanged)
                 , m_alertBoxFactory(alertBoxFactory)
                 , m_failAlertHandler(this, &CompassModel::OnFailedToGetLocation)
+                , m_interiorFloorChangedCallback(this, &CompassModel::OnInteriorFloorChanged)
                 , m_exitInteriorTriggered(false)
             {
                 m_compassGpsModeToNavigationGpsMode[Eegeo::Location::NavigationService::GpsModeOff] = GpsMode::GpsDisabled;
@@ -54,10 +55,13 @@ namespace ExampleApp
                 
                 
                 m_appModeModel.RegisterAppModeChangedCallback(m_appModeChangedCallback);
+                m_interiorExplorerModel.InsertInteriorExplorerFloorSelectionDraggedCallback(m_interiorFloorChangedCallback);
             }
 
             CompassModel::~CompassModel()
             {
+                
+                m_interiorExplorerModel.RemoveInteriorExplorerFloorSelectionDraggedCallback(m_interiorFloorChangedCallback);
                 m_appModeModel.UnregisterAppModeChangedCallback(m_appModeChangedCallback);
             }
 
@@ -235,6 +239,11 @@ namespace ExampleApp
                     DisableGpsMode();
                     return;
                 }
+            }
+            
+            void CompassModel::OnInteriorFloorChanged()
+            {
+                DisableGpsMode();
             }
             
             void CompassModel::OnFailedToGetLocation()

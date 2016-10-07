@@ -42,6 +42,7 @@ namespace ExampleApp
                 AppModes::SdkModel::IAppModeModel& m_appModeModel;
                 InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorExplorerModel;
                 Eegeo::Helpers::TCallback0<CompassModel> m_appModeChangedCallback;
+                Eegeo::Helpers::TCallback0<CompassModel> m_interiorFloorChangedCallback;
                 
                 Eegeo::UI::NativeAlerts::IAlertBoxFactory& m_alertBoxFactory;
                 Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<CompassModel> m_failAlertHandler;
@@ -85,6 +86,8 @@ namespace ExampleApp
                 void SetGpsMode(GpsMode::Values value);
                 
                 void OnAppModeChanged();
+                
+                void OnInteriorFloorChanged();
                 
                 void OnFailedToGetLocation();
                 
