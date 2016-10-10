@@ -675,6 +675,10 @@ set(resources ${resources}
 		Resources/SearchResultOnMap/pin_sheet_0@2x.png
         Resources/SearchResultOnMap/pin_sheet_0@3x.png
         Resources/SearchResultOnMap/pin_sheet.json
+        Resources/Sphere.POD
+        Resources/Sphere_8bit.pvr
+        Resources/Sphere_Night_8bit.pvr
+        Resources/Stalk.POD
 		Resources/SplashScreen
 		Resources/SplashScreen/Icon-60@2x.png
 		Resources/SplashScreen/Icon-60@3x.png
