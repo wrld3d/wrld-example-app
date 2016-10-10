@@ -36,7 +36,6 @@ namespace ExampleApp
             , m_environmentFlatteningService(environmentFlatteningService)
             , m_visualMapService(visualMapService)
             , m_messageBus(messageBus)
-            , m_updateTime(0.0f)
             , m_visibilityCount(1)
             , m_screenPixelScale(screenProperties.GetPixelScale())
             , m_screenOversampleScale(screenProperties.GetOversampleScale())
@@ -81,13 +80,7 @@ namespace ExampleApp
             
             void GpsMarkerController::Update(float dt, const Eegeo::Camera::RenderCamera &renderCamera)
             {
-                m_updateTime += dt;
-                if(m_updateTime >= DefaultUpdatePeriod)
-                {
-                    m_model.UpdateGpsPosition();
-                    m_updateTime = 0.0f;
-                }
-                
+                m_model.UpdateGpsPosition(dt);
                 m_model.UpdateHeading(dt);
                 m_view.Update(dt);
                 m_anchorView.Update(dt);

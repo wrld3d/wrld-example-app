@@ -21,7 +21,7 @@ namespace ExampleApp
                                Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider);
                 ~GpsMarkerModel();
 
-                bool UpdateGpsPosition();
+                bool UpdateGpsPosition(float dt);
                 
                 bool HasLocation() const { return m_hasLocation; }
                 const Eegeo::dv3& GetCurrentLocationEcef() const { return m_currentLocationEcef; }

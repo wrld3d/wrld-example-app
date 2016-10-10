@@ -34,7 +34,6 @@ namespace ExampleApp
             private:
                 
                 const static float DefaultUpdatePeriod;
-                float m_updateTime;
                 int m_visibilityCount;
 
                 float m_screenPixelScale;

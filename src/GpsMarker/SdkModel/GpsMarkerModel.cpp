@@ -29,7 +29,7 @@ namespace ExampleApp
                 
             }
             
-            bool GpsMarkerModel::UpdateGpsPosition()
+            bool GpsMarkerModel::UpdateGpsPosition(float dt)
             {
                 Eegeo::Space::LatLong latLong(0,0);
                 if(!m_locationService.GetLocation(latLong))
@@ -46,7 +46,20 @@ namespace ExampleApp
                     return false;
                 }
                 
-                m_currentLocationEcef = ecefPositionFlat + (ecefPositionFlat.Norm() * terrainHeight);
+                Eegeo::dv3 newLocationEcef = ecefPositionFlat + (ecefPositionFlat.Norm() * terrainHeight);
+                
+                float halfLife = 0.25f;
+                float jumpThreshold = 50.0f;
+                
+                if(m_currentLocationEcef.SquareDistanceTo(newLocationEcef) < jumpThreshold * jumpThreshold)
+                {
+                    m_currentLocationEcef = Eegeo::Helpers::MathsHelpers::ExpMoveTowards(m_currentLocationEcef, newLocationEcef, halfLife, dt, 0.1f);
+                }
+                else
+                {
+                    m_currentLocationEcef = newLocationEcef;
+                }
+                
                 m_hasLocation = true;
                 return true;
             }
