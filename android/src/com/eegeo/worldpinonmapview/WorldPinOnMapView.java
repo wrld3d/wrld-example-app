@@ -5,6 +5,7 @@ package com.eegeo.worldpinonmapview;
 import android.animation.Animator;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.view.View.MeasureSpec;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -63,6 +64,7 @@ public class WorldPinOnMapView implements View.OnClickListener
     public void show(final String title, final String subtitle, final String ratingsImg, final int reviewCount, final float modality)
     {
         boolean usedImage = !ratingsImg.isEmpty();
+        boolean usedSubtitle = subtitle != null && subtitle.length()>0;
         int titleMarginDp = 3;
         float density = m_activity.getResources().getDisplayMetrics().density;
         
@@ -94,7 +96,7 @@ public class WorldPinOnMapView implements View.OnClickListener
     		m_ratingsBar.setVisibility(View.GONE);
     		m_poiAccreditationImage.setVisibility(View.GONE);
     		
-    		if(subtitle != null && subtitle.length()>0)
+    		if(usedSubtitle)
     		{
     			m_detailsView.setVisibility(View.VISIBLE);
             	m_detailsView.setText(subtitle);	
@@ -102,7 +104,6 @@ public class WorldPinOnMapView implements View.OnClickListener
     		else 
     		{
     			m_detailsView.setVisibility(View.GONE);
-    			titleMarginDp = 15; 
     		}
     		
     		m_poiRatingImage.setImageDrawable(null);
@@ -120,13 +121,15 @@ public class WorldPinOnMapView implements View.OnClickListener
         m_view.setVisibility(View.VISIBLE);
         animateToAlpha(1.f - modality);
         
-        m_height = usedImage ? m_activity.dipAsPx(95) : m_activity.dipAsPx(72);
-        
+        m_height = usedImage ? m_activity.dipAsPx(95) : (usedSubtitle ? m_activity.dipAsPx(72) : m_activity.dipAsPx(49));
+
+        m_view.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED);
     }
 
     public void updateScreenLocation(final float x, final float y)
     {
-        m_x = x - m_horizontalOffsetPx;
+    	
+        m_x = x - (m_view.getMeasuredWidth()/2);
         m_y = y - m_height;
 
         m_view.setEnabled(true);
