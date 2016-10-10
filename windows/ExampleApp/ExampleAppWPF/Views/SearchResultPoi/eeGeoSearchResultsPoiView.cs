@@ -23,6 +23,7 @@ namespace ExampleAppWPF
         private Visibility m_ratingCountVisibility;
         private string m_url;
         private FrameworkElement m_reviewsIcon;
+        private ImageSource m_placeholderImage;
 
         private ControlClickHandler m_yelpReviewImageClickHandler;
         
@@ -91,6 +92,7 @@ namespace ExampleAppWPF
             m_titleView = (TextBlock)GetTemplateChild("Title");
             
             m_poiImage = (Image)GetTemplateChild("PoiImage");
+            m_placeholderImage = m_poiImage.Source;
 
             var yelpButton = (Image)GetTemplateChild("WebVendorLinkStyle");
 
@@ -122,7 +124,8 @@ namespace ExampleAppWPF
         
         public override void UpdateImageData(string url, bool hasImage, byte[] imgData)
         {
-            m_poiImage.Source = LoadImageFromByteArray(imgData);
+            var image = LoadImageFromByteArray(imgData);
+            m_poiImage.Source = image ?? m_placeholderImage;
             m_poiImage.Visibility = Visibility.Visible;
         }
         

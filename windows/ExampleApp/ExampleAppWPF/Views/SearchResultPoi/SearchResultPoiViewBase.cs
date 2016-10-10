@@ -244,15 +244,24 @@ namespace ExampleAppWPF
 
             var image = new BitmapImage();
 
-            using (var mem = new MemoryStream(imageData))
+            try
             {
-                mem.Position = 0;
-                image.BeginInit();
-                image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.UriSource = null;
-                image.StreamSource = mem;
-                image.EndInit();
+                using (var mem = new MemoryStream(imageData))
+                {
+                    mem.Position = 0;
+                    image.BeginInit();
+                    image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+                    image.CacheOption = BitmapCacheOption.OnLoad;
+                    image.UriSource = null;
+                    image.StreamSource = mem;
+                    image.EndInit();
+                }
+            }
+            catch (NotSupportedException)
+            {
+                // the byte stream did not point at parseable image data (can happen if user sets something other than
+                // an image to be the image url for a given poi).
+                return null;
             }
 
             image.Freeze();
