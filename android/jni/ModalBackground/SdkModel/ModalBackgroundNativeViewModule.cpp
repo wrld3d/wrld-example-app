@@ -10,6 +10,7 @@
 #include "GlBufferPool.h"
 #include "VertexLayoutPool.h"
 #include "VertexBindingPool.h"
+#include "ModalBackgroundNativeModalityObserver.h"
 
 namespace ExampleApp
 {
@@ -20,6 +21,17 @@ namespace ExampleApp
 			void ModalBackgroundNativeViewModule::Register(const TContainerBuilder& builder)
 			{
 				builder->registerType<ModalBackgroundNativeView>().singleInstance();
+				builder->registerType<ModalBackgroundNativeModalityObserver>().singleInstance();
+			}
+
+			void ModalBackgroundNativeViewModule::RegisterNativeLeaves()
+			{
+				RegisterLeaf<ModalBackgroundNativeModalityObserver>();
+			}
+
+			void ModalBackgroundNativeViewModule::RegisterRenderableFilters()
+			{
+				RegisterRenderableFilter<ModalBackgroundNativeView>();
 			}
         }
     }

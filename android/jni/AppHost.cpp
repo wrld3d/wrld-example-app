@@ -123,6 +123,12 @@ AppHost::AppHost(
     ,m_app(nullptr)
     ,m_wiring(nullptr)
     ,m_appInputDelegate(nullptr)
+    ,m_connectivityValidator(nullptr)
+    ,m_viewControllerUpdater(nullptr)
+    ,m_messageBus(nullptr)
+    ,m_locationService(nullptr)
+    ,m_androidAbstractionModule(nullptr)
+    ,m_modalBackground(nullptr)
 {
     ASSERT_NATIVE_THREAD
 
@@ -140,6 +146,7 @@ AppHost::AppHost(
     m_wiring->RegisterModule<ExampleApp::MyPinCreation::View::MyPinCreationViewModule>();
     m_wiring->RegisterModule<ExampleApp::Compass::View::CompassViewModule>();
     m_wiring->RegisterModule<ExampleApp::ModalBackground::View::ModalBackgroundViewModule>();
+    m_wiring->RegisterModule<ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule>();
     m_wiring->RegisterModule<ExampleApp::SearchMenu::View::SearchMenuViewModule>();
     m_wiring->RegisterModule<ExampleApp::SettingsMenu::View::SettingsMenuViewModule>();
     m_wiring->RegisterModule<ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule>();
@@ -158,11 +165,16 @@ AppHost::AppHost(
 	m_wiring->ResolveLeaf<ExampleApp::PersistentSettings::IPersistentSettingsModel>();
 	m_wiring->ResolveLeaf<ExampleApp::Net::SdkModel::INetworkCapabilities>();
 	m_wiring->ResolveLeaf<Eegeo::EegeoWorld>();
+
+	Eegeo::EffectHandler::Initialise();
 }
 
 AppHost::~AppHost()
 {
     ASSERT_NATIVE_THREAD
+
+    Eegeo::EffectHandler::Reset();
+    Eegeo::EffectHandler::Shutdown();
 
     if (m_app != nullptr)
     {
@@ -174,7 +186,10 @@ void AppHost::OnResume()
 {
     ASSERT_NATIVE_THREAD
 
-    m_app->OnResume();
+	if (m_app != nullptr)
+	{
+		m_app->OnResume();
+	}
     m_isPaused = false;
 }
 
@@ -183,21 +198,33 @@ void AppHost::OnPause()
     ASSERT_NATIVE_THREAD
 
     m_isPaused = true;
-    m_app->OnPause();
-    m_wiring->Resolve<Eegeo::Location::ILocationService>()->StopListening();
+    if (m_app != nullptr)
+    {
+    	m_app->OnPause();
+    }
+    if (m_locationService != nullptr)
+    {
+    	m_locationService->StopListening();
+    }
 }
 
 void AppHost::NotifyScreenPropertiesChanged(const std::shared_ptr<Eegeo::Rendering::ScreenProperties>& screenProperties)
 {
 	Eegeo_ASSERT(m_app != nullptr);
-	m_app->NotifyScreenPropertiesChanged(screenProperties);
+	if (m_app != nullptr)
+	{
+		m_app->NotifyScreenPropertiesChanged(screenProperties);
+	}
 }
 
 void AppHost::SetSharedSurface(EGLSurface sharedSurface)
 {
     ASSERT_NATIVE_THREAD
 
-	std::dynamic_pointer_cast<Eegeo::Android::AndroidPlatformAbstractionModule>(m_wiring->Resolve<Eegeo::Modules::IPlatformAbstractionModule>())->UpdateSurface(sharedSurface);
+	if (m_androidAbstractionModule != nullptr)
+	{
+		m_androidAbstractionModule->UpdateSurface(sharedSurface);
+	}
 }
 
 void AppHost::SetViewportOffset(float x, float y)
@@ -226,7 +253,7 @@ void AppHost::Update(float dt)
 
     m_app->Update(dt);
 
-    //m_wiring->Resolve<ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeView>()->Update(dt);
+    m_modalBackground->Update(dt);
 }
 
 void AppHost::OnLoadingScreenComplete()
@@ -256,6 +283,14 @@ void AppHost::HandleApplicationUiCreatedOnNativeThread()
 	m_app = m_wiring->BuildMobileExampleApp();
 	m_app->RegisterLoadingScreenComplete(m_loadingScreenCallback);
 	m_appInputDelegate = m_wiring->Resolve<AppInputDelegate>();
+
+	m_connectivityValidator = m_wiring->Resolve<Eegeo::Web::WebConnectivityValidator>();
+	m_viewControllerUpdater = m_wiring->Resolve<ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel>();
+	m_messageBus = m_wiring->Resolve<ExampleApp::ExampleAppMessaging::TMessageBus>();
+	m_locationService = m_wiring->Resolve<Eegeo::Location::ILocationService>();
+	m_androidAbstractionModule = std::dynamic_pointer_cast<Eegeo::Android::AndroidPlatformAbstractionModule>(m_wiring->Resolve<Eegeo::Modules::IPlatformAbstractionModule>());
+	m_modalBackground = m_wiring->Resolve<ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeView>();
+
 	GetMessageBus().SubscribeUi(m_userInteractionEnabledChangedHandler);
 	m_uiCreatedMessageReceivedOnNativeThread = true;
 	PublishNetworkConnectivityStateToUIThread();
@@ -268,11 +303,7 @@ void AppHost::PublishNetworkConnectivityStateToUIThread()
 
     ASSERT_NATIVE_THREAD
     
-    const bool connectionIsValid = m_wiring->Resolve<Eegeo::Web::WebConnectivityValidator>()->IsValid();
-    GetMessageBus().Publish(ExampleApp::Net::ConnectivityChangedViewMessage(connectionIsValid));
-
-    auto validator = m_wiring->Resolve<Eegeo::Web::WebConnectivityValidator>();
-    GetMessageBus().Publish(ExampleApp::Net::ConnectivityChangedViewMessage(validator->IsValid()));
+    GetMessageBus().Publish(ExampleApp::Net::ConnectivityChangedViewMessage(m_connectivityValidator->IsValid()));
 }
 
 void AppHost::DispatchRevealUiMessageToUiThreadFromNativeThread()
@@ -324,9 +355,9 @@ void AppHost::UpdateUiViewsFromUiThread(float dt)
     {
         CreateUiFromUiThread();
     }
-    else
+    else if (m_uiCreatedMessageReceivedOnNativeThread)
     {
-    	m_wiring->Resolve<ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel>()->UpdateObjectsUiThread(dt);
+    	m_viewControllerUpdater->UpdateObjectsUiThread(dt);
     }
 }
 
@@ -387,7 +418,6 @@ void AppHost::HandleUserInteractionEnabledChanged(const ExampleApp::UserInteract
 ExampleApp::ExampleAppMessaging::TMessageBus& AppHost::GetMessageBus()
 {
 	Eegeo_ASSERT(m_resolvedUIModules);
-    auto messageBus = m_wiring->Resolve<ExampleApp::ExampleAppMessaging::TMessageBus>();
-    return *messageBus;
+    return *m_messageBus;
 }
 

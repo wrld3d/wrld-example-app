@@ -35,23 +35,29 @@ namespace ExampleApp
             , m_setAlpha(0.0f)
             {
                 ASSERT_NATIVE_THREAD
+				Eegeo_ASSERT(shaderIdGenerator != nullptr);
+				Eegeo_ASSERT(materialIdGenerator != nullptr);
+				Eegeo_ASSERT(glBufferPool != nullptr);
+				Eegeo_ASSERT(vertexLayoutPool != nullptr);
+				Eegeo_ASSERT(vertexBindingPool != nullptr);
 
-                m_shader = std::shared_ptr<Eegeo::Rendering::Shaders::ColorShader>(Eegeo::Rendering::Shaders::ColorShader::Create(shaderIdGenerator->GetNextId()));
+				auto shaderProgramId = shaderIdGenerator->GetNextId();
+                m_pShader = Eegeo::Rendering::Shaders::ColorShader::Create(shaderProgramId);
 
-                m_material = std::make_shared<Eegeo::Rendering::Materials::ColorMaterial>(materialIdGenerator->GetNextId(),
+                m_pMaterial = Eegeo_NEW(Eegeo::Rendering::Materials::ColorMaterial)(materialIdGenerator->GetNextId(),
                               "ModelBackgrounal",
-                              *m_shader,
+                              *m_pShader,
                               Eegeo::v4::Zero());
 
                 Eegeo::Rendering::Mesh* pScreenQuad = Eegeo::Rendering::Geometry::CreatePositionQuad(*glBufferPool, *vertexLayoutPool);
 
                 const Eegeo::Rendering::VertexLayouts::VertexBinding& vertexBinding = vertexBindingPool->GetVertexBinding(
                             pScreenQuad->GetVertexLayout(),
-                            m_material->GetShader().GetVertexAttributes());
+							m_pShader->GetVertexAttributes());
 
-                m_modalBackgroundRenderable = std::make_shared<Eegeo::Rendering::Renderables::WorldMeshRenderable>(
-                                                   Eegeo::Rendering::LayerIds::AfterAll, m_material.get(), vertexBinding, pScreenQuad, Eegeo::dv3::Zero());
-                m_modalBackgroundRenderable->SetModelViewProjection(Eegeo::m44::CreateIdentity());
+                m_pModalBackgroundRenderable = Eegeo_NEW(Eegeo::Rendering::Renderables::WorldMeshRenderable)(
+                                                   Eegeo::Rendering::LayerIds::AfterAll, m_pMaterial, vertexBinding, pScreenQuad, Eegeo::dv3::Zero());
+                m_pModalBackgroundRenderable->SetModelViewProjection(Eegeo::m44::CreateIdentity());
 
                 m_baseAlpha = 0.46f;
                 SetAlpha(0.0f);
@@ -59,15 +65,18 @@ namespace ExampleApp
 
             ModalBackgroundNativeView::~ModalBackgroundNativeView()
             {
+            	Eegeo_DELETE m_pModalBackgroundRenderable;
+            	Eegeo_DELETE m_pMaterial;
+            	Eegeo_DELETE m_pShader;
             }
 
             void ModalBackgroundNativeView::EnqueueRenderables(const Eegeo::Rendering::RenderContext& renderContext, Eegeo::Rendering::RenderQueue& renderQueue)
             {
                 ASSERT_NATIVE_THREAD
 
-                if(m_material->GetColor().w > 0.0f)
+                if(m_pMaterial->GetColor().w > 0.0f)
                 {
-                    renderQueue.EnqueueRenderable(*m_modalBackgroundRenderable);
+                    renderQueue.EnqueueRenderable(*m_pModalBackgroundRenderable);
                 }
             }
 
@@ -92,7 +101,7 @@ namespace ExampleApp
             	float trueAlpha = Eegeo::Math::Lerp(m_setAlpha, 1.0f, m_fixedTransition);
 
             	Eegeo::v4 color(0.0f, 0.0f, 0.0f, trueAlpha * m_baseAlpha);
-            	m_material->SetColor(color);
+            	m_pMaterial->SetColor(color);
             }
         }
     }
