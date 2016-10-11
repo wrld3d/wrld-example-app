@@ -212,12 +212,18 @@ namespace ExampleApp
                     std::string imageUrl = "";
                     std::string description = "";
                     std::string address = "";
+                    std::string facebookUrl = "";
+                    std::string twitterUrl = "";
+                    std::string email = "";
                     
                     const std::string phoneName = "phone";
                     const std::string webName = "web";
                     const std::string addressName = "address";
                     const std::string descriptionName = "description";
                     const std::string imageName = "image_url";
+                    const std::string facebookName = "facebook";
+                    const std::string twitterName = "twitter";
+                    const std::string emailName = "email";
                     
                     if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
                     {
@@ -249,13 +255,31 @@ namespace ExampleApp
                             Eegeo_ASSERT(lastSlashIndex != std::string::npos, "The image_url is not well formed: %s.\n",
                                          imageUrl.c_str());
                         }
+                        
+                        if(json.HasMember(facebookName.c_str()) && json[facebookName.c_str()].IsString())
+                        {
+                            facebookUrl = json[facebookName.c_str()].GetString();
+                        }
+                        
+                        if(json.HasMember(twitterName.c_str()) && json[twitterName.c_str()].IsString())
+                        {
+                            twitterUrl = json[twitterName.c_str()].GetString();
+                        }
+                        
+                        if(json.HasMember(emailName.c_str()) && json[emailName.c_str()].IsString())
+                        {
+                            email = json[emailName.c_str()].GetString();
+                        }
                     }
                     
                     return EegeoSearchResultModel(phone,
                                                   webUrl,
                                                   address,
                                                   description,
-                                                  imageUrl);
+                                                  imageUrl,
+                                                  facebookUrl,
+                                                  twitterUrl,
+                                                  email);
                 }
                 
                 bool TryParseImageDetails(const Search::SdkModel::SearchResultModel& searchResultModel, std::string& out_imageUrl)
