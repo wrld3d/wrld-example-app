@@ -10,6 +10,7 @@
 #include "SearchResultPoiViewInterop.h"
 #include "SearchResultPoiView.h"
 #include "EegeoSearchResultModel.h"
+#include "SearchResultPoiSpinner.h"
 
 @class EegeoSearchResultPoiView;
 
@@ -24,6 +25,7 @@
     
     bool m_isPinned;
     float m_labelsSectionWidth;
+    bool m_poiImageLoadedSuccessfully;
     
     UIImage* m_pRemovePinButtonBackgroundImage;
     UIImage* m_pRemovePinHighlightButtonBackgroundImage;
@@ -31,11 +33,6 @@
     UIImage* m_pAddPinHighlightButtonBackgroundImage;
     
     CAGradientLayer* m_pGradientMask;
-    
-    float m_imageWidth;
-    float m_imageHeight;
-    float m_ratingsImageWidth;
-    float m_ratingsImageHeight;
 }
 
 - (id)initWithInterop:(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*)pInterop;
@@ -54,16 +51,15 @@
 
 - (void) setActiveStateToIntermediateValue:(float)activeState;
 
-
-@property (nonatomic, retain) UIButton* pCloseButton;
 @property (nonatomic, retain) UIView* pCloseButtonContainer;
+@property (nonatomic, retain) UIButton* pCloseButton;
 @property (nonatomic, retain) UIButton* pPinButton;
 @property (nonatomic, retain) UIView* pDropPinContainer;
-@property (nonatomic, retain) UILabel* pDropPinLabel;
 @property (nonatomic, retain) UIView* pControlContainer;
 @property (nonatomic, retain) UIView* pTitleCardContainer;
 @property (nonatomic, retain) UIView* pDetailsCardContainer;
 @property (nonatomic, retain) UIView* pTagsCardContainer;
+@property (nonatomic, retain) UIView* pPreviewImageContainer;
 @property (nonatomic, retain) UIView* pDescriptionCardContainer;
 @property (nonatomic, retain) UIScrollView* pLabelsContainer;
 @property (nonatomic, retain) UIView* pTagIconContainer;
@@ -71,10 +67,11 @@
 @property (nonatomic, retain) UILabel* pAddressContent;
 @property (nonatomic, retain) UILabel* pPhoneContent;
 @property (nonatomic, retain) UILabel* pTagsContent;
-@property (nonatomic, retain) UIImageView* pPreviewImage;
-@property (nonatomic, retain) UIActivityIndicatorView* pPreviewImageSpinner;
 @property (nonatomic, retain) UILabel* pWebContent;
 @property (nonatomic, retain) UILabel* pDescriptionContent;
+@property (nonatomic, retain) UIImageView* pPreviewImage;
+@property (nonatomic, retain) UIView* pFooterSpace;
+@property (nonatomic, retain) SearchResultPoiSpinner* pPoiImageLoadingSpinner;
 
 @property (nonatomic, retain) UIImageView* pAddressIconContainer;
 @property (nonatomic, retain) UIImageView* pPhoneIconContainer;
@@ -87,8 +84,9 @@
 @property (nonatomic, retain) UIImageView* pFadeContainer;
 
 @property (nonatomic, retain) UIView* pTitleCardHeaderLine;
+@property (nonatomic, retain) UIView* pPreviewCardHeaderLine;
 @property (nonatomic, retain) UIView* pDetailsCardHeaderLine;
 @property (nonatomic, retain) UIView* pTagsCardHeaderLine;
-@property (nonatomic, retain) UIView* pDescriptionCardHeaderLine;
+@property (nonatomic, retain) UIView* pFooterLine;
 
 @end
