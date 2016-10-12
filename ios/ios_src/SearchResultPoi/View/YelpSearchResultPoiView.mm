@@ -559,8 +559,8 @@ namespace
         }
         
         UIImage* pButtonImage = ExampleApp::Helpers::ImageHelpers::LoadImage(@"reviewsFromYelpRED");
-        self.pVendorWebLinkButton = [[[UIButton alloc] initWithFrame:CGRectMake(roundf(yelpButtonX),
-                                                                                roundf(currentLabelY),
+        self.pVendorWebLinkButton = [[[UIButton alloc] initWithFrame:CGRectMake(0.f,
+                                                                                0.f ,
                                                                                 pButtonImage.size.width,
                                                                                 pButtonImage.size.height)] autorelease];
         self.pVendorWebLinkButton.frame = CGRectIntegral(self.pVendorWebLinkButton.frame);
@@ -572,7 +572,10 @@ namespace
         [self.pVendorWebLinkButton setImage:pButtonImage forState:UIControlStateNormal];
         [self.pVendorWebLinkButton addTarget:self action:@selector(handleLinkClicked) forControlEvents:UIControlEventTouchUpInside];
         [self.pReviewsCardContainer addSubview: self.pVendorWebLinkButton];
-        self.pReviewsCardContainer.frame = CGRectMake(headerTextPadding, detailsCardY, detailsImageSize, detailsImageSize);
+        self.pReviewsCardContainer.frame = CGRectMake(roundf(yelpButtonX),
+                                                      roundf(currentLabelY),
+                                                      pButtonImage.size.width,
+                                                      pButtonImage.size.height);
         
         currentLabelY += (yelpButtonHeight + imageBottomPadding + headerMargin);
         
