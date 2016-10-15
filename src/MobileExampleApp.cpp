@@ -374,6 +374,7 @@ namespace ExampleApp
         
         m_pInteriorsHighlightVisibilityController = Eegeo_NEW(IntHighlights::InteriorsHighlightVisibilityController)(
                                                                                                                      mapModule.GetInteriorsPresentationModule().GetInteriorInteractionModel(),
+                                                                                                                     mapModule.GetInteriorsModelModule().GetInteriorsCellResourceObserver(),
                                                                                                                      m_searchServiceModules[Search::EegeoVendorName]->GetSearchService(),
                                                                                                                      m_pSearchModule->GetSearchQueryPerformer(),
                                                                                                                      m_pSearchModule->GetSearchResultRepository(),
