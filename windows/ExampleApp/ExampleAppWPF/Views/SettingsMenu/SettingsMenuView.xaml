@@ -369,6 +369,8 @@
                                             <ListBox.ItemContainerStyle>
                                                 <Style TargetType="{x:Type ListBoxItem}">
                                                     <Setter Property="Grid.ZIndex" Value="{Binding ZIndex}" />
+                                                    <Setter Property="Padding" Value="0"/>
+                                                    <Setter Property="BorderThickness" Value="0"/>
                                                 </Style>
                                             </ListBox.ItemContainerStyle>
                                         </ListBox>

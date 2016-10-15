@@ -19,8 +19,6 @@
 }
 @end
 
-const float RatingImageWidth = 100.f;
-const float RatingImageHeight = 30.f;
 const int PhoneAlertViewTag = 1;
 const int DeletePinAlertViewTag = 2;
 
@@ -36,7 +34,9 @@ const int DeletePinAlertViewTag = 2;
         [m_pController setView:self];
         
         self->m_pRemovePinButtonBackgroundImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_off") retain];
+        self->m_pRemovePinHighlightButtonBackgroundImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_on") retain];
         self->m_pAddPinButtonBackgroundImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_add_pin_off") retain];
+        self->m_pAddPinHighlightButtonBackgroundImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_add_pin_on") retain];
         
         m_pInterop = pInterop;
         self.alpha = 0.f;
@@ -44,98 +44,161 @@ const int DeletePinAlertViewTag = 2;
         
         self.pControlContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
+        self.pControlContainer.clipsToBounds = YES;
         [self addSubview: self.pControlContainer];
-        
-        self.pCloseButtonContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pCloseButtonContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
-        [self.pControlContainer addSubview: self.pCloseButtonContainer];
-        
-        self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pCloseButton setDefaultStatesWithImageNames:@"button_close_off" :@"button_close_on"];
-        [self.pCloseButton addTarget:self action:@selector(handleClosedButtonSelected) forControlEvents:UIControlEventTouchUpInside];
-        [self.pCloseButtonContainer addSubview: self.pCloseButton];
-        
-        self.pPinButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pPinButton addTarget:self action:@selector(handlePinButtonSelected) forControlEvents:UIControlEventTouchUpInside];
-        [self.pCloseButtonContainer addSubview: self.pPinButton];
-        
-        self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
-        [self.pControlContainer addSubview: self.pContentContainer];
         
         self.pLabelsContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pLabelsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
-        [self.pContentContainer addSubview: self.pLabelsContainer];
+        [self.pControlContainer addSubview: self.pLabelsContainer];
         
-        self.pHeadlineContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
-        [self.pControlContainer addSubview: self.pHeadlineContainer];
+        self.pPreviewImageContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pPreviewImageContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
+        [self.pLabelsContainer addSubview: self.pPreviewImageContainer];
+        
+        self.pDetailsCardContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pDetailsCardContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
+        [self.pLabelsContainer addSubview: self.pDetailsCardContainer];
+        
+        self.pTagsCardContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pTagsCardContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
+        [self.pLabelsContainer addSubview: self.pTagsCardContainer];
+        
+        self.pDescriptionCardContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pDescriptionCardContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
+        [self.pLabelsContainer addSubview: self.pDescriptionCardContainer];
+        
+        self.pTitleCardContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pTitleCardContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
+        [self.pControlContainer addSubview: self.pTitleCardContainer];
         
         self.pTagIconContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pTagIconContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
-        [self.pHeadlineContainer addSubview: self.pTagIconContainer];
+        [self.pTitleCardContainer addSubview: self.pTagIconContainer];
         
         self.pTitleLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextTitleColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
-        [self.pHeadlineContainer addSubview: self.pTitleLabel];
+        self.pTitleLabel.adjustsFontSizeToFitWidth = YES;
+        [self.pTitleCardContainer addSubview: self.pTitleLabel];
+        
+        self.pTitleCardHeaderLine = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pTitleCardHeaderLine.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
+        [self.pControlContainer addSubview:self.pTitleCardHeaderLine];
+        
+        self.pPreviewCardHeaderLine = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pPreviewCardHeaderLine.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
+        [self.pPreviewImageContainer addSubview:self.pPreviewCardHeaderLine];
+        
+        self.pDetailsCardHeaderLine = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pDetailsCardHeaderLine.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
+        [self.pDetailsCardContainer addSubview:self.pDetailsCardHeaderLine];
+        
+        self.pTagsCardHeaderLine = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pTagsCardHeaderLine.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
+        [self.pTagsCardContainer addSubview:self.pTagsCardHeaderLine];
+        
+        self.pFooterLine = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pFooterLine.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
+        [self.pControlContainer addSubview:self.pFooterLine];
+        
+        self.pCloseButtonContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pCloseButtonContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
+        [self.pTitleCardContainer addSubview: self.pCloseButtonContainer];
+        
+        self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pCloseButton.contentMode = UIViewContentModeScaleAspectFit;
+        self.pCloseButton.clipsToBounds = YES;
+        [self.pCloseButton setDefaultStatesWithImageNames:@"exit_blue_x_button" :@"exit_dark_blue_x_button"];
+        [self.pCloseButton addTarget:self action:@selector(handleClosedButtonSelected) forControlEvents:UIControlEventTouchUpInside];
+        [self.pCloseButtonContainer addSubview: self.pCloseButton];
+        
+        self.pDropPinContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pDropPinContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
+        [self.pControlContainer addSubview:self.pDropPinContainer];
+        
+        self.pPinButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pPinButton setTitle:@"Drop Pin" forState:UIControlStateNormal];
+        [self.pPinButton setTitleColor:ExampleApp::Helpers::ColorPalette::UiBorderColor forState:UIControlStateHighlighted];
+        [self.pPinButton setDefaultStatesWithImageNames:@"button_close_off" :@"button_close_on"];
+        [self.pPinButton addTarget:self action:@selector(handlePinButtonSelected) forControlEvents:UIControlEventTouchUpInside];
+        [self.pDropPinContainer addSubview: self.pPinButton];
         
         self.pPreviewImage = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pLabelsContainer addSubview: self.pPreviewImage];
+        self.pPreviewImage.clipsToBounds = YES;
+        [self.pPreviewImageContainer addSubview: self.pPreviewImage];
         
-        self.pPreviewImageSpinner = [[[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pPreviewImageSpinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
-        self.pPreviewImageSpinner.center = CGPointZero;
-        [self.pPreviewImage addSubview: self.pPreviewImageSpinner];
-        
-        self.pAddressHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pAddressHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
-        [self.pLabelsContainer addSubview: self.pAddressHeaderContainer];
-        
-        self.pAddressHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextHeaderColor :ExampleApp::Helpers::ColorPalette::UiBorderColor];
-        [self.pAddressHeaderContainer addSubview: self.pAddressHeaderLabel];
+        self.pPoiImageLoadingSpinner = [[[SearchResultPoiSpinner alloc] init] autorelease];
+        self.pPoiImageLoadingSpinner.center = CGPointMake(0.0f, 0.0f);
+        [self.pPreviewImage addSubview: self.pPoiImageLoadingSpinner];
         
         self.pAddressContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextCopyColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
-        [self.pLabelsContainer addSubview: self.pAddressContent];
+        [self.pDetailsCardContainer addSubview: self.pAddressContent];
         
-        self.pPhoneHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pPhoneHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
+        self.pDescriptionContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextCopyColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
+        [self.pDescriptionCardContainer addSubview: self.pDescriptionContent];
         
-        [self.pLabelsContainer addSubview: self.pPhoneHeaderContainer];
-        
-        self.pPhoneHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextHeaderColor :ExampleApp::Helpers::ColorPalette::UiBorderColor];
-        [self.pPhoneHeaderContainer addSubview: self.pPhoneHeaderLabel];
+        self.pTagsContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextCopyColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
+        [self.pTagsCardContainer addSubview: self.pTagsContent];
         
         self.pPhoneContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextLinkColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
         UITapGestureRecognizer* phoneTappedGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTappedOnPhone:)];
         [self.pPhoneContent setUserInteractionEnabled:YES];
         [self.pPhoneContent addGestureRecognizer:phoneTappedGesture];
-        
-        [self.pLabelsContainer addSubview: self.pPhoneContent];
-        
-        self.pWebHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pWebHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
-        
-        [self.pLabelsContainer addSubview: self.pWebHeaderContainer];
-        
-        self.pWebHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextTitleColor :ExampleApp::Helpers::ColorPalette::UiBorderColor];
-        [self.pWebHeaderContainer addSubview: self.pWebHeaderLabel];
+        [self.pDetailsCardContainer addSubview: self.pPhoneContent];
         
         self.pWebContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextLinkColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
         UITapGestureRecognizer* webTappedGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTappedOnLink:)];
         [self.pWebContent setUserInteractionEnabled:YES];
         [self.pWebContent addGestureRecognizer:webTappedGesture];
+        [self.pDetailsCardContainer addSubview: self.pWebContent];
         
-        [self.pLabelsContainer addSubview: self.pWebContent];
+        self.pFacebookIconContainer = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        UITapGestureRecognizer* facebookTappedGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTappedOnFacebookLink:)];
+        self.pFacebookIconContainer.image = [UIImage imageNamed:@"contact_icon_facebook"];
+        [self.pFacebookIconContainer setUserInteractionEnabled:YES];
+        [self.pFacebookIconContainer addGestureRecognizer:facebookTappedGesture];
+        [self.pDetailsCardContainer addSubview: self.pFacebookIconContainer];
         
-        self.pTagsHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pTagsHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
-        [self.pLabelsContainer addSubview: self.pTagsHeaderContainer];
+        self.pTwitterIconContainer = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        UITapGestureRecognizer* twitterTappedGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTappedOnTwitterLink:)];
+        self.pTwitterIconContainer.image = [UIImage imageNamed:@"contact_icon_twitter"];
+        [self.pTwitterIconContainer setUserInteractionEnabled:YES];
+        [self.pTwitterIconContainer addGestureRecognizer:twitterTappedGesture];
+        [self.pDetailsCardContainer addSubview: self.pTwitterIconContainer];
         
-        self.pTagsHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextHeaderColor :ExampleApp::Helpers::ColorPalette::UiBorderColor];
-        [self.pTagsHeaderContainer addSubview: self.pTagsHeaderLabel];
+        self.pEmailIconContainer = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        UITapGestureRecognizer* emailTappedGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTappedOnEmailLink:)];
+        self.pEmailIconContainer.image = [UIImage imageNamed:@"contact_icon_email"];
+        [self.pEmailIconContainer setUserInteractionEnabled:YES];
+        [self.pEmailIconContainer addGestureRecognizer:emailTappedGesture];
+        [self.pDetailsCardContainer addSubview: self.pEmailIconContainer];
         
-        self.pTagsContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextCopyColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
-        [self.pLabelsContainer addSubview: self.pTagsContent];
-       
+        self.pAddressIconContainer = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pAddressIconContainer.image = [UIImage imageNamed:@"poi_address"];
+        [self.pDetailsCardContainer addSubview: self.pAddressIconContainer];
+        
+        self.pPhoneIconContainer = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pPhoneIconContainer.image = [UIImage imageNamed:@"poi_phone_active"];
+        [self.pDetailsCardContainer addSubview: self.pPhoneIconContainer];
+        
+        self.pWebIconContainer = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pWebIconContainer.image = [UIImage imageNamed:@"detail_icon_web_link_active"];
+        [self.pDetailsCardContainer addSubview: self.pWebIconContainer];
+        
+        self.pTagsIconContainer = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pTagsIconContainer.image = [UIImage imageNamed:@"poi_tag"];
+        [self.pTagsCardContainer addSubview: self.pTagsIconContainer];
+        
+        self.pDescriptionIconContainer = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pDescriptionIconContainer.image =  [UIImage imageNamed:@"detail_icon_description"];
+        [self.pDescriptionCardContainer addSubview: self.pDescriptionIconContainer];
+        
+        self.pFadeContainer = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SearchResults_Fade"]] autorelease];
+        self.pFadeContainer.hidden = NO;
+        [self.pControlContainer addSubview: self.pFadeContainer];
+        
+        self.pFooterSpace = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pFooterSpace.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
+        [self.pControlContainer addSubview: self.pFooterSpace];
+        
         m_pGradientMask = [[CAGradientLayer layer] retain];
         m_pGradientMask.colors = @[(id)[UIColor clearColor].CGColor,
                                    (id)[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.5f].CGColor];
@@ -144,7 +207,7 @@ const int DeletePinAlertViewTag = 2;
         
         [self setTouchExclusivity: self];
         
-        self.alpha = 0.f;
+        m_poiImageLoadedSuccessfully = true;
     }
     
     return self;
@@ -154,27 +217,36 @@ const int DeletePinAlertViewTag = 2;
 {
     [m_pGradientMask release];
     m_pGradientMask = nil;
-        
+    
     [self.pCloseButton removeFromSuperview];
     [self.pCloseButton release];
-    
-    [self.pPinButton removeFromSuperview];
-    [self.pPinButton release];
     
     [self.pCloseButtonContainer removeFromSuperview];
     [self.pCloseButtonContainer release];
     
+    [self.pPinButton removeFromSuperview];
+    [self.pPinButton release];
+    
+    [self.pDropPinContainer removeFromSuperview];
+    [self.pDropPinContainer release];
+    
     [self.pControlContainer removeFromSuperview];
     [self.pControlContainer release];
     
-    [self.pHeadlineContainer removeFromSuperview];
-    [self.pHeadlineContainer release];
+    [self.pTitleCardContainer removeFromSuperview];
+    [self.pTitleCardContainer release];
+    
+    [self.pDetailsCardContainer removeFromSuperview];
+    [self.pDetailsCardContainer release];
+    
+    [self.pTagsCardContainer removeFromSuperview];
+    [self.pTagsCardContainer release];
     
     [self.pLabelsContainer removeFromSuperview];
     [self.pLabelsContainer release];
     
-    [self.pContentContainer removeFromSuperview];
-    [self.pContentContainer release];
+    [self.pDescriptionCardContainer removeFromSuperview];
+    [self.pDescriptionCardContainer release];
     
     [self.pTagIconContainer removeFromSuperview];
     [self.pTagIconContainer release];
@@ -182,47 +254,74 @@ const int DeletePinAlertViewTag = 2;
     [self.pTitleLabel removeFromSuperview];
     [self.pTitleLabel release];
     
-    [self.pAddressHeaderLabel removeFromSuperview];
-    [self.pAddressHeaderLabel release];
-    
-    [self.pAddressHeaderContainer removeFromSuperview];
-    [self.pAddressHeaderContainer release];
-    
     [self.pAddressContent removeFromSuperview];
     [self.pAddressContent release];
     
-    [self.pPhoneHeaderLabel removeFromSuperview];
-    [self.pPhoneHeaderLabel release];
-    
-    [self.pPhoneHeaderContainer removeFromSuperview];
-    [self.pPhoneHeaderContainer release];
-    
     [self.pPhoneContent removeFromSuperview];
     [self.pPhoneContent release];
-    
-    [self.pWebHeaderLabel removeFromSuperview];
-    [self.pWebHeaderLabel release];
-    
-    [self.pWebHeaderContainer removeFromSuperview];
-    [self.pWebHeaderContainer release];
-    
-    [self.pWebContent removeFromSuperview];
-    [self.pWebContent release];
-    
-    [self.pTagsHeaderContainer removeFromSuperview];
-    [self.pTagsHeaderContainer release];
-    
-    [self.pTagsHeaderLabel removeFromSuperview];
-    [self.pTagsHeaderLabel release];
     
     [self.pTagsContent removeFromSuperview];
     [self.pTagsContent release];
     
     [self.pPreviewImage removeFromSuperview];
-    //[self.pPreviewImage release];
+    [self.pPreviewImage release];
     
-    [self.pPreviewImageSpinner removeFromSuperview];
-    [self.pPreviewImageSpinner release];
+    [self.pPoiImageLoadingSpinner removeFromSuperview];
+    [self.pPoiImageLoadingSpinner release];
+    
+    [self.pWebContent removeFromSuperview];
+    [self.pWebContent release];
+    
+    [self.pDescriptionContent removeFromSuperview];
+    [self.pDescriptionContent release];
+    
+    [self.pAddressIconContainer removeFromSuperview];
+    [self.pAddressIconContainer release];
+    
+    [self.pPhoneIconContainer removeFromSuperview];
+    [self.pPhoneIconContainer release];
+    
+    [self.pWebIconContainer removeFromSuperview];
+    [self.pWebIconContainer release];
+    
+    [self.pTagsIconContainer removeFromSuperview];
+    [self.pTagsIconContainer release];
+    
+    [self.pDescriptionIconContainer removeFromSuperview];
+    [self.pDescriptionIconContainer release];
+    
+    [self.pFacebookIconContainer removeFromSuperview];
+    [self.pFacebookIconContainer release];
+    
+    [self.pTwitterIconContainer removeFromSuperview];
+    [self.pTwitterIconContainer release];
+    
+    [self.pEmailIconContainer removeFromSuperview];
+    [self.pEmailIconContainer release];
+    
+    [self.pTitleCardHeaderLine removeFromSuperview];
+    [self.pTitleCardHeaderLine release];
+    
+    [self.pPreviewCardHeaderLine removeFromSuperview];
+    [self.pPreviewCardHeaderLine release];
+    
+    [self.pDetailsCardHeaderLine removeFromSuperview];
+    [self.pDetailsCardHeaderLine release];
+    
+    [self.pTagsCardHeaderLine removeFromSuperview];
+    [self.pTagsCardHeaderLine release];
+    
+    [self.pFooterLine removeFromSuperview];
+    [self.pFooterLine release];
+    
+    [self.pFooterSpace removeFromSuperview];
+    [self.pFooterSpace release];
+    
+    [self.pFadeContainer removeFromSuperview];
+    [self.pFadeContainer release];
+    
+    [self.pPreviewImageContainer removeFromSuperview];
+    [self.pPreviewImageContainer release];
     
     [self->m_pRemovePinButtonBackgroundImage release];
     [self->m_pRemovePinHighlightButtonBackgroundImage release];
@@ -239,10 +338,32 @@ const int DeletePinAlertViewTag = 2;
     const float boundsWidth = static_cast<float>(self.superview.bounds.size.width);
     const float boundsHeight = static_cast<float>(self.superview.bounds.size.height);
     const float boundsOccupyMultiplierHeight = 0.9f;
-    const float mainWindowWidth = std::min(boundsWidth, 348.f);
+    const float mainWindowWidth = std::min(boundsWidth * boundsOccupyMultiplierHeight, 348.f);
     const float mainWindowHeight = boundsHeight * boundsOccupyMultiplierHeight;
     const float mainWindowX = (boundsWidth * 0.5f) - (mainWindowWidth * 0.5f);
     const float mainWindowY = (boundsHeight * 0.5f) - (mainWindowHeight * 0.5f);
+    
+    const float headlineHeight = 50.f;
+    const float closeButtonSectionHeight = 64.f;
+    const float closeButtonSectionOffsetY = mainWindowHeight - 46.f;
+    const float contentSectionHeight = mainWindowHeight - (closeButtonSectionHeight + headlineHeight);
+    
+    const float topMargin = 15.f;
+    const float bottomMargin = 15.f;
+    const float sideMargin = 15.f;
+    const float cardMargin = 10.f;
+    
+    const float cardContainerWidth = mainWindowWidth - sideMargin * 2;
+    
+    const float titleCardImageSize = 36.f;
+    const float titleCardContainerHeight = 46.f;
+    
+    const float detailsCardHeight = 170.f;
+    const float headerLineThickness = 1.f;
+    
+    float currentCardYPos = 0.f;
+    
+    currentCardYPos += topMargin;
     
     self.frame = CGRectMake(mainWindowX,
                             mainWindowY,
@@ -254,145 +375,257 @@ const int DeletePinAlertViewTag = 2;
                                               mainWindowWidth,
                                               mainWindowHeight);
     
-    const float headlineHeight = 50.f;
-    const float closeButtonSectionHeight = 64.f;
-    const float closeButtonSectionOffsetY = mainWindowHeight - closeButtonSectionHeight;
-    const float contentSectionHeight = mainWindowHeight - (closeButtonSectionHeight + headlineHeight);
+    self.pTitleCardContainer.frame = CGRectMake(sideMargin,
+                                                currentCardYPos,
+                                                cardContainerWidth,
+                                                titleCardContainerHeight);
     
-    self.pHeadlineContainer.frame = CGRectMake(0.f,
-                                               0.f,
-                                               mainWindowWidth,
-                                               headlineHeight);
+    currentCardYPos += titleCardContainerHeight + cardMargin;
     
-    self.pContentContainer.frame = CGRectMake(0.f,
-                                              headlineHeight,
-                                              mainWindowWidth,
-                                              contentSectionHeight);
-    
-    const float labelsSectionOffsetX = 0.f;
-    m_labelsSectionWidth = mainWindowWidth - (2.f * labelsSectionOffsetX);
-    
-    self.pLabelsContainer.frame = CGRectMake(labelsSectionOffsetX,
-                                             0.f,
-                                             m_labelsSectionWidth,
+    self.pLabelsContainer.frame = CGRectMake(sideMargin,
+                                             currentCardYPos,
+                                             cardContainerWidth,
                                              contentSectionHeight);
     
+    m_labelsSectionWidth = cardContainerWidth;
     
-    self.pCloseButtonContainer.frame = CGRectMake(0.f,
-                                                  closeButtonSectionOffsetY,
-                                                  mainWindowWidth,
-                                                  closeButtonSectionHeight);
+    currentCardYPos += detailsCardHeight + cardMargin;
     
-    self.pCloseButton.frame = CGRectMake(mainWindowWidth - closeButtonSectionHeight,
+    self.pCloseButtonContainer.frame = CGRectMake(cardContainerWidth - titleCardImageSize,
+                                                  0,
+                                                  titleCardImageSize,
+                                                  titleCardImageSize);
+    
+    self.pCloseButton.frame = CGRectMake(0.f,
                                          0.f,
-                                         closeButtonSectionHeight,
-                                         closeButtonSectionHeight);
+                                         titleCardImageSize,
+                                         titleCardImageSize);
+    
+    self.pTitleCardHeaderLine.frame = CGRectMake(sideMargin,
+                                                 titleCardContainerHeight + topMargin,
+                                                 cardContainerWidth,
+                                                 headerLineThickness);
+    
+    self.pFooterSpace.frame = CGRectMake(sideMargin,
+                                         closeButtonSectionOffsetY - bottomMargin - 19.f,
+                                         cardContainerWidth,
+                                         19.f);
+    
+    self.pFooterLine.frame = CGRectMake(sideMargin,
+                                        closeButtonSectionOffsetY - bottomMargin - 20.f,
+                                        cardContainerWidth,
+                                        headerLineThickness);
+    
+    self.pDropPinContainer.frame = CGRectMake(sideMargin,
+                                              closeButtonSectionOffsetY - bottomMargin,
+                                              cardContainerWidth,
+                                              42.f);
+    
     
     self.pPinButton.frame = CGRectMake(0.f,
                                        0.f,
-                                       closeButtonSectionHeight,
-                                       closeButtonSectionHeight);
+                                       cardContainerWidth,
+                                       42.f);
     
-    self.pTagIconContainer.frame = CGRectMake(0.f, 0.f, headlineHeight, headlineHeight);
+    self.pFadeContainer.frame = CGRectMake(sideMargin,
+                                           closeButtonSectionOffsetY - 15.f - 60.f,
+                                           cardContainerWidth,
+                                           40.f);
+
+    [self.pPinButton setImageEdgeInsets:UIEdgeInsetsMake(2.f, -20.f, 2.f, 0.f)];
+    [self.pPinButton setTitleEdgeInsets:UIEdgeInsetsMake(2.f, -10.f, 2.f, 0.f)];
+    
+    self.pPinButton.titleLabel.font = [UIFont systemFontOfSize:21.0f];
+    
+    self.pTagIconContainer.frame = CGRectMake(0.f,
+                                              0.f,
+                                              titleCardImageSize,
+                                              titleCardImageSize);
     const float titlePadding = 10.0f;
-    self.pTitleLabel.frame = CGRectMake(headlineHeight + titlePadding,
+    self.pTitleLabel.frame = CGRectMake(titleCardImageSize + titlePadding,
                                         0.f,
-                                        mainWindowWidth - (headlineHeight + titlePadding),
-                                        headlineHeight);
-    self.pTitleLabel.font = [UIFont systemFontOfSize:24.0f];
+                                        cardContainerWidth - titleCardImageSize * 2 - titlePadding * 2,
+                                        titleCardImageSize);
+    self.pTitleLabel.textAlignment = NSTextAlignmentCenter;
+    self.pTitleLabel.font = [UIFont systemFontOfSize:22.0f];
 }
 
 - (void) performDynamicContentLayout
 {
-    const float headerLabelHeight = 20.f;
+    const float boundsWidth = static_cast<float>(self.superview.bounds.size.width);
+    const float mainWindowWidth = std::min(boundsWidth - 20.f, 348.f);
     const float labelYSpacing = 8.f;
     const float headerTextPadding = 3.0f;
+    const float detailsImageSize = 18.f;
+    const float detailsImageToTextMargin = 6.f;
+    const float headerMargin = 10.f;
+    const float sideMargin = 15.f;
+    const float cardContainerWidth = mainWindowWidth - sideMargin * 2;
+    const float cardTextHorizontalSpace = cardContainerWidth - detailsImageSize * 2 - headerMargin * 2.f;
+    const float optionalPadding = 8.f;
+    const float headerLineThickness = 1.f;
     
-    float currentLabelY = 8.f;
+    float currentLabelY = 0.f;
+    
+    float detailsCardY = 0.f;
     
     if(!m_eegeoModel.GetImageUrl().empty())
     {
         currentLabelY = 0.f;
-        const CGFloat imageX = (self.frame.size.width * 0.5f - m_imageWidth * 0.5f);
-        self.pPreviewImage.frame = CGRectMake(imageX, currentLabelY, m_imageWidth, m_imageHeight);
-        self.pPreviewImageSpinner.center = [self.pPreviewImage convertPoint:self.pPreviewImage.center fromView:self.pPreviewImage.superview];
-        const CGFloat imageBottomPadding = 8.0;
-        currentLabelY += (m_imageHeight + imageBottomPadding);
+        self.pPreviewImage.frame = CGRectMake(0.0f,
+                                              currentLabelY,
+                                              cardContainerWidth,
+                                              cardContainerWidth *2.f/3.f);
+        
+        currentLabelY += (cardContainerWidth *2.f/3.f + headerMargin);
+        
+        self.pPreviewCardHeaderLine.frame = CGRectMake(0.f,
+                                                       currentLabelY,
+                                                       cardContainerWidth,
+                                                       headerLineThickness);
+        currentLabelY += headerMargin;
+        if(!m_poiImageLoadedSuccessfully)
+        {
+            self.pPreviewImage.frame = CGRectMake(0.f, 0.f, 0.f, 0.f);
+            currentLabelY -= (cardContainerWidth *2.f/3.f + headerMargin * 2);
+        }
+        
+        self.pDetailsCardContainer.frame = CGRectMake(0.f,
+                                                      currentLabelY,
+                                                      cardContainerWidth,
+                                                      500.f);
     }
     
-    if(!m_eegeoModel.GetWebUrl().empty())
+    if(!m_eegeoModel.GetAddress().empty())
     {
-        self.pWebHeaderContainer.frame = CGRectMake(0.f, currentLabelY, m_labelsSectionWidth, headerLabelHeight + 2 * headerTextPadding);
-        self.pWebHeaderContainer.hidden = false;
-        
-        self.pWebHeaderLabel.frame = CGRectMake(headerTextPadding, headerTextPadding, m_labelsSectionWidth - headerTextPadding, headerLabelHeight);
-        self.pWebHeaderLabel.text = @"Web";
-        self.pWebHeaderLabel.hidden = false;
-        currentLabelY += labelYSpacing + self.pWebHeaderContainer.frame.size.height;
-        
-        self.pWebContent.frame = CGRectMake(headerTextPadding, currentLabelY, m_labelsSectionWidth - headerTextPadding, 32.f);
-        self.pWebContent.text = [NSString stringWithUTF8String:m_eegeoModel.GetWebUrl().c_str()];
-        self.pWebContent.hidden = false;
-        [self.pWebContent sizeToFit];
-        
-        currentLabelY += labelYSpacing + self.pWebContent.frame.size.height;
-    }
-    
-    
-    if(!m_eegeoModel.GetPhone().empty())
-    {
-        self.pPhoneHeaderContainer.frame = CGRectMake(0.f, currentLabelY, m_labelsSectionWidth, headerLabelHeight + 2 * headerTextPadding);
-        self.pPhoneHeaderContainer.hidden = false;
-        
-        self.pPhoneHeaderLabel.frame = CGRectMake(headerTextPadding, headerTextPadding, m_labelsSectionWidth - headerTextPadding, headerLabelHeight);
-        self.pPhoneHeaderLabel.text = @"Phone";
-        self.pPhoneHeaderLabel.hidden = false;
-        currentLabelY += labelYSpacing + self.pPhoneHeaderContainer.frame.size.height;
-        
-        self.pPhoneContent.frame = CGRectMake(headerTextPadding, currentLabelY, m_labelsSectionWidth - headerTextPadding, 32.f);
-        self.pPhoneContent.text = [NSString stringWithUTF8String:m_eegeoModel.GetPhone().c_str()];
-        self.pPhoneContent.hidden = false;
-        [self.pPhoneContent sizeToFit];
-        
-        currentLabelY += labelYSpacing + self.pPhoneContent.frame.size.height;
-    }
-    
-    if(!m_eegeoModel.GetDescription().empty())
-    {
-        self.pAddressHeaderContainer.frame = CGRectMake(0.f, currentLabelY, m_labelsSectionWidth, headerLabelHeight + 2 * headerTextPadding);
-        self.pAddressHeaderContainer.hidden = false;
-        
-        self.pAddressHeaderLabel.frame = CGRectMake(headerTextPadding, headerTextPadding, m_labelsSectionWidth - headerTextPadding, headerLabelHeight);
-        self.pAddressHeaderLabel.text = @"Description";
-        self.pAddressHeaderLabel.hidden = false;
-        currentLabelY += labelYSpacing + self.pAddressHeaderContainer.frame.size.height;
-        
-        self.pAddressContent.frame = CGRectMake(headerTextPadding, currentLabelY, m_labelsSectionWidth - headerTextPadding, 85.f);
+        self.pAddressContent.frame = CGRectMake(headerTextPadding + detailsImageSize + detailsImageToTextMargin,
+                                                detailsCardY,
+                                                cardTextHorizontalSpace,
+                                                35.f);
         self.pAddressContent.text = @"";
-        self.pAddressContent.numberOfLines = 0;
+        self.pAddressContent.numberOfLines = 0.f;
         self.pAddressContent.adjustsFontSizeToFitWidth = NO;
         self.pAddressContent.lineBreakMode = NSLineBreakByTruncatingTail;
         
-        std::string addressText = m_eegeoModel.GetDescription();
+        std::string addressText = m_eegeoModel.GetAddress();
         Eegeo::Helpers::SearchReplace(addressText,", ", "\n");
         self.pAddressContent.text = [NSString stringWithUTF8String:addressText.c_str()];
         self.pAddressContent.hidden = false;
         [self.pAddressContent sizeToFit];
         
+        self.pAddressIconContainer.frame = CGRectMake(headerTextPadding,
+                                                      detailsCardY,
+                                                      detailsImageSize,
+                                                      detailsImageSize);
+        
+        detailsCardY += labelYSpacing + self.pAddressContent.frame.size.height;
         currentLabelY += labelYSpacing + self.pAddressContent.frame.size.height;
+    }
+    
+    if(!m_eegeoModel.GetPhone().empty())
+    {
+        self.pPhoneContent.frame = CGRectMake(headerTextPadding + detailsImageSize + detailsImageToTextMargin,
+                                              detailsCardY,
+                                              cardTextHorizontalSpace,
+                                              35.f);
+        self.pPhoneContent.lineBreakMode = NSLineBreakByTruncatingTail;
+        self.pPhoneContent.adjustsFontSizeToFitWidth = YES;
+        self.pPhoneContent.numberOfLines = 0;
+        self.pPhoneContent.text = [NSString stringWithUTF8String:m_eegeoModel.GetPhone().c_str()];
+        self.pPhoneContent.hidden = false;
+        [self.pPhoneContent sizeToFit];
+        
+        self.pPhoneIconContainer.frame = CGRectMake(headerTextPadding,
+                                                    detailsCardY,
+                                                    detailsImageSize,
+                                                    detailsImageSize);
+        
+        detailsCardY += labelYSpacing + self.pPhoneContent.frame.size.height;
+        currentLabelY += labelYSpacing + self.pPhoneContent.frame.size.height;
+    }
+    
+    if(!m_eegeoModel.GetWebUrl().empty())
+    {
+        self.pWebContent.frame = CGRectMake(headerTextPadding + detailsImageSize + detailsImageToTextMargin,
+                                            detailsCardY,
+                                            cardTextHorizontalSpace,
+                                            35.f);
+        self.pWebContent.text = [NSString stringWithUTF8String:m_eegeoModel.GetWebUrl().c_str()];
+        self.pWebContent.numberOfLines = 0;
+        self.pWebContent.hidden = false;
+        [self.pWebContent sizeToFit];
+        
+        self.pWebIconContainer.frame = CGRectMake(headerTextPadding,
+                                                  detailsCardY,
+                                                  detailsImageSize,
+                                                  detailsImageSize);
+        
+        detailsCardY += labelYSpacing + self.pWebContent.frame.size.height;
+        currentLabelY += labelYSpacing + self.pWebContent.frame.size.height;
+    }
+    
+    const float iconSize = 36.f;
+    const float contactIconSpacing = 20.f;
+    float contactIconCurrentXPos = headerTextPadding + detailsImageSize + detailsImageToTextMargin;
+
+    if(!m_eegeoModel.GetEmail().empty() || !m_eegeoModel.GetFacebookUrl().empty() || !m_eegeoModel.GetTwitterUrl().empty())
+    {
+        currentLabelY += optionalPadding ;
+        detailsCardY += optionalPadding;
+    }
+    
+    if(!m_eegeoModel.GetEmail().empty())
+    {
+        self.pEmailIconContainer.frame = CGRectMake(contactIconCurrentXPos,
+                                                    detailsCardY,
+                                                    iconSize,
+                                                    iconSize);
+        
+        contactIconCurrentXPos += iconSize + contactIconSpacing;
+    }
+    
+    if(!m_eegeoModel.GetFacebookUrl().empty())
+    {
+        self.pFacebookIconContainer.frame = CGRectMake(contactIconCurrentXPos,
+                                                       detailsCardY,
+                                                       iconSize,
+                                                       iconSize);
+        
+        contactIconCurrentXPos += iconSize + contactIconSpacing;
+    }
+    
+    if(!m_eegeoModel.GetTwitterUrl().empty())
+    {
+        self.pTwitterIconContainer.frame = CGRectMake(contactIconCurrentXPos,
+                                                      detailsCardY,
+                                                      iconSize,
+                                                      iconSize);
+        
+        contactIconCurrentXPos += iconSize + contactIconSpacing;
+    }
+    
+
+    if(!m_eegeoModel.GetEmail().empty() || !m_eegeoModel.GetFacebookUrl().empty() || !m_eegeoModel.GetTwitterUrl().empty() || !m_eegeoModel.GetWebUrl().empty() || !m_eegeoModel.GetAddress().empty() || !m_eegeoModel.GetPhone().empty())
+    {
+        if(!m_eegeoModel.GetEmail().empty() || !m_eegeoModel.GetFacebookUrl().empty() || !m_eegeoModel.GetTwitterUrl().empty())
+        {
+            currentLabelY += labelYSpacing + iconSize + optionalPadding ;
+            detailsCardY += labelYSpacing + iconSize + optionalPadding;
+        }
+        
+        self.pDetailsCardHeaderLine.frame = CGRectMake(0.f,
+                                                       detailsCardY,
+                                                       cardContainerWidth,
+                                                       1.f);
+        currentLabelY += headerMargin;
     }
     
     if(!m_model.GetHumanReadableTags().empty())
     {
-        self.pTagsHeaderContainer.frame = CGRectMake(0.f, currentLabelY, m_labelsSectionWidth, headerLabelHeight + 2 * headerTextPadding);
-        self.pTagsHeaderContainer.hidden = false;
-        
-        self.pTagsHeaderLabel.frame = CGRectMake(headerTextPadding, headerTextPadding, m_labelsSectionWidth - headerTextPadding, headerLabelHeight);
-        self.pTagsHeaderLabel.text = @"Tags";
-        self.pTagsHeaderLabel.hidden = false;
-        currentLabelY += labelYSpacing + self.pTagsHeaderContainer.frame.size.height;
-        
-        self.pTagsContent.frame = CGRectMake(headerTextPadding, currentLabelY, m_labelsSectionWidth - headerTextPadding, 85.f);
+        self.pTagsContent.frame = CGRectMake(headerTextPadding + detailsImageSize + detailsImageToTextMargin,
+                                             currentLabelY,
+                                             cardTextHorizontalSpace - headerMargin * 2,
+                                             85.f);
         self.pTagsContent.text = @"";
         self.pTagsContent.numberOfLines = 0;
         self.pTagsContent.adjustsFontSizeToFitWidth = NO;
@@ -402,7 +635,7 @@ const int DeletePinAlertViewTag = 2;
         const std::vector<std::string>& tagsList(m_model.GetHumanReadableTags());
         for(size_t i = 0; i < tagsList.size()-1; ++i)
         {
-            tagsText += tagsList[i] + "\n";
+            tagsText += tagsList[i] + ", ";
         }
         tagsText += tagsList.back();
         
@@ -410,11 +643,45 @@ const int DeletePinAlertViewTag = 2;
         self.pTagsContent.hidden = false;
         [self.pTagsContent sizeToFit];
         
+        self.pTagsIconContainer.frame = CGRectMake(headerTextPadding,
+                                                   currentLabelY,
+                                                   detailsImageSize,
+                                                   detailsImageSize);
+        
         currentLabelY += labelYSpacing + self.pTagsContent.frame.size.height;
+        
+        self.pTagsCardHeaderLine.frame = CGRectMake(0.f,
+                                                    currentLabelY,
+                                                    cardContainerWidth,
+                                                    1.f);
+        currentLabelY += headerMargin;
     }
     
+    if(!m_eegeoModel.GetDescription().empty())
+    {
+        self.pDescriptionContent.frame = CGRectMake(headerTextPadding + detailsImageSize + detailsImageToTextMargin,
+                                                    currentLabelY,
+                                                    cardTextHorizontalSpace,
+                                                    85.f);
+        self.pDescriptionContent.text = @"";
+        self.pDescriptionContent.numberOfLines = 0;
+        self.pDescriptionContent.adjustsFontSizeToFitWidth = NO;
+        self.pDescriptionContent.lineBreakMode = NSLineBreakByTruncatingTail;
+        
+        std::string descriptionText = m_eegeoModel.GetDescription();
+        self.pDescriptionContent.text = [NSString stringWithUTF8String:descriptionText.c_str()];
+        self.pDescriptionContent.hidden = false;
+        [self.pDescriptionContent sizeToFit];
+        
+        self.pDescriptionIconContainer.frame = CGRectMake(headerTextPadding,
+                                                          currentLabelY,
+                                                          detailsImageSize,
+                                                          detailsImageSize);
+        
+        currentLabelY += labelYSpacing + self.pDescriptionContent.frame.size.height + 20.f;
+    }
     
-    [self.pLabelsContainer setContentSize:CGSizeMake(m_labelsSectionWidth, currentLabelY)];
+    [self.pLabelsContainer setContentSize:CGSizeMake(m_labelsSectionWidth, currentLabelY + 30.f)];
 }
 
 - (void) setContent:(const ExampleApp::Search::SdkModel::SearchResultModel*)pModel :(bool)isPinned
@@ -423,7 +690,7 @@ const int DeletePinAlertViewTag = 2;
     
     m_model = *pModel;
     m_eegeoModel = ExampleApp::Search::EegeoPois::SdkModel::TransformToEegeoSearchResult(m_model);
-
+    
     m_isPinned = isPinned;
     [self updatePinnedButtonState];
     
@@ -433,27 +700,21 @@ const int DeletePinAlertViewTag = 2;
     std::string tagIcon = ExampleApp::Helpers::IconResources::GetSmallIconForTag(pModel->GetIconKey());
     ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pTagIconContainer, tagIcon, ExampleApp::Helpers::ImageHelpers::Centre);
     
-    self.pAddressHeaderContainer.hidden = true;
     self.pAddressContent.hidden = true;
-    self.pPhoneHeaderContainer.hidden = true;
-    self.pPhoneContent.hidden = true;
-    self.pWebHeaderContainer.hidden = true;
     self.pWebContent.hidden = true;
     self.pPreviewImage.hidden = true;
-    self.pTagsHeaderContainer.hidden = true;
     self.pTagsContent.hidden = true;
-    
-    const CGFloat previewImagePlaceholderSize = 64.f;
-    m_imageWidth = m_imageHeight = previewImagePlaceholderSize;
-    m_ratingsImageWidth = RatingImageWidth;
-    m_ratingsImageHeight = RatingImageHeight;
+    self.pDescriptionContent.hidden = true;
     
     [self performDynamicContentLayout];
     
     if(!m_eegeoModel.GetImageUrl().empty())
     {
+        self.pPreviewImage.hidden = NO;
+        self.pPoiImageLoadingSpinner.center = CGPointMake(self.pPreviewImage.frame.size.width/2.f,
+                                                          self.pPreviewImage.frame.size.height/2.f);
         [self.pPreviewImage setImage:nil];
-        [self.pPreviewImageSpinner startAnimating];
+        [self.pPoiImageLoadingSpinner startAnimating];
     }
     
     [self.pLabelsContainer setContentOffset:CGPointMake(0,0) animated:NO];
@@ -463,10 +724,11 @@ const int DeletePinAlertViewTag = 2;
 {
     if(url == m_eegeoModel.GetImageUrl())
     {
-        [self.pPreviewImageSpinner stopAnimating];
+        [self.pPoiImageLoadingSpinner stopAnimating];
         
         if(success)
         {
+            m_poiImageLoadedSuccessfully = true;
             NSData* imageData = [NSData dataWithBytes:&bytes->at(0) length:bytes->size()];
             UIImage *image = [UIImage imageWithData:imageData];
             [self.pPreviewImage setImage:image];
@@ -476,8 +738,7 @@ const int DeletePinAlertViewTag = 2;
             frame.size = image.size;
             frame.origin.x = self.frame.size.width * 0.5f - frame.size.width * 0.5f;
             self.pPreviewImage.frame = frame;
-            self.pPreviewImage.hidden = false;
-            
+            self.pPreviewImage.contentMode = UIViewContentModeScaleAspectFill;
             
             m_pGradientMask.frame = self.pPreviewImage.bounds;
             [m_pGradientMask removeAllAnimations];
@@ -487,17 +748,13 @@ const int DeletePinAlertViewTag = 2;
             const CGFloat newContentHeight = self.pLabelsContainer.contentSize.height + imageContentHeightDifference;
             [self.pLabelsContainer setContentSize:CGSizeMake(self.pLabelsContainer.contentSize.width, newContentHeight)];
             
-            m_imageWidth = image.size.width;
-            m_imageHeight = image.size.height;
             [self performDynamicContentLayout];
         }
         else
         {
-            m_imageWidth = 0.f;
-            m_imageHeight = 0.f;
-            
+            m_poiImageLoadedSuccessfully = false;
             m_pGradientMask.frame = CGRectMake(0, 0, 0, 0);
-            
+            self.pPreviewImage.frame = CGRectMake(0, 0, 0, 0);
             [self performDynamicContentLayout];
         }
     }
@@ -566,7 +823,69 @@ const int DeletePinAlertViewTag = 2;
 - (void) handleLinkClicked
 {
     NSString* preFormattedUrlString = [NSString stringWithUTF8String:m_eegeoModel.GetWebUrl().c_str()];
-        
+    
+    NSString* webUrlString = ([preFormattedUrlString rangeOfString:@"http"].location != NSNotFound)
+    ? preFormattedUrlString
+    : [NSString stringWithFormat:@"http://%@", preFormattedUrlString];
+    
+    NSURL *url = [NSURL URLWithString:webUrlString];
+    if (![[UIApplication sharedApplication] openURL:url])
+    {
+        NSLog(@"%@%@",@"Failed to open url:",[url description]);
+    }
+}
+
+
+- (void) userTappedOnFacebookLink:(UITapGestureRecognizer *)recognizer
+{
+    [self handleFacebookLinkClicked];
+}
+
+- (void) handleFacebookLinkClicked
+{
+    NSString* preFormattedUrlString = [NSString stringWithUTF8String:m_eegeoModel.GetFacebookUrl().c_str()];
+    
+    NSString* webUrlString = ([preFormattedUrlString rangeOfString:@"http"].location != NSNotFound)
+    ? preFormattedUrlString
+    : [NSString stringWithFormat:@"http://%@", preFormattedUrlString];
+    
+    NSURL *url = [NSURL URLWithString:webUrlString];
+    if (![[UIApplication sharedApplication] openURL:url])
+    {
+        NSLog(@"%@%@",@"Failed to open url:",[url description]);
+    }
+}
+
+
+- (void) userTappedOnTwitterLink:(UITapGestureRecognizer *)recognizer
+{
+    [self handleTwitterLinkClicked];
+}
+
+- (void) handleTwitterLinkClicked
+{
+    NSString* preFormattedUrlString = [NSString stringWithUTF8String:m_eegeoModel.GetTwitterUrl().c_str()];
+    
+    NSString* webUrlString = ([preFormattedUrlString rangeOfString:@"http"].location != NSNotFound)
+    ? preFormattedUrlString
+    : [NSString stringWithFormat:@"http://%@", preFormattedUrlString];
+    
+    NSURL *url = [NSURL URLWithString:webUrlString];
+    if (![[UIApplication sharedApplication] openURL:url])
+    {
+        NSLog(@"%@%@",@"Failed to open url:",[url description]);
+    }
+}
+
+- (void) userTappedOnEmailLink:(UITapGestureRecognizer *)recognizer
+{
+    [self handleEmailLinkClicked];
+}
+
+- (void) handleEmailLinkClicked
+{
+    NSString* preFormattedUrlString = [NSString stringWithUTF8String:m_eegeoModel.GetEmail().c_str()];
+    
     NSString* webUrlString = ([preFormattedUrlString rangeOfString:@"http"].location != NSNotFound)
     ? preFormattedUrlString
     : [NSString stringWithFormat:@"http://%@", preFormattedUrlString];
@@ -643,13 +962,13 @@ const int DeletePinAlertViewTag = 2;
 {
     if(m_isPinned)
     {
-        [self.pPinButton setBackgroundImage:self->m_pRemovePinButtonBackgroundImage forState:UIControlStateNormal];
-        [self.pPinButton setBackgroundImage:self->m_pRemovePinHighlightButtonBackgroundImage forState:UIControlStateHighlighted];
+        [self.pPinButton setImage:self->m_pRemovePinButtonBackgroundImage forState:UIControlStateNormal];
+        [self.pPinButton setImage:self->m_pRemovePinHighlightButtonBackgroundImage forState:UIControlStateHighlighted];
     }
     else
     {
-        [self.pPinButton setBackgroundImage:self->m_pAddPinButtonBackgroundImage forState:UIControlStateNormal];
-        [self.pPinButton setBackgroundImage:self->m_pAddPinHighlightButtonBackgroundImage forState:UIControlStateHighlighted];
+        [self.pPinButton setImage:self->m_pAddPinButtonBackgroundImage forState:UIControlStateNormal];
+        [self.pPinButton setImage:self->m_pAddPinHighlightButtonBackgroundImage forState:UIControlStateHighlighted];
     }
 }
 

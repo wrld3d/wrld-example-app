@@ -20,6 +20,8 @@ set(currsources
   ios_src/SearchResultPoi/View/SearchResultPoiViewModule.mm
   ios_src/SearchResultPoi/View/YelpSearchResultPoiView.h
   ios_src/SearchResultPoi/View/YelpSearchResultPoiView.mm
+  ios_src/SearchResultPoi/View/SearchResultPoiSpinner.h
+  ios_src/SearchResultPoi/View/SearchResultPoiSpinner.mm
 )
 set(sources ${sources} ${currsources})
 source_group(\\ios_src\\SearchResultPoi\\View FILES ${currsources})

@@ -524,13 +524,6 @@ namespace ExampleApp
         // TODO: Check if this module is still relevant
         m_pAppCameraModule = Eegeo_NEW(AppCamera::SdkModel::AppCameraModule)();
         
-        m_pGpsMarkerModule = Eegeo_NEW(ExampleApp::GpsMarker::SdkModel::GpsMarkerModule)(m_pWorld->GetRenderingModule(),
-                                                                                         m_platformAbstractions,
-                                                                                         m_pWorld->GetLocationService(),
-                                                                                         m_pWorld->GetTerrainModelModule(),
-                                                                                         m_pWorld->GetMapModule(),
-                                                                                         m_messageBus);
-        
         Eegeo::Modules::Map::CityThemesModule& cityThemesModule = world.GetCityThemesModule();
         
         Eegeo::Modules::Map::MapModule& mapModule = world.GetMapModule();
@@ -539,6 +532,16 @@ namespace ExampleApp
                                                                              cityThemesModule.GetCityThemesUpdater(),
                                                                              mapModule.GetEnvironmentFlatteningService());
         
+        m_pGpsMarkerModule = Eegeo_NEW(ExampleApp::GpsMarker::SdkModel::GpsMarkerModule)(m_pWorld->GetRenderingModule(),
+                                                                                         m_pWorld->GetSceneModelsModule().GetLocalSceneModelFactory(),
+                                                                                         m_platformAbstractions,
+                                                                                         m_pWorld->GetLocationService(),
+                                                                                         m_pWorld->GetTerrainModelModule(),
+                                                                                         m_pWorld->GetMapModule(),
+                                                                                         m_pVisualMapModule->GetVisualMapService(),
+                                                                                         m_screenProperties,
+                                                                                         m_messageBus);
+
         m_pSurveyModule = Eegeo_NEW(Surveys::SdkModel::SurveyModule)(m_messageBus,
                                                                      m_persistentSettings);
         
@@ -1068,6 +1071,9 @@ namespace ExampleApp
         
         eegeoWorld.EarlyUpdate(dt);
         
+        m_pNavigationService->Update(dt);
+        m_pInteriorsNavigationService->Update(dt);
+        
         m_pCameraTransitionService->Update(dt);
         m_pAppCameraModule->GetController().Update(dt);
         
@@ -1141,8 +1147,7 @@ namespace ExampleApp
             }
         }
         
-        m_pNavigationService->Update(dt);
-        m_pInteriorsNavigationService->Update(dt);
+        
         
         if(ToursEnabled())
         {

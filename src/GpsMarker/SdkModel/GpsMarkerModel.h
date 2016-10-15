@@ -21,10 +21,13 @@ namespace ExampleApp
                                Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider);
                 ~GpsMarkerModel();
 
-                bool UpdateGpsPosition();
+                bool UpdateGpsPosition(float dt);
                 
                 bool HasLocation() const { return m_hasLocation; }
                 const Eegeo::dv3& GetCurrentLocationEcef() const { return m_currentLocationEcef; }
+                
+                void UpdateHeading(float dt);
+                const double GetSmoothedHeadingDegrees() const;
                 
             private:
                 
@@ -33,6 +36,9 @@ namespace ExampleApp
                 
                 bool m_hasLocation;
                 Eegeo::dv3 m_currentLocationEcef;
+                
+                float m_currentHeadingRadians;
+                float m_currentHeadingVelocity;
             };
         }
     }

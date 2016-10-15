@@ -25,6 +25,7 @@ namespace ExampleAppWPF
         private Visibility m_ratingCountVisibility;
         private string m_url;
         private FrameworkElement m_reviewsIcon;
+        private ImageSource m_placeholderImage;
 
         private ControlClickHandler m_yelpReviewImageClickHandler;
         private Image m_yelpButton;
@@ -232,14 +233,16 @@ namespace ExampleAppWPF
                 m_reviewsIcon.Visibility = Visibility.Visible;
             }
 
-            m_poiImage.Source = new BitmapImage(new Uri("/ExampleAppWPF;component/Assets/poi_placeholder.png", UriKind.Relative));
+            m_placeholderImage = new BitmapImage(new Uri("/ExampleAppWPF;component/Assets/poi_placeholder.png", UriKind.Relative));
+            m_poiImage.Source = m_placeholderImage;
 
             ShowAll();
         }
         
         public override void UpdateImageData(string url, bool hasImage, byte[] imgData)
         {
-            m_poiImage.Source = LoadImageFromByteArray(imgData);
+            var image = LoadImageFromByteArray(imgData);
+            m_poiImage.Source = image ?? m_placeholderImage;
             m_poiImage.Visibility = Visibility.Visible;
         }
         
