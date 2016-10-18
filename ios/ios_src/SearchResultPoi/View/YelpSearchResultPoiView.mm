@@ -450,7 +450,7 @@ namespace
                                         cardContainerWidth - titleCardImageSize * 2 - titlePadding * 2,
                                         titleCardImageSize);
     
-    self.pTitleLabel.textAlignment = NSTextAlignmentCenter;
+    self.pTitleLabel.textAlignment = NSTextAlignmentLeft;
     self.pTitleLabel.font = [UIFont systemFontOfSize:22.0f];
     
     self->m_pVendorBrandingImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"yelp_logo_100x50", true) retain];

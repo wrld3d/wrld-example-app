@@ -50,11 +50,20 @@
         self.pNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pNameLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextTitleColor;
         self.pNameLabel.textAlignment = NSTextAlignmentCenter;
-        self.pNameLabel.numberOfLines = 2;
-        self.pNameLabel.lineBreakMode = NSLineBreakByWordWrapping;
-        self.pNameLabel.font = [UIFont systemFontOfSize:16.0];
+        self.pNameLabel.numberOfLines = 1;
+        self.pNameLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+        self.pNameLabel.font = [UIFont systemFontOfSize:14.0];
         self.pNameLabel.backgroundColor = [UIColor clearColor];
         [self.pLabelBack addSubview: self.pNameLabel];
+        
+        self.pSubtitleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pSubtitleLabel.textColor = ExampleApp::Helpers::ColorPalette::TwitterDarkGrey;
+        self.pSubtitleLabel.textAlignment = NSTextAlignmentCenter;
+        self.pSubtitleLabel.numberOfLines = 1;
+        self.pSubtitleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+        self.pSubtitleLabel.font = [UIFont systemFontOfSize:12.0];
+        self.pSubtitleLabel.backgroundColor = [UIColor clearColor];
+        [self.pLabelBack addSubview: self.pSubtitleLabel];
         
         // poi arrow
         self.pArrowContainer = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage("arrow1")] autorelease];
@@ -71,6 +80,9 @@
 {
     [self.pNameLabel removeFromSuperview];
     [self.pNameLabel release];
+    
+    [self.pSubtitleLabel removeFromSuperview];
+    [self.pSubtitleLabel release];
     
     [self.pLabelBack removeFromSuperview];
     [self.pLabelBack release];
@@ -116,7 +128,12 @@
     const float nameHeight = h - labelContainerOffsetY;
     
     self.pNameLabel.frame = CGRectMake(labelOffsetX,
-                                       labelOffsetY,
+                                       labelOffsetY - 10,
+                                       w - (labelOffsetX*2),
+                                       nameHeight);
+    
+    self.pSubtitleLabel.frame = CGRectMake(labelOffsetX,
+                                       labelOffsetY + 10,
                                        w - (labelOffsetX*2),
                                        nameHeight);
     
@@ -133,6 +150,7 @@
 - (void) setContent:(const ExampleApp::WorldPins::SdkModel::IWorldPinsInFocusModel&) worldPinsInFocusModel
 {
     self.pNameLabel.text = [NSString stringWithUTF8String:worldPinsInFocusModel.GetTitle().c_str()];
+    self.pSubtitleLabel.text = [NSString stringWithUTF8String:worldPinsInFocusModel.GetSubtitle().c_str()];
     
     
     [self setNeedsLayout];

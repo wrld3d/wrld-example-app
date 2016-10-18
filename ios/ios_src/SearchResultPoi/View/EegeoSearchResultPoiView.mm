@@ -69,6 +69,7 @@ const int DeletePinAlertViewTag = 2;
         
         self.pTitleCardContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pTitleCardContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
+        self.pTitleCardContainer.clipsToBounds = YES;
         [self.pControlContainer addSubview: self.pTitleCardContainer];
         
         self.pTagIconContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -76,8 +77,10 @@ const int DeletePinAlertViewTag = 2;
         [self.pTitleCardContainer addSubview: self.pTagIconContainer];
         
         self.pTitleLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextTitleColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
-        self.pTitleLabel.adjustsFontSizeToFitWidth = YES;
         [self.pTitleCardContainer addSubview: self.pTitleLabel];
+        
+        self.pSubtitleLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextTitleColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
+        [self.pTitleCardContainer addSubview: self.pSubtitleLabel];
         
         self.pTitleCardHeaderLine = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pTitleCardHeaderLine.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
@@ -253,6 +256,9 @@ const int DeletePinAlertViewTag = 2;
     
     [self.pTitleLabel removeFromSuperview];
     [self.pTitleLabel release];
+    
+    [self.pSubtitleLabel removeFromSuperview];
+    [self.pSubtitleLabel release];
     
     [self.pAddressContent removeFromSuperview];
     [self.pAddressContent release];
@@ -445,9 +451,19 @@ const int DeletePinAlertViewTag = 2;
     self.pTitleLabel.frame = CGRectMake(titleCardImageSize + titlePadding,
                                         0.f,
                                         cardContainerWidth - titleCardImageSize * 2 - titlePadding * 2,
-                                        titleCardImageSize);
-    self.pTitleLabel.textAlignment = NSTextAlignmentCenter;
+                                        26.f);
+    self.pTitleLabel.textAlignment = NSTextAlignmentLeft;
+    self.pTitleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     self.pTitleLabel.font = [UIFont systemFontOfSize:22.0f];
+    
+    self.pSubtitleLabel.frame = CGRectMake(titleCardImageSize + titlePadding,
+                                           26.f,
+                                           cardContainerWidth - titleCardImageSize * 2 - titlePadding * 2,
+                                           14.f);
+    self.pSubtitleLabel.textAlignment = NSTextAlignmentLeft;
+    self.pSubtitleLabel.font = [UIFont systemFontOfSize:12.0f];
+    self.pSubtitleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+    self.pSubtitleLabel.textColor = ExampleApp::Helpers::ColorPalette::TwitterDarkGrey;
 }
 
 - (void) performDynamicContentLayout
@@ -695,6 +711,7 @@ const int DeletePinAlertViewTag = 2;
     [self updatePinnedButtonState];
     
     self.pTitleLabel.text = [NSString stringWithUTF8String:pModel->GetTitle().c_str()];
+    self.pSubtitleLabel.text = [NSString stringWithUTF8String:pModel->GetSubtitle().c_str()];
     
     [self.pTagIconContainer.subviews makeObjectsPerformSelector: @selector(removeFromSuperview)];
     std::string tagIcon = ExampleApp::Helpers::IconResources::GetSmallIconForTag(pModel->GetIconKey());
