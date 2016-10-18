@@ -448,13 +448,29 @@ const int DeletePinAlertViewTag = 2;
                                               titleCardImageSize,
                                               titleCardImageSize);
     const float titlePadding = 10.0f;
-    self.pTitleLabel.frame = CGRectMake(titleCardImageSize + titlePadding,
-                                        0.f,
-                                        cardContainerWidth - titleCardImageSize * 2 - titlePadding * 2,
-                                        26.f);
-    self.pTitleLabel.textAlignment = NSTextAlignmentLeft;
-    self.pTitleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
-    self.pTitleLabel.font = [UIFont systemFontOfSize:22.0f];
+    
+    if(self.pSubtitleLabel.text.length == 0)
+    {
+        self.pTitleLabel.frame = CGRectMake(titleCardImageSize + titlePadding,
+                                            0.f,
+                                            cardContainerWidth - titleCardImageSize * 2 - titlePadding * 2,
+                                            titleCardImageSize);
+        self.pTitleLabel.textAlignment = NSTextAlignmentLeft;
+        self.pTitleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+        self.pTitleLabel.font = [UIFont systemFontOfSize:22.0f];
+        self.pSubtitleLabel.hidden = YES;
+    }
+    else
+    {
+        self.pTitleLabel.frame = CGRectMake(titleCardImageSize + titlePadding,
+                                            0.f,
+                                            cardContainerWidth - titleCardImageSize * 2 - titlePadding * 2,
+                                            26.f);
+        self.pTitleLabel.textAlignment = NSTextAlignmentLeft;
+        self.pTitleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+        self.pTitleLabel.font = [UIFont systemFontOfSize:22.0f];
+        self.pSubtitleLabel.hidden = NO;
+    }
     
     self.pSubtitleLabel.frame = CGRectMake(titleCardImageSize + titlePadding,
                                            26.f,

@@ -127,11 +127,24 @@
     const float labelOffsetY = 1.5f;
     const float nameHeight = h - labelContainerOffsetY;
     
-    self.pNameLabel.frame = CGRectMake(labelOffsetX,
-                                       labelOffsetY - 10,
-                                       w - (labelOffsetX*2),
-                                       nameHeight);
-    
+    if(self.pSubtitleLabel.text.length == 0)
+    {
+        self.pNameLabel.frame = CGRectMake(labelOffsetX,
+                                           labelOffsetY,
+                                           w - (labelOffsetX*2),
+                                           nameHeight);
+        self.pNameLabel.font = [UIFont systemFontOfSize:18.0];
+        self.pSubtitleLabel.hidden = YES;
+    }
+    else
+    {
+        self.pNameLabel.frame = CGRectMake(labelOffsetX,
+                                           labelOffsetY - 10,
+                                           w - (labelOffsetX*2),
+                                           nameHeight);
+        self.pNameLabel.font = [UIFont systemFontOfSize:14.0];
+        self.pSubtitleLabel.hidden = NO;
+    }
     self.pSubtitleLabel.frame = CGRectMake(labelOffsetX,
                                        labelOffsetY + 10,
                                        w - (labelOffsetX*2),
