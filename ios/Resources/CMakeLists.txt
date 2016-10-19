@@ -829,6 +829,12 @@ set(resources ${resources}
 		Resources/Yelp/reviewsFromYelpRED.png
 		Resources/Yelp/reviewsFromYelpRED@2x.png
 		Resources/Yelp/reviewsFromYelpRED@3x.png
+		Resources/yelp_powered_btn_light.png
+		Resources/yelp_powered_btn_light@2x.png
+		Resources/yelp_powered_btn_light@3x.png
+		Resources/yelp_review_btn_light.png
+		Resources/yelp_review_btn_light@2x.png
+		Resources/yelp_review_btn_light@3x.png
 		Resources/Yelp/stars_0_0.png
 		Resources/Yelp/stars_0_0@2x.png
 		Resources/Yelp/stars_0_0@3x.png

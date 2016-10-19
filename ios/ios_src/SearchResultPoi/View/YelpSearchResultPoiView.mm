@@ -558,7 +558,7 @@ namespace
             self.pVendorWebLinkButton = nil;
         }
         
-        UIImage* pButtonImage = ExampleApp::Helpers::ImageHelpers::LoadImage(@"reviewsFromYelpRED");
+        UIImage* pButtonImage = ExampleApp::Helpers::ImageHelpers::LoadImage(@"yelp_review_btn_light");
         self.pVendorWebLinkButton = [[[UIButton alloc] initWithFrame:CGRectMake(0.f,
                                                                                 0.f ,
                                                                                 pButtonImage.size.width,
@@ -580,6 +580,11 @@ namespace
         currentLabelY += (yelpButtonHeight + imageBottomPadding + headerMargin);
         
         self.pReviewsCardHeaderLine.frame = CGRectMake(0.f,
+                                                       currentLabelY,
+                                                       cardContainerWidth,
+                                                       1.f);
+        
+        self.pPreviewCardHeaderLine.frame = CGRectMake(0.f,
                                                        currentLabelY,
                                                        cardContainerWidth,
                                                        1.f);
