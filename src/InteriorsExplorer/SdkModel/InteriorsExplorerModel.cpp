@@ -46,7 +46,8 @@ namespace ExampleApp
                                                            VisualMap::SdkModel::IVisualMapService& visualMapService,
                                                            ExampleAppMessaging::TMessageBus& messageBus,
                                                            Metrics::IMetricsService& metricsService,
-                                                           PersistentSettings::IPersistentSettingsModel& persistentSettings)
+                                                           PersistentSettings::IPersistentSettingsModel& persistentSettings,
+                                                           Eegeo::Location::NavigationService& navigationService)
             : m_interiorInteractionModel(interiorInteractionModel)
             , m_interiorSelectionModel(interiorSelectionModel)
             , m_visualMapService(visualMapService)
@@ -59,6 +60,7 @@ namespace ExampleApp
             , m_interiorExplorerEnabled(false)
             , m_currentInteriorFloorIndex(0)
             , m_persistentSettings(persistentSettings)
+            , m_navigationService(navigationService)
             , m_interiorExitTutorialViewedCount(0)
 			, m_interiorChangeFloorTutorialViewedCount(0)
             {
@@ -201,6 +203,7 @@ namespace ExampleApp
 
                 HideInteriorExplorer();
                 m_metricsService.SetEvent(MetricEventInteriorExitPressed);
+                m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsMode::GpsModeOff);
                 m_interiorExplorerExitedCallbacks.ExecuteCallbacks();
             }
             

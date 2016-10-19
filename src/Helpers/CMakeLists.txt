@@ -8,6 +8,8 @@ set(currsources
   ../src/Helpers/ImagePathHelpers.h
   ../src/Helpers/InteriorHeightHelpers.cpp
   ../src/Helpers/InteriorHeightHelpers.h
+  ../src/Helpers/InteriorNavigationHelpers.cpp
+  ../src/Helpers/InteriorNavigationHelpers.h
   ../src/Helpers/IStateMachineState.h
   ../src/Helpers/SizeHelpers.cpp
   ../src/Helpers/SizeHelpers.h
