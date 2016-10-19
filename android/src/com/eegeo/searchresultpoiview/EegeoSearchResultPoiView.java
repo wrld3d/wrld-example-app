@@ -30,23 +30,36 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
     protected long m_nativeCallerPointer;
     private View m_view = null;
     private RelativeLayout m_uiRoot = null;
-
+    
+    private View m_searchResultPoiViewContainer = null;
     private View m_closeButton = null;
     private View m_togglePinnedButton = null;
     private TextView m_titleView = null;
+    private TextView m_subtitleView = null;
     private TextView m_addressView = null;
-    private TextView m_addressHeader = null;
+    private View m_detailsHeader = null;
     private TextView m_phoneView = null;
-    private TextView m_phoneHeader = null;
+    private TextView m_webLinkView = null;
     private TextView m_humanReadableTagsView = null;
-    private TextView m_humanReadableTagsHeader = null;
-    private	ImageView m_webVendorStyleLinkButton = null;
+    private View m_humanReadableTagsHeader = null;
     private ImageView m_tagIcon = null;
+    private TextView m_descriptionView = null;
+    private View m_poiImageHeader = null;
 	private ImageView m_poiImage = null;
 	private View m_poiImageProgressBar = null;
 	private View m_poiImageGradient = null;
-	private String m_url;
-	private String m_poiImageUrl;
+	private String m_url = null;
+	private String m_poiImageUrl = null;
+	private ImageView m_facebookUrl = null;
+	private ImageView m_twitterUrl = null;
+	private ImageView m_email = null;
+	private ImageView m_addressIcon = null;
+	private ImageView m_phoneIcon = null;
+	private ImageView m_webIcon = null;
+	private ImageView m_tagsIcon = null;
+	private ImageView m_descriptionIcon = null;
+	private View m_poiImageViewContainer = null;
+	private TextView m_dropPinText = null;
 
     private boolean m_handlingClick = false;
     private TintablePinToggleButton m_togglePinnedWrapper;
@@ -58,23 +71,35 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
 
         m_uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
         m_view = m_activity.getLayoutInflater().inflate(R.layout.search_result_poi_eegeo_layout, m_uiRoot, false);
-
+       
+        m_searchResultPoiViewContainer = m_view.findViewById(R.id.search_result_poi_view_container);
         m_closeButton = m_view.findViewById(R.id.search_result_poi_view_close_button);
         m_togglePinnedButton = m_view.findViewById(R.id.search_result_poi_view_toggle_pinned_button);
         m_togglePinnedWrapper = new TintablePinToggleButton(m_togglePinnedButton);
         m_titleView = (TextView)m_view.findViewById(R.id.search_result_poi_view_title);
+        m_subtitleView = (TextView)m_view.findViewById(R.id.search_result_poi_view_subtitle);
         m_addressView = (TextView)m_view.findViewById(R.id.search_result_poi_view_address);
-        m_addressHeader = (TextView)m_view.findViewById(R.id.search_result_poi_view_address_header);
+        m_detailsHeader = (View)m_view.findViewById(R.id.search_result_poi_view_details_header);
         m_phoneView = (TextView)m_view.findViewById(R.id.search_result_poi_view_phone);
-        m_phoneHeader = (TextView)m_view.findViewById(R.id.search_result_poi_view_phone_header);
+        m_webLinkView = (TextView)m_view.findViewById(R.id.search_result_poi_view_web_link);
+        m_descriptionView = (TextView)m_view.findViewById(R.id.search_result_poi_view_descritption);
+        m_poiImageHeader = (View)m_view.findViewById(R.id.search_result_poi_image_header);
         m_humanReadableTagsView = (TextView)m_view.findViewById(R.id.search_result_poi_view_tags);
-        m_humanReadableTagsHeader = (TextView)m_view.findViewById(R.id.search_result_poi_view_tags_header);
-        m_webVendorStyleLinkButton = (ImageView)m_view.findViewById(R.id.search_result_poi_view_web_vendor_link_style);
+        m_humanReadableTagsHeader = (View)m_view.findViewById(R.id.search_result_poi_view_tags_header);
         m_tagIcon = (ImageView)m_view.findViewById(R.id.search_result_poi_view_tag_icon);
-        m_poiImageProgressBar = m_view.findViewById(R.id.search_result_poi_view_image_progress);
 		m_poiImage = (ImageView)m_view.findViewById(R.id.search_result_poi_view_image);
 		m_poiImageGradient = m_view.findViewById(R.id.search_result_poi_view_image_gradient);
-		
+        m_poiImageProgressBar = m_view.findViewById(R.id.search_result_poi_view_image_progress);
+		m_facebookUrl = (ImageView)m_view.findViewById(R.id.search_result_poi_view_facebook);
+		m_twitterUrl = (ImageView)m_view.findViewById(R.id.search_result_poi_view_twitter);
+		m_email = (ImageView)m_view.findViewById(R.id.search_result_poi_view_email);
+		m_addressIcon = (ImageView)m_view.findViewById(R.id.search_result_poi_view_address_icon);
+		m_phoneIcon = (ImageView)m_view.findViewById(R.id.search_result_poi_view_phone_icon);
+		m_webIcon = (ImageView)m_view.findViewById(R.id.search_result_poi_view_web_link_icon);
+		m_tagsIcon = (ImageView)m_view.findViewById(R.id.search_result_poi_view_tags_icon);
+		m_descriptionIcon = (ImageView)m_view.findViewById(R.id.search_result_poi_view_description_icon);
+		m_poiImageViewContainer = (View)m_view.findViewById(R.id.search_result_poi_view_image_container);
+		m_dropPinText = (TextView)m_view.findViewById(R.id.drop_pin_text);
         
         m_activity.recursiveDisableSplitMotionEvents((ViewGroup)m_view);
         
@@ -83,7 +108,10 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
         
         m_closeButton.setOnClickListener(this);
         m_togglePinnedButton.setOnClickListener(this);
-        m_webVendorStyleLinkButton.setOnClickListener(this);
+        m_facebookUrl.setOnClickListener(this);
+        m_twitterUrl.setOnClickListener(this);
+        m_email.setOnClickListener(this);
+        m_webLinkView.setOnClickListener(this);
     }
 
     public void destroy()
@@ -93,38 +121,68 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
 
     public void displayPoiInfo(
     		final String title,
+    		final String subtitle,
     		final String address,
+    		final String description,
     		final String phone, 
     		final String url,
     		final String iconKey,
     		final String[] humanReadableTags,
     		final String imageUrl,
     		final String vendor,
-    		final boolean isPinned)
+    		final boolean isPinned,
+    		final String facebook,
+    		final String twitter,
+    		final String email) 
     {
+    	int containerWidth = m_searchResultPoiViewContainer.getWidth();
+    	int containerHeight = m_searchResultPoiViewContainer.getHeight();
+    	int maxWidth = (int) (containerHeight * 0.5f);
+    	if(m_searchResultPoiViewContainer.getWidth() > maxWidth)
+    	{
+    		m_searchResultPoiViewContainer.getLayoutParams().width = maxWidth;
+    	}
     	m_url = url;
     	m_poiImageUrl = imageUrl;
     	
         m_titleView.setText(title);
-
-        if(!address.equals(""))
+        m_subtitleView.setText(subtitle);
+        
+        if(subtitle.equals(""))
         {
-            m_addressHeader.setVisibility(View.VISIBLE);
-            m_addressView.setVisibility(View.VISIBLE);
-            String addressText = address.replace(", ", "\n");
-            m_addressView.setText(addressText);
-            m_addressHeader.setText(vendor.equals("GeoNames") ? "Country" : "Address");
+        	m_subtitleView.setVisibility(View.GONE);
         }
         else
         {
-            m_addressHeader.setVisibility(View.GONE);
+        	m_subtitleView.setVisibility(View.VISIBLE);
+        }
+        
+        if(!address.equals("") || !phone.equals("") || !facebook.equals("") || !twitter.equals("") || !email.equals(""))
+        {
+            m_detailsHeader.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            m_detailsHeader.setVisibility(View.GONE);
+        }
+
+        if(!address.equals(""))
+        {
+            m_addressView.setVisibility(View.VISIBLE);
+            m_addressIcon.setVisibility(View.VISIBLE);
+            String addressText = address.replace(", ", "\n");
+            m_addressView.setText(addressText);
+        }
+        else
+        {
             m_addressView.setVisibility(View.GONE);
+            m_addressIcon.setVisibility(View.GONE);
         }
 
         if(!phone.equals(""))
         {
-            m_phoneHeader.setVisibility(View.VISIBLE);
             m_phoneView.setVisibility(View.VISIBLE);
+            m_phoneIcon.setVisibility(View.VISIBLE);
             m_phoneView.setText(phone.replace(" ", ""));
 
             // Autolink discards country code so add custom phone link
@@ -133,29 +191,82 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
         }
         else
         {
-            m_phoneHeader.setVisibility(View.GONE);
             m_phoneView.setVisibility(View.GONE);
+            m_phoneIcon.setVisibility(View.GONE);
         }
-
+        
+        
         if(!url.equals(""))
         {
-            m_webVendorStyleLinkButton.setVisibility(View.VISIBLE);
+        	m_webLinkView.setVisibility(View.VISIBLE);
+        	m_webIcon.setVisibility(View.VISIBLE);
+        	m_webLinkView.setText(url.replace("", ""));
+        	
+        	final String webRegex = "[\\S]*";
+        	Linkify.addLinks(m_webLinkView, Pattern.compile(webRegex), "Web:");
         }
         else
         {
-        	m_webVendorStyleLinkButton.setVisibility(View.GONE);
+        	m_webLinkView.setVisibility(View.GONE);
+        	m_webIcon.setVisibility(View.GONE);
         }
 
+        m_poiImageProgressBar.setVisibility(View.GONE);
+    	m_poiImageGradient.setVisibility(View.GONE);
+
+        if(!imageUrl.equals(""))
+        {
+        	m_poiImageProgressBar.setVisibility(View.VISIBLE);
+            m_poiImageHeader.setVisibility(View.VISIBLE);
+            m_poiImageViewContainer.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+        	m_poiImageHeader.setVisibility(View.GONE);
+        	m_poiImageViewContainer.setVisibility(View.GONE);
+        }
+        
+        if(!facebook.equals(""))
+        {
+        	m_facebookUrl.setVisibility(View.VISIBLE);
+        	m_facebookUrl.setTag(facebook);
+        }
+        else
+        {
+        	m_facebookUrl.setVisibility(View.GONE);
+        }
+        
+        if(!twitter.equals(""))
+        {
+        	m_twitterUrl.setVisibility(View.VISIBLE);
+        	m_twitterUrl.setTag(twitter);
+        }
+        else
+        {
+        	m_twitterUrl.setVisibility(View.GONE);
+        }
+        
+        if(!email.equals(""))
+        {
+        	m_email.setVisibility(View.VISIBLE);
+        	m_email.setTag(email);
+        }
+        else
+        {
+        	m_email.setVisibility(View.GONE);
+        }
+        
         if(humanReadableTags.length > 0)
         {
         	m_humanReadableTagsHeader.setVisibility(View.VISIBLE);
         	m_humanReadableTagsView.setVisibility(View.VISIBLE);
+        	m_tagsIcon.setVisibility(View.VISIBLE);
         	
         	String output = new String();
         	output += humanReadableTags[0]; 
         	for(int i = 1; i < humanReadableTags.length; ++ i)
         	{
-        		output += ("\n" + humanReadableTags[i]);
+        		output += (", " + humanReadableTags[i]);
         	}
         	m_humanReadableTagsView.setText(output);
         }
@@ -163,15 +274,19 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
         {
         	m_humanReadableTagsHeader.setVisibility(View.GONE);
             m_humanReadableTagsView.setVisibility(View.GONE);
+            m_tagsIcon.setVisibility(View.GONE);
         }
-
-        m_poiImage.setVisibility(View.GONE);
-        m_poiImageProgressBar.setVisibility(View.GONE);
-    	m_poiImageGradient.setVisibility(View.GONE);
-
-        if(!imageUrl.equals(""))
+        
+        if(!description.equals(""))
         {
-            m_poiImageProgressBar.setVisibility(View.VISIBLE);
+            m_descriptionView.setVisibility(View.VISIBLE);
+            m_descriptionIcon.setVisibility(View.VISIBLE);
+            m_descriptionView.setText(description);
+        }
+        else
+        {
+            m_addressView.setVisibility(View.GONE);
+            m_descriptionIcon.setVisibility(View.GONE);
         }
         
         int iconId = TagResources.getSmallIconForTag(m_activity, iconKey);
@@ -185,8 +300,22 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
 
         m_handlingClick = false;
     }
+    
+    public void handleButtonLink(View view)
+    {
+    	String url = (String)view.getTag();
+    	if (!url.startsWith("http://") && !url.startsWith("https://") && view == m_email)
+			   url = "http://" + url;
+    	
+		Intent intent = new Intent();
+		intent.setAction(Intent.ACTION_VIEW);
+		intent.addCategory(Intent.CATEGORY_BROWSABLE);
+		intent.setData(Uri.parse(url));
+		m_activity.startActivity(intent);
+		m_handlingClick = false;
+    }
 
-    public void onClick(View view)
+	public void onClick(View view)
     {
         if(m_handlingClick)
         {
@@ -202,10 +331,14 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
         {
 			handleTogglePinnedClicked();
         }
-        else if(view == m_webVendorStyleLinkButton) 
+        else if(view == m_facebookUrl || view == m_twitterUrl || view == m_email)
         {
-			handleWebLinkButtonClicked();
-		}
+        	handleButtonLink(view);
+        }
+        else if(view == m_webLinkView)
+        {
+        	handleWebLinkButtonClicked();
+        }
     }
 
     public void dismissPoiInfo()
@@ -228,9 +361,18 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
 			    bmOptions.inJustDecodeBounds = false;
 			    bmOptions.inPurgeable = true;
 				
-				int size = m_activity.dipAsPx(280);
+			    m_poiImage.getLayoutParams().height = (int) (m_poiImage.getWidth() * 2.f / 3.f);
+				int width = m_activity.dipAsPx(m_poiImage.getWidth());
+				int height = (int) (width * 2.f / 3.f);
 				Bitmap poiBitmap = BitmapFactory.decodeByteArray(imgData, 0, imgData.length, bmOptions);
-				m_poiImage.setImageBitmap(Bitmap.createScaledBitmap(poiBitmap, size, size, false));
+
+			    
+				m_poiImage.setImageBitmap(Bitmap.createScaledBitmap(poiBitmap, width, height, false));
+			}
+			else
+			{
+				m_poiImageHeader.setVisibility(View.GONE);
+				m_poiImageViewContainer.setVisibility(View.GONE);
 			}
 		}
 	}
