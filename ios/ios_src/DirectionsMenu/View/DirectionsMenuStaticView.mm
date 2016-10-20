@@ -197,7 +197,6 @@
     DirectionsMenuView *parentView = (DirectionsMenuView *)m_pView;
     ExampleApp::DirectionsMenu::View::DirectionsMenuViewInterop *interop = [parentView getDirectionsMenuInterop];
     interop->HandleWayPointSelected(static_cast<int>(indexPath.row));
-    [parentView ExitDirectionsClicked];
     
 }
 

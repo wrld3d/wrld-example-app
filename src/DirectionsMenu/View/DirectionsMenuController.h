@@ -28,6 +28,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<DirectionsMenuController, int> m_wayPointSelectedCallbacks;
                 Eegeo::Helpers::TCallback0<DirectionsMenuController> m_exitDirectionsCallbacks;
                 bool m_appModeAllowsOpen;
+                bool m_isExitDirections;
 
                 Eegeo::Helpers::TCallback2<DirectionsMenuController, OpenableControl::View::IOpenableControlViewModel&, float> m_onOpenStateChangedCallback;
                 Eegeo::Helpers::TCallback1<DirectionsMenuController, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
@@ -39,7 +40,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<DirectionsMenuController, Menu::View::MenuItemModel> m_onSearchItemRemovedCallback;
                 
                 void OnOpenStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& openState);
-                
+                void OnViewClosed();
+
                 void OnAppModeChanged(const AppModes::AppModeChangedMessage& message);
                 
                 void OnDirectionsMenuStateChanged(const DirectionsMenuInitiation::DirectionsMenuStateChangedMessage& message);

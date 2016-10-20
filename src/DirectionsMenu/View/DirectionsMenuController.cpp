@@ -38,6 +38,7 @@ namespace ExampleApp
                         , m_onSearchItemAddedCallback(this, &DirectionsMenuController::OnSearchItemAdded)
                         , m_onSearchItemRemovedCallback(this, &DirectionsMenuController::OnSearchItemRemoved)
                         , m_directionsMenuHighlightItemCallback(this, &DirectionsMenuController::OnDirectionsHighlightItem)
+                        , m_isExitDirections(false)
 
             {
                 m_directionsMenuView.InsertSearchPeformedCallback(m_searchPerformedCallbacks);
@@ -96,6 +97,17 @@ namespace ExampleApp
                 }
             }
             
+            void DirectionsMenuController::OnViewClosed()
+            {
+                
+                if (m_isExitDirections)
+                {
+                    m_isExitDirections = false;
+                    DirectionsMenuInitiation::DirectionsMenuStateChangedMessage message(ExampleApp::DirectionsMenuInitiation::Inactive);
+                    m_messageBus.Publish(message);
+                }
+                
+            }
             void DirectionsMenuController::OnSearch(const std::string& searchQuery)
             {
                 // Publish message Here
@@ -125,10 +137,12 @@ namespace ExampleApp
             
             void DirectionsMenuController::OnExitDirectionsClicked()
             {
+                
                 MenuController::OnViewClicked();
+                m_isExitDirections = true;
              
-                DirectionsMenuInitiation::DirectionsMenuStateChangedMessage message(ExampleApp::DirectionsMenuInitiation::Inactive);
-                m_messageBus.Publish(message);
+//                DirectionsMenuInitiation::DirectionsMenuStateChangedMessage message(ExampleApp::DirectionsMenuInitiation::Inactive);
+//                m_messageBus.Publish(message);
             }
             
             void DirectionsMenuController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
