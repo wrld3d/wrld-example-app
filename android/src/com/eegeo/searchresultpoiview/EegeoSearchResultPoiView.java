@@ -304,7 +304,7 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
     public void handleButtonLink(View view)
     {
     	String url = (String)view.getTag();
-    	if (!url.startsWith("http://") && !url.startsWith("https://") && view == m_email)
+    	if (!url.startsWith("http://") && !url.startsWith("https://"))
 			   url = "http://" + url;
     	
 		Intent intent = new Intent();
@@ -313,6 +313,19 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
 		intent.setData(Uri.parse(url));
 		m_activity.startActivity(intent);
 		m_handlingClick = false;
+    }
+    
+    public void openEmailLink(View view)
+    {
+    	String url = (String)view.getTag();
+    	
+    	Intent intent = new Intent(Intent.ACTION_SEND);
+    	intent.setType("plain/text");
+    	intent.putExtra(Intent.EXTRA_EMAIL, new String[] { url });
+    	intent.putExtra(Intent.EXTRA_SUBJECT, "");
+    	intent.putExtra(Intent.EXTRA_TEXT, "");
+    	m_activity.startActivity(Intent.createChooser(intent, ""));
+    	m_handlingClick = false;
     }
 
 	public void onClick(View view)
@@ -331,9 +344,13 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
         {
 			handleTogglePinnedClicked();
         }
-        else if(view == m_facebookUrl || view == m_twitterUrl || view == m_email)
+        else if(view == m_facebookUrl || view == m_twitterUrl)
         {
         	handleButtonLink(view);
+        }
+        else if(view == m_email)
+        {
+        	openEmailLink(view);
         }
         else if(view == m_webLinkView)
         {
