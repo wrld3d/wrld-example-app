@@ -918,17 +918,12 @@ const int DeletePinAlertViewTag = 2;
 
 - (void) handleEmailLinkClicked
 {
-    NSString* preFormattedUrlString = [NSString stringWithUTF8String:m_eegeoModel.GetEmail().c_str()];
-    
-    NSString* webUrlString = ([preFormattedUrlString rangeOfString:@"http"].location != NSNotFound)
-    ? preFormattedUrlString
-    : [NSString stringWithFormat:@"http://%@", preFormattedUrlString];
-    
-    NSURL *url = [NSURL URLWithString:webUrlString];
-    if (![[UIApplication sharedApplication] openURL:url])
-    {
-        NSLog(@"%@%@",@"Failed to open url:",[url description]);
-    }
+    NSString *toEmail=[NSString stringWithUTF8String:m_eegeoModel.GetEmail().c_str()];
+    NSString *subject=@"";
+    NSString *body = @"";
+    NSString *email = [NSString stringWithFormat:@"mailto:%@?subject=%@&body=%@", toEmail,subject,body];
+    email = [email stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:email]];
 }
 
 -(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
