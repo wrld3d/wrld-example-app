@@ -343,16 +343,16 @@ const int DeletePinAlertViewTag = 2;
 {
     const float boundsWidth = static_cast<float>(self.superview.bounds.size.width);
     const float boundsHeight = static_cast<float>(self.superview.bounds.size.height);
-    const float boundsOccupyMultiplierHeight = 0.9f;
-    const float mainWindowWidth = std::min(boundsWidth * boundsOccupyMultiplierHeight, 348.f);
-    const float mainWindowHeight = boundsHeight * boundsOccupyMultiplierHeight;
+    const float boundsOccupyMultiplier = 0.9f;
+    const float mainWindowWidth = std::min(boundsWidth * boundsOccupyMultiplier, 348.f);
+    const float mainWindowHeight = boundsHeight * boundsOccupyMultiplier;
     const float mainWindowX = (boundsWidth * 0.5f) - (mainWindowWidth * 0.5f);
     const float mainWindowY = (boundsHeight * 0.5f) - (mainWindowHeight * 0.5f);
     
     const float headlineHeight = 50.f;
-    const float closeButtonSectionHeight = 64.f;
+    const float pinButtonSectionHeight = 64.f;
     const float closeButtonSectionOffsetY = mainWindowHeight - 46.f;
-    const float contentSectionHeight = mainWindowHeight - (closeButtonSectionHeight + headlineHeight);
+    const float contentSectionHeight = mainWindowHeight - (pinButtonSectionHeight + headlineHeight);
     
     const float topMargin = 15.f;
     const float bottomMargin = 15.f;
@@ -485,7 +485,8 @@ const int DeletePinAlertViewTag = 2;
 - (void) performDynamicContentLayout
 {
     const float boundsWidth = static_cast<float>(self.superview.bounds.size.width);
-    const float mainWindowWidth = std::min(boundsWidth - 20.f, 348.f);
+    const float boundsOccupyMultiplier = 0.9f;
+    const float mainWindowWidth = std::min(boundsWidth * boundsOccupyMultiplier, 348.f);
     const float labelYSpacing = 8.f;
     const float headerTextPadding = 3.0f;
     const float detailsImageSize = 18.f;
@@ -521,12 +522,12 @@ const int DeletePinAlertViewTag = 2;
             self.pPreviewImage.frame = CGRectMake(0.f, 0.f, 0.f, 0.f);
             currentLabelY -= (cardContainerWidth *2.f/3.f + headerMargin * 2);
         }
-        
-        self.pDetailsCardContainer.frame = CGRectMake(0.f,
-                                                      currentLabelY,
-                                                      cardContainerWidth,
-                                                      500.f);
     }
+    
+    self.pDetailsCardContainer.frame = CGRectMake(0.f,
+                                                  currentLabelY,
+                                                  cardContainerWidth,
+                                                  500.f);
     
     if(!m_eegeoModel.GetAddress().empty())
     {

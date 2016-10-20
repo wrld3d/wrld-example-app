@@ -342,9 +342,9 @@ namespace
 {
     const float boundsWidth = static_cast<float>(self.superview.bounds.size.width);
     const float boundsHeight = static_cast<float>(self.superview.bounds.size.height);
-    const float boundsOccupyMultiplierHeight = 0.9f;
-    const float mainWindowWidth = std::min(boundsWidth, 348.f);
-    const float mainWindowHeight = boundsHeight * boundsOccupyMultiplierHeight;
+    const float boundsOccupyMultiplier = 0.9f;
+    const float mainWindowWidth = std::min(boundsWidth * boundsOccupyMultiplier, 348.f);
+    const float mainWindowHeight = boundsHeight * boundsOccupyMultiplier;
     const float mainWindowX = (boundsWidth * 0.5f) - (mainWindowWidth * 0.5f);
     const float mainWindowY = (boundsHeight * 0.5f) - (mainWindowHeight * 0.5f);
     
@@ -360,7 +360,7 @@ namespace
     
     const float headlineHeight = 50.f;
     const float closeButtonSectionHeight = 64.f;
-    const float closeButtonSectionOffsetY = mainWindowHeight - closeButtonSectionHeight;
+    const float pinButtonSectionOffsetY = mainWindowHeight - 46.f;
     const float contentSectionHeight = mainWindowHeight - (closeButtonSectionHeight + headlineHeight);
     
     const float topMargin = 15.f;
@@ -410,17 +410,17 @@ namespace
                                                  headerLineThickness);
     
     self.pFooterSpace.frame = CGRectMake(sideMargin,
-                                         closeButtonSectionOffsetY - bottomMargin - 19.f,
+                                         pinButtonSectionOffsetY - bottomMargin - 19.f,
                                          cardContainerWidth,
                                          19.f);
     
     self.pFooterLine.frame = CGRectMake(sideMargin,
-                                        closeButtonSectionOffsetY - bottomMargin - 20.f,
+                                        pinButtonSectionOffsetY - bottomMargin - 20.f,
                                         cardContainerWidth,
                                         headerLineThickness);
     
     self.pDropPinContainer.frame = CGRectMake(sideMargin,
-                                              closeButtonSectionOffsetY - bottomMargin,
+                                              pinButtonSectionOffsetY - bottomMargin,
                                               cardContainerWidth,
                                               42.f);
     
@@ -431,7 +431,7 @@ namespace
                                        42.f);
     
     self.pFadeContainer.frame = CGRectMake(sideMargin,
-                                           closeButtonSectionOffsetY - 15.f - 60.f,
+                                           pinButtonSectionOffsetY - 15.f - 60.f,
                                            cardContainerWidth,
                                            40.f);
     
@@ -475,7 +475,8 @@ namespace
     
     
     const float boundsWidth = static_cast<float>(self.superview.bounds.size.width);
-    const float mainWindowWidth = std::min(boundsWidth - 20.f, 348.f);
+    const float boundsOccupyMultiplier = 0.9f;
+    const float mainWindowWidth = std::min(boundsWidth * boundsOccupyMultiplier, 348.f);
     const float detailsImageSize = 18.f;
     const float detailsImageToTextMargin = 6.f;
     const float headerMargin = 10.f;
@@ -501,8 +502,7 @@ namespace
     if(hasImage)
     {
         currentLabelY = 0.f;
-        const CGFloat imageX = (self.frame.size.width * 0.5f - m_imageWidth * 0.5f);
-        self.pPreviewImage.frame = CGRectMake(imageX,
+        self.pPreviewImage.frame = CGRectMake(0,
                                               currentLabelY,
                                               cardContainerWidth,
                                               cardContainerWidth * 2.f/3.f);
