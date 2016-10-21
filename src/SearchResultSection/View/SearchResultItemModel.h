@@ -27,6 +27,7 @@ namespace ExampleApp
                 Eegeo::dv3 m_searchResultModelLocationEcef;
                 
                 bool m_isInterior;
+                bool m_isDirections;
                 Eegeo::Resources::Interiors::InteriorId m_interiorId;
                 int m_floorIndex;
 
@@ -41,6 +42,7 @@ namespace ExampleApp
                 SearchResultItemModel(const std::string& name,
                                       const Eegeo::dv3& searchResultModelLocationEcef,
                                       const bool isInterior,
+                                      const bool isDirections,
                                       const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                       const int floorIndex,
                                       OpenableControl::View::IOpenableControlViewModel& searchMenuViewModel,

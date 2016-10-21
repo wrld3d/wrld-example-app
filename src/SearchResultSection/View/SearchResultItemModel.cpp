@@ -4,6 +4,7 @@
 
 #include "SearchResultSectionItemSelectedMessage.h"
 #include "ISearchResultPoiViewModel.h"
+#include "UIHelpers.h"
 
 namespace ExampleApp
 {
@@ -14,6 +15,7 @@ namespace ExampleApp
             SearchResultItemModel::SearchResultItemModel(const std::string& name,
                                                          const Eegeo::dv3& searchResultModelLocationEcef,
                                                          const bool isInterior,
+                                                         const bool isDirections,
                                                          const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                                          const int floorIndex,
                                                          OpenableControl::View::IOpenableControlViewModel& searchMenuViewModel,
@@ -24,6 +26,7 @@ namespace ExampleApp
             : m_name(name)
             , m_searchResultModelLocationEcef(searchResultModelLocationEcef)
             , m_isInterior(isInterior)
+            , m_isDirections(isDirections)
             , m_interiorId(interiorId)
             , m_floorIndex(floorIndex)
             , m_searchMenuViewModel(searchMenuViewModel)
@@ -42,7 +45,9 @@ namespace ExampleApp
 
             void SearchResultItemModel::Select()
             {
-                if (m_menuReaction.GetShouldCloseMenu())
+                const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
+
+                if ((isPhone && m_isDirections && m_menuReaction.GetShouldCloseMenu()) || (!m_isDirections && m_menuReaction.GetShouldCloseMenu()))
                 {
                     m_searchMenuViewModel.Close();
                 }

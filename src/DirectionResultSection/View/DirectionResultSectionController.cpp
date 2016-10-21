@@ -85,6 +85,7 @@ namespace ExampleApp
                                           Eegeo_NEW(SearchResultSection::View::SearchResultItemModel)("model title",
                                                                            latlong.ToECEF(),
                                                                            false,
+                                                                           true,
                                                                            m_buildingId,
                                                                            2,
                                                                            m_directionMenuViewModel,

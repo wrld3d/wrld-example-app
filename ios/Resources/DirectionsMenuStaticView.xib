@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -201,13 +201,13 @@
                     </variation>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pQy-bF-sHb" userLabel="Content View">
-                    <rect key="frame" x="0.0" y="170" width="360" height="516"/>
+                    <rect key="frame" x="0.0" y="168" width="360" height="518"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oKx-rg-azB">
-                            <rect key="frame" x="0.0" y="0.0" width="360" height="45"/>
+                            <rect key="frame" x="0.0" y="3" width="360" height="45"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wce-Y8-pGa">
-                                    <rect key="frame" x="90" y="0.0" width="180" height="41"/>
+                                    <rect key="frame" x="90" y="1" width="180" height="41"/>
                                     <color key="backgroundColor" red="0.074509803920000006" green="0.33725490200000002" blue="0.69019607839999997" alpha="1" colorSpace="calibratedRGB"/>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                     <state key="normal" title=" Hide Options" image="DirectionCard_HideOptionStandardState.png">
@@ -222,14 +222,14 @@
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="Wce-Y8-pGa" firstAttribute="width" secondItem="oKx-rg-azB" secondAttribute="width" multiplier="0.5" id="69M-es-eMs"/>
-                                <constraint firstItem="Wce-Y8-pGa" firstAttribute="top" secondItem="oKx-rg-azB" secondAttribute="top" id="B5Y-wF-OcX"/>
+                                <constraint firstItem="Wce-Y8-pGa" firstAttribute="top" secondItem="oKx-rg-azB" secondAttribute="top" constant="1" id="B5Y-wF-OcX"/>
                                 <constraint firstItem="Wce-Y8-pGa" firstAttribute="centerX" secondItem="oKx-rg-azB" secondAttribute="centerX" id="QFY-gI-rLQ"/>
                                 <constraint firstAttribute="height" constant="45" id="SII-hw-Pl4"/>
                                 <constraint firstItem="Wce-Y8-pGa" firstAttribute="height" secondItem="oKx-rg-azB" secondAttribute="height" multiplier="0.9" id="UDP-bl-fff"/>
                             </constraints>
                         </view>
                         <tableView clipsSubviews="YES" tag="10" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Muq-xI-IPR">
-                            <rect key="frame" x="0.0" y="45" width="360" height="471"/>
+                            <rect key="frame" x="0.0" y="48" width="360" height="470"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <outlet property="dataSource" destination="iN0-l3-epB" id="HhA-je-VQj"/>
@@ -243,7 +243,7 @@
                         <constraint firstAttribute="trailing" secondItem="oKx-rg-azB" secondAttribute="trailing" id="Xbz-A4-0Sk"/>
                         <constraint firstAttribute="trailing" secondItem="Muq-xI-IPR" secondAttribute="trailing" id="Xp9-od-OCg"/>
                         <constraint firstAttribute="bottom" secondItem="Muq-xI-IPR" secondAttribute="bottom" id="eQJ-SO-8WF"/>
-                        <constraint firstItem="oKx-rg-azB" firstAttribute="top" secondItem="pQy-bF-sHb" secondAttribute="top" id="qGo-ik-45z"/>
+                        <constraint firstItem="oKx-rg-azB" firstAttribute="top" secondItem="pQy-bF-sHb" secondAttribute="top" constant="3" id="qGo-ik-45z"/>
                         <constraint firstItem="oKx-rg-azB" firstAttribute="leading" secondItem="pQy-bF-sHb" secondAttribute="leading" id="tXo-Jb-8Ey"/>
                         <constraint firstItem="Muq-xI-IPR" firstAttribute="top" secondItem="oKx-rg-azB" secondAttribute="bottom" id="wTw-jq-1Tx"/>
                     </constraints>
@@ -257,11 +257,8 @@
                             <constraints>
                                 <constraint firstAttribute="height" constant="42" id="ybZ-Ng-ZLg"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="23"/>
                             <state key="normal" title=" Exit Directions" image="DirectionCard_ExitDirectionsStandardState.png"/>
-                            <state key="highlighted" image="Button_CTA_Icon_RepFaultDown.png">
-                                <color key="titleColor" red="0.0" green="0.14901960780000001" blue="0.34509803919999998" alpha="1" colorSpace="calibratedRGB"/>
-                            </state>
+                            <state key="selected" image="DirectionCard_ExitDirectionsStandardState.png"/>
                             <variation key="default">
                                 <mask key="constraints">
                                     <exclude reference="ybZ-Ng-ZLg"/>
@@ -281,7 +278,7 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="pQy-bF-sHb" firstAttribute="top" secondItem="gyb-Hn-ca1" secondAttribute="bottom" id="2Dc-k6-0Z2"/>
+                <constraint firstItem="pQy-bF-sHb" firstAttribute="top" secondItem="gyb-Hn-ca1" secondAttribute="bottom" constant="-2" id="2Dc-k6-0Z2"/>
                 <constraint firstItem="gyb-Hn-ca1" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="81V-cn-vnk"/>
                 <constraint firstAttribute="trailing" secondItem="pQy-bF-sHb" secondAttribute="trailing" id="HCZ-qo-OS8"/>
                 <constraint firstAttribute="trailing" secondItem="gyb-Hn-ca1" secondAttribute="trailing" id="KsL-85-hPo"/>
@@ -312,7 +309,6 @@
         </view>
     </objects>
     <resources>
-        <image name="Button_CTA_Icon_RepFaultDown.png" width="30" height="30"/>
         <image name="DirectionCard_ExitDirectionsStandardState.png" width="32" height="32"/>
         <image name="DirectionCard_HideOptionStandardState.png" width="32" height="32"/>
         <image name="DirectionCard_ReverseRoute.png" width="32" height="32"/>

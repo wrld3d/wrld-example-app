@@ -105,6 +105,8 @@ namespace ExampleApp
                     m_isExitDirections = false;
                     DirectionsMenuInitiation::DirectionsMenuStateChangedMessage message(ExampleApp::DirectionsMenuInitiation::Inactive);
                     m_messageBus.Publish(message);
+                    
+                    RefreshPresentation();
                 }
                 
             }
@@ -140,9 +142,7 @@ namespace ExampleApp
                 
                 MenuController::OnViewClicked();
                 m_isExitDirections = true;
-             
-//                DirectionsMenuInitiation::DirectionsMenuStateChangedMessage message(ExampleApp::DirectionsMenuInitiation::Inactive);
-//                m_messageBus.Publish(message);
+
             }
             
             void DirectionsMenuController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
