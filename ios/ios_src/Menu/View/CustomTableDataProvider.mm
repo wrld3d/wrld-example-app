@@ -90,7 +90,14 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         numberOfHeaders += section.GetTotalItemCount();
     }
     
-    return ((CellConstants::SectionHeaderCellHeight * numberOfHeaders + CellConstants::SubSectionCellHeight * numberOfSubSectionCells));
+    // Plaster for MPLY-6624:
+    // TJ/MB 2016/02
+    // We believe the table height calculation is not correctly factoring separate height.
+    // This significantly reduces the severity of MPLY-6624 but this should be revisited
+    
+    CGFloat separatorHeight     = 2.f;
+    CGFloat totalSeparateHeight = separatorHeight * ((numberOfHeaders+numberOfSubSectionCells)-1);
+    return ((CellConstants::SectionHeaderCellHeight * numberOfHeaders + CellConstants::SubSectionCellHeight * numberOfSubSectionCells) + totalSeparateHeight);
 }
 
 - (void)dealloc
