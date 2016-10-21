@@ -16,6 +16,7 @@
 #include "InteriorsExplorer.h"
 #include "VisualMap.h"
 #include "PersistentSettings.h"
+#include "NavigationService.h"
 
 namespace ExampleApp
 {
@@ -31,7 +32,8 @@ namespace ExampleApp
                                        VisualMap::SdkModel::IVisualMapService& visualMapService,
                                        ExampleAppMessaging::TMessageBus& messageBus,
                                        Metrics::IMetricsService& metricsServic,
-                                       PersistentSettings::IPersistentSettingsModel& persistentSettings);
+                                       PersistentSettings::IPersistentSettingsModel& persistentSettings,
+                                       Eegeo::Location::NavigationService& navigationService);
                 ~InteriorsExplorerModel();
                 
                 void SelectFloor(int floor);
@@ -72,6 +74,8 @@ namespace ExampleApp
 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Metrics::IMetricsService& m_metricsService;
+                
+                Eegeo::Location::NavigationService& m_navigationService;
                 
                 PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
                 int m_interiorExitTutorialViewedCount;

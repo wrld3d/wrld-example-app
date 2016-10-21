@@ -17,7 +17,8 @@ namespace ExampleApp
             {
             public:
                 
-                AppInteriorCameraWrapper(Eegeo::Resources::Interiors::InteriorsCameraController& interiorCameraController);
+                AppInteriorCameraWrapper(Eegeo::Resources::Interiors::InteriorsGpsCameraController& interiorGpsCameraController,
+                                         Eegeo::Resources::Interiors::InteriorsCameraController& interiorCameraController);
                 
                 void Update(float dt);
                 
@@ -29,12 +30,15 @@ namespace ExampleApp
                 
                 Eegeo::ITouchController& GetTouchController() const;
                 
+                Eegeo::Resources::Interiors::InteriorsGpsCameraController& GetInteriorGpsCameraController() const { return m_interiorGpsCameraController; }
+                
                 Eegeo::Resources::Interiors::InteriorsCameraController& GetInteriorCameraController() const { return m_interiorCameraController; }
                 
                 float GetHeadingDegrees() const;
                 
             private:
                 
+                Eegeo::Resources::Interiors::InteriorsGpsCameraController& m_interiorGpsCameraController;
                 Eegeo::Resources::Interiors::InteriorsCameraController& m_interiorCameraController;
             };
         }

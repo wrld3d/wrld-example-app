@@ -83,7 +83,6 @@
 #include "VisualMap.h"
 #include "Surveys.h"
 #include "IMenuReactionModel.h"
-#include "InteriorsNavigation.h"
 #include "IMenuIgnoredReactionModel.h"
 #include "DoubleTapIndoorInteraction.h"		
 #include "IRayCaster.h"
@@ -101,7 +100,6 @@ namespace ExampleApp
         Eegeo::ITouchController* m_pCurrentTouchController;
         Eegeo::EegeoWorld* m_pWorld;
         Eegeo::Location::NavigationService* m_pNavigationService;
-        InteriorsNavigation::SdkModel::IInteriorsNavigationService* m_pInteriorsNavigationService;
         PlatformAbstractionsFacade m_platformAbstractions;
         Eegeo::Rendering::LoadingScreen* m_pLoadingScreen;
         Eegeo::Rendering::ScreenProperties m_screenProperties;

@@ -17,7 +17,6 @@
 #include "ExitCurrentInteriorStage.h"
 #include "TransitionToInteriorStage.h"
 #include "IAppCameraController.h"
-#include "IInteriorsNavigationService.h"
 
 namespace ExampleApp
 {
@@ -28,7 +27,6 @@ namespace ExampleApp
             CameraTransitionController::CameraTransitionController(Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
                                                                    Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
                                                                    Eegeo::Location::NavigationService& navigationService,
-                                                                   ExampleApp::InteriorsNavigation::SdkModel::IInteriorsNavigationService& interiorsNavigationService,
                                                                    Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
                                                                    ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                                                    ExampleApp::AppCamera::SdkModel::IAppCameraController& appCameraController,
@@ -40,7 +38,6 @@ namespace ExampleApp
             : m_cameraController(cameraController)
             , m_interiorsCameraController(interiorsCameraController)
             , m_navigationService(navigationService)
-            , m_interiorsNavigationService(interiorsNavigationService)
             , m_terrainHeightProvider(terrainHeightProvider)
             , m_appModeModel(appModeModel)
             , m_interiorSelectionModel(interiorSelectionModel)
@@ -106,7 +103,6 @@ namespace ExampleApp
                 }
                 
                 m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsModeOff);
-                m_interiorsNavigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsModeOff);
                 
                 if(m_appModeModel.GetAppMode() == ExampleApp::AppModes::SdkModel::InteriorMode)
                 {

@@ -16,6 +16,8 @@
 #include "GpsGlobeCameraComponentConfiguration.h"
 #include "InteriorsCameraController.h"
 #include "InteriorsCameraControllerFactory.h"
+#include "InteriorsGpsCameraController.h"
+#include "InteriorsGpsCameraControllerFactory.h"
 #include "ITextureFileLoader.h"
 #include "IWeatherMenuModule.h"
 #include "SettingsMenuModule.h"
@@ -107,7 +109,6 @@
 #include "InteriorsMaterialDto.h"
 #include "InteriorsMaterialParser.h"
 #include "InteriorsMaterialDescriptorLoader.h"
-#include "InteriorsNavigationService.h"
 #include "ModalityIgnoredReactionModel.h"
 #include "ReactorIgnoredReactionModel.h"
 #include "WorldPinIconMappingFactory.h"
@@ -230,7 +231,6 @@ namespace ExampleApp
     , m_pCameraTouchController(NULL)
     , m_pCurrentTouchController(NULL)
     , m_pNavigationService(NULL)
-    , m_pInteriorsNavigationService(NULL)
     , m_pWorld(NULL)
     , m_platformAbstractions(platformAbstractions, networkCapabilities)
     , m_pLoadingScreen(NULL)
@@ -397,7 +397,6 @@ namespace ExampleApp
         m_pCameraTransitionController = Eegeo_NEW(ExampleApp::CameraTransitions::SdkModel::CameraTransitionController)(*m_pGlobeCameraController,
                                                                                                                        m_pInteriorsExplorerModule->GetInteriorsCameraController(),
                                                                                                                        *m_pNavigationService,
-                                                                                                                       *m_pInteriorsNavigationService,
                                                                                                                        terrainModelModule.GetTerrainHeightProvider(),
                                                                                                                        *m_pAppModeModel,
                                                                                                                        m_pAppCameraModule->GetController(),
@@ -631,6 +630,10 @@ namespace ExampleApp
                                                                                                      m_metricsService,
                                                                                                      m_menuReaction);
         
+        Eegeo::Camera::GlobeCamera::GpsGlobeCameraControllerFactory gpsCameraControllerFactory(m_pWorld->GetTerrainModelModule().GetTerrainHeightProvider(),
+                                                                                               mapModule.GetEnvironmentFlatteningService(),
+                                                                                               mapModule.GetResourceCeilingProvider(),
+                                                                                               *m_pNavigationService);
         
         Eegeo::Camera::GlobeCamera::GlobeCameraControllerFactory cameraControllerFactory(m_pWorld->GetTerrainModelModule().GetTerrainHeightProvider(),
                                                                                          mapModule.GetEnvironmentFlatteningService(),
@@ -639,7 +642,8 @@ namespace ExampleApp
         const Eegeo::Resources::Interiors::InteriorsCameraConfiguration& interiorsCameraConfig(Eegeo::Resources::Interiors::InteriorsCameraController::CreateDefaultConfig());
         const Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration& globeCameraConfig = Eegeo::Resources::Interiors::InteriorsCameraControllerFactory::DefaultGlobeCameraControllerConfiguration();
         const Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration& globeCameraTouchConfig = Eegeo::Resources::Interiors::InteriorsCameraControllerFactory::DefaultGlobeCameraTouchControllerConfiguration();
-        
+        Eegeo::Camera::GlobeCamera::GpsGlobeCameraComponentConfiguration gpsGlobeCameraComponentConfig = Eegeo::Resources::Interiors::InteriorsGpsCameraControllerFactory::DefaultGpsGlobeCameraComponentConfiguration();
+        gpsGlobeCameraComponentConfig.defaultGpsDistanceToInterest = ExampleApp::InteriorsExplorer::DefaultInteriorSearchResultTransitionInterestDistance;
         
         const Eegeo::Resources::Interiors::InteriorsCameraControllerFactory interiorsCameraControllerFactory(
                                                                                                              interiorsCameraConfig,
@@ -651,6 +655,12 @@ namespace ExampleApp
                                                                                                              interiorsPresentationModule.GetInteriorViewModel(),
                                                                                                              mapModule.GetEnvironmentFlatteningService(),
                                                                                                              interiorsAffectedByFlattening );
+        
+        const Eegeo::Resources::Interiors::InteriorsGpsCameraControllerFactory interiorsGpsCameraControllerFactory(gpsGlobeCameraComponentConfig,
+                                                                                                                   globeCameraConfig,
+                                                                                                                   gpsCameraControllerFactory,
+                                                                                                                   m_screenProperties,
+                                                                                                                   interiorsPresentationModule.GetInteriorViewModel());
         
         
         Eegeo::Modules::Map::StreamingModule& streamingModule = world.GetStreamingModule();
@@ -679,6 +689,7 @@ namespace ExampleApp
                                                                                                      mapModule.GetEnvironmentFlatteningService(),
                                                                                                      m_pVisualMapModule->GetVisualMapService(),
                                                                                                      interiorsCameraControllerFactory,
+                                                                                                     interiorsGpsCameraControllerFactory,
                                                                                                      m_screenProperties,
                                                                                                      m_identityProvider,
                                                                                                      m_messageBus,
@@ -686,7 +697,8 @@ namespace ExampleApp
                                                                                                      initialExperienceModel,
                                                                                                      interiorsAffectedByFlattening,
                                                                                                      m_pInteriorsEntitiesPinsModule->GetInteriorsEntitiesPinsController(),
-                                                                                                     m_persistentSettings);
+                                                                                                     m_persistentSettings,
+                                                                                                     *m_pNavigationService);
         
         m_pMyPinCreationModule = Eegeo_NEW(ExampleApp::MyPinCreation::SdkModel::MyPinCreationModule)(m_pMyPinsModule->GetMyPinsService(),
                                                                                                      m_identityProvider,
@@ -719,15 +731,8 @@ namespace ExampleApp
                                                                                                   m_messageBus,
                                                                                                   m_menuReaction);
         
-        m_pInteriorsNavigationService = Eegeo_NEW(ExampleApp::InteriorsNavigation::SdkModel::InteriorsNavigationService)(world.GetLocationService(),
-                                                                                                                         m_pInteriorsExplorerModule->GetInteriorsCameraController(),
-                                                                                                                         m_pInteriorsExplorerModule->GetTouchController(),
-                                                                                                                         interiorsPresentationModule.GetInteriorSelectionModel(),
-                                                                                                                         interiorsPresentationModule.GetInteriorInteractionModel());
-        
-        
         m_pCompassModule = Eegeo_NEW(ExampleApp::Compass::SdkModel::CompassModule)(*m_pNavigationService,
-                                                                                   *m_pInteriorsNavigationService,
+                                                                                   interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                    world.GetLocationService(),
                                                                                    m_pAppCameraModule->GetController(),
                                                                                    m_identityProvider,
@@ -737,7 +742,8 @@ namespace ExampleApp
                                                                                    *m_pAppModeModel,
                                                                                    m_pWorld->GetNativeUIFactories().AlertBoxFactory());
         
-        m_pInteriorCameraWrapper = Eegeo_NEW(AppCamera::SdkModel::AppInteriorCameraWrapper)(m_pInteriorsExplorerModule->GetInteriorsCameraController());
+        m_pInteriorCameraWrapper = Eegeo_NEW(AppCamera::SdkModel::AppInteriorCameraWrapper)(m_pInteriorsExplorerModule->GetInteriorsGpsCameraController(),
+                                                                                            m_pInteriorsExplorerModule->GetInteriorsCameraController());
         
         m_pWatermarkModule = Eegeo_NEW(ExampleApp::Watermark::SdkModel::WatermarkModule)(m_identityProvider,
                                                                                          m_applicationConfiguration.Name(),
@@ -813,8 +819,6 @@ namespace ExampleApp
         Eegeo_DELETE m_pModalityModule;
         
         Eegeo_DELETE m_pCompassModule;
-        
-        Eegeo_DELETE m_pInteriorsNavigationService;;
         
         Eegeo_DELETE m_pMyPinDetailsModule;
         
@@ -1072,7 +1076,6 @@ namespace ExampleApp
         eegeoWorld.EarlyUpdate(dt);
         
         m_pNavigationService->Update(dt);
-        m_pInteriorsNavigationService->Update(dt);
         
         m_pCameraTransitionService->Update(dt);
         m_pAppCameraModule->GetController().Update(dt);
@@ -1199,7 +1202,7 @@ namespace ExampleApp
         
         m_pGlobeCameraController->UpdateScreenProperties(m_screenProperties);
         
-        m_pInteriorsExplorerModule->GetInteriorsCameraController().UpdateScreenProperties(m_screenProperties);
+        m_pInteriorsExplorerModule->GetInteriorsGpsCameraController().UpdateScreenProperties(m_screenProperties);
     }
     
     void MobileExampleApp::InitialiseApplicationViewState()
