@@ -82,9 +82,6 @@ namespace ExampleApp
             {
                 m_model.UpdateGpsPosition(dt);
                 m_model.UpdateHeading(dt);
-                m_view.Update(dt);
-                m_anchorView.Update(dt);
-                
                 Eegeo::dv3 currentLocationEcef = m_model.GetCurrentLocationEcef();
                 Eegeo::dv3 scaledPoint = m_environmentFlatteningService.GetScaledPointEcef(currentLocationEcef, m_environmentFlatteningService.GetCurrentScale());
                 
@@ -92,6 +89,8 @@ namespace ExampleApp
                 {
                     m_view.SetVisible(false);
                     m_anchorView.SetVisible(false);
+                    m_view.Update(dt);
+                    m_anchorView.Update(dt);
                     return;
                 }
                 else if(m_visibilityCount == 1)
@@ -99,7 +98,9 @@ namespace ExampleApp
                     m_view.SetVisible(true);
                     m_anchorView.SetVisible(true);
                 }
-                
+                m_view.Update(dt);
+                m_anchorView.Update(dt);
+
                 Eegeo::v3 markerUp = scaledPoint.Norm().ToSingle();
                 
 				const float scale = ExampleApp::Helpers::ScaleHelpers::ComputeModelScaleForScreenWithPixelScaling(renderCamera, scaledPoint, m_screenPixelScale, m_screenOversampleScale) * 4.25f;
