@@ -14,7 +14,7 @@
 
 @class YelpSearchResultPoiView;
 
-@interface YelpSearchResultPoiView : UIView<SearchResultPoiView>
+@interface YelpSearchResultPoiView : UIView<SearchResultPoiView, UIScrollViewDelegate>
 {
     UIViewController* m_pController;
     

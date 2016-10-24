@@ -14,7 +14,7 @@
 
 @class EegeoSearchResultPoiView;
 
-@interface EegeoSearchResultPoiView : UIView<SearchResultPoiView>
+@interface EegeoSearchResultPoiView : UIView<SearchResultPoiView, UIScrollViewDelegate>
 {
     UIViewController* m_pController;
     
