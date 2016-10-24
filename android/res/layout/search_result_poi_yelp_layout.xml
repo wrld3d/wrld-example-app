@@ -73,6 +73,7 @@
 	      
         <!--  Scrolling icontent -->
         <ScrollView
+            android:id="@+id/content_container"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
 			android:layout_above="@+id/footer_line"
@@ -80,6 +81,7 @@
 			android:background="@color/white">
          
          	<LinearLayout 
+         	     android:id="@+id/linear_content_container"
 	             android:layout_width="fill_parent"
 	             android:layout_height="wrap_content"
 	             android:orientation="vertical">
@@ -330,11 +332,12 @@
         </ScrollView>
         
         <ImageView
-		    android:id="@+id/search_results_fade"
+		    android:id="@+id/footer_fade"
 			android:layout_height="wrap_content"
 			android:layout_width="fill_parent"
 			android:layout_marginRight="9dp"
 			android:layout_marginLeft="9dp"
+			android:layout_marginBottom="-1dp"
 			android:layout_above="@+id/footer_line"
 			android:layout_alignBottom="@+id/search_menu_item_list"
 			android:adjustViewBounds="true"
@@ -349,7 +352,6 @@
 	        android:layout_above="@+id/search_result_poi_view_toggle_pinned_button"
 	        android:layout_marginLeft="10dp"
 			android:layout_marginRight="10dp"
-			android:layout_marginTop="10dp"
 			android:layout_marginBottom="10dp"
 	        android:background="@color/gold"/>
 		

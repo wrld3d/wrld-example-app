@@ -4,19 +4,20 @@ package com.eegeo.searchresultpoiview;
 
 import java.util.regex.Pattern;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.text.util.Linkify;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
@@ -60,11 +61,20 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
 	private ImageView m_descriptionIcon = null;
 	private View m_poiImageViewContainer = null;
 	private TextView m_dropPinText = null;
+	private ScrollView m_contentContainer = null;
+	private ImageView m_footerFade = null;
+	private LinearLayout m_linearContentContainer = null;
 
     private boolean m_handlingClick = false;
     private TintablePinToggleButton m_togglePinnedWrapper;
+    
+    private SearchResultsPoiViewScrollListener m_scrollListener;
+    
+    private static String m_pinTextDefault = "Drop Pin";
+    private static String m_pinTextPressed = "Remove Pin";
 
-    public EegeoSearchResultPoiView(MainActivity activity, long nativeCallerPointer)
+    @SuppressLint("NewApi")
+	public EegeoSearchResultPoiView(MainActivity activity, long nativeCallerPointer)
     {
         m_activity = activity;
         m_nativeCallerPointer = nativeCallerPointer;
@@ -100,6 +110,9 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
 		m_descriptionIcon = (ImageView)m_view.findViewById(R.id.search_result_poi_view_description_icon);
 		m_poiImageViewContainer = (View)m_view.findViewById(R.id.search_result_poi_view_image_container);
 		m_dropPinText = (TextView)m_view.findViewById(R.id.drop_pin_text);
+		m_contentContainer = (ScrollView)m_view.findViewById(R.id.content_container);
+		m_footerFade = (ImageView)m_view.findViewById(R.id.footer_fade);
+		m_linearContentContainer = (LinearLayout)m_view.findViewById(R.id.linear_content_container);
         
         m_activity.recursiveDisableSplitMotionEvents((ViewGroup)m_view);
         
@@ -112,6 +125,9 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
         m_twitterUrl.setOnClickListener(this);
         m_email.setOnClickListener(this);
         m_webLinkView.setOnClickListener(this);
+        
+        m_scrollListener = new SearchResultsPoiViewScrollListener(m_footerFade, true, m_contentContainer);
+        m_contentContainer.setOnScrollChangeListener(m_scrollListener);
     }
 
     public void destroy()
@@ -258,7 +274,7 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
         
         if(humanReadableTags.length > 0)
         {
-        	m_humanReadableTagsHeader.setVisibility(View.VISIBLE);
+        	m_humanReadableTagsHeader.setVisibility(View.GONE);
         	m_humanReadableTagsView.setVisibility(View.VISIBLE);
         	m_tagsIcon.setVisibility(View.VISIBLE);
         	
@@ -285,7 +301,7 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
         }
         else
         {
-            m_addressView.setVisibility(View.GONE);
+        	m_descriptionView.setVisibility(View.GONE);
             m_descriptionIcon.setVisibility(View.GONE);
         }
         
@@ -299,6 +315,11 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
         m_view.requestFocus();
 
         m_handlingClick = false;
+        
+        if(m_togglePinnedWrapper.isPinned())
+        {
+        	m_dropPinText.setText("Remove Pin");
+        }
     }
     
     public void handleButtonLink(View view)
@@ -362,6 +383,20 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
     {
         m_view.setVisibility(View.GONE);
     }
+    
+    public void HandleFooterFadeInitialVisibility()
+    {
+        int childHeight = m_linearContentContainer.getHeight();
+        boolean isScrollable = m_contentContainer.getHeight() < (childHeight + m_contentContainer.getPaddingTop() + m_contentContainer.getPaddingBottom());
+        if(!isScrollable)
+        {
+        	m_footerFade.setVisibility(View.GONE);
+        }
+        else
+        {
+        	m_footerFade.setVisibility(View.VISIBLE);
+        }
+    }
 
 	public void updateImageData(String url, boolean hasImage, final byte[] imgData)
 	{
@@ -392,6 +427,8 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
 				m_poiImageViewContainer.setVisibility(View.GONE);
 			}
 		}
+		
+		HandleFooterFadeInitialVisibility();
 	}
 
     private void handleCloseClicked()
@@ -460,13 +497,14 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
     		SearchResultPoiViewJniMethods.TogglePinnedButtonClicked(m_nativeCallerPointer);
             m_handlingClick = false;
             m_togglePinnedWrapper.setPinToggleState(true);
+            m_dropPinText.setText(m_pinTextPressed);
     	}
     }
 	
 	private void showRemovePinDialog()
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(m_activity);
-        builder.setTitle("Remove Pin")
+        builder.setTitle(m_pinTextPressed)
         .setMessage("Are you sure you want to remove this pin?")
         .setPositiveButton("Yes,  delete it", new DialogInterface.OnClickListener()
         {
@@ -476,6 +514,7 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
         		SearchResultPoiViewJniMethods.TogglePinnedButtonClicked(m_nativeCallerPointer);
                 m_handlingClick = false;
                 m_togglePinnedWrapper.setPinToggleState(false);
+                m_dropPinText.setText(m_pinTextDefault);
             }
         })
         .setNegativeButton("No,  keep it", new DialogInterface.OnClickListener()
