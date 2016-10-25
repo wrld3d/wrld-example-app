@@ -89,7 +89,6 @@ namespace ExampleApp
                 Eegeo_DELETE m_pWorldPinController;
                 Eegeo_DELETE m_pInteriorsGpsCameraController;
                 Eegeo_DELETE m_pInteriorsCameraController;
-                Eegeo_DELETE m_pGlobeCameraTouchController;
                 Eegeo_DELETE m_pGpsGlobeCameraController;
                 Eegeo_DELETE m_pVisibilityUpdater;
                 Eegeo_DELETE m_pUserInteractionModel;
