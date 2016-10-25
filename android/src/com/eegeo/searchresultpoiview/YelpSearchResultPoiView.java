@@ -4,6 +4,7 @@ package com.eegeo.searchresultpoiview;
 
 import java.util.regex.Pattern;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,7 +17,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
@@ -57,12 +60,22 @@ public class YelpSearchResultPoiView implements View.OnClickListener
 	private ImageView m_review_icon = null;
 	private View m_detailsHeader = null;
 	private View m_humanReadableTagsHeader = null;
-	 private View m_poiImageHeader = null;
+	private View m_poiImageHeader = null;
+	private ScrollView m_contentContainer = null;
+	private ImageView m_footerFade = null;
+	private LinearLayout m_linearContentContainer = null;
+	private TextView m_dropPinText = null;
 
     private boolean m_handlingClick = false;
     private TintablePinToggleButton m_togglePinnedWrapper;
+    
+    private SearchResultsPoiViewScrollListener m_scrollListener;
+    
+    private static String m_pinTextDefault = "Drop Pin";
+    private static String m_pinTextPressed = "Remove Pin";
 
-    public YelpSearchResultPoiView(MainActivity activity, long nativeCallerPointer)
+    @SuppressLint("NewApi")
+	public YelpSearchResultPoiView(MainActivity activity, long nativeCallerPointer)
     {
         m_activity = activity;
         m_nativeCallerPointer = nativeCallerPointer;
@@ -96,6 +109,10 @@ public class YelpSearchResultPoiView implements View.OnClickListener
 		m_detailsHeader = (View)m_view.findViewById(R.id.search_result_poi_view_details_header);
 		m_humanReadableTagsHeader = (View)m_view.findViewById(R.id.search_result_poi_view_tags_header);
 		m_poiImageHeader = (View)m_view.findViewById(R.id.search_result_poi_image_header);
+		m_contentContainer = (ScrollView)m_view.findViewById(R.id.content_container);
+		m_footerFade = (ImageView)m_view.findViewById(R.id.footer_fade);
+		m_linearContentContainer = (LinearLayout)m_view.findViewById(R.id.linear_content_container);
+		m_dropPinText = (TextView)m_view.findViewById(R.id.drop_pin_text);
         
         m_activity.recursiveDisableSplitMotionEvents((ViewGroup)m_view);
         
@@ -108,6 +125,9 @@ public class YelpSearchResultPoiView implements View.OnClickListener
         m_closeButton.setOnClickListener(this);
         m_togglePinnedButton.setOnClickListener(this);
         m_webVendorStyleLinkButton.setOnClickListener(this);
+        
+        m_scrollListener = new SearchResultsPoiViewScrollListener(m_footerFade, true, m_contentContainer);
+        m_contentContainer.setOnScrollChangeListener(m_scrollListener);
     }
 
     public void destroy()
@@ -265,6 +285,11 @@ public class YelpSearchResultPoiView implements View.OnClickListener
         m_view.requestFocus();
 
         m_handlingClick = false;
+        
+        if(m_togglePinnedWrapper.isPinned())
+        {
+        	m_dropPinText.setText("Remove Pin");
+        }
     }
 
     public void onClick(View view)
@@ -293,6 +318,20 @@ public class YelpSearchResultPoiView implements View.OnClickListener
     {
         m_view.setVisibility(View.GONE);
     }
+    
+    public void HandleFooterFadeInitialVisibility()
+    {
+        int childHeight = m_linearContentContainer.getHeight();
+        boolean isScrollable = m_contentContainer.getHeight() < (childHeight + m_contentContainer.getPaddingTop() + m_contentContainer.getPaddingBottom());
+        if(!isScrollable)
+        {
+        	m_footerFade.setVisibility(View.GONE);
+        }
+        else
+        {
+        	m_footerFade.setVisibility(View.VISIBLE);
+        }
+    }
 
 	public void updateImageData(String url, boolean hasImage, final byte[] imgData)
 	{
@@ -316,6 +355,8 @@ public class YelpSearchResultPoiView implements View.OnClickListener
 				m_poiImage.setImageBitmap(Bitmap.createScaledBitmap(poiBitmap, width, height, false));
 			}
 		}
+		
+		HandleFooterFadeInitialVisibility();
 	}
 
     private void handleCloseClicked()
@@ -384,13 +425,14 @@ public class YelpSearchResultPoiView implements View.OnClickListener
     		SearchResultPoiViewJniMethods.TogglePinnedButtonClicked(m_nativeCallerPointer);
             m_handlingClick = false;
             m_togglePinnedWrapper.setPinToggleState(true);
+            m_dropPinText.setText(m_pinTextPressed);
     	}
     }
 	
 	private void showRemovePinDialog()
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(m_activity);
-        builder.setTitle("Remove Pin")
+        builder.setTitle(m_pinTextPressed)
         .setMessage("Are you sure you want to remove this pin?")
         .setPositiveButton("Yes,  delete it", new DialogInterface.OnClickListener()
         {
@@ -400,6 +442,7 @@ public class YelpSearchResultPoiView implements View.OnClickListener
         		SearchResultPoiViewJniMethods.TogglePinnedButtonClicked(m_nativeCallerPointer);
                 m_handlingClick = false;
                 m_togglePinnedWrapper.setPinToggleState(false);
+                m_dropPinText.setText(m_pinTextDefault);
             }
         })
         .setNegativeButton("No,  keep it", new DialogInterface.OnClickListener()

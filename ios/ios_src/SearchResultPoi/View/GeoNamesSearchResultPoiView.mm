@@ -407,11 +407,13 @@ namespace
     {
         [self.pPinButton setImage:self->m_pRemovePinButtonImage forState:UIControlStateNormal];
         [self.pPinButton setImage:self->m_pRemovePinButtonHighlightImage forState:UIControlStateHighlighted];
+        [self.pPinButton setTitle:@"Remove Pin" forState:UIControlStateNormal];
     }
     else
     {
         [self.pPinButton setImage:self->m_pAddPinButtonImage forState:UIControlStateNormal];
         [self.pPinButton setImage:self->m_pAddPinButtonHighlightImage forState:UIControlStateHighlighted];
+        [self.pPinButton setTitle:@"Drop Pin" forState:UIControlStateNormal];
     }
 }
 

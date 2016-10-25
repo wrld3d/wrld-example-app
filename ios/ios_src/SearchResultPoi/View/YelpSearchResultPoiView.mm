@@ -55,6 +55,7 @@ namespace
         
         self.pLabelsContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pLabelsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
+        self.pLabelsContainer.delegate = self;
         [self.pControlContainer addSubview: self.pLabelsContainer];
         
         self.pPreviewImageContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -475,14 +476,20 @@ namespace
     
     
     const float boundsWidth = static_cast<float>(self.superview.bounds.size.width);
+    const float boundsHeight = static_cast<float>(self.superview.bounds.size.height);
     const float boundsOccupyMultiplier = 0.9f;
     const float mainWindowWidth = std::min(boundsWidth * boundsOccupyMultiplier, 348.f);
+    const float mainWindowHeight = boundsHeight * boundsOccupyMultiplier;
     const float detailsImageSize = 18.f;
     const float detailsImageToTextMargin = 6.f;
     const float headerMargin = 10.f;
     const float sideMargin = 15.f;
     const float cardContainerWidth = mainWindowWidth - sideMargin * 2;
     const float cardTextHorizontalSpace = cardContainerWidth - detailsImageSize * 2 - headerMargin * 2.f;
+    
+    const float headlineHeight = 50.f;
+    const float pinButtonSectionHeight = 64.f;
+    const float contentSectionHeight = mainWindowHeight - (pinButtonSectionHeight + headlineHeight);
     
     const float reviewCountWidth = 40.0f;
     const float reviewCountHeight = 17.0f;
@@ -713,7 +720,12 @@ namespace
         currentLabelY += labelYSpacing + self.pReviewsContent.frame.size.height + 20.f;
     }
     
-    [self.pLabelsContainer setContentSize:CGSizeMake(cardContainerWidth, currentLabelY + 30.f)];
+    [self.pLabelsContainer setContentSize:CGSizeMake(cardContainerWidth, currentLabelY + 15.f)];
+    
+    if (self.pLabelsContainer.contentSize.height < contentSectionHeight)
+    {
+        self.pFadeContainer.hidden = YES;
+    }
 }
 
 - (void) setContent:(const ExampleApp::Search::SdkModel::SearchResultModel*)pModel :(bool)isPinned
@@ -946,11 +958,13 @@ namespace
     {
         [self.pPinButton setImage:self->m_pRemovePinButtonImage forState:UIControlStateNormal];
         [self.pPinButton setImage:self->m_pRemovePinButtonHighlightImage forState:UIControlStateHighlighted];
+        [self.pPinButton setTitle:@"Remove Pin" forState:UIControlStateNormal];
     }
     else
     {
         [self.pPinButton setImage:self->m_pAddPinButtonImage forState:UIControlStateNormal];
         [self.pPinButton setImage:self->m_pAddPinButtonHighlightImage forState:UIControlStateHighlighted];
+        [self.pPinButton setTitle:@"Drop Pin" forState:UIControlStateNormal];
     }
 }
 
@@ -993,6 +1007,18 @@ namespace
         [alert show];
         alert.tag = DeletePinAlertViewTag;
         [alert release];
+    }
+}
+
+-(void)scrollViewDidScroll: (UIScrollView*)scrollView
+{
+    if(self.pLabelsContainer.contentOffset.y + self.pLabelsContainer.frame.size.height >= self.pLabelsContainer.contentSize.height)
+    {
+        self.pFadeContainer.hidden = YES;
+    }
+    else
+    {
+        self.pFadeContainer.hidden = NO;
     }
 }
 

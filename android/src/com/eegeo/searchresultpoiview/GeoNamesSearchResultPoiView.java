@@ -25,7 +25,11 @@ public class GeoNamesSearchResultPoiView
     private TextView m_titleView = null;
     private TextView m_countryView = null;
     private ImageView m_tagIcon = null;
+    private TextView m_dropPinText = null;
     private TintablePinToggleButton m_togglePinnedWrapper;
+    
+    private static String m_pinTextDefault = "Drop Pin";
+    private static String m_pinTextPressed = "Remove Pin";
 
     public GeoNamesSearchResultPoiView(MainActivity activity, long nativeCallerPointer)
     {
@@ -41,6 +45,7 @@ public class GeoNamesSearchResultPoiView
         m_titleView = (TextView)m_view.findViewById(R.id.search_result_poi_view_title);
         m_countryView = (TextView)m_view.findViewById(R.id.search_result_poi_view_country);
         m_tagIcon = (ImageView)m_view.findViewById(R.id.search_result_poi_view_tag_icon);
+        m_dropPinText = (TextView)m_view.findViewById(R.id.drop_pin_text);
 
         m_view.setVisibility(View.GONE);
         m_uiRoot.addView(m_view);
@@ -90,6 +95,11 @@ public class GeoNamesSearchResultPoiView
     	
         m_view.setVisibility(View.VISIBLE);
         m_view.requestFocus();
+        
+        if(m_togglePinnedWrapper.isPinned())
+        {
+        	m_dropPinText.setText("Remove Pin");
+        }
     }
 
     public void dismissPoiInfo()
@@ -114,6 +124,7 @@ public class GeoNamesSearchResultPoiView
     	{
     		SearchResultPoiViewJniMethods.TogglePinnedButtonClicked(m_nativeCallerPointer);
             m_togglePinnedWrapper.setPinToggleState(true);
+            m_dropPinText.setText(m_pinTextPressed);
     	}
     }
     
@@ -129,6 +140,7 @@ public class GeoNamesSearchResultPoiView
             {
         		SearchResultPoiViewJniMethods.TogglePinnedButtonClicked(m_nativeCallerPointer);
                 m_togglePinnedWrapper.setPinToggleState(false);
+                m_dropPinText.setText(m_pinTextDefault);
             }
         })
         .setNegativeButton("No,  keep it", new DialogInterface.OnClickListener()
