@@ -90,6 +90,8 @@ namespace ExampleApp
                 
                 if(currentLocationEcef.LengthSq() == 0)
                 {
+                    m_view.SetVisible(false);
+                    m_anchorView.SetVisible(false);
                     return;
                 }
                 else if(m_visibilityCount == 1)

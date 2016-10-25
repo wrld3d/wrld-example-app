@@ -243,26 +243,36 @@ namespace ExampleApp
             	jobjectArray humanReadableTagsArray = CreateJavaArray(model.GetHumanReadableTags());
 
             	jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
-            	jstring addressStr = env->NewStringUTF(model.GetSubtitle().c_str());
+            	jstring subtitleStr = env->NewStringUTF(model.GetSubtitle().c_str());
+            	jstring addressStr = env->NewStringUTF(eegeoSearchResultModel.GetAddress().c_str());
+            	jstring descriptionStr = env->NewStringUTF(eegeoSearchResultModel.GetDescription().c_str());
             	jstring phoneStr = env->NewStringUTF(eegeoSearchResultModel.GetPhone().c_str());
             	jstring urlStr = env->NewStringUTF(eegeoSearchResultModel.GetWebUrl().c_str());
             	jstring iconKeyStr = env->NewStringUTF(model.GetIconKey().c_str());
             	jstring imageUrlStr = env->NewStringUTF(eegeoSearchResultModel.GetImageUrl().c_str());
             	jstring vendorStr = env->NewStringUTF(model.GetVendor().c_str());
+            	jstring facebookStr = env->NewStringUTF(eegeoSearchResultModel.GetFacebookUrl().c_str());
+            	jstring twitterStr = env->NewStringUTF(eegeoSearchResultModel.GetTwitterUrl().c_str());
+            	jstring emailStr = env->NewStringUTF(eegeoSearchResultModel.GetEmail().c_str());
 
-            	jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
+            	jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
             	env->CallVoidMethod(
             			m_uiView,
 						displayPoiInfoMethod,
 						titleStr,
+						subtitleStr,
 						addressStr,
+						descriptionStr,
 						phoneStr,
 						urlStr,
 						iconKeyStr,
 						humanReadableTagsArray,
 						imageUrlStr,
 						vendorStr,
-						isPinned
+						isPinned,
+						facebookStr,
+						twitterStr,
+						emailStr
             	);
 
             	env->DeleteLocalRef(vendorStr);
@@ -271,8 +281,13 @@ namespace ExampleApp
             	env->DeleteLocalRef(urlStr);
             	env->DeleteLocalRef(phoneStr);
             	env->DeleteLocalRef(addressStr);
+            	env->DeleteLocalRef(descriptionStr);
             	env->DeleteLocalRef(titleStr);
+            	env->DeleteLocalRef(subtitleStr);
             	env->DeleteLocalRef(humanReadableTagsArray);
+            	env->DeleteLocalRef(facebookStr);
+            	env->DeleteLocalRef(twitterStr);
+            	env->DeleteLocalRef(emailStr);
             }
 
             jclass SearchResultPoiView::CreateJavaClass(const std::string& viewClass)

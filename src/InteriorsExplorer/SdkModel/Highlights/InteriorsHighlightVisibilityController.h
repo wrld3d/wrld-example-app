@@ -26,6 +26,7 @@ namespace ExampleApp
                 {
                 public:
                     InteriorsHighlightVisibilityController(Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                           Eegeo::Resources::Interiors::InteriorsCellResourceObserver& interiorsCellResourceObserver,
                                                            Search::SdkModel::ISearchService& searchService,
                                                            Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                                            Search::SdkModel::ISearchResultRepository& searchResultRepository,
@@ -39,7 +40,8 @@ namespace ExampleApp
                     void OnSearchResultsLoaded(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results);
                     void OnSearchResultCleared();
                     
-                    void OnInteriorInteractionModelChanged();
+                    void OnInteriorChanged();
+                    void OnInteriorAddedToSceneGraph(const Eegeo::Resources::Interiors::InteriorsCellResource& callback);
                     void OnInteriorLabelsBuilt();
                     void OnAvailabilityChanged();
                     
@@ -51,20 +53,21 @@ namespace ExampleApp
                     void DeactivateLabels();
                     
                     Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
+                    Eegeo::Resources::Interiors::InteriorsCellResourceObserver& m_interiorsCellResourceObserver;
                     Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& m_interiorslabelsController;
                     Search::SdkModel::ISearchService& m_searchService;
                     Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
                     Search::SdkModel::ISearchResultRepository& m_searchResultRepository;
-                    //ExampleAppMessaging::TMessageBus& m_messageBus;
                     
                     Eegeo::Helpers::TCallback2<InteriorsHighlightVisibilityController, const Search::SdkModel::SearchQuery&, const std::vector<Search::SdkModel::SearchResultModel>&> m_searchResultsHandler;
+                    Eegeo::Helpers::TCallback1<InteriorsHighlightVisibilityController, const Eegeo::Resources::Interiors::InteriorsCellResource> m_interiorCellAddedHandler;
                     Eegeo::Helpers::TCallback0<InteriorsHighlightVisibilityController> m_searchResultsClearedHandler;
                     Eegeo::Helpers::TCallback0<InteriorsHighlightVisibilityController> m_interiorInteractionModelChangedHandler;
                     Eegeo::Helpers::TCallback0<InteriorsHighlightVisibilityController> m_interiorLabelsBuiltHandler;
                     
                     Eegeo::Helpers::TCallback0<InteriorsHighlightVisibilityController> m_availabilityChangedHandlerBinding;
                     
-                    std::map<std::string, Eegeo::Rendering::Renderables::InteriorHighlightRenderable*> m_currentHighlightRenderables;
+                    std::map<std::string, std::vector<Eegeo::Rendering::Renderables::InteriorHighlightRenderable*>> m_currentHighlightRenderables;
                     
                     IHighlightColorMapper& m_highlightColorMapper;
                 };

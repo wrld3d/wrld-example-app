@@ -14,7 +14,7 @@
 
 @class EegeoSearchResultPoiView;
 
-@interface EegeoSearchResultPoiView : UIView<SearchResultPoiView>
+@interface EegeoSearchResultPoiView : UIView<SearchResultPoiView, UIScrollViewDelegate>
 {
     UIViewController* m_pController;
     
@@ -64,6 +64,7 @@
 @property (nonatomic, retain) UIScrollView* pLabelsContainer;
 @property (nonatomic, retain) UIView* pTagIconContainer;
 @property (nonatomic, retain) UILabel* pTitleLabel;
+@property (nonatomic, retain) UILabel* pSubtitleLabel;
 @property (nonatomic, retain) UILabel* pAddressContent;
 @property (nonatomic, retain) UILabel* pPhoneContent;
 @property (nonatomic, retain) UILabel* pTagsContent;

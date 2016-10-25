@@ -57,6 +57,10 @@ namespace
         self.pTitleCardContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pControlContainer addSubview: self.pTitleCardContainer];
         
+        self.pTagIconContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pTagIconContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
+        [self.pTitleCardContainer addSubview: self.pTagIconContainer];
+        
         self.pTitleLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextTitleColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
         self.pTitleLabel.adjustsFontSizeToFitWidth = YES;
         [self.pTitleCardContainer addSubview: self.pTitleLabel];
@@ -84,11 +88,7 @@ namespace
         [self.pDropPinContainer addSubview: self.pPinButton];
 
         self.pPinButton.titleLabel.font = [UIFont systemFontOfSize:21.0f];
-        
-        self.pTagIconContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pTagIconContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
-        [self.pTitleCardContainer addSubview: self.pTagIconContainer];
-        
+
         self.pCountryContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextCopyColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
         [self.pLabelsContainer addSubview: self.pCountryContent];
         
@@ -243,7 +243,7 @@ namespace
                                         0.f,
                                         cardContainerWidth - titleCardImageSize * 2 - titlePadding * 2,
                                         titleCardImageSize);
-    self.pTitleLabel.textAlignment = NSTextAlignmentCenter;
+    self.pTitleLabel.textAlignment = NSTextAlignmentLeft;
     self.pTitleLabel.font = [UIFont systemFontOfSize:22.0f];
     
     
@@ -407,11 +407,13 @@ namespace
     {
         [self.pPinButton setImage:self->m_pRemovePinButtonImage forState:UIControlStateNormal];
         [self.pPinButton setImage:self->m_pRemovePinButtonHighlightImage forState:UIControlStateHighlighted];
+        [self.pPinButton setTitle:@"Remove Pin" forState:UIControlStateNormal];
     }
     else
     {
         [self.pPinButton setImage:self->m_pAddPinButtonImage forState:UIControlStateNormal];
         [self.pPinButton setImage:self->m_pAddPinButtonHighlightImage forState:UIControlStateHighlighted];
+        [self.pPinButton setTitle:@"Drop Pin" forState:UIControlStateNormal];
     }
 }
 

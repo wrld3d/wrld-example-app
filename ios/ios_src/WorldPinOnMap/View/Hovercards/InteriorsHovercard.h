@@ -41,5 +41,6 @@
 @property (nonatomic, retain) UIView* pArrowContainer;
 @property (nonatomic, retain) UIView* pLabelBack;
 @property (nonatomic, retain) UILabel* pNameLabel;
+@property (nonatomic, retain) UILabel* pSubtitleLabel;
 
 @end

@@ -55,6 +55,7 @@ namespace
         
         self.pLabelsContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pLabelsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
+        self.pLabelsContainer.delegate = self;
         [self.pControlContainer addSubview: self.pLabelsContainer];
         
         self.pPreviewImageContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -342,9 +343,9 @@ namespace
 {
     const float boundsWidth = static_cast<float>(self.superview.bounds.size.width);
     const float boundsHeight = static_cast<float>(self.superview.bounds.size.height);
-    const float boundsOccupyMultiplierHeight = 0.9f;
-    const float mainWindowWidth = std::min(boundsWidth, 348.f);
-    const float mainWindowHeight = boundsHeight * boundsOccupyMultiplierHeight;
+    const float boundsOccupyMultiplier = 0.9f;
+    const float mainWindowWidth = std::min(boundsWidth * boundsOccupyMultiplier, 348.f);
+    const float mainWindowHeight = boundsHeight * boundsOccupyMultiplier;
     const float mainWindowX = (boundsWidth * 0.5f) - (mainWindowWidth * 0.5f);
     const float mainWindowY = (boundsHeight * 0.5f) - (mainWindowHeight * 0.5f);
     
@@ -360,7 +361,7 @@ namespace
     
     const float headlineHeight = 50.f;
     const float closeButtonSectionHeight = 64.f;
-    const float closeButtonSectionOffsetY = mainWindowHeight - closeButtonSectionHeight;
+    const float pinButtonSectionOffsetY = mainWindowHeight - 46.f;
     const float contentSectionHeight = mainWindowHeight - (closeButtonSectionHeight + headlineHeight);
     
     const float topMargin = 15.f;
@@ -410,17 +411,17 @@ namespace
                                                  headerLineThickness);
     
     self.pFooterSpace.frame = CGRectMake(sideMargin,
-                                         closeButtonSectionOffsetY - bottomMargin - 19.f,
+                                         pinButtonSectionOffsetY - bottomMargin - 19.f,
                                          cardContainerWidth,
                                          19.f);
     
     self.pFooterLine.frame = CGRectMake(sideMargin,
-                                        closeButtonSectionOffsetY - bottomMargin - 20.f,
+                                        pinButtonSectionOffsetY - bottomMargin - 20.f,
                                         cardContainerWidth,
                                         headerLineThickness);
     
     self.pDropPinContainer.frame = CGRectMake(sideMargin,
-                                              closeButtonSectionOffsetY - bottomMargin,
+                                              pinButtonSectionOffsetY - bottomMargin,
                                               cardContainerWidth,
                                               42.f);
     
@@ -431,7 +432,7 @@ namespace
                                        42.f);
     
     self.pFadeContainer.frame = CGRectMake(sideMargin,
-                                           closeButtonSectionOffsetY - 15.f - 60.f,
+                                           pinButtonSectionOffsetY - 15.f - 60.f,
                                            cardContainerWidth,
                                            40.f);
     
@@ -450,7 +451,7 @@ namespace
                                         cardContainerWidth - titleCardImageSize * 2 - titlePadding * 2,
                                         titleCardImageSize);
     
-    self.pTitleLabel.textAlignment = NSTextAlignmentCenter;
+    self.pTitleLabel.textAlignment = NSTextAlignmentLeft;
     self.pTitleLabel.font = [UIFont systemFontOfSize:22.0f];
     
     self->m_pVendorBrandingImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"yelp_logo_100x50", true) retain];
@@ -475,13 +476,20 @@ namespace
     
     
     const float boundsWidth = static_cast<float>(self.superview.bounds.size.width);
-    const float mainWindowWidth = std::min(boundsWidth - 20.f, 348.f);
+    const float boundsHeight = static_cast<float>(self.superview.bounds.size.height);
+    const float boundsOccupyMultiplier = 0.9f;
+    const float mainWindowWidth = std::min(boundsWidth * boundsOccupyMultiplier, 348.f);
+    const float mainWindowHeight = boundsHeight * boundsOccupyMultiplier;
     const float detailsImageSize = 18.f;
     const float detailsImageToTextMargin = 6.f;
     const float headerMargin = 10.f;
     const float sideMargin = 15.f;
     const float cardContainerWidth = mainWindowWidth - sideMargin * 2;
     const float cardTextHorizontalSpace = cardContainerWidth - detailsImageSize * 2 - headerMargin * 2.f;
+    
+    const float headlineHeight = 50.f;
+    const float pinButtonSectionHeight = 64.f;
+    const float contentSectionHeight = mainWindowHeight - (pinButtonSectionHeight + headlineHeight);
     
     const float reviewCountWidth = 40.0f;
     const float reviewCountHeight = 17.0f;
@@ -501,8 +509,7 @@ namespace
     if(hasImage)
     {
         currentLabelY = 0.f;
-        const CGFloat imageX = (self.frame.size.width * 0.5f - m_imageWidth * 0.5f);
-        self.pPreviewImage.frame = CGRectMake(imageX,
+        self.pPreviewImage.frame = CGRectMake(0,
                                               currentLabelY,
                                               cardContainerWidth,
                                               cardContainerWidth * 2.f/3.f);
@@ -558,7 +565,7 @@ namespace
             self.pVendorWebLinkButton = nil;
         }
         
-        UIImage* pButtonImage = ExampleApp::Helpers::ImageHelpers::LoadImage(@"reviewsFromYelpRED");
+        UIImage* pButtonImage = ExampleApp::Helpers::ImageHelpers::LoadImage(@"yelp_review_btn_light");
         self.pVendorWebLinkButton = [[[UIButton alloc] initWithFrame:CGRectMake(0.f,
                                                                                 0.f ,
                                                                                 pButtonImage.size.width,
@@ -580,6 +587,11 @@ namespace
         currentLabelY += (yelpButtonHeight + imageBottomPadding + headerMargin);
         
         self.pReviewsCardHeaderLine.frame = CGRectMake(0.f,
+                                                       currentLabelY,
+                                                       cardContainerWidth,
+                                                       1.f);
+        
+        self.pPreviewCardHeaderLine.frame = CGRectMake(0.f,
                                                        currentLabelY,
                                                        cardContainerWidth,
                                                        1.f);
@@ -708,7 +720,12 @@ namespace
         currentLabelY += labelYSpacing + self.pReviewsContent.frame.size.height + 20.f;
     }
     
-    [self.pLabelsContainer setContentSize:CGSizeMake(cardContainerWidth, currentLabelY + 30.f)];
+    [self.pLabelsContainer setContentSize:CGSizeMake(cardContainerWidth, currentLabelY + 15.f)];
+    
+    if (self.pLabelsContainer.contentSize.height < contentSectionHeight)
+    {
+        self.pFadeContainer.hidden = YES;
+    }
 }
 
 - (void) setContent:(const ExampleApp::Search::SdkModel::SearchResultModel*)pModel :(bool)isPinned
@@ -941,11 +958,13 @@ namespace
     {
         [self.pPinButton setImage:self->m_pRemovePinButtonImage forState:UIControlStateNormal];
         [self.pPinButton setImage:self->m_pRemovePinButtonHighlightImage forState:UIControlStateHighlighted];
+        [self.pPinButton setTitle:@"Remove Pin" forState:UIControlStateNormal];
     }
     else
     {
         [self.pPinButton setImage:self->m_pAddPinButtonImage forState:UIControlStateNormal];
         [self.pPinButton setImage:self->m_pAddPinButtonHighlightImage forState:UIControlStateHighlighted];
+        [self.pPinButton setTitle:@"Drop Pin" forState:UIControlStateNormal];
     }
 }
 
@@ -988,6 +1007,18 @@ namespace
         [alert show];
         alert.tag = DeletePinAlertViewTag;
         [alert release];
+    }
+}
+
+-(void)scrollViewDidScroll: (UIScrollView*)scrollView
+{
+    if(self.pLabelsContainer.contentOffset.y + self.pLabelsContainer.frame.size.height >= self.pLabelsContainer.contentSize.height)
+    {
+        self.pFadeContainer.hidden = YES;
+    }
+    else
+    {
+        self.pFadeContainer.hidden = NO;
     }
 }
 

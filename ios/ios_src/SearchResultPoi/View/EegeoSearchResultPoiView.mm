@@ -49,6 +49,7 @@ const int DeletePinAlertViewTag = 2;
         
         self.pLabelsContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pLabelsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
+        self.pLabelsContainer.delegate = self;
         [self.pControlContainer addSubview: self.pLabelsContainer];
         
         self.pPreviewImageContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -69,6 +70,7 @@ const int DeletePinAlertViewTag = 2;
         
         self.pTitleCardContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pTitleCardContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
+        self.pTitleCardContainer.clipsToBounds = YES;
         [self.pControlContainer addSubview: self.pTitleCardContainer];
         
         self.pTagIconContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -76,8 +78,10 @@ const int DeletePinAlertViewTag = 2;
         [self.pTitleCardContainer addSubview: self.pTagIconContainer];
         
         self.pTitleLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextTitleColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
-        self.pTitleLabel.adjustsFontSizeToFitWidth = YES;
         [self.pTitleCardContainer addSubview: self.pTitleLabel];
+        
+        self.pSubtitleLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextTitleColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
+        [self.pTitleCardContainer addSubview: self.pSubtitleLabel];
         
         self.pTitleCardHeaderLine = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pTitleCardHeaderLine.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
@@ -254,6 +258,9 @@ const int DeletePinAlertViewTag = 2;
     [self.pTitleLabel removeFromSuperview];
     [self.pTitleLabel release];
     
+    [self.pSubtitleLabel removeFromSuperview];
+    [self.pSubtitleLabel release];
+    
     [self.pAddressContent removeFromSuperview];
     [self.pAddressContent release];
     
@@ -337,16 +344,16 @@ const int DeletePinAlertViewTag = 2;
 {
     const float boundsWidth = static_cast<float>(self.superview.bounds.size.width);
     const float boundsHeight = static_cast<float>(self.superview.bounds.size.height);
-    const float boundsOccupyMultiplierHeight = 0.9f;
-    const float mainWindowWidth = std::min(boundsWidth * boundsOccupyMultiplierHeight, 348.f);
-    const float mainWindowHeight = boundsHeight * boundsOccupyMultiplierHeight;
+    const float boundsOccupyMultiplier = 0.9f;
+    const float mainWindowWidth = std::min(boundsWidth * boundsOccupyMultiplier, 348.f);
+    const float mainWindowHeight = boundsHeight * boundsOccupyMultiplier;
     const float mainWindowX = (boundsWidth * 0.5f) - (mainWindowWidth * 0.5f);
     const float mainWindowY = (boundsHeight * 0.5f) - (mainWindowHeight * 0.5f);
     
     const float headlineHeight = 50.f;
-    const float closeButtonSectionHeight = 64.f;
+    const float pinButtonSectionHeight = 64.f;
     const float closeButtonSectionOffsetY = mainWindowHeight - 46.f;
-    const float contentSectionHeight = mainWindowHeight - (closeButtonSectionHeight + headlineHeight);
+    const float contentSectionHeight = mainWindowHeight - (pinButtonSectionHeight + headlineHeight);
     
     const float topMargin = 15.f;
     const float bottomMargin = 15.f;
@@ -442,18 +449,47 @@ const int DeletePinAlertViewTag = 2;
                                               titleCardImageSize,
                                               titleCardImageSize);
     const float titlePadding = 10.0f;
-    self.pTitleLabel.frame = CGRectMake(titleCardImageSize + titlePadding,
-                                        0.f,
-                                        cardContainerWidth - titleCardImageSize * 2 - titlePadding * 2,
-                                        titleCardImageSize);
-    self.pTitleLabel.textAlignment = NSTextAlignmentCenter;
-    self.pTitleLabel.font = [UIFont systemFontOfSize:22.0f];
+    
+    if(self.pSubtitleLabel.text.length == 0)
+    {
+        self.pTitleLabel.frame = CGRectMake(titleCardImageSize + titlePadding,
+                                            0.f,
+                                            cardContainerWidth - titleCardImageSize * 2 - titlePadding * 2,
+                                            titleCardImageSize);
+        self.pTitleLabel.textAlignment = NSTextAlignmentLeft;
+        self.pTitleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+        self.pTitleLabel.font = [UIFont systemFontOfSize:22.0f];
+        self.pSubtitleLabel.hidden = YES;
+    }
+    else
+    {
+        self.pTitleLabel.frame = CGRectMake(titleCardImageSize + titlePadding,
+                                            0.f,
+                                            cardContainerWidth - titleCardImageSize * 2 - titlePadding * 2,
+                                            26.f);
+        self.pTitleLabel.textAlignment = NSTextAlignmentLeft;
+        self.pTitleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+        self.pTitleLabel.font = [UIFont systemFontOfSize:22.0f];
+        self.pSubtitleLabel.hidden = NO;
+    }
+    
+    self.pSubtitleLabel.frame = CGRectMake(titleCardImageSize + titlePadding,
+                                           26.f,
+                                           cardContainerWidth - titleCardImageSize * 2 - titlePadding * 2,
+                                           14.f);
+    self.pSubtitleLabel.textAlignment = NSTextAlignmentLeft;
+    self.pSubtitleLabel.font = [UIFont systemFontOfSize:12.0f];
+    self.pSubtitleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+    self.pSubtitleLabel.textColor = ExampleApp::Helpers::ColorPalette::TwitterDarkGrey;
 }
 
 - (void) performDynamicContentLayout
 {
     const float boundsWidth = static_cast<float>(self.superview.bounds.size.width);
-    const float mainWindowWidth = std::min(boundsWidth - 20.f, 348.f);
+    const float boundsHeight = static_cast<float>(self.superview.bounds.size.height);
+    const float boundsOccupyMultiplier = 0.9f;
+    const float mainWindowWidth = std::min(boundsWidth * boundsOccupyMultiplier, 348.f);
+    const float mainWindowHeight = boundsHeight * boundsOccupyMultiplier;
     const float labelYSpacing = 8.f;
     const float headerTextPadding = 3.0f;
     const float detailsImageSize = 18.f;
@@ -464,6 +500,10 @@ const int DeletePinAlertViewTag = 2;
     const float cardTextHorizontalSpace = cardContainerWidth - detailsImageSize * 2 - headerMargin * 2.f;
     const float optionalPadding = 8.f;
     const float headerLineThickness = 1.f;
+    
+    const float headlineHeight = 50.f;
+    const float pinButtonSectionHeight = 64.f;
+    const float contentSectionHeight = mainWindowHeight - (pinButtonSectionHeight + headlineHeight);
     
     float currentLabelY = 0.f;
     
@@ -489,12 +529,12 @@ const int DeletePinAlertViewTag = 2;
             self.pPreviewImage.frame = CGRectMake(0.f, 0.f, 0.f, 0.f);
             currentLabelY -= (cardContainerWidth *2.f/3.f + headerMargin * 2);
         }
-        
-        self.pDetailsCardContainer.frame = CGRectMake(0.f,
-                                                      currentLabelY,
-                                                      cardContainerWidth,
-                                                      500.f);
     }
+    
+    self.pDetailsCardContainer.frame = CGRectMake(0.f,
+                                                  currentLabelY,
+                                                  cardContainerWidth,
+                                                  500.f);
     
     if(!m_eegeoModel.GetAddress().empty())
     {
@@ -681,7 +721,12 @@ const int DeletePinAlertViewTag = 2;
         currentLabelY += labelYSpacing + self.pDescriptionContent.frame.size.height + 20.f;
     }
     
-    [self.pLabelsContainer setContentSize:CGSizeMake(m_labelsSectionWidth, currentLabelY + 30.f)];
+    [self.pLabelsContainer setContentSize:CGSizeMake(m_labelsSectionWidth, currentLabelY + 15.f)];
+    
+    if (self.pLabelsContainer.contentSize.height < contentSectionHeight)
+    {
+        self.pFadeContainer.hidden = YES;
+    }
 }
 
 - (void) setContent:(const ExampleApp::Search::SdkModel::SearchResultModel*)pModel :(bool)isPinned
@@ -695,6 +740,7 @@ const int DeletePinAlertViewTag = 2;
     [self updatePinnedButtonState];
     
     self.pTitleLabel.text = [NSString stringWithUTF8String:pModel->GetTitle().c_str()];
+    self.pSubtitleLabel.text = [NSString stringWithUTF8String:pModel->GetSubtitle().c_str()];
     
     [self.pTagIconContainer.subviews makeObjectsPerformSelector: @selector(removeFromSuperview)];
     std::string tagIcon = ExampleApp::Helpers::IconResources::GetSmallIconForTag(pModel->GetIconKey());
@@ -884,17 +930,12 @@ const int DeletePinAlertViewTag = 2;
 
 - (void) handleEmailLinkClicked
 {
-    NSString* preFormattedUrlString = [NSString stringWithUTF8String:m_eegeoModel.GetEmail().c_str()];
-    
-    NSString* webUrlString = ([preFormattedUrlString rangeOfString:@"http"].location != NSNotFound)
-    ? preFormattedUrlString
-    : [NSString stringWithFormat:@"http://%@", preFormattedUrlString];
-    
-    NSURL *url = [NSURL URLWithString:webUrlString];
-    if (![[UIApplication sharedApplication] openURL:url])
-    {
-        NSLog(@"%@%@",@"Failed to open url:",[url description]);
-    }
+    NSString *toEmail=[NSString stringWithUTF8String:m_eegeoModel.GetEmail().c_str()];
+    NSString *subject=@"";
+    NSString *body = @"";
+    NSString *email = [NSString stringWithFormat:@"mailto:%@?subject=%@&body=%@", toEmail,subject,body];
+    email = [email stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:email]];
 }
 
 -(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -964,11 +1005,13 @@ const int DeletePinAlertViewTag = 2;
     {
         [self.pPinButton setImage:self->m_pRemovePinButtonBackgroundImage forState:UIControlStateNormal];
         [self.pPinButton setImage:self->m_pRemovePinHighlightButtonBackgroundImage forState:UIControlStateHighlighted];
+        [self.pPinButton setTitle:@"Remove Pin" forState:UIControlStateNormal];
     }
     else
     {
         [self.pPinButton setImage:self->m_pAddPinButtonBackgroundImage forState:UIControlStateNormal];
         [self.pPinButton setImage:self->m_pAddPinHighlightButtonBackgroundImage forState:UIControlStateHighlighted];
+        [self.pPinButton setTitle:@"Drop Pin" forState:UIControlStateNormal];
     }
 }
 
@@ -1011,6 +1054,18 @@ const int DeletePinAlertViewTag = 2;
         [alert show];
         alert.tag = DeletePinAlertViewTag;
         [alert release];
+    }
+}
+
+-(void)scrollViewDidScroll: (UIScrollView*)scrollView
+{
+    if(self.pLabelsContainer.contentOffset.y + self.pLabelsContainer.frame.size.height >= self.pLabelsContainer.contentSize.height)
+    {
+        self.pFadeContainer.hidden = YES;
+    }
+    else
+    {
+        self.pFadeContainer.hidden = NO;
     }
 }
 
