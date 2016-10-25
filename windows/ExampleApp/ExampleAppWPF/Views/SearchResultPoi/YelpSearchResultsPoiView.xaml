@@ -84,14 +84,14 @@
                         <Grid x:Name="ForgetLocation1">
                             <Image x:Name="image" Source="/Assets/button_remove_pin_off.png" Width="48" Height="48" HorizontalAlignment="Left" Margin="115,0,0,0"/>
                             <Image x:Name="image1" Source="/Assets/button_remove_pin_on.png" Width="48" Height="48" HorizontalAlignment="Left" Margin="115,0,0,0" Visibility="Hidden"/>
-                            <TextBlock x:Name="ForgetLocation" VerticalAlignment="Center" Text="Forget Location" FontSize="28"  Foreground="{StaticResource White}" TextTrimming="CharacterEllipsis" Width="Auto" FontFamily="{StaticResource PrimaryUILightFont}" Margin="165,-5,0,0"/>
-                            <TextBlock x:Name="ForgetLocationDown" VerticalAlignment="Center" Text="Forget Location" FontSize="28"  Foreground="{StaticResource PrimaryBG_Over_Colour}" TextTrimming="CharacterEllipsis" Width="Auto" FontFamily="{StaticResource PrimaryUILightFont}" Margin="165,-5,0,0" Visibility="Hidden"/>
+                            <TextBlock x:Name="ForgetLocation" VerticalAlignment="Center" Text="Remove Pin" FontSize="28"  Foreground="{StaticResource White}" TextTrimming="CharacterEllipsis" Width="Auto" FontFamily="{StaticResource PrimaryUILightFont}" Margin="165,-5,0,0"/>
+                            <TextBlock x:Name="ForgetLocationDown" VerticalAlignment="Center" Text="Remove Pin" FontSize="28"  Foreground="{StaticResource PrimaryBG_Over_Colour}" TextTrimming="CharacterEllipsis" Width="Auto" FontFamily="{StaticResource PrimaryUILightFont}" Margin="165,-5,0,0" Visibility="Hidden"/>
                         </Grid>
                         <Grid x:Name="SaveLocationGrid">
                             <Image x:Name="image2" Source="/Assets/button_add_pin_off.png" Width="48" Height="48" HorizontalAlignment="Left" Margin="115,0,0,0"/>
                             <Image x:Name="image3" Source="/Assets/button_add_pin_on.png" Width="48" Height="48" HorizontalAlignment="Left" Margin="115,0,0,0" Visibility="Hidden"/>
-                            <TextBlock x:Name="SaveLocation" VerticalAlignment="Center" Text="Save Location" FontSize="28"  Foreground="{StaticResource White}" TextTrimming="CharacterEllipsis" Width="Auto" FontFamily="{StaticResource PrimaryUILightFont}" HorizontalAlignment="Left" Margin="165,-5,0,0"/>
-                            <TextBlock x:Name="SaveLocationDown" VerticalAlignment="Center" Text="Save Location" FontSize="28"  Foreground="{StaticResource PrimaryBG_Over_Colour}" TextTrimming="CharacterEllipsis" Width="Auto" FontFamily="{StaticResource PrimaryUILightFont}" HorizontalAlignment="Left" Margin="165,-5,0,0" Visibility="Hidden"/>
+                            <TextBlock x:Name="SaveLocation" VerticalAlignment="Center" Text="Drop Pin" FontSize="28"  Foreground="{StaticResource White}" TextTrimming="CharacterEllipsis" Width="Auto" FontFamily="{StaticResource PrimaryUILightFont}" HorizontalAlignment="Left" Margin="165,-5,0,0"/>
+                            <TextBlock x:Name="SaveLocationDown" VerticalAlignment="Center" Text="Drop Pin" FontSize="28"  Foreground="{StaticResource PrimaryBG_Over_Colour}" TextTrimming="CharacterEllipsis" Width="Auto" FontFamily="{StaticResource PrimaryUILightFont}" HorizontalAlignment="Left" Margin="165,-5,0,0" Visibility="Hidden"/>
                         </Grid>
                     </Grid>
                 </ControlTemplate>
@@ -142,7 +142,7 @@
                         <Rectangle x:Name="rectangle1" Fill="{StaticResource PrimaryBG_colour}" Margin="0"/>
                         <Rectangle x:Name="rectangle" Fill="{StaticResource PrimaryBG_Over_Colour}" Margin="0" Visibility="Hidden"/>
                         <Rectangle x:Name="rectangle2" Fill="{StaticResource PrimaryBG_Down_Colour}" Margin="0" Visibility="Hidden"/>
-                        <Image x:Name="image" Source="/Assets/button_close_off.png"/>
+                        <Image x:Name="image" Source="/Assets/exit_blue_x_button.png"/>
                         <Image x:Name="image1" Source="/Assets/button_close_on.png" Visibility="Hidden"/>
                     </Grid>
                 </ControlTemplate>
@@ -176,10 +176,11 @@
                                     <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="Auto"  Background="{StaticResource Gold}" Grid.Column="1">
                                         <Button Style="{StaticResource POIcard_CloseButton}" Name="CloseButton" HorizontalAlignment="Right" Width="36" Height="36" />
                                     </Border>
+                                    <Border BorderBrush="{x:Null}" HorizontalAlignment="Stretch" Height="1" Margin="0,0,0,-5" Background="{StaticResource Gold}" Grid.ColumnSpan="2" VerticalAlignment="Bottom" />
                                 </Grid>
 
-                                <Grid Grid.Row="1" >
-                                    <ScrollViewer Name="MainScrollViewr" HorizontalScrollBarVisibility="Disabled" PanningRatio="3" PanningDeceleration="0" PanningMode="VerticalOnly" VerticalScrollBarVisibility="Auto" Background="{StaticResource White}" Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}">
+                                <Grid Grid.Row="1"  Margin="0,0,0,20">
+                                    <ScrollViewer Name="ContentContainer" HorizontalScrollBarVisibility="Disabled" PanningRatio="3" PanningDeceleration="0" PanningMode="VerticalOnly" VerticalScrollBarVisibility="Auto" Background="{StaticResource White}" Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}">
 
                                         <StackPanel VerticalAlignment="Top">
 
@@ -258,21 +259,21 @@
                                                     </Grid>
 
                                                     <!--Address-->
-                                                        <Grid Margin="5,15,0,0">
-                                                            <Canvas Name="HomeAddressIcon" Width="16" HorizontalAlignment="Left" Margin="0,0,0,7.94">
-                                                                <!-- Layer 1/<Group>/<Path> -->
-                                                                <Path Fill="#ff5f5f5f" Data="F1 M 15.867,7.684 L 8.942,0.759 L 8.941,0.758 L 8.313,0.130 C 8.226,0.043 8.112,-0.000 7.998,0.000 C 7.884,-0.000 7.770,0.043 7.684,0.130 L 7.055,0.758 L 7.054,0.759 L 0.130,7.684 C -0.043,7.857 -0.043,8.140 0.130,8.313 L 0.758,8.941 C 0.931,9.114 1.214,9.114 1.387,8.941 L 7.998,2.330 L 14.610,8.941 C 14.783,9.114 15.066,9.114 15.238,8.941 L 15.867,8.313 C 16.040,8.140 16.040,7.857 15.867,7.684 Z"/>
-                                                                <!-- Layer 1/<Group>/<Path> -->
-                                                                <Path Fill="#ff5f5f5f" Data="F1 M 2.665,9.441 L 2.665,14.222 C 2.665,15.200 3.465,16.000 4.443,16.000 L 6.657,16.000 L 6.657,11.621 C 6.657,11.376 6.857,11.176 7.102,11.176 L 8.879,11.176 C 9.124,11.176 9.324,11.376 9.324,11.621 L 9.324,16.000 L 11.554,16.000 C 12.532,16.000 13.332,15.200 13.332,14.222 L 13.332,9.441 L 7.998,4.108 L 2.665,9.441 Z"/>
-                                                            </Canvas>
-                                                            <TextBlock Name="Address" TextWrapping="WrapWithOverflow" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=AddressText}" FontSize="18" Margin="25,-4,0,0" Foreground="{StaticResource DarkGrey}" FontFamily="{DynamicResource PrimaryUIFont}"/>
-                                                        </Grid>
-                                                    </StackPanel>
+                                                    <Grid Margin="5,15,0,0">
+                                                        <Canvas Name="HomeAddressIcon" Width="16" HorizontalAlignment="Left" Margin="0,0,0,7.94">
+                                                            <!-- Layer 1/<Group>/<Path> -->
+                                                            <Path Fill="#ff5f5f5f" Data="F1 M 15.867,7.684 L 8.942,0.759 L 8.941,0.758 L 8.313,0.130 C 8.226,0.043 8.112,-0.000 7.998,0.000 C 7.884,-0.000 7.770,0.043 7.684,0.130 L 7.055,0.758 L 7.054,0.759 L 0.130,7.684 C -0.043,7.857 -0.043,8.140 0.130,8.313 L 0.758,8.941 C 0.931,9.114 1.214,9.114 1.387,8.941 L 7.998,2.330 L 14.610,8.941 C 14.783,9.114 15.066,9.114 15.238,8.941 L 15.867,8.313 C 16.040,8.140 16.040,7.857 15.867,7.684 Z"/>
+                                                            <!-- Layer 1/<Group>/<Path> -->
+                                                            <Path Fill="#ff5f5f5f" Data="F1 M 2.665,9.441 L 2.665,14.222 C 2.665,15.200 3.465,16.000 4.443,16.000 L 6.657,16.000 L 6.657,11.621 C 6.657,11.376 6.857,11.176 7.102,11.176 L 8.879,11.176 C 9.124,11.176 9.324,11.376 9.324,11.621 L 9.324,16.000 L 11.554,16.000 C 12.532,16.000 13.332,15.200 13.332,14.222 L 13.332,9.441 L 7.998,4.108 L 2.665,9.441 Z"/>
+                                                        </Canvas>
+                                                        <TextBlock Name="Address" TextWrapping="WrapWithOverflow" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=AddressText}" FontSize="18" Margin="25,-4,0,0" Foreground="{StaticResource DarkGrey}" FontFamily="{DynamicResource PrimaryUIFont}"/>
+                                                    </Grid>
+                                                </StackPanel>
 
                                             </Grid>
 
                                             <!-- Details Divider -->
-                                            <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="2" Background="{StaticResource Gold}" Margin="0,20"/>
+                                            <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="1" Background="{StaticResource Gold}" Margin="0,20"/>
 
                                             <!--Tags-->
                                             <Grid Width="Auto" Height="Auto" Margin="5,0,0,0" >
@@ -284,7 +285,7 @@
                                             </Grid>
 
                                             <!-- Reviews Divider -->
-                                            <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="2" Background="{StaticResource Gold}" Margin="0,20"/>
+                                            <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="1" Background="{StaticResource Gold}" Margin="0,20"/>
 
                                             <!--Reviews-->
                                             <Grid Width="Auto" Height="Auto" Margin="5,0,0,0" >
@@ -303,7 +304,8 @@
                                             <Grid Height="20"/>
                                         </StackPanel>
                                     </ScrollViewer>
-
+                                    <Image IsHitTestVisible="False" Name="FooterFade" Source="/Assets/search_results_fade.png" HorizontalAlignment="Left" VerticalAlignment="Bottom" Visibility="Visible" Width="500"/>
+                                    <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="1" Background="{StaticResource Gold}" Margin="0" VerticalAlignment="Bottom"/>
                                 </Grid>
                             </Grid>
                             <Grid VerticalAlignment="Bottom" Background="{StaticResource Gold}" HorizontalAlignment="Stretch" Height="Auto" Grid.Row="2">

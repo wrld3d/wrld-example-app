@@ -26,6 +26,8 @@ namespace ExampleAppWPF
         private string m_url;
         private FrameworkElement m_reviewsIcon;
         private ImageSource m_placeholderImage;
+        private ScrollViewer m_contentContainer;
+        private Image m_footerFade;
 
         private ControlClickHandler m_yelpReviewImageClickHandler;
         private Image m_yelpButton;
@@ -180,9 +182,13 @@ namespace ExampleAppWPF
 
             m_reviewsIcon = (FrameworkElement)GetTemplateChild("ReviewsIcon");
 
-            var scrollViewr = (ScrollViewer)GetTemplateChild("MainScrollViewr");
+            m_contentContainer = (ScrollViewer)GetTemplateChild("ContentContainer");
 
-            scrollViewr.ManipulationBoundaryFeedback += OnBoundaryFeedback;
+            m_contentContainer.ManipulationBoundaryFeedback += OnBoundaryFeedback;
+
+            m_contentContainer.ScrollChanged += OnSearchResultsScrolled;
+
+            m_footerFade = (Image)GetTemplateChild("FooterFade");
 
             var mainGrid = (Application.Current.MainWindow as MainWindow).MainGrid;
             var screenWidth = mainGrid.ActualWidth;
@@ -190,6 +196,17 @@ namespace ExampleAppWPF
             m_yelpReviewImageClickHandler = new ControlClickHandler(m_yelpButton, HandleWebLinkButtonClicked);
 
             base.OnApplyTemplate();
+        }
+        private void OnSearchResultsScrolled(object sender, RoutedEventArgs e)
+        {
+            if (m_contentContainer.VerticalOffset == m_contentContainer.ScrollableHeight)
+            {
+                m_footerFade.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                m_footerFade.Visibility = Visibility.Visible;
+            }
         }
 
         private void OnBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
@@ -210,7 +227,7 @@ namespace ExampleAppWPF
             TitleText = model.Title;
             AddressText = model.Subtitle.Replace(", ", "," + Environment.NewLine);
             PhoneText = yelpResultModel.Phone;
-            HumanReadableTagsText = string.Join(Environment.NewLine, model.HumanReadableTags);
+            HumanReadableTagsText = string.Join(", ", model.HumanReadableTags);
             ReviewText = string.Join(Environment.NewLine, yelpResultModel.Reviews);
             TagIcon = SearchResultPoiViewIconProvider.GetIconForTag(model.IconKey);
             PoiViewRatingCountText = yelpResultModel.ReviewCount > 0 ? yelpResultModel.ReviewCount.ToString() : string.Empty;
@@ -234,6 +251,7 @@ namespace ExampleAppWPF
             }
 
             m_placeholderImage = new BitmapImage(new Uri("/ExampleAppWPF;component/Assets/poi_placeholder.png", UriKind.Relative));
+
             m_poiImage.Source = m_placeholderImage;
 
             ShowAll();
