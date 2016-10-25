@@ -120,6 +120,25 @@
     {
         ExampleApp::Menu::View::MenuItemModel item = m_pSearchResultsSection->GetItemAtIndex(static_cast<int>(indexPath.row));
         std::string json = item.SerializeJson();
+        
+        rapidjson::Document document;
+        
+        if (!document.Parse<0>(json.c_str()).HasParseError())
+        {
+            std::string title = document.HasMember("name") ? document["name"].GetString() : "";
+            
+            std::string subTitle = document.HasMember("details") ? document["details"].GetString() : "";
+            
+            std::string icon = document.HasMember("icon") ? document["icon"].GetString() : "misc";            
+            
+            [cell.wayPointImageView setImage:[UIImage imageNamed:[NSString stringWithCString:icon.c_str() encoding:NSUTF8StringEncoding]]];
+            [cell.wayPointMainTitlelbl setText:[NSString stringWithCString:title.c_str() encoding:NSUTF8StringEncoding]];
+            [cell.wayPointSubCategorylbl setText:[NSString stringWithCString:subTitle.c_str() encoding:NSUTF8StringEncoding]];
+        
+        }
+        
+        
+        
     }
     
     if(indexPath.row == selectedIndex)
@@ -129,57 +148,6 @@
     else
     {
         [cell.mainContainerView setBackgroundColor:[UIColor colorWithRed:248.0f/255.0f green:248.0f/255.0f blue:248.0f/255.0f alpha:1.0f]];
-    }
-    
-    if(indexPath.row == 0)
-    {
-        [cell.wayPointImageView setImage:[UIImage imageNamed:@"DirectionCard_RouteStart"]];
-        [cell.wayPointMainTitlelbl setText:@"Westfield Valley Mall"];
-        [cell.wayPointSubCategorylbl setText:@"South Entrance"];
-        
-    }
-    else if (indexPath.row == 1)
-    {
-        [cell.wayPointImageView setImage:[UIImage imageNamed:@"DirectionCard_EnterMallSelected"]];
-        [cell.wayPointMainTitlelbl setText:@"50 yd"];
-        [cell.wayPointSubCategorylbl setText:@"Enter Mall"];
-        
-        
-    }
-    else if (indexPath.row == 2)
-    {
-        [cell.wayPointImageView setImage:[UIImage imageNamed:@"DirectionCard_StraightAhead"]];
-        [cell.wayPointMainTitlelbl setText:@"40 yd"];
-        [cell.wayPointSubCategorylbl setText:@"Turn left along main concourse"];
-        
-    }
-    else if (indexPath.row == 3)
-    {
-        [cell.wayPointImageView setImage:[UIImage imageNamed:@"DirectionCard_TurnLeft"]];
-        [cell.wayPointMainTitlelbl setText:@"Turn Left"];
-        [cell.wayPointSubCategorylbl setText:@"Then 400 yd along main course"];
-        
-    }
-    else if (indexPath.row == 4)
-    {
-        [cell.wayPointImageView setImage:[UIImage imageNamed:@"DirectionCard_ElevatorSelected"]];
-        [cell.wayPointMainTitlelbl setText:@"Elevator to 2nd floor"];
-        [cell.wayPointSubCategorylbl setText:@""];
-        
-    }
-    else if (indexPath.row == 5)
-    {
-        [cell.wayPointImageView setImage:[UIImage imageNamed:@"DirectionCard_TurnRight"]];
-        [cell.wayPointMainTitlelbl setText:@"Turn Right"];
-        [cell.wayPointSubCategorylbl setText:@"Then 50 yd along main concourse"];
-        
-    }
-    else if (indexPath.row == 6)
-    {
-        [cell.wayPointImageView setImage:[UIImage imageNamed:@"DirectionCard_VeerLeft.png"]];
-        [cell.wayPointMainTitlelbl setText:@"Left"];
-        [cell.wayPointSubCategorylbl setText:@"The 50 yd along main concourse"];
-        
     }
     
     return cell;
