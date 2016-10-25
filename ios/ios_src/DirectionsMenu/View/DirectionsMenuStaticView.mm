@@ -18,6 +18,7 @@
 @property (retain, nonatomic) IBOutlet UIView *endRouteBgView;
 @property (retain, nonatomic) IBOutlet NSLayoutConstraint *contentHeightConstraint;
 @property (retain, nonatomic) IBOutlet NSLayoutConstraint *endHeightConstraint;
+@property (retain, nonatomic) IBOutlet NSLayoutConstraint *startContainerHeightConstraint;
 @property (retain, nonatomic) IBOutlet UIButton *optionsButton;
 @property (retain, nonatomic) IBOutlet UIButton *reverseButton;
 @property (retain, nonatomic) IBOutlet UITableView *wayPointsTableView;
@@ -62,7 +63,7 @@
         [_optionsButton setSelected:NO];
         
         [_endHeightConstraint setConstant:115.0f];
-    
+        [_startContainerHeightConstraint setConstant:55.0f];
         [UIView animateWithDuration:0.5
                      animations:^{
                          [self layoutIfNeeded];
@@ -71,8 +72,8 @@
     else
     {
         [_optionsButton setSelected:YES];
-        [_endHeightConstraint setConstant:10.0f];
-        
+        [_endHeightConstraint setConstant:64.0f];
+        [_startContainerHeightConstraint setConstant:0.f];
         [UIView animateWithDuration:0.5
                          animations:^{
                              [self layoutIfNeeded];
@@ -250,6 +251,7 @@
     [_endRouteTextField release];
     [_startRouteTextField release];
     
+    [_startContainerHeightConstraint release];
     [super dealloc];
 }
 
