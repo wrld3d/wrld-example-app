@@ -185,6 +185,7 @@ public class YelpSearchResultPoiView implements View.OnClickListener {
 		m_poiImageGradient.setVisibility(View.GONE);
 
 		if (!imageUrl.equals("")) {
+			m_poiImage.setVisibility(View.VISIBLE);
 			m_poiImageProgressBar.setVisibility(View.VISIBLE);
 		}
 

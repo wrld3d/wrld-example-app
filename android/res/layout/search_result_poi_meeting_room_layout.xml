@@ -59,7 +59,8 @@
 	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content"
 	                android:background="@color/white"
-	                android:adjustViewBounds="true" />	               
+	                android:adjustViewBounds="true"
+	                android:src="@drawable/poi_placeholder" />	               
 
                 <ProgressBar
                     android:id="@+id/search_result_poi_view_image_progress"

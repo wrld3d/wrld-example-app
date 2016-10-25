@@ -91,6 +91,7 @@ public class DepartmentSearchResultPoiView implements View.OnClickListener
 
         if(!imageUrl.equals(""))
         {
+        	m_poiImage.setVisibility(View.VISIBLE);
             m_poiImageProgressBar.setVisibility(View.VISIBLE);
         }
         
