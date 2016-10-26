@@ -6,6 +6,26 @@
         <ResourceDictionary Source="../../Colours.xaml" />        
     </ResourceDictionary.MergedDictionaries>
 
+    <Style x:Key="RotatingAnim" TargetType="{x:Type Image}">
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <RotateTransform Angle="0"/>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="true">
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" From="0" To="360" Duration="0:0:1.5" RepeatBehavior="Forever"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <Style x:Key="AddRemovePinStyle" TargetType="{x:Type ToggleButton}" x:Shared="false">
         <Setter Property="Template">
             <Setter.Value>
@@ -181,57 +201,21 @@
 
                                 <Grid Grid.Row="1" Margin="0,0,0,20">
                                     <ScrollViewer Name="ContentContainer" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Background="{StaticResource White}" Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}">
-
                                         <StackPanel VerticalAlignment="Top">
                                             <StackPanel VerticalAlignment="Top" Margin="0,0,0,15">
-                                                    <Grid Name="PoiImageContainer">
+                                                <Grid Name="PoiImageContainer" Height="250">
                                                         <StackPanel HorizontalAlignment="Stretch">
                                                             <ProgressBar Name="ImageProgress" HorizontalAlignment="Center" Visibility="Hidden"/>
                                                         </StackPanel>
-                                                        <Grid Margin="0,0,0,0">
-                                                            <Image Name="PoiImage"/>
-                                                            <Grid Name="ImageGradient" Height="30" VerticalAlignment="Bottom"/>
+                                                    <Grid Margin="0,0,0,0">
+                                                        <Image Name="PoiImage"/>
+                                                        <Grid Margin="0,0,0,0" Grid.Column="0" Name="PreviewImageSpinner" Visibility="Hidden">
+                                                            <Image Style="{StaticResource RotatingAnim}" Source="/Assets/search_results_spinner.png" Width="18" Height="18" RenderTransformOrigin="0.5,0.5"/>
                                                         </Grid>
-                                                        <Grid HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Bottom" Margin="0,0,0,5">
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="*"/>
-                                                                <ColumnDefinition Width="Auto"/>
-                                                                <ColumnDefinition Width="*"/>
-                                                            </Grid.ColumnDefinitions>
-                                                            <Image Name="RatingOverImage" Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=RatingsImage}" 
-                    						Grid.Column="1" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform" Height="17">
-                                                                <Image.Style>
-                                                                    <Style>
-                                                                        <Style.Triggers>
-                                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=RatingsImage}" Value="{x:Null}">
-                                                                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
-                                                                            </DataTrigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </Image.Style>
-                                                            </Image>
-
-                                                            <Border BorderBrush="{x:Null}" BorderThickness="0" Width="Auto" Height="15" Margin="3,0,0,0" Grid.Column="2">
-                                                                <TextBlock Name="RatingOverImageReviewCount" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=PoiViewRatingCountText}" FontSize="12" Foreground="{StaticResource White}" />
-                                                            </Border>
-                                                        </Grid>
-                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,-40" VerticalAlignment="Bottom">
-                                                            <Image Name="RatingImage" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                                            <Image Name="WebVendorLinkStyle" Margin="5,10,5,5" VerticalAlignment="Center" HorizontalAlignment="Center" Source="/Assets/yelp_reviews.png">
-                                                                <Image.Style>
-                                                                    <Style>
-                                                                        <Setter Property="Image.Visibility" Value="Visible"/>
-                                                                        <Style.Triggers>
-                                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=Url}" Value="{x:Null}">
-                                                                                <Setter Property="Image.Visibility" Value="Collapsed"/>
-                                                                            </DataTrigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </Image.Style>
-                                                            </Image>
-                                                        </StackPanel>
+                                                        <Grid Name="ImageGradient" Height="30" VerticalAlignment="Bottom"/>
                                                     </Grid>
-                                                </StackPanel>
+                                                </Grid>
+                                            </StackPanel>
 
                                             <!--</Grid>-->
 

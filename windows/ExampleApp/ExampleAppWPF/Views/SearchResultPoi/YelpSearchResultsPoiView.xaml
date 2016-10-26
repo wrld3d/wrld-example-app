@@ -6,6 +6,26 @@
         <ResourceDictionary Source="../../Colours.xaml" />        
     </ResourceDictionary.MergedDictionaries>
 
+    <Style x:Key="RotatingAnim" TargetType="{x:Type Image}">
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <RotateTransform Angle="0"/>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="true">
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" From="0" To="360" Duration="0:0:1.5" RepeatBehavior="Forever"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <Style x:Key="AddRemovePinStyle" TargetType="{x:Type ToggleButton}" x:Shared="false">
         <Setter Property="Template">
             <Setter.Value>
@@ -192,12 +212,17 @@
                                                     <ColumnDefinition Width="210"/>
                                                 </Grid.ColumnDefinitions>
                                                 <StackPanel VerticalAlignment="Top">
-                                                    <Grid>
+                                                    <Grid Name="PoiImageContainer">
                                                         <StackPanel HorizontalAlignment="Stretch">
                                                             <ProgressBar Name="ImageProgress" HorizontalAlignment="Center" Visibility="Hidden"/>
                                                         </StackPanel>
                                                         <Grid Margin="0,0,0,0">
-                                                            <Image Name="PoiImage" Source="/Assets/poi_placeholder.png"/>
+                                                            <Grid>
+                                                                <Image Name="PoiImage" Source="/Assets/poi_placeholder.png"/>
+                                                                <Grid Margin="0,0,0,0" Grid.Column="0" Name="PreviewImageSpinner" Visibility="Hidden">
+                                                                    <Image Style="{StaticResource RotatingAnim}" Source="/Assets/search_results_spinner.png" Width="18" Height="18" RenderTransformOrigin="0.5,0.5"/>
+                                                                </Grid>
+                                                            </Grid>
                                                             <Grid Name="ImageGradient" Height="30" VerticalAlignment="Bottom">
                                                                 <Grid.Background>
                                                                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">

@@ -18,16 +18,12 @@ namespace ExampleAppWPF
         private string m_addressText;
         private string m_webAddressText;
         private string m_titleText;
-        private string m_poiViewRatingCountText;
         private string m_descriptionText;
         private string m_humanReadableTagsText;
         private string m_facebookText;
         private string m_twitterText;
         private string m_emailText;
         private ImageSource m_tagIcon;
-        private ImageSource m_ratingsImage;
-        private Visibility m_ratingCountVisibility;
-        private string m_url;
         private FrameworkElement m_reviewsIcon;
         private Grid m_phoneDetailsContainer;
         private Grid m_addressDetailsContainer;
@@ -45,6 +41,7 @@ namespace ExampleAppWPF
         private Border m_tagsDivider;
         private Border m_poiImageDivider;
         private ScrollViewer m_contentContainer;
+        private Grid m_previewImageSpinner;
 
         private ControlClickHandler m_yelpReviewImageClickHandler;
 
@@ -194,10 +191,10 @@ namespace ExampleAppWPF
 
             m_footerFade = (Image)GetTemplateChild("FooterFade");
 
+            m_previewImageSpinner = (Grid)GetTemplateChild("PreviewImageSpinner");
+
             var mainGrid = (Application.Current.MainWindow as MainWindow).MainGrid;
             var screenWidth = mainGrid.ActualWidth;
-
-            m_yelpReviewImageClickHandler = new ControlClickHandler(yelpButton, HandleWebLinkButtonClicked);
             
             base.OnApplyTemplate();
         }
@@ -258,6 +255,21 @@ namespace ExampleAppWPF
 
             EegeoResultModel eegeoResultModel = EegeoResultModel.FromResultModel(model);
             m_closing = false;
+
+            if(eegeoResultModel.ImageUrl != null)
+            {
+                m_poiImageContainer.Visibility = Visibility.Visible;
+                m_poiImageDivider.Visibility = Visibility.Visible;
+                m_poiImage.Visibility = Visibility.Hidden;
+                m_previewImageSpinner.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                m_poiImageContainer.Visibility = Visibility.Collapsed;
+                m_poiImageDivider.Visibility = Visibility.Collapsed;
+                m_poiImage.Visibility = Visibility.Collapsed;
+                m_previewImageSpinner.Visibility = Visibility.Collapsed;
+            }
 
             if (eegeoResultModel.Phone != null)
             {
@@ -369,10 +381,6 @@ namespace ExampleAppWPF
                 m_descriptionContainer.Visibility = Visibility.Collapsed;
             }
 
-            m_poiImageContainer.Visibility = Visibility.Collapsed;
-            m_poiImageDivider.Visibility = Visibility.Collapsed;
-
-
             TagIcon = SearchResultPoiViewIconProvider.GetIconForTag(model.IconKey);
 
             ShowAll();
@@ -380,18 +388,15 @@ namespace ExampleAppWPF
         
         public override void UpdateImageData(string url, bool hasImage, byte[] imgData)
         {
-            m_poiImage.Source = LoadImageFromByteArray(imgData);
-            m_poiImage.Visibility = Visibility.Visible;
-            m_poiImageContainer.Visibility = Visibility.Visible;
-            m_poiImageDivider.Visibility = Visibility.Visible;
+            if (hasImage)
+            {
+                m_poiImage.Source = LoadImageFromByteArray(imgData);
+                m_poiImage.Visibility = Visibility.Visible;
+                m_poiImageContainer.Visibility = Visibility.Visible;
+                m_poiImageDivider.Visibility = Visibility.Visible;
+            }
+            m_previewImageSpinner.Visibility = Visibility.Hidden;
         }
         
-        public void HandleWebLinkButtonClicked(object sender, MouseEventArgs e)
-        {
-            if (!string.IsNullOrEmpty(m_url))
-            {
-                Process.Start(m_url);
-            }
-        }
     }
 }

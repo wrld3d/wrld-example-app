@@ -28,6 +28,8 @@ namespace ExampleAppWPF
         private ImageSource m_placeholderImage;
         private ScrollViewer m_contentContainer;
         private Image m_footerFade;
+        private Grid m_previewImageSpinner;
+        private Grid m_poiImageContainer;
 
         private ControlClickHandler m_yelpReviewImageClickHandler;
         private Image m_yelpButton;
@@ -190,6 +192,10 @@ namespace ExampleAppWPF
 
             m_footerFade = (Image)GetTemplateChild("FooterFade");
 
+            m_previewImageSpinner = (Grid)GetTemplateChild("PreviewImageSpinner");
+
+            m_poiImageContainer = (Grid)GetTemplateChild("PoiImageContainer");
+
             var mainGrid = (Application.Current.MainWindow as MainWindow).MainGrid;
             var screenWidth = mainGrid.ActualWidth;
 
@@ -250,18 +256,22 @@ namespace ExampleAppWPF
                 m_reviewsIcon.Visibility = Visibility.Visible;
             }
 
-            m_placeholderImage = new BitmapImage(new Uri("/ExampleAppWPF;component/Assets/poi_placeholder.png", UriKind.Relative));
-
-            m_poiImage.Source = m_placeholderImage;
+            m_poiImageContainer.Visibility = Visibility.Visible;
+            m_previewImageSpinner.Visibility = Visibility.Visible;
+            m_poiImage.Visibility = Visibility.Hidden;
 
             ShowAll();
         }
         
         public override void UpdateImageData(string url, bool hasImage, byte[] imgData)
         {
-            var image = LoadImageFromByteArray(imgData);
-            m_poiImage.Source = image ?? m_placeholderImage;
-            m_poiImage.Visibility = Visibility.Visible;
+            if(hasImage)
+            {
+                m_poiImageContainer.Visibility = Visibility.Visible;
+                m_poiImage.Source = LoadImageFromByteArray(imgData);
+                m_poiImage.Visibility = Visibility.Visible;
+            }
+            m_previewImageSpinner.Visibility = Visibility.Hidden;
         }
         
         public void HandleWebLinkButtonClicked(object sender, MouseEventArgs e)
