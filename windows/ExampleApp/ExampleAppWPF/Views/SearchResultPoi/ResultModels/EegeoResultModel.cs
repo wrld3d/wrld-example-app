@@ -49,11 +49,15 @@ namespace ExampleAppWPF
 
         public static EegeoResultModel FromResultModel(ExampleApp.SearchResultModelCLI model)
         {
-            using (var stream = new MemoryStream(Encoding.Unicode.GetBytes(model.JsonData)))
+            var stream = new MemoryStream(Encoding.Unicode.GetBytes(model.JsonData));
+            // First time creating a poi will return "" from json data. Adding json data such as phone number and then removing it will return {} for unknown reason.
+            if (model.JsonData == "")
             {
-                var serializer = new DataContractJsonSerializer(typeof(EegeoResultModel));
-                return (EegeoResultModel)serializer.ReadObject(stream);
+                stream = new MemoryStream(Encoding.Unicode.GetBytes("{}"));
             }
+
+            var serializer = new DataContractJsonSerializer(typeof(EegeoResultModel));
+            return (EegeoResultModel)serializer.ReadObject(stream);
         }
     }
 }
