@@ -92,6 +92,8 @@
 #include "DirectionsMenuInitiation.h"
 #include "DirectionsMenu.h"
 #include "DirectionResultSection.h"
+#include "FindDirectionServiceModule.h"
+
 namespace ExampleApp
 {
     class MobileExampleApp : private Eegeo::NonCopyable
@@ -128,6 +130,7 @@ namespace ExampleApp
 
         ExampleApp::SearchResultSection::SdkModel::ISearchResultSectionModule* m_pSearchResultSectionModule;
         ExampleApp::DirectionResultSection::SdkModel::IDirectionsResultSectionModule* m_pDirectionResultSectionModule;
+        ExampleApp::Direction::SdkModel::FindDirectionServiceModule* m_pFindDirectionServiceModule;
         ExampleApp::Modality::View::IModalityModule* m_pModalityModule;
         ExampleApp::TagSearch::SdkModel::ITagSearchModule* m_pTagSearchModule;
         ExampleApp::MapMode::SdkModel::IMapModeModule* m_pMapModeModule;

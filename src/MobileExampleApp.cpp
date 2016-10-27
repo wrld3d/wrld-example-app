@@ -497,6 +497,8 @@ namespace ExampleApp
                 m_platformAbstractions.GetFileIO()
                 );
         }
+        
+        
 
         m_pSearchServiceModule = Eegeo_NEW(Search::Combined::SdkModel::CombinedSearchServiceModule)(m_searchServiceModules, m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel());
         
@@ -609,12 +611,14 @@ namespace ExampleApp
                                                                                                            m_pAppCameraModule->GetController(),
                                                                                                            m_messageBus);
         //TODO: Creat new repository for direction moudle query performer
+        m_pFindDirectionServiceModule = Eegeo_NEW(Direction::SdkModel::FindDirectionServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),m_platformAbstractions.GetUrlEncoder(),m_applicationConfiguration.EegeoApiKey());
         m_pDirectionResultSectionModule = Eegeo_NEW(ExampleApp::DirectionResultSection::SdkModel::DirectionsResultSectionModule)(m_pDirectionsMenuModule->GetDirectionsMenuViewModel(),m_pSearchModule->GetSearchResultRepository(),m_pSearchModule->GetSearchQueryPerformer(),*m_pCameraTransitionService,interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                                     interiorsModelModule.GetInteriorMarkerModelRepository(),
                                                                                                                     m_pAppCameraModule->GetController(),
                                                                                                                     m_messageBus);
         
         m_pDirectionsMenuModule->SetDirectionsSection("", m_pDirectionResultSectionModule->GetDirectionsResultSectionModel());
+        
         
         m_pSearchResultOnMapModule = Eegeo_NEW(SearchResultOnMap::SdkModel::SearchResultOnMapModule)(m_pSearchModule->GetSearchResultRepository(),
                                                                                                      m_pSearchResultPoiModule->GetSearchResultPoiViewModel(),
@@ -888,6 +892,7 @@ namespace ExampleApp
         Eegeo_DELETE m_pDirectionsMenuInitiationModule;
         
         Eegeo_DELETE m_pDirectionsMenuModule;
+        Eegeo_DELETE m_pFindDirectionServiceModule;
         
     }
 

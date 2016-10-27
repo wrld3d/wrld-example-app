@@ -11,7 +11,7 @@ namespace ExampleApp
 {
     namespace PathDrawing
     {
-        class WayPointModel : protected Eegeo::NonCopyable
+        class WayPointModel
         {
         private:
             const int m_id;
