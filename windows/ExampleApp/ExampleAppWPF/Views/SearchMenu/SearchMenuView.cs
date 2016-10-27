@@ -481,7 +481,9 @@ namespace ExampleAppWPF
         {
             if(!m_editText.IsFocused)
             {
-                m_editText.Text = text;
+                byte[] bytes = Encoding.Default.GetBytes(text);
+                string encodedText = Encoding.UTF8.GetString(bytes);
+                m_editText.Text = encodedText;
             }
             m_hasCategorySearch = isCategory;
         }
