@@ -52,44 +52,59 @@ namespace ExampleApp
                     double lat = 0.0;
                     double lng = 0.0;
                     
+                    std::string title = "";
+                    std::string subtitle = "";
+                    ExampleApp::Search::SdkModel::TagIconKey iconKey = "";
+
                     if(i==0)
                     {
                         lat = 56.459676;
                         lng = -2.977240;
+                        title = "Westfield Valley Mall";
+                        subtitle = "South Entrance";
+                        iconKey = "DirectionCard_RouteStart";
                     }
                     else if(i==1)
                     {
                         lat = 56.457827;
                         lng = -2.972691;
+                        title = "50 yd";
+                        subtitle = "Enter Mall";
+                        iconKey = "DirectionCard_EnterMallSelected";
+                        
                     }
                     else if(i==2)
                     {
                         lat = 56.457860;
                         lng = -2.970793;
+                        title = "40 yd";
+                        subtitle = "Turn left along main concourse";
+                        iconKey = "DirectionCard_StraightAhead";
                     }
                     else if(i==3)
                     {
                         lat = 56.461427;
                         lng = -2.963596;
+                        title = "Turn Left";
+                        subtitle = "Then 400 yd along main course";
+                        iconKey = "DirectionCard_TurnLeft";
                     }
                     
                     const Eegeo::Space::LatLong& latlong = Eegeo::Space::LatLong::FromDegrees(lat, lng);
                     
-                    std::string subtitle = "sub";
-                    ExampleApp::Search::SdkModel::TagIconKey iconKey1 = "default";
+
                     Eegeo::Resources::Interiors::InteriorId m_buildingId("");
                     m_menuOptions.AddItem(std::to_string(i),
-                                          "title",
+                                          title,
                                           subtitle,
-                                          iconKey1,
+                                          iconKey,
                                           Eegeo_NEW(SearchResultSection::View::SearchResultItemModel)("model title",
                                                                            latlong.ToECEF(),
                                                                            false,
                                                                            true,
                                                                            m_buildingId,
                                                                            2,
-                                                                           m_directionMenuViewModel,
-                                                                           m_searchResultPoiViewModel,
+                                                                           m_directionMenuViewModel,                                                                           m_searchResultPoiViewModel,
                                                                            i,
                                                                            m_messageBus,
                                                                            m_menuReaction));
