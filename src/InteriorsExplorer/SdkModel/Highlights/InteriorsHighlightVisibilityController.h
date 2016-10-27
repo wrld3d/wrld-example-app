@@ -48,9 +48,9 @@ namespace ExampleApp
                     void DeactivateHighlightRenderables();
                     void AddHighlight(Eegeo::Rendering::Renderables::InteriorHighlightRenderable& renderable);
                     
-                    void ShowLabelsForResults(const std::vector<Search::SdkModel::SearchResultModel>& results);
-                    void ShowLabelsForCurrentResults();
-                    void DeactivateLabels();
+                    bool ShowHighlightsForResults(const std::vector<Search::SdkModel::SearchResultModel>& results);
+                    bool ShowHighlightsForCurrentResults();
+                    void ActivateLabels(bool active);
                     
                     Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                     Eegeo::Resources::Interiors::InteriorsCellResourceObserver& m_interiorsCellResourceObserver;
