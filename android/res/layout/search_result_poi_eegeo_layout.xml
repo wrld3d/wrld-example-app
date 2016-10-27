@@ -73,7 +73,6 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/button_pressed_colour_change"
                 android:src="@drawable/button_pin_close_states" />
-
         </RelativeLayout>
         
         <View
@@ -86,8 +85,7 @@
        		    android:layout_marginRight="10dp"
        		    android:layout_below="@+id/search_result_poi_view_header"
        		    android:background="@color/gold"/>
-	        
-	      
+	        	      
         <!--  Scrolling icontent -->
         <ScrollView
             android:id="@+id/content_container"
@@ -111,7 +109,6 @@
          	        android:layout_marginLeft="10dp"
          	        android:layout_marginRight="10dp" >
          	        
-         	        
          	        <ProgressBar
          	            android:id="@+id/search_result_poi_view_image_progress"
          	            style="@android:style/Widget.ProgressBar.Small"
@@ -132,7 +129,21 @@
          	            android:layout_alignParentBottom="true"
          	            android:background="@drawable/image_gradient" />
          	    </RelativeLayout>
-   
+         	    
+         	    <RelativeLayout
+         	        android:id="@+id/search_result_poi_view_webview_container"
+         	        android:layout_width="fill_parent"
+         	        android:layout_height="fill_parent"
+         	        android:layout_marginLeft="10dp"
+         	        android:layout_marginRight="10dp"
+         	        android:visibility="gone" >   
+         	               	        
+         	        <WebView  
+					    android:id="@+id/webview"
+						android:layout_width="fill_parent"
+						android:layout_height="170dp"/>
+       	        </RelativeLayout>
+         	    
 				<View
          	        android:id="@+id/search_result_poi_image_header"
          	        android:layout_width="fill_parent"
@@ -142,8 +153,6 @@
          	        android:layout_marginRight="10dp"
          	        android:layout_marginTop="10dp"
          	        android:background="@color/gold" />
-
-
 
          	    <!-- Phone -->
          	    
@@ -170,7 +179,6 @@
          	        android:textAlignment="center"
          	        android:textColor="@color/darkgrey"
          	        android:textSize="16dp" />
-         	    
          	    </RelativeLayout>
 
          	    <RelativeLayout
@@ -255,7 +263,6 @@
 		   	        	 android:layout_marginBottom="8dp"
 		   	             android:layout_toRightOf="@+id/search_result_poi_view_facebook"
 		   	             android:src="@drawable/contact_icon_twitter" />
-		   	        
 		   	     </RelativeLayout>
 		   	     
 		   	     <View
@@ -387,7 +394,6 @@
 			    android:layout_alignTop="@+id/drop_pin_text"
 			    android:layout_marginLeft="43dp"
 			    layout="@layout/toggle_pinned_control" />
-
          </RelativeLayout>
          
          <RelativeLayout

@@ -203,6 +203,9 @@ const int DeletePinAlertViewTag = 2;
         self.pFooterSpace.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pControlContainer addSubview: self.pFooterSpace];
         
+        self.pWebView = [[[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pWebView.delegate = self;
+        
         m_pGradientMask = [[CAGradientLayer layer] retain];
         m_pGradientMask.colors = @[(id)[UIColor clearColor].CGColor,
                                    (id)[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.5f].CGColor];
@@ -212,6 +215,8 @@ const int DeletePinAlertViewTag = 2;
         [self setTouchExclusivity: self];
         
         m_poiImageLoadedSuccessfully = true;
+        m_htmlLoaded = true;
+        m_webPageLoaded = false;
     }
     
     return self;
@@ -509,9 +514,14 @@ const int DeletePinAlertViewTag = 2;
     
     float detailsCardY = 0.f;
     
-    if(!m_eegeoModel.GetImageUrl().empty())
+    if(m_htmlLoaded)
     {
-        currentLabelY = 0.f;
+        [self createWebViewWithHTML:CGRectMake(0, currentLabelY, cardContainerWidth, cardContainerWidth) ];
+        currentLabelY += cardContainerWidth + headerMargin;
+        self.pPreviewImage.frame = CGRectMake(0, 0, 0, 0);
+    }
+    else if(!m_eegeoModel.GetImageUrl().empty())
+    {
         self.pPreviewImage.frame = CGRectMake(0.0f,
                                               currentLabelY,
                                               cardContainerWidth,
@@ -727,6 +737,25 @@ const int DeletePinAlertViewTag = 2;
     {
         self.pFadeContainer.hidden = YES;
     }
+}
+
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    m_webPageLoaded = true;
+}
+
+- (void) createWebViewWithHTML:(CGRect) frame
+{
+     if(!m_webPageLoaded)
+     {
+        self.pWebView.frame = frame;
+        
+        [self.pWebView setBackgroundColor:[UIColor clearColor]];
+
+            [self.pWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.youtube.com/watch?v=z-t5-S1O3Ck"]]];
+        
+        [self.pLabelsContainer addSubview:self.pWebView];
+     }
 }
 
 - (void) setContent:(const ExampleApp::Search::SdkModel::SearchResultModel*)pModel :(bool)isPinned

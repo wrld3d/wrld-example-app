@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.text.util.Linkify;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -64,7 +65,10 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
 	private ScrollView m_contentContainer = null;
 	private ImageView m_footerFade = null;
 	private LinearLayout m_linearContentContainer = null;
-
+	private WebView m_webView = null;
+	private View m_webViewContainer = null;
+	
+	private boolean m_htmlLoaded = true;
     private boolean m_handlingClick = false;
     private TintablePinToggleButton m_togglePinnedWrapper;
     
@@ -113,6 +117,8 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
 		m_contentContainer = (ScrollView)m_view.findViewById(R.id.content_container);
 		m_footerFade = (ImageView)m_view.findViewById(R.id.footer_fade);
 		m_linearContentContainer = (LinearLayout)m_view.findViewById(R.id.linear_content_container);
+		m_webView = (WebView)m_view.findViewById(R.id.webview);
+		m_webViewContainer = (View)m_view.findViewById(R.id.search_result_poi_view_webview_container);
         
         m_activity.recursiveDisableSplitMotionEvents((ViewGroup)m_view);
         
@@ -320,6 +326,14 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
         {
         	m_dropPinText.setText("Remove Pin");
         }
+        
+        if(m_htmlLoaded)
+        {
+        	m_webView.loadUrl("https://raw.githubusercontent.com/eegeo/eegeo-example-app/master/LICENSE.md");
+        	m_poiImageViewContainer.setVisibility(View.GONE);
+        	m_webViewContainer.setVisibility(View.VISIBLE);
+        	m_poiImageHeader.setVisibility(View.VISIBLE);
+        }
     }
     
     public void handleButtonLink(View view)
@@ -418,8 +432,10 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
 				int height = (int) (width * 2.f / 3.f);
 				Bitmap poiBitmap = BitmapFactory.decodeByteArray(imgData, 0, imgData.length, bmOptions);
 
-			    
-				m_poiImage.setImageBitmap(Bitmap.createScaledBitmap(poiBitmap, width, height, false));
+			    if(m_poiImageViewContainer.getVisibility() != View.GONE)
+			    {
+			    	m_poiImage.setImageBitmap(Bitmap.createScaledBitmap(poiBitmap, width, height, false));
+			    }
 			}
 			else
 			{
