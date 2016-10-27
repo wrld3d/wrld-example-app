@@ -68,8 +68,6 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
     private boolean m_handlingClick = false;
     private TintablePinToggleButton m_togglePinnedWrapper;
     
-    private SearchResultsPoiViewScrollListener m_scrollListener;
-    
     private static String m_pinTextDefault = "Drop Pin";
     private static String m_pinTextPressed = "Remove Pin";
 
@@ -125,9 +123,6 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
         m_twitterUrl.setOnClickListener(this);
         m_email.setOnClickListener(this);
         m_webLinkView.setOnClickListener(this);
-        
-        m_scrollListener = new SearchResultsPoiViewScrollListener(m_footerFade, true, m_contentContainer);
-        m_contentContainer.setOnScrollChangeListener(m_scrollListener);
     }
 
     public void destroy()
