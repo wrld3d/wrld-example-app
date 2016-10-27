@@ -84,6 +84,7 @@
          	     android:id="@+id/linear_content_container"
 	             android:layout_width="fill_parent"
 	             android:layout_height="wrap_content"
+	             android:paddingBottom="25dp"
 	             android:orientation="vertical">
 	             
 	              <!--  Preview Image -->
