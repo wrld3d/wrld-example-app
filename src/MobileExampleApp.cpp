@@ -594,8 +594,7 @@ namespace ExampleApp
                                                                                             m_messageBus,
                                                                                             m_metricsService);
         
-        m_pDirectionsMenuModule = Eegeo_NEW(ExampleApp::DirectionsMenu::SdkModel::DirectionsMenuModule)(m_identityProvider,
-                                                                                                m_pReactionControllerModule->GetReactionControllerModel(),                                                                                                                         m_messageBus);
+
         
 
         
@@ -610,13 +609,20 @@ namespace ExampleApp
                                                                                                            interiorsModelModule.GetInteriorMarkerModelRepository(),
                                                                                                            m_pAppCameraModule->GetController(),
                                                                                                            m_messageBus);
+        
         //TODO: Creat new repository for direction moudle query performer
-        m_pFindDirectionServiceModule = Eegeo_NEW(Direction::SdkModel::FindDirectionServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),m_platformAbstractions.GetUrlEncoder(),m_applicationConfiguration.EegeoApiKey());
+        
+        m_pFindDirectionServiceModule = Eegeo_NEW(Direction::SdkModel::FindDirectionServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),m_platformAbstractions.GetUrlEncoder(),m_applicationConfiguration.EegeoApiKey(),m_messageBus);
+        
+        m_pDirectionsMenuModule = Eegeo_NEW(ExampleApp::DirectionsMenu::SdkModel::DirectionsMenuModule)(m_identityProvider,
+                                                                                                        m_pReactionControllerModule->GetReactionControllerModel(),                                                                                                                         m_messageBus,m_pFindDirectionServiceModule->GetFindDirectionQueryPerformer());
+        
         m_pDirectionResultSectionModule = Eegeo_NEW(ExampleApp::DirectionResultSection::SdkModel::DirectionsResultSectionModule)(m_pDirectionsMenuModule->GetDirectionsMenuViewModel(),m_pSearchModule->GetSearchResultRepository(),m_pSearchModule->GetSearchQueryPerformer(),*m_pCameraTransitionService,interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                                     interiorsModelModule.GetInteriorMarkerModelRepository(),
                                                                                                                     m_pAppCameraModule->GetController(),
                                                                                                                     m_messageBus);
         
+
         m_pDirectionsMenuModule->SetDirectionsSection("", m_pDirectionResultSectionModule->GetDirectionsResultSectionModel());
         
         

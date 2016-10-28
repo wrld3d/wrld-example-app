@@ -27,7 +27,7 @@ namespace ExampleApp
                 //"legs":[],
                 int m_duration;
                 float m_distance;
-                const DirectionRouteGeometryModel& m_Geometry;
+                const DirectionRouteGeometryModel m_Geometry;
             };
         
         }

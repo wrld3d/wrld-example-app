@@ -6,6 +6,7 @@
 #include <vector>
 #include "SearchQuery.h"
 #include "SearchResultModel.h"
+#include "DirectionResultModel.h"
 
 namespace ExampleApp
 {
@@ -14,9 +15,10 @@ namespace ExampleApp
         class DirectionQueryResponseReceivedMessage
         {
         private:
-            
+            ExampleApp::Direction::SdkModel::DirectionResultModel& m_directionResultModel;
         public:
-            DirectionQueryResponseReceivedMessage(const std::string& query);
+            DirectionQueryResponseReceivedMessage(ExampleApp::Direction::SdkModel::DirectionResultModel& directionResultModel);
+            ExampleApp::Direction::SdkModel::DirectionResultModel& GetDirectionResultModel() const;
             
 
             

@@ -10,11 +10,12 @@ namespace ExampleApp
         {
             FindDirectionServiceModule::FindDirectionServiceModule(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                                      Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
-                                                     const std::string& eegeoApiKey)
+                                                     const std::string& eegeoApiKey,ExampleAppMessaging::TMessageBus& messageBus)
             {
                 m_pDirectionResultJsonParser = Eegeo_NEW(FindDirectionResultJsonParser)();
                 m_pDirectionHttpRequestFactory = Eegeo_NEW(FindDirectionHttpRequestFactory)(eegeoApiKey,webRequestFactory,urlEncoder);
-                m_pDirectionService = Eegeo_NEW(FindDirectionService)(*m_pDirectionHttpRequestFactory,*m_pDirectionResultJsonParser);
+                m_pDirectionService = Eegeo_NEW(FindDirectionService)(*m_pDirectionHttpRequestFactory,*m_pDirectionResultJsonParser,messageBus);
+                m_pDirectionQueryPerformer = Eegeo_NEW(FindDirectionQueryPerformer)(GetFindDirectionService());
 
             }
 
@@ -29,6 +30,12 @@ namespace ExampleApp
             {
                 return *m_pDirectionService;
             }
+            
+            FindDirectionQueryPerformer& FindDirectionServiceModule::GetFindDirectionQueryPerformer() const
+            {
+                return *m_pDirectionQueryPerformer;
+            }
+
 
         }
     }

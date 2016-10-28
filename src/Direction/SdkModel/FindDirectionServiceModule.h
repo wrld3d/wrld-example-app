@@ -2,7 +2,9 @@
 
 #pragma once
 
+#include "BidirectionalBus.h"
 #include "FindDirectionService.h"
+#include "FindDirectionQueryPerformer.h"
 #include "FindDirectionResultJsonParser.h"
 #include "FindDirectionHttpRequestFactory.h"
 
@@ -17,14 +19,18 @@ namespace ExampleApp
             public:
                 FindDirectionServiceModule(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                     Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
-                                    const std::string& eegeoApiKey);
+                                    const std::string& eegeoApiKey,ExampleAppMessaging::TMessageBus& messageBus);
                 ~FindDirectionServiceModule();
                 FindDirectionService& GetFindDirectionService() const;
+                FindDirectionQueryPerformer& GetFindDirectionQueryPerformer() const;
                 
             private:
                 FindDirectionService* m_pDirectionService;
                 FindDirectionResultJsonParser* m_pDirectionResultJsonParser;
                 FindDirectionHttpRequestFactory* m_pDirectionHttpRequestFactory;
+                FindDirectionQueryPerformer* m_pDirectionQueryPerformer;
+
+                
                 
                 
             };

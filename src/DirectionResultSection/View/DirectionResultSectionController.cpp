@@ -1,9 +1,10 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-#include "DirectionResultSectionController.h"
-
-
+#include "WayPointModel.h"
+#include "DirectionRouteModel.h"
+#include "DirectionResultModel.h"
 #include "SearchResultItemModel.h"
+#include "DirectionResultSectionController.h"
 
 namespace ExampleApp
 {
@@ -38,77 +39,74 @@ namespace ExampleApp
             
             void DirectionResultSectionController::OnSearchQueryResponseReceivedMessage(const DirectionQueryResponseReceivedMessage& message)
             {
-                //TODO:This static numbers will be replaced with vector lastAddedResults
                 
-                
-                
-                for(int i = 0; i < 4; ++i)
+                for(int i = 0; i < 2; ++i)
                 {
                     m_menuOptions.RemoveItem(std::to_string(i));
                 }
                 
-                for(int i = 0; i < 4; ++i)
+                Direction::SdkModel::DirectionResultModel& model = message.GetDirectionResultModel();
+                const std::vector<Direction::SdkModel::DirectionRouteModel>& routes = model.GetRoutes();
+                if (routes.size() > 0)
                 {
-                    double lat = 0.0;
-                    double lng = 0.0;
-                    
-                    std::string title = "";
-                    std::string subtitle = "";
-                    ExampleApp::Search::SdkModel::TagIconKey iconKey = "";
+                    Direction::SdkModel::DirectionRouteModel routeModel = routes[0];
+                    const std::vector<ExampleApp::PathDrawing::WayPointModel>& wayPointVector = routeModel.GetWayPoints();
+                    for(int i = 0; i < wayPointVector.size(); ++i)
+                    {
+                        ExampleApp::PathDrawing::WayPointModel wayPointModel = wayPointVector[i];
 
-                    if(i==0)
-                    {
-                        lat = 56.459676;
-                        lng = -2.977240;
-                        title = "Westfield Valley Mall";
-                        subtitle = "South Entrance";
-                        iconKey = "DirectionCard_RouteStart";
-                    }
-                    else if(i==1)
-                    {
-                        lat = 56.457827;
-                        lng = -2.972691;
-                        title = "50 yd";
-                        subtitle = "Enter Mall";
-                        iconKey = "DirectionCard_EnterMallSelected";
                         
+                        std::string subtitle = "";
+                        ExampleApp::Search::SdkModel::TagIconKey iconKey = "";
+                        
+                        if(i%4 == 0)
+                        {
+
+                            subtitle = "South Entrance";
+                            iconKey = "DirectionCard_RouteStart";
+                        }
+                        else if(i%4 == 1)
+                        {
+
+                            subtitle = "Enter Mall";
+                            iconKey = "DirectionCard_EnterMallSelected";
+                            
+                        }
+                        else if(i%4 == 2)
+                        {
+
+                            subtitle = "Turn left along main concourse";
+                            iconKey = "DirectionCard_StraightAhead";
+                        }
+                        else if(i%4 == 3)
+                        {
+
+                            subtitle = "Then 400 yd along main course";
+                            iconKey = "DirectionCard_TurnLeft";
+                        }
+                        
+                        const Eegeo::Space::LatLong latlong = wayPointModel.GetLocation();
+                        
+                        
+                        Eegeo::Resources::Interiors::InteriorId m_buildingId("");
+                        m_menuOptions.AddItem(std::to_string(i),
+                                              wayPointModel.GetTitle(),
+                                              subtitle,
+                                              iconKey,
+                                              Eegeo_NEW(SearchResultSection::View::SearchResultItemModel)("model title",
+                                                                                                          latlong.ToECEF(),
+                                                                                                          false,
+                                                                                                          true,
+                                                                                                          m_buildingId,
+                                                                                                          2,
+                                                                                                          m_directionMenuViewModel,                                                                           m_searchResultPoiViewModel,
+                                                                                                          i,
+                                                                                                          m_messageBus,
+                                                                                                          m_menuReaction));
                     }
-                    else if(i==2)
-                    {
-                        lat = 56.457860;
-                        lng = -2.970793;
-                        title = "40 yd";
-                        subtitle = "Turn left along main concourse";
-                        iconKey = "DirectionCard_StraightAhead";
-                    }
-                    else if(i==3)
-                    {
-                        lat = 56.461427;
-                        lng = -2.963596;
-                        title = "Turn Left";
-                        subtitle = "Then 400 yd along main course";
-                        iconKey = "DirectionCard_TurnLeft";
-                    }
-                    
-                    const Eegeo::Space::LatLong& latlong = Eegeo::Space::LatLong::FromDegrees(lat, lng);
                     
 
-                    Eegeo::Resources::Interiors::InteriorId m_buildingId("");
-                    m_menuOptions.AddItem(std::to_string(i),
-                                          title,
-                                          subtitle,
-                                          iconKey,
-                                          Eegeo_NEW(SearchResultSection::View::SearchResultItemModel)("model title",
-                                                                           latlong.ToECEF(),
-                                                                           false,
-                                                                           true,
-                                                                           m_buildingId,
-                                                                           2,
-                                                                           m_directionMenuViewModel,                                                                           m_searchResultPoiViewModel,
-                                                                           i,
-                                                                           m_messageBus,
-                                                                           m_menuReaction));
-                }                
+                }
                 
             }
             void DirectionResultSectionController::OnSearchQueryRemovedMessage(const Search::SearchQueryRemovedMessage& message)

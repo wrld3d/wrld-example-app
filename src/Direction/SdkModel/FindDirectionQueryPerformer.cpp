@@ -15,13 +15,13 @@ namespace ExampleApp
             , m_pFindDirectionResultResponseReceivedCallback( Eegeo_NEW((Eegeo::Helpers::TCallback2<FindDirectionQueryPerformer, const FindDirectionQuery&, const std::vector<Search::SdkModel::SearchResultModel>&>))(this, &FindDirectionQueryPerformer::HandleSearchResultsResponseReceived))
 
             {
-                m_findDirectionService.InsertOnReceivedQueryResultsCallback(*m_pFindDirectionResultResponseReceivedCallback);
+                //m_findDirectionService.InsertOnReceivedQueryResultsCallback(*m_pFindDirectionResultResponseReceivedCallback);
 
             }
             
             FindDirectionQueryPerformer::~FindDirectionQueryPerformer()
             {
-                m_findDirectionService.RemoveOnReceivedQueryResultsCallback(*m_pFindDirectionResultResponseReceivedCallback);
+                //m_findDirectionService.RemoveOnReceivedQueryResultsCallback(*m_pFindDirectionResultResponseReceivedCallback);
                 Eegeo_DELETE m_pFindDirectionResultResponseReceivedCallback;
             
             }

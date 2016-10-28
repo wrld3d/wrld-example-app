@@ -23,7 +23,7 @@ namespace ExampleApp
                 
                 ~FindDirectionHttpRequestFactory();
                 
-                FindDirectionHttpRequest* CreateYelpSearchForQuery(const FindDirectionQuery& query,
+                FindDirectionHttpRequest* CreateFindDirectionQuery(const FindDirectionQuery& query,
                                                            Eegeo::Helpers::ICallback0& completionCallback);
                 
             private:

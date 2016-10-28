@@ -15,7 +15,7 @@ namespace ExampleApp
         {
             DirectionsMenuModule::DirectionsMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
                                                ExampleApp::Reaction::View::IReactionControllerModel& reactionControllerModel,
-                                             ExampleAppMessaging::TMessageBus& messageBus)
+                                             ExampleAppMessaging::TMessageBus& messageBus,ExampleApp::Direction::SdkModel::FindDirectionQueryPerformer& findDirectionQueryPerformer)
             : m_pMenuModel(NULL)
             , m_pMenuViewModel(NULL)
             , m_pSearchSectionViewModel(NULL)
@@ -25,6 +25,7 @@ namespace ExampleApp
                 m_pMenuViewModel = Eegeo_NEW(Menu::View::MenuViewModel)(false,
                                                                         identityProvider.GetNextIdentity(),
                                                                         reactionControllerModel);
+                m_pFindDirectionMessageHandler = Eegeo_NEW(DirectionMenuFindDirectionMessageHandler)(messageBus,findDirectionQueryPerformer);
             }
             
             DirectionsMenuModule::~DirectionsMenuModule()

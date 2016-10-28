@@ -80,13 +80,13 @@ namespace ExampleApp
                                     if (innerRouteJson.HasMember("duration"))
                                     {
                                         const rapidjson::Value& durationVal = innerRouteJson["duration"];
-                                        innerRouteDuration = durationVal.GetInt();
+                                        innerRouteDuration = durationVal.GetDouble();
                                     }
                                     
                                     if (innerRouteJson.HasMember("distance"))
                                     {
                                         const rapidjson::Value& distanceVal = innerRouteJson["distance"];
-                                        innerRouteDistance = distanceVal.GetInt();
+                                        innerRouteDistance = distanceVal.GetDouble();
                                     }
                                     
                                     std::string geometryResponseType = "";
@@ -95,26 +95,25 @@ namespace ExampleApp
                                     if (innerRouteJson.HasMember("geometry"))
                                     {
                                         const rapidjson::Value& geometryJson = innerRouteJson["geometry"];
-                                        if(geometryJson.HasMember("geometry"))
-                                        {
-                                            const rapidjson::Value& geometryTypeJson = geometryJson["type"];
-                                            geometryResponseType = geometryTypeJson.GetString();
-                                            const rapidjson::Value& coordinatesListValue = geometryJson["coordinates"];
-                                            const size_t numCoordinatesListVal(coordinatesListValue.Size());
-                                            for(int k = 0; k < numCoordinatesListVal; ++k)
-                                            {
-                                                const rapidjson::Value& coordinateJsonValue = coordinatesListValue[k];
-                                                const rapidjson::Value& coordinateLatLong = coordinateJsonValue[k];
-                                                coordinatesLatLongVector.push_back(Eegeo::Space::LatLong::FromDegrees(coordinateLatLong[0].GetDouble(),
-                                                                                   coordinateLatLong[1].GetDouble()));
+                                        const rapidjson::Value& geometryTypeJson = geometryJson["type"];
+                                        geometryResponseType = geometryTypeJson.GetString();
+                                        const rapidjson::Value& coordinatesListValue = geometryJson["coordinates"];
+                                        size_t numCoordinatesListVal = coordinatesListValue.Size();
 
-                                            }
+                                        for(int k = 0; k < numCoordinatesListVal; ++k)
+                                        {
+                                            const rapidjson::Value& coordinateJsonValue = coordinatesListValue[k];
+                                            Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong::FromDegrees(coordinateJsonValue[1].GetDouble(),
+                                                                                                  coordinateJsonValue[0].GetDouble());
+                                            coordinatesLatLongVector.push_back(latLong);
+                                            
                                         }
                                     }
                                     
                                     DirectionRouteGeometryModel geometryModel(geometryResponseType,coordinatesLatLongVector);
                                     DirectionInnerRouteModel innerRouteModel(innerRouteDuration,innerRouteDistance,geometryModel);
                                     innerRoutesVector.push_back(innerRouteModel);
+                                    
                                     
                                 }//end for for inner Routes
                                 
@@ -136,7 +135,7 @@ namespace ExampleApp
                                     if (wayPointJsonValue.HasMember("name"))
                                     {
                                         const rapidjson::Value& durationVal = wayPointJsonValue["name"];
-                                        watPointName = durationVal.GetInt();
+                                        watPointName = durationVal.GetString();
                                     }
                                     
                                     if (wayPointJsonValue.HasMember("hint"))
@@ -148,11 +147,11 @@ namespace ExampleApp
                                     if (wayPointJsonValue.HasMember("location"))
                                     {
                                         const rapidjson::Value& wayPointLocationJson = wayPointJsonValue["location"];
-                                        lat = wayPointLocationJson[0].GetDouble();
-                                        longi = wayPointLocationJson[1].GetDouble();
+                                        lat = wayPointLocationJson[1].GetDouble();
+                                        longi = wayPointLocationJson[0].GetDouble();
                                     }
                                     Eegeo::Space::LatLong latLongStart = Eegeo::Space::LatLong::FromDegrees(lat,longi);
-                                    ExampleApp::PathDrawing::WayPointModel wayPointModel(0,ExampleApp::PathDrawing::WayPointType::CheckPoint,latLongStart,"");
+                                    ExampleApp::PathDrawing::WayPointModel wayPointModel(j,ExampleApp::PathDrawing::WayPointType::CheckPoint,latLongStart,watPointName);
                                     wayPointsVector.push_back(wayPointModel);
                                     
                                 }//end for wayPoints

@@ -24,7 +24,7 @@ namespace ExampleApp
             {
             }
             
-            FindDirectionHttpRequest* FindDirectionHttpRequestFactory::CreateYelpSearchForQuery(const FindDirectionQuery& query,
+            FindDirectionHttpRequest* FindDirectionHttpRequestFactory::CreateFindDirectionQuery(const FindDirectionQuery& query,
                                                                Eegeo::Helpers::ICallback0& completionCallback)
             {
                 return Eegeo_NEW(FindDirectionHttpRequest)(m_apiUrl,completionCallback,m_webRequestFactory,m_urlEncoder,query,m_eegeoApiKey);

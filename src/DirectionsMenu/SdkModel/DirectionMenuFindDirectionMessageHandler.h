@@ -9,7 +9,7 @@
 
 namespace ExampleApp
 {
-    namespace DirectiondMenu
+    namespace DirectionsMenu
     {
         namespace SdkModel
         {

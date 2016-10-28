@@ -113,7 +113,7 @@ namespace ExampleApp
             void DirectionsMenuController::OnSearch(const std::string& searchQuery)
             {
                 // Publish message Here
-                m_messageBus.Publish(DirectionResultSection::DirectionQueryResponseReceivedMessage("temp Query String"));
+                m_messageBus.Publish(ExampleApp::DirectionsMenu::DirectionMenuFindDirectionMessage("",true));
                 
             }
             

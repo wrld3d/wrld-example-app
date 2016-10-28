@@ -17,7 +17,7 @@ namespace ExampleApp
             const int m_id;
             const std::string m_title;
             const ExampleApp::PathDrawing::WayPointType::Values m_type;
-            const Eegeo::Space::LatLong& m_location;
+            const Eegeo::Space::LatLong m_location;
        
         public:
             WayPointModel(const int wpId

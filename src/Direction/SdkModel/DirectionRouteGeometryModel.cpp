@@ -25,7 +25,7 @@ namespace ExampleApp
                 return m_type;
             }
             
-            const std::vector<Eegeo::Space::LatLong>& DirectionRouteGeometryModel::GetCoordinates()
+            const std::vector<Eegeo::Space::LatLong>& DirectionRouteGeometryModel::GetCoordinates() const
             {
                 return m_coordinates;
             }

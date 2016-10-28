@@ -6,10 +6,15 @@ namespace ExampleApp
 {
     namespace DirectionResultSection
     {
-        DirectionQueryResponseReceivedMessage::DirectionQueryResponseReceivedMessage(const std::string& query)
+        DirectionQueryResponseReceivedMessage::DirectionQueryResponseReceivedMessage(ExampleApp::Direction::SdkModel::DirectionResultModel& directionResultModel)
+        : m_directionResultModel(directionResultModel)
         {
         }
-        
+        ExampleApp::Direction::SdkModel::DirectionResultModel& DirectionQueryResponseReceivedMessage::GetDirectionResultModel() const
+        {
+            return m_directionResultModel;
+        }
+
         
     
     }

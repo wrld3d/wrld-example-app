@@ -15,6 +15,8 @@
 #include "DirectionsMenuStateChangedMessage.h"
 #include "BidirectionalBus.h"
 #include "PathDrawingOptionsModel.h"
+#include "DirectionResultModel.h"
+
 namespace ExampleApp
 {
     namespace PathDrawing
@@ -42,7 +44,7 @@ namespace ExampleApp
             std::vector<Eegeo::Routes::Route*> m_routes;
             Eegeo::Routes::Style::Thickness::LinearAltitudeBasedRouteThicknessPolicy m_routeThicknessPolicy;
             
-            void CreateRoutePlan();
+            void CreateRoutePlan(Direction::SdkModel::DirectionResultModel& directionResultModel);
             
             void RemoveRoutePlan();
             

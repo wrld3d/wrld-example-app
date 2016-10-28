@@ -8,6 +8,8 @@
 #include "Reaction.h"
 #include "DirectionsMenu.h"
 #include "Types.h"
+#include "DirectionMenuFindDirectionMessageHandler.h"
+#include "FindDirectionQueryPerformer.h"
 
 namespace ExampleApp
 {
@@ -21,11 +23,13 @@ namespace ExampleApp
                 Menu::View::IMenuModel* m_pMenuModel;
                 Menu::View::IMenuViewModel* m_pMenuViewModel;
                 Menu::View::IMenuSectionViewModel* m_pSearchSectionViewModel;
+                DirectionMenuFindDirectionMessageHandler* m_pFindDirectionMessageHandler;
 
             public:
                 DirectionsMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
                                  ExampleApp::Reaction::View::IReactionControllerModel& reactionControllerModel,
-                                 ExampleAppMessaging::TMessageBus& messageBus);
+                                 ExampleAppMessaging::TMessageBus& messageBus,
+                                     ExampleApp::Direction::SdkModel::FindDirectionQueryPerformer& findDirectionQueryPerformer);
                 
                 
                 ~DirectionsMenuModule();

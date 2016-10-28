@@ -8,6 +8,8 @@
 #include "FindDirectionResultJsonParser.h"
 #include "FindDirectionHttpRequestFactory.h"
 #include "SearchResultModel.h"
+#include "BidirectionalBus.h"
+
 
 namespace ExampleApp
 {
@@ -19,21 +21,23 @@ namespace ExampleApp
             {
             private:
                 
-                Eegeo::Helpers::CallbackCollection2<const FindDirectionQuery&, const std::vector<Search::SdkModel::SearchResultModel>& > m_findDirectionqueryResponseReceivedCallbacks;
+                Eegeo::Helpers::CallbackCollection1<const DirectionResultModel&> m_findDirectionqueryResponseReceivedCallbacks;
                 FindDirectionHttpRequest* m_pCurrentRequest;
                 FindDirectionHttpRequestFactory& m_findDirectionHttpRequestFactory;
                 Eegeo::Helpers::TCallback0<FindDirectionService> m_handleResponseCallback;
                 FindDirectionResultJsonParser& m_findDirectionResultParser;
+                ExampleAppMessaging::TMessageBus& m_messageBus;
+
                 
                 void HandleRouteDirectionResponse();
 
             public:
                 
-                FindDirectionService(FindDirectionHttpRequestFactory& findDirectionHttpRequestFactory,FindDirectionResultJsonParser& m_findDirectionResultParser);
+                FindDirectionService(FindDirectionHttpRequestFactory& findDirectionHttpRequestFactory,FindDirectionResultJsonParser& m_findDirectionResultParser,ExampleAppMessaging::TMessageBus& messageBus);
                 ~FindDirectionService();
-                void InsertOnReceivedQueryResultsCallback(Eegeo::Helpers::ICallback2<const FindDirectionQuery&, const std::vector<Search::SdkModel::SearchResultModel>& >& callback);
+                void InsertOnReceivedQueryResultsCallback(Eegeo::Helpers::ICallback1<const DirectionResultModel& >& callback);
                 
-                void RemoveOnReceivedQueryResultsCallback(Eegeo::Helpers::ICallback2<const FindDirectionQuery&, const std::vector<Search::SdkModel::SearchResultModel>& >& callback);
+                void RemoveOnReceivedQueryResultsCallback(Eegeo::Helpers::ICallback1<const DirectionResultModel& >& callback);
                 void PerformLocationQuerySearch(const Direction::SdkModel::FindDirectionQuery& findDirectionQuery);
 
             };

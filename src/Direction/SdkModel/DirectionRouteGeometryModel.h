@@ -19,15 +19,12 @@ namespace ExampleApp
                 DirectionRouteGeometryModel(std::string type, const  std::vector<Eegeo::Space::LatLong>& coordinates);
                 ~DirectionRouteGeometryModel();
                 const std::string& GetType() const;
-                const std::vector<Eegeo::Space::LatLong>& GetCoordinates();
+                const std::vector<Eegeo::Space::LatLong>& GetCoordinates() const;
                 
             private:
                 
                 std::vector<Eegeo::Space::LatLong> m_coordinates;
                 std::string m_type;
-
-                
-
                 
             };
         }

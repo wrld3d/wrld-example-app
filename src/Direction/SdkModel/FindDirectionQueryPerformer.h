@@ -29,7 +29,6 @@ namespace ExampleApp
                 void PerformFindDirectionQuery( const Eegeo::Space::LatLongAltitude& startLocation, const Eegeo::Space::LatLongAltitude& endlocation, bool isInterior);
                 void HandleSearchResultsResponseReceived(const FindDirectionQuery& query,const std::vector<Search::SdkModel::SearchResultModel>& results);
                 
-                void Dummy(){}
             };
         }
     }
