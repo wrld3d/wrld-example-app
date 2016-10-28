@@ -414,7 +414,7 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
 				Bitmap poiBitmap = BitmapFactory.decodeByteArray(imgData, 0, imgData.length, bmOptions);
 
 			    
-				m_poiImage.setImageBitmap(Bitmap.createScaledBitmap(poiBitmap, width, height, false));
+				m_poiImage.setImageBitmap(Bitmap.createBitmap(poiBitmap));
 			}
 			else
 			{

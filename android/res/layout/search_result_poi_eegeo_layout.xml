@@ -123,6 +123,7 @@
 
          	        <ImageView
          	            android:id="@+id/search_result_poi_view_image"
+         	            android:scaleType="centerCrop"
          	            android:layout_width="fill_parent"
          	            android:layout_height="170dp" />
 

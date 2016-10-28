@@ -347,7 +347,7 @@ public class YelpSearchResultPoiView implements View.OnClickListener
 				int width = m_activity.dipAsPx(m_poiImage.getWidth());
 				int height = (int) (width * 2.f / 3.f);
 				Bitmap poiBitmap = BitmapFactory.decodeByteArray(imgData, 0, imgData.length, bmOptions);
-				m_poiImage.setImageBitmap(Bitmap.createScaledBitmap(poiBitmap, width, height, false));
+				m_poiImage.setImageBitmap(Bitmap.createBitmap(poiBitmap));
 			}
 		}
 		
