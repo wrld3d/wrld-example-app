@@ -256,6 +256,8 @@ namespace ExampleAppWPF
             EegeoResultModel eegeoResultModel = EegeoResultModel.FromResultModel(model);
             m_closing = false;
 
+            m_contentContainer.ScrollToTop();
+
             if(eegeoResultModel.ImageUrl != null)
             {
                 m_poiImageContainer.Visibility = Visibility.Visible;
