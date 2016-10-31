@@ -235,10 +235,6 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     	boolean floorSelectionEnabled = floorShortNames.length > 1;
     	m_floorListContainer.setVisibility(floorSelectionEnabled ? View.VISIBLE : View.GONE);
     	
-    	int floorListWidth = m_floorList.getWidth();
-    	int floorArrowHeight = m_floorUpArrow.getHeight();
-    	m_floorList.setClipBounds(new Rect(-floorListWidth / 2, floorArrowHeight, floorListWidth, (int) controlHeight - floorArrowHeight));
-    	
     	m_floorUpArrow.setY(m_floorList.getY());
     	m_floorDownArrow.setY(m_floorList.getY() + controlHeight - m_floorDownArrow.getHeight());
     }
