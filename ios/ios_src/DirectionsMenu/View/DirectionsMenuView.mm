@@ -148,6 +148,10 @@
     
     _pEndRouteTextField.delegate = self;
     
+    [_pStartRouteTextField addTarget:self action:@selector(StartLocationTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    
+    [_pEndRouteTextField addTarget:self action:@selector(EndLocationTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    
     [m_pDirectionsMenuView.exitDirectionsBtn addTarget:self action:@selector(ExitDirectionsClicked) forControlEvents:UIControlEventTouchUpInside];
     
     [self.pMenuContainer addSubview:m_pDirectionsMenuView];
@@ -316,7 +320,8 @@
         }
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
 
     if(textField == _pStartRouteTextField)
     {
@@ -329,6 +334,16 @@
         [_pStartRouteTextField resignFirstResponder];
     }
     return YES;
+}
+
+-(void)StartLocationTextFieldDidChange:(UITextField *)textField
+{
+    m_pDirectionsMenuInterop->HandleStartLocationChanged(std::string([textField.text UTF8String]));
+}
+
+-(void)EndLocationTextFieldDidChange:(UITextField *)textField
+{
+    m_pDirectionsMenuInterop->HandleEndLocationChanged(std::string([textField.text UTF8String]));
 }
 
 #define MenuViewCallbacks

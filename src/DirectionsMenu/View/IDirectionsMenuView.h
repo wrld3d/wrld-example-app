@@ -45,6 +45,19 @@ namespace ExampleApp
                 virtual void RemoveWayPointSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback) = 0;
                 
                 virtual void HandleWayPointSelected(int index) = 0;
+                
+                virtual void InsertStartLocationChangedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback) = 0;
+                
+                virtual void RemoveStartLocationChangedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)  = 0;
+                
+                virtual void HandleStartLocationChanged(const std::string& startLocationQuery) = 0;
+                
+                virtual void InsertEndLocationChangedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback) = 0;
+                
+                virtual void RemoveEndLocationChangedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)  = 0;
+                
+                virtual void HandleEndLocationChanged(const std::string& startLocationQuery) = 0;
+                
             };
         }
     }

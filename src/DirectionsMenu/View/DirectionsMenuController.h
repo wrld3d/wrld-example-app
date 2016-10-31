@@ -38,6 +38,9 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<DirectionsMenuController> m_onModalBackgroundTappedCallback;
                 Eegeo::Helpers::TCallback1<DirectionsMenuController, Menu::View::MenuItemModel> m_onSearchItemAddedCallback;
                 Eegeo::Helpers::TCallback1<DirectionsMenuController, Menu::View::MenuItemModel> m_onSearchItemRemovedCallback;
+
+                Eegeo::Helpers::TCallback1<DirectionsMenuController,const std::string&>  m_onStartLocationChangedCallback;
+                Eegeo::Helpers::TCallback1<DirectionsMenuController,const std::string&>  m_onEndLocationChangedCallback;
                 
                 void OnOpenStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& openState);
                 void OnViewClosed();
@@ -64,6 +67,10 @@ namespace ExampleApp
                 void OnSearchItemAdded(Menu::View::MenuItemModel& item);
                 
                 void OnSearchItemRemoved(Menu::View::MenuItemModel& item);
+                
+                void OnStartLocationChanged(const std::string& startLocationQuery);
+                
+                void OnEndLocationChanged(const std::string& startLocationQuery);
                 
             protected:
                 

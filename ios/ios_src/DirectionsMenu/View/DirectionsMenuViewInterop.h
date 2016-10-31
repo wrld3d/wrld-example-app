@@ -25,6 +25,9 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_searchClearedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<int> m_wayPointSelectedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_exitDirectionsCallbacks;
+                Eegeo::Helpers::CallbackCollection1<const std::string&> m_startLocationCallbacks;
+                Eegeo::Helpers::CallbackCollection1<const std::string&> m_endLocationCallbacks;
+                
             public:
                 
                 DirectionsMenuViewInterop(DirectionsMenuView* pView)
@@ -124,6 +127,38 @@ namespace ExampleApp
                 {
                     m_wayPointSelectedCallbacks.ExecuteCallbacks(index);
                 }
+                
+                void InsertStartLocationChangedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)
+                {
+                    m_startLocationCallbacks.AddCallback(callback);
+                }
+                
+                void RemoveStartLocationChangedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)
+                {
+                    m_startLocationCallbacks.RemoveCallback(callback);
+                }
+                
+                void HandleStartLocationChanged(const std::string& startLocationQuery)
+                {
+                    m_startLocationCallbacks.ExecuteCallbacks(startLocationQuery);
+                }
+                
+                void InsertEndLocationChangedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)
+                {
+                    m_endLocationCallbacks.AddCallback(callback);
+                }
+                
+                void RemoveEndLocationChangedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)
+                {
+                    m_endLocationCallbacks.RemoveCallback(callback);
+                }
+                
+                void HandleEndLocationChanged(const std::string& startLocationQuery)
+                {
+                    m_endLocationCallbacks.ExecuteCallbacks(startLocationQuery);
+                }
+                
+                
             };
         }
     }

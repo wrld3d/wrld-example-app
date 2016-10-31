@@ -6,7 +6,6 @@
 #include "IModalBackgroundView.h"
 #include "IDirectionsMenuView.h"
 #include "SearchResultSectionItemSelectedMessage.h"
-#include "DirectionQueryResponseReceivedMessage.h"
 
 namespace ExampleApp
 {
@@ -38,6 +37,8 @@ namespace ExampleApp
                         , m_onSearchItemAddedCallback(this, &DirectionsMenuController::OnSearchItemAdded)
                         , m_onSearchItemRemovedCallback(this, &DirectionsMenuController::OnSearchItemRemoved)
                         , m_directionsMenuHighlightItemCallback(this, &DirectionsMenuController::OnDirectionsHighlightItem)
+                        , m_onStartLocationChangedCallback(this,&DirectionsMenuController::OnStartLocationChanged)
+                        , m_onEndLocationChangedCallback(this, &DirectionsMenuController::OnEndLocationChanged)
                         , m_isExitDirections(false)
 
             {
@@ -45,10 +46,14 @@ namespace ExampleApp
                 m_directionsMenuView.InsertSearchClearedCallback(m_searchClearedCallbacks);
                 m_directionsMenuView.InsertWayPointSelectedCallback(m_wayPointSelectedCallbacks);
                 m_directionsMenuView.InsertExitDirectionsCallback(m_exitDirectionsCallbacks);
+                m_directionsMenuView.InsertStartLocationChangedCallback(m_onStartLocationChangedCallback);
+                m_directionsMenuView.InsertEndLocationChangedCallback(m_onEndLocationChangedCallback);
                 
                 Menu::View::IMenuModel& searchSectionMenuModel = m_searchSectionViewModel.GetModel();
                 searchSectionMenuModel.InsertItemAddedCallback(m_onSearchItemAddedCallback);
                 searchSectionMenuModel.InsertItemRemovedCallback(m_onSearchItemRemovedCallback);
+                
+                
                 
                 
                 m_viewModel.InsertOpenStateChangedCallback(m_onOpenStateChangedCallback);
@@ -112,9 +117,22 @@ namespace ExampleApp
             }
             void DirectionsMenuController::OnSearch(const std::string& searchQuery)
             {
-                // Publish message Here
-                m_messageBus.Publish(ExampleApp::DirectionsMenu::DirectionMenuFindDirectionMessage("",true));
                 
+                const Eegeo::Space::LatLongAltitude startLoc = Eegeo::Space::LatLongAltitude::FromDegrees(-2.984219, 56.459917,0.0);
+                const Eegeo::Space::LatLongAltitude endLoc = Eegeo::Space::LatLongAltitude::FromDegrees(-2.977156, 56.459778,0.0);
+                
+                m_messageBus.Publish(ExampleApp::DirectionsMenu::DirectionMenuFindDirectionMessage(startLoc,endLoc,true));
+                
+            }
+            
+            void DirectionsMenuController::OnStartLocationChanged(const std::string& startLocationQuery)
+            {
+                Eegeo_TTY("OnStartLocationChanged");
+            }
+            
+            void DirectionsMenuController::OnEndLocationChanged(const std::string& startLocationQuery)
+            {
+                Eegeo_TTY("OnEndLocationChanged");
             }
             
             void DirectionsMenuController::OnSearchCleared()
