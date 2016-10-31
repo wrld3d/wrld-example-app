@@ -32,7 +32,7 @@
             android:background="@drawable/arrow3_down">
         </ImageView>
         
-	    <ListView
+	    <com.eegeo.menu.BackwardsCompatibleListView
 	        android:id="@+id/interiors_floor_item_list"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
