@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
+import com.eegeo.menu.BackwardsCompatibleListView;
 import com.eegeo.mobileexampleapp.R;
 
 import android.graphics.Color;
@@ -44,7 +45,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     private float m_topYPosInactive;
 
     private RelativeLayout m_floorListContainer;
-    private ListView m_floorList;
+    private BackwardsCompatibleListView m_floorList;
     private int m_maxFloorsViewableCount;
     private RelativeLayout m_floorLayout;
     private ImageView m_floorUpArrow;
@@ -90,7 +91,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
         m_floorNameView = (TextView)m_uiRootView.findViewById(R.id.floor_name);
         
         m_floorListContainer = (RelativeLayout)m_uiRootView.findViewById(R.id.interiors_floor_list_container);
-        m_floorList = (ListView)m_uiRootView.findViewById(R.id.interiors_floor_item_list);
+        m_floorList = (BackwardsCompatibleListView)m_uiRootView.findViewById(R.id.interiors_floor_item_list);
         m_floorList.setEnabled(false);
         
         m_floorListAdapter = new InteriorsFloorListAdapter(m_activity, R.layout.interiors_floor_list_item);
@@ -234,6 +235,10 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     	
     	boolean floorSelectionEnabled = floorShortNames.length > 1;
     	m_floorListContainer.setVisibility(floorSelectionEnabled ? View.VISIBLE : View.GONE);
+    	
+    	int floorListWidth = m_floorList.getWidth();
+    	int floorArrowHeight = m_floorUpArrow.getHeight();
+    	m_floorList.setClipBounds(new Rect(-floorListWidth / 2, floorArrowHeight, floorListWidth, (int) controlHeight - floorArrowHeight));
     	
     	m_floorUpArrow.setY(m_floorList.getY());
     	m_floorDownArrow.setY(m_floorList.getY() + controlHeight - m_floorDownArrow.getHeight());
