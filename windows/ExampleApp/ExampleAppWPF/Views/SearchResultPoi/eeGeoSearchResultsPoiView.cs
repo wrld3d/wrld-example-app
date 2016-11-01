@@ -231,7 +231,7 @@ namespace ExampleAppWPF
         private void WebLinkClicked(object sender, MouseButtonEventArgs e)
         {
             Uri uri;
-            if (TryCreateWebLink(m_emailText, out uri))
+            if (TryCreateWebLink(m_webAddressText, out uri))
             {
                 System.Diagnostics.Process.Start(uri.ToString());
             }
