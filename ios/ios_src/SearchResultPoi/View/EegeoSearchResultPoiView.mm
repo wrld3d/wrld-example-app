@@ -591,7 +591,7 @@ const int DeletePinAlertViewTag = 2;
                                             cardTextHorizontalSpace,
                                             35.f);
         self.pWebContent.text = [NSString stringWithUTF8String:m_eegeoModel.GetWebUrl().c_str()];
-        self.pWebContent.numberOfLines = 0;
+        self.pWebContent.numberOfLines = 2;
         self.pWebContent.hidden = false;
         [self.pWebContent sizeToFit];
         

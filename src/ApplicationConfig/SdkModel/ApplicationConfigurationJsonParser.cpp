@@ -92,6 +92,13 @@ namespace ExampleApp
                     useLabels = document["UseLabels"].GetBool();
                 }
                 
+                std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo> interiorTrackingInfoList;
+                if(document.HasMember("IndoorTrackedBuildings") && !document["IndoorTrackedBuildings"].IsNull())
+                {
+                    const rapidjson::Value& indoorTrackedBuildingsArray = document["IndoorTrackedBuildings"];
+                    ParseIndoorTrackingInfo(interiorTrackingInfoList, indoorTrackedBuildingsArray);
+                }
+                
                 return ApplicationConfiguration(
                     name,
                     eegeoApiKey,
@@ -118,8 +125,47 @@ namespace ExampleApp
                     myPinsWebServiceAuthToken,
                     twitterAuthCode,
                     isKioskTouchInputEnabled,
-                    useLabels
+                    useLabels,
+                    interiorTrackingInfoList
                 );
+            }
+            
+            void ApplicationConfigurationJsonParser::ParseIndoorTrackingInfo(std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfoList,
+                                                                             const rapidjson::Value& indoorTrackedBuildingsArray)
+            {
+                for(rapidjson::SizeType i = 0; i < indoorTrackedBuildingsArray.Size(); ++i)
+                {
+                    const rapidjson::Value& building = indoorTrackedBuildingsArray[i];
+                    
+                    Eegeo_ASSERT(building.HasMember("InteriorId"), "Interior Id not found");
+                    const std::string& id = building["InteriorId"].GetString();
+                    const Eegeo::Resources::Interiors::InteriorId& interiorId(id);
+                    
+                    Eegeo_ASSERT(building.HasMember("Type"), "Type not found");
+                    const std::string& type = building["Type"].GetString();
+
+                    
+                    Eegeo_ASSERT(building.HasMember("Config"), "Config not found");
+                    const std::string& apiKey = building["Config"][0]["ApiKey"].GetString();
+                    const std::string& apiSecret = building["Config"][0]["ApiSecret"].GetString();
+                    SdkModel::ApplicationInteriorTrackingConfig interiorTrackingConfig(apiKey, apiSecret);
+                    
+                    Eegeo_ASSERT(building.HasMember("FloorMapping"), "FloorMapping not found");
+                    const rapidjson::Value& floorMappingArray = building["FloorMapping"];
+                    
+                    std::map<int, std::string> floorMapping;
+                    for(rapidjson::SizeType j = 0; j < floorMappingArray.Size(); ++j)
+                    {
+                        floorMapping[floorMappingArray[j]["BuildingFloorIndex"].GetInt()] = floorMappingArray[j]["TrackedFloorIndex"].GetString();
+                    }
+                    
+                    SdkModel::ApplicationInteriorTrackingInfo interiorTrackingInfo(interiorId,
+                                                                                   type,
+                                                                                   interiorTrackingConfig,
+                                                                                   floorMapping);
+                    
+                    interiorTrackingInfoList.insert(std::pair<std::string, SdkModel::ApplicationInteriorTrackingInfo>(interiorId.Value(),interiorTrackingInfo));
+                }
             }
         }
     }
