@@ -205,7 +205,7 @@
                                         <StackPanel VerticalAlignment="Top">
 
                                             <!-- Details Divider -->
-                                            <Grid Height="250">
+                                            <Grid Height="250" Name="DetailsContainer">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="220"/>
                                                     <ColumnDefinition Width="10"/>
@@ -216,7 +216,7 @@
                                                         <StackPanel HorizontalAlignment="Stretch">
                                                             <ProgressBar Name="ImageProgress" HorizontalAlignment="Center" Visibility="Hidden"/>
                                                         </StackPanel>
-                                                        <Grid Margin="0,0,0,0">
+                                                        <Grid Margin="0,0,0,0" Name="PoiImageAndGradientContainer">
                                                             <Grid>
                                                                 <Image Name="PoiImage" Source="/Assets/poi_placeholder.png"/>
                                                                 <Grid Margin="0,0,0,0" Grid.Column="0" Name="PreviewImageSpinner" Visibility="Hidden">
@@ -238,6 +238,8 @@
                                                                 <ColumnDefinition Width="Auto"/>
                                                                 <ColumnDefinition Width="*"/>
                                                             </Grid.ColumnDefinitions>
+
+                                                            <Image Name="RatingImage" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Width="100" Height="20"/>
                                                             <Image Name="RatingOverImage" Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=RatingsImage}" 
                     						Grid.Column="1" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform" Height="17">
                                                                 <Image.Style>
@@ -256,7 +258,6 @@
                                                             </Border>
                                                         </Grid>
                                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,-40" VerticalAlignment="Bottom">
-                                                            <Image Name="RatingImage" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                                             <Image Name="WebVendorLinkStyle" Margin="5,10,5,5" VerticalAlignment="Center" HorizontalAlignment="Center" Source="/Assets/yelp_reviews.png">
                                                                 <Image.Style>
                                                                     <Style>
