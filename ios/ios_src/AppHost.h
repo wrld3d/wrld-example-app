@@ -57,6 +57,9 @@
 #include "SurveyViewIncludes.h"
 #include "IMenuReactionModel.h"
 #include "TagSearchViewIncludes.h"
+#include "IndoorAtlasLocationModule.h"
+#include "CurrentLocationService.h"
+#include "InteriorsLocationServiceProvider.h"
 
 @class ViewController;
 class AppInputDelegate;
@@ -106,6 +109,10 @@ private:
     Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory m_iOSAlertBoxFactory;
     Eegeo::UI::NativeUIFactories m_iOSNativeUIFactories;
     Eegeo::iOS::iOSPlatformAbstractionModule* m_piOSPlatformAbstractionModule;
+    
+    ExampleApp::IndoorAtlas::IndoorAtlasLocationModule* m_pIndoorAtlasLocationModule;
+    Eegeo::Helpers::CurrentLocationService::CurrentLocationService* m_pCurrentLocationService;
+    ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider* m_pInteriorsLocationServiceProvider;
     
     ExampleApp::SettingsMenu::View::ISettingsMenuViewModule* m_pSettingsMenuViewModule;
     ExampleApp::SearchMenu::View::ISearchMenuViewModule* m_pSearchMenuViewModule;

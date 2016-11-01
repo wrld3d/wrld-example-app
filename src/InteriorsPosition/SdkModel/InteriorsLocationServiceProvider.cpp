@@ -9,16 +9,18 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            InteriorsLocationServiceProvider::InteriorsLocationServiceProvider(InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
+            InteriorsLocationServiceProvider::InteriorsLocationServiceProvider(const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
+                                                                               InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                                                                Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                                Eegeo::Helpers::CurrentLocationService::CurrentLocationService& currentLocationService,
                                                                                Eegeo::Location::ILocationService& defaultLocationService,
-                                                                               TestLocationService& testLocationService)
-            : m_currentLocationService(currentLocationService)
-            //, m_defaultLocationService(defaultLocationService)
-            //, m_testLocationService(testLocationService)
+                                                                               Eegeo::Location::ILocationService& indoorAtlasLocationService)
+            : m_applicationConfiguration(applicationConfiguration)
+            , m_currentLocationService(currentLocationService)
+            , m_defaultLocationService(defaultLocationService)
+            , m_indoorAtlasLocationService(indoorAtlasLocationService)
             , m_interiorsExplorerModel(interiorsExplorerModel)
-            //, m_interiorSelectionModel(interiorSelectionModel)
+            , m_interiorSelectionModel(interiorSelectionModel)
             , m_interiorExplorerEnteredCallback(this, &InteriorsLocationServiceProvider::OnInteriorExplorerEntered)
             , m_interiorExplorerExitCallback(this, &InteriorsLocationServiceProvider::OnInteriorExplorerExit)
             {
@@ -34,18 +36,27 @@ namespace ExampleApp
             
             void InteriorsLocationServiceProvider::OnInteriorExplorerEntered()
             {
-                //const Eegeo::Resources::Interiors::InteriorId& interiorID = m_interiorSelectionModel.GetSelectedInteriorId();
-                //if(interiorID == Eegeo::Resources::Interiors::InteriorId("westport_house"))
-                //{
-                //    Eegeo_TTY("using test location service");
-                //    m_currentLocationService.SetLocationService(m_testLocationService);
-                //}
+                Eegeo::Resources::Interiors::InteriorId interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
+                
+                const std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& trackingInfoMap = m_applicationConfiguration.InteriorTrackingInfo();
+                const std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>::const_iterator it = trackingInfoMap.find(interiorId.Value());
+                
+                if(it != trackingInfoMap.end())
+                {
+                    const ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo& trackingInfo = it->second;
+                
+                    if(trackingInfo.GetType() == "IndoorAtlas")
+                    {
+                        Eegeo_TTY("using IndoorAtlas location service");
+                        m_currentLocationService.SetLocationService(m_indoorAtlasLocationService);
+                    }
+                }
             }
             
             void InteriorsLocationServiceProvider::OnInteriorExplorerExit()
             {
-                //Eegeo_TTY("using default location service");
-                //m_currentLocationService.SetLocationService(m_defaultLocationService);
+                Eegeo_TTY("using default location service");
+                m_currentLocationService.SetLocationService(m_defaultLocationService);
             }
         }
     }

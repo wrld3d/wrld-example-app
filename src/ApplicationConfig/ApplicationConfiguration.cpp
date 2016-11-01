@@ -32,7 +32,8 @@ namespace ExampleApp
             const std::string& myPinsWebServiceAuthToken,
             const std::string& twitterAuthCode,
             const bool isKioskTouchInputEnabled,
-            const bool useLabels
+            const bool useLabels,
+            const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo
             )
         : m_name(name)
         , m_eegeoApiKey(eegeoApiKey)
@@ -60,6 +61,7 @@ namespace ExampleApp
         , m_twitterAuthCode(twitterAuthCode)
         , m_isKioskTouchInputEnabled(isKioskTouchInputEnabled)
         , m_useLabels(useLabels)
+        , m_interiorTrackingInfo(interiorTrackingInfo)
         {
         }
         
@@ -191,6 +193,11 @@ namespace ExampleApp
         bool ApplicationConfiguration::UseLabels() const
         {
             return m_useLabels;
+        }
+        
+        const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& ApplicationConfiguration::InteriorTrackingInfo() const
+        {
+            return m_interiorTrackingInfo;
         }
     }
 }
