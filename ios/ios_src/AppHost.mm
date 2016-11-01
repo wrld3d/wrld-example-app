@@ -85,6 +85,7 @@
 #include "SurveyViewModule.h"
 #include "IOSMenuReactionModel.h"
 #include "TagSearchViewModule.h"
+#include "InteriorsExplorerModel.h"
 
 #import "UIView+TouchExclusivity.h"
 
@@ -124,6 +125,8 @@ AppHost::AppHost(
     Eegeo::TtyHandler::TtyEnabled = true;
     
     m_piOSLocationService = Eegeo_NEW(iOSLocationService)();
+    
+    m_pCurrentLocationService = Eegeo_NEW(Eegeo::Helpers::CurrentLocationService::CurrentLocationService)(*m_piOSLocationService);
 
     m_piOSConnectivityService = Eegeo_NEW(iOSConnectivityService)();
 
@@ -159,7 +162,7 @@ AppHost::AppHost(
 			 applicationConfiguration,
              *m_piOSPlatformAbstractionModule,
              screenProperties,
-             *m_piOSLocationService,
+             *m_pCurrentLocationService,
              m_iOSNativeUIFactories,
              platformConfiguration,
              *m_pJpegLoader,
@@ -171,7 +174,23 @@ AppHost::AppHost(
              m_iOSFlurryMetricsService,             
              *this,
              *m_pMenuReactionModel);
-
+    
+    Eegeo::Modules::Map::MapModule& mapModule = m_pApp->World().GetMapModule();
+    Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
+    m_pIndoorAtlasLocationModule = Eegeo_NEW(ExampleApp::IndoorAtlas::IndoorAtlasLocationModule)(m_pApp->GetAppModeModel(),
+                                                                                                 interiorsPresentationModule.GetInteriorInteractionModel(),
+                                                                                                 interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                                                 mapModule.GetEnvironmentFlatteningService(),
+                                                                                                 applicationConfiguration,
+                                                                                                 *m_piOSLocationService);
+    
+    m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(applicationConfiguration,
+                                                                                                                               m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
+                                                                                                                               interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                                                                               *m_pCurrentLocationService,
+                                                                                                                               *m_piOSLocationService,
+                                                                                                                               m_pIndoorAtlasLocationModule->GetLocationService());
+    
     CreateApplicationViewModules(screenProperties);
 
     m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_pApp, m_viewController, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), screenProperties.GetPixelScale());
@@ -209,6 +228,15 @@ AppHost::~AppHost()
 
     Eegeo_DELETE m_pInitialExperienceModule;
     m_pInitialExperienceModule = NULL;
+    
+    Eegeo_DELETE m_pInteriorsLocationServiceProvider;
+    m_pInteriorsLocationServiceProvider = NULL;
+    
+    Eegeo_DELETE m_pIndoorAtlasLocationModule;
+    m_pIndoorAtlasLocationModule = NULL;
+    
+    Eegeo_DELETE m_pCurrentLocationService;
+    m_pCurrentLocationService = NULL;
 
     Eegeo_DELETE m_piOSLocationService;
     m_piOSLocationService = NULL;

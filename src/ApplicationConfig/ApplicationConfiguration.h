@@ -3,8 +3,10 @@
 #pragma once
 
 #include <string>
+#include <map>
 #include "ApplicationConfig.h"
 #include "LatLongAltitude.h"
+#include "ApplicationInteriorTrackingInfo.h"
 
 namespace ExampleApp
 {
@@ -39,6 +41,8 @@ namespace ExampleApp
             std::string m_twitterAuthCode;
             bool m_isKioskTouchInputEnabled;
             bool m_useLabels;
+            
+            std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo> m_interiorTrackingInfo;
 
         public:
             
@@ -68,7 +72,8 @@ namespace ExampleApp
                 const std::string& myPinsWebServiceAuthToken,
                 const std::string& twitterAuthCode,
                 const bool isKioskTouchInputEnabled,
-                bool m_useLabels
+                bool m_useLabels,
+                const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo
             );
             
             std::string Name() const;
@@ -122,6 +127,8 @@ namespace ExampleApp
             bool IsKioskTouchInputEnabled() const;
             
             bool UseLabels() const;
+            
+            const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& InteriorTrackingInfo() const;
         };
     }
 }

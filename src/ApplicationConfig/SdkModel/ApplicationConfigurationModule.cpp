@@ -35,6 +35,8 @@ namespace ExampleApp
                     const std::string emptyMyPinsWebServiceUrl;
                     const std::string emptyMyPinsWebServiceAuthToken;
                     const std::string emptyTwitterAuthCode;
+                    
+                    const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo> interiorTrackingInfo;
 
                     return ApplicationConfiguration ("Eegeo Example App", 
                         emptyEegeoApiKey,
@@ -61,7 +63,8 @@ namespace ExampleApp
                         emptyMyPinsWebServiceAuthToken,
                         emptyTwitterAuthCode,
                         false,
-                        false);
+                        false,
+                        interiorTrackingInfo);
                 }
             }
             

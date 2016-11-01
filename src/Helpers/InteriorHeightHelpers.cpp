@@ -18,6 +18,11 @@ namespace ExampleApp
             {
                 return interiorModel.GetTangentSpaceBounds().GetMin().y + (floorIndex * INTERIOR_FLOOR_HEIGHT);
             }
+            
+            float GetFloorHeightAboveSeaLevelIncludingEnvironmentFlattening(const Eegeo::Resources::Interiors::InteriorsModel& interiorModel, unsigned int floorIndex, float environmentFlattening)
+            {
+                return (interiorModel.GetTangentSpaceBounds().GetMin().y * environmentFlattening) + (floorIndex * INTERIOR_FLOOR_HEIGHT);
+            }
         }
     }
 }

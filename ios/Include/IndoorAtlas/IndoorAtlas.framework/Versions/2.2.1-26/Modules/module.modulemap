@@ -1,0 +1,6 @@
+framework module IndoorAtlas { umbrella header "IndoorAtlas.h"
+header "IALocationManager.h"
+header "IAResourceManager.h"
+header "IAFloorPlan.h"
+header "IAFloor.h"
+export * module * { export * } }
