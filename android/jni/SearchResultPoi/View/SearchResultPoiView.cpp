@@ -254,8 +254,10 @@ namespace ExampleApp
             	jstring facebookStr = env->NewStringUTF(eegeoSearchResultModel.GetFacebookUrl().c_str());
             	jstring twitterStr = env->NewStringUTF(eegeoSearchResultModel.GetTwitterUrl().c_str());
             	jstring emailStr = env->NewStringUTF(eegeoSearchResultModel.GetEmail().c_str());
+            	jstring customViewStr = env->NewStringUTF(eegeoSearchResultModel.GetCustomViewUrl().c_str());
+            	int customViewHeight = eegeoSearchResultModel.GetCustomViewHeight();
 
-            	jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
+            	jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V");
             	env->CallVoidMethod(
             			m_uiView,
 						displayPoiInfoMethod,
@@ -272,7 +274,9 @@ namespace ExampleApp
 						isPinned,
 						facebookStr,
 						twitterStr,
-						emailStr
+						emailStr,
+						customViewStr,
+						customViewHeight
             	);
 
             	env->DeleteLocalRef(vendorStr);
@@ -288,6 +292,7 @@ namespace ExampleApp
             	env->DeleteLocalRef(facebookStr);
             	env->DeleteLocalRef(twitterStr);
             	env->DeleteLocalRef(emailStr);
+            	env->DeleteLocalRef(customViewStr);
             }
 
             jclass SearchResultPoiView::CreateJavaClass(const std::string& viewClass)

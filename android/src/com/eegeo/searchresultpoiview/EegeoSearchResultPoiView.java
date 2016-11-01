@@ -155,7 +155,9 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
     		final boolean isPinned,
     		final String facebook,
     		final String twitter,
-    		final String email) 
+    		final String email,
+    		final String customViewUrl,
+    		final int customViewHeight) 
     {
     	int containerWidth = m_searchResultPoiViewContainer.getWidth();
     	int containerHeight = m_searchResultPoiViewContainer.getHeight();
@@ -327,9 +329,17 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
         	m_dropPinText.setText("Remove Pin");
         }
         
-        if(m_htmlLoaded)
+        if(!customViewUrl.equals(""))
         {
-        	m_webView.loadUrl("https://raw.githubusercontent.com/eegeo/eegeo-example-app/master/LICENSE.md");
+        	m_webView.loadUrl(customViewUrl);
+        	if(customViewHeight != -1)
+        	{
+        		RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) m_webView.getLayoutParams();
+            	params.height = m_activity.dipAsPx(customViewHeight);
+            	m_webView.setLayoutParams(params);
+        	}
+        	m_webView.getSettings().setLoadWithOverviewMode(true);
+        	m_webView.getSettings().setUseWideViewPort(true);
         	m_poiImageViewContainer.setVisibility(View.GONE);
         	m_webViewContainer.setVisibility(View.VISIBLE);
         	m_poiImageHeader.setVisibility(View.VISIBLE);

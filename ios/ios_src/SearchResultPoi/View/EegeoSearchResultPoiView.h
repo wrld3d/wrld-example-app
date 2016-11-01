@@ -28,6 +28,7 @@
     bool m_poiImageLoadedSuccessfully;
     bool m_htmlLoaded;
     bool m_webPageLoaded;
+    bool m_webPageHeightSpecified;
     
     UIImage* m_pRemovePinButtonBackgroundImage;
     UIImage* m_pRemovePinHighlightButtonBackgroundImage;

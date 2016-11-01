@@ -138,10 +138,11 @@
          	        android:layout_marginRight="10dp"
          	        android:visibility="gone" >   
          	               	        
-         	        <WebView  
+         	        <WebView
 					    android:id="@+id/webview"
 						android:layout_width="fill_parent"
-						android:layout_height="170dp"/>
+						android:layout_height="wrap_content"
+						android:minHeight="170dp"/>
        	        </RelativeLayout>
          	    
 				<View

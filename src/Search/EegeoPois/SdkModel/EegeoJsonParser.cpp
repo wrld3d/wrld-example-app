@@ -215,6 +215,8 @@ namespace ExampleApp
                     std::string facebookUrl = "";
                     std::string twitterUrl = "";
                     std::string email = "";
+                    std::string customViewUrl = "";
+                    int customViewHeight = -1;
                     
                     const std::string phoneName = "phone";
                     const std::string webName = "web";
@@ -224,6 +226,8 @@ namespace ExampleApp
                     const std::string facebookName = "facebook";
                     const std::string twitterName = "twitter";
                     const std::string emailName = "email";
+                    const std::string customViewUrlName = "custom_view";
+                    const std::string customViewHeightName = "custom_view_height";
                     
                     if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
                     {
@@ -270,6 +274,16 @@ namespace ExampleApp
                         {
                             email = json[emailName.c_str()].GetString();
                         }
+                        
+                        if(json.HasMember(customViewUrlName.c_str()) && json[customViewUrlName.c_str()].IsString())
+                        {
+                            customViewUrl = json[customViewUrlName.c_str()].GetString();
+                        }
+                        
+                        if(json.HasMember(customViewHeightName.c_str()) && json[customViewHeightName.c_str()].IsInt())
+                        {
+                            customViewHeight = json[customViewHeightName.c_str()].GetInt();
+                        }
                     }
                     
                     return EegeoSearchResultModel(phone,
@@ -279,7 +293,9 @@ namespace ExampleApp
                                                   imageUrl,
                                                   facebookUrl,
                                                   twitterUrl,
-                                                  email);
+                                                  email,
+                                                  customViewUrl,
+                                                  customViewHeight);
                 }
                 
                 bool TryParseImageDetails(const Search::SdkModel::SearchResultModel& searchResultModel, std::string& out_imageUrl)

@@ -26,6 +26,8 @@ namespace ExampleApp
                     std::string m_facebookUrl;
                     std::string m_twitterUrl;
                     std::string m_email;
+                    std::string m_customViewUrl;
+                    int m_customViewHeight;
                     
                 public:
                     
@@ -36,7 +38,9 @@ namespace ExampleApp
                                            const std::string& imageUrl,
                                            const std::string& facebookUrl,
                                            const std::string& twitterUrl,
-                                           const std::string& email);
+                                           const std::string& email,
+                                           const std::string& customViewUrl,
+                                           const int& customViewHeight);
                     
                     EegeoSearchResultModel();
                     
@@ -59,6 +63,10 @@ namespace ExampleApp
                     bool HasImage() const;
                     
                     const std::string& GetImageUrl() const;
+                    
+                    const std::string& GetCustomViewUrl() const;
+                    
+                    const int& GetCustomViewHeight() const;
                 };
             }
         }
