@@ -123,6 +123,7 @@
 #include "SearchTagsFactory.h"
 #include "ITagSearchRepository.h"
 #include "DirectionsResultSectionModule.h"
+#include "GeoNamesSearchService.h"
 
 namespace ExampleApp
 {
@@ -499,7 +500,7 @@ namespace ExampleApp
         }
         
         
-
+        
         m_pSearchServiceModule = Eegeo_NEW(Search::Combined::SdkModel::CombinedSearchServiceModule)(m_searchServiceModules, m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel());
         
         m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(m_pSearchServiceModule->GetSearchService(),
@@ -610,12 +611,19 @@ namespace ExampleApp
                                                                                                            m_pAppCameraModule->GetController(),
                                                                                                            m_messageBus);
         
+        Search::GeoNames::SdkModel::GeoNamesSearchServiceModule *pGeoNameModule = Eegeo_NEW(Search::GeoNames::SdkModel::GeoNamesSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
+                                                                           m_platformAbstractions.GetUrlEncoder(),
+                                                                           m_networkCapabilities,
+                                                                           m_applicationConfiguration.GeoNamesUserName());
+        
+        ExampleApp::Search::GeoNames::SdkModel::GeoNamesSearchService &geoNameService = (ExampleApp::Search::GeoNames::SdkModel::GeoNamesSearchService&)pGeoNameModule->GetSearchService();
+        
         //TODO: Creat new repository for direction moudle query performer
         
         m_pFindDirectionServiceModule = Eegeo_NEW(Direction::SdkModel::FindDirectionServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),m_platformAbstractions.GetUrlEncoder(),m_applicationConfiguration.EegeoApiKey(),m_messageBus);
         
         m_pDirectionsMenuModule = Eegeo_NEW(ExampleApp::DirectionsMenu::SdkModel::DirectionsMenuModule)(m_identityProvider,
-                                                                                                        m_pReactionControllerModule->GetReactionControllerModel(),                                                                                                                         m_messageBus,m_pFindDirectionServiceModule->GetFindDirectionQueryPerformer());
+                                                                                                        m_pReactionControllerModule->GetReactionControllerModel(),                                                                                                                         m_messageBus,m_pFindDirectionServiceModule->GetFindDirectionQueryPerformer(),geoNameService);
         
         m_pDirectionResultSectionModule = Eegeo_NEW(ExampleApp::DirectionResultSection::SdkModel::DirectionsResultSectionModule)(m_pDirectionsMenuModule->GetDirectionsMenuViewModel(),m_pSearchModule->GetSearchResultRepository(),m_pSearchModule->GetSearchQueryPerformer(),*m_pCameraTransitionService,interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                                     interiorsModelModule.GetInteriorMarkerModelRepository(),

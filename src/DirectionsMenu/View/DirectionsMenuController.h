@@ -8,6 +8,7 @@
 #include "IModalityController.h"
 #include "DirectionsMenuStateChangedMessage.h"
 #include "DirectionsMenuItemHighlightMessage.h"
+#include "DirectionMenuGeoNamesResponseReceivedMessage.h"
 
 namespace ExampleApp
 {
@@ -42,6 +43,10 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<DirectionsMenuController,const std::string&>  m_onStartLocationChangedCallback;
                 Eegeo::Helpers::TCallback1<DirectionsMenuController,const std::string&>  m_onEndLocationChangedCallback;
                 
+                
+                Eegeo::Helpers::TCallback1<DirectionsMenuController, const DirectionsMenu::DirectionMenuGeoNamesResponseReceivedMessage&> m_onStartLocationResponseReceivedCallback;
+                
+                
                 void OnOpenStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& openState);
                 void OnViewClosed();
 
@@ -71,6 +76,8 @@ namespace ExampleApp
                 void OnStartLocationChanged(const std::string& startLocationQuery);
                 
                 void OnEndLocationChanged(const std::string& startLocationQuery);
+                
+                void OnGeoNamesStartLocationResponseReceived(const DirectionsMenu::DirectionMenuGeoNamesResponseReceivedMessage& message);
                 
             protected:
                 
