@@ -439,7 +439,7 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
 
 			    if(m_poiImageViewContainer.getVisibility() != View.GONE)
 			    {
-			    	m_poiImage.setImageBitmap(Bitmap.createScaledBitmap(poiBitmap, width, height, false));
+			    	m_poiImage.setImageBitmap(Bitmap.createBitmap(poiBitmap));
 			    }
 			}
 			else
