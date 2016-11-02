@@ -39,6 +39,7 @@
 #include "WorldPinsSelectedFocussedMessage.h"
 #include "DirectionMenuFindDirectionMessage.h"
 #include "DirectionResultSectionItemSelectedMessage.h"
+#include "DirectionMenuGetGeoNamesMessage.h"
 
 namespace ExampleApp
 {
@@ -80,6 +81,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<WorldPins::WorldPinsSelectedFocussedMessage>
             , public Eegeo::Messaging::CatalogBinding<DirectionsMenu::DirectionMenuFindDirectionMessage>
             , public Eegeo::Messaging::CatalogBinding<DirectionResultSection::DirectionResultSectionItemSelectedMessage>
+            , public Eegeo::Messaging::CatalogBinding<DirectionsMenu::DirectionMenuGetGeoNamesMessage>
             , private Eegeo::NonCopyable
         {
 

@@ -46,6 +46,7 @@
 #include "TagSearchRemovedMessage.h"
 #include "DirectionQueryResponseReceivedMessage.h"
 #include "DirectionsMenuItemHighlightMessage.h"
+#include "DirectionMenuGeoNamesResponseReceivedMessage.h"
 
 namespace ExampleApp
 {
@@ -94,6 +95,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<DirectionsMenuInitiation::DirectionsMenuStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<DirectionResultSection::DirectionQueryResponseReceivedMessage>
             , public Eegeo::Messaging::CatalogBinding<DirectionsMenuInitiation::DirectionsMenuItemHighlightMessage>
+            , public Eegeo::Messaging::CatalogBinding<DirectionsMenu::DirectionMenuGeoNamesResponseReceivedMessage>
             , private Eegeo::NonCopyable
         {
 

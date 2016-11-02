@@ -58,6 +58,16 @@ namespace ExampleApp
                 
                 }
                 
+                void SetGeoNamesStartSuggestions(const std::vector<Search::SdkModel::SearchResultModel>& results)
+                {
+                    [m_pView SetGeoNamesStartSuggestions:results];
+                }
+                
+                void SetGeoNamesEndSuggestions(const std::vector<Search::SdkModel::SearchResultModel>& results)
+                {
+                    [m_pView SetGeoNamesEndSuggestions:results];
+                }
+                
                 void SearchPerformed(const std::string& searchQuery)
                 {
                     m_searchPerformedCallbacks.ExecuteCallbacks(searchQuery);
