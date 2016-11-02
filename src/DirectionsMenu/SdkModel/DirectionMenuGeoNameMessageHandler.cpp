@@ -23,7 +23,7 @@ namespace ExampleApp
             DirectionMenuGeoNameMessageHandler::~DirectionMenuGeoNameMessageHandler()
             {
                 m_messageBus.UnsubscribeNative(m_handleFindDirectionMessageBinding);
-                m_geoNamesService.Search::SdkModel::ISearchService::RemoveOnReceivedQueryResultsCallback(m_searchQueryResponseCallback);
+                m_geoNamesService.RemoveOnReceivedQueryResultsCallback(m_searchQueryResponseCallback);
                 
                 
             }

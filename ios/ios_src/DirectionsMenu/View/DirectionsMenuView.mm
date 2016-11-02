@@ -293,12 +293,12 @@
 
 -(void) SetGeoNamesStartSuggestions:(const std::vector<ExampleApp::Search::SdkModel::SearchResultModel>&) results
 {
-    Eegeo_TTY("Start Results Count",results.size());
+    Eegeo_TTY("Start Results Count: %i",results.size());
 }
 
 -(void) SetGeoNamesEndSuggestions:(const std::vector<ExampleApp::Search::SdkModel::SearchResultModel>&) results
 {
-    Eegeo_TTY("End Results Count",results.size());
+    Eegeo_TTY("End Results Count: %i",results.size());
 }
 
 - (void)onSectionExpanded
