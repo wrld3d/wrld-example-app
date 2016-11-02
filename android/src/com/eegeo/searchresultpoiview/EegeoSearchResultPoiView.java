@@ -130,7 +130,6 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
         m_facebookUrl.setOnClickListener(this);
         m_twitterUrl.setOnClickListener(this);
         m_email.setOnClickListener(this);
-        m_webLinkView.setOnClickListener(this);
     }
 
     public void destroy()
@@ -224,7 +223,7 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
         	m_webLinkView.setText(url.replace("", ""));
         	
         	final String webRegex = "[\\S]*";
-        	Linkify.addLinks(m_webLinkView, Pattern.compile(webRegex), "Web:");
+        	Linkify.addLinks(m_webLinkView, Pattern.compile(webRegex), url);
         }
         else
         {
@@ -394,10 +393,6 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
         {
         	openEmailLink(view);
         }
-        else if(view == m_webLinkView)
-        {
-        	handleWebLinkButtonClicked();
-        }
     }
 
     public void dismissPoiInfo()
@@ -460,30 +455,6 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
         m_togglePinnedButton.setOnClickListener(null);
 
         SearchResultPoiViewJniMethods.CloseButtonClicked(m_nativeCallerPointer);
-    }
-    
-    private void handleWebLinkButtonClicked()
-    {
-    	final Uri uri = Uri.parse(m_url);
-    	final Intent browserIntent = new Intent(Intent.ACTION_VIEW, uri);
-    	if(browserIntent.resolveActivity(m_activity.getPackageManager()) != null)
-    	{
-    		m_activity.startActivity(browserIntent);
-    	}
-    	else
-    	{
-    		new AlertDialog.Builder(m_activity)
-    			.setTitle("Warning")
-    			.setMessage("No web browser found on device. Cannot open webpage.")
-    			.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) 
-					{
-					}
-				})
-    			.show();
-    	}
-        m_handlingClick = false;
     }
 	
 	public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight)
