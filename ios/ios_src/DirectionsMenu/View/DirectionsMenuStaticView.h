@@ -23,5 +23,7 @@
 -(void)SetSearchMenuView:(UIView *)parentView;
 
 -(void)SetHighlightItem:(int)highlightItem;
-
+- (IBAction)cancelSuggestions:(id)sender;
+- (void)showEndSuggestions;
+- (void)showStartSuggestions;
 @end

@@ -335,20 +335,31 @@
     }
     return YES;
 }
-
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    [m_pDirectionsMenuView cancelSuggestions:nil];
+}
 -(void)StartLocationTextFieldDidChange:(UITextField *)textField
 {
-    m_pDirectionsMenuInterop->HandleStartLocationChanged(std::string([textField.text UTF8String]));
+    [m_pDirectionsMenuView showStartSuggestions];
+    [self updateContainerFrame];
+
+    //m_pDirectionsMenuInterop->HandleStartLocationChanged(std::string([textField.text UTF8String]));
 }
 
 -(void)EndLocationTextFieldDidChange:(UITextField *)textField
 {
-    m_pDirectionsMenuInterop->HandleEndLocationChanged(std::string([textField.text UTF8String]));
+    [m_pDirectionsMenuView showEndSuggestions];
+    [self updateContainerFrame];
+   // m_pDirectionsMenuInterop->HandleEndLocationChanged(std::string([textField.text UTF8String]));
 }
 
 #define MenuViewCallbacks
 
 -(void)ExitDirectionsClicked {
+    [m_pDirectionsMenuView cancelSuggestions:nil];
+    [self updateContainerFrame];
+
     
     if([self canInteract])
     {
