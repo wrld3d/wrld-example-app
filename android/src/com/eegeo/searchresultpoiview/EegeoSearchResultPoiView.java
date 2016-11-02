@@ -15,6 +15,7 @@ import android.text.util.Linkify;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -122,6 +123,7 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
         
         m_view.setVisibility(View.GONE);
         m_uiRoot.addView(m_view);
+    	m_webView.setWebViewClient(new WebViewClient());
         
         m_closeButton.setOnClickListener(this);
         m_togglePinnedButton.setOnClickListener(this);
