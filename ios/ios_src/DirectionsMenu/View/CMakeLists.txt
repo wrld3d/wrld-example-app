@@ -13,6 +13,8 @@ set(currsources
   ios_src/DirectionsMenu/View/DirectionsMenuStaticView.h
   ios_src/DirectionsMenu/View/DirectionsMenuStaticView.mm
   ios_src/DirectionsMenu/View/DirectionsMenuViewInterop.h
+  ios_src/DirectionsMenu/View/DirectionSuggestionTableViewCell.h
+  ios_src/DirectionsMenu/View/DirectionSuggestionTableViewCell.m
 )
 set(sources ${sources} ${currsources})
 source_group(\\ios_src\\DirectionsMenu\\View FILES ${currsources})

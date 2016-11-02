@@ -293,12 +293,17 @@
 
 -(void) SetGeoNamesStartSuggestions:(const std::vector<ExampleApp::Search::SdkModel::SearchResultModel>&) results
 {
+    [m_pDirectionsMenuView showStartSuggestions];
+    [self updateContainerFrame];
+
     Eegeo_TTY("Start Results Count",results.size());
 }
 
 -(void) SetGeoNamesEndSuggestions:(const std::vector<ExampleApp::Search::SdkModel::SearchResultModel>&) results
 {
     Eegeo_TTY("End Results Count",results.size());
+    [m_pDirectionsMenuView showEndSuggestions];
+    [self updateContainerFrame];
 }
 
 - (void)onSectionExpanded
@@ -351,17 +356,14 @@
 }
 -(void)StartLocationTextFieldDidChange:(UITextField *)textField
 {
-    [m_pDirectionsMenuView showStartSuggestions];
-    [self updateContainerFrame];
-
-    //m_pDirectionsMenuInterop->HandleStartLocationChanged(std::string([textField.text UTF8String]));
+   
+    m_pDirectionsMenuInterop->HandleStartLocationChanged(std::string([textField.text UTF8String]));
 }
 
 -(void)EndLocationTextFieldDidChange:(UITextField *)textField
 {
-    [m_pDirectionsMenuView showEndSuggestions];
-    [self updateContainerFrame];
-   // m_pDirectionsMenuInterop->HandleEndLocationChanged(std::string([textField.text UTF8String]));
+   
+   m_pDirectionsMenuInterop->HandleEndLocationChanged(std::string([textField.text UTF8String]));
 }
 
 #define MenuViewCallbacks
