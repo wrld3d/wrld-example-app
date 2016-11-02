@@ -135,11 +135,19 @@ namespace ExampleApp
             void DirectionsMenuController::OnEndLocationChanged(const std::string& startLocationQuery)
             {
                 Eegeo_TTY("OnEndLocationChanged");
+                m_messageBus.Publish(ExampleApp::DirectionsMenu::DirectionMenuGetGeoNamesMessage(startLocationQuery, false, false));
             }
             
             void DirectionsMenuController::OnGeoNamesStartLocationResponseReceived(const DirectionsMenu::DirectionMenuGeoNamesResponseReceivedMessage& message)
             {
-                m_directionsMenuView.SetGeoNamesStartSuggestions(message.SearchResults());
+                if(message.IsStartLocationActive())
+                {
+                    m_directionsMenuView.SetGeoNamesStartSuggestions(message.SearchResults());
+                }
+                else
+                {
+                    m_directionsMenuView.SetGeoNamesEndSuggestions(message.SearchResults());
+                }
             }
             
             void DirectionsMenuController::OnSearchCleared()
