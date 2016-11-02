@@ -513,6 +513,7 @@ namespace
                                               currentLabelY,
                                               cardContainerWidth,
                                               cardContainerWidth * 2.f/3.f);
+        m_pGradientMask.frame = self.pPreviewImage.bounds;
         
         self.pPoiImageLoadingSpinner.center = CGPointMake(self.pPreviewImage.frame.size.width/2.f, self.pPreviewImage.frame.size.height/2.f);
         m_pGradientMask.frame = self.pPreviewImage.bounds;

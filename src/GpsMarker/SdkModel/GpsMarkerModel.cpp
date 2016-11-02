@@ -38,9 +38,16 @@ namespace ExampleApp
                     return false;
                 }
                 
-                float terrainHeight;
+                float terrainHeight = 0.0f;
                 Eegeo::dv3 ecefPositionFlat = latLong.ToECEF();
-                if(!m_terrainHeightProvider.TryGetHeight(ecefPositionFlat, 1, terrainHeight))
+                
+                if(m_locationService.IsIndoors())
+                {
+                    double altitude;
+                    m_locationService.GetAltitude(altitude);
+                    terrainHeight = static_cast<float>(altitude);
+                }
+                else if(!m_terrainHeightProvider.TryGetHeight(ecefPositionFlat, 1, terrainHeight))
                 {
                     m_hasLocation = false;
                     return false;

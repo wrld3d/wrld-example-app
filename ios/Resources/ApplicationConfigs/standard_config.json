@@ -18,5 +18,28 @@
     "ThemeManifestURL": "",
     "EegeoSearchServiceUrl": "",
     "MyPinsWebServiceUrl": "",
-    "MyPinsWebServiceAuthToken": ""
+    "MyPinsWebServiceAuthToken": "",
+    "IndoorTrackedBuildings":
+    [
+        {
+            "InteriorId": "westport_house",
+            "Type": "IndoorAtlas",
+            "Config":
+            [{
+                "ApiKey": "941b8502-b022-4abb-bbf2-9a90450e4343",
+                "ApiSecret": "k9cZWpze+pjvgyGMbj06Kl2GaF2RdQdPmUlsQuWAAJRegFFXpKy+JgRpKGS6Fq5mOee3CVTPVQacBYnwGPBb28EPT3qeihS6RrbkIWnIW/DZn7JhL+ohu3gdoYOBlw=="
+            }],
+            "FloorMapping":
+            [
+                {
+                    "BuildingFloorIndex": 0,
+                    "TrackedFloorIndex": "7317b943-65c5-42de-8679-26cfc770406e"
+                },
+                {
+                    "BuildingFloorIndex": 2,
+                    "TrackedFloorIndex": "d11c3970-04c9-47fc-82d8-43285509b8cb"
+                }
+            ]
+        }
+    ]
 }

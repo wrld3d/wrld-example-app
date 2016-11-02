@@ -118,6 +118,7 @@
     <Compile Include="Views\SearchMenu\SearchMenuResultIconProvider.cs" />
     <Compile Include="Views\SearchResultPoi\eeGeoSearchResultsPoiView.cs" />
     <Compile Include="Views\SearchResultPoi\GeonamesSearchResultsPoiView.cs" />
+    <Compile Include="Views\SearchResultPoi\ResultModels\EegeoResultModel.cs" />
     <Compile Include="Views\SearchResultPoi\ResultModels\YelpResultModel.cs" />
     <Compile Include="Views\SearchResultPoi\SearchResultPoiViewIconProvider.cs" />
     <Compile Include="Views\SearchResultPoi\SearchResultPoiViewBase.cs" />
@@ -732,6 +733,30 @@
   <ItemGroup>
     <Resource Include="..\..\Resources\compass_new_unlocked_over.png">
       <Link>Assets\compass_new_unlocked_over.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\social_icon_fb.png">
+      <Link>Assets\social_icon_fb.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\social_icon_mail.png">
+      <Link>Assets\social_icon_mail.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\social_icon_slack.png">
+      <Link>Assets\social_icon_slack.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\social_icon_twitter.png">
+      <Link>Assets\social_icon_twitter.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\social_icon_linked_in.png">
+      <Link>Assets\social_icon_linked_in.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\exit_blue_x_button.png">
+      <Link>Assets\exit_blue_x_button.png</Link>
     </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

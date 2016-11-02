@@ -80,11 +80,9 @@ namespace ExampleApp
                             renderable->SetDiffuseColor(transparent);
                         }
                     }
-
-                    DeactivateLabels();
                 }
 
-                void InteriorsHighlightVisibilityController::DeactivateLabels()
+                void InteriorsHighlightVisibilityController::ActivateLabels(bool active)
                 {
                     namespace IE = Eegeo::Resources::Interiors::Entities;
 
@@ -96,19 +94,23 @@ namespace ExampleApp
 
                         for (IE::TModelVector::const_iterator modelIt = modelVector.begin(); modelIt != modelVector.end(); ++modelIt)
                         {
-                            modelIt->second->SetEnabled(false);
+                            modelIt->second->SetEnabled(active);
                         }
                     }
                 }
 
                 void InteriorsHighlightVisibilityController::OnInteriorLabelsBuilt()
                 {
-                    ShowLabelsForCurrentResults();
+                    if (!ShowHighlightsForCurrentResults())
+                    {
+                        ActivateLabels(true);
+                    }
                 }
 
                 void InteriorsHighlightVisibilityController::OnSearchResultCleared()
                 {
                     DeactivateHighlightRenderables();
+                    ActivateLabels(true);
                 }
 
                 void InteriorsHighlightVisibilityController::OnInteriorChanged()
@@ -145,7 +147,12 @@ namespace ExampleApp
 
                         if (m_currentHighlightRenderables.size() > 0)
                         {
-                            ShowLabelsForCurrentResults();
+                            bool showingHighlights = ShowHighlightsForCurrentResults();
+                            ActivateLabels(!showingHighlights);
+                        }
+                        else
+                        {
+                            ActivateLabels(true);
                         }
                     }
                     else
@@ -187,10 +194,14 @@ namespace ExampleApp
                 void InteriorsHighlightVisibilityController::OnSearchResultsLoaded(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results)
                 {
                     DeactivateHighlightRenderables();
-                    ShowLabelsForResults(results);
+                    
+                    if (ShowHighlightsForResults(results))
+                    {
+                        ActivateLabels(false);
+                    }
                 }
 
-                void InteriorsHighlightVisibilityController::ShowLabelsForCurrentResults()
+                bool InteriorsHighlightVisibilityController::ShowHighlightsForCurrentResults()
                 {
                     std::vector<Search::SdkModel::SearchResultModel> results;
                     results.reserve(m_searchResultRepository.GetItemCount());
@@ -201,11 +212,13 @@ namespace ExampleApp
                         results.push_back(*pResult);
                     }
 
-                    ShowLabelsForResults(results);
+                    return ShowHighlightsForResults(results);
                 }
 
-                void InteriorsHighlightVisibilityController::ShowLabelsForResults(const std::vector<Search::SdkModel::SearchResultModel> &results)
+                bool InteriorsHighlightVisibilityController::ShowHighlightsForResults(const std::vector<Search::SdkModel::SearchResultModel> &results)
                 {
+                    bool showingHighlights = false;
+
                     if (m_interiorInteractionModel.HasInteriorModel() && m_currentHighlightRenderables.size() == 0)
                     {
                         OnInteriorChanged();
@@ -229,11 +242,14 @@ namespace ExampleApp
                                     if (renderable->GetRenderableId().compare("entity_highlight " + highlightedRoomId) == 0)
                                     {
                                         renderable->SetDiffuseColor(m_highlightColorMapper.GetColor(*resultsItt, "highlight_color"));
+                                        showingHighlights = true;
                                     }
                                 }
                             }
                         }
                     }
+
+                    return showingHighlights;
                 }
             }
         }

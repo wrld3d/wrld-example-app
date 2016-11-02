@@ -69,8 +69,6 @@ public class YelpSearchResultPoiView implements View.OnClickListener
     private boolean m_handlingClick = false;
     private TintablePinToggleButton m_togglePinnedWrapper;
     
-    private SearchResultsPoiViewScrollListener m_scrollListener;
-    
     private static String m_pinTextDefault = "Drop Pin";
     private static String m_pinTextPressed = "Remove Pin";
 
@@ -125,9 +123,6 @@ public class YelpSearchResultPoiView implements View.OnClickListener
         m_closeButton.setOnClickListener(this);
         m_togglePinnedButton.setOnClickListener(this);
         m_webVendorStyleLinkButton.setOnClickListener(this);
-        
-        m_scrollListener = new SearchResultsPoiViewScrollListener(m_footerFade, true, m_contentContainer);
-        m_contentContainer.setOnScrollChangeListener(m_scrollListener);
     }
 
     public void destroy()
@@ -352,7 +347,7 @@ public class YelpSearchResultPoiView implements View.OnClickListener
 				int width = m_activity.dipAsPx(m_poiImage.getWidth());
 				int height = (int) (width * 2.f / 3.f);
 				Bitmap poiBitmap = BitmapFactory.decodeByteArray(imgData, 0, imgData.length, bmOptions);
-				m_poiImage.setImageBitmap(Bitmap.createScaledBitmap(poiBitmap, width, height, false));
+				m_poiImage.setImageBitmap(Bitmap.createBitmap(poiBitmap));
 			}
 		}
 		

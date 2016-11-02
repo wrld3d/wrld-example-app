@@ -84,6 +84,7 @@
          	     android:id="@+id/linear_content_container"
 	             android:layout_width="fill_parent"
 	             android:layout_height="wrap_content"
+	             android:paddingBottom="25dp"
 	             android:orientation="vertical">
 	             
 	              <!--  Preview Image -->
@@ -111,6 +112,7 @@
 			            <ImageView
 	         	            android:id="@+id/search_result_poi_view_image"
 	         	            android:layout_width="fill_parent"
+	         	            android:scaleType="centerCrop"
 	         	            android:layout_height="170dp" />
 			            
 			            <View android:id="@+id/search_result_poi_view_image_gradient"

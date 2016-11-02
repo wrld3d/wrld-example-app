@@ -72,7 +72,8 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/button_pressed_colour_change"
-                android:src="@drawable/button_pin_close_states" />
+                android:src="@drawable/button_poi_close_states" />
+
         </RelativeLayout>
         
         <View
@@ -99,6 +100,7 @@
          	    android:id="@+id/linear_content_container"
          	    android:layout_width="fill_parent"
          	    android:layout_height="114dp"
+				android:paddingBottom="25dp"
          	    android:orientation="vertical" >
 
          	    <!-- Preview Image -->
@@ -119,6 +121,7 @@
 
          	        <ImageView
          	            android:id="@+id/search_result_poi_view_image"
+         	            android:scaleType="centerCrop"
          	            android:layout_width="fill_parent"
          	            android:layout_height="170dp" />
 
@@ -222,9 +225,10 @@
          	        <TextView
          	            android:id="@+id/search_result_poi_view_web_link"
          	            android:layout_width="fill_parent"
-         	            android:layout_height="18dp"
+         	            android:layout_height="wrap_content"
          	            android:layout_marginLeft="10dp"
          	            android:layout_marginRight="10dp"
+         	            android:maxLines="2"
          	            android:layout_toRightOf="@+id/search_result_poi_view_web_link_icon"
          	            android:textAlignment="center"
          	            android:textColor="@color/darkgrey"

@@ -35,6 +35,7 @@ namespace ExampleApp
                 
                 const static float DefaultUpdatePeriod;
                 int m_visibilityCount;
+                float m_viewTransitionParam;
 
                 float m_screenPixelScale;
                 float m_screenOversampleScale;
@@ -54,6 +55,8 @@ namespace ExampleApp
                 void OnModalityChangedMessage(const Modality::ModalityChangedMessage& message);
                 void OnVisibilityChangedMessage(const GpsMarkerVisibilityMessage& message);
                 void OnInteriorsExplorerStateChangedMessage(const InteriorsExplorer::InteriorsExplorerStateChangedMessage& message);
+                
+                void UpdateTransition(bool isVisible, float dt);
                 
                 void CreateModelViewProjectionMatrix(Eegeo::m44& out_modelViewProjection,
                                                      const Eegeo::dv3& location,

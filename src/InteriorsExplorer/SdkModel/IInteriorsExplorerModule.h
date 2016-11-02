@@ -26,6 +26,8 @@ namespace ExampleApp
                 
                 virtual Eegeo::Resources::Interiors::InteriorsCameraController& GetInteriorsCameraController() const = 0;
                 
+                virtual Eegeo::Resources::Interiors::InteriorsGpsCameraController& GetInteriorsGpsCameraController() const = 0;
+                
                 virtual void Update(float dt) const = 0;
                 
                 virtual InteriorsExplorerModel& GetInteriorsExplorerModel() const = 0;

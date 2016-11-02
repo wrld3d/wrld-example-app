@@ -6,6 +6,26 @@
         <ResourceDictionary Source="../../Colours.xaml" />        
     </ResourceDictionary.MergedDictionaries>
 
+    <Style x:Key="RotatingAnim" TargetType="{x:Type Image}">
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <RotateTransform Angle="0"/>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="true">
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" From="0" To="360" Duration="0:0:1.5" RepeatBehavior="Forever"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <Style x:Key="AddRemovePinStyle" TargetType="{x:Type ToggleButton}" x:Shared="false">
         <Setter Property="Template">
             <Setter.Value>
@@ -84,14 +104,14 @@
                         <Grid x:Name="ForgetLocation1">
                             <Image x:Name="image" Source="/Assets/button_remove_pin_off.png" Width="48" Height="48" HorizontalAlignment="Left" Margin="115,0,0,0"/>
                             <Image x:Name="image1" Source="/Assets/button_remove_pin_on.png" Width="48" Height="48" HorizontalAlignment="Left" Margin="115,0,0,0" Visibility="Hidden"/>
-                            <TextBlock x:Name="ForgetLocation" VerticalAlignment="Center" Text="Forget Location" FontSize="28"  Foreground="{StaticResource White}" TextTrimming="CharacterEllipsis" Width="Auto" FontFamily="{StaticResource PrimaryUILightFont}" Margin="165,-5,0,0"/>
-                            <TextBlock x:Name="ForgetLocationDown" VerticalAlignment="Center" Text="Forget Location" FontSize="28"  Foreground="{StaticResource PrimaryBG_Over_Colour}" TextTrimming="CharacterEllipsis" Width="Auto" FontFamily="{StaticResource PrimaryUILightFont}" Margin="165,-5,0,0" Visibility="Hidden"/>
+                            <TextBlock x:Name="ForgetLocation" VerticalAlignment="Center" Text="Remove Pin" FontSize="28"  Foreground="{StaticResource White}" TextTrimming="CharacterEllipsis" Width="Auto" FontFamily="{StaticResource PrimaryUILightFont}" Margin="165,-5,0,0"/>
+                            <TextBlock x:Name="ForgetLocationDown" VerticalAlignment="Center" Text="Remove Pin" FontSize="28"  Foreground="{StaticResource PrimaryBG_Over_Colour}" TextTrimming="CharacterEllipsis" Width="Auto" FontFamily="{StaticResource PrimaryUILightFont}" Margin="165,-5,0,0" Visibility="Hidden"/>
                         </Grid>
                         <Grid x:Name="SaveLocationGrid">
                             <Image x:Name="image2" Source="/Assets/button_add_pin_off.png" Width="48" Height="48" HorizontalAlignment="Left" Margin="115,0,0,0"/>
                             <Image x:Name="image3" Source="/Assets/button_add_pin_on.png" Width="48" Height="48" HorizontalAlignment="Left" Margin="115,0,0,0" Visibility="Hidden"/>
-                            <TextBlock x:Name="SaveLocation" VerticalAlignment="Center" Text="Save Location" FontSize="28"  Foreground="{StaticResource White}" TextTrimming="CharacterEllipsis" Width="Auto" FontFamily="{StaticResource PrimaryUILightFont}" HorizontalAlignment="Left" Margin="165,-5,0,0"/>
-                            <TextBlock x:Name="SaveLocationDown" VerticalAlignment="Center" Text="Save Location" FontSize="28"  Foreground="{StaticResource PrimaryBG_Over_Colour}" TextTrimming="CharacterEllipsis" Width="Auto" FontFamily="{StaticResource PrimaryUILightFont}" HorizontalAlignment="Left" Margin="165,-5,0,0" Visibility="Hidden"/>
+                            <TextBlock x:Name="SaveLocation" VerticalAlignment="Center" Text="Drop Pin" FontSize="28"  Foreground="{StaticResource White}" TextTrimming="CharacterEllipsis" Width="Auto" FontFamily="{StaticResource PrimaryUILightFont}" HorizontalAlignment="Left" Margin="165,-5,0,0"/>
+                            <TextBlock x:Name="SaveLocationDown" VerticalAlignment="Center" Text="Drop Pin" FontSize="28"  Foreground="{StaticResource PrimaryBG_Over_Colour}" TextTrimming="CharacterEllipsis" Width="Auto" FontFamily="{StaticResource PrimaryUILightFont}" HorizontalAlignment="Left" Margin="165,-5,0,0" Visibility="Hidden"/>
                         </Grid>
                     </Grid>
                 </ControlTemplate>
@@ -142,7 +162,7 @@
                         <Rectangle x:Name="rectangle1" Fill="{StaticResource PrimaryBG_colour}" Margin="0"/>
                         <Rectangle x:Name="rectangle" Fill="{StaticResource PrimaryBG_Over_Colour}" Margin="0" Visibility="Hidden"/>
                         <Rectangle x:Name="rectangle2" Fill="{StaticResource PrimaryBG_Down_Colour}" Margin="0" Visibility="Hidden"/>
-                        <Image x:Name="image" Source="/Assets/button_close_off.png"/>
+                        <Image x:Name="image" Source="/Assets/exit_blue_x_button.png"/>
                         <Image x:Name="image1" Source="/Assets/button_close_on.png" Visibility="Hidden"/>
                     </Grid>
                 </ControlTemplate>
@@ -176,111 +196,96 @@
                                     <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="Auto"  Background="{StaticResource Gold}" Grid.Column="1">
                                         <Button Style="{StaticResource POIcard_CloseButton}" Name="CloseButton" HorizontalAlignment="Right" Width="36" Height="36" />
                                     </Border>
+                                    <Border BorderBrush="{x:Null}" HorizontalAlignment="Stretch" Height="1" Margin="0,0,0,-5" Background="{StaticResource Gold}" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
                                 </Grid>
 
-                                <Grid Grid.Row="1" >
-                                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Background="{StaticResource White}" Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}">
-
+                                <Grid Grid.Row="1" Margin="0,0,0,20">
+                                    <ScrollViewer Name="ContentContainer" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Background="{StaticResource White}" Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}">
                                         <StackPanel VerticalAlignment="Top">
-
-                                            <!-- Details Divider -->
-                                            <Grid Height="250">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="220"/>
-                                                    <ColumnDefinition Width="10"/>
-                                                    <ColumnDefinition Width="210"/>
-                                                </Grid.ColumnDefinitions>
-                                                <StackPanel VerticalAlignment="Top">
-                                                    <Grid>
+                                            <StackPanel VerticalAlignment="Top" Margin="0,0,0,15">
+                                                <Grid Name="PoiImageContainer" Height="250">
                                                         <StackPanel HorizontalAlignment="Stretch">
                                                             <ProgressBar Name="ImageProgress" HorizontalAlignment="Center" Visibility="Hidden"/>
                                                         </StackPanel>
-                                                        <Grid Margin="0,0,0,0">
-                                                            <Image Name="PoiImage" Source="/Assets/poi_placeholder.png"/>
-                                                            <Grid Name="ImageGradient" Height="30" VerticalAlignment="Bottom"/>
+                                                    <Grid Margin="0,0,0,0">
+                                                        <Image Name="PoiImage"/>
+                                                        <Grid Margin="0,0,0,0" Grid.Column="0" Name="PreviewImageSpinner" Visibility="Hidden">
+                                                            <Image Style="{StaticResource RotatingAnim}" Source="/Assets/search_results_spinner.png" Width="18" Height="18" RenderTransformOrigin="0.5,0.5"/>
                                                         </Grid>
-                                                        <Grid HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Bottom" Margin="0,0,0,5">
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="*"/>
-                                                                <ColumnDefinition Width="Auto"/>
-                                                                <ColumnDefinition Width="*"/>
-                                                            </Grid.ColumnDefinitions>
-                                                            <Image Name="RatingOverImage" Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=RatingsImage}" 
-                    						Grid.Column="1" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform" Height="17">
-                                                                <Image.Style>
-                                                                    <Style>
-                                                                        <Style.Triggers>
-                                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=RatingsImage}" Value="{x:Null}">
-                                                                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
-                                                                            </DataTrigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </Image.Style>
-                                                            </Image>
-
-                                                            <Border BorderBrush="{x:Null}" BorderThickness="0" Width="Auto" Height="15" Margin="3,0,0,0" Grid.Column="2">
-                                                                <TextBlock Name="RatingOverImageReviewCount" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=PoiViewRatingCountText}" FontSize="12" Foreground="{StaticResource White}" />
-                                                            </Border>
-                                                        </Grid>
-                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,-40" VerticalAlignment="Bottom">
-                                                            <Image Name="RatingImage" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                                            <Image Name="WebVendorLinkStyle" Margin="5,10,5,5" VerticalAlignment="Center" HorizontalAlignment="Center" Source="/Assets/yelp_reviews.png">
-                                                                <Image.Style>
-                                                                    <Style>
-                                                                        <Setter Property="Image.Visibility" Value="Visible"/>
-                                                                        <Style.Triggers>
-                                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=Url}" Value="{x:Null}">
-                                                                                <Setter Property="Image.Visibility" Value="Collapsed"/>
-                                                                            </DataTrigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </Image.Style>
-                                                            </Image>
-                                                        </StackPanel>
+                                                        <Grid Name="ImageGradient" Height="30" VerticalAlignment="Bottom"/>
                                                     </Grid>
-                                                </StackPanel>
-                                                <!--<StackPanel Grid.Column="2" VerticalAlignment="Top" MaxHeight="280">
-                                                    --><!--Phone--><!--
-                                                    <Grid Width="Auto" Margin="5,0,0,0">
-                                                        <Canvas Name="TelephoneIcon" Width="16" Height="16.000" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                                            <Path Fill="{StaticResource POIdetailsColour}" Data="F1 M 7.606,11.826 C 6.991,12.379 6.261,12.107 5.727,11.537 C 4.738,10.482 3.555,8.778 2.793,7.053 C 2.533,6.466 2.815,6.136 3.299,5.910 C 3.320,5.900 3.341,5.888 3.361,5.878 L 2.632,0.253 C 2.117,0.235 1.596,0.284 1.309,0.436 C 0.447,0.877 -0.501,2.902 0.306,7.133 C 0.657,8.970 2.725,12.565 5.520,14.352 C 7.579,15.669 9.425,16.039 10.894,15.997 C 11.663,15.974 11.857,15.526 12.191,15.028 C 12.313,14.845 12.415,14.668 12.496,14.490 L 7.642,11.790 C 7.630,11.802 7.619,11.814 7.606,11.826 Z" Margin="1.25,0,0,0"/>
-                                                            <Path Fill="{StaticResource POIdetailsColour}" Data="F1 M 13.469,12.752 L 12.985,13.620 L 8.139,10.917 L 8.624,10.049 L 13.469,12.752 Z" Margin="1.25,0,0,0"/>
-                                                            <Path Fill="{StaticResource POIdetailsColour}" Data="F1 M 5.343,5.622 L 4.357,5.750 L 3.623,0.129 L 4.609,0.000 L 5.343,5.622 Z" Margin="1.25,0,0,0"/>
-                                                        </Canvas>
-                                                        <TextBlock Name="Phone" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=PhoneText}" FontSize="18" Margin="25,0,0,0" Foreground="{StaticResource DarkGrey}" FontFamily="{DynamicResource PrimaryUIFont}"/>
-                                                    </Grid>
+                                                </Grid>
+                                            </StackPanel>
 
-                                                    --><!--Address--><!--
-                                                        <Grid Margin="5,15,0,0">
-                                                            <Canvas Name="HomeAddressIcon" Width="16" HorizontalAlignment="Left" Margin="0,0,0,7.94">
-                                                                --><!-- Layer 1/<Group>/<Path> --><!--
-                                                                <Path Fill="#ff5f5f5f" Data="F1 M 15.867,7.684 L 8.942,0.759 L 8.941,0.758 L 8.313,0.130 C 8.226,0.043 8.112,-0.000 7.998,0.000 C 7.884,-0.000 7.770,0.043 7.684,0.130 L 7.055,0.758 L 7.054,0.759 L 0.130,7.684 C -0.043,7.857 -0.043,8.140 0.130,8.313 L 0.758,8.941 C 0.931,9.114 1.214,9.114 1.387,8.941 L 7.998,2.330 L 14.610,8.941 C 14.783,9.114 15.066,9.114 15.238,8.941 L 15.867,8.313 C 16.040,8.140 16.040,7.857 15.867,7.684 Z"/>
-                                                                --><!-- Layer 1/<Group>/<Path> --><!--
-                                                                <Path Fill="#ff5f5f5f" Data="F1 M 2.665,9.441 L 2.665,14.222 C 2.665,15.200 3.465,16.000 4.443,16.000 L 6.657,16.000 L 6.657,11.621 C 6.657,11.376 6.857,11.176 7.102,11.176 L 8.879,11.176 C 9.124,11.176 9.324,11.376 9.324,11.621 L 9.324,16.000 L 11.554,16.000 C 12.532,16.000 13.332,15.200 13.332,14.222 L 13.332,9.441 L 7.998,4.108 L 2.665,9.441 Z"/>
-                                                            </Canvas>
-                                                            <TextBlock Name="Address" TextWrapping="WrapWithOverflow" MaxWidth="165" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=AddressText}" FontSize="18" Margin="25,-4,0,0" Foreground="{StaticResource DarkGrey}" FontFamily="{DynamicResource PrimaryUIFont}"/>
-                                                        </Grid>
-                                                    </StackPanel>-->
-
-                                            </Grid>
+                                            <!--</Grid>-->
 
                                             <!-- Details Divider -->
-                                            <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="2" Background="{StaticResource Gold}" Margin="0,20"/>
+                                            <Border BorderBrush="{x:Null}" Name="PoiImageDivider" BorderThickness="0" HorizontalAlignment="Stretch" Height="1" Margin="0,0,0,15" Background="{StaticResource Gold}"/>
+
+                                            <StackPanel Grid.Column="2" VerticalAlignment="Top" MaxHeight="280">
+                                                <!--Phone-->
+                                                <Grid Name="PhoneDetailsContainer" Width="Auto"  Margin="5,0,0,15">
+                                                    <Canvas Name="TelephoneIcon" Width="16" Height="16.000" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                        <Path Fill="{StaticResource POIdetailsColour}" Data="F1 M 7.606,11.826 C 6.991,12.379 6.261,12.107 5.727,11.537 C 4.738,10.482 3.555,8.778 2.793,7.053 C 2.533,6.466 2.815,6.136 3.299,5.910 C 3.320,5.900 3.341,5.888 3.361,5.878 L 2.632,0.253 C 2.117,0.235 1.596,0.284 1.309,0.436 C 0.447,0.877 -0.501,2.902 0.306,7.133 C 0.657,8.970 2.725,12.565 5.520,14.352 C 7.579,15.669 9.425,16.039 10.894,15.997 C 11.663,15.974 11.857,15.526 12.191,15.028 C 12.313,14.845 12.415,14.668 12.496,14.490 L 7.642,11.790 C 7.630,11.802 7.619,11.814 7.606,11.826 Z" Margin="1.25,0,0,0"/>
+                                                        <Path Fill="{StaticResource POIdetailsColour}" Data="F1 M 13.469,12.752 L 12.985,13.620 L 8.139,10.917 L 8.624,10.049 L 13.469,12.752 Z" Margin="1.25,0,0,0"/>
+                                                        <Path Fill="{StaticResource POIdetailsColour}" Data="F1 M 5.343,5.622 L 4.357,5.750 L 3.623,0.129 L 4.609,0.000 L 5.343,5.622 Z" Margin="1.25,0,0,0"/>
+                                                    </Canvas>
+                                                    <TextBlock Name="Phone" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=PhoneText}" FontSize="18" Margin="25,0,0,0" Foreground="{StaticResource DarkGrey}" FontFamily="{DynamicResource PrimaryUIFont}"/>
+                                                </Grid>
+
+                                                <!--Address-->
+                                                <Grid  Name="AddressDetailsContainer" Margin="5,0,0,15">
+                                                    <Canvas Name="HomeAddressIcon" Width="16" HorizontalAlignment="Left" Margin="0,0,0,7.94">
+                                                        <!--Layer 1/<Group>/<Path>-->
+                                                        <Path Fill="#ff5f5f5f" Data="F1 M 15.867,7.684 L 8.942,0.759 L 8.941,0.758 L 8.313,0.130 C 8.226,0.043 8.112,-0.000 7.998,0.000 C 7.884,-0.000 7.770,0.043 7.684,0.130 L 7.055,0.758 L 7.054,0.759 L 0.130,7.684 C -0.043,7.857 -0.043,8.140 0.130,8.313 L 0.758,8.941 C 0.931,9.114 1.214,9.114 1.387,8.941 L 7.998,2.330 L 14.610,8.941 C 14.783,9.114 15.066,9.114 15.238,8.941 L 15.867,8.313 C 16.040,8.140 16.040,7.857 15.867,7.684 Z"/>
+                                                        <!--Layer 1/<Group>/<Path>-->
+                                                        <Path Fill="#ff5f5f5f" Data="F1 M 2.665,9.441 L 2.665,14.222 C 2.665,15.200 3.465,16.000 4.443,16.000 L 6.657,16.000 L 6.657,11.621 C 6.657,11.376 6.857,11.176 7.102,11.176 L 8.879,11.176 C 9.124,11.176 9.324,11.376 9.324,11.621 L 9.324,16.000 L 11.554,16.000 C 12.532,16.000 13.332,15.200 13.332,14.222 L 13.332,9.441 L 7.998,4.108 L 2.665,9.441 Z"/>
+                                                    </Canvas>
+                                                    <TextBlock Name="Address" TextWrapping="WrapWithOverflow" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=AddressText}" FontSize="18" Margin="25,-4,0,0" Foreground="{StaticResource DarkGrey}" FontFamily="{DynamicResource PrimaryUIFont}"/>
+                                                </Grid>
+
+                                                <!--WebAddress-->
+                                                <Grid x:Name="WebDetailsContainer" Width="Auto" Height="Auto" Margin="5,0,0,15" >
+                                                    <Canvas x:Name="WebLinkIcon" Width="16" HorizontalAlignment="Left" Margin="0,2,0,0">
+                                                        <!--Layer 1/<Group>/<Path>-->
+                                                        <Canvas>
+                                                            <!-- Layer 3/<Group>/<Group>/<Path> -->
+                                                            <Path Fill="{StaticResource Gold}" Data="F1 M 7.198,10.967 C 7.129,11.308 6.964,11.634 6.701,11.897 L 4.969,13.629 C 4.254,14.344 3.085,14.344 2.371,13.629 C 1.656,12.915 1.656,11.746 2.371,11.031 L 4.103,9.299 C 4.366,9.036 4.692,8.871 5.033,8.802 L 6.672,7.163 C 5.369,6.685 3.846,6.958 2.804,8.000 L 1.072,9.732 C -0.357,11.161 -0.357,13.499 1.072,14.928 C 2.501,16.357 4.839,16.357 6.268,14.928 L 8.000,13.196 C 9.042,12.154 9.315,10.631 8.837,9.328 L 7.198,10.967 Z"/>
+                                                            <!-- Layer 3/<Group>/<Group>/<Path> -->
+                                                            <Path Fill="{StaticResource Gold}" Data="F1 M 14.928,1.072 C 13.499,-0.357 11.161,-0.357 9.732,1.072 L 8.000,2.804 C 6.958,3.846 6.685,5.369 7.163,6.672 L 8.802,5.033 C 8.871,4.692 9.036,4.366 9.299,4.103 L 11.031,2.371 C 11.746,1.656 12.915,1.656 13.629,2.371 C 14.344,3.085 14.344,4.254 13.629,4.969 L 11.897,6.701 C 11.634,6.964 11.308,7.129 10.967,7.198 L 9.328,8.837 C 10.631,9.315 12.154,9.042 13.196,8.000 L 14.928,6.268 C 16.357,4.839 16.357,2.501 14.928,1.072 Z"/>
+                                                        </Canvas>
+                                                        <!-- Layer 3/<Group>/<Rectangle> -->
+                                                        <Path Fill="#ff5f5f5f" Data="F1 M 11.464,5.835 L 5.835,11.464 C 5.478,11.821 4.893,11.821 4.536,11.464 L 4.536,11.464 C 4.179,11.107 4.179,10.522 4.536,10.165 L 10.165,4.536 C 10.522,4.179 11.107,4.179 11.464,4.536 L 11.464,4.536 C 11.821,4.893 11.821,5.478 11.464,5.835 Z"/>
+                                                    </Canvas>
+                                                    <TextBlock Name="WebAddress" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=WebAddressText}" FontSize="18" Margin="25,-4,0,0" Foreground="{StaticResource Gold}" FontFamily="{DynamicResource PrimaryUIFont}"></TextBlock>
+                                                </Grid>
+
+                                                <WrapPanel x:Name="SocialLinkIcons" Height="Auto" Margin="30,0,-30,15" Width="Auto" HorizontalAlignment="Left" >
+                                                    <Image x:Name="SocialIcon_Mail" Source="/Assets/social_icon_mail.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="54" Height="54" Margin="0,0,25,0" />
+                                                    <Image x:Name="SocialIcon_FB" Source="/Assets/social_icon_fb.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="54" Height="54" Margin="0,0,25,0" />
+                                                    <Image x:Name="SocialIcon_Twitter" Source="/Assets/social_icon_twitter.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="54" Height="54" Margin="0,0,25,0" />
+                                                    <Image x:Name="SocialIcon_LinkedIn" Source="/Assets/social_icon_linked_in.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="54" Height="54" Margin="0,0,25,0" />
+                                                    <Image x:Name="SocialIcon_Slack" Source="/Assets/social_icon_slack.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="54" Height="54" Margin="0,0,25,0" />
+                                                </WrapPanel>
+                                            </StackPanel>
+
+                                            <!-- Details Divider -->
+                                            <Border BorderBrush="{x:Null}" Name="DetailsDivider" BorderThickness="0" HorizontalAlignment="Stretch" Height="1" Background="{StaticResource Gold}" Margin="0,0,0,15"/>
 
                                             <!--Tags-->
-                                            <Grid Width="Auto" Height="Auto" Margin="5,0,0,0" >
+                                            <Grid Width="Auto" Height="Auto" Margin="5,0,0,15" >
                                                 <Canvas Name="TagLabelIcon" Margin="0,2,0,0">
                                                     <!-- Layer 3/<Compound Path> -->
                                                     <Path Fill="#ff5f5f5f" Data="F1 M 12.439,3.558 C 11.854,2.973 11.854,2.023 12.439,1.437 C 13.025,0.851 13.975,0.851 14.561,1.437 C 15.146,2.023 15.146,2.973 14.561,3.558 C 13.975,4.144 13.025,4.144 12.439,3.558 Z M 15.994,7.102 L 16.000,1.552 C 16.000,0.700 15.310,0.010 14.458,0.010 L 8.892,0.000 C 8.259,-0.000 7.465,0.315 7.017,0.763 L 0.463,7.317 C -0.140,7.920 -0.161,8.966 0.441,9.569 L 6.450,15.577 C 6.751,15.878 7.157,15.996 7.553,15.996 C 7.948,15.996 8.355,15.812 8.656,15.511 L 15.211,8.956 C 15.658,8.508 15.994,7.735 15.994,7.102 Z"/>
                                                 </Canvas>
-                                                <TextBlock Name="Tags" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=HumanReadableTagsText}" FontSize="18" Margin="25,-4,0,0" Foreground="{StaticResource DarkGrey}" FontFamily="{DynamicResource PrimaryUIFont}"/>
+                                                <TextBlock Name="Tags" TextWrapping="Wrap" Width="404" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=HumanReadableTagsText}" FontSize="18" Margin="25,-4,0,0" Foreground="{StaticResource DarkGrey}" FontFamily="{DynamicResource PrimaryUIFont}"/>
                                             </Grid>
 
                                             <!-- Reviews Divider -->
-                                            <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="2" Background="{StaticResource Gold}" Margin="0,20"/>
+                                            <Border BorderBrush="{x:Null}" Name="TagsDivider" BorderThickness="0" HorizontalAlignment="Stretch" Height="1" Background="{StaticResource Gold}" Margin="0,0,0,15"/>
 
                                             <!--Reviews-->
-                                            <Grid Width="Auto" Height="Auto" Margin="5,0,0,0" >
+                                            <Grid Name="DescriptionContainer" Width="Auto" Height="Auto" Margin="5,0,0,0" >
 
                                                 <Canvas Name="ReviewsIcon" Margin="0,2,0,0">
                                                     <!-- Layer 3/<Path> -->
@@ -288,8 +293,7 @@
                                                     <!-- Layer 3/<Path> -->
                                                     <Path Fill="#ff5f5f5f" Data="F1 M 9.000,8.457 L 9.000,15.457 L 16.000,15.457 L 16.000,8.457 L 12.398,8.457 C 12.398,6.457 14.000,4.221 16.000,3.520 L 16.000,3.457 L 16.000,0.457 L 16.000,0.000 C 12.000,0.789 9.000,4.457 9.000,8.457 Z"/>
                                                 </Canvas>
-                                                <TextBlock Name="Reviews" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=ReviewText}" 
-								FontSize="18" Margin="25,-4,0,0" Foreground="{StaticResource DarkGrey}" FontFamily="{DynamicResource PrimaryUIFont}" TextWrapping="Wrap"/>
+                                                <TextBlock Name="Description" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=DescriptionText}" FontSize="18" Margin="25,-4,0,0" Foreground="{StaticResource DarkGrey}" FontFamily="{DynamicResource PrimaryUIFont}" TextWrapping="Wrap"/>
                                             </Grid>
 
                                             <!-- Bottom Spacer -->
@@ -297,6 +301,9 @@
                                         </StackPanel>
                                     </ScrollViewer>
 
+
+                                    <Image IsHitTestVisible="False" Name="FooterFade" Source="/Assets/search_results_fade.png" HorizontalAlignment="Left" VerticalAlignment="Bottom" Visibility="Visible" Width="500" Height="auto"/>
+                                    <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="1" Background="{StaticResource Gold}" Margin="0" VerticalAlignment="Bottom"/>
                                 </Grid>
                             </Grid>
                             <Grid VerticalAlignment="Bottom" Background="{StaticResource Gold}" HorizontalAlignment="Stretch" Height="Auto" Grid.Row="2">

@@ -21,11 +21,18 @@ namespace ExampleAppWPF
         private string m_reviewText;
         private string m_humanReadableTagsText;
         private ImageSource m_tagIcon;
-        private ImageSource m_ratingsImage;
+        private Image m_ratingsImage;
         private Visibility m_ratingCountVisibility;
         private string m_url;
         private FrameworkElement m_reviewsIcon;
         private ImageSource m_placeholderImage;
+        private ScrollViewer m_contentContainer;
+        private Image m_footerFade;
+        private Grid m_previewImageSpinner;
+        private Grid m_poiImageContainer;
+        private Grid m_imageGradient;
+        private Grid m_poiImageAndGradientContainer;
+        private Grid m_detailsContainer;
 
         private ControlClickHandler m_yelpReviewImageClickHandler;
         private Image m_yelpButton;
@@ -118,7 +125,7 @@ namespace ExampleAppWPF
             }
         }
         
-        public ImageSource RatingsImage
+        public Image RatingsImage
         {
             get
             {
@@ -180,9 +187,25 @@ namespace ExampleAppWPF
 
             m_reviewsIcon = (FrameworkElement)GetTemplateChild("ReviewsIcon");
 
-            var scrollViewr = (ScrollViewer)GetTemplateChild("MainScrollViewr");
+            m_contentContainer = (ScrollViewer)GetTemplateChild("ContentContainer");
 
-            scrollViewr.ManipulationBoundaryFeedback += OnBoundaryFeedback;
+            m_contentContainer.ManipulationBoundaryFeedback += OnBoundaryFeedback;
+
+            m_contentContainer.ScrollChanged += OnSearchResultsScrolled;
+
+            m_footerFade = (Image)GetTemplateChild("FooterFade");
+
+            m_previewImageSpinner = (Grid)GetTemplateChild("PreviewImageSpinner");
+
+            m_poiImageContainer = (Grid)GetTemplateChild("PoiImageContainer");
+
+            m_imageGradient = (Grid)GetTemplateChild("ImageGradient");
+
+            m_ratingsImage = (Image)GetTemplateChild("RatingImage");
+
+            m_poiImageAndGradientContainer = (Grid)GetTemplateChild("PoiImageAndGradientContainer");
+
+            m_detailsContainer = (Grid)GetTemplateChild("DetailsContainer");
 
             var mainGrid = (Application.Current.MainWindow as MainWindow).MainGrid;
             var screenWidth = mainGrid.ActualWidth;
@@ -190,6 +213,17 @@ namespace ExampleAppWPF
             m_yelpReviewImageClickHandler = new ControlClickHandler(m_yelpButton, HandleWebLinkButtonClicked);
 
             base.OnApplyTemplate();
+        }
+        private void OnSearchResultsScrolled(object sender, RoutedEventArgs e)
+        {
+            if (m_contentContainer.VerticalOffset == m_contentContainer.ScrollableHeight)
+            {
+                m_footerFade.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                m_footerFade.Visibility = Visibility.Visible;
+            }
         }
 
         private void OnBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
@@ -210,15 +244,30 @@ namespace ExampleAppWPF
             TitleText = model.Title;
             AddressText = model.Subtitle.Replace(", ", "," + Environment.NewLine);
             PhoneText = yelpResultModel.Phone;
-            HumanReadableTagsText = string.Join(Environment.NewLine, model.HumanReadableTags);
+            HumanReadableTagsText = string.Join(", ", model.HumanReadableTags);
             ReviewText = string.Join(Environment.NewLine, yelpResultModel.Reviews);
             TagIcon = SearchResultPoiViewIconProvider.GetIconForTag(model.IconKey);
             PoiViewRatingCountText = yelpResultModel.ReviewCount > 0 ? yelpResultModel.ReviewCount.ToString() : string.Empty;
-            RatingsImage = null;
+            RatingsImage.Source = null;
 
             if (yelpResultModel.ReviewCount > 0 && !string.IsNullOrEmpty(yelpResultModel.RatingsImageUrl))
             {
-                RatingsImage = new BitmapImage(ViewHelpers.MakeUriForImage(string.Format("{0}.png", yelpResultModel.RatingsImageUrl)));
+                RatingsImage.Source = new BitmapImage(ViewHelpers.MakeUriForImage(string.Format("{0}.png", yelpResultModel.RatingsImageUrl)));
+            }
+
+            if (string.IsNullOrEmpty(yelpResultModel.ImageUrl))
+            {
+                m_previewImageSpinner.Visibility = Visibility.Hidden;
+                m_imageGradient.Visibility = Visibility.Collapsed;
+                m_poiImageAndGradientContainer.Visibility = Visibility.Collapsed;
+                m_detailsContainer.Height = Double.NaN;
+            }
+            else
+            {
+                m_previewImageSpinner.Visibility = Visibility.Visible;
+                m_imageGradient.Visibility = Visibility.Visible;
+                m_poiImageAndGradientContainer.Visibility = Visibility.Visible;
+                m_detailsContainer.Height = 250;
             }
 
             RatingCountVisibility = !string.IsNullOrEmpty(yelpResultModel.RatingsImageUrl) && yelpResultModel.ReviewCount > 0 ? Visibility.Visible : Visibility.Collapsed;
@@ -233,17 +282,22 @@ namespace ExampleAppWPF
                 m_reviewsIcon.Visibility = Visibility.Visible;
             }
 
-            m_placeholderImage = new BitmapImage(new Uri("/ExampleAppWPF;component/Assets/poi_placeholder.png", UriKind.Relative));
-            m_poiImage.Source = m_placeholderImage;
+            m_poiImageContainer.Visibility = Visibility.Visible;
+            
+            m_poiImage.Visibility = Visibility.Hidden;
 
             ShowAll();
         }
         
         public override void UpdateImageData(string url, bool hasImage, byte[] imgData)
         {
-            var image = LoadImageFromByteArray(imgData);
-            m_poiImage.Source = image ?? m_placeholderImage;
-            m_poiImage.Visibility = Visibility.Visible;
+            if(hasImage)
+            {
+                m_poiImageContainer.Visibility = Visibility.Visible;
+                m_poiImage.Source = LoadImageFromByteArray(imgData);
+                m_poiImage.Visibility = Visibility.Visible;
+            }
+            m_previewImageSpinner.Visibility = Visibility.Hidden;
         }
         
         public void HandleWebLinkButtonClicked(object sender, MouseEventArgs e)

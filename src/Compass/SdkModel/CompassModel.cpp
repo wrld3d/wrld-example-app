@@ -11,8 +11,8 @@
 #include "LatLongAltitude.h"
 #include "IAppModeModel.h"
 #include "IAlertBoxFactory.h"
-#include "IInteriorsNavigationService.h"
 #include "InteriorsExplorerModel.h"
+#include "InteriorNavigationHelpers.h"
 
 namespace ExampleApp
 {
@@ -21,7 +21,7 @@ namespace ExampleApp
         namespace SdkModel
         {
             CompassModel::CompassModel(Eegeo::Location::NavigationService& navigationService,
-                                       InteriorsNavigation::SdkModel::IInteriorsNavigationService& interiorsNavigationService,
+                                       Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                        Eegeo::Location::ILocationService& locationService,
                                        ExampleApp::AppCamera::SdkModel::IAppCameraController& cameraController,
                                        Metrics::IMetricsService& metricsService,
@@ -29,7 +29,7 @@ namespace ExampleApp
                                        AppModes::SdkModel::IAppModeModel& appModeModel,
                                        Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory)
                 :m_navigationService(navigationService)
-                ,m_interiorsNavigationService(interiorsNavigationService)
+                ,m_interiorInteractionModel(interiorInteractionModel)
                 ,m_locationService(locationService)
                 ,m_cameraController(cameraController)
                 ,m_metricsService(metricsService)
@@ -115,7 +115,7 @@ namespace ExampleApp
                 return ((appMode != AppModes::SdkModel::WorldMode) &&
                         !m_exitInteriorTriggered &&
                         (gpsMode != GpsMode::GpsDisabled) &&
-                        !m_interiorsNavigationService.IsPositionInInterior());
+                        !Helpers::InteriorNavigationHelpers::IsPositionInInterior(m_interiorInteractionModel, m_locationService));
             }
 
             void CompassModel::TryUpdateToNavigationServiceGpsMode(Eegeo::Location::NavigationService::GpsMode value)
@@ -164,19 +164,7 @@ namespace ExampleApp
             void CompassModel::SetGpsMode(GpsMode::Values gpsMode)
             {
                 m_gpsMode = gpsMode;
-                
-                const AppModes::SdkModel::AppMode appMode = m_appModeModel.GetAppMode();
-                if (appMode == AppModes::SdkModel::WorldMode || m_exitInteriorTriggered)
-                {
-                    m_navigationService.SetGpsMode(m_navigationGpsModeToCompassGpsMode[gpsMode]);
-                    m_interiorsNavigationService.SetGpsMode(m_navigationGpsModeToCompassGpsMode[GpsMode::GpsDisabled]);
-                }
-                else
-                {
-                    m_navigationService.SetGpsMode(m_navigationGpsModeToCompassGpsMode[GpsMode::GpsDisabled]);
-                    m_interiorsNavigationService.SetGpsMode(m_navigationGpsModeToCompassGpsMode[gpsMode]);
-                }
-                
+                m_navigationService.SetGpsMode(m_navigationGpsModeToCompassGpsMode[m_gpsMode]);
                 m_metricsService.SetEvent("SetGpsMode", "GpsMode", m_gpsModeToString[m_gpsMode]);
                 
                 m_gpsModeChangedCallbacks.ExecuteCallbacks();
