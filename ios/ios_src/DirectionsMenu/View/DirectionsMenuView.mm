@@ -293,16 +293,18 @@
 
 -(void) SetGeoNamesStartSuggestions:(const std::vector<ExampleApp::Search::SdkModel::SearchResultModel>&) results
 {
-    [m_pDirectionsMenuView showStartSuggestions];
+    Eegeo_TTY("Start Results Count: %i",results.size());
+
+    [m_pDirectionsMenuView updateStartSuggestions:results];
     [self updateContainerFrame];
 
-    Eegeo_TTY("Start Results Count",results.size());
 }
 
 -(void) SetGeoNamesEndSuggestions:(const std::vector<ExampleApp::Search::SdkModel::SearchResultModel>&) results
 {
-    Eegeo_TTY("End Results Count",results.size());
-    [m_pDirectionsMenuView showEndSuggestions];
+    Eegeo_TTY("End Results Count: %i",results.size());
+
+    [m_pDirectionsMenuView updateEndSuggestions:results];
     [self updateContainerFrame];
 }
 

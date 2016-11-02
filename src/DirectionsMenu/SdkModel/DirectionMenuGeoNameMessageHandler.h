@@ -28,7 +28,9 @@ namespace ExampleApp
                 const Search::SdkModel::SearchQuery&,
                 const std::vector<Search::SdkModel::SearchResultModel>&> m_searchQueryResponseCallback;
                 
-                void OnFindDirectionMessage(const DirectionsMenu::DirectionMenuGetGeoNamesMessage& message);
+                bool m_isStartLocationActive;
+                
+                void OnGetGeoNamesReceivedMessage(const DirectionsMenu::DirectionMenuGetGeoNamesMessage& message);
                 
                 void OnSearchResponseRecieved(const Search::SdkModel::SearchQuery& query,
                                               const std::vector<Search::SdkModel::SearchResultModel>& results);

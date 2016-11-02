@@ -11,6 +11,10 @@
 @interface DirectionsMenuStaticView()
 {
     ExampleApp::Menu::View::IMenuSectionViewModel* m_pSearchResultsSection;
+    
+   std::vector< ExampleApp::Search::SdkModel::SearchResultModel> m_pSuggestionsResults;
+
+    
     UIView *m_pView;
     int selectedIndex;
     int searchType;
@@ -125,7 +129,29 @@
     
 
 }
+- (void)updateStartSuggestions:(const std::vector<ExampleApp::Search::SdkModel::SearchResultModel>&) results
+{
+    m_pSuggestionsResults = results;
+    
+    if (m_pSuggestionsResults.size() > 0)
+    {
+        [self showStartSuggestions];
+    }
+    [_suggestionsTableView reloadData];
+    
+}
 
+- (void)updateEndSuggestions:(const std::vector<ExampleApp::Search::SdkModel::SearchResultModel>&) results
+{
+    m_pSuggestionsResults = results;
+    
+    if (m_pSuggestionsResults.size() > 0)
+    {
+        [self showEndSuggestions];
+    }
+    [_suggestionsTableView reloadData];
+    
+}
 #define  UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -133,7 +159,9 @@
     
     if (tableView == _suggestionsTableView)
     {
-        return 4;
+        
+        return m_pSuggestionsResults.size();
+        
     }
     if(m_pSearchResultsSection == NULL)
     {
@@ -150,8 +178,15 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView == _suggestionsTableView) {
+        
+        ExampleApp::Search::SdkModel::SearchResultModel item = m_pSuggestionsResults[(static_cast<int>(indexPath.row))];
+
+        
         DirectionSuggestionTableViewCell *cell = (DirectionSuggestionTableViewCell*)[self.suggestionsTableView dequeueReusableCellWithIdentifier:@"DirectionSuggestionsViewCell"];
-        [cell.titleLabel setText:[NSString stringWithFormat:@"%li",(long)indexPath.row+1]];
+      //  [cell.titleLabel setText:[NSString stringWithFormat:@"%li",(long)indexPath.row+1]];
+        
+        
+        [cell.titleLabel setText:[NSString stringWithFormat:@"%s",item.GetTitle().c_str()]];
 
         return cell;
         
@@ -209,6 +244,9 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
+    if (tableView == _suggestionsTableView) {
+        return;
+    }
     DirectionsMenuView *parentView = (DirectionsMenuView *)m_pView;
     ExampleApp::DirectionsMenu::View::DirectionsMenuViewInterop *interop = [parentView getDirectionsMenuInterop];
     interop->HandleWayPointSelected(static_cast<int>(indexPath.row));
