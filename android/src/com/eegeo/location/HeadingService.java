@@ -110,7 +110,9 @@ public class HeadingService implements SensorEventListener
             {
                 float smoothing = 0.6f;
                 float heading = event.values[0];
-                if (Float.isNaN(heading)) // Fix MPLY-4888
+                float pitch = event.values[1];
+                float roll = event.values[2];
+                if (Float.isNaN(heading) || (heading == 0 && (Float.isNaN(pitch) || pitch == 0) && (Float.isNaN(roll) || roll == 0))) // Fix MPLY-4888 || Fix MPLY-7637
                 {
                     return;
                 }
