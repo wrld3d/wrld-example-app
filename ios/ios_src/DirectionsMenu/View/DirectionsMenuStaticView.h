@@ -32,5 +32,6 @@
 - (void)showStartSuggestions;
 - (Eegeo::Space::LatLong) GetStartLocation;
 - (Eegeo::Space::LatLong) GetEndLocation;
-
+- (BOOL) shouldPerformSearch;
+- (void) resetSuggestionItem;
 @end

@@ -21,6 +21,8 @@
     UIView *m_pView;
     int selectedIndex;
     int searchType;
+    BOOL startLocationSearched;
+    BOOL endLocationSearched;
 }
 
 @property (retain, nonatomic) IBOutlet UIView *startRouteBgView;
@@ -77,11 +79,11 @@
 }
 - (IBAction)cancelSuggestions:(id)sender
 {
-    
     _heightDropSpacingConstraint.constant = 0;
     _suggestionsView.hidden = true;
     searchType = -1;
     [self layoutIfNeeded];
+    
     
 }
 - (void)showStartSuggestions
@@ -135,7 +137,7 @@
 - (void)updateStartSuggestions:(const std::vector<ExampleApp::Search::SdkModel::SearchResultModel>&) results
 {
     m_pSuggestionsResults = results;
-    
+    startLocationSearched = false;
     if (m_pSuggestionsResults.size() > 0)
     {
         [self showStartSuggestions];
@@ -147,6 +149,7 @@
 - (void)updateEndSuggestions:(const std::vector<ExampleApp::Search::SdkModel::SearchResultModel>&) results
 {
     m_pSuggestionsResults = results;
+    endLocationSearched = false;
     
     if (m_pSuggestionsResults.size() > 0)
     {
@@ -248,12 +251,13 @@
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
     if (tableView == _suggestionsTableView) {
-        
+    
         ExampleApp::Search::SdkModel::SearchResultModel item = m_pSuggestionsResults[(static_cast<int>(indexPath.row))];
         
-        if(searchType == 1) //start
+        if(searchType == 1 ) //start
         {
             m_pStartLoc = item;
+            startLocationSearched = true;
             [_startRouteTextField setText:[NSString stringWithFormat:@"%s",item.GetTitle().c_str()]];
             [self cancelSuggestions:nil];
         }
@@ -261,6 +265,7 @@
         if(searchType == 2) //end
         {
             m_pEndLoc = item;
+            endLocationSearched = true;
             [_endRouteTextField setText:[NSString stringWithFormat:@"%s",item.GetTitle().c_str()]];
             [self cancelSuggestions:nil];
         }
@@ -274,13 +279,34 @@
 }
 - (Eegeo::Space::LatLong) GetStartLocation
 {
-     return m_pStartLoc.GetLocation();
+    if (startLocationSearched)
+    {
+      return m_pStartLoc.GetLocation();
+    }
+    return Eegeo::Space::LatLong(0.0f,0.0f);
 }
 - (Eegeo::Space::LatLong) GetEndLocation
 {
-    return m_pStartLoc.GetLocation();
-}
+    if (endLocationSearched)
+    {
+        return m_pEndLoc.GetLocation();
+    }
+    return Eegeo::Space::LatLong(0.0f,0.0f);
 
+}
+- (void) resetSuggestionItem
+{
+    startLocationSearched = false;
+    endLocationSearched = false;
+}
+- (BOOL) shouldPerformSearch
+{
+    if (startLocationSearched && endLocationSearched)
+    {
+        return true;
+    }
+    return false;
+}
 -(void)SetSearchMenuView:(UIView *)_parentView   {
     
     m_pView = _parentView;
@@ -296,8 +322,11 @@
 
     if(m_pSearchResultsSection == NULL || m_pSearchResultsSection->Size() == 0)
     {
-        if (searchType  > 0) {
+        if (searchType  == 1) {
             return _headerView.bounds.size.height + _bottomBarView.bounds.size.height + (_hideOptionsView.bounds.size.height) + 150;
+        }
+        if (searchType  == 2) {
+            return _headerView.bounds.size.height + _bottomBarView.bounds.size.height + (_hideOptionsView.bounds.size.height) + 175;
         }
         return _headerView.bounds.size.height + _bottomBarView.bounds.size.height + (_hideOptionsView.bounds.size.height);
     }

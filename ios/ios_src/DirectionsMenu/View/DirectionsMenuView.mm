@@ -147,6 +147,7 @@
     _pEndRouteTextField = m_pDirectionsMenuView.endRouteTextField;
     
     _pEndRouteTextField.delegate = self;
+    _pStartRouteTextField.delegate = self;
     
     [_pStartRouteTextField addTarget:self action:@selector(StartLocationTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
@@ -344,7 +345,7 @@
     {
         [_pEndRouteTextField becomeFirstResponder];
     }
-    else if(textField == _pEndRouteTextField)
+    else if(textField == _pEndRouteTextField && [m_pDirectionsMenuView shouldPerformSearch])
     {
         [self EndRouteEntered];
         [_pEndRouteTextField resignFirstResponder];
@@ -373,8 +374,9 @@
 -(void)ExitDirectionsClicked {
     [m_pDirectionsMenuView cancelSuggestions:nil];
     [self updateContainerFrame];
-
-    
+    _pEndRouteTextField.text = @"";
+    _pStartRouteTextField.text = @"";
+    [m_pDirectionsMenuView resetSuggestionItem];
     if([self canInteract])
     {
         m_pDirectionsMenuInterop->OnExitDirectionsClicked();
@@ -385,7 +387,7 @@
 
 -(void)EndRouteEntered  {
     //std::string locationString = m_pDirectionsMenuView.GetStartLocation.GetLatitudeInDegrees();
-    m_pDirectionsMenuInterop->SearchPerformed(m_pDirectionsMenuView.GetStartLocation,m_pDirectionsMenuView.GetStartLocation);
+    m_pDirectionsMenuInterop->SearchPerformed(m_pDirectionsMenuView.GetStartLocation,m_pDirectionsMenuView.GetEndLocation);
 }
 
 -(void)updateContainerFrame {
