@@ -17,7 +17,7 @@ namespace ExampleApp
                 std::string m_identifier;
                 std::string m_name;
                 std::string m_details;
-                std::string m_icon;
+                std::string m_icon;                
                 IMenuOption* m_pOption;
 
             public:

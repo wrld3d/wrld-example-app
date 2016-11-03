@@ -21,6 +21,12 @@ namespace ExampleApp
                                      const std::string& details,
                                      const std::string& icon,
                                      IMenuOption* pOption) = 0;
+                virtual void AddItem(const std::string& uniqueIdentifier,
+                                     const std::string& name,
+                                     const std::string& details,
+                                     const std::string& icon,
+                                     const std::string& duration,
+                                     IMenuOption* pOption) {};
 
                 virtual void RemoveItem(const std::string& uniqueIdentifier) = 0;
             };
