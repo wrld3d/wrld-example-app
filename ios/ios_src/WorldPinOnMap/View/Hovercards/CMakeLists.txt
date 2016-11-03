@@ -11,6 +11,8 @@ set(currsources
   ios_src/WorldPinOnMap/View/Hovercards/TwitterWorldHovercard.mm
   ios_src/WorldPinOnMap/View/Hovercards/YelpHovercardView.h
   ios_src/WorldPinOnMap/View/Hovercards/YelpHovercardView.mm
+  ios_src/WorldPinOnMap/View/Hovercards/BaseHovercard.h
+  ios_src/WorldPinOnMap/View/Hovercards/BaseHovercard.mm
 )
 set(sources ${sources} ${currsources})
 source_group(\\ios_src\\WorldPinOnMap\\View\\Hovercards FILES ${currsources})
