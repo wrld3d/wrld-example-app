@@ -389,9 +389,10 @@ namespace ExampleApp
         m_pLoadingScreen = CreateLoadingScreen(screenProperties, m_pWorld->GetRenderingModule(), m_pWorld->GetPlatformAbstractionModule());
 
         m_pPathDrawingModule = Eegeo_NEW(ExampleApp::PathDrawing::SdkModel::PathDrawingModule)(DirectionsMenuModule().GetDirectionsSectionViewModel(),                                                                                               m_pWorldPinsModule->GetWorldPinsService(),
-                                                                                            m_pWorld->GetRoutesModule().GetRouteService(), *m_pGlobeCameraWrapper,
+                                                                                               m_pWorld->GetRoutesModule().GetRouteService(), *m_pGlobeCameraWrapper,
                                                                                                m_pTagSearchModule->GetSearchResultIconKeyMapper(),
-                                                                                            m_messageBus);
+                                                                                               m_messageBus);
+        m_pdirectionReCalculationService = Eegeo_NEW(ExampleApp::DirectionReCalculationService::SdkModel::DirectionReCalculationService)(m_pWorld->GetLocationService(),m_pPathDrawingModule->GetPathDrawingController());
         
         if(m_applicationConfiguration.TryStartAtGpsLocation())
         {
@@ -620,7 +621,11 @@ namespace ExampleApp
         
         //TODO: Creat new repository for direction moudle query performer
         
+
+        
+        
         m_pFindDirectionServiceModule = Eegeo_NEW(Direction::SdkModel::FindDirectionServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),m_platformAbstractions.GetUrlEncoder(),m_applicationConfiguration.EegeoApiKey(),m_messageBus);
+
         
         m_pDirectionsMenuModule = Eegeo_NEW(ExampleApp::DirectionsMenu::SdkModel::DirectionsMenuModule)(m_identityProvider,
                                                                                                         m_pReactionControllerModule->GetReactionControllerModel(),                                                                                                                         m_messageBus,m_pFindDirectionServiceModule->GetFindDirectionQueryPerformer(),geoNameService);
@@ -907,6 +912,7 @@ namespace ExampleApp
         
         Eegeo_DELETE m_pDirectionsMenuModule;
         Eegeo_DELETE m_pFindDirectionServiceModule;
+        Eegeo_DELETE m_pdirectionReCalculationService;
         
     }
 
@@ -1187,7 +1193,10 @@ namespace ExampleApp
         {
             m_pPathDrawingModule->GetPathDrawingController().Update(dt);
         }
-        
+        if(m_pPathDrawingModule->GetPathDrawingController().IsRouteCreated())
+        {
+            m_pdirectionReCalculationService->Update(dt);
+        }
         UpdateLoadingScreen(dt);
     }
 

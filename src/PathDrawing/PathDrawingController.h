@@ -69,6 +69,9 @@ namespace ExampleApp
             virtual void Update(float dt);
             void Draw() {}
             void Suspend();
+            bool IsRouteCreated();
+            std::vector<Eegeo::Routes::Route*>& GetCreatedRoutes();
+
             
             virtual ~PathDrawingController();
             
