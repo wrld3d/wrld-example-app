@@ -516,6 +516,7 @@ namespace
         m_pGradientMask.frame = self.pPreviewImage.bounds;
         
         self.pPoiImageLoadingSpinner.center = CGPointMake(self.pPreviewImage.frame.size.width/2.f, self.pPreviewImage.frame.size.height/2.f);
+        m_pGradientMask.frame = self.pPreviewImage.bounds;
         const CGFloat imageBottomPadding = 8.0;
         currentLabelY += (cardContainerWidth * 2.f/3.f + imageBottomPadding);
     }

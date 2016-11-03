@@ -30,6 +30,7 @@ namespace ExampleApp
                 
                 void SetVisible(bool visible);
                 void SetScale(float scaleParam);
+                void SetTransitionValue(float transitionParam);
                 void Update(float dt);
                 void EnqueueRenderables(const Eegeo::Rendering::RenderContext& renderContext, Eegeo::Rendering::RenderQueue& renderQueue);
                 void SetMarkerTransform(const Eegeo::m44& modelViewProjectionSphere, const Eegeo::m44& modelViewProjectionCylinder) const;

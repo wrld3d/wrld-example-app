@@ -14,7 +14,7 @@
 
 @class EegeoSearchResultPoiView;
 
-@interface EegeoSearchResultPoiView : UIView<SearchResultPoiView, UIScrollViewDelegate>
+@interface EegeoSearchResultPoiView : UIView<SearchResultPoiView, UIScrollViewDelegate, UIWebViewDelegate>
 {
     UIViewController* m_pController;
     
@@ -26,6 +26,9 @@
     bool m_isPinned;
     float m_labelsSectionWidth;
     bool m_poiImageLoadedSuccessfully;
+    bool m_htmlLoaded;
+    bool m_webPageLoaded;
+    bool m_webPageHeightSpecified;
     
     UIImage* m_pRemovePinButtonBackgroundImage;
     UIImage* m_pRemovePinHighlightButtonBackgroundImage;
@@ -89,5 +92,7 @@
 @property (nonatomic, retain) UIView* pDetailsCardHeaderLine;
 @property (nonatomic, retain) UIView* pTagsCardHeaderLine;
 @property (nonatomic, retain) UIView* pFooterLine;
+
+@property (nonatomic, retain) UIWebView* pWebView;
 
 @end

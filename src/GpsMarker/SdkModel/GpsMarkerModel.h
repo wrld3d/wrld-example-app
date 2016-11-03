@@ -3,7 +3,7 @@
 #pragma once
 
 #include "ICallback.h"
-#include "Location.h"
+#include "ILocationService.h"
 #include "VectorMath.h"
 #include "Terrain.h"
 
@@ -25,6 +25,7 @@ namespace ExampleApp
                 
                 bool HasLocation() const { return m_hasLocation; }
                 const Eegeo::dv3& GetCurrentLocationEcef() const { return m_currentLocationEcef; }
+                bool IsLocationIndoors() const { return m_locationService.IsIndoors(); }
                 
                 void UpdateHeading(float dt);
                 const double GetSmoothedHeadingDegrees() const;

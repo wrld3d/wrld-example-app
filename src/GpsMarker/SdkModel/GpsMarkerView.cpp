@@ -113,18 +113,13 @@ namespace ExampleApp
                 m_scaleParam = Eegeo::Math::Clamp01(scaleParam);
             }
             
+            void GpsMarkerView::SetTransitionValue(float transitionParam)
+            {
+                m_transitionParam = Eegeo::Math::Clamp01(transitionParam);
+            }
+            
             void GpsMarkerView::Update(float dt)
             {
-                if(m_visible && m_transitionParam < 1.0f)
-                {
-                    m_transitionParam += dt * 4.0f;
-                }
-                else if(!m_visible && m_transitionParam > 0.0f)
-                {
-                    m_transitionParam -= dt * 4.0f;
-                }
-                m_transitionParam = Eegeo::Math::Clamp01(m_transitionParam);
-                
                 m_iconRenderable.Reset();
                 
                 float currentColorLerpValue = m_pMarkerMaterial->GetColorLerpValue();

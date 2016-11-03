@@ -52,6 +52,7 @@ namespace ExampleApp
                 
                 void SetVisible(bool visible);
                 void SetScale(float scaleParam);
+                void SetTransitionValue(float transitionParam);
                 void Update(float dt);
                 void DrawIconAtEcefPosition(const Eegeo::Camera::RenderCamera& renderCamera, const Eegeo::dv3& ecefPosition);
                 void EnqueueRenderables(const Eegeo::Rendering::RenderContext& renderContext, Eegeo::Rendering::RenderQueue& renderQueue);

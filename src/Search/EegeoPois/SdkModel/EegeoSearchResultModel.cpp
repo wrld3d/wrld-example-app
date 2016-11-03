@@ -19,6 +19,8 @@ namespace ExampleApp
                 , m_facebookUrl("")
                 , m_twitterUrl("")
                 , m_email("")
+                , m_customViewUrl("")
+                , m_customViewHeight(-1)
                 {
                 }
                 
@@ -29,7 +31,9 @@ namespace ExampleApp
                                                                const std::string& imageUrl,
                                                                const std::string& facebookUrl,
                                                                const std::string& twitterUrl,
-                                                               const std::string& email)
+                                                               const std::string& email,
+                                                               const std::string& customViewUrl,
+                                                               const int& customViewHeight)
                     : m_phone(phone)
                     , m_webUrl(webUrl)
                     , m_imageUrl(imageUrl)
@@ -38,6 +42,8 @@ namespace ExampleApp
                     , m_facebookUrl(facebookUrl)
                     , m_twitterUrl(twitterUrl)
                     , m_email(email)
+                    , m_customViewUrl(customViewUrl)
+                    , m_customViewHeight(customViewHeight)
                 {
                 }
 
@@ -89,6 +95,16 @@ namespace ExampleApp
                 const std::string& EegeoSearchResultModel::GetImageUrl() const
                 {
                     return m_imageUrl;
+                }
+                
+                const std::string& EegeoSearchResultModel::GetCustomViewUrl() const
+                {
+                    return m_customViewUrl;
+                }
+                
+                const int& EegeoSearchResultModel::GetCustomViewHeight() const
+                {
+                    return m_customViewHeight;
                 }
             }
         }

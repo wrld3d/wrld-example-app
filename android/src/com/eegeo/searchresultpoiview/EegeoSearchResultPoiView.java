@@ -14,6 +14,8 @@ import android.net.Uri;
 import android.text.util.Linkify;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -64,7 +66,10 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
 	private ScrollView m_contentContainer = null;
 	private ImageView m_footerFade = null;
 	private LinearLayout m_linearContentContainer = null;
-
+	private WebView m_webView = null;
+	private View m_webViewContainer = null;
+	
+	private boolean m_htmlLoaded = true;
     private boolean m_handlingClick = false;
     private TintablePinToggleButton m_togglePinnedWrapper;
     
@@ -111,18 +116,20 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
 		m_contentContainer = (ScrollView)m_view.findViewById(R.id.content_container);
 		m_footerFade = (ImageView)m_view.findViewById(R.id.footer_fade);
 		m_linearContentContainer = (LinearLayout)m_view.findViewById(R.id.linear_content_container);
+		m_webView = (WebView)m_view.findViewById(R.id.webview);
+		m_webViewContainer = (View)m_view.findViewById(R.id.search_result_poi_view_webview_container);
         
         m_activity.recursiveDisableSplitMotionEvents((ViewGroup)m_view);
         
         m_view.setVisibility(View.GONE);
         m_uiRoot.addView(m_view);
+    	m_webView.setWebViewClient(new WebViewClient());
         
         m_closeButton.setOnClickListener(this);
         m_togglePinnedButton.setOnClickListener(this);
         m_facebookUrl.setOnClickListener(this);
         m_twitterUrl.setOnClickListener(this);
         m_email.setOnClickListener(this);
-        m_webLinkView.setOnClickListener(this);
     }
 
     public void destroy()
@@ -144,7 +151,9 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
     		final boolean isPinned,
     		final String facebook,
     		final String twitter,
-    		final String email) 
+    		final String email,
+    		final String customViewUrl,
+    		final int customViewHeight) 
     {
     	int containerWidth = m_searchResultPoiViewContainer.getWidth();
     	int containerHeight = m_searchResultPoiViewContainer.getHeight();
@@ -214,7 +223,7 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
         	m_webLinkView.setText(url.replace("", ""));
         	
         	final String webRegex = "[\\S]*";
-        	Linkify.addLinks(m_webLinkView, Pattern.compile(webRegex), "Web:");
+        	Linkify.addLinks(m_webLinkView, Pattern.compile(webRegex), url);
         }
         else
         {
@@ -315,6 +324,22 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
         {
         	m_dropPinText.setText("Remove Pin");
         }
+        
+        if(!customViewUrl.equals(""))
+        {
+        	m_webView.loadUrl(customViewUrl);
+        	if(customViewHeight != -1)
+        	{
+        		RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) m_webView.getLayoutParams();
+            	params.height = m_activity.dipAsPx(customViewHeight);
+            	m_webView.setLayoutParams(params);
+        	}
+        	m_webView.getSettings().setLoadWithOverviewMode(true);
+        	m_webView.getSettings().setUseWideViewPort(true);
+        	m_poiImageViewContainer.setVisibility(View.GONE);
+        	m_webViewContainer.setVisibility(View.VISIBLE);
+        	m_poiImageHeader.setVisibility(View.VISIBLE);
+        }
     }
     
     public void handleButtonLink(View view)
@@ -368,10 +393,6 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
         {
         	openEmailLink(view);
         }
-        else if(view == m_webLinkView)
-        {
-        	handleWebLinkButtonClicked();
-        }
     }
 
     public void dismissPoiInfo()
@@ -413,8 +434,10 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
 				int height = (int) (width * 2.f / 3.f);
 				Bitmap poiBitmap = BitmapFactory.decodeByteArray(imgData, 0, imgData.length, bmOptions);
 
-			    
-				m_poiImage.setImageBitmap(Bitmap.createBitmap(poiBitmap));
+			    if(m_poiImageViewContainer.getVisibility() != View.GONE)
+			    {
+			    	m_poiImage.setImageBitmap(Bitmap.createBitmap(poiBitmap));
+			    }
 			}
 			else
 			{
@@ -432,30 +455,6 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
         m_togglePinnedButton.setOnClickListener(null);
 
         SearchResultPoiViewJniMethods.CloseButtonClicked(m_nativeCallerPointer);
-    }
-    
-    private void handleWebLinkButtonClicked()
-    {
-    	final Uri uri = Uri.parse(m_url);
-    	final Intent browserIntent = new Intent(Intent.ACTION_VIEW, uri);
-    	if(browserIntent.resolveActivity(m_activity.getPackageManager()) != null)
-    	{
-    		m_activity.startActivity(browserIntent);
-    	}
-    	else
-    	{
-    		new AlertDialog.Builder(m_activity)
-    			.setTitle("Warning")
-    			.setMessage("No web browser found on device. Cannot open webpage.")
-    			.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) 
-					{
-					}
-				})
-    			.show();
-    	}
-        m_handlingClick = false;
     }
 	
 	public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight)

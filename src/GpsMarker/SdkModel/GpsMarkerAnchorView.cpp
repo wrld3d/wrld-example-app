@@ -88,18 +88,13 @@ namespace ExampleApp
                 m_scaleParam = Eegeo::Math::Clamp01(scaleParam);
             }
             
+            void GpsMarkerAnchorView::SetTransitionValue(float transitionParam)
+            {
+                m_transitionParam = Eegeo::Math::Clamp01(transitionParam);
+            }
+            
             void GpsMarkerAnchorView::Update(float dt)
             {
-                if(m_visible && m_transitionParam < 1.0f)
-                {
-                    m_transitionParam += dt * 4.0f;
-                }
-                else if(!m_visible && m_transitionParam > 0.0f)
-                {
-                    m_transitionParam -= dt * 4.0f;
-                }
-                m_transitionParam = Eegeo::Math::Clamp01(m_transitionParam);
-                
                 Eegeo::v4 currentHighlightColor = m_pMarkerHighlightMaterial->GetColor();
                 Eegeo::v4 newHighlightColor = Eegeo::v4::Lerp(currentHighlightColor, m_highlightColor, dt);
                 m_pMarkerHighlightMaterial->SetColor(newHighlightColor);

@@ -203,6 +203,10 @@ const int DeletePinAlertViewTag = 2;
         self.pFooterSpace.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pControlContainer addSubview: self.pFooterSpace];
         
+        self.pWebView = [[[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pWebView.scalesPageToFit = YES;
+        self.pWebView.delegate = self;
+        
         m_pGradientMask = [[CAGradientLayer layer] retain];
         m_pGradientMask.colors = @[(id)[UIColor clearColor].CGColor,
                                    (id)[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.5f].CGColor];
@@ -212,6 +216,9 @@ const int DeletePinAlertViewTag = 2;
         [self setTouchExclusivity: self];
         
         m_poiImageLoadedSuccessfully = true;
+        m_htmlLoaded = true;
+        m_webPageLoaded = false;
+        m_webPageHeightSpecified = false;
     }
     
     return self;
@@ -329,6 +336,9 @@ const int DeletePinAlertViewTag = 2;
     
     [self.pPreviewImageContainer removeFromSuperview];
     [self.pPreviewImageContainer release];
+    
+    [self.pWebView removeFromSuperview];
+    [self.pWebView release];
     
     [self->m_pRemovePinButtonBackgroundImage release];
     [self->m_pRemovePinHighlightButtonBackgroundImage release];
@@ -509,9 +519,22 @@ const int DeletePinAlertViewTag = 2;
     
     float detailsCardY = 0.f;
     
-    if(!m_eegeoModel.GetImageUrl().empty())
+    if(!m_eegeoModel.GetCustomViewUrl().empty())
     {
-        currentLabelY = 0.f;
+        NSString *errorMessage = [NSString stringWithCString:m_eegeoModel.GetCustomViewUrl().c_str()
+                                                    encoding:[NSString defaultCStringEncoding]];
+        int webViewHeight = cardContainerWidth;
+        if(m_eegeoModel.GetCustomViewHeight() != -1)
+        {
+            m_webPageHeightSpecified = true;
+            webViewHeight = m_eegeoModel.GetCustomViewHeight();
+        }
+        [self createWebViewWithHTML:CGRectMake(0, currentLabelY, cardContainerWidth, webViewHeight):errorMessage ];
+        currentLabelY += self.pWebView.frame.size.height + headerMargin;
+        self.pPreviewImage.frame = CGRectMake(0, 0, 0, 0);
+    }
+    else if(!m_eegeoModel.GetImageUrl().empty())
+    {
         self.pPreviewImage.frame = CGRectMake(0.0f,
                                               currentLabelY,
                                               cardContainerWidth,
@@ -591,7 +614,7 @@ const int DeletePinAlertViewTag = 2;
                                             cardTextHorizontalSpace,
                                             35.f);
         self.pWebContent.text = [NSString stringWithUTF8String:m_eegeoModel.GetWebUrl().c_str()];
-        self.pWebContent.numberOfLines = 0;
+        self.pWebContent.numberOfLines = 2;
         self.pWebContent.hidden = false;
         [self.pWebContent sizeToFit];
         
@@ -727,6 +750,43 @@ const int DeletePinAlertViewTag = 2;
     {
         self.pFadeContainer.hidden = YES;
     }
+}
+
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    m_webPageLoaded = true;
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    if(!m_webPageHeightSpecified)
+    {
+        CGRect frame = self.pWebView.frame;
+        frame.size.height = 1;
+        self.pWebView.frame = frame;
+        CGSize fittingSize = [self.pWebView sizeThatFits:CGSizeZero];
+        float minHeight = 300.f;
+        float newHeight = std::max((float)fittingSize.height, minHeight);
+        frame.size.height = newHeight;
+        self.pWebView.frame = frame;
+        self.pWebView.scalesPageToFit = YES;
+        
+        [self performDynamicContentLayout];
+    }
+}
+
+- (void) createWebViewWithHTML:(CGRect)frame :(NSString*)url
+{
+     if(!m_webPageLoaded)
+     {
+        self.pWebView.frame = frame;
+
+        [self.pWebView setBackgroundColor:[UIColor clearColor]];
+
+        [self.pWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
+        
+        [self.pLabelsContainer addSubview:self.pWebView];
+     }
 }
 
 - (void) setContent:(const ExampleApp::Search::SdkModel::SearchResultModel*)pModel :(bool)isPinned
