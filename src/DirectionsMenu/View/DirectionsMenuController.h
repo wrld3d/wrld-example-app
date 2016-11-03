@@ -24,7 +24,7 @@ namespace ExampleApp
                 IDirectionsMenuView& m_directionsMenuView;
                 Menu::View::IMenuSectionViewModel& m_searchSectionViewModel;
                 
-                Eegeo::Helpers::TCallback1<DirectionsMenuController, const std::string&> m_searchPerformedCallbacks;
+                Eegeo::Helpers::TCallback2<DirectionsMenuController, const Eegeo::Space::LatLong&,const Eegeo::Space::LatLong&> m_searchPerformedCallbacks;
                 Eegeo::Helpers::TCallback0<DirectionsMenuController> m_searchClearedCallbacks;
                 Eegeo::Helpers::TCallback1<DirectionsMenuController, int> m_wayPointSelectedCallbacks;
                 Eegeo::Helpers::TCallback0<DirectionsMenuController> m_exitDirectionsCallbacks;
@@ -61,7 +61,7 @@ namespace ExampleApp
                 
                 void OnModalBackgroundTapped();
                 
-                void OnSearch(const std::string& searchQuery);
+                void OnSearch(const Eegeo::Space::LatLong& start,const Eegeo::Space::LatLong& end);
                 
                 void OnSearchCleared();
                 

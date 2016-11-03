@@ -30,4 +30,7 @@
 - (IBAction)cancelSuggestions:(id)sender;
 - (void)showEndSuggestions;
 - (void)showStartSuggestions;
+- (Eegeo::Space::LatLong) GetStartLocation;
+- (Eegeo::Space::LatLong) GetEndLocation;
+
 @end

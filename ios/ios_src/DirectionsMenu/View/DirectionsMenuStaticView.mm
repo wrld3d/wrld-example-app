@@ -7,13 +7,16 @@
 #include "DirectionsMenuViewInterop.h"
 #include "UIColors.h"
 #include "DirectionSuggestionTableViewCell.h"
+#include "LatLongAltitude.h"
 
 @interface DirectionsMenuStaticView()
 {
     ExampleApp::Menu::View::IMenuSectionViewModel* m_pSearchResultsSection;
     
-   std::vector< ExampleApp::Search::SdkModel::SearchResultModel> m_pSuggestionsResults;
+    std::vector< ExampleApp::Search::SdkModel::SearchResultModel> m_pSuggestionsResults;
 
+    ExampleApp::Search::SdkModel::SearchResultModel m_pStartLoc;
+    ExampleApp::Search::SdkModel::SearchResultModel m_pEndLoc;
     
     UIView *m_pView;
     int selectedIndex;
@@ -245,12 +248,37 @@
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
     if (tableView == _suggestionsTableView) {
+        
+        ExampleApp::Search::SdkModel::SearchResultModel item = m_pSuggestionsResults[(static_cast<int>(indexPath.row))];
+        
+        if(searchType == 1) //start
+        {
+            m_pStartLoc = item;
+            [_startRouteTextField setText:[NSString stringWithFormat:@"%s",item.GetTitle().c_str()]];
+            [self cancelSuggestions:nil];
+        }
+        
+        if(searchType == 2) //end
+        {
+            m_pEndLoc = item;
+            [_endRouteTextField setText:[NSString stringWithFormat:@"%s",item.GetTitle().c_str()]];
+            [self cancelSuggestions:nil];
+        }
+        
         return;
     }
     DirectionsMenuView *parentView = (DirectionsMenuView *)m_pView;
     ExampleApp::DirectionsMenu::View::DirectionsMenuViewInterop *interop = [parentView getDirectionsMenuInterop];
     interop->HandleWayPointSelected(static_cast<int>(indexPath.row));
     
+}
+- (Eegeo::Space::LatLong) GetStartLocation
+{
+     return m_pStartLoc.GetLocation();
+}
+- (Eegeo::Space::LatLong) GetEndLocation
+{
+    return m_pStartLoc.GetLocation();
 }
 
 -(void)SetSearchMenuView:(UIView *)_parentView   {

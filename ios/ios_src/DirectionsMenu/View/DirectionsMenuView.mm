@@ -384,8 +384,8 @@
 
 
 -(void)EndRouteEntered  {
-    
-    m_pDirectionsMenuInterop->SearchPerformed("");  
+    //std::string locationString = m_pDirectionsMenuView.GetStartLocation.GetLatitudeInDegrees();
+    m_pDirectionsMenuInterop->SearchPerformed(m_pDirectionsMenuView.GetStartLocation,m_pDirectionsMenuView.GetStartLocation);
 }
 
 -(void)updateContainerFrame {
