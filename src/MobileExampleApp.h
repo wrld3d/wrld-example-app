@@ -93,6 +93,8 @@
 #include "DirectionsMenu.h"
 #include "DirectionResultSection.h"
 #include "FindDirectionServiceModule.h"
+#include "DirectionReCalculationService.h"
+
 
 namespace ExampleApp
 {
@@ -131,6 +133,7 @@ namespace ExampleApp
         ExampleApp::SearchResultSection::SdkModel::ISearchResultSectionModule* m_pSearchResultSectionModule;
         ExampleApp::DirectionResultSection::SdkModel::IDirectionsResultSectionModule* m_pDirectionResultSectionModule;
         ExampleApp::Direction::SdkModel::FindDirectionServiceModule* m_pFindDirectionServiceModule;
+        ExampleApp::DirectionReCalculationService::SdkModel::DirectionReCalculationService* m_pdirectionReCalculationService;
         ExampleApp::Modality::View::IModalityModule* m_pModalityModule;
         ExampleApp::TagSearch::SdkModel::ITagSearchModule* m_pTagSearchModule;
         ExampleApp::MapMode::SdkModel::IMapModeModule* m_pMapModeModule;

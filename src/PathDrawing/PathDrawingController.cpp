@@ -131,7 +131,7 @@ namespace ExampleApp
                 Direction::SdkModel::DirectionRouteModel routeModel = routes[0];
                 const std::vector<Direction::SdkModel::DirectionInnerRouteModel>& innerRoutesVector = routeModel.GetInnerRoutes();
                 
-                for(int i=0; i<1;i++)
+                for(int i=0; i<innerRoutesVector.size();i++)
                 {
                     RouteBuilder builder;
 
@@ -145,9 +145,14 @@ namespace ExampleApp
                     
                     Eegeo::Routes::Style::RouteStyle routeStyle(&m_routeThicknessPolicy, Eegeo::Routes::Style::RouteStyle::DebugStyleNone);
                     
-
-                    builder.Start(m_pPathDrawingSettings->GetRoutePrimaryColor(), m_pPathDrawingSettings->GetRouteWidth(), m_pPathDrawingSettings->GetRouteSpeed(), Routes::Road);
-                    
+                    if (i%2 == 0)
+                    {
+                        builder.Start(m_pPathDrawingSettings->GetRoutePrimaryColor(), m_pPathDrawingSettings->GetRouteWidth(), m_pPathDrawingSettings->GetRouteSpeed(), Routes::Road);
+                    }
+                    else
+                    {
+                        builder.Start(m_pPathDrawingSettings->GetRouteSecondaryColor(), m_pPathDrawingSettings->GetRouteWidth(), m_pPathDrawingSettings->GetRouteSpeed(), Routes::Road);
+                    }
                     for (std::vector<Eegeo::Space::LatLong>::const_iterator it = coordinatesVector.begin() ; it != coordinatesVector.end(); ++it)
                     {
                         builder.AddPoint(it->GetLatitudeInDegrees(), it->GetLongitudeInDegrees(), altitudeMeters);
@@ -185,16 +190,28 @@ namespace ExampleApp
                 m_routeService.DestroyRoute(*i);
             }
             
-            m_routes.clear();
-            
             while (m_pWayPointsRepository.GetItemCount() != 0)
             {
                 WayPointModel* waypoint = m_pWayPointsRepository.GetItemAtIndex(0);
                 m_pWayPointsRepository.RemoveItem(waypoint);
                 Eegeo_DELETE waypoint;
             }
-           m_createdRoutes = false;
+            m_createdRoutes = false;
+            m_routes.clear();
+
         }
+        
+        bool PathDrawingController::IsRouteCreated()
+        {
+            return m_createdRoutes;
+        }
+        
+        std::vector<Eegeo::Routes::Route*>& PathDrawingController::GetCreatedRoutes()
+        {
+            return m_routes;
+        }
+
+
     }
 }
 

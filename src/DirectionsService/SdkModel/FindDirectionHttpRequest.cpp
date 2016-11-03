@@ -25,14 +25,14 @@ namespace ExampleApp
             {
                 //std::string encodedQuery;
                 //urlEncoder.UrlEncode(query.Query(), encodedQuery);
-                std::string t1 = std::to_string(query.StartLocation().GetLatitudeInDegrees());
-                std::string t2 = std::to_string(query.StartLocation().GetLongitudeInDegrees());
+                std::string startLocLat = std::to_string(query.StartLocation().GetLatitudeInDegrees());
+                std::string startLocLong = std::to_string(query.StartLocation().GetLongitudeInDegrees());
                 
-                std::string t3 = std::to_string(query.EndLocation().GetLatitudeInDegrees());
-                std::string t4 = std::to_string(query.EndLocation().GetLongitudeInDegrees());
+                std::string endLocLat = std::to_string(query.EndLocation().GetLatitudeInDegrees());
+                std::string endLocLong = std::to_string(query.EndLocation().GetLongitudeInDegrees());
                 //loc=37.7858,-122.401%3B37.7869000,-122.402333&apikey=b488cb833b4d73f0ff4662160743e8f2
                 std::string url =requestUrl
-                + "loc=" + t1 + "," + t2 + "%3B" + t3+ "," + t4 + "&apikey="
+                + "loc=" + startLocLong + "," + startLocLat + "%3B" + endLocLong+ "," + endLocLat + "&apikey="
                 + eegeoApiKey;
                 m_pWebLoadRequest = m_webRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, url, m_webRequestCompleteCallback).Build();
             }

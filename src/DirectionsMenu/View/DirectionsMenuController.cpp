@@ -121,6 +121,10 @@ namespace ExampleApp
 
                 const Eegeo::Space::LatLongAltitude startLoc = Eegeo::Space::LatLongAltitude::FromDegrees(start.GetLatitudeInDegrees(), start.GetLongitudeInDegrees(),0.0);
                 const Eegeo::Space::LatLongAltitude endLoc = Eegeo::Space::LatLongAltitude::FromDegrees(end.GetLatitudeInDegrees(), end.GetLongitudeInDegrees(),0.0);
+
+//                const Eegeo::Space::LatLongAltitude startLoc = Eegeo::Space::LatLongAltitude::FromDegrees(56.459917,-2.984219,0.0);
+//                const Eegeo::Space::LatLongAltitude endLoc = Eegeo::Space::LatLongAltitude::FromDegrees(56.459778,-2.977156,0.0);
+
                 
                 m_messageBus.Publish(ExampleApp::DirectionsMenu::DirectionMenuFindDirectionMessage(startLoc,endLoc,true));
                 

@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <vector>
+#include "Route.h"
 
 namespace ExampleApp
 {
@@ -14,6 +16,10 @@ namespace ExampleApp
             virtual ~IPathDrawingController() {}
             
             virtual void Update(float dt){};
+            
+            virtual bool IsRouteCreated() = 0;
+            
+            virtual std::vector<Eegeo::Routes::Route*>& GetCreatedRoutes() = 0;
             
         };
     }

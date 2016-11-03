@@ -67,6 +67,8 @@ include(../src/DirectionsMenuInitiation/CMakeLists.txt)
 include(../src/DirectionsMenu/CMakeLists.txt)
 include(../src/DirectionResultSection/CMakeLists.txt)
 include(../src/DirectionsService/CMakeLists.txt)
+include(../src/DirectionReCalculationService/CMakeLists.txt)
+
 
 
 
