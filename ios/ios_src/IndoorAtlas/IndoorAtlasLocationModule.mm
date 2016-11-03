@@ -20,11 +20,12 @@ namespace ExampleApp
         , m_pLocationManager(NULL)
         , m_pLocationService(NULL)
         {
-            m_pLocationService = Eegeo_NEW(IndoorAtlasLocationService)(defaultLocationService, environmentFlatteningService);
+            m_pLocationService = Eegeo_NEW(IndoorAtlasLocationService)(defaultLocationService,
+                                                                       environmentFlatteningService,
+                                                                       interiorInteractionModel);
             m_pLocationManager = [[IndoorAtlasLocationManager alloc] Init: m_pLocationService];
             
-            m_pLocationController = Eegeo_NEW(IndoorAtlasLocationController)(*m_pLocationService,
-                                                                             *m_pLocationManager,
+            m_pLocationController = Eegeo_NEW(IndoorAtlasLocationController)(*m_pLocationManager,
                                                                              appModeModel,
                                                                              interiorInteractionModel,
                                                                              interiorSelectionModel,
