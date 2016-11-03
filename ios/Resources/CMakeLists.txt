@@ -770,6 +770,7 @@ set(resources ${resources}
 		Resources/direction_card_close_arrow@3x.png
 		Resources/DirectionsMenuStaticView.xib
         Resources/DirectionsMenuWayPointViewCell.xib
+        Resources/DirectionSuggestionsViewCell.xib
         Resources/DirectionCard_RouteStart.png
         Resources/DirectionCard_RouteStart@2x.png
         Resources/DirectionCard_RouteStart@3x.png

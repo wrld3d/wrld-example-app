@@ -4,7 +4,8 @@
 
 #import <UIKit/UIKit.h>
 #include "IMenuView.h"
-
+#include <vector>
+#include "SearchResultModel.h"
 
 @interface DirectionsMenuStaticView : UIView  <UITableViewDelegate, UITableViewDataSource>
 {
@@ -19,9 +20,14 @@
 @property (nonatomic) int resultCount;
 
 - (void)updateSearchResultsSection:(ExampleApp::Menu::View::IMenuSectionViewModel*)section;
+- (void)updateStartSuggestions:(const std::vector<ExampleApp::Search::SdkModel::SearchResultModel>&) results;
+- (void)updateEndSuggestions:(const std::vector<ExampleApp::Search::SdkModel::SearchResultModel>&) results;
+
 -(float)getEstimatedHeight;
 -(void)SetSearchMenuView:(UIView *)parentView;
 
 -(void)SetHighlightItem:(int)highlightItem;
-
+- (IBAction)cancelSuggestions:(id)sender;
+- (void)showEndSuggestions;
+- (void)showStartSuggestions;
 @end

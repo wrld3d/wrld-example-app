@@ -6,12 +6,18 @@
 #include "DirectionsMenuView.h"
 #include "DirectionsMenuViewInterop.h"
 #include "UIColors.h"
+#include "DirectionSuggestionTableViewCell.h"
 
 @interface DirectionsMenuStaticView()
 {
     ExampleApp::Menu::View::IMenuSectionViewModel* m_pSearchResultsSection;
+    
+   std::vector< ExampleApp::Search::SdkModel::SearchResultModel> m_pSuggestionsResults;
+
+    
     UIView *m_pView;
     int selectedIndex;
+    int searchType;
 }
 
 @property (retain, nonatomic) IBOutlet UIView *startRouteBgView;
@@ -24,7 +30,10 @@
 @property (retain, nonatomic) IBOutlet UITableView *wayPointsTableView;
 
 - (IBAction)optionsAction:(id)sender;
+@property (retain, nonatomic) IBOutlet NSLayoutConstraint *heightDropSpacingConstraint;
+@property (retain, nonatomic) IBOutlet UIView *suggestionsView;
 
+@property (retain, nonatomic) IBOutlet UITableView *suggestionsTableView;
 @end
 
 @implementation DirectionsMenuStaticView
@@ -43,10 +52,18 @@
     _wayPointsTableView.delegate = self;
     _wayPointsTableView.dataSource = self;
     
+    _suggestionsTableView.delegate = self;
+    _suggestionsTableView.dataSource = self;
+    
     selectedIndex = -1;
+    searchType = -1;
     
     UINib *wayPointsCellNib = [UINib nibWithNibName:@"DirectionsMenuWayPointViewCell" bundle: [NSBundle mainBundle]];
     [self.wayPointsTableView registerNib:wayPointsCellNib forCellReuseIdentifier:@"DirectionsMenuWayPointViewCell"];
+
+    
+    UINib *suggestionCellNib = [UINib nibWithNibName:@"DirectionSuggestionsViewCell" bundle: [NSBundle mainBundle]];
+    [self.suggestionsTableView registerNib:suggestionCellNib forCellReuseIdentifier:@"DirectionSuggestionsViewCell"];
 
 }
 
@@ -55,7 +72,29 @@
 {
     [super layoutSubviews];
 }
-
+- (IBAction)cancelSuggestions:(id)sender
+{
+    
+    _heightDropSpacingConstraint.constant = 0;
+    _suggestionsView.hidden = true;
+    searchType = -1;
+    [self layoutIfNeeded];
+    
+}
+- (void)showStartSuggestions
+{
+    _heightDropSpacingConstraint.constant = 0;
+    _suggestionsView.hidden = false;
+    searchType = 1;
+    [self layoutIfNeeded];
+}
+- (void)showEndSuggestions
+{
+    _heightDropSpacingConstraint.constant = 55;
+    _suggestionsView.hidden = false;
+    searchType = 2;
+    [self layoutIfNeeded];
+}
 - (IBAction)optionsAction:(id)sender {
  
     if(_optionsButton.isSelected)
@@ -90,12 +129,40 @@
     
 
 }
+- (void)updateStartSuggestions:(const std::vector<ExampleApp::Search::SdkModel::SearchResultModel>&) results
+{
+    m_pSuggestionsResults = results;
+    
+    if (m_pSuggestionsResults.size() > 0)
+    {
+        [self showStartSuggestions];
+    }
+    [_suggestionsTableView reloadData];
+    
+}
 
+- (void)updateEndSuggestions:(const std::vector<ExampleApp::Search::SdkModel::SearchResultModel>&) results
+{
+    m_pSuggestionsResults = results;
+    
+    if (m_pSuggestionsResults.size() > 0)
+    {
+        [self showEndSuggestions];
+    }
+    [_suggestionsTableView reloadData];
+    
+}
 #define  UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
+    if (tableView == _suggestionsTableView)
+    {
+        
+        return m_pSuggestionsResults.size();
+        
+    }
     if(m_pSearchResultsSection == NULL)
     {
         return 0;
@@ -110,6 +177,20 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (tableView == _suggestionsTableView) {
+        
+        ExampleApp::Search::SdkModel::SearchResultModel item = m_pSuggestionsResults[(static_cast<int>(indexPath.row))];
+
+        
+        DirectionSuggestionTableViewCell *cell = (DirectionSuggestionTableViewCell*)[self.suggestionsTableView dequeueReusableCellWithIdentifier:@"DirectionSuggestionsViewCell"];
+      //  [cell.titleLabel setText:[NSString stringWithFormat:@"%li",(long)indexPath.row+1]];
+        
+        
+        [cell.titleLabel setText:[NSString stringWithFormat:@"%s",item.GetTitle().c_str()]];
+
+        return cell;
+        
+    }
     
     ExampleApp::Menu::View::MenuItemModel item = m_pSearchResultsSection->GetItemAtIndex(static_cast<int>(indexPath.row));
     
@@ -163,6 +244,9 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
+    if (tableView == _suggestionsTableView) {
+        return;
+    }
     DirectionsMenuView *parentView = (DirectionsMenuView *)m_pView;
     ExampleApp::DirectionsMenu::View::DirectionsMenuViewInterop *interop = [parentView getDirectionsMenuInterop];
     interop->HandleWayPointSelected(static_cast<int>(indexPath.row));
@@ -182,8 +266,11 @@
 
 -(float)getEstimatedHeight {
 
-    if(m_pSearchResultsSection == NULL)
+    if(m_pSearchResultsSection == NULL || m_pSearchResultsSection->Size() == 0)
     {
+        if (searchType  > 0) {
+            return _headerView.bounds.size.height + _bottomBarView.bounds.size.height + (_hideOptionsView.bounds.size.height) + 150;
+        }
         return _headerView.bounds.size.height + _bottomBarView.bounds.size.height + (_hideOptionsView.bounds.size.height);
     }
     else
@@ -220,6 +307,9 @@
     [_startRouteTextField release];
     
     [_startContainerHeightConstraint release];
+    [_heightDropSpacingConstraint release];
+    [_suggestionsView release];
+    [_suggestionsTableView release];
     [super dealloc];
 }
 

@@ -12,9 +12,10 @@ namespace ExampleApp
         {
             DirectionMenuGeoNameMessageHandler::DirectionMenuGeoNameMessageHandler(ExampleApp::Search::GeoNames::SdkModel::GeoNamesSearchService & geoNamesService, ExampleAppMessaging::TMessageBus& messageBus)
             
-            :m_handleFindDirectionMessageBinding(this, &DirectionMenuGeoNameMessageHandler::OnFindDirectionMessage)
+            :m_handleFindDirectionMessageBinding(this, &DirectionMenuGeoNameMessageHandler::OnGetGeoNamesReceivedMessage)
             , m_geoNamesService(geoNamesService)
             , m_searchQueryResponseCallback(this, &DirectionMenuGeoNameMessageHandler::OnSearchResponseRecieved)
+            , m_isStartLocationActive(true)
             , m_messageBus(messageBus)
             {
                 m_messageBus.SubscribeNative(m_handleFindDirectionMessageBinding);
@@ -27,12 +28,13 @@ namespace ExampleApp
                 
                 
             }
-            void DirectionMenuGeoNameMessageHandler::OnFindDirectionMessage(const DirectionsMenu::DirectionMenuGetGeoNamesMessage& message)
+            void DirectionMenuGeoNameMessageHandler::OnGetGeoNamesReceivedMessage(const DirectionsMenu::DirectionMenuGetGeoNamesMessage& message)
             {                
                 bool isTag = false;
                 bool tryInteriorSearch = false;
                 Eegeo::Space::LatLongAltitude location = Eegeo::Space::LatLongAltitude(0.0f,0.0f,0.0f);
                 float radius = 200.0f;
+                m_isStartLocationActive = message.IsStartLocation();
                 Search::SdkModel::SearchQuery searchQuery(message.SearchQuery(), isTag, tryInteriorSearch, location, radius);
                 m_geoNamesService.PerformLocationQuerySearch(searchQuery);
                 
@@ -43,7 +45,7 @@ namespace ExampleApp
             {
                 Eegeo_TTY("Response Received");
                 
-                m_messageBus.Publish(DirectionsMenu::DirectionMenuGeoNamesResponseReceivedMessage(results));
+                m_messageBus.Publish(DirectionsMenu::DirectionMenuGeoNamesResponseReceivedMessage(results,m_isStartLocationActive));
                 
                 
 //                std::vector<Search::SdkModel::SearchResultModel> filtered;

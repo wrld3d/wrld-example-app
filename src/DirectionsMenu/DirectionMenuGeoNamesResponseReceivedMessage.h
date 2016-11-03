@@ -19,11 +19,15 @@ namespace ExampleApp
             
             const std::vector<ExampleApp::Search::SdkModel::SearchResultModel>& m_searchResults;
             
+            bool m_isStartLocationActive;
+            
         public:
-            DirectionMenuGeoNamesResponseReceivedMessage(const std::vector<ExampleApp::Search::SdkModel::SearchResultModel>& results);
+            DirectionMenuGeoNamesResponseReceivedMessage(const std::vector<ExampleApp::Search::SdkModel::SearchResultModel>& results, bool   isStartLocationActive);
             
             const std::vector<ExampleApp::Search::SdkModel::SearchResultModel>& SearchResults() const;
             
+            
+            bool IsStartLocationActive() const;
         };
     }
 }
