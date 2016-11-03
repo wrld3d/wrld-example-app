@@ -31,7 +31,6 @@
 @property (retain, nonatomic) IBOutlet NSLayoutConstraint *endHeightConstraint;
 @property (retain, nonatomic) IBOutlet NSLayoutConstraint *startContainerHeightConstraint;
 @property (retain, nonatomic) IBOutlet UIButton *optionsButton;
-@property (retain, nonatomic) IBOutlet UIButton *reverseButton;
 @property (retain, nonatomic) IBOutlet UITableView *wayPointsTableView;
 
 - (IBAction)optionsAction:(id)sender;
@@ -100,7 +99,19 @@
     searchType = 2;
     [self layoutIfNeeded];
 }
-- (IBAction)optionsAction:(id)sender {
+- (void)reverseAction
+{
+    ExampleApp::Search::SdkModel::SearchResultModel temp = m_pStartLoc;
+    m_pStartLoc = m_pEndLoc;
+    m_pEndLoc = temp;
+
+    NSString *temptextStart = _startRouteTextField.text;
+    _startRouteTextField.text = _endRouteTextField.text;
+    _endRouteTextField.text = temptextStart;
+    
+}
+- (IBAction)optionsAction:(id)sender
+{
  
     if(_optionsButton.isSelected)
     {

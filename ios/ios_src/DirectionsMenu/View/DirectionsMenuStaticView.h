@@ -12,6 +12,7 @@
 }
 
 @property (retain, nonatomic) IBOutlet UIButton *exitDirectionsBtn;
+@property (retain, nonatomic) IBOutlet UIButton *reverseButton;
 @property (retain, nonatomic) IBOutlet UITextField *endRouteTextField;
 @property (retain, nonatomic) IBOutlet UITextField *startRouteTextField;
 @property (retain, nonatomic) IBOutlet UIView *headerView;
@@ -34,4 +35,5 @@
 - (Eegeo::Space::LatLong) GetEndLocation;
 - (BOOL) shouldPerformSearch;
 - (void) resetSuggestionItem;
+- (void)reverseAction;
 @end

@@ -149,6 +149,7 @@
     _pEndRouteTextField.delegate = self;
     _pStartRouteTextField.delegate = self;
     
+    [m_pDirectionsMenuView.reverseButton  addTarget:self action:@selector(ReverseButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     [_pStartRouteTextField addTarget:self action:@selector(StartLocationTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     [_pEndRouteTextField addTarget:self action:@selector(EndLocationTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
@@ -383,6 +384,12 @@
     }
 
 }
+
+-(void)ReverseButtonClicked {
+    [m_pDirectionsMenuView reverseAction];
+    [self EndRouteEntered];
+}
+
 
 
 -(void)EndRouteEntered  {
