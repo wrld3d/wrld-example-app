@@ -58,7 +58,7 @@ namespace ExampleApp
                         
                         std::string subtitle = "";
                         ExampleApp::Search::SdkModel::TagIconKey iconKey = "";
-                        
+                        std::string duration = "Temp Duration";
                         if(i%4 == 0)
                         {
 
@@ -93,6 +93,7 @@ namespace ExampleApp
                                               wayPointModel.GetTitle(),
                                               subtitle,
                                               iconKey,
+                                              duration,
                                               Eegeo_NEW(SearchResultSection::View::SearchResultItemModel)("model title",
                                                                                                           latlong.ToECEF(),
                                                                                                           false,

@@ -7,6 +7,7 @@
 #include "DirectionsMenuViewInterop.h"
 #include "UIColors.h"
 #include "DirectionSuggestionTableViewCell.h"
+#include "DirectionsMenuItemModel.h"
 
 @interface DirectionsMenuStaticView()
 {
@@ -192,7 +193,6 @@
         
     }
     
-    ExampleApp::Menu::View::MenuItemModel item = m_pSearchResultsSection->GetItemAtIndex(static_cast<int>(indexPath.row));
     
     DirectionsMenuWayPointViewCell *cell = (DirectionsMenuWayPointViewCell*)[self.wayPointsTableView dequeueReusableCellWithIdentifier:@"DirectionsMenuWayPointViewCell"];
     [cell.wayPointNumberlbl setText:[NSString stringWithFormat:@"%li",(long)indexPath.row+1]];
@@ -200,6 +200,7 @@
     if(indexPath.row < m_pSearchResultsSection->Size())
     {
         ExampleApp::Menu::View::MenuItemModel item = m_pSearchResultsSection->GetItemAtIndex(static_cast<int>(indexPath.row));
+ 
         std::string json = item.SerializeJson();
         
         rapidjson::Document document;
@@ -210,7 +211,9 @@
             
             std::string subTitle = document.HasMember("details") ? document["details"].GetString() : "";
             
-            std::string icon = document.HasMember("icon") ? document["icon"].GetString() : "misc";            
+            std::string icon = document.HasMember("icon") ? document["icon"].GetString() : "misc";
+            
+            std::string duration = document.HasMember("duration") ? document["duration"].GetString() : "";
             
             [cell.wayPointImageView setImage:[UIImage imageNamed:[NSString stringWithCString:icon.c_str() encoding:NSUTF8StringEncoding]]];
             [cell.wayPointMainTitlelbl setText:[NSString stringWithCString:title.c_str() encoding:NSUTF8StringEncoding]];

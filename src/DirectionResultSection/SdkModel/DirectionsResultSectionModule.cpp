@@ -2,7 +2,7 @@
 
 #include "DirectionsResultSectionModule.h"
 #include "MenuModel.h"
-#include "MenuOptionsModel.h"
+#include "DirectionsMenuOptionsModel.h"
 #include "SearchResultSection.h"
 #include "SearchResultSectionOrder.h"
 
@@ -24,7 +24,7 @@ namespace ExampleApp
             {
                 m_pModel = Eegeo_NEW(Menu::View::MenuModel)();
                 
-                m_pMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pModel);
+                m_pMenuOptionsModel = Eegeo_NEW(DirectionsMenuOptionsModel)(*m_pModel);
                 
                 m_pSearchResultRepositoryObserver = Eegeo_NEW(ExampleApp::SearchResultSection::View::SearchResultRepositoryObserver)(searchResultRepository,
                                                                                                                                      messageBus);
