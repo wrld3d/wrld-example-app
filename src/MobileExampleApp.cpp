@@ -392,7 +392,7 @@ namespace ExampleApp
                                                                                                m_pWorld->GetRoutesModule().GetRouteService(), *m_pGlobeCameraWrapper,
                                                                                                m_pTagSearchModule->GetSearchResultIconKeyMapper(),
                                                                                                m_messageBus);
-        m_pdirectionReCalculationService = Eegeo_NEW(ExampleApp::DirectionReCalculationService::SdkModel::DirectionReCalculationService)(m_pWorld->GetLocationService(),m_pPathDrawingModule->GetPathDrawingController());
+        m_pdirectionReCalculationService = Eegeo_NEW(ExampleApp::DirectionReCalculationService::SdkModel::DirectionReCalculationService)(m_pWorld->GetLocationService(),m_pPathDrawingModule->GetPathDrawingController(),m_messageBus);
         
         if(m_applicationConfiguration.TryStartAtGpsLocation())
         {

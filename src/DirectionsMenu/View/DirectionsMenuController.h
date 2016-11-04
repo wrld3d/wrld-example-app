@@ -9,6 +9,8 @@
 #include "DirectionsMenuStateChangedMessage.h"
 #include "DirectionsMenuItemHighlightMessage.h"
 #include "DirectionMenuGeoNamesResponseReceivedMessage.h"
+#include "ILocationService.h"
+
 
 namespace ExampleApp
 {
@@ -19,6 +21,7 @@ namespace ExampleApp
             class DirectionsMenuController : public Menu::View::MenuController
             {
             private:
+                Eegeo::Location::ILocationService& m_locationService;
                 Modality::View::IModalBackgroundView& m_modalBackgroundView;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 IDirectionsMenuView& m_directionsMenuView;
@@ -92,7 +95,8 @@ namespace ExampleApp
                                          DirectionsMenu::View::IDirectionsMenuView& directionsMenuView,
                                          Menu::View::IMenuSectionViewModel& searchSectionViewModel,
                                          Modality::View::IModalBackgroundView& modalBackgroundView,
-                                         ExampleAppMessaging::TMessageBus& messageBus);
+                                         ExampleAppMessaging::TMessageBus& messageBus,
+                                         Eegeo::Location::ILocationService& locationService);
                 
                 virtual ~DirectionsMenuController();
             };

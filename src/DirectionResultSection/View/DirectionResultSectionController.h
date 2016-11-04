@@ -33,6 +33,7 @@ namespace ExampleApp
                 std::vector<Search::SdkModel::SearchResultModel> m_lastAddedResults;
                 const Menu::View::IMenuReactionModel& m_menuReaction;
                 SearchResultPoi::View::ISearchResultPoiViewModel& m_searchResultPoiViewModel;
+                long m_wayPointCount;
                 
                 Eegeo::Helpers::TCallback1<DirectionResultSectionController, const DirectionQueryResponseReceivedMessage&> m_directionResultReceivedHandler;
                 Eegeo::Helpers::TCallback1<DirectionResultSectionController, const Search::SearchQueryRemovedMessage&> m_directionQueryRemovedHandler;
@@ -42,6 +43,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<DirectionResultSectionController, const DirectionsMenuInitiation::DirectionsMenuStateChangedMessage&> m_directionsMenuStateChangedCallback;
                 
                 void OnDirectionsMenuStateChanged(const DirectionsMenuInitiation::DirectionsMenuStateChangedMessage& message);
+                
+                void RemoveWayPoints();
                 
             public:
                 DirectionResultSectionController(Menu::View::IMenuViewModel& directionMenuViewModel,
