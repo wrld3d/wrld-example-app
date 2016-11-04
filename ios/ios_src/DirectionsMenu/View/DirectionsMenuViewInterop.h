@@ -21,7 +21,7 @@ namespace ExampleApp
             {
             private:
                 DirectionsMenuView* m_pView;
-                Eegeo::Helpers::CallbackCollection1<const std::string&> m_searchPerformedCallbacks;
+                Eegeo::Helpers::CallbackCollection2<const Eegeo::Space::LatLong&,const Eegeo::Space::LatLong&> m_searchPerformedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_searchClearedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<int> m_wayPointSelectedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_exitDirectionsCallbacks;
@@ -68,9 +68,9 @@ namespace ExampleApp
                     [m_pView SetGeoNamesEndSuggestions:results];
                 }
                 
-                void SearchPerformed(const std::string& searchQuery)
+                void SearchPerformed(const Eegeo::Space::LatLong& start, const Eegeo::Space::LatLong& end )
                 {
-                    m_searchPerformedCallbacks.ExecuteCallbacks(searchQuery);
+                    m_searchPerformedCallbacks.ExecuteCallbacks(start,end);
                 }
                 
                 void CollapseAll()
@@ -83,12 +83,12 @@ namespace ExampleApp
                     [m_pView HighlightItemIndex:index];
                 }
                 
-                void InsertSearchPeformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)
+                void InsertSearchPeformedCallback(Eegeo::Helpers::ICallback2<const Eegeo::Space::LatLong&,const Eegeo::Space::LatLong&>& callback)
                 {
                     m_searchPerformedCallbacks.AddCallback(callback);
                 }
 
-                void RemoveSearchPeformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)
+                void RemoveSearchPeformedCallback(Eegeo::Helpers::ICallback2<const Eegeo::Space::LatLong&,const Eegeo::Space::LatLong&>& callback)
                 {
                     m_searchPerformedCallbacks.RemoveCallback(callback);
                 }

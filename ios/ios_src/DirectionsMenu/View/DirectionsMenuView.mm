@@ -147,7 +147,9 @@
     _pEndRouteTextField = m_pDirectionsMenuView.endRouteTextField;
     
     _pEndRouteTextField.delegate = self;
+    _pStartRouteTextField.delegate = self;
     
+    [m_pDirectionsMenuView.reverseButton  addTarget:self action:@selector(ReverseButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     [_pStartRouteTextField addTarget:self action:@selector(StartLocationTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     [_pEndRouteTextField addTarget:self action:@selector(EndLocationTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
@@ -344,7 +346,7 @@
     {
         [_pEndRouteTextField becomeFirstResponder];
     }
-    else if(textField == _pEndRouteTextField)
+    else if(textField == _pEndRouteTextField && [m_pDirectionsMenuView shouldPerformSearch])
     {
         [self EndRouteEntered];
         [_pEndRouteTextField resignFirstResponder];
@@ -354,17 +356,24 @@
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    [m_pDirectionsMenuView cancelSuggestions:nil];
+        [m_pDirectionsMenuView cancelSuggestions:nil];
+}
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if(textField == _pStartRouteTextField)
+    {
+        [m_pDirectionsMenuView showStartSuggestions];
+        [self updateContainerFrame];
+    }
 }
 -(void)StartLocationTextFieldDidChange:(UITextField *)textField
 {
-   
     m_pDirectionsMenuInterop->HandleStartLocationChanged(std::string([textField.text UTF8String]));
+    [m_pDirectionsMenuView showStartSuggestions];
 }
 
 -(void)EndLocationTextFieldDidChange:(UITextField *)textField
 {
-   
    m_pDirectionsMenuInterop->HandleEndLocationChanged(std::string([textField.text UTF8String]));
 }
 
@@ -373,8 +382,9 @@
 -(void)ExitDirectionsClicked {
     [m_pDirectionsMenuView cancelSuggestions:nil];
     [self updateContainerFrame];
-
-    
+    _pEndRouteTextField.text = @"";
+    _pStartRouteTextField.text = @"";
+    [m_pDirectionsMenuView resetSuggestionItem];
     if([self canInteract])
     {
         m_pDirectionsMenuInterop->OnExitDirectionsClicked();
@@ -382,10 +392,16 @@
 
 }
 
+-(void)ReverseButtonClicked {
+    [m_pDirectionsMenuView reverseAction];
+    [self EndRouteEntered];
+}
+
+
 
 -(void)EndRouteEntered  {
-    
-    m_pDirectionsMenuInterop->SearchPerformed("");  
+    //std::string locationString = m_pDirectionsMenuView.GetStartLocation.GetLatitudeInDegrees();
+    m_pDirectionsMenuInterop->SearchPerformed(m_pDirectionsMenuView.GetStartLocation,m_pDirectionsMenuView.GetEndLocation);
 }
 
 -(void)updateContainerFrame {

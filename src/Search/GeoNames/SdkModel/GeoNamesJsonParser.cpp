@@ -34,13 +34,20 @@ namespace ExampleApp
                                 const double lng(::atof(json["lng"].GetString()));
                                 
                                 std::stringstream ss;
+                                std::string countryName = "";
+                                int population = 0;
                                 ss << json["geonameId"].GetInt();
-                                
+                                if (json.HasMember("countryName")) {
+                                    countryName = json["countryName"].GetString();
+                                }
+                                if (json.HasMember("population")) {
+                                    population = json["population"].GetInt();
+                                }
                                 GeoNamesSearchResultDto dto(ss.str(),
                                                             json["name"].GetString(),
-                                                            json["countryName"].GetString(),
+                                                            countryName,
                                                             Eegeo::Space::LatLong::FromDegrees(lat, lng),
-                                                            json["population"].GetInt());
+                                                            population);
                                 
                                 out_results.push_back(dto);
                             }

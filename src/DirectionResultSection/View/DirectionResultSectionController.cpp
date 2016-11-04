@@ -68,32 +68,22 @@ namespace ExampleApp
                         std::string subtitle = std::to_string(routeDuration);
                         if(i%4 == 0)
                         {
-
-                            //subtitle = "South Entrance";
                             iconKey = "DirectionCard_RouteStart";
                         }
                         else if(i%4 == 1)
                         {
-
-                            //subtitle = "Enter Mall";
                             iconKey = "DirectionCard_EnterMallSelected";
-                            
                         }
                         else if(i%4 == 2)
                         {
-
-                            //subtitle = "Turn left along main concourse";
                             iconKey = "DirectionCard_StraightAhead";
                         }
                         else if(i%4 == 3)
                         {
-
-                            //subtitle = "Then 400 yd along main course";
                             iconKey = "DirectionCard_TurnLeft";
                         }
                         
                         const Eegeo::Space::LatLong latlong = wayPointModel.GetLocation();
-                        
                         
                         Eegeo::Resources::Interiors::InteriorId m_buildingId("");
                         m_menuOptions.AddItem(std::to_string(i),

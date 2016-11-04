@@ -12,11 +12,13 @@
 }
 
 @property (retain, nonatomic) IBOutlet UIButton *exitDirectionsBtn;
+@property (retain, nonatomic) IBOutlet UIButton *reverseButton;
 @property (retain, nonatomic) IBOutlet UITextField *endRouteTextField;
 @property (retain, nonatomic) IBOutlet UITextField *startRouteTextField;
 @property (retain, nonatomic) IBOutlet UIView *headerView;
 @property (retain, nonatomic) IBOutlet UIView *bottomBarView;
 @property (retain, nonatomic) IBOutlet UIView *hideOptionsView;
+@property (retain, nonatomic) IBOutlet UIButton *myLocation;
 @property (nonatomic) int resultCount;
 
 - (void)updateSearchResultsSection:(ExampleApp::Menu::View::IMenuSectionViewModel*)section;
@@ -25,9 +27,15 @@
 
 -(float)getEstimatedHeight;
 -(void)SetSearchMenuView:(UIView *)parentView;
+- (IBAction)MyLocationSelected:(id)sender;
 
 -(void)SetHighlightItem:(int)highlightItem;
 - (IBAction)cancelSuggestions:(id)sender;
 - (void)showEndSuggestions;
 - (void)showStartSuggestions;
+- (Eegeo::Space::LatLong) GetStartLocation;
+- (Eegeo::Space::LatLong) GetEndLocation;
+- (BOOL) shouldPerformSearch;
+- (void) resetSuggestionItem;
+- (void)reverseAction;
 @end
