@@ -36,6 +36,12 @@ namespace ExampleAppWPF
         [DataMember(Name = "email")]
         private string m_email = string.Empty;
 
+        [DataMember(Name = "custom_view")]
+        private string m_webViewUrl = string.Empty;
+
+        [DataMember(Name = "custom_view_height")]
+        private int m_webViewHeight = -1;
+
 
         public string Phone { get { return m_phone; } }
         public string WebUrl { get { return m_webUrl; } }
@@ -46,6 +52,8 @@ namespace ExampleAppWPF
         public string Facebook { get { return m_facebook; } }
         public string Twitter { get { return m_twitter; } }
         public string Email { get { return m_email; } }
+        public string WebViewUrl { get { return m_webViewUrl; } }
+        public int WebViewHeight { get { return m_webViewHeight; } }
 
         public static EegeoResultModel FromResultModel(ExampleApp.SearchResultModelCLI model)
         {

@@ -191,7 +191,14 @@
 
                                     <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Center" >
                                         <Image Name="TagIcon" Stretch="Uniform" Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=TagIcon}"/>
-                                        <TextBlock Name="Title" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=TitleText}"  MaxWidth="350" VerticalAlignment="Center" FontSize="28" Margin="4,-4,0,0"  Foreground="{DynamicResource PrimaryBG_Over_Colour}" FontFamily="{DynamicResource PrimaryUIFont}" TextTrimming="CharacterEllipsis"/>
+                                        <Grid Name="TitlesGrid">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Name="Title" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=TitleText}"  MaxWidth="350" VerticalAlignment="Center" FontSize="28" Margin="4,-4,0,0"  Foreground="{DynamicResource PrimaryBG_Over_Colour}" FontFamily="{DynamicResource PrimaryUIFont}" TextTrimming="CharacterEllipsis"/>
+                                            <TextBlock Name="SubTitle" Grid.Row="1" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=SubTitleText}"  MaxWidth="350" VerticalAlignment="Center" FontSize="13" Margin="4,4,0,-4"  Foreground="{DynamicResource PrimaryBG_Over_Colour}" FontFamily="{DynamicResource PrimaryUIFont}" TextTrimming="CharacterEllipsis"/>
+                                        </Grid>
                                     </StackPanel>
                                     <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="Auto"  Background="{StaticResource Gold}" Grid.Column="1">
                                         <Button Style="{StaticResource POIcard_CloseButton}" Name="CloseButton" HorizontalAlignment="Right" Width="36" Height="36" />
@@ -207,6 +214,9 @@
                                                         <StackPanel HorizontalAlignment="Stretch">
                                                             <ProgressBar Name="ImageProgress" HorizontalAlignment="Center" Visibility="Hidden"/>
                                                         </StackPanel>
+                                                    <Grid>
+                                                        <WebBrowser Margin="0,0,0,0" Name="WebBrowser" VerticalAlignment="Bottom"/>
+                                                    </Grid>
                                                     <Grid Margin="0,0,0,0">
                                                         <Image Name="PoiImage"/>
                                                         <Grid Margin="0,0,0,0" Grid.Column="0" Name="PreviewImageSpinner" Visibility="Hidden">

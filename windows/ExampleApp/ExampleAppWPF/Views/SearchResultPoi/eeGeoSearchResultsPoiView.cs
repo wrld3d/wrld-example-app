@@ -18,6 +18,7 @@ namespace ExampleAppWPF
         private string m_addressText;
         private string m_webAddressText;
         private string m_titleText;
+        private string m_subTitleText;
         private string m_descriptionText;
         private string m_humanReadableTagsText;
         private string m_facebookText;
@@ -42,8 +43,15 @@ namespace ExampleAppWPF
         private Border m_poiImageDivider;
         private ScrollViewer m_contentContainer;
         private Grid m_previewImageSpinner;
+        private WebBrowser m_webBrowser;
+        private bool m_webBrowserSelected;
+        private double m_contentContainerLastScrollY;
+        private double m_webBrowserOriginalHeight;
+        private TextBlock m_subTitle;
+        private Grid m_titlesGrid;
 
-        private ControlClickHandler m_yelpReviewImageClickHandler;
+        private const double MAX_WEB_VIEW_HEIGHT = 430;
+        private const double DEFAULT_WEB_VIEW_HEIGHT = 250;
 
         public string PhoneText
         {
@@ -91,6 +99,18 @@ namespace ExampleAppWPF
             {
                 m_titleText = value;
                 OnPropertyChanged("TitleText");
+            }
+        }
+        public string SubTitleText
+        {
+            get
+            {
+                return m_subTitleText;
+            }
+            set
+            {
+                m_subTitleText = value;
+                OnPropertyChanged("SubTitleText");
             }
         }
         public string DescriptionText
@@ -193,11 +213,29 @@ namespace ExampleAppWPF
 
             m_previewImageSpinner = (Grid)GetTemplateChild("PreviewImageSpinner");
 
+            m_webBrowser = (WebBrowser)GetTemplateChild("WebBrowser");
+            m_webBrowser.LoadCompleted += (OnWebPageLoaded);
+
+            m_subTitle = (TextBlock)GetTemplateChild("SubTitle");
+
+            m_titlesGrid = (Grid)GetTemplateChild("TitlesGrid");
+
             var mainGrid = (Application.Current.MainWindow as MainWindow).MainGrid;
             var screenWidth = mainGrid.ActualWidth;
-            
+            m_webBrowserSelected = false;
+            m_contentContainerLastScrollY = m_poiImageContainer.Height;
+            m_webBrowserOriginalHeight = m_poiImageContainer.Height;
+
             base.OnApplyTemplate();
         }
+
+        private void OnWebPageLoaded(object sender, NavigationEventArgs e)
+        {
+            string script = "document.body.style.overflow ='hidden'";
+            WebBrowser wb = (WebBrowser)sender;
+            wb.InvokeScript("execScript", new Object[] { script, "JavaScript" });
+        }
+
         // Validating urls here although the url's should be validated in the poi tool before reaching this.
         private bool TryCreateWebLink(string urlText, out Uri uri)
         {
@@ -239,6 +277,29 @@ namespace ExampleAppWPF
 
         private void OnSearchResultsScrolled(object sender, RoutedEventArgs e)
         {
+            double newBrowserHeight = m_webBrowserOriginalHeight - m_contentContainer.VerticalOffset;
+
+            if (newBrowserHeight < 0)
+            {
+                newBrowserHeight = 0;
+            }
+
+            if (newBrowserHeight > MAX_WEB_VIEW_HEIGHT)
+            {
+                newBrowserHeight = MAX_WEB_VIEW_HEIGHT;
+            }
+
+            m_webBrowser.Height = newBrowserHeight;
+
+            var htmlDoc = m_webBrowser.Document as mshtml.HTMLDocument;
+            double webBrowserScrollBy = m_contentContainerLastScrollY - newBrowserHeight;
+            if (htmlDoc != null)
+            {
+                htmlDoc.parentWindow.scrollBy(0, (int)webBrowserScrollBy);
+            }
+
+            m_contentContainerLastScrollY = newBrowserHeight;
+
             if (m_contentContainer.VerticalOffset == m_contentContainer.ScrollableHeight)
             {
                 m_footerFade.Visibility = Visibility.Hidden;
@@ -249,28 +310,89 @@ namespace ExampleAppWPF
             }
         }
 
+        private void HandleNoWebView(EegeoResultModel eegeoResultModel)
+        {
+            m_webBrowser.Visibility = Visibility.Collapsed;
+            m_webBrowserSelected = false;
+            m_poiImageContainer.Visibility = Visibility.Collapsed;
+            m_webBrowserSelected = false;
+            m_poiImageContainer.Visibility = Visibility.Collapsed;
+
+            if (eegeoResultModel.ImageUrl != null)
+            {
+                m_poiImageContainer.Visibility = Visibility.Visible;
+                m_poiImage.Visibility = Visibility.Visible;
+                m_poiImageDivider.Visibility = Visibility.Collapsed;
+            }
+        }
         protected override void DisplayCustomPoiInfo(Object modelObject)
         {
             ExampleApp.SearchResultModelCLI model = modelObject as ExampleApp.SearchResultModelCLI;
 
             EegeoResultModel eegeoResultModel = EegeoResultModel.FromResultModel(model);
             m_closing = false;
+            m_webBrowserSelected = false;
+            m_titlesGrid.RowDefinitions[1].Height = new GridLength(1, GridUnitType.Star);
+            m_poiImageContainer.Height = DEFAULT_WEB_VIEW_HEIGHT;
+            bool webViewUrlIsValid = false;
+            m_poiImageContainer.Visibility = Visibility.Visible;
+            m_poiImage.Visibility = Visibility.Collapsed;
+            m_webBrowser.Visibility = Visibility.Visible;
+            m_poiImageDivider.Visibility = Visibility.Visible;
 
             m_contentContainer.ScrollToTop();
 
-            if(eegeoResultModel.ImageUrl != null)
+            if (eegeoResultModel.WebViewUrl != null)
             {
-                m_poiImageContainer.Visibility = Visibility.Visible;
-                m_poiImageDivider.Visibility = Visibility.Visible;
-                m_poiImage.Visibility = Visibility.Hidden;
-                m_previewImageSpinner.Visibility = Visibility.Visible;
+                m_webBrowserSelected = true;
+                Uri hyperlink;
+                webViewUrlIsValid = Uri.TryCreate(eegeoResultModel.WebViewUrl, UriKind.Absolute, out hyperlink)
+                && (hyperlink.Scheme == Uri.UriSchemeHttp || hyperlink.Scheme == Uri.UriSchemeHttps);
+
+                if (webViewUrlIsValid)
+                {
+                    Uri url = new Uri(eegeoResultModel.WebViewUrl);
+                    m_webBrowser.Source = url;
+
+                    if (eegeoResultModel.WebViewHeight != 0)
+                    {
+                        m_webBrowserOriginalHeight = eegeoResultModel.WebViewHeight;
+                        m_poiImageContainer.Height = eegeoResultModel.WebViewHeight;
+
+                        if (eegeoResultModel.WebViewHeight > MAX_WEB_VIEW_HEIGHT)
+                        {
+                            m_webBrowserOriginalHeight = MAX_WEB_VIEW_HEIGHT;
+                            m_poiImageContainer.Height = MAX_WEB_VIEW_HEIGHT;
+                        }
+                    }
+                    else
+                    {
+                        m_webBrowserOriginalHeight = DEFAULT_WEB_VIEW_HEIGHT;
+                        m_poiImageContainer.Height = DEFAULT_WEB_VIEW_HEIGHT;
+                    }
+                }
+                else
+                {
+                    HandleNoWebView(eegeoResultModel);
+                }
             }
             else
             {
-                m_poiImageContainer.Visibility = Visibility.Collapsed;
-                m_poiImageDivider.Visibility = Visibility.Collapsed;
-                m_poiImage.Visibility = Visibility.Collapsed;
-                m_previewImageSpinner.Visibility = Visibility.Collapsed;
+                HandleNoWebView(eegeoResultModel);
+            }
+
+            if (!m_webBrowserSelected)
+            {
+                Uri uri;
+                if ((eegeoResultModel.ImageUrl != null || webViewUrlIsValid) && TryCreateWebLink(eegeoResultModel.ImageUrl, out uri))
+                {
+                    m_poiImageDivider.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    m_poiImageContainer.Visibility = Visibility.Collapsed;
+                    m_poiImageDivider.Visibility = Visibility.Collapsed;
+                }
             }
 
             if (eegeoResultModel.Phone != null)
@@ -362,6 +484,14 @@ namespace ExampleAppWPF
             m_linkedInIcon.Visibility = Visibility.Collapsed;
             m_slackIcon.Visibility = Visibility.Collapsed;
             TitleText = model.Title;
+            if (model.Subtitle != "")
+            {
+                SubTitleText = model.Subtitle;
+            }
+            else
+            {
+                m_titlesGrid.RowDefinitions[1].Height = new GridLength(0);
+            }
 
             if (model.HumanReadableTags != null)
             {
@@ -390,15 +520,14 @@ namespace ExampleAppWPF
         
         public override void UpdateImageData(string url, bool hasImage, byte[] imgData)
         {
-            if (hasImage)
+            if (hasImage && !m_webBrowserSelected)
             {
                 m_poiImage.Source = LoadImageFromByteArray(imgData);
                 m_poiImage.Visibility = Visibility.Visible;
                 m_poiImageContainer.Visibility = Visibility.Visible;
                 m_poiImageDivider.Visibility = Visibility.Visible;
             }
-            m_previewImageSpinner.Visibility = Visibility.Hidden;
+            m_previewImageSpinner.Visibility = Visibility.Collapsed;
         }
-        
     }
 }

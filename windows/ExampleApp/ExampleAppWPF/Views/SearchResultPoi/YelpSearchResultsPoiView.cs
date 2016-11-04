@@ -250,6 +250,8 @@ namespace ExampleAppWPF
             PoiViewRatingCountText = yelpResultModel.ReviewCount > 0 ? yelpResultModel.ReviewCount.ToString() : string.Empty;
             RatingsImage.Source = null;
 
+            m_contentContainer.ScrollToTop();
+
             if (yelpResultModel.ReviewCount > 0 && !string.IsNullOrEmpty(yelpResultModel.RatingsImageUrl))
             {
                 RatingsImage.Source = new BitmapImage(ViewHelpers.MakeUriForImage(string.Format("{0}.png", yelpResultModel.RatingsImageUrl)));
