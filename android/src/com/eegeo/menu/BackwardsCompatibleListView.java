@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ListView;
 
 public class BackwardsCompatibleListView extends ListView
@@ -27,6 +28,7 @@ public class BackwardsCompatibleListView extends ListView
     }
 
 	private Rect m_clipBounds;
+	private float m_itemHeight;
 
 	@Override
 	public void draw(Canvas canvas)
@@ -36,6 +38,42 @@ public class BackwardsCompatibleListView extends ListView
 	        canvas.clipRect(m_clipBounds);
 	    }
 	    super.draw(canvas);
+	}
+	
+	@Override
+	@TargetApi(Build.VERSION_CODES.KITKAT)
+	public void scrollListBy(int y)
+	{
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+	    {
+	        super.scrollListBy(y);
+	        return;
+	    }
+		
+		if(y != 0)
+		{
+			y+=getListScrollY();
+		    int item=(int)Math.floor(y/m_itemHeight);
+		    int scroll=(int) ((item*m_itemHeight)-y);
+		    this.smoothScrollToPositionFromTop(item, scroll, 0);
+		}
+	}
+	
+	public void setItemHeight(float height)
+	{
+		m_itemHeight = height;
+	}
+	
+	public int getListScrollY()
+	{
+		if (super.getChildCount() == 0)
+		{
+			return 0;
+		}
+		
+	    View v=this.getChildAt(0);
+	    int tempscroll=(int) ((this.getFirstVisiblePosition()*m_itemHeight)-v.getTop());
+	    return tempscroll;
 	}
 
 	@Override
