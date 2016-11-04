@@ -105,7 +105,7 @@ namespace ExampleApp
             
             void DirectionsMenuController::OnViewClosed()
             {
-                
+                MenuController::OnViewClosed();
                 if (m_isExitDirections)
                 {
                     m_isExitDirections = false;
