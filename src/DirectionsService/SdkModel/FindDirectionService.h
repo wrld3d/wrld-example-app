@@ -10,6 +10,9 @@
 #include "SearchResultModel.h"
 #include "BidirectionalBus.h"
 
+#include "IAlertBoxFactory.h"
+#include "AlertBox.h"
+#include "ISingleOptionAlertBoxDismissedHandler.h"
 
 namespace ExampleApp
 {
@@ -27,13 +30,15 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<FindDirectionService> m_handleResponseCallback;
                 FindDirectionResultJsonParser& m_findDirectionResultParser;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
-
+                Eegeo::UI::NativeAlerts::IAlertBoxFactory& m_alertBoxFactory;
+                Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<FindDirectionService> m_failAlertHandler;
                 
                 void HandleRouteDirectionResponse();
+                void OnFailedToCallRouteResponse();
 
             public:
                 
-                FindDirectionService(FindDirectionHttpRequestFactory& findDirectionHttpRequestFactory,FindDirectionResultJsonParser& m_findDirectionResultParser,ExampleAppMessaging::TMessageBus& messageBus);
+                FindDirectionService(FindDirectionHttpRequestFactory& findDirectionHttpRequestFactory,FindDirectionResultJsonParser& m_findDirectionResultParser,Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,ExampleAppMessaging::TMessageBus& messageBus);
                 ~FindDirectionService();
                 void InsertOnReceivedQueryResultsCallback(Eegeo::Helpers::ICallback1<const DirectionResultModel& >& callback);
                 

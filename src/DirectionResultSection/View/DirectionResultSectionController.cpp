@@ -26,6 +26,7 @@ namespace ExampleApp
             , m_menuReaction(menuReaction)
             , m_searchResultPoiViewModel(searchResultPoiViewModel)
             , m_directionsMenuStateChangedCallback(this, &DirectionResultSectionController::OnDirectionsMenuStateChanged)
+            , m_wayPointCount(0)
             {
                 m_messageBus.SubscribeUi(m_directionResultReceivedHandler);
                 m_messageBus.SubscribeUi(m_directionsMenuStateChangedCallback);
@@ -40,10 +41,7 @@ namespace ExampleApp
             void DirectionResultSectionController::OnSearchQueryResponseReceivedMessage(const DirectionQueryResponseReceivedMessage& message)
             {
                 
-                for(int i = 0; i < 2; ++i)
-                {
-                    m_menuOptions.RemoveItem(std::to_string(i));
-                }
+                RemoveWayPoints();
                 
                 Direction::SdkModel::DirectionResultModel& model = message.GetDirectionResultModel();
                 const std::vector<Direction::SdkModel::DirectionRouteModel>& routes = model.GetRoutes();
@@ -51,48 +49,46 @@ namespace ExampleApp
                 {
                     Direction::SdkModel::DirectionRouteModel routeModel = routes[0];
                     const std::vector<ExampleApp::PathDrawing::WayPointModel>& wayPointVector = routeModel.GetWayPoints();
+                    const std::vector<Direction::SdkModel::DirectionInnerRouteModel>& tempVector = routeModel.GetInnerRoutes();
+                    
+                    Direction::SdkModel::DirectionInnerRouteModel tempInnerRouteModel = tempVector[0];
+                    
+                    int routeDuration = tempInnerRouteModel.GetDuration();
+                    
+                    Eegeo_TTY("Duration: %i",routeDuration);
+                    
                     for(int i = 0; i < wayPointVector.size(); ++i)
                     {
                         ExampleApp::PathDrawing::WayPointModel wayPointModel = wayPointVector[i];
-
                         
-                        std::string subtitle = "";
                         ExampleApp::Search::SdkModel::TagIconKey iconKey = "";
-                        
+                        std::string duration = "Temp Duration";
+                        std::string subtitle = std::to_string(routeDuration);
                         if(i%4 == 0)
                         {
-
-                            subtitle = "South Entrance";
                             iconKey = "DirectionCard_RouteStart";
                         }
                         else if(i%4 == 1)
                         {
-
-                            subtitle = "Enter Mall";
                             iconKey = "DirectionCard_EnterMallSelected";
-                            
                         }
                         else if(i%4 == 2)
                         {
-
-                            subtitle = "Turn left along main concourse";
                             iconKey = "DirectionCard_StraightAhead";
                         }
                         else if(i%4 == 3)
                         {
-
-                            subtitle = "Then 400 yd along main course";
                             iconKey = "DirectionCard_TurnLeft";
                         }
                         
                         const Eegeo::Space::LatLong latlong = wayPointModel.GetLocation();
-                        
                         
                         Eegeo::Resources::Interiors::InteriorId m_buildingId("");
                         m_menuOptions.AddItem(std::to_string(i),
                                               wayPointModel.GetTitle(),
                                               subtitle,
                                               iconKey,
+                                              duration,
                                               Eegeo_NEW(SearchResultSection::View::SearchResultItemModel)("model title",
                                                                                                           latlong.ToECEF(),
                                                                                                           false,
@@ -104,8 +100,8 @@ namespace ExampleApp
                                                                                                           m_messageBus,
                                                                                                           m_menuReaction));
                     }
+                    m_wayPointCount = wayPointVector.size();
                     
-
                 }
                 
             }
@@ -117,12 +113,20 @@ namespace ExampleApp
             {
                 if(message.GetDirectionsMenuStage() == DirectionsMenuInitiation::Inactive)
                 {
-                    for(int i = 0; i < 4; ++i)
-                    {
-                        m_menuOptions.RemoveItem(std::to_string(i));
-                    }
+                    RemoveWayPoints();
                 }
             }
+            
+            void DirectionResultSectionController::RemoveWayPoints()
+            {
+                for(int i = 0; i < m_wayPointCount; ++i)
+                {
+                    m_menuOptions.RemoveItem(std::to_string(i));
+                }
+                m_wayPointCount = 0;
+            
+            }
+
         }
     }
 }

@@ -382,7 +382,7 @@
 -(void)ExitDirectionsClicked {
     [m_pDirectionsMenuView cancelSuggestions:nil];
     [self updateContainerFrame];
-    _pEndRouteTextField.text = @"";
+    _pEndRouteTextField.text = @"My Location";
     _pStartRouteTextField.text = @"";
     [m_pDirectionsMenuView resetSuggestionItem];
     if([self canInteract])

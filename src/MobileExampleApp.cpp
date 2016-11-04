@@ -392,7 +392,7 @@ namespace ExampleApp
                                                                                                m_pWorld->GetRoutesModule().GetRouteService(), *m_pGlobeCameraWrapper,
                                                                                                m_pTagSearchModule->GetSearchResultIconKeyMapper(),
                                                                                                m_messageBus);
-        m_pdirectionReCalculationService = Eegeo_NEW(ExampleApp::DirectionReCalculationService::SdkModel::DirectionReCalculationService)(m_pWorld->GetLocationService(),m_pPathDrawingModule->GetPathDrawingController());
+        m_pdirectionReCalculationService = Eegeo_NEW(ExampleApp::DirectionReCalculationService::SdkModel::DirectionReCalculationService)(m_pWorld->GetLocationService(),m_pPathDrawingModule->GetPathDrawingController(),m_messageBus);
         
         if(m_applicationConfiguration.TryStartAtGpsLocation())
         {
@@ -624,7 +624,10 @@ namespace ExampleApp
 
         
         
-        m_pFindDirectionServiceModule = Eegeo_NEW(Direction::SdkModel::FindDirectionServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),m_platformAbstractions.GetUrlEncoder(),m_applicationConfiguration.EegeoApiKey(),m_messageBus);
+        m_pFindDirectionServiceModule = Eegeo_NEW(Direction::SdkModel::FindDirectionServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
+                                                                                                   m_platformAbstractions.GetUrlEncoder(),
+                                                                        m_pWorld->GetNativeUIFactories().AlertBoxFactory(),m_applicationConfiguration.EegeoApiKey(),
+                                                                        m_messageBus);
 
         
         m_pDirectionsMenuModule = Eegeo_NEW(ExampleApp::DirectionsMenu::SdkModel::DirectionsMenuModule)(m_identityProvider,

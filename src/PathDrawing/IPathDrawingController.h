@@ -21,6 +21,9 @@ namespace ExampleApp
             
             virtual std::vector<Eegeo::Routes::Route*>& GetCreatedRoutes() = 0;
             
+            virtual void RemoveRoutePlan() = 0;
+
+            
         };
     }
 }

@@ -19,6 +19,7 @@ namespace ExampleApp
                 , m_name(name)
                 , m_details(details)
                 , m_icon(icon)
+                , m_duration("")
                 , m_pOption(pOption)
             {
                 Eegeo_ASSERT(m_pOption != NULL, "MenuItemModel must be provided with a non-null menu option.")
@@ -52,6 +53,15 @@ namespace ExampleApp
             const std::string& MenuItemModel::Icon() const
             {
                 return m_icon;
+            }
+            
+            const std::string& MenuItemModel::Duration() const
+            {
+                return m_duration;
+            }
+            void MenuItemModel::SetDuration(std::string duration)
+            {
+                m_duration = duration;
             }
             
             IMenuOption& MenuItemModel::MenuOption()

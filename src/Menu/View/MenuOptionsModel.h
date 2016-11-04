@@ -16,7 +16,7 @@ namespace ExampleApp
         {
             class MenuOptionsModel : public IMenuOptionsModel, private Eegeo::NonCopyable
             {
-            private:
+            protected:
                 IMenuModel& m_menu;
                 std::map<std::string, IMenuOption*> m_options;
 
@@ -30,11 +30,18 @@ namespace ExampleApp
                              const std::string& details,
                              const std::string& icon,
                              IMenuOption* pOption);
-
+                
+                void AddItem(const std::string& uniqueIdentifier,
+                             const std::string& name,
+                             const std::string& details,
+                             const std::string& icon,
+                             const std::string& duration,
+                             IMenuOption* pOption)  {};
+                
                 void RemoveItem(const std::string& uniqueIdentifier);
 
-            private:
-
+            protected:
+                
                 void EraseOption(const std::string& uniqueIdentifier);
             };
         }

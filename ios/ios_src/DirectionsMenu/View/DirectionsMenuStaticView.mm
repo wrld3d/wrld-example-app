@@ -39,6 +39,7 @@
 @property (retain, nonatomic) IBOutlet UIView *suggestionsView;
 @property (retain, nonatomic) IBOutlet UILabel *minCounterLabel;
 @property (retain, nonatomic) IBOutlet UILabel *secCounterLabel;
+@property (retain, nonatomic) IBOutlet UILabel *staticMinsLabel;
 
 @property (retain, nonatomic) IBOutlet UITableView *suggestionsTableView;
 @end
@@ -74,7 +75,10 @@
     [self.suggestionsTableView registerNib:suggestionCellNib forCellReuseIdentifier:@"DirectionSuggestionsViewCell"];
     
     [_startRouteTextField setText:@"My Location"];
-
+    
+    [self.minCounterLabel setHidden:YES];
+    [self.secCounterLabel setHidden:YES];
+    [self.staticMinsLabel setHidden:YES];
 
 }
 
@@ -149,7 +153,9 @@
 
 - (void)updateSearchResultsSection:(ExampleApp::Menu::View::IMenuSectionViewModel*)section  {
     
-     m_pSearchResultsSection = section;
+     m_pSearchResultsSection = section;    
+    
+    [self UpdateRouteTime];
     [_wayPointsTableView reloadData];
     
 
@@ -206,11 +212,8 @@
     if (tableView == _suggestionsTableView) {
         
         ExampleApp::Search::SdkModel::SearchResultModel item = m_pSuggestionsResults[(static_cast<int>(indexPath.row))];
-
         
         DirectionSuggestionTableViewCell *cell = (DirectionSuggestionTableViewCell*)[self.suggestionsTableView dequeueReusableCellWithIdentifier:@"DirectionSuggestionsViewCell"];
-      //  [cell.titleLabel setText:[NSString stringWithFormat:@"%li",(long)indexPath.row+1]];
-        
         
         [cell.titleLabel setText:[NSString stringWithFormat:@"%s",item.GetTitle().c_str()]];
 
@@ -218,7 +221,6 @@
         
     }
     
-    ExampleApp::Menu::View::MenuItemModel item = m_pSearchResultsSection->GetItemAtIndex(static_cast<int>(indexPath.row));
     
     DirectionsMenuWayPointViewCell *cell = (DirectionsMenuWayPointViewCell*)[self.wayPointsTableView dequeueReusableCellWithIdentifier:@"DirectionsMenuWayPointViewCell"];
     [cell.wayPointNumberlbl setText:[NSString stringWithFormat:@"%li",(long)indexPath.row+1]];
@@ -226,6 +228,7 @@
     if(indexPath.row < m_pSearchResultsSection->Size())
     {
         ExampleApp::Menu::View::MenuItemModel item = m_pSearchResultsSection->GetItemAtIndex(static_cast<int>(indexPath.row));
+ 
         std::string json = item.SerializeJson();
         
         rapidjson::Document document;
@@ -236,15 +239,15 @@
             
             std::string subTitle = document.HasMember("details") ? document["details"].GetString() : "";
             
-            std::string icon = document.HasMember("icon") ? document["icon"].GetString() : "misc";            
+            std::string icon = document.HasMember("icon") ? document["icon"].GetString() : "misc";
+            
+            std::string duration = document.HasMember("duration") ? document["duration"].GetString() : "";
             
             [cell.wayPointImageView setImage:[UIImage imageNamed:[NSString stringWithCString:icon.c_str() encoding:NSUTF8StringEncoding]]];
             [cell.wayPointMainTitlelbl setText:[NSString stringWithCString:title.c_str() encoding:NSUTF8StringEncoding]];
-            [cell.wayPointSubCategorylbl setText:[NSString stringWithCString:subTitle.c_str() encoding:NSUTF8StringEncoding]];
-        
+            [cell.wayPointSubCategorylbl setText:@""];
+
         }
-        
-        
         
     }
     
@@ -298,6 +301,42 @@
     interop->HandleWayPointSelected(static_cast<int>(indexPath.row));
     
 }
+
+-(void)UpdateRouteTime  {
+    
+    
+    [self.minCounterLabel setHidden:YES];
+    [self.secCounterLabel setHidden:YES];
+    [self.staticMinsLabel setHidden:YES];
+    
+    if( m_pSearchResultsSection->Size() > 0)
+    {
+        ExampleApp::Menu::View::MenuItemModel item = m_pSearchResultsSection->GetItemAtIndex(static_cast<int>(0));
+        
+        std::string json = item.SerializeJson();
+        
+        rapidjson::Document document;
+        
+        if (!document.Parse<0>(json.c_str()).HasParseError())
+        {
+            std::string subTitle = document.HasMember("details") ? document["details"].GetString() : "";
+            
+            std::string duration = document.HasMember("duration") ? document["duration"].GetString() : "";
+            
+            int duration_sec = std::stoi( subTitle );
+            int mins = duration_sec / 60;
+            int sec = duration_sec % 60;
+            [self.minCounterLabel setText:[NSString stringWithFormat:@"%i",mins]];
+            [self.secCounterLabel setText:[NSString stringWithFormat:@"%isec",sec]];
+            
+            [self.minCounterLabel setHidden:NO];
+            [self.secCounterLabel setHidden:NO];
+            [self.staticMinsLabel setHidden:NO];
+            
+        }
+    }
+}
+
 - (Eegeo::Space::LatLong) GetStartLocation
 {
     if (startLocationSearched)
@@ -367,24 +406,6 @@
     }
 }
 
-- (void) populateCellWithJson:(std::string)json :(UITableViewCell*)cell
-{
-    rapidjson::Document document;
-    if (!document.Parse<0>(json.c_str()).HasParseError())
-    {
-        std::string name = document["name"].GetString();
-        const std::string icon = document.HasMember("icon") ? document["icon"].GetString() : "misc";
-        cell.textLabel.text = [NSString stringWithUTF8String:name.c_str()];
-        std::string details = "";
-        if (document.HasMember("details"))
-        {
-            details = document["details"].GetString();
-        }
-        cell.detailTextLabel.text = [NSString stringWithUTF8String:details.c_str()];
-
-    }
-}
-
 - (void)dealloc {
     
     [_contentHeightConstraint release];
@@ -392,7 +413,7 @@
     [_optionsButton release];
     [_exitDirectionsBtn release];
     [_endRouteTextField release];
-    [_startRouteTextField release];
+    [_startRouteTextField release];\
     
     [_startContainerHeightConstraint release];
     [_heightDropSpacingConstraint release];
@@ -401,6 +422,7 @@
     [_myLocation release];
     [_minCounterLabel release];
     [_secCounterLabel release];
+    [_staticMinsLabel release];
     [super dealloc];
 }
 

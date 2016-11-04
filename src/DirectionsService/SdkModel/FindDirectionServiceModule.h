@@ -7,6 +7,7 @@
 #include "FindDirectionQueryPerformer.h"
 #include "FindDirectionResultJsonParser.h"
 #include "FindDirectionHttpRequestFactory.h"
+#include "AlertBox.h"
 
 namespace ExampleApp
 {
@@ -18,8 +19,9 @@ namespace ExampleApp
             {
             public:
                 FindDirectionServiceModule(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
-                                    Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
-                                    const std::string& eegeoApiKey,ExampleAppMessaging::TMessageBus& messageBus);
+                                    Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,                          Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                                    const std::string& eegeoApiKey,
+                                           ExampleAppMessaging::TMessageBus& messageBus);
                 ~FindDirectionServiceModule();
                 FindDirectionService& GetFindDirectionService() const;
                 FindDirectionQueryPerformer& GetFindDirectionQueryPerformer() const;
@@ -28,10 +30,7 @@ namespace ExampleApp
                 FindDirectionService* m_pDirectionService;
                 FindDirectionResultJsonParser* m_pDirectionResultJsonParser;
                 FindDirectionHttpRequestFactory* m_pDirectionHttpRequestFactory;
-                FindDirectionQueryPerformer* m_pDirectionQueryPerformer;
-
-                
-                
+                FindDirectionQueryPerformer* m_pDirectionQueryPerformer;                                
                 
             };
         }

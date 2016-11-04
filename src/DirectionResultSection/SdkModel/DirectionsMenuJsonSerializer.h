@@ -8,9 +8,9 @@
 
 namespace ExampleApp
 {
-    namespace Menu
+    namespace DirectionResultSection
     {
-        namespace View
+        namespace SdkModel
         {
             template <typename TMenuItem>
             std::string SerialiseMenuItemToJson(const TMenuItem& menuItem)
@@ -37,7 +37,15 @@ namespace ExampleApp
                     writer.String("icon");
                     writer.String(menuItem.Icon().c_str(), static_cast<rapidjson::SizeType>(menuItem.Icon().size()));
                 }
+                if(!menuItem.Duration().empty())
+                {
+//                  std::string& tempStr = menuItem.Duration();
+                    writer.String("duration");
+                    writer.String(menuItem.Duration().c_str(), static_cast<rapidjson::SizeType>(menuItem.Duration().size()));
+                }
+
                 
+
                 writer.EndObject();
 
                 return std::string(stringBuffer.GetString(), stringBuffer.GetSize());

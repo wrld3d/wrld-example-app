@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -396,6 +396,7 @@
                 <outlet property="startContainerHeightConstraint" destination="xzc-a8-zAu" id="PzR-qJ-ZTj"/>
                 <outlet property="startRouteBgView" destination="4AZ-5v-gdH" id="S33-SS-tM5"/>
                 <outlet property="startRouteTextField" destination="b3N-Kh-zAY" id="sf9-jf-QJf"/>
+                <outlet property="staticMinsLabel" destination="R7O-gU-BZQ" id="1SH-cU-Fq4"/>
                 <outlet property="suggestionsTableView" destination="dTb-bE-3p5" id="dzM-tj-to0"/>
                 <outlet property="suggestionsView" destination="JbE-GW-7Vd" id="q8z-fg-vl2"/>
                 <outlet property="wayPointsTableView" destination="Muq-xI-IPR" id="4wP-N0-aBF"/>

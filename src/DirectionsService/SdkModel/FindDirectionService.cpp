@@ -4,6 +4,7 @@
 #include "SearchResultModel.h"
 #include "FindDirectionService.h"
 #include "DirectionQueryResponseReceivedMessage.h"
+#include "ISingleOptionAlertBoxDismissedHandler.h"
 
 
 namespace ExampleApp
@@ -12,11 +13,13 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            FindDirectionService::FindDirectionService(FindDirectionHttpRequestFactory& findDirectionHttpRequestFactory,FindDirectionResultJsonParser& findDirectionResultParser,ExampleAppMessaging::TMessageBus& messageBus)
+            FindDirectionService::FindDirectionService(FindDirectionHttpRequestFactory& findDirectionHttpRequestFactory,FindDirectionResultJsonParser& findDirectionResultParser,Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,ExampleAppMessaging::TMessageBus& messageBus)
             : m_pCurrentRequest(NULL)
             , m_findDirectionHttpRequestFactory(findDirectionHttpRequestFactory)
             , m_handleResponseCallback(this,&FindDirectionService::HandleRouteDirectionResponse)
             , m_findDirectionResultParser(findDirectionResultParser)
+            , m_failAlertHandler(this, &FindDirectionService::OnFailedToCallRouteResponse)
+            , m_alertBoxFactory(alertBoxFactory)
             , m_messageBus(messageBus)
 
             {
@@ -47,17 +50,29 @@ namespace ExampleApp
             {
                 Eegeo_ASSERT(m_pCurrentRequest != NULL, "Find Direction request must have been performed");
                 
-                
                 if(m_pCurrentRequest->IsSucceeded())
                 {
                     const std::string& response(m_pCurrentRequest->ResponseString());
                     DirectionResultModel result =  m_findDirectionResultParser.ParseGeoNamesQueryResults(response);
                     //m_findDirectionqueryResponseReceivedCallbacks.ExecuteCallbacks(result);
                      m_messageBus.Publish(DirectionResultSection::DirectionQueryResponseReceivedMessage(result));
+                    
+                    if(result.GetCode() == "Error")
+                    {
+                         m_alertBoxFactory.CreateSingleOptionAlertBox("Failed to obtain route.", "No location found matching.", m_failAlertHandler);
+                    }
 
                 }
-                
+                else
+                {
+                    m_alertBoxFactory.CreateSingleOptionAlertBox("Failed to obtain route.", "No location found matching.", m_failAlertHandler);
+                }
                 m_pCurrentRequest = NULL;
+            }
+            
+            void FindDirectionService::OnFailedToCallRouteResponse()
+            {
+                
             }
 
 

@@ -18,6 +18,7 @@ namespace ExampleApp
                 std::string m_name;
                 std::string m_details;
                 std::string m_icon;
+                std::string m_duration;
                 IMenuOption* m_pOption;
 
             public:
@@ -37,6 +38,11 @@ namespace ExampleApp
 
                 const std::string& Icon() const;
 
+                const std::string& Duration() const;
+                
+                void SetDuration(std::string duration);
+
+                
                 std::string SerializeJson() const;
                 
                 IMenuOption& MenuOption();
