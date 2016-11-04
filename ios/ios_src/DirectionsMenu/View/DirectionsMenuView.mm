@@ -356,17 +356,24 @@
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    [m_pDirectionsMenuView cancelSuggestions:nil];
+        [m_pDirectionsMenuView cancelSuggestions:nil];
+}
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if(textField == _pStartRouteTextField)
+    {
+        [m_pDirectionsMenuView showStartSuggestions];
+        [self updateContainerFrame];
+    }
 }
 -(void)StartLocationTextFieldDidChange:(UITextField *)textField
 {
-   
     m_pDirectionsMenuInterop->HandleStartLocationChanged(std::string([textField.text UTF8String]));
+    [m_pDirectionsMenuView showStartSuggestions];
 }
 
 -(void)EndLocationTextFieldDidChange:(UITextField *)textField
 {
-   
    m_pDirectionsMenuInterop->HandleEndLocationChanged(std::string([textField.text UTF8String]));
 }
 

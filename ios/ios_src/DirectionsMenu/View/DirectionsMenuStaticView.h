@@ -18,6 +18,7 @@
 @property (retain, nonatomic) IBOutlet UIView *headerView;
 @property (retain, nonatomic) IBOutlet UIView *bottomBarView;
 @property (retain, nonatomic) IBOutlet UIView *hideOptionsView;
+@property (retain, nonatomic) IBOutlet UIButton *myLocation;
 @property (nonatomic) int resultCount;
 
 - (void)updateSearchResultsSection:(ExampleApp::Menu::View::IMenuSectionViewModel*)section;
@@ -26,6 +27,7 @@
 
 -(float)getEstimatedHeight;
 -(void)SetSearchMenuView:(UIView *)parentView;
+- (IBAction)MyLocationSelected:(id)sender;
 
 -(void)SetHighlightItem:(int)highlightItem;
 - (IBAction)cancelSuggestions:(id)sender;

@@ -42,7 +42,7 @@
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="West Field Valley mall" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="b3N-Kh-zAY">
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="My Location" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="b3N-Kh-zAY">
                                             <rect key="frame" x="67" y="4" width="213" height="29"/>
                                             <color key="textColor" red="0.054901960784313725" green="0.18823529411764706" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
@@ -95,7 +95,7 @@
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Pizza My Heart" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="hDf-y3-L7w">
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Choose End Point" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="hDf-y3-L7w">
                                             <rect key="frame" x="58" y="4" width="222" height="29"/>
                                             <color key="textColor" red="0.054901960780000002" green="0.18823529410000001" blue="0.42352941179999998" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
@@ -270,11 +270,27 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zfE-Zw-orK">
                             <rect key="frame" x="1" y="0.0" width="286" height="258"/>
                             <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2YF-mU-cFO">
+                                    <rect key="frame" x="0.0" y="0.0" width="286" height="45"/>
+                                    <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="45" id="YPo-ZO-gUn"/>
+                                    </constraints>
+                                </view>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pmW-NM-cRH">
                                     <rect key="frame" x="227" y="9" width="48" height="30"/>
                                     <state key="normal" title="Cancel"/>
                                     <connections>
                                         <action selector="cancelSuggestions:" destination="iN0-l3-epB" eventType="touchUpInside" id="Tc1-E2-j6r"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Te6-jW-4yu">
+                                    <rect key="frame" x="12" y="9" width="84" height="30"/>
+                                    <state key="normal" title="My Location">
+                                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="MyLocationSelected:" destination="iN0-l3-epB" eventType="touchUpInside" id="lJG-jU-n4D"/>
                                     </connections>
                                 </button>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dTb-bE-3p5">
@@ -286,10 +302,15 @@
                             <constraints>
                                 <constraint firstItem="dTb-bE-3p5" firstAttribute="top" secondItem="pmW-NM-cRH" secondAttribute="bottom" constant="8" id="5Cl-Z4-UiV"/>
                                 <constraint firstItem="pmW-NM-cRH" firstAttribute="top" secondItem="zfE-Zw-orK" secondAttribute="top" id="69T-9I-y8e"/>
+                                <constraint firstItem="2YF-mU-cFO" firstAttribute="top" secondItem="zfE-Zw-orK" secondAttribute="top" id="FBQ-AS-iXS"/>
                                 <constraint firstAttribute="trailing" secondItem="dTb-bE-3p5" secondAttribute="trailing" id="J8I-mg-qoG"/>
+                                <constraint firstItem="Te6-jW-4yu" firstAttribute="centerY" secondItem="pmW-NM-cRH" secondAttribute="centerY" id="JGc-uQ-pku"/>
+                                <constraint firstItem="Te6-jW-4yu" firstAttribute="leading" secondItem="zfE-Zw-orK" secondAttribute="leading" constant="12" id="K8F-qB-PaL"/>
+                                <constraint firstItem="2YF-mU-cFO" firstAttribute="leading" secondItem="zfE-Zw-orK" secondAttribute="leading" id="L8M-H1-iVg"/>
                                 <constraint firstItem="dTb-bE-3p5" firstAttribute="leading" secondItem="zfE-Zw-orK" secondAttribute="leading" id="O2H-YE-WGy"/>
                                 <constraint firstItem="pmW-NM-cRH" firstAttribute="top" secondItem="zfE-Zw-orK" secondAttribute="top" constant="9" id="RLt-Qn-Vol"/>
                                 <constraint firstAttribute="trailing" secondItem="pmW-NM-cRH" secondAttribute="trailing" constant="16" id="RoP-HR-Zj4"/>
+                                <constraint firstAttribute="trailing" secondItem="2YF-mU-cFO" secondAttribute="trailing" id="kSb-VR-mWH"/>
                                 <constraint firstItem="dTb-bE-3p5" firstAttribute="top" secondItem="zfE-Zw-orK" secondAttribute="top" constant="1" id="qkt-Zd-4Ly"/>
                                 <constraint firstAttribute="trailing" secondItem="pmW-NM-cRH" secondAttribute="trailing" constant="11" id="ttF-qj-bWf"/>
                                 <constraint firstAttribute="bottom" secondItem="dTb-bE-3p5" secondAttribute="bottom" constant="2" id="veK-ru-7Vr"/>
@@ -367,8 +388,11 @@
                 <outlet property="headerView" destination="gyb-Hn-ca1" id="lFu-hN-LsF"/>
                 <outlet property="heightDropSpacingConstraint" destination="Dc7-pe-gcb" id="xp4-uw-ZLz"/>
                 <outlet property="hideOptionsView" destination="oKx-rg-azB" id="xHl-vg-u4Y"/>
+                <outlet property="minCounterLabel" destination="AeA-cS-OeV" id="UtI-ZW-j8r"/>
+                <outlet property="myLocation" destination="Te6-jW-4yu" id="ihK-J8-dvZ"/>
                 <outlet property="optionsButton" destination="Wce-Y8-pGa" id="gEn-G9-sFT"/>
                 <outlet property="reverseButton" destination="PZ9-8w-jwC" id="aMI-ge-oqH"/>
+                <outlet property="secCounterLabel" destination="g5U-1C-0sZ" id="qUm-nE-hi9"/>
                 <outlet property="startContainerHeightConstraint" destination="xzc-a8-zAu" id="PzR-qJ-ZTj"/>
                 <outlet property="startRouteBgView" destination="4AZ-5v-gdH" id="S33-SS-tM5"/>
                 <outlet property="startRouteTextField" destination="b3N-Kh-zAY" id="sf9-jf-QJf"/>

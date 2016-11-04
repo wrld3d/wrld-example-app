@@ -23,6 +23,7 @@
     int searchType;
     BOOL startLocationSearched;
     BOOL endLocationSearched;
+    BOOL startMyLocationSelected;
 }
 
 @property (retain, nonatomic) IBOutlet UIView *startRouteBgView;
@@ -36,6 +37,8 @@
 - (IBAction)optionsAction:(id)sender;
 @property (retain, nonatomic) IBOutlet NSLayoutConstraint *heightDropSpacingConstraint;
 @property (retain, nonatomic) IBOutlet UIView *suggestionsView;
+@property (retain, nonatomic) IBOutlet UILabel *minCounterLabel;
+@property (retain, nonatomic) IBOutlet UILabel *secCounterLabel;
 
 @property (retain, nonatomic) IBOutlet UITableView *suggestionsTableView;
 @end
@@ -61,6 +64,7 @@
     
     selectedIndex = -1;
     searchType = -1;
+    startMyLocationSelected = true;
     
     UINib *wayPointsCellNib = [UINib nibWithNibName:@"DirectionsMenuWayPointViewCell" bundle: [NSBundle mainBundle]];
     [self.wayPointsTableView registerNib:wayPointsCellNib forCellReuseIdentifier:@"DirectionsMenuWayPointViewCell"];
@@ -68,6 +72,9 @@
     
     UINib *suggestionCellNib = [UINib nibWithNibName:@"DirectionSuggestionsViewCell" bundle: [NSBundle mainBundle]];
     [self.suggestionsTableView registerNib:suggestionCellNib forCellReuseIdentifier:@"DirectionSuggestionsViewCell"];
+    
+    [_startRouteTextField setText:@"My Location"];
+
 
 }
 
@@ -90,6 +97,7 @@
     _heightDropSpacingConstraint.constant = 0;
     _suggestionsView.hidden = false;
     searchType = 1;
+    _myLocation.hidden = false;
     [self layoutIfNeeded];
 }
 - (void)showEndSuggestions
@@ -97,6 +105,7 @@
     _heightDropSpacingConstraint.constant = 55;
     _suggestionsView.hidden = false;
     searchType = 2;
+    _myLocation.hidden = true;
     [self layoutIfNeeded];
 }
 - (void)reverseAction
@@ -271,6 +280,7 @@
             startLocationSearched = true;
             [_startRouteTextField setText:[NSString stringWithFormat:@"%s",item.GetTitle().c_str()]];
             [self cancelSuggestions:nil];
+            [_endRouteTextField becomeFirstResponder];
         }
         
         if(searchType == 2) //end
@@ -309,10 +319,11 @@
 {
     startLocationSearched = false;
     endLocationSearched = false;
+    startMyLocationSelected = true;
 }
 - (BOOL) shouldPerformSearch
 {
-    if (startLocationSearched && endLocationSearched)
+    if ((startLocationSearched || startMyLocationSelected) && endLocationSearched)
     {
         return true;
     }
@@ -321,6 +332,15 @@
 -(void)SetSearchMenuView:(UIView *)_parentView   {
     
     m_pView = _parentView;
+}
+
+- (IBAction)MyLocationSelected:(id)sender {
+    
+    startMyLocationSelected = true;
+    [_startRouteTextField setText:@"My Location"];
+    [self cancelSuggestions:nil];
+    [_endRouteTextField becomeFirstResponder];
+    
 }
 
 -(void)SetHighlightItem:(int)highlightItem  {
@@ -378,6 +398,9 @@
     [_heightDropSpacingConstraint release];
     [_suggestionsView release];
     [_suggestionsTableView release];
+    [_myLocation release];
+    [_minCounterLabel release];
+    [_secCounterLabel release];
     [super dealloc];
 }
 
