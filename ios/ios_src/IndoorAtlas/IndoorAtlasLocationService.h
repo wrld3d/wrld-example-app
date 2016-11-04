@@ -14,7 +14,8 @@ namespace ExampleApp
         {
         public:
             IndoorAtlasLocationService(Eegeo::Location::ILocationService& defaultLocationService,
-                                       const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService);
+                                       const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
+                                       const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel);
             
             const bool GetIsAuthorized() const;
             
@@ -27,15 +28,14 @@ namespace ExampleApp
             bool GetHeadingDegrees(double& headingDegrees);
             void StopListening();
             
-            void SetInteriorModel(const Eegeo::Resources::Interiors::InteriorsModel* interiorModel);
             void SetLocation(Eegeo::Space::LatLong& latLong);
             void SetFloorIndex(int floorIndex);
             
         private:
             Eegeo::Location::ILocationService& m_defaultLocationService;
             const Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
+            const Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
             
-            const Eegeo::Resources::Interiors::InteriorsModel* m_pInteriorModel;
             Eegeo::Space::LatLong m_latLong;
             int m_floorIndex;
         };

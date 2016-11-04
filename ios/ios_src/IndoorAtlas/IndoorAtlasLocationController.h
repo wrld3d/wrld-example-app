@@ -15,8 +15,7 @@ namespace ExampleApp
         class IndoorAtlasLocationController
         {
         public:
-            IndoorAtlasLocationController(IndoorAtlasLocationService& locationService,
-                                          IndoorAtlasLocationManager& locationManager,
+            IndoorAtlasLocationController(IndoorAtlasLocationManager& locationManager,
                                           ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                           Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                           const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
@@ -24,7 +23,6 @@ namespace ExampleApp
             ~IndoorAtlasLocationController();
             
         private:
-            IndoorAtlasLocationService& m_locationService;
             IndoorAtlasLocationManager& m_locationManager;
             
             ExampleApp::AppModes::SdkModel::IAppModeModel& m_appModeModel;

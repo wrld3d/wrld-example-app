@@ -10,14 +10,12 @@ namespace ExampleApp
 {
     namespace IndoorAtlas
     {
-        IndoorAtlasLocationController::IndoorAtlasLocationController(IndoorAtlasLocationService& locationService,
-                                                                     IndoorAtlasLocationManager& locationManager,
+        IndoorAtlasLocationController::IndoorAtlasLocationController(IndoorAtlasLocationManager& locationManager,
                                                                      ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                                                      Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                      const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                      const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration)
-        : m_locationService(locationService)
-        , m_locationManager(locationManager)
+        : m_locationManager(locationManager)
         , m_appModeModel(appModeModel)
         , m_interiorInteractionModel(interiorInteractionModel)
         , m_interiorSelectionModel(interiorSelectionModel)
@@ -54,8 +52,6 @@ namespace ExampleApp
          
                     if(trackingInfo.GetType() == "IndoorAtlas")
                     {
-                        m_locationService.SetInteriorModel(m_interiorInteractionModel.GetInteriorModel());
-         
                         NSString* apiKey = [NSString stringWithCString:trackingInfo.GetConfig().GetApiKey().c_str() encoding:[NSString defaultCStringEncoding]];
                         NSString* apiSecret = [NSString stringWithCString:trackingInfo.GetConfig().GetApiSecret().c_str() encoding:[NSString defaultCStringEncoding]];
                         std::map<int, std::string> floorMap = trackingInfo.GetFloorIndexMap();

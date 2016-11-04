@@ -3,15 +3,18 @@
 #include "IndoorAtlasLocationService.h"
 #include "InteriorHeightHelpers.h"
 #include "EnvironmentFlatteningService.h"
+#include "InteriorInteractionModel.h"
 
 namespace ExampleApp
 {
     namespace IndoorAtlas
     {
         IndoorAtlasLocationService::IndoorAtlasLocationService(Eegeo::Location::ILocationService& defaultLocationService,
-                                                               const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService)
+                                                               const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
+                                                               const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel)
         : m_defaultLocationService(defaultLocationService)
         , m_environmentFlatteningService(environmentFlatteningService)
+        , m_interiorInteractionModel(interiorInteractionModel)
         , m_latLong(Eegeo::Space::LatLong::FromDegrees(0, 0))
         , m_floorIndex(0)
         {
@@ -41,10 +44,16 @@ namespace ExampleApp
         
         bool IndoorAtlasLocationService::GetAltitude(double& altitude)
         {
-            altitude = ExampleApp::Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevelIncludingEnvironmentFlattening(*m_pInteriorModel,
-                                                                                                                             m_floorIndex,
-                                                                                                                             m_environmentFlatteningService.GetCurrentScale());
-            return true;
+            const Eegeo::Resources::Interiors::InteriorsModel* interiorModel = m_interiorInteractionModel.GetInteriorModel();
+            if(interiorModel)
+            {
+                altitude = ExampleApp::Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevelIncludingEnvironmentFlattening(*interiorModel,
+                                                                                                                                 m_floorIndex,
+                                                                                                                                 m_environmentFlatteningService.GetCurrentScale());
+                return true;
+            }
+            
+            return false;
         }
         
         bool IndoorAtlasLocationService::GetFloorIndex(int& floorIndex)
@@ -65,11 +74,6 @@ namespace ExampleApp
         
         void IndoorAtlasLocationService::StopListening()
         {
-        }
-        
-        void IndoorAtlasLocationService::SetInteriorModel(const Eegeo::Resources::Interiors::InteriorsModel* interiorModel)
-        {
-            m_pInteriorModel = interiorModel;
         }
         
         void IndoorAtlasLocationService::SetLocation(Eegeo::Space::LatLong &latLong)

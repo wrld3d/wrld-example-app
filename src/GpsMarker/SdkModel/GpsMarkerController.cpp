@@ -37,6 +37,7 @@ namespace ExampleApp
             , m_visualMapService(visualMapService)
             , m_messageBus(messageBus)
             , m_visibilityCount(1)
+            , m_viewTransitionParam(0)
             , m_screenPixelScale(screenProperties.GetPixelScale())
             , m_screenOversampleScale(screenProperties.GetOversampleScale())
             , m_modalityChangedHandlerBinding(this, &GpsMarkerController::OnModalityChangedMessage)
@@ -104,18 +105,25 @@ namespace ExampleApp
                 {
                     return;
                 }
-
-                Eegeo::v3 markerUp = currentLocationEcef.Norm().ToSingle();
                 
-				const float scale = ExampleApp::Helpers::ScaleHelpers::ComputeModelScaleForScreenWithPixelScaling(renderCamera, currentLocationEcef, m_screenPixelScale, m_screenOversampleScale) * 4.25f;
+                float currentScale = m_environmentFlatteningService.GetCurrentScale();
+                if(m_model.IsLocationIndoors())
+                {
+                    currentScale = 1;
+                }
+                Eegeo::dv3 scaledPoint = m_environmentFlatteningService.GetScaledPointEcef(currentLocationEcef, currentScale);
+
+                Eegeo::v3 markerUp = scaledPoint.Norm().ToSingle();
+                
+				const float scale = ExampleApp::Helpers::ScaleHelpers::ComputeModelScaleForScreenWithPixelScaling(renderCamera, scaledPoint, m_screenPixelScale, m_screenOversampleScale) * 4.25f;
                 Eegeo::v3 markerScale = Eegeo::v3(scale, scale, scale);
                 
                 const Eegeo::dv3& ecefCameraPosition = renderCamera.GetEcefLocation();
-                Eegeo::v3 cameraRelativeModelOrigin = (currentLocationEcef - ecefCameraPosition).ToSingle();
+                Eegeo::v3 cameraRelativeModelOrigin = (scaledPoint - ecefCameraPosition).ToSingle();
                 
                 Eegeo::m44 modelViewProjectionSphere;
                 CreateModelViewProjectionMatrix(modelViewProjectionSphere,
-                                                currentLocationEcef,
+                                                scaledPoint,
                                                 225,
                                                 cameraRelativeModelOrigin + markerUp * 4.5f * m_viewTransitionParam,
                                                 markerScale * m_viewTransitionParam,
@@ -123,7 +131,7 @@ namespace ExampleApp
                                                 true);
                 Eegeo::m44 modelViewProjectionArrow;
                 CreateModelViewProjectionMatrix(modelViewProjectionArrow,
-                                                currentLocationEcef,
+                                                scaledPoint,
                                                 m_model.GetSmoothedHeadingDegrees(),
                                                 cameraRelativeModelOrigin + markerUp * 4.5f * m_viewTransitionParam,
                                                 markerScale * m_viewTransitionParam,
@@ -135,7 +143,7 @@ namespace ExampleApp
                 float scaleAnchorCylinder = 0.4f;
                 Eegeo::m44 modelViewProjectionAnchorSphere;
                 CreateModelViewProjectionMatrix(modelViewProjectionAnchorSphere,
-                                                currentLocationEcef,
+                                                scaledPoint,
                                                 0,
                                                 cameraRelativeModelOrigin + markerUp,
                                                 Eegeo::v3(scaleAnchor, scaleAnchor, scaleAnchor) * m_viewTransitionParam,
@@ -144,7 +152,7 @@ namespace ExampleApp
                 
                 Eegeo::m44 modelViewProjectionAnchorCylinder;
                 CreateModelViewProjectionMatrix(modelViewProjectionAnchorCylinder,
-                                                currentLocationEcef,
+                                                scaledPoint,
                                                 0,
                                                 cameraRelativeModelOrigin + markerUp * 0.8f,
                                                 Eegeo::v3(scaleAnchor, scaleAnchorCylinder, scaleAnchor) * m_viewTransitionParam,
