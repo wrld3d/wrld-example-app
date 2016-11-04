@@ -1,1024 +1,1024 @@
 {
-    "LabelTextStyles": [{
-                        "name": "road_default",
-                        "label_resource_font_binding": "roads",
-                        "size_px": 13.0,
-                        "apply_pixel_scale": true,
-                        "glyph_color_rgba": "FFFFFFFF",
-                        "halo_color_rgba": "3A3A3AFF",
-                        "halo_width": 2.0,
-                        "halo_hardness": 1.0
-                        },
-                        {
-                        "name": "place_name_default",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 16,
-                        "apply_pixel_scale": true,
-                        "glyph_color_rgba": "FFFFFFFF",
-                        "halo_color_rgba": "3A3A3AFF",
-                        "halo_width": 2.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_park_highz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 18.0,
-                        "glyph_color_rgba": "B9F69F",
-                        "halo_color_rgba": "5C7C52",
-                        "halo_width": 3.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_park_midz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 16.0,
-                        "glyph_color_rgba": "B9F69F",
-                        "halo_color_rgba": "5C7C52",
-                        "halo_width": 3.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_park_lowz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 13,
-                        "glyph_color_rgba": "B9F69F",
-                        "halo_color_rgba": "5C7C52",
-                        "halo_width": 2.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_airport_highz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 18,
-                        "glyph_color_rgba": "90F2EA",
-                        "halo_color_rgba": "4C625D",
-                        "halo_width": 3.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_airport_midz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 16,
-                        "glyph_color_rgba": "90F2EA",
-                        "halo_color_rgba": "4C625D",
-                        "halo_width": 3.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_airport_lowz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 14,
-                        "glyph_color_rgba": "90F2EA",
-                        "halo_color_rgba": "4C625D",
-                        "halo_width": 2.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_place_of_interest_highz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 16,
-                        "glyph_color_rgba": "F0F0F0",
-                        "halo_color_rgba": "606060",
-                        "halo_width": 3.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_city_highz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 24,
-                        "glyph_color_rgba": "F0F0F0",
-                        "halo_color_rgba": "202020",
-                        "halo_width": 2.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_city_lowz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 16.0,
-                        "glyph_color_rgba": "F5F5F5",
-                        "halo_color_rgba": "000000",
-                        "halo_width": 2.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_capital_city_lowz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 18,
-                        "glyph_color_rgba": "FFFF00",
-                        "halo_color_rgba": "000000",
-                        "halo_width": 2.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_county",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 21.0,
-                        "glyph_color_rgba": "787878",
-                        "halo_color_rgba": "101010",
-                        "halo_width": 2.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_district_highz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 22,
-                        "glyph_color_rgba": "F0F0F0",
-                        "halo_color_rgba": "707070",
-                        "halo_width": 3.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_district_midz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 18,
-                        "glyph_color_rgba": "F0F0F0",
-                        "halo_color_rgba": "707070",
-                        "halo_width": 3.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_district_lowz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 15,
-                        "glyph_color_rgba": "E6E6E6",
-                        "halo_color_rgba": "101010",
-                        "halo_width": 2.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_state",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 18,
-                        "glyph_color_rgba": "B8B8B8",
-                        "halo_color_rgba": "000000",
-                        "halo_width": 3.0,
-                        "halo_hardness": 0.0
-                        },
-                        {
-                        "name": "place_name_country",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 18,
-                        "glyph_color_rgba": "FFFFFF",
-                        "halo_color_rgba": "000000",
-                        "halo_width": 3.0,
-                        "halo_hardness": 0.0
-                        },
-                        {
-                        "name": "place_name_japan_accommodation_highz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 15,
-                        "glyph_color_rgba": "FFE680",
-                        "halo_color_rgba": "606060",
-                        "halo_width": 3.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_japan_commercial_highz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 15,
-                        "glyph_color_rgba": "FFB380",
-                        "halo_color_rgba": "606060",
-                        "halo_width": 3.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_japan_crossing_highz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 14,
-                        "glyph_color_rgba": "00CCEB",
-                        "halo_color_rgba": "606060",
-                        "halo_width": 3.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_japan_leisure_facility_highz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 15,
-                        "glyph_color_rgba": "FFB380",
-                        "halo_color_rgba": "606060",
-                        "halo_width": 3.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_japan_landmark_highz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 15,
-                        "glyph_color_rgba": "F5F7CC",
-                        "halo_color_rgba": "606060",
-                        "halo_width": 3.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_japan_medical_facility_highz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 14,
-                        "glyph_color_rgba": "F5F7CC",
-                        "halo_color_rgba": "606060",
-                        "halo_width": 3.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_japan_misc_facility_highz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 15,
-                        "glyph_color_rgba": "F5F7CC",
-                        "halo_color_rgba": "606060",
-                        "halo_width": 3.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_japan_municipality_koaza_highz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 16,
-                        "glyph_color_rgba": "B8B8B8",
-                        "halo_color_rgba": "606060",
-                        "halo_width": 3.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_japan_municipality_oaza_highz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 18,
-                        "glyph_color_rgba": "F0F0F0",
-                        "halo_color_rgba": "606060",
-                        "halo_width": 3.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_japan_prefecture_highz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 18,
-                        "glyph_color_rgba": "EBEBEB",
-                        "halo_color_rgba": "606060",
-                        "halo_width": 3.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_japan_public_facility_highz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 14,
-                        "glyph_color_rgba": "CCCCCC",
-                        "halo_color_rgba": "606060",
-                        "halo_width": 3.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_japan_railway_highz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 14,
-                        "glyph_color_rgba": "29D4FF",
-                        "halo_color_rgba": "606060",
-                        "halo_width": 3.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_japan_school_highz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 14,
-                        "glyph_color_rgba": "F5F7CC",
-                        "halo_color_rgba": "606060",
-                        "halo_width": 3.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_japan_ski_resort_highz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 15,
-                        "glyph_color_rgba": "EBEBEB",
-                        "halo_color_rgba": "606060",
-                        "halo_width": 3.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_japan_transport_facility_highz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 15,
-                        "glyph_color_rgba": "29E8E3",
-                        "halo_color_rgba": "606060",
-                        "halo_width": 3.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_japan_train_station_highz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 18,
-                        "glyph_color_rgba": "FFFFFF",
-                        "halo_color_rgba": "606060",
-                        "halo_width": 3.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "place_name_japan_water_highz",
-                        "label_resource_font_binding": "place_names",
-                        "size_px": 14,
-                        "glyph_color_rgba": "C2E6EB",
-                        "halo_color_rgba": "606060",
-                        "halo_width": 3.0,
-                        "halo_hardness": 0.5
-                        },
-                        {
-                        "name": "roads_big_red_text",
-                        "label_resource_font_binding": "roads",
-                        "size_px": 32,
-                        "glyph_color_rgba": "FF0000",
-                        "halo_color_rgba": "000000"
-                        },
-                        {
-                        "name": "roads_freeway_highz",
-                        "label_resource_font_binding": "roads",
-                        "size_px": 18,
-                        "glyph_color_rgba": "95B2FFFF",
-                        "halo_color_rgba": "3A3A3AFF",
-                        "masked_glyph_color_rgba": "95B2FFA0",
-                        "masked_halo_color_rgba": "00000080"
-                        },
-                        {
-                        "name": "roads_major_highz",
-                        "label_resource_font_binding": "roads",
-                        "size_px": 15,
-                        "glyph_color_rgba": "FFFFFF",
-                        "halo_color_rgba": "3A3A3A",
-                        "masked_glyph_color_rgba": "E0E0E0A0",
-                        "masked_halo_color_rgba": "00000080"
-                        },
-                        {
-                        "name": "roads_secondary_highz",
-                        "label_resource_font_binding": "roads",
-                        "size_px": 14,
-                        "glyph_color_rgba": "FFFFFF",
-                        "halo_color_rgba": "3A3A3A",
-                        "masked_glyph_color_rgba": "E0E0E0A0",
-                        "masked_halo_color_rgba": "00000080"
-                        },
-                        {
-                        "name": "roads_minor_highz",
-                        "label_resource_font_binding": "roads",
-                        "size_px": 13.5,
-                        "glyph_color_rgba": "E0E0E0",
-                        "halo_color_rgba": "3A3A3A",
-                        "masked_glyph_color_rgba": "E0E0E0A0",
-                        "masked_halo_color_rgba": "00000080"
-                        },
-                        {
-                        "name": "roads_local_minor_highz",
-                        "label_resource_font_binding": "roads",
-                        "size_px": 13,
-                        "glyph_color_rgba": "D0D0D0",
-                        "halo_color_rgba": "3A3A3A",
-                        "masked_glyph_color_rgba": "D0D0D0A0",
-                        "masked_halo_color_rgba": "00000080"
-                        }],
-    "LabelStyles": [{
-                    "name": "road_default",
-                    "label_text_style_name": "road_default",
-                    "label_orientation": "map_feature_auto_upright",
-                    "label_display": "screen_space",
-                    "label_horizontal_alignment": "center",
-                    "label_vertical_alignment": "middle",
-                    "constraint_radius_scale": 0.5,
-                    "fade_duration": 0.3,
-                    "stencil_mode": "always",
-                    "priority": 10
-                    },
-                    {
-                    "name": "place_name_default",
-                    "label_text_style_name": "place_name_default",
-                    "label_orientation": "screen",
-                    "label_display": "screen_space",
-                    "label_horizontal_alignment": "center",
-                    "label_vertical_alignment": "middle",
-                    "constraint_radius_scale": 0.6,
-                    "fade_duration": 0.5,
-                    "stencil_mode": "always",
-                    "priority": 0
-                    },
-                    {
-                    "name": "place_name_park_highz",
-                    "label_text_style_name": "place_name_park_highz",
-                    "constraint_radius_scale": 2.5,
-                    "priority": 5
-                    },
-                    {
-                    "name": "place_name_park_midz",
-                    "label_text_style_name": "place_name_park_midz",
-                    "constraint_radius_scale": 2.5,
-                    "priority": 5
-                    },
-                    {
-                    "name": "place_name_park_lowz",
-                    "label_text_style_name": "place_name_park_lowz",
-                    "constraint_radius_scale": 2.5,
-                    "priority": 5
-                    },
-                    {
-                    "name": "place_name_airport_lowz",
-                    "label_text_style_name": "place_name_airport_lowz",
-                    "constraint_radius_scale": 0.6,
-                    "priority": 3
-                    },
-                    {
-                    "name": "place_name_airport_midz",
-                    "label_text_style_name": "place_name_airport_midz",
-                    "constraint_radius_scale": 0.6,
-                    "priority": 3
-                    },
-                    {
-                    "name": "place_name_airport_highz",
-                    "label_text_style_name": "place_name_airport_highz",
-                    "constraint_radius_scale": 0.6,
-                    "priority": 3
-                    },
-                    {
-                    "name": "place_name_place_of_interest_highz",
-                    "label_text_style_name": "place_name_place_of_interest_highz",
-                    "priority": 5
-                    },
-                    {
-                    "name": "place_name_city_highz",
-                    "label_text_style_name": "place_name_city_highz",
-                    "constraint_radius_scale": 0.6,
-                    "priority": 3
-                    },
-                    {
-                    "name": "place_name_city_lowz",
-                    "label_text_style_name": "place_name_city_lowz",
-                    "constraint_radius_scale": 0.6,
-                    "priority": 2
-                    },
-                    {
-                    "name": "place_name_capital_city_lowz",
-                    "label_text_style_name": "place_name_capital_city_lowz",
-                    "constraint_radius_scale": 0.6,
-                    "priority": 2
-                    },
-                    {
-                    "name": "place_name_county",
-                    "label_text_style_name": "place_name_county",
-                    "constraint_radius_scale": 0.6,
-                    "priority": 2
-                    },
-                    {
-                    "name": "place_name_district_highz",
-                    "label_text_style_name": "place_name_district_highz",
-                    "constraint_radius_scale": 0.6,
-                    "priority": 4
-                    },
-                    {
-                    "name": "place_name_district_midz",
-                    "label_text_style_name": "place_name_district_midz",
-                    "constraint_radius_scale": 0.6,
-                    "priority": 4
-                    },
-                    {
-                    "name": "place_name_district_lowz",
-                    "label_text_style_name": "place_name_district_lowz",
-                    "constraint_radius_scale": 0.6,
-                    "priority": 4
-                    },
-                    {
-                    "name": "place_name_state",
-                    "label_text_style_name": "place_name_state",
-                    "constraint_radius_scale": 0.6,
-                    "priority": 2
-                    },
-                    {
-                    "name": "place_name_country",
-                    "label_text_style_name": "place_name_country",
-                    "constraint_radius_scale": 0.6,
-                    "initially_faded_out": true,
-                    "priority": 1
-                    },
-                    {
-                    "name": "place_name_japan_accommodation_highz",
-                    "label_text_style_name": "place_name_japan_accommodation_highz",
-                    "priority": 5
-                    },
-                    {
-                    "name": "place_name_japan_commercial_highz",
-                    "label_text_style_name": "place_name_japan_commercial_highz",
-                    "priority": 5
-                    },
-                    {
-                    "name": "place_name_japan_crossing_highz",
-                    "label_text_style_name": "place_name_japan_crossing_highz",
-                    "priority": 5
-                    },
-                    {
-                    "name": "place_name_japan_leisure_facility_highz",
-                    "label_text_style_name": "place_name_japan_leisure_facility_highz",
-                    "priority": 5
-                    },
-                    {
-                    "name": "place_name_japan_landmark_highz",
-                    "label_text_style_name": "place_name_japan_landmark_highz",
-                    "priority": 5
-                    },
-                    {
-                    "name": "place_name_japan_medical_facility_highz",
-                    "label_text_style_name": "place_name_japan_medical_facility_highz",
-                    "priority": 5
-                    },
-                    {
-                    "name": "place_name_japan_misc_facility_highz",
-                    "label_text_style_name": "place_name_japan_misc_facility_highz",
-                    "priority": 5
-                    },
-                    {
-                    "name": "place_name_japan_municipality_koaza_highz",
-                    "label_text_style_name": "place_name_japan_municipality_koaza_highz",
-                    "priority": 5
-                    },
-                    {
-                    "name": "place_name_japan_municipality_oaza_highz",
-                    "label_text_style_name": "place_name_japan_municipality_oaza_highz",
-                    "priority": 5
-                    },
-                    {
-                    "name": "place_name_japan_prefecture_highz",
-                    "label_text_style_name": "place_name_japan_prefecture_highz",
-                    "priority": 5
-                    },
-                    {
-                    "name": "place_name_japan_public_facility_highz",
-                    "label_text_style_name": "place_name_japan_public_facility_highz",
-                    "priority": 5
-                    },
-                    {
-                    "name": "place_name_japan_railway_highz",
-                    "label_text_style_name": "place_name_japan_railway_highz",
-                    "priority": 5
-                    },
-                    {
-                    "name": "place_name_japan_school_highz",
-                    "label_text_style_name": "place_name_japan_school_highz",
-                    "priority": 5
-                    },
-                    {
-                    "name": "place_name_japan_ski_resort_highz",
-                    "label_text_style_name": "place_name_japan_ski_resort_highz",
-                    "priority": 5
-                    },
-                    {
-                    "name": "place_name_japan_transport_facility_highz",
-                    "label_text_style_name": "place_name_japan_transport_facility_highz",
-                    "priority": 5
-                    },
-                    {
-                    "name": "place_name_japan_train_station_highz",
-                    "label_text_style_name": "place_name_japan_train_station_highz",
-                    "priority": 5
-                    },
-                    {
-                    "name": "place_name_japan_water_highz",
-                    "label_text_style_name": "place_name_japan_water_highz",
-                    "priority": 5
-                    },
-                    {
-                    "name": "roads_big_red_text",
-                    "label_text_style_name": "roads_big_red_text",
-                    "label_orientation": "map_feature",
-                    "label_display": "screen_space",
-                    "label_horizontal_alignment": "center",
-                    "label_vertical_alignment": "bottom",
-                    "constraint_radius_scale": 0.2,
-                    "fade_duration": 1.5,
-                    "priority": 1
-                    },
-                    {
-                    "name": "roads_freeway_highz",
-                    "label_text_style_name": "roads_freeway_highz",
-                    "label_orientation": "map_feature_auto_upright",
-                    "label_display": "screen_space",
-                    "label_horizontal_alignment": "center",
-                    "label_vertical_alignment": "middle",
-                    "constraint_radius_scale": 0.2,
-                    "stencil_mode": "with_masked_style",
-                    "priority": 10
-                    },
-                    {
-                    "name": "roads_freeway_lowz",
-                    "label_text_style_name": "roads_freeway_highz",
-                    "label_orientation": "map_feature_auto_upright",
-                    "label_display": "screen_space",
-                    "label_horizontal_alignment": "center",
-                    "label_vertical_alignment": "middle",
-                    "constraint_radius_scale": 0.2,
-                    "stencil_mode": "always",
-                    "priority": 6
-                    },
-                    {
-                    "name": "roads_major_highz",
-                    "label_text_style_name": "roads_major_highz",
-                    "label_orientation": "map_feature_auto_upright",
-                    "label_display": "screen_space",
-                    "label_horizontal_alignment": "center",
-                    "label_vertical_alignment": "middle",
-                    "constraint_radius_scale": 0.3,
-                    "stencil_mode": "with_masked_style",
-                    "priority": 11
-                    },
-                    {
-                    "name": "roads_secondary_highz",
-                    "label_text_style_name": "roads_secondary_highz",
-                    "label_orientation": "map_feature_auto_upright",
-                    "label_display": "screen_space",
-                    "label_horizontal_alignment": "center",
-                    "label_vertical_alignment": "middle",
-                    "constraint_radius_scale": 0.5,
-                    "stencil_mode": "with_masked_style",
-                    "priority": 12
-                    },
-                    {
-                    "name": "roads_secondary_lowz",
-                    "label_text_style_name": "roads_secondary_highz",
-                    "label_orientation": "map_feature_auto_upright",
-                    "label_display": "screen_space",
-                    "label_horizontal_alignment": "center",
-                    "label_vertical_alignment": "middle",
-                    "constraint_radius_scale": 0.5,
-                    "stencil_mode": "always",
-                    "priority": 7
-                    },
-                    {
-                    "name": "roads_minor_highz",
-                    "label_text_style_name": "roads_minor_highz",
-                    "label_orientation": "map_feature_auto_upright",
-                    "label_display": "screen_space",
-                    "label_horizontal_alignment": "center",
-                    "label_vertical_alignment": "middle",
-                    "constraint_radius_scale": 0.5,
-                    "stencil_mode": "with_masked_style",
-                    "priority": 13
-                    },
-                    {
-                    "name": "roads_local_minor_highz",
-                    "label_text_style_name": "roads_local_minor_highz",
-                    "label_orientation": "map_feature_auto_upright",
-                    "label_display": "screen_space",
-                    "label_horizontal_alignment": "center",
-                    "label_vertical_alignment": "middle",
-                    "constraint_radius_scale": 1.0,
-                    "stencil_mode": "if_not_masked_by_map_feature",
-                    "priority": 14
-                    }],
-    "LabelStyleBindings": [{
-                           "label_anchor_category": "default_line",
-                           "label_style_name": "road_default"
-                           },
-                           {
-                           "label_anchor_category": "default_point",
-                           "label_style_name": "place_name_default"
-                           },
-                           {
-                           "label_anchor_category": "road_motorway_freeway_or_other_major_road_highz",
-                           "label_style_name": "roads_freeway_highz"
-                           },
-                           {
-                           "label_anchor_category": "road_motorway_freeway_or_other_major_road_midz",
-                           "label_style_name": "roads_freeway_lowz"
-                           },
-                           {
-                           "label_anchor_category": "road_motorway_freeway_or_other_major_road_lowz",
-                           "label_style_name": "roads_freeway_lowz"
-                           },
-                           {
-                           "label_anchor_category": "road_major_road_less_important_than_motorway_highz",
-                           "label_style_name": "roads_major_highz"
-                           },
-                           {
-                           "label_anchor_category": "road_other_major_road_highz",
-                           "label_style_name": "roads_major_highz"
-                           },
-                           {
-                           "label_anchor_category": "road_secondary_road_highz",
-                           "label_style_name": "roads_secondary_highz"
-                           },
-                           {
-                           "label_anchor_category": "road_secondary_road_lowz",
-                           "label_style_name": "roads_secondary_lowz"
-                           },
-                           {
-                           "label_anchor_category": "road_local_connecting_road_highz",
-                           "label_style_name": "roads_secondary_highz"
-                           },
-                           {
-                           "label_anchor_category": "road_local_road_of_high_importance_highz",
-                           "label_style_name": "roads_secondary_highz"
-                           },
-                           {
-                           "label_anchor_category": "road_local_road_highz",
-                           "label_style_name": "roads_minor_highz"
-                           },
-                           {
-                           "label_anchor_category": "road_local_road_of_minor_importance_highz",
-                           "label_style_name": "roads_local_minor_highz"
-                           },
-                           {
-                           "label_anchor_category": "road_other_road_highz",
-                           "label_style_name": "roads_minor_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_park_highz",
-                           "label_style_name": "place_name_park_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_golf_highz",
-                           "label_style_name": "place_name_park_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_airp_highz",
-                           "label_style_name": "place_name_airport_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_poin_highz",
-                           "label_style_name": "place_name_place_of_interest_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_coun_highz",
-                           "label_style_name": "place_name_county"
-                           },
-                           {
-                           "label_anchor_category": "place_name_dist_highz",
-                           "label_style_name": "place_name_district_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_city_highz",
-                           "label_style_name": "place_name_city_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_ccty_highz",
-                           "label_style_name": "place_name_city_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_park_midz",
-                           "label_style_name": "place_name_park_midz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_golf_midz",
-                           "label_style_name": "place_name_park_midz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_airp_midz",
-                           "label_style_name": "place_name_airport_midz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_coun_midz",
-                           "label_style_name": "place_name_county"
-                           },
-                           {
-                           "label_anchor_category": "place_name_dist_midz",
-                           "label_style_name": "place_name_district_midz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_city_midz",
-                           "label_style_name": "place_name_city_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_ccty_midz",
-                           "label_style_name": "place_name_city_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_park_lowz",
-                           "label_style_name": "place_name_park_lowz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_golf_lowz",
-                           "label_style_name": "place_name_park_lowz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_airp_lowz",
-                           "label_style_name": "place_name_airport_lowz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_city_lowz",
-                           "label_style_name": "place_name_city_lowz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_ccty_lowz",
-                           "label_style_name": "place_name_capital_city_lowz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_coun_lowz",
-                           "label_style_name": "place_name_county"
-                           },
-                           {
-                           "label_anchor_category": "place_name_dist_lowz",
-                           "label_style_name": "place_name_district_lowz"
-                           },
-                           {
-                           "label_anchor_category": "placename_park_highz",
-                           "label_style_name": "place_name_park_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_stat_lowz",
-                           "label_style_name": "place_name_state"
-                           },
-                           {
-                           "label_anchor_category": "place_name_ctry_lowz",
-                           "label_style_name": "place_name_country"
-                           },
-                           {
-                           "label_anchor_category": "place_name_acco_highz",
-                           "label_style_name": "place_name_japan_accommodation_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_cros_highz",
-                           "label_style_name": "place_name_japan_crossing_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_koaz_highz",
-                           "label_style_name": "place_name_japan_municipality_koaza_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_hosp_highz",
-                           "label_style_name": "place_name_japan_medical_facility_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_leis_highz",
-                           "label_style_name": "place_name_japan_leisure_facility_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_lnmk_highz",
-                           "label_style_name": "place_name_japan_landmark_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_misc_highz",
-                           "label_style_name": "place_name_japan_misc_facility_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_pref_highz",
-                           "label_style_name": "place_name_japan_prefecture_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_publ_highz",
-                           "label_style_name": "place_name_japan_public_facility_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_ooaz_highz",
-                           "label_style_name": "place_name_japan_municipality_oaza_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_rail_highz",
-                           "label_style_name": "place_name_japan_railway_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_scho_highz",
-                           "label_style_name": "place_name_japan_school_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_skii_highz",
-                           "label_style_name": "place_name_japan_ski_resort_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_shop_highz",
-                           "label_style_name": "place_name_japan_commercial_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_tran_highz",
-                           "label_style_name": "place_name_japan_transport_facility_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_watr_highz",
-                           "label_style_name": "place_name_japan_water_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_zsta_highz",
-                           "label_style_name": "place_name_japan_train_station_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_acco_midz",
-                           "label_style_name": "place_name_japan_accommodation_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_cros_midz",
-                           "label_style_name": "place_name_japan_crossing_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_koaz_midz",
-                           "label_style_name": "place_name_japan_municipality_koaza_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_hosp_midz",
-                           "label_style_name": "place_name_japan_medical_facility_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_leis_midz",
-                           "label_style_name": "place_name_japan_leisure_facility_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_lnmk_midz",
-                           "label_style_name": "place_name_japan_landmark_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_misc_midz",
-                           "label_style_name": "place_name_japan_misc_facility_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_pref_midz",
-                           "label_style_name": "place_name_japan_prefecture_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_publ_midz",
-                           "label_style_name": "place_name_japan_public_facility_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_ooaz_midz",
-                           "label_style_name": "place_name_japan_municipality_oaza_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_rail_midz",
-                           "label_style_name": "place_name_japan_railway_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_scho_midz",
-                           "label_style_name": "place_name_japan_school_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_skii_midz",
-                           "label_style_name": "place_name_japan_ski_resort_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_shop_midz",
-                           "label_style_name": "place_name_japan_commercial_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_tran_midz",
-                           "label_style_name": "place_name_japan_transport_facility_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_watr_midz",
-                           "label_style_name": "place_name_japan_water_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_zsta_midz",
-                           "label_style_name": "place_name_japan_train_station_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_acco_lowz",
-                           "label_style_name": "place_name_japan_accommodation_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_cros_lowz",
-                           "label_style_name": "place_name_japan_crossing_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_koaz_lowz",
-                           "label_style_name": "place_name_japan_municipality_koaza_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_hosp_lowz",
-                           "label_style_name": "place_name_japan_medical_facility_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_leis_lowz",
-                           "label_style_name": "place_name_japan_leisure_facility_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_lnmk_lowz",
-                           "label_style_name": "place_name_japan_landmark_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_misc_lowz",
-                           "label_style_name": "place_name_japan_misc_facility_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_pref_lowz",
-                           "label_style_name": "place_name_japan_prefecture_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_publ_lowz",
-                           "label_style_name": "place_name_japan_public_facility_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_ooaz_lowz",
-                           "label_style_name": "place_name_japan_municipality_oaza_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_rail_lowz",
-                           "label_style_name": "place_name_japan_railway_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_scho_lowz",
-                           "label_style_name": "place_name_japan_school_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_skii_lowz",
-                           "label_style_name": "place_name_japan_ski_resort_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_shop_lowz",
-                           "label_style_name": "place_name_japan_commercial_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_tran_lowz",
-                           "label_style_name": "place_name_japan_transport_facility_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_watr_lowz",
-                           "label_style_name": "place_name_japan_water_highz"
-                           },
-                           {
-                           "label_anchor_category": "place_name_zsta_lowz",
-                           "label_style_name": "place_name_japan_train_station_highz"
-                           }]
+	"LabelTextStyles": [{
+		"name": "road_default",
+		"label_resource_font_binding": "roads",
+		"size_px": 9.5,
+		"apply_projection_scale": false,
+		"glyph_color_rgba": "FFFFFFFF",
+		"halo_color_rgba": "3A3A3AFF",
+		"halo_width": 2.0,
+		"halo_hardness": 1.0
+	},
+	{
+		"name": "place_name_default",
+		"label_resource_font_binding": "place_names",
+		"size_px": 11.5,
+		"apply_projection_scale": false,
+		"glyph_color_rgba": "FFFFFFFF",
+		"halo_color_rgba": "3A3A3AFF",
+		"halo_width": 2.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_park_highz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 13,
+		"glyph_color_rgba": "B9F69F",
+		"halo_color_rgba": "5C7C52",
+		"halo_width": 3.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_park_midz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 11.5,
+		"glyph_color_rgba": "B9F69F",
+		"halo_color_rgba": "5C7C52",
+		"halo_width": 3.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_park_lowz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 9.5,
+		"glyph_color_rgba": "B9F69F",
+		"halo_color_rgba": "5C7C52",
+		"halo_width": 2.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_airport_highz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 13,
+		"glyph_color_rgba": "90F2EA",
+		"halo_color_rgba": "4C625D",
+		"halo_width": 3.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_airport_midz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 11.5,
+		"glyph_color_rgba": "90F2EA",
+		"halo_color_rgba": "4C625D",
+		"halo_width": 3.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_airport_lowz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 10,
+		"glyph_color_rgba": "90F2EA",
+		"halo_color_rgba": "4C625D",
+		"halo_width": 2.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_place_of_interest_highz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 11.5,
+		"glyph_color_rgba": "F0F0F0",
+		"halo_color_rgba": "606060",
+		"halo_width": 3.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_city_highz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 17.5,
+		"glyph_color_rgba": "F0F0F0",
+		"halo_color_rgba": "202020",
+		"halo_width": 2.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_city_lowz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 11.5,
+		"glyph_color_rgba": "F5F5F5",
+		"halo_color_rgba": "000000",
+		"halo_width": 2.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_capital_city_lowz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 13,
+		"glyph_color_rgba": "FFFF00",
+		"halo_color_rgba": "000000",
+		"halo_width": 2.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_county",
+		"label_resource_font_binding": "place_names",
+		"size_px": 15,
+		"glyph_color_rgba": "787878",
+		"halo_color_rgba": "101010",
+		"halo_width": 2.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_district_highz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 16,
+		"glyph_color_rgba": "F0F0F0",
+		"halo_color_rgba": "707070",
+		"halo_width": 3.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_district_midz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 13,
+		"glyph_color_rgba": "F0F0F0",
+		"halo_color_rgba": "707070",
+		"halo_width": 3.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_district_lowz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 11,
+		"glyph_color_rgba": "E6E6E6",
+		"halo_color_rgba": "101010",
+		"halo_width": 2.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_state",
+		"label_resource_font_binding": "place_names",
+		"size_px": 13,
+		"glyph_color_rgba": "B8B8B8",
+		"halo_color_rgba": "000000",
+		"halo_width": 3.0,
+		"halo_hardness": 0.0
+	},
+	{
+		"name": "place_name_country",
+		"label_resource_font_binding": "place_names",
+		"size_px": 13,
+		"glyph_color_rgba": "FFFFFF",
+		"halo_color_rgba": "000000",
+		"halo_width": 3.0,
+		"halo_hardness": 0.0
+	},
+	{
+		"name": "place_name_japan_accommodation_highz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 11,
+		"glyph_color_rgba": "FFE680",
+		"halo_color_rgba": "606060",
+		"halo_width": 3.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_japan_commercial_highz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 11,
+		"glyph_color_rgba": "FFB380",
+		"halo_color_rgba": "606060",
+		"halo_width": 3.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_japan_crossing_highz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 10,
+		"glyph_color_rgba": "00CCEB",
+		"halo_color_rgba": "606060",
+		"halo_width": 3.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_japan_leisure_facility_highz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 11,
+		"glyph_color_rgba": "FFB380",
+		"halo_color_rgba": "606060",
+		"halo_width": 3.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_japan_landmark_highz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 11,
+		"glyph_color_rgba": "F5F7CC",
+		"halo_color_rgba": "606060",
+		"halo_width": 3.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_japan_medical_facility_highz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 10,
+		"glyph_color_rgba": "F5F7CC",
+		"halo_color_rgba": "606060",
+		"halo_width": 3.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_japan_misc_facility_highz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 11,
+		"glyph_color_rgba": "F5F7CC",
+		"halo_color_rgba": "606060",
+		"halo_width": 3.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_japan_municipality_koaza_highz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 11.5,
+		"glyph_color_rgba": "B8B8B8",
+		"halo_color_rgba": "606060",
+		"halo_width": 3.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_japan_municipality_oaza_highz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 13,
+		"glyph_color_rgba": "F0F0F0",
+		"halo_color_rgba": "606060",
+		"halo_width": 3.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_japan_prefecture_highz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 13,
+		"glyph_color_rgba": "EBEBEB",
+		"halo_color_rgba": "606060",
+		"halo_width": 3.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_japan_public_facility_highz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 10,
+		"glyph_color_rgba": "CCCCCC",
+		"halo_color_rgba": "606060",
+		"halo_width": 3.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_japan_railway_highz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 10,
+		"glyph_color_rgba": "29D4FF",
+		"halo_color_rgba": "606060",
+		"halo_width": 3.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_japan_school_highz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 10,
+		"glyph_color_rgba": "F5F7CC",
+		"halo_color_rgba": "606060",
+		"halo_width": 3.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_japan_ski_resort_highz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 11,
+		"glyph_color_rgba": "EBEBEB",
+		"halo_color_rgba": "606060",
+		"halo_width": 3.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_japan_transport_facility_highz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 11,
+		"glyph_color_rgba": "29E8E3",
+		"halo_color_rgba": "606060",
+		"halo_width": 3.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_japan_train_station_highz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 13,
+		"glyph_color_rgba": "FFFFFF",
+		"halo_color_rgba": "606060",
+		"halo_width": 3.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "place_name_japan_water_highz",
+		"label_resource_font_binding": "place_names",
+		"size_px": 10,
+		"glyph_color_rgba": "C2E6EB",
+		"halo_color_rgba": "606060",
+		"halo_width": 3.0,
+		"halo_hardness": 0.5
+	},
+	{
+		"name": "roads_big_red_text",
+		"label_resource_font_binding": "roads",
+		"size_px": 24,
+		"glyph_color_rgba": "FF0000",
+		"halo_color_rgba": "000000"
+	},
+	{
+		"name": "roads_freeway_highz",
+		"label_resource_font_binding": "roads",
+		"size_px": 13,
+		"glyph_color_rgba": "95B2FFFF",
+		"halo_color_rgba": "3A3A3AFF",
+		"masked_glyph_color_rgba": "95B2FFA0",
+		"masked_halo_color_rgba": "00000080"
+	},
+	{
+		"name": "roads_major_highz",
+		"label_resource_font_binding": "roads",
+		"size_px": 11,
+		"glyph_color_rgba": "FFFFFF",
+		"halo_color_rgba": "3A3A3A",
+		"masked_glyph_color_rgba": "E0E0E0A0",
+		"masked_halo_color_rgba": "00000080"
+	},
+	{
+		"name": "roads_secondary_highz",
+		"label_resource_font_binding": "roads",
+		"size_px": 10,
+		"glyph_color_rgba": "FFFFFF",
+		"halo_color_rgba": "3A3A3A",
+		"masked_glyph_color_rgba": "E0E0E0A0",
+		"masked_halo_color_rgba": "00000080"
+	},
+	{
+		"name": "roads_minor_highz",
+		"label_resource_font_binding": "roads",
+		"size_px": 9.5,
+		"glyph_color_rgba": "E0E0E0",
+		"halo_color_rgba": "3A3A3A",
+		"masked_glyph_color_rgba": "E0E0E0A0",
+		"masked_halo_color_rgba": "00000080"
+	},
+	{
+		"name": "roads_local_minor_highz",
+		"label_resource_font_binding": "roads",
+		"size_px": 9,
+		"glyph_color_rgba": "D0D0D0",
+		"halo_color_rgba": "3A3A3A",
+		"masked_glyph_color_rgba": "D0D0D0A0",
+		"masked_halo_color_rgba": "00000080"
+	}],
+	"LabelStyles": [{
+		"name": "road_default",
+		"label_text_style_name": "road_default",
+		"label_orientation": "map_feature_auto_upright",
+		"label_display": "screen_space",
+		"label_horizontal_alignment": "center",
+		"label_vertical_alignment": "middle",
+		"constraint_radius_scale": 0.5,
+		"fade_duration": 0.3,
+		"stencil_mode": "always",
+		"priority": 10
+	},
+	{
+		"name": "place_name_default",
+		"label_text_style_name": "place_name_default",
+		"label_orientation": "screen",
+		"label_display": "screen_space",
+		"label_horizontal_alignment": "center",
+		"label_vertical_alignment": "middle",
+		"constraint_radius_scale": 0.6,
+		"fade_duration": 0.5,
+		"stencil_mode": "always",
+		"priority": 0
+	},
+	{
+		"name": "place_name_park_highz",
+		"label_text_style_name": "place_name_park_highz",
+		"constraint_radius_scale": 2.5,
+		"priority": 5
+	},
+	{
+		"name": "place_name_park_midz",
+		"label_text_style_name": "place_name_park_midz",
+		"constraint_radius_scale": 2.5,
+		"priority": 5
+	},
+	{
+		"name": "place_name_park_lowz",
+		"label_text_style_name": "place_name_park_lowz",
+		"constraint_radius_scale": 2.5,
+		"priority": 5
+	},
+	{
+		"name": "place_name_airport_lowz",
+		"label_text_style_name": "place_name_airport_lowz",
+		"constraint_radius_scale": 0.6,
+		"priority": 3
+	},
+	{
+		"name": "place_name_airport_midz",
+		"label_text_style_name": "place_name_airport_midz",
+		"constraint_radius_scale": 0.6,
+		"priority": 3
+	},
+	{
+		"name": "place_name_airport_highz",
+		"label_text_style_name": "place_name_airport_highz",
+		"constraint_radius_scale": 0.6,
+		"priority": 3
+	},
+	{
+		"name": "place_name_place_of_interest_highz",
+		"label_text_style_name": "place_name_place_of_interest_highz",
+		"priority": 5
+	},
+	{
+		"name": "place_name_city_highz",
+		"label_text_style_name": "place_name_city_highz",
+		"constraint_radius_scale": 0.6,
+		"priority": 3
+	},
+	{
+		"name": "place_name_city_lowz",
+		"label_text_style_name": "place_name_city_lowz",
+		"constraint_radius_scale": 0.6,
+		"priority": 2
+	},
+	{
+		"name": "place_name_capital_city_lowz",
+		"label_text_style_name": "place_name_capital_city_lowz",
+		"constraint_radius_scale": 0.6,
+		"priority": 2
+	},
+	{
+		"name": "place_name_county",
+		"label_text_style_name": "place_name_county",
+		"constraint_radius_scale": 0.6,
+		"priority": 2
+	},
+	{
+		"name": "place_name_district_highz",
+		"label_text_style_name": "place_name_district_highz",
+		"constraint_radius_scale": 0.6,
+		"priority": 4
+	},
+	{
+		"name": "place_name_district_midz",
+		"label_text_style_name": "place_name_district_midz",
+		"constraint_radius_scale": 0.6,
+		"priority": 4
+	},
+	{
+		"name": "place_name_district_lowz",
+		"label_text_style_name": "place_name_district_lowz",
+		"constraint_radius_scale": 0.6,
+		"priority": 4
+	},
+	{
+		"name": "place_name_state",
+		"label_text_style_name": "place_name_state",
+		"constraint_radius_scale": 0.6,
+		"priority": 2
+	},
+	{
+		"name": "place_name_country",
+		"label_text_style_name": "place_name_country",
+		"constraint_radius_scale": 0.6,
+		"initially_faded_out": true,
+		"priority": 1
+	},
+	{
+		"name": "place_name_japan_accommodation_highz",
+		"label_text_style_name": "place_name_japan_accommodation_highz",
+		"priority": 5
+	},
+	{
+		"name": "place_name_japan_commercial_highz",
+		"label_text_style_name": "place_name_japan_commercial_highz",
+		"priority": 5
+	},
+	{
+		"name": "place_name_japan_crossing_highz",
+		"label_text_style_name": "place_name_japan_crossing_highz",
+		"priority": 5
+	},
+	{
+		"name": "place_name_japan_leisure_facility_highz",
+		"label_text_style_name": "place_name_japan_leisure_facility_highz",
+		"priority": 5
+	},
+	{
+		"name": "place_name_japan_landmark_highz",
+		"label_text_style_name": "place_name_japan_landmark_highz",
+		"priority": 5
+	},
+	{
+		"name": "place_name_japan_medical_facility_highz",
+		"label_text_style_name": "place_name_japan_medical_facility_highz",
+		"priority": 5
+	},
+	{
+		"name": "place_name_japan_misc_facility_highz",
+		"label_text_style_name": "place_name_japan_misc_facility_highz",
+		"priority": 5
+	},
+	{
+		"name": "place_name_japan_municipality_koaza_highz",
+		"label_text_style_name": "place_name_japan_municipality_koaza_highz",
+		"priority": 5
+	},
+	{
+		"name": "place_name_japan_municipality_oaza_highz",
+		"label_text_style_name": "place_name_japan_municipality_oaza_highz",
+		"priority": 5
+	},
+	{
+		"name": "place_name_japan_prefecture_highz",
+		"label_text_style_name": "place_name_japan_prefecture_highz",
+		"priority": 5
+	},
+	{
+		"name": "place_name_japan_public_facility_highz",
+		"label_text_style_name": "place_name_japan_public_facility_highz",
+		"priority": 5
+	},
+	{
+		"name": "place_name_japan_railway_highz",
+		"label_text_style_name": "place_name_japan_railway_highz",
+		"priority": 5
+	},
+	{
+		"name": "place_name_japan_school_highz",
+		"label_text_style_name": "place_name_japan_school_highz",
+		"priority": 5
+	},
+	{
+		"name": "place_name_japan_ski_resort_highz",
+		"label_text_style_name": "place_name_japan_ski_resort_highz",
+		"priority": 5
+	},
+	{
+		"name": "place_name_japan_transport_facility_highz",
+		"label_text_style_name": "place_name_japan_transport_facility_highz",
+		"priority": 5
+	},
+	{
+		"name": "place_name_japan_train_station_highz",
+		"label_text_style_name": "place_name_japan_train_station_highz",
+		"priority": 5
+	},
+	{
+		"name": "place_name_japan_water_highz",
+		"label_text_style_name": "place_name_japan_water_highz",
+		"priority": 5
+	},
+	{
+		"name": "roads_big_red_text",
+		"label_text_style_name": "roads_big_red_text",
+		"label_orientation": "map_feature",
+		"label_display": "screen_space",
+		"label_horizontal_alignment": "center",
+		"label_vertical_alignment": "bottom",
+		"constraint_radius_scale": 0.2,
+		"fade_duration": 1.5,
+		"priority": 1
+	},
+	{
+		"name": "roads_freeway_highz",
+		"label_text_style_name": "roads_freeway_highz",
+		"label_orientation": "map_feature_auto_upright",
+		"label_display": "screen_space",
+		"label_horizontal_alignment": "center",
+		"label_vertical_alignment": "middle",
+		"constraint_radius_scale": 0.2,
+		"stencil_mode": "with_masked_style",
+		"priority": 10
+	},
+	{
+		"name": "roads_freeway_lowz",
+		"label_text_style_name": "roads_freeway_highz",
+		"label_orientation": "map_feature_auto_upright",
+		"label_display": "screen_space",
+		"label_horizontal_alignment": "center",
+		"label_vertical_alignment": "middle",
+		"constraint_radius_scale": 0.2,
+		"stencil_mode": "always",
+		"priority": 6
+	},
+	{
+		"name": "roads_major_highz",
+		"label_text_style_name": "roads_major_highz",
+		"label_orientation": "map_feature_auto_upright",
+		"label_display": "screen_space",
+		"label_horizontal_alignment": "center",
+		"label_vertical_alignment": "middle",
+		"constraint_radius_scale": 0.3,
+		"stencil_mode": "with_masked_style",
+		"priority": 11
+	},
+	{
+		"name": "roads_secondary_highz",
+		"label_text_style_name": "roads_secondary_highz",
+		"label_orientation": "map_feature_auto_upright",
+		"label_display": "screen_space",
+		"label_horizontal_alignment": "center",
+		"label_vertical_alignment": "middle",
+		"constraint_radius_scale": 0.5,
+		"stencil_mode": "with_masked_style",
+		"priority": 12
+	},
+	{
+		"name": "roads_secondary_lowz",
+		"label_text_style_name": "roads_secondary_highz",
+		"label_orientation": "map_feature_auto_upright",
+		"label_display": "screen_space",
+		"label_horizontal_alignment": "center",
+		"label_vertical_alignment": "middle",
+		"constraint_radius_scale": 0.5,
+		"stencil_mode": "always",
+		"priority": 7
+	},
+	{
+		"name": "roads_minor_highz",
+		"label_text_style_name": "roads_minor_highz",
+		"label_orientation": "map_feature_auto_upright",
+		"label_display": "screen_space",
+		"label_horizontal_alignment": "center",
+		"label_vertical_alignment": "middle",
+		"constraint_radius_scale": 0.5,
+		"stencil_mode": "with_masked_style",
+		"priority": 13
+	},
+	{
+		"name": "roads_local_minor_highz",
+		"label_text_style_name": "roads_local_minor_highz",
+		"label_orientation": "map_feature_auto_upright",
+		"label_display": "screen_space",
+		"label_horizontal_alignment": "center",
+		"label_vertical_alignment": "middle",
+		"constraint_radius_scale": 1.0,
+		"stencil_mode": "if_not_masked_by_map_feature",
+		"priority": 14
+	}],
+	"LabelStyleBindings": [{
+		"label_anchor_category": "default_line",
+		"label_style_name": "road_default"
+	},
+	{
+		"label_anchor_category": "default_point",
+		"label_style_name": "place_name_default"
+	},
+	{
+		"label_anchor_category": "road_motorway_freeway_or_other_major_road_highz",
+		"label_style_name": "roads_freeway_highz"
+	},
+	{
+		"label_anchor_category": "road_motorway_freeway_or_other_major_road_midz",
+		"label_style_name": "roads_freeway_lowz"
+	},
+	{
+		"label_anchor_category": "road_motorway_freeway_or_other_major_road_lowz",
+		"label_style_name": "roads_freeway_lowz"
+	},
+	{
+		"label_anchor_category": "road_major_road_less_important_than_motorway_highz",
+		"label_style_name": "roads_major_highz"
+	},
+	{
+		"label_anchor_category": "road_other_major_road_highz",
+		"label_style_name": "roads_major_highz"
+	},
+	{
+		"label_anchor_category": "road_secondary_road_highz",
+		"label_style_name": "roads_secondary_highz"
+	},
+	{
+		"label_anchor_category": "road_secondary_road_lowz",
+		"label_style_name": "roads_secondary_lowz"
+	},
+	{
+		"label_anchor_category": "road_local_connecting_road_highz",
+		"label_style_name": "roads_secondary_highz"
+	},
+	{
+		"label_anchor_category": "road_local_road_of_high_importance_highz",
+		"label_style_name": "roads_secondary_highz"
+	},
+	{
+		"label_anchor_category": "road_local_road_highz",
+		"label_style_name": "roads_minor_highz"
+	},
+	{
+		"label_anchor_category": "road_local_road_of_minor_importance_highz",
+		"label_style_name": "roads_local_minor_highz"
+	},
+	{
+		"label_anchor_category": "road_other_road_highz",
+		"label_style_name": "roads_minor_highz"
+	},
+	{
+		"label_anchor_category": "place_name_park_highz",
+		"label_style_name": "place_name_park_highz"
+	},
+	{
+		"label_anchor_category": "place_name_golf_highz",
+		"label_style_name": "place_name_park_highz"
+	},
+	{
+		"label_anchor_category": "place_name_airp_highz",
+		"label_style_name": "place_name_airport_highz"
+	},
+	{
+		"label_anchor_category": "place_name_poin_highz",
+		"label_style_name": "place_name_place_of_interest_highz"
+	},
+	{
+		"label_anchor_category": "place_name_coun_highz",
+		"label_style_name": "place_name_county"
+	},
+	{
+		"label_anchor_category": "place_name_dist_highz",
+		"label_style_name": "place_name_district_highz"
+	},
+	{
+		"label_anchor_category": "place_name_city_highz",
+		"label_style_name": "place_name_city_highz"
+	},
+	{
+		"label_anchor_category": "place_name_ccty_highz",
+		"label_style_name": "place_name_city_highz"
+	},
+	{
+		"label_anchor_category": "place_name_park_midz",
+		"label_style_name": "place_name_park_midz"
+	},
+	{
+		"label_anchor_category": "place_name_golf_midz",
+		"label_style_name": "place_name_park_midz"
+	},
+	{
+		"label_anchor_category": "place_name_airp_midz",
+		"label_style_name": "place_name_airport_midz"
+	},
+	{
+		"label_anchor_category": "place_name_coun_midz",
+		"label_style_name": "place_name_county"
+	},
+	{
+		"label_anchor_category": "place_name_dist_midz",
+		"label_style_name": "place_name_district_midz"
+	},
+	{
+		"label_anchor_category": "place_name_city_midz",
+		"label_style_name": "place_name_city_highz"
+	},
+	{
+		"label_anchor_category": "place_name_ccty_midz",
+		"label_style_name": "place_name_city_highz"
+	},
+	{
+		"label_anchor_category": "place_name_park_lowz",
+		"label_style_name": "place_name_park_lowz"
+	},
+	{
+		"label_anchor_category": "place_name_golf_lowz",
+		"label_style_name": "place_name_park_lowz"
+	},
+	{
+		"label_anchor_category": "place_name_airp_lowz",
+		"label_style_name": "place_name_airport_lowz"
+	},
+	{
+		"label_anchor_category": "place_name_city_lowz",
+		"label_style_name": "place_name_city_lowz"
+	},
+	{
+		"label_anchor_category": "place_name_ccty_lowz",
+		"label_style_name": "place_name_capital_city_lowz"
+	},
+	{
+		"label_anchor_category": "place_name_coun_lowz",
+		"label_style_name": "place_name_county"
+	},
+	{
+		"label_anchor_category": "place_name_dist_lowz",
+		"label_style_name": "place_name_district_lowz"
+	},
+	{
+		"label_anchor_category": "placename_park_highz",
+		"label_style_name": "place_name_park_highz"
+	},
+	{
+		"label_anchor_category": "place_name_stat_lowz",
+		"label_style_name": "place_name_state"
+	},
+	{
+		"label_anchor_category": "place_name_ctry_lowz",
+		"label_style_name": "place_name_country"
+	},
+	{
+		"label_anchor_category": "place_name_acco_highz",
+		"label_style_name": "place_name_japan_accommodation_highz"
+	},
+	{
+		"label_anchor_category": "place_name_cros_highz",
+		"label_style_name": "place_name_japan_crossing_highz"
+	},
+	{
+		"label_anchor_category": "place_name_koaz_highz",
+		"label_style_name": "place_name_japan_municipality_koaza_highz"
+	},
+	{
+		"label_anchor_category": "place_name_hosp_highz",
+		"label_style_name": "place_name_japan_medical_facility_highz"
+	},
+	{
+		"label_anchor_category": "place_name_leis_highz",
+		"label_style_name": "place_name_japan_leisure_facility_highz"
+	},
+	{
+		"label_anchor_category": "place_name_lnmk_highz",
+		"label_style_name": "place_name_japan_landmark_highz"
+	},
+	{
+		"label_anchor_category": "place_name_misc_highz",
+		"label_style_name": "place_name_japan_misc_facility_highz"
+	},
+	{
+		"label_anchor_category": "place_name_pref_highz",
+		"label_style_name": "place_name_japan_prefecture_highz"
+	},
+	{
+		"label_anchor_category": "place_name_publ_highz",
+		"label_style_name": "place_name_japan_public_facility_highz"
+	},
+	{
+		"label_anchor_category": "place_name_ooaz_highz",
+		"label_style_name": "place_name_japan_municipality_oaza_highz"
+	},
+	{
+		"label_anchor_category": "place_name_rail_highz",
+		"label_style_name": "place_name_japan_railway_highz"
+	},
+	{
+		"label_anchor_category": "place_name_scho_highz",
+		"label_style_name": "place_name_japan_school_highz"
+	},
+	{
+		"label_anchor_category": "place_name_skii_highz",
+		"label_style_name": "place_name_japan_ski_resort_highz"
+	},
+	{
+		"label_anchor_category": "place_name_shop_highz",
+		"label_style_name": "place_name_japan_commercial_highz"
+	},
+	{
+		"label_anchor_category": "place_name_tran_highz",
+		"label_style_name": "place_name_japan_transport_facility_highz"
+	},
+	{
+		"label_anchor_category": "place_name_watr_highz",
+		"label_style_name": "place_name_japan_water_highz"
+	},
+	{
+		"label_anchor_category": "place_name_zsta_highz",
+		"label_style_name": "place_name_japan_train_station_highz"
+	},
+	{
+		"label_anchor_category": "place_name_acco_midz",
+		"label_style_name": "place_name_japan_accommodation_highz"
+	},
+	{
+		"label_anchor_category": "place_name_cros_midz",
+		"label_style_name": "place_name_japan_crossing_highz"
+	},
+	{
+		"label_anchor_category": "place_name_koaz_midz",
+		"label_style_name": "place_name_japan_municipality_koaza_highz"
+	},
+	{
+		"label_anchor_category": "place_name_hosp_midz",
+		"label_style_name": "place_name_japan_medical_facility_highz"
+	},
+	{
+		"label_anchor_category": "place_name_leis_midz",
+		"label_style_name": "place_name_japan_leisure_facility_highz"
+	},
+	{
+		"label_anchor_category": "place_name_lnmk_midz",
+		"label_style_name": "place_name_japan_landmark_highz"
+	},
+	{
+		"label_anchor_category": "place_name_misc_midz",
+		"label_style_name": "place_name_japan_misc_facility_highz"
+	},
+	{
+		"label_anchor_category": "place_name_pref_midz",
+		"label_style_name": "place_name_japan_prefecture_highz"
+	},
+	{
+		"label_anchor_category": "place_name_publ_midz",
+		"label_style_name": "place_name_japan_public_facility_highz"
+	},
+	{
+		"label_anchor_category": "place_name_ooaz_midz",
+		"label_style_name": "place_name_japan_municipality_oaza_highz"
+	},
+	{
+		"label_anchor_category": "place_name_rail_midz",
+		"label_style_name": "place_name_japan_railway_highz"
+	},
+	{
+		"label_anchor_category": "place_name_scho_midz",
+		"label_style_name": "place_name_japan_school_highz"
+	},
+	{
+		"label_anchor_category": "place_name_skii_midz",
+		"label_style_name": "place_name_japan_ski_resort_highz"
+	},
+	{
+		"label_anchor_category": "place_name_shop_midz",
+		"label_style_name": "place_name_japan_commercial_highz"
+	},
+	{
+		"label_anchor_category": "place_name_tran_midz",
+		"label_style_name": "place_name_japan_transport_facility_highz"
+	},
+	{
+		"label_anchor_category": "place_name_watr_midz",
+		"label_style_name": "place_name_japan_water_highz"
+	},
+	{
+		"label_anchor_category": "place_name_zsta_midz",
+		"label_style_name": "place_name_japan_train_station_highz"
+	},
+	{
+		"label_anchor_category": "place_name_acco_lowz",
+		"label_style_name": "place_name_japan_accommodation_highz"
+	},
+	{
+		"label_anchor_category": "place_name_cros_lowz",
+		"label_style_name": "place_name_japan_crossing_highz"
+	},
+	{
+		"label_anchor_category": "place_name_koaz_lowz",
+		"label_style_name": "place_name_japan_municipality_koaza_highz"
+	},
+	{
+		"label_anchor_category": "place_name_hosp_lowz",
+		"label_style_name": "place_name_japan_medical_facility_highz"
+	},
+	{
+		"label_anchor_category": "place_name_leis_lowz",
+		"label_style_name": "place_name_japan_leisure_facility_highz"
+	},
+	{
+		"label_anchor_category": "place_name_lnmk_lowz",
+		"label_style_name": "place_name_japan_landmark_highz"
+	},
+	{
+		"label_anchor_category": "place_name_misc_lowz",
+		"label_style_name": "place_name_japan_misc_facility_highz"
+	},
+	{
+		"label_anchor_category": "place_name_pref_lowz",
+		"label_style_name": "place_name_japan_prefecture_highz"
+	},
+	{
+		"label_anchor_category": "place_name_publ_lowz",
+		"label_style_name": "place_name_japan_public_facility_highz"
+	},
+	{
+		"label_anchor_category": "place_name_ooaz_lowz",
+		"label_style_name": "place_name_japan_municipality_oaza_highz"
+	},
+	{
+		"label_anchor_category": "place_name_rail_lowz",
+		"label_style_name": "place_name_japan_railway_highz"
+	},
+	{
+		"label_anchor_category": "place_name_scho_lowz",
+		"label_style_name": "place_name_japan_school_highz"
+	},
+	{
+		"label_anchor_category": "place_name_skii_lowz",
+		"label_style_name": "place_name_japan_ski_resort_highz"
+	},
+	{
+		"label_anchor_category": "place_name_shop_lowz",
+		"label_style_name": "place_name_japan_commercial_highz"
+	},
+	{
+		"label_anchor_category": "place_name_tran_lowz",
+		"label_style_name": "place_name_japan_transport_facility_highz"
+	},
+	{
+		"label_anchor_category": "place_name_watr_lowz",
+		"label_style_name": "place_name_japan_water_highz"
+	},
+	{
+		"label_anchor_category": "place_name_zsta_lowz",
+		"label_style_name": "place_name_japan_train_station_highz"
+	}]
 }
