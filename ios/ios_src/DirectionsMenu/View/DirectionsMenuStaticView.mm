@@ -217,7 +217,7 @@
             
             [cell.wayPointImageView setImage:[UIImage imageNamed:[NSString stringWithCString:icon.c_str() encoding:NSUTF8StringEncoding]]];
             [cell.wayPointMainTitlelbl setText:[NSString stringWithCString:title.c_str() encoding:NSUTF8StringEncoding]];
-            [cell.wayPointSubCategorylbl setText:[NSString stringWithCString:subTitle.c_str() encoding:NSUTF8StringEncoding]];
+            [cell.wayPointSubCategorylbl setText:@""];
         
         }
         
@@ -307,7 +307,7 @@
     [_optionsButton release];
     [_exitDirectionsBtn release];
     [_endRouteTextField release];
-    [_startRouteTextField release];
+    [_startRouteTextField release];\
     
     [_startContainerHeightConstraint release];
     [_heightDropSpacingConstraint release];

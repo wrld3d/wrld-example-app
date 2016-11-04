@@ -37,7 +37,7 @@ namespace ExampleApp
                     writer.String("icon");
                     writer.String(menuItem.Icon().c_str(), static_cast<rapidjson::SizeType>(menuItem.Icon().size()));
                 }
-
+                
                 writer.EndObject();
 
                 return std::string(stringBuffer.GetString(), stringBuffer.GetSize());

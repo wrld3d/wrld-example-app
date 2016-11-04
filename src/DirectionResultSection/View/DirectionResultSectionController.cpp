@@ -51,37 +51,44 @@ namespace ExampleApp
                 {
                     Direction::SdkModel::DirectionRouteModel routeModel = routes[0];
                     const std::vector<ExampleApp::PathDrawing::WayPointModel>& wayPointVector = routeModel.GetWayPoints();
+                    const std::vector<Direction::SdkModel::DirectionInnerRouteModel>& tempVector = routeModel.GetInnerRoutes();
+                    
+                    Direction::SdkModel::DirectionInnerRouteModel tempInnerRouteModel = tempVector[0];
+                    
+                    int routeDuration = tempInnerRouteModel.GetDuration();
+                    
+                    Eegeo_TTY("Duration: %i",routeDuration);
+                    
                     for(int i = 0; i < wayPointVector.size(); ++i)
                     {
                         ExampleApp::PathDrawing::WayPointModel wayPointModel = wayPointVector[i];
-
                         
-                        std::string subtitle = "";
                         ExampleApp::Search::SdkModel::TagIconKey iconKey = "";
                         std::string duration = "Temp Duration";
+                        std::string subtitle = std::to_string(routeDuration);
                         if(i%4 == 0)
                         {
 
-                            subtitle = "South Entrance";
+                            //subtitle = "South Entrance";
                             iconKey = "DirectionCard_RouteStart";
                         }
                         else if(i%4 == 1)
                         {
 
-                            subtitle = "Enter Mall";
+                            //subtitle = "Enter Mall";
                             iconKey = "DirectionCard_EnterMallSelected";
                             
                         }
                         else if(i%4 == 2)
                         {
 
-                            subtitle = "Turn left along main concourse";
+                            //subtitle = "Turn left along main concourse";
                             iconKey = "DirectionCard_StraightAhead";
                         }
                         else if(i%4 == 3)
                         {
 
-                            subtitle = "Then 400 yd along main course";
+                            //subtitle = "Then 400 yd along main course";
                             iconKey = "DirectionCard_TurnLeft";
                         }
                         

@@ -40,6 +40,7 @@ namespace ExampleApp
                              uniqueIdentifier.c_str(), uniqueIdentifier.c_str());
                 m_options[uniqueIdentifier] = pOption;
                 MenuItemModel menuItem(uniqueIdentifier, name, details, icon, pOption);
+                menuItem.SetDuration("temp Duration");
                 m_menu.AddItem(menuItem);
             }
 
