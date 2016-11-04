@@ -46,7 +46,6 @@ namespace ExampleApp
             
             void CreateRoutePlan(Direction::SdkModel::DirectionResultModel& directionResultModel);
             
-            void RemoveRoutePlan();
             
             void OnSearchQueryResponseReceivedMessage(const DirectionResultSection::DirectionQueryResponseReceivedMessage& message);
             
@@ -72,7 +71,8 @@ namespace ExampleApp
             bool IsRouteCreated();
             std::vector<Eegeo::Routes::Route*>& GetCreatedRoutes();
 
-            
+            void RemoveRoutePlan();
+
             virtual ~PathDrawingController();
             
         };

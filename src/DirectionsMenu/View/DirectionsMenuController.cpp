@@ -19,7 +19,8 @@ namespace ExampleApp
                                      DirectionsMenu::View::IDirectionsMenuView& directionsMenuView,
                                     Menu::View::IMenuSectionViewModel& searchSectionViewModel,
                                      Modality::View::IModalBackgroundView& modalBackgroundView,
-                                     ExampleAppMessaging::TMessageBus& messageBus)
+                                     ExampleAppMessaging::TMessageBus& messageBus,
+                                     Eegeo::Location::ILocationService& locationService)
                         : Menu::View::MenuController(model, viewModel, view, messageBus)
                         , m_directionsMenuView(directionsMenuView)
                         , m_searchSectionViewModel(searchSectionViewModel)
@@ -41,6 +42,7 @@ namespace ExampleApp
                         , m_onEndLocationChangedCallback(this, &DirectionsMenuController::OnEndLocationChanged)
                         , m_onStartLocationResponseReceivedCallback(this, &DirectionsMenuController::OnGeoNamesStartLocationResponseReceived)
                         , m_isExitDirections(false)
+                        , m_locationService(locationService)
 
             {
                 m_directionsMenuView.InsertSearchPeformedCallback(m_searchPerformedCallbacks);
@@ -118,8 +120,13 @@ namespace ExampleApp
             }
             void DirectionsMenuController::OnSearch(const Eegeo::Space::LatLong& start,const Eegeo::Space::LatLong& end)
             {
+                Eegeo::Space::LatLong currentLatLong = Eegeo::Space::LatLong::FromDegrees(start.GetLatitudeInDegrees(), start.GetLongitudeInDegrees());
+                if (currentLatLong.GetLongitudeInDegrees() == 0 && currentLatLong.GetLongitudeInDegrees() == 0)
+                {
+                    m_locationService.GetLocation(currentLatLong);
+                }
 
-                const Eegeo::Space::LatLongAltitude startLoc = Eegeo::Space::LatLongAltitude::FromDegrees(start.GetLatitudeInDegrees(), start.GetLongitudeInDegrees(),0.0);
+                const Eegeo::Space::LatLongAltitude startLoc = Eegeo::Space::LatLongAltitude::FromDegrees(currentLatLong.GetLatitudeInDegrees(), currentLatLong.GetLongitudeInDegrees(),0.0);
                 const Eegeo::Space::LatLongAltitude endLoc = Eegeo::Space::LatLongAltitude::FromDegrees(end.GetLatitudeInDegrees(), end.GetLongitudeInDegrees(),0.0);
 
 //                const Eegeo::Space::LatLongAltitude startLoc = Eegeo::Space::LatLongAltitude::FromDegrees(56.459917,-2.984219,0.0);

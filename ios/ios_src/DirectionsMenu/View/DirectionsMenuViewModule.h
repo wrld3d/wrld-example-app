@@ -11,6 +11,7 @@
 #include "Rendering.h"
 #include "DirectionsMenuController.h"
 #include "Types.h"
+#include "ILocationService.h"
 
 namespace ExampleApp
 {
@@ -24,13 +25,15 @@ namespace ExampleApp
                 DirectionsMenuController* m_pController;
                 DirectionsMenuView* m_pView;
 
+
             public:
                 DirectionsMenuViewModule(Menu::View::IMenuModel& searchMenuModel,
                                          Menu::View::IMenuViewModel& searchMenuViewModel,
                                         Menu::View::IMenuSectionViewModel& searchSectionViewModel,
                                          const Eegeo::Rendering::ScreenProperties& screenProperties,
                                          Modality::View::IModalBackgroundView& modalBackgroundView,
-                                         ExampleAppMessaging::TMessageBus& messageBus);
+                                         ExampleAppMessaging::TMessageBus& messageBus,
+                                         Eegeo::Location::ILocationService& locationService);
                 
                 ~DirectionsMenuViewModule();
                 

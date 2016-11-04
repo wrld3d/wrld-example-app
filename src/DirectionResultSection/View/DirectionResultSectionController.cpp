@@ -26,6 +26,7 @@ namespace ExampleApp
             , m_menuReaction(menuReaction)
             , m_searchResultPoiViewModel(searchResultPoiViewModel)
             , m_directionsMenuStateChangedCallback(this, &DirectionResultSectionController::OnDirectionsMenuStateChanged)
+            , m_wayPointCount(0)
             {
                 m_messageBus.SubscribeUi(m_directionResultReceivedHandler);
                 m_messageBus.SubscribeUi(m_directionsMenuStateChangedCallback);
@@ -40,10 +41,7 @@ namespace ExampleApp
             void DirectionResultSectionController::OnSearchQueryResponseReceivedMessage(const DirectionQueryResponseReceivedMessage& message)
             {
                 
-                for(int i = 0; i < 2; ++i)
-                {
-                    m_menuOptions.RemoveItem(std::to_string(i));
-                }
+                RemoveWayPoints();
                 
                 Direction::SdkModel::DirectionResultModel& model = message.GetDirectionResultModel();
                 const std::vector<Direction::SdkModel::DirectionRouteModel>& routes = model.GetRoutes();
@@ -104,8 +102,8 @@ namespace ExampleApp
                                                                                                           m_messageBus,
                                                                                                           m_menuReaction));
                     }
+                    m_wayPointCount = wayPointVector.size();
                     
-
                 }
                 
             }
@@ -117,12 +115,20 @@ namespace ExampleApp
             {
                 if(message.GetDirectionsMenuStage() == DirectionsMenuInitiation::Inactive)
                 {
-                    for(int i = 0; i < 4; ++i)
-                    {
-                        m_menuOptions.RemoveItem(std::to_string(i));
-                    }
+                    RemoveWayPoints();
                 }
             }
+            
+            void DirectionResultSectionController::RemoveWayPoints()
+            {
+                for(int i = 0; i < m_wayPointCount; ++i)
+                {
+                    m_menuOptions.RemoveItem(std::to_string(i));
+                }
+                m_wayPointCount = 0;
+            
+            }
+
         }
     }
 }
