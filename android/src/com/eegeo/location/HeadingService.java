@@ -25,15 +25,12 @@ public class HeadingService implements SensorEventListener
     // using the results of the Sensor.TYPE_GRAVITY and Sensor.TYPE_MAGNETIC_FIELD sensors, set
     // this field to false. The results of this have high jitter, so a low-pass filter is used. Even
     // then, the results appear to be inferior to Sensor.TYPE_ORIENTATION.
-    private final boolean m_useDeprecatedOrientationMethod = true;
+    private final boolean m_useDeprecatedOrientationMethod = false;
 
     // Used if m_useDeprecatedOrientationMethod == true.
     private float m_azimuthDegrees = 0.f;
 
     // Used if m_useDeprecatedOrientationMethod == false.
-    private final int NumBufferedResults = 16;
-    private float m_sumSin, m_sumCos;
-    private ArrayDeque<Float> m_resultsBuffer = new ArrayDeque<Float>();
     private float[] m_gravity = new float[3];
     private float[] m_geomagnetic = new float[3];
 
@@ -44,14 +41,7 @@ public class HeadingService implements SensorEventListener
 
     public double heading()
     {
-        if(m_useDeprecatedOrientationMethod)
-        {
-            return m_azimuthDegrees;
-        }
-        else
-        {
-            return filteredResultDegrees();
-        }
+        return m_azimuthDegrees;
     }
 
     public HeadingService(Activity activity)
@@ -155,44 +145,35 @@ public class HeadingService implements SensorEventListener
                 if(success)
                 {
                     float remap[] = new float[9];
-                    SensorManager.remapCoordinateSystem(R, SensorManager.AXIS_X, SensorManager.AXIS_Z, remap);
-
+                    adjustHeadingForDeviceOrientation(R, remap);
+                    
                     float orientation[] = new float[3];
                     SensorManager.getOrientation(remap, orientation);
 
+                    float newAzimuth = (float) Math.toDegrees(orientation[0]);
+                    
+                    if(Math.abs(newAzimuth - m_azimuthDegrees) >= 180)
+                    {
+                        if(newAzimuth > m_azimuthDegrees)
+                        {
+                            m_azimuthDegrees += 360.0f;
+                        }
+                        else
+                        {
+                            newAzimuth += 360.0f;
+                        }
+                    }
+                    
+                    float threshold = 25f;
+                    float diff = m_azimuthDegrees - newAzimuth;
+                    diff /= threshold;
+                    diff = Math.min(diff, diff * diff);
+                    m_azimuthDegrees -= diff;
+                    m_azimuthDegrees = (m_azimuthDegrees + 360f) % 360;
                     m_hasAzimuthAngle = true;
-                    addResultForFiltering(adjustHeadingForDeviceOrientation(orientation[0]));
                 }
             }
         }
-    }
-
-    private void addResultForFiltering(float radians)
-    {
-        m_sumSin += (float) Math.sin(radians);
-        m_sumCos += (float) Math.cos(radians);
-        m_resultsBuffer.add(radians);
-
-        if(m_resultsBuffer.size() > NumBufferedResults)
-        {
-            float old = m_resultsBuffer.poll();
-            m_sumSin -= Math.sin(old);
-            m_sumCos -= Math.cos(old);
-        }
-    }
-
-    private float filteredResultDegrees()
-    {
-        int size = m_resultsBuffer.size();
-
-        if(size == 0)
-        {
-            return 0.f;
-        }
-
-        float resultRadians = (float) Math.atan2(m_sumSin / size, m_sumCos / size);
-        float resultDegrees = (float) Math.toDegrees(resultRadians);
-        return (resultDegrees + 360.f) % 360.f;
     }
 
     private float adjustHeadingForDeviceOrientation(float heading)
@@ -217,5 +198,26 @@ public class HeadingService implements SensorEventListener
 
         heading = (heading + 360.f)%360.f;
         return heading;
+    }
+    
+    private void adjustHeadingForDeviceOrientation(float rotationMatrix[], float remap[])
+    {
+    	final int rotation = ((WindowManager) this.m_activity.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRotation();
+
+        switch (rotation)
+        {
+        case Surface.ROTATION_0:
+        	SensorManager.remapCoordinateSystem(rotationMatrix, SensorManager.AXIS_MINUS_X, SensorManager.AXIS_Y, remap);
+            break;
+        case Surface.ROTATION_90:
+        	SensorManager.remapCoordinateSystem(rotationMatrix, SensorManager.AXIS_Y, SensorManager.AXIS_MINUS_X, remap);
+            break;
+        case Surface.ROTATION_180:
+        	SensorManager.remapCoordinateSystem(rotationMatrix, SensorManager.AXIS_Z, SensorManager.AXIS_X, remap);
+            break;
+        default:
+        	SensorManager.remapCoordinateSystem(rotationMatrix, SensorManager.AXIS_X, SensorManager.AXIS_Z, remap);
+            break;
+        }
     }
 }
