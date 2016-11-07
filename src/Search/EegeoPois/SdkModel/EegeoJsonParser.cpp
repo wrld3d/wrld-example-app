@@ -86,11 +86,17 @@ namespace ExampleApp
                             json["user_data"].Accept(writer);
                             userData = strbuf.GetString();
                         }
+                        
+                        std::string subTitle = "";
+                        if (json.HasMember("subtitle") &&  !json["subtitle"].IsNull() )
+                        {
+                            subTitle = json["subtitle"].GetString();
+                        }
 
                         return ExampleApp::Search::SdkModel::SearchResultModel(ExampleApp::Search::SdkModel::SearchResultModel::CurrentVersion,
                                                                                idStream.str(),
                                                                                json["title"].GetString(),
-                                                                               json["subtitle"].GetString(),
+                                                                               subTitle,
                                                                                location,
                                                                                static_cast<float>(json["height_offset"].GetDouble()),
                                                                                indoor,
