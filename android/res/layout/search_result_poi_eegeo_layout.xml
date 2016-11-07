@@ -352,7 +352,7 @@
 			android:layout_marginBottom="-1dp"
 			android:layout_above="@+id/footer_line"
 			android:layout_alignBottom="@+id/search_menu_item_list"
-			android:adjustViewBounds="true"
+			android:scaleType="fitXY"
 			android:src="@drawable/search_results_fade">
 	    </ImageView>
         
