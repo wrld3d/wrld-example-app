@@ -18,9 +18,9 @@ namespace ExampleApp
                                                                      const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                                      Eegeo::Helpers::IdentityProvider& identityProvider)
             {
-                const int screenWidth = screenProperties.GetScreenWidth();
-                const int screenHeight = screenProperties.GetScreenHeight();
-                const int pixelScale = screenProperties.GetPixelScale();
+                const float screenWidth = screenProperties.GetScreenWidth();
+                const float screenHeight = screenProperties.GetScreenHeight();
+                const float pixelScale = screenProperties.GetPixelScale();
                 
                 m_pTutorialView = [[InteriorsExplorerTutorialView alloc] initWithParams: screenWidth : screenHeight : pixelScale];
                 
