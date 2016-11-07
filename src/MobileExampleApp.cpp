@@ -128,6 +128,8 @@ namespace ExampleApp
 {
     namespace
     {
+        const float PanToUnlockThreshold = 0.03f;
+        
         Eegeo::Rendering::LoadingScreen* CreateLoadingScreen(const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                              const Eegeo::Modules::Core::RenderingModule& renderingModule,
                                                              const Eegeo::Modules::IPlatformAbstractionModule& platformAbstractionModule)
@@ -331,7 +333,7 @@ namespace ExampleApp
         const bool useLowSpecSettings = false;
         
         Eegeo::Camera::GlobeCamera::GpsGlobeCameraComponentConfiguration gpsGlobeCameraConfig = Eegeo::Camera::GlobeCamera::GpsGlobeCameraComponentConfiguration::CreateDefault();
-        gpsGlobeCameraConfig.panToUnlockThreshold =  0.03f;
+        gpsGlobeCameraConfig.panToUnlockThreshold = PanToUnlockThreshold;
         Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration touchControllerConfig = Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration::CreateDefault();
         Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration globeCameraConfig = Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration::CreateDefault(useLowSpecSettings);
         
@@ -644,6 +646,7 @@ namespace ExampleApp
         const Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration& globeCameraTouchConfig = Eegeo::Resources::Interiors::InteriorsCameraControllerFactory::DefaultGlobeCameraTouchControllerConfiguration();
         Eegeo::Camera::GlobeCamera::GpsGlobeCameraComponentConfiguration gpsGlobeCameraComponentConfig = Eegeo::Resources::Interiors::InteriorsGpsCameraControllerFactory::DefaultGpsGlobeCameraComponentConfiguration();
         gpsGlobeCameraComponentConfig.defaultGpsDistanceToInterest = ExampleApp::InteriorsExplorer::DefaultInteriorSearchResultTransitionInterestDistance;
+        gpsGlobeCameraComponentConfig.panToUnlockThreshold = PanToUnlockThreshold;
         
         const Eegeo::Resources::Interiors::InteriorsCameraControllerFactory interiorsCameraControllerFactory(
                                                                                                              interiorsCameraConfig,
