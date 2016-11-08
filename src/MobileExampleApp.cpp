@@ -123,6 +123,7 @@
 #include "InteriorsEntityIdHighlightController.h"
 #include "Colors.h"
 #include "HighlightColorMapper.h"
+#include "StringHelpers.h"
 
 namespace ExampleApp
 {
@@ -1499,6 +1500,37 @@ namespace ExampleApp
         }
         
         m_pCurrentTouchController->Event_Tilt(data);
+    }
+
+    void MobileExampleApp::Event_OpenUrl(const AppInterface::UrlData& data)
+    {
+        if(strcmp(data.host, LOCATION_STRING)==0)
+        {
+            std::vector<std::string> parts;
+            size_t numParts = Eegeo::Helpers::Split(data.path, '/', parts);
+            
+            if(numParts >= 2)
+            {
+                Eegeo::Space::LatLong latLon(0, 0);
+                if(Eegeo::Helpers::TryParseLatLong(parts.at(1), parts.at(2), latLon))
+                {
+                    double distance = 1000.0;
+                    if(numParts >= 4)
+                    {
+                        Eegeo::Helpers::TryParseDouble(parts.at(3), distance);
+                    }
+                    
+                    double heading = 0.0;
+                    if(numParts >= 5)
+                    {
+                        Eegeo::Helpers::TryParseDouble(parts.at(4), heading);
+                    }
+                    
+                    Eegeo_TTY("lat=%f lon=%f, distance=%f, heading=%f", latLon.GetLatitudeInDegrees(), latLon.GetLongitudeInDegrees(), distance, heading);
+                    m_pCameraTransitionController->StartTransitionTo(latLon.ToECEF(), (float) distance, (float) Eegeo::Math::Deg2Rad(heading));
+                }
+            }
+        }
     }
     
     bool MobileExampleApp::CanAcceptTouch() const

@@ -210,6 +210,7 @@ namespace ExampleApp
                                     const bool interiorsAffectedByFlattening);
         
         const bool IsTourCameraActive() const;
+        const char * const LOCATION_STRING = "location";
 
     public:
         MobileExampleApp(const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
@@ -484,5 +485,6 @@ namespace ExampleApp
         void Event_TiltStart(const AppInterface::TiltData& data);
         void Event_TiltEnd(const AppInterface::TiltData& data);
         void Event_Tilt(const AppInterface::TiltData& data);
+        void Event_OpenUrl(const AppInterface::UrlData& data);
     };
 }

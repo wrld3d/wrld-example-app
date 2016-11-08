@@ -24,6 +24,19 @@
 	<string>@EEGEO_PLIST_BUNDLE_SHORT_VERSION_STRING@</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+        <key>CFBundleURLTypes</key>
+        <array>
+                <dict>
+                        <key>CFBundleTypeRole</key>
+                        <string>Editor</string>
+                        <key>CFBundleURLName</key>
+                        <string>com.eegeo</string>
+                        <key>CFBundleURLSchemes</key>
+                        <array>
+                                <string>eegeo</string>
+                        </array>
+                </dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>

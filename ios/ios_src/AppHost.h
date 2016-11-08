@@ -60,10 +60,12 @@
 #include "IndoorAtlasLocationModule.h"
 #include "CurrentLocationService.h"
 #include "InteriorsLocationServiceProvider.h"
+#include "AppUrlDelegate.h"
 
 @class ViewController;
 class AppInputDelegate;
 class AppLocationDelegate;
+class AppUrlDelegate;
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
@@ -103,6 +105,7 @@ private:
     Eegeo::iOS::iOSConnectivityService* m_piOSConnectivityService;
     AppInputDelegate* m_pAppInputDelegate;
     AppLocationDelegate* m_pAppLocationDelegate;
+    AppUrlDelegate* m_pAppUrlDelegate;
 
     Eegeo::UI::NativeInput::iOS::iOSInputBoxFactory m_iOSInputBoxFactory;
     Eegeo::UI::NativeInput::iOS::iOSKeyboardInputFactory m_iOSKeyboardInputFactory;
