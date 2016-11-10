@@ -319,7 +319,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                                         app.DirectionsMenuModule().GetDirectionsSectionViewModel(),
                                                             screenProperties,
                                                                                                m_pModalBackgroundViewModule->GetModalBackgroundViewInterop(),
-                                                                                               m_messageBus,*m_piOSLocationService);
+                                                                                               m_messageBus,*m_piOSLocationService,app.SettingsMenuModule().GetSettingsMenuViewModel());
 
     
     //TODO: Search result poi moudle

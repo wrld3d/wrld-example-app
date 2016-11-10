@@ -26,6 +26,7 @@ namespace ExampleApp
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 IDirectionsMenuView& m_directionsMenuView;
                 Menu::View::IMenuSectionViewModel& m_searchSectionViewModel;
+                ExampleApp::Menu::View::IMenuViewModel& m_settingsMenuViewModel;
                 
                 Eegeo::Helpers::TCallback2<DirectionsMenuController, const Eegeo::Space::LatLong&,const Eegeo::Space::LatLong&> m_searchPerformedCallbacks;
                 Eegeo::Helpers::TCallback0<DirectionsMenuController> m_searchClearedCallbacks;
@@ -51,6 +52,7 @@ namespace ExampleApp
                 
                 
                 void OnOpenStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& openState);
+                
                 void OnViewClosed();
 
                 void OnAppModeChanged(const AppModes::AppModeChangedMessage& message);
@@ -96,7 +98,8 @@ namespace ExampleApp
                                          Menu::View::IMenuSectionViewModel& searchSectionViewModel,
                                          Modality::View::IModalBackgroundView& modalBackgroundView,
                                          ExampleAppMessaging::TMessageBus& messageBus,
-                                         Eegeo::Location::ILocationService& locationService);
+                                         Eegeo::Location::ILocationService& locationService,
+                                         ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel);
                 
                 virtual ~DirectionsMenuController();
             };

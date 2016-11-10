@@ -33,7 +33,8 @@ namespace ExampleApp
                                          const Eegeo::Rendering::ScreenProperties& screenProperties,
                                          Modality::View::IModalBackgroundView& modalBackgroundView,
                                          ExampleAppMessaging::TMessageBus& messageBus,
-                                         Eegeo::Location::ILocationService& locationService);
+                                         Eegeo::Location::ILocationService& locationService,
+                                         ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel);
                 
                 ~DirectionsMenuViewModule();
                 

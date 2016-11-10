@@ -22,7 +22,8 @@ namespace ExampleApp
                 m_messageBus.UnsubscribeUi(m_directionsMenuStateChangedCallback);
             }
             
-            void DirectionInitiationStateChangedObserver::OnDirectionsMenuStateChanged(const DirectionsMenuInitiation::DirectionsMenuStateChangedMessage& message){
+            void DirectionInitiationStateChangedObserver::OnDirectionsMenuStateChanged(const DirectionsMenuInitiation::DirectionsMenuStateChangedMessage& message)
+            {
                 
                 if(message.GetDirectionsMenuStage() == DirectionsMenuInitiation::Inactive)
                 {

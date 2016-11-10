@@ -20,7 +20,7 @@ namespace ExampleApp
                                     Menu::View::IMenuSectionViewModel& searchSectionViewModel,
                                      Modality::View::IModalBackgroundView& modalBackgroundView,
                                      ExampleAppMessaging::TMessageBus& messageBus,
-                                     Eegeo::Location::ILocationService& locationService)
+                                     Eegeo::Location::ILocationService& locationService,ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel)
                         : Menu::View::MenuController(model, viewModel, view, messageBus)
                         , m_directionsMenuView(directionsMenuView)
                         , m_searchSectionViewModel(searchSectionViewModel)
@@ -43,6 +43,7 @@ namespace ExampleApp
                         , m_onStartLocationResponseReceivedCallback(this, &DirectionsMenuController::OnGeoNamesStartLocationResponseReceived)
                         , m_isExitDirections(false)
                         , m_locationService(locationService)
+                        , m_settingsMenuViewModel(settingsMenuViewModel)
 
             {
                 m_directionsMenuView.InsertSearchPeformedCallback(m_searchPerformedCallbacks);
@@ -84,6 +85,7 @@ namespace ExampleApp
                 m_messageBus.UnsubscribeUi(m_directionsMenuStateChangedCallback);
                 m_messageBus.UnsubscribeUi(m_directionsMenuHighlightItemCallback);
                 m_messageBus.UnsubscribeUi(m_onStartLocationResponseReceivedCallback);
+                
 
             }
             
@@ -116,11 +118,12 @@ namespace ExampleApp
                     
                     RefreshPresentation();
                 }
-                
             }
+            
             void DirectionsMenuController::OnSearch(const Eegeo::Space::LatLong& start,const Eegeo::Space::LatLong& end)
             {
                 Eegeo::Space::LatLong currentLatLong = Eegeo::Space::LatLong::FromDegrees(start.GetLatitudeInDegrees(), start.GetLongitudeInDegrees());
+                
                 if (currentLatLong.GetLongitudeInDegrees() == 0 && currentLatLong.GetLongitudeInDegrees() == 0)
                 {
                     m_locationService.GetLocation(currentLatLong);
@@ -128,10 +131,6 @@ namespace ExampleApp
 
                 const Eegeo::Space::LatLongAltitude startLoc = Eegeo::Space::LatLongAltitude::FromDegrees(currentLatLong.GetLatitudeInDegrees(), currentLatLong.GetLongitudeInDegrees(),0.0);
                 const Eegeo::Space::LatLongAltitude endLoc = Eegeo::Space::LatLongAltitude::FromDegrees(end.GetLatitudeInDegrees(), end.GetLongitudeInDegrees(),0.0);
-
-//                const Eegeo::Space::LatLongAltitude startLoc = Eegeo::Space::LatLongAltitude::FromDegrees(56.459917,-2.984219,0.0);
-//                const Eegeo::Space::LatLongAltitude endLoc = Eegeo::Space::LatLongAltitude::FromDegrees(56.459778,-2.977156,0.0);
-
                 
                 m_messageBus.Publish(ExampleApp::DirectionsMenu::DirectionMenuFindDirectionMessage(startLoc,endLoc,true));
                 
@@ -186,6 +185,7 @@ namespace ExampleApp
                 
                 MenuController::OnViewClicked();
                 m_isExitDirections = true;
+                m_settingsMenuViewModel.AddToScreen();
 
             }
             
@@ -196,7 +196,18 @@ namespace ExampleApp
             
             void DirectionsMenuController::OnDirectionsMenuStateChanged(const DirectionsMenuInitiation::DirectionsMenuStateChangedMessage& message)
             {
-                if (message.GetDirectionsMenuStage() == DirectionsMenuInitiation::Active) {
+                if (message.GetDirectionsMenuStage() == DirectionsMenuInitiation::Active)
+                {
+                    if(m_viewModel.IsFullyClosed())
+                    {
+                        m_settingsMenuViewModel.RemoveFromScreen();
+
+                    }
+                    else if(m_viewModel.IsFullyOpen())
+                    {
+                        m_settingsMenuViewModel.AddToScreen();
+
+                    }
                     MenuController::OnViewClicked();
                 }
             }

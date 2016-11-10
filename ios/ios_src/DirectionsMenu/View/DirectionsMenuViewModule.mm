@@ -1,7 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "DirectionsMenuViewModule.h"
-
+#include "IMenuViewModel.h"
 #include "MenuViewInterop.h"
 #include "ScreenProperties.h"
 #include "DirectionsMenuView.h"
@@ -19,7 +19,8 @@ namespace ExampleApp
                                      const Eegeo::Rendering::ScreenProperties& screenProperties,
                                      Modality::View::IModalBackgroundView& modalBackgroundView,
                                      ExampleAppMessaging::TMessageBus& messageBus,
-                                     Eegeo::Location::ILocationService& locationService)
+                                     Eegeo::Location::ILocationService& locationService,
+                                     ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel)
             {
                 m_pView = [[DirectionsMenuView alloc] initWithParams:screenProperties.GetScreenWidth()
                                                                 :screenProperties.GetScreenHeight()
@@ -31,7 +32,7 @@ namespace ExampleApp
                                                                 *[m_pView getDirectionsMenuInterop],
                                                                     searchSectionViewModel,
                                                                 modalBackgroundView,
-                                                                    messageBus,locationService);
+                                                                    messageBus,locationService, settingsMenuViewModel);
                 
                 
             }
