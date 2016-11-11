@@ -124,6 +124,8 @@
 #include "Colors.h"
 #include "HighlightColorMapper.h"
 #include "StringHelpers.h"
+#include "ApplicationConfigurationJsonParser.h"
+#include "IAlertBoxFactory.h"
 
 namespace ExampleApp
 {
@@ -297,6 +299,8 @@ namespace ExampleApp
     , m_pInteriorsHighlightVisibilityController(NULL)
     , m_pHighlightColorMapper(NULL)
     , m_pInteriorsEntityIdHighlightVisibilityController(NULL)
+    ,m_configRequestCompleteCallback(this, &MobileExampleApp::HandleConfigResponse)
+    ,m_failAlertHandler(this, &MobileExampleApp::OnFailAlertBoxDismissed)
     {
         m_metricsService.BeginSession(m_applicationConfiguration.FlurryAppKey(), EEGEO_PLATFORM_VERSION_NUMBER);
         
@@ -1531,6 +1535,34 @@ namespace ExampleApp
                 }
             }
         }
+        else if (strcmp(data.host, MYMAP_STRING)==0)
+        {
+            Eegeo::Web::IWebLoadRequestFactory& webRequestFactory = m_platformAbstractions.GetPlatformWebLoadRequestFactory();
+            const std::string url = CONFIG_FILES_HOME + data.path + ".json";
+            
+            //TODO:Check connectivity
+            Eegeo::Web::IWebLoadRequest* webRequest = webRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, url, m_configRequestCompleteCallback).Build();
+            webRequest->Load(); //Investigate memory handling for the webrequest
+        }
+        else
+        {
+            //OpenURL string unrecognised
+        }
+    }
+    
+    void MobileExampleApp::HandleConfigResponse(Eegeo::Web::IWebResponse& webResponse) {
+        if(webResponse.IsSucceeded())
+        {
+            ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationJsonParser parser(m_applicationConfiguration);
+            size_t resultSize = webResponse.GetBodyData().size();
+            std::string resultString = std::string(reinterpret_cast<char const*>(&(webResponse.GetBodyData().front())), resultSize);
+            ExampleApp::ApplicationConfig::ApplicationConfiguration applicationConfig = parser.ParseConfiguration(resultString);
+            m_pCameraTransitionController->StartTransitionTo(applicationConfig.InterestLocation().ToECEF(), applicationConfig.DistanceToInterestMetres(), applicationConfig.OrientationDegrees());
+        }
+        else
+        {
+            m_pWorld->GetNativeUIFactories().AlertBoxFactory().CreateSingleOptionAlertBox("User config load failed", "Reverting to default config",m_failAlertHandler);
+        }
     }
     
     bool MobileExampleApp::CanAcceptTouch() const
@@ -1542,5 +1574,9 @@ namespace ExampleApp
         const bool lockedCameraStepsCompleted = initialExperienceModel.LockedCameraStepsCompleted();
         
         return !worldIsInitialising && lockedCameraStepsCompleted && userInteractionEnabled;
+    }
+    
+    void MobileExampleApp::OnFailAlertBoxDismissed()
+    { //Do nothing
     }
 }
