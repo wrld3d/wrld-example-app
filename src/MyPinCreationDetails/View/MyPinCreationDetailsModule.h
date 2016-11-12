@@ -3,7 +3,7 @@
 #pragma once
 
 #include "IMyPinCreationDetailsModule.h"
-#include "MyPinCreationDetailsVIewModel.h"
+#include "MyPinCreationDetailsViewModel.h"
 #include "Reaction.h"
 #include "IIdentity.h"
 

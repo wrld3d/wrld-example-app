@@ -5,7 +5,7 @@
 #include "IFlattenButtonViewModule.h"
 #include "AndroidNativeState.h"
 #include "Types.h"
-#include "FLattenButton.h"
+#include "FlattenButton.h"
 #include "FlattenButtonViewIncludes.h"
 #include "FlattenButtonView.h"
 #include "FlattenButtonController.h"

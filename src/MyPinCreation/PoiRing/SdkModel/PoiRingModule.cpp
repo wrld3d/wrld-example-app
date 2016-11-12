@@ -5,7 +5,7 @@
 #include "PoiRingRenderable.h"
 #include "PoiRingView.h"
 #include "PoiRingController.h"
-#include "PoiRingTouchCOntroller.h"
+#include "PoiRingTouchController.h"
 
 #include "BatchedSpriteShader.h"
 #include "BatchedSpriteMaterial.h"
