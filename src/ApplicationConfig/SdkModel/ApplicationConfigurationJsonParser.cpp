@@ -130,6 +130,16 @@ namespace ExampleApp
                 );
             }
             
+            bool ApplicationConfigurationJsonParser::IsValidConfig(const std::string& serialized)
+            {
+                //Same logic from the asserts in ApplicationConfigurationJsonParser
+                rapidjson::Document document;
+                const bool hasParseError(document.Parse<0>(serialized.c_str()).HasParseError());
+                return !hasParseError && document.HasMember("StartLocationLatitude") && document.HasMember("StartLocationLongitude")
+                    && document.HasMember("StartLocationAltitude") && document.HasMember("StartLocationDistance")
+                    && document.HasMember("StartLocationOrientationDegrees") && document.HasMember("TryStartAtGpsLocation");
+            }
+            
             void ApplicationConfigurationJsonParser::ParseIndoorTrackingInfo(std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfoList,
                                                                              const rapidjson::Value& indoorTrackedBuildingsArray)
             {

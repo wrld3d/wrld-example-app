@@ -19,6 +19,7 @@ namespace ExampleApp
                 ApplicationConfigurationJsonParser(const ApplicationConfiguration& defaultConfig);
 
                 ApplicationConfiguration ParseConfiguration(const std::string& serialized);
+                bool IsValidConfig(const std::string& serialized);
             private:
                 const ApplicationConfiguration m_defaultConfig;
                 

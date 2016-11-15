@@ -1556,8 +1556,16 @@ namespace ExampleApp
             ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationJsonParser parser(m_applicationConfiguration);
             size_t resultSize = webResponse.GetBodyData().size();
             std::string resultString = std::string(reinterpret_cast<char const*>(&(webResponse.GetBodyData().front())), resultSize);
+            
+            if(parser.IsValidConfig(resultString))
+            {
             ExampleApp::ApplicationConfig::ApplicationConfiguration applicationConfig = parser.ParseConfiguration(resultString);
             m_pCameraTransitionController->StartTransitionTo(applicationConfig.InterestLocation().ToECEF(), applicationConfig.DistanceToInterestMetres(), applicationConfig.OrientationDegrees());
+            }
+            else
+            {
+            m_pWorld->GetNativeUIFactories().AlertBoxFactory().CreateSingleOptionAlertBox("User config file invalid", "Reverting to default config",m_failAlertHandler);
+            }
         }
         else
         {
