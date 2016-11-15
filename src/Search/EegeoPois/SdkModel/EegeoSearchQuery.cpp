@@ -3,7 +3,6 @@
 #include "EegeoSearchQuery.h"
 #include "IWebLoadRequestFactory.h"
 #include "IWebLoadRequest.h"
-#include "ApiKey.h"
 
 #include <sstream>
 #include <iomanip>
@@ -38,21 +37,24 @@ namespace ExampleApp
                     std::stringstream urlstream;
                     urlstream.setf(std::ios_base::fixed);
                     urlstream << serviceUrl;
-                    if (query.IsCategory())
+                    if (query.IsTag())
                     {
-                        urlstream << "/tag?t=";
+                        urlstream << "/tag?";
+                        if (!encodedQuery.empty())
+                        {
+                            urlstream << "t=" << encodedQuery << "&";
+                        }
                     }
                     else
                     {
-                        urlstream << "/search?s=";
+                        urlstream << "/search?s=" << encodedQuery << "&";
                         minimumScore = 0.6;
                     }
-                    urlstream << encodedQuery;
-                    urlstream << "&r=" << std::setprecision(4) << (query.Radius() * 1.5f); // increased for Swallow
+                    urlstream << "r=" << std::setprecision(4) << (query.Radius() * 1.5f);
                     urlstream << "&lat=" << std::setprecision(8) << query.Location().GetLatitudeInDegrees();
                     urlstream << "&lon=" << std::setprecision(8) << query.Location().GetLongitudeInDegrees();
-                    urlstream << "&n=" << maximumNumberOfResults; // increased for Swallow
-                    urlstream << "&ms=" << std::setprecision(2) << minimumScore; // minimum score filter for Swallow
+                    urlstream << "&n=" << maximumNumberOfResults;
+                    urlstream << "&ms=" << std::setprecision(2) << minimumScore;
                     urlstream << "&apikey=" << m_apiKey;
                     
                     std::string url = urlstream.str();

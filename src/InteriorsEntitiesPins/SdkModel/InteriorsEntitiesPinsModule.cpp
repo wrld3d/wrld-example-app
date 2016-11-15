@@ -10,6 +10,8 @@
 #include "InteriorsModelModule.h"
 #include "InteriorsPresentationModule.h"
 
+#include "RegularTexturePageLayout.h"
+
 #include "PinsModule.h"
 #include "ITextureFileLoader.h"
 #include "InteriorsLabelController.h"
@@ -29,9 +31,8 @@ namespace ExampleApp
                                                                      const Eegeo::Rendering::ScreenProperties& screenProperties)
             : m_pInteriorsEntitiesPinsController(NULL)
             , m_pEntityPinsModule(NULL)
+            , m_pEntityPinIconsTexturePageLayout(NULL)
             {
-
-                Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule = mapModule.GetTerrainModelModule();
 
                 m_pEntityPinsModule = Eegeo::Pins::PinsModule::CreateWithAtlas(renderingModule,
                                                                       platformAbstractionModule,
@@ -50,8 +51,7 @@ namespace ExampleApp
                                                                                                 worldPinIconMapping,
                                                                                                 interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                 interiorsPresentationModule.GetInteriorTransitionModel(),
-                                                                                                interiorsPresentationModule.GetInteriorsLabelsController(),
-                                                                                                terrainModelModule.GetTerrainHeightProvider());
+                                                                                                interiorsPresentationModule.GetInteriorsLabelsController());
                 
                 
             }
@@ -60,6 +60,8 @@ namespace ExampleApp
             {
                 Eegeo_DELETE m_pInteriorsEntitiesPinsController;
                 Eegeo_DELETE m_pEntityPinsModule;
+                Eegeo_DELETE m_pEntityPinIconsTexturePageLayout;
+                Eegeo_GL(glDeleteTextures(1, &m_entityPinsTextureInfo.textureId));
             }
             
             IInteriorsEntitiesPinsController& InteriorsEntitiesPinsModule::GetInteriorsEntitiesPinsController()

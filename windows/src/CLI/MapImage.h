@@ -21,7 +21,7 @@ namespace ExampleApp
             !MapImage();
 
             void Init(int width, int height, float oversampleScale, bool hasNativeTouchInput, int maxDeviceTouchCount);
-			void InitBackBuffer();
+            void InitBackBuffer();
             void Render(float dt);
 
             void HandlePanStartEvent(int x, int y, System::Windows::Input::ModifierKeys modifierKeys);

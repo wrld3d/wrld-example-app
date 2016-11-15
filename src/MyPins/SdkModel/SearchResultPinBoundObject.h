@@ -9,7 +9,7 @@
 #include "SearchResultModel.h"
 #include "BidirectionalBus.h"
 #include "SdkModelDomainEventBus.h"
-#include "CategorySearch.h"
+#include "TagSearch.h"
 #include "Search.h"
 #include "Web.h"
 #include "ICallback.h"
@@ -25,7 +25,6 @@ namespace ExampleApp
                 Search::SdkModel::SearchResultModel m_searchResult;
                 std::string m_pinIconKey;
                 MyPinsFileIO& m_myPinsFileIO;
-
                 Search::SdkModel::MyPins::IMyPinsSearchResultRefreshService& m_myPinsSearchResultRefreshService;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkModelDomainEventBus;

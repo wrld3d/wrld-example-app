@@ -49,8 +49,7 @@ namespace ExampleApp
                     const std::string& sourceVendor = interiorModel.GetSourceVendor();
                     
                     m_watermarkModel.SetId(sourceVendor);
-                    
-                    m_messageBus.Publish(WatermarkAlignmentStateChangedMessage(true));
+                    m_messageBus.Publish(WatermarkAlignmentStateChangedMessage(false, true));
                     m_messageBus.Publish(WatermarkModelChangedMessage(m_watermarkModel.GetId()));
                 }
             }
@@ -58,7 +57,7 @@ namespace ExampleApp
             void WatermarkInteriorStateChangedObserver::OnInteriorExplorerExit()
             {
                 m_watermarkModel.SetId(DefaultEegeoWatermarkId);
-                m_messageBus.Publish(WatermarkAlignmentStateChangedMessage(false));
+                m_messageBus.Publish(WatermarkAlignmentStateChangedMessage(false, false));
                 m_messageBus.Publish(WatermarkModelChangedMessage(m_watermarkModel.GetId()));
             }
         }

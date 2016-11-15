@@ -19,8 +19,8 @@ namespace ExampleApp
                 EegeoSearchService::EegeoSearchService(IEegeoSearchQueryFactory& EegeoSearchQueryFactory,
                                                                IEegeoParser& EegeoParser,
                                                                Net::SdkModel::INetworkCapabilities& networkCapabilities,
-                                                               const std::vector<std::string>& availableCategories)
-                : Search::SdkModel::SearchServiceBase(availableCategories)
+                                                               const std::vector<std::string>& handledTags)
+                : Search::SdkModel::SearchServiceBase(handledTags)
                 , m_eeGeoSearchQueryFactory(EegeoSearchQueryFactory)
                 , m_eeGeoParser(EegeoParser)
                 , m_networkCapabilities(networkCapabilities)

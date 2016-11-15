@@ -2,7 +2,7 @@
 
 #include "SearchMenuController.h"
 
-#include "CategorySearchRepository.h"
+#include "TagSearchRepository.h"
 #include "IMenuOption.h"
 #include "IModalBackgroundView.h"
 #include "ISearchMenuView.h"
@@ -22,13 +22,13 @@ namespace ExampleApp
                                                        Menu::View::IMenuView& view,
                                                        ISearchMenuView& searchMenuView,
                                                        Menu::View::IMenuSectionViewModel& searchSectionViewModel,
-                                                       CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
+                                                       TagSearch::View::ITagSearchRepository& tagSearchRepository,
                                                        Modality::View::IModalBackgroundView& modalBackgroundView,
                                                        ExampleAppMessaging::TMessageBus& messageBus)
             : Menu::View::MenuController(model, viewModel, view, messageBus)
             , m_searchMenuView(searchMenuView)
             , m_searchSectionViewModel(searchSectionViewModel)
-            , m_categorySearchRepository(categorySearchRepository)
+            , m_tagSearchRepository(tagSearchRepository)
             , m_modalBackgroundView(modalBackgroundView)
             , m_messageBus(messageBus)
             , m_appModeAllowsOpen(true)
@@ -58,13 +58,13 @@ namespace ExampleApp
                 m_messageBus.SubscribeUi(m_receivedQueryResponseHandler);
                 m_messageBus.SubscribeUi(m_appModeChangedCallback);
 
-                const int numSections = static_cast<int>(m_viewModel.SectionsCount());
+                const size_t numSections = m_viewModel.SectionsCount();
                 std::vector<Menu::View::IMenuSectionViewModel*> sections;
                 sections.reserve(numSections);
 
-                for (int groupIndex = 0; groupIndex < numSections; groupIndex++)
+                for (size_t groupIndex = 0; groupIndex < numSections; groupIndex++)
                 {
-                    Menu::View::IMenuSectionViewModel& section = m_viewModel.GetMenuSection(groupIndex);
+                    auto& section = m_viewModel.GetMenuSection(static_cast<int>(groupIndex));
                     sections.push_back(&section);
                 }
                 
@@ -109,9 +109,9 @@ namespace ExampleApp
             
             void SearchMenuController::OnSearchQueryPerformedMessage(const Search::SearchQueryPerformedMessage& message)
             {
-                std::string headerString = CategorySearch::View::GetPresentationStringForQuery(m_categorySearchRepository, message.Query());
+                std::string headerString = TagSearch::View::GetPresentationStringForQuery(m_tagSearchRepository, message.Query());
                 
-                m_searchMenuView.SetEditText(headerString, message.Query().IsCategory());
+                m_searchMenuView.SetEditText(headerString, message.Query().IsTag());
                 m_searchMenuView.SetSearchInProgress(true);
             }
             
@@ -126,7 +126,7 @@ namespace ExampleApp
                 {
                     for(std::vector<Search::SdkModel::SearchResultModel>::const_iterator it = message.GetResults().begin(); it != message.GetResults().end(); ++it)
                     {
-                        if(!Search::Swallow::SearchConstants::ShouldShowCategoryAsSearchResult((*it).GetCategory()))
+                        if(!Search::Swallow::SearchConstants::ShouldShowTagAsSearchResult((*it).GetPrimaryTag()))
                         {
                             --resultCount;
                             

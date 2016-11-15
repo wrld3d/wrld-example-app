@@ -10,6 +10,8 @@
 #include "UrlHelpers.h"
 #include "ISearchServiceModule.h"
 #include "IFileIO.h"
+#include "TagSearch.h"
+#include "SearchTags.h"
 
 namespace ExampleApp
 {
@@ -24,24 +26,26 @@ namespace ExampleApp
                 Yelp::SdkModel::YelpBusinessQueryFactory* m_pYelpBusinessQueryFactory;
                 Search::SdkModel::ISearchResultParser* m_pYelpSearchJsonParser;
                 Yelp::SdkModel::YelpBusinessJsonParser* m_pYelpBusinessJsonParser;
-                Yelp::SdkModel::IYelpCategoryMapper* m_pYelpCategoryMapper;
+                Yelp::SdkModel::IYelpCategoryToTagMapper* m_pYelpCategoryMapper;
+                TagSearch::SdkModel::ITagIconMapper *m_pTagIconMapper;
 
             public:
                 YelpSearchServiceModule(
                     Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                     Net::SdkModel::INetworkCapabilities& networkCapabilities,
                     Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
-					const std::string& yelpConsumerKey,
-					const std::string& yelpConsumerSecret,
-					const std::string& yelpOAuthToken,
-					const std::string& yelpOAuthTokenSecret,
+                    const Search::SdkModel::SearchTags& searchTags,
+                    const std::string& yelpConsumerKey,
+                    const std::string& yelpConsumerSecret,
+                    const std::string& yelpOAuthToken,
+                    const std::string& yelpOAuthTokenSecret,
                     Eegeo::Helpers::IFileIO& fileIO);
 
                 ~YelpSearchServiceModule();
 
                 Search::SdkModel::ISearchService& GetSearchService() const;
 
-                std::vector<CategorySearch::View::CategorySearchModel> GetCategorySearchModels() const;
+                std::vector<TagSearch::View::TagSearchModel> GetTagSearchModels() const;
             };
         }
     }

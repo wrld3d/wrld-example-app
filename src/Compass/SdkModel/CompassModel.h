@@ -13,9 +13,8 @@
 #include "AppModes.h"
 #include "AlertBox.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
-#include "InteriorsNavigation.h"
 #include "InteriorsExplorer.h"
-#include "SenionLocation.h"
+#include "InteriorInteractionModel.h"
 
 namespace ExampleApp
 {
@@ -26,8 +25,8 @@ namespace ExampleApp
             class CompassModel : public ICompassModel, private Eegeo::NonCopyable
             {
                 Eegeo::Location::NavigationService& m_navigationService;
-                InteriorsNavigation::SdkModel::IInteriorsNavigationService& m_interiorsNavigationService;
-                ExampleApp::SenionLocation::SdkModel::ISenionLocationService& m_locationService;
+                Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
+                Eegeo::Location::ILocationService& m_locationService;
                 ExampleApp::AppCamera::SdkModel::IAppCameraController& m_cameraController;
                 Eegeo::Helpers::CallbackCollection0 m_compassAllowedChangedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_gpsModeChangedCallbacks;
@@ -43,6 +42,7 @@ namespace ExampleApp
                 AppModes::SdkModel::IAppModeModel& m_appModeModel;
                 InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorExplorerModel;
                 Eegeo::Helpers::TCallback0<CompassModel> m_appModeChangedCallback;
+                Eegeo::Helpers::TCallback0<CompassModel> m_interiorFloorChangedCallback;
                 
                 Eegeo::UI::NativeAlerts::IAlertBoxFactory& m_alertBoxFactory;
                 Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<CompassModel> m_failAlertHandler;
@@ -50,13 +50,13 @@ namespace ExampleApp
             public:
 
                 CompassModel(Eegeo::Location::NavigationService& navigationService,
-                             InteriorsNavigation::SdkModel::IInteriorsNavigationService& interiorsNavigationService,
-                             ExampleApp::SenionLocation::SdkModel::ISenionLocationService& locationService,
-                             ExampleApp::AppCamera::SdkModel::IAppCameraController& Cameracontroller,
-                             Metrics::IMetricsService& metricsService,
-                             InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorExplorerModel,
-                             AppModes::SdkModel::IAppModeModel& appModeModel,
-                             Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory);
+                    Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                    Eegeo::Location::ILocationService& locationService,
+                    ExampleApp::AppCamera::SdkModel::IAppCameraController& Cameracontroller,
+                    Metrics::IMetricsService& metricsService,
+                    InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorExplorerModel,
+                    AppModes::SdkModel::IAppModeModel& appModeModel,
+                    Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory);
 
                 ~CompassModel();
 
@@ -86,6 +86,8 @@ namespace ExampleApp
                 void SetGpsMode(GpsMode::Values value);
                 
                 void OnAppModeChanged();
+                
+                void OnInteriorFloorChanged();
                 
                 void OnFailedToGetLocation();
                 

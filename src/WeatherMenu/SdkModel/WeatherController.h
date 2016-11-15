@@ -5,6 +5,7 @@
 #include "Types.h"
 #include "IWeatherController.h"
 #include "VisualMap.h"
+#include "IAppModeModel.h"
 
 #include <string>
 

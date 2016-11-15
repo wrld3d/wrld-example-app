@@ -1,5 +1,6 @@
 #include "MapImage.h"
 #include "MouseInputEvent.h"
+#include "TouchScreenInputEvent.h"
 #include "AppRunner.h"
 #include "WindowsProcessHelper.h"
 
@@ -42,9 +43,7 @@ namespace ExampleApp
             HWND windowHandle = (HWND)windowInteropHelper->Handle.ToPointer();
 
             const std::string appName = "WPFControl";
-            // temp change to fix incorrect size of placename labels, pending platform change
-            //const float deviceDpi = static_cast<float>(GetScreenDPI());
-            const float deviceDpi = 0.f;
+            const float deviceDpi = static_cast<float>(GetScreenDPI());
             const std::string deviceModel = "WPFControl";
             const bool fullScreen = false;
             const HINSTANCE hinstance = GetModuleHandle(NULL);
@@ -150,7 +149,9 @@ namespace ExampleApp
 
         void MapImage::Render(float dt)
         {
-            UpdateAndRender(dt);
+            m_appRunner->UpdateNative(dt);
+            m_appRunner->UpdateUiViews(dt);			
+
             InvalidateImage();
         }
 
@@ -245,6 +246,7 @@ namespace ExampleApp
         {
             m_appRunner->HandleTouchEvent(MakeTouchScreenInputEvent(ScaledScreenCoord(x), ScaledScreenCoord(y), z, id, Eegeo::Windows::Input::TouchScreenInputAction::TouchScreenDown));
         }
+        
 
         void MapImage::HandleTouchUpEvent(float x, float y, float z, int id)
         {

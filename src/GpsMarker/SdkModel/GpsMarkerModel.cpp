@@ -1,15 +1,9 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "GpsMarkerModel.h"
-#include "ILocationService.h"
 #include "LatLongAltitude.h"
 #include "TerrainHeightProvider.h"
-#include "InteriorInteractionModel.h"
-#include "InteriorHeightHelpers.h"
-#include "EnvironmentFlatteningService.h"
-#include "InteriorsModel.h"
-#include "EarthConstants.h"
-#include "ISenionLocationService.h"
+#include "MathsHelpers.h"
 
 namespace ExampleApp
 {
@@ -17,16 +11,14 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            GpsMarkerModel::GpsMarkerModel(ExampleApp::SenionLocation::SdkModel::ISenionLocationService& locationService,
-                                           Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
-                                           const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                           const bool interiorsAffectedByFlattening)
+            GpsMarkerModel::GpsMarkerModel(Eegeo::Location::ILocationService& locationService,
+                                           Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider)
             : m_locationService(locationService)
             , m_terrainHeightProvider(terrainHeightProvider)
-            , m_interiorInteractionModel(interiorInteractionModel)
             , m_hasLocation(false)
             , m_currentLocationEcef(Eegeo::dv3::Zero())
-            , m_interiorsAffectedByFlattening(interiorsAffectedByFlattening)
+            , m_currentHeadingRadians(0)
+            , m_currentHeadingVelocity(0)
             {
                 
             }
@@ -36,7 +28,7 @@ namespace ExampleApp
                 
             }
             
-            bool GpsMarkerModel::UpdateGpsPosition()
+            bool GpsMarkerModel::UpdateGpsPosition(float dt)
             {
                 Eegeo::Space::LatLong latLong(0,0);
                 if(!m_locationService.GetLocation(latLong))
@@ -45,62 +37,73 @@ namespace ExampleApp
                     return false;
                 }
                 
-                float terrainHeight;
+                float terrainHeight = 0.0f;
                 Eegeo::dv3 ecefPositionFlat = latLong.ToECEF();
-                if(!m_terrainHeightProvider.TryGetHeight(ecefPositionFlat, 1, terrainHeight))
+                
+                if(m_locationService.IsIndoors())
+                {
+                    double altitude;
+                    m_locationService.GetAltitude(altitude);
+                    terrainHeight = static_cast<float>(altitude);
+                }
+                else if(!m_terrainHeightProvider.TryGetHeight(ecefPositionFlat, 1, terrainHeight))
                 {
                     m_hasLocation = false;
                     return false;
                 }
                 
-                m_currentLocationEcef = ecefPositionFlat + (ecefPositionFlat.Norm() * terrainHeight);
+                Eegeo::dv3 newLocationEcef = ecefPositionFlat + (ecefPositionFlat.Norm() * terrainHeight);
+                
+                float halfLife = 0.25f;
+                float jumpThreshold = 50.0f;
+                
+                if(m_currentLocationEcef.SquareDistanceTo(newLocationEcef) < jumpThreshold * jumpThreshold)
+                {
+                    m_currentLocationEcef = Eegeo::Helpers::MathsHelpers::ExpMoveTowards(m_currentLocationEcef, newLocationEcef, halfLife, dt, 0.1f);
+                }
+                else
+                {
+                    m_currentLocationEcef = newLocationEcef;
+                }
+                
                 m_hasLocation = true;
                 return true;
             }
             
-            void GpsMarkerModel::GetFinalEcefPosition(Eegeo::Rendering::EnvironmentFlatteningService& environmentFlattening,
-                                                      Eegeo::dv3& out_position)
+            void GpsMarkerModel::UpdateHeading(float dt)
             {
-                float terrainHeight = 0.0f;
-                const bool inInterior = m_interiorInteractionModel.HasInteriorModel();
+                double headingDegrees = 0;
+                m_locationService.GetHeadingDegrees(headingDegrees);
+                headingDegrees -= 180;
                 
-                if (inInterior && m_locationService.isSenionMode() == true)
+                double headingRadians = Eegeo::Math::Deg2Rad(headingDegrees);
+                
+                if(headingRadians < m_currentHeadingRadians)
                 {
-                    Eegeo::Space::LatLong latlong = Eegeo::Space::LatLong::FromDegrees(0.0, 0.0);
-                    GetServiceLocation(latlong);
-                    
-                    const int currentFloor = m_interiorInteractionModel.GetSelectedFloorIndex();
-                    out_position = Eegeo::Space::LatLongAltitude::FromDegrees(latlong.GetLatitudeInDegrees(), latlong.GetLongitudeInDegrees(), (currentFloor * Helpers::InteriorHeightHelpers::INTERIOR_FLOOR_HEIGHT) + Helpers::InteriorHeightHelpers::INTERIOR_AVATAR_OFFSET).ToECEF();
-                    
-                }
-                else if(inInterior)
-                {
-                    const int currentFloor = m_interiorInteractionModel.GetSelectedFloorIndex();
-                    const Eegeo::Resources::Interiors::InteriorsModel& interiorModel = *m_interiorInteractionModel.GetInteriorModel();
-                    
-                    float floorOffset = Helpers::InteriorHeightHelpers::INTERIOR_FLOOR_HEIGHT*currentFloor;
-                    terrainHeight = interiorModel.GetTangentSpaceBounds().GetMin().y;
-                    
-                    if(m_interiorsAffectedByFlattening)
+                    float test = m_currentHeadingRadians - Eegeo::Math::kPI * 2;
+                    if(Eegeo::Math::Abs(headingRadians - test) < m_currentHeadingRadians - headingRadians)
                     {
-                        out_position = m_currentLocationEcef.Norm() * (Eegeo::Space::EarthConstants::Radius + terrainHeight + floorOffset);
-                        out_position = environmentFlattening.GetScaledPointEcef(out_position, environmentFlattening.GetCurrentScale());
-                    }
-                    else
-                    {
-                        out_position = m_currentLocationEcef.Norm() * (Eegeo::Space::EarthConstants::Radius + terrainHeight);
-                        out_position = environmentFlattening.GetScaledPointAboveGroundEcef(out_position, floorOffset, environmentFlattening.GetCurrentScale());
+                        m_currentHeadingRadians = test;
                     }
                 }
                 else
                 {
-                    out_position = environmentFlattening.GetScaledPointEcef(m_currentLocationEcef, environmentFlattening.GetCurrentScale());
+                    float test = m_currentHeadingRadians + Eegeo::Math::kPI * 2;
+                    if(Eegeo::Math::Abs(headingRadians - test) < headingRadians - m_currentHeadingRadians)
+                    {
+                        m_currentHeadingRadians = test;
+                    }
                 }
+                
+                Eegeo::Helpers::MathsHelpers::AlphaBetaFilter(headingRadians, m_currentHeadingRadians, m_currentHeadingVelocity, m_currentHeadingRadians, m_currentHeadingVelocity, dt);
             }
-            void GpsMarkerModel::GetServiceLocation(Eegeo::Space::LatLong &latLong){
-                m_locationService.GetLocation(latLong);
+            
+            const double GpsMarkerModel::GetSmoothedHeadingDegrees() const
+            {
+                double smoothedHeadingDegrees = Eegeo::Math::Rad2Deg(m_currentHeadingRadians);
+                
+                return smoothedHeadingDegrees;
             }
-
         }
     }
 }

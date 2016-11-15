@@ -57,11 +57,10 @@ set(ios_frameworks
   -framework Security
   -framework CoreLocation
   -framework CoreMotion
-  -framework CoreBluetooth
-  -framework SLIndoorLocation")
+  -framework IndoorAtlas")
 
 set(linker_search_paths "-LInclude/eegeo -LInclude")
-set(framework_search_paths "${CMAKE_CURRENT_SOURCE_DIR}/ios_src/SenionLab/FrameWork")
+set(framework_search_paths "${CMAKE_CURRENT_SOURCE_DIR}/Include/IndoorAtlas")
 set(libs "${eegeo_sdk_libs} -lturbojpeg -lz -lcurl -luv -lFlurry_6.0.0")
 set(CMAKE_EXE_LINKER_FLAGS "${ios_frameworks} ${linker_search_paths} ${libs}")
 
@@ -89,9 +88,11 @@ set_xcode_property (${executable_name} DEBUG_INFORMATION_FORMAT[variant=Release]
 
 set_xcode_property (${executable_name} GCC_TREAT_WARNINGS_AS_ERRORS "YES")
 set_xcode_property (${executable_name} CODE_SIGN_IDENTITY "iPhone Developer")
+set_xcode_property (${executable_name} DEVELOPMENT_TEAM "")
 set_xcode_property (${executable_name} IPHONEOS_DEPLOYMENT_TARGET "6.0")
 set_xcode_property (${executable_name} TARGETED_DEVICE_FAMILY "1,2")
 set_xcode_property (${executable_name} ENABLE_BITCODE "No")
+set_xcode_property (${executable_name} INSTALL_PATH "/Applications")
 
 set_xcode_property (${executable_name} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon")
 set_xcode_property (${executable_name} ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME "LaunchImage")

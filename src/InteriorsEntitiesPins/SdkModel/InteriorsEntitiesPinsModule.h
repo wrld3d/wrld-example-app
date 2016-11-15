@@ -4,6 +4,7 @@
 
 #include "IInteriorsEntitiesPinsModule.h"
 #include "Modules.h"
+#include "WorldPins.h"
 #include "Pins.h"
 #include "GLHelpers.h"
 #include "WorldPins.h"
@@ -31,6 +32,9 @@ namespace ExampleApp
                 
                 Eegeo::Pins::PinsModule* m_pEntityPinsModule;
                 IInteriorsEntitiesPinsController* m_pInteriorsEntitiesPinsController;
+
+                Eegeo::Helpers::GLHelpers::TextureInfo m_entityPinsTextureInfo;
+                Eegeo::Rendering::ITexturePageLayout* m_pEntityPinIconsTexturePageLayout;
                 
             };
         }

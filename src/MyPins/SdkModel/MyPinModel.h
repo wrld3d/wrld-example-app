@@ -25,8 +25,8 @@ namespace ExampleApp
                 std::string m_description;
                 std::string m_vendor;
                 std::string m_ratingsImage;
-                int m_reviewCount;
                 std::string m_pinIconKey;
+                int m_reviewCount;
                 Eegeo::Space::LatLong m_latLong;
                 float m_heightAboveTerrainMetres;
                 bool m_interior;

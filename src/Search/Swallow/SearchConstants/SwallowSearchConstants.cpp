@@ -55,60 +55,60 @@ namespace ExampleApp
                 const int MEETING_ROOM_OCCUPIED_PRIORITY = 2;
                 const int MEETING_ROOM_MAX_PRIORITY = 3;
                 
-                std::vector<CategorySearch::View::CategorySearchModel> GetCategorySearchModels()
+                std::vector<TagSearch::View::TagSearchModel> GetTagSearchModels()
                 {
                     const bool showCategoriesInSearchMenu = false;
                     
-                    std::vector<ExampleApp::CategorySearch::View::CategorySearchModel> categories;
+                    std::vector<ExampleApp::TagSearch::View::TagSearchModel> tags;
                     
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Meeting Rooms", MEETING_ROOM_CATEGORY_NAME, true, "meetingroom", showCategoriesInSearchMenu));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Working Groups", WORKING_GROUP_CATEGORY_NAME, false, "workinggroup", showCategoriesInSearchMenu));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Facilities", FACILITY_CATEGORY_NAME, true, "toilets", showCategoriesInSearchMenu));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Buildings", OFFICE_CATEGORY_NAME, false, "office", showCategoriesInSearchMenu));
+                    tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("Meeting Rooms", MEETING_ROOM_CATEGORY_NAME, true, "meetingroom", showCategoriesInSearchMenu));
+                    tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("Working Groups", WORKING_GROUP_CATEGORY_NAME, false, "workinggroup", showCategoriesInSearchMenu));
+                    tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("Facilities", FACILITY_CATEGORY_NAME, true, "toilets", showCategoriesInSearchMenu));
+                    tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("Buildings", OFFICE_CATEGORY_NAME, false, "office", showCategoriesInSearchMenu));
                     
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Toilets", OFFICE_CATEGORY_NAME, true, "toilets", false));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Print Stations", PRINT_STATION_CATEGORY_NAME, true, "printstation", false));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Stationary", STATIONERY_CATEGORY_NAME, true, "stationary", false));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("People", PERSON_CATEGORY_NAME, false, "person", false));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Department", DEPARTMENT_CATEGORY_NAME, false, "department", false));
-                    categories.push_back(ExampleApp::CategorySearch::View::CategorySearchModel("Transitions", TRANSITION_CATEGORY_NAME, false, "transition", false));
-                    return categories;
+                    tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("Toilets", OFFICE_CATEGORY_NAME, true, "toilets", false));
+                    tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("Print Stations", PRINT_STATION_CATEGORY_NAME, true, "printstation", false));
+                    tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("Stationary", STATIONERY_CATEGORY_NAME, true, "stationary", false));
+                    tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("People", PERSON_CATEGORY_NAME, false, "person", false));
+                    tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("Department", DEPARTMENT_CATEGORY_NAME, false, "department", false));
+                    tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("Transitions", TRANSITION_CATEGORY_NAME, false, "transition", false));
+                    return tags;
                 }
                 
-                std::vector<std::string> GetAllCategories()
+                std::vector<std::string> GetAllTags()
                 {
-                    std::vector<std::string> categories;
+                    std::vector<std::string> tags;
                     
-                    categories.push_back(MEETING_ROOM_CATEGORY_NAME);
-                    categories.push_back(WORKING_GROUP_CATEGORY_NAME);
-                    categories.push_back(FACILITY_CATEGORY_NAME);
-                    categories.push_back(OFFICE_CATEGORY_NAME);
-                    categories.push_back(TOILETS_CATEGORY_NAME);
-                    categories.push_back(PRINT_STATION_CATEGORY_NAME);
-                    categories.push_back(DEPARTMENT_CATEGORY_NAME);
-                    categories.push_back(STATIONERY_CATEGORY_NAME);
-                    categories.push_back(RECEPTION_CATEGORY_NAME);
-                    categories.push_back(PERSON_CATEGORY_NAME);
-                    categories.push_back(TRANSITION_CATEGORY_NAME);
+                    tags.push_back(MEETING_ROOM_CATEGORY_NAME);
+                    tags.push_back(WORKING_GROUP_CATEGORY_NAME);
+                    tags.push_back(FACILITY_CATEGORY_NAME);
+                    tags.push_back(OFFICE_CATEGORY_NAME);
+                    tags.push_back(TOILETS_CATEGORY_NAME);
+                    tags.push_back(PRINT_STATION_CATEGORY_NAME);
+                    tags.push_back(DEPARTMENT_CATEGORY_NAME);
+                    tags.push_back(STATIONERY_CATEGORY_NAME);
+                    tags.push_back(RECEPTION_CATEGORY_NAME);
+                    tags.push_back(PERSON_CATEGORY_NAME);
+                    tags.push_back(TRANSITION_CATEGORY_NAME);
                     
-                    return categories;
+                    return tags;
                 }
                 
-                std::vector<std::string> GetCategories()
+                std::vector<std::string> GetTags()
                 {
-                    std::vector<std::string> categories;
+                    std::vector<std::string> tags;
                     
-                    categories.push_back(MEETING_ROOM_CATEGORY_NAME);
-                    categories.push_back(WORKING_GROUP_CATEGORY_NAME);
-                    categories.push_back(FACILITY_CATEGORY_NAME);
-                    categories.push_back(OFFICE_CATEGORY_NAME);
+                    tags.push_back(MEETING_ROOM_CATEGORY_NAME);
+                    tags.push_back(WORKING_GROUP_CATEGORY_NAME);
+                    tags.push_back(FACILITY_CATEGORY_NAME);
+                    tags.push_back(OFFICE_CATEGORY_NAME);
                     
-                    return categories;
+                    return tags;
                 }
                 
-                bool ShouldShowCategoryAsSearchResult(const std::string& category)
+                bool ShouldShowTagAsSearchResult(const std::string& tag)
                 {
-                    if(category == INDOOR_MAP_CATEGORY_NAME)
+                    if(tag == INDOOR_MAP_CATEGORY_NAME)
                     {
                         return false;
                     }

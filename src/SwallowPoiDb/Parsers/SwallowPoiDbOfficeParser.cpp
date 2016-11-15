@@ -68,9 +68,10 @@ namespace ExampleApp
                                                            false,
                                                            Eegeo::Resources::Interiors::InteriorId(),
                                                            0,
-                                                           Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME,
+                                                           Search::Swallow::SearchConstants::GetAllTags(),
                                                            std::vector<std::string>(),
                                                            Search::EegeoVendorName,
+                                                           Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME,
                                                            strbuf.GetString(),
                                                            Eegeo::Helpers::Time::MillisecondsSinceEpoch());
             }

@@ -25,27 +25,27 @@ namespace ExampleApp
             {                
                 int GetSwallowResultPriority(const Search::SdkModel::SearchResultModel& result)
                 {
-                    if(result.GetCategory() == Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
+                    if(result.GetPrimaryTag() == Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
                     {
                         return Search::SwallowPeopleVendorPriority;
                     }
                     
-                    if(result.GetCategory() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
+                    if(result.GetPrimaryTag() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
                     {
                         return Search::SwallowMeetingRoomsVendorPriority;
                     }
                     
-                    if(result.GetCategory() == Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME)
+                    if(result.GetPrimaryTag() == Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME)
                     {
                         return Search::SwallowWorkingGroupsVendorPriority;
                     }
                     
-                    if(result.GetCategory() == Search::Swallow::SearchConstants::FACILITY_CATEGORY_NAME)
+                    if(result.GetPrimaryTag() == Search::Swallow::SearchConstants::FACILITY_CATEGORY_NAME)
                     {
                         return Search::SwallowFacilitiesVendorPriority;
                     }
                     
-                    if(result.GetCategory() == Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME)
+                    if(result.GetPrimaryTag() == Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME)
                     {
                         return Search::SwallowOfficesVendorPriority;
                     }
@@ -194,13 +194,13 @@ namespace ExampleApp
                 //Order eeGeo results as they came in
                 if(a.GetVendor() == Search::EegeoVendorName || b.GetVendor() == Search::EegeoVendorName)
                 {
-                    bool matchingCategory = a.GetCategory() == b.GetCategory() &&
+                    bool matchingCategory = a.GetPrimaryTag() == b.GetPrimaryTag() &&
                                             a.GetVendor() == Search::EegeoVendorName &&
                                             b.GetVendor() == Search::EegeoVendorName;
                     
                     if (matchingCategory)
                     {
-                        if(a.GetCategory() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
+                        if(a.GetPrimaryTag() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
                         {
                             if(m_interiorInteractionModel.HasInteriorModel())
                             {
@@ -212,7 +212,7 @@ namespace ExampleApp
                                 return GetExteriorOrderForMeetingRooms(a, b, cameraFocusLocation, m_interiorMarkerRepository);
                             }
                         }
-                        else if(a.GetCategory() == Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME)
+                        else if(a.GetPrimaryTag() == Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME)
                         {
                             const Eegeo::dv3 cameraFocusLocation = m_appCameraController.GetCameraState().InterestPointEcef();
                             Eegeo::Resources::Interiors::InteriorId currentInteriorId = m_interiorInteractionModel.HasInteriorModel() ? m_interiorInteractionModel.GetInteriorModel()->GetId() : Eegeo::Resources::Interiors::InteriorId::NullId();

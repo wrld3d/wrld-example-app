@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ExampleAppWPF"
         mc:Ignorable="d"
+        Stylus.IsPressAndHoldEnabled="False"
         Title="BWAY" Margin="0" KeyboardNavigation.DirectionalNavigation="Once" KeyboardNavigation.TabNavigation="None"
         MinWidth="1024"
         MinHeight="768"

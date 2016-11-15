@@ -73,14 +73,20 @@ namespace ExampleApp
 
                 virtual IApplicationConfigurationBuilder& SetIsKioskTouchInputEnabled(bool kioskTouchInputEnabled) = 0;
 
+                virtual IApplicationConfigurationBuilder& SetEmbeddedThemeTexturePath(const std::string& embeddedThemeTexturePath) = 0;
+
+                virtual IApplicationConfigurationBuilder& SetTwitterAuthCode(const std::string& twitterAuthCode) = 0;
+
+                virtual IApplicationConfigurationBuilder& SetUseLabels(bool useLabels) = 0;
+
+                virtual IApplicationConfigurationBuilder& SetInteriorTrackingInfo(const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo) = 0;
+
                 virtual std::string Decrypt(const std::string& value) const = 0;
 
                 virtual bool ValidateHMAC(const std::string& message, const std::string& hmac) const = 0;
                 
                 virtual ApplicationConfiguration Build() = 0;
                 
-                virtual IApplicationConfigurationBuilder& SetSenionMapKey(const std::string& mapKey) = 0;
-                virtual IApplicationConfigurationBuilder& SetSenionCustomerID(const std::string& customerID) = 0;
                 virtual IApplicationConfigurationBuilder& SetBuildingInfoArray(const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>&infoBuildingList) = 0;
                 virtual IApplicationConfigurationBuilder& SetRestrictedBuildingInfoArray(const std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*>&restrictedBuildingInfo) = 0;
             };

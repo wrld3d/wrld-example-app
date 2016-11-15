@@ -3,10 +3,9 @@
 #include "SearchJsonParser.h"
 #include "SearchResultModel.h"
 #include "SearchVendorNames.h"
-#include "YelpSearchJsonParser.h"
+#include "YelpParsingHelpers.h"
 #include "SwallowSearchParser.h"
 #include "EegeoJsonParser.h"
-#include "YelpParsingHelpers.h"
 
 namespace ExampleApp
 {

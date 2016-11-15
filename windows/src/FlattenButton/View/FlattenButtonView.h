@@ -30,7 +30,7 @@ namespace ExampleApp
                 Helpers::ReflectionHelpers::Method<float> mAnimateToIntermediateOnScreenState;
                 Helpers::ReflectionHelpers::Method<void> mAnimateToActive;
                 Helpers::ReflectionHelpers::Method<void> mAnimateToInActive;
-				Helpers::ReflectionHelpers::Method<bool> mSetViewEnabled;
+                Helpers::ReflectionHelpers::Method<bool> mSetViewEnabled;
                 
             public:
                 FlattenButtonView(WindowsNativeState& nativeState);
@@ -50,7 +50,7 @@ namespace ExampleApp
 
                 void RemoveToggleCallback(Eegeo::Helpers::ICallback1<bool>& callback);
 
-				void SetViewEnabled(bool enabled);
+                void SetViewEnabled(bool enabled);
             };
         }
     }

@@ -74,7 +74,7 @@ namespace ExampleApp
                     {
                         return UserCreatedPinBoundObject::FromSerializedData(pinId,
                                                                              pinMetadataJson,
-                                                                             pinIconKey,
+                           													 pinIconKey,
                                                                              myPinsFileIO,
                                                                              m_messageBus,
                                                                              m_webService);

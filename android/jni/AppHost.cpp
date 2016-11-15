@@ -9,7 +9,6 @@
 #include "GlobalFogging.h"
 #include "AppInterface.h"
 #include "JpegLoader.h"
-#include "Blitter.h"
 #include "EffectHandler.h"
 #include "SearchServiceCredentials.h"
 #include "AndroidThreadHelper.h"
@@ -57,7 +56,8 @@
 #include "AndroidInitialExperienceModule.h"
 #include "ViewControllerUpdaterModule.h"
 #include "ViewControllerUpdaterModel.h"
-#include "CategorySearchModule.h"
+#include "TagSearchModule.h"
+#include "TagSearchViewModule.h"
 #include "ScreenProperties.h"
 #include "MyPinCreationViewModule.h"
 #include "IMyPinCreationModule.h"
@@ -88,31 +88,23 @@
 #include "ConnectivityChangedViewMessage.h"
 #include "WebConnectivityValidator.h"
 #include "AndroidMenuReactionModel.h"
-#include "PlatformConfigBuilder.h"
+#include "ApplicationConfigurationModule.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
 
 namespace
 {
-    typedef ExampleApp::ApplicationConfig::ApplicationConfiguration ApplicationConfiguration;
+	ExampleApp::ApplicationConfig::ApplicationConfiguration LoadApplicationConfiguration(AndroidNativeState& nativeState, const std::set<std::string>& customApplicationAssetDirectories)
+	{
+	    AndroidFileIO tempFileIO(&nativeState, customApplicationAssetDirectories);
+	    ExampleApp::ApplicationConfig::SdkModel::AndroidApplicationConfigurationVersionProvider versionProvider(nativeState);
 
-    ApplicationConfiguration LoadConfiguration(AndroidNativeState& state)
-    {
-        // SJM -- this is kinda fail, we would like to get the platform file IO to load the API key but need the API key
-        // to create a file IO instance (due to coarseness of AndroidPlatformAbstractionModule).
-        std::set<std::string> customApplicationAssetDirectories;
-        customApplicationAssetDirectories.insert("ApplicationConfigs");
-
-        AndroidFileIO tempFileIO(&state, customApplicationAssetDirectories);
-
-        ExampleApp::ApplicationConfig::SdkModel::AndroidApplicationConfigurationVersionProvider versionProvider(state);
-        ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule applicationConfigurationModule(tempFileIO,
-        		versionProvider.GetProductVersionString(),
-        		versionProvider.GetBuildNumberString(),
-				ExampleApp::ApplicationConfigurationSecret);
-        return applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration(ExampleApp::ApplicationConfigurationPath);
-    }
+	    return ExampleApp::ApplicationConfig::SdkModel::LoadAppConfig(
+	    		tempFileIO,
+	    		versionProvider,
+	    		ExampleApp::ApplicationConfigurationPath);
+	}
 }
 
 AppHost::AppHost(
@@ -152,6 +144,7 @@ AppHost::AppHost(
     ,m_pViewControllerUpdaterModule(NULL)
 	,m_pAndroidFlurryMetricsService(NULL)
 	,m_pInitialExperienceIntroViewModule(NULL)
+    ,m_pTagSearchViewModule(NULL)
 	,m_failAlertHandler(this, &AppHost::HandleStartupFailure)
 	,m_userInteractionEnabledChangedHandler(this, &AppHost::HandleUserInteractionEnabledChanged)
 {
@@ -171,8 +164,8 @@ AppHost::AppHost(
     customApplicationAssetDirectories.insert("SearchResultOnMap");
     customApplicationAssetDirectories.insert("ApplicationConfigs");
 
-    const ApplicationConfiguration& applicationConfiguration = LoadConfiguration(nativeState);
-
+    const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration = LoadApplicationConfiguration(nativeState, customApplicationAssetDirectories);
+	
     m_pAndroidPlatformAbstractionModule = Eegeo_NEW(Eegeo::Android::AndroidPlatformAbstractionModule)(
             nativeState,
             *m_pJpegLoader,
@@ -185,9 +178,9 @@ AppHost::AppHost(
     Eegeo::EffectHandler::Initialise();
 
     std::string deviceModel = std::string(nativeState.deviceModel, strlen(nativeState.deviceModel));
+    Eegeo::Android::AndroidPlatformConfigBuilder androidPlatformConfigBuilder(deviceModel);
 
-    const Eegeo::Config::PlatformConfig& defaultConfig = Eegeo::Android::AndroidPlatformConfigBuilder(deviceModel).Build();
-    const Eegeo::Config::PlatformConfig& platformConfig = ExampleApp::PlatformConfigBuilder::Build(defaultConfig, applicationConfiguration, "Textures");
+    const Eegeo::Config::PlatformConfig& platformConfiguration = ExampleApp::ApplicationConfig::SdkModel::BuildPlatformConfig(androidPlatformConfigBuilder, applicationConfiguration);
 
     m_pInputProcessor = Eegeo_NEW(Eegeo::Android::Input::AndroidInputProcessor)(&m_inputHandler, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
 
@@ -207,11 +200,12 @@ AppHost::AppHost(
     m_pMenuReactionModel = Eegeo_NEW(ExampleApp::Menu::View::AndroidMenuReactionModel)();
 
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
+    			 applicationConfiguration,
                  *m_pAndroidPlatformAbstractionModule,
                  screenProperties,
                  *m_pAndroidLocationService,
                  m_androidNativeUIFactories,
-                 platformConfig,
+                 platformConfiguration,
                  *m_pJpegLoader,
                  *m_pInitialExperienceModule,
                  m_androidPersistentSettingsModel,
@@ -489,11 +483,17 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                         app.SearchMenuModule().GetSearchMenuModel(),
                                         app.SearchMenuModule().GetSearchMenuViewModel(),
 										app.SearchMenuModule().GetSearchSectionViewModel(),
-                                        app.CategorySearchModule().GetCategorySearchRepository(),
+                                        app.TagSearchModule().GetTagSearchRepository(),
 	                                    app.SearchMenuModule().GetSearchMenuOptionsModel(),
 										m_pModalBackgroundViewModule->GetModalBackgroundView(),
                                         m_messageBus
                                     );
+
+    m_pTagSearchViewModule = ExampleApp::TagSearch::View::TagSearchViewModule::Create(
+            app.TagSearchModule().GetTagSearchMenuOptionsModel(),
+            app.SettingsMenuModule().GetSettingsMenuViewModel(),
+            m_messageBus,
+            *m_pMenuReactionModel);
 
     m_pSettingsMenuViewModule = Eegeo_NEW(ExampleApp::SettingsMenu::View::SettingsMenuViewModule)(
     											"com/eegeo/settingsmenu/SettingsMenuView",
@@ -506,11 +506,11 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     m_pSearchResultSectionViewModule = Eegeo_NEW(ExampleApp::SearchResultSection::View::SearchResultSectionViewModule)(
     		app.SearchMenuModule().GetSearchMenuViewModel(),
-		    app.SearchResultSectionModule().GetSearchResultSectionOptionsModel(),
-		    app.SearchResultSectionModule().GetSearchResultSectionOrder(),
-		    m_messageBus,
-			*m_pMenuReactionModel,
-            app.SearchResultPoiModule().GetSearchResultPoiViewModel());
+    				    app.SearchResultSectionModule().GetSearchResultSectionOptionsModel(),
+    				    app.SearchResultSectionModule().GetSearchResultSectionOrder(),
+    				    m_messageBus,
+    					*m_pMenuReactionModel,
+    		            app.SearchResultPoiModule().GetSearchResultPoiViewModel());
 
     // Pop-up layer.
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(
@@ -601,6 +601,8 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
         Eegeo_DELETE m_pModalBackgroundViewModule;
 
         Eegeo_DELETE m_pSettingsMenuViewModule;
+
+        Eegeo_DELETE m_pTagSearchViewModule;
 
         Eegeo_DELETE m_pSearchMenuViewModule;
 

@@ -10,7 +10,7 @@
 #include "SearchResultModel.h"
 #include "SearchServiceBase.h"
 #include "ICallback.h"
-#include "CategorySearchModel.h"
+#include "TagSearchModel.h"
 #include "Interiors.h"
 
 namespace ExampleApp
@@ -21,8 +21,7 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                class CombinedSearchService
-                : public Search::SdkModel::SearchServiceBase
+                class CombinedSearchService : public Search::SdkModel::SearchServiceBase
                 {
                 public:
                     
@@ -31,7 +30,7 @@ namespace ExampleApp
                     
                     ~CombinedSearchService();
                     
-                    bool CanHandleCategory(const std::string& category) const;
+                    bool CanHandleTag(const std::string& tag) const;
                     
                     void CancelInFlightQueries();
                     
@@ -43,6 +42,8 @@ namespace ExampleApp
                 private:
                     
                     void OnSearchResponseRecieved(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results);
+                    
+                    bool CanPerformLocationQuerySearch(const Search::SdkModel::SearchQuery& query, const Search::SdkModel::ISearchService& searchService) const;
                     
                     
                 private:

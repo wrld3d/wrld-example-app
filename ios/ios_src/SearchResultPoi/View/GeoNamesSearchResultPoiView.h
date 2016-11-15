@@ -48,14 +48,14 @@
 @property (nonatomic, retain) UIView* pCloseButtonContainer;
 @property (nonatomic, retain) UIButton* pCloseButton;
 @property (nonatomic, retain) UIButton* pPinButton;
+@property (nonatomic, retain) UIView* pDropPinContainer;
 @property (nonatomic, retain) UIView* pControlContainer;
-@property (nonatomic, retain) UIView* pHeadlineContainer;
-@property (nonatomic, retain) UIView* pContentContainer;
-@property (nonatomic, retain) UIScrollView* pLabelsContainer;
-@property (nonatomic, retain) UIView* pCategoryIconContainer;
+@property (nonatomic, retain) UIView* pTitleCardContainer;
 @property (nonatomic, retain) UILabel* pTitleLabel;
-@property (nonatomic, retain) UIView* pCountryHeaderContainer;
-@property (nonatomic, retain) UILabel* pCountryHeaderLabel;
+@property (nonatomic, retain) UIScrollView* pLabelsContainer;
+@property (nonatomic, retain) UIView* pTagIconContainer;
 @property (nonatomic, retain) UILabel* pCountryContent;
+
+@property (nonatomic, retain) UIView* pTitleCardHeaderLine;
 
 @end

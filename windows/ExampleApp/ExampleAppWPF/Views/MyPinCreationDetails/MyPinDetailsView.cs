@@ -70,8 +70,9 @@ namespace ExampleAppWPF
             m_closeButton = (Button)CheckAndGetProperty("Close");
 
             m_removeButton.Click += OnDeleteClicked;
-            m_closeButton.Click += OnCloseClicked; m_PinDetailsView = (ScrollViewer)GetTemplateChild("PinDetailsView");
+            m_closeButton.Click += OnCloseClicked;
 
+            m_PinDetailsView = (ScrollViewer)GetTemplateChild("PinDetailsView");
             m_PinDetailsView.TouchDown += OnPinDetailsTouchDown;
             m_PinDetailsView.TouchUp += OnPinDetailsTouchUp;
             m_PinDetailsView.ManipulationBoundaryFeedback += OnPinDetailsBoundaryFeedback;
@@ -119,8 +120,6 @@ namespace ExampleAppWPF
 
                 if(src != null)
                 {
-                    m_imageHeader.Visibility = Visibility.Visible;
-                    m_imageView.Visibility = Visibility.Visible;
                     m_imageView.Source = src;
                     m_imageHeader.Visibility = Visibility.Visible;
                     m_imageView.Visibility = Visibility.Visible;

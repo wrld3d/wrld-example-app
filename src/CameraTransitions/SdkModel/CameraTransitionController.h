@@ -15,7 +15,6 @@
 #include <queue>
 #include "AppCamera.h"
 #include "CallbackCollection.h"
-#include "InteriorsNavigation.h"
 #include "BidirectionalBus.h"
 
 namespace ExampleApp
@@ -31,7 +30,6 @@ namespace ExampleApp
                 CameraTransitionController(Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
                                            Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
                                            Eegeo::Location::NavigationService& navigationService,
-                                           ExampleApp::InteriorsNavigation::SdkModel::IInteriorsNavigationService& interiorsNavigationService,
                                            Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
                                            ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                            ExampleApp::AppCamera::SdkModel::IAppCameraController& appCameraController,
@@ -44,7 +42,6 @@ namespace ExampleApp
                 void StartTransitionTo(const Eegeo::dv3& newInterestPoint,
                                        float distanceFromInterest,
                                        bool jumpIfFar=true);
-                
                 void StartTransitionTo(float distanceFromInterest,
                                        const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                        int targetFloorIndex,
@@ -107,7 +104,6 @@ namespace ExampleApp
                 Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_cameraController;
                 Eegeo::Resources::Interiors::InteriorsCameraController& m_interiorsCameraController;
                 Eegeo::Location::NavigationService& m_navigationService;
-                ExampleApp::InteriorsNavigation::SdkModel::IInteriorsNavigationService& m_interiorsNavigationService;
                 Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& m_terrainHeightProvider;
                 ExampleApp::AppModes::SdkModel::IAppModeModel& m_appModeModel;
                 ExampleApp::AppCamera::SdkModel::IAppCameraController& m_appCameraController;

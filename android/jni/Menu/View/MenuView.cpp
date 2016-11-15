@@ -38,11 +38,11 @@ namespace ExampleApp
                 jmethodID uiViewCtor = env->GetMethodID(m_uiViewClass, "<init>", "(Lcom/eegeo/entrypointinfrastructure/MainActivity;J)V");
 
                 jobject instance = env->NewObject(
-                                       m_uiViewClass,
-                                       uiViewCtor,
-                                       m_nativeState.activity,
-                                       (jlong)(this)
-                                   );
+                        m_uiViewClass,
+                        uiViewCtor,
+                        m_nativeState.activity,
+                        (jlong)(this)
+                );
 
                 m_uiView = env->NewGlobalRef(instance);
                 env->DeleteLocalRef(instance);
@@ -102,10 +102,14 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView, updateAnimationMethod, dt);
             }
 
-            void MenuView::UpdateMenuSectionViews(TSections& sections)
+            void MenuView::UpdateMenuSectionViews(TSections& sections, bool contentsChanged)
             {
                 ASSERT_UI_THREAD
 
+                if (!contentsChanged)
+                {
+                    return;
+                }
 				const size_t numSections = sections.size();
 				size_t numItems = 0;
 				for(size_t i = 0; i < numSections; ++ i)
@@ -121,7 +125,7 @@ namespace ExampleApp
 
 				m_numberOfItemsOnLastRefresh = numItems;
 
-				m_currentSections = sections;
+                m_currentSections = sections;
 
                 AndroidSafeNativeThreadAttachment attached(m_nativeState);
                 JNIEnv* env = attached.envForThread;
@@ -129,6 +133,14 @@ namespace ExampleApp
                 jstring strClassName = env->NewStringUTF("java/lang/String");
                 jclass strClass = m_nativeState.LoadClass(env, strClassName);
                 env->DeleteLocalRef(strClassName);
+
+                const size_t numSections = sections.size();
+                size_t numItems = 0;
+                for(size_t i = 0; i < numSections; ++ i)
+                {
+                    const IMenuSectionViewModel& section = *(sections.at(i));
+                    numItems += section.GetTotalItemCount() + 1;
+                }
 
                 jobjectArray groupNamesArray = env->NewObjectArray(numSections, strClass, 0);
                 jintArray groupSizesArray = env->NewIntArray(numSections);
@@ -143,7 +155,7 @@ namespace ExampleApp
 
                     if (section.IsExpandable())
                     {
-                    	totalItems++;
+                        totalItems++;
                     }
 
                     for(size_t childIndex = 0; childIndex < totalItems; childIndex++)
@@ -171,12 +183,12 @@ namespace ExampleApp
                 jmethodID populateData = env->GetMethodID(m_uiViewClass, "populateData", "(J[Ljava/lang/String;[I[Ljava/lang/String;)V");
 
                 env->CallVoidMethod(
-                    m_uiView,
-                    populateData,
-                    (jlong)(this),
-                    groupNamesArray,
-                    groupSizesArray,
-                    childNamesArray
+                        m_uiView,
+                        populateData,
+                        (jlong)(this),
+                        groupNamesArray,
+                        groupSizesArray,
+                        childNamesArray
                 );
 
                 env->DeleteLocalRef(groupNamesArray);
@@ -187,14 +199,14 @@ namespace ExampleApp
             void MenuView::SetFullyOnScreenOpen()
             {
                 ASSERT_UI_THREAD
-                CallVoidVoidFunction("animateToOpenOnScreen");
+                        CallVoidVoidFunction("animateToOpenOnScreen");
             }
 
             void MenuView::SetFullyOnScreenClosed()
             {
                 ASSERT_UI_THREAD
 
-                CallVoidVoidFunction("animateToClosedOnScreen");
+                        CallVoidVoidFunction("animateToClosedOnScreen");
             }
 
             void MenuView::SetOnScreenStateToIntermediateValue(float value)
@@ -210,14 +222,14 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                CallVoidVoidFunction("animateToClosedOnScreen");
+                        CallVoidVoidFunction("animateToClosedOnScreen");
             }
 
             void MenuView::SetFullyOffScreen()
             {
                 ASSERT_UI_THREAD
 
-                CallVoidVoidFunction("animateOffScreen");
+                        CallVoidVoidFunction("animateOffScreen");
             }
 
             void MenuView::InsertOnViewClicked(Eegeo::Helpers::ICallback0& callback)
@@ -351,7 +363,7 @@ namespace ExampleApp
             bool MenuView::CallBeginDrag()
             {
                 ASSERT_UI_THREAD
-				return false;
+                return false;
             }
 
             void MenuView::SetCanInteract(bool canInteract)

@@ -8,7 +8,7 @@ namespace ExampleAppWPF
     {
         private ExampleApp.SearchResultModelCLI m_model;
 
-        private Image m_categoryIcon;
+        private Image m_tagIcon;
         private string m_title;
         private string m_country;
 
@@ -59,17 +59,17 @@ namespace ExampleAppWPF
 
         public override void OnApplyTemplate()
         {
-            m_categoryIcon = (Image)GetTemplateChild("CategoryIcon");
+            m_tagIcon = (Image)GetTemplateChild("TagIcon");
+
             m_mainContainer = (FrameworkElement)GetTemplateChild("GeoNamesResultView");
 
             base.OnApplyTemplate();
         }
-        
-        public override void DisplayPoiInfo(Object modelObject, bool isPinned)
+
+        protected override void DisplayCustomPoiInfo(Object modelObject)
         {
             m_model = modelObject as ExampleApp.SearchResultModelCLI;
-            
-            m_categoryIcon.Source = SearchResultCategoryMapper.GetIconForCategory("misc");
+            m_tagIcon.Source = SearchResultPoiViewIconProvider.GetIconForTag(m_model.IconKey);
 
             m_closing = false;
 

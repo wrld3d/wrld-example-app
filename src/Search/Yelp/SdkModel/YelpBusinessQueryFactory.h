@@ -8,7 +8,6 @@
 #include "Web.h"
 #include "ICallback.h"
 #include "liboauthcpp.h"
-#include "IdentitySearchCallbackData.h"
 
 namespace ExampleApp
 {

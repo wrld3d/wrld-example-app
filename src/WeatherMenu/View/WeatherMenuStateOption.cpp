@@ -12,18 +12,25 @@ namespace ExampleApp
             WeatherMenuStateOption::WeatherMenuStateOption(
                 SdkModel::WeatherMenuStateModel& weatherStateModel,
                 ExampleAppMessaging::TMessageBus& messageBus,
-                Metrics::IMetricsService& metricsService)
+                Metrics::IMetricsService& metricsService,
+                const AppModes::SdkModel::IAppModeModel& appModeModel)
                 : m_weatherStateModel(weatherStateModel)
                 , m_messageBus(messageBus)
                 , m_metricsService(metricsService)
+                , m_appModeModel(appModeModel)
             {
             }
 
             void WeatherMenuStateOption::Select()
             {
                 m_metricsService.SetEvent("UIItem: Weather", "Name", m_weatherStateModel.GetName().c_str());
-                m_messageBus.Publish(FlattenButton::FlattenButtonViewStateChangedMessage(false));
-                m_messageBus.Publish(WeatherSelectedMessage(m_weatherStateModel));
+                
+                if (m_appModeModel.GetAppMode() == AppModes::SdkModel::WorldMode)
+                {
+                    m_messageBus.Publish(FlattenButton::FlattenButtonViewStateChangedMessage(false));
+                    m_messageBus.Publish(WeatherSelectedMessage(m_weatherStateModel));
+                }
+
                 
             }
         }

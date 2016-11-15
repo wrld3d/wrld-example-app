@@ -38,7 +38,7 @@ namespace ExampleApp
                     
                     if(m_swallowPoiDbServiceProvider.TryGetSwallowPoiDbService(swallowPoiDbService))
                     {
-                        if(query.IsCategory())
+                        if(query.IsTag())
                         {
                             PerformCategorySearch(query, *swallowPoiDbService);
                         }

@@ -35,7 +35,7 @@ namespace ExampleApp
             , m_geoNamesUserName("")
             , m_coverageTreeManifestURL("")
             , m_themeManifestURL("")
-            , m_searchServiceUrl("")
+            , m_eegeoSearchServiceUrl("")
             , m_myPinsWebServiceUrl("")
             , m_myPinsWebServiceAuthToken("")
             , m_webProxyEnabled(false)
@@ -44,6 +44,9 @@ namespace ExampleApp
             , m_webProxyIgnorePattern("")
             , m_isKioskTouchInputEnabled(false)
             , m_shouldStartFullscreen(false)
+            , m_embeddedThemeTexturePath("")
+            , m_twitterAuthCode("")
+            , m_useLabels(false)
             {
                 
             }
@@ -144,9 +147,9 @@ namespace ExampleApp
                 return *this;
             }
             
-            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetSearchServiceUrl(const std::string& searchServiceUrl)
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetSearchServiceUrl(const std::string& eegeoSearchServiceUrl)
             {
-                m_searchServiceUrl = searchServiceUrl;
+                m_eegeoSearchServiceUrl = eegeoSearchServiceUrl;
                 return *this;
             }
             
@@ -203,17 +206,7 @@ namespace ExampleApp
                 m_webProxyIgnorePattern = webProxyIgnorePattern;
                 return *this;
             }
-            
-            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetSenionMapKey(const std::string& mapKey)
-            {
-                m_senionMapKey = mapKey;
-                return *this;
-            }
-            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetSenionCustomerID(const std::string& customerID)
-            {
-                m_senionMapCustomerID = customerID;
-                return *this;
-            }
+
             IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetBuildingInfoArray(const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>&infoBuildingList){
                 m_buildingsInfo = infoBuildingList;
                 return *this;
@@ -234,6 +227,30 @@ namespace ExampleApp
             IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetIsKioskTouchInputEnabled(bool kioskTouchInputEnabled)
             {
                 m_isKioskTouchInputEnabled = kioskTouchInputEnabled;
+                return *this;
+            }
+
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetEmbeddedThemeTexturePath(const std::string& embeddedThemeTexturePath)
+            {
+                m_embeddedThemeTexturePath = embeddedThemeTexturePath;
+                return *this;
+            }
+
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetTwitterAuthCode(const std::string& twitterAuthCode)
+            {
+                m_twitterAuthCode = twitterAuthCode;
+                return *this;
+            }
+
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetUseLabels(bool useLabels)
+            {
+                m_useLabels = useLabels;
+                return *this;
+            }
+
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetInteriorTrackingInfo(const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo)
+            {
+                m_interiorTrackingInfo = interiorTrackingInfo;
                 return *this;
             }
 
@@ -277,7 +294,7 @@ namespace ExampleApp
                                                 m_coverageTreeManifestURL,
                                                 m_themeManifestURL,
                                                 m_sqliteDbUrl,
-                                                m_searchServiceUrl,
+                                                m_eegeoSearchServiceUrl,
                                                 m_myPinsWebServiceUrl,
                                                 m_myPinsWebServiceAuthToken,
                                                 m_productVersion,
@@ -287,11 +304,13 @@ namespace ExampleApp
                                                 m_webProxyIpAddress,
                                                 m_webProxyPort,
                                                 m_webProxyIgnorePattern,
-                                                m_senionMapKey,
-                                                m_senionMapCustomerID,
                                                 m_buildingsInfo,
                                                 m_restrictedBuildingsInfo,
-                                                m_isKioskTouchInputEnabled);
+                                                m_isKioskTouchInputEnabled,
+                                                m_embeddedThemeTexturePath,
+                                                m_twitterAuthCode,
+                                                m_useLabels,
+                                                m_interiorTrackingInfo);
             }
         }
     }

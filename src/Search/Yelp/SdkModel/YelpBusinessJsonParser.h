@@ -5,7 +5,7 @@
 #include "Types.h"
 #include "Yelp.h"
 #include "Search.h"
-
+#include "TagSearch.h"
 #include <string>
 
 namespace ExampleApp
@@ -19,12 +19,14 @@ namespace ExampleApp
                 class YelpBusinessJsonParser : private Eegeo::NonCopyable
                 {
                 public:
-                    YelpBusinessJsonParser(IYelpCategoryMapper& yelpCategoryMapper);
+                    YelpBusinessJsonParser(IYelpCategoryToTagMapper& yelpCategoryMapper,
+                                           const TagSearch::SdkModel::ITagIconMapper& tagIconMapper);
                     
                     bool TryParse(const std::string& responseString, Search::SdkModel::SearchResultModel& out_result) const;
                     
                 private:
-                    IYelpCategoryMapper& m_yelpCategoryMapper;
+                    IYelpCategoryToTagMapper& m_yelpCategoryMapper;
+                    const TagSearch::SdkModel::ITagIconMapper& m_tagIconMapper;
                 };
             }
         }

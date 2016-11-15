@@ -9,7 +9,6 @@
 #include "ImagePathHelpers.h"
 
 #include "document.h"
-#include <string>
 #include <fstream>
 
 
@@ -147,8 +146,6 @@ namespace ExampleApp
                 const rapidjson::Value& iconMappings = document["icons"];
                 std::vector<WorldPinIconMappingIconDefinition> icons = ParseIcons(iconMappings);
 
-                std::map<std::string, int> keyToIconIndex;
-
                 // Only using one page for now for expediency. Support for multiple page atlases will come later.
                 Eegeo_ASSERT(pages.size()==1, "Only support single page mappings for pin icons currently");
                 WorldPinIconMappingPage page = pages.at(0);
@@ -168,7 +165,7 @@ namespace ExampleApp
                     Eegeo_ASSERT(false, "Failed to load texture for pins: %s", filepath.c_str());
                 }
 
-
+                std::map<std::string, int> keyToIconIndex;
                 for (std::vector<WorldPinIconMappingIconDefinition>::const_iterator it = icons.begin(); it != icons.end(); it++)
                 {
                     const WorldPinIconMappingIconDefinition iconDef = *it;

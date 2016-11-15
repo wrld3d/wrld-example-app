@@ -24,6 +24,7 @@ namespace ExampleApp
             WorldPinOnMapView::WorldPinOnMapView(WindowsNativeState& nativeState, float pinDiameter)
                 : m_nativeState(nativeState)
                 , m_pinOffset(pinDiameter * Helpers::ImageHelpers::GetPixelScale())
+                , m_largePinFocus(false)
             {
                 m_uiViewClass = GetTypeFromEntryAssembly("ExampleAppWPF.WorldPinOnMapView");
                 ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid, float::typeid));
@@ -43,22 +44,12 @@ namespace ExampleApp
             void WorldPinOnMapView::Open(const WorldPins::SdkModel::IWorldPinsInFocusModel& worldPinsInFocusModel,
                     float modality)
             {
-                std::string subtitle;
-
-                if (worldPinsInFocusModel.GetVendor() == ExampleApp::Search::InteriorVendorName)
-                {
-                    subtitle = "";
-                }
-                else
-                {
-                    subtitle = worldPinsInFocusModel.GetSubtitle();
-                }
-                
+                m_largePinFocus = worldPinsInFocusModel.GetVendor() == ExampleApp::Search::InteriorVendorName;
                 mShow(ConvertUTF8ToManagedString(worldPinsInFocusModel.GetTitle()),
-                     ConvertUTF8ToManagedString(subtitle),
-                     ConvertUTF8ToManagedString(worldPinsInFocusModel.GetRatingsImage()),
-                     worldPinsInFocusModel.GetReviewCount(),
-                     modality);
+                      ConvertUTF8ToManagedString(worldPinsInFocusModel.GetSubtitle()),
+                      ConvertUTF8ToManagedString(worldPinsInFocusModel.GetRatingsImage()),
+                      worldPinsInFocusModel.GetReviewCount(),
+                      modality);
             }
 
             void WorldPinOnMapView::Close()
@@ -68,7 +59,7 @@ namespace ExampleApp
 
             void WorldPinOnMapView::UpdateScreenLocation(float posX, float posY)
             {
-                float offsetY = posY - m_pinOffset;
+                float offsetY = posY - (m_largePinFocus ? m_pinOffset*1.5f : m_pinOffset);
                 mUpdateScreenLocation(posX, offsetY);
             }
 

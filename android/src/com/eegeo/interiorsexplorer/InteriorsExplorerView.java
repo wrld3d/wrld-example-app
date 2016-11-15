@@ -80,6 +80,9 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
         m_activity = activity;
         m_nativeCallerPointer = nativeCallerPointer;
 
+        // TODO: Move to Dimens values resource when integrated with Search UX changes.
+        ListItemHeight = m_activity.dipAsPx(50.0f);
+        
         final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
         m_uiRootView = m_activity.getLayoutInflater().inflate(R.layout.interiors_explorer_layout, uiRoot, false);
         
@@ -94,6 +97,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
         m_floorListContainer = (RelativeLayout)m_uiRootView.findViewById(R.id.interiors_floor_list_container);
         m_floorList = (BackwardsCompatibleListView)m_uiRootView.findViewById(R.id.interiors_floor_item_list);
         m_floorList.setEnabled(false);
+        m_floorList.setItemHeight(ListItemHeight);
         
         m_floorListAdapter = new InteriorsFloorListAdapter(m_activity, R.layout.interiors_floor_list_item);
         m_floorList.setAdapter(m_floorListAdapter);
@@ -106,8 +110,6 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
         m_floorButtonText.setTextColor(TextColorNormal);
         m_draggingFloorButton = false;
         
-        // TODO: Move to Dimens values resource when integrated with Search UX changes.
-        ListItemHeight = m_activity.dipAsPx(50.0f);
         
         m_floorButton.setOnTouchListener(this);
         

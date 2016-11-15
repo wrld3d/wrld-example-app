@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,7 +8,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using System.Diagnostics;
 
 namespace ExampleAppWPF
 {
@@ -19,6 +19,7 @@ namespace ExampleAppWPF
         protected Button m_closeButton;
 
         protected bool m_closing;
+        protected bool m_isPinned;
 
         protected bool m_isOpen;
 
@@ -28,6 +29,29 @@ namespace ExampleAppWPF
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private static bool m_isAnyPOIOpen = false;
+
+        public bool IsPinned
+        {
+            get
+            {
+                return m_isPinned;
+            }
+
+            set
+            {
+                if (HandleTogglePinnedClicked(ref m_isPinned, !m_isPinned))
+                {
+                    OnPropertyChanged("IsPinned");
+                }
+            }
+        }
+
+        public static bool IsAnyPOIOpen()
+        {
+            return m_isAnyPOIOpen;
+        }
+
         public SearchResultPoiViewBase(IntPtr nativeCallerPointer)
         {
             m_nativeCallerPointer = nativeCallerPointer;
@@ -35,7 +59,7 @@ namespace ExampleAppWPF
             m_currentWindow = (MainWindow)Application.Current.MainWindow;
             m_currentWindow.MainGrid.Children.Add(this);
 
-            m_currentWindow.SizeChanged += OnWindowResized;
+            Application.Current.MainWindow.SizeChanged += OnWindowResized;
 
             Visibility = Visibility.Hidden;
 
@@ -103,6 +127,7 @@ namespace ExampleAppWPF
             m_mainContainer.RenderTransform.BeginAnimation(TranslateTransform.XProperty, db);
 
             m_isOpen = false;
+            m_isAnyPOIOpen = false;
         }
 
         protected void ShowAll()
@@ -128,6 +153,7 @@ namespace ExampleAppWPF
             m_mainContainer.RenderTransform.BeginAnimation(TranslateTransform.XProperty, db);
 
             m_isOpen = true;
+            m_isAnyPOIOpen = true;
         }
 
         private void HandleCloseButtonClicked(object sender, RoutedEventArgs e)
@@ -138,8 +164,19 @@ namespace ExampleAppWPF
                 ExampleApp.SearchResultPoiViewCLI.CloseButtonClicked(m_nativeCallerPointer);
             }
         }
+        protected abstract void DisplayCustomPoiInfo(Object modelObject);
 
-        public abstract void DisplayPoiInfo(Object modelObject, bool isPinned);
+        public void DisplayPoiInfo(Object modelObject, bool isPinned)
+        {
+            // set the pinned state from the native model without feeding back into the native model
+            if (m_isPinned != isPinned)
+            {
+                m_isPinned = isPinned;
+                OnPropertyChanged("IsPinned");
+            }
+
+            DisplayCustomPoiInfo(modelObject);
+        }
 
         public virtual void DismissPoiInfo()
         {
@@ -147,7 +184,57 @@ namespace ExampleAppWPF
         }
 
         public abstract void UpdateImageData(string url, bool hasImage, byte[] imgData);
-        
+
+        private void HandleCloseClicked(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            ExampleApp.SearchResultPoiViewCLI.CloseButtonClicked(m_nativeCallerPointer);
+        }
+
+        private bool HandleTogglePinnedClicked(ref bool oldValue, bool newValue)
+        {
+            if (oldValue != newValue)
+            {
+                if (!newValue)
+                {
+                    if (ShowRemovePinDialog() == true)
+                    {
+                        ExampleApp.SearchResultPoiViewCLI.TogglePinnedButtonClicked(m_nativeCallerPointer);
+                        oldValue = newValue;
+
+                        return true;
+                    }
+                }
+                else
+                {
+                    ExampleApp.SearchResultPoiViewCLI.TogglePinnedButtonClicked(m_nativeCallerPointer);
+                    oldValue = newValue;
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool ShowRemovePinDialog()
+        {
+            DialogBox dialogBox = new DialogBox("Remove Pin", "Are you sure you want to remove this pin?", "Yes", "No");
+            dialogBox.Owner = m_currentWindow;
+
+            m_currentWindow.SetOpacity(MainWindow.OpacityOnPopup);
+
+            bool? result = dialogBox.ShowDialog();
+
+            m_currentWindow.SetOpacity(1.0f);
+
+            if (result == null)
+            {
+                return false;
+            }
+
+            return (bool)result;
+        }
+
         protected static BitmapImage LoadImageFromByteArray(byte[] imageData)
         {
             if (imageData == null || imageData.Length == 0)
@@ -157,15 +244,24 @@ namespace ExampleAppWPF
 
             var image = new BitmapImage();
 
-            using (var mem = new MemoryStream(imageData))
+            try
             {
-                mem.Position = 0;
-                image.BeginInit();
-                image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.UriSource = null;
-                image.StreamSource = mem;
-                image.EndInit();
+                using (var mem = new MemoryStream(imageData))
+                {
+                    mem.Position = 0;
+                    image.BeginInit();
+                    image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+                    image.CacheOption = BitmapCacheOption.OnLoad;
+                    image.UriSource = null;
+                    image.StreamSource = mem;
+                    image.EndInit();
+                }
+            }
+            catch (NotSupportedException)
+            {
+                // the byte stream did not point at parseable image data (can happen if user sets something other than
+                // an image to be the image url for a given poi).
+                return null;
             }
 
             image.Freeze();

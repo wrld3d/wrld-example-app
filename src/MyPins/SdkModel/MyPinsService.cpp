@@ -20,7 +20,6 @@
 #include "IMyPinBoundObject.h"
 #include <string>
 #include <sstream>
-#include "YelpSearchJsonParser.h"
 #include "WorldPinVisibility.h"
 #include "SearchVendorNames.h"
 #include "YelpParsingHelpers.h"

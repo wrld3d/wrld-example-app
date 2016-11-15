@@ -164,7 +164,7 @@ void AppRunner::HandleTouchEvent(const Eegeo::Windows::Input::TouchScreenInputEv
 {
     if (m_pAppHost)
     {
-        m_pAppHost->HandleTouchScreenInputEvent(event);
+    	m_pAppHost->HandleTouchScreenInputEvent(event);
     }
 }
 
@@ -350,21 +350,21 @@ bool AppRunner::ShouldStartFullscreen() const
 void AppRunner::SetFullscreen(bool fullscreen)
 {
     DWORD dwStyle = GetWindowLong(m_pNativeState->GetWindow(), GWL_STYLE);
-
+    
     if (fullscreen)
     {
         MONITORINFO mi;
         mi.cbSize = sizeof(mi);
-
+        
         if (GetWindowPlacement(m_pNativeState->GetWindow(), &m_wpPrev) &&
             GetMonitorInfo(MonitorFromWindow(m_pNativeState->GetWindow(), MONITOR_DEFAULTTOPRIMARY), &mi))
         {
             SetWindowLong(m_pNativeState->GetWindow(), GWL_STYLE, dwStyle & ~WS_OVERLAPPEDWINDOW);
             SetWindowPos(m_pNativeState->GetWindow(), HWND_TOP,
-                mi.rcMonitor.left, mi.rcMonitor.top,
-                mi.rcMonitor.right - mi.rcMonitor.left,
-                mi.rcMonitor.bottom - mi.rcMonitor.top,
-                SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
+                         mi.rcMonitor.left, mi.rcMonitor.top,
+                         mi.rcMonitor.right - mi.rcMonitor.left,
+                         mi.rcMonitor.bottom - mi.rcMonitor.top,
+                         SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
         }
     }
     else
@@ -374,4 +374,3 @@ void AppRunner::SetFullscreen(bool fullscreen)
         SetWindowPos(m_pNativeState->GetWindow(), NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
     }
 }
-

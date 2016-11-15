@@ -30,8 +30,8 @@ namespace ExampleApp
                 , m_pinRepository(pinRepository)
                 , m_pinController(pinController)
                 , m_environmentFlatteningService(flatteningService)
+                , m_worldPinIconMapping(worldPinIconMapping)
                 , m_pinAlreadySelected(false)
-                ,m_worldPinIconMapping(worldPinIconMapping)
             {
             }
 
@@ -55,7 +55,6 @@ namespace ExampleApp
                                                         int visibilityMask)
             {
                 const int iconIndex = m_worldPinIconMapping.IconIndexForKey(pinIconKey);
-                
                 Eegeo::Pins::Pin* pPin = m_worldPinsFactory.CreatePin(location, iconIndex, heightAboveTerrainMetres);
 
                 m_pinRepository.AddPin(*pPin);

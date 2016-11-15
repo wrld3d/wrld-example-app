@@ -23,7 +23,6 @@
 #include "NativeUIFactories.h"
 #include "TerrainHeightRepository.h"
 #include "GlobalShadowing.h"
-#include "Blitter.h"
 #include "WindowsNativeState.h"
 #include "AppInputDelegate.h"
 #include "Modules.h"
@@ -58,6 +57,7 @@
 #include "ISearchResultSectionViewModule.h"
 #include "ISurveyViewModule.h"
 #include "IMenuReactionModel.h"
+#include "TagSearchViewIncludes.h"
 #include "SearchMenuViewModule.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
@@ -139,6 +139,7 @@ private:
     ExampleApp::FlattenButton::View::IFlattenButtonViewModule* m_pFlattenButtonViewModule;
     ExampleApp::SearchResultPoi::View::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;
     ExampleApp::SearchResultSection::View::ISearchResultSectionViewModule* m_pSearchResultSectionViewModule;
+	ExampleApp::TagSearch::View::ITagSearchViewModule* m_pTagSearchViewModule;
     ExampleApp::WorldPins::View::IWorldPinOnMapViewModule* m_pWorldPinOnMapViewModule;
     ExampleApp::AboutPage::View::IAboutPageViewModule* m_pAboutPageViewModule;
     ExampleApp::Compass::View::ICompassViewModule* m_pCompassViewModule;

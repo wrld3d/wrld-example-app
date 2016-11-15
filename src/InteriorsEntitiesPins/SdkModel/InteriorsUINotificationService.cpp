@@ -12,32 +12,32 @@ namespace ExampleApp
         namespace SdkModel
         {
             const int NumNotifiableIcons = 3;
-            
+
             InteriorsUINotificationService::InteriorsUINotificationService(ExampleAppMessaging::TMessageBus& messageBus,
                                                                            InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsPinsController,
                                                                            const WorldPins::SdkModel::IWorldPinIconMapping& pinIconMapping)
-            : m_interiorsPinsController(interiorsPinsController)
-            , m_interiorsPinSelectedCallback(this, &InteriorsUINotificationService::OnInteriorPinSelected)
-            , m_notifiableIcons(NumNotifiableIcons)
-            , m_messageBus(messageBus)
+                : m_interiorsPinsController(interiorsPinsController)
+                , m_interiorsPinSelectedCallback(this, &InteriorsUINotificationService::OnInteriorPinSelected)
+                , m_notifiableIcons(NumNotifiableIcons)
+                , m_messageBus(messageBus)
             {
                 m_interiorsPinsController.RegisterInteriorsPinSelected(m_interiorsPinSelectedCallback);
-                
+
                 m_notifiableIcons[0] = pinIconMapping.IconIndexForKey(InteriorsEntitiesPins::SdkModel::IconKeyElevator);
                 m_notifiableIcons[1] = pinIconMapping.IconIndexForKey(InteriorsEntitiesPins::SdkModel::IconKeyEscalator);
                 m_notifiableIcons[2] = pinIconMapping.IconIndexForKey(InteriorsEntitiesPins::SdkModel::IconKeyStairs);
             }
-            
+
             InteriorsUINotificationService::~InteriorsUINotificationService()
             {
                 m_interiorsPinsController.UnregisterInteriorsPinSelected(m_interiorsPinSelectedCallback);
             }
-            
+
             void InteriorsUINotificationService::OnInteriorPinSelected(const std::vector<Eegeo::Pins::Pin*>& selectedPins)
             {
                 for (std::vector<Eegeo::Pins::Pin*>::const_iterator i = selectedPins.begin();
-                     i != selectedPins.end();
-                     ++i)
+                    i != selectedPins.end();
+                    ++i)
                 {
                     if (RequiresUINotification((*i)->GetCategoryId()))
                     {
@@ -45,14 +45,14 @@ namespace ExampleApp
                     }
                 }
             }
-            
+
             bool InteriorsUINotificationService::RequiresUINotification(int iconCategory)
             {
                 if (std::find(m_notifiableIcons.begin(), m_notifiableIcons.end(), iconCategory) != m_notifiableIcons.end())
                 {
                     return true;
                 }
-                
+
                 return false;
             }
         }

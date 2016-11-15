@@ -9,8 +9,7 @@
 #include "Modules.h"
 #include "Location.h"
 #include "BidirectionalBus.h"
-#include "IAvatarModel.h"
-#include "SenionLocation.h"
+#include "VisualMapService.h"
 
 namespace ExampleApp
 {
@@ -23,12 +22,14 @@ namespace ExampleApp
             public:
                 
                 GpsMarkerModule(Eegeo::Modules::Core::RenderingModule& renderingModule,
+                                Eegeo::Rendering::SceneModels::SceneModelFactory& sceneModelFactory,
                                 Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
-                                ExampleApp::SenionLocation::SdkModel::ISenionLocationService& locationService,
+                                Eegeo::Location::ILocationService& locationService,
                                 Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
                                 Eegeo::Modules::Map::MapModule& mapModule,
-                                ExampleAppMessaging::TMessageBus& messageBus,
-                                const bool interiorsAffectedByFlattening);
+                                VisualMap::SdkModel::IVisualMapService& visualMapService,
+                                const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                ExampleAppMessaging::TMessageBus& messageBus);
                 ~GpsMarkerModule();
                 
                 IGpsMarkerController& GetGpsMarkerController();
@@ -37,6 +38,7 @@ namespace ExampleApp
                 
                 GpsMarkerModel* m_pModel;
                 GpsMarkerView* m_pView;
+                GpsMarkerAnchorView* m_pAnchorView;
                 IGpsMarkerController* m_pController;
                 
                 Eegeo::Rendering::Shaders::BatchedSpriteShader* m_pSpriteShader;

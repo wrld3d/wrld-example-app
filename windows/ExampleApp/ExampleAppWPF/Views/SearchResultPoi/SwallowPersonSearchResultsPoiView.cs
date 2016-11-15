@@ -36,7 +36,7 @@ namespace ExampleAppWPF
             base.OnApplyTemplate();
         }
         
-        public override void DisplayPoiInfo(Object modelObject, bool isPinned)
+        protected override void DisplayCustomPoiInfo(Object modelObject)
         {
             m_model = modelObject as ExampleApp.SearchResultModelCLI;
 

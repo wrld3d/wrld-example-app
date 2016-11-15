@@ -11,6 +11,7 @@ import android.os.Handler;
 import org.json.JSONObject;
 import android.util.Log;
 import android.view.View;
+import android.widget.ExpandableListView;
 import android.widget.RelativeLayout;
 
 import com.eegeo.ProjectSwallowApp.R;
@@ -40,6 +41,8 @@ public abstract class MenuView implements View.OnClickListener, MenuAnimationSta
     protected MenuAnimationHandler m_menuAnimationHandler = null;
 
     protected abstract void refreshListData(List<String> groups, HashMap<String, List<String>> groupToChildrenMap);
+    
+    protected abstract void onMenuChildItemClick(ExpandableListView parent, View view, int groupPosition, int childPosition, long id);
 
     public MenuView(MainActivity activity, long nativeCallerPointer)
     {

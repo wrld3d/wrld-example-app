@@ -78,7 +78,7 @@ namespace ExampleApp
 				}
 			}
 
-			void SearchMenuView::SetEditText(const std::string& searchText, bool isCategory)
+			void SearchMenuView::SetEditText(const std::string& searchText, bool isTag)
 			{
 				ASSERT_UI_THREAD
 
@@ -88,7 +88,7 @@ namespace ExampleApp
 				jmethodID setEditTextMethod = env->GetMethodID(m_uiViewClass, "setEditText", "(Ljava/lang/String;Z)V");
 				jstring searchTextString = env->NewStringUTF(searchText.c_str());
 
-				env->CallVoidMethod(m_uiView, setEditTextMethod, searchTextString, isCategory);
+				env->CallVoidMethod(m_uiView, setEditTextMethod, searchTextString, isTag);
 				env->DeleteLocalRef(searchTextString);
 			}
 
@@ -111,7 +111,7 @@ namespace ExampleApp
 					(*it)->Contract();
 				}
 
-				UpdateMenuSectionViews(m_currentSections);
+				UpdateMenuSectionViews(m_currentSections, false);
 			}
 
             void SearchMenuView::InsertSearchPeformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)

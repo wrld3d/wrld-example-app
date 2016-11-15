@@ -13,7 +13,7 @@ namespace ExampleAppWPF
         public static SolidColorBrush olive = (SolidColorBrush)(new BrushConverter().ConvertFrom("#94A847"));
         public static SolidColorBrush white = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFFFF"));
         public static SolidColorBrush black = (SolidColorBrush)(new BrushConverter().ConvertFrom("#000000"));
-        public static SolidColorBrush darkgrey = (SolidColorBrush)(new BrushConverter().ConvertFrom("#777777"));
+        public static SolidColorBrush darkgrey = (SolidColorBrush)(new BrushConverter().ConvertFrom("#606060"));
         public static SolidColorBrush grey = (SolidColorBrush)(new BrushConverter().ConvertFrom("#AAAAAA"));
         public static SolidColorBrush lightgrey = (SolidColorBrush)(new BrushConverter().ConvertFrom("#CCCCCC"));
         public static SolidColorBrush blue = (SolidColorBrush)(new BrushConverter().ConvertFrom("#291E9A"));

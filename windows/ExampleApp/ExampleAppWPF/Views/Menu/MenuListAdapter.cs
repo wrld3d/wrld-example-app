@@ -96,7 +96,7 @@ namespace ExampleAppWPF
         {
             if (m_list.ItemsSource != itemsSource)
             {
-                ResetData();                
+                ResetData();
                 m_list.ItemsSource = itemsSource;
                 AnimateItemsInShutterOnly(groups, groupsExpandable, groupToChildren, 0, m_list.Items.Count);
             }
@@ -314,6 +314,8 @@ namespace ExampleAppWPF
 
                     return;
                 }
+                
+                
 
 
             }

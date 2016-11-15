@@ -47,6 +47,7 @@ namespace ExampleApp
                 , m_previousInterestEcefLocation(Eegeo::dv3::Zero())
                 , m_previousQueryInterestDistance(0.f)
                 , m_previousQueryInteriorId()
+                , m_interiorHasChanged(false)
             {
                 m_searchService.InsertOnPerformedQueryCallback(m_searchResultQueryIssuedCallback);
                 m_searchService.InsertOnReceivedQueryResultsCallback(m_searchResultResponseReceivedCallback);
@@ -98,6 +99,16 @@ namespace ExampleApp
                 m_previousQueryFloorIndex != m_interiorInteractionModel.GetSelectedFloorIndex();
                 if (hasChangedInteriorFloors)
                 {
+                    if (m_interiorHasChanged)
+                    {
+                        m_interiorHasChanged = false;
+
+                        m_previousQueryFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
+
+                        return false;
+                    }
+
+                    
                     return true;
                 }
                 
@@ -146,14 +157,15 @@ namespace ExampleApp
                 {
                     const Eegeo::Space::LatLongAltitude& currentLocation = Eegeo::Space::LatLongAltitude::FromECEF(interestPointEcef);
                     const SearchQuery& previousQuery = m_searchQueryPerformer.GetPreviousSearchQuery();
-                    if (previousQuery.IsCategory() && previousQuery.Query() == Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME)
+                    m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsTag(), previousQuery.ShouldTryInteriorSearch(), currentLocation);
+                    if (previousQuery.IsTag() && previousQuery.Query() == Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME)
                     {
                         // Bodged for Swallow Office category query.
-                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), previousQuery.ShouldTryInteriorSearch(), currentLocation, previousQuery.Radius());
+                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsTag(), previousQuery.ShouldTryInteriorSearch(), currentLocation, previousQuery.Radius());
                     }
                     else
                     {
-                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), previousQuery.ShouldTryInteriorSearch(), currentLocation);
+                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsTag(), previousQuery.ShouldTryInteriorSearch(), currentLocation);
                     }
 
                     if (m_interiorInteractionModel.HasInteriorModel())
@@ -176,10 +188,12 @@ namespace ExampleApp
                 {
                     const SearchQuery& previousQuery = m_searchQueryPerformer.GetPreviousSearchQuery();
                     
-                    if ((previousQuery.IsCategory()) && (previousQuery.Query() != Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME))
+                    if (previousQuery.IsTag())
                     {
-                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsCategory(), previousQuery.ShouldTryInteriorSearch());
+                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsTag(), previousQuery.ShouldTryInteriorSearch());
                         m_secondsSincePreviousRefresh = 0.f;
+
+                        m_interiorHasChanged = true;
                     }
                 }
             }

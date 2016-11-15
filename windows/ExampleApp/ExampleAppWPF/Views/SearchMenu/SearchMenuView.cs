@@ -1,4 +1,5 @@
 ﻿using ExampleApp;
+using ExampleAppWPF.Views.SearchMenu;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,7 @@ namespace ExampleAppWPF
 
         private bool m_searchInFlight;
         private bool m_hasResults;
-        private bool m_hasCategorySearch;
+        private bool m_hasTagSearch;
 
         private ControlClickHandler m_menuListClickHandler;
         private ControlClickHandler m_resultsListClickHandler;
@@ -68,8 +69,16 @@ namespace ExampleAppWPF
 
             m_searchInFlight = false;
             m_hasResults = false;
-            m_hasCategorySearch = false;
+            m_hasTagSearch = false;
             m_touchHandler = new WindowInteractionTouchHandler(this, true, false, true);
+
+            MouseEnter += (o, e) =>
+            {
+                mainWindow.PopAllMouseEvents();
+                mainWindow.DisableInput();
+            };
+
+            MouseLeave += (o, e) => { mainWindow.EnableInput(); };
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -103,7 +112,7 @@ namespace ExampleAppWPF
             var searchBoxBackgroundDefaultHeight = m_backgroundRectangle.ActualHeight;
             var menuOptionsViewDefaultHeight = m_menuOptionsView.ActualHeight;
             var separatorHeight = m_resultsSeparator.ActualHeight;
-            var seperatorCount = 4;
+            var seperatorCount = 2;
 
             return Math.Max(0.0, menuViewHeight - searchBoxBackgroundDefaultHeight - menuOptionsViewDefaultHeight - seperatorCount * separatorHeight);
         }
@@ -117,11 +126,11 @@ namespace ExampleAppWPF
             return Math.Max(0.0, menuViewHeight - searchBoxBackgroundDefaultHeight + 2 * separatorHeight);
         }
 
-        protected override Size MeasureOverride(Size constraint)
+        protected override Size ArrangeOverride(Size arrangeBounds)
         {
             m_resultsOptionsView.MaxHeight = CalcResultOptionsViewMaxHeight();
             m_menuOptionsView.MaxHeight = CalcMenuOptionsViewMaxHeight();
-            return base.MeasureOverride(constraint);
+            return base.ArrangeOverride(arrangeBounds);
         }
 
         public override void OnApplyTemplate()
@@ -306,7 +315,7 @@ namespace ExampleAppWPF
 
         private void OnSearchBoxSelected(object sender, RoutedEventArgs e)
         {
-            if (m_hasCategorySearch)
+            if (m_hasTagSearch)
             {
                 m_editText.Text = string.Empty;
             }
@@ -330,7 +339,7 @@ namespace ExampleAppWPF
         private void ClearSearch()
         {
             m_hasResults = false;
-            m_hasCategorySearch = false;
+            m_hasTagSearch = false;
 
             if (m_resultsList.Items?.Count > 0)
             {
@@ -373,7 +382,7 @@ namespace ExampleAppWPF
             }
         }
 
-        async Task UpdateResults(string[] searchResults)
+        public void SetSearchSection(string tag, string[] searchResults)
         {
             var groups = new List<string>(searchResults.Length);
             var groupsExpandable = new List<bool>(searchResults.Length);
@@ -385,19 +394,17 @@ namespace ExampleAppWPF
             {
                 var jObject = JObject.Parse(str);
                 var item = new SearchMenuListItem();
-                item.Name = jObject["name"].Value<string>();
+                item.Name = jObject["name"] != null ? jObject["name"].Value<string>() : string.Empty;
+                item.Details = jObject["details"] != null ? jObject["details"].Value<string>() : string.Empty;
 
-                var detailsString = jObject["details"]?.Value<string>();
-                item.Details = detailsString;
-                item.DetailVisibility = detailsString == null ? "Collapsed" : "Visible";
-              
                 JToken iconStringToken;
-                var iconString = jObject.TryGetValue("icon", out iconStringToken) ? iconStringToken.Value<string>() : "misc";
-                item.Icon = new System.Windows.Media.Imaging.BitmapImage(ViewHelpers.MakeUriForImage(string.Format("icon1_{0}.png", iconString)));
+                var iconTagName = jObject.TryGetValue("icon", out iconStringToken) ? iconStringToken.Value<string>() : "";
+                item.Icon = SearchMenuResultIconProvider.GetIconForTag(iconTagName);
                 itemsSource.Add(item);
 
                 groups.Add(str);
                 groupsExpandable.Add(false);
+
                 if (!groupToChildren.ContainsKey(str))
                 {
                     groupToChildren.Add(str, new List<string>());
@@ -406,18 +413,13 @@ namespace ExampleAppWPF
 
 
             m_resultListAdapter.SetData(itemsSource, groups, groupsExpandable, groupToChildren);
-        }
 
-        public async void SetSearchSection(string category, string[] searchResults)
-        {
             m_resultsSpinner.Visibility = Visibility.Hidden;
             m_resultsClearButton.Visibility = Visibility.Visible;
             m_searchArrow.Visibility = Visibility.Visible;
             m_resultsSeparator.Visibility = Visibility.Visible;
 
             m_searchInFlight = false;
-
-            await UpdateResults(searchResults);
         }
 
         public override void AnimateToClosedOnScreen()
@@ -458,7 +460,7 @@ namespace ExampleAppWPF
                 m_searchArrowOpen.Begin(m_searchArrow);
 
                 base.AnimateToOpenOnScreen();
-                m_mainWindow.EnableInput(); 
+                m_mainWindow.EnableInput();
             }
         }
 
@@ -477,7 +479,7 @@ namespace ExampleAppWPF
             });
         }
 
-        public void SetEditText(string text, bool isCategory)
+        public void SetEditText(string text, bool isTag)
         {
             if(!m_editText.IsFocused)
             {
@@ -485,7 +487,8 @@ namespace ExampleAppWPF
                 string encodedText = Encoding.UTF8.GetString(bytes);
                 m_editText.Text = encodedText;
             }
-            m_hasCategorySearch = isCategory;
+            m_hasTagSearch = isTag;
+            
         }
         
         public void SetSearchResultCount(int count)

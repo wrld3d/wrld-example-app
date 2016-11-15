@@ -149,6 +149,7 @@ namespace ExampleAppWPF
         }
         public void UpdateFloors(string[] floorShortNames, int currentlySelectedFloorIndex)
         {
+            System.Diagnostics.Debug.Assert(floorShortNames != null, "floorShortNames cannot be null");
             m_floorShortNames = floorShortNames;
 
             m_sliderTickBar.TickLabels = string.Join(",", floorShortNames);
@@ -157,9 +158,9 @@ namespace ExampleAppWPF
 
             m_floorSlider.Minimum = 0;
             m_floorSlider.Maximum = FloorCount - 1;
-            SetSelectedFloor(currentlySelectedFloorIndex);
+			SetSelectedFloor(currentlySelectedFloorIndex);
 
-            m_floorPanel.Visibility = FloorSelectionEnabled ? Visibility.Visible : Visibility.Hidden;
+			m_floorPanel.Visibility = FloorSelectionEnabled ? Visibility.Visible : Visibility.Hidden;
         }
         public void SetFloorName(string name)
         {
@@ -172,6 +173,7 @@ namespace ExampleAppWPF
         public void SetSelectedFloor(int floorIndex)
         {
             m_selectedFloorIndex = floorIndex;
+
             if (!m_dragInProgress)
             {
                 m_floorSlider.Value = m_selectedFloorIndex;

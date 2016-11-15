@@ -41,6 +41,7 @@ namespace ExampleApp
                 
                 WindowsNativeState& m_nativeState;
                 const float m_pinOffset;
+                bool m_largePinFocus;
 
                 gcroot<System::Type^> m_uiViewClass;
                 gcroot<System::Object^> m_uiView;

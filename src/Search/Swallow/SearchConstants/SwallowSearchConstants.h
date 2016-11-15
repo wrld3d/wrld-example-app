@@ -4,7 +4,7 @@
 
 #include <string>
 #include <vector>
-#include "CategorySearchModel.h"
+#include "TagSearchModel.h"
 
 namespace ExampleApp
 {
@@ -59,14 +59,14 @@ namespace ExampleApp
                 extern const int MEETING_ROOM_AVAILABLE_SOON_PRIORITY;
                 extern const int MEETING_ROOM_OCCUPIED_PRIORITY;
                 extern const int MEETING_ROOM_MAX_PRIORITY;
-                
-                std::vector<CategorySearch::View::CategorySearchModel> GetCategorySearchModels();
 
-                std::vector<std::string> GetAllCategories();
+                std::vector<TagSearch::View::TagSearchModel> GetTagSearchModels();
                 
-                std::vector<std::string> GetCategories();
+                std::vector<std::string> GetAllTags();
                 
-                bool ShouldShowCategoryAsSearchResult(const std::string& category);
+                std::vector<std::string> GetTags();
+                
+                bool ShouldShowTagAsSearchResult(const std::string& tag);
             }
         }
     }

@@ -51,9 +51,9 @@ namespace ExampleApp
                     //[m_pView.pInputDelegate enableEdit];
                 }
                 
-                void SetEditText(const std::string& searchText, bool isCategory)
+                void SetEditText(const std::string& searchText, bool isTag)
                 {
-                    //[m_pView.pInputDelegate setEditText :[NSString stringWithUTF8String:searchText.c_str()] :isCategory];
+                    //[m_pView.pInputDelegate setEditText :[NSString stringWithUTF8String:searchText.c_str()] :isTag];
                 }
                 
                 void SetSearchResultCount(int searchResultCount)

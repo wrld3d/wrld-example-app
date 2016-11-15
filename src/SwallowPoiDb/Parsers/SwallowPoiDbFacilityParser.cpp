@@ -78,8 +78,9 @@ namespace ExampleApp
                                                            true,
                                                            Eegeo::Resources::Interiors::InteriorId(resultRow.Cell(columnOffset + poi_interior_id).AsText()),
                                                            resultRow.Cell(columnOffset + poi_interior_floor).AsInteger(),
-                                                           resultRow.Cell(columnOffset + poi_category).AsText(),
+                                                           Search::Swallow::SearchConstants::GetAllTags(),
                                                            std::vector<std::string>(),
+                                                           resultRow.Cell(columnOffset + poi_category).AsText(),
                                                            Search::EegeoVendorName,
                                                            strbuf.GetString(),
                                                            Eegeo::Helpers::Time::MillisecondsSinceEpoch());

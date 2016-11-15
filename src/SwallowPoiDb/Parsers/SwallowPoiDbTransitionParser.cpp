@@ -80,9 +80,10 @@ namespace ExampleApp
                                                            true,
                                                            interiorID,
                                                            interiorFloor,
-                                                           Search::Swallow::SearchConstants::TRANSITION_CATEGORY_NAME,
+                                                           Search::Swallow::SearchConstants::GetAllTags(),
                                                            std::vector<std::string>(),
                                                            Search::EegeoVendorName,
+                                                           Search::Swallow::SearchConstants::TRANSITION_CATEGORY_NAME,
 														   strbuf.GetString(),
                                                            Eegeo::Helpers::Time::MillisecondsSinceEpoch());
             }

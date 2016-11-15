@@ -14,9 +14,8 @@ set(currsources
   src/main.h
 )
 
-
-
-set(clr_compile_flags "/clr /EHa /FpExampleAppClrPch.pch")
+set(precompiled_header_clr_result WindowsClrPch_$(Configuration)_$(Platform).pch)
+set(clr_compile_flags "/clr /EHa /Fp${precompiled_header_clr_result}")
 
 set_source_files_properties(${currsources} PROPERTIES COMPILE_FLAGS "${clr_compile_flags}")
 
@@ -32,7 +31,6 @@ set(sources ${sources} ${currsources})
 source_group(\\windows_src\\ FILES ${currsources})
 include(src/AboutPage/CMakeLists.txt)
 include(src/ApplicationConfig/CMakeLists.txt)
-include(src/CategorySearch/CMakeLists.txt)
 include(src/CLI/CMakeLists.txt)
 include(src/Compass/CMakeLists.txt)
 include(src/FlattenButton/CMakeLists.txt)
@@ -53,6 +51,7 @@ include(src/SearchResultPoi/CMakeLists.txt)
 include(src/SearchResultSection/CMakeLists.txt)
 include(src/SettingsMenu/CMakeLists.txt)
 include(src/Surveys/CMakeLists.txt)
+include(src/TagSearch/CMakeLists.txt)
 include(src/Watermark/CMakeLists.txt)
 include(src/WindowsAppThreadAssertions/CMakeLists.txt)
 include(src/WorldPins/CMakeLists.txt)

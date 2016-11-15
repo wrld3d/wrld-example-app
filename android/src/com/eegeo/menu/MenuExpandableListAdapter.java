@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.eegeo.categories.CategoryResources;
+import com.eegeo.tags.TagResources;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.ProjectSwallowApp.R;
 
@@ -196,6 +196,7 @@ public class MenuExpandableListAdapter extends BaseExpandableListAdapter
 	public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) 
 	{
 		View itemView;
+		MenuItemData menuItemData = (MenuItemData)getGroup(groupPosition);
 		
 		String key = m_headerData.get(groupPosition).getText();
 		if (m_headerViewCache.containsKey(key))
@@ -204,11 +205,18 @@ public class MenuExpandableListAdapter extends BaseExpandableListAdapter
 		}
 		else
 		{
-			MenuItemData menuItemData = (MenuItemData)getGroup(groupPosition);
 			itemView = inflateView(m_groupViewId, menuItemData);		
 			m_headerViewCache.put(key, itemView);
 		}
-
+		
+		List<MenuItemData> children = m_childData.get(menuItemData.getText());
+		Boolean isExpandable = children != null && children.size() > 0;
+		View arrowView = itemView.findViewById(R.id.menu_list_openable_shape);
+		if(arrowView != null)
+		{
+			arrowView.setVisibility(isExpandable ? View.VISIBLE : View.GONE);
+		}
+		
 		return itemView;
 	}
 
@@ -332,18 +340,9 @@ public class MenuExpandableListAdapter extends BaseExpandableListAdapter
 		}
 		
 		ImageView itemIcon = (ImageView)itemView.findViewById(R.id.menu_list_item_icon);
-		
-		if (itemData.getText().equals("Meeting Rooms") ||
-		        itemData.getText().equals("Facilities & Amenities") ||
-		        itemData.getText().equals("Buildings"))
-		{
-		    View arrowView = itemView.findViewById(R.id.menu_list_openable_shape);
-		    arrowView.setVisibility(View.INVISIBLE);
-		}
-		
 		if (itemIcon != null)
 		{
-			itemIcon.setImageResource(CategoryResources.getSmallIconForResourceName(m_context, itemData.getIcon()));
+			itemIcon.setImageResource(TagResources.getIconForResourceName(m_context, itemData.getIcon()));
 		}
 		
 		return itemView;

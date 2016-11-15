@@ -25,7 +25,6 @@ namespace ExampleApp
                                              ExampleAppMessaging::TMessageBus& messageBus,
                                              const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                              const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
-                                             const Eegeo::Resources::Interiors::IImmutableInteriorViewModel& interiorViewModel,
                                              ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
                                              const bool interiorsAffectedByFlattening,
                                              const Menu::View::IMenuReactionModel& menuReaction,
@@ -53,7 +52,6 @@ namespace ExampleApp
                 m_pWorldPinsFloorHeightController = Eegeo_NEW(WorldPinsFloorHeightController)(*m_pWorldPinsRepository,
                                                                                               pinRepository,
                                                                                               interiorInteractionModel,
-                                                                                              interiorViewModel,
                                                                                               interiorsAffectedByFlattening);
 
                 m_pWorldPinsInFocusViewModel = Eegeo_NEW(View::WorldPinInFocusViewModel)(identityProvider.GetNextIdentity());
@@ -70,8 +68,6 @@ namespace ExampleApp
 
                 m_pWorldPinsModalityObserver = Eegeo_NEW(WorldPinsModalityObserver)(*m_pWorldPinsScaleController,
                                                messageBus);
-
-
             }
 
             WorldPinsModule::~WorldPinsModule()

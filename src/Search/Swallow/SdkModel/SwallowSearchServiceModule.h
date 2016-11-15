@@ -61,7 +61,7 @@ namespace ExampleApp
 
                     void Update();
                    
-                    std::vector<CategorySearch::View::CategorySearchModel> GetCategorySearchModels() const;
+                    std::vector<TagSearch::View::TagSearchModel> GetTagSearchModels() const;
                     
                     SwallowSearchTransitionPinController& GetSwallowSearchTransitionPinController() const;
                     

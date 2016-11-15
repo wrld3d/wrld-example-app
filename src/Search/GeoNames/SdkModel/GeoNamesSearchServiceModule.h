@@ -34,8 +34,8 @@ namespace ExampleApp
                     ~GeoNamesSearchServiceModule();
                     
                     Search::SdkModel::ISearchService& GetSearchService() const;
-                    
-                    std::vector<CategorySearch::View::CategorySearchModel> GetCategorySearchModels() const;
+
+                    std::vector<TagSearch::View::TagSearchModel> GetTagSearchModels() const;
                 };
             }
         }

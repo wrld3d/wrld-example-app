@@ -15,7 +15,7 @@
 #include "Camera.h"
 #include "SearchResultOnMapItemModelSelectedObserver.h"
 #include "BidirectionalBus.h"
-#include "CategorySearch.h"
+#include "TagSearch.h"
 #include "MyPins.h"
 #include "IMetricsService.h"
 #include "IMenuReactionModel.h"
@@ -39,7 +39,7 @@ namespace ExampleApp
                                         SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
                                         WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                         MyPins::SdkModel::IMyPinsService& myPinsService,
-                                        CategorySearch::ISearchResultIconCategoryMapper& searchResultOnMapIconCategoryMapper,
+                                        TagSearch::ISearchResultIconKeyMapper& searchResultOnMapIconKeyMapper,
                                         Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultMyPinsService,
                                         ExampleAppMessaging::TMessageBus& messageBus,
                                         Metrics::IMetricsService& metricsService,

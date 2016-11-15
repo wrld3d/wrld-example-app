@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.IO;
 using System.Diagnostics;
 using System.Windows.Navigation;
+using System.Windows.Input;
 
 namespace ExampleAppWPF
 {
@@ -61,6 +62,7 @@ namespace ExampleAppWPF
             m_selectFromGalleryButton.Click -= OnSelectFromGalleryClick;
             m_submitButton.Click -= OnSubmitClick;
             m_tosLink.Click -= OnHyperlinkClick;
+            m_description.ManipulationBoundaryFeedback -= OnDescriptionViewBoundaryFeedback;
 
             m_currentWindow.MainGrid.Children.Remove(this);
         }
@@ -83,12 +85,17 @@ namespace ExampleAppWPF
             m_tosLink = CheckAndGetProperty("TermsLink") as System.Windows.Documents.Hyperlink;
 
             m_prevSource = m_poiImage.Source;
-            
             m_closeButton = CheckAndGetProperty("CloseButton") as Button;
             m_closeButton.Click += OnCloseClick;
             m_selectFromGalleryButton.Click += OnSelectFromGalleryClick;
             m_submitButton.Click += OnSubmitClick;
             m_tosLink.Click += OnHyperlinkClick;
+            m_description.ManipulationBoundaryFeedback += OnDescriptionViewBoundaryFeedback;
+        }
+
+        private void OnDescriptionViewBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
+        {
+            e.Handled = true;
         }
 
         private void OnHyperlinkClick(object sender, RoutedEventArgs e)

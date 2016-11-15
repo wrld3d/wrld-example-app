@@ -1,3 +1,4 @@
+using ExampleAppWPF.Views.SearchMenu;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Windows.Media;
@@ -7,12 +8,20 @@ namespace ExampleAppWPF
 {
     public class SubMenuListItem : MenuListItem
     {
-        string m_iconString;
         ImageSource m_icon;
+        private string m_details;
+
+        public string DetailVisibility { get; private set; } = "Collapsed";
+        public SolidColorBrush TitleTextColor { get; private set; } = Colour.darkgrey;
 
         public ImageSource Icon
         {
             get { return m_icon; }
+        }
+
+        public string Details
+        {
+            get { return m_details; }
         }
 
         public SubMenuListItem(string json, int zIndex)
@@ -23,8 +32,16 @@ namespace ExampleAppWPF
 
             if (parsed.TryGetValue("icon", out iconField))
             {
-                m_iconString = iconField.Value<string>();
-                m_icon = new BitmapImage(ViewHelpers.MakeUriForImage(string.Format("icon1_{0}.png", m_iconString)));
+                var iconName = iconField.Value<string>();
+                m_icon = SearchMenuResultIconProvider.GetIconForTag(iconName);
+            }
+
+            JToken detailsField;
+            if (parsed.TryGetValue("details", out detailsField))
+            {
+                m_details = detailsField.Value<string>();
+                DetailVisibility = "Visible";
+                TitleTextColor = Colour.black;
             }
         }
     }

@@ -3,7 +3,6 @@
 #include "AboutPageModule.h"
 #include "AboutPageViewModel.h"
 #include "EegeoWorld.h"
-#include "ApiKey.h"
 
 namespace
 {

@@ -18,7 +18,8 @@ namespace ExampleApp
             SettingsMenuModule::SettingsMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
                                                    Reaction::View::IReactionControllerModel& reactionControllerModel,
                                                    AboutPage::View::IAboutPageViewModel& aboutPageViewModel,
-                                                   Options::View::IOptionsViewModel& optionsViewModel)
+                                                   Options::View::IOptionsViewModel& optionsViewModel,
+                                                   Menu::View::IMenuModel& weatherMenuModel)
             {
                 m_pModel = Eegeo_NEW(Menu::View::MenuModel)();
                 m_pMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pModel);
@@ -26,18 +27,21 @@ namespace ExampleApp
                 m_pViewModel = Eegeo_NEW(Menu::View::MenuViewModel)(false,
                                                                     identityProvider.GetNextIdentity(),
                                                                     reactionControllerModel);
+
+                AddMenuSection("Weather", weatherMenuModel, true);
                 
                 m_pOptionsMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                 m_pOptionsMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pOptionsMenuModel);
-                m_pOptionsMenuOptionsModel->AddItem("Options", "Options", "", "options", Eegeo_NEW(View::OptionsMenuOption)(*m_pViewModel, optionsViewModel));
+                m_pOptionsMenuOptionsModel->AddItem("Options", "Options", "", "", Eegeo_NEW(View::OptionsMenuOption)(*m_pViewModel, optionsViewModel));
                 
-                AddMenuSection("Options", "options", *m_pOptionsMenuModel, false);
-                
+                AddMenuSection("Options", *m_pOptionsMenuModel, false);
+
                 m_pAboutMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                 m_pAboutMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pAboutMenuModel);
-                m_pAboutMenuOptionsModel->AddItem("About", "About", "", "misc", Eegeo_NEW(View::AboutPageMenuOption)(*m_pViewModel,aboutPageViewModel));
+                m_pAboutMenuOptionsModel->AddItem("About", "About", "", "", Eegeo_NEW(View::AboutPageMenuOption)(*m_pViewModel, aboutPageViewModel));
+
+                AddMenuSection("About", *m_pAboutMenuModel, false);
                 
-                AddMenuSection("About", "misc", *m_pAboutMenuModel, false);
             }
             
             SettingsMenuModule::~SettingsMenuModule()
@@ -59,15 +63,14 @@ namespace ExampleApp
             }
             
             void SettingsMenuModule::AddMenuSection(const std::string& name,
-            										const std::string& icon,
                                                     Menu::View::IMenuModel& menuModel,
                                                     bool isExpandable)
             {
-                Menu::View::MenuSectionViewModel* pMenuSection = Eegeo_NEW(Menu::View::MenuSectionViewModel)(name, icon, menuModel, isExpandable);
+                Menu::View::MenuSectionViewModel* pMenuSection = Eegeo_NEW(Menu::View::MenuSectionViewModel)(name, "", menuModel, isExpandable);
                 m_pViewModel->AddSection(*pMenuSection);
                 m_sections.push_back(pMenuSection);
             }
-            
+
             Menu::View::IMenuModel& SettingsMenuModule::GetSettingsMenuModel() const
             {
                 return *m_pModel;

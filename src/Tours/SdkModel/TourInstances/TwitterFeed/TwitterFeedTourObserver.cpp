@@ -121,7 +121,6 @@ namespace ExampleApp
                         //                        }
                         const std::string& pinIconKey = PinIconKeyForTwitterUser(userId);
                         
-                        
                         ExampleApp::Tours::SdkModel::TourModel tourModel(tourName,
                                                                          "@"+userId,
                                                                          pinIconKey,
@@ -198,7 +197,6 @@ namespace ExampleApp
                                 }
                             }
                         }
-                        
                     }
                     
                 }

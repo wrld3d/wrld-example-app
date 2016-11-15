@@ -61,6 +61,7 @@ namespace ExampleApp
 
                 void CreateAndShowGeoNamesPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned);
 
+                void CreateAndShowEegeoPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned);
                 void CreateAndShowPersonSearchResultPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned);
 
 				void CreateAndShowMeetingRoomSearchResultPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned);

@@ -174,7 +174,7 @@ static NSString *CellIdentifier = @"searchCell";
     {
         std::string name = document["name"].GetString();
         
-        const float imageSize = 30.0f;
+        const float imageSize = 36.0f;
         const float imageInset = 6.0f;
         
         const std::string icon = document.HasMember("icon") ? document["icon"].GetString() : "misc";
@@ -206,21 +206,21 @@ static NSString *CellIdentifier = @"searchCell";
                                       textWidth,
                                       textHeight);
         
-        if (hasDetails)
+        std::string details = "";
+        if (document.HasMember("details"))
         {
-            const std::string details = document["details"].GetString();
-            cell.detailTextLabel.text = [NSString stringWithUTF8String:details.c_str()];
-            cell.detailTextLabel.font = [UIFont systemFontOfSize:11.0f];
-            cell.detailTextLabel.textColor = ExampleApp::Helpers::ColorPalette::TableSearchDetailTextColor;
-            cell.detailTextLabel.backgroundColor = [UIColor clearColor];
-            [cell.detailTextLabel sizeToFit];
+            details = document["details"].GetString();
         }
-
-        const float detailTextY = 24.0f;
-        CGRect detailTextFrame = hasDetails ? CGRectMake(textInsetX,
-                                                         detailTextY,
-                                                         textWidth,
-                                                         cell.detailTextLabel.frame.size.height) : CGRectZero;
+        
+        cell.detailTextLabel.text = [NSString stringWithUTF8String:details.c_str()];
+        cell.detailTextLabel.font = [UIFont systemFontOfSize:11.0f];
+        cell.detailTextLabel.textColor = ExampleApp::Helpers::ColorPalette::TableSearchDetailTextColor;
+        [cell.detailTextLabel sizeToFit];
+        
+        CGRect detailTextFrame = CGRectMake(textInsetX,
+                                            detailTextY,
+                                            textWidth,
+                                            cell.detailTextLabel.frame.size.height);
         
         [(CustomTableViewCell*)cell setContentFrames:imageFrame
                                                     :textFrame

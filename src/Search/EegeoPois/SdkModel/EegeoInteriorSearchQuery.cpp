@@ -3,7 +3,6 @@
 #include "EegeoInteriorSearchQuery.h"
 #include "IWebLoadRequestFactory.h"
 #include "IWebLoadRequest.h"
-#include "ApiKey.h"
 #include "InteriorId.h"
 
 #include <sstream>
@@ -33,9 +32,8 @@ namespace ExampleApp
                 , m_floorIdx(floorIdx)
                 , m_webRequestCompleteCallback(this, &EegeoInteriorSearchQuery::OnWebResponseReceived)
                 {
-                    Eegeo_ASSERT(query.IsCategory(), "Only support category indoor queries");
+                    Eegeo_ASSERT(query.IsTag(), "Only support tag indoor queries");
                     const int maximumNumberOfResults = 99;
-                    const int timeOutSecs = 30;
                     
                     std::string encodedQuery;
                     urlEncoder.UrlEncode(query.Query(), encodedQuery);
@@ -43,17 +41,20 @@ namespace ExampleApp
                     std::stringstream urlstream;
                     urlstream.setf(std::ios_base::fixed);
                     urlstream << serviceUrl;
-                    urlstream << "/indoor?t=";
-                    urlstream << encodedQuery;
-                    urlstream << "&f=";
+                    urlstream << "/indoor?";
+                    if (!encodedQuery.empty())
+                    {
+                        urlstream << "t=" << encodedQuery << "&";
+                    }
+                    urlstream << "f=";
                     urlstream << m_floorIdx;
                     urlstream << "&i=";
                     urlstream << m_interiorId.Value();
-                    urlstream << "&n=" << maximumNumberOfResults; // increased for Swallow
+                    urlstream << "&n=" << maximumNumberOfResults;
                     urlstream << "&apikey=" << m_apiKey;
                     
                     std::string url = urlstream.str();
-                    m_pWebLoadRequest = webRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, url, m_webRequestCompleteCallback).SetTimeout(timeOutSecs).Build();
+                    m_pWebLoadRequest = webRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, url, m_webRequestCompleteCallback).Build();
                     m_pWebLoadRequest->Load();
                 }
                 

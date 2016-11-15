@@ -23,6 +23,7 @@ namespace ExampleApp
             {
                 const std::string VendorViewClassNames[] = {
                     "ExampleAppWPF.YelpSearchResultsPoiView",
+                    "ExampleAppWPF.eeGeoSearchResultsPoiView",
                     "ExampleAppWPF.SwallowWorkingGroupSearchResultsPoiView",
                     "ExampleAppWPF.SwallowPersonSearchResultsPoiView",
                     "ExampleAppWPF.SwallowMeetingRoomSearchResultsPoiView",
@@ -58,7 +59,7 @@ namespace ExampleApp
                 int previousVendor = m_currentVendor;
 
                 m_model = model;
-                CreateVendorSpecificPoiView(m_model.GetVendor(), m_model.GetCategory());
+                CreateVendorSpecificPoiView(m_model.GetVendor(), m_model.GetPrimaryTag());
 
                 if (m_isAnyPoiOpen && previousVendor != m_currentVendor)
                 {
@@ -79,7 +80,7 @@ namespace ExampleApp
 
             void SearchResultPoiView::UpdateImage(const std::string& url, bool hasImage, const std::vector<unsigned char>* pImageBytes)
             {
-                if (!hasImage || pImageBytes == NULL)
+                if (!hasImage || pImageBytes->empty())
                 {
                     return;
                 }
@@ -150,14 +151,12 @@ namespace ExampleApp
             void SearchResultPoiView::CreateVendorSpecificPoiView(const std::string& vendor, const std::string& category)
             {
                 ASSERT_UI_THREAD
-				
-                std::string viewClassName = "";
-				
-                if(vendor == ExampleApp::Search::YelpVendorName)
+
+                if(vendor == Search::YelpVendorName)
                 {
                     m_currentVendor = SearchVendors::Yelp;
                 }
-                else if(vendor == ExampleApp::Search::GeoNamesVendorName)
+                else if(vendor == Search::GeoNamesVendorName)
                 {
                     m_currentVendor = SearchVendors::GeoNames;
                 }
@@ -188,6 +187,7 @@ namespace ExampleApp
                 else
                 {
                     Eegeo_ASSERT(false, "Unknown POI vendor %s, cannot create view instance.\n", vendor.c_str());
+                    m_currentVendor = -1;
                 }
             }
         }

@@ -66,6 +66,7 @@ LOCAL_LDLIBS += -fuse-ld=bfd -Wl,--stub-group-size=2085000
 LOCAL_STATIC_LIBRARIES := recce-common-lib eegeo-sdk-lib png-lib curl-lib uv-lib ssl-lib crypto-lib http-parser-lib jpeg-lib turbojpeg-lib sqlite-lib
 
 cflags := -Wall -Wno-unknown-pragmas -Wno-sign-compare -Wno-format-security -Wno-reorder
+
 cppflags := -std=c++11 -fexceptions
 
 LOCAL_CFLAGS += ${cflags}
@@ -99,7 +100,7 @@ else
 	includes := ${shell sh -c '${get_android_includes_cmd}'}
 	includes += ${shell sh -c '${get_shared_includes_cmd}'}
 	includes += ${shell sh -c '${get_platform_includes_cmd}'}
-	includes += ${shell sh -c '${get_external_libs_includes_cmd}'}	
+	includes += ${shell sh -c '${get_external_libs_includes_cmd}'}
 endif 
 
 includes += ./libs/eegeo/rapidjson

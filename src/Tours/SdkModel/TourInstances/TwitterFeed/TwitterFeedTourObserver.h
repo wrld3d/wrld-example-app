@@ -1,5 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
+#pragma once
+
 #include "types.h"
 
 #include <set>
@@ -47,8 +49,8 @@ namespace ExampleApp
                                                  Social::TwitterFeed::TweetRepository& tweetRepository);
                         
                         void UpadateTweetLinksOut();
-                        std::string PinIconKeyForTwitterUser(const std::string twitterUserId) const;
                         
+                        std::string PinIconKeyForTwitterUser(const std::string twitterUserId) const;
                     public:
                         TwitterFeedTourObserver(Camera::IToursCameraTransitionController& toursCameraTransitionController,
                                                 ITourService& tourService,

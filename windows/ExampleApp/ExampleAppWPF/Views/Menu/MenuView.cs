@@ -185,7 +185,10 @@ namespace ExampleAppWPF
             }
             m_SearchMenuAnimated = false;
 
-            m_animationCompleteCallback?.Invoke(sender, e);
+            if (m_animationCompleteCallback != null)
+            {
+                m_animationCompleteCallback(sender, e);
+            }
         }
 
         public virtual void AnimateToClosedOnScreen()

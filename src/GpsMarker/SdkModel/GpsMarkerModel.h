@@ -3,13 +3,9 @@
 #pragma once
 
 #include "ICallback.h"
-#include "Location.h"
+#include "ILocationService.h"
 #include "VectorMath.h"
 #include "Terrain.h"
-#include "Interiors.h"
-#include "Rendering.h"
-#include "Space.h"
-#include "SenionLocation.h"
 
 namespace ExampleApp
 {
@@ -21,30 +17,29 @@ namespace ExampleApp
             {
             public:
                 
-                GpsMarkerModel(ExampleApp::SenionLocation::SdkModel::ISenionLocationService& locationService,
-                               Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider,
-                               const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                               const bool interiorsAffectedByFlattening);
+                GpsMarkerModel(Eegeo::Location::ILocationService& locationService,
+                               Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider);
                 ~GpsMarkerModel();
 
-                bool UpdateGpsPosition();
+                bool UpdateGpsPosition(float dt);
                 
                 bool HasLocation() const { return m_hasLocation; }
                 const Eegeo::dv3& GetCurrentLocationEcef() const { return m_currentLocationEcef; }
+                bool IsLocationIndoors() const { return m_locationService.IsIndoors(); }
                 
-                void GetFinalEcefPosition(Eegeo::Rendering::EnvironmentFlatteningService& environmentFlattening,
-                                          Eegeo::dv3& out_position);
+                void UpdateHeading(float dt);
+                const double GetSmoothedHeadingDegrees() const;
                 
-                void GetServiceLocation(Eegeo::Space::LatLong &latLong);
             private:
                 
-                ExampleApp::SenionLocation::SdkModel::ISenionLocationService& m_locationService;
+                Eegeo::Location::ILocationService& m_locationService;
                 Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& m_terrainHeightProvider;
-                const Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 
                 bool m_hasLocation;
                 Eegeo::dv3 m_currentLocationEcef;
-                const bool m_interiorsAffectedByFlattening;
+                
+                float m_currentHeadingRadians;
+                float m_currentHeadingVelocity;
             };
         }
     }

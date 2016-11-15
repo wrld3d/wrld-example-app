@@ -285,7 +285,16 @@
 
 - (void) transitionToNewPosition
 {
-    const float inactivePos = !m_alignAlongBottom ? (m_screenHeight + m_height) : (-m_height);
+    float inactivePos = !m_alignAlongBottom ? (m_screenHeight + m_height) : (-m_height);
+    
+    if(self.frame.origin.y >= m_screenHeight * 0.5f && inactivePos < m_screenHeight * 0.5f)
+    {
+        inactivePos = (m_screenHeight + m_height);
+    }
+    else if(self.frame.origin.y < m_screenHeight * 0.5f && inactivePos >= m_screenHeight * 0.5f)
+    {
+        inactivePos = (-m_height);
+    }
     
     CGRect f = self.frame;
     f.origin.y = inactivePos;
@@ -307,6 +316,7 @@
 }
 
 - (void) setWatermarkAlignmentState: (bool) alignAlongBottom
+                                   : (bool) alignBelowFloorDisplay
 {
     if (!ExampleApp::Helpers::UIHelpers::UsePhoneLayout())
     {
@@ -317,7 +327,15 @@
     
     if (!alignAlongBottom)
     {
-        m_yPosActive = (20 * m_pixelScale);
+        if(alignBelowFloorDisplay)
+        {
+            m_yPosActive = m_height + (18 * m_pixelScale);
+        }
+        else
+        {
+            m_yPosActive = (20 * m_pixelScale);
+        }
+        
         m_yPosInactive = (-m_height);
     }
     else

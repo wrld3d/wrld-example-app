@@ -8,7 +8,7 @@
 #include "Types.h"
 
 #include "AppCamera.h"
-#include "SearchResultIconCategoryMapper.h"
+#include "SearchResultIconKeyMapper.h"
 #include "SearchResultModel.h"
 #include "WorldPins.h"
 #include "CameraTransitions.h"
@@ -38,7 +38,7 @@ namespace ExampleApp
                     
                     void ClearResults();
                     
-                    CategorySearch::SearchResultIconCategoryMapper m_searchResultIconCategoryMapper;
+                    TagSearch::SearchResultIconKeyMapper m_searchResultIconKeyMapper;
                     WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
                     CameraTransitions::SdkModel::ICameraTransitionController& m_transitionController;
                     Search::SdkModel::ISearchService& m_searchService;

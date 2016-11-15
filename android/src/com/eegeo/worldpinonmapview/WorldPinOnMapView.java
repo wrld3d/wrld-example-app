@@ -96,7 +96,7 @@ public class WorldPinOnMapView implements View.OnClickListener
     		m_ratingsBar.setVisibility(View.GONE);
     		m_poiAccreditationImage.setVisibility(View.GONE);
     		
-    		if(usedSubtitle)
+    		if(subtitle != null && subtitle.length()>0)
     		{
     			m_detailsView.setVisibility(View.VISIBLE);
             	m_detailsView.setText(subtitle);	
@@ -104,6 +104,7 @@ public class WorldPinOnMapView implements View.OnClickListener
     		else 
     		{
     			m_detailsView.setVisibility(View.GONE);
+    			titleMarginDp = 15; 
     		}
     		
     		m_poiRatingImage.setImageDrawable(null);

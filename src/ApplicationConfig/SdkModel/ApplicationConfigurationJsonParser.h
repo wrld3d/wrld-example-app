@@ -3,8 +3,10 @@
 #pragma once
 
 #include "ApplicationConfig.h"
+#include "IApplicationConfigurationBuilder.h"
 #include "IApplicationConfigurationParser.h"
 #include "Types.h"
+#include "document.h"
 
 namespace ExampleApp
 {
@@ -14,13 +16,17 @@ namespace ExampleApp
         {
             class ApplicationConfigurationJsonParser : public IApplicationConfigurationParser, private Eegeo::NonCopyable
             {
+            public:
+                ApplicationConfigurationJsonParser(const ApplicationConfiguration& defaultConfig,
+                                                   IApplicationConfigurationBuilder& builder);
+
+                ApplicationConfiguration ParseConfiguration(const std::string& serialized);
+            private:
+                const ApplicationConfiguration m_defaultConfig;
                 IApplicationConfigurationBuilder& m_builder;
                 
-            public:
-                
-                ApplicationConfigurationJsonParser(IApplicationConfigurationBuilder& builder);
-                
-                ApplicationConfiguration ParseConfiguration(const std::string& serialized);
+                void ParseIndoorTrackingInfo(std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfoList,
+                                             const rapidjson::Value& indoorTrackedBuildingsArray);
             };
         }
     }

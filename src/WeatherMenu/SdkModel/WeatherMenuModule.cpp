@@ -21,7 +21,8 @@ namespace ExampleApp
             WeatherMenuModule::WeatherMenuModule(Eegeo::Helpers::IFileIO& fileIO,
                                                  VisualMap::SdkModel::IVisualMapService& visualMapService,
                                                  ExampleAppMessaging::TMessageBus& messageBus,
-                                                 Metrics::IMetricsService& metricsService)
+                                                 Metrics::IMetricsService& metricsService,
+                                                 const AppModes::SdkModel::IAppModeModel& appModeModel)
             {
                 m_pMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                 m_pMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pMenuModel);
@@ -50,7 +51,7 @@ namespace ExampleApp
                     WeatherMenuStateModel& weatherState = *it;
                     m_pMenuOptionsModel->AddItem(weatherState.GetName(),
                                                  weatherState.GetName(), "", weatherState.GetIcon(),
-                                                 Eegeo_NEW(View::WeatherMenuStateOption)(weatherState, messageBus, metricsService));
+                                                 Eegeo_NEW(View::WeatherMenuStateOption)(weatherState, messageBus, metricsService, appModeModel));
                 }
 
                 m_pWeatherSelectedMessageHandler = Eegeo_NEW(WeatherSelectedMessageHandler)(*m_pWeatherController, messageBus);

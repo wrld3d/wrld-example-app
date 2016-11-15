@@ -11,7 +11,7 @@
 #include "InteriorsEntitiesRepository.h"
 #include "Terrain.h"
 #include "CallbackCollection.h"
-#include  "InteriorsEntityMetadata.h"
+#include "InteriorsEntityMetadata.h"
 #include "WorldPins.h"
 
 #include <map>
@@ -40,8 +40,7 @@ namespace ExampleApp
                                                 const ExampleApp::WorldPins::SdkModel::IWorldPinIconMapping& pinIconMapper,
                                                 Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                 const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
-                                                Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& interiorsLabelsController,
-                                                Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider);
+                                                Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& interiorsLabelsController);
                 
                 ~InteriorsEntitiesPinsController();
                 
@@ -58,6 +57,7 @@ namespace ExampleApp
                 void RemovePinForEntity(const Eegeo::Resources::Interiors::Entities::InteriorsEntityModel& model);
                 void RemoveAllPins();
                 void UpdateScaleForPins(float t);
+                int FindPinIconIndexForEntity(const Eegeo::Resources::Interiors::Entities::InteriorsEntityMetadata& interiorsEntityMetadata) const;
                 
                 Eegeo::Resources::Interiors::Entities::InteriorsEntitiesRepository& m_interiorsEntitiesRepository;
                 Eegeo::Pins::PinController& m_pinController;
@@ -86,8 +86,6 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection1<const std::vector<Eegeo::Pins::Pin*>&> m_interiorPinSelectedCallbacks;
                 
                 Eegeo::Pins::TPinId m_lastId;
-                
-                Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& m_terrainHeightProvider;
             };
         }
     }

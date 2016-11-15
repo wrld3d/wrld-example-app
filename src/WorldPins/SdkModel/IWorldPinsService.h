@@ -9,6 +9,8 @@
 #include "WorldPinFocusData.h"
 #include "WorldPinInteriorData.h"
 
+#include <string>
+
 namespace ExampleApp
 {
     namespace WorldPins

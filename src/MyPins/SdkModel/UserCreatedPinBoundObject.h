@@ -27,7 +27,7 @@ namespace ExampleApp
                 MyPinsFileIO& m_myPinsFileIO;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 MyPins::SdkModel::MyPinsWebService& m_webService;
-                
+
                 void SubmitPinToWebService(const MyPinModel& pinModel);
                 
             public:

@@ -12,11 +12,16 @@
 #include "InteriorsEntityPinData.h"
 #include "IInteriorsLabelController.h"
 #include "InteriorsFloorModel.h"
-#include "TerrainHeightProvider.h"
 #include "InteriorInteractionModel.h"
 #include "InteriorsEntitiesRepository.h"
 #include "InteriorTransitionModel.h"
+#include "StringHelpers.h"
 #include "IWorldPinIconMapping.h"
+#include "SerializedJsonHelpers.h"
+#include "InteriorHelpers.h"
+#include "InteriorsEntitiesHelpers.h"
+
+#include <math.h>
 
 namespace ExampleApp
 {
@@ -30,8 +35,7 @@ namespace ExampleApp
                                                                              const ExampleApp::WorldPins::SdkModel::IWorldPinIconMapping& pinIconMapper,
                                                                              Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                              const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
-                                                                             Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& interiorsLabelsController,
-                                                                             Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider)
+                                                                             Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& interiorsLabelsController)
             : m_interiorsEntitiesRepository(interiorsEntitiesRepostiory)
             , m_pinController(pinController)
             , m_pinRepository(pinRepository)
@@ -43,7 +47,6 @@ namespace ExampleApp
             , m_interiorModelChangedCallback(this, &InteriorsEntitiesPinsController::HandleInteriorModelChanged)
             , m_interiorInteractionStateChangedCallback(this, &InteriorsEntitiesPinsController::HandleInteriorInteractionStateChanged)
             , m_lastId(0)
-            , m_terrainHeightProvider(terrainHeightProvider)
             {
                 m_interiorsEntitiesRepository.RegisterEntitiesAddedCallback(m_entitiesAddedCallback);
                 m_interiorsEntitiesRepository.RegisterEntitiesRemovedCallback(m_entitiesRemovedCallback);
@@ -58,8 +61,6 @@ namespace ExampleApp
                 m_labelNameToIconIndex["elevator"] = pinIconMapper.IconIndexForKey(IconKeyElevator);
                 m_labelNameToIconIndex["escalator"] = pinIconMapper.IconIndexForKey(IconKeyEscalator);
                 m_labelNameToIconIndex["stairs"] = pinIconMapper.IconIndexForKey(IconKeyStairs);
-
-                
                 
                 for (std::map<std::string, int>::const_iterator it = m_labelNameToIconIndex.begin(); it != m_labelNameToIconIndex.end(); ++it)
                 {
@@ -123,13 +124,16 @@ namespace ExampleApp
                 
                 for (Eegeo::Resources::Interiors::Entities::TEntityModelVector::const_iterator it = entities.begin(); it != entities.end(); ++it)
                 {
-                    const Eegeo::Resources::Interiors::Entities::InteriorsEntityMetadata *pMetadata = interiorModel.GetMetadataForEntityFromCategory("labels", (*it)->GetIdentifier());
+                    const Eegeo::Resources::Interiors::Entities::InteriorsEntityMetadata *pMetadata =
+                            interiorModel.GetMetadataForEntityFromCategory("labels", (*it)->GetIdentifier());
+
                     if (pMetadata == NULL)
                     {
                         continue;
                     }
                     
-                    if (m_labelNameToIconIndex.find(pMetadata->name) != m_labelNameToIconIndex.end())
+                    const int iconIndex = FindPinIconIndexForEntity(*pMetadata);
+                    if (iconIndex >= 0)
                     {
                         AddPinForEntity(**it, interiorModel);
                     }
@@ -142,29 +146,31 @@ namespace ExampleApp
                 
                 const Eegeo::Resources::Interiors::Entities::InteriorsEntityMetadata *pMetadata = interiorModel.GetMetadataForEntityFromCategory("labels", model.GetIdentifier());
                 
-                Eegeo_ASSERT(m_labelNameToIconIndex.find(pMetadata->name) != m_labelNameToIconIndex.end(), "Wasn't expecting to generate a pin for this label");
                 Eegeo_ASSERT(pMetadata != NULL, "No metadata to create entity pin");
                 
                 Eegeo::Space::LatLong pinLocation = Eegeo::Space::LatLong::FromDegrees(pMetadata->latitudeDegrees, pMetadata->longitudeDegrees);
-                const float wallHeight = 5.f;
-                float terrainHeight = 0.f;
-                m_terrainHeightProvider.TryGetHeight(pinLocation.ToECEF(), 12, terrainHeight);
-                
-                const float height = static_cast<float>(pMetadata->altitude - terrainHeight + wallHeight);
-                
-                int pinIconIndex = m_labelNameToIconIndex.at(pMetadata->name);
+
+                const int pinIconIndex = FindPinIconIndexForEntity(*pMetadata);
+                Eegeo_ASSERT(pinIconIndex >= 0, "Wasn't expecting to generate a pin for this label");
                 
                 if (m_floorToScaleMap.find(pMetadata->floorNumber) == m_floorToScaleMap.end())
                 {
                     m_floorToScaleMap[pMetadata->floorNumber] = 0.f;
                 }
-                
+
                 Entities::InteriorsEntityPinData* pPinData = Eegeo_NEW(Entities::InteriorsEntityPinData)(pMetadata->floorNumber);
-                Eegeo::Pins::Pin* pPin = Eegeo_NEW(Eegeo::Pins::Pin)(m_lastId, pinLocation, height, pinIconIndex, pPinData);
+                Eegeo::Pins::Pin* pPin = Eegeo_NEW(Eegeo::Pins::Pin)(m_lastId, pinLocation, 0.0f, pinIconIndex, pPinData);
+                
+                float bottomOfInterior = m_interiorInteractionModel.GetInteriorModel()->GetTangentSpaceBounds().GetMin().y;
+                float heightAboveGround = (pMetadata->altitude - bottomOfInterior) + Eegeo::Resources::Interiors::Entities::Helpers::GetHeightOffset(pMetadata);
+                
+                pPin->SetTerrainHeight(bottomOfInterior, 14);
+                pPin->SetHeightAboveTerrain(heightAboveGround);
+
                 m_entityToPinIdMap[&model] = m_lastId;
                 m_pinRepository.AddPin(*pPin);
                 m_pinController.SetScaleForPin(*pPin, 0.f);
-                
+
                 m_lastId++;
             }
             
@@ -296,6 +302,22 @@ namespace ExampleApp
                 {
                     RemoveAllPins();
                     m_floorToScaleMap.clear();
+                }
+            }
+            
+            int InteriorsEntitiesPinsController::FindPinIconIndexForEntity(const Eegeo::Resources::Interiors::Entities::InteriorsEntityMetadata& interiorsEntityMetadata) const
+            {
+                const std::string& nameLowerCase = Eegeo::Helpers::ToLower(interiorsEntityMetadata.name);
+                
+                std::map<std::string, int>::const_iterator iter = m_labelNameToIconIndex.find(nameLowerCase);
+                
+                if (iter == m_labelNameToIconIndex.end())
+                {
+                    return -1;
+                }
+                else
+                {
+                    return iter->second;
                 }
             }
         }

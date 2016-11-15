@@ -433,7 +433,7 @@ enum MenuState
         
         totalTableHeight += tableHeight;
     }
-    
+
     const CGFloat tableY = self.pTableViewContainer.frame.origin.y + self.pMenuContainer.frame.origin.y;
     const CGFloat tableViewContainerHeight = MIN(m_screenHeight - tableY, totalTableHeight);
     

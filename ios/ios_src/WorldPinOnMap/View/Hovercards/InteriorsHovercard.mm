@@ -11,98 +11,31 @@
 
 - (id)initWithParams:(float)pinDiameter :(float)pixelScale :(ExampleApp::WorldPins::View::WorldPinOnMapViewInterop*)interop
 {
-    self = [super init];
-    
+    self = [super initWithParams:pinDiameter :pixelScale :interop :14];
     if(self)
     {
-        self.alpha = 0.f;
-        m_pinOffset = (pinDiameter * pixelScale);
-        m_pixelScale = pixelScale;
-        m_stateChangeAnimationTimeSeconds = 0.2f;
-        
-        m_tapGestureRecogniser = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapped:)];
-        [m_tapGestureRecogniser setDelegate:self];
-        [self addGestureRecognizer: m_tapGestureRecogniser];
-        
-        m_pInterop = interop;
-        
-        // shadow
-        self.pMainControlShadowContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pMainControlShadowContainer setBackgroundColor: ExampleApp::Helpers::ColorPalette::UiShadowColor];
-        [self addSubview: self.pMainControlShadowContainer];
-        
-        // main control container
-        self.pMainControlContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pMainControlContainer setBackgroundColor: [UIColor clearColor]];
-        [self addSubview: self.pMainControlContainer];
-        
-        // top strip
-        self.pTopStrip = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pTopStrip setBackgroundColor: ExampleApp::Helpers::ColorPalette::UiBorderColor];
-        [self.pMainControlContainer addSubview: self.pTopStrip];
-        
-        // label container
-        self.pLabelBack = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pLabelBack setBackgroundColor: ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
-        [self.pMainControlContainer addSubview: self.pLabelBack];
-        
-        // name label
-        self.pNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pNameLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextTitleColor;
-        self.pNameLabel.textAlignment = NSTextAlignmentCenter;
-        self.pNameLabel.numberOfLines = 2;
-        self.pNameLabel.lineBreakMode = NSLineBreakByWordWrapping;
-        self.pNameLabel.font = [UIFont systemFontOfSize:16.0];
-        self.pNameLabel.backgroundColor = [UIColor clearColor];
-        [self.pLabelBack addSubview: self.pNameLabel];
-        
-        // poi arrow
-        self.pArrowContainer = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::LoadImage("arrow1")] autorelease];
-        self.pArrowContainer.contentMode = UIViewContentModeScaleToFill;
-        [self addSubview: self.pArrowContainer];
-        
-        self.frame.origin = CGPointMake(0, 0);
+        self.pSubtitleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pSubtitleLabel.textColor = ExampleApp::Helpers::ColorPalette::TwitterDarkGrey;
+        self.pSubtitleLabel.textAlignment = NSTextAlignmentCenter;
+        self.pSubtitleLabel.numberOfLines = 1;
+        self.pSubtitleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+        self.pSubtitleLabel.font = [UIFont systemFontOfSize:12.0];
+        self.pSubtitleLabel.backgroundColor = [UIColor clearColor];
+        [self.pLabelBack addSubview: self.pSubtitleLabel];
     }
-    
     return self;
 }
 
 - (void)dealloc
 {
-    [self.pNameLabel removeFromSuperview];
-    [self.pNameLabel release];
-    
-    [self.pLabelBack removeFromSuperview];
-    [self.pLabelBack release];
-    
-    [self.pTopStrip removeFromSuperview];
-    [self.pTopStrip release];
-    
-    [self.pMainControlContainer removeFromSuperview];
-    [self.pMainControlContainer release];
-    
-    [self.pMainControlShadowContainer removeFromSuperview];
-    [self.pMainControlShadowContainer release];
-    
-    [self.pArrowContainer removeFromSuperview];
-    [self.pArrowContainer release];
-    
+    [self.pSubtitleLabel removeFromSuperview];
+    [self.pSubtitleLabel release];
     [self removeFromSuperview];
     [super dealloc];
 }
 
 - (void)layoutSubviews
 {
-    const float minWidth = 120.f;
-    const float maxWidth = 180.f;
-    
-    const float topStripHeight = 5.f;
-    const float labelMarginX = 8.f;
-    const float labelMarginTop = 2.5f;
-    const float labelMarginBottom = 4.0f;
-    const float arrowWidth = 16.f;
-    const float maxLabelWidth = maxWidth - 2*labelMarginX;
-    
     self.layer.shouldRasterize = YES;
     self.layer.rasterizationScale = [[UIScreen mainScreen] scale];
     
@@ -123,6 +56,30 @@
     self.pTopStrip.frame =  CGRectMake(0.f, 0.f, w, topStripHeight);
     self.pLabelBack.frame = CGRectMake(0.f, topStripHeight, w, h - topStripHeight);
 
+    if(self.pSubtitleLabel.text.length == 0)
+    {
+        self.pNameLabel.frame = CGRectMake(labelOffsetX,
+                                           labelOffsetY,
+                                           w - (labelOffsetX*2),
+                                           nameHeight);
+        self.pNameLabel.font = [UIFont systemFontOfSize:18.0];
+        self.pSubtitleLabel.hidden = YES;
+    }
+    else
+    {
+        self.pNameLabel.frame = CGRectMake(labelOffsetX,
+                                           labelOffsetY - 10,
+                                           w - (labelOffsetX*2),
+                                           nameHeight);
+        self.pNameLabel.font = [UIFont systemFontOfSize:14.0];
+        self.pSubtitleLabel.hidden = NO;
+    }
+    self.pSubtitleLabel.frame = CGRectMake(labelOffsetX,
+                                       labelOffsetY + 10,
+                                       w - (labelOffsetX*2),
+                                       nameHeight);
+    
+    const float arrowWidth = 16.f;
     self.pArrowContainer.frame = CGRectMake(w/2.f - arrowWidth/2.f, h, arrowWidth, arrowWidth);
     
     float trueY = m_previousY/m_pixelScale - m_pinOffset/m_pixelScale;
@@ -135,76 +92,7 @@
 - (void) setContent:(const ExampleApp::WorldPins::SdkModel::IWorldPinsInFocusModel&) worldPinsInFocusModel
 {
     self.pNameLabel.text = [NSString stringWithUTF8String:worldPinsInFocusModel.GetTitle().c_str()];
-    
-    
+    self.pSubtitleLabel.text = [NSString stringWithUTF8String:worldPinsInFocusModel.GetSubtitle().c_str()];
     [self setNeedsLayout];
 }
-
-- (void) setFullyActive :(float)modality
-{
-    self.userInteractionEnabled = YES;
-    [self animateToAlpha:(1.f - modality)];
-}
-
-- (void) setFullyInactive
-{
-    self.userInteractionEnabled = NO;
-    [self animateToAlpha:0.f];
-}
-
-- (void) updatePosition:(float)x :(float)y
-{
-    float roundedX = roundf(x);
-    float roundedY = roundf(y);
-    
-    if(m_previousX == roundedX && m_previousY == roundedY)
-    {
-        float trueY = roundedY/m_pixelScale - m_pinOffset/m_pixelScale;
-        float trueX = roundedX/m_pixelScale;
-        
-        CGRect f = self.frame;
-        f.origin.x = static_cast<int>(trueX - (f.size.width/2.f));
-        f.origin.y = static_cast<int>(trueY - (m_cardHeight));
-        self.frame = f;
-    }
-    else
-    {
-        float trueY = y/m_pixelScale - m_pinOffset/m_pixelScale;
-        float trueX = x/m_pixelScale;
-        
-        CGRect f = self.frame;
-        f.origin.x = trueX - (f.size.width/2.f);
-        f.origin.y = trueY - (m_cardHeight);
-        self.frame = f;
-    }
-    
-    m_previousX = roundedX;
-    m_previousY = roundedY;
-}
-
-- (BOOL)consumesTouch:(UITouch *)touch
-{
-    if(self.userInteractionEnabled)
-    {
-        CGPoint touchLocation = [touch locationInView:self];
-        return CGRectContainsPoint(self.bounds, touchLocation);
-    }
-    
-    return false;
-}
-
-- (void) animateToAlpha:(float)alpha
-{
-    [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds
-                     animations:^
-     {
-         self.alpha = alpha;
-     }];
-}
-
-- (void) onTapped:(UITapGestureRecognizer *)recognizer
-{
-    m_pInterop->OnSelected();
-}
-
 @end

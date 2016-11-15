@@ -41,18 +41,46 @@ namespace ExampleApp
                     }
                 }
                 
-                bool CombinedSearchService::CanHandleCategory(const std::string& category) const
+                bool CombinedSearchService::CanHandleTag(const std::string& tag) const
                 {
                     std::map<std::string,Search::SdkModel::ISearchService*>::const_iterator iter;
                     
                     for (iter = m_searchServices.begin(); iter != m_searchServices.end(); ++iter)
                     {
-                        if((*iter).second->CanHandleCategory(category))
+                        if((*iter).second->CanHandleTag(tag))
                         {
                             return true;
                         }
                     }
                     
+                    return false;
+                }
+                
+                
+                bool CombinedSearchService::CanPerformLocationQuerySearch(const Search::SdkModel::SearchQuery& query, const Search::SdkModel::ISearchService& searchService) const
+                {
+                    if (searchService.CanHandleIndoor())
+                    {
+                        const bool isIndoor = m_interiorInteractionModel.HasInteriorModel();
+                        
+                        if (isIndoor || query.ShouldTryInteriorSearch())
+                        {
+                            return true;
+                        }
+                    }
+                    
+                    const bool isTag = query.IsTag();
+                    const bool canPerformTag = isTag && searchService.CanHandleTag(query.Query());
+
+                    if (canPerformTag)
+                    {
+                        return true;
+                    }
+                    else if (!isTag)
+                    {
+                        return true;
+                    }
+
                     return false;
                 }
                 
@@ -70,8 +98,8 @@ namespace ExampleApp
                     for (std::map<std::string,Search::SdkModel::ISearchService*>::const_iterator iter = m_searchServices.begin(); iter != m_searchServices.end(); ++iter)
                     {
                         bool isIndoor = m_interiorInteractionModel.HasInteriorModel();
-                        bool isCategory = query.IsCategory();
-                        bool canPerformCategory = isCategory && (*iter).second->CanHandleCategory(query.Query());
+                        bool isCategory = query.IsTag();
+                        bool canPerformCategory = isCategory && (*iter).second->CanHandleTag(query.Query());
                         bool canPerformIndoor = isIndoor && (*iter).second->CanHandleIndoor();
                         
                         if (isIndoor)
@@ -92,6 +120,7 @@ namespace ExampleApp
                                 queryServices.push_back((*iter).second);
                             }
                         }
+
                         
                     }
                     
@@ -118,9 +147,11 @@ namespace ExampleApp
                 void CombinedSearchService::PerformIdentitySearch(const Search::SdkModel::SearchResultModel& outdatedSearchResult,
                                                                      Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& callback)
                 {
-                    if(m_searchServices.find(outdatedSearchResult.GetVendor()) != m_searchServices.end())
+                    std::map<std::string,Search::SdkModel::ISearchService*>::iterator iter = m_searchServices.find(outdatedSearchResult.GetVendor());
+                    if (iter != m_searchServices.end())
                     {
-                        m_searchServices[outdatedSearchResult.GetVendor()]->PerformIdentitySearch(outdatedSearchResult,callback);
+                        Search::SdkModel::ISearchService* pSearchService = iter->second;
+                        pSearchService->PerformIdentitySearch(outdatedSearchResult,callback);
                     }
                     else
                     {
@@ -158,7 +189,7 @@ namespace ExampleApp
                          it++)
                     {
                         const Search::SdkModel::SearchResultModel& searchResult = *it;
-                        if (searchResult.GetCategory() == Search::Swallow::SearchConstants::INDOOR_MAP_CATEGORY_NAME && !query.IsCategory())
+                        if (searchResult.GetPrimaryTag() == Search::Swallow::SearchConstants::INDOOR_MAP_CATEGORY_NAME && !query.IsTag())
                         {
                             continue;
                         }

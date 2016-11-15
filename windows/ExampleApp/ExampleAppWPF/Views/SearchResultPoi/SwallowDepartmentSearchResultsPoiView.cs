@@ -39,10 +39,10 @@ namespace ExampleAppWPF
             base.OnApplyTemplate();
         }
         
-        public override void DisplayPoiInfo(Object modelObject, bool isPinned)
+        protected override void DisplayCustomPoiInfo(Object modelObject)
         {
             m_model = modelObject as ExampleApp.SearchResultModelCLI;
-            m_categoryIcon.Source = SearchResultCategoryMapper.GetIconForCategory(m_model.Category);
+            m_categoryIcon.Source = SearchResultPoiViewIconProvider.GetIconForTag(m_model.IconKey);
 
             m_swallowDepartmentModel = SwallowDepartmentResultModel.FromJson(m_model.JsonData);
 

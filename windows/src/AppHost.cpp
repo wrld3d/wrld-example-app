@@ -9,7 +9,6 @@
 #include "GlobalFogging.h"
 #include "AppInterface.h"
 #include "JpegLoader.h"
-#include "Blitter.h"
 #include "EffectHandler.h"
 #include "SearchServiceCredentials.h"
 #include "WindowsThreadHelper.h"
@@ -55,7 +54,7 @@
 #include "WindowsInitialExperienceModule.h"
 #include "ViewControllerUpdaterModule.h"
 #include "ViewControllerUpdaterModel.h"
-#include "CategorySearchModule.h"
+#include "TagSearchModule.h"
 #include "ScreenProperties.h"
 #include "MyPinCreationViewModule.h"
 #include "IMyPinCreationModule.h"
@@ -90,31 +89,15 @@
 #include "SurveyViewModule.h"
 #include "SearchResultPoiView.h"
 #include "WindowsMenuReactionModel.h"
+#include "TagSearchViewModule.h"
 #include "IMyPinCreationInitiationViewModel.h"
+#include "WindowsApplicationConfigurationVersionProvider.h"
 #include "ModalityIgnoredReactionModel.h"
 #include "WindowsApplicationConfigurationVersionProvider.h"
 #include "PlatformConfigBuilder.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
-
-namespace
-{
-	typedef ExampleApp::ApplicationConfig::ApplicationConfiguration ApplicationConfiguration;
-
-	ApplicationConfiguration LoadConfiguration(WindowsNativeState& state)
-	{
-		std::set<std::string> customAsssetDirectories;
-		customAsssetDirectories.insert("ApplicationConfigs");
-
-		WindowsFileIO tempFileIO(&state, customAsssetDirectories);
-
-        ExampleApp::ApplicationConfig::SdkModel::WindowsApplicationConfigurationVersionProvider versionProvider;
-
-		ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule applicationConfigurationModule(tempFileIO, versionProvider.GetProductVersionString(), versionProvider.GetBuildNumberString(), ExampleApp::ApplicationConfigurationSecret);
-		return applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration(ExampleApp::ApplicationConfigurationPath);
-	}
-}
 
 AppHost::AppHost(
     WindowsNativeState& nativeState,
@@ -124,7 +107,7 @@ AppHost::AppHost(
     EGLContext resourceBuildShareContext,
     bool hasNativeTouchInput,
     int maxDeviceTouchCount
-    )
+)
     :m_isPaused(false)
     , m_pJpegLoader(NULL)
     , m_pWindowsLocationService(NULL)
@@ -155,15 +138,16 @@ AppHost::AppHost(
     , m_pWindowsFlurryMetricsService(NULL)
     , m_pInitialExperienceIntroViewModule(NULL)
     , m_pSurverysViewModule(NULL)
-	, m_pInteriorsExplorerViewModule(NULL)
+    , m_pInteriorsExplorerViewModule(NULL)
     , m_failAlertHandler(this, &AppHost::HandleStartupFailure)
     , m_pMenuReaction(NULL)
     , m_shouldStartFullscreen(false)
     , m_maxDeviceTouchCount(maxDeviceTouchCount)
+	, m_pTagSearchViewModule(NULL)
 {
     ASSERT_NATIVE_THREAD
          
-    Eegeo_ASSERT(resourceBuildShareContext != EGL_NO_CONTEXT);
+	Eegeo_ASSERT(resourceBuildShareContext != EGL_NO_CONTEXT);
 
     Eegeo::TtyHandler::TtyEnabled = true;
     Eegeo::AssertHandler::BreakOnAssert = true;
@@ -176,8 +160,6 @@ AppHost::AppHost(
     locationOverride.horizontalAccuracyMeters = 10.0;
     locationOverride.headingDegrees = 0.0;
 
-	const ApplicationConfiguration& applicationConfiguration = LoadConfiguration(nativeState);
-
     m_pWindowsLocationService = Eegeo_NEW(WindowsLocationService)(&nativeState, &locationOverride);
 
     m_pJpegLoader = Eegeo_NEW(Eegeo::Helpers::Jpeg::JpegLoader)();
@@ -185,6 +167,14 @@ AppHost::AppHost(
     std::set<std::string> customApplicationAssetDirectories;
     customApplicationAssetDirectories.insert("SearchResultOnMap");
     customApplicationAssetDirectories.insert("ApplicationConfigs");
+
+    const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration = ExampleApp::ApplicationConfig::SdkModel::LoadAppConfig(
+        WindowsFileIO(&nativeState, customApplicationAssetDirectories),
+        ExampleApp::ApplicationConfig::SdkModel::WindowsApplicationConfigurationVersionProvider(),
+        ExampleApp::ApplicationConfigurationPath,
+        ExampleApp::ApplicationConfigurationSecret);
+
+    m_shouldStartFullscreen = applicationConfiguration.ShouldStartFullscreen();
 
     m_pWindowsPlatformAbstractionModule = Eegeo_NEW(Eegeo::Windows::WindowsPlatformAbstractionModule)(
         nativeState,
@@ -197,7 +187,11 @@ AppHost::AppHost(
 
     Eegeo::EffectHandler::Initialise();
 
-    bool enableTouchControls = hasNativeTouchInput ? applicationConfiguration.IsKioskTouchInputEnabled() : false;
+    Eegeo::Windows::WindowsPlatformConfigBuilder windowsPlatformConfigBuilder(nativeState.GetDeviceModel());
+
+    const Eegeo::Config::PlatformConfig& platformConfiguration = ExampleApp::ApplicationConfig::SdkModel::BuildPlatformConfig(windowsPlatformConfigBuilder, applicationConfiguration);
+
+    bool enableTouchControls =  hasNativeTouchInput ? applicationConfiguration.IsKioskTouchInputEnabled() : false;
 
     const Eegeo::Windows::Input::WindowsInputProcessorConfig& windowsInputProcessorConfig = Eegeo::Windows::Input::WindowsInputProcessor::DefaultConfig();
     m_pInputProcessor = Eegeo_NEW(Eegeo::Windows::Input::WindowsInputProcessor)(&m_inputHandler, m_nativeState.GetWindow(), screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), windowsInputProcessorConfig, enableTouchControls, m_maxDeviceTouchCount);
@@ -217,28 +211,23 @@ AppHost::AppHost(
 
     m_pWindowsFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::WindowsFlurryMetricsService)(&m_nativeState);
 
-    m_pMenuReaction = Eegeo_NEW(ExampleApp::Menu::View::WindowsMenuReactionModel)(true, true, m_messageBus);
+    m_pMenuReaction = Eegeo_NEW(ExampleApp::Menu::View::WindowsMenuReactionModel)(false, false);
 
-    const std::string& deviceModel = nativeState.GetDeviceModel();
-    const Eegeo::Config::PlatformConfig& defaultPlatformConfig = Eegeo::Windows::WindowsPlatformConfigBuilder(deviceModel).Build();
-    const Eegeo::Config::PlatformConfig& platformConfig = ExampleApp::PlatformConfigBuilder::Build(defaultPlatformConfig, applicationConfiguration, "EmbeddedTheme");
-
-    m_shouldStartFullscreen = applicationConfiguration.ShouldStartFullscreen();
 
     m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
+        applicationConfiguration,
         *m_pWindowsPlatformAbstractionModule,
         screenProperties,
         *m_pWindowsLocationService,
         m_WindowsNativeUIFactories,
-        platformConfig,
+        platformConfiguration,
         *m_pJpegLoader,
         *m_pInitialExperienceModule,
         *m_pWindowsPersistentSettingsModel,
         m_messageBus,
         m_sdkDomainEventBus,
         *m_pNetworkCapabilities,
-        *m_pWindowsFlurryMetricsService,
-        applicationConfiguration,
+        *m_pWindowsFlurryMetricsService,        
         *this,
         *m_pMenuReaction);
 
@@ -523,12 +512,18 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         app.SearchMenuModule().GetSearchMenuModel(),
         app.SearchMenuModule().GetSearchMenuViewModel(),
         app.SearchMenuModule().GetSearchSectionViewModel(),
-        app.CategorySearchModule().GetCategorySearchRepository(),
+        app.TagSearchModule().GetTagSearchRepository(),
         m_pModalBackgroundViewModule->GetView(),
         app.ModalityModule().GetModalityController(),
         m_messageBus,
         app.ReactionModelModule().GetReactionModel()
         );
+
+	m_pTagSearchViewModule = ExampleApp::TagSearch::View::TagSearchViewModule::Create(
+		app.TagSearchModule().GetTagSearchMenuOptionsModel(),
+		app.SettingsMenuModule().GetSettingsMenuViewModel(),
+		m_messageBus,
+		*m_pMenuReaction);
 
     m_pSettingsMenuViewModule = Eegeo_NEW(ExampleApp::SettingsMenu::View::SettingsMenuViewModule)(
         "ExampleAppWPF.SettingsMenuView",
@@ -595,14 +590,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 	m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(
 		app.InteriorsExplorerModule().GetInteriorsExplorerModel(),
 		app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
-		m_messageBus,
-		app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
-		app.SettingsMenuModule().GetSettingsMenuViewModel(),
-		app.SearchMenuModule().GetSearchMenuViewModel(),
-		app.FlattenButtonModule().GetScreenControlViewModel(),
-		app.CompassModule().GetScreenControlViewModel(),
-		app.WatermarkModule().GetScreenControlViewModel(),
-		app.GetIdentityProvider());
+		m_messageBus);
 
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
 
@@ -648,6 +636,8 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
             Eegeo_DELETE m_pModalBackgroundViewModule;
 
             Eegeo_DELETE m_pSearchResultSectionViewModule;
+
+			Eegeo_DELETE m_pTagSearchViewModule;
 
             Eegeo_DELETE m_pSearchMenuViewModule;
 

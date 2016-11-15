@@ -8,5 +8,4 @@
 @implementation SettingsTableDataProvider
 
 
-
 @end;

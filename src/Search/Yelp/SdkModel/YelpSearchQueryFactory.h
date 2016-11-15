@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <string>
 #include "Search.h"
 #include "ICallback.h"
 #include "IdentitySearchCallbackData.h"
@@ -27,12 +28,13 @@ namespace ExampleApp
                         const std::string& yelpConsumerSecret,
                         const std::string& yelpOAuthToken,
                         const std::string& yelpOAuthTokenSecret,
+                        const std::map<std::string, std::string>& appTagToYelpCategoryMap,
                         Eegeo::Web::IWebLoadRequestFactory& webRequestFactory);
                     
                     ~YelpSearchQueryFactory();
                     
                     IYelpSearchQuery* CreateYelpSearchForQuery(const Search::SdkModel::SearchQuery& query,
-                                                                       Eegeo::Helpers::ICallback0& completionCallback);
+                                                               Eegeo::Helpers::ICallback0& completionCallback);
                     
                 private:
                     const std::string m_apiUrl;
@@ -42,7 +44,7 @@ namespace ExampleApp
                     OAuth::Token m_token;
                     
                     Eegeo::Web::IWebLoadRequestFactory& m_webRequestFactory;
-                    std::map<std::string, std::string> m_applicationToYelpCategoryMap;
+                    std::map<std::string, std::string> m_applicationTagToYelpCategoryMap;
                 };
             }
         }

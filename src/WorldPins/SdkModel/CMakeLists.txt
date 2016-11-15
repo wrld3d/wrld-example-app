@@ -40,6 +40,6 @@ set(currsources
   ../src/WorldPins/SdkModel/IWorldPinIconMappingFactory.h
   ../src/WorldPins/SdkModel/WorldPinIconMappingFactory.h
   ../src/WorldPins/SdkModel/WorldPinIconMappingFactory.cpp
-)		  
+)
 set(sources ${sources} ${currsources})
 source_group(\\src\\WorldPins\\SdkModel FILES ${currsources})

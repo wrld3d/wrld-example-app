@@ -23,27 +23,27 @@
  {
     "Name":"Clear",
     "Weather":"Default",
-    "Icon":"sunny"
+    "Icon":"clear"
  },
  {
     "Name":"Overcast",
     "Weather":"Overcast",
-    "Icon":"overcast"
+    "Icon":"sun"
  },
  {
     "Name":"Foggy",
     "Weather":"Foggy",
-    "Icon":"foggy"
+    "Icon":"fog"
  },
  {
     "Name":"Rain",
     "Weather":"Rainy",
-    "Icon":"rainy"
+    "Icon":"rain"
  },
  {
     "Name":"Snow",
     "Weather":"Snowy",
-    "Icon":"snowy"
+    "Icon":"snow"
  },
  {
     "Name":"Spring",

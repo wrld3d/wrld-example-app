@@ -41,7 +41,7 @@ namespace ExampleApp
                 
                 void SwallowSearchTransitionPinController::OnSearchServiceReceivedQueryResults(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results)
                 {
-                    if (query.IsCategory() && query.Query() == SearchConstants::TRANSITION_CATEGORY_NAME)
+                    if (query.IsTag() && query.Query() == SearchConstants::TRANSITION_CATEGORY_NAME)
                     {
                         OnTransitionsLoaded(results);
                     }
@@ -58,7 +58,7 @@ namespace ExampleApp
                                                                                        (*it).GetFloor());
                         
                         const float heightOffsetMetres = 0.0f;
-                        const std::string& pinIconKey = m_searchResultIconCategoryMapper.GetIconKeyFromSearchResult(*it);
+                        const std::string& pinIconKey = m_searchResultIconKeyMapper.GetIconKeyFromSearchResult(*it);
                         const bool isInteriorPin = true;
                         
                         SwallowTransitionResultModel transitionResultModel = SearchParser::TransformToSwallowTransitionResult(*it);

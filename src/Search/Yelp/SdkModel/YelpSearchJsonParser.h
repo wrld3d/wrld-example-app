@@ -7,6 +7,9 @@
 #include "Yelp.h"
 #include "ISearchResultParser.h"
 #include "Types.h"
+#include "TagSearch.h"
+
+#include <document.h>
 
 #include <document.h>
 
@@ -20,10 +23,12 @@ namespace ExampleApp
             {
                 class YelpSearchJsonParser : public Search::SdkModel::ISearchResultParser, private Eegeo::NonCopyable
                 {
-                    IYelpCategoryMapper& m_yelpCategoryMapper;
+                    IYelpCategoryToTagMapper& m_yelpCategoryMapper;
+                    const TagSearch::SdkModel::ITagIconMapper& m_tagIconMapper;
                     
                 public:
-                    YelpSearchJsonParser(IYelpCategoryMapper& yelpCategoryMapper);
+                    YelpSearchJsonParser(IYelpCategoryToTagMapper& yelpCategoryMapper,
+                                         const TagSearch::SdkModel::ITagIconMapper& tagIconMapper);
                     
                     void ParseSearchResults(const std::string& serialized,
                                             std::vector<Search::SdkModel::SearchResultModel>& out_results);

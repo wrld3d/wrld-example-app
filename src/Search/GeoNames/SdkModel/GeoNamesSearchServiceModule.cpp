@@ -42,10 +42,10 @@ namespace ExampleApp
                 {
                     return *m_pSearchService;
                 }
-                
-                std::vector<CategorySearch::View::CategorySearchModel> GeoNamesSearchServiceModule::GetCategorySearchModels() const
+
+                std::vector<TagSearch::View::TagSearchModel> GeoNamesSearchServiceModule::GetTagSearchModels() const
                 {
-                    return std::vector<CategorySearch::View::CategorySearchModel>();
+                    return std::vector<TagSearch::View::TagSearchModel>();
                 }
             }
         }

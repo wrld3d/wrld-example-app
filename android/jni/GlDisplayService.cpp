@@ -201,6 +201,7 @@ bool GlDisplayService::TryBindDisplay(ANativeWindow& window)
     }
 
     // no documentation on what return code means. Some other functions return a negative value to indicate failure.
+
     ANativeWindow_setBuffersGeometry(&window, 0, 0, format);
 
     static const EGLint contextAttribs[] =

@@ -31,12 +31,12 @@ namespace ExampleApp
                 
                 m_metricsService.SetEvent("Opened POI",
                                           "Title", searchResultModel.GetTitle().c_str(),
-                                          "Category", searchResultModel.GetCategory().c_str(),
+                                          "Tag", searchResultModel.GetPrimaryTag().c_str(),
                                           "Vicinity", searchResultModel.GetSubtitle().c_str());
                 
                 std::string floorRanges;
                 
-                if(searchResultModel.GetCategory() == Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME)
+                if(searchResultModel.GetPrimaryTag() == Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME)
                 {
                     floorRanges = "\n\n" + Helpers::GetFormattedFloorRanges(searchResultModel.GetJsonData());
                 }
@@ -50,8 +50,9 @@ namespace ExampleApp
                                                              searchResultModel.IsInterior(),
                                                              searchResultModel.GetBuildingId(),
                                                              searchResultModel.GetFloor(),
-                                                             searchResultModel.GetCategory(),
-                                                             searchResultModel.GetHumanReadableCategories(),
+                                                             searchResultModel.GetTags(),
+                                                             searchResultModel.GetHumanReadableTags(),
+                                                             searchResultModel.GetIconKey(),
                                                              searchResultModel.GetVendor(),
                                                              searchResultModel.GetJsonData(),
                                                              Eegeo::Helpers::Time::MillisecondsSinceEpoch());

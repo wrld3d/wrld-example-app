@@ -28,7 +28,7 @@ namespace ExampleApp
                 mAnimateToIntermediateOnScreenState.SetupMethod(m_uiViewClass, m_uiView, "AnimateToIntermediateOnScreenState");
                 mAnimateToActive.SetupMethod(m_uiViewClass, m_uiView, "AnimateToActive");
                 mAnimateToInActive.SetupMethod(m_uiViewClass, m_uiView, "AnimateToInactive");
-				mSetViewEnabled.SetupMethod(m_uiViewClass, m_uiView, "SetViewEnabled");
+                mSetViewEnabled.SetupMethod(m_uiViewClass, m_uiView, "SetViewEnabled");
             }
 
             FlattenButtonView::~FlattenButtonView()
@@ -71,10 +71,10 @@ namespace ExampleApp
                 m_callbacks.RemoveCallback(callback);
             }
 
-			void FlattenButtonView::SetViewEnabled(bool enabled)
-			{
-				mSetViewEnabled(enabled);
-			}
+            void FlattenButtonView::SetViewEnabled(bool enabled)
+            {
+                mSetViewEnabled(System::Boolean(enabled));
+            }
         }
     }
 }

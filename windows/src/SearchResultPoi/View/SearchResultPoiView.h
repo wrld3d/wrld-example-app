@@ -19,6 +19,7 @@ namespace ExampleApp
             enum SearchVendors
             {
                 Yelp = 0,
+                eeGeo,
                 SwallowWorkingGroup,
                 SwallowPerson,
                 SwallowMeetingRoom,

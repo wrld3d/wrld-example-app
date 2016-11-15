@@ -12,13 +12,15 @@
 #include "VertexBindingPool.h"
 #include "VertexLayoutPool.h"
 #include "GpsMarkerView.h"
+#include "GpsMarkerAnchorView.h"
 #include "GpsMarkerModel.h"
 #include "GpsMarkerController.h"
 #include "RenderableFilters.h"
 #include "TerrainModelModule.h"
 #include "ImagePathHelpers.h"
 #include "MapModule.h"
-#include "InteriorsPresentationModule.h"
+#include "AsyncLoadersModule.h"
+#include "LocalAsyncTextureLoader.h"
 
 namespace ExampleApp
 {
@@ -27,12 +29,14 @@ namespace ExampleApp
         namespace SdkModel
         {
             GpsMarkerModule::GpsMarkerModule(Eegeo::Modules::Core::RenderingModule& renderingModule,
+                                             Eegeo::Rendering::SceneModels::SceneModelFactory& sceneModelFactory,
                                              Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
-                                             ExampleApp::SenionLocation::SdkModel::ISenionLocationService& locationService,
+                                             Eegeo::Location::ILocationService& locationService,
                                              Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
                                              Eegeo::Modules::Map::MapModule& mapModule,
-                                             ExampleAppMessaging::TMessageBus& messageBus,
-                                             const bool interiorsAffectedByFlattening)
+                                             VisualMap::SdkModel::IVisualMapService& visualMapService,
+                                             const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                             ExampleAppMessaging::TMessageBus& messageBus)
             : m_renderableFilters(renderingModule.GetRenderableFilters())
             {
                 Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator = renderingModule.GetShaderIdGenerator();
@@ -60,20 +64,28 @@ namespace ExampleApp
                                                                                                          renderingModule.GetGlBufferPool(),
                                                                                                          Eegeo::Rendering::Renderables::BatchedSpriteAnchor::Bottom);
                 
-                const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel = mapModule.GetInteriorsPresentationModule().GetInteriorInteractionModel();
-                m_pModel = Eegeo_NEW(GpsMarkerModel)(locationService, terrainModelModule.GetTerrainHeightProvider(), interiorInteractionModel, interiorsAffectedByFlattening);
-                m_pView = Eegeo_NEW(GpsMarkerView)(*m_pGpsIconRenderable);
-                m_pController = Eegeo_NEW(GpsMarkerController)(*m_pModel, *m_pView, mapModule.GetEnvironmentFlatteningService(), messageBus);
+                m_pModel = Eegeo_NEW(GpsMarkerModel)(locationService, terrainModelModule.GetTerrainHeightProvider());
+                m_pAnchorView = Eegeo_NEW(GpsMarkerAnchorView)(renderingModule,
+                                                               sceneModelFactory,
+                                                               platformAbstractions.GetFileIO());
+                m_pView = Eegeo_NEW(GpsMarkerView)(renderingModule,
+                                                   sceneModelFactory,
+                                                   platformAbstractions.GetFileIO(),
+                                                   platformAbstractions.GetTextureFileLoader(),
+                                                   *m_pGpsIconRenderable);
+                m_pController = Eegeo_NEW(GpsMarkerController)(*m_pModel, *m_pView, *m_pAnchorView, mapModule.GetEnvironmentFlatteningService(), visualMapService, screenProperties, messageBus);
                 
                 m_renderableFilters.AddRenderableFilter(*m_pView);
-
+                m_renderableFilters.AddRenderableFilter(*m_pAnchorView);
             }
             
             GpsMarkerModule::~GpsMarkerModule()
             {
+                m_renderableFilters.RemoveRenderableFilter(*m_pAnchorView);
                 m_renderableFilters.RemoveRenderableFilter(*m_pView);
                 
                 Eegeo_DELETE m_pController;
+                Eegeo_DELETE m_pAnchorView;
                 Eegeo_DELETE m_pView;
                 Eegeo_DELETE m_pModel;
                 Eegeo_DELETE m_pGpsIconRenderable;

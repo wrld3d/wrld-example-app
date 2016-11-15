@@ -2,7 +2,7 @@
 
 #include "SwallowCategoryMenuOption.h"
 #include "IMenuViewModel.h"
-#include "CategorySearchSelectedMessage.h"
+#include "TagSearchSelectedMessage.h"
 
 namespace ExampleApp
 {
@@ -69,11 +69,11 @@ namespace ExampleApp
                     
                     if (m_hasRadiusOverride)
                     {
-                        m_messageBus.Publish(CategorySearch::CategorySearchSelectedMessage(m_category, m_interiorSearchAllowed, m_radiusOverride));
+                        m_messageBus.Publish(TagSearch::TagSearchSelectedMessage(m_category, m_interiorSearchAllowed, m_radiusOverride));
                     }
                     else
                     {
-                        m_messageBus.Publish(CategorySearch::CategorySearchSelectedMessage(m_category, m_interiorSearchAllowed));
+                        m_messageBus.Publish(TagSearch::TagSearchSelectedMessage(m_category, m_interiorSearchAllowed));
                     }
                 }
             }

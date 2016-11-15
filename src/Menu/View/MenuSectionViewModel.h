@@ -39,7 +39,7 @@ namespace ExampleApp
 
                 std::string Details() const
                 {
-                    return "";
+                    return m_details;
                 }
 
                 std::string SerializeJson() const;
@@ -70,6 +70,7 @@ namespace ExampleApp
 
                 std::string m_name;
                 std::string m_icon;
+                std::string m_details;
                 IMenuModel& m_menuModel;
                 const bool m_isExpandable;
                 bool m_expanded;

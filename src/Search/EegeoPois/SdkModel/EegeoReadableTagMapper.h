@@ -2,9 +2,10 @@
 
 #pragma once
 
-#include "Types.h"
 #include <string>
 #include <map>
+#include "Types.h"
+#include "SearchTags.h"
 
 namespace ExampleApp
 {
@@ -17,7 +18,7 @@ namespace ExampleApp
                 class EegeoReadableTagMapper : private Eegeo::NonCopyable
                 {
                 public:
-                    EegeoReadableTagMapper();
+                    EegeoReadableTagMapper(const Search::SdkModel::SearchTags& searchTags);
                     
                     const std::string& GetNameForTag(const std::string& tag) const;
                     

@@ -9,7 +9,7 @@
 #include "writer.h"
 #include "stringbuffer.h"
 #include "YelpSearchJsonParser.h"
-#include "IYelpCategoryMapper.h"
+#include "IYelpCategoryToTagMapper.h"
 #include "LatLongAltitude.h"
 #include "SearchResultModel.h"
 #include "SearchQuery.h"
@@ -17,6 +17,7 @@
 #include "TimeHelpers.h"
 #include "YelpSearchResultModel.h"
 #include "SearchVendorNames.h"
+#include "ITagIconMapper.h"
 
 using namespace rapidjson;
 
@@ -27,7 +28,9 @@ namespace
         std::string placeId;
         std::string address;
         std::string name;
-        std::string category;
+
+        // This is the result of mapping a yelp category to an app tag
+        std::string mappedAppTag;
         std::string uniqueId;
         Eegeo::Space::LatLong location;
         
@@ -47,7 +50,8 @@ namespace ExampleApp
                 namespace Helpers
                 {
                     ExampleApp::Search::SdkModel::SearchResultModel ParseYelpSearchResultFromJsonObject(const Value& json,
-                                                                                                        ExampleApp::Search::Yelp::SdkModel::IYelpCategoryMapper& yelpCategoryMapper)
+                                                                                                        ExampleApp::Search::Yelp::SdkModel::IYelpCategoryToTagMapper& yelpCategoryMapper,
+                                                                                                        const TagSearch::SdkModel::ITagIconMapper& tagIconMapper)
                     {
                         Result entry;
                         
@@ -73,7 +77,17 @@ namespace ExampleApp
                                 
                                 for(rapidjson::SizeType categoryStringIndex = 0; categoryStringIndex < numYelpCategoryEntryStrings; ++ categoryStringIndex)
                                 {
-                                    if(categoryStringIndex%2 == 0)
+                                    /* Yelp data has category alias pairs; we're only interested in the first
+                                     * (more readable) one for generating human-readable categories, e.g.
+                                     "categories": [
+                                            [
+                                                "Mass Media", # friendly / readable
+                                                "massmedia"   # skip
+                                            ]
+                                        ]
+                                    */
+                                    const bool isReadableYelpCategory = categoryStringIndex % 2 == 0;
+                                    if(isReadableYelpCategory)
                                     {
                                         humanCategories.push_back(categoryEntry[categoryStringIndex].GetString());
                                     }
@@ -82,8 +96,8 @@ namespace ExampleApp
                                 }
                             }
                         }
-                        
-                        yelpCategoryMapper.TryGetBestMatchingApplicationCategoryForYelpCategories(allCategories, entry.category);
+
+                        yelpCategoryMapper.TryGetBestMatchingTagForYelpCategories(allCategories, entry.mappedAppTag);
                         
                         if(json.HasMember("location"))
                         {
@@ -127,6 +141,10 @@ namespace ExampleApp
                         rapidjson::StringBuffer strbuf;
                         rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
                         json.Accept(writer);
+
+                        std::vector<std::string> appTags;
+                        appTags.push_back(entry.mappedAppTag);
+                        ExampleApp::Search::SdkModel::TagIconKey tagIconKey = tagIconMapper.GetIconKeyForTags(appTags);
                         
                         return ExampleApp::Search::SdkModel::SearchResultModel(ExampleApp::Search::SdkModel::SearchResultModel::CurrentVersion,
                                                                                entry.uniqueId,
@@ -137,8 +155,9 @@ namespace ExampleApp
                                                                                interior,
                                                                                building,
                                                                                floor,
-                                                                               entry.category,
+                                                                               allCategories,
                                                                                humanCategories,
+                                                                               tagIconKey,
                                                                                ExampleApp::Search::YelpVendorName,
                                                                                strbuf.GetString(),
                                                                                Eegeo::Helpers::Time::MillisecondsSinceEpoch());

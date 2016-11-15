@@ -4,6 +4,7 @@
 
 #include <algorithm>
 
+#include "IMenuOptionsModel.h"
 #include "IAppModeModel.h"
 #include "ISearchResultSectionOrder.h"
 #include "SearchResultItemModel.h"
@@ -68,21 +69,22 @@ namespace ExampleApp
 				{
 					const Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
 					std::string subtitle = model.GetSubtitle();
-					std::string category = model.GetCategory();
-					if (model.GetCategory() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
+                    ExampleApp::Search::SdkModel::TagIconKey iconKey = model.GetIconKey();
+
+                    if (model.GetIconKey() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
 					{
 						// Availability is no longer a subtitle as that affects search results.
 						Search::Swallow::SdkModel::SwallowMeetingRoomResultModel meetingRoomModel = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(model);
 						subtitle = meetingRoomModel.GetOfficeLocation();
 
-						category = GetMeetingRoomAvailablityIcon(meetingRoomModel.GetAvailability());
+                        iconKey = GetMeetingRoomAvailablityIcon(meetingRoomModel.GetAvailability());
 					}
-					else if(model.GetCategory() == Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME)
+					else if(model.GetIconKey() == Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME)
 					{
 						Search::Swallow::SdkModel::SwallowWorkingGroupResultModel workingGroupmodel = Search::Swallow::SdkModel::SearchParser::TransformToSwallowWorkingGroupResult(model);
 						subtitle = workingGroupmodel.GetOfficeLocation();
 					}
-					else if(model.GetCategory() == Search::Swallow::SearchConstants::TOILETS_CATEGORY_NAME || model.GetCategory() == Search::Swallow::SearchConstants::PRINT_STATION_CATEGORY_NAME)
+					else if(model.GetIconKey() == Search::Swallow::SearchConstants::TOILETS_CATEGORY_NAME || model.GetIconKey() == Search::Swallow::SearchConstants::PRINT_STATION_CATEGORY_NAME)
 					{
 						Search::Swallow::SdkModel::SwallowFacilityResultModel facilityModel = Search::Swallow::SdkModel::SearchParser::TransformToSwallowFacilityResult(model);
 						subtitle = facilityModel.GetOfficeLocation();
@@ -91,7 +93,7 @@ namespace ExampleApp
 					m_menuOptions.AddItem(model.GetIdentifier(),
 										  model.GetTitle(),
 										  subtitle,
-										  category,
+                                          iconKey,
 										  Eegeo_NEW(SearchResultItemModel)(model.GetIdentifier(),
 																		   model.GetTitle(),
 																		   model.GetLocation().ToECEF(),
@@ -116,6 +118,7 @@ namespace ExampleApp
 
                 m_lastAddedResults = message.GetResults();
                 const std::vector<Search::SdkModel::SearchResultModel>& unorderedResults = message.GetResults();
+                
 
                 OrderWrapper orderWrapper(m_order);
                 std::stable_sort(m_lastAddedResults.begin(), m_lastAddedResults.end(), orderWrapper);
@@ -129,6 +132,7 @@ namespace ExampleApp
                 {
                     const Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
                     m_menuOptions.RemoveItem(model.GetIdentifier());
+
                 }
 
                 m_lastAddedResults.clear();
@@ -173,8 +177,7 @@ namespace ExampleApp
 
                 AddSearchResultsToModel(unorderedResults);
             }
-
-
+            
             SearchResultSectionController::SearchResultSectionController(Menu::View::IMenuViewModel& searchMenuViewModel,
                                                                          Menu::View::IMenuOptionsModel& menuOptions,
                                                                          ISearchResultSectionOrder& order,

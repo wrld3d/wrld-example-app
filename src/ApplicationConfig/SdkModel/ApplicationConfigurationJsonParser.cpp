@@ -2,8 +2,8 @@
 
 #include "document.h"
 #include "ApplicationConfigurationJsonParser.h"
-#include "IApplicationConfigurationBuilder.h"
 #include "MathFunc.h"
+#include "ConfigSections.h"
 
 namespace ExampleApp
 {
@@ -11,8 +11,26 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            ApplicationConfigurationJsonParser::ApplicationConfigurationJsonParser(IApplicationConfigurationBuilder& builder)
-            : m_builder(builder)
+            namespace
+            {
+                std::string ParseStringOrDefault(rapidjson::Document& document, const std::string& key, const std::string& defaultValue)
+                {
+                    if (document.HasMember(key.c_str()))
+                    {
+                        const std::string& value = document[key.c_str()].GetString();
+                        if (!value.empty())
+                        {
+                            return value;
+                        }
+                    }
+                    return defaultValue;
+                }
+            }
+
+            ApplicationConfigurationJsonParser::ApplicationConfigurationJsonParser(const ApplicationConfiguration& defaultConfig,
+                                                                                   IApplicationConfigurationBuilder& builder)
+            : m_defaultConfig(defaultConfig)
+            , m_builder(builder)
             {
                 
             }
@@ -42,7 +60,7 @@ namespace ExampleApp
 
                 Eegeo_ASSERT(document.HasMember("Name"));
                 m_builder.SetApplicationName(document["Name"].GetString());
-                
+
                 Eegeo_ASSERT(document.HasMember("EegeoApiKey"));
                 m_builder.SetEegeoApiKey(document["EegeoApiKey"].GetString());
                 
@@ -50,15 +68,15 @@ namespace ExampleApp
                 Eegeo_ASSERT(document.HasMember("StartLocationLongitude"));
                 Eegeo_ASSERT(document.HasMember("StartLocationAltitude"));
                 m_builder.SetStartInterestPointLocation(Eegeo::Space::LatLongAltitude::FromDegrees(document["StartLocationLatitude"].GetDouble(),
-                                                                                                   document["StartLocationLongitude"].GetDouble(),
-                                                                                                   document["StartLocationAltitude"].GetDouble()));
-                
+                    document["StartLocationLongitude"].GetDouble(),
+                    document["StartLocationAltitude"].GetDouble()));
+
                 Eegeo_ASSERT(document.HasMember("StartLocationDistance"));
                 m_builder.SetStartDistanceFromInterestPoint(static_cast<float>(document["StartLocationDistance"].GetDouble()));
-                
+
                 Eegeo_ASSERT(document.HasMember("StartLocationOrientationDegrees"));
                 m_builder.SetStartOrientationAboutInterestPoint(static_cast<float>(document["StartLocationOrientationDegrees"].GetDouble()));
-                
+
                 Eegeo_ASSERT(document.HasMember("TryStartAtGpsLocation"));
                 m_builder.SetTryStartAtGpsLocation(document["TryStartAtGpsLocation"].GetBool());
                 
@@ -92,8 +110,8 @@ namespace ExampleApp
                 Eegeo_ASSERT(document.HasMember("SqliteDbUrl"), "SqliteDbUrl config not found");
                 m_builder.SetSqliteDbUrl(document["SqliteDbUrl"].GetString());
                 
-                Eegeo_ASSERT(document.HasMember("SearchServiceUrl"), "SearchServiceUrl not found");
-                m_builder.SetSearchServiceUrl(document["SearchServiceUrl"].GetString());
+                Eegeo_ASSERT(document.HasMember("EegeoSearchServiceUrl"), "EegeoSearchServiceUrl not found");
+                m_builder.SetSearchServiceUrl(document["EegeoSearchServiceUrl"].GetString());
                 
                 Eegeo_ASSERT(document.HasMember("MyPinsWebServiceUrl"), "MyPinsWebServiceUrl config not found");
                 m_builder.SetMyPinsWebServiceUrl(document["MyPinsWebServiceUrl"].GetString());
@@ -153,7 +171,6 @@ namespace ExampleApp
                 if (document.HasMember(wifiRestrictedBuildingTag))
                 {
                     const rapidjson::Value& restrictedBuildingJsonArray = document[wifiRestrictedBuildingTag];
-
                     for (rapidjson::SizeType i = 0; i < restrictedBuildingJsonArray.Size(); i++)
                     {
                         const rapidjson::Value& restrictedBuilding = restrictedBuildingJsonArray[i];
@@ -185,8 +202,65 @@ namespace ExampleApp
                 {
                     m_builder.SetShouldStartFullscreen(document["StartAppInFullscreen"].GetBool());
                 }
+
+                Eegeo_ASSERT(document.HasMember("EmbeddedThemeTexturePath"), "EmbeddedThemeTexturePath not found");
+                m_builder.SetEmbeddedThemeTexturePath(document["EmbeddedThemeTexturePath"].GetString());
+
+                Eegeo_ASSERT(document.HasMember("TwitterAuthCode"), "TwitterAuthCode not found");
+                m_builder.SetTwitterAuthCode(document["TwitterAuthCode"].GetString());
+
+                if (document.HasMember("UseLabels") && !document["UseLabels"].IsNull())
+                {
+                    m_builder.SetUseLabels(document["UseLabels"].GetBool());
+                }
+
+                std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo> interiorTrackingInfoList;
+                if(document.HasMember("IndoorTrackedBuildings") && !document["IndoorTrackedBuildings"].IsNull())
+                {
+                    const rapidjson::Value& indoorTrackedBuildingsArray = document["IndoorTrackedBuildings"];
+                    ParseIndoorTrackingInfo(interiorTrackingInfoList, indoorTrackedBuildingsArray);
+                    m_builder.SetInteriorTrackingInfo(interiorTrackingInfoList);
+                }
                 
                 return m_builder.Build();
+            }
+
+			void ApplicationConfigurationJsonParser::ParseIndoorTrackingInfo(std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfoList,
+                                                                             const rapidjson::Value& indoorTrackedBuildingsArray)
+            {
+                for(rapidjson::SizeType i = 0; i < indoorTrackedBuildingsArray.Size(); ++i)
+                {
+                    const rapidjson::Value& building = indoorTrackedBuildingsArray[i];
+                    
+                    Eegeo_ASSERT(building.HasMember("InteriorId"), "Interior Id not found");
+                    const std::string& id = building["InteriorId"].GetString();
+                    const Eegeo::Resources::Interiors::InteriorId& interiorId(id);
+                    
+                    Eegeo_ASSERT(building.HasMember("Type"), "Type not found");
+                    const std::string& type = building["Type"].GetString();
+
+                    
+                    Eegeo_ASSERT(building.HasMember("Config"), "Config not found");
+                    const std::string& apiKey = building["Config"][0]["ApiKey"].GetString();
+                    const std::string& apiSecret = building["Config"][0]["ApiSecret"].GetString();
+                    SdkModel::ApplicationInteriorTrackingConfig interiorTrackingConfig(apiKey, apiSecret);
+                    
+                    Eegeo_ASSERT(building.HasMember("FloorMapping"), "FloorMapping not found");
+                    const rapidjson::Value& floorMappingArray = building["FloorMapping"];
+                    
+                    std::map<int, std::string> floorMapping;
+                    for(rapidjson::SizeType j = 0; j < floorMappingArray.Size(); ++j)
+                    {
+                        floorMapping[floorMappingArray[j]["BuildingFloorIndex"].GetInt()] = floorMappingArray[j]["TrackedFloorIndex"].GetString();
+                    }
+                    
+                    SdkModel::ApplicationInteriorTrackingInfo interiorTrackingInfo(interiorId,
+                                                                                   type,
+                                                                                   interiorTrackingConfig,
+                                                                                   floorMapping);
+                    
+                    interiorTrackingInfoList.insert(std::pair<std::string, SdkModel::ApplicationInteriorTrackingInfo>(interiorId.Value(),interiorTrackingInfo));
+                }
             }
         }
     }

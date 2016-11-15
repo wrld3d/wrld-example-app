@@ -74,6 +74,10 @@ public class SearchMenuAnimationHandler extends MenuAnimationHandler
         
         
         m_view.setX(0.0f);
+        
+        int menuButtonMarginPx = (int)m_mainActivity.getResources().getDimension(R.dimen.menu_button_margin);
+
+        titleContainerView.setPivotX(0.0f);
 		searchCountView.setVisibility(View.GONE);
 	
 		addAnimator(m_onScreenAnimatorSet, -(dragTabWidthPx + menuButtonMarginPx), menuButtonMarginPx, false, new ViewXAnimatorUpdateListener(dragTabView), new CircleInOutTimeInterpolator());

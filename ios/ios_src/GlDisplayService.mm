@@ -96,41 +96,39 @@ bool GlDisplayService::TryBindDisplay(GLKView& view)
 void GlDisplayService::UpdateDisplayDimensions()
 {
     Eegeo_ASSERT(m_displayBound, "GlDisplayService::UpdateDisplayDimensions - display not bound");
-
+    
     UIScreen* screen = [UIScreen mainScreen];
-    if ([screen respondsToSelector: @selector(scale)])
-    {
-        m_pixelScale = static_cast<float>(screen.scale);
-    }
-    else
-    {
-        m_pixelScale = 1.f;
-    }
-
+    
+    const float nativeScale = App::GetNativeScale();
+    
+    
     CGSize screenBounds;
-
-    if ([screen respondsToSelector:@selector(fixedCoordinateSpace)])
+    
+    if ([screen respondsToSelector:@selector(nativeBounds)])
     {
-        screenBounds = [screen.coordinateSpace convertRect:screen.bounds toCoordinateSpace:screen.fixedCoordinateSpace].size;
+        screenBounds = screen.nativeBounds.size;
     }
     else
     {
         screenBounds = screen.bounds.size;
+        screenBounds.width *= nativeScale;
+        screenBounds.height *= nativeScale;
     }
-
+    
     OrientationMode orientationMode = App::DetermineOrientationMode();
-
+    
     // default to landscape if we were not able to query info.plist (orientationMode == ORIENTATION_MODE_UNKNOWN)
     m_isPortraitAspect = (orientationMode == ORIENTATION_MODE_PORTRAIT);
-
+    
     if (!m_isPortraitAspect)
     {
         std::swap(screenBounds.width, screenBounds.height);
     }
-
-    m_displayWidth = static_cast<float>(screenBounds.width * m_pixelScale);
-    m_displayHeight = static_cast<float>(screenBounds.height * m_pixelScale);
-    m_displayDpi = App::GetDeviceDpi() * m_pixelScale;
+    
+    m_pixelScale = nativeScale;
+    m_displayWidth = std::roundf(static_cast<float>(screenBounds.width));
+    m_displayHeight = std::roundf(static_cast<float>(screenBounds.height));
+    m_displayDpi = App::GetAbsoluteDeviceDpi();
 }
 
 void GlDisplayService::ReleaseDisplay()

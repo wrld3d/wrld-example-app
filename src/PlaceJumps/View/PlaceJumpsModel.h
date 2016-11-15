@@ -3,11 +3,8 @@
 #pragma once
 
 #include "IPlaceJumpsModel.h"
-#include "MenuItemModel.h"
 #include "Types.h"
 #include "LatLongAltitude.h"
-#include "IMenuOption.h"
-#include "MenuOptionsModel.h"
 #include <string>
 #include <vector>
 

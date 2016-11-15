@@ -4,6 +4,7 @@
 #include "AndroidAppThreadAssertionMacros.h"
 #include "ImagePathHelpers.h"
 #include "IWorldPinsInFocusModel.h"
+#include "SearchVendorNames.h"
 
 namespace ExampleApp
 {
@@ -13,7 +14,8 @@ namespace ExampleApp
         {
             WorldPinOnMapView::WorldPinOnMapView(AndroidNativeState& nativeState, float pinDiameter)
                 : m_nativeState(nativeState)
-                , m_pinOffset((pinDiameter * Helpers::ImageHelpers::GetPixelScale()) * 0.75f)
+                , m_pinOffset((pinDiameter * Helpers::ImageHelpers::GetPixelScale()))
+            	, m_showingEnlargedPin(false)
             {
                 ASSERT_UI_THREAD
 
@@ -54,6 +56,8 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
+				m_showingEnlargedPin = worldPinsInFocusModel.GetVendor() == ExampleApp::Search::InteriorVendorName;
+
                 AndroidSafeNativeThreadAttachment attached(m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
@@ -83,7 +87,7 @@ namespace ExampleApp
             void WorldPinOnMapView::UpdateScreenLocation(float posX, float posY)
             {
                 ASSERT_UI_THREAD
-                float offsetY = posY - m_pinOffset;
+                float offsetY = posY - (m_showingEnlargedPin ? m_pinOffset*1.5f : m_pinOffset);
 
                 AndroidSafeNativeThreadAttachment attached(m_nativeState);
                 JNIEnv* env = attached.envForThread;

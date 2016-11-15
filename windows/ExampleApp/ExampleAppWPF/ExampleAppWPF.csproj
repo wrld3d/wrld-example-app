@@ -64,6 +64,9 @@
     <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -120,6 +123,8 @@
     <Compile Include="Views\Options\OptionsView.cs" />
     <Compile Include="Views\SearchMenu\SearchMenuListItem.cs" />
     <Compile Include="StartupResourceLoader.cs" />
+    <Compile Include="Views\SearchMenu\SearchMenuResultIconProvider.cs" />
+    <Compile Include="Views\SearchResultPoi\eeGeoSearchResultsPoiView.cs" />
     <Compile Include="Views\SearchResultPoi\ResultModels\SwallowDepartmentResultModel.cs" />
     <Compile Include="Views\SearchResultPoi\ResultModels\SwallowFacilityResultModel.cs" />
     <Compile Include="Views\SearchResultPoi\ResultModels\SwallowMeetingRoomResultModel.cs" />
@@ -127,7 +132,8 @@
     <Compile Include="Views\SearchResultPoi\ResultModels\SwallowWorkingGroupResultModel.cs" />
     <Compile Include="Views\SearchResultPoi\ResultModels\YelpResultModel.cs" />
     <Compile Include="Views\SearchResultPoi\GeonamesSearchResultsPoiView.cs" />
-    <Compile Include="Views\SearchResultPoi\SearchResultCategoryMapper.cs" />
+    <Compile Include="Views\SearchResultPoi\ResultModels\EegeoResultModel.cs" />
+    <Compile Include="Views\SearchResultPoi\SearchResultPoiViewIconProvider.cs" />
     <Compile Include="Views\SearchResultPoi\SearchResultPoiViewBase.cs" />
     <Compile Include="Views\SearchResultPoi\SwallowDepartmentSearchResultsPoiView.cs" />
     <Compile Include="Views\SearchResultPoi\SwallowFacilitySearchResultsPoiView.cs" />
@@ -145,8 +151,7 @@
     <Compile Include="Views\Menu\MenuView.cs" />
     <Compile Include="Views\SettingsMenu\SettingsMenuView.cs" />
     <Compile Include="Views\SearchMenu\SearchMenuView.cs" />
-    <Compile Include="Search\Yelp\YelpSearch.cs" />
-    <Compile Include="WindowsInteractionTouchHandler.cs" />
+    <Compile Include="WindowInteractionTouchHandler.cs" />
     <Page Include="CheckBoxStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -242,6 +247,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\SearchResultPoi\eeGeoSearchResultsPoiView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\SettingsMenu\SettingsMenuView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -307,6 +316,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -636,6 +646,68 @@
     <Resource Include="Assets\search_results_scroll_button_down.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="..\..\Resources\compass_new_locate_over.png">
+      <Link>Assets\compass_new_locate_over.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\compass_new_locked_over.png">
+      <Link>Assets\compass_new_locked_over.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\compass_new.png">
+      <Link>Assets\compass_new.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\compass_new_locate.png">
+      <Link>Assets\compass_new_locate.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\compass_new_locate_down.png">
+      <Link>Assets\compass_new_locate_down.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\compass_new_locked.png">
+      <Link>Assets\compass_new_locked.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\compass_new_locked_down.png">
+      <Link>Assets\compass_new_locked_down.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\compass_new_unlocked.png">
+      <Link>Assets\compass_new_unlocked.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\compass_new_unlocked_down.png">
+      <Link>Assets\compass_new_unlocked_down.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\compass_new_unlocked_over.png">
+      <Link>Assets\compass_new_unlocked_over.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\social_icon_fb.png">
+      <Link>Assets\social_icon_fb.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\social_icon_mail.png">
+      <Link>Assets\social_icon_mail.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\social_icon_slack.png">
+      <Link>Assets\social_icon_slack.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\social_icon_twitter.png">
+      <Link>Assets\social_icon_twitter.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\social_icon_linked_in.png">
+      <Link>Assets\social_icon_linked_in.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\exit_blue_x_button.png">
+      <Link>Assets\exit_blue_x_button.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="..\..\Resources\icon1_accommodation.png">
       <Link>Assets\icon1_accommodation.png</Link>
     </Resource>
@@ -644,9 +716,6 @@
     </Resource>
     <Resource Include="..\..\Resources\icon1_aroundme.png">
       <Link>Assets\icon1_aroundme.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_arts.png">
-      <Link>Assets\icon1_arts.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\icon1_art_museums.png">
       <Link>Assets\icon1_art_museums.png</Link>
@@ -705,12 +774,6 @@
     <Resource Include="..\..\Resources\icon1_fog.png">
       <Link>Assets\icon1_fog.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\icon1_foggy.png">
-      <Link>Assets\icon1_foggy.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_food.png">
-      <Link>Assets\icon1_food.png</Link>
-    </Resource>
     <Resource Include="..\..\Resources\icon1_food_drink.png">
       <Link>Assets\icon1_food_drink.png</Link>
     </Resource>
@@ -741,17 +804,8 @@
     <Resource Include="..\..\Resources\icon1_night.png">
       <Link>Assets\icon1_night.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\icon1_nightlife.png">
-      <Link>Assets\icon1_nightlife.png</Link>
-    </Resource>
     <Resource Include="..\..\Resources\icon1_office.png">
       <Link>Assets\icon1_office.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_options.png">
-      <Link>Assets\icon1_options.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_overcast.png">
-      <Link>Assets\icon1_overcast.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\icon1_park.png">
       <Link>Assets\icon1_park.png</Link>
@@ -762,17 +816,11 @@
     <Resource Include="..\..\Resources\icon1_person_POI.png">
       <Link>Assets\icon1_person_POI.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\icon1_place.png">
-      <Link>Assets\icon1_place.png</Link>
-    </Resource>
     <Resource Include="..\..\Resources\icon1_printer.png">
       <Link>Assets\icon1_printer.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\icon1_rain.png">
       <Link>Assets\icon1_rain.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_rainy.png">
-      <Link>Assets\icon1_rainy.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\icon1_reception.png">
       <Link>Assets\icon1_reception.png</Link>
@@ -782,9 +830,6 @@
     </Resource>
     <Resource Include="..\..\Resources\icon1_snow.png">
       <Link>Assets\icon1_snow.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_snowy.png">
-      <Link>Assets\icon1_snowy.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\icon1_sports_leisure.png">
       <Link>Assets\icon1_sports_leisure.png</Link>
@@ -803,9 +848,6 @@
     </Resource>
     <Resource Include="..\..\Resources\icon1_sun.png">
       <Link>Assets\icon1_sun.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_sunny.png">
-      <Link>Assets\icon1_sunny.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\icon1_toilets.png">
       <Link>Assets\icon1_toilets.png</Link>

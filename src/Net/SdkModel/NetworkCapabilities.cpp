@@ -38,6 +38,7 @@ namespace ExampleApp
                 }
                 
                 m_connectivityService.RegisterConnectivityChangedCallback(m_connectionChangedCallback);
+                
 
             }
             

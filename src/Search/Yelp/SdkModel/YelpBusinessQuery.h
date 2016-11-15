@@ -10,7 +10,6 @@
 #include "ICallback.h"
 
 #include <string>
-#include "IdentitySearchCallbackData.h"
 
 namespace ExampleApp
 {

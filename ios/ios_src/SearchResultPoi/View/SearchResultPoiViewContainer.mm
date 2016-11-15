@@ -121,6 +121,7 @@
     }
     else if(vendor == ExampleApp::Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME)
     {
+        return [[ExampleTourSearchResultPoiView alloc] initWithInterop:m_pInterop];
         return [[SwallowDepartmentSearchResultPoiView alloc] initWithInterop:m_pInterop];
     }
     

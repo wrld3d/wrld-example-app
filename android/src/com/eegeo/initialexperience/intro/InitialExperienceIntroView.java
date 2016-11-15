@@ -90,7 +90,7 @@ public class InitialExperienceIntroView implements View.OnClickListener, Animati
     	m_banner.startAnimation(m_mainAnimationOn);
     	
     	Animation settingsDialogAnim = createDialogAnimation(0.0f, 1.0f, m_animationDuration/4, 0);
-        m_settingMenuDialog.startAnimation(settingsDialogAnim);
+    	m_settingMenuDialog.startAnimation(settingsDialogAnim);
     	Animation searchDialogAnim = createDialogAnimation(0.0f, 1.0f, m_animationDuration/4, (m_animationDuration/4)*1);
     	m_searchMenuDialog.startAnimation(searchDialogAnim);
     	Animation mapModeAnim = createDialogAnimation(0.0f, 1.0f, m_animationDuration/4, (m_animationDuration/4)*2);
@@ -137,6 +137,7 @@ public class InitialExperienceIntroView implements View.OnClickListener, Animati
     	ViewGroup dialog = (ViewGroup)dialogRoot.getChildAt(0);
     	if(dialog instanceof RelativeLayout)
     	{
+    		dialog = (ViewGroup)dialogRoot.getChildAt(1);
     	    dialog = (ViewGroup)dialogRoot.getChildAt(1);    
     	}
     	TextView title = (TextView)dialog.getChildAt(0);

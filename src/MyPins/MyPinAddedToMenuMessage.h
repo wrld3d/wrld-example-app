@@ -16,6 +16,7 @@ namespace ExampleApp
         public:
             MyPinAddedToMenuMessage(SdkModel::MyPinModel::TPinIdType myPinId,
                                     const std::string& myPinTitle,
+                                    const std::string& myPinDetails,
                                     const std::string& myPinIcon,
                                     const Eegeo::Space::LatLong& myPinLocation,
                                     const Eegeo::Resources::Interiors::InteriorId& interiorId,
@@ -24,6 +25,8 @@ namespace ExampleApp
             SdkModel::MyPinModel::TPinIdType GetMyPinId() const;
             
             const std::string& GetMyPinTitle() const;
+            
+            const std::string& GetMyPinDetails() const;
             
             const std::string& GetMyPinIcon() const;
             
@@ -38,6 +41,7 @@ namespace ExampleApp
             SdkModel::MyPinModel::TPinIdType m_myPinId;
             std::string m_myPinIcon;
             std::string m_myPinTitle;
+            std::string m_myPinDetails;
             Eegeo::Space::LatLong m_pinLocation;
             Eegeo::Resources::Interiors::InteriorId m_interiorId;
             int m_floorIndex;

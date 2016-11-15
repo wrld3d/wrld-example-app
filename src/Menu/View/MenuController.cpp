@@ -63,16 +63,12 @@ namespace ExampleApp
 
             bool MenuController::TryDrag()
             {
-                if(m_viewModel.TryAcquireReactorControl())
-                {
-                    return true;
-                }
-                return false;
+                return m_viewModel.TryAcquireReactorControl();
             }
 
             void MenuController::RefreshPresentation()
             {
-                const int numSections = static_cast<int>(m_viewModel.SectionsCount());
+                const size_t numSections = m_viewModel.SectionsCount();
                 TSections sections;
                 sections.reserve(numSections);
 
@@ -84,8 +80,9 @@ namespace ExampleApp
 
                 if(!m_viewModel.IsFullyClosed())
                 {
-                    m_view.UpdateMenuSectionViews(sections);
+                    m_view.UpdateMenuSectionViews(sections, m_menuContentsChanged);
                     m_presentationDirty = false;
+                    m_menuContentsChanged = false;
                 }
             }
 
@@ -228,11 +225,13 @@ namespace ExampleApp
             void MenuController::OnItemAdded(MenuItemModel& item)
             {
                 m_presentationDirty = true;
+                m_menuContentsChanged = true;
             }
 
             void MenuController::OnItemRemoved(MenuItemModel& item)
             {
                 m_presentationDirty = true;
+                m_menuContentsChanged = true;
             }
 
             void MenuController::OnItemSelected(int& sectionIndex, int& itemIndex)
@@ -262,7 +261,7 @@ namespace ExampleApp
                 }
                 else
                 {
-                    int index = section.IsExpandable() ? itemIndex - 1 : itemIndex;
+                    const int index = section.IsExpandable() ? itemIndex - 1 : itemIndex;
                     section.GetItemAtIndex(index).MenuOption().Select();
                 }
             }
@@ -292,6 +291,7 @@ namespace ExampleApp
                 , m_messageBus(messageBus)
                 , m_dragInProgress(false)
                 , m_presentationDirty(false)
+                , m_menuContentsChanged(true)
             {
                 m_viewModel.InsertOpenStateChangedCallback(m_onOpenableStateChanged);
                 m_viewModel.InsertOnScreenStateChangedCallback(m_onScreenStateChanged);
@@ -316,9 +316,9 @@ namespace ExampleApp
                 {
                     IMenuSectionViewModel& section(m_viewModel.GetMenuSection(static_cast<int>(i)));
                     section.InsertExpandedChangedCallback(m_onMenuSectionExpandedStateChanged);
-                    IMenuModel& model = section.GetModel();
-                    model.InsertItemAddedCallback(m_onItemAddedCallback);
-                    model.InsertItemRemovedCallback(m_onItemRemovedCallback);
+                    IMenuModel& menuModel = section.GetModel();
+                    menuModel.InsertItemAddedCallback(m_onItemAddedCallback);
+                    menuModel.InsertItemRemovedCallback(m_onItemRemovedCallback);
                 }
             }
 

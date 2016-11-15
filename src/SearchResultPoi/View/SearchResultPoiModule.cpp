@@ -16,7 +16,7 @@ namespace ExampleApp
                                                          Reaction::View::IReactionControllerModel& reactionControllerModel,
                                                          MyPins::SdkModel::IMyPinsService& myPinsService,
                                                          Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultMyPinsService,
-                                                         CategorySearch::ISearchResultIconCategoryMapper& searchResultIconCategoryMapper,
+                                                         TagSearch::ISearchResultIconKeyMapper& searchResultIconKeyMapper,
                                                          Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                                          ExampleAppMessaging::TMessageBus& messageBus)
             {
@@ -30,7 +30,7 @@ namespace ExampleApp
                 
                 m_pSearchResultPoiMyPinService = Eegeo_NEW(SdkModel::SearchResultPoiMyPinService)(myPinsService,
                                                                                                   searchResultMyPinsService,
-                                                                                                  searchResultIconCategoryMapper);
+                                                                                                  searchResultIconKeyMapper);
                 
                 m_pSearchResultPoiPinToggledMessageHandler = Eegeo_NEW(SdkModel::SearchResultPoiPinToggledMessageHandler)(*m_pSearchResultPoiMyPinService,
                                                                                                                           messageBus);

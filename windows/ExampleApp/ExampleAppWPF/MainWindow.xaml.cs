@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Windows.Navigation;
 using System.Windows.Threading;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ExampleAppWPF
 {
@@ -28,6 +29,7 @@ namespace ExampleAppWPF
         private bool m_hasHadRenderEventSinceRender = false;
         private double m_maxDelta = 0.0;
         private bool m_logging = false;
+        private bool m_firstFrame = true;
 
         private const float m_maxWaitPercentage = 1.1f;
 
@@ -43,8 +45,8 @@ namespace ExampleAppWPF
 
             InitializeComponent();
             StartupResourceLoader.Init();
-            m_mapImage = new MapImage();
 
+            m_mapImage = new MapImage();
             Loaded += MainWindow_Loaded;
             Closed += MainWindow_Closed;
 
@@ -64,7 +66,7 @@ namespace ExampleAppWPF
         {
             m_mapImage.Dispose();
         }
-        
+
         private void OnIsFrontBufferAvailableChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (m_mapImage.IsFrontBufferAvailable)
@@ -117,7 +119,7 @@ namespace ExampleAppWPF
             m_mapImage.IsFrontBufferAvailableChanged += OnIsFrontBufferAvailableChanged;
             CompositionTarget.Rendering += CompositionTarget_Rendering;
 
-            if (m_mapImage.ShouldStartFullscreen())
+            if(m_mapImage.ShouldStartFullscreen())
             {
                 SetFullScreen(true);
             }
@@ -131,8 +133,7 @@ namespace ExampleAppWPF
             MouseMove += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandleMouseMoveEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
             MouseEnter += (o, e) => { if (m_isMouseInputActive) { EnableInput(); } };
 
-            MapHost.KeyDown += MainWindowOnKeyDown;
-            KeyDown += MainWindowOnKeyDown;
+            KeyDown += OnKeyDown;
 
             MouseDown += MainWindow_MouseDown;
             MouseUp += MainWindow_MouseUp;
@@ -161,12 +162,12 @@ namespace ExampleAppWPF
         }
 
         public void PopAllMouseEvents()
-         {
-             if (m_isMouseInputActive)
-             {
-                 m_mapImage.SetAllInputEventsToPointerUp(0, 0);
-             }
-         }
+        {
+            if (m_isMouseInputActive)
+            {
+                m_mapImage.SetAllInputEventsToPointerUp(0, 0);
+            }
+        }
 
         private void SetFullScreen(bool isFullScreen)
         {
@@ -225,11 +226,12 @@ namespace ExampleAppWPF
         {
             if (m_isTouchInputActive)
             {
+                
                 m_mapImage.HandleTouchDownEvent((float)e.TouchDevice.GetTouchPoint(this).Position.X, (float)e.TouchDevice.GetTouchPoint(this).Position.Y, 0.0f, CheckAndGetZeroIndexedId(e.TouchDevice.Id));
             }
         }
 
-        private void MainWindowOnKeyDown(object sender, KeyEventArgs e)
+        private void OnKeyDown(object sender, KeyEventArgs e)
         {
             m_mapImage.HandleKeyboardDownEvent((int)KeyInterop.VirtualKeyFromKey(e.Key));
 
@@ -287,7 +289,7 @@ namespace ExampleAppWPF
         {
             int pixelWidth = (int)e.NewSize.Width;
             int pixelHeight = (int)e.NewSize.Height;
-            
+
             if (pixelWidth != m_mapImage.PixelWidth || pixelHeight != m_mapImage.PixelHeight)
             {
                 MapHost.Width = pixelWidth;
@@ -320,6 +322,12 @@ namespace ExampleAppWPF
 
         private void TryDoUpdateAndRender()
         {
+            if (m_firstFrame)
+            {
+                m_firstFrame = false;
+                return;
+            }
+
             if (MapHost.Source == null)
                 return;
 

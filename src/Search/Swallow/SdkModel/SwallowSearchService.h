@@ -8,7 +8,7 @@
 #include "LatLongAltitude.h"
 #include "InteriorId.h"
 #include "SwallowPoiDb.h"
-#include "CategorySearchModel.h"
+#include "TagSearchModel.h"
 #include "BidirectionalBus.h"
 
 namespace ExampleApp

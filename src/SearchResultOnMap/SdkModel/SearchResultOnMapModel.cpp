@@ -6,7 +6,7 @@
 #include "ISearchResultOnMapFactory.h"
 #include "ISearchResultRepository.h"
 #include "SearchResultModel.h"
-#include "ISearchResultIconCategoryMapper.h"
+#include "ISearchResultIconKeyMapper.h"
 #include "WorldPinFocusData.h"
 #include "WorldPinInteriorData.h"
 #include "ISearchResultMyPinsService.h"
@@ -18,6 +18,7 @@
 #include "WorldPinItemModel.h"
 #include "IMyPinsService.h"
 #include "MyPinModel.h"
+#include "YelpParsingHelpers.h"
 #include "WorldPinVisibility.h"
 #include "SwallowSearchConstants.h"
 #include "ISearchService.h"
@@ -54,17 +55,17 @@ namespace ExampleApp
                 {
                     bool operator()(const Search::SdkModel::SearchResultModel& searchResultModel) const
                     {
-                        return searchResultModel.GetCategory() != Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME;
+                        return searchResultModel.GetPrimaryTag() != Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME;
                     }
                 };
                 
                 std::string GetDepartmentFromSearchResultModel(const Search::SdkModel::SearchResultModel& searchResultModel)
                 {
-                    if (searchResultModel.GetCategory() == Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME)
+                    if (searchResultModel.GetPrimaryTag() == Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME)
                     {
                         return searchResultModel.GetTitle();
                     }
-                    else if (searchResultModel.GetCategory() == Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
+                    else if (searchResultModel.GetPrimaryTag() == Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
                     {
                         const Search::Swallow::SdkModel::SwallowPersonResultModel& person = Search::Swallow::SdkModel::SearchParser::TransformToSwallowPersonResult(searchResultModel);
                         return person.GetWorkingGroup();
@@ -79,7 +80,7 @@ namespace ExampleApp
                     static inline VisibilityMaskGenerator Build(const Search::SdkModel::SearchResultModel* pCurrentSelection)
                     {
                         const bool isDepartment = (pCurrentSelection != NULL)
-                            ? (pCurrentSelection->GetCategory() == Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME)
+                            ? (pCurrentSelection->GetPrimaryTag() == Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME)
                             : false;
 
                         const std::string& selectedDepartment = isDepartment
@@ -115,9 +116,9 @@ namespace ExampleApp
                     
                 private:
                     VisibilityMaskGenerator(bool isDepartment,
-                                            const std::string& categoryId)
+                                            const std::string& tagId)
                     : m_isDepartment(isDepartment)
-                    , m_categoryId(categoryId)
+                    , m_tagId(tagId)
                     {
                         
                     }
@@ -127,7 +128,7 @@ namespace ExampleApp
                         if (m_isDepartment)
                         {
                             const std::string& department = GetDepartmentFromSearchResultModel(searchResultModel);
-                            return m_categoryId == department;
+                            return m_tagId == department;
                         }
                         else
                         {
@@ -137,11 +138,11 @@ namespace ExampleApp
                     
                     bool IsMeetingRoomVisible(const Search::SdkModel::SearchResultModel& searchResultModel) const
                     {
-                        return searchResultModel.GetCategory() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME;
+                        return searchResultModel.GetPrimaryTag() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME;
                     }
                     
                     const bool m_isDepartment;
-                    const std::string m_categoryId;
+                    const std::string m_tagId;
                 };
             }
 
@@ -149,13 +150,12 @@ namespace ExampleApp
                                                            MyPins::SdkModel::IMyPinsService& myPinsService,
                                                            View::ISearchResultOnMapFactory& searchResultOnMapFactory,
                                                            Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultOnMapMyPinsService,
-                                                           CategorySearch::ISearchResultIconCategoryMapper& searchResultIconCategoryMapper,
+                                                           TagSearch::ISearchResultIconKeyMapper& searchResultIconKeyMapper,
                                                            ExampleAppMessaging::TMessageBus& messageBus,
                                                            Search::SdkModel::ISearchResultRepository& searchResultRepository,
                                                            Search::SdkModel::ISearchService& searchService)
             : m_searchResultRepository(searchResultRepository)
-            , m_searchService(searchService)
-            , m_searchResultIconCategoryMapper(searchResultIconCategoryMapper)
+            , m_searchResultIconKeyMapper(searchResultIconKeyMapper)
             , m_searchResultOnMapMyPinsService(searchResultOnMapMyPinsService)
             , m_searchResultOnMapFactory(searchResultOnMapFactory)
             , m_myPinsService(myPinsService)
@@ -171,7 +171,6 @@ namespace ExampleApp
             {
                 m_searchResultRepository.InsertItemAddedCallback(m_searchResultAddedCallback);
                 m_searchResultRepository.InsertItemRemovedCallback(m_searchResultRemovedCallback);
-                m_searchService.InsertOnReceivedQueryResultsCallback(m_searchResultsCallback);
                 
                 m_searchResultOnMapMyPinsService.InsertSearchResultPinnedCallback(m_searchResultPinnedCallback);
                 m_searchResultOnMapMyPinsService.InsertSearchResultUnpinnedCallback(m_searchResultUnpinnedCallback);
@@ -191,7 +190,6 @@ namespace ExampleApp
                 m_messageBus.UnsubscribeNative(m_availbilityChangedMessage);
                 m_messageBus.UnsubscribeNative(m_searchResultSectionItemSelectedMessageHandler);
                 
-                m_searchService.RemoveOnReceivedQueryResultsCallback(m_searchResultsCallback);
                 m_searchResultRepository.RemoveItemAddedCallback(m_searchResultAddedCallback);
                 m_searchResultRepository.RemoveItemRemovedCallback(m_searchResultRemovedCallback);
                 
@@ -228,8 +226,8 @@ namespace ExampleApp
                     }
                     
                 }
-                else if((pSearchResultModel->GetCategory() != Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME)
-                        && (pSearchResultModel->GetCategory() != Search::Swallow::SearchConstants::INDOOR_MAP_CATEGORY_NAME))
+                else if((pSearchResultModel->GetPrimaryTag() != Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME)
+                        && (pSearchResultModel->GetPrimaryTag() != Search::Swallow::SearchConstants::INDOOR_MAP_CATEGORY_NAME))
                 {
                     AddSearchResultOnMap(*pSearchResultModel);
                 }
@@ -261,8 +259,8 @@ namespace ExampleApp
                         pWorldPinItemModel->SetVisibilityMask(newVisibilityMask);
                     }
                 }
-                else if((pSearchResultModel->GetCategory() != Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME)
-                        && (pSearchResultModel->GetCategory() != Search::Swallow::SearchConstants::INDOOR_MAP_CATEGORY_NAME))
+                else if((pSearchResultModel->GetPrimaryTag() != Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME)
+                        && (pSearchResultModel->GetPrimaryTag() != Search::Swallow::SearchConstants::INDOOR_MAP_CATEGORY_NAME))
                 {
                     RemoveSearchResultOnMap(*pSearchResultModel);
                 }
@@ -274,7 +272,7 @@ namespace ExampleApp
                 for(std::vector<Search::SdkModel::SearchResultModel>::const_iterator it = results.begin(); it != results.end(); it++)
                 {
                     const Search::SdkModel::SearchResultModel& result = (*it);
-                    if(result.GetCategory() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
+                    if(result.GetPrimaryTag() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
                     {
                         mapIt pinIt = m_searchResultsToPinModel.find(result);
                         if(pinIt == m_searchResultsToPinModel.end())
@@ -284,7 +282,7 @@ namespace ExampleApp
                         
                         Search::Swallow::SdkModel::SwallowMeetingRoomResultModel meetingRoomResult = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(result);
                         
-                        std::string availabilityIconKey = m_searchResultIconCategoryMapper.GetIconKeyFromSearchResult(result);
+                        std::string availabilityIconKey = m_searchResultIconKeyMapper.GetIconKeyFromSearchResult(result);
                         
                         ExampleApp::WorldPins::SdkModel::WorldPinItemModel* pPinItemModel = pinIt->second;
                         m_worldPinsService.UpdatePinCategory(*pPinItemModel, availabilityIconKey);
@@ -386,7 +384,7 @@ namespace ExampleApp
                 {
                     const WorldPins::SdkModel::WorldPinItemModel& worldPinModel = *(it->second);
                     const SearchResultModel& mutatedModel = Search::Swallow::SdkModel::SearchParser::MutateMeetingRoomAvailability(model, meetingAvailbilityChangedMessage.GetAvailability());
-                    m_worldPinsService.UpdatePinCategory(worldPinModel, m_searchResultIconCategoryMapper.GetIconKeyFromSearchResult(mutatedModel));
+                    m_worldPinsService.UpdatePinCategory(worldPinModel, m_searchResultIconKeyMapper.GetIconKeyFromSearchResult(mutatedModel));
                 }
             }
             
@@ -399,7 +397,7 @@ namespace ExampleApp
                 
                 View::SearchResultOnMapItemModel* pSearchResultOnMapItemModel = m_searchResultOnMapFactory.CreateSearchResultOnMapItemModel(searchResultModel);
                 
-                const std::string& pinIconKey = m_searchResultIconCategoryMapper.GetIconKeyFromSearchResult(searchResultModel);
+                const std::string& pinIconKey = m_searchResultIconKeyMapper.GetIconKeyFromSearchResult(searchResultModel);
                 
                 std::string ratingsImage = "";
                 int reviewCount = 0;

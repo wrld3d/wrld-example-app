@@ -14,14 +14,7 @@ namespace ExampleApp
         {
             InteriorsExplorerViewModule::InteriorsExplorerViewModule(SdkModel::InteriorsExplorerModel& model,
 																	 InteriorsExplorerViewModel& viewModel,
-                                                                     ExampleAppMessaging::TMessageBus& messageBus,
-                                                                     MyPinCreation::View::IMyPinCreationInitiationViewModel& initiationViewModel,
-                                                                     ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
-                                                                     ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
-                                                                     ScreenControl::View::IScreenControlViewModel& flattenViewModel,
-                                                                     ScreenControl::View::IScreenControlViewModel& compassViewModel,
-                                                                     ScreenControl::View::IScreenControlViewModel& watermarkViewModel,
-                                                                     Eegeo::Helpers::IdentityProvider& identityProvider)
+                                                                     ExampleAppMessaging::TMessageBus& messageBus)
             {
                 m_pView = Eegeo_NEW(InteriorsExplorerView)();
                 

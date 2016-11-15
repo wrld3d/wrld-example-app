@@ -61,9 +61,9 @@ namespace ExampleApp
                     m_searchService.PerformLocationQuerySearch(query);
                 }
                     
-                std::vector<CategorySearch::View::CategorySearchModel> SwallowSearchServiceModule::GetCategorySearchModels() const
+                std::vector<TagSearch::View::TagSearchModel> SwallowSearchServiceModule::GetTagSearchModels() const
                 {
-                    return SearchConstants::GetCategorySearchModels();
+                    return SearchConstants::GetTagSearchModels();
                 }
                 
                 SwallowSearchTransitionPinController& SwallowSearchServiceModule::GetSwallowSearchTransitionPinController() const
@@ -81,7 +81,7 @@ namespace ExampleApp
                 
                 void SwallowSearchServiceModule::OnSearchServiceReceivedQueryResults(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results)
                 {
-                    if (query.IsCategory() && query.Query() == SearchConstants::TRANSITION_CATEGORY_NAME)
+                    if (query.IsTag() && query.Query() == SearchConstants::TRANSITION_CATEGORY_NAME)
                     {
                         // Due to multiple callbacks of "ReceivedQueryResultsCallback" happening in undetermined order, clear results
                         // after they've all been resolved by handlers. Needs better model/schedule support. 

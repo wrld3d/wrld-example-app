@@ -35,7 +35,7 @@ namespace ExampleApp
                 std::string m_coverageTreeManifestURL;
                 std::string m_themeManifestURL;
                 std::string m_sqliteDbUrl;
-                std::string m_searchServiceUrl;
+                std::string m_eegeoSearchServiceUrl;
                 std::string m_myPinsWebServiceUrl;
                 std::string m_myPinsWebServiceAuthToken;
                 std::string m_productVersion;
@@ -45,11 +45,15 @@ namespace ExampleApp
                 std::string m_webProxyIpAddress;
                 int m_webProxyPort;
                 std::string m_webProxyIgnorePattern;
-                std::string m_senionMapKey;
-                std::string m_senionMapCustomerID;
                 std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>m_buildingsInfo;
                 std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*>m_restrictedBuildingsInfo;
                 bool m_isKioskTouchInputEnabled;
+
+                std::string m_embeddedThemeTexturePath;
+                std::string m_twitterAuthCode;
+                bool m_useLabels;
+
+                std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo> m_interiorTrackingInfo;
                 
             public:
                 ApplicationConfigurationBuilder(const IApplicationConfigurationCipher& applicationConfigurationEncryption,
@@ -87,7 +91,7 @@ namespace ExampleApp
                 
                 IApplicationConfigurationBuilder& SetSqliteDbUrl(const std::string& SqliteDbUrl);
                 
-                IApplicationConfigurationBuilder& SetSearchServiceUrl(const std::string& searchServiceUrl);
+                IApplicationConfigurationBuilder& SetSearchServiceUrl(const std::string& eegeoSearchServiceUrl);
                 
                 IApplicationConfigurationBuilder& SetMyPinsWebServiceUrl(const std::string& myPinsWebServiceUrl);
                 
@@ -106,10 +110,6 @@ namespace ExampleApp
                 IApplicationConfigurationBuilder& SetWebProxyPort(int webProxyPort);
 
                 IApplicationConfigurationBuilder& SetWebProxyIgnorePattern(const std::string& webProxyIgnorePattern);
-
-                IApplicationConfigurationBuilder& SetSenionMapKey(const std::string& mapKey);
-                
-                IApplicationConfigurationBuilder& SetSenionCustomerID(const std::string& customerID);
                 
                 IApplicationConfigurationBuilder& SetBuildingInfoArray(const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>&infoBuildingList);
 
@@ -118,6 +118,14 @@ namespace ExampleApp
                 IApplicationConfigurationBuilder& SetShouldStartFullscreen(bool startFullscreen);
                 
                 IApplicationConfigurationBuilder& SetIsKioskTouchInputEnabled(bool kioskTouchInputEnabled);
+
+                IApplicationConfigurationBuilder& SetEmbeddedThemeTexturePath(const std::string& embeddedThemeTexturePath);
+
+                IApplicationConfigurationBuilder& SetTwitterAuthCode(const std::string& twitterAuthCode);
+
+                IApplicationConfigurationBuilder& SetUseLabels(bool useLabels);
+
+                IApplicationConfigurationBuilder& SetInteriorTrackingInfo(const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo);
                 
                 std::string Decrypt(const std::string& message) const;
 

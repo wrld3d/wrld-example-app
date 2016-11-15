@@ -4,11 +4,12 @@
 #include "AndroidAppThreadAssertionMacros.h"
 #include "SearchVendorNames.h"
 #include "YelpSearchResultModel.h"
-#include "YelpSearchJsonParser.h"
+#include "YelpParsingHelpers.h"
+#include "EegeoJsonParser.h"
+#include "EegeoSearchResultModel.h"
 #include "SwallowSearchConstants.h"
 #include "SwallowSearchParser.h"
 #include "logger.h"
-#include "YelpParsingHelpers.h"
 
 namespace ExampleApp
 {
@@ -44,6 +45,10 @@ namespace ExampleApp
                 else if(vendor == Search::GeoNamesVendorName)
                 {
                 	CreateAndShowGeoNamesPoiView(model, isPinned);
+                }
+                else if (vendor == Search::EegeoVendorName)
+                {
+                	CreateAndShowEegeoPoiView(model, isPinned);
                 }
                 else if(vendor == Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
                 {
@@ -119,6 +124,14 @@ namespace ExampleApp
 
             void SearchResultPoiView::InsertAvailabilityChangedCallback(Eegeo::Helpers::ICallback2<const Search::SdkModel::SearchResultModel&, const std::string&>& callback)
             {
+            	// TJ: Stubbed for Droid implementation
+            }
+
+            void SearchResultPoiView::RemoveAvailabilityChangedCallback(Eegeo::Helpers::ICallback2<const Search::SdkModel::SearchResultModel&, const std::string&>& callback)
+            {
+            	// TJ: Stubbed for Droid implementation
+            }
+
             	m_availabilityChangedCallbacks.AddCallback(callback);
             }
 
@@ -188,14 +201,14 @@ namespace ExampleApp
             	AndroidSafeNativeThreadAttachment attached(m_nativeState);
             	JNIEnv* env = attached.envForThread;
 
-            	jobjectArray humanReadableCategoriesArray = CreateJavaArray(model.GetHumanReadableCategories());
+            	jobjectArray humanReadableTagsArray = CreateJavaArray(model.GetHumanReadableTags());
             	jobjectArray reviewsArray = CreateJavaArray(yelpModel.GetReviews());
 
             	jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
             	jstring addressStr = env->NewStringUTF(model.GetSubtitle().c_str());
             	jstring phoneStr = env->NewStringUTF(yelpModel.GetPhone().c_str());
             	jstring urlStr = env->NewStringUTF(yelpModel.GetWebUrl().c_str());
-            	jstring categoryStr = env->NewStringUTF(model.GetCategory().c_str());
+            	jstring iconKeyStr = env->NewStringUTF(model.GetIconKey().c_str());
             	jstring imageUrlStr = env->NewStringUTF(yelpModel.GetImageUrl().c_str());
             	jstring ratingImageUrlStr = env->NewStringUTF(yelpModel.GetRatingImageUrl().c_str());
             	jstring vendorStr = env->NewStringUTF(model.GetVendor().c_str());
@@ -208,8 +221,8 @@ namespace ExampleApp
 						addressStr,
 						phoneStr,
 						urlStr,
-						categoryStr,
-						humanReadableCategoriesArray,
+						iconKeyStr,
+						humanReadableTagsArray,
 						imageUrlStr,
 						ratingImageUrlStr,
 						vendorStr,
@@ -221,13 +234,13 @@ namespace ExampleApp
             	env->DeleteLocalRef(vendorStr);
             	env->DeleteLocalRef(ratingImageUrlStr);
             	env->DeleteLocalRef(imageUrlStr);
-            	env->DeleteLocalRef(categoryStr);
+            	env->DeleteLocalRef(iconKeyStr);
             	env->DeleteLocalRef(urlStr);
             	env->DeleteLocalRef(phoneStr);
             	env->DeleteLocalRef(addressStr);
             	env->DeleteLocalRef(titleStr);
             	env->DeleteLocalRef(reviewsArray);
-            	env->DeleteLocalRef(humanReadableCategoriesArray);
+            	env->DeleteLocalRef(humanReadableTagsArray);
             }
 
             void SearchResultPoiView::CreateAndShowGeoNamesPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned)
@@ -241,7 +254,7 @@ namespace ExampleApp
 
             	jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
             	jstring addressStr = env->NewStringUTF(model.GetSubtitle().c_str());
-            	jstring categoryStr = env->NewStringUTF(model.GetCategory().c_str());
+            	jstring iconKeyStr = env->NewStringUTF(model.GetIconKey().c_str());
 
             	jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
             	env->CallVoidMethod(
@@ -249,13 +262,81 @@ namespace ExampleApp
 						displayPoiInfoMethod,
 						titleStr,
 						addressStr,
-						categoryStr,
+						iconKeyStr,
 						isPinned
             	);
 
-            	env->DeleteLocalRef(categoryStr);
+            	env->DeleteLocalRef(iconKeyStr);
             	env->DeleteLocalRef(addressStr);
             	env->DeleteLocalRef(titleStr);
+            }
+
+            void SearchResultPoiView::CreateAndShowEegeoPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned)
+            {
+            	const std::string viewClass = "com/eegeo/searchresultpoiview/EegeoSearchResultPoiView";
+            	m_uiViewClass = CreateJavaClass(viewClass);
+            	Eegeo_ASSERT(m_uiViewClass != NULL, "failed to create viewClass EegeoSearchResultPoiView");
+            	m_uiView = CreateJavaObject(m_uiViewClass);
+            	Eegeo_ASSERT(m_uiView != NULL, "failed to create view EegeoSearchResultPoiView");
+
+            	const Search::EegeoPois::SdkModel::EegeoSearchResultModel& eegeoSearchResultModel = Search::EegeoPois::SdkModel::TransformToEegeoSearchResult(model);
+
+            	AndroidSafeNativeThreadAttachment attached(m_nativeState);
+            	JNIEnv* env = attached.envForThread;
+
+            	jobjectArray humanReadableTagsArray = CreateJavaArray(model.GetHumanReadableTags());
+
+            	jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
+            	jstring subtitleStr = env->NewStringUTF(model.GetSubtitle().c_str());
+            	jstring addressStr = env->NewStringUTF(eegeoSearchResultModel.GetAddress().c_str());
+            	jstring descriptionStr = env->NewStringUTF(eegeoSearchResultModel.GetDescription().c_str());
+            	jstring phoneStr = env->NewStringUTF(eegeoSearchResultModel.GetPhone().c_str());
+            	jstring urlStr = env->NewStringUTF(eegeoSearchResultModel.GetWebUrl().c_str());
+            	jstring iconKeyStr = env->NewStringUTF(model.GetIconKey().c_str());
+            	jstring imageUrlStr = env->NewStringUTF(eegeoSearchResultModel.GetImageUrl().c_str());
+            	jstring vendorStr = env->NewStringUTF(model.GetVendor().c_str());
+            	jstring facebookStr = env->NewStringUTF(eegeoSearchResultModel.GetFacebookUrl().c_str());
+            	jstring twitterStr = env->NewStringUTF(eegeoSearchResultModel.GetTwitterUrl().c_str());
+            	jstring emailStr = env->NewStringUTF(eegeoSearchResultModel.GetEmail().c_str());
+            	jstring customViewStr = env->NewStringUTF(eegeoSearchResultModel.GetCustomViewUrl().c_str());
+            	int customViewHeight = eegeoSearchResultModel.GetCustomViewHeight();
+
+            	jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V");
+            	env->CallVoidMethod(
+            			m_uiView,
+						displayPoiInfoMethod,
+						titleStr,
+						subtitleStr,
+						addressStr,
+						descriptionStr,
+						phoneStr,
+						urlStr,
+						iconKeyStr,
+						humanReadableTagsArray,
+						imageUrlStr,
+						vendorStr,
+						isPinned,
+						facebookStr,
+						twitterStr,
+						emailStr,
+						customViewStr,
+						customViewHeight
+            	);
+
+            	env->DeleteLocalRef(vendorStr);
+            	env->DeleteLocalRef(imageUrlStr);
+            	env->DeleteLocalRef(iconKeyStr);
+            	env->DeleteLocalRef(urlStr);
+            	env->DeleteLocalRef(phoneStr);
+            	env->DeleteLocalRef(addressStr);
+            	env->DeleteLocalRef(descriptionStr);
+            	env->DeleteLocalRef(titleStr);
+            	env->DeleteLocalRef(subtitleStr);
+            	env->DeleteLocalRef(humanReadableTagsArray);
+            	env->DeleteLocalRef(facebookStr);
+            	env->DeleteLocalRef(twitterStr);
+            	env->DeleteLocalRef(emailStr);
+            	env->DeleteLocalRef(customViewStr);
             }
 
             void SearchResultPoiView::CreateAndShowPersonSearchResultPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned)

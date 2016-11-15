@@ -12,7 +12,7 @@
 #include "MyPins.h"
 #include "Search.h"
 #include "BidirectionalBus.h"
-#include "CategorySearch.h"
+#include "TagSearch.h"
 #include "SearchResultPoiViewOpenedMessageHandler.h"
 #include "ISearchResultPoiViewImageFetcher.h"
 #include "Web.h"
@@ -37,7 +37,7 @@ namespace ExampleApp
                                       Reaction::View::IReactionControllerModel& reactionControllerModel,
                                       MyPins::SdkModel::IMyPinsService& myPinsService,
                                       Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultMyPinsService,
-                                      CategorySearch::ISearchResultIconCategoryMapper& searchResultIconCategoryMapper,
+                                      TagSearch::ISearchResultIconKeyMapper& searchResultIconKeyMapper,
                                       Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
                                       ExampleAppMessaging::TMessageBus& messageBus);
 

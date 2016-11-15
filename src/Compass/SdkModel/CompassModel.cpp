@@ -11,9 +11,9 @@
 #include "LatLongAltitude.h"
 #include "IAppModeModel.h"
 #include "IAlertBoxFactory.h"
-#include "IInteriorsNavigationService.h"
 #include "InteriorsExplorerModel.h"
-#include "ISenionLocationService.h"
+#include "InteriorNavigationHelpers.h"
+
 
 
 namespace ExampleApp
@@ -23,23 +23,24 @@ namespace ExampleApp
         namespace SdkModel
         {
             CompassModel::CompassModel(Eegeo::Location::NavigationService& navigationService,
-                                       InteriorsNavigation::SdkModel::IInteriorsNavigationService& interiorsNavigationService,
-                                       ExampleApp::SenionLocation::SdkModel::ISenionLocationService& locationService,
-                                       ExampleApp::AppCamera::SdkModel::IAppCameraController& cameraController,
-                                       Metrics::IMetricsService& metricsService,
-                                       InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorExplorerModel,
-                                       AppModes::SdkModel::IAppModeModel& appModeModel,
-                                       Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory)
+                Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                Eegeo::Location::ILocationService& locationService,
+                ExampleApp::AppCamera::SdkModel::IAppCameraController& Cameracontroller,
+                Metrics::IMetricsService& metricsService,
+                InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorExplorerModel,
+                AppModes::SdkModel::IAppModeModel& appModeModel,
+                Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory)
                 :m_navigationService(navigationService)
-                ,m_interiorsNavigationService(interiorsNavigationService)
+                ,m_interiorInteractionModel(interiorInteractionModel)
                 ,m_locationService(locationService)
-                ,m_cameraController(cameraController)
+                ,m_cameraController(Cameracontroller)
                 ,m_metricsService(metricsService)
                 , m_interiorExplorerModel(interiorExplorerModel)
                 , m_appModeModel(appModeModel)
                 , m_appModeChangedCallback(this, &CompassModel::OnAppModeChanged)
                 , m_alertBoxFactory(alertBoxFactory)
                 , m_failAlertHandler(this, &CompassModel::OnFailedToGetLocation)
+                , m_interiorFloorChangedCallback(this, &CompassModel::OnInteriorFloorChanged)
                 , m_exitInteriorTriggered(false)
             {
                 m_compassGpsModeToNavigationGpsMode[Eegeo::Location::NavigationService::GpsModeOff] = GpsMode::GpsDisabled;
@@ -56,10 +57,13 @@ namespace ExampleApp
                 
                 
                 m_appModeModel.RegisterAppModeChangedCallback(m_appModeChangedCallback);
+                m_interiorExplorerModel.InsertInteriorExplorerFloorSelectionDraggedCallback(m_interiorFloorChangedCallback);
             }
 
             CompassModel::~CompassModel()
             {
+                
+                m_interiorExplorerModel.RemoveInteriorExplorerFloorSelectionDraggedCallback(m_interiorFloorChangedCallback);
                 m_appModeModel.UnregisterAppModeChangedCallback(m_appModeChangedCallback);
             }
 
@@ -75,32 +79,27 @@ namespace ExampleApp
 
             void CompassModel::CycleToNextGpsMode()
             {
-                
-                
-                if(m_locationService.isSenionMode() != true)
+                if(!m_locationService.GetIsAuthorized())
                 {
-                    if(!m_locationService.GetIsAuthorized())
-                    {
-                        DisableGpsMode();
-                        m_gpsModeUnauthorizedCallbacks.ExecuteCallbacks();
-                        return;
-                    }
-                    
-                    Eegeo::Space::LatLong latlong = Eegeo::Space::LatLong::FromDegrees(0.0, 0.0);
-                    if(!m_locationService.GetLocation(latlong))
-                    {
-                        m_alertBoxFactory.CreateSingleOptionAlertBox("Failed to obtain location",
-                                                                     "Could not get the device location. Please ensure you have GPS enabled",
-                                                                     m_failAlertHandler);
-                        DisableGpsMode();
-                        return;
-                    }
+                    DisableGpsMode();
+                    m_gpsModeUnauthorizedCallbacks.ExecuteCallbacks();
+                    return;
                 }
-                
+
+                Eegeo::Space::LatLong latlong = Eegeo::Space::LatLong::FromDegrees(0.0, 0.0);
+                if(!m_locationService.GetLocation(latlong))
+                {
+                    m_alertBoxFactory.CreateSingleOptionAlertBox("Failed to obtain location",
+                        "Could not get the device location. Please ensure you have GPS enabled",
+                        m_failAlertHandler);
+                    DisableGpsMode();
+                    return;
+                }
+
                 int gpsMode = static_cast<int>(m_gpsMode);
                 gpsMode = (gpsMode + 1) % static_cast<int>(GpsMode::GpsMode_Max);
                 GpsMode::Values newGpsMode = static_cast<GpsMode::Values>(gpsMode);
-                
+
                 if(GetGpsModeActive() && newGpsMode == GpsMode::GpsDisabled)
                 {
                     m_gpsMode = newGpsMode;
@@ -118,22 +117,18 @@ namespace ExampleApp
                 return ((appMode != AppModes::SdkModel::WorldMode) &&
                         !m_exitInteriorTriggered &&
                         (gpsMode != GpsMode::GpsDisabled) &&
-                        !m_interiorsNavigationService.IsPositionInInterior());
+                        !Helpers::InteriorNavigationHelpers::IsPositionInInterior(m_interiorInteractionModel, m_locationService));
             }
 
             void CompassModel::TryUpdateToNavigationServiceGpsMode(Eegeo::Location::NavigationService::GpsMode value)
             {
-                
-                if(m_locationService.isSenionMode() != true)
+                if(!m_locationService.GetIsAuthorized())
                 {
-                    
-                    if(!m_locationService.GetIsAuthorized())
-                    {
-                        DisableGpsMode();
-                        return;
-                    }
+              {  DisableGpsMode();
+                    return;
                 }
                 
+}
                 GpsMode::Values gpsModeValueFromNavigationService = m_compassGpsModeToNavigationGpsMode[value];
                 // override value if we know we are using navigation service
                 if(m_exitInteriorTriggered)
@@ -172,19 +167,6 @@ namespace ExampleApp
             void CompassModel::SetGpsMode(GpsMode::Values gpsMode)
             {
                 m_gpsMode = gpsMode;
-                
-                const AppModes::SdkModel::AppMode appMode = m_appModeModel.GetAppMode();
-                if (appMode == AppModes::SdkModel::WorldMode || m_exitInteriorTriggered)
-                {
-                    m_navigationService.SetGpsMode(m_navigationGpsModeToCompassGpsMode[gpsMode]);
-                    m_interiorsNavigationService.SetGpsMode(m_navigationGpsModeToCompassGpsMode[GpsMode::GpsDisabled]);
-                }
-                else
-                {
-                    m_navigationService.SetGpsMode(m_navigationGpsModeToCompassGpsMode[GpsMode::GpsDisabled]);
-                    m_interiorsNavigationService.SetGpsMode(m_navigationGpsModeToCompassGpsMode[gpsMode]);
-                }
-                
                 m_metricsService.SetEvent("SetGpsMode", "GpsMode", m_gpsModeToString[m_gpsMode]);
                 
                 m_gpsModeChangedCallbacks.ExecuteCallbacks();
@@ -247,6 +229,11 @@ namespace ExampleApp
                     DisableGpsMode();
                     return;
                 }
+            }
+            
+            void CompassModel::OnInteriorFloorChanged()
+            {
+                DisableGpsMode();
             }
             
             void CompassModel::OnFailedToGetLocation()

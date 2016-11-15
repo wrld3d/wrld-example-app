@@ -3,7 +3,6 @@
 #include "GeoNamesSearchQuery.h"
 #include "IWebLoadRequestFactory.h"
 #include "IWebLoadRequest.h"
-#include "ApiKey.h"
 
 namespace ExampleApp
 {

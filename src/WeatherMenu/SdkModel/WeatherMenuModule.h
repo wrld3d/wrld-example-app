@@ -10,6 +10,7 @@
 #include "WeatherSelectedMessageHandler.h"
 #include "IMetricsService.h"
 #include "VisualMap.h"
+#include "IAppModeModel.h"
 
 namespace ExampleApp
 {
@@ -23,7 +24,8 @@ namespace ExampleApp
                 WeatherMenuModule(Eegeo::Helpers::IFileIO& fileio,
                                   VisualMap::SdkModel::IVisualMapService& visualMapService,
                                   ExampleAppMessaging::TMessageBus& messageBus,
-                                  Metrics::IMetricsService& metricsService);
+                                  Metrics::IMetricsService& metricsService,
+                                  const AppModes::SdkModel::IAppModeModel& appModeModel);
 
                 ~WeatherMenuModule();
 

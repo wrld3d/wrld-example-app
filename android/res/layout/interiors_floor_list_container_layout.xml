@@ -3,7 +3,6 @@
     android:id="@+id/interiors_floor_list_container"
     android:layout_width="70dp"
     android:layout_height="150dp"
-    android:background="@android:color/transparent"
     android:cacheColorHint="@android:color/transparent"
     android:clipChildren="false"
     android:layout_gravity="center_horizontal"

@@ -2,7 +2,7 @@
 
 #include "DesktopSearchMenuController.h"
 
-#include "CategorySearchRepository.h"
+#include "TagSearchRepository.h"
 #include "IMenuOption.h"
 #include "IModalBackgroundView.h"
 #include "ISearchMenuView.h"
@@ -20,7 +20,7 @@ namespace ExampleApp
                                                                      Menu::View::IMenuView& view,
                                                                      ISearchMenuView& searchMenuView,
                                                                      Menu::View::IMenuSectionViewModel& searchSectionViewModel,
-                                                                     CategorySearch::View::ICategorySearchRepository& categorySearchRepository,
+                                                                     TagSearch::View::ITagSearchRepository& tagSearchRepository,
                                                                      Modality::View::IModalBackgroundView& modalBackgroundView,
                                                                      Modality::View::IModalityController& modalityController,
                                                                      ExampleAppMessaging::TMessageBus& messageBus,
@@ -30,7 +30,7 @@ namespace ExampleApp
                                      view,
                                      searchMenuView,
                                      searchSectionViewModel,
-                                     categorySearchRepository,
+                                     tagSearchRepository,
                                      modalBackgroundView,
                                      messageBus),
                 //m_modalityController(modalityController),

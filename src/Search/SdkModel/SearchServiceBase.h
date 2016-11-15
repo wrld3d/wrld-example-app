@@ -20,7 +20,7 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection2<const SearchQuery&, const std::vector<SearchResultModel>& > m_queryResponseReceivedCallbacks;
 
             protected:
-                SearchServiceBase(const std::vector<std::string>& availableCategories);
+                SearchServiceBase(const std::vector<std::string>& handledTags);
 
                 ~SearchServiceBase();
 
@@ -28,11 +28,11 @@ namespace ExampleApp
 
                 void ExecuteQueryResponseReceivedCallbacks(const SearchQuery& query, const std::vector<SearchResultModel>& results);
                 
-                std::vector<std::string> m_availableCategories;
+                std::vector<std::string> m_handledTags;
 
             public:
                 
-                virtual bool CanHandleCategory(const std::string& category) const;
+                virtual bool CanHandleTag(const std::string& tag) const;
                 
                 virtual bool CanHandleIndoor() const { return false; }
                 

@@ -17,7 +17,9 @@ namespace ExampleApp
             {
             public:
                 
-                InteriorsUINotificationService(ExampleAppMessaging::TMessageBus& messageBus, InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsPinsController,const WorldPins::SdkModel::IWorldPinIconMapping& pinIconMapping);
+                InteriorsUINotificationService(ExampleAppMessaging::TMessageBus& messageBus,
+                                               InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsPinsController,
+                                               const WorldPins::SdkModel::IWorldPinIconMapping& pinIconMapping);
                 
                 ~InteriorsUINotificationService();
                 

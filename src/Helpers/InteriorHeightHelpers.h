@@ -11,10 +11,10 @@ namespace ExampleApp
         namespace InteriorHeightHelpers
         {
             extern const float INTERIOR_FLOOR_HEIGHT;
-            extern const float INTERIOR_AVATAR_OFFSET;
             
             float GetFloorHeightAboveSeaLevel(const Eegeo::Resources::Interiors::InteriorsModel& interiorModel, unsigned int floorIndex);
-            float GetFloorHeightAboveSeaLevelIncludingEnvironmentFlattening(const Eegeo::Resources::Interiors::InteriorsModel& interiorModel, unsigned int floorIndex, float environmentFlatteningScalar);
+            
+            float GetFloorHeightAboveSeaLevelIncludingEnvironmentFlattening(const Eegeo::Resources::Interiors::InteriorsModel& interiorModel, unsigned int floorIndex, float environmentFlattening);
         }
     }
 }

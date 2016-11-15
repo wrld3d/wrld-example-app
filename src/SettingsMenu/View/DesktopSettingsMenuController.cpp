@@ -123,7 +123,7 @@ namespace ExampleApp
                 m_isControlOpen[Control::POICard] = false;
 
             }
-            
+
             void DesktopSettingsMenuController::OnSearchMenuOpened()
             {
                 m_viewModel.RemoveFromScreen();

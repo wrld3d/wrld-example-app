@@ -79,7 +79,7 @@ namespace ExampleApp
 					watermarkData.ShouldShowShadow());
 			}
 
-			void WatermarkView::SetWatermarkAlignmentState(bool alignAlongBottom)
+			void WatermarkView::SetWatermarkAlignmentState(bool alignAlongBottom, bool alignBelowFloorDisplay)
 			{
 				// Windows build doesn't really need to implement -- used to align watermark to bottom of screen on portrait devices
 			}

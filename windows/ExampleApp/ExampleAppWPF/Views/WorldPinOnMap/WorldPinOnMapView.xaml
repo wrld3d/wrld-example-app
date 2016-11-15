@@ -13,6 +13,9 @@
                     <StackPanel Width="183" Name="SearchResultOnMapView" VerticalAlignment="Center" UseLayoutRounding="False">
                         <Grid Width="Auto" Height="Auto">
                             <Border BorderBrush="{x:Null}" Width="Auto" Height="Auto" BorderThickness="0">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="{Binding Source={StaticResource Grey}, Path=Color}" ShadowDepth="2" BlurRadius="0" Opacity="1"/>
+                                </Border.Effect>
                                 <StackPanel Name="SearchResultOnMapViewContainer" MinWidth="120" MaxWidth="240" Width="Auto" Height="Auto" Background="White">
                                     <Grid Height="5" Background="{StaticResource Gold}"/>
                                     <StackPanel Margin="8,0,8,0" Background="{StaticResource Transparent}">

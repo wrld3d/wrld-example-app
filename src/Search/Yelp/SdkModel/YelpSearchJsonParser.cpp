@@ -18,8 +18,10 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                YelpSearchJsonParser::YelpSearchJsonParser(IYelpCategoryMapper& yelpCategoryMapper)
+                YelpSearchJsonParser::YelpSearchJsonParser(IYelpCategoryToTagMapper& yelpCategoryMapper,
+                                                           const TagSearch::SdkModel::ITagIconMapper& tagIconMapper)
                 : m_yelpCategoryMapper(yelpCategoryMapper)
+                , m_tagIconMapper(tagIconMapper)
                 {
                     
                 }
@@ -39,7 +41,7 @@ namespace ExampleApp
                             for(int i = 0; i < numEntries; ++i)
                             {
                                 const rapidjson::Value& json = entries[i];
-                                Search::SdkModel::SearchResultModel result(Helpers::ParseYelpSearchResultFromJsonObject(json, m_yelpCategoryMapper));
+                                Search::SdkModel::SearchResultModel result(Helpers::ParseYelpSearchResultFromJsonObject(json, m_yelpCategoryMapper, m_tagIconMapper));
                                 out_results.push_back(result);
                             }
                         }

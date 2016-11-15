@@ -90,9 +90,10 @@ namespace ExampleApp
                                                            true,
                                                            Eegeo::Resources::Interiors::InteriorId(resultRow.Cell(columnOffset + poi_interior_id).AsText()),
                                                            resultRow.Cell(columnOffset + poi_interior_floor).AsInteger(),
-                                                           Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME,
+                                                           Search::Swallow::SearchConstants::GetAllTags(),
                                                            std::vector<std::string>(),
                                                            Search::EegeoVendorName,
+                                                           Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME,
 														   strbuf.GetString(),
                                                            Eegeo::Helpers::Time::MillisecondsSinceEpoch());
             }

@@ -12,9 +12,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
@@ -28,11 +25,12 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
     private View m_view = null;
     private View m_compassPoint = null;
     private ImageView m_compassInner = null;
+    private View m_compassDefault = null;
+    private View m_compassLocked = null;
+    private View m_compassUnlocked = null;
 
     private float m_yPosActive;
     private float m_yPosInactive;
-    private float m_compassPointOffsetX;
-    private float m_compassPointOffsetY;
     
     private final long m_stateChangeAnimationTimeMilliseconds = 200;
 
@@ -62,6 +60,10 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
         m_compassInner = (ImageView)m_view.findViewById(R.id.compass_inner_shape);
     	m_compassInner.setVisibility(View.GONE);
     	
+    	m_compassDefault = m_view.findViewById(R.id.compass_outer_shape);
+    	m_compassLocked = m_view.findViewById(R.id.compass_new_locked);
+    	m_compassUnlocked = m_view.findViewById(R.id.compass_new_unlocked);
+    	
     	m_activity.getRuntimePermissionDispatcher().addRuntimePermissionResultHandler(this);
 
         m_view.addOnLayoutChangeListener(new View.OnLayoutChangeListener() 
@@ -75,11 +77,6 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 		        final float screenHeight = uiRoot.getHeight();
 		        final float viewWidth = m_view.getWidth();
 		        final float viewHeight = m_view.getHeight();
-		        final float pointWidth = m_compassPoint.getWidth();
-		        final float pointHeight = m_compassPoint.getHeight();
-
-		    	m_compassPointOffsetX = (viewWidth * 0.5f) - (pointWidth * 0.5f);
-		        m_compassPointOffsetY = (viewHeight * 0.5f) - (pointHeight * 0.5f);
 		        
 		        m_yPosActive = (screenHeight - viewWidth) - m_activity.dipAsPx(8.f);
 		        m_yPosInactive = screenHeight + viewHeight;
@@ -96,34 +93,31 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 
     public void updateHeading(float headingAngleRadians)
     {
-    	final float verticalPointOffsetPx = 25.f;
-       	final float theta = -headingAngleRadians;
-       	final float sinTheta = (float)Math.sin(theta);
-        final float cosTheta = (float)Math.cos(theta);
-        final float x = 0.f;
-        final float y = m_activity.dipAsPx(-verticalPointOffsetPx);
-        final float newX = x*cosTheta - y*sinTheta;
-        final float newY = y*cosTheta + x*sinTheta;
-        m_compassPoint.setX(m_compassPointOffsetX + newX);
-        m_compassPoint.setY(m_compassPointOffsetY + newY);
     	m_compassPoint.setRotation((float) -Math.toDegrees(headingAngleRadians));
     }
 
     public void showGpsDisabledView()
     { 
     	m_compassInner.setVisibility(View.GONE);
+    	m_compassDefault.setVisibility(View.VISIBLE);
+    	m_compassLocked.setVisibility(View.INVISIBLE);
+    	m_compassUnlocked.setVisibility(View.INVISIBLE);
     }
 
     public void showGpsFollowView()
     {  
     	m_compassInner.setVisibility(View.VISIBLE);
-    	createBitMap(Paint.Style.STROKE);
+    	m_compassDefault.setVisibility(View.INVISIBLE);
+    	m_compassLocked.setVisibility(View.VISIBLE);
+    	m_compassUnlocked.setVisibility(View.INVISIBLE);
     }
 
     public void showGpsCompassModeView()
     { 
     	m_compassInner.setVisibility(View.VISIBLE);
-    	createBitMap(Paint.Style.FILL);
+    	m_compassLocked.setVisibility(View.INVISIBLE);
+    	m_compassUnlocked.setVisibility(View.VISIBLE);
+    	m_compassDefault.setVisibility(View.INVISIBLE);
     }
     
     public void notifyGpsUnauthorized()

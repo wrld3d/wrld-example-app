@@ -33,8 +33,8 @@
         android:inputType="text"
         android:imeOptions="actionDone"
         android:paddingLeft="8dp"
-        android:textSize="18dp"
-        android:singleLine="true">
+    	android:imeOptions="actionDone"
+        android:textSize="18dp" >
 
         <requestFocus android:layout_width="wrap_content" />
 

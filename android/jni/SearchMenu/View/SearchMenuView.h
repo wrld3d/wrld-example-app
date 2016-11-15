@@ -31,7 +31,7 @@ namespace ExampleApp
 
 				void SetSearchInProgress(bool inProgress);
 
-				void SetEditText(const std::string& searchText, bool isCategory);
+				void SetEditText(const std::string& searchText, bool isTag);
 
 				void SetSearchResultCount(int searchResultCount);
 

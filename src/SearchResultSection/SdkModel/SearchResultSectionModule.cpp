@@ -31,7 +31,8 @@ namespace ExampleApp
                                                                                                     messageBus);
 
                 m_pSearchResultSectionItemSelectedMessageHandler = Eegeo_NEW(SearchResultSectionItemSelectedMessageHandler)(cameraTransitionController,
-                                                                                                                      messageBus,                                                                                                                            restrictedBuildingInformationService);
+                                                                                                                            messageBus,
+                                                                                                                            restrictedBuildingInformationService);
                 
                 m_pSearchResultViewClearedObserver = Eegeo_NEW(SearchResultViewClearedObserver)(searchQueryPerformer, messageBus);
                 
