@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.Uri;
 
 
 public class BackgroundThreadActivity extends MainActivity
@@ -27,6 +28,11 @@ public class BackgroundThreadActivity extends MainActivity
     private long m_nativeAppWindowPtr;
     private ThreadedUpdateRunner m_threadedRunner;
     private Thread m_updater;
+    /* The url used if the app is opened by a deep link.
+     *  As the app in singleTask this is set in onNewIntent and must be
+     *  set to null before for the app pauses.
+     */
+    private Uri m_deepLinkUrlData;
 
     static
     {
@@ -110,6 +116,10 @@ public class BackgroundThreadActivity extends MainActivity
                 {
                     NativeJniCalls.setNativeSurface(m_surfaceHolder.getSurface());
                 }
+
+                if(m_deepLinkUrlData != null) {
+                    NativeJniCalls.handleUrlOpenEvent(m_deepLinkUrlData.getHost(), m_deepLinkUrlData.getPath());
+                }
             }
         });
     }
@@ -118,6 +128,8 @@ public class BackgroundThreadActivity extends MainActivity
     protected void onPause()
     {
         super.onPause();
+
+        m_deepLinkUrlData = null;
 
         runOnNativeThread(new Runnable()
         {
@@ -208,6 +220,12 @@ public class BackgroundThreadActivity extends MainActivity
                 }
             }
         });
+    }
+    
+    @Override
+    public void onNewIntent(Intent intent) {
+         m_deepLinkUrlData = intent.getData();
+
     }
 
     public void dispatchRevealUiMessageToUiThreadFromNativeThread(final long nativeCallerPointer)

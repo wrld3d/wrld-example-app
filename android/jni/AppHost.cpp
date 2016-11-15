@@ -678,3 +678,8 @@ void AppHost::HandleUserInteractionEnabledChanged(const ExampleApp::UserInteract
 	env->CallVoidMethod(m_nativeState.activity, touchEnabledMethod, message.IsEnabled());
 }
 
+void AppHost::HandleOpenUrlEvent(const AppInterface::UrlData& data)
+{
+	m_pApp->Event_OpenUrl(data);
+}
+

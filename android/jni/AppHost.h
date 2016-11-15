@@ -89,6 +89,8 @@ public:
 
     void HandleTouchInputEvent(const Eegeo::Android::Input::TouchInputEvent& event);
 
+    void HandleOpenUrlEvent(const AppInterface::UrlData& data);
+
     void SetEnvironmentFlatten(bool flattenState);
     void SetCameraLocation(const Eegeo::Space::LatLongAltitude& interestPoint, double distanceToInterestPoint, double orientationInDegrees);
     void SendCameraLocationToGUI();

@@ -22,6 +22,7 @@ public:
     void UpdateUiViews(float deltaSeconds);
     void StopUpdatingNativeBeforeTeardown();
     void DestroyApplicationUi();
+    void HandleUrlOpenEvent(const AppInterface::UrlData& data);
 
     void HandleTouchEvent(const Eegeo::Android::Input::TouchInputEvent& message);
 

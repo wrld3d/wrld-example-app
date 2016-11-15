@@ -80,6 +80,16 @@ void AppRunner::Resume()
     m_isPaused = false;
 }
 
+void AppRunner::HandleUrlOpenEvent(const AppInterface::UrlData& data)
+{
+    ASSERT_NATIVE_THREAD
+
+    if(m_pAppHost != NULL)
+    {
+        m_pAppHost->HandleOpenUrlEvent(data);
+    }
+}
+
 void AppRunner::ActivateSurface()
 {
     ASSERT_NATIVE_THREAD

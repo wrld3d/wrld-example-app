@@ -24,12 +24,19 @@
                   android:label="eeGeo Example"
                   android:configChanges="orientation|keyboardHidden|screenSize|fontScale"
                   android:windowSoftInputMode="adjustPan"
-              	  android:launchMode="standard"
+              	  android:launchMode="singleTask"
               	  android:hardwareAccelerated="true"
               	  android:resizeableActivity="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+        		<category android:name="android.intent.category.BROWSABLE" />
+		        <data android:scheme="eegeo" android:host="location" />
+		        <data android:scheme="eegeo" android:host="mymaps" />         		
             </intent-filter>
         </activity>
         
