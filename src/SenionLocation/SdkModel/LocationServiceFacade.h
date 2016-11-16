@@ -28,8 +28,11 @@ namespace ExampleApp
                 
                 const bool GetIsAuthorized() const { return m_gpslocationService.GetIsAuthorized(); }
 
+                bool IsIndoors();
+                bool GetIndoorID(int& indoorID);
                 bool GetLocation(Eegeo::Space::LatLong& latlong);
                 bool GetAltitude(double& altitude);
+                bool GetFloorIndex(int& floorIndex);
                 bool GetHorizontalAccuracy(double& accuracy);
                 bool GetHeadingDegrees(double& headingDegrees);
                 void StopListening();

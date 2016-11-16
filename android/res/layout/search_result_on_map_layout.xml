@@ -1,12 +1,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/search_result_on_map_view"
-    android:layout_width="183dip"
-    android:layout_height="wrap_content">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingLeft="1dp"
+    android:paddingRight="1dp">
 
 	<LinearLayout
 		android:id="@+id/search_result_on_map_view_container"
-		android:layout_width="180dp"
+		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:orientation="vertical"
 		android:background="@drawable/search_result_on_map_back" >
@@ -17,19 +19,23 @@
 		    android:background="@color/gold"/>
 		  
 		<!--  Title text -->
+
 		<TextView
 		    android:id="@+id/search_result_on_map_view_title"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
-		    android:layout_marginTop="3dp"
 		    android:layout_marginBottom="3dp"
+		    android:layout_marginTop="3dp"
 		    android:ellipsize="end"
 		    android:gravity="center_horizontal"
+		    android:paddingLeft="4dp"
+		    android:paddingRight="4dp"
 		    android:singleLine="true"
 		    android:textColor="@color/gold"
 		    android:textSize="15.0dp" />
 		
 		<!--  Description -->
+
 		<TextView
 		    android:id="@+id/search_result_on_map_view_details"
 		    android:layout_width="fill_parent"
@@ -37,6 +43,8 @@
 		    android:layout_marginBottom="4dp"
 		    android:ellipsize="end"
 		    android:gravity="center_horizontal"
+		    android:paddingLeft="4dp"
+		    android:paddingRight="4dp"
 		    android:singleLine="true"
 		    android:textColor="@color/darkgrey"
 		    android:textSize="12.0dp" />
@@ -48,6 +56,8 @@
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:layout_gravity="center_horizontal"
+		    android:layout_marginLeft="10dp"
+		    android:layout_marginRight="10dp"
 		    android:layout_marginTop="3dp"
 		    android:orientation="horizontal" >
 
@@ -77,9 +87,11 @@
             android:id="@+id/search_result_on_map_accreditation_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="2dp"
             android:src="@drawable/yelp_logo_small" />
 		
 	  </LinearLayout>

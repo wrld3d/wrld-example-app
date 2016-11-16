@@ -27,6 +27,16 @@ namespace ExampleApp
             
             }
             
+            bool LocationServiceFacade::IsIndoors()
+            {
+                return m_avatarVisiblityStatus == true;
+            }
+            
+            bool LocationServiceFacade::GetIndoorID(int &indoorID)
+            {
+                return false;
+            }
+            
             bool LocationServiceFacade::GetLocation(Eegeo::Space::LatLong& latlong)
             {
                 if(m_avatarVisiblityStatus == true)
@@ -46,6 +56,11 @@ namespace ExampleApp
             bool LocationServiceFacade::GetAltitude(double& altitude)
             {
                 return m_gpslocationService.GetAltitude(altitude);
+            }
+            
+            bool LocationServiceFacade::GetFloorIndex(int& floorIndex)
+            {
+                return false;
             }
             
             bool LocationServiceFacade::GetHorizontalAccuracy(double& accuracy)

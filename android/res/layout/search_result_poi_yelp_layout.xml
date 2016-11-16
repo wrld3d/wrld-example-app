@@ -45,20 +45,6 @@
 	             android:layout_height="wrap_content"
 	             android:orientation="vertical">
 	             
-	              <!--  Preview Image -->
-	            <RelativeLayout 
-	             android:layout_width="fill_parent"
-	             android:layout_height="wrap_content">
-				
-					<ProgressBar
-					    android:id="@+id/search_result_poi_view_image_progress"
-					    style="@android:style/Widget.ProgressBar.Small"
-					    android:layout_width="wrap_content"
-					    android:layout_height="wrap_content"
-					    android:layout_centerHorizontal="true"
-					    android:layout_centerVertical="true" />
-	            </RelativeLayout>
-	            
 	            <RelativeLayout
 	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content">
@@ -66,7 +52,8 @@
 		                android:adjustViewBounds="true"
 		                android:id="@+id/search_result_poi_view_image"
 		                android:layout_width="fill_parent"
-		                android:layout_height="wrap_content"/>
+		                android:layout_height="wrap_content"
+		                android:src="@drawable/poi_placeholder"/>
 		            
 		            <View android:id="@+id/search_result_poi_view_image_gradient"
 		                android:layout_width="fill_parent"
@@ -104,7 +91,13 @@
 		            
 		            </RelativeLayout>
 		            
-		            
+		            <ProgressBar
+					    android:id="@+id/search_result_poi_view_image_progress"
+					    style="@android:style/Widget.ProgressBar.Small"
+					    android:layout_width="wrap_content"
+					    android:layout_height="wrap_content"
+					    android:layout_centerHorizontal="true"
+					    android:layout_centerVertical="true" />
 
 	            </RelativeLayout>
 	            

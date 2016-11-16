@@ -54,6 +54,13 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content" >
 
+                    <ImageView
+	                    android:id="@+id/search_result_poi_view_image"
+	                    android:adjustViewBounds="true"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:src="@drawable/poi_placeholder" />
+                    
                     <ProgressBar
                         android:id="@+id/search_result_poi_view_image_progress"
                         style="@android:style/Widget.ProgressBar.Small"
@@ -62,12 +69,6 @@
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true" />
                 </RelativeLayout>
-
-                <ImageView
-                    android:id="@+id/search_result_poi_view_image"
-                    android:adjustViewBounds="true"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" />
 
                 <!-- Availability -->
 
