@@ -152,8 +152,6 @@ namespace
         self.pTagsContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextCopyColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
         [self.pTagsCardContainer addSubview: self.pTagsContent];
         
-        self.pPreviewImageSpinner = [[[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 64, 64)] autorelease];
-        self.pPreviewImageSpinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
         self.pPhoneContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextLinkColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
         UITapGestureRecognizer* phoneTappedGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTappedOnPhone:)];
         [self.pPhoneContent setUserInteractionEnabled:YES];

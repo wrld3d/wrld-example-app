@@ -22,7 +22,10 @@ namespace
         
         ExampleApp::ApplicationConfig::SdkModel::iOSApplicationConfigurationVersionProvider iOSVersionProvider;
         
-        return ExampleApp::ApplicationConfig::SdkModel::LoadAppConfig(tempFileIO, iOSVersionProvider, ExampleApp::ApplicationConfigurationPath);
+        return ExampleApp::ApplicationConfig::SdkModel::LoadAppConfig(tempFileIO,
+                                                                      iOSVersionProvider,
+                                                                      ExampleApp::ApplicationConfigurationPath,
+                                                                      ExampleApp::ApplicationConfigurationSecret);
     }
 }
 

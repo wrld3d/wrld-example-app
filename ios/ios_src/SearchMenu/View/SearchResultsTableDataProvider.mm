@@ -189,8 +189,8 @@ static NSString *CellIdentifier = @"searchCell";
         
         const bool hasDetails = document.HasMember("details");
         const float textInsetX = 48.0f;
-        const float textY = hasDetails ? 4.0f : 1.0f;
-        
+        const float textY = 4.0f;
+        const float detailTextY = 24.0f;
         const float textWidth = [m_pView.pSearchResultsTableView getCellWidth] - textInsetX;
         
         cell.textLabel.text = [NSString stringWithUTF8String:name.c_str()];

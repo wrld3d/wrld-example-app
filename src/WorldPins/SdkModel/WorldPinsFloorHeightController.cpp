@@ -22,18 +22,6 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            
-            namespace
-            {
-                float CalculateAlphaForPin(int pinFloor, int selectedFloor, float floorParam, float expandedParam)
-                {
-                    const float expandedModePinFadeFloorRange = 2.5f;
-                    float expandedAlpha = 1.0f - Eegeo::Math::Clamp01(Eegeo::Math::Abs((floorParam - pinFloor)/expandedModePinFadeFloorRange));
-                    float collapsedAlpha = pinFloor == selectedFloor ? 1.0f : 0.0f;
-                    return Eegeo::Math::Lerp(collapsedAlpha, expandedAlpha, expandedParam);
-                }
-            }
-            
             WorldPinsFloorHeightController::WorldPinsFloorHeightController(IWorldPinsRepository& worldPinsRepository,
                                                                            Eegeo::Pins::PinRepository& pinRepository,
                                                                            const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,

@@ -90,8 +90,6 @@ namespace ExampleApp
                 Eegeo::Camera::GlobeCamera::GpsGlobeCameraController* m_pGpsGlobeCameraController;
 
                 InteriorsUINotificationService* m_pUINotificationService;
-                
-                InteriorExplorerConnectionChangedObserver* m_pInteriorExplorerConnectionChangedObserver;
             };
         }
     }
