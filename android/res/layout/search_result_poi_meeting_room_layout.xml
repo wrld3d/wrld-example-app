@@ -13,7 +13,7 @@
         android:background="@color/white" >
 
         <ImageView
-            android:id="@+id/search_result_poi_view_category_icon"
+            android:id="@+id/search_result_poi_view_primary_tag_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/eegeo_logo"
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_margin="10dp"
-            android:layout_toRightOf="@id/search_result_poi_view_category_icon"
+            android:layout_toRightOf="@id/search_result_poi_view_primary_tag_icon"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:singleLine="true"

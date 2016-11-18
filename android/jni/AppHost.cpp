@@ -103,7 +103,8 @@ namespace
 	    return ExampleApp::ApplicationConfig::SdkModel::LoadAppConfig(
 	    		tempFileIO,
 	    		versionProvider,
-	    		ExampleApp::ApplicationConfigurationPath);
+	    		ExampleApp::ApplicationConfigurationPath,
+                ExampleApp::ApplicationConfigurationSecret);
 	}
 }
 
@@ -213,7 +214,6 @@ AppHost::AppHost(
                  m_sdkDomainEventBus,
                  *m_pNetworkCapabilities,
                  *m_pAndroidFlurryMetricsService,
-                 applicationConfiguration,
                  *this,
                  *m_pMenuReactionModel);
 

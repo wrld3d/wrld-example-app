@@ -24,14 +24,14 @@ namespace ExampleApp
         }
         std::string SearchResultIconCategoryMapper::GetIconKeyFromSearchResult(const Search::SdkModel::SearchResultModel& searchResultModel) const
         {
-            if(searchResultModel.GetCategory() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
+            if(searchResultModel.GetPrimaryTag() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
             {
                 const Search::Swallow::SdkModel::SwallowMeetingRoomResultModel& meetingRoom = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(searchResultModel);
                 return GetMeetingRoomIconFromAvailability(meetingRoom);
             }
             
             
-            return searchResultModel.GetCategory();
+            return searchResultModel.GetPrimaryTag();
         }
         
         std::string SearchResultIconCategoryMapper::GetMeetingRoomIconFromAvailability(const Search::Swallow::SdkModel::SwallowMeetingRoomResultModel& meetingRoom) const

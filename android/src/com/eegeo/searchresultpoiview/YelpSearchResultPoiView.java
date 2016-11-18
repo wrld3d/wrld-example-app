@@ -5,11 +5,6 @@ package com.eegeo.searchresultpoiview;
 import java.util.regex.Pattern;
 
 import android.annotation.SuppressLint;
-import com.eegeo.ProjectSwallowApp.R;
-import com.eegeo.categories.CategoryResources;
-import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.helpers.TintablePinToggleButton;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,14 +13,18 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.text.util.Linkify;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
+
+import com.eegeo.entrypointinfrastructure.MainActivity;
+import com.eegeo.helpers.TintablePinToggleButton;
+import com.eegeo.ProjectSwallowApp.R;
 import com.eegeo.tags.TagResources;
 
 public class YelpSearchResultPoiView implements View.OnClickListener 
@@ -79,13 +78,8 @@ public class YelpSearchResultPoiView implements View.OnClickListener
         m_activity = activity;
         m_nativeCallerPointer = nativeCallerPointer;
 
-			// Autolink discards country code so add custom phone link
-			final String phoneRegex = "[\\S]*";
-			Linkify.addLinks(m_phoneView, Pattern.compile(phoneRegex), "Tel:");
-		} else {
-			m_phoneHeader.setVisibility(View.GONE);
-			m_phoneView.setVisibility(View.GONE);
-		}
+        m_uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
+        m_view = m_activity.getLayoutInflater().inflate(R.layout.search_result_poi_yelp_layout, m_uiRoot, false);
 
         m_closeButton = m_view.findViewById(R.id.search_result_poi_view_close_button);
         m_togglePinnedButton = m_view.findViewById(R.id.search_result_poi_view_toggle_pinned_button);
@@ -131,9 +125,10 @@ public class YelpSearchResultPoiView implements View.OnClickListener
         m_webVendorStyleLinkButton.setOnClickListener(this);
     }
 
-		if (humanReadableCategories.length > 0) {
-			m_humanReadableCategoriesHeader.setVisibility(View.VISIBLE);
-			m_humanReadableCategoriesView.setVisibility(View.VISIBLE);
+    public void destroy()
+    {
+        m_uiRoot.removeView(m_view);
+    }
 
     public void displayPoiInfo(
     		final String title,
@@ -192,12 +187,14 @@ public class YelpSearchResultPoiView implements View.OnClickListener
             m_phoneIcon.setVisibility(View.GONE);
         }
 
-		m_poiRatingImage.setVisibility(View.GONE);
-		m_poiRatingOverImage.setVisibility(View.GONE);
-		if (!ratingImageUrl.equals("") && reviewCount > 0) {
-			int imageResource = m_activity.getResources().getIdentifier(ratingImageUrl, "drawable",
-					m_activity.getPackageName());
-			Drawable image = m_activity.getResources().getDrawable(imageResource);
+        if(!url.equals(""))
+        {
+            m_webVendorStyleLinkButton.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+        	m_webVendorStyleLinkButton.setVisibility(View.GONE);
+        }
 
         if(humanReadableTags.length > 0)
         {
@@ -276,8 +273,11 @@ public class YelpSearchResultPoiView implements View.OnClickListener
         int iconId = TagResources.getSmallIconForTag(m_activity, iconKey);
         m_tagIcon.setImageResource(iconId);
 
-		m_view.setVisibility(View.VISIBLE);
-		m_view.requestFocus();
+        m_closeButton.setEnabled(true);
+        m_togglePinnedWrapper.setPinToggleState(isPinned);
+    	
+        m_view.setVisibility(View.VISIBLE);
+        m_view.requestFocus();
 
         m_handlingClick = false;
         
@@ -287,20 +287,27 @@ public class YelpSearchResultPoiView implements View.OnClickListener
         }
     }
 
-	public void onClick(View view) {
-		if (m_handlingClick) {
-			return;
-		}
-		m_handlingClick = true;
+    public void onClick(View view)
+    {
+        if(m_handlingClick)
+        {
+            return;
+        }
+        m_handlingClick = true;
 
-		if (view == m_closeButton) {
+        if(view == m_closeButton)
+        {
 			handleCloseClicked();
-		} else if (view == m_togglePinnedButton) {
+        }
+        else if(view == m_togglePinnedButton)
+        {
 			handleTogglePinnedClicked();
-		} else if (view == m_webVendorStyleLinkButton) {
+        }
+        else if(view == m_webVendorStyleLinkButton) 
+        {
 			handleWebLinkButtonClicked();
 		}
-	}
+    }
 
     public void dismissPoiInfo()
     {
@@ -321,11 +328,14 @@ public class YelpSearchResultPoiView implements View.OnClickListener
         }
     }
 
-	public void updateImageData(String url, boolean hasImage, final byte[] imgData) {
-		if (url.equals(m_poiImageUrl)) {
+	public void updateImageData(String url, boolean hasImage, final byte[] imgData)
+	{
+		if(url.equals(m_poiImageUrl))
+		{
 			m_poiImageProgressBar.setVisibility(View.GONE);
-
-			if (hasImage) {
+			
+			if(hasImage)
+			{
 				m_poiImage.setVisibility(View.VISIBLE);
 				
 			    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -344,86 +354,59 @@ public class YelpSearchResultPoiView implements View.OnClickListener
 		HandleFooterFadeInitialVisibility();
 	}
 
-	private void handleCloseClicked() {
-		m_view.setEnabled(false);
-		m_togglePinnedButton.setOnClickListener(null);
+    private void handleCloseClicked()
+    {
+        m_view.setEnabled(false);
+        m_togglePinnedButton.setOnClickListener(null);
 
-		SearchResultPoiViewJniMethods.CloseButtonClicked(m_nativeCallerPointer);
-	}
-
-	private void handleWebLinkButtonClicked() {
-		final Uri uri = Uri.parse(m_url);
-		final Intent browserIntent = new Intent(Intent.ACTION_VIEW, uri);
-		if (browserIntent.resolveActivity(m_activity.getPackageManager()) != null) {
-			m_activity.startActivity(browserIntent);
-		} else {
-			new AlertDialog.Builder(m_activity).setTitle("Warning")
-					.setMessage("No web browser found on device. Cannot open webpage.")
-					.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-						}
-					}).show();
-		}
-		m_handlingClick = false;
-	}
-
-	public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
-		// Raw height and width of image
-		final int height = options.outHeight;
-		final int width = options.outWidth;
-		int inSampleSize = 1;
-
-		if (height > reqHeight || width > reqWidth) {
-			final int halfHeight = height / 2;
-			final int halfWidth = width / 2;
-
-			// Calculate the largest inSampleSize value that is a power of 2 and
-			// keeps both
-			// height and width larger than the requested height and width.
-			while ((halfHeight / inSampleSize) > reqHeight && (halfWidth / inSampleSize) > reqWidth) {
-				inSampleSize *= 2;
-			}
-		}
-
-		return inSampleSize;
-	}
-
-	private void handleTogglePinnedClicked() {
-		if (m_togglePinnedWrapper.isPinned()) {
-			showRemovePinDialog();
-		} else {
-			SearchResultPoiViewJniMethods.TogglePinnedButtonClicked(m_nativeCallerPointer);
-			m_handlingClick = false;
-			m_togglePinnedWrapper.setPinToggleState(true);
-		}
-	}
-
-	private void showRemovePinDialog() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(m_activity);
-		builder.setTitle("Remove Pin").setMessage("Are you sure you want to remove this pin?")
-				.setPositiveButton("Yes,  delete it", new DialogInterface.OnClickListener() {
+        SearchResultPoiViewJniMethods.CloseButtonClicked(m_nativeCallerPointer);
+    }
+    
+    private void handleWebLinkButtonClicked()
+    {
+    	final Uri uri = Uri.parse(m_url);
+    	final Intent browserIntent = new Intent(Intent.ACTION_VIEW, uri);
+    	if(browserIntent.resolveActivity(m_activity.getPackageManager()) != null)
+    	{
+    		m_activity.startActivity(browserIntent);
+    	}
+    	else
+    	{
+    		new AlertDialog.Builder(m_activity)
+    			.setTitle("Warning")
+    			.setMessage("No web browser found on device. Cannot open webpage.")
+    			.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 					@Override
-					public void onClick(DialogInterface dialog, int id) {
-						SearchResultPoiViewJniMethods.TogglePinnedButtonClicked(m_nativeCallerPointer);
-						m_handlingClick = false;
-						m_togglePinnedWrapper.setPinToggleState(false);
+					public void onClick(DialogInterface dialog, int which) 
+					{
 					}
-				}).setNegativeButton("No,  keep it", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						m_togglePinnedWrapper.setPinToggleState(true);
-						m_handlingClick = false;
-					}
-				}).setOnCancelListener(new DialogInterface.OnCancelListener() {
-					@Override
-					public void onCancel(DialogInterface dialog) {
-						m_togglePinnedWrapper.setPinToggleState(true);
-						m_handlingClick = false;
-					}
-				});
-		AlertDialog dialog = builder.create();
-		dialog.show();
+				})
+    			.show();
+    	}
+        m_handlingClick = false;
+    }
+	
+	public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight)
+	{
+	    // Raw height and width of image
+	    final int height = options.outHeight;
+	    final int width = options.outWidth;
+	    int inSampleSize = 1;
+	    
+	    if (height > reqHeight || width > reqWidth)
+	    {	
+	        final int halfHeight = height / 2;
+	        final int halfWidth = width / 2;
+	        
+	        // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+	        // height and width larger than the requested height and width.
+	        while ((halfHeight / inSampleSize) > reqHeight && (halfWidth / inSampleSize) > reqWidth) 
+	        {
+	            inSampleSize *= 2;
+	        }
+	    }
+	    
+	    return inSampleSize;
 	}
 
     private void handleTogglePinnedClicked()

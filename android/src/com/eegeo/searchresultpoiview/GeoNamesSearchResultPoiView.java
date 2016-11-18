@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.eegeo.tags.TagResources;
 import com.eegeo.ProjectSwallowApp.R;
-import com.eegeo.categories.CategoryResources;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.helpers.TintablePinToggleButton;
 

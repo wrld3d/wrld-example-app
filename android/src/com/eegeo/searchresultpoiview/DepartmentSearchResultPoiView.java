@@ -2,7 +2,7 @@
 
 package com.eegeo.searchresultpoiview;
 
-import com.eegeo.categories.CategoryResources;
+import com.eegeo.tags.TagResources;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.helpers.TintablePinToggleButton;
 import com.eegeo.ProjectSwallowApp.R;
@@ -29,7 +29,7 @@ public class DepartmentSearchResultPoiView implements View.OnClickListener
     private View m_togglePinnedButton = null;
     private TextView m_titleView = null;
     private TextView m_descriptionView = null;
-    private ImageView m_categoryIcon = null;
+    private ImageView m_tagIcon = null;
 	private ImageView m_poiImage = null;
 	private View m_poiImageProgressBar = null;
 	private String m_poiImageUrl;
@@ -56,7 +56,7 @@ public class DepartmentSearchResultPoiView implements View.OnClickListener
         m_togglePinnedWrapper = new TintablePinToggleButton(m_togglePinnedButton);
         m_titleView = (TextView)m_view.findViewById(R.id.search_result_poi_view_title);
         m_descriptionView = (TextView)m_view.findViewById(R.id.search_result_poi_view_description);
-        m_categoryIcon = (ImageView)m_view.findViewById(R.id.search_result_poi_view_category_icon);
+        m_tagIcon = (ImageView)m_view.findViewById(R.id.search_result_poi_view_tag_icon);
         m_poiImageProgressBar = m_view.findViewById(R.id.search_result_poi_view_image_progress);
 		m_poiImage = (ImageView)m_view.findViewById(R.id.search_result_poi_view_image);
         
@@ -77,7 +77,7 @@ public class DepartmentSearchResultPoiView implements View.OnClickListener
     public void displayPoiInfo(
     		final String title,
     		final String description,
-    		final String category,
+    		final String primaryTag,
     		final String imageUrl,
     		final boolean isPinned)
     {
@@ -95,8 +95,8 @@ public class DepartmentSearchResultPoiView implements View.OnClickListener
             m_poiImageProgressBar.setVisibility(View.VISIBLE);
         }
         
-        int iconId = CategoryResources.getSmallIconForCategory(m_activity, category);
-        m_categoryIcon.setImageResource(iconId);
+        int iconId = TagResources.getSmallIconForTag(m_activity, primaryTag);
+        m_tagIcon.setImageResource(iconId);
 
         m_closeButton.setEnabled(true);
         m_togglePinnedWrapper.setPinToggleState(isPinned);

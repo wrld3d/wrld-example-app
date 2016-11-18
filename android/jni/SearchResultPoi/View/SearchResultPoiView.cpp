@@ -36,7 +36,7 @@ namespace ExampleApp
 
                 m_model = model;
                 const std::string& vendor = m_model.GetVendor();
-                const std::string& category = m_model.GetCategory();
+                const std::string& primaryTag = m_model.GetPrimaryTag();
 
                 if(vendor == Search::YelpVendorName)
                 {
@@ -50,27 +50,27 @@ namespace ExampleApp
                 {
                 	CreateAndShowEegeoPoiView(model, isPinned);
                 }
-                else if(vendor == Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
+                else if(vendor == Search::EegeoVendorName && primaryTag == ExampleApp::Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
                 {
                 	CreateAndShowPersonSearchResultPoiView(model, isPinned);
                 }
-                else if(vendor == Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
+                else if(vendor == Search::EegeoVendorName && primaryTag == ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
 				{
 					CreateAndShowMeetingRoomSearchResultPoiView(model, isPinned);
 				}
-                else if(vendor == Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME)
+                else if(vendor == Search::EegeoVendorName && primaryTag == ExampleApp::Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME)
 				{
                 	CreateAndShowWorkingGroupSearchResultPoiView(model, isPinned);
 				}
-                else if(vendor == ExampleApp::Search::EegeoVendorName && (category == ExampleApp::Search::Swallow::SearchConstants::PRINT_STATION_CATEGORY_NAME
-                                                                              || category == ExampleApp::Search::Swallow::SearchConstants::TOILETS_CATEGORY_NAME
-                                                                              || category == ExampleApp::Search::Swallow::SearchConstants::FACILITY_CATEGORY_NAME
-                                                                              || category == ExampleApp::Search::Swallow::SearchConstants::EMERGENCY_EXIT_CATEGORY_NAME
-                                                                              || category == ExampleApp::Search::Swallow::SearchConstants::STATIONERY_CATEGORY_NAME))
+                else if(vendor == ExampleApp::Search::EegeoVendorName && (primaryTag == ExampleApp::Search::Swallow::SearchConstants::PRINT_STATION_CATEGORY_NAME
+                                                                              || primaryTag == ExampleApp::Search::Swallow::SearchConstants::TOILETS_CATEGORY_NAME
+                                                                              || primaryTag == ExampleApp::Search::Swallow::SearchConstants::FACILITY_CATEGORY_NAME
+                                                                              || primaryTag == ExampleApp::Search::Swallow::SearchConstants::EMERGENCY_EXIT_CATEGORY_NAME
+                                                                              || primaryTag == ExampleApp::Search::Swallow::SearchConstants::STATIONERY_CATEGORY_NAME))
                 {
                 	CreateAndShowFacilitySearchResultPoiView(model, isPinned);
                 }
-                else if(vendor == ExampleApp::Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME)
+                else if(vendor == ExampleApp::Search::EegeoVendorName && primaryTag == ExampleApp::Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME)
                 {
                 	CreateAndShowDepartmentSearchResultPoiView(model, isPinned);
                 }
@@ -124,15 +124,7 @@ namespace ExampleApp
 
             void SearchResultPoiView::InsertAvailabilityChangedCallback(Eegeo::Helpers::ICallback2<const Search::SdkModel::SearchResultModel&, const std::string&>& callback)
             {
-            	// TJ: Stubbed for Droid implementation
-            }
-
-            void SearchResultPoiView::RemoveAvailabilityChangedCallback(Eegeo::Helpers::ICallback2<const Search::SdkModel::SearchResultModel&, const std::string&>& callback)
-            {
-            	// TJ: Stubbed for Droid implementation
-            }
-
-            	m_availabilityChangedCallbacks.AddCallback(callback);
+                m_availabilityChangedCallbacks.AddCallback(callback);
             }
 
             void SearchResultPoiView::RemoveAvailabilityChangedCallback(Eegeo::Helpers::ICallback2<const Search::SdkModel::SearchResultModel&, const std::string&>& callback)
@@ -393,7 +385,7 @@ namespace ExampleApp
 
 				jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
 				jstring availabilityStr = env->NewStringUTF(meetingRoomModel.GetAvailability().c_str());
-				jstring categoryStr = env->NewStringUTF(model.GetCategory().c_str());
+				jstring primaryTagStr = env->NewStringUTF(model.GetPrimaryTag().c_str());
 				jstring imageUrlStr = env->NewStringUTF(meetingRoomModel.GetImageUrl().c_str());
 
 				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
@@ -402,14 +394,14 @@ namespace ExampleApp
 						displayPoiInfoMethod,
 						titleStr,
 						availabilityStr,
-						categoryStr,
+						primaryTagStr,
 						imageUrlStr,
 						isPinned
 				);
 
 				env->DeleteLocalRef(titleStr);
 				env->DeleteLocalRef(availabilityStr);
-				env->DeleteLocalRef(categoryStr);
+				env->DeleteLocalRef(primaryTagStr);
 				env->DeleteLocalRef(imageUrlStr);
 			}
 
@@ -427,7 +419,7 @@ namespace ExampleApp
 
 				jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
 				jstring descriptionStr = env->NewStringUTF(departmentModel.GetDescription().c_str());
-				jstring categoryStr = env->NewStringUTF(model.GetCategory().c_str());
+				jstring primaryTagStr = env->NewStringUTF(model.GetPrimaryTag().c_str());
 				jstring imageUrlStr = env->NewStringUTF(departmentModel.GetImageUrl().c_str());
 
 				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
@@ -436,14 +428,14 @@ namespace ExampleApp
 						displayPoiInfoMethod,
 						titleStr,
 						descriptionStr,
-						categoryStr,
+						primaryTagStr,
 						imageUrlStr,
 						isPinned
 				);
 
 				env->DeleteLocalRef(titleStr);
 				env->DeleteLocalRef(descriptionStr);
-				env->DeleteLocalRef(categoryStr);
+				env->DeleteLocalRef(primaryTagStr);
 				env->DeleteLocalRef(imageUrlStr);
 			}
 
@@ -461,7 +453,7 @@ namespace ExampleApp
 
 				jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
 				jstring descriptionStr = env->NewStringUTF(departmentModel.GetDescription().c_str());
-				jstring categoryStr = env->NewStringUTF(model.GetCategory().c_str());
+				jstring primaryTagStr = env->NewStringUTF(model.GetPrimaryTag().c_str());
 				jstring imageUrlStr = env->NewStringUTF(departmentModel.GetImageUrl().c_str());
 
 				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
@@ -470,14 +462,14 @@ namespace ExampleApp
 						displayPoiInfoMethod,
 						titleStr,
 						descriptionStr,
-						categoryStr,
+						primaryTagStr,
 						imageUrlStr,
 						isPinned
 				);
 
 				env->DeleteLocalRef(titleStr);
 				env->DeleteLocalRef(descriptionStr);
-				env->DeleteLocalRef(categoryStr);
+				env->DeleteLocalRef(primaryTagStr);
 				env->DeleteLocalRef(imageUrlStr);
 			}
 
@@ -495,7 +487,7 @@ namespace ExampleApp
 
 				jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
 				jstring descriptionStr = env->NewStringUTF(departmentModel.GetDescription().c_str());
-				jstring categoryStr = env->NewStringUTF(model.GetCategory().c_str());
+				jstring primaryTagStr = env->NewStringUTF(model.GetPrimaryTag().c_str());
 				jstring imageUrlStr = env->NewStringUTF(departmentModel.GetImageUrl().c_str());
 
 				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
@@ -504,14 +496,14 @@ namespace ExampleApp
 						displayPoiInfoMethod,
 						titleStr,
 						descriptionStr,
-						categoryStr,
+						primaryTagStr,
 						imageUrlStr,
 						isPinned
 				);
 
 				env->DeleteLocalRef(titleStr);
 				env->DeleteLocalRef(descriptionStr);
-				env->DeleteLocalRef(categoryStr);
+				env->DeleteLocalRef(primaryTagStr);
 				env->DeleteLocalRef(imageUrlStr);
 			}
 

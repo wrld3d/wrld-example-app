@@ -134,14 +134,6 @@ namespace ExampleApp
                 jclass strClass = m_nativeState.LoadClass(env, strClassName);
                 env->DeleteLocalRef(strClassName);
 
-                const size_t numSections = sections.size();
-                size_t numItems = 0;
-                for(size_t i = 0; i < numSections; ++ i)
-                {
-                    const IMenuSectionViewModel& section = *(sections.at(i));
-                    numItems += section.GetTotalItemCount() + 1;
-                }
-
                 jobjectArray groupNamesArray = env->NewObjectArray(numSections, strClass, 0);
                 jintArray groupSizesArray = env->NewIntArray(numSections);
                 jobjectArray childNamesArray = env->NewObjectArray(numItems, strClass, 0);

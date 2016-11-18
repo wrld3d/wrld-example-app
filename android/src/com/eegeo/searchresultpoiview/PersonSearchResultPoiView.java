@@ -61,7 +61,7 @@ public class PersonSearchResultPoiView implements View.OnClickListener
         m_locationView = (TextView)m_view.findViewById(R.id.search_result_poi_view_location);
         m_deskView = (TextView)m_view.findViewById(R.id.search_result_poi_view_desk);
         m_poiImageProgressBar = m_view.findViewById(R.id.search_result_poi_view_image_progress);
-		m_poiImage = (ImageView)m_view.findViewById(R.id.search_result_poi_view_category_icon);
+		m_poiImage = (ImageView)m_view.findViewById(R.id.search_result_poi_view_primary_tag_icon);
         
         m_activity.recursiveDisableSplitMotionEvents((ViewGroup)m_view);
         

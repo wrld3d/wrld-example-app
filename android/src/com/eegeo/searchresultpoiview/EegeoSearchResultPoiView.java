@@ -24,7 +24,7 @@ import android.widget.TextView;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.helpers.TintablePinToggleButton;
-import com.eegeo.mobileexampleapp.R;
+import com.eegeo.ProjectSwallowApp.R;
 import com.eegeo.tags.TagResources;
 
 public class EegeoSearchResultPoiView implements View.OnClickListener 

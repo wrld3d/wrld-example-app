@@ -13,12 +13,12 @@
             android:background="@color/white" >
 
             <RelativeLayout
-                android:id="@+id/search_result_poi_view_category_icon_container"
+                android:id="@+id/search_result_poi_view_primary_tag_icon_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
 
                 <ImageView
-                    android:id="@+id/search_result_poi_view_category_icon"
+                    android:id="@+id/search_result_poi_view_primary_tag_icon"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:contentDescription=""
@@ -41,7 +41,7 @@
                 android:layout_height="40dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@id/search_result_poi_view_category_icon_container"
+                android:layout_toRightOf="@id/search_result_poi_view_primary_tag_icon_container"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:singleLine="true"

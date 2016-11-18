@@ -2,10 +2,10 @@
 
 package com.eegeo.searchresultpoiview;
 
-import com.eegeo.categories.CategoryResources;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.helpers.TintableImageView;
 import com.eegeo.helpers.TintablePinToggleButton;
+import com.eegeo.tags.TagResources;
 import com.eegeo.ProjectSwallowApp.R;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -35,7 +35,7 @@ public class MeetingRoomSearchResultPoiView implements View.OnClickListener
 	private View m_closeButton = null;
 	private View m_togglePinnedButton = null;
 	private TextView m_titleView = null;
-	private ImageView m_categoryIcon = null;
+	private ImageView m_tagIcon = null;
 	private ImageView m_poiImage = null;
 	private TintableImageView m_availableButton = null;
 	private TintableImageView m_availableSoonButton = null;
@@ -70,7 +70,7 @@ public class MeetingRoomSearchResultPoiView implements View.OnClickListener
 		m_availableSoonButton = (TintableImageView) m_view.findViewById(R.id.search_result_poi_view_button_available_soon);
 		m_occupiedButton = (TintableImageView) m_view.findViewById(R.id.search_result_poi_view_button_occupied);
 		m_titleView = (TextView) m_view.findViewById(R.id.search_result_poi_view_title);
-		m_categoryIcon = (ImageView) m_view.findViewById(R.id.search_result_poi_view_category_icon);
+		m_tagIcon = (ImageView) m_view.findViewById(R.id.search_result_poi_view_primary_tag_icon);
 		m_poiImageProgressBar = m_view.findViewById(R.id.search_result_poi_view_image_progress);
 		m_poiImage = (ImageView) m_view.findViewById(R.id.search_result_poi_view_image);
 	
@@ -91,7 +91,7 @@ public class MeetingRoomSearchResultPoiView implements View.OnClickListener
 		m_uiRoot.removeView(m_view);
 	}
 
-	public void displayPoiInfo(final String title, final String availability, final String category,
+	public void displayPoiInfo(final String title, final String availability, final String primaryTag,
 			final String imageUrl, final boolean isPinned) 
 	{
 		m_poiImageUrl = imageUrl;
@@ -112,8 +112,8 @@ public class MeetingRoomSearchResultPoiView implements View.OnClickListener
 			m_poiImageProgressBar.setVisibility(View.VISIBLE);
 		}
 
-		int iconId = CategoryResources.getSmallIconForCategory(m_activity, category);
-		m_categoryIcon.setImageResource(iconId);
+		int iconId = TagResources.getSmallIconForTag(m_activity, primaryTag);
+		m_tagIcon.setImageResource(iconId);
 
 		m_closeButton.setEnabled(true);
 		m_togglePinnedWrapper.setPinToggleState(isPinned);

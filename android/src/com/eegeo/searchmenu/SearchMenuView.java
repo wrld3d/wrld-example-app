@@ -18,6 +18,7 @@ import com.eegeo.searchmenu.SearchResultsScrollButtonTouchDownListener;
 import com.eegeo.searchmenu.SearchResultsScrollListener;
 import com.eegeo.searchmenu.SearchMenuResultsListAnimationConstants;
 import com.eegeo.ProjectSwallowApp.R;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.TextUtils.TruncateAt;
@@ -57,8 +58,6 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     private ListView m_searchList = null;
     private SearchMenuAdapter m_searchListAdapter = null;
     
-    private MenuExpandableListAdapter m_expandableListAdapter = null;
-    
     private OnItemClickListener m_searchMenuItemSelectedListener = null;
     private SearchMenuListAnimationHandler m_searchMenuListAnimationHandler = null;
     private SearchMenuListItemAnimationListener m_searchMenuListItemAnimationListener = null;
@@ -79,13 +78,6 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     private int m_visibleItemsCount = 0;
     
     private SearchMenuAnimationHandler m_searchMenuAnimationHandler = null;
-    private MenuListAnimationHandler m_menuListAnimationHandler = null;
-    
-    private ImageView m_searchResultsFade;
-    private Button m_searchResultsScrollButton;
-    private boolean m_searchResultsScrollable;
-    private SearchResultsScrollButtonTouchDownListener m_searchResultsScrollButtonTouchDownListener;
-    private SearchResultsScrollListener m_searchResultsScrollListener;
     
     private ImageView m_searchResultsFade;
     private Button m_searchResultsScrollButton;
@@ -307,12 +299,6 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     	m_progressSpinner.setVisibility(View.VISIBLE);
     }
 
-    public void setSearchEnded()
-    {
-    	m_closeButtonView.setVisibility(View.VISIBLE);
-    	m_progressSpinner.setVisibility(View.GONE);
-    }
-    
     public void setEditText(String searchText, boolean isTag)
     {
     	setEditTextInternal(searchText, isTag);
@@ -504,7 +490,6 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
 
     	final int height = (int)Math.min(Math.max(fullHeight - listDividerHeight, 0), availableHeight);
     	
-    	int oldHeight = m_searchList.getHeight();
     	ViewGroup.LayoutParams params = m_searchList.getLayoutParams();
     	int oldHeight = params.height;
 
