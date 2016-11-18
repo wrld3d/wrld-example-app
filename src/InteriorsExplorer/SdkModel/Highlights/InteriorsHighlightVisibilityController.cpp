@@ -129,11 +129,11 @@ namespace ExampleApp
                             floors != model.GetFloors().end();
                             ++floors)
                         {
-                            EegeoInteriors::InteriorsFloorCells* floorCells = model.GetFloorCells((*floors)->GetFloorNumber());
+                            const EegeoInteriors::InteriorsFloorCells* floorCells = model.GetFloorCells((*floors)->GetFloorNumber());
 
                             for (int cellIndex = 0; cellIndex < floorCells->GetCellCount(); ++cellIndex)
                             {
-                                EegeoInteriors::InteriorsFloorCell* cell = floorCells->GetFloorCells()[cellIndex];
+                                const EegeoInteriors::InteriorsFloorCell* cell = floorCells->GetFloorCells()[cellIndex];
                                 std::vector<EegeoRenderables::InteriorHighlightRenderable*> renderables = cell->GetHighlightRenderables();
 
                                 for (std::vector<EegeoRenderables::InteriorHighlightRenderable*>::iterator renderableIterator = renderables.begin();

@@ -33,6 +33,6 @@ Before you begin, ensure you have completed the initial steps as described in th
 3. Make sure your url starts with `https://` or `http://`
 4. You can optionally edit the height of your web view in piexels with the data field `"custom_view_height":int`
 4. In order to render the web view using IE 11, run regedit.exe from your start menu.
-5. Create a new DWORD value in :HKEY_LOCAL_MACHINE (or HKEY_CURRENT_USER) > SOFTWARE > Microsoft > Internet Explorer > Main > FeatureControl > FEATURE_BEHAVIORS
+5. Create a new DWORD value in :HKEY_LOCAL_MACHINE (or HKEY_CURRENT_USER) > SOFTWARE > Microsoft > Internet Explorer > Main > FeatureControl > FEATURE_BROWSER_EMULATION
 6. Call it (appName).exe, for windows example app it will be ExampleAppWPF.exe
 7. Set the Decimal data to 11000. Other IE rendering mode values can be found [here](https://msdn.microsoft.com/library/ee330730(v=vs.85).aspx)
