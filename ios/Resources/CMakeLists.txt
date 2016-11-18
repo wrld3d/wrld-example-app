@@ -659,7 +659,6 @@ set(resources ${resources}
         Resources/IPAexGothic32_A8_icons_5.png
         Resources/IPAexGothic32_A8_icons_6.png
         Resources/IPAexGothic32_A8_icons.fnt
-		Resources/Interiors
 		Resources/menu_background1.png
 		Resources/menu_background1@2x.png
 		Resources/menu_background1@3x.png

@@ -20,8 +20,8 @@ namespace ExampleApp
                 const std::string& GetApiSecret() const;
                 
             private:
-                const std::string m_apiKey;
-                const std::string m_apiSecret;
+                std::string m_apiKey;
+                std::string m_apiSecret;
             };
         }
     }

@@ -149,7 +149,6 @@ namespace ExampleApp
                         std::vector<std::string> readableTags = GetNamesForTags(tagSet, tagNameMapper);
 
                         const Search::SdkModel::TagIconKey& tagIconKey = tagIconMapper.GetIconKeyForTags(tagSet);
-                        int availabilityState = 1;
                         
                         std::string userData = "";
                         

@@ -283,9 +283,6 @@ namespace
     
 
     m_floorDivisionHeight = m_screenHeight*0.0625f;
-    const float divisionWidth = 30;
-    const float divisionLabelWidth = 25;
-    const float divisionLabelSpacing = 15;
     int floorCount = static_cast<int>(m_tableViewFloorNames.size());
     float maxHeight = m_screenHeight*0.5f;
     float verticalPadding = ((float)self.pFloorChangeButton.frame.size.height - m_floorDivisionHeight);
@@ -321,40 +318,6 @@ namespace
     self.pFloorListArrowDown.frame = CGRectMake(self.pFloorPanel.frame.size.width/2 - arrowWidth/2, self.pFloorListView.frame.origin.y+self.pFloorListView.frame.size.height, arrowWidth, arrowHeight);
     
     [self refreshArrowState];
-}
-
-- (void) playSliderShakeAnim
-{
-    CGFloat xPos = [self GetXPositionForFloorPanelAt:1.0];
-    
-    CGFloat posLeft = xPos - 5.0f;
-    CGFloat posRight = xPos + 10.0f;
-    
-    m_isSliderAnimPlaying = true;
-        
-        InteriorsExplorerFloorItemView* pFloorView = [[[InteriorsExplorerFloorItemView alloc] initWithParams:divisionLabelWidth
-                                                                                                            :divisionLabelSpacing
-                                                                                                            :divisionWidth
-                                                                                                            :m_floorDivisionHeight
-                                                                                                            :m_pixelScale
-                                                                                                            :nameString
-                                                                                                            :(floorIndex == 0)
-                                                                                                            :(floorIndex == floorCount-1)] autorelease];
-        CGRect viewFrame = pFloorView.frame;
-        viewFrame.origin.y = yOffset;
-        viewFrame.origin.x = (self.pFloorPanel.frame.size.width*0.5f) - ((divisionLabelWidth + divisionLabelSpacing) + 0.5 * divisionWidth);
-        pFloorView.frame = viewFrame;
-        
-        [self.pFloorPanel insertSubview:pFloorView belowSubview:self.pFloorChangeButton];
-        [self.pFloorListViews addObject:pFloorView];
-        
-        yOffset += m_floorDivisionHeight;
-        floorIndex++;
-    }
-
-    m_floorSelectionEnabled= (floorCount > 1);
-    self.pFloorPanel.hidden = !m_floorSelectionEnabled;
-    self.pFloorPanel.userInteractionEnabled = self.pFloorChangeButton.userInteractionEnabled = m_floorSelectionEnabled;
 }
 
 - (void) playSliderShakeAnim

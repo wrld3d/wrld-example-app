@@ -98,6 +98,4 @@
 @property(nonatomic, retain) InteriorsExplorerTutorialView* pTutorialView;
 @property(nonatomic, retain) NSTimer* pTimer;
 
-@property(nonatomic, retain) InteriorsExplorerTutorialView* pTutorialView;
-
 @end

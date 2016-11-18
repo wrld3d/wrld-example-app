@@ -11,22 +11,6 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            namespace
-            {
-                std::string ParseStringOrDefault(rapidjson::Document& document, const std::string& key, const std::string& defaultValue)
-                {
-                    if (document.HasMember(key.c_str()))
-                    {
-                        const std::string& value = document[key.c_str()].GetString();
-                        if (!value.empty())
-                        {
-                            return value;
-                        }
-                    }
-                    return defaultValue;
-                }
-            }
-
             ApplicationConfigurationJsonParser::ApplicationConfigurationJsonParser(const ApplicationConfiguration& defaultConfig,
                                                                                    IApplicationConfigurationBuilder& builder)
             : m_defaultConfig(defaultConfig)
@@ -225,7 +209,8 @@ namespace ExampleApp
                 return m_builder.Build();
             }
 
-			void ApplicationConfigurationJsonParser::ParseIndoorTrackingInfo(std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfoList,
+			void ApplicationConfigurationJsonParser::ParseIndoorTrackingInfo(std::map<std::string,
+                                                                             SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfoList,
                                                                              const rapidjson::Value& indoorTrackedBuildingsArray)
             {
                 for(rapidjson::SizeType i = 0; i < indoorTrackedBuildingsArray.Size(); ++i)
