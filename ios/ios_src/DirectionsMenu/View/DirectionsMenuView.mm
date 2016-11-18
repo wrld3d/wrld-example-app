@@ -155,6 +155,8 @@
     [_pEndRouteTextField addTarget:self action:@selector(EndLocationTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     [m_pDirectionsMenuView.exitDirectionsBtn addTarget:self action:@selector(ExitDirectionsClicked) forControlEvents:UIControlEventTouchUpInside];
+    [m_pDirectionsMenuView.optionsButton addTarget:self action:@selector(OptionAction) forControlEvents:UIControlEventTouchUpInside];
+
     
     [self.pMenuContainer addSubview:m_pDirectionsMenuView];
     
@@ -379,11 +381,14 @@
 
 #define MenuViewCallbacks
 
--(void)ExitDirectionsClicked {
+-(void)ExitDirectionsClicked
+{
     [m_pDirectionsMenuView cancelSuggestions:nil];
     [self updateContainerFrame];
-    _pEndRouteTextField.text = @"My Location";
-    _pStartRouteTextField.text = @"";
+    _pEndRouteTextField.text = @"";
+    _pStartRouteTextField.text = @"My Location";
+    [_pEndRouteTextField resignFirstResponder];
+    [_pStartRouteTextField resignFirstResponder];
     [m_pDirectionsMenuView resetSuggestionItem];
     if([self canInteract])
     {
@@ -392,9 +397,21 @@
 
 }
 
+-(void)OptionAction
+{
+    [m_pDirectionsMenuView optionsAction];
+    [self updateContainerFrame];
+
+}
+
 -(void)ReverseButtonClicked {
     [m_pDirectionsMenuView reverseAction];
-    [self EndRouteEntered];
+    
+    if([m_pDirectionsMenuView shouldPerformSearch])
+    {
+        [self EndRouteEntered];
+    }
+    
 }
 
 

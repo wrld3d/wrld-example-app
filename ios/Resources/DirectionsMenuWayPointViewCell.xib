@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -18,7 +19,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AP6-hD-5bR">
                         <rect key="frame" x="5" y="2" width="304" height="40"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="08A9B46B-1386-4855-8C4C-1B74E51E765F" translatesAutoresizingMaskIntoConstraints="NO" id="pi9-vO-BHa">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="4B80BCA3-62D5-49AF-884A-110872E31AC9" translatesAutoresizingMaskIntoConstraints="NO" id="pi9-vO-BHa">
                                 <rect key="frame" x="20" y="8" width="24" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="24" id="m4Q-Q9-uZb"/>
@@ -57,11 +58,23 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VyB-sb-p8I">
                         <rect key="frame" x="313" y="2" width="56" height="40"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="A483929F-DFB2-4FD5-9902-D586AAB0D49D" translatesAutoresizingMaskIntoConstraints="NO" id="mrT-U0-Okw">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="54C2F425-8ECE-4939-B9A5-860FFF9AF4CE" translatesAutoresizingMaskIntoConstraints="NO" id="mrT-U0-Okw">
                                 <rect key="frame" x="8" y="0.0" width="40" height="40"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="9tf-7G-tqe"/>
+                                    <constraint firstAttribute="width" constant="40" id="Q6K-QQ-Y3e"/>
+                                    <constraint firstAttribute="width" secondItem="mrT-U0-Okw" secondAttribute="height" multiplier="1:1" id="ojT-eg-XMr"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="9tf-7G-tqe"/>
+                                        <exclude reference="Q6K-QQ-Y3e"/>
+                                    </mask>
+                                </variation>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rO1-u9-9uw">
-                                <rect key="frame" x="8" y="0.0" width="40" height="40"/>
+                                <rect key="frame" x="22" y="5" width="12" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -75,9 +88,11 @@
                             <constraint firstItem="mrT-U0-Okw" firstAttribute="top" secondItem="VyB-sb-p8I" secondAttribute="top" id="DvZ-CG-7wE"/>
                             <constraint firstItem="mrT-U0-Okw" firstAttribute="centerY" secondItem="VyB-sb-p8I" secondAttribute="centerY" id="PiU-oa-eIS"/>
                             <constraint firstAttribute="bottom" secondItem="mrT-U0-Okw" secondAttribute="bottom" id="gni-z4-GaD"/>
+                            <constraint firstItem="mrT-U0-Okw" firstAttribute="height" secondItem="VyB-sb-p8I" secondAttribute="height" id="h1t-WT-2cV"/>
                             <constraint firstItem="rO1-u9-9uw" firstAttribute="centerY" secondItem="mrT-U0-Okw" secondAttribute="centerY" id="j0B-6g-2PG"/>
                             <constraint firstItem="rO1-u9-9uw" firstAttribute="width" secondItem="mrT-U0-Okw" secondAttribute="width" id="qAQ-Hk-zVn"/>
                             <constraint firstAttribute="trailing" secondItem="mrT-U0-Okw" secondAttribute="trailing" id="qxO-iN-H71"/>
+                            <constraint firstItem="mrT-U0-Okw" firstAttribute="width" secondItem="VyB-sb-p8I" secondAttribute="width" multiplier="0.7" id="sr3-OY-1Iz"/>
                             <constraint firstItem="mrT-U0-Okw" firstAttribute="centerX" secondItem="VyB-sb-p8I" secondAttribute="centerX" id="vKx-kH-w9J"/>
                         </constraints>
                         <variation key="default">
@@ -85,7 +100,10 @@
                                 <exclude reference="29t-wv-5CR"/>
                                 <exclude reference="DvZ-CG-7wE"/>
                                 <exclude reference="gni-z4-GaD"/>
+                                <exclude reference="h1t-WT-2cV"/>
                                 <exclude reference="qxO-iN-H71"/>
+                                <exclude reference="DaH-Vy-h4J"/>
+                                <exclude reference="qAQ-Hk-zVn"/>
                             </mask>
                         </variation>
                     </view>
@@ -120,7 +138,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="08A9B46B-1386-4855-8C4C-1B74E51E765F" width="24" height="24">
+        <image name="4B80BCA3-62D5-49AF-884A-110872E31AC9" width="24" height="24">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA
@@ -228,7 +246,7 @@ yBbaFt8W6hbzFwYXChcVFx4XIxcrFy4XMxdCF0YXTRdVF2IXZxdpF2sXcBd4F3sXgBeIF4sXnRegF6UA
 AAAAAAACAQAAAAAAAAA+AAAAAAAAAAAAAAAAAAAXpw
 </mutableData>
         </image>
-        <image name="A483929F-DFB2-4FD5-9902-D586AAB0D49D" width="40" height="40">
+        <image name="54C2F425-8ECE-4939-B9A5-860FFF9AF4CE" width="40" height="40">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA
