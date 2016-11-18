@@ -87,8 +87,7 @@
 #include "DoubleTapIndoorInteraction.h"		
 #include "IRayCaster.h"
 #include "InteriorsEntityIdHighlightVisibilityController.h"
-#include "ISingleOptionAlertBoxDismissedHandler.h"
-
+#include "DeepLink.h"
 
 namespace ExampleApp
 {
@@ -160,6 +159,7 @@ namespace ExampleApp
         Social::TwitterFeed::ITwitterFeedModule* m_pTwitterFeedModule;
         VisualMap::SdkModel::IVisualMapModule* m_pVisualMapModule;
         Surveys::SdkModel::ISurveyModule* m_pSurveyModule;
+        DeepLink::SdkModel::DeepLinkModule* m_pDeepLinkModule;
         InteriorsExplorer::SdkModel::Highlights::InteriorsHighlightVisibilityController* m_pInteriorsHighlightVisibilityController;
         InteriorsExplorer::SdkModel::Highlights::IHighlightColorMapper* m_pHighlightColorMapper;
         InteriorsExplorer::SdkModel::Highlights::InteriorsEntityIdHighlightVisibilityController* m_pInteriorsEntityIdHighlightVisibilityController;
@@ -211,17 +211,7 @@ namespace ExampleApp
                                     Eegeo::EegeoWorld& world,
                                     const bool interiorsAffectedByFlattening);
         
-        void HandleConfigResponse(Eegeo::Web::IWebResponse& webResponse);
-        
         const bool IsTourCameraActive() const;
-        const char * const LOCATION_STRING = "location";
-        const char * const MYMAP_STRING = "mymaps";
-        const std::string CONFIG_FILES_HOME = "http://cdn1.eegeo.com/test_configs";
-        Eegeo::Web::TWebLoadRequestCompletionCallback<MobileExampleApp> m_configRequestCompleteCallback;
-        Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<MobileExampleApp> m_failAlertHandler;
-        void OnFailAlertBoxDismissed();
-
-
 
     public:
         MobileExampleApp(const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,

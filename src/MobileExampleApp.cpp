@@ -123,9 +123,8 @@
 #include "InteriorsEntityIdHighlightController.h"
 #include "Colors.h"
 #include "HighlightColorMapper.h"
-#include "StringHelpers.h"
-#include "ApplicationConfigurationJsonParser.h"
-#include "IAlertBoxFactory.h"
+#include "DeepLinkModule.h"
+#include "DeepLinkController.h"
 
 namespace ExampleApp
 {
@@ -299,8 +298,7 @@ namespace ExampleApp
     , m_pInteriorsHighlightVisibilityController(NULL)
     , m_pHighlightColorMapper(NULL)
     , m_pInteriorsEntityIdHighlightVisibilityController(NULL)
-    ,m_configRequestCompleteCallback(this, &MobileExampleApp::HandleConfigResponse)
-    ,m_failAlertHandler(this, &MobileExampleApp::OnFailAlertBoxDismissed)
+    , m_pDeepLinkModule(NULL)
     {
         m_metricsService.BeginSession(m_applicationConfiguration.FlurryAppKey(), EEGEO_PLATFORM_VERSION_NUMBER);
         
@@ -426,6 +424,8 @@ namespace ExampleApp
         InitialiseAppState(nativeUIFactories);
         
         m_pUserInteractionModule = Eegeo_NEW(UserInteraction::SdkModel::UserInteractionModule)(m_pAppCameraModule->GetController(), *m_pCameraTransitionService, m_pInteriorsExplorerModule->GetInteriorsExplorerUserInteractionModel(), m_messageBus);
+        
+        m_pDeepLinkModule = Eegeo_NEW(DeepLink::SdkModel::DeepLinkModule::DeepLinkModule)(*m_pCameraTransitionController, m_platformAbstractions.GetWebLoadRequestFactory(), m_pWorld->GetNativeUIFactories().AlertBoxFactory(), m_applicationConfiguration);
     }
     
     MobileExampleApp::~MobileExampleApp()
@@ -433,6 +433,8 @@ namespace ExampleApp
         OnPause();
         
         m_pAppModeModel->DestroyStateMachine();
+        
+        Eegeo_DELETE m_pDeepLinkModule;
         
         Eegeo_DELETE m_pUserInteractionModule;
         
@@ -1508,69 +1510,7 @@ namespace ExampleApp
 
     void MobileExampleApp::Event_OpenUrl(const AppInterface::UrlData& data)
     {
-        if(strcmp(data.host, LOCATION_STRING)==0)
-        {
-            std::vector<std::string> parts;
-            size_t numParts = Eegeo::Helpers::Split(data.path, '/', parts);
-            
-            if(numParts >= 2)
-            {
-                Eegeo::Space::LatLong latLon(0, 0);
-                if(Eegeo::Helpers::TryParseLatLong(parts.at(1), parts.at(2), latLon))
-                {
-                    double distance = 1000.0;
-                    if(numParts >= 4)
-                    {
-                        Eegeo::Helpers::TryParseDouble(parts.at(3), distance);
-                    }
-                    
-                    double heading = 0.0;
-                    if(numParts >= 5)
-                    {
-                        Eegeo::Helpers::TryParseDouble(parts.at(4), heading);
-                    }
-                    
-                    Eegeo_TTY("lat=%f lon=%f, distance=%f, heading=%f", latLon.GetLatitudeInDegrees(), latLon.GetLongitudeInDegrees(), distance, heading);
-                    m_pCameraTransitionController->StartTransitionTo(latLon.ToECEF(), (float) distance, (float) Eegeo::Math::Deg2Rad(heading));
-                }
-            }
-        }
-        else if (strcmp(data.host, MYMAP_STRING)==0)
-        {
-            Eegeo::Web::IWebLoadRequestFactory& webRequestFactory = m_platformAbstractions.GetPlatformWebLoadRequestFactory();
-            const std::string url = CONFIG_FILES_HOME + data.path + ".json";
-            
-            //TODO:Check connectivity
-            Eegeo::Web::IWebLoadRequest* webRequest = webRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, url, m_configRequestCompleteCallback).Build();
-            webRequest->Load(); //Investigate memory handling for the webrequest
-        }
-        else
-        {
-            //OpenURL string unrecognised
-        }
-    }
-    
-    void MobileExampleApp::HandleConfigResponse(Eegeo::Web::IWebResponse& webResponse) {
-        if(webResponse.IsSucceeded())
-        {
-            ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationJsonParser parser(m_applicationConfiguration);
-            size_t resultSize = webResponse.GetBodyData().size();
-            std::string resultString = std::string(reinterpret_cast<char const*>(&(webResponse.GetBodyData().front())), resultSize);
-            
-            if(parser.IsValidConfig(resultString))
-            {
-            ExampleApp::ApplicationConfig::ApplicationConfiguration applicationConfig = parser.ParseConfiguration(resultString);
-            m_pCameraTransitionController->StartTransitionTo(applicationConfig.InterestLocation().ToECEF(), applicationConfig.DistanceToInterestMetres(), applicationConfig.OrientationDegrees());
-            }
-            else
-            {
-            m_pWorld->GetNativeUIFactories().AlertBoxFactory().CreateSingleOptionAlertBox("User config file invalid", "Reverting to default config",m_failAlertHandler);
-            }
-        }
-        else
-        {
-            m_pWorld->GetNativeUIFactories().AlertBoxFactory().CreateSingleOptionAlertBox("User config load failed", "Reverting to default config",m_failAlertHandler);
-        }
+        m_pDeepLinkModule->GetDeepLinkController().HandleDeepLinkOpen(data);
     }
     
     bool MobileExampleApp::CanAcceptTouch() const
@@ -1582,9 +1522,5 @@ namespace ExampleApp
         const bool lockedCameraStepsCompleted = initialExperienceModel.LockedCameraStepsCompleted();
         
         return !worldIsInitialising && lockedCameraStepsCompleted && userInteractionEnabled;
-    }
-    
-    void MobileExampleApp::OnFailAlertBoxDismissed()
-    { //Do nothing
     }
 }
