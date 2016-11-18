@@ -374,7 +374,6 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         {
             cell.textLabel.allowsDefaultTighteningForTruncation = true;
         }
-        cell.textLabel.adjustsFontSizeToFitWidth = true;
         [cell.textLabel sizeToFit];
         
         CGRect textFrame = CGRectMake(textInsetX,
