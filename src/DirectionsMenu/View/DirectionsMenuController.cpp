@@ -169,6 +169,7 @@ namespace ExampleApp
             {
                 
                 m_directionsMenuView.HighlightListItem(message.GetSelectedItemIndex());
+                DirectionsMenuController::ToggleSettingMenuButton();
                 MenuController::OnViewClicked();
             }
             
@@ -189,6 +190,19 @@ namespace ExampleApp
 
             }
             
+            void DirectionsMenuController::ToggleSettingMenuButton()
+            {
+                if(m_viewModel.IsFullyClosed())
+                {
+                    m_settingsMenuViewModel.RemoveFromScreen();
+                    
+                }
+                else if(m_viewModel.IsFullyOpen())
+                {
+                    m_settingsMenuViewModel.AddToScreen();
+                    
+                }
+            }
             void DirectionsMenuController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
             {
                 
@@ -198,16 +212,7 @@ namespace ExampleApp
             {
                 if (message.GetDirectionsMenuStage() == DirectionsMenuInitiation::Active)
                 {
-                    if(m_viewModel.IsFullyClosed())
-                    {
-                        m_settingsMenuViewModel.RemoveFromScreen();
-
-                    }
-                    else if(m_viewModel.IsFullyOpen())
-                    {
-                        m_settingsMenuViewModel.AddToScreen();
-
-                    }
+                    DirectionsMenuController::ToggleSettingMenuButton();
                     MenuController::OnViewClicked();
                 }
             }

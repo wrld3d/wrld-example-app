@@ -54,6 +54,8 @@ namespace ExampleApp
                 void OnOpenStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& openState);
                 
                 void OnViewClosed();
+                
+                void ToggleSettingMenuButton();
 
                 void OnAppModeChanged(const AppModes::AppModeChangedMessage& message);
                 
