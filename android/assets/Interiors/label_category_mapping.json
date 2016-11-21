@@ -1,0 +1,92 @@
+{
+	"label_name_to_tag": [{
+		"name": "restroom",
+		"tag": "toilets"
+	},
+	{
+		"name": "men's bathroom",
+		"tag": "toilets"
+	},
+	{
+		"name": "women's bathroom",
+		"tag": "toilets"
+	},
+	{
+		"name": "bathroom",
+		"tag": "toilets"
+	},
+	{
+		"name": "elevator",
+		"tag": "elevator"
+	},
+	{
+		"name": "escalator",
+		"tag": "escalator"
+	},
+	{
+		"name": "stairs",
+		"tag": "stairs"
+	}],
+	"tag_to_label_anchor_category": [{
+		"tag": "toilets",
+		"label_anchor_category": "interior_facility_normal_priority"
+	},
+	{
+		"tag": "elevator",
+		"label_anchor_category": "interior_facility_high_priority"
+	},
+	{
+		"tag": "escalator",
+		"label_anchor_category": "interior_facility_high_priority"
+	},
+	{
+		"tag": "stairs",
+		"label_anchor_category": "interior_facility_low_priority"
+	},
+    {
+         "tag": "default",
+         "label_anchor_category": "interior_unit_very_low_priority"
+    },
+    {
+        "tag": "default",
+        "label_anchor_category": "interior_unit_low_priority"
+    },
+    {
+        "tag": "default",
+        "label_anchor_category": "interior_unit_medium_priority"
+    },
+    {
+        "tag": "default",
+        "label_anchor_category": "interior_unit_high_priority"
+    }
+    ],
+	"label_anchor_categories": [
+    {
+        "label_anchor_category": "interior_facility_low_priority",
+        "maximum_priority": -1
+    },
+    {
+		"label_anchor_category": "interior_facility_normal_priority",
+		"maximum_priority": -1
+	},
+    {
+        "label_anchor_category": "interior_facility_high_priority",
+        "maximum_priority": -1
+    },
+    {
+        "label_anchor_category": "interior_unit_very_low_priority",
+        "maximum_priority": 75.0
+    },
+	{
+		"label_anchor_category": "interior_unit_low_priority",
+		"maximum_priority": 200.0
+	},
+	{
+		"label_anchor_category": "interior_unit_medium_priority",
+		"maximum_priority": 500.0
+	},
+	{
+		"label_anchor_category": "interior_unit_high_priority",
+		"maximum_priority": -1
+	}]
+}

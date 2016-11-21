@@ -35,13 +35,15 @@ namespace ExampleApp
                                                                              const ExampleApp::WorldPins::SdkModel::IWorldPinIconMapping& pinIconMapper,
                                                                              Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                              const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
-                                                                             Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& interiorsLabelsController)
+                                                                             Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& legacyInteriorsLabelsController,
+                                                                             const bool useLegacyInteriorLabels)
             : m_interiorsEntitiesRepository(interiorsEntitiesRepostiory)
             , m_pinController(pinController)
             , m_pinRepository(pinRepository)
             , m_interiorInteractionModel(interiorInteractionModel)
             , m_interiorTransitionModel(interiorTransitionModel)
-            , m_interiorsLabelsController(interiorsLabelsController)
+            , m_legacyInteriorsLabelsController(legacyInteriorsLabelsController)
+            , m_useLegacyInteriorLabels(useLegacyInteriorLabels)
             , m_entitiesAddedCallback(this, &InteriorsEntitiesPinsController::OnEntitiesAdded)
             , m_entitiesRemovedCallback(this, &InteriorsEntitiesPinsController::OnEntitiesRemoved)
             , m_interiorModelChangedCallback(this, &InteriorsEntitiesPinsController::HandleInteriorModelChanged)
@@ -62,10 +64,13 @@ namespace ExampleApp
                 m_labelNameToIconIndex["escalator"] = pinIconMapper.IconIndexForKey(IconKeyEscalator);
                 m_labelNameToIconIndex["stairs"] = pinIconMapper.IconIndexForKey(IconKeyStairs);
                 
-                for (std::map<std::string, int>::const_iterator it = m_labelNameToIconIndex.begin(); it != m_labelNameToIconIndex.end(); ++it)
+                if (m_useLegacyInteriorLabels)
                 {
-                    const std::string& labelName = it->first;
-                    m_interiorsLabelsController.AddLabelToOmit(labelName);
+                    for (std::map<std::string, int>::const_iterator it = m_labelNameToIconIndex.begin(); it != m_labelNameToIconIndex.end(); ++it)
+                    {
+                        const std::string& labelName = it->first;
+                        m_legacyInteriorsLabelsController.AddLabelToOmit(labelName);
+                    }
                 }
             }
             
@@ -77,10 +82,13 @@ namespace ExampleApp
                 m_interiorInteractionModel.UnregisterModelChangedCallback(m_interiorModelChangedCallback);
                 m_interiorInteractionModel.UnregisterInteractionStateChangedCallback(m_interiorInteractionStateChangedCallback);
                 
-                for (std::map<std::string, int>::const_iterator it = m_labelNameToIconIndex.begin(); it != m_labelNameToIconIndex.end(); ++it)
+                if (m_useLegacyInteriorLabels)
                 {
-                    const std::string& labelName = it->first;
-                    m_interiorsLabelsController.RemoveLabelToOmit(labelName);
+                    for (std::map<std::string, int>::const_iterator it = m_labelNameToIconIndex.begin(); it != m_labelNameToIconIndex.end(); ++it)
+                    {
+                        const std::string& labelName = it->first;
+                        m_legacyInteriorsLabelsController.RemoveLabelToOmit(labelName);
+                    }
                 }
             }
             

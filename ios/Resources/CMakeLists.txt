@@ -651,6 +651,7 @@ set(resources ${resources}
 		Resources/image_blank.png
 		Resources/image_blank@2x.png
 		Resources/image_blank@3x.png
+        Resources/Interiors
         Resources/IPAexGothic32_A8_icons_0.png
         Resources/IPAexGothic32_A8_icons_1.png
         Resources/IPAexGothic32_A8_icons_2.png

@@ -40,7 +40,8 @@ namespace ExampleApp
                                                 const ExampleApp::WorldPins::SdkModel::IWorldPinIconMapping& pinIconMapper,
                                                 Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                 const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
-                                                Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& interiorsLabelsController);
+                                                Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& legacyInteriorsLabelsController,
+                                                const bool useLegacyInteriorLabels);
                 
                 ~InteriorsEntitiesPinsController();
                 
@@ -64,7 +65,8 @@ namespace ExampleApp
                 Eegeo::Pins::PinRepository& m_pinRepository;
                 Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 const Eegeo::Resources::Interiors::InteriorTransitionModel& m_interiorTransitionModel;
-                Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& m_interiorsLabelsController;
+                Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& m_legacyInteriorsLabelsController;
+                const bool m_useLegacyInteriorLabels;
                 
                 Eegeo::Helpers::TCallback2<InteriorsEntitiesPinsController, const std::string&, const Eegeo::Resources::Interiors::Entities::TEntityModelVector&> m_entitiesAddedCallback;
                 Eegeo::Helpers::TCallback2<InteriorsEntitiesPinsController, const std::string&, const Eegeo::Resources::Interiors::Entities::TEntityModelVector&> m_entitiesRemovedCallback;

@@ -187,6 +187,7 @@ namespace ExampleApp
         ExampleApp::DoubleTapIndoorInteraction::SdkModel::IDoubleTapIndoorInteractionController* m_pDoubleTapIndoorInteractionController;
 
         const bool m_interiorsEnabled;
+        const bool m_usingLegacyInteriorLabels;
         
         ExampleApp::WifiInfo::IRestrictedBuildingService* m_pRestrictedBuildingInfoService;
         
@@ -233,7 +234,7 @@ namespace ExampleApp
                          Eegeo::Rendering::ScreenProperties& screenProperties,
                          Eegeo::Location::ILocationService& locationService,
                          Eegeo::UI::NativeUIFactories& nativeUIFactories,
-                         Eegeo::Config::PlatformConfig platformConfig,
+                         const Eegeo::Config::PlatformConfig& platformConfig,
                          Eegeo::Helpers::Jpeg::IJpegLoader& jpegLoader,
                          ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule& initialExperienceModule,
                          ExampleApp::PersistentSettings::IPersistentSettingsModel& persistentSettings,

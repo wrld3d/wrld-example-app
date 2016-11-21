@@ -149,6 +149,7 @@
 #include "IWorldPinIconMapping.h"
 
 #include "RestrictedBuildingService.h"
+#include "InteriorsStreamingModule.h"
 
 namespace ExampleApp
 {
@@ -245,7 +246,7 @@ namespace ExampleApp
                                        Eegeo::Rendering::ScreenProperties& screenProperties,
                                        Eegeo::Location::ILocationService& locationService,
                                        Eegeo::UI::NativeUIFactories& nativeUIFactories,
-                                       Eegeo::Config::PlatformConfig platformConfig,
+                                       const Eegeo::Config::PlatformConfig& platformConfig,
                                        Eegeo::Helpers::Jpeg::IJpegLoader& jpegLoader,
                                        ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule& initialExperienceModule,
                                        ExampleApp::PersistentSettings::IPersistentSettingsModel& persistentSettings,
@@ -305,6 +306,7 @@ namespace ExampleApp
     , m_metricsService(metricsService)
     , m_applicationConfiguration(applicationConfiguration)
     , m_interiorsEnabled(platformConfig.OptionsConfig.EnableInteriors)
+    , m_usingLegacyInteriorLabels(!platformConfig.OptionsConfig.EnableLabels || platformConfig.MapLayersConfig.Interiors.UseLegacyLabels)
     , m_pToursModule(NULL)
     , m_pGlobeCameraWrapper(NULL)
     , m_pTwitterFeedModule(NULL)
@@ -416,9 +418,12 @@ namespace ExampleApp
                                                                                                                      m_pSearchModule->GetSearchQueryPerformer(),
                                                                                                                      m_pSearchModule->GetSearchResultRepository(),
                                                                                                                      mapModule.GetInteriorsPresentationModule().GetInteriorsLabelsController(),
+                                                                                                                     mapModule.GetLabelsModule().GetLabelHiddenFilterModel(),
+                                                                                                                     mapModule.GetInteriorsStreamingModule().GetLabelLayerId(),
                                                                                                                      m_messageBus,
                                                                                                                      *m_pHighlightColorMapper,
-                                                                                                                     m_persistentSettings);
+                                                                                                                     m_persistentSettings,
+                                                                                                                     m_usingLegacyInteriorLabels);
         
         Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
         
@@ -745,7 +750,8 @@ namespace ExampleApp
                                                                                                                     m_pWorld->GetRenderingModule(),
                                                                                                                     m_pWorld->GetMapModule(),
                                                                                                                     *m_pWorldPinsIconMapping,
-                                                                                                                    m_screenProperties));
+                                                                                                                    m_screenProperties,
+                                                                                                                    m_usingLegacyInteriorLabels));
         }
         
         m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(interiorsPresentationModule.GetInteriorInteractionModel(),

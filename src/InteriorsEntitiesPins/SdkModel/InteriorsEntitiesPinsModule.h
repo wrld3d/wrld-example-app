@@ -22,7 +22,8 @@ namespace ExampleApp
                                             Eegeo::Modules::Core::RenderingModule& renderingModule,
                                             Eegeo::Modules::Map::MapModule& mapModule,
                                             const WorldPins::SdkModel::IWorldPinIconMapping& worldPinIconMapping,
-                                            const Eegeo::Rendering::ScreenProperties& screenProperties);
+                                            const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                            const bool useLegacyInteriorLabels);
                 
                 ~InteriorsEntitiesPinsModule();
                 
