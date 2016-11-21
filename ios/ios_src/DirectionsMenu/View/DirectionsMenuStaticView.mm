@@ -31,10 +31,9 @@
 @property (retain, nonatomic) IBOutlet NSLayoutConstraint *contentHeightConstraint;
 @property (retain, nonatomic) IBOutlet NSLayoutConstraint *endHeightConstraint;
 @property (retain, nonatomic) IBOutlet NSLayoutConstraint *startContainerHeightConstraint;
-@property (retain, nonatomic) IBOutlet UIButton *optionsButton;
 @property (retain, nonatomic) IBOutlet UITableView *wayPointsTableView;
 
-- (IBAction)optionsAction:(id)sender;
+
 @property (retain, nonatomic) IBOutlet NSLayoutConstraint *heightDropSpacingConstraint;
 @property (retain, nonatomic) IBOutlet UIView *suggestionsView;
 @property (retain, nonatomic) IBOutlet UILabel *minCounterLabel;
@@ -123,7 +122,7 @@
     _endRouteTextField.text = temptextStart;
     
 }
-- (IBAction)optionsAction:(id)sender
+- (void)optionsAction
 {
  
     if(_optionsButton.isSelected)
@@ -362,7 +361,16 @@
 }
 - (BOOL) shouldPerformSearch
 {
-    if ((startLocationSearched || startMyLocationSelected) && endLocationSearched)
+    
+    Eegeo::Space::LatLong startLatLong = Eegeo::Space::LatLong::FromDegrees(m_pStartLoc.GetLocation().GetLatitudeInDegrees(), m_pStartLoc.GetLocation().GetLongitudeInDegrees());
+    Eegeo::Space::LatLong endLatLong = Eegeo::Space::LatLong::FromDegrees(m_pEndLoc.GetLocation().GetLatitudeInDegrees(), m_pEndLoc.GetLocation().GetLongitudeInDegrees());
+    
+    if (startLatLong.GetLongitudeInDegrees() == 0 && startLatLong.GetLongitudeInDegrees() == 0 && endLatLong.GetLongitudeInDegrees() == 0 && endLatLong.GetLongitudeInDegrees() == 0)
+    {
+        return false;
+    }
+    
+    if ((startLocationSearched || (startMyLocationSelected && [_startRouteTextField.text isEqualToString:@"My Location"])) && endLocationSearched)
     {
         return true;
     }
@@ -398,11 +406,12 @@
         if (searchType  == 2) {
             return _headerView.bounds.size.height + _bottomBarView.bounds.size.height + (_hideOptionsView.bounds.size.height) + 175;
         }
-        return _headerView.bounds.size.height + _bottomBarView.bounds.size.height + (_hideOptionsView.bounds.size.height);
+        return _headerView.bounds.size.height + _bottomBarView.bounds.size.height + (_hideOptionsView.bounds.size.height)+_endHeightConstraint.constant; //+_startContainerHeightConstraint.constant;
+        
     }
     else
     {
-        return _headerView.bounds.size.height + _bottomBarView.bounds.size.height + (45  * m_pSearchResultsSection->Size()) + (_hideOptionsView.bounds.size.height);
+        return _headerView.bounds.size.height + _bottomBarView.bounds.size.height + (45  * m_pSearchResultsSection->Size()) + (_hideOptionsView.bounds.size.height)+_endHeightConstraint.constant +_startContainerHeightConstraint.constant;
     }
 }
 

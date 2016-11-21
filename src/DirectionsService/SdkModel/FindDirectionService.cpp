@@ -41,6 +41,11 @@ namespace ExampleApp
             
             void FindDirectionService::PerformLocationQuerySearch(const Direction::SdkModel::FindDirectionQuery& findDirectionQuery)
             {
+                if(m_pCurrentRequest != NULL)
+                {
+                    m_pCurrentRequest->Cancel();
+                }
+                
                 m_pCurrentRequest = m_findDirectionHttpRequestFactory.CreateFindDirectionQuery(findDirectionQuery, m_handleResponseCallback);
                 m_pCurrentRequest->Dispatch();
 

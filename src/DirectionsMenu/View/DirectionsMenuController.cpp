@@ -139,13 +139,19 @@ namespace ExampleApp
             
             void DirectionsMenuController::OnSearch(const Eegeo::Space::LatLong& start,const Eegeo::Space::LatLong& end)
             {
+               
                 Eegeo::Space::LatLong currentLatLong = Eegeo::Space::LatLong::FromDegrees(start.GetLatitudeInDegrees(), start.GetLongitudeInDegrees());
                 
                 if (currentLatLong.GetLongitudeInDegrees() == 0 && currentLatLong.GetLongitudeInDegrees() == 0)
                 {
+                    if (!m_locationService.GetIsAuthorized())
+                    {
+                        return;
+                    }
                     m_locationService.GetLocation(currentLatLong);
                 }
 
+            
                 const Eegeo::Space::LatLongAltitude startLoc = Eegeo::Space::LatLongAltitude::FromDegrees(currentLatLong.GetLatitudeInDegrees(), currentLatLong.GetLongitudeInDegrees(),0.0);
                 const Eegeo::Space::LatLongAltitude endLoc = Eegeo::Space::LatLongAltitude::FromDegrees(end.GetLatitudeInDegrees(), end.GetLongitudeInDegrees(),0.0);
                 

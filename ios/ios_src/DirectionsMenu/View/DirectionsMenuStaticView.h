@@ -13,6 +13,7 @@
 
 @property (retain, nonatomic) IBOutlet UIButton *exitDirectionsBtn;
 @property (retain, nonatomic) IBOutlet UIButton *reverseButton;
+@property (retain, nonatomic) IBOutlet UIButton *optionsButton;
 @property (retain, nonatomic) IBOutlet UITextField *endRouteTextField;
 @property (retain, nonatomic) IBOutlet UITextField *startRouteTextField;
 @property (retain, nonatomic) IBOutlet UIView *headerView;
@@ -38,4 +39,5 @@
 - (BOOL) shouldPerformSearch;
 - (void) resetSuggestionItem;
 - (void)reverseAction;
+- (void)optionsAction;
 @end
