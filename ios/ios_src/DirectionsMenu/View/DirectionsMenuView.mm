@@ -117,11 +117,11 @@
     if(isPhone)
         m_menuContainerWidth = m_screenWidth;
     else
-        m_menuContainerWidth = m_screenWidth / 3;
+        m_menuContainerWidth = (m_screenWidth / 3);
 
     m_menuContainerOffScreenX = -m_menuContainerWidth;
     m_menuContainerOffScreenY = upperMargin;
-    m_menuContainerClosedOnScreenX = m_menuContainerOffScreenX;
+    m_menuContainerClosedOnScreenX = m_menuContainerOffScreenX-2;
     m_menuContainerClosedOnScreenY = m_menuContainerOffScreenY;
     m_menuContainerOpenOnScreenX = 0.0f;
     m_menuContainerOpenOnScreenY = m_menuContainerOffScreenY;
