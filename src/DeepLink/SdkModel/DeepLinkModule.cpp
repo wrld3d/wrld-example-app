@@ -12,6 +12,7 @@
 namespace {
     const char * const LOCATION_PATH = "location";
     const char * const MYMAP_PATH = "mymaps";
+    const bool CONFIG_DEEP_LINK_ENABLED = false;
 }
 
 namespace ExampleApp
@@ -23,10 +24,14 @@ namespace ExampleApp
             ExampleApp::DeepLink::SdkModel::DeepLinkModule::DeepLinkModule(CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController, Eegeo::Web::IWebLoadRequestFactory& webFactory, Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory, ApplicationConfig::ApplicationConfiguration& defaultConfig)
             {
                 m_pDeepLinkModel = Eegeo_NEW(DeepLinkModel)();
-                DeepLinkConfigHandler* configHandler= Eegeo_NEW(DeepLinkConfigHandler)(cameraTransitionController, webFactory, alertBoxFactory, defaultConfig);
                 DeepLinkLocationHandler* locationHandler = Eegeo_NEW(DeepLinkLocationHandler)(cameraTransitionController, alertBoxFactory);
                 m_pDeepLinkModel->AddRoute(LOCATION_PATH, locationHandler);
-                m_pDeepLinkModel->AddRoute(MYMAP_PATH, configHandler);
+                
+                if(CONFIG_DEEP_LINK_ENABLED)
+                {
+                    DeepLinkConfigHandler* configHandler= Eegeo_NEW(DeepLinkConfigHandler)(cameraTransitionController, webFactory, alertBoxFactory, defaultConfig);
+                    m_pDeepLinkModel->AddRoute(MYMAP_PATH, configHandler);
+                }
 
                 m_pDeepLinkController = Eegeo_NEW(DeepLinkController)(*m_pDeepLinkModel);
             }
