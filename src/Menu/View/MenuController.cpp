@@ -344,6 +344,14 @@ namespace ExampleApp
                 m_viewModel.RemoveOnScreenStateChangedCallback(m_onScreenStateChanged);
                 m_viewModel.RemoveOpenStateChangedCallback(m_onOpenableStateChanged);
             }
+            
+            void MenuController::AddDirectionMenuStateUpdateCallBack(Eegeo::Helpers::ICallback1<const float&>& callback)
+            {
+            }
+            
+            void MenuController::RemoveDirectionMenuStateUpdateCallBack(Eegeo::Helpers::ICallback1<const float&>& callback)
+            {
+            }
         }
     }
 }

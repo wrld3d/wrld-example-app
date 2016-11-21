@@ -1,12 +1,11 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-#include "DirectionsMenuController.h"
-
 #include "IMenuOption.h"
-#include "IModalBackgroundView.h"
 #include "IDirectionsMenuView.h"
+#include "IModalBackgroundView.h"
+#include "ModalityChangedMessage.h"
+#include "DirectionsMenuController.h"
 #include "SearchResultSectionItemSelectedMessage.h"
-
 namespace ExampleApp
 {
     namespace DirectionsMenu
@@ -119,6 +118,24 @@ namespace ExampleApp
                     RefreshPresentation();
                 }
             }
+            
+            void DirectionsMenuController::UpdateUiThread(float dt)
+            {
+                MenuController::UpdateUiThread(dt);
+                const bool isAnimating = m_view.IsAnimating();
+                if(isAnimating)
+                {
+                    const float normalisedAnimationProgress = m_view.GetAnimationProgress();
+                    m_messageBus.Publish(ExampleApp::Modality::ModalityChangedMessage(normalisedAnimationProgress));
+                    m_updateDirectionMenuStateCallbacks.ExecuteCallbacks(normalisedAnimationProgress);
+
+                }
+
+
+
+                
+            }
+
             
             void DirectionsMenuController::OnSearch(const Eegeo::Space::LatLong& start,const Eegeo::Space::LatLong& end)
             {
@@ -258,6 +275,16 @@ namespace ExampleApp
             void DirectionsMenuController::UpdateOpenState()
             {
                 m_viewModel.UpdateOpenState(1.0f);
+            }
+            
+            void DirectionsMenuController::AddDirectionMenuStateUpdateCallBack(Eegeo::Helpers::ICallback1<const float&>& callback)
+            {
+                m_updateDirectionMenuStateCallbacks.AddCallback(callback);
+            }
+            
+            void DirectionsMenuController::RemoveDirectionMenuStateUpdateCallBack(Eegeo::Helpers::ICallback1<const float&>& callback)
+            {
+                m_updateDirectionMenuStateCallbacks.RemoveCallback(callback);
             }
         }
     }

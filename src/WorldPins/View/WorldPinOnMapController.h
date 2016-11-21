@@ -25,6 +25,9 @@ namespace ExampleApp
                                         Modality::View::IModalityModel& modalityModel);
                 
                 ~WorldPinOnMapController();
+                
+                void OnScreenStateUpdated(const float& screenState);
+
 
             private:
 

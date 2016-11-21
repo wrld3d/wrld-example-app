@@ -51,6 +51,15 @@ namespace ExampleApp
                 m_view.RemoveSelectedCallback(m_viewSelectedCallback);
             }
             
+            void WorldPinOnMapController::OnScreenStateUpdated(const float& screenState)
+            {
+                if(m_viewModel.IsOpen())
+                {
+                    m_view.UpdateScreenState(screenState);
+                }
+            }
+
+            
             void WorldPinOnMapController::OnSelected()
             {
                 if(!m_modalityModel.IsModalEnabled())
