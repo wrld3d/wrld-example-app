@@ -88,9 +88,23 @@ namespace ExampleApp
                 platformConfig.CityThemesConfig.StreamedManifestUrl = appConfig.ThemeManifestURL();
                 platformConfig.CityThemesConfig.EmbeddedThemeTexturePath = appConfig.EmbeddedThemeTexturePath();
 
-                platformConfig.OptionsConfig.EnableLabels = appConfig.UseLabels();
-                platformConfig.MapLayersConfig.FontsModuleConfig.EnvironmentFontFilename = appConfig.UseLabels() ? "IPAexGothic_sdf.fnt" : "IPAexGothic32_A8_icons.fnt";
-                
+                if (appConfig.UseLabels())
+                {
+                    platformConfig.OptionsConfig.EnableLabels = true;
+                    platformConfig.MapLayersConfig.FontsModuleConfig.EnvironmentFontFilename = "IPAexGothic_sdf.fnt";
+                    platformConfig.MapLayersConfig.Interiors.UseLegacyLabels = false;
+                    platformConfig.MapLayersConfig.Interiors.LabelCategoryMapPath = "Interiors/label_category_mapping.json";
+                    platformConfig.MapLayersConfig.LabelsModuleConfig.StyleSheetPath = "Labels/label_style_sheet.json";
+                }
+                else
+                {
+                    platformConfig.OptionsConfig.EnableLabels = false;
+                    platformConfig.MapLayersConfig.FontsModuleConfig.EnvironmentFontFilename = "IPAexGothic32_A8_icons.fnt";
+                    platformConfig.MapLayersConfig.Interiors.UseLegacyLabels = true;
+                    platformConfig.MapLayersConfig.Interiors.LabelCategoryMapPath = "";
+                    platformConfig.MapLayersConfig.LabelsModuleConfig.StyleSheetPath = "";
+                    
+                }
                 return platformConfig;
             }
             
