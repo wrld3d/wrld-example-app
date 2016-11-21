@@ -5,6 +5,7 @@
 #include "Menu.h"
 #include "IMenuSectionViewModel.h"
 #include <vector>
+#include "SearchResultModel.h"
 
 namespace ExampleApp
 {

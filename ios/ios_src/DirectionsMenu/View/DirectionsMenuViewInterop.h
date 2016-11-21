@@ -9,7 +9,6 @@
 #include "IMenuSectionViewModel.h"
 #include "DirectionsMenuView.h"
 #include "SearchResultViewClearedMessage.h"
-#include "Types.h"
 
 namespace ExampleApp
 {
