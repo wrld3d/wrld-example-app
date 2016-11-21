@@ -54,6 +54,7 @@
               <Directory Id="PINSFOLDER" Name="SearchResultOnMap"/>
               <Directory Id="THEMEFOLDER" Name="EmbeddedTheme"/>
               <Directory Id="YELPFOLDER" Name="Yelp"/>
+              <Directory Id="LABELSFOLDER" Name="Labels"/>
             </Directory>
           </Directory>
         </Directory>
@@ -1210,13 +1211,13 @@
 	  <Component Id="_7fe0b8f1.b0c9.4ad2.b28d.6a9bb6d3b4c7" Directory="APPCONFIGFOLDER" Guid="{57a95988-df94-42ec-b812-e62a72b03a23}">
 		<File Id="_158190e8.eb27.4f8b.938e.654e6ec9b2b4" KeyPath="yes" Source="payload\Resources\ApplicationConfigs\standard_config.json" />
 	  </Component>
-	  <Component Id="_9d916d55.ff00.41e0.97eb.5ab1894e3d8e" Directory="RESOURCEFOLDER" Guid="{901e81c9-a966-42a0-862c-f8a09025f1a1}">
+	  <Component Id="_9d916d55.ff00.41e0.97eb.5ab1894e3d8e" Directory="THEMEFOLDER" Guid="{901e81c9-a966-42a0-862c-f8a09025f1a1}">
 		<File Id="_7e129572.00eb.43e0.88de.af6cf2e4957d" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_SanFran_roadDiffuse_repeat.dds" />
 	  </Component>
-	  <Component Id="_2121217c.7b9e.4da2.ac89.3fbe93ebbfcd" Directory="RESOURCEFOLDER" Guid="{834b2342-c3ea-49cd-894a-a3f8fb73bef2}">
+	  <Component Id="_2121217c.7b9e.4da2.ac89.3fbe93ebbfcd" Directory="THEMEFOLDER" Guid="{834b2342-c3ea-49cd-894a-a3f8fb73bef2}">
 		<File Id="_f20ec86a.82dd.43eb.a34f.01de670af621" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_SanFran_wallDiffuse.dds" />
 	  </Component>
-	  <Component Id="_b1517288.34b6.4ab4.8761.2183de5a79ee" Directory="RESOURCEFOLDER" Guid="{5fccf60b-eaad-49f4-85f9-fc5622970e38}">
+	  <Component Id="_b1517288.34b6.4ab4.8761.2183de5a79ee" Directory="LABELSFOLDER" Guid="{5fccf60b-eaad-49f4-85f9-fc5622970e38}">
 		<File Id="_a659851b.b7b2.463a.aa68.323283719849" KeyPath="yes" Source="payload\Resources\Labels\label_style_sheet.json" />
 	  </Component>
     </ComponentGroup>
