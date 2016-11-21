@@ -809,6 +809,7 @@ set(resources ${resources}
 		Resources/sub_menu_arrow_on@3x.png
 		Resources/search_menu_items.json
 		Resources/search_tags.json
+        Resources/swallow_search_tags.json
 		Resources/EmbeddedTheme
 		Resources/Tours
 		Resources/Tours/browser_back.png
