@@ -155,6 +155,7 @@ namespace ExampleApp
                                                            Search::SdkModel::ISearchResultRepository& searchResultRepository,
                                                            Search::SdkModel::ISearchService& searchService)
             : m_searchResultRepository(searchResultRepository)
+            , m_searchService(searchService)
             , m_searchResultIconKeyMapper(searchResultIconKeyMapper)
             , m_searchResultOnMapMyPinsService(searchResultOnMapMyPinsService)
             , m_searchResultOnMapFactory(searchResultOnMapFactory)
@@ -163,7 +164,7 @@ namespace ExampleApp
             , m_worldPinsService(worldPinsService)
             , m_searchResultAddedCallback(this, &SearchResultOnMapModel::HandleAddedSearchResult)
             , m_searchResultRemovedCallback(this, &SearchResultOnMapModel::HandleRemovedSearchResult)
-            , m_searchResultsCallback(this, &SearchResultOnMapModel::HandleSearchResultsRecieved)
+            , m_searchResultsCallback(this, &SearchResultOnMapModel::HandleSearchResultsReceived)
             , m_searchResultPinnedCallback(this, &SearchResultOnMapModel::HandleSearchResultPinned)
             , m_searchResultUnpinnedCallback(this, &SearchResultOnMapModel::HandleSearchResultUnpinned)
             , m_availbilityChangedMessage(this, &SearchResultOnMapModel::OnSearchResultMeetingAvailbilityChanged)
@@ -171,6 +172,7 @@ namespace ExampleApp
             {
                 m_searchResultRepository.InsertItemAddedCallback(m_searchResultAddedCallback);
                 m_searchResultRepository.InsertItemRemovedCallback(m_searchResultRemovedCallback);
+                m_searchService.InsertOnReceivedQueryResultsCallback(m_searchResultsCallback);
                 
                 m_searchResultOnMapMyPinsService.InsertSearchResultPinnedCallback(m_searchResultPinnedCallback);
                 m_searchResultOnMapMyPinsService.InsertSearchResultUnpinnedCallback(m_searchResultUnpinnedCallback);
@@ -190,6 +192,7 @@ namespace ExampleApp
                 m_messageBus.UnsubscribeNative(m_availbilityChangedMessage);
                 m_messageBus.UnsubscribeNative(m_searchResultSectionItemSelectedMessageHandler);
                 
+                m_searchService.RemoveOnReceivedQueryResultsCallback(m_searchResultsCallback);
                 m_searchResultRepository.RemoveItemAddedCallback(m_searchResultAddedCallback);
                 m_searchResultRepository.RemoveItemRemovedCallback(m_searchResultRemovedCallback);
                 
@@ -266,7 +269,7 @@ namespace ExampleApp
                 }
             }
             
-            void SearchResultOnMapModel::HandleSearchResultsRecieved(const Search::SdkModel::SearchQuery &query,
+            void SearchResultOnMapModel::HandleSearchResultsReceived(const Search::SdkModel::SearchQuery &query,
                                                                      const std::vector<Search::SdkModel::SearchResultModel> &results)
             {
                 for(std::vector<Search::SdkModel::SearchResultModel>::const_iterator it = results.begin(); it != results.end(); it++)
@@ -280,8 +283,6 @@ namespace ExampleApp
                             continue;
                         }
                         
-                        Search::Swallow::SdkModel::SwallowMeetingRoomResultModel meetingRoomResult = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(result);
-                        
                         std::string availabilityIconKey = m_searchResultIconKeyMapper.GetIconKeyFromSearchResult(result);
                         
                         ExampleApp::WorldPins::SdkModel::WorldPinItemModel* pPinItemModel = pinIt->second;
@@ -289,7 +290,8 @@ namespace ExampleApp
                     }
                 }
                 
-                RefreshPinsForSelection();            }
+                RefreshPinsForSelection();
+            }
             
             void SearchResultOnMapModel::OnSearchResultSectionItemSelected(const SearchResultSection::SearchResultSectionItemSelectedMessage& message)
             {

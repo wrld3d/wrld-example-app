@@ -23,10 +23,12 @@ namespace ExampleApp
                 private:
                     const TagSearch::SdkModel::ITagIconMapper& m_tagIconMapper;
                     const EegeoReadableTagMapper& m_tagReadableNameMapper;
+                    ExampleApp::PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
 
                 public:
                     EegeoJsonParser(const TagSearch::SdkModel::ITagIconMapper& tagIconMapper,
-                        const EegeoReadableTagMapper& tagReadableNameMapper);
+                        const EegeoReadableTagMapper& tagReadableNameMapper,
+                        PersistentSettings::IPersistentSettingsModel& persistentSettings);
 
                     void ParseEegeoQueryResults(const std::string& serialized,
                         std::vector<Search::SdkModel::SearchResultModel>& out_results);

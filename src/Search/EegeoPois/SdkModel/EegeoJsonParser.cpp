@@ -62,7 +62,8 @@ namespace ExampleApp
 
                     Search::SdkModel::SearchResultModel ParseSearchResultFromJsonObject(const rapidjson::Value& json,
                                                                                         const TagSearch::SdkModel::ITagIconMapper& tagIconMapper,
-                                                                                        const EegeoReadableTagMapper& tagNameMapper)
+                                                                                        const EegeoReadableTagMapper& tagNameMapper,
+                                                                                        PersistentSettings::IPersistentSettingsModel& persistentSettings)
                     {
                         
                         std::string title = "";
@@ -144,12 +145,10 @@ namespace ExampleApp
                         idStream << id;
                         
                         Eegeo::Resources::Interiors::InteriorId interiorId(indoorId);
-                        
-                        std::vector<std::string> tagSet = SplitIntoTags(tags, ' ');
-                        std::vector<std::string> readableTags = GetNamesForTags(tagSet, tagNameMapper);
 
-                        const Search::SdkModel::TagIconKey& tagIconKey = tagIconMapper.GetIconKeyForTags(tagSet);
-                        
+                        int availabilityState = 1;
+                        persistentSettings.TryGetValue(idStream.str(), availabilityState);
+
                         std::string userData = "";
                         
                         if (json.HasMember(userDataName.c_str()) && json[userDataName.c_str()].IsObject())
@@ -160,7 +159,21 @@ namespace ExampleApp
                             userData = strbuf.GetString();
                         }
                         
-                        return ExampleApp::Search::SdkModel::SearchResultModel(ExampleApp::Search::SdkModel::SearchResultModel::CurrentVersion,
+                        std::vector<std::string> tagSet = SplitIntoTags(tags, ' ');
+                        std::vector<std::string> readableTags = GetNamesForTags(tagSet, tagNameMapper);
+
+                        rapidjson::Document userDataDocument;
+                        if (!userDataDocument.Parse<0>(userData.c_str()).HasParseError())
+                        {
+                            if (userDataDocument.HasMember("subcategory"))
+                            {
+                                tagSet.push_back(userDataDocument["subcategory"].GetString());
+                            }
+                        }
+
+                        const Search::SdkModel::TagIconKey& tagIconKey = tagIconMapper.GetIconKeyForTags(tagSet);
+                        
+                        ExampleApp::Search::SdkModel::SearchResultModel resultModel = ExampleApp::Search::SdkModel::SearchResultModel(ExampleApp::Search::SdkModel::SearchResultModel::CurrentVersion,
                                                                                idStream.str(),
                                                                                title,
                                                                                subtitle,
@@ -175,14 +188,18 @@ namespace ExampleApp
                                                                                ExampleApp::Search::EegeoVendorName,
                                                                                userData,
                                                                                Eegeo::Helpers::Time::MillisecondsSinceEpoch());
+                        resultModel.SetAvailability(availabilityState);
+                        return resultModel;
                     }
                 }
                 
                 EegeoJsonParser::EegeoJsonParser(
                         const TagSearch::SdkModel::ITagIconMapper &tagIconMapper,
-                        const EegeoReadableTagMapper& tagReadableNameMapper)
+                        const EegeoReadableTagMapper& tagReadableNameMapper,
+                        ExampleApp::PersistentSettings::IPersistentSettingsModel& persistentSettings)
                 : m_tagIconMapper(tagIconMapper)
                 , m_tagReadableNameMapper(tagReadableNameMapper)
+                , m_persistentSettings(persistentSettings)
                 {
 
                 }
@@ -199,7 +216,7 @@ namespace ExampleApp
                         for(int i = 0; i < numEntries; ++i)
                         {
                             const rapidjson::Value& json = document[i];
-                            Search::SdkModel::SearchResultModel result(ParseSearchResultFromJsonObject(json, m_tagIconMapper, m_tagReadableNameMapper));
+                            Search::SdkModel::SearchResultModel result(ParseSearchResultFromJsonObject(json, m_tagIconMapper, m_tagReadableNameMapper, m_persistentSettings));
                             out_results.push_back(result);
                         }
                     }

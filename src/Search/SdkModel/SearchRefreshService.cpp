@@ -157,7 +157,6 @@ namespace ExampleApp
                 {
                     const Eegeo::Space::LatLongAltitude& currentLocation = Eegeo::Space::LatLongAltitude::FromECEF(interestPointEcef);
                     const SearchQuery& previousQuery = m_searchQueryPerformer.GetPreviousSearchQuery();
-                    m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsTag(), previousQuery.ShouldTryInteriorSearch(), currentLocation);
                     if (previousQuery.IsTag() && previousQuery.Query() == Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME)
                     {
                         // Bodged for Swallow Office category query.

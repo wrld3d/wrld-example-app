@@ -46,7 +46,8 @@ namespace ExampleApp
                                              const Search::SdkModel::SearchTags& searchTags,
                                              const std::string& serviceUrl,
                                              const std::string& apiKey,
-                                             const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel);
+                                             const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                             ExampleApp::PersistentSettings::IPersistentSettingsModel& persistentSettings);
                     
                     ~EegeoSearchServiceModule();
                     

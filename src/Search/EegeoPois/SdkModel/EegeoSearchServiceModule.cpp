@@ -24,7 +24,8 @@ namespace ExampleApp
                                                                    const Search::SdkModel::SearchTags& searchTags,
                                                                    const std::string& serviceUrl,
                                                                    const std::string& apiKey,
-                                                                   const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel)
+                                                                   const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                                   ExampleApp::PersistentSettings::IPersistentSettingsModel& persistentSettings)
                 : m_pEegeoSearchQueryFactory(NULL)
                 , m_pEegeoParser(NULL)
                 , m_pSearchService(NULL)
@@ -40,7 +41,7 @@ namespace ExampleApp
 
                     m_pReadableTagMapper = Eegeo_NEW(EegeoReadableTagMapper)(searchTags);
 
-                    m_pEegeoParser = Eegeo_NEW(EegeoJsonParser)(*m_pTagIconMapper, *m_pReadableTagMapper);
+                    m_pEegeoParser = Eegeo_NEW(EegeoJsonParser)(*m_pTagIconMapper, *m_pReadableTagMapper, persistentSettings);
 
                     std::vector<std::string> handledTags;
                     handledTags.reserve(searchTags.tags.size());

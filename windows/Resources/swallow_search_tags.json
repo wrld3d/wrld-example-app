@@ -1,0 +1,16 @@
+{
+  "tags": [
+	{ "tag": "meeting_room", "readable_tag": "Meeting Rooms", "icon_key": "meeting_room" },
+	{ "tag": "working_group", "readable_tag": "Working Group", "icon_key": "working_group" },
+	{ "tag": "office", "readable_tag": "Buildings", "icon_key": "office" },
+	{ "tag": "toilets", "readable_tag": "Toilets", "icon_key": "toilets" },
+	{ "tag": "print_station", "readable_tag": "Printer", "icon_key": "printer" },
+	{ "tag": "department", "readable_tag": "Department", "icon_key": "department" },
+	{ "tag": "stationery", "readable_tag": "Stationery", "icon_key": "stationery" },
+	{ "tag": "reception", "readable_tag": "Reception", "icon_key": "reception" },
+	{ "tag": "person", "readable_tag": "Person", "icon_key": "person" },
+	{ "tag": "transition", "readable_tag": "Indoor Map", "icon_key": "indoor_map" }
+  ],
+  "default_readable_tag": "Unknown",
+  "default_icon_key": "misc"
+}

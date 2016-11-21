@@ -557,23 +557,24 @@ namespace ExampleApp
                                                                                                                                     m_applicationConfiguration.GeoNamesUserName());
         }
         
-        const auto& searchTags = Search::SdkModel::CreateSearchTagsFromFile(m_platformAbstractions.GetFileIO(), "search_tags.json");
-        
         const bool useEegeoPois = true;
         if(useEegeoPois)
         {
+            const auto& searchTags = Search::SdkModel::CreateSearchTagsFromFile(m_platformAbstractions.GetFileIO(), "swallow_search_tags.json");
             m_searchServiceModules[Search::EegeoVendorName] = Eegeo_NEW(Search::EegeoPois::SdkModel::EegeoSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
                                                                                                                                m_platformAbstractions.GetUrlEncoder(),
                                                                                                                                m_networkCapabilities,
                                                                                                                                searchTags,
                                                                                                                                m_applicationConfiguration.EegeoSearchServiceUrl(),
                                                                                                                                m_applicationConfiguration.EegeoApiKey(),
-                                                                                                                               world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel());
+                                                                                                                               world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel(),
+                                                                                                                               m_persistentSettings);
         }
 
         const bool useYelpSearch = true;
         if (useYelpSearch)
         {
+            const auto& searchTags = Search::SdkModel::CreateSearchTagsFromFile(m_platformAbstractions.GetFileIO(), "search_tags.json");
             m_searchServiceModules[ExampleApp::Search::YelpVendorName] = Eegeo_NEW(ExampleApp::Search::Yelp::YelpSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
                                                                                                                                       m_networkCapabilities,
                                                                                                                                       m_platformAbstractions.GetUrlEncoder(),
@@ -595,8 +596,6 @@ namespace ExampleApp
                                                                     m_messageBus,
                                                                     m_sdkDomainEventBus);
         
-        // TODO: Check if this module is still relevant
-        m_pAppCameraModule = Eegeo_NEW(AppCamera::SdkModel::AppCameraModule)();
         m_pSwallowSearchServiceModule = Eegeo_NEW(Search::Swallow::SdkModel::SwallowSearchServiceModule)(m_pSearchServiceModule->GetSearchService(),
                                                                                                          m_pSearchModule->GetSearchQueryPerformer(),
                                                                                                          *m_pCameraTransitionService,
@@ -627,11 +626,6 @@ namespace ExampleApp
                                                                                          m_screenProperties,
                                                                                          m_messageBus);
 
-        m_pSurveyModule = Eegeo_NEW(Surveys::SdkModel::SurveyModule)(m_messageBus,
-                                                                     m_persistentSettings);
-        
-        m_pSurveyModule->GetSurveyObserver().OnStartup();
-        
         m_pWeatherMenuModule = Eegeo_NEW(ExampleApp::WeatherMenu::SdkModel::WeatherMenuModule)(m_platformAbstractions.GetFileIO(),
                                                                                                m_pVisualMapModule->GetVisualMapService(),
                                                                                                m_messageBus,
@@ -971,6 +965,8 @@ namespace ExampleApp
             Eegeo_DELETE (*it).second;
         }
         m_searchServiceModules.clear();
+
+        Eegeo_DELETE m_pReportPinsVisibilityMaskingModule;
         
         Eegeo_DELETE m_pMyPinsModule;
         

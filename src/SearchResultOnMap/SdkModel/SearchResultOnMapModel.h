@@ -50,6 +50,7 @@ namespace ExampleApp
                 Search::SdkModel::MyPins::ISearchResultMyPinsService& m_searchResultOnMapMyPinsService;
                 MyPins::SdkModel::IMyPinsService& m_myPinsService;
                 Search::SdkModel::ISearchResultRepository& m_searchResultRepository;
+                Search::SdkModel::ISearchService& m_searchService;
                 TagSearch::ISearchResultIconKeyMapper& m_searchResultIconKeyMapper;
                 View::ISearchResultOnMapFactory& m_searchResultOnMapFactory;
                 WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
@@ -77,7 +78,7 @@ namespace ExampleApp
 
                 void HandleRemovedSearchResult(Search::SdkModel::SearchResultModel*& pSearchResultModel);
                 
-                void HandleSearchResultsRecieved(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results);
+                void HandleSearchResultsReceived(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results);
                 
                 void HandleSearchResultPinned(Search::SdkModel::SearchResultModel& searchResultModel);
                 
