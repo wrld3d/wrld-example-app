@@ -124,7 +124,7 @@
 	            <EditText
 	                android:id="@+id/poi_creation_details_description"
 	                android:layout_width="fill_parent"
-	                android:layout_height="wrap_content"
+	                android:layout_height="106dp"
 	                android:layout_margin="10dp"
 	                android:gravity="top|left"
 	                android:hint="@string/poi_creation_details_description_hint"

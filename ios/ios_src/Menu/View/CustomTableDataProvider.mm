@@ -366,7 +366,6 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         {
             cell.textLabel.allowsDefaultTighteningForTruncation = true;
         }
-        cell.textLabel.adjustsFontSizeToFitWidth = true;
         [cell.textLabel sizeToFit];
         
         const float titleTextHeight = hasDetails ? cell.textLabel.frame.size.height : textHeight;

@@ -75,6 +75,21 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     private final int TextColorDown = Color.parseColor("#CDFC0D");
     private final float ListItemHeight;
 
+	private class PropogateToViewTouchListener implements View.OnTouchListener {
+        private View m_target;
+
+        public PropogateToViewTouchListener(View target)
+        {
+            m_target = target;
+        }
+
+        @Override
+        public boolean onTouch(View view, MotionEvent event)
+        {
+            return m_target.onTouchEvent(event);
+        }
+    }
+
     public InteriorsExplorerView(MainActivity activity, long nativeCallerPointer)
     {
         m_activity = activity;
@@ -96,6 +111,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
         
         m_floorListContainer = (RelativeLayout)m_uiRootView.findViewById(R.id.interiors_floor_list_container);
         m_floorList = (BackwardsCompatibleListView)m_uiRootView.findViewById(R.id.interiors_floor_item_list);
+        m_floorList.setOnTouchListener(new PropogateToViewTouchListener(m_activity.findViewById(R.id.surface)));
         m_floorList.setEnabled(false);
         m_floorList.setItemHeight(ListItemHeight);
         
@@ -340,20 +356,25 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
     }
     
     @Override
-    public boolean onTouch(View view, MotionEvent event) {
-		if(event.getAction() == MotionEvent.ACTION_DOWN)
+    public boolean onTouch(View view, MotionEvent event)
+    {
+		if(view == m_floorButton)
 		{
-			startDraggingButton(event.getRawY());
+			if(event.getAction() == MotionEvent.ACTION_DOWN)
+			{
+				startDraggingButton(event.getRawY());
+			}
+			else if(event.getAction() == MotionEvent.ACTION_MOVE)
+			{
+				updateDraggingButton(event.getRawY());
+			}
+			else if(event.getAction() == MotionEvent.ACTION_UP)
+			{
+				endDraggingButton();
+			}
+			return true;
 		}
-		else if(event.getAction() == MotionEvent.ACTION_MOVE)
-		{
-			updateDraggingButton(event.getRawY());
-		}
-		else if(event.getAction() == MotionEvent.ACTION_UP)
-		{
-			endDraggingButton();
-		}
-		return true;
+		return false;
 	}
     
     private void startDraggingButton(float initialYCoordinate)
