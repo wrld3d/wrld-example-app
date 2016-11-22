@@ -5,7 +5,6 @@
 #include "Types.h"
 #include "IFlattenButtonModel.h"
 #include "CallbackCollection.h"
-#include "WeatherMenu.h"
 #include "MapMode.h"
 #include <string>
 

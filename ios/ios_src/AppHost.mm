@@ -82,7 +82,6 @@
 #include "ImageStore.h"
 #include "SearchVendorNames.h"
 #include "UserInteractionEnabledChangedMessage.h"
-#include "SurveyViewModule.h"
 #include "IOSMenuReactionModel.h"
 #include "TagSearchViewModule.h"
 #include "InteriorsExplorerModel.h"
@@ -418,10 +417,6 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                                                  screenProperties,
                                                                                                                  app.GetIdentityProvider());
     
-    m_pSurveyViewModule = Eegeo_NEW(ExampleApp::Surveys::View::SurveyViewModule)(m_messageBus,
-                                                                                 m_iOSFlurryMetricsService,
-                                                                                 *m_pURLRequestHandler);
-    
     // 3d map view layer.
     [m_pView addSubview: &m_pWorldPinOnMapViewModule->GetWorldPinOnMapView()];
     
@@ -515,8 +510,6 @@ void AppHost::DestroyApplicationViewModules()
     
     // Initial experience layer
     [&m_pInitialExperienceIntroViewModule->GetIntroView() removeFromSuperview];
-    
-    Eegeo_DELETE m_pSurveyViewModule;
     
     Eegeo_DELETE m_pInteriorsExplorerViewModule;
     
