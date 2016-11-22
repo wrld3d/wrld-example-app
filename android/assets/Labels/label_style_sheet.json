@@ -367,7 +367,80 @@
 		"halo_color_rgba": "3A3A3A",
 		"masked_glyph_color_rgba": "D0D0D0A0",
 		"masked_halo_color_rgba": "00000080"
-	}],
+	},
+    {
+        "name": "interior_unit_very_low_priority",
+        "label_resource_font_binding": "interiors",
+        "size_px": 12,
+        "glyph_color_rgba": "000080",
+        "halo_color_rgba": "3A3A3A",
+        "masked_glyph_color_rgba": "D0D0D0A0",
+        "masked_halo_color_rgba": "00000080"
+    },
+    {
+        "name": "interior_unit_low_priority",
+        "label_resource_font_binding": "interiors",
+        "size_px": 12,
+        "glyph_color_rgba": "0000FF",
+        "halo_color_rgba": "3A3A3A",
+        "masked_glyph_color_rgba": "D0D0D0A0",
+        "masked_halo_color_rgba": "00000080"
+    },
+    {
+        "name": "interior_unit_medium_priority",
+        "label_resource_font_binding": "interiors",
+        "size_px": 12,
+        "glyph_color_rgba": "00FF00",
+        "halo_color_rgba": "3A3A3A",
+        "masked_glyph_color_rgba": "D0D0D0A0",
+        "masked_halo_color_rgba": "00000080"
+    },
+    {
+        "name": "interior_unit_high_priority",
+        "label_resource_font_binding": "interiors",
+        "size_px": 12,
+        "glyph_color_rgba": "FF0000",
+        "halo_color_rgba": "3A3A3A",
+        "masked_glyph_color_rgba": "D0D0D0A0",
+        "masked_halo_color_rgba": "00000080"
+    },
+    {
+        "name": "interior_facility_low_priority",
+        "label_resource_font_binding": "interiors",
+        "size_px": 10,
+        "glyph_color_rgba": "FFFF00",
+        "halo_color_rgba": "3A3A3A",
+        "masked_glyph_color_rgba": "D0D0D0A0",
+        "masked_halo_color_rgba": "00000080"
+    },
+    {
+        "name": "interior_facility_normal_priority",
+        "label_resource_font_binding": "interiors",
+        "size_px": 12,
+        "glyph_color_rgba": "FFFF00",
+        "halo_color_rgba": "3A3A3A",
+        "masked_glyph_color_rgba": "D0D0D0A0",
+        "masked_halo_color_rgba": "00000080"
+    },
+    {
+        "name": "interior_facility_high_priority",
+        "label_resource_font_binding": "interiors",
+        "size_px": 18,
+        "glyph_color_rgba": "FFFF00",
+        "halo_color_rgba": "3A3A3A",
+        "masked_glyph_color_rgba": "D0D0D0A0",
+        "masked_halo_color_rgba": "00000080"
+    },
+    {
+        "name": "interior_default",
+        "label_resource_font_binding": "interiors",
+        "size_px": 12,
+        "glyph_color_rgba": "000000",
+        "halo_color_rgba": "FFFFFF",
+        "masked_glyph_color_rgba": "000000",
+        "masked_halo_color_rgba": "FFFFFF"
+    }
+    ],
 	"LabelStyles": [{
 		"name": "road_default",
 		"label_text_style_name": "road_default",
@@ -593,7 +666,7 @@
 		"label_vertical_alignment": "middle",
 		"constraint_radius_scale": 0.2,
 		"stencil_mode": "with_masked_style",
-		"priority": 10
+		"priority": 4
 	},
 	{
 		"name": "roads_freeway_lowz",
@@ -604,7 +677,7 @@
 		"label_vertical_alignment": "middle",
 		"constraint_radius_scale": 0.2,
 		"stencil_mode": "always",
-		"priority": 6
+		"priority": 4
 	},
 	{
 		"name": "roads_major_highz",
@@ -660,7 +733,85 @@
 		"constraint_radius_scale": 1.0,
 		"stencil_mode": "if_not_masked_by_map_feature",
 		"priority": 14
-	}],
+	},
+    {
+        "name": "interior_unit_very_low_priority",
+        "label_text_style_name": "interior_default",
+        "label_orientation": "screen",
+        "label_display": "screen_space",
+        "label_horizontal_alignment": "center",
+        "label_vertical_alignment": "bottom",
+        "constraint_radius_scale": 1.0,
+        "stencil_mode": "always",
+        "priority": 7
+    },
+    {
+        "name": "interior_unit_low_priority",
+        "label_text_style_name": "interior_default",
+        "label_orientation": "screen",
+        "label_display": "screen_space",
+        "label_horizontal_alignment": "center",
+        "label_vertical_alignment": "bottom",
+        "constraint_radius_scale": 1.0,
+        "stencil_mode": "always",
+        "priority": 6
+    },
+    {
+        "name": "interior_unit_medium_priority",
+        "label_text_style_name": "interior_default",
+        "label_orientation": "screen",
+        "label_display": "screen_space",
+        "label_horizontal_alignment": "center",
+        "label_vertical_alignment": "bottom",
+        "constraint_radius_scale": 1.0,
+        "stencil_mode": "always",
+        "priority": 4
+    },
+    {
+        "name": "interior_unit_high_priority",
+        "label_text_style_name": "interior_default",
+        "label_orientation": "screen",
+        "label_display": "screen_space",
+        "label_horizontal_alignment": "center",
+        "label_vertical_alignment": "bottom",
+        "constraint_radius_scale": 1.0,
+        "stencil_mode": "always",
+        "priority": 1
+    },
+    {
+        "name": "interior_facility_low_priority",
+        "label_text_style_name": "",
+        "label_orientation": "screen",
+        "label_display": "screen_space",
+        "label_horizontal_alignment": "center",
+        "label_vertical_alignment": "bottom",
+        "constraint_radius_scale": 1.0,
+        "stencil_mode": "always",
+        "priority": 5
+    },
+    {
+        "name": "interior_facility_normal_priority",
+        "label_text_style_name": "",
+        "label_orientation": "screen",
+        "label_display": "screen_space",
+        "label_horizontal_alignment": "center",
+        "label_vertical_alignment": "bottom",
+        "constraint_radius_scale": 1.0,
+        "stencil_mode": "always",
+        "priority": 3
+    },
+    {
+        "name": "interior_facility_high_priority",
+        "label_text_style_name": "",
+        "label_orientation": "screen",
+        "label_display": "screen_space",
+        "label_horizontal_alignment": "center",
+        "label_vertical_alignment": "bottom",
+        "constraint_radius_scale": 1.0,
+        "stencil_mode": "always",
+        "priority": 2
+    }
+    ],
 	"LabelStyleBindings": [{
 		"label_anchor_category": "default_line",
 		"label_style_name": "road_default"
@@ -1020,5 +1171,35 @@
 	{
 		"label_anchor_category": "place_name_zsta_lowz",
 		"label_style_name": "place_name_japan_train_station_highz"
-	}]
+
+    },
+    {
+        "label_anchor_category": "interior_unit_very_low_priority",
+        "label_style_name": "interior_unit_very_low_priority"
+    },
+    {
+		"label_anchor_category": "interior_unit_low_priority",
+		"label_style_name": "interior_unit_low_priority"
+    },
+    {
+        "label_anchor_category": "interior_unit_medium_priority",
+        "label_style_name": "interior_unit_medium_priority"
+    },
+    {
+        "label_anchor_category": "interior_unit_high_priority",
+        "label_style_name": "interior_unit_high_priority"
+    },
+    {
+        "label_anchor_category": "interior_facility_low_priority",
+        "label_style_name": "interior_facility_low_priority"
+    },
+    {
+        "label_anchor_category": "interior_facility_normal_priority",
+        "label_style_name": "interior_facility_normal_priority"
+    },
+    {
+        "label_anchor_category": "interior_facility_high_priority",
+        "label_style_name": "interior_facility_high_priority"
+    }
+    ]
 }

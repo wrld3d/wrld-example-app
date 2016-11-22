@@ -180,6 +180,7 @@ namespace ExampleApp
         Menu::View::IMenuIgnoredReactionModel* m_pReactorIgnoredReactionModel;
         
         const bool m_interiorsEnabled;
+        const bool m_usingLegacyInteriorLabels;
 
         void CreateApplicationModelModules(Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                            const bool interiorsAffectedByFlattening);
@@ -219,7 +220,7 @@ namespace ExampleApp
                          Eegeo::Rendering::ScreenProperties& screenProperties,
                          Eegeo::Location::ILocationService& locationService,
                          Eegeo::UI::NativeUIFactories& nativeUIFactories,
-                         Eegeo::Config::PlatformConfig platformConfig,
+                         const Eegeo::Config::PlatformConfig& platformConfig,
                          Eegeo::Helpers::Jpeg::IJpegLoader& jpegLoader,
                          ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule& initialExperienceModule,
                          ExampleApp::PersistentSettings::IPersistentSettingsModel& persistentSettings,
