@@ -1,14 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "FlattenButtonView.h"
-#include "WindowsAppThreadAssertionMacros.h"
-#include "FlattenButtonCLI.h"
-#include "ReflectionHelpers.h"
-
-using namespace ExampleApp::Helpers::ReflectionHelpers;
-
-using namespace System;
-using namespace System::Reflection;
+#include "FlattenButtonViewImpl.h"
 
 namespace ExampleApp
 {
@@ -16,64 +9,54 @@ namespace ExampleApp
     {
         namespace View
         {
-            FlattenButtonView::FlattenButtonView(WindowsNativeState& nativeState)
-                : m_nativeState(nativeState)
+            FlattenButtonView::FlattenButtonView(const std::shared_ptr<WindowsNativeState>& nativeState)
             {
-                m_uiViewClass = GetTypeFromEntryAssembly("ExampleAppWPF.FlattenButtonView");
-                ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid));
-                m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this)));
-
-                mDestroy.SetupMethod(m_uiViewClass, m_uiView, "Destroy");
-                mUpdateViewStateBasedOnFlattening.SetupMethod(m_uiViewClass, m_uiView, "UpdateViewStateBasedOnFlattening");
-                mAnimateToIntermediateOnScreenState.SetupMethod(m_uiViewClass, m_uiView, "AnimateToIntermediateOnScreenState");
-                mAnimateToActive.SetupMethod(m_uiViewClass, m_uiView, "AnimateToActive");
-                mAnimateToInActive.SetupMethod(m_uiViewClass, m_uiView, "AnimateToInactive");
-                mSetViewEnabled.SetupMethod(m_uiViewClass, m_uiView, "SetViewEnabled");
+                m_pImpl = Eegeo_NEW(FlattenButtonViewImpl)(nativeState);
             }
 
             FlattenButtonView::~FlattenButtonView()
             {
-                mDestroy();
+                Eegeo_DELETE m_pImpl;
             }
 
             void FlattenButtonView::SetToggled(bool toggled)
             {
-                mUpdateViewStateBasedOnFlattening(toggled);
+                m_pImpl->SetToggled(toggled);
             }
 
             void FlattenButtonView::OnToggle(bool toggled)
             {
-                m_callbacks.ExecuteCallbacks(toggled);
+                m_pImpl->OnToggle(toggled);
             }
 
             void FlattenButtonView::SetOnScreenStateToIntermediateValue(float value)
             {
-                mAnimateToIntermediateOnScreenState(value);
+                m_pImpl->SetOnScreenStateToIntermediateValue(value);
             }
 
             void FlattenButtonView::SetFullyOnScreen()
             {
-                mAnimateToActive();
+                m_pImpl->SetFullyOnScreen();
             }
 
             void FlattenButtonView::SetFullyOffScreen()
             {
-                mAnimateToInActive();
+                m_pImpl->SetFullyOffScreen();
             }
 
             void FlattenButtonView::InsertToggleCallback(Eegeo::Helpers::ICallback1<bool>& callback)
             {
-                m_callbacks.AddCallback(callback);
+                m_pImpl->InsertToggleCallback(callback);
             }
 
             void FlattenButtonView::RemoveToggleCallback(Eegeo::Helpers::ICallback1<bool>& callback)
             {
-                m_callbacks.RemoveCallback(callback);
+                m_pImpl->RemoveToggleCallback(callback);
             }
 
             void FlattenButtonView::SetViewEnabled(bool enabled)
             {
-                mSetViewEnabled(System::Boolean(enabled));
+                m_pImpl->SetViewEnabled(enabled);
             }
         }
     }

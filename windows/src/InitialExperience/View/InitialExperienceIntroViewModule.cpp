@@ -10,16 +10,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            InitialExperienceIntroViewModule::InitialExperienceIntroViewModule(WindowsNativeState& nativeState, ExampleAppMessaging::TMessageBus& messageBus)
+            void InitialExperienceIntroViewModule::Register(const TContainerBuilder& builder)
             {
-                m_pView = Eegeo_NEW(InitialExperienceIntroView)(nativeState, messageBus);
-                m_pController = Eegeo_NEW(InitialExperienceIntroController)(*m_pView, messageBus);
-            }
-
-            InitialExperienceIntroViewModule::~InitialExperienceIntroViewModule()
-            {
-                Eegeo_DELETE m_pController;
-                Eegeo_DELETE m_pView;
+                builder->registerType<InitialExperienceIntroView>().as<IInitialExperienceIntroView>().singleInstance();
+                builder->registerType<InitialExperienceIntroController>().singleInstance();
             }
         }
     }

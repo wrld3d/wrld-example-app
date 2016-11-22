@@ -1,5 +1,6 @@
 #pragma once
 
+#pragma managed(push, off)
 #include <exception>
 #include <mutex>
 #include <sstream>
@@ -199,3 +200,4 @@ namespace Hypodermic
     };
 
 } // namespace Hypodermic
+#pragma managed(pop)

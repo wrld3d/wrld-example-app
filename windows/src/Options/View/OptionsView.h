@@ -7,7 +7,6 @@
 #include "WindowsNativeState.h"
 #include "ICallback.h"
 #include "CallbackCollection.h"
-#include "ReflectionHelpers.h"
 
 namespace ExampleApp
 {
@@ -15,28 +14,15 @@ namespace ExampleApp
     {
         namespace View
         {
+            class OptionsViewImpl;
+
             class OptionsView : public IOptionsView, private Eegeo::NonCopyable
             {
             private:
-                WindowsNativeState& m_nativeState;
-                
-                gcroot<System::Type^> m_uiViewClass;
-                gcroot<System::Object^> m_uiView;
-
-                Helpers::ReflectionHelpers::Method<void> mDestroy;
-                Helpers::ReflectionHelpers::Method<void> mIsCacheEnabledSelected;
-                Helpers::ReflectionHelpers::Method<void> mOpenOptions;
-                Helpers::ReflectionHelpers::Method<void> mCloseOptions;
-                Helpers::ReflectionHelpers::Method<void> mConcludeCacheClearCeremony;
-                Helpers::ReflectionHelpers::Method<bool> mSetCacheEnabledSelected;
-                
-                Eegeo::Helpers::CallbackCollection0 m_closeCallbacks;
-                Eegeo::Helpers::CallbackCollection0 m_wifiOnlyCallbacks;
-                Eegeo::Helpers::CallbackCollection0 m_cacheEnabledCallbacks;
-                Eegeo::Helpers::CallbackCollection0 m_clearCacheCallbacks;
+                OptionsViewImpl* m_pImpl;
 
             public:
-                OptionsView(WindowsNativeState& nativeState);
+                OptionsView(const std::shared_ptr<WindowsNativeState>& nativeState);
 
                 ~OptionsView();
 

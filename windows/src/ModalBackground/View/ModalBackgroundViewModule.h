@@ -2,12 +2,7 @@
 
 #pragma once
 
-#include "IModalBackgroundViewModule.h"
-#include "WindowsNativeState.h"
-#include "Types.h"
-#include "Modality.h"
-#include "ModalBackgroundViewIncludes.h"
-#include "BidirectionalBus.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -15,23 +10,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            class ModalBackgroundViewModule: public IModalBackgroundViewModule, private Eegeo::NonCopyable
+            class ModalBackgroundViewModule : public Module
             {
-            private:
-                ModalBackgroundAggregateView* m_pView;
-                Modality::View::ModalBackgroundController* m_pController;
-
             public:
-                ModalBackgroundViewModule(
-                    WindowsNativeState& nativeState,
-                    Modality::View::IModalityModel& modalityModel,
-                    ExampleAppMessaging::TMessageBus& messageBus
-                );
-
-                ~ModalBackgroundViewModule();
-
-                Modality::View::IModalBackgroundView& GetView();
-                Modality::View::ModalBackgroundController& GetController();
+                void Register(const TContainerBuilder& builder);
             };
         }
     }

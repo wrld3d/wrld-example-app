@@ -25,27 +25,27 @@ namespace ExampleApp
         namespace SdkModel
         {
             ModalBackgroundNativeView::ModalBackgroundNativeView(
-                Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator,
-                Eegeo::Rendering::Materials::MaterialIdGenerator& materialIdGenerator,
-                Eegeo::Rendering::GlBufferPool& glBufferPool,
-                Eegeo::Rendering::VertexLayouts::VertexLayoutPool& vertexLayoutPool,
-                Eegeo::Rendering::VertexLayouts::VertexBindingPool& vertexBindingPool)
+                const std::shared_ptr<Eegeo::Rendering::Shaders::ShaderIdGenerator>& shaderIdGenerator,
+                const std::shared_ptr<Eegeo::Rendering::Materials::MaterialIdGenerator>& materialIdGenerator,
+                const std::shared_ptr<Eegeo::Rendering::GlBufferPool>& glBufferPool,
+                const std::shared_ptr<Eegeo::Rendering::VertexLayouts::VertexLayoutPool>& vertexLayoutPool,
+                const std::shared_ptr<Eegeo::Rendering::VertexLayouts::VertexBindingPool>& vertexBindingPool)
             : m_fixedOn(false)
             , m_fixedTransition(0.0f)
             , m_setAlpha(0.0f)
             {
                 ASSERT_NATIVE_THREAD
 
-                m_pShader = Eegeo::Rendering::Shaders::ColorShader::Create(shaderIdGenerator.GetNextId());
+                m_pShader = Eegeo::Rendering::Shaders::ColorShader::Create(shaderIdGenerator->GetNextId());
 
-                m_pMaterial = Eegeo_NEW(Eegeo::Rendering::Materials::ColorMaterial)(materialIdGenerator.GetNextId(),
+                m_pMaterial = Eegeo_NEW(Eegeo::Rendering::Materials::ColorMaterial)(materialIdGenerator->GetNextId(),
                               "ModelBackgrounal",
                               *m_pShader,
                               Eegeo::v4::Zero());
 
-                Eegeo::Rendering::Mesh* pScreenQuad = Eegeo::Rendering::Geometry::CreatePositionQuad(glBufferPool, vertexLayoutPool);
+                Eegeo::Rendering::Mesh* pScreenQuad = Eegeo::Rendering::Geometry::CreatePositionQuad(*glBufferPool, *vertexLayoutPool);
 
-                const Eegeo::Rendering::VertexLayouts::VertexBinding& vertexBinding = vertexBindingPool.GetVertexBinding(
+                const Eegeo::Rendering::VertexLayouts::VertexBinding& vertexBinding = vertexBindingPool->GetVertexBinding(
                             pScreenQuad->GetVertexLayout(),
                             m_pMaterial->GetShader().GetVertexAttributes());
 

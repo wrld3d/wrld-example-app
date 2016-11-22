@@ -3,7 +3,6 @@
 #include "InteriorsExplorerViewModule.h"
 #include "ScreenProperties.h"
 #include "InteriorsExplorerView.h"
-#include "InteriorsExplorerCLI.h"
 #include "InteriorsExplorerController.h"
 
 namespace ExampleApp
@@ -12,33 +11,14 @@ namespace ExampleApp
     {
         namespace View
         {
-            InteriorsExplorerViewModule::InteriorsExplorerViewModule(SdkModel::InteriorsExplorerModel& model,
-																	 InteriorsExplorerViewModel& viewModel,
-                                                                     ExampleAppMessaging::TMessageBus& messageBus)
+            void InteriorsExplorerViewModule::Register(const TContainerBuilder& builder)
             {
-                m_pView = Eegeo_NEW(InteriorsExplorerView)();
-                
-                m_pController = Eegeo_NEW(InteriorsExplorerController)(model,
-																	  *m_pView,
-                                                                       viewModel,
-                                                                       messageBus);
+                builder->registerType<InteriorsExplorerView>().as<IInteriorsExplorerView>().singleInstance();
             }
-            
-            InteriorsExplorerViewModule::~InteriorsExplorerViewModule()
-            {
-                Eegeo_DELETE m_pView;
 
-                Eegeo_DELETE m_pController;
-            }
-            
-            InteriorsExplorerController& InteriorsExplorerViewModule::GetController() const
+            void InteriorsExplorerViewModule::RegisterUiLeaves()
             {
-                return *m_pController;
-            }
-            
-            InteriorsExplorerView& InteriorsExplorerViewModule::GetView() const
-            {
-                return *m_pView;
+                RegisterLeaf<IInteriorsExplorerView>();
             }
         }
     }

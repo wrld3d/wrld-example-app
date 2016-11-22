@@ -28,8 +28,8 @@ namespace ExampleApp
                 };
 
             private:
-                ExampleAppMessaging::TMessageBus& m_messageBus;
-                Modality::View::IModalBackgroundView& m_modalBackgroundView;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
+                const std::shared_ptr<Modality::View::IModalBackgroundView> m_modalBackgroundView;
                 bool m_appModeAllowsOpen;
                 bool m_isControlOpen[Control::Num];
                 AppModes::SdkModel::AppMode m_currentAppMode;
@@ -37,7 +37,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<DesktopSettingsMenuController, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
                 Eegeo::Helpers::TCallback0<DesktopSettingsMenuController> m_onModalBackgroundTappedCallback;
 
-                Menu::View::IMenuView& m_searchMenuView;
+                const std::shared_ptr<Menu::View::IMenuView> m_searchMenuView;
                 
                 void OnAppModeChanged(const AppModes::AppModeChangedMessage& message);
                 
@@ -60,12 +60,12 @@ namespace ExampleApp
                 void OnSearchMenuClosed();
 
             public:
-                DesktopSettingsMenuController(Menu::View::IMenuView& menuView,
-                                       Menu::View::IMenuModel& menuModel,
-                                       Menu::View::IMenuViewModel& menuViewModel,
-                                       Modality::View::IModalBackgroundView& modalBackgroundView,
-                                       Menu::View::IMenuView& searchMenuView,
-                                       ExampleAppMessaging::TMessageBus& messageBus);
+                DesktopSettingsMenuController(const std::shared_ptr<Menu::View::IMenuView>& menuView,
+                                       const std::shared_ptr<Menu::View::IMenuModel>& menuModel,
+                                       const std::shared_ptr<Menu::View::IMenuViewModel>& menuViewModel,
+                                       const std::shared_ptr<Modality::View::IModalBackgroundView>& modalBackgroundView,
+                                       const std::shared_ptr<Menu::View::IMenuView>& searchMenuView,
+                                       const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
 
                 ~DesktopSettingsMenuController();
             };

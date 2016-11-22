@@ -1,19 +1,11 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-#using "System.dll"
-#include <vcclr.h>
-
 #include "WorldPinOnMapView.h"
+#include "WorldPinOnMapViewImpl.h"
 #include "WindowsAppThreadAssertionMacros.h"
 #include "ImagePathHelpers.h"
-#include "ReflectionHelpers.h"
 #include "IWorldPinsInFocusModel.h"
 #include "SearchVendorNames.h"
-
-using namespace ExampleApp::Helpers::ReflectionHelpers;
-
-using namespace System;
-using namespace System::Reflection;
 
 namespace ExampleApp
 {
@@ -21,66 +13,50 @@ namespace ExampleApp
     {
         namespace View
         {
-            WorldPinOnMapView::WorldPinOnMapView(WindowsNativeState& nativeState, float pinDiameter)
-                : m_nativeState(nativeState)
-                , m_pinOffset(pinDiameter * Helpers::ImageHelpers::GetPixelScale())
-                , m_largePinFocus(false)
+            WorldPinOnMapView::WorldPinOnMapView(const std::shared_ptr<WindowsNativeState>& nativeState, const std::shared_ptr<ApplicationConfig::ApplicationConfiguration>& appConfig)
             {
-                m_uiViewClass = GetTypeFromEntryAssembly("ExampleAppWPF.WorldPinOnMapView");
-                ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid, float::typeid));
-                m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this), m_pinOffset));
-
-               mShow.SetupMethod(m_uiViewClass, m_uiView, "Show");
-               mDismiss.SetupMethod(m_uiViewClass, m_uiView, "Dismiss");
-               mUpdateScreenLocation.SetupMethod(m_uiViewClass, m_uiView, "UpdateScreenLocation");
-               mUpdateScreenVisibility.SetupMethod(m_uiViewClass, m_uiView, "UpdateScreenVisibility");
+                m_pImpl = Eegeo_NEW(WorldPinOnMapViewImpl)(nativeState, appConfig);
             }
 
             WorldPinOnMapView::~WorldPinOnMapView()
             {
-                
+                Eegeo_DELETE m_pImpl;   
             }
 
             void WorldPinOnMapView::Open(const WorldPins::SdkModel::IWorldPinsInFocusModel& worldPinsInFocusModel,
                     float modality)
             {
-                m_largePinFocus = worldPinsInFocusModel.GetVendor() == ExampleApp::Search::InteriorVendorName;
-               mShow(ConvertUTF8ToManagedString(worldPinsInFocusModel.GetTitle()),
-                     ConvertUTF8ToManagedString(worldPinsInFocusModel.GetSubtitle()),
-                     ConvertUTF8ToManagedString(worldPinsInFocusModel.GetRatingsImage()),
-                     worldPinsInFocusModel.GetReviewCount(),
-                     modality);
+                m_pImpl->Open(worldPinsInFocusModel, modality);
             }
 
             void WorldPinOnMapView::Close()
             {
-                mDismiss();
+                m_pImpl->Close();
             }
 
             void WorldPinOnMapView::UpdateScreenLocation(float posX, float posY)
             {
-                float offsetY = posY - (m_largePinFocus ? m_pinOffset*1.5f : m_pinOffset);
-                mUpdateScreenLocation(posX, offsetY);
+                m_pImpl->UpdateScreenLocation(posX, posY);
             }
 
             void WorldPinOnMapView::UpdateScreenState(float screenState)
             {
-                mUpdateScreenVisibility(screenState);
+                m_pImpl->UpdateScreenState(screenState);
             }
 
             void WorldPinOnMapView::OnSelected()
             {
-                m_selectedCallbacks.ExecuteCallbacks();
+                m_pImpl->OnSelected();
             }
 
             void WorldPinOnMapView::InsertSelectedCallback(Eegeo::Helpers::ICallback0& callback)
             {
-                m_selectedCallbacks.AddCallback(callback);
+                m_pImpl->InsertSelectedCallback(callback);
             }
 
             void WorldPinOnMapView::RemoveSelectedCallback(Eegeo::Helpers::ICallback0& callback)
             {
-                m_selectedCallbacks.RemoveCallback(callback);
+                m_pImpl->RemoveSelectedCallback(callback);
             }
         }
     }

@@ -9,19 +9,18 @@
 #include "MyPinCreationDetailsViewIncludes.h"
 #include "CallbackCollection.h"
 
-#include <vcclr.h>
-#include "ReflectionHelpers.h"
-
 namespace ExampleApp
 {
     namespace MyPinCreationDetails
     {
         namespace View
         {
-            class MyPinCreationDetailsView: public IMyPinCreationDetailsView
+            class MyPinCreationDetailsViewImpl;
+
+            class MyPinCreationDetailsView : public IMyPinCreationDetailsView
             {
             public:
-                MyPinCreationDetailsView(WindowsNativeState& nativeState);
+                MyPinCreationDetailsView(const std::shared_ptr<WindowsNativeState>& nativeState);
                 ~MyPinCreationDetailsView();
 
                 void Open();
@@ -44,23 +43,7 @@ namespace ExampleApp
                 size_t GetImageSize() const;
 
             private:
-                gcroot<System::Type^> m_uiViewClass;
-                gcroot<System::Object^> m_uiView;
-
-                Helpers::ReflectionHelpers::Method<void> mDestroy;
-                Helpers::ReflectionHelpers::Method<void> mShow;
-                Helpers::ReflectionHelpers::Method<void> mDismiss;
-                
-                Helpers::ReflectionHelpers::Method<void> mGetTitle;
-                Helpers::ReflectionHelpers::Method<void> mGetDescription;
-                Helpers::ReflectionHelpers::Method<void> mGetShouldShare;
-                Helpers::ReflectionHelpers::Method<void> mGetImageBuffer;
-                Helpers::ReflectionHelpers::Method<void> mGetImageBufferSize;
-
-                WindowsNativeState& m_nativeState;
-
-                Eegeo::Helpers::CallbackCollection0 m_confirmedCallbacks;
-                Eegeo::Helpers::CallbackCollection0 m_dismissedCallbacks;
+                MyPinCreationDetailsViewImpl* m_pImpl;
             };
         }
     }

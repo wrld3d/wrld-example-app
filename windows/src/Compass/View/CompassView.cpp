@@ -1,12 +1,9 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "CompassView.h"
+#include "CompassViewImpl.h"
 #include "WindowsAppThreadAssertionMacros.h"
 #include "ReflectionHelpers.h"
-
-using namespace ExampleApp::Helpers::ReflectionHelpers;
-using namespace System;
-using namespace System::Reflection;
 
 namespace ExampleApp
 {
@@ -14,82 +11,69 @@ namespace ExampleApp
     {
         namespace View
         {
-            CompassView::CompassView(WindowsNativeState& nativeState)
-                : m_nativeState(nativeState)
+            CompassView::CompassView(const std::shared_ptr<WindowsNativeState>& nativeState)
             {
-                m_uiViewClass = GetTypeFromEntryAssembly("ExampleAppWPF.CompassView");
-                ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid));
-                m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this)));
-
-                mDestroy.SetupMethod(m_uiViewClass, m_uiView, "Destroy");
-                mShowGpsDisabledView.SetupMethod(m_uiViewClass, m_uiView, "ShowGpsDisabledView");
-                mShowGpsFollowView.SetupMethod(m_uiViewClass, m_uiView, "ShowGpsFollowView");
-                mShowGpsCompassModeView.SetupMethod(m_uiViewClass, m_uiView, "ShowGpsCompassModeView");
-                mNotifyGpsUnauthorized.SetupMethod(m_uiViewClass, m_uiView, "NotifyGpsUnauthorized");
-                mUpdateHeading.SetupMethod(m_uiViewClass, m_uiView, "UpdateHeading");
-                mAnimateToIntermediateOnScreenState.SetupMethod(m_uiViewClass, m_uiView, "AnimateToIntermediateOnScreenState");
-                mAnimateToActive.SetupMethod(m_uiViewClass, m_uiView, "AnimateToActive");
-                mAnimateToInactive.SetupMethod(m_uiViewClass, m_uiView, "AnimateToInactive");
+                m_pImpl = Eegeo_NEW(CompassViewImpl)(nativeState);
             }
 
             CompassView::~CompassView()
             {
-                mDestroy();
+                Eegeo_DELETE m_pImpl;
             }
 
             void CompassView::OnCycle()
             {
-                m_callbacks.ExecuteCallbacks();
+                m_pImpl->OnCycle();
             }
 
             void CompassView::ShowGpsDisabledView()
             {
-                mShowGpsDisabledView();
+                m_pImpl->ShowGpsDisabledView();
             }
 
             void CompassView::ShowGpsFollowView()
             {
-                mShowGpsFollowView();
+                m_pImpl->ShowGpsFollowView();
             }
 
             void CompassView::ShowGpsCompassModeView()
             {
-                mShowGpsCompassModeView();
+                m_pImpl->ShowGpsCompassModeView();
             }
 
             void CompassView::NotifyGpsUnauthorized()
             {
-                mNotifyGpsUnauthorized();
+                m_pImpl->NotifyGpsUnauthorized();
             }
 
             void CompassView::SetHeadingRadians(float heading)
             {
-                mUpdateHeading(heading);
+                m_pImpl->SetHeadingRadians(heading);
             }
 
             void CompassView::SetOnScreenStateToIntermediateValue(float value)
             {
-                mAnimateToIntermediateOnScreenState(value);
+                m_pImpl->SetOnScreenStateToIntermediateValue(value);
             }
 
             void CompassView::SetFullyOnScreen()
             {
-                mAnimateToActive();
+                m_pImpl->SetFullyOnScreen();
             }
 
             void CompassView::SetFullyOffScreen()
             {
-                mAnimateToInactive();
+                m_pImpl->SetFullyOffScreen();
             }
 
             void CompassView::InsertCycledCallback(Eegeo::Helpers::ICallback0& callback)
             {
-                m_callbacks.AddCallback(callback);
+                m_pImpl->InsertCycledCallback(callback);
             }
 
             void CompassView::RemoveCycledCallback(Eegeo::Helpers::ICallback0& callback)
             {
-                m_callbacks.RemoveCallback(callback);
+                m_pImpl->RemoveCycledCallback(callback);
             }
         }
     }

@@ -12,7 +12,7 @@ namespace ExampleApp
         class WindowsFlurryMetricsService : public IMetricsService
         {
         public:
-            WindowsFlurryMetricsService(WindowsNativeState* pNativeState);
+            WindowsFlurryMetricsService(const std::shared_ptr<WindowsNativeState>& nativeState);
 
             ~WindowsFlurryMetricsService();
 
@@ -43,8 +43,7 @@ namespace ExampleApp
             bool IsEnabled() const;
 
         private:
-            WindowsNativeState* m_pNativeState;
-            //jclass m_flurryClass;
+            const std::shared_ptr<WindowsNativeState> m_nativeState;
             bool m_enabled;
         };
     }

@@ -17,30 +17,30 @@ namespace ExampleApp
         {
             class ModalBackgroundNativeModalityObserver : private Eegeo::NonCopyable
             {
-                ModalBackgroundNativeView& m_modalBackgroundView;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<ModalBackgroundNativeView> m_modalBackgroundView;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 Eegeo::Helpers::TCallback1<ModalBackgroundNativeModalityObserver, const Modality::UpdateNativeModalBackgroundMessage&> m_handlerBinding;
 
                 void OnUpdateNativeModalBackgroundMessage(const Modality::UpdateNativeModalBackgroundMessage& message)
                 {
-                    m_modalBackgroundView.SetFixedOn(message.ShouldFixOn());
-                    m_modalBackgroundView.SetAlpha(message.Modality());
+                    m_modalBackgroundView->SetFixedOn(message.ShouldFixOn());
+                    m_modalBackgroundView->SetAlpha(message.Modality());
                 }
 
             public:
                 ModalBackgroundNativeModalityObserver(
-                    ModalBackgroundNativeView& modalBackgroundView,
-                    ExampleAppMessaging::TMessageBus& messageBus)
+                    const std::shared_ptr<ModalBackgroundNativeView>& modalBackgroundView,
+                    const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
                     : m_modalBackgroundView(modalBackgroundView)
                     , m_messageBus(messageBus)
                     , m_handlerBinding(this, &ModalBackgroundNativeModalityObserver::OnUpdateNativeModalBackgroundMessage)
                 {
-                    m_messageBus.SubscribeNative(m_handlerBinding);
+                    m_messageBus->SubscribeNative(m_handlerBinding);
                 }
 
                 ~ModalBackgroundNativeModalityObserver()
                 {
-                    m_messageBus.UnsubscribeNative(m_handlerBinding);
+                    m_messageBus->UnsubscribeNative(m_handlerBinding);
                 }
             };
         }

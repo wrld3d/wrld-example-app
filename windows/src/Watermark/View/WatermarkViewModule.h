@@ -2,15 +2,7 @@
 
 #pragma once
 
-#include <string>
-#include "IWatermarkViewModule.h"
-#include "WindowsNativeState.h"
-#include "Types.h"
-#include "Watermark.h"
-#include "WatermarkViewIncludes.h"
-#include "WatermarkView.h"
-#include "WatermarkController.h"
-#include "IMetricsService.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -18,22 +10,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            class WatermarkViewModule: public IWatermarkViewModule, private Eegeo::NonCopyable
+            class WatermarkViewModule : public Module
             {
-            private:
-                WatermarkView* m_pView;
-                WatermarkController* m_pController;
-
             public:
-                WatermarkViewModule(
-                    WindowsNativeState& nativeState,
-                    IWatermarkViewModel& viewModel,
-					IWatermarkDataRepository& watermarkDataRepository,
-                    ExampleAppMessaging::TMessageBus& messageBus,
-                    Metrics::IMetricsService& metricsService
-                );
-
-                ~WatermarkViewModule();
+                void Register(const TContainerBuilder& builder);
             };
         }
     }

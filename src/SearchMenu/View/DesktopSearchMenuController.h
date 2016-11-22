@@ -18,10 +18,10 @@ namespace ExampleApp
         {
             class DesktopSearchMenuController : public SearchMenuController
             {
-                //Modality::View::IModalityController& m_modalityController;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<Modality::View::IModalityController> m_modalityController;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
                 Eegeo::Helpers::TIdentity m_menuIdentity;
-                //Reaction::View::IReactionModel& m_reactionModel;
+                const std::shared_ptr<Reaction::View::IReactionModel> m_reactionModel;
                 
                 Eegeo::Helpers::TCallback1<DesktopSearchMenuController, const ExampleApp::SearchResultPoi::SearchResultPoiViewOpenedMessage&> m_poiOpenedHandler;
                 Eegeo::Helpers::TCallback1<DesktopSearchMenuController, const ExampleApp::SearchResultPoi::SearchResultPoiViewClosedMessage&> m_poiClosedHandler;
@@ -30,16 +30,16 @@ namespace ExampleApp
                 void OnSearchResultPoiViewClosedMessage(const ExampleApp::SearchResultPoi::SearchResultPoiViewClosedMessage& message);
 
             public:
-                DesktopSearchMenuController(Menu::View::IMenuModel& model,
-                    Menu::View::IMenuViewModel& viewModel,
-                    Menu::View::IMenuView& view,
-                    ISearchMenuView& searchMenuView,
-                    Menu::View::IMenuSectionViewModel& searchSectionViewModel,
-                    TagSearch::View::ITagSearchRepository& tagSearchRepository,
-                    Modality::View::IModalBackgroundView& modalBackgroundView,
-                    Modality::View::IModalityController& modalityController,
-                    ExampleAppMessaging::TMessageBus& messageBus,
-                    Reaction::View::IReactionModel& reactionModel);
+                DesktopSearchMenuController(const std::shared_ptr<Menu::View::IMenuModel>& model,
+                    const std::shared_ptr<Menu::View::IMenuViewModel>& viewModel,
+                    const std::shared_ptr<Menu::View::IMenuView>& view,
+                    const std::shared_ptr<ISearchMenuView>& searchMenuView,
+                    const std::shared_ptr<Menu::View::IMenuSectionViewModel>& searchSectionViewModel,
+                    const std::shared_ptr<TagSearch::View::ITagSearchRepository>& tagSearchRepository,
+                    const std::shared_ptr<Modality::View::IModalBackgroundView>& modalBackgroundView,
+                    const std::shared_ptr<Modality::View::IModalityController>& modalityController,
+                    const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                    const std::shared_ptr<Reaction::View::IReactionModel>& reactionModel);
 
                 ~DesktopSearchMenuController();
             };

@@ -15,16 +15,16 @@ namespace ExampleApp
     {
         namespace View
         {
-            DesktopSearchMenuController::DesktopSearchMenuController(Menu::View::IMenuModel& model,
-                                                                     Menu::View::IMenuViewModel& viewModel,
-                                                                     Menu::View::IMenuView& view,
-                                                                     ISearchMenuView& searchMenuView,
-                                                                     Menu::View::IMenuSectionViewModel& searchSectionViewModel,
-                                                                     TagSearch::View::ITagSearchRepository& tagSearchRepository,
-                                                                     Modality::View::IModalBackgroundView& modalBackgroundView,
-                                                                     Modality::View::IModalityController& modalityController,
-                                                                     ExampleAppMessaging::TMessageBus& messageBus,
-                                                                     Reaction::View::IReactionModel& reactionModel) :
+            DesktopSearchMenuController::DesktopSearchMenuController(const std::shared_ptr<Menu::View::IMenuModel>& model,
+                                                                     const std::shared_ptr<Menu::View::IMenuViewModel>& viewModel,
+                                                                     const std::shared_ptr<Menu::View::IMenuView>& view,
+                                                                     const std::shared_ptr<ISearchMenuView>& searchMenuView,
+                                                                     const std::shared_ptr<Menu::View::IMenuSectionViewModel>& searchSectionViewModel,
+                                                                     const std::shared_ptr<TagSearch::View::ITagSearchRepository>& tagSearchRepository,
+                                                                     const std::shared_ptr<Modality::View::IModalBackgroundView>& modalBackgroundView,
+                                                                     const std::shared_ptr<Modality::View::IModalityController>& modalityController,
+                                                                     const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus,
+                                                                     const std::shared_ptr<Reaction::View::IReactionModel>& reactionModel) :
                 SearchMenuController(nullptr,
                                      nullptr,
                                      nullptr,
@@ -34,22 +34,22 @@ namespace ExampleApp
                                      nullptr,
                                      nullptr),
 
-                //m_modalityController(modalityController),
+                m_modalityController(modalityController),
                 m_messageBus(messageBus),
-                //m_reactionModel(reactionModel),
+                m_reactionModel(reactionModel),
                 m_poiClosedHandler(this, &DesktopSearchMenuController::OnSearchResultPoiViewClosedMessage),
                 m_poiOpenedHandler(this, &DesktopSearchMenuController::OnSearchResultPoiViewOpenedMessage)
             {
-                m_menuIdentity = viewModel.GetIdentity();
+                m_menuIdentity = viewModel->GetIdentity();
                 
-                m_messageBus.SubscribeNative(m_poiClosedHandler);
-                m_messageBus.SubscribeNative(m_poiOpenedHandler);
+                m_messageBus->SubscribeNative(m_poiClosedHandler);
+                m_messageBus->SubscribeNative(m_poiOpenedHandler);
             }
 
             DesktopSearchMenuController::~DesktopSearchMenuController()
             {
-                m_messageBus.UnsubscribeNative(m_poiOpenedHandler);
-                m_messageBus.UnsubscribeNative(m_poiClosedHandler);
+                m_messageBus->UnsubscribeNative(m_poiOpenedHandler);
+                m_messageBus->UnsubscribeNative(m_poiClosedHandler);
             }
             
             void DesktopSearchMenuController::OnSearchResultPoiViewOpenedMessage(const ExampleApp::SearchResultPoi::SearchResultPoiViewOpenedMessage& message)

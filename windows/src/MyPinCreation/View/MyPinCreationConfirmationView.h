@@ -7,18 +7,18 @@
 #include "WindowsNativeState.h"
 #include "CallbackCollection.h"
 
-#include "ReflectionHelpers.h"
-
 namespace ExampleApp
 {
     namespace MyPinCreation
     {
         namespace View
         {
+            class MyPinCreationConfirmationViewImpl;
+
             class MyPinCreationConfirmationView: public IMyPinCreationConfirmationView
             {
             public:
-                MyPinCreationConfirmationView(WindowsNativeState& nativeState);
+                MyPinCreationConfirmationView(const std::shared_ptr<WindowsNativeState>& nativeState);
                 ~MyPinCreationConfirmationView();
 
                 void OnDismissed();
@@ -34,19 +34,7 @@ namespace ExampleApp
                 void SetFullyOffScreen();
 
             private:
-                Helpers::ReflectionHelpers::Method<void> mDestroy;
-                Helpers::ReflectionHelpers::Method<float> mAnimateToIntermediateOnScreenState;
-                Helpers::ReflectionHelpers::Method<void> mAnimateToActive;
-                Helpers::ReflectionHelpers::Method<void> mAnimateToInactive;
-
-                WindowsNativeState& m_nativeState;
-
-                gcroot<System::Type^> m_uiViewClass;
-                gcroot<System::Object^> m_uiView;
-
-                Eegeo::Helpers::CallbackCollection0 m_dismissedCallbacks;
-                Eegeo::Helpers::CallbackCollection0 m_confirmedCallbacks;
-
+                MyPinCreationConfirmationViewImpl* m_pImpl;
             };
         }
     }

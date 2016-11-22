@@ -109,5 +109,5 @@ namespace ExampleApp
         TReactorTypes m_reactors;
     };
     
-    typedef std::vector<const std::shared_ptr<Module>> TModules;
+    typedef std::vector<std::shared_ptr<Module>> TModules;
 }

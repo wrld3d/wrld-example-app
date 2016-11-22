@@ -7,8 +7,7 @@
 #include "WindowsNativeState.h"
 #include "ICallback.h"
 #include "CallbackCollection.h"
-
-#include "ReflectionHelpers.h"
+#include "ApplicationConfiguration.h"
 
 namespace ExampleApp
 {
@@ -16,10 +15,13 @@ namespace ExampleApp
     {
         namespace View
         {
+            class WorldPinOnMapViewImpl;
+
             class WorldPinOnMapView: public IWorldPinOnMapView
             {
             public:
-                WorldPinOnMapView(WindowsNativeState& nativeState, float pinDiameter);
+                WorldPinOnMapView(const std::shared_ptr<WindowsNativeState>& nativeState, 
+                                  const std::shared_ptr<ApplicationConfig::ApplicationConfiguration>& appConfig);
                 ~WorldPinOnMapView();
 
                 void Open(const WorldPins::SdkModel::IWorldPinsInFocusModel& worldPinsInFocusModel,
@@ -33,20 +35,7 @@ namespace ExampleApp
                 void RemoveSelectedCallback(Eegeo::Helpers::ICallback0& callback);
 
             private:
-                Helpers::ReflectionHelpers::Method<System::String^, System::String^,
-                                                    System::String^, int, float> mShow;
-                Helpers::ReflectionHelpers::Method<void> mDismiss;
-                Helpers::ReflectionHelpers::Method<float, float> mUpdateScreenLocation;
-                Helpers::ReflectionHelpers::Method<float> mUpdateScreenVisibility;
-                
-                WindowsNativeState& m_nativeState;
-                const float m_pinOffset;
-                bool m_largePinFocus;
-
-                gcroot<System::Type^> m_uiViewClass;
-                gcroot<System::Object^> m_uiView;
-
-                Eegeo::Helpers::CallbackCollection0 m_selectedCallbacks;
+                WorldPinOnMapViewImpl* m_pImpl;
             };
         }
     }

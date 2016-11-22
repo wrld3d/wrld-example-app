@@ -8,18 +8,18 @@
 #include "ICallback.h"
 #include "CallbackCollection.h"
 
-#include "ReflectionHelpers.h"
-
 namespace ExampleApp
 {
     namespace MyPinDetails
     {
         namespace View
         {
+            class MyPinDetailsViewImpl;
+
             class MyPinDetailsView: public IMyPinDetailsView
             {
             public:
-                MyPinDetailsView(WindowsNativeState& nativeState);
+                MyPinDetailsView(const std::shared_ptr<WindowsNativeState>& nativeState);
                 ~MyPinDetailsView();
 
                 void OpenWithModel(
@@ -38,17 +38,7 @@ namespace ExampleApp
                 void RemoveRemovePinCallback(Eegeo::Helpers::ICallback0& callback);
 
             private:
-                WindowsNativeState& m_nativeState;
-
-                gcroot<System::Type^> m_uiViewClass;
-                gcroot <System::Object^> m_uiView;
-
-                Helpers::ReflectionHelpers::Method<void> mDestroy;
-                Helpers::ReflectionHelpers::Method<System::String^, System::String^, System::String^> mDisplay;
-                Helpers::ReflectionHelpers::Method<void> mDismiss;
-
-                Eegeo::Helpers::CallbackCollection0 m_removePinCallbacks;
-                Eegeo::Helpers::CallbackCollection0 m_dismissedCallbacks;
+                MyPinDetailsViewImpl* m_pImpl;
             };
         }
     }

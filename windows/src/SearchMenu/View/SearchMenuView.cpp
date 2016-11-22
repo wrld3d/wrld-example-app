@@ -1,12 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "SearchMenuView.h"
-#include "ReflectionHelpers.h"
-
-using namespace ExampleApp::Helpers::ReflectionHelpers;
-
-using namespace System;
-using namespace System::Reflection;
+#include "SearchMenuViewImpl.h"
 
 namespace ExampleApp
 {
@@ -14,140 +9,235 @@ namespace ExampleApp
     {
         namespace View
         {
-            SearchMenuView::SearchMenuView(WindowsNativeState& nativeState,
+            SearchMenuView::SearchMenuView(const std::shared_ptr<WindowsNativeState>& nativeState,
                 const std::string& viewClassName)
-                : Menu::View::MenuView(nativeState, viewClassName)
-                , m_currentSections(0)
             {
-                m_uiViewClass = GetTypeFromEntryAssembly("ExampleAppWPF.SearchMenuView");
+                m_pImpl = Eegeo_NEW(SearchMenuViewImpl)(nativeState, viewClassName);
+            }
 
-                mSetSearchSection.SetupMethod(m_uiViewClass, m_uiView, "SetSearchSection");
-                mSetSearchInProgress.SetupMethod(m_uiViewClass, m_uiView, "SetSearchInProgress");
-                mSetSearchEnded.SetupMethod(m_uiViewClass, m_uiView, "SetSearchEnded");
-                mSetEditText.SetupMethod(m_uiViewClass, m_uiView, "SetEditText");
-                mSetSearchResultCount.SetupMethod(m_uiViewClass, m_uiView, "SetSearchResultCount");
+            SearchMenuView::~SearchMenuView()
+            {
+                Eegeo_DELETE m_pImpl;
             }
 
             void SearchMenuView::SetSearchSection(Menu::View::IMenuSectionViewModel& searchSection)
             {
-                int resultCount = static_cast<int>(searchSection.Size());
-
-                if (resultCount <= 0)
-                {
-                    return;
-                }
-
-                array<System::String^>^ searchResultArray = gcnew array<System::String^>(resultCount);
-
-                for (int i = 0; i < resultCount; ++i)
-                {
-                    System::String^ str = ConvertUTF8ToManagedString(searchSection.GetItemAtIndex(i).SerializeJson());
-                    searchResultArray[i] = str;
-                }
-
-                mSetSearchSection(System::String::Empty, searchResultArray);
+                m_pImpl->SetSearchSection(searchSection);
             }
 
             void SearchMenuView::RemoveSeachKeyboard()
             {
-                
+                m_pImpl->RemoveSeachKeyboard();
             }
 
             void SearchMenuView::SetSearchInProgress(bool inProgress)
             {
-                if (inProgress)
-                {
-                    mSetSearchInProgress();
-                }
-                else
-                {
-                    mSetSearchEnded();
-                }
+                m_pImpl->SetSearchInProgress(inProgress);
             }
 
             void SearchMenuView::SetEditText(const std::string& searchText, bool isTag)
             {
-                mSetEditText(gcnew System::String(searchText.c_str()), isTag);
+                m_pImpl->SetEditText(searchText, isTag);
             }
 
             void SearchMenuView::SetSearchResultCount(int searchResultCount)
             {
-                mSetSearchResultCount(searchResultCount);
+                m_pImpl->SetSearchResultCount(searchResultCount);
             }
 
             void SearchMenuView::CollapseAll()
             {
-                for (Menu::View::TSections::iterator it = m_currentSections.begin(); it != m_currentSections.end(); ++it)
-                {
-                    (*it)->Contract();
-                }
-
-                UpdateMenuSectionViews(m_currentSections, false);
+                m_pImpl->CollapseAll();
             }
 
             void SearchMenuView::InsertSearchPeformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)
             {
-                m_searchPerformedCallbacks.AddCallback(callback);
+                m_pImpl->InsertSearchPeformedCallback(callback);
             }
 
             void SearchMenuView::RemoveSearchPeformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)
             {
-                m_searchPerformedCallbacks.RemoveCallback(callback);
+                m_pImpl->RemoveSearchPeformedCallback(callback);
             }
 
             void SearchMenuView::SearchPerformed(const std::string& searchQuery)
             {
-                m_searchPerformedCallbacks.ExecuteCallbacks(searchQuery);
+                m_pImpl->SearchPerformed(searchQuery);
             }
 
             void SearchMenuView::InsertSearchClearedCallback(Eegeo::Helpers::ICallback0& callback)
             {
-                m_searchClearedCallbacks.AddCallback(callback);
+                m_pImpl->InsertSearchClearedCallback(callback);
             }
 
             void SearchMenuView::RemoveSearchClearedCallback(Eegeo::Helpers::ICallback0& callback)
             {
-                m_searchClearedCallbacks.RemoveCallback(callback);
+                m_pImpl->RemoveSearchClearedCallback(callback);
             }
 
             void SearchMenuView::OnSearchCleared()
             {
-                m_searchClearedCallbacks.ExecuteCallbacks();
+                m_pImpl->OnSearchCleared();
             }
 
             void SearchMenuView::InsertSearchItemSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback)
             {
-                m_searchItemSelectedCallbacks.AddCallback(callback);
+                m_pImpl->InsertSearchItemSelectedCallback(callback);
             }
 
             void SearchMenuView::RemoveSearchItemSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback)
             {
-                m_searchItemSelectedCallbacks.RemoveCallback(callback);
+                m_pImpl->RemoveSearchItemSelectedCallback(callback);
             }
 
             void SearchMenuView::HandleSearchItemSelected(int index)
             {
-               m_searchItemSelectedCallbacks.ExecuteCallbacks(index);
-            }
-
-            bool SearchMenuView::IsTableAnimating() const
-            {
-                return false;
+                m_pImpl->HandleSearchItemSelected(index);
             }
 
             void SearchMenuView::UpdateTableAnimation(float dt)
             {
-
-            }
-
-            void SearchMenuView::SetTableCanInteract(bool interact)
-            {
-
+                m_pImpl->UpdateTableAnimation(dt);
             }
 
             void SearchMenuView::SetMenuSections(const std::vector<Menu::View::IMenuSectionViewModel*>& sections)
             {
-                m_currentSections = sections;
+                m_pImpl->SetMenuSections(sections);
+            }
+
+            void SearchMenuView::SetTryDragFunc(Eegeo::Helpers::IFunc0<bool>& function)
+            {
+                m_pImpl->SetTryDragFunc(function);
+            }
+
+            void SearchMenuView::ClearTryDragFunc()
+            {
+                m_pImpl->ClearTryDragFunc();
+            }
+
+            float SearchMenuView::GetAnimationProgress() const
+            {
+                return m_pImpl->GetAnimationProgress();
+            }
+
+            bool SearchMenuView::IsAnimating() const
+            {
+                return m_pImpl->IsAnimating();
+            }
+
+            bool SearchMenuView::IsTableAnimating() const
+            {
+                return m_pImpl->IsTableAnimating();
+            }
+
+            void SearchMenuView::UpdateAnimation(float dt)
+            {
+                m_pImpl->UpdateAnimation(dt);
+            }
+
+            void SearchMenuView::UpdateMenuSectionViews(Menu::View::TSections& sections, bool contentsChanged)
+            {
+                m_pImpl->UpdateMenuSectionViews(sections, contentsChanged);
+            }
+
+            void SearchMenuView::SetOnScreenStateToIntermediateValue(float value)
+            {
+                m_pImpl->SetOnScreenStateToIntermediateValue(value);
+            }
+
+            void SearchMenuView::SetFullyOnScreen()
+            {
+                m_pImpl->SetFullyOnScreen();
+            }
+
+            void SearchMenuView::SetFullyOffScreen()
+            {
+                m_pImpl->SetFullyOffScreen();
+            }
+
+            void SearchMenuView::SetFullyOnScreenOpen()
+            {
+                m_pImpl->SetFullyOnScreenOpen();
+            }
+
+            void SearchMenuView::SetFullyOnScreenClosed()
+            {
+                m_pImpl->SetFullyOnScreenClosed();
+            }
+
+            void SearchMenuView::SetTableCanInteract(bool canInteract)
+            {
+                m_pImpl->SetTableCanInteract(canInteract);
+            }
+
+            void SearchMenuView::InsertOnViewClicked(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_pImpl->InsertOnViewClicked(callback);
+            }
+
+            void SearchMenuView::RemoveOnViewClicked(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_pImpl->RemoveOnViewClicked(callback);
+            }
+
+            void SearchMenuView::InsertOnViewOpened(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_pImpl->InsertOnViewOpened(callback);
+            }
+
+            void SearchMenuView::RemoveOnViewOpened(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_pImpl->RemoveOnViewOpened(callback);
+            }
+
+            void SearchMenuView::InsertOnViewClosed(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_pImpl->InsertOnViewClosed(callback);
+            }
+
+            void SearchMenuView::RemoveOnViewClosed(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_pImpl->RemoveOnViewClosed(callback);
+            }
+
+            void SearchMenuView::InsertOnDragStarted(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_pImpl->InsertOnDragStarted(callback);
+            }
+
+            void SearchMenuView::RemoveOnDragStarted(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_pImpl->RemoveOnDragStarted(callback);
+            }
+
+            void SearchMenuView::InsertOnDrag(Eegeo::Helpers::ICallback1<float>& callback)
+            {
+                m_pImpl->InsertOnDrag(callback);
+            }
+
+            void SearchMenuView::RemoveOnDrag(Eegeo::Helpers::ICallback1<float>& callback)
+            {
+                m_pImpl->RemoveOnDrag(callback);
+            }
+
+            void SearchMenuView::InsertOnDragCompleted(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_pImpl->InsertOnDragCompleted(callback);
+            }
+
+            void SearchMenuView::RemoveOnDragCompleted(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_pImpl->RemoveOnDragCompleted(callback);
+            }
+
+            void SearchMenuView::InsertOnItemSelected(Eegeo::Helpers::ICallback2<int, int>& callback)
+            {
+                m_pImpl->InsertOnItemSelected(callback);
+            }
+
+            void SearchMenuView::RemoveOnItemSelected(Eegeo::Helpers::ICallback2<int, int>& callback)
+            {
+                m_pImpl->RemoveOnItemSelected(callback);
             }
         }
     }

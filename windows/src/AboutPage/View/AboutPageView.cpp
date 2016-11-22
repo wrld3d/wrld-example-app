@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "AboutPageView.h"
+#include "AboutPageViewImpl.h"
 #include "WindowsAppThreadAssertionMacros.h"
 
 namespace ExampleApp
@@ -9,52 +10,44 @@ namespace ExampleApp
     {
         namespace View
         {
-            AboutPageView::AboutPageView(WindowsNativeState& nativeState)
-                : m_nativeState(nativeState)
+            AboutPageView::AboutPageView(const std::shared_ptr<WindowsNativeState>& nativeState)
             {
-                m_uiViewClass = Helpers::ReflectionHelpers::GetTypeFromEntryAssembly("ExampleAppWPF.AboutPageView");
-                System::Reflection::ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(Helpers::ReflectionHelpers::CreateTypes(System::IntPtr::typeid));
-                m_uiView = ctor->Invoke(Helpers::ReflectionHelpers::CreateObjects(gcnew System::IntPtr(this)));
-                
-                mDestroy.SetupMethod(m_uiViewClass, m_uiView, "Destroy");
-                mDisplayContent.SetupMethod(m_uiViewClass, m_uiView, "DisplayContent");
-                mOpenAboutPage.SetupMethod(m_uiViewClass, m_uiView, "OpenAboutPage");
-                mDismissAboutPage.SetupMethod(m_uiViewClass, m_uiView, "DismissAboutPage");
+                m_pImpl = Eegeo_NEW(AboutPageViewImpl)(nativeState);
             }
 
             AboutPageView::~AboutPageView()
             {
-                mDestroy();
+                Eegeo_DELETE m_pImpl;
             }
 
             void AboutPageView::CloseTapped()
             {
-                m_callbacks.ExecuteCallbacks();
+                m_pImpl->CloseTapped();
             }
 
             void AboutPageView::Open()
             {
-                mOpenAboutPage();
+                m_pImpl->Open();
             }
 
             void AboutPageView::Close()
             {
-                mDismissAboutPage();
+                m_pImpl->Close();
             }
 
             void AboutPageView::SetContent(const std::string& content)
             {
-                mDisplayContent(Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(content));
+                m_pImpl->SetContent(content);
             }
 
             void AboutPageView::InsertCloseTappedCallback(Eegeo::Helpers::ICallback0& callback)
             {
-                m_callbacks.AddCallback(callback);
+                m_pImpl->InsertCloseTappedCallback(callback);
             }
 
             void AboutPageView::RemoveCloseTappedCallback(Eegeo::Helpers::ICallback0& callback)
             {
-                m_callbacks.RemoveCallback(callback);
+                m_pImpl->RemoveCloseTappedCallback(callback);
             }
         }
     }

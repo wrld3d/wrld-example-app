@@ -5,6 +5,11 @@
 #include "WindowsNativeState.h"
 #include "ScreenProperties.h"
 #include "SearchMenuView.h"
+#include "SearchMenuOptions.h"
+#include "DesktopSearchMenuController.h"
+#include "WindowsAppThreadAssertionMacros.h"
+#include "ITagSearchRepository.h"
+#include "IModalBackgroundView.h"
 
 namespace ExampleApp
 {
@@ -12,46 +17,35 @@ namespace ExampleApp
     {
         namespace View
         {
-            SearchMenuViewModule::SearchMenuViewModule(const std::string& viewName,
-                                                       WindowsNativeState& nativeState,
-                                                       Menu::View::IMenuModel& searchMenuModel,
-                                                       Menu::View::IMenuViewModel& searchMenuViewModel,
-                                                       Menu::View::IMenuSectionViewModel& searchSectionViewModel,
-                                                       TagSearch::View::ITagSearchRepository& tagSearchRepository,
-                                                       Modality::View::IModalBackgroundView& modalBackgroundView,
-                                                       Modality::View::IModalityController& modalityController,
-                                                       ExampleAppMessaging::TMessageBus& messageBus,
-                                                       Reaction::View::IReactionModel& reactionModel)
+            void SearchMenuViewModule::Register(const TContainerBuilder& builder)
             {
-                m_pView = Eegeo_NEW(SearchMenuView)(nativeState, viewName);
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                {
+                    return std::make_shared<SearchMenuView>(context.resolve<WindowsNativeState>(),
+                        "");
+                }).as<ISearchMenuView>().singleInstance();
 
-                m_pController = Eegeo_NEW(DesktopSearchMenuController)(searchMenuModel,
-                                                                searchMenuViewModel,
-                                                                *m_pView,
-                                                                *m_pView,
-                                                                searchSectionViewModel,
-                                                                tagSearchRepository,
-                                                                modalBackgroundView,
-                                                                modalityController,
-                                                                messageBus,
-                                                                reactionModel);
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                {
+                    auto searchMenuView = context.resolve<ISearchMenuView>();
+                    return std::make_shared<DesktopSearchMenuController>(context.resolve<SearchMenuModel>(),
+                        context.resolve<SearchMenuViewModel>(),
+                        std::dynamic_pointer_cast<Menu::View::IMenuView>(searchMenuView),
+                        searchMenuView,
+                        context.resolve<SearchMenuSectionViewModel>(),
+                        context.resolve<TagSearch::View::ITagSearchRepository>(),
+                        context.resolve<Modality::View::IModalBackgroundView>(),
+                        context.resolve<Modality::View::IModalityController>(),
+                        context.resolve<ExampleAppMessaging::TMessageBus>(),
+                        context.resolve<Reaction::View::IReactionModel>()
+                        );
+                }).singleInstance();
             }
 
-            SearchMenuViewModule::~SearchMenuViewModule()
+            void SearchMenuViewModule::RegisterUiLeaves()
             {
-                Eegeo_DELETE m_pController;
-                
-                Eegeo_DELETE m_pView;
-            }
-
-            Menu::View::MenuController& SearchMenuViewModule::GetMenuController()
-            {
-                return *m_pController;
-            }
-
-            Menu::View::IMenuView& SearchMenuViewModule::GetMenuView()
-            {
-                return *m_pView;
+                ASSERT_UI_THREAD
+                RegisterLeaf<DesktopSearchMenuController>();
             }
         }
     }

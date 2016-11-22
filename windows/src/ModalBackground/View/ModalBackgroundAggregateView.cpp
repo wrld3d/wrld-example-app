@@ -11,7 +11,8 @@ namespace ExampleApp
     {
         namespace View
         {
-            ModalBackgroundAggregateView::ModalBackgroundAggregateView(WindowsNativeState& nativeState, ExampleAppMessaging::TMessageBus& messageBus)
+            ModalBackgroundAggregateView::ModalBackgroundAggregateView(const std::shared_ptr<WindowsNativeState>& nativeState, 
+                                                                       const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
                 : m_nativeState(nativeState)
                 , m_messageBus(messageBus)
             {
@@ -35,7 +36,7 @@ namespace ExampleApp
 
             void ModalBackgroundAggregateView::SetActiveStateToIntermediateValue(float modality)
             {
-                m_messageBus.Publish(Modality::UpdateNativeModalBackgroundMessage(modality, false));
+                m_messageBus->Publish(Modality::UpdateNativeModalBackgroundMessage(modality, false));
             }
 
             void ModalBackgroundAggregateView::InsertTappedCallback(Eegeo::Helpers::ICallback0& callback)

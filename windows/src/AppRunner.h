@@ -2,10 +2,12 @@
 
 #pragma once
 
-#include "Graphics.h"
-#include "AppHost.h"
-#include "GlDisplayService.h"
+#include "WindowsNativeState.h"
+#include "MouseInputEvent.h"
+#include "TouchScreenInputEvent.h"
 #include "Types.h"
+
+class AppRunnerImpl;
 
 class AppRunner : Eegeo::NonCopyable
 {
@@ -47,18 +49,5 @@ public:
     void SetFullscreen(bool fullscreen);
 
 private:
-    WindowsNativeState* m_pNativeState;
-    AppHost* m_pAppHost;
-    bool m_updatingNative;
-    bool m_isPaused;
-    bool m_appRunning;
-    bool m_hasNativeTouch;
-    int m_maxDeviceTouchCount;
-
-    GlDisplayService m_displayService;
-    void ReleaseDisplay();
-    bool TryBindDisplay();
-    void CreateAppHost();
-
-    WINDOWPLACEMENT m_wpPrev;
+    AppRunnerImpl* m_pImpl;
 };

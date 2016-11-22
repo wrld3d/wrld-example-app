@@ -2,20 +2,7 @@
 
 #pragma once
 
-#include "Types.h"
-#include "InteriorsExplorer.h"
-#include "InteriorsExplorerViewIncludes.h"
-#include "BidirectionalBus.h"
-#include "Rendering.h"
-#include "MyPinCreation.h"
-#include "MyPinCreationDetails.h"
-#include "BidirectionalBus.h"
-#include "IMetricsService.h"
-#include "IIdentity.h"
-#include "Interiors.h"
-#include "ScreenControlViewModelIncludes.h"
-#include "IInteriorsExplorerViewModule.h"
-#include "InteriorsExplorerModel.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -23,23 +10,11 @@ namespace ExampleApp
     {
         namespace View
         {
-            class InteriorsExplorerViewModule : public IInteriorsExplorerViewModule
+            class InteriorsExplorerViewModule : public Module
             {
-            private:
-                InteriorsExplorerController* m_pController;
-                InteriorsExplorerView* m_pView;
-                
-                
             public:
-                InteriorsExplorerViewModule(SdkModel::InteriorsExplorerModel& model,
-											InteriorsExplorerViewModel& viewModel,
-                                            ExampleAppMessaging::TMessageBus& messageBus);
-                
-                ~InteriorsExplorerViewModule();
-                
-                InteriorsExplorerController& GetController() const;
-                
-                InteriorsExplorerView& GetView() const;
+                void Register(const TContainerBuilder& builder);
+                void RegisterUiLeaves();
             };
         }
     }

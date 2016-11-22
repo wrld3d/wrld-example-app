@@ -11,12 +11,12 @@ namespace ExampleApp
     {
         namespace View
         {
-            DesktopSettingsMenuController::DesktopSettingsMenuController(Menu::View::IMenuView& menuView,
-                                                           Menu::View::IMenuModel& menuModel,
-                                                           Menu::View::IMenuViewModel& menuViewModel,
-                                                           Modality::View::IModalBackgroundView& modalBackgroundView,
-                                                           Menu::View::IMenuView& searchMenuView,
-                                                           ExampleAppMessaging::TMessageBus& messageBus)
+            DesktopSettingsMenuController::DesktopSettingsMenuController(const std::shared_ptr<Menu::View::IMenuView>& menuView,
+                                                           const std::shared_ptr<Menu::View::IMenuModel>& menuModel,
+                                                           const std::shared_ptr<Menu::View::IMenuViewModel>& menuViewModel,
+                                                           const std::shared_ptr<Modality::View::IModalBackgroundView>& modalBackgroundView,
+                                                           const std::shared_ptr<Menu::View::IMenuView>& searchMenuView,
+                                                           const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
             : Menu::View::MenuController(nullptr, nullptr, nullptr, nullptr)
             , m_messageBus(messageBus)
             , m_modalBackgroundView(modalBackgroundView)
@@ -30,15 +30,15 @@ namespace ExampleApp
             , m_onViewClosedCallback(this, &DesktopSettingsMenuController::OnSearchMenuClosed)
             , m_searchMenuView(searchMenuView)
             {
-                m_modalBackgroundView.InsertTappedCallback(m_onModalBackgroundTappedCallback);
+                m_modalBackgroundView->InsertTappedCallback(m_onModalBackgroundTappedCallback);
                 
-                m_messageBus.SubscribeUi(m_appModeChangedCallback);
+                m_messageBus->SubscribeUi(m_appModeChangedCallback);
 
-                m_messageBus.SubscribeNative(m_poiClosedHandler);
-                m_messageBus.SubscribeNative(m_poiOpenedHandler);
+                m_messageBus->SubscribeNative(m_poiClosedHandler);
+                m_messageBus->SubscribeNative(m_poiOpenedHandler);
 
-                m_searchMenuView.InsertOnViewOpened(m_onViewOpenedCallback);
-                m_searchMenuView.InsertOnViewClosed(m_onViewClosedCallback);
+                m_searchMenuView->InsertOnViewOpened(m_onViewOpenedCallback);
+                m_searchMenuView->InsertOnViewClosed(m_onViewClosedCallback);
 
                 m_isControlOpen[Control::SearchMenu] = false;
                 m_isControlOpen[Control::POICard] = false;
@@ -46,15 +46,15 @@ namespace ExampleApp
             
             DesktopSettingsMenuController::~DesktopSettingsMenuController()
             {
-                m_messageBus.UnsubscribeUi(m_appModeChangedCallback);
+                m_messageBus->UnsubscribeUi(m_appModeChangedCallback);
 
-                m_messageBus.UnsubscribeNative(m_poiOpenedHandler);
-                m_messageBus.UnsubscribeNative(m_poiClosedHandler);
+                m_messageBus->UnsubscribeNative(m_poiOpenedHandler);
+                m_messageBus->UnsubscribeNative(m_poiClosedHandler);
                 
-                m_modalBackgroundView.RemoveTappedCallback(m_onModalBackgroundTappedCallback);
+                m_modalBackgroundView->RemoveTappedCallback(m_onModalBackgroundTappedCallback);
 
-                m_searchMenuView.RemoveOnViewOpened(m_onViewOpenedCallback);
-                m_searchMenuView.RemoveOnViewClosed(m_onViewClosedCallback);
+                m_searchMenuView->RemoveOnViewOpened(m_onViewOpenedCallback);
+                m_searchMenuView->RemoveOnViewClosed(m_onViewClosedCallback);
             }
             
             void DesktopSettingsMenuController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)

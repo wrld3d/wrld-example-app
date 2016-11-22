@@ -5,6 +5,7 @@
 #include "SearchResultPoiView.h"
 #include "SearchResultPoiController.h"
 #include "WindowsAppThreadAssertionMacros.h"
+#include "DesktopSearchResultPoiController.h"
 
 namespace ExampleApp
 {
@@ -12,35 +13,15 @@ namespace ExampleApp
     {
         namespace View
         {
-            SearchResultPoiViewModule::SearchResultPoiViewModule(
-                WindowsNativeState& nativeState,
-                ISearchResultPoiViewModel& searchResultPoiViewModel,
-                ExampleAppMessaging::TMessageBus& messageBus,
-                Metrics::IMetricsService& metricsService,
-                MyPinCreation::View::IMyPinCreationInitiationView& pinCreationInitiationView,
-                Eegeo::Resources::Interiors::InteriorSelectionModel& interiorsSelectionModel
-            )
+            void SearchResultPoiViewModule::Register(const TContainerBuilder& builder)
             {
-                ASSERT_UI_THREAD
-                m_pView = Eegeo_NEW(SearchResultPoiView)(nativeState);
-                m_pController = Eegeo_NEW(DesktopSearchResultPoiController)(*m_pView, searchResultPoiViewModel, messageBus, metricsService, pinCreationInitiationView, interiorsSelectionModel);
+                builder->registerType<SearchResultPoiView>().as<ISearchResultPoiView>().singleInstance();
+                builder->registerType<DesktopSearchResultPoiController>().as<SearchResultPoiController>().singleInstance();
             }
 
-            SearchResultPoiViewModule::~SearchResultPoiViewModule()
+            void SearchResultPoiViewModule::RegisterUiLeaves()
             {
-                ASSERT_UI_THREAD
-                Eegeo_DELETE m_pController;
-                Eegeo_DELETE m_pView;
-            }
-
-            SearchResultPoiView& SearchResultPoiViewModule::GetView() const
-            {
-                return *m_pView;
-            }
-
-            SearchResultPoiController& SearchResultPoiViewModule::GetController() const
-            {
-                return *m_pController;
+                RegisterLeaf<SearchResultPoiController>();
             }
         }
     }

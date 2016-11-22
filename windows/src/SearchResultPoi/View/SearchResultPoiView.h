@@ -8,8 +8,6 @@
 #include "WindowsNativeState.h"
 #include "CallbackCollection.h"
 
-#include "ReflectionHelpers.h"
-
 namespace ExampleApp
 {
     namespace SearchResultPoi
@@ -24,26 +22,14 @@ namespace ExampleApp
                 Num
             };
 
+            class SearchResultPoiViewImpl;
+
             class SearchResultPoiView : public ISearchResultPoiView, Eegeo::NonCopyable
             {
             private:
-                WindowsNativeState& m_nativeState;
-                Eegeo::Helpers::CallbackCollection0 m_closedCallbacks;
-                Eegeo::Helpers::CallbackCollection1<Search::SdkModel::SearchResultModel> m_togglePinClickedCallbacks;
-
-                Search::SdkModel::SearchResultModel m_model;
-
-                gcroot<System::Type^> m_uiViewClass[SearchVendors::Num];
-                gcroot<System::Object^> m_uiView[SearchVendors::Num];
-				
-				Helpers::ReflectionHelpers::Method<System::Object^, bool> DisplayPoiInfo[SearchVendors::Num];
-                Helpers::ReflectionHelpers::Method<void> DismissPoiInfo[SearchVendors::Num];
-                Helpers::ReflectionHelpers::Method<System::String^, bool, array<unsigned char, 1>^> UpdateImageData[SearchVendors::Num];
-
-                int m_currentVendor;
-
+                SearchResultPoiViewImpl* m_pImpl;
             public:
-                SearchResultPoiView(WindowsNativeState& nativeState);
+                SearchResultPoiView(const std::shared_ptr<WindowsNativeState>& nativeState);
 
                 ~SearchResultPoiView();
 

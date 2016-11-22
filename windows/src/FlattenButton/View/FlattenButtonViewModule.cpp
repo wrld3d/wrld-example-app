@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "FlattenButtonViewModule.h"
+#include "FlattenButtonView.h"
 #include "WindowsAppThreadAssertionMacros.h"
 
 namespace ExampleApp
@@ -9,26 +10,14 @@ namespace ExampleApp
     {
         namespace View
         {
-            FlattenButtonViewModule::FlattenButtonViewModule(
-                WindowsNativeState& nativeState,
-                IFlattenButtonViewModel& viewModel,
-                ExampleAppMessaging::TMessageBus& messageBus,
-                Metrics::IMetricsService& metricsService
-            )
+            void FlattenButtonViewModule::Register(const TContainerBuilder& builder)
             {
-                m_pView = Eegeo_NEW(FlattenButtonView)(nativeState);
-
-                m_pController = Eegeo_NEW(FlattenButtonController)(
-                                    viewModel,
-                                    *m_pView,
-                                    messageBus,
-                                    metricsService);
+                builder->registerType<FlattenButtonView>().as<IFlattenButtonView>().singleInstance();
             }
 
-            FlattenButtonViewModule::~FlattenButtonViewModule()
+            void FlattenButtonViewModule::RegisterUiLeaves()
             {
-                Eegeo_DELETE m_pController;
-                Eegeo_DELETE m_pView;
+                RegisterLeaf<IFlattenButtonView>();
             }
         }
     }

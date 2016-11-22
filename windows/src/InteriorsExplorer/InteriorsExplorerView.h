@@ -7,7 +7,6 @@
 #include "WindowsNativeState.h"
 #include "ICallback.h"
 #include "CallbackCollection.h"
-#include "ReflectionHelpers.h"
 #include <vector>
 
 namespace ExampleApp
@@ -16,30 +15,12 @@ namespace ExampleApp
     {
         namespace View
         {
+            class InteriorsExplorerViewImpl;
+
             class InteriorsExplorerView : public IInteriorsExplorerView, private Eegeo::NonCopyable
             {
             private:
-                
-                gcroot<System::Type^> m_uiViewClass;
-                gcroot<System::Object^> m_uiView;
-
-                Eegeo::Helpers::CallbackCollection1<int> m_selectedFloorCallbacks;
-                Eegeo::Helpers::CallbackCollection0 m_dismissedCallbacks;
-                Eegeo::Helpers::CallbackCollection1<float> m_floorSelectionDraggedCallbacks;
-
-                Helpers::ReflectionHelpers::Method<array<System::String^>^, int> mUpdateFloors;
-                Helpers::ReflectionHelpers::Method<System::String^> mSetFloorName;
-                Helpers::ReflectionHelpers::Method<int> mSetSelectedFloor;
-                Helpers::ReflectionHelpers::Method<float> mSetOnScreenStateToIntermediateValue;
-                Helpers::ReflectionHelpers::Method<void> mSetFullyOnScreen;
-                Helpers::ReflectionHelpers::Method<void> mSetFullyOffScreen;
-                Helpers::ReflectionHelpers::Method<bool> mSetTouchEnabled;
-                Helpers::ReflectionHelpers::Method<bool> mSetFloorPanelEnabled;
-                Helpers::ReflectionHelpers::Method<void> mDestroy;
-                Helpers::ReflectionHelpers::Method<void> mPlaySliderAnim;
-				Helpers::ReflectionHelpers::Method<bool,bool> mAddTutorialDialogs;
-				Helpers::ReflectionHelpers::Method<void> mRemoveTutorialDialogs;
-				Helpers::ReflectionHelpers::Method<void> mGetCanShowChangeFloorTutorialDialog;
+                InteriorsExplorerViewImpl* m_pImpl;
 
             public:
                 InteriorsExplorerView();

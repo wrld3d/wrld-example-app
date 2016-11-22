@@ -8,35 +8,21 @@
 #include "CallbackCollection.h"
 #include "WindowsNativeState.h"
 
-#include "ReflectionHelpers.h"
-
 namespace ExampleApp
 {
     namespace Compass
     {
         namespace View
         {
+            class CompassViewImpl;
+
             class CompassView : public ICompassView, private Eegeo::NonCopyable
             {
             private:
-                Eegeo::Helpers::CallbackCollection0 m_callbacks;
-                WindowsNativeState& m_nativeState;
-
-                gcroot<System::Type^> m_uiViewClass;
-                gcroot<System::Object^> m_uiView;
-
-                Helpers::ReflectionHelpers::Method<void> mDestroy;
-                Helpers::ReflectionHelpers::Method<void> mShowGpsDisabledView;
-                Helpers::ReflectionHelpers::Method<void> mShowGpsFollowView;
-                Helpers::ReflectionHelpers::Method<void> mShowGpsCompassModeView;
-                Helpers::ReflectionHelpers::Method<void> mNotifyGpsUnauthorized;
-                Helpers::ReflectionHelpers::Method<float> mUpdateHeading;
-                Helpers::ReflectionHelpers::Method<float> mAnimateToIntermediateOnScreenState;
-                Helpers::ReflectionHelpers::Method<void> mAnimateToActive;
-                Helpers::ReflectionHelpers::Method<void> mAnimateToInactive;
+                CompassViewImpl* m_pImpl;
 
             public:
-                CompassView(WindowsNativeState& nativeState);
+                CompassView(const std::shared_ptr<WindowsNativeState>& nativeState);
                 ~CompassView();
 
                 void OnCycle();

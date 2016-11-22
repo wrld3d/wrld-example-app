@@ -8,32 +8,21 @@
 #include "CallbackCollection.h"
 #include "ICallback.h"
 
-#include "ReflectionHelpers.h"
-
 namespace ExampleApp
 {
     namespace FlattenButton
     {
         namespace View
         {
+            class FlattenButtonViewImpl;
+
             class FlattenButtonView : public IFlattenButtonView
             {
             private:
-                Eegeo::Helpers::CallbackCollection1<bool> m_callbacks;
-                WindowsNativeState& m_nativeState;
-
-                gcroot<System::Type^> m_uiViewClass;
-                gcroot<System::Object^> m_uiView;
-
-                Helpers::ReflectionHelpers::Method<void> mDestroy;
-                Helpers::ReflectionHelpers::Method<bool> mUpdateViewStateBasedOnFlattening;
-                Helpers::ReflectionHelpers::Method<float> mAnimateToIntermediateOnScreenState;
-                Helpers::ReflectionHelpers::Method<void> mAnimateToActive;
-                Helpers::ReflectionHelpers::Method<void> mAnimateToInActive;
-                Helpers::ReflectionHelpers::Method<bool> mSetViewEnabled;
+                FlattenButtonViewImpl* m_pImpl;
                 
             public:
-                FlattenButtonView(WindowsNativeState& nativeState);
+                FlattenButtonView(const std::shared_ptr<WindowsNativeState>& nativeState);
                 ~FlattenButtonView();
 
                 void SetToggled(bool toggled);

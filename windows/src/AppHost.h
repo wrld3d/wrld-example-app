@@ -2,13 +2,17 @@
 
 #pragma once
 
+namespace ExampleApp
+{
+    class MobileExampleApp;
+}
+
 #include <map>
 #include <string>
 #include <vector>
 #include "Types.h"
 #include "Graphics.h"
 #include "WindowsFileIO.h"
-#include "WindowsCacheFileIO.h"
 #include "WindowsTextureFileLoader.h"
 #include "WindowsInputProcessor.h"
 #include "WindowsLocationService.h"
@@ -27,7 +31,7 @@
 #include "AppInputDelegate.h"
 #include "Modules.h"
 #include "InitialExperience.h"
-#include "WindowsPersistentSettings.h"
+#include "WindowsPersistentSettingsModel.h"
 #include "ViewControllerUpdater.h"
 #include "MenuViewIncludes.h"
 #include "ModalBackgroundViewIncludes.h"
@@ -50,16 +54,14 @@
 #include "IEegeoErrorHandler.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
 #include "WindowsFlurryMetricsService.h"
-#include "Interiors.h"
-#include "InteriorsExplorerViewIncludes.h"
-#include "SettingsMenuModule.h"
-#include "SearchMenuModule.h"
-#include "ISearchResultSectionViewModule.h"
-#include "ISurveyViewModule.h"
+#include "ICallback.h"
+#include "UserInteraction.h"
 #include "IMenuReactionModel.h"
-#include "TagSearchViewIncludes.h"
+#include "AppWiring.h"
+#include "IViewControllerUpdaterModel.h"
+#include "WebConnectivityValidator.h"
 
-class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
+class AppHost : protected Eegeo::NonCopyable
 {
 public:
     AppHost(
@@ -70,7 +72,7 @@ public:
         EGLContext resourceBuildShareContext,
         bool hasNativeTouchInput,
         int maxDeviceTouchCount
-        );
+    );
     ~AppHost();
 
     void Update(float dt);
@@ -85,18 +87,15 @@ public:
     void OnPause();
     void OnResume();
 
-    void NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties);
+    void NotifyScreenPropertiesChanged(const std::shared_ptr<Eegeo::Rendering::ScreenProperties>& screenProperties);
 
     void HandleFailureToProvideWorkingApiKey();
 
     void HandleFailureToDownloadBootstrapResources();
-    void HandleNoConnectivityWarning();
-    void HandleInvalidConnectivityError();
 
     void HandleMouseInputEvent(const Eegeo::Windows::Input::MouseInputEvent& event);
     void HandleKeyboardInputEvent(const Eegeo::Windows::Input::KeyboardInputEvent& event);
     void HandleTouchScreenInputEvent(const Eegeo::Windows::Input::TouchScreenInputEvent& event);
-
     void SetAllInputEventsToPointerUp(int x, int y);
     void SetTouchInputEventToPointerUp(int touchId);
     void PopAllTouchEvents();
@@ -105,75 +104,47 @@ public:
     void SetCameraLocation(const Eegeo::Space::LatLongAltitude& interestPoint, double distanceToInterestPoint, double orientationInDegrees);
     void SendCameraLocationToGUI();
 
+    bool ShouldStartFullscreen();
+
     void SetSharedSurface(EGLSurface sharedSurface);
     void SetViewportOffset(float x, float y);
 
-    bool ShouldStartFullscreen();
+    template <class T>
+    void AddViewControllerUpdatable()
+    {
+        auto t = m_wiring->Resolve<T>();
+        auto controller = m_wiring->Resolve<ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel>();
+        Eegeo_ASSERT(t != nullptr);
+        Eegeo_ASSERT(controller != nullptr);
+        controller->AddUpdateableObject(*t);
+    }
 
 private:
+    Eegeo::Helpers::TCallback0<AppHost> m_loadingScreenCallback;
+    void OnLoadingScreenComplete();
+
+    ExampleApp::ExampleAppMessaging::TMessageBus& GetMessageBus();
+
     bool m_isPaused;
-    Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;
-    Eegeo::Windows::WindowsLocationService* m_pWindowsLocationService;
-
-    bool m_shouldStartFullscreen;
-
     WindowsNativeState& m_nativeState;
-    AppInputDelegate* m_pAppInputDelegate;
+    std::shared_ptr<AppInputDelegate> m_appInputDelegate;
+    std::shared_ptr<ExampleApp::AppWiring> m_wiring;
+    std::shared_ptr<ExampleApp::MobileExampleApp> m_app;
+    std::shared_ptr<Eegeo::Web::WebConnectivityValidator> m_connectivityValidator;
+    std::shared_ptr<ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel> m_viewControllerUpdater;
+    std::shared_ptr<ExampleApp::ExampleAppMessaging::TMessageBus> m_messageBus;
+    std::shared_ptr<Eegeo::Location::ILocationService> m_locationService;
+    std::shared_ptr<Eegeo::Windows::WindowsPlatformAbstractionModule> m_windowsAbstractionModule;
+    std::shared_ptr<ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeView> m_modalBackground;
 
-    Eegeo::Windows::Input::WindowsInputHandler m_inputHandler;
-    Eegeo::UI::NativeInput::Windows::WindowsInputBoxFactory m_WindowsInputBoxFactory;
-    Eegeo::UI::NativeInput::Windows::WindowsKeyboardInputFactory m_WindowsKeyboardInputFactory;
-    Eegeo::UI::NativeAlerts::Windows::WindowsAlertBoxFactory m_WindowsAlertBoxFactory;
-    Eegeo::UI::NativeUIFactories m_WindowsNativeUIFactories;
-
-    Eegeo::Windows::Input::WindowsInputProcessor* m_pInputProcessor;
-
-    ExampleApp::ModalBackground::SdkModel::IModalBackgroundNativeViewModule* m_pModalBackgroundNativeViewModule;
-
-
-    Eegeo::Windows::WindowsPlatformAbstractionModule* m_pWindowsPlatformAbstractionModule;
-    ExampleApp::Menu::View::IMenuViewModule* m_pSettingsMenuViewModule;
-    ExampleApp::Menu::View::IMenuViewModule* m_pSearchMenuViewModule;
-    ExampleApp::ModalBackground::View::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
-    ExampleApp::FlattenButton::View::IFlattenButtonViewModule* m_pFlattenButtonViewModule;
-    ExampleApp::SearchResultPoi::View::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;
-    ExampleApp::SearchResultSection::View::ISearchResultSectionViewModule* m_pSearchResultSectionViewModule;
-	ExampleApp::TagSearch::View::ITagSearchViewModule* m_pTagSearchViewModule;
-    ExampleApp::WorldPins::View::IWorldPinOnMapViewModule* m_pWorldPinOnMapViewModule;
-    ExampleApp::AboutPage::View::IAboutPageViewModule* m_pAboutPageViewModule;
-    ExampleApp::Compass::View::ICompassViewModule* m_pCompassViewModule;
-    ExampleApp::MyPinCreation::View::IMyPinCreationViewModule* m_pMyPinCreationViewModule;
-    ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsViewModule* m_pMyPinCreationDetailsViewModule;
-    ExampleApp::MyPinDetails::View::IMyPinDetailsViewModule* m_pMyPinDetailsViewModule;
-    ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule* m_pInitialExperienceIntroViewModule; // TODO: Interface.
-    ExampleApp::Surveys::View::ISurveyViewModule* m_pSurverysViewModule;
-    ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
-    ExampleApp::Watermark::View::IWatermarkViewModule* m_pWatermarkViewModule;
-    ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
-    ExampleApp::Metrics::WindowsFlurryMetricsService* m_pWindowsFlurryMetricsService;
-	ExampleApp::InteriorsExplorer::View::IInteriorsExplorerViewModule* m_pInteriorsExplorerViewModule;
-    ExampleApp::Menu::View::IMenuReactionModel* m_pMenuReaction;
-
-    ExampleApp::MobileExampleApp* m_pApp;
-
-    ExampleApp::PersistentSettings::WindowsPersistentSettingsModel* m_pWindowsPersistentSettingsModel;
-    ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule* m_pInitialExperienceModule;
-
-    bool m_createdUIModules;
-    bool m_requestedApplicationInitialiseViewState;
+    bool m_registeredUIModules;
+    bool m_resolvedUIModules;
     bool m_uiCreatedMessageReceivedOnNativeThread;
-    ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModule* m_pViewControllerUpdaterModule;
-
-    ExampleApp::ExampleAppMessaging::TMessageBus m_messageBus;
-    ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus m_sdkDomainEventBus;
-    Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<AppHost> m_failAlertHandler;
 
     void DispatchRevealUiMessageToUiThreadFromNativeThread();
     void DispatchUiCreatedMessageToNativeThreadFromUiThread();
     void CreateApplicationViewModulesFromUiThread();
     void DestroyApplicationViewModulesFromUiThread();
 
-    void HandleStartupFailure();
-
-    int m_maxDeviceTouchCount;
+    void PublishNetworkConnectivityStateToUIThread();
 };

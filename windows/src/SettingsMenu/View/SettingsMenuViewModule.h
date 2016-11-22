@@ -2,17 +2,7 @@
 
 #pragma once
 
-#include <string>
-#include "WindowsNativeState.h"
-#include "Types.h"
-#include "Menu.h"
-#include "MenuViewIncludes.h"
-#include "ISettingsMenuViewModule.h"
-#include "Search.h"
-#include "BidirectionalBus.h"
-#include "DesktopSettingsMenuController.h"
-#include "Modality.h"
-#include "IMenuViewModule.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -20,27 +10,11 @@ namespace ExampleApp
     {
         namespace View
         {
-            class SettingsMenuViewModule: public Menu::View::IMenuViewModule, private Eegeo::NonCopyable
+            class SettingsMenuViewModule : public Module
             {
-            private:
-                SettingsMenuView* m_pView;
-                DesktopSettingsMenuController* m_pController;
-
             public:
-                SettingsMenuViewModule(
-                    const std::string& viewName,
-                    WindowsNativeState& nativeState,
-                    Menu::View::IMenuModel& menuModelModel,
-                    Menu::View::IMenuViewModel& menuViewModel,
-                    Modality::View::IModalBackgroundView& modealBackgroundView,
-                    Menu::View::IMenuView& searchMenuView,
-                    ExampleAppMessaging::TMessageBus& messageBus
-                );
-
-                ~SettingsMenuViewModule();
-
-                Menu::View::MenuController& GetMenuController();
-                Menu::View::IMenuView& GetMenuView();
+                void Register(const TContainerBuilder& builder);
+                void RegisterUiLeaves();
             };
         }
     }

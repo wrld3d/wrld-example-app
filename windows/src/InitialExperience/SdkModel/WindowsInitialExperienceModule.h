@@ -21,9 +21,10 @@ namespace ExampleApp
             {
             public:
                 WindowsInitialExperienceModule(
-                    WindowsNativeState& m_nativeState,
-                    PersistentSettings::IPersistentSettingsModel& persistentSettings,
-                    ExampleAppMessaging::TMessageBus& messageBus
+                    const std::shared_ptr<WindowsNativeState>& m_nativeState,
+                    const std::shared_ptr<PersistentSettings::IPersistentSettingsModel>& persistentSettings,
+                    const std::shared_ptr<WorldAreaLoader::SdkModel::IWorldAreaLoaderModel>& worldAreaLoaderModel,
+                    const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus
                 );
 
                 ~WindowsInitialExperienceModule();
@@ -32,8 +33,8 @@ namespace ExampleApp
                 std::vector<IInitialExperienceStep*> CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel &worldAreaLoaderModel);
 
             private:
-                WindowsNativeState& m_nativeState;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<WindowsNativeState> m_nativeState;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
             };
         }
     }

@@ -1,11 +1,8 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "OptionsView.h"
+#include "OptionsViewImpl.h"
 #include "WindowsAppThreadAssertionMacros.h"
-
-using namespace ExampleApp::Helpers::ReflectionHelpers;
-using namespace System::Reflection;
-using namespace System;
 
 namespace ExampleApp
 {
@@ -13,119 +10,109 @@ namespace ExampleApp
     {
         namespace View
         {
-            OptionsView::OptionsView(WindowsNativeState& nativeState)
-                : m_nativeState(nativeState)
+            OptionsView::OptionsView(const std::shared_ptr<WindowsNativeState>& nativeState)
             {
-                m_uiViewClass = GetTypeFromEntryAssembly("ExampleAppWPF.OptionsView");
-                ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid));
-                m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this)));
-
-                mDestroy.SetupMethod(m_uiViewClass, m_uiView, "Destroy");
-                mIsCacheEnabledSelected.SetupMethod(m_uiViewClass, m_uiView, "IsCacheEnabledSelected");
-                mOpenOptions.SetupMethod(m_uiViewClass, m_uiView, "OpenOptions");
-                mCloseOptions.SetupMethod(m_uiViewClass, m_uiView, "CloseOptions");
-                mConcludeCacheClearCeremony.SetupMethod(m_uiViewClass, m_uiView, "ConcludeCacheClearCeremony");
-                mSetCacheEnabledSelected.SetupMethod(m_uiViewClass, m_uiView, "SetCacheEnabledSelected");
+                m_pImpl = Eegeo_NEW(OptionsViewImpl)(nativeState);
             }
 
             OptionsView::~OptionsView()
             {
-                mDestroy();
+                Eegeo_DELETE m_pImpl;
             }
 
             bool OptionsView::IsStreamOverWifiOnlySelected() const
             {
-                return false;
+                return m_pImpl->IsStreamOverWifiOnlySelected();
             }
 
             bool OptionsView::IsCacheEnabledSelected() const
             {
-                return (bool)mIsCacheEnabledSelected.Call<System::Boolean^>();
+                return m_pImpl->IsCacheEnabledSelected();
             }
 
             void OptionsView::SetStreamOverWifiOnlySelected(bool isStreamOverWifiOnlySelected)
             {
-                // doesn't make any sense for windows, so just stubbing out implementation
+                m_pImpl->SetStreamOverWifiOnlySelected(isStreamOverWifiOnlySelected);
             }
 
             void OptionsView::SetCacheEnabledSelected(bool isCacheEnabledSelected)
             {
-                mSetCacheEnabledSelected(isCacheEnabledSelected);
+                m_pImpl->SetCacheEnabledSelected(isCacheEnabledSelected);
             }
 
             void OptionsView::Open()
             {
-                mOpenOptions();
+                m_pImpl->Open();
             }
 
             void OptionsView::Close()
             {
-                mCloseOptions();
+                m_pImpl->Close();
             }
 
             void OptionsView::ConcludeCacheClearCeremony()
             {
-                mConcludeCacheClearCeremony();
+                m_pImpl->ConcludeCacheClearCeremony();
             }
 
             void OptionsView::HandleCloseSelected()
             {
-                m_closeCallbacks.ExecuteCallbacks();
+                m_pImpl->HandleCloseSelected();
             }
 
             void OptionsView::HandleStreamOverWifiOnlySelectionStateChanged()
             {
-                m_wifiOnlyCallbacks.ExecuteCallbacks();
+                m_pImpl->HandleStreamOverWifiOnlySelectionStateChanged();
             }
 
             void OptionsView::HandleCacheEnabledSelectionStateChanged()
             {
-                m_cacheEnabledCallbacks.ExecuteCallbacks();
+                m_pImpl->HandleCacheEnabledSelectionStateChanged();
             }
 
             void OptionsView::HandleClearCacheSelected()
             {
-                m_clearCacheCallbacks.ExecuteCallbacks();
+                m_pImpl->HandleClearCacheSelected();
             }
 
             void OptionsView::InsertCloseSelectedCallback(Eegeo::Helpers::ICallback0& callback)
             {
-                m_closeCallbacks.AddCallback(callback);
+                m_pImpl->InsertCloseSelectedCallback(callback);
             }
 
             void OptionsView::RemoveCloseSelectedCallback(Eegeo::Helpers::ICallback0& callback)
             {
-                m_closeCallbacks.RemoveCallback(callback);
+                m_pImpl->RemoveCloseSelectedCallback(callback);
             }
 
             void OptionsView::InsertStreamOverWifiOnlySelectionChangedCallback(Eegeo::Helpers::ICallback0& callback)
             {
-                m_wifiOnlyCallbacks.AddCallback(callback);
+                m_pImpl->InsertStreamOverWifiOnlySelectionChangedCallback(callback);
             }
 
             void OptionsView::RemoveStreamOverWifiOnlySelectionChangedCallback(Eegeo::Helpers::ICallback0& callback)
             {
-                m_wifiOnlyCallbacks.RemoveCallback(callback);
+                m_pImpl->RemoveStreamOverWifiOnlySelectionChangedCallback(callback);
             }
 
             void OptionsView::InsertCacheEnabledSelectionCallback(Eegeo::Helpers::ICallback0& callback)
             {
-                m_cacheEnabledCallbacks.AddCallback(callback);
+                m_pImpl->InsertCacheEnabledSelectionCallback(callback);
             }
 
             void OptionsView::RemoveCacheEnabledSelectionCallback(Eegeo::Helpers::ICallback0& callback)
             {
-                m_cacheEnabledCallbacks.RemoveCallback(callback);
+                m_pImpl->RemoveCacheEnabledSelectionCallback(callback);
             }
 
             void OptionsView::InsertClearCacheSelectedCallback(Eegeo::Helpers::ICallback0& callback)
             {
-                m_clearCacheCallbacks.AddCallback(callback);
+                m_pImpl->InsertClearCacheSelectedCallback(callback);
             }
 
             void OptionsView::RemoveClearCacheSelectedCallback(Eegeo::Helpers::ICallback0& callback)
             {
-                m_clearCacheCallbacks.RemoveCallback(callback);
+                m_pImpl->RemoveClearCacheSelectedCallback(callback);
             }
         }
     }

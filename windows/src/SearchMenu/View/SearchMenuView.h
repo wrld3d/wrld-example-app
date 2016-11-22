@@ -5,7 +5,7 @@
 
 #include "ISearchMenuView.h"
 #include "WindowsNativeState.h"
-#include "MenuView.h"
+#include "IMenuView.h"
 
 namespace ExampleApp
 {
@@ -13,24 +13,18 @@ namespace ExampleApp
     {
         namespace View
         {
-            class SearchMenuView : public Menu::View::MenuView, public SearchMenu::View::ISearchMenuView
+            class SearchMenuViewImpl;
+
+            class SearchMenuView : public Menu::View::IMenuView, public SearchMenu::View::ISearchMenuView
             {
             private:
-                Eegeo::Helpers::CallbackCollection0 m_searchClearedCallbacks;
-                Eegeo::Helpers::CallbackCollection1<int> m_searchItemSelectedCallbacks;
-                Eegeo::Helpers::CallbackCollection1<const std::string&> m_searchPerformedCallbacks;
-
-                Helpers::ReflectionHelpers::Method<System::String^, array<System::String^>^> mSetSearchSection;
-                Helpers::ReflectionHelpers::Method<void> mSetSearchInProgress;
-                Helpers::ReflectionHelpers::Method<void> mSetSearchEnded;
-                Helpers::ReflectionHelpers::Method<System::String^, bool> mSetEditText;
-                Helpers::ReflectionHelpers::Method<int> mSetSearchResultCount;
-
-                std::vector<Menu::View::IMenuSectionViewModel*> m_currentSections;
+                SearchMenuViewImpl* m_pImpl;
 
             public:
-                SearchMenuView(WindowsNativeState& nativeState,
-                    const std::string& viewClassName);
+                SearchMenuView(const std::shared_ptr<WindowsNativeState>& nativeState,
+                               const std::string& viewClassName);
+
+                ~SearchMenuView();
 
                 void SetSearchSection(Menu::View::IMenuSectionViewModel& searchSection);
 
@@ -66,6 +60,45 @@ namespace ExampleApp
                 void SetTableCanInteract(bool interact);
 
                 void SetMenuSections(const std::vector<Menu::View::IMenuSectionViewModel*>& sections);
+
+                void SetTryDragFunc(Eegeo::Helpers::IFunc0<bool>& function);
+
+                void ClearTryDragFunc();
+
+                float GetAnimationProgress() const;
+
+                bool IsAnimating() const;
+
+                void UpdateAnimation(float dt);
+
+                void UpdateMenuSectionViews(Menu::View::TSections& sections, bool contentsChanged);
+
+                void SetOnScreenStateToIntermediateValue(float value);
+                void SetFullyOnScreen();
+                void SetFullyOffScreen();
+                void SetFullyOnScreenOpen();
+                void SetFullyOnScreenClosed();
+
+                void InsertOnViewClicked(Eegeo::Helpers::ICallback0& callback);
+                void RemoveOnViewClicked(Eegeo::Helpers::ICallback0& callback);
+
+                void InsertOnViewOpened(Eegeo::Helpers::ICallback0& callback);
+                void RemoveOnViewOpened(Eegeo::Helpers::ICallback0& callback);
+
+                void InsertOnViewClosed(Eegeo::Helpers::ICallback0& callback);
+                void RemoveOnViewClosed(Eegeo::Helpers::ICallback0& callback);
+
+                void InsertOnDragStarted(Eegeo::Helpers::ICallback0& callback);
+                void RemoveOnDragStarted(Eegeo::Helpers::ICallback0& callback);
+
+                void InsertOnDrag(Eegeo::Helpers::ICallback1<float>& callback);
+                void RemoveOnDrag(Eegeo::Helpers::ICallback1<float>& callback);
+
+                void InsertOnDragCompleted(Eegeo::Helpers::ICallback0& callback);
+                void RemoveOnDragCompleted(Eegeo::Helpers::ICallback0& callback);
+
+                void InsertOnItemSelected(Eegeo::Helpers::ICallback2<int, int>& callback);
+                void RemoveOnItemSelected(Eegeo::Helpers::ICallback2<int, int>& callback);
             };
         }
     }

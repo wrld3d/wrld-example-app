@@ -10,19 +10,9 @@ namespace ExampleApp
     {
         namespace View
         {
-            MyPinDetailsViewModule::MyPinDetailsViewModule(
-                WindowsNativeState& nativeState,
-                IMyPinDetailsViewModel& myPinDetailsViewModel,
-                ExampleAppMessaging::TMessageBus& messageBus)
+            void MyPinDetailsViewModule::Register(const TContainerBuilder& builder)
             {
-                m_pView = Eegeo_NEW(MyPinDetailsView)(nativeState);
-                m_pController = Eegeo_NEW(MyPinDetailsController)(*m_pView, myPinDetailsViewModel, messageBus);
-            }
-
-            MyPinDetailsViewModule::~MyPinDetailsViewModule()
-            {
-                Eegeo_DELETE m_pController;
-                Eegeo_DELETE m_pView;
+                builder->registerType<MyPinDetailsView>().as<IMyPinDetailsView>().singleInstance();
             }
         }
     }

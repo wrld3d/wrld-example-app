@@ -13,30 +13,27 @@ namespace ExampleApp
         namespace SdkModel
         {
             WindowsInitialExperienceModule::WindowsInitialExperienceModule(
-                WindowsNativeState& nativeState,
-                PersistentSettings::IPersistentSettingsModel& persistentSettings,
-                ExampleAppMessaging::TMessageBus& messageBus
+                const std::shared_ptr<WindowsNativeState>& nativeState,
+                const std::shared_ptr<PersistentSettings::IPersistentSettingsModel>& persistentSettings,
+                const std::shared_ptr<WorldAreaLoader::SdkModel::IWorldAreaLoaderModel>& worldAreaLoaderModel,
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus
             )
-                : InitialExperienceModuleBase(persistentSettings)
+                : InitialExperienceModuleBase(persistentSettings, worldAreaLoaderModel)
                 , m_nativeState(nativeState)
                 , m_messageBus(messageBus)
-                //, m_pInitialExperienceSearchResultAttractModeModule(NULL)
             {
 
             }
 
             WindowsInitialExperienceModule::~WindowsInitialExperienceModule()
             {
-                //Eegeo_DELETE m_pInitialExperienceSearchResultAttractModeModule;
             }
 
             std::vector<IInitialExperienceStep*> WindowsInitialExperienceModule::CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel &worldAreaLoaderModel)
             {
                 std::vector<IInitialExperienceStep*> steps;
 
-				// TODO: Recreate MEA initial experience steps for windows...
-				
-				m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::All));
+                m_messageBus->Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::All));
 
                 return steps;
             }

@@ -4,6 +4,8 @@
 #include "RenderableFilters.h"
 #include "RenderingModule.h"
 #include "WindowsAppThreadAssertionMacros.h"
+#include "ModalBackgroundNativeView.h"
+#include "ModalBackgroundNativeModalityObserver.h"
 
 namespace ExampleApp
 {
@@ -11,43 +13,22 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            ModalBackgroundNativeViewModule::ModalBackgroundNativeViewModule(
-                Eegeo::Modules::Core::RenderingModule& renderingModule,
-                ExampleAppMessaging::TMessageBus& messageBus
-            )
-                : m_renderableFilters(renderingModule.GetRenderableFilters())
+            void ModalBackgroundNativeViewModule::Register(const TContainerBuilder& builder)
             {
-                ASSERT_NATIVE_THREAD
-
-                m_pModalBackgroundView = Eegeo_NEW(ModalBackgroundNativeView)(
-                                             renderingModule.GetShaderIdGenerator(),
-                                             renderingModule.GetMaterialIdGenerator(),
-                                             renderingModule.GetGlBufferPool(),
-                                             renderingModule.GetVertexLayoutPool(),
-                                             renderingModule.GetVertexBindingPool()
-                                         );
-
-                m_renderableFilters.AddRenderableFilter(*m_pModalBackgroundView);
-
-                m_pModalBackgroundNativeModalityObserver = Eegeo_NEW(ModalBackgroundNativeModalityObserver)(
-                            *m_pModalBackgroundView,
-                            messageBus
-                        );
+                builder->registerType<ModalBackgroundNativeView>().singleInstance();
+                builder->registerType<ModalBackgroundNativeModalityObserver>().singleInstance();
             }
 
-            ModalBackgroundNativeViewModule::~ModalBackgroundNativeViewModule()
+            void ModalBackgroundNativeViewModule::RegisterNativeLeaves()
             {
                 ASSERT_NATIVE_THREAD
-
-                Eegeo_DELETE m_pModalBackgroundNativeModalityObserver;
-
-                m_renderableFilters.RemoveRenderableFilter(*m_pModalBackgroundView);
-                Eegeo_DELETE(m_pModalBackgroundView);
+                RegisterLeaf<ModalBackgroundNativeView>();
+                RegisterLeaf<ModalBackgroundNativeModalityObserver>();
             }
 
-            void ModalBackgroundNativeViewModule::Update(float dt)
+            void ModalBackgroundNativeViewModule::RegisterRenderableFilters()
             {
-                m_pModalBackgroundView->Update(dt);
+                RegisterRenderableFilter<ModalBackgroundNativeView>();
             }
         }
     }

@@ -8,31 +8,21 @@
 #include "ICallback.h"
 #include "CallbackCollection.h"
 
-#include "ReflectionHelpers.h"
-
 namespace ExampleApp
 {
     namespace AboutPage
     {
         namespace View
         {
+            class AboutPageViewImpl;
+
             class AboutPageView : public IAboutPageView, private Eegeo::NonCopyable
             {
             private:
-                WindowsNativeState& m_nativeState;
-
-                gcroot<System::Type^> m_uiViewClass;
-                gcroot<System::Object^> m_uiView;
-
-                Helpers::ReflectionHelpers::Method<void> mDestroy;
-                Helpers::ReflectionHelpers::Method<System::String^> mDisplayContent;
-                Helpers::ReflectionHelpers::Method<void> mOpenAboutPage;
-                Helpers::ReflectionHelpers::Method<void> mDismissAboutPage;
-
-                Eegeo::Helpers::CallbackCollection0 m_callbacks;
+                AboutPageViewImpl* m_pImpl;
 
             public:
-                AboutPageView(WindowsNativeState& nativeState);
+                AboutPageView(const std::shared_ptr<WindowsNativeState>& nativeState);
 
                 ~AboutPageView();
 

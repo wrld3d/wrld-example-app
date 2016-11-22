@@ -2,16 +2,7 @@
 
 #pragma once
 
-#include "WindowsNativeState.h"
-#include "Types.h"
-#include "SearchResultPoi.h"
-#include "SearchResultPoiViewIncludes.h"
-#include "ISearchResultPoiViewModule.h"
-#include "BidirectionalBus.h"
-#include "IMetricsService.h"
-#include "DesktopSearchResultPoiController.h"
-#include "IMyPinCreationInitiationView.h"
-#include "InteriorSelectionModel.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -19,26 +10,11 @@ namespace ExampleApp
     {
         namespace View
         {
-            class SearchResultPoiViewModule: public ISearchResultPoiViewModule, private Eegeo::NonCopyable
+            class SearchResultPoiViewModule : public Module
             {
-            private:
-                SearchResultPoiView* m_pView;
-                DesktopSearchResultPoiController* m_pController;
-
             public:
-                SearchResultPoiViewModule(
-                    WindowsNativeState& nativeState,
-                    ISearchResultPoiViewModel& searchResultPoiViewModel,
-                    ExampleAppMessaging::TMessageBus& messageBus,
-                    Metrics::IMetricsService& metricsService,
-                    MyPinCreation::View::IMyPinCreationInitiationView& pinCreationInitiationView,
-                    Eegeo::Resources::Interiors::InteriorSelectionModel& interiorsSelectionModel
-                );
-
-                ~SearchResultPoiViewModule();
-
-                SearchResultPoiView& GetView() const;
-                SearchResultPoiController& GetController() const;
+                void Register(const TContainerBuilder& builder);
+                void RegisterUiLeaves();
             };
         }
     }

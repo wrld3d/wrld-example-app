@@ -9,7 +9,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            InitialExperienceIntroView::InitialExperienceIntroView(WindowsNativeState& nativeState, ExampleAppMessaging::TMessageBus& messageBus)
+            InitialExperienceIntroView::InitialExperienceIntroView(const std::shared_ptr<WindowsNativeState>& nativeState, const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus)
             : m_nativeState(nativeState)
             , m_messageBus(messageBus)
             {
@@ -57,7 +57,7 @@ namespace ExampleApp
                 jmethodID showDialogMethod = env->GetMethodID(m_uiViewClass, "show", "()V");
                 env->CallVoidMethod(m_uiView, showDialogMethod);*/
 
-                m_messageBus.Publish(Modality::UpdateNativeModalBackgroundMessage(1.0f, true));
+                m_messageBus->Publish(Modality::UpdateNativeModalBackgroundMessage(1.0f, true));
             }
 
             void InitialExperienceIntroView::Dismiss()
@@ -70,7 +70,7 @@ namespace ExampleApp
                 jmethodID dismissDialogMethod = env->GetMethodID(m_uiViewClass, "dismiss", "()V");
                 env->CallVoidMethod(m_uiView, dismissDialogMethod);*/
 
-                m_messageBus.Publish(Modality::UpdateNativeModalBackgroundMessage(0.0f, false));
+                m_messageBus->Publish(Modality::UpdateNativeModalBackgroundMessage(0.0f, false));
             }
 
             void InitialExperienceIntroView::OnDismiss()

@@ -2,11 +2,7 @@
 
 #pragma once
 
-#include "IMyPinDetailsViewModule.h"
-#include "MyPinDetailsViewIncludes.h"
-#include "WindowsNativeState.h"
-#include "MyPinDetails.h"
-#include "BidirectionalBus.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -14,19 +10,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            class MyPinDetailsViewModule : public IMyPinDetailsViewModule
+            class MyPinDetailsViewModule : public Module
             {
             public:
-                MyPinDetailsViewModule(
-                    WindowsNativeState& nativeState,
-                    IMyPinDetailsViewModel& viewModel,
-                    ExampleAppMessaging::TMessageBus& messageBus);
-                ~MyPinDetailsViewModule();
-
-            private:
-
-                MyPinDetailsView* m_pView;
-                MyPinDetailsController* m_pController;
+                void Register(const TContainerBuilder& builder);
             };
         }
     }

@@ -24,8 +24,8 @@ include(../src/CMakeLists.txt)
 include(src/CMakeLists.txt)
 
 
-add_definitions(-D__BYTE_ORDER__ -D__ORDER_LITTLE_ENDIAN__ -D_HAS_EXCEPTIONS=0 -DHAVE_STRUCT_TIMESPEC=1 -DNOMINMAX=1 -DPTW32_STATIC_LIB -DCURL_STATICLIB)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Zi /EHsc /Oi /GS /Gy /wd4068 /Gd /MP /WX /Zm300 /Yu${precompiled_header} /FI${precompiled_header} /Fp${precompiled_header_result}")
+add_definitions(-D__BYTE_ORDER__ -D__ORDER_LITTLE_ENDIAN__ -D_HAS_EXCEPTIONS=0 -DHAVE_STRUCT_TIMESPEC=1 -DNOMINMAX=1 -DPTW32_STATIC_LIB -DCURL_STATICLIB -D_SCL_SECURE_NO_WARNINGS)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Zi /EHsc /Oi /GS /Gy /wd4068 /Gd /MP /WX /Zm300 /bigobj /Yu${precompiled_header} /FI${precompiled_header} /Fp${precompiled_header_result}")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /MP")
 set(CMAKE_SHARED_LINKER_FLAGS_RELEASE "${CMAKE_SHARED_LINKER_FLAGS_RELEASE} /LTCG /INCREMENTAL:NO /OPT:REF")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS} /NODEFAULTLIB:LIBCMT.lib")

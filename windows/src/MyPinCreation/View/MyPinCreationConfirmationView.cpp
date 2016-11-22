@@ -1,13 +1,8 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "MyPinCreationConfirmationView.h"
+#include "MyPinCreationConfirmationViewImpl.h"
 #include "WindowsAppThreadAssertionMacros.h"
-#include "ReflectionHelpers.h"
-
-using namespace ExampleApp::Helpers::ReflectionHelpers;
-
-using namespace System;
-using namespace System::Reflection;
 
 namespace ExampleApp
 {
@@ -15,67 +10,59 @@ namespace ExampleApp
     {
         namespace View
         {
-            MyPinCreationConfirmationView::MyPinCreationConfirmationView(WindowsNativeState& windowsNativeState)
-                : m_nativeState(windowsNativeState)
+            MyPinCreationConfirmationView::MyPinCreationConfirmationView(const std::shared_ptr<WindowsNativeState>& windowsNativeState)
             {
-                m_uiViewClass = GetTypeFromEntryAssembly("ExampleAppWPF.MyPinCreationConfirmationView");
-                ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid));
-                m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this)));
-
-                mDestroy.SetupMethod(m_uiViewClass, m_uiView, "Destroy");
-                mAnimateToIntermediateOnScreenState.SetupMethod(m_uiViewClass, m_uiView, "AnimateToIntermediateOnScreenState");
-                mAnimateToActive.SetupMethod(m_uiViewClass, m_uiView, "AnimateToActive");
-                mAnimateToInactive.SetupMethod(m_uiViewClass, m_uiView, "AnimateToInactive");
+                m_pImpl = Eegeo_NEW(MyPinCreationConfirmationViewImpl)(windowsNativeState);
             }
 
             MyPinCreationConfirmationView::~MyPinCreationConfirmationView()
             {
-                mDestroy();
+                Eegeo_DELETE m_pImpl;
             }
 
             void MyPinCreationConfirmationView::OnConfirmed()
             {
-                m_confirmedCallbacks.ExecuteCallbacks();
+                m_pImpl->OnConfirmed();
             }
 
             void MyPinCreationConfirmationView::OnDismissed()
             {
-                m_dismissedCallbacks.ExecuteCallbacks();
+                m_pImpl->OnDismissed();
             }
 
             void MyPinCreationConfirmationView::InsertDismissedCallback(Eegeo::Helpers::ICallback0& callback)
             {
-                m_dismissedCallbacks.AddCallback(callback);
+                m_pImpl->InsertDismissedCallback(callback);
             }
 
             void MyPinCreationConfirmationView::RemoveDismissedCallback(Eegeo::Helpers::ICallback0& callback)
             {
-                m_dismissedCallbacks.RemoveCallback(callback);
+                m_pImpl->RemoveDismissedCallback(callback);
             }
 
             void MyPinCreationConfirmationView::InsertConfirmedCallback(Eegeo::Helpers::ICallback0& callback)
             {
-                m_confirmedCallbacks.AddCallback(callback);
+                m_pImpl->InsertConfirmedCallback(callback);
             }
 
             void MyPinCreationConfirmationView::RemoveConfirmedCallback(Eegeo::Helpers::ICallback0& callback)
             {
-                m_confirmedCallbacks.RemoveCallback(callback);
+                m_pImpl->RemoveConfirmedCallback(callback);
             }
 
             void MyPinCreationConfirmationView::SetOnScreenStateToIntermediateValue(float value)
             {
-                mAnimateToIntermediateOnScreenState(value);
+                m_pImpl->SetOnScreenStateToIntermediateValue(value);
             }
 
             void MyPinCreationConfirmationView::SetFullyOnScreen()
             {
-                mAnimateToActive();
+                m_pImpl->SetFullyOnScreen();
             }
 
             void MyPinCreationConfirmationView::SetFullyOffScreen()
             {
-                mAnimateToInactive();
+                m_pImpl->SetFullyOffScreen();
             }
         }
     }

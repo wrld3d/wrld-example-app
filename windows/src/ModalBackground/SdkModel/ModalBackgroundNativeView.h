@@ -15,11 +15,11 @@ namespace ExampleApp
             {
             public:
                 ModalBackgroundNativeView(
-                    Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator,
-                    Eegeo::Rendering::Materials::MaterialIdGenerator& materialIdGenerator,
-                    Eegeo::Rendering::GlBufferPool& glBufferPool,
-                    Eegeo::Rendering::VertexLayouts::VertexLayoutPool& vertexLayoutPool,
-                    Eegeo::Rendering::VertexLayouts::VertexBindingPool& vertexBindingPool);
+                    const std::shared_ptr<Eegeo::Rendering::Shaders::ShaderIdGenerator>& shaderIdGenerator,
+                    const std::shared_ptr<Eegeo::Rendering::Materials::MaterialIdGenerator>& materialIdGenerator,
+                    const std::shared_ptr<Eegeo::Rendering::GlBufferPool>& glBufferPool,
+                    const std::shared_ptr<Eegeo::Rendering::VertexLayouts::VertexLayoutPool>& vertexLayoutPool,
+                    const std::shared_ptr<Eegeo::Rendering::VertexLayouts::VertexBindingPool>& vertexBindingPool);
 
                 virtual ~ModalBackgroundNativeView();
 

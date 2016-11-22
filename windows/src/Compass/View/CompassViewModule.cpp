@@ -11,23 +11,15 @@ namespace ExampleApp
     {
         namespace View
         {
-            CompassViewModule::CompassViewModule(
-                WindowsNativeState& nativeState,
-                ICompassViewModel& viewModel,
-                ExampleAppMessaging::TMessageBus& messageBus
-            )
+            void CompassViewModule::Register(const TContainerBuilder& builder)
             {
-                m_pView = Eegeo_NEW(CompassView)(nativeState);
-                m_pController = Eegeo_NEW(CompassController)(
-                                    *m_pView,
-                                    viewModel,
-                                    messageBus);
+                builder->registerType<CompassView>().as<ICompassView>().singleInstance();
             }
 
-            CompassViewModule::~CompassViewModule()
+            void CompassViewModule::RegisterUiLeaves()
             {
-                Eegeo_DELETE m_pController;
-                Eegeo_DELETE m_pView;
+                ASSERT_UI_THREAD
+                RegisterLeaf<ICompassView>();
             }
         }
     }

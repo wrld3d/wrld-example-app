@@ -2,14 +2,7 @@
 
 #pragma once
 
-#include "IMyPinCreationViewModule.h"
-#include "Types.h"
-#include "WindowsNativeState.h"
-#include "MyPinCreation.h"
-#include "MyPinCreationDetails.h"
-#include "MyPinCreationViewIncludes.h"
-#include "BidirectionalBus.h"
-#include "IMetricsService.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -17,28 +10,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            class MyPinCreationViewModule : public IMyPinCreationViewModule, private Eegeo::NonCopyable
+            class MyPinCreationViewModule : public Module
             {
-            private:
-                MyPinCreationInitiationView* m_pInitiationView;
-                MyPinCreationInitiationController* m_pInitiationController;
-
-                MyPinCreationConfirmationView* m_pConfirmationView;
-                MyPinCreationConfirmationController* m_pConfirmationController;
-
             public:
-                MyPinCreationViewModule(
-                    WindowsNativeState& nativeState,
-                    IMyPinCreationInitiationViewModel& initiationViewModel,
-                    IMyPinCreationConfirmationViewModel& confirmationViewModel,
-                    MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& detailsViewModel,
-                    ExampleAppMessaging::TMessageBus& messageBus,
-                    Metrics::IMetricsService& metricsService
-                );
-
-                ~MyPinCreationViewModule();
-
-                IMyPinCreationInitiationView& GetMyPinCreationInitiationView();
+                void Register(const TContainerBuilder& builder);
             };
         }
     }

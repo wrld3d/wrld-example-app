@@ -5,7 +5,9 @@
 #include "SettingsMenuViewModule.h"
 #include "SettingsMenuController.h"
 #include "SettingsMenuView.h"
+#include "IModalBackgroundView.h"
 #include "WindowsAppThreadAssertionMacros.h"
+#include "DesktopSettingsMenuController.h"
 
 namespace ExampleApp
 {
@@ -13,42 +15,30 @@ namespace ExampleApp
     {
         namespace View
         {
-            SettingsMenuViewModule::SettingsMenuViewModule(
-                const std::string& viewName,
-                WindowsNativeState& nativeState,
-                Menu::View::IMenuModel& menuModel,
-                Menu::View::IMenuViewModel& menuViewModel,
-                Modality::View::IModalBackgroundView& modealBackgroundView,
-                Menu::View::IMenuView& searchMenuView,
-                ExampleAppMessaging::TMessageBus& messageBus
-            )
+            void SettingsMenuViewModule::Register(const TContainerBuilder& builder)
             {
-                m_pView = Eegeo_NEW(SettingsMenuView)(nativeState, viewName);
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                {
+                    const std::string viewName = "";
+                    return std::make_shared<SettingsMenuView>(context.resolve<WindowsNativeState>(), viewName);
+                }).as<ISettingsMenuView>().singleInstance();
 
-                m_pController = Eegeo_NEW(DesktopSettingsMenuController)(
-                                    *m_pView,
-                                    menuModel,
-                                    menuViewModel,
-                                    modealBackgroundView,
-                                    searchMenuView,
-                                    messageBus
-                                );
+                builder->registerInstanceFactory([](Hypodermic::ComponentContext& context)
+                {
+                    auto settingsMenuView = context.resolve<ISettingsMenuView>();
+
+                    return std::make_shared<DesktopSettingsMenuController>(std::dynamic_pointer_cast<Menu::View::IMenuView>(settingsMenuView),
+                        context.resolve<SettingsMenuModel>(),
+                        context.resolve<SettingsMenuViewModel>(),
+                        context.resolve<Modality::View::IModalBackgroundView>(),
+                        std::dynamic_pointer_cast<Menu::View::IMenuView>(settingsMenuView),
+                        context.resolve<ExampleAppMessaging::TMessageBus>());
+                }).singleInstance();
             }
 
-            SettingsMenuViewModule::~SettingsMenuViewModule()
+            void SettingsMenuViewModule::RegisterUiLeaves()
             {
-                Eegeo_DELETE m_pController;
-                Eegeo_DELETE m_pView;
-            }
-
-            Menu::View::MenuController& SettingsMenuViewModule::GetMenuController()
-            {
-                return *m_pController;
-            }
-
-            Menu::View::IMenuView& SettingsMenuViewModule::GetMenuView()
-            {
-                return *m_pView;
+                RegisterLeaf<DesktopSettingsMenuController>();
             }
         }
     }

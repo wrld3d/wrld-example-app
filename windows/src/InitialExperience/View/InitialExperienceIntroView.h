@@ -18,7 +18,8 @@ namespace ExampleApp
             {
             public:
 
-                InitialExperienceIntroView(WindowsNativeState& nativeState, ExampleAppMessaging::TMessageBus& messageBus);
+                InitialExperienceIntroView(const std::shared_ptr<WindowsNativeState>& nativeState, 
+                                           const std::shared_ptr<ExampleAppMessaging::TMessageBus>& messageBus);
                 ~InitialExperienceIntroView();
 
                 void Show();
@@ -29,12 +30,12 @@ namespace ExampleApp
                 virtual void RemoveDismissedCallback(Eegeo::Helpers::ICallback0& callback);
 
             private:
-                WindowsNativeState& m_nativeState;
+                const std::shared_ptr<WindowsNativeState> m_nativeState;
                 //jclass m_uiViewClass;
                 //jobject m_uiView;
 
                 Eegeo::Helpers::CallbackCollection0 m_dismissedCallbacks;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
+                const std::shared_ptr<ExampleAppMessaging::TMessageBus> m_messageBus;
             };
         }
     }

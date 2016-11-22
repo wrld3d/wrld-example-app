@@ -11,33 +11,11 @@ namespace ExampleApp
     {
         namespace View
         {
-            ModalBackgroundViewModule::ModalBackgroundViewModule(
-                WindowsNativeState& nativeState,
-                Modality::View::IModalityModel& modalityModel,
-                ExampleAppMessaging::TMessageBus& messageBus
-            )
+            void ModalBackgroundViewModule::Register(const TContainerBuilder& builder)
             {
                 ASSERT_UI_THREAD
 
-                m_pView = Eegeo_NEW(ModalBackgroundAggregateView)(nativeState, messageBus);
-                m_pController = Eegeo_NEW(Modality::View::ModalBackgroundController)(*m_pView, modalityModel);
-            }
-
-            ModalBackgroundViewModule::~ModalBackgroundViewModule()
-            {
-                ASSERT_UI_THREAD
-
-                Eegeo_DELETE(m_pController);
-                Eegeo_DELETE(m_pView);
-            }
-            Modality::View::IModalBackgroundView& ModalBackgroundViewModule::GetView()
-            {
-                return *m_pView;
-            }
-
-            Modality::View::ModalBackgroundController& ModalBackgroundViewModule::GetController()
-            {
-                return *m_pController;
+                builder->registerType<ModalBackgroundAggregateView>().as<Modality::View::IModalBackgroundView>().singleInstance();
             }
         }
     }

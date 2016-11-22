@@ -5,12 +5,29 @@
 #include "Types.h"
 #include "MobileExampleApp.h"
 #include "IWindowsInputHandler.h"
+#include "WindowsInputProcessor.h"
+#include "IInputController.h"
+#include "MouseInputEvent.h"
+#include "TouchScreenInputEvent.h"
+#include "WindowsInput.h"
 
 class AppInputDelegate : public Eegeo::Windows::Input::IWindowsInputHandler, protected Eegeo::NonCopyable
 {
 public:
-    AppInputDelegate(ExampleApp::MobileExampleApp& exampleApp);
+    AppInputDelegate(const std::shared_ptr<ExampleApp::IInputController>& inputController,
+                     const std::shared_ptr<Eegeo::Windows::Input::WindowsInputProcessor>& inputProcessor,
+                     const std::shared_ptr<Eegeo::Windows::Input::IWindowsInputHandler>& inputHandle);
     ~AppInputDelegate();
+
+    void HandleMouseInput(const Eegeo::Windows::Input::MouseInputEvent& event, float screenWidth, float screenHeight);
+    void HandleMouseInput(const Eegeo::Windows::Input::KeyboardInputEvent& keyEvent);
+    void HandleTouchScreenInput(const Eegeo::Windows::Input::TouchScreenInputEvent& event, float screenWidth, float screenHeight);
+    void SetAllInputEventsToPointerUp(int x, int y);
+    void SetTouchInputEventToPointerUp(int touchId);
+    void PopAllTouchEvents();
+
+    void Update(float dt);
+    void SetViewportOffset(float x, float y);
 
     void Event_TouchRotate 			(const AppInterface::RotateData& data);
     void Event_TouchRotate_Start	(const AppInterface::RotateData& data);
@@ -47,7 +64,9 @@ public:
     }
 
 private:
-    ExampleApp::MobileExampleApp& m_exampleApp;
+    const std::shared_ptr<ExampleApp::IInputController> m_inputController;
+    const std::shared_ptr<Eegeo::Windows::Input::WindowsInputProcessor> m_inputProcessor;
+    const std::shared_ptr<Eegeo::Windows::Input::IWindowsInputHandler> m_inputHandler;
 };
 
 

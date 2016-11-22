@@ -4,6 +4,7 @@
 #include "WindowsAppThreadAssertionMacros.h"
 #include "IWatermarkDataRepository.h"
 #include "WatermarkData.h"
+#include "WatermarkView.h"
 
 namespace ExampleApp
 {
@@ -11,34 +12,9 @@ namespace ExampleApp
     {
         namespace View
         {
-            WatermarkViewModule::WatermarkViewModule(
-                WindowsNativeState& nativeState,
-                IWatermarkViewModel& viewModel,
-				IWatermarkDataRepository& watermarkDataRepository,
-                ExampleAppMessaging::TMessageBus& messageBus,
-                Metrics::IMetricsService& metricsService
-            )
+            void WatermarkViewModule::Register(const TContainerBuilder& builder)
             {
-				ASSERT_UI_THREAD
-
-				const WatermarkData& defaultWatermarkData = watermarkDataRepository.GetWatermarkDataWithKey("eegeo");
-
-                m_pView = Eegeo_NEW(WatermarkView)(nativeState, defaultWatermarkData);
-
-                m_pController = Eegeo_NEW(WatermarkController)(
-                                    viewModel,
-                                    *m_pView,
-									watermarkDataRepository,
-                                    messageBus,
-                                    metricsService);
-
-            }
-
-            WatermarkViewModule::~WatermarkViewModule()
-            {
-                ASSERT_UI_THREAD
-                Eegeo_DELETE m_pController;
-                Eegeo_DELETE m_pView;
+                builder->registerType<WatermarkView>().as<IWatermarkView>().singleInstance();
             }
         }
     }

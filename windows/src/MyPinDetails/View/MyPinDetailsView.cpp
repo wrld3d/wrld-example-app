@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "MyPinDetailsView.h"
+#include "MyPinDetailsViewImpl.h"
 #include "WindowsAppThreadAssertionMacros.h"
 #include "MyPinModel.h"
 
@@ -10,51 +11,44 @@ namespace ExampleApp
     {
         namespace View
         {
-            MyPinDetailsView::MyPinDetailsView(WindowsNativeState& nativeState)
-                :m_nativeState(nativeState)
+            MyPinDetailsView::MyPinDetailsView(const std::shared_ptr<WindowsNativeState>& nativeState)
             {
-                m_uiViewClass = Helpers::ReflectionHelpers::GetTypeFromEntryAssembly("ExampleAppWPF.MyPinDetailsView");
-                System::Reflection::ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(Helpers::ReflectionHelpers::CreateTypes(System::IntPtr::typeid));
-                m_uiView = ctor->Invoke(Helpers::ReflectionHelpers::CreateObjects(gcnew System::IntPtr(this)));
-
-                mDestroy.SetupMethod(m_uiViewClass, m_uiView, "Destroy");
-                mDisplay.SetupMethod(m_uiViewClass, m_uiView, "Display");
-                mDismiss.SetupMethod(m_uiViewClass, m_uiView, "Dismiss");
+                m_pImpl = Eegeo_NEW(MyPinDetailsViewImpl)(nativeState);
             }
 
             MyPinDetailsView::~MyPinDetailsView()
             {
-                mDestroy();
+                Eegeo_DELETE m_pImpl;
             }
 
             void MyPinDetailsView::OnDismiss()
             {
-                m_dismissedCallbacks.ExecuteCallbacks();
+                m_pImpl->OnDismiss();
             }
 
             void MyPinDetailsView::OnRemove()
             {
-                m_removePinCallbacks.ExecuteCallbacks();
+                m_pImpl->OnRemove();
             }
 
             void MyPinDetailsView::InsertDismissedCallback(Eegeo::Helpers::ICallback0& callback)
             {
-                m_dismissedCallbacks.AddCallback(callback);
+                m_pImpl->InsertDismissedCallback(callback);
             }
 
             void MyPinDetailsView::RemoveDismissedCallback(Eegeo::Helpers::ICallback0& callback)
             {
-                m_dismissedCallbacks.RemoveCallback(callback);
+                m_pImpl->RemoveDismissedCallback(callback);
             }
 
             void MyPinDetailsView::InsertRemovePinCallback(Eegeo::Helpers::ICallback0& callback)
             {
-                m_removePinCallbacks.AddCallback(callback);
+                m_pImpl->InsertRemovePinCallback(callback);
             }
 
             void MyPinDetailsView::RemoveRemovePinCallback(Eegeo::Helpers::ICallback0& callback)
             {
-                m_removePinCallbacks.RemoveCallback(callback);
+                m_pImpl->RemoveRemovePinCallback(callback);
             }
 
             void MyPinDetailsView::OpenWithModel(
@@ -62,12 +56,12 @@ namespace ExampleApp
                     const std::string& description,
                     const std::string& imagePath)
             {
-                mDisplay(gcnew System::String(title.c_str()), gcnew System::String(description.c_str()), gcnew System::String(imagePath.c_str()));
+                m_pImpl->OpenWithModel(title, description, imagePath);
             }
 
             void MyPinDetailsView::Close()
             {
-                mDismiss();
+                m_pImpl->Close();
             }
         }
     }

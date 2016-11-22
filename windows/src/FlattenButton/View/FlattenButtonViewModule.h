@@ -2,14 +2,7 @@
 
 #pragma once
 
-#include "IFlattenButtonViewModule.h"
-#include "WindowsNativeState.h"
-#include "Types.h"
-#include "FLattenButton.h"
-#include "FlattenButtonViewIncludes.h"
-#include "FlattenButtonView.h"
-#include "FlattenButtonController.h"
-#include "IMetricsService.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -17,21 +10,11 @@ namespace ExampleApp
     {
         namespace View
         {
-            class FlattenButtonViewModule: public IFlattenButtonViewModule, private Eegeo::NonCopyable
+            class FlattenButtonViewModule : public Module
             {
-            private:
-                FlattenButtonView* m_pView;
-                FlattenButtonController* m_pController;
-
             public:
-                FlattenButtonViewModule(
-                    WindowsNativeState& nativeState,
-                    IFlattenButtonViewModel& viewModel,
-                    ExampleAppMessaging::TMessageBus& messageBus,
-                    Metrics::IMetricsService& metricsService
-                );
-
-                ~FlattenButtonViewModule();
+                void Register(const TContainerBuilder& builder);
+                void RegisterUiLeaves();
             };
         }
     }

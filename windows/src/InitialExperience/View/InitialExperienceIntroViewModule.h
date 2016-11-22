@@ -2,10 +2,7 @@
 
 #pragma once
 
-#include "InitialExperienceViewIncludes.h"
-#include "InitialExperience.h"
-#include "WindowsNativeState.h"
-#include "BidirectionalBus.h"
+#include "Module.h"
 
 namespace ExampleApp
 {
@@ -13,17 +10,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            class InitialExperienceIntroViewModule
+            class InitialExperienceIntroViewModule : public Module
             {
             public:
-                InitialExperienceIntroViewModule(WindowsNativeState& nativeState, ExampleAppMessaging::TMessageBus& messageBus);
-                ~InitialExperienceIntroViewModule();
-
-
-            private:
-
-                InitialExperienceIntroController* m_pController;
-                InitialExperienceIntroView* m_pView;
+                void Register(const TContainerBuilder& builder);
             };
         }
     }

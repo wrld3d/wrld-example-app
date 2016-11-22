@@ -2,7 +2,7 @@
 
 #include <string>
 #include "MenuCLI.h"
-#include "MenuView.h"
+#include "MenuViewImpl.h"
 #include "WindowsAppThreadAssertionMacros.h"
 
 namespace ExampleApp
@@ -10,28 +10,28 @@ namespace ExampleApp
     void MenuViewCLIMethods::ViewClicked(
         System::IntPtr^ nativeObjectPtr)
     {
-        ExampleApp::Menu::View::MenuView* pView = reinterpret_cast<ExampleApp::Menu::View::MenuView*>(nativeObjectPtr->ToPointer());
+        ExampleApp::Menu::View::MenuViewImpl* pView = reinterpret_cast<ExampleApp::Menu::View::MenuViewImpl*>(nativeObjectPtr->ToPointer());
         pView->HandleViewClicked();
     }
 
     void MenuViewCLIMethods::ViewOpenCompleted(
         System::IntPtr^ nativeObjectPtr)
     {
-        ExampleApp::Menu::View::MenuView* pView = reinterpret_cast<ExampleApp::Menu::View::MenuView*>(nativeObjectPtr->ToPointer());
+        ExampleApp::Menu::View::MenuViewImpl* pView = reinterpret_cast<ExampleApp::Menu::View::MenuViewImpl*>(nativeObjectPtr->ToPointer());
         pView->HandleViewOpenCompleted();
     }
 
     void MenuViewCLIMethods::ViewCloseCompleted(
         System::IntPtr^ nativeObjectPtr)
     {
-        ExampleApp::Menu::View::MenuView* pView = reinterpret_cast<ExampleApp::Menu::View::MenuView*>(nativeObjectPtr->ToPointer());
+        ExampleApp::Menu::View::MenuViewImpl* pView = reinterpret_cast<ExampleApp::Menu::View::MenuViewImpl*>(nativeObjectPtr->ToPointer());
         pView->HandleViewCloseCompleted();
     }
 
     void MenuViewCLIMethods::ViewDragStarted(
         System::IntPtr^ nativeObjectPtr)
     {
-        ExampleApp::Menu::View::MenuView* pView = reinterpret_cast<ExampleApp::Menu::View::MenuView*>(nativeObjectPtr->ToPointer());
+        ExampleApp::Menu::View::MenuViewImpl* pView = reinterpret_cast<ExampleApp::Menu::View::MenuViewImpl*>(nativeObjectPtr->ToPointer());
         pView->HandleDraggingViewStarted();
     }
 
@@ -39,7 +39,7 @@ namespace ExampleApp
         System::IntPtr^ nativeObjectPtr,
         float normalisedDragState)
     {
-        ExampleApp::Menu::View::MenuView* pView = reinterpret_cast<ExampleApp::Menu::View::MenuView*>(nativeObjectPtr->ToPointer());
+        ExampleApp::Menu::View::MenuViewImpl* pView = reinterpret_cast<ExampleApp::Menu::View::MenuViewImpl*>(nativeObjectPtr->ToPointer());
         pView->HandleDraggingViewInProgress(normalisedDragState);
     }
 
@@ -48,7 +48,7 @@ namespace ExampleApp
     {
         ASSERT_UI_THREAD
 
-            ExampleApp::Menu::View::MenuView* pView = reinterpret_cast<ExampleApp::Menu::View::MenuView*>(nativeObjectPtr->ToPointer());
+            ExampleApp::Menu::View::MenuViewImpl* pView = reinterpret_cast<ExampleApp::Menu::View::MenuViewImpl*>(nativeObjectPtr->ToPointer());
         pView->HandleDraggingViewCompleted();
     }
 
@@ -57,14 +57,14 @@ namespace ExampleApp
         int sectionIndex,
         int itemIndex)
     {
-        ExampleApp::Menu::View::MenuView* pView = reinterpret_cast<ExampleApp::Menu::View::MenuView*>(nativeObjectPtr->ToPointer());
+        ExampleApp::Menu::View::MenuViewImpl* pView = reinterpret_cast<ExampleApp::Menu::View::MenuViewImpl*>(nativeObjectPtr->ToPointer());
         pView->HandleItemSelected(sectionIndex, itemIndex);
     }
 
     bool MenuViewCLIMethods::TryBeginDrag(
         System::IntPtr^ nativeObjectPtr)
     {
-        ExampleApp::Menu::View::MenuView* pView = reinterpret_cast<ExampleApp::Menu::View::MenuView*>(nativeObjectPtr->ToPointer());
+        ExampleApp::Menu::View::MenuViewImpl* pView = reinterpret_cast<ExampleApp::Menu::View::MenuViewImpl*>(nativeObjectPtr->ToPointer());
         return pView->CallBeginDrag();
     }
 }

@@ -1,5 +1,6 @@
 #pragma once
 
+#pragma managed(push, off)
 #include <mutex>
 #include <unordered_map>
 #include <vector>
@@ -13,7 +14,6 @@
 
 namespace Hypodermic
 {
-
     class RegistrationScope : public IRegistrationScope
     {
     public:
@@ -59,5 +59,5 @@ namespace Hypodermic
         mutable std::recursive_mutex m_mutex;
         ResolutionContainer m_resolutionContainer;
     };
-
 } // namespace Hypodermic
+#pragma managed(pop)
