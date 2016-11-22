@@ -31,6 +31,8 @@ public:
     void NotifyViewLayoutChanged();
 
     bool ShouldAutoRotateToInterfaceOrientation(UIInterfaceOrientation interfaceOrientation);
+    
+    void HandleUrlOpen(const AppInterface::UrlData& data);
 
 private:
     ViewController& m_viewController;

@@ -96,6 +96,8 @@ public:
     void HandleNoConnectivityWarning();
     
     void HandleInvalidConnectivityError();
+    
+    void HandleUrlOpen(const AppInterface::UrlData& data);
 
 private:
     UIView* m_pView;

@@ -127,3 +127,8 @@ bool AppRunner::ShouldAutoRotateToInterfaceOrientation(UIInterfaceOrientation in
 {
     return true;
 }
+
+void AppRunner::HandleUrlOpen(const AppInterface::UrlData& data)
+{
+    m_pAppHost->HandleUrlOpen(data);
+}

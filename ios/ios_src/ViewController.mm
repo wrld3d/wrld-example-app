@@ -71,6 +71,13 @@ using namespace Eegeo::iOS;
         self.pBackingView.backgroundColor = [UIColor clearColor];
         [[self view] addSubview:self.pBackingView];
         m_pAppRunner = new AppRunner(*self, [self view], *appDelegate.applicationConfiguration, *appDelegate.metricsService);
+        if(appDelegate.launchUrl)
+        {
+            AppInterface::UrlData data;
+            data.host = [appDelegate.launchUrl.host UTF8String];
+            data.path = [appDelegate.launchUrl.path UTF8String];
+            m_pAppRunner->HandleUrlOpen(data);
+        }
     }
     [[self view] sendSubviewToBack:self.pBackingView];
     m_pAppRunner->NotifyViewLayoutChanged();

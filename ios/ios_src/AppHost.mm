@@ -615,3 +615,8 @@ void AppHost::HandleUserInteractionEnabledChanged(const ExampleApp::UserInteract
     m_pView.userInteractionEnabled = message.IsEnabled();
 }
 
+void AppHost::HandleUrlOpen(const AppInterface::UrlData &data)
+{
+    m_pApp->Event_OpenUrl(data);
+}
+
