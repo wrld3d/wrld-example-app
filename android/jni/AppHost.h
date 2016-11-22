@@ -60,6 +60,7 @@ namespace ExampleApp
 #include "IMenuReactionModel.h"
 #include "AppWiring.h"
 #include "IViewControllerUpdaterModel.h"
+#include "WebConnectivityValidator.h"
 
 class AppHost : protected Eegeo::NonCopyable
 {
@@ -121,12 +122,17 @@ private:
     std::shared_ptr<AppInputDelegate> m_appInputDelegate;
     std::shared_ptr<ExampleApp::AppWiring> m_wiring;
     std::shared_ptr<ExampleApp::MobileExampleApp> m_app;
+    std::shared_ptr<Eegeo::Web::WebConnectivityValidator> m_connectivityValidator;
+    std::shared_ptr<ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel> m_viewControllerUpdater;
+    std::shared_ptr<ExampleApp::ExampleAppMessaging::TMessageBus> m_messageBus;
+    std::shared_ptr<Eegeo::Location::ILocationService> m_locationService;
+    std::shared_ptr<Eegeo::Android::AndroidPlatformAbstractionModule> m_androidAbstractionModule;
+    std::shared_ptr<ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeView> m_modalBackground;
 
     bool m_registeredUIModules;
     bool m_resolvedUIModules;
     bool m_uiCreatedMessageReceivedOnNativeThread;
 
-    ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus m_sdkDomainEventBus;
     Eegeo::Helpers::TCallback1<AppHost, const ExampleApp::UserInteraction::UserInteractionEnabledChangedMessage&> m_userInteractionEnabledChangedHandler;
 
     void DispatchRevealUiMessageToUiThreadFromNativeThread();

@@ -36,9 +36,9 @@ namespace ExampleApp
                 float m_fixedTransition;
                 float m_setAlpha;
 
-                std::shared_ptr<Eegeo::Rendering::Shaders::ColorShader> m_shader;
-                std::shared_ptr<Eegeo::Rendering::Materials::ColorMaterial> m_material;
-                std::shared_ptr<Eegeo::Rendering::Renderables::WorldMeshRenderable> m_modalBackgroundRenderable;
+                Eegeo::Rendering::Shaders::ColorShader* m_pShader;
+                Eegeo::Rendering::Materials::ColorMaterial* m_pMaterial;
+                Eegeo::Rendering::Renderables::WorldMeshRenderable* m_pModalBackgroundRenderable;
                 float m_baseAlpha;
             };
         }
