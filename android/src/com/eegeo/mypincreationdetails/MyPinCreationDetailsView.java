@@ -155,7 +155,7 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
     public String getTitle()
     {
         String titleText = m_title.getText().toString();
-        titleText = titleText.isEmpty() ? "Untitled Pin" : titleText;
+        titleText = titleText.isEmpty() ? m_activity.getResources().getString(R.string.pin_default_title) : titleText;
         return titleText;
     }
 

@@ -169,7 +169,8 @@ namespace ExampleAppWPF
                 return m_title.Text;
             }
 
-            return "Untitled";
+
+            return Properties.Resources.pin_default_title;
         }
 
         public string GetDescription()

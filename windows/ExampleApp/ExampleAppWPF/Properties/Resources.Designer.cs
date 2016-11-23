@@ -95,5 +95,14 @@ namespace ExampleAppWPF.Properties {
                 return ResourceManager.GetString("InteriorsExplorerTutorialView_ExitDialogTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Untitled Report.
+        /// </summary>
+        internal static string pin_default_title {
+            get {
+                return ResourceManager.GetString("pin_default_title", resourceCulture);
+            }
+        }
     }
 }

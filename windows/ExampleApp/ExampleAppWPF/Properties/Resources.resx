@@ -129,4 +129,7 @@
   <data name="InteriorsExplorerTutorialView_ExitDialogTitle" xml:space="preserve">
     <value>Exit Indoors</value>
   </data>
+  <data name="pin_default_title" xml:space="preserve">
+    <value>Untitled Report</value>
+  </data>
 </root>

@@ -59,7 +59,7 @@ namespace ExampleApp
             std::string MyPinCreationDetailsViewInterop::GetTitle() const
             {
                 NSString* title = m_pView.pTitleText.text;
-                std::string titleAsString = (title != nil && title.length > 0) ? [title UTF8String] : "Untitled";
+                std::string titleAsString = (title != nil && title.length > 0) ? [title UTF8String] : "Untitled Report";
                 return titleAsString;
             }
 
