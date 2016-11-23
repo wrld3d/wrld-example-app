@@ -11,10 +11,12 @@
 #include "BidirectionalBus.h"
 #include "ILabelAnchorFilter.h"
 #include "HighlightColorMapper.h"
+#include "VectorMath.h"
 
 #include <string>
 #include <vector>
 #include <map>
+#include <unordered_set>
 
 namespace ExampleApp
 {
@@ -44,24 +46,32 @@ namespace ExampleApp
                     ~InteriorsHighlightVisibilityController();
                     
                 private:
+                    typedef std::unordered_set<std::string> SearchResultLabelNameSet;
+                    typedef std::vector<Eegeo::Rendering::Renderables::InteriorHighlightRenderable*> HighlightRenderableVector;
+                    typedef std::map<std::string, Eegeo::v4> HighlightIdToColor;
+                    typedef std::map<std::string, Eegeo::v4> AvailabilityToColor;
+                    
+                    static AvailabilityToColor BuildAvailabilityToColor();
+                    
                     void OnSearchResultsLoaded(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results);
                     void OnSearchResultCleared();
-                    
                     void OnInteriorChanged();
                     void OnInteriorAddedToSceneGraph(const Eegeo::Resources::Interiors::InteriorsCellResource& callback);
                     void OnInteriorLabelsBuilt();
                     void OnAvailabilityChanged(const ExampleApp::SearchResultOnMap::SearchResultMeetingAvailabilityChanged& message);
                     
-                    void ConfigureRenderableForAvailability(Eegeo::Rendering::Renderables::InteriorHighlightRenderable& renderable, const std::string& availability);
-                    void DeactivateHighlightRenderables();
-                    void AddHighlight(Eegeo::Rendering::Renderables::InteriorHighlightRenderable& renderable);
+                    Eegeo::v4 GetColorForAvailability(const std::string& availability) const;
+                    void GetCurrentSearchResults(std::vector<Search::SdkModel::SearchResultModel>& out_results) const;
                     
-                    bool ShowHighlightsForResults(const std::vector<Search::SdkModel::SearchResultModel>& results);
-                    bool ShowHighlightsForCurrentResults();
-                    void ActivateLabels(bool active);
-                    void DeactivateLabels();
-
-                    void ActivateLabelsLegacy(bool active);
+                    void PopulateHighlightRenderables();
+                    void ClearHighlightRenderables();
+                    
+                    void RefreshForSearchResults(const std::vector<Search::SdkModel::SearchResultModel>& results);
+                    void RefreshHighlightsColor();
+                    void RefreshLabels();
+                    void RefreshLabelsLegacy();
+                    
+                    bool HideLabelByNamePredicate(const Eegeo::Labels::IAnchoredLabel& anchoredLabel) const;
                     bool HideLabelAlwaysPredicate(const Eegeo::Labels::IAnchoredLabel& anchoredLabel) const;
                     
                     Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
@@ -74,23 +84,22 @@ namespace ExampleApp
                     Search::SdkModel::ISearchResultRepository& m_searchResultRepository;
                     ExampleAppMessaging::TMessageBus& m_messageBus;
                     IHighlightColorMapper& m_highlightColorMapper;
+                    ExampleApp::PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
                     const bool m_usingLegacyInteriorLabels;
-                    
+                    const AvailabilityToColor m_availabilityToColor;
+
                     Eegeo::Helpers::TCallback2<InteriorsHighlightVisibilityController, const Search::SdkModel::SearchQuery&, const std::vector<Search::SdkModel::SearchResultModel>&> m_searchResultsHandler;
                     Eegeo::Helpers::TCallback1<InteriorsHighlightVisibilityController, const Eegeo::Resources::Interiors::InteriorsCellResource> m_interiorCellAddedHandler;
                     Eegeo::Helpers::TCallback0<InteriorsHighlightVisibilityController> m_searchResultsClearedHandler;
                     Eegeo::Helpers::TCallback0<InteriorsHighlightVisibilityController> m_interiorInteractionModelChangedHandler;
                     Eegeo::Helpers::TCallback0<InteriorsHighlightVisibilityController> m_interiorLabelsBuiltHandler;
-                    
                     Eegeo::Helpers::TCallback1<InteriorsHighlightVisibilityController, const SearchResultOnMap::SearchResultMeetingAvailabilityChanged&> m_availabilityChangedHandlerBinding;
-                    
-                    std::map<std::string, std::vector<Eegeo::Rendering::Renderables::InteriorHighlightRenderable*>> m_currentHighlightRenderables;
-                    
-                    std::map<std::string, std::string> m_highlightAvailabilityData;
-
-                    ExampleApp::PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
-
+                    Eegeo::Labels::TLabelAnchorFilter<InteriorsHighlightVisibilityController> m_hideLabelByNameFilter;
                     Eegeo::Labels::TLabelAnchorFilter<InteriorsHighlightVisibilityController> m_hideLabelAlwaysFilter;
+                    
+                    HighlightRenderableVector m_highlightRenderablesForInterior;
+                    HighlightIdToColor m_searchResultHighlightIdToColor;
+                    SearchResultLabelNameSet m_searchResultLabelNames;
                 };
             }
         }

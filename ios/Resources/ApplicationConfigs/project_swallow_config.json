@@ -25,6 +25,7 @@
     "WebProxyEnabled": false,
     "WebProxyIpAddress": "",
     "WebProxyPort": 0,
+    "UseLabels": false,
     "Buildings": [
                   {
                   "SenionMapKey": "70f77f56-78b7-42bb-b94f-3c2c6d8dd30a",
