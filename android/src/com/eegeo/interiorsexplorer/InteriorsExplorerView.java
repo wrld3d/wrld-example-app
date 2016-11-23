@@ -112,7 +112,6 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
         m_floorListContainer = (RelativeLayout)m_uiRootView.findViewById(R.id.interiors_floor_list_container);
         m_floorList = (BackwardsCompatibleListView)m_uiRootView.findViewById(R.id.interiors_floor_item_list);
         m_floorList.setOnTouchListener(new PropogateToViewTouchListener(m_activity.findViewById(R.id.surface)));
-        m_floorList.setEnabled(false);
         m_floorList.setItemHeight(ListItemHeight);
         
         m_floorListAdapter = new InteriorsFloorListAdapter(m_activity, R.layout.interiors_floor_list_item);
