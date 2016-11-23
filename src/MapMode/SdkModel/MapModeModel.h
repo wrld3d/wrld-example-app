@@ -4,7 +4,6 @@
 
 #include "IMapModeModel.h"
 #include "Rendering.h"
-#include "IWeatherController.h"
 #include "CallbackCollection.h"
 
 #include <string>

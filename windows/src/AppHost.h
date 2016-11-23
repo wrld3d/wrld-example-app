@@ -55,7 +55,6 @@
 #include "SettingsMenuModule.h"
 #include "SearchMenuModule.h"
 #include "ISearchResultSectionViewModule.h"
-#include "ISurveyViewModule.h"
 #include "IMenuReactionModel.h"
 #include "TagSearchViewIncludes.h"
 #include "SearchMenuViewModule.h"
@@ -147,7 +146,6 @@ private:
     ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsViewModule* m_pMyPinCreationDetailsViewModule;
     ExampleApp::MyPinDetails::View::IMyPinDetailsViewModule* m_pMyPinDetailsViewModule;
     ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule* m_pInitialExperienceIntroViewModule; // TODO: Interface.
-    ExampleApp::Surveys::View::ISurveyViewModule* m_pSurverysViewModule;
     ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
     ExampleApp::Watermark::View::IWatermarkViewModule* m_pWatermarkViewModule;
     ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;

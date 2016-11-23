@@ -61,34 +61,9 @@
             android:layout_height="30dp"
             android:layout_marginLeft="20dp"
             android:background="@drawable/arrow3_up" />
-	    android:id="@+id/initial_ux_settings_menu_dialog"
-	    android:orientation="vertical"
-	    android:layout_marginTop="70dp"
-	    android:layout_marginRight="@dimen/menu_button_margin" >
         
         <include layout="@layout/initial_experience_intro_dialog_layout" />
-	    
-	 <!-- Search Menu dialog -->
-	    <LinearLayout
-           android:id="@+id/initial_ux_search_menu_dialog"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_alignParentTop="true"
-           android:layout_marginLeft="@dimen/menu_button_margin"
-           android:layout_marginTop="70dp"
-           android:orientation="vertical" >
- 
-          <RelativeLayout
-              android:layout_width="10dp"
-              android:layout_height="30dp"
-              android:layout_marginLeft="20dp"
-              android:background="@drawable/arrow3_up" />
-          
-          <include layout="@layout/initial_experience_intro_dialog_layout" />
-  
-      </LinearLayout>
-	
-
+        
     </LinearLayout>
 
     <!-- Compass dialog -->

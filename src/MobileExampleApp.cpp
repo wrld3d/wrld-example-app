@@ -19,7 +19,6 @@
 #include "InteriorsGpsCameraController.h"
 #include "InteriorsGpsCameraControllerFactory.h"
 #include "ITextureFileLoader.h"
-#include "IWeatherMenuModule.h"
 #include "SettingsMenuModule.h"
 #include "SearchMenuModule.h"
 #include "CompassUpdateController.h"
@@ -107,8 +106,6 @@
 #include "SceneModelsModule.h"
 #include "VisualMapModule.h"
 #include "ConnectivityChangedObserver.h"
-#include "SurveyModule.h"
-#include "SurveyObserver.h"
 #include "InteriorsResourceCounts.h"
 #include "HttpAsyncTextureLoader.h"
 #include "HttpAsyncCubeTextureLoader.h"
@@ -284,7 +281,6 @@ namespace ExampleApp
     , m_pReactionControllerModule(NULL)
     , m_pSearchResultPoiModule(NULL)
     , m_pPlaceJumpsModule(NULL)
-    , m_pWeatherMenuModule(NULL)
     , m_pCompassModule(NULL)
     , m_pGpsMarkerModule(NULL)
     , m_pWorldAreaLoaderModule(NULL)
@@ -314,7 +310,6 @@ namespace ExampleApp
     , m_pTwitterFeedModule(NULL)
     , m_pTwitterFeedTourModule(NULL)
     , m_pVisualMapModule(NULL)
-    , m_pSurveyModule(NULL)
     , m_pConnectivityChangedObserver(NULL)
     , m_toursPinDiameter(48.f)
     , m_enableTours(false)
@@ -611,11 +606,6 @@ namespace ExampleApp
                                                                              cityThemesModule.GetCityThemesUpdater(),
                                                                              mapModule.GetEnvironmentFlatteningService());
         
-        m_pSurveyModule = Eegeo_NEW(Surveys::SdkModel::SurveyModule)(m_messageBus,
-                                                                     m_persistentSettings);
-        
-        m_pSurveyModule->GetSurveyObserver().OnStartup();
-
         m_pGpsMarkerModule = Eegeo_NEW(ExampleApp::GpsMarker::SdkModel::GpsMarkerModule)(m_pWorld->GetRenderingModule(),
                                                                                          m_pWorld->GetSceneModelsModule().GetLocalSceneModelFactory(),
                                                                                          m_platformAbstractions,
@@ -626,17 +616,10 @@ namespace ExampleApp
                                                                                          m_screenProperties,
                                                                                          m_messageBus);
 
-        m_pWeatherMenuModule = Eegeo_NEW(ExampleApp::WeatherMenu::SdkModel::WeatherMenuModule)(m_platformAbstractions.GetFileIO(),
-                                                                                               m_pVisualMapModule->GetVisualMapService(),
-                                                                                               m_messageBus,
-                                                                                               m_metricsService,
-                                                                                               *m_pAppModeModel);
-        
         m_pSettingsMenuModule = Eegeo_NEW(ExampleApp::SettingsMenu::SdkModel::SettingsMenuModule)(m_identityProvider,
                                                                                                   m_pReactionControllerModule->GetReactionControllerModel(),
                                                                                                   m_pAboutPageModule->GetAboutPageViewModel(),
-                                                                                                  m_pOptionsModule->GetOptionsViewModel(),
-                                                                                                  m_pWeatherMenuModule->GetWeatherMenuModel());
+                                                                                                  m_pOptionsModule->GetOptionsViewModel());
         
         m_pPlaceJumpsModule = Eegeo_NEW(PlaceJumps::SdkModel::PlaceJumpsModule)(m_platformAbstractions.GetFileIO(),
                                                                                 CameraTransitionController(),
@@ -940,11 +923,7 @@ namespace ExampleApp
 
         Eegeo_DELETE m_pSettingsMenuModule;
         
-        Eegeo_DELETE m_pSurveyModule;
-        
         Eegeo_DELETE m_pVisualMapModule;
-        
-        Eegeo_DELETE m_pWeatherMenuModule;
         
         Eegeo_DELETE m_pGpsMarkerModule;
         

@@ -86,7 +86,6 @@
 #include "SettingsMenuViewModule.h"
 #include "SearchResultSectionViewModule.h"
 #include "SearchResultSectionModule.h"
-#include "SurveyViewModule.h"
 #include "SearchResultPoiView.h"
 #include "WindowsMenuReactionModel.h"
 #include "TagSearchViewModule.h"
@@ -137,7 +136,6 @@ AppHost::AppHost(
     , m_pViewControllerUpdaterModule(NULL)
     , m_pWindowsFlurryMetricsService(NULL)
     , m_pInitialExperienceIntroViewModule(NULL)
-    , m_pSurverysViewModule(NULL)
     , m_pInteriorsExplorerViewModule(NULL)
     , m_failAlertHandler(this, &AppHost::HandleStartupFailure)
     , m_pMenuReaction(NULL)
@@ -235,8 +233,6 @@ AppHost::AppHost(
         m_pApp->World().GetRenderingModule(),
         m_messageBus);
 
-    m_pSurverysViewModule = Eegeo_NEW(ExampleApp::Surveys::View::SurveyViewModule)(m_messageBus, *m_pWindowsFlurryMetricsService);
-
     m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_pApp);
     m_inputHandler.AddDelegateInputHandler(m_pAppInputDelegate);
 }
@@ -249,9 +245,6 @@ AppHost::~AppHost()
 
     Eegeo_DELETE m_pAppInputDelegate;
     m_pAppInputDelegate = NULL;
-
-    Eegeo_DELETE m_pSurverysViewModule;
-    m_pSurverysViewModule = NULL;
 
     Eegeo_DELETE m_pApp;
     m_pApp = NULL;

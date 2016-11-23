@@ -18,8 +18,7 @@ namespace ExampleApp
             SettingsMenuModule::SettingsMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
                                                    Reaction::View::IReactionControllerModel& reactionControllerModel,
                                                    AboutPage::View::IAboutPageViewModel& aboutPageViewModel,
-                                                   Options::View::IOptionsViewModel& optionsViewModel,
-                                                   Menu::View::IMenuModel& weatherMenuModel)
+                                                   Options::View::IOptionsViewModel& optionsViewModel)
             {
                 m_pModel = Eegeo_NEW(Menu::View::MenuModel)();
                 m_pMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pModel);
@@ -28,8 +27,6 @@ namespace ExampleApp
                                                                     identityProvider.GetNextIdentity(),
                                                                     reactionControllerModel);
 
-                AddMenuSection("Weather", weatherMenuModel, true);
-                
                 m_pOptionsMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                 m_pOptionsMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pOptionsMenuModel);
                 m_pOptionsMenuOptionsModel->AddItem("Options", "Options", "", "", Eegeo_NEW(View::OptionsMenuOption)(*m_pViewModel, optionsViewModel));

@@ -26,7 +26,6 @@
 #include "PlaceJumps.h"
 #include "IIdentity.h"
 #include "SearchResultPoi.h"
-#include "WeatherMenu.h"
 #include "CameraTransitions.h"
 #include "ModalityModule.h"
 #include "MenuModel.h"
@@ -46,7 +45,6 @@
 #include "FlattenButtonModule.h"
 #include "PlaceJumpsModule.h"
 #include "IPlaceJumpController.h"
-#include "WeatherMenuModule.h"
 #include "CompassModule.h"
 #include "TagSearch.h"
 #include "WorldAreaLoader.h"
@@ -87,7 +85,6 @@
 #include "IRayCaster.h"
 #include "VisualMap.h"
 #include "InteriorsEntityIdHighlightVisibilityController.h"
-#include "Surveys.h"
 #include "IMenuReactionModel.h"
 #include "IMenuIgnoredReactionModel.h"
 #include "DoubleTapIndoorInteraction.h"
@@ -140,7 +137,6 @@ namespace ExampleApp
         ExampleApp::Reaction::View::IReactionControllerModule* m_pReactionControllerModule;
         ExampleApp::SearchResultPoi::View::ISearchResultPoiModule* m_pSearchResultPoiModule;
         ExampleApp::PlaceJumps::SdkModel::IPlaceJumpsModule* m_pPlaceJumpsModule;
-        ExampleApp::WeatherMenu::SdkModel::IWeatherMenuModule* m_pWeatherMenuModule;
         ExampleApp::Compass::SdkModel::ICompassModule* m_pCompassModule;
         ExampleApp::GpsMarker::SdkModel::IGpsMarkerModule* m_pGpsMarkerModule;
         ExampleApp::WorldAreaLoader::SdkModel::IWorldAreaLoaderModule* m_pWorldAreaLoaderModule;
@@ -174,7 +170,6 @@ namespace ExampleApp
         InteriorsExplorer::SdkModel::Highlights::InteriorsEntityIdHighlightVisibilityController* m_pInteriorsEntityIdHighlightVisibilityController;
         Eegeo::Collision::IRayCaster* m_pRayCaster;
         VisualMap::SdkModel::IVisualMapModule* m_pVisualMapModule;
-        Surveys::SdkModel::ISurveyModule* m_pSurveyModule;
         InteriorsExplorer::SdkModel::Highlights::IHighlightColorMapper* m_pHighlightColorMapper;
         
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
@@ -349,11 +344,6 @@ namespace ExampleApp
         const ExampleApp::PlaceJumps::SdkModel::IPlaceJumpsModule& PlaceJumpsModule() const
         {
             return *m_pPlaceJumpsModule;
-        }
-
-        const ExampleApp::WeatherMenu::SdkModel::IWeatherMenuModule& WeatherMenuModule() const
-        {
-            return *m_pWeatherMenuModule;
         }
 
         const ExampleApp::Compass::SdkModel::ICompassModule& CompassModule() const

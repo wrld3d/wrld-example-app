@@ -54,7 +54,6 @@
 #include "UserInteraction.h"
 #include "LinkOutObserver.h"
 #include "URLRequestHandler.h"
-#include "SurveyViewIncludes.h"
 #include "IMenuReactionModel.h"
 #include "TagSearchViewIncludes.h"
 #include "IndoorAtlasLocationModule.h"
@@ -142,7 +141,6 @@ private:
     ExampleApp::InteriorsExplorer::View::IInteriorsExplorerViewModule* m_pInteriorsExplorerViewModule;
     ExampleApp::LinkOutObserver::LinkOutObserver* m_pLinkOutObserver;
     ExampleApp::URLRequest::View::URLRequestHandler* m_pURLRequestHandler;
-    ExampleApp::Surveys::View::ISurveyViewModule* m_pSurveyViewModule;
     ExampleApp::Menu::View::IMenuReactionModel* m_pMenuReactionModel;
     
     ImageStore* m_pImageStore;
