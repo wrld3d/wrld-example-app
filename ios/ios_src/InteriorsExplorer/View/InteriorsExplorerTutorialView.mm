@@ -262,6 +262,31 @@ namespace
     self.pChangeFloorDialogArrow.frame = changeFloorDialogArrowFrame;
     
     m_showChangeFloorDialog = showChangeFloorDialog;
+    
+    int dialogGap = isPhone ? 10 : 14;
+    int currentDialogGap = changeFloorDialogContainerFrame.origin.y - (exitDialogContainerFrame.origin.y + exitDialogContainerFrame.size.height);
+    if(currentDialogGap < dialogGap)
+    {
+        int offset = (dialogGap - currentDialogGap) / 2;
+        
+        exitDialogContainerFrame.origin.y -= offset;
+        self.pExitDialogContainer.frame = exitDialogContainerFrame;
+        
+        exitDialogOutlineArrowFrame.origin.y += offset;
+        self.pExitDialogOutlineArrow.frame = exitDialogOutlineArrowFrame;
+        
+        exitDialogArrowFrame.origin.y += offset;
+        self.pExitDialogArrow.frame = exitDialogArrowFrame;
+        
+        changeFloorDialogContainerFrame.origin.y += offset;
+        self.pChangeFloorDialogContainer.frame = changeFloorDialogContainerFrame;
+        
+        changeFloorDialogOutlineArrowFrame.origin.y -= offset;
+        self.pChangeFloorDialogOutlineArrow.frame = changeFloorDialogOutlineArrowFrame;
+        
+        changeFloorDialogArrowFrame.origin.y -= offset;
+        self.pChangeFloorDialogArrow.frame = changeFloorDialogArrowFrame;
+    }
 }
 
 - (void) animateTo: (float) t
@@ -279,7 +304,7 @@ namespace
     }
     
     [UIView animateWithDuration:m_animationTimeSeconds
-                          delay:0.0f
+                          delay:m_animationTimeSeconds * 0.8f
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^
     {
@@ -290,11 +315,12 @@ namespace
         if(self.pExitDialogContainer.alpha <= 0.0f)
         {
             [self.pExitDialogContainer setHidden:YES];
+            [self hide];
         }
     }];
     
     [UIView animateWithDuration:m_animationTimeSeconds
-                          delay:m_animationTimeSeconds * 0.8f
+                          delay:0.0f
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^
      {
@@ -305,7 +331,6 @@ namespace
          if(self.pChangeFloorDialogContainer.alpha <= 0.0f)
          {
              [self.pChangeFloorDialogContainer setHidden:YES];
-             [self hide];
          }
      }];
 }
