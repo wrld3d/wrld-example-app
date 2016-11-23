@@ -76,6 +76,7 @@ public class DepartmentSearchResultPoiView implements View.OnClickListener
 
     public void displayPoiInfo(
     		final String title,
+    		final String subtitle,
     		final String description,
     		final String primaryTag,
     		final String imageUrl,
@@ -84,7 +85,7 @@ public class DepartmentSearchResultPoiView implements View.OnClickListener
     	m_poiImageUrl = imageUrl;
     	
         m_titleView.setText(title);
-        m_descriptionView.setText(description);
+        m_descriptionView.setText(description + subtitle);
 
         m_poiImage.setVisibility(View.GONE);
         m_poiImageProgressBar.setVisibility(View.GONE);

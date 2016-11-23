@@ -46,10 +46,6 @@ namespace ExampleApp
                 {
                 	CreateAndShowGeoNamesPoiView(model, isPinned);
                 }
-                else if (vendor == Search::EegeoVendorName)
-                {
-                	CreateAndShowEegeoPoiView(model, isPinned);
-                }
                 else if(vendor == Search::EegeoVendorName && primaryTag == ExampleApp::Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
                 {
                 	CreateAndShowPersonSearchResultPoiView(model, isPinned);
@@ -73,6 +69,10 @@ namespace ExampleApp
                 else if(vendor == ExampleApp::Search::EegeoVendorName && primaryTag == ExampleApp::Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME)
                 {
                 	CreateAndShowDepartmentSearchResultPoiView(model, isPinned);
+                }
+                else if (vendor == Search::EegeoVendorName)
+                {
+                	CreateAndShowEegeoPoiView(model, isPinned);
                 }
                 else
                 {
@@ -486,15 +486,17 @@ namespace ExampleApp
 				JNIEnv* env = attached.envForThread;
 
 				jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
+				jstring subtitleStr = env->NewStringUTF(model.GetSubtitle().c_str());
 				jstring descriptionStr = env->NewStringUTF(departmentModel.GetDescription().c_str());
 				jstring primaryTagStr = env->NewStringUTF(model.GetPrimaryTag().c_str());
 				jstring imageUrlStr = env->NewStringUTF(departmentModel.GetImageUrl().c_str());
 
-				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
+				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
 				env->CallVoidMethod(
 						m_uiView,
 						displayPoiInfoMethod,
 						titleStr,
+						subtitleStr,
 						descriptionStr,
 						primaryTagStr,
 						imageUrlStr,
