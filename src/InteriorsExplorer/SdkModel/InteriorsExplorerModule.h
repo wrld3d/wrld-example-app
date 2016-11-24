@@ -52,7 +52,8 @@ namespace ExampleApp
                                         InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsEntitiesPinsController,
                                         PersistentSettings::IPersistentSettingsModel& persistentSettings,
                                         Eegeo::Location::NavigationService& navigationServic,
-                                        ExampleApp::WifiInfo::IRestrictedBuildingService& restrictedBuildingInformationServicee);
+                                        ExampleApp::WifiInfo::IRestrictedBuildingService& restrictedBuildingInformationServicee,
+                                        Eegeo::Web::IConnectivityService& connectivityService);
 
                 ~InteriorsExplorerModule();
                 
@@ -90,6 +91,8 @@ namespace ExampleApp
                 Eegeo::Camera::GlobeCamera::GpsGlobeCameraController* m_pGpsGlobeCameraController;
 
                 InteriorsUINotificationService* m_pUINotificationService;
+
+                InteriorExplorerConnectionChangedObserver* m_pInteriorExplorerConnectionChangedObserver;
             };
         }
     }

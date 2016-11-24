@@ -774,7 +774,8 @@ namespace ExampleApp
                                                                                                      m_pInteriorsEntitiesPinsModule->GetInteriorsEntitiesPinsController(),
                                                                                                      m_persistentSettings,
                                                                                                      *m_pNavigationService,
-                                                                                                     *m_pRestrictedBuildingInfoService);
+                                                                                                     *m_pRestrictedBuildingInfoService,
+                                                                                                     m_platformAbstractions.GetConnectivityService());
         
         m_pMyPinCreationModule = Eegeo_NEW(ExampleApp::MyPinCreation::SdkModel::MyPinCreationModule)(m_pMyPinsModule->GetMyPinsService(),
                                                                                                      m_identityProvider,
