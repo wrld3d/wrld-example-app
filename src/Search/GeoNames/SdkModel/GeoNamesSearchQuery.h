@@ -10,6 +10,7 @@
 #include "SearchQuery.h"
 #include "WebLoadRequestCompletionCallback.h"
 #include "UrlHelpers.h"
+#include "PendingWebRequestsContainer.h"
 
 namespace ExampleApp
 {
@@ -26,6 +27,7 @@ namespace ExampleApp
                     bool m_isSuccess;
                     Eegeo::Web::TWebLoadRequestCompletionCallback<GeoNamesSearchQuery> m_webRequestCompleteCallback;
                     Eegeo::Web::IWebLoadRequest* m_pWebLoadRequest;
+                    Eegeo::Web::PendingWebRequestsContainer m_pendingWebRequestsContainer;
                     
                 public:
                     GeoNamesSearchQuery(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,

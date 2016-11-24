@@ -122,6 +122,8 @@ AppHost::AppHost(
     ,m_pURLRequestHandler(NULL)
     ,m_pMenuReactionModel(NULL)
     ,m_pTagSearchViewModule(NULL)
+    ,m_pApplicationConfigurationChangeHolder(NULL)
+    ,m_screenProperties(screenProperties)
 {
     Eegeo::TtyHandler::TtyEnabled = true;
     
@@ -136,10 +138,6 @@ AppHost::AppHost(
     m_piOSPlatformAbstractionModule = Eegeo_NEW(Eegeo::iOS::iOSPlatformAbstractionModule)(*m_pJpegLoader, applicationConfiguration.EegeoApiKey());
 
     Eegeo::EffectHandler::Initialise();
-
-    Eegeo::iOS::iOSPlatformConfigBuilder iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion());
-    
-    const Eegeo::Config::PlatformConfig& platformConfiguration = ExampleApp::ApplicationConfig::SdkModel::BuildPlatformConfig(iOSPlatformConfigBuilder, applicationConfiguration);
     
     m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::iOSInitialExperienceModule)(m_iOSPersistentSettingsModel, m_messageBus);
     
@@ -159,65 +157,16 @@ AppHost::AppHost(
     
     m_pMenuReactionModel = Eegeo_NEW(ExampleApp::Menu::View::IOSMenuReactionModel)();
     
-    m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
-			 applicationConfiguration,
-             *m_piOSPlatformAbstractionModule,
-             screenProperties,
-             *m_pCurrentLocationService,
-             m_iOSNativeUIFactories,
-             platformConfiguration,
-             *m_pJpegLoader,
-             *m_pInitialExperienceModule,
-             m_iOSPersistentSettingsModel,
-             m_messageBus,
-             m_sdkModelDomainEventBus,
-             *m_pNetworkCapabilities,
-             m_iOSFlurryMetricsService,             
-             *this,
-             *m_pMenuReactionModel);
-    
-    Eegeo::Modules::Map::MapModule& mapModule = m_pApp->World().GetMapModule();
-    Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
-    m_pIndoorAtlasLocationModule = Eegeo_NEW(ExampleApp::IndoorAtlas::IndoorAtlasLocationModule)(m_pApp->GetAppModeModel(),
-                                                                                                 interiorsPresentationModule.GetInteriorInteractionModel(),
-                                                                                                 interiorsPresentationModule.GetInteriorSelectionModel(),
-                                                                                                 mapModule.GetEnvironmentFlatteningService(),
-                                                                                                 applicationConfiguration,
-                                                                                                 *m_piOSLocationService);
-    
-    m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(applicationConfiguration,
-                                                                                                                               m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
-                                                                                                                               interiorsPresentationModule.GetInteriorSelectionModel(),
-                                                                                                                               *m_pCurrentLocationService,
-                                                                                                                               *m_piOSLocationService,
-                                                                                                                               m_pIndoorAtlasLocationModule->GetLocationService());
-    
-    CreateApplicationViewModules(screenProperties);
-
-    m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_pApp, m_viewController, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), screenProperties.GetPixelScale());
-    m_pAppLocationDelegate = Eegeo_NEW(AppLocationDelegate)(*m_piOSLocationService, m_viewController);
-    m_pAppUrlDelegate = Eegeo_NEW(AppUrlDelegate)(*m_pApp);
-
-    m_messageBus.SubscribeUi(m_userInteractionEnabledChangedHandler);
+    m_pApplicationConfigurationChangeHolder = Eegeo_NEW(ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationChangedHolder)();
+    CreateAppAndDependencies(applicationConfiguration);
 }
 
 AppHost::~AppHost()
 {
-    m_messageBus.UnsubscribeUi(m_userInteractionEnabledChangedHandler);
- 
-    Eegeo_DELETE m_pAppUrlDelegate;
-    m_pAppUrlDelegate = NULL;
-   
-    Eegeo_DELETE m_pAppLocationDelegate;
-    m_pAppLocationDelegate = NULL;
+    DestroyAppAndDependencies();
+    Eegeo_DELETE m_pApplicationConfigurationChangeHolder;
+    m_pApplicationConfigurationChangeHolder = NULL;
 
-    Eegeo_DELETE m_pAppInputDelegate;
-    m_pAppInputDelegate = NULL;
-
-    DestroyApplicationViewModules();
-    
-    Eegeo_DELETE m_pApp;
-    m_pApp = NULL;
     
     [m_pImageStore release];
     m_pImageStore = nil;
@@ -273,11 +222,18 @@ void AppHost::OnPause()
 
 void AppHost::NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties)
 {
+    m_screenProperties = screenProperties;
     m_pApp->NotifyScreenPropertiesChanged(screenProperties);
 }
 
 void AppHost::Update(float dt)
 {
+    if(m_pApplicationConfigurationChangeHolder->HasConfigurationChanged())
+    {
+        StartAppWithNewConfig(m_pApplicationConfigurationChangeHolder->GetNewApplicationConfiguration());
+        m_pApplicationConfigurationChangeHolder->Clear();
+    }
+    
     if (!m_pAppLocationDelegate->HasReceivedPermissionResponse())
     {
         return;
@@ -620,3 +576,78 @@ void AppHost::HandleUrlOpen(const AppInterface::UrlData &data)
     m_pApp->Event_OpenUrl(data);
 }
 
+void AppHost::CreateAppAndDependencies(const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration)
+{
+        Eegeo::iOS::iOSPlatformConfigBuilder iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion());
+    
+    const Eegeo::Config::PlatformConfig& platformConfiguration = ExampleApp::ApplicationConfig::SdkModel::BuildPlatformConfig(iOSPlatformConfigBuilder, applicationConfiguration);
+    
+    m_pApp = Eegeo_NEW(ExampleApp::MobileExampleApp)(
+                                                     applicationConfiguration,
+                                                     *m_piOSPlatformAbstractionModule,
+                                                     m_screenProperties,
+                                                     *m_pCurrentLocationService,
+                                                     m_iOSNativeUIFactories,
+                                                     platformConfiguration,
+                                                     *m_pJpegLoader,
+                                                     *m_pInitialExperienceModule,
+                                                     m_iOSPersistentSettingsModel,
+                                                     m_messageBus,
+                                                     m_sdkModelDomainEventBus,
+                                                     *m_pNetworkCapabilities,
+                                                     m_iOSFlurryMetricsService,
+                                                     *this,
+                                                     *m_pMenuReactionModel,
+                                                     *m_pApplicationConfigurationChangeHolder);
+    
+    Eegeo::Modules::Map::MapModule& mapModule = m_pApp->World().GetMapModule();
+    Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
+    m_pIndoorAtlasLocationModule = Eegeo_NEW(ExampleApp::IndoorAtlas::IndoorAtlasLocationModule)(m_pApp->GetAppModeModel(),
+                                                                                                 interiorsPresentationModule.GetInteriorInteractionModel(),
+                                                                                                 interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                                                 mapModule.GetEnvironmentFlatteningService(),
+                                                                                                 applicationConfiguration,
+                                                                                                 *m_piOSLocationService);
+    
+    m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(applicationConfiguration,
+                                                                                                                               m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
+                                                                                                                               interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                                                                               *m_pCurrentLocationService,
+                                                                                                                               *m_piOSLocationService,
+                                                                                                                               m_pIndoorAtlasLocationModule->GetLocationService());
+    
+    CreateApplicationViewModules(m_screenProperties);
+    
+    m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_pApp, m_viewController, m_screenProperties.GetScreenWidth(), m_screenProperties.GetScreenHeight(), m_screenProperties.GetPixelScale());
+    m_pAppLocationDelegate = Eegeo_NEW(AppLocationDelegate)(*m_piOSLocationService, m_viewController);
+    m_pAppUrlDelegate = Eegeo_NEW(AppUrlDelegate)(*m_pApp);
+    
+    m_messageBus.SubscribeUi(m_userInteractionEnabledChangedHandler);
+
+}
+
+void AppHost::DestroyAppAndDependencies()
+{
+    m_messageBus.UnsubscribeUi(m_userInteractionEnabledChangedHandler);
+    
+    Eegeo_DELETE m_pAppUrlDelegate;
+    m_pAppUrlDelegate = NULL;
+    
+    Eegeo_DELETE m_pAppLocationDelegate;
+    m_pAppLocationDelegate = NULL;
+    
+    Eegeo_DELETE m_pAppInputDelegate;
+    m_pAppInputDelegate = NULL;
+    
+    DestroyApplicationViewModules();
+    
+    Eegeo_DELETE m_pApp;
+    m_pApp = NULL;
+}
+
+void AppHost::StartAppWithNewConfig(const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfig)
+{
+    DestroyAppAndDependencies();
+    CreateAppAndDependencies(applicationConfig);
+    m_requestedApplicationInitialiseViewState = false;
+}

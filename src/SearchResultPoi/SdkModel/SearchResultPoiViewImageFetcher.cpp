@@ -31,6 +31,7 @@ namespace ExampleApp
             void SearchResultPoiViewImageFetcher::OnImageFetchResponseReceived(Eegeo::Web::IWebResponse& webResponse)
             {
                 const std::vector<Byte>* pImageBytes = NULL;
+                m_pendingWebRequestsContainer.RemoveRequest(*m_pWebLoadRequest);
                 
                 if(webResponse.IsSucceeded())
                 {
@@ -44,7 +45,9 @@ namespace ExampleApp
             
             void SearchResultPoiViewImageFetcher::FetchImageForSearchResult(const std::string& imageUrl)
             {
-                m_webRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, imageUrl, m_webRequestCallback).Build()->Load();
+                m_pWebLoadRequest = m_webRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, imageUrl, m_webRequestCallback).Build();
+                m_pendingWebRequestsContainer.InsertRequest(*m_pWebLoadRequest);
+                m_pWebLoadRequest->Load();
             }
         }
     }

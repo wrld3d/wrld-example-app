@@ -43,7 +43,7 @@ namespace ExampleApp
                 {
                     Eegeo_ASSERT(!m_dispatched, "YelpBusinessQuery already dispatched");
                     m_dispatched = true;
-                    
+                    m_pendingWebRequestsContainer.InsertRequest(*m_pWebLoadRequest);
                     m_pWebLoadRequest->Load();
                 }
 
@@ -59,6 +59,8 @@ namespace ExampleApp
                 void YelpBusinessQuery::HandleWebResponseComplete(Eegeo::Web::IWebResponse& webResponse)
                 {
                     Eegeo_ASSERT(!webResponse.IsCancelled());
+                    
+                    m_pendingWebRequestsContainer.RemoveRequest(*m_pWebLoadRequest);
                     
                     size_t resultSize = webResponse.GetBodyData().size();
                     const std::string& responseString = resultSize > 0 ? std::string(reinterpret_cast<char const*>(&(webResponse.GetBodyData().front())), resultSize) : "<empty>";

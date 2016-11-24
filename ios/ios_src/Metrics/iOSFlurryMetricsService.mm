@@ -17,13 +17,16 @@ namespace ExampleApp
         
         void iOSFlurryMetricsService::BeginSession(const std::string& string, const std::string& appVersion)
         {
-            NSString* pAppVersionString = [NSString stringWithUTF8String:appVersion.c_str()];
-            [Flurry setAppVersion:pAppVersionString];
-            
-            NSString* pString = [NSString stringWithUTF8String:string.c_str()];
-            [Flurry startSession:pString];
-            
-            m_enabled = true;
+            if(!IsEnabled())
+            {
+                NSString* pAppVersionString = [NSString stringWithUTF8String:appVersion.c_str()];
+                [Flurry setAppVersion:pAppVersionString];
+                
+                NSString* pString = [NSString stringWithUTF8String:string.c_str()];
+                [Flurry startSession:pString];
+                
+                m_enabled = true;
+            }
         }
         
         void iOSFlurryMetricsService::SetPosition(const double latitude, const double longitude, const double horizontalAccuracy, const double verticalAccuracy)

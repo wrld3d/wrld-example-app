@@ -65,6 +65,38 @@ namespace ExampleApp
         {
         }
         
+        ApplicationConfiguration* ApplicationConfiguration::Clone(const ApplicationConfiguration& appConfig)
+        {
+            const Eegeo::Space::LatLongAltitude lla(appConfig.InterestLocation().GetLatitude(),appConfig.InterestLocation().GetLongitude(), appConfig.InterestLocation().GetAltitude());
+            return Eegeo_NEW(ApplicationConfiguration) (appConfig.Name(),
+                                             appConfig.EegeoApiKey(),
+                                             appConfig.ProductVersion(),
+                                             appConfig.BuildNumber(),
+                                             appConfig.CombinedVersionString(),
+                                             appConfig.CoverageTreeManifestURL(),
+                                             appConfig.ThemeManifestURL(),
+                                             appConfig.EmbeddedThemeTexturePath(),
+                                             lla,
+                                             appConfig.DistanceToInterestMetres(),
+                                             appConfig.OrientationDegrees(),
+                                             appConfig.TryStartAtGpsLocation(),
+                                             appConfig.ShouldStartFullscreen(),
+                                             appConfig.GoogleAnalyticsReferrerToken(),
+                                             appConfig.FlurryAppKey(),
+                                             appConfig.YelpConsumerKey(),
+                                             appConfig.YelpConsumerSecret(),
+                                             appConfig.YelpOAuthToken(),
+                                             appConfig.YelpOAuthTokenSecret(),
+                                             appConfig.GeoNamesUserName(),
+                                             appConfig.EegeoSearchServiceUrl(),
+                                             appConfig.MyPinsWebServiceUrl(),
+                                             appConfig.MyPinsWebServiceAuthToken(),
+                                             appConfig.TwitterAuthCode(),
+                                             appConfig.IsKioskTouchInputEnabled(),
+                                             appConfig.UseLabels(),
+                                             appConfig.InteriorTrackingInfo());
+        }
+        
         std::string ApplicationConfiguration::Name() const
         {
             return m_name;

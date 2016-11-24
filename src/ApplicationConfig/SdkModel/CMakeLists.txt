@@ -1,6 +1,8 @@
 set(headers ${headers} ../src/ApplicationConfig/SdkModel
 )
 set(currsources
+../src/ApplicationConfig/SdkModel/ApplicationConfigurationChangedHolder.cpp
+../src/ApplicationConfig/SdkModel/ApplicationConfigurationChangedHolder.h
   ../src/ApplicationConfig/SdkModel/ApplicationConfigurationJsonParser.cpp
   ../src/ApplicationConfig/SdkModel/ApplicationConfigurationJsonParser.h
   ../src/ApplicationConfig/SdkModel/ApplicationConfigurationModule.cpp

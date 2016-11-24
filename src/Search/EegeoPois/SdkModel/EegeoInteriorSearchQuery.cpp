@@ -55,6 +55,7 @@ namespace ExampleApp
                     
                     std::string url = urlstream.str();
                     m_pWebLoadRequest = webRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, url, m_webRequestCompleteCallback).Build();
+                    m_pendingWebRequestsContainer.InsertRequest(*m_pWebLoadRequest);
                     m_pWebLoadRequest->Load();
                 }
                 
@@ -66,6 +67,7 @@ namespace ExampleApp
                 void EegeoInteriorSearchQuery::Cancel()
                 {
                     m_pWebLoadRequest->Cancel();
+                    m_pendingWebRequestsContainer.RemoveRequest(*m_pWebLoadRequest);
                 }
                 
                 bool EegeoInteriorSearchQuery::IsSucceeded()
@@ -80,6 +82,7 @@ namespace ExampleApp
                 
                 void EegeoInteriorSearchQuery::OnWebResponseReceived(Eegeo::Web::IWebResponse& webResponse)
                 {
+                    m_pendingWebRequestsContainer.RemoveRequest(*m_pWebLoadRequest);
                     if(webResponse.IsSucceeded())
                     {
                         size_t resultSize = webResponse.GetBodyData().size();

@@ -11,6 +11,7 @@
 #include "Interiors.h"
 #include "WebLoadRequestCompletionCallback.h"
 #include "UrlHelpers.h"
+#include "PendingWebRequestsContainer.h"
 
 #include <string>
 
@@ -31,6 +32,7 @@ namespace ExampleApp
                     int m_floorIdx;
                     Eegeo::Web::TWebLoadRequestCompletionCallback<EegeoInteriorSearchQuery> m_webRequestCompleteCallback;
                     Eegeo::Web::IWebLoadRequest* m_pWebLoadRequest;
+                    Eegeo::Web::PendingWebRequestsContainer m_pendingWebRequestsContainer;
                 public:
                     EegeoInteriorSearchQuery(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                          Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,

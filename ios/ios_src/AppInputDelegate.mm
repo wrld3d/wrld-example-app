@@ -75,6 +75,17 @@ UILongPressGestureRecognizer* gestureTouch;
 
 }
 
+- (void)dealloc
+{
+    [[m_pViewController view] removeGestureRecognizer:gestureRotation];
+    [[m_pViewController view] removeGestureRecognizer:gesturePinch];
+    [[m_pViewController view] removeGestureRecognizer:gesturePan];
+    [[m_pViewController view] removeGestureRecognizer:gestureTap];
+    [[m_pViewController view] removeGestureRecognizer:gestureDoubleTap];
+        
+    [super dealloc];
+}
+
 -(void)gestureRotation_Callback:(UIRotationGestureRecognizer*)recognizer
 {
     AppInterface::RotateData data;

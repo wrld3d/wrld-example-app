@@ -9,6 +9,7 @@
 #include "Web.h"
 #include "IYelpCategoryToTagMapper.h"
 #include "WebLoadRequestCompletionCallback.h"
+#include "PendingWebRequestsContainer.h"
 
 namespace ExampleApp
 {
@@ -27,6 +28,8 @@ namespace ExampleApp
                     std::map<std::string, std::string> m_yelpToApplicationTagMap;
                     std::string m_defaultTag;
                     Eegeo::Web::TWebLoadRequestCompletionCallback<YelpCategoryToTagMapper> m_yelpTaxonomyRequestCompletedCallback;
+                    Eegeo::Web::PendingWebRequestsContainer m_pendingWebRequestsContainer;
+                    Eegeo::Web::IWebLoadRequest* m_pWebLoadRequest;
                     bool m_isDownloadingTaxonomy;
                     bool m_hasDownloadedTaxonomy;
                     

@@ -8,6 +8,7 @@
 #include "Web.h"
 #include "WebLoadRequestCompletionCallback.h"
 #include "ISearchResultPoiViewImageFetcher.h"
+#include "PendingWebRequestsContainer.h"
 
 namespace ExampleApp
 {
@@ -18,6 +19,8 @@ namespace ExampleApp
             class SearchResultPoiViewImageFetcher : public ISearchResultPoiViewImageFetcher, private Eegeo::NonCopyable
             {
                 Eegeo::Web::IWebLoadRequestFactory& m_webRequestFactory;
+                Eegeo::Web::PendingWebRequestsContainer m_pendingWebRequestsContainer;
+                Eegeo::Web::IWebLoadRequest* m_pWebLoadRequest;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Web::TWebLoadRequestCompletionCallback<SearchResultPoiViewImageFetcher> m_webRequestCallback;
                 

@@ -62,6 +62,7 @@ namespace ExampleApp
                         .SetShouldCacheAggressively(false)
                         .SetShouldRequestOnlyFromCache(false)
                         .Build();
+                    m_pendingWebRequestsContainer.InsertRequest(*m_pWebLoadRequest);
                     m_pWebLoadRequest->Load();
                 }
                 
@@ -73,6 +74,7 @@ namespace ExampleApp
                 void EegeoSearchQuery::Cancel()
                 {
                     m_pWebLoadRequest->Cancel();
+                    m_pendingWebRequestsContainer.RemoveRequest(*m_pWebLoadRequest);
                 }
                 
                 bool EegeoSearchQuery::IsSucceeded()
@@ -87,6 +89,7 @@ namespace ExampleApp
                 
                 void EegeoSearchQuery::OnWebResponseReceived(Eegeo::Web::IWebResponse& webResponse)
                 {
+                    m_pendingWebRequestsContainer.RemoveRequest(*m_pWebLoadRequest);
                     if(webResponse.IsSucceeded())
                     {
                         size_t resultSize = webResponse.GetBodyData().size();

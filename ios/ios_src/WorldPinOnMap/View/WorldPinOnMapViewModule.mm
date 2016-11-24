@@ -33,7 +33,6 @@ namespace ExampleApp
             WorldPinOnMapViewModule::~WorldPinOnMapViewModule()
             {
                 Eegeo_DELETE m_pController;
-                [m_pTourView release];
             }
 
             WorldPinOnMapController& WorldPinOnMapViewModule::GetWorldPinOnMapController() const

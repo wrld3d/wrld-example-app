@@ -5,6 +5,7 @@
 #include "IWebLoadRequestFactory.h"
 #include "ICameraTransitionController.h"
 #include "ApplicationConfigurationJsonParser.h"
+#include "ApplicationConfigurationChangedHolder.h"
 
 namespace ExampleApp
 {
@@ -12,21 +13,30 @@ namespace ExampleApp
     {
         namespace SdkModel
         {            
-            DeepLinkConfigHandler::DeepLinkConfigHandler(CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController, Eegeo::Web::IWebLoadRequestFactory& webRequestFactory, Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory, ApplicationConfig::ApplicationConfiguration& defaultConfig)
+            DeepLinkConfigHandler::DeepLinkConfigHandler(CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController, Eegeo::Web::IWebLoadRequestFactory& webRequestFactory, Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory, ApplicationConfig::ApplicationConfiguration& defaultConfig, ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationChangedHolder& applicationConfigurationChangedHolder)
             :m_webRequestFactory(webRequestFactory)
             ,m_configRequestCompleteCallback(this, &DeepLinkConfigHandler::HandleConfigResponse)
             ,m_failAlertHandler(this, &DeepLinkConfigHandler::OnFailAlertBoxDismissed)
             ,m_cameraTransitionController(cameraTransitionController)
             ,m_alertBoxFactory(alertBoxFactory)
             ,m_defaultConfig(defaultConfig)
+            ,m_applicationConfigurationChangedHolder(applicationConfigurationChangedHolder)
+            ,m_pWebLoadRequest(NULL)
             {
             }
 
             void DeepLinkConfigHandler::HandleDeepLink(const AppInterface::UrlData& data)
             {
+                if(m_pWebLoadRequest != NULL)
+                {
+                    m_pWebLoadRequest->Cancel();
+                    m_pendingWebRequestsContainer.RemoveRequest(*m_pWebLoadRequest);
+                    m_pWebLoadRequest = NULL;
+                }
                 const std::string url = GenerateConfigUrl(data);
-                Eegeo::Web::IWebLoadRequest* webRequest = m_webRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, url, m_configRequestCompleteCallback).Build();
-                webRequest->Load();
+                m_pWebLoadRequest = m_webRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, url, m_configRequestCompleteCallback).Build();
+                m_pendingWebRequestsContainer.InsertRequest(*m_pWebLoadRequest);
+                m_pWebLoadRequest->Load();
             }
 
             std::string DeepLinkConfigHandler::GenerateConfigUrl(const AppInterface::UrlData& data) const
@@ -36,6 +46,8 @@ namespace ExampleApp
 
             void DeepLinkConfigHandler::HandleConfigResponse(Eegeo::Web::IWebResponse& webResponse)
             {
+                m_pendingWebRequestsContainer.RemoveRequest(*m_pWebLoadRequest);
+                m_pWebLoadRequest = NULL;
                 if(webResponse.IsSucceeded())
                 {
                     ApplicationConfig::SdkModel::ApplicationConfigurationJsonParser parser(m_defaultConfig);
@@ -44,8 +56,8 @@ namespace ExampleApp
                     
                     if(parser.IsValidConfig(resultString))
                     {
-                        ApplicationConfig::ApplicationConfiguration applicationConfig = parser.ParseConfiguration(resultString);
-                        m_cameraTransitionController.StartTransitionTo(applicationConfig.InterestLocation().ToECEF(), applicationConfig.DistanceToInterestMetres(), applicationConfig.OrientationDegrees());
+                        const ApplicationConfig::ApplicationConfiguration applicationConfig = parser.ParseConfiguration(resultString);
+                        m_applicationConfigurationChangedHolder.SetNewApplicationConfiguration(applicationConfig);
                     }
                     else
                     {

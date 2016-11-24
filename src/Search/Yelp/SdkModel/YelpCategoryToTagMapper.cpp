@@ -48,6 +48,7 @@ namespace ExampleApp
                 , m_yelpTaxonomyRequestCompletedCallback(this, &YelpCategoryToTagMapper::OnYelpTaxonomyRequestCompleted)
                 , m_isDownloadingTaxonomy(false)
                 , m_hasDownloadedTaxonomy(false)
+                , m_pWebLoadRequest(NULL)
                 {
                     DispatchTaxonomyRequest();
                 }
@@ -100,12 +101,15 @@ namespace ExampleApp
                 {
                     Eegeo_ASSERT(!m_hasDownloadedTaxonomy);
                     m_isDownloadingTaxonomy = true;
-                    m_webRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, YelpCategoryTaxonomyUrl, m_yelpTaxonomyRequestCompletedCallback)
-                        .Build()->Load();
+                    m_pWebLoadRequest = m_webRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, YelpCategoryTaxonomyUrl, m_yelpTaxonomyRequestCompletedCallback)
+                    .Build();
+                    m_pendingWebRequestsContainer.InsertRequest(*m_pWebLoadRequest);
+                    m_pWebLoadRequest->Load();
                 }
                 
                 void YelpCategoryToTagMapper::OnYelpTaxonomyRequestCompleted(Eegeo::Web::IWebResponse& webResponse)
                 {
+                    m_pendingWebRequestsContainer.RemoveRequest(*m_pWebLoadRequest);
                     Eegeo_ASSERT(m_isDownloadingTaxonomy);
                     m_isDownloadingTaxonomy = false;
                     

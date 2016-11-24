@@ -96,6 +96,16 @@ AppLocationDelegate* m_pAppLocationDelegate;
     }
 }
 
+- (void)dealloc
+{
+    m_pLocationManager.delegate = nil;
+    [m_pLocationManager stopUpdatingLocation];
+    [m_pLocationManager stopUpdatingHeading];
+    [m_pLocationManager release];
+    
+    [super dealloc];
+}
+
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading
 {
     float heading = GetValidOrNegativeHeading(static_cast<float>(newHeading.headingAccuracy), static_cast<float>(newHeading.trueHeading), static_cast<float>(newHeading.magneticHeading));

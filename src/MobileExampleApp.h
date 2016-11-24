@@ -229,7 +229,8 @@ namespace ExampleApp
                          ExampleApp::Net::SdkModel::INetworkCapabilities& networkCapabilities,
                          ExampleApp::Metrics::IMetricsService& metricsService,                         
                          Eegeo::IEegeoErrorHandler& errorHandler,
-                         Menu::View::IMenuReactionModel& menuReaction);
+                         Menu::View::IMenuReactionModel& menuReaction,
+                         ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationChangedHolder& applicationConfigurationChangedHolder);
 
         ~MobileExampleApp();
 

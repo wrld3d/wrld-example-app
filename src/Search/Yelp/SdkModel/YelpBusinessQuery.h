@@ -8,6 +8,7 @@
 #include "Web.h"
 #include "WebLoadRequestCompletionCallback.h"
 #include "ICallback.h"
+#include "PendingWebRequestsContainer.h"
 
 #include <string>
 
@@ -37,6 +38,7 @@ namespace ExampleApp
                     
                 private:
                     void HandleWebResponseComplete(Eegeo::Web::IWebResponse& webResponse);
+                    Eegeo::Web::PendingWebRequestsContainer m_pendingWebRequestsContainer;
 
                     Eegeo::Web::IWebLoadRequest* m_pWebLoadRequest;
                     Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& m_completionCallback;

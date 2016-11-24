@@ -21,7 +21,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            ExampleApp::DeepLink::SdkModel::DeepLinkModule::DeepLinkModule(CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController, Eegeo::Web::IWebLoadRequestFactory& webFactory, Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory, ApplicationConfig::ApplicationConfiguration& defaultConfig)
+            ExampleApp::DeepLink::SdkModel::DeepLinkModule::DeepLinkModule(CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController, Eegeo::Web::IWebLoadRequestFactory& webFactory, Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory, ApplicationConfig::ApplicationConfiguration& defaultConfig, ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationChangedHolder& applicationConfigurationChangedHolder)
             {
                 m_pDeepLinkModel = Eegeo_NEW(DeepLinkModel)();
                 DeepLinkLocationHandler* locationHandler = Eegeo_NEW(DeepLinkLocationHandler)(cameraTransitionController, alertBoxFactory);
@@ -29,7 +29,7 @@ namespace ExampleApp
                 
                 if(CONFIG_DEEP_LINK_ENABLED)
                 {
-                    DeepLinkConfigHandler* configHandler= Eegeo_NEW(DeepLinkConfigHandler)(cameraTransitionController, webFactory, alertBoxFactory, defaultConfig);
+                    DeepLinkConfigHandler* configHandler= Eegeo_NEW(DeepLinkConfigHandler)(cameraTransitionController, webFactory, alertBoxFactory, defaultConfig, applicationConfigurationChangedHolder);
                     m_pDeepLinkModel->AddRoute(MYMAP_PATH, configHandler);
                 }
 

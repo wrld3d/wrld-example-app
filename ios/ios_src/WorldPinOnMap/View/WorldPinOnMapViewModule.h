@@ -23,8 +23,6 @@ namespace ExampleApp
             private:
                 WorldPinOnMapViewContainer* m_pView;
                 WorldPinOnMapController* m_pController;
-                
-                TourHovercardView* m_pTourView;
 
             public:
                 WorldPinOnMapViewModule(IWorldPinInFocusViewModel& worldPinInFocusViewModel,

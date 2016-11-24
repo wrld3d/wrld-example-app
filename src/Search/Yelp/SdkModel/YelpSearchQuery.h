@@ -10,6 +10,7 @@
 #include "Yelp.h"
 #include "IWebLoadRequestFactory.h"
 #include "WebLoadRequestCompletionCallback.h"
+#include "PendingWebRequestsContainer.h"
 
 
 
@@ -43,6 +44,7 @@ namespace ExampleApp
 
                     void HandleWebResponseComplete(Eegeo::Web::IWebResponse& webResponse);
                     
+                    Eegeo::Web::PendingWebRequestsContainer m_pendingWebRequestsContainer;
                     Eegeo::Web::IWebLoadRequest* m_pWebLoadRequest;
                     Eegeo::Helpers::ICallback0& m_completionCallback;
                     std::string m_responseString;

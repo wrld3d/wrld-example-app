@@ -35,6 +35,7 @@ namespace ExampleApp
                     m_pWebLoadRequest = m_webRequestFactory
                         .Begin(Eegeo::Web::HttpVerbs::Values::GET, requestUrl, m_webRequestCompleteCallback)
                         .Build();
+                    m_pendingWebRequestsContainer.InsertRequest(*m_pWebLoadRequest);
                 }
 
                 YelpSearchQuery::~YelpSearchQuery()
@@ -60,6 +61,8 @@ namespace ExampleApp
                 void YelpSearchQuery::HandleWebResponseComplete(Eegeo::Web::IWebResponse& webResponse)
                 {
                     Eegeo_ASSERT(!webResponse.IsCancelled());
+                    
+                    m_pendingWebRequestsContainer.RemoveRequest(*m_pWebLoadRequest);
                     
                     size_t resultSize = webResponse.GetBodyData().size();
                     

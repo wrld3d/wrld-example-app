@@ -150,13 +150,13 @@
     {
         CustomTableView* customTableView = self.pTableViewMap[@(i)];
         
-        [[customTableView initWithFrame:CGRectMake(tableX, tableY, tableWidth, tableHeight)
+        [customTableView initWithFrame:CGRectMake(tableX, tableY, tableWidth, tableHeight)
                                   style:UITableViewStylePlain
                                menuView:self
                             hasSubMenus:true
                               cellWidth:tableCellWidth
                               cellInset:tableInset
-          ] autorelease];
+          ];
         customTableView.backgroundColor = [UIColor clearColor];
         customTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         customTableView.bounces = NO;

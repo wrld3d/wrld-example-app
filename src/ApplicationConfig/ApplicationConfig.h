@@ -15,6 +15,7 @@ namespace ExampleApp
             class IApplicationConfigurationParser;
             class IApplicationConfigurationService;
             class IApplicationConfigurationVersionProvider;
+            class ApplicationConfigurationChangedHolder;
         }
     }
 }

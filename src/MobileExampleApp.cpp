@@ -231,7 +231,8 @@ namespace ExampleApp
                                        Net::SdkModel::INetworkCapabilities& networkCapabilities,
                                        ExampleApp::Metrics::IMetricsService& metricsService,
                                        Eegeo::IEegeoErrorHandler& errorHandler,
-                                       Menu::View::IMenuReactionModel& menuReaction)
+                                       Menu::View::IMenuReactionModel& menuReaction,
+                                       ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationChangedHolder& applicationConfigurationChangedHolder)
     : m_pGlobeCameraController(NULL)
     , m_pCameraTouchController(NULL)
     , m_pCurrentTouchController(NULL)
@@ -430,7 +431,7 @@ namespace ExampleApp
         
         m_pUserInteractionModule = Eegeo_NEW(UserInteraction::SdkModel::UserInteractionModule)(m_pAppCameraModule->GetController(), *m_pCameraTransitionService, m_pInteriorsExplorerModule->GetInteriorsExplorerUserInteractionModel(), m_messageBus);
         
-        m_pDeepLinkModule = Eegeo_NEW(DeepLink::SdkModel::DeepLinkModule)(*m_pCameraTransitionController, m_platformAbstractions.GetWebLoadRequestFactory(), m_pWorld->GetNativeUIFactories().AlertBoxFactory(), m_applicationConfiguration);
+        m_pDeepLinkModule = Eegeo_NEW(DeepLink::SdkModel::DeepLinkModule)(*m_pCameraTransitionController, m_platformAbstractions.GetWebLoadRequestFactory(), m_pWorld->GetNativeUIFactories().AlertBoxFactory(), m_applicationConfiguration, applicationConfigurationChangedHolder);
     }
     
     MobileExampleApp::~MobileExampleApp()

@@ -76,6 +76,8 @@ namespace ExampleApp
                 const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo
             );
             
+            static ApplicationConfiguration* Clone(const ApplicationConfiguration& appConfig);
+            
             std::string Name() const;
 
             std::string EegeoApiKey() const;
@@ -129,6 +131,7 @@ namespace ExampleApp
             bool UseLabels() const;
             
             const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& InteriorTrackingInfo() const;
+            
         };
     }
 }

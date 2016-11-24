@@ -61,6 +61,7 @@
 #include "CurrentLocationService.h"
 #include "InteriorsLocationServiceProvider.h"
 #include "AppUrlDelegate.h"
+#include "ApplicationConfigurationChangedHolder.h"
 
 @class ViewController;
 class AppInputDelegate;
@@ -150,6 +151,10 @@ private:
     ExampleApp::Surveys::View::ISurveyViewModule* m_pSurveyViewModule;
     ExampleApp::Menu::View::IMenuReactionModel* m_pMenuReactionModel;
     
+    ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationChangedHolder* m_pApplicationConfigurationChangeHolder;
+    
+    Eegeo::Rendering::ScreenProperties m_screenProperties;
+    
     ImageStore* m_pImageStore;
     
     ExampleApp::MobileExampleApp* m_pApp;
@@ -161,8 +166,12 @@ private:
     Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<AppHost> m_failAlertHandler;
     Eegeo::Helpers::TCallback1<AppHost, const ExampleApp::UserInteraction::UserInteractionEnabledChangedMessage&> m_userInteractionEnabledChangedHandler;
 
+    void CreateAppAndDependencies(const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration);
+    void DestroyAppAndDependencies();
     void CreateApplicationViewModules(const Eegeo::Rendering::ScreenProperties& screenProperties);
     void DestroyApplicationViewModules();
+    
+    void StartAppWithNewConfig(const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfig);
     
     void SetTouchExclusivity();
     
