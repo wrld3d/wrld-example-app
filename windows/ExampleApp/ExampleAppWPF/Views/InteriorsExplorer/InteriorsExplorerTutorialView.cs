@@ -5,6 +5,8 @@ namespace ExampleAppWPF
 {
     public class InteriorsExplorerTutorialView : ButtonBase
     {
+        private const int DialogGap = 10;
+
         private InteriorsExplorerTutorialDialogView m_exitDialog;
 
         private InteriorsExplorerTutorialDialogView m_changeFloorDialog;
@@ -46,15 +48,33 @@ namespace ExampleAppWPF
                                         bool showChangeFloorDialog,
 										Thickness rootContainerMargin)
         {
-			m_exitDialog.repositionDialog(Application.Current.MainWindow.Width - newPositionX, Application.Current.MainWindow.Height - dismissButtonPositionY, rootContainerMargin);
+            double exitDialogY = Application.Current.MainWindow.Height - dismissButtonPositionY;
 
-			m_changeFloorDialog.repositionDialog(Application.Current.MainWindow.Width - newPositionX, Application.Current.MainWindow.Height - floorChangeButtonPositionY, rootContainerMargin);
+            double changeDialogY = Application.Current.MainWindow.Height - floorChangeButtonPositionY;
+
+            double exitDialogHeight = m_exitDialog.getHeight();
+
+            int offset = 0;
+
+            int currentDialogGap = (int) (exitDialogY - changeDialogY - exitDialogHeight);
+            if(currentDialogGap < DialogGap)
+            {
+                offset = (DialogGap - currentDialogGap) / 2;
+
+                exitDialogY += offset;
+
+                changeDialogY -= offset;
+            }
+
+            m_exitDialog.repositionDialog(Application.Current.MainWindow.Width - newPositionX, exitDialogY, rootContainerMargin, offset);
+
+			m_changeFloorDialog.repositionDialog(Application.Current.MainWindow.Width - newPositionX, changeDialogY, rootContainerMargin, -offset);
             m_changeFloorDialog.Visibility = showChangeFloorDialog ? Visibility.Visible : Visibility.Hidden;
         }
         public void animateTo(double t, double delayMilliseconds, bool animateDialogsAtSameTime)
         {
-			m_exitDialog.animateTo(t, delayMilliseconds);
-			m_changeFloorDialog.animateTo(t, delayMilliseconds + (animateDialogsAtSameTime ? 0 : InteriorsExplorerTutorialDialogView.AnimationTimeMilliseconds * 0.8f));
+			m_exitDialog.animateTo(t, delayMilliseconds + (animateDialogsAtSameTime ? 0 : InteriorsExplorerTutorialDialogView.AnimationTimeMilliseconds * 0.8f));
+			m_changeFloorDialog.animateTo(t, delayMilliseconds);
         }
 
 		public void show(bool showExitDialog, bool showChangeFloorDialog)
