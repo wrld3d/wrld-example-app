@@ -713,7 +713,12 @@ namespace ExampleApp
                                                                                          mapModule.GetEnvironmentFlatteningService(),
                                                                                          mapModule.GetResourceCeilingProvider());
         
-        const Eegeo::Resources::Interiors::InteriorsCameraConfiguration& interiorsCameraConfig(Eegeo::Resources::Interiors::InteriorsCameraController::CreateDefaultConfig());
+        Eegeo::Resources::Interiors::InteriorsCameraConfiguration& interiorsCameraConfig(Eegeo::Resources::Interiors::InteriorsCameraController::CreateDefaultConfig());
+        interiorsCameraConfig.ExpandedLookAtDistanceScale = 1.5f;
+        interiorsCameraConfig.ExpandedLookAtRightOffset = 0.02f;
+        interiorsCameraConfig.ExpandedLookAtUpOffset = 0.09f;
+        interiorsCameraConfig.BuildingHorizontalScreenSpacePercentInLandscape = 0.4f;
+
         const Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration& globeCameraConfig = Eegeo::Resources::Interiors::InteriorsCameraControllerFactory::DefaultGlobeCameraControllerConfiguration();
         const Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration& globeCameraTouchConfig = Eegeo::Resources::Interiors::InteriorsCameraControllerFactory::DefaultGlobeCameraTouchControllerConfiguration();
         Eegeo::Camera::GlobeCamera::GpsGlobeCameraComponentConfiguration gpsGlobeCameraComponentConfig = Eegeo::Resources::Interiors::InteriorsGpsCameraControllerFactory::DefaultGpsGlobeCameraComponentConfiguration();
