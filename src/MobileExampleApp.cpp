@@ -713,7 +713,7 @@ namespace ExampleApp
                                                                                          mapModule.GetEnvironmentFlatteningService(),
                                                                                          mapModule.GetResourceCeilingProvider());
         
-        Eegeo::Resources::Interiors::InteriorsCameraConfiguration& interiorsCameraConfig(Eegeo::Resources::Interiors::InteriorsCameraController::CreateDefaultConfig());
+        Eegeo::Resources::Interiors::InteriorsCameraConfiguration interiorsCameraConfig(Eegeo::Resources::Interiors::InteriorsCameraController::CreateDefaultConfig());
         interiorsCameraConfig.ExpandedLookAtDistanceScale = 1.5f;
         interiorsCameraConfig.ExpandedLookAtRightOffset = 0.02f;
         interiorsCameraConfig.ExpandedLookAtUpOffset = 0.09f;
