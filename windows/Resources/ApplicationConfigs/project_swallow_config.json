@@ -28,6 +28,7 @@
     "WebProxyIgnorePattern":"",
 	"IsKioskTouchInputEnabled":false,
 	"StartAppInFullscreen":false,
+    "UseLabels": true,
     "Buildings": [
                   
                   {
