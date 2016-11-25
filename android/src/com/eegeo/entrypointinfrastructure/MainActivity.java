@@ -2,6 +2,9 @@
 
 package com.eegeo.entrypointinfrastructure;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -17,18 +20,21 @@ import android.widget.RelativeLayout;
 import com.eegeo.ProjectSwallowApp.R;
 import com.eegeo.photos.PhotoIntentDispatcher;
 import com.eegeo.runtimepermissions.RuntimePermissionDispatcher;
+import com.eegeo.view.OnPauseListener;
 
 public abstract class MainActivity extends Activity implements SurfaceHolder.Callback, INativeMessageRunner
 {
     private PhotoIntentDispatcher m_photoIntentDispatcher;
     private RuntimePermissionDispatcher m_runtimePermissionDispatcher;
     private boolean m_touchEnabled;
+    private List<OnPauseListener> m_onPauseListeners;
 
     public MainActivity()
     {
         m_photoIntentDispatcher = new PhotoIntentDispatcher(this);
         m_runtimePermissionDispatcher = new RuntimePermissionDispatcher(this);
         m_touchEnabled = true;
+        m_onPauseListeners = new ArrayList<OnPauseListener>();
     }
 
     public PhotoIntentDispatcher getPhotoIntentDispatcher()
@@ -90,6 +96,11 @@ public abstract class MainActivity extends Activity implements SurfaceHolder.Cal
     	m_touchEnabled = touchEnabled;
     }
 
+    public void addOnPauseListener(OnPauseListener l)
+    {
+        m_onPauseListeners.add(l);
+    }
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent event)
     {
@@ -106,6 +117,16 @@ public abstract class MainActivity extends Activity implements SurfaceHolder.Cal
         m_photoIntentDispatcher.onActivityResult(requestCode, resultCode, data);
     }
     
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        for (OnPauseListener l : m_onPauseListeners)
+        {
+            l.notifyOnPause();
+        }
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
     {

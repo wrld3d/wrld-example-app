@@ -14,6 +14,7 @@
 #include "InteriorExplorerUserInteractionModel.h"
 #include "IInitialExperienceModel.h"
 #include "InteriorsExplorerFloorDraggedObserver.h"
+#include "InteriorExplorerConnectionChangedObserver.h"
 
 namespace ExampleApp
 {
@@ -41,7 +42,8 @@ namespace ExampleApp
                                                              InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsEntitiesPinsController,
                                                              PersistentSettings::IPersistentSettingsModel& persistentSettings,
                                                              Eegeo::Location::NavigationService& navigationService,
-                                                             ExampleApp::WifiInfo::IRestrictedBuildingService& restrictedBuildingInformationService)
+                                                             ExampleApp::WifiInfo::IRestrictedBuildingService& restrictedBuildingInformationService,
+                                                             Eegeo::Web::IConnectivityService& connectivityService)
             {
                 m_pUserInteractionModel = Eegeo_NEW(InteriorExplorerUserInteractionModel)();
                 
@@ -80,10 +82,17 @@ namespace ExampleApp
                 m_pFloorDraggedObserver = Eegeo_NEW(InteriorsExplorerFloorDraggedObserver)(*m_pModel, m_pInteriorsGpsCameraController->GetTouchController());
 
                 m_pUINotificationService = Eegeo_NEW(InteriorsUINotificationService)(messageBus, interiorsEntitiesPinsController, worldPinIconMapping);
+
+                m_pInteriorExplorerConnectionChangedObserver = Eegeo_NEW(InteriorExplorerConnectionChangedObserver)(connectivityService,
+                                                                                                                    interiorSelectionModel,
+                                                                                                                    *m_pModel,
+                                                                                                                    restrictedBuildingInformationService);
+
             }
             
             InteriorsExplorerModule::~InteriorsExplorerModule()
             {
+                Eegeo_DELETE m_pInteriorExplorerConnectionChangedObserver;
                 Eegeo_DELETE m_pUINotificationService;
                 Eegeo_DELETE m_pFloorDraggedObserver;
                 Eegeo_DELETE m_pViewModel;
