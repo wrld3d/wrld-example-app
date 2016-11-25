@@ -54,6 +54,7 @@ namespace ExampleApp
         , m_yelpConsumerSecret(yelpConsumerSecret)
         , m_yelpOAuthToken(yelpOAuthToken)
         , m_yelpOAuthTokenSecret(yelpOAuthTokenSecret)
+        , m_geoNamesUserName(geoNamesUserName)
         , m_coverageTreeManifestURL(coverageTreeManifestURL)
         , m_themeManifestURL(themeManifestURL)
         , m_sqliteDbUrl(sqliteDbUrl)
