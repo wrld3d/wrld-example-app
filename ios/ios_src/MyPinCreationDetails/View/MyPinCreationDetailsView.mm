@@ -10,6 +10,9 @@
 #import <QuartzCore/QuartzCore.h>
 #import <AVFoundation/AVFoundation.h>
 
+const float BOUNDS_OCCUPY_MULTIPLIER = 0.9f;
+const float CARD_TOP_MARGINS_MULTIPLIER = (1.0f - BOUNDS_OCCUPY_MULTIPLIER) * 0.5f;
+
 @implementation MyPinCreationDetailsView
 
 - (id)initWithParams:(float)width :(float)height :(UIViewController*) rootViewController
@@ -159,12 +162,10 @@
 
     m_scrollContentBottomMargin = 50;
 
-    const bool useFullScreenSize = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
-    const float boundsOccupyMultiplier = useFullScreenSize ? 0.9f : 0.6f;
-    m_controlContainerWidth = floorf(boundsWidth * boundsOccupyMultiplier);
-    m_controlContainerHeight = boundsHeight * boundsOccupyMultiplier;
+    m_controlContainerWidth = std::min(floorf(boundsWidth * BOUNDS_OCCUPY_MULTIPLIER), 348.f);
+    m_controlContainerHeight = boundsHeight * BOUNDS_OCCUPY_MULTIPLIER;
     const float controlContainerX = (boundsWidth * 0.5f) - (m_controlContainerWidth * 0.5f);
-    const float controlContainerY = (boundsHeight * 0.5f) - (m_controlContainerHeight * 0.5f);
+    const float controlContainerY = boundsHeight * CARD_TOP_MARGINS_MULTIPLIER;
 
     self.pControlContainer.frame = CGRectMake(controlContainerX, controlContainerY, m_controlContainerWidth, m_controlContainerHeight);
     self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
@@ -213,7 +214,7 @@
 - (void) layoutBody
 {
     const float bodyContainerY = m_yCursor;
-    const float bodyContainerHeight = m_controlContainerHeight - (2.f * static_cast<float>(self.pTitleContainer.frame.size.height));
+    const float bodyContainerHeight = m_controlContainerHeight - static_cast<float>(self.pTitleContainer.frame.size.height) - static_cast<float>(self.pFooterContainer.frame.size.height);
 
     self.pBodyContainer.frame = CGRectMake(0, bodyContainerY, m_controlContainerWidth, bodyContainerHeight);
     self.pBodyContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
