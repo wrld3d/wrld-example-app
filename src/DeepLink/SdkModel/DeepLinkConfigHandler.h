@@ -32,13 +32,14 @@ namespace ExampleApp
                 ApplicationConfig::ApplicationConfiguration& m_defaultConfig;
                 Eegeo::Web::TWebLoadRequestCompletionCallback<DeepLinkConfigHandler> m_configRequestCompleteCallback;
                 Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<DeepLinkConfigHandler> m_failAlertHandler;
-                std::string GenerateConfigUrl(const AppInterface::UrlData& data) const;
                 ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationChangedHolder& m_applicationConfigurationChangedHolder;
                 void HandleConfigResponse(Eegeo::Web::IWebResponse& webResponse);
                 void OnFailAlertBoxDismissed();
             };
         
-            const std::string CONFIG_FILES_HOME = "http://cdn1.eegeo.com/test_configs";
+            std::string GenerateConfigUrl(const AppInterface::UrlData& data);
+            
+            const std::string CONFIG_FILES_HOME = "https://cdn1.eegeo.com/test_configs";
         }
     }
 }

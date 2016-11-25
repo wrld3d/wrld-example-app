@@ -10,17 +10,46 @@
 #include "ApplicationConfigurationModule.h"
 #include "IApplicationConfigurationService.h"
 #include "iOSFlurryMetricsService.h"
+#include "DeepLinkModule.h"
+#include "AppInterface.h"
+#include "DeepLinkConfigHandler.h"
 
 namespace
 {
     typedef ExampleApp::ApplicationConfig::ApplicationConfiguration ApplicationConfiguration;
     
-    ApplicationConfiguration LoadConfiguration()
+    ApplicationConfiguration LoadConfiguration(NSURL* deepLinkUrl)
     {
+        ExampleApp::ApplicationConfig::SdkModel::iOSApplicationConfigurationVersionProvider iOSVersionProvider;
+        
+        if(deepLinkUrl != nil)
+        {
+            AppInterface::UrlData data = {[[deepLinkUrl host] UTF8String], [[deepLinkUrl path] UTF8String]};
+            
+            NSString* url = [NSString stringWithUTF8String:ExampleApp::DeepLink::SdkModel::GenerateConfigUrl(data).c_str()];
+            NSURL* configWebRequestUrl= [NSURL URLWithString:url];
+            NSURLRequest *request = [NSURLRequest requestWithURL:configWebRequestUrl cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:30.0];
+            NSError *error = nil;
+            NSURLResponse *response = nil;
+            NSData *webResponse = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+            
+            if(!error)
+            {
+                const NSString* configResult = [[NSString alloc] initWithData:webResponse encoding:NSUTF8StringEncoding];
+                
+                ApplicationConfiguration* pAppConfig = ExampleApp::ApplicationConfig::SdkModel::CreateConfigFromJson([configResult UTF8String], iOSVersionProvider);
+                if(pAppConfig != NULL)
+                {
+                    ApplicationConfiguration returnConfig(*pAppConfig);
+                    Eegeo_DELETE(pAppConfig);
+                    pAppConfig = NULL;
+                    return returnConfig;
+                }
+            }
+        }
+        
         // create file IO instance (iOSPlatformAbstractionModule not yet available in app lifetime)
         Eegeo::iOS::iOSFileIO tempFileIO;
-        
-        ExampleApp::ApplicationConfig::SdkModel::iOSApplicationConfigurationVersionProvider iOSVersionProvider;
         
         return ExampleApp::ApplicationConfig::SdkModel::LoadAppConfig(tempFileIO, iOSVersionProvider, ExampleApp::ApplicationConfigurationPath);
     }
@@ -43,20 +72,31 @@ namespace
 
 -(BOOL) application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSString* DeepLinkOptionsKey = @"UIApplicationLaunchOptionsURLKey";
     // Override point for customization after application launch.
     _metricsService = Eegeo_NEW(ExampleApp::Metrics::iOSFlurryMetricsService)();
     
-    const ApplicationConfiguration& appConfig = LoadConfiguration();
+    NSURL* appConfigDeepLinkUrl = nil;
+    if(launchOptions[DeepLinkOptionsKey])
+    {
+        NSURL *url = launchOptions[DeepLinkOptionsKey];
+        
+        if([[url host] isEqualToString:[NSString stringWithUTF8String:ExampleApp::DeepLink::SdkModel::MYMAP_PATH]])
+        {
+            appConfigDeepLinkUrl = url;
+        }
+        else
+        {
+            _launchUrl = url;
+        }
+    }
+
+    ApplicationConfiguration appConfig = LoadConfiguration(appConfigDeepLinkUrl);
     _applicationConfiguration = Eegeo_NEW(ApplicationConfiguration)(appConfig);
     
     // Flurry metrics service must be started during didFinishLaunchingWithOptions (events not logged on >= iOS 8.0 if started later)
     _metricsService->BeginSession(_applicationConfiguration->FlurryAppKey(), appConfig.CombinedVersionString());
     
-    if(launchOptions[@"UIApplicationLaunchOptionsURLKey"])
-    {
-        NSURL *url = launchOptions[@"UIApplicationLaunchOptionsURLKey"];
-        _launchUrl = url;
-    }
 	return YES;
 }
 

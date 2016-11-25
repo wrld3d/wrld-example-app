@@ -23,6 +23,9 @@ namespace ExampleApp
                 DeepLinkModel* m_pDeepLinkModel;
                 DeepLinkController* m_pDeepLinkController;
             };
+            
+            const char * const LOCATION_PATH = "location";
+            const char * const MYMAP_PATH = "mymaps";
         }
     }
 }

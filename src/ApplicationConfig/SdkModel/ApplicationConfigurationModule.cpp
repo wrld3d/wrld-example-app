@@ -80,6 +80,18 @@ namespace ExampleApp
                 return applicationConfigurationModule.GetApplicationConfigurationService().LoadConfiguration(configFilePath);
             }
             
+            ApplicationConfig::ApplicationConfiguration* CreateConfigFromJson(const char* configString, ApplicationConfig::SdkModel::IApplicationConfigurationVersionProvider& applicationConfigurationVersionProvider)
+            {
+                ApplicationConfig::SdkModel::ApplicationConfigurationJsonParser parser(BuildDefaultConfig(applicationConfigurationVersionProvider));
+                if(parser.IsValidConfig(configString))
+                {
+                    return Eegeo_NEW(ApplicationConfig::ApplicationConfiguration)(parser.ParseConfiguration(configString));
+                }
+                else
+                {
+                    return NULL;
+                }
+            }
             Eegeo::Config::PlatformConfig BuildPlatformConfig(Eegeo::Config::IPlatformConfigBuilder& platformConfigBuilder,
                                                               const ApplicationConfiguration& appConfig)
             {

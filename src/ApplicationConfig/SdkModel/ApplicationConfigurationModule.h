@@ -34,6 +34,8 @@ namespace ExampleApp
                                                                       const std::string& configFilePath
                                                                       );
             
+            ApplicationConfig::ApplicationConfiguration* CreateConfigFromJson(const char* configString, ApplicationConfig::SdkModel::IApplicationConfigurationVersionProvider& applicationConfigurationVersionProvider);
+            
             Eegeo::Config::PlatformConfig BuildPlatformConfig(Eegeo::Config::IPlatformConfigBuilder& platformConfigBuilder,
                                                               const ApplicationConfiguration& appConfig);
         }

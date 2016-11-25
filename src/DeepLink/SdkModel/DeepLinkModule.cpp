@@ -10,9 +10,7 @@
 #include "DeepLinkConfigHandler.h"
 
 namespace {
-    const char * const LOCATION_PATH = "location";
-    const char * const MYMAP_PATH = "mymaps";
-    const bool CONFIG_DEEP_LINK_ENABLED = false;
+    const bool CONFIG_DEEP_LINK_ENABLED = true;
 }
 
 namespace ExampleApp

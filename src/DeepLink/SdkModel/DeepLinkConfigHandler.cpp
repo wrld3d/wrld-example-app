@@ -39,7 +39,7 @@ namespace ExampleApp
                 m_pWebLoadRequest->Load();
             }
 
-            std::string DeepLinkConfigHandler::GenerateConfigUrl(const AppInterface::UrlData& data) const
+            std::string GenerateConfigUrl(const AppInterface::UrlData& data)
             {
                 return CONFIG_FILES_HOME + data.path + ".json";
             }
