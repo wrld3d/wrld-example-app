@@ -1,22 +1,24 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/poi_creation_details_main"
     android:layout_width="330dp"
-    android:layout_height="550dp"
+    android:layout_height="fill_parent"
     android:layout_centerInParent="true"
     android:layout_margin="5dp" >
     
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
         android:layout_centerInParent="true"
-        android:layout_margin="10dp">
-        
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_centerInParent="true"
-        android:background="@color/gold"/>
+        app:layout_heightPercent="90%">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_centerInParent="true"
+            android:background="@color/gold"/>
+
         
         <!-- header -->
 	    <LinearLayout
@@ -230,4 +232,4 @@
         <!-- end footer -->
         
     </RelativeLayout>
-</RelativeLayout>
+</android.support.percent.PercentRelativeLayout>
