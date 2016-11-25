@@ -111,8 +111,11 @@ namespace ExampleApp
             {
                 std::string headerString = TagSearch::View::GetPresentationStringForQuery(m_tagSearchRepository, message.Query());
                 
-                m_searchMenuView.SetEditText(headerString, message.Query().IsTag());
-                m_searchMenuView.SetSearchInProgress(true);
+                if(Search::Swallow::SearchConstants::ShouldShowTagAsSearchResult(message.Query().Query()))
+                {
+                    m_searchMenuView.SetEditText(headerString, message.Query().IsTag());
+                    m_searchMenuView.SetSearchInProgress(true);
+                }
             }
             
             void SearchMenuController::OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message)
