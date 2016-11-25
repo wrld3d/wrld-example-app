@@ -185,9 +185,9 @@ AppHost::AppHost(
 
     Eegeo::EffectHandler::Initialise();
 
-    Eegeo::Windows::WindowsPlatformConfigBuilder windowsPlatformConfigBuilder(nativeState.GetDeviceModel());
-
-    const Eegeo::Config::PlatformConfig& platformConfiguration = ExampleApp::ApplicationConfig::SdkModel::BuildPlatformConfig(windowsPlatformConfigBuilder, applicationConfiguration);
+    const std::string& deviceModel = nativeState.GetDeviceModel();
+    const Eegeo::Config::PlatformConfig& defaultPlatformConfig = Eegeo::Windows::WindowsPlatformConfigBuilder(deviceModel).Build();
+    const Eegeo::Config::PlatformConfig& platformConfiguration = ExampleApp::PlatformConfigBuilder::Build(defaultPlatformConfig, applicationConfiguration, "EmbeddedTheme");
 
     bool enableTouchControls =  hasNativeTouchInput ? applicationConfiguration.IsKioskTouchInputEnabled() : false;
 

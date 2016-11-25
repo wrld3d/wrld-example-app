@@ -38,7 +38,8 @@ namespace ExampleAppWPF
 
         public void repositionDialog(double xPosition,
                                         double yPosition,
-										Thickness rootContainerMargin)
+                                        Thickness rootContainerMargin,
+                                        int arrowOffset)
         {
 			resizeDialog();
 			
@@ -46,20 +47,21 @@ namespace ExampleAppWPF
 			containerMargin.Right = xPosition;
 			containerMargin.Bottom = yPosition - m_container.Height;
 
+			double offsetY = arrowOffset;
+
 			if(containerMargin.Bottom < 0)
 			{
-				double offsetY = -containerMargin.Bottom;
-
-				Thickness arrowMargin = m_arrow.Margin;
-				arrowMargin.Top = Math.Round((m_outline.Height / 2) - (m_arrow.Height / 2)) + offsetY;
-				m_arrow.Margin = arrowMargin;
-
-				Thickness outlineArrowMargin = m_outlineArrow.Margin;
-				outlineArrowMargin.Top = arrowMargin.Top - 1;
-				m_outlineArrow.Margin = outlineArrowMargin;
-
+                offsetY -= containerMargin.Bottom;
 				containerMargin.Bottom = 0;
 			}
+
+            Thickness arrowMargin = m_arrow.Margin;
+			arrowMargin.Top = Math.Round((m_outline.Height / 2) - (m_arrow.Height / 2)) + offsetY;
+			m_arrow.Margin = arrowMargin;
+
+			Thickness outlineArrowMargin = m_outlineArrow.Margin;
+			outlineArrowMargin.Top = arrowMargin.Top - 1;
+			m_outlineArrow.Margin = outlineArrowMargin;
 
 			containerMargin.Bottom -= rootContainerMargin.Bottom;
 			m_container.Margin = containerMargin;
@@ -79,6 +81,11 @@ namespace ExampleAppWPF
 			m_title.Text = title;
 			m_description.Text = description;
 		}
+
+        public double getHeight()
+        {
+            return m_container.Height;
+        }
 
 		private void resizeDialog()
 		{
