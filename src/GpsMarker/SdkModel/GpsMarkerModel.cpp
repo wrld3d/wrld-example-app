@@ -94,8 +94,11 @@ namespace ExampleApp
                         m_currentHeadingRadians = test;
                     }
                 }
-                
-                Eegeo::Helpers::MathsHelpers::AlphaBetaFilter(headingRadians, m_currentHeadingRadians, m_currentHeadingVelocity, m_currentHeadingRadians, m_currentHeadingVelocity, dt);
+
+                if(dt != 0)
+                {
+                    Eegeo::Helpers::MathsHelpers::AlphaBetaFilter(headingRadians, m_currentHeadingRadians, m_currentHeadingVelocity, m_currentHeadingRadians, m_currentHeadingVelocity, dt);
+                }
             }
             
             const double GpsMarkerModel::GetSmoothedHeadingDegrees() const
