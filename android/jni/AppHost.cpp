@@ -157,6 +157,9 @@ AppHost::AppHost(
     Eegeo::AssertHandler::BreakOnAssert = true;
 
     m_pAndroidLocationService = Eegeo_NEW(AndroidLocationService)(&nativeState);
+
+    m_pCurrentLocationService = Eegeo_NEW(Eegeo::Helpers::CurrentLocationService::CurrentLocationService)(*m_pAndroidLocationService);
+
     m_pAndroidConnectivityService = Eegeo_NEW(AndroidConnectivityService)(&nativeState);
 
     m_pJpegLoader = Eegeo_NEW(Eegeo::Helpers::Jpeg::JpegLoader)();
@@ -207,7 +210,7 @@ AppHost::AppHost(
     			 applicationConfiguration,
                  *m_pAndroidPlatformAbstractionModule,
                  screenProperties,
-                 *m_pAndroidLocationService,
+                 *m_pCurrentLocationService,
                  m_androidNativeUIFactories,
                  platformConfiguration,
                  *m_pJpegLoader,
@@ -219,6 +222,25 @@ AppHost::AppHost(
                  *m_pAndroidFlurryMetricsService,
                  *this,
                  *m_pMenuReactionModel);
+
+    Eegeo::Modules::Map::MapModule& mapModule = m_pApp->World().GetMapModule();
+    Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
+
+    m_pIndoorAtlasLocationModule = Eegeo_NEW(ExampleApp::IndoorAtlas::IndoorAtlasLocationModule)(m_pApp->GetAppModeModel(),
+                                                                                                     interiorsPresentationModule.GetInteriorInteractionModel(),
+                                                                                                     interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                                                     mapModule.GetEnvironmentFlatteningService(),
+                                                                                                     applicationConfiguration,
+                                                                                                     *m_pAndroidLocationService,
+																									 m_nativeState);
+
+	m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(applicationConfiguration,
+																															   m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
+																															   interiorsPresentationModule.GetInteriorSelectionModel(),
+																															   *m_pCurrentLocationService,
+																															   *m_pAndroidLocationService,
+																															   m_pIndoorAtlasLocationModule->GetLocationService(),
+																															   m_pIndoorAtlasLocationModule->GetLocationService());
 
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(
             m_pApp->World().GetRenderingModule(),
@@ -263,6 +285,15 @@ AppHost::~AppHost()
 
     Eegeo_DELETE m_pAndroidConnectivityService;
     m_pAndroidConnectivityService = NULL;
+
+    Eegeo_DELETE m_pInteriorsLocationServiceProvider;
+    m_pInteriorsLocationServiceProvider = NULL;
+
+    Eegeo_DELETE m_pIndoorAtlasLocationModule;
+	m_pIndoorAtlasLocationModule = NULL;
+
+	Eegeo_DELETE m_pCurrentLocationService;
+	m_pCurrentLocationService = NULL;
 
     Eegeo_DELETE m_pAndroidLocationService;
     m_pAndroidLocationService = NULL;
@@ -614,6 +645,7 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
         Eegeo_DELETE m_pInitialExperienceIntroViewModule;
 
         Eegeo_DELETE m_pWatermarkViewModule;
+
     }
     m_createdUIModules = false;
 }

@@ -34,6 +34,7 @@ namespace ExampleApp
                 Eegeo::Location::ILocationService& m_defaultLocationService;
                 Eegeo::Location::ILocationService& m_indoorAtlasLocationService;
                 Eegeo::Location::ILocationService& m_senionLabLocationService;
+                const std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo> m_trackingInfoMap;
                 
                 InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;

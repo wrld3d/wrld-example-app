@@ -54,6 +54,18 @@ include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 
+INDOOR_ATLAS_PREBUILT_LIBS := ./libs/indooratlas/ia-$(TARGET_ARCH_ABI)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := cpa-lib
+LOCAL_SRC_FILES := ../$(INDOOR_ATLAS_PREBUILT_LIBS)/libcpaJNI.so
+include $(PREBUILT_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
+ifneq ($(os_name),Darwin)
+    LOCAL_SHORT_COMMANDS := true
+endif
+
 LOCAL_MODULE := eegeo-mobile-example-app
 LOCAL_LDLIBS := -llog -landroid -lEGL -lGLESv2 -lz -lm
 LOCAL_LDLIBS += -Wl,--stub-group-size=2085000

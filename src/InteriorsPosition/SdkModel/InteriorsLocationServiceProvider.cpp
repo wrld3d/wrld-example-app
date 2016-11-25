@@ -25,6 +25,7 @@ namespace ExampleApp
             , m_interiorSelectionModel(interiorSelectionModel)
             , m_interiorExplorerEnteredCallback(this, &InteriorsLocationServiceProvider::OnInteriorExplorerEntered)
             , m_interiorExplorerExitCallback(this, &InteriorsLocationServiceProvider::OnInteriorExplorerExit)
+            , m_trackingInfoMap(m_applicationConfiguration.InteriorTrackingInfo())
             {
                 m_interiorsExplorerModel.InsertInteriorExplorerEnteredCallback(m_interiorExplorerEnteredCallback);
                 m_interiorsExplorerModel.InsertInteriorExplorerExitedCallback(m_interiorExplorerExitCallback);
@@ -39,14 +40,11 @@ namespace ExampleApp
             void InteriorsLocationServiceProvider::OnInteriorExplorerEntered()
             {
                 Eegeo::Resources::Interiors::InteriorId interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
-                
-                const std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& trackingInfoMap = m_applicationConfiguration.InteriorTrackingInfo();
-                const std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>::const_iterator it = trackingInfoMap.find(interiorId.Value());
-                
-                if(it != trackingInfoMap.end())
+                const std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>::const_iterator it = m_trackingInfoMap.find(interiorId.Value());
+                if(it != m_trackingInfoMap.end())
                 {
                     const ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo& trackingInfo = it->second;
-                
+
                     if(trackingInfo.GetType() == "IndoorAtlas")
                     {
                         Eegeo_TTY("using IndoorAtlas location service");

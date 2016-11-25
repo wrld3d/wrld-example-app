@@ -56,6 +56,9 @@
 #include "SearchResultSectionViewIncludes.h"
 #include "IMenuReactionModel.h"
 #include "TagSearchViewIncludes.h"
+#include "IndoorAtlasLocationModule.h"
+#include "CurrentLocationService.h"
+#include "InteriorsLocationServiceProvider.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
@@ -117,6 +120,9 @@ private:
 
     ExampleApp::ModalBackground::SdkModel::IModalBackgroundNativeViewModule* m_pModalBackgroundNativeViewModule;
 
+    ExampleApp::IndoorAtlas::IndoorAtlasLocationModule* m_pIndoorAtlasLocationModule;
+	Eegeo::Helpers::CurrentLocationService::CurrentLocationService* m_pCurrentLocationService;
+	ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider* m_pInteriorsLocationServiceProvider;
 
     Eegeo::Android::AndroidPlatformAbstractionModule* m_pAndroidPlatformAbstractionModule;
     ExampleApp::Menu::View::IMenuViewModule* m_pSettingsMenuViewModule;
