@@ -455,7 +455,7 @@ namespace ExampleApp
 
 				jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
 				jstring descriptionStr = env->NewStringUTF(departmentModel.GetDescription().c_str());
-				jstring primaryTagStr = env->NewStringUTF(model.GetPrimaryTag().c_str());
+				jstring iconKeyStr = env->NewStringUTF(model.GetIconKey().c_str());
 				jstring imageUrlStr = env->NewStringUTF(departmentModel.GetImageUrl().c_str());
 
 				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
@@ -464,14 +464,14 @@ namespace ExampleApp
 						displayPoiInfoMethod,
 						titleStr,
 						descriptionStr,
-						primaryTagStr,
+						iconKeyStr,
 						imageUrlStr,
 						isPinned
 				);
 
 				env->DeleteLocalRef(titleStr);
 				env->DeleteLocalRef(descriptionStr);
-				env->DeleteLocalRef(primaryTagStr);
+				env->DeleteLocalRef(iconKeyStr);
 				env->DeleteLocalRef(imageUrlStr);
 			}
 

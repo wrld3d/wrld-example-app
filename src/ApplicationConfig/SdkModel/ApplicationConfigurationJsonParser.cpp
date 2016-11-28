@@ -42,6 +42,9 @@ namespace ExampleApp
                     Eegeo_ASSERT(!document.HasParseError(), "unable to parse Encrypted config field");
                 }
 
+                m_builder.SetProductVersion(m_defaultConfig.ProductVersion());
+                m_builder.SetBuildNumber(m_defaultConfig.BuildNumber());
+
                 Eegeo_ASSERT(document.HasMember("Name"));
                 m_builder.SetApplicationName(document["Name"].GetString());
 
