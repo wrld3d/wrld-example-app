@@ -13,36 +13,39 @@ namespace ExampleApp
         namespace View
         {
             DirectionsMenuController::DirectionsMenuController(Menu::View::IMenuModel& model,
-                                     Menu::View::IMenuViewModel& viewModel,
-                                     Menu::View::IMenuView& view,
-                                     DirectionsMenu::View::IDirectionsMenuView& directionsMenuView,
-                                    Menu::View::IMenuSectionViewModel& searchSectionViewModel,
-                                     Modality::View::IModalBackgroundView& modalBackgroundView,
-                                     ExampleAppMessaging::TMessageBus& messageBus,
-                                     Eegeo::Location::ILocationService& locationService,ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel)
-                        : Menu::View::MenuController(model, viewModel, view, messageBus)
-                        , m_directionsMenuView(directionsMenuView)
-                        , m_searchSectionViewModel(searchSectionViewModel)
-                        , m_modalBackgroundView(modalBackgroundView)
-                        , m_messageBus(messageBus)
-                        , m_appModeAllowsOpen(true)
-                        , m_appModeChangedCallback(this, &DirectionsMenuController::OnAppModeChanged)
-                        , m_directionsMenuStateChangedCallback(this, &DirectionsMenuController::OnDirectionsMenuStateChanged)
-                        , m_searchPerformedCallbacks(this, &DirectionsMenuController::OnSearch)
-                        , m_searchClearedCallbacks(this, &DirectionsMenuController::OnSearchCleared)
-                        , m_wayPointSelectedCallbacks(this, &DirectionsMenuController::OnWayPointItemSelected)
-                        , m_exitDirectionsCallbacks(this, &DirectionsMenuController::OnExitDirectionsClicked)
-                        , m_onModalBackgroundTappedCallback(this, &DirectionsMenuController::OnModalBackgroundTapped)
-                        , m_onOpenStateChangedCallback(this, &DirectionsMenuController::OnOpenStateChanged)
-                        , m_onSearchItemAddedCallback(this, &DirectionsMenuController::OnSearchItemAdded)
-                        , m_onSearchItemRemovedCallback(this, &DirectionsMenuController::OnSearchItemRemoved)
-                        , m_directionsMenuHighlightItemCallback(this, &DirectionsMenuController::OnDirectionsHighlightItem)
-                        , m_onStartLocationChangedCallback(this,&DirectionsMenuController::OnStartLocationChanged)
-                        , m_onEndLocationChangedCallback(this, &DirectionsMenuController::OnEndLocationChanged)
-                        , m_onStartLocationResponseReceivedCallback(this, &DirectionsMenuController::OnGeoNamesStartLocationResponseReceived)
-                        , m_isExitDirections(false)
-                        , m_locationService(locationService)
-                        , m_settingsMenuViewModel(settingsMenuViewModel)
+                                                               Menu::View::IMenuViewModel& viewModel,
+                                                               Menu::View::IMenuView& view,
+                                                               DirectionsMenu::View::IDirectionsMenuView& directionsMenuView,
+                                                               Menu::View::IMenuSectionViewModel& searchSectionViewModel,
+                                                               Modality::View::IModalBackgroundView& modalBackgroundView,
+                                                               ExampleAppMessaging::TMessageBus& messageBus,
+                                                               Eegeo::Location::ILocationService& locationService,
+                                                               ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
+                                                               ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel)
+            : Menu::View::MenuController(model, viewModel, view, messageBus)
+            , m_directionsMenuView(directionsMenuView)
+            , m_searchSectionViewModel(searchSectionViewModel)
+            , m_modalBackgroundView(modalBackgroundView)
+            , m_messageBus(messageBus)
+            , m_appModeAllowsOpen(true)
+            , m_appModeChangedCallback(this, &DirectionsMenuController::OnAppModeChanged)
+            , m_directionsMenuStateChangedCallback(this, &DirectionsMenuController::OnDirectionsMenuStateChanged)
+            , m_searchPerformedCallbacks(this, &DirectionsMenuController::OnSearch)
+            , m_searchClearedCallbacks(this, &DirectionsMenuController::OnSearchCleared)
+            , m_wayPointSelectedCallbacks(this, &DirectionsMenuController::OnWayPointItemSelected)
+            , m_exitDirectionsCallbacks(this, &DirectionsMenuController::OnExitDirectionsClicked)
+            , m_onModalBackgroundTappedCallback(this, &DirectionsMenuController::OnModalBackgroundTapped)
+            , m_onOpenStateChangedCallback(this, &DirectionsMenuController::OnOpenStateChanged)
+            , m_onSearchItemAddedCallback(this, &DirectionsMenuController::OnSearchItemAdded)
+            , m_onSearchItemRemovedCallback(this, &DirectionsMenuController::OnSearchItemRemoved)
+            , m_directionsMenuHighlightItemCallback(this, &DirectionsMenuController::OnDirectionsHighlightItem)
+            , m_onStartLocationChangedCallback(this,&DirectionsMenuController::OnStartLocationChanged)
+            , m_onEndLocationChangedCallback(this, &DirectionsMenuController::OnEndLocationChanged)
+            , m_onStartLocationResponseReceivedCallback(this, &DirectionsMenuController::OnGeoNamesStartLocationResponseReceived)
+            , m_isExitDirections(false)
+            , m_locationService(locationService)
+            , m_settingsMenuViewModel(settingsMenuViewModel)
+            , m_searchMenuViewModel(searchMenuViewModel)
 
             {
                 m_directionsMenuView.InsertSearchPeformedCallback(m_searchPerformedCallbacks);
@@ -210,6 +213,7 @@ namespace ExampleApp
                 MenuController::OnViewClicked();
                 m_isExitDirections = true;
                 m_settingsMenuViewModel.AddToScreen();
+                m_searchMenuViewModel.AddToScreen();
 
             }
             
@@ -218,11 +222,15 @@ namespace ExampleApp
                 if(m_viewModel.IsFullyClosed())
                 {
                     m_settingsMenuViewModel.RemoveFromScreen();
+                    m_searchMenuViewModel.RemoveFromScreen();
+
                     
                 }
                 else if(m_viewModel.IsFullyOpen())
                 {
                     m_settingsMenuViewModel.AddToScreen();
+                    m_searchMenuViewModel.AddToScreen();
+
                     
                 }
             }

@@ -34,7 +34,8 @@ namespace ExampleApp
                                          Modality::View::IModalBackgroundView& modalBackgroundView,
                                          ExampleAppMessaging::TMessageBus& messageBus,
                                          Eegeo::Location::ILocationService& locationService,
-                                         ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel);
+                                         ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
+                                         ExampleApp::Menu::View::IMenuViewModel& searchSideMenuViewModel);
                 
                 ~DirectionsMenuViewModule();
                 

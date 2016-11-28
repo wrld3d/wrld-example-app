@@ -27,6 +27,7 @@ namespace ExampleApp
                 IDirectionsMenuView& m_directionsMenuView;
                 Menu::View::IMenuSectionViewModel& m_searchSectionViewModel;
                 ExampleApp::Menu::View::IMenuViewModel& m_settingsMenuViewModel;
+                ExampleApp::Menu::View::IMenuViewModel& m_searchMenuViewModel;
                 
                 Eegeo::Helpers::TCallback2<DirectionsMenuController, const Eegeo::Space::LatLong&,const Eegeo::Space::LatLong&> m_searchPerformedCallbacks;
                 Eegeo::Helpers::TCallback0<DirectionsMenuController> m_searchClearedCallbacks;
@@ -107,7 +108,8 @@ namespace ExampleApp
                                          Modality::View::IModalBackgroundView& modalBackgroundView,
                                          ExampleAppMessaging::TMessageBus& messageBus,
                                          Eegeo::Location::ILocationService& locationService,
-                                         ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel);
+                                         ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
+                                         ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel);
                 
                 virtual ~DirectionsMenuController();
                 
