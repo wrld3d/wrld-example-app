@@ -3,7 +3,7 @@
 #pragma once
 
 #include <string>
-#include "GLBufferPool.h"
+#include "GlBufferPool.h"
 #include "Mesh.h"
 #include "Types.h"
 #include "VertexLayoutPool.h"

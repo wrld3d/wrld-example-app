@@ -13,7 +13,7 @@
 #include "ShaderIdGenerator.h"
 #include "MaterialIdGenerator.h"
 #include "SceneModelFactory.h"
-#include "PODfile.h"
+#include "PODFile.h"
 #include "PODFileParser.h"
 #include "PODNode.h"
 #include "PODScene.h"

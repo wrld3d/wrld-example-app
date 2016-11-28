@@ -9,7 +9,7 @@
 #include "EegeoSearchResultModel.h"
 #include "SwallowSearchConstants.h"
 #include "SwallowSearchParser.h"
-#include "logger.h"
+#include "Logger.h"
 
 namespace ExampleApp
 {

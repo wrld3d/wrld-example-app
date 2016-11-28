@@ -5,7 +5,7 @@
 #include "IGpsMarkerModule.h"
 #include "GpsMarker.h"
 #include "Rendering.h"
-#include "GlHelpers.h"
+#include "GLHelpers.h"
 #include "Modules.h"
 #include "Location.h"
 #include "BidirectionalBus.h"

@@ -1,6 +1,6 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-#include "types.h"
+#include "Types.h"
 #include "TweetModel.h"
 #include "LatLongAltitude.h"
 #include <sstream>

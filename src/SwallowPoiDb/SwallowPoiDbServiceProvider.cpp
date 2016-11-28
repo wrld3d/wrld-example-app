@@ -2,7 +2,7 @@
 
 #include "SwallowPoiDbServiceProvider.h"
 
-#include "SwallowPoiDbCombinedService.H"
+#include "SwallowPoiDbCombinedService.h"
 #include "WorldPinsService.h"
 
 namespace ExampleApp

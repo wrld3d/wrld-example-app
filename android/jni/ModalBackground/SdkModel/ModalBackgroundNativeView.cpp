@@ -8,7 +8,7 @@
 #include "MaterialIdGenerator.h"
 #include "Mesh.h"
 #include "Quad.h"
-#include "GLBufferPool.h"
+#include "GlBufferPool.h"
 #include "VertexLayoutPool.h"
 #include "VertexBinding.h"
 #include "WorldMeshRenderable.h"
