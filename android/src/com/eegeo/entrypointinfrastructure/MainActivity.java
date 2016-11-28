@@ -2,8 +2,7 @@
 
 package com.eegeo.entrypointinfrastructure;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
 import android.app.Activity;
 import android.content.Context;
@@ -27,14 +26,14 @@ public abstract class MainActivity extends Activity implements SurfaceHolder.Cal
     private PhotoIntentDispatcher m_photoIntentDispatcher;
     private RuntimePermissionDispatcher m_runtimePermissionDispatcher;
     private boolean m_touchEnabled;
-    private List<OnPauseListener> m_onPauseListeners;
+    private LinkedList<OnPauseListener> m_onPauseListeners;
 
     public MainActivity()
     {
         m_photoIntentDispatcher = new PhotoIntentDispatcher(this);
         m_runtimePermissionDispatcher = new RuntimePermissionDispatcher(this);
         m_touchEnabled = true;
-        m_onPauseListeners = new ArrayList<OnPauseListener>();
+        m_onPauseListeners = new LinkedList<OnPauseListener>();
     }
 
     public PhotoIntentDispatcher getPhotoIntentDispatcher()
@@ -99,6 +98,11 @@ public abstract class MainActivity extends Activity implements SurfaceHolder.Cal
     public void addOnPauseListener(OnPauseListener l)
     {
         m_onPauseListeners.add(l);
+    }
+
+    public void deleteOnPauseListener(OnPauseListener l)
+    {
+        m_onPauseListeners.remove(l);
     }
 
     @Override

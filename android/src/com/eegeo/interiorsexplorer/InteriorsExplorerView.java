@@ -211,6 +211,7 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
         m_uiRootView = null;
         
         m_scrollHandler.removeCallbacks(m_scrollingRunnable);
+        m_activity.deleteOnPauseListener(this);
     }
     
     public void playShakeSliderAnim()
