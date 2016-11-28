@@ -134,8 +134,8 @@ public class WatermarkView implements View.OnClickListener
 
      builder.setTitle(m_popupTitle);
      builder.setMessage(m_popupBody);
-     builder.setPositiveButton("Find Out More", createClickListener(true));
-     builder.setNegativeButton("Later", createClickListener(false));
+     builder.setNegativeButton("Find Out More", createClickListener(true));
+     builder.setPositiveButton("Later", createClickListener(false));
      builder.setCancelable(false);
 
      m_options = builder.show();
