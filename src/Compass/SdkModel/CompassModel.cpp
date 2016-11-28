@@ -124,11 +124,10 @@ namespace ExampleApp
             {
                 if(!m_locationService.GetIsAuthorized())
                 {
-              {  DisableGpsMode();
+                    DisableGpsMode();
                     return;
                 }
                 
-}
                 GpsMode::Values gpsModeValueFromNavigationService = m_compassGpsModeToNavigationGpsMode[value];
                 // override value if we know we are using navigation service
                 if(m_exitInteriorTriggered)
@@ -167,6 +166,7 @@ namespace ExampleApp
             void CompassModel::SetGpsMode(GpsMode::Values gpsMode)
             {
                 m_gpsMode = gpsMode;
+                m_navigationService.SetGpsMode(m_navigationGpsModeToCompassGpsMode[m_gpsMode]);
                 m_metricsService.SetEvent("SetGpsMode", "GpsMode", m_gpsModeToString[m_gpsMode]);
                 
                 m_gpsModeChangedCallbacks.ExecuteCallbacks();
