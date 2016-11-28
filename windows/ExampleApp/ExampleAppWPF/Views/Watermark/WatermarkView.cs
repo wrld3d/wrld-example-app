@@ -63,7 +63,7 @@ namespace ExampleAppWPF
 
         private void OnClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            DialogBox dialogBox = new DialogBox(m_popupTitle, m_popupBody, "Find Out More", "Later");
+            DialogBox dialogBox = new DialogBox(m_popupTitle, m_popupBody, "Later", "Find Out More");
             dialogBox.Owner = m_currentWindow;
 
             m_currentWindow.SetOpacity(MainWindow.OpacityOnPopup);
@@ -74,7 +74,7 @@ namespace ExampleAppWPF
 
             WatermarkCLI.OnSelected(m_nativeCallerPointer);
 
-            if (result != null && result == true)
+            if (result != null && result == false)
             {
                 Process.Start(new ProcessStartInfo(m_webUrl));
             }
