@@ -334,8 +334,8 @@ namespace
     self.pTitleLabel.text = [NSString stringWithUTF8String:pModel->GetTitle().c_str()];
     
     [self.pCategoryIconContainer.subviews makeObjectsPerformSelector: @selector(removeFromSuperview)];
-    std::string categoryIcon = ExampleApp::Helpers::IconResources::GetSmallIconForTag(pModel->GetPrimaryTag());
-    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pCategoryIconContainer, categoryIcon, ExampleApp::Helpers::ImageHelpers::Centre);
+    std::string iconKey = ExampleApp::Helpers::IconResources::GetSmallIconForTag(pModel->GetIconKey());
+    ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pCategoryIconContainer, iconKey, ExampleApp::Helpers::ImageHelpers::Centre);
     
     self.pPreviewImage.hidden = true;
     self.pCategoriesHeaderContainer.hidden = true;
