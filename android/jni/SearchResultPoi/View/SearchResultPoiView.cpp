@@ -447,16 +447,15 @@ namespace ExampleApp
 				m_uiViewClass = CreateJavaClass(viewClass);
 				m_uiView = CreateJavaObject(m_uiViewClass);
 
-				ExampleApp::Search::Swallow::SdkModel::SwallowDepartmentResultModel departmentModel;
-				departmentModel = ExampleApp::Search::Swallow::SdkModel::SearchParser::TransformToSwallowDepartmentResult(model);
+				const ExampleApp::Search::Swallow::SdkModel::SwallowFacilityResultModel facilityModel = ExampleApp::Search::Swallow::SdkModel::SearchParser::TransformToSwallowFacilityResult(model);
 
 				AndroidSafeNativeThreadAttachment attached(m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
 				jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
-				jstring descriptionStr = env->NewStringUTF(departmentModel.GetDescription().c_str());
+				jstring descriptionStr = env->NewStringUTF(facilityModel.GetDescription().c_str());
 				jstring iconKeyStr = env->NewStringUTF(model.GetIconKey().c_str());
-				jstring imageUrlStr = env->NewStringUTF(departmentModel.GetImageUrl().c_str());
+				jstring imageUrlStr = env->NewStringUTF(facilityModel.GetImageUrl().c_str());
 
 				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
 				env->CallVoidMethod(
