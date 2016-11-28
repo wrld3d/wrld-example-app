@@ -400,7 +400,7 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
     		detectAndRemoveInitialJump(m_scrollYCoordinate);
     	}
     }
-    
+
     private void endDraggingButton()
     {
     	endScrollingUpdate();
@@ -408,7 +408,7 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
     	hideFloorLabels();
 		m_draggingFloorButton = false;
 		m_floorButton.getBackground().setState(new int[] {});
-		
+
 		View firstVisibleChild = m_floorList.getChildAt(0);
 		float topY = (m_floorList.getFirstVisiblePosition() * ListItemHeight) - firstVisibleChild.getTop();
 		
@@ -416,6 +416,7 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
 		int floorCount = m_floorListAdapter.getCount()-1;
 		int selectedFloor = Math.round(dragParameter * floorCount);
 		moveButtonToFloorIndex(selectedFloor, true);
+
 		InteriorsExplorerViewJniMethods.OnFloorSelected(m_nativeCallerPointer, selectedFloor);
     }
     
@@ -531,7 +532,7 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
 
     public void notifyOnPause()
     {
-        endDraggingButton();
+        endScrollingUpdate();
     }
     
     private void refreshFloorIndicator(int floorIndex)
