@@ -22,7 +22,6 @@ namespace ExampleApp
                                const std::string& viewClassName)
                 : m_nativeState(nativeState)
                 , m_pTryDragFunc(NULL)
-            	, m_numberOfItemsOnLastRefresh(0)
             {
                 ASSERT_UI_THREAD
 
@@ -117,13 +116,6 @@ namespace ExampleApp
 					const IMenuSectionViewModel& section = *(sections.at(i));
 					numItems += section.GetTotalItemCount() + 1;
 				}
-
-				if (numItems == m_numberOfItemsOnLastRefresh)
-				{
-					return;
-				}
-
-				m_numberOfItemsOnLastRefresh = numItems;
 
                 m_currentSections = sections;
 
