@@ -497,7 +497,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     	menuHeightAnimator.setDuration(SearchMenuResultsListAnimationConstants.SearchMenuListTotalAnimationSpeedMilliseconds);
     	menuHeightAnimator.start();
     	m_searchList.setSelection(0);
-    	
+
     	if(fullHeight > availableHeight + cellHeight)
     	{
     		m_searchResultsFade.setVisibility(View.VISIBLE);
@@ -515,12 +515,6 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     		m_searchResultsScrollButton.setVisibility(View.INVISIBLE);
     		m_searchResultsScrollable = false;
     	}
-    	
-    	m_searchResultsScrollListener.UpdateScrollable(m_searchResultsScrollable);
-    	
-    	m_searchResultsFade.setVisibility(View.INVISIBLE);
-    	m_searchResultsScrollButton.setVisibility(View.INVISIBLE);
-    	m_searchResultsScrollable = false;
     	
     	m_searchResultsScrollListener.UpdateScrollable(m_searchResultsScrollable);
     	
