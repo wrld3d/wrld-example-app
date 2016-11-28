@@ -22,6 +22,11 @@ using namespace Eegeo::iOS;
      selector: @selector(onResume)
      name: @"handleResume"
      object: nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(tryLoadApplication)
+                                                 name: @"handleConfigLoad"
+                                               object: nil];
 
     if([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)])
     {
@@ -31,6 +36,12 @@ using namespace Eegeo::iOS;
     m_previousTimestamp = CFAbsoluteTimeGetCurrent();
     self.preferredFramesPerSecond = 60;
     m_pAppRunner = NULL;
+}
+
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver: self];
+    [super dealloc];
 }
 
 - (void)onPause
@@ -64,23 +75,13 @@ using namespace Eegeo::iOS;
 {
     if(m_pAppRunner == NULL)
     {
-        AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-        
-        self.pBackingView = [[[UIView alloc] initWithFrame:[self view].frame] autorelease];
-        self.pBackingView.hidden = NO;
-        self.pBackingView.backgroundColor = [UIColor clearColor];
-        [[self view] addSubview:self.pBackingView];
-        m_pAppRunner = new AppRunner(*self, [self view], *appDelegate.applicationConfiguration, *appDelegate.metricsService);
-        if(appDelegate.launchUrl)
-        {
-            AppInterface::UrlData data;
-            data.host = [appDelegate.launchUrl.host UTF8String];
-            data.path = [appDelegate.launchUrl.path UTF8String];
-            m_pAppRunner->HandleUrlOpen(data);
-        }
+        [self tryLoadApplication];
+    }
+    else
+    {
+        m_pAppRunner->NotifyViewLayoutChanged();
     }
     [[self view] sendSubviewToBack:self.pBackingView];
-    m_pAppRunner->NotifyViewLayoutChanged();
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
@@ -103,6 +104,29 @@ using namespace Eegeo::iOS;
     Eegeo_GL(glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 2, discards));
 
     m_previousTimestamp = timeNow;
+}
+
+- (void) tryLoadApplication
+{
+    AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    self.pBackingView = [[[UIView alloc] initWithFrame:[self view].frame] autorelease];
+    self.pBackingView.hidden = NO;
+    self.pBackingView.backgroundColor = [UIColor clearColor];
+    [[self view] addSubview:self.pBackingView];
+    
+    if(appDelegate.applicationConfiguration != Nil)
+    {
+        m_pAppRunner = new AppRunner(*self, [self view], *appDelegate.applicationConfiguration, *appDelegate.metricsService);
+        if(appDelegate.launchUrl)
+        {
+            AppInterface::UrlData data;
+            data.host = [appDelegate.launchUrl.host UTF8String];
+            data.path = [appDelegate.launchUrl.path UTF8String];
+            m_pAppRunner->HandleUrlOpen(data);
+        }
+        [[self view] sendSubviewToBack:self.pBackingView];
+        m_pAppRunner->NotifyViewLayoutChanged();
+    }
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer

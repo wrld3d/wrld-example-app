@@ -12,6 +12,8 @@
     AppRunner* m_pAppRunner;
 }
 
+-(void) tryLoadApplication;
+
 @property (nonatomic, retain) UIView* pBackingView;
 
 @end

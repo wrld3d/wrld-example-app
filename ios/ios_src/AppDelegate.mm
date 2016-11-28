@@ -14,49 +14,6 @@
 #include "AppInterface.h"
 #include "DeepLinkConfigHandler.h"
 
-namespace
-{
-    typedef ExampleApp::ApplicationConfig::ApplicationConfiguration ApplicationConfiguration;
-    
-    ApplicationConfiguration LoadConfiguration(NSURL* deepLinkUrl)
-    {
-        ExampleApp::ApplicationConfig::SdkModel::iOSApplicationConfigurationVersionProvider iOSVersionProvider;
-        
-        if(deepLinkUrl != nil)
-        {
-            AppInterface::UrlData data = {[[deepLinkUrl host] UTF8String], [[deepLinkUrl path] UTF8String]};
-            
-            NSString* url = [NSString stringWithUTF8String:ExampleApp::DeepLink::SdkModel::GenerateConfigUrl(data).c_str()];
-            NSURL* configWebRequestUrl= [NSURL URLWithString:url];
-            NSURLRequest *request = [NSURLRequest requestWithURL:configWebRequestUrl cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:30.0];
-            NSError *error = nil;
-            NSURLResponse *response = nil;
-            NSData *webResponse = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-            
-            if(!error)
-            {
-                const NSString* configResult = [[NSString alloc] initWithData:webResponse encoding:NSUTF8StringEncoding];
-                
-                ApplicationConfiguration* pAppConfig = ExampleApp::ApplicationConfig::SdkModel::CreateConfigFromJson([configResult UTF8String], iOSVersionProvider);
-                if(pAppConfig != NULL)
-                {
-                    ApplicationConfiguration returnConfig(*pAppConfig);
-                    Eegeo_DELETE(pAppConfig);
-                    pAppConfig = NULL;
-                    return returnConfig;
-                }
-            }
-        }
-        
-        // create file IO instance (iOSPlatformAbstractionModule not yet available in app lifetime)
-        Eegeo::iOS::iOSFileIO tempFileIO;
-        
-        return ExampleApp::ApplicationConfig::SdkModel::LoadAppConfig(tempFileIO, iOSVersionProvider, ExampleApp::ApplicationConfigurationPath);
-    }
-}
-
-
-
 @implementation AppDelegate
 
 @synthesize window = _window;
@@ -65,6 +22,7 @@ namespace
 {
     Eegeo_DELETE _metricsService;
     Eegeo_DELETE _applicationConfiguration;
+    Eegeo_DELETE _pIOSVersionProvider;
     
     [super dealloc];
 }
@@ -91,11 +49,7 @@ namespace
         }
     }
 
-    ApplicationConfiguration appConfig = LoadConfiguration(appConfigDeepLinkUrl);
-    _applicationConfiguration = Eegeo_NEW(ApplicationConfiguration)(appConfig);
-    
-    // Flurry metrics service must be started during didFinishLaunchingWithOptions (events not logged on >= iOS 8.0 if started later)
-    _metricsService->BeginSession(_applicationConfiguration->FlurryAppKey(), appConfig.CombinedVersionString());
+    [self LoadAppConfig:appConfigDeepLinkUrl];
     
 	return YES;
 }
@@ -145,6 +99,63 @@ namespace
                                                         object: url
                                                       userInfo: nil];
     return YES;
+}
+
+- (void) LoadAppConfig:(NSURL*) deepLinkUrl
+{
+    _pIOSVersionProvider = Eegeo_NEW(ExampleApp::ApplicationConfig::SdkModel::iOSApplicationConfigurationVersionProvider)();
+    
+    if(deepLinkUrl != nil)
+    {
+        AppInterface::UrlData deepLinkData = {[[deepLinkUrl host] UTF8String], [[deepLinkUrl path] UTF8String]};
+        
+        NSString* url = [NSString stringWithUTF8String:ExampleApp::DeepLink::SdkModel::GenerateConfigUrl(deepLinkData).c_str()];
+        NSURL* configWebRequestUrl= [NSURL URLWithString:url];
+        NSURLRequest *request = [NSURLRequest requestWithURL:configWebRequestUrl cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:30.0];
+        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
+         {
+             if (error)
+             {
+                 Eegeo_TTY("Error loading application config from web, reverting to default.");
+                 Eegeo::iOS::iOSFileIO tempFileIO;
+                 
+                 [self OnLoadAppConfig: ExampleApp::ApplicationConfig::SdkModel::LoadAppConfig(tempFileIO, *_pIOSVersionProvider, ExampleApp::ApplicationConfigurationPath)];
+             }
+             else
+             {
+                 const NSString* configResult = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                 
+                 ExampleApp::ApplicationConfig::ApplicationConfiguration* pAppConfig = ExampleApp::ApplicationConfig::SdkModel::CreateConfigFromJson([configResult UTF8String], *_pIOSVersionProvider);
+                 if(pAppConfig != NULL)
+                 {
+                     ExampleApp::ApplicationConfig::ApplicationConfiguration returnConfig(*pAppConfig);
+                     Eegeo_DELETE(pAppConfig);
+                     [self OnLoadAppConfig: returnConfig];
+                 }
+                 else
+                 {
+                     // create file IO instance (iOSPlatformAbstractionModule not yet available in app lifetime)
+                     Eegeo::iOS::iOSFileIO tempFileIO;
+                     [self OnLoadAppConfig: ExampleApp::ApplicationConfig::SdkModel::LoadAppConfig(tempFileIO, *_pIOSVersionProvider, ExampleApp::ApplicationConfigurationPath)];
+                 }
+                 [configResult release];
+             }
+         }];
+    }
+    else
+    {
+        // create file IO instance (iOSPlatformAbstractionModule not yet available in app lifetime)
+        Eegeo::iOS::iOSFileIO tempFileIO;
+        [self OnLoadAppConfig: ExampleApp::ApplicationConfig::SdkModel::LoadAppConfig(tempFileIO, *_pIOSVersionProvider, ExampleApp::ApplicationConfigurationPath)];
+    }
+}
+- (void) OnLoadAppConfig:(const ExampleApp::ApplicationConfig::ApplicationConfiguration&) appConfig
+{
+    _applicationConfiguration = Eegeo_NEW(ExampleApp::ApplicationConfig::ApplicationConfiguration)(appConfig);
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"handleConfigLoad"
+                                                        object:nil];
+    // Flurry metrics service must be started during didFinishLaunchingWithOptions (events not logged on >= iOS 8.0 if started later)
+    _metricsService->BeginSession(_applicationConfiguration->FlurryAppKey(), appConfig.CombinedVersionString());
 }
 
 
