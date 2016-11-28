@@ -359,7 +359,6 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     public void animateOffScreen()
     {
     	super.animateOffScreen();    	
-    	super.animateOffScreen();
     }
     
     @Override
