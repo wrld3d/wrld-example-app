@@ -519,12 +519,6 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     	
     	m_searchResultsScrollListener.UpdateScrollable(m_searchResultsScrollable);
     	
-    	if (m_searchResultsScrollButton.getX() == 0)
-    	{
-	        m_searchResultsScrollButton.setX(m_searchResultsFade.getPaddingLeft()
-	        		- m_searchResultsScrollButton.getWidth()/2
-	        		+ (m_searchResultsFade.getWidth() - (m_searchResultsFade.getPaddingLeft() + m_searchResultsFade.getPaddingRight()))/2);
-    	}
     	m_searchResultsFade.setVisibility(View.INVISIBLE);
     	m_searchResultsScrollButton.setVisibility(View.INVISIBLE);
     	m_searchResultsScrollable = false;
