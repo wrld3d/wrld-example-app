@@ -50,7 +50,7 @@ namespace ExampleApp
                         Eegeo::Routes::Route* route = routes[0];
                         Eegeo::Space::LatLong currentLatLong = Eegeo::Space::LatLong::FromDegrees(0.0, 0.0);
                         m_locationService.GetLocation(currentLatLong);
-                        Eegeo::Space::LatLongAltitude firstLatLong = Eegeo::Space::LatLongAltitude::FromDegrees(currentLatLong.GetLatitudeInDegrees(), currentLatLong.GetLongitudeInDegrees(),0.0);//Eegeo::Space::LatLongAltitude::FromDegrees(56.459905999999997, -2.9840330000000002,0.0);
+                        Eegeo::Space::LatLongAltitude firstLatLong = Eegeo::Space::LatLongAltitude::FromDegrees(currentLatLong.GetLatitudeInDegrees(), currentLatLong.GetLongitudeInDegrees(),0.0);
                         double out_closestApproch;
                         int out_immedeiatly_before;
                         double distance = Eegeo::Routes::Route::DistanceToRoute(route->GetPoints(),firstLatLong.ToECEF(),out_closestApproch,out_immedeiatly_before);

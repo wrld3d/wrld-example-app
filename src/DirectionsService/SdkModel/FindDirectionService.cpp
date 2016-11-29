@@ -59,7 +59,6 @@ namespace ExampleApp
                 {
                     const std::string& response(m_pCurrentRequest->ResponseString());
                     DirectionResultModel result =  m_findDirectionResultParser.ParseGeoNamesQueryResults(response);
-                    //m_findDirectionqueryResponseReceivedCallbacks.ExecuteCallbacks(result);
                      m_messageBus.Publish(DirectionResultSection::DirectionQueryResponseReceivedMessage(result));
                     
                     if(result.GetCode() == "Error")

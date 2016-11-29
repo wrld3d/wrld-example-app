@@ -38,6 +38,7 @@ namespace ExampleApp
         , m_directionsMenuStateChangedCallback(this, &PathDrawingController::OnDirectionsMenuStateChanged)
         , m_onDirectionItemAddedCallback(this, &PathDrawingController::OnSearchItemAdded)
         , m_onDirectionItemRemovedCallback(this, &PathDrawingController::OnSearchItemRemoved)
+        , m_onFindNewDirectionCallback(this, &PathDrawingController::OnFindNewDirection)
         {
             m_pPathDrawingSettings = Eegeo_NEW(ExampleApp::PathDrawing::PathDrawingOptionsModel)();
             m_routeThicknessPolicy.SetScaleFactor(1.0f);
@@ -49,6 +50,9 @@ namespace ExampleApp
             searchSectionMenuModel.InsertItemAddedCallback(m_onDirectionItemAddedCallback);
             searchSectionMenuModel.InsertItemRemovedCallback(m_onDirectionItemRemovedCallback);
             
+            m_messageBus.SubscribeNative(m_onFindNewDirectionCallback);
+
+            
             
         }
         
@@ -57,6 +61,7 @@ namespace ExampleApp
             Eegeo_DELETE m_pPathDrawingSettings;
             m_messageBus.UnsubscribeUi(m_directionResultReceivedHandler);
             m_messageBus.UnsubscribeUi(m_directionsMenuStateChangedCallback);
+            m_messageBus.UnsubscribeNative(m_onFindNewDirectionCallback);
 
         }
         
@@ -77,7 +82,6 @@ namespace ExampleApp
 
         }
 
-        
         void PathDrawingController::Update(float dt)
         {
             
@@ -99,33 +103,18 @@ namespace ExampleApp
             }
         }
         
+        void PathDrawingController::OnFindNewDirection(const DirectionsMenu::DirectionMenuFindDirectionMessage&)
+        {
+            if(m_createdRoutes)
+            {
+               RemoveRoutePlan();
+            }
+        }
+
+        
         void PathDrawingController::CreateRoutePlan(Direction::SdkModel::DirectionResultModel& directionResultModel)
         {
-  //          const float altitudeMeters = m_pPathDrawingSettings->GetRouteAltitudeMeter();;
-            
-//            Eegeo::Routes::Style::RouteStyle routeStyle(&m_routeThicknessPolicy, Eegeo::Routes::Style::RouteStyle::DebugStyleNone);
-//            
-//            RouteBuilder builder;
-//            
-//            std::vector<RouteVertex> points = builder.Start(m_pPathDrawingSettings->GetRoutePrimaryColor(), m_pPathDrawingSettings->GetRouteWidth(), m_pPathDrawingSettings->GetRouteSpeed(), Routes::Road)
-//            .AddPoint(56.459676, -2.977240, altitudeMeters)
-//            .AddPoint(56.459178, -2.975524, altitudeMeters)
-//            .AddPoint(56.458467, -2.973764, altitudeMeters)
-//            .AddPoint(56.457827, -2.972691, altitudeMeters)
-//            .AddPoint(56.457779, -2.971833, altitudeMeters)
-//            .AddPoint(56.457771, -2.971389, altitudeMeters)
-//            .AddPoint(56.457860, -2.970793, altitudeMeters)
-//            .AddPoint(56.458822, -2.968892, altitudeMeters)
-//            .AddPoint(56.461725, -2.964054, altitudeMeters)
-//            .AddPoint(56.461547, -2.963546, altitudeMeters)
-//            .AddPoint(56.461427, -2.963596, altitudeMeters)
-//            .AddPoint(56.461369, -2.963540, altitudeMeters)
-//            .AddPoint(56.460882, -2.962729, altitudeMeters)
-//            .FinishRoute();
-//            
-//            m_routes.push_back(m_routeService.CreateRoute(points, routeStyle, false));
-            
-            
+
             const std::vector<Direction::SdkModel::DirectionRouteModel>& routes = directionResultModel.GetRoutes();
             if(routes.size() > 0)
             {
@@ -163,14 +152,6 @@ namespace ExampleApp
                     m_routes.push_back(m_routeService.CreateRoute(points, routeStyle, false));
 
                 }
-                
-                
-                
-                
-                
-                
-              //  std::vector<RouteVertex> otherPoints = builder.Start(m_pPathDrawingSettings->GetRouteSecondaryColor(), m_pPathDrawingSettings->GetRouteWidth(), m_pPathDrawingSettings->GetRouteSpeed(), Routes::Road)
-
             }
             m_createdRoutes = true;
         }
@@ -182,7 +163,6 @@ namespace ExampleApp
                 RemoveRoutePlan();
             }
         }
-        
         
         void PathDrawingController::RemoveRoutePlan()
         {
@@ -211,8 +191,6 @@ namespace ExampleApp
         {
             return m_routes;
         }
-
-
     }
 }
 

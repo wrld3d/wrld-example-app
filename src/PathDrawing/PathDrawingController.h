@@ -16,6 +16,7 @@
 #include "BidirectionalBus.h"
 #include "PathDrawingOptionsModel.h"
 #include "DirectionResultModel.h"
+#include "DirectionMenuFindDirectionMessage.h"
 
 namespace ExampleApp
 {
@@ -39,6 +40,8 @@ namespace ExampleApp
             
             Eegeo::Helpers::TCallback1<PathDrawingController, Menu::View::MenuItemModel> m_onDirectionItemAddedCallback;
             Eegeo::Helpers::TCallback1<PathDrawingController, Menu::View::MenuItemModel> m_onDirectionItemRemovedCallback;
+            Eegeo::Helpers::TCallback1<PathDrawingController, const DirectionsMenu::DirectionMenuFindDirectionMessage&> m_onFindNewDirectionCallback;
+
             
             bool m_createdRoutes;
             std::vector<Eegeo::Routes::Route*> m_routes;
@@ -54,6 +57,8 @@ namespace ExampleApp
             void OnSearchItemAdded(Menu::View::MenuItemModel& item);
             
             void OnSearchItemRemoved(Menu::View::MenuItemModel& item);
+            
+            void OnFindNewDirection(const DirectionsMenu::DirectionMenuFindDirectionMessage&);
             
         public:
 
