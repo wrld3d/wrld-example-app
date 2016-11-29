@@ -119,6 +119,19 @@ namespace ExampleApp
                     platformConfig.MapLayersConfig.LabelsModuleConfig.StyleSheetPath = "";
                     
                 }
+
+                platformConfig.OptionsConfig.InteriorsAffectedByFlattening = false;
+
+                platformConfig.MapLayersConfig.Interiors.LabelsVisibleWhenExpanded = true;
+
+                platformConfig.MapLayersConfig.Interiors.FloorAnimatorConfiguration.ExpandedFloorSpacingFactor = 0.15f;
+                platformConfig.MapLayersConfig.Interiors.FloorAnimatorConfiguration.ExpandedSelectedFloorGapFactor = 9.0f;
+                platformConfig.MapLayersConfig.Interiors.FloorAnimatorConfiguration.FloorScaleWhenSelected = 2.0f;
+                platformConfig.MapLayersConfig.Interiors.FloorAnimatorConfiguration.ExpandedDeadZone = 0.2f;
+                platformConfig.MapLayersConfig.Interiors.FloorAnimatorConfiguration.ExpandedLookAtDeadZone = 0.2f;
+                platformConfig.MapLayersConfig.Interiors.FloorAnimatorConfiguration.UseBoundsMaxDimension = true;
+                platformConfig.MapLayersConfig.Interiors.FloorAnimatorConfiguration.UseLargeFloorGapForSmallFloorCount = false;
+
                 return platformConfig;
             }
             

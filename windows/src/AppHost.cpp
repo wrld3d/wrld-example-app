@@ -93,7 +93,6 @@
 #include "WindowsApplicationConfigurationVersionProvider.h"
 #include "ModalityIgnoredReactionModel.h"
 #include "WindowsApplicationConfigurationVersionProvider.h"
-#include "PlatformConfigBuilder.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
@@ -186,8 +185,8 @@ AppHost::AppHost(
     Eegeo::EffectHandler::Initialise();
 
     const std::string& deviceModel = nativeState.GetDeviceModel();
-    const Eegeo::Config::PlatformConfig& defaultPlatformConfig = Eegeo::Windows::WindowsPlatformConfigBuilder(deviceModel).Build();
-    const Eegeo::Config::PlatformConfig& platformConfiguration = ExampleApp::PlatformConfigBuilder::Build(defaultPlatformConfig, applicationConfiguration, "EmbeddedTheme");
+    Eegeo::Windows::WindowsPlatformConfigBuilder windowsPlatformConfigBuilder(deviceModel);
+    const Eegeo::Config::PlatformConfig& platformConfiguration = ExampleApp::ApplicationConfig::SdkModel::BuildPlatformConfig(windowsPlatformConfigBuilder, applicationConfiguration);
 
     bool enableTouchControls =  hasNativeTouchInput ? applicationConfiguration.IsKioskTouchInputEnabled() : false;
 
