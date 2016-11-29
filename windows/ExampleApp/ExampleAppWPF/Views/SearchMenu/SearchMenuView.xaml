@@ -222,7 +222,7 @@
                                             <Style.Resources>
                                                 <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
                                                     <VisualBrush.Visual>
-                                                        <Label Content="Enter search term" FontFamily="{StaticResource PrimaryUIFont}" FontSize="16" Foreground="{StaticResource DarkGrey}" Margin="5,0,0,0" BorderThickness="0"/>
+                                                        <Label Content="Search people, depts, groups, etc." FontFamily="{StaticResource PrimaryUIFont}" FontSize="12" Foreground="{StaticResource DarkGrey}" Margin="5,0,0,0" BorderThickness="0"/>
                                                     </VisualBrush.Visual>
                                                 </VisualBrush>
                                             </Style.Resources>
