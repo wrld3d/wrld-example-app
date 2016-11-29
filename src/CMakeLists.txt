@@ -9,8 +9,6 @@ set(currsources
   ../src/MobileExampleApp.h
   ../src/PlatformAbstractionsFacade.cpp
   ../src/PlatformAbstractionsFacade.h
-  ../src/PlatformConfigBuilder.cpp
-  ../src/PlatformConfigBuilder.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\/ FILES ${currsources})

@@ -104,7 +104,8 @@
 
 - (BOOL) canInteract;
 
-- (void)updateMenuSections:(ExampleApp::Menu::View::TSections*)sections;
+- (void)updateMenuSections:(ExampleApp::Menu::View::TSections*)sections
+           contentsChanged:(BOOL)contentsChanged;
 
 @property (nonatomic, retain) UIButton* pDragTab;
 @property (nonatomic, retain) UIView* pTitleContainer;

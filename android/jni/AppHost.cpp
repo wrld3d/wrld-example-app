@@ -89,7 +89,6 @@
 #include "WebConnectivityValidator.h"
 #include "AndroidMenuReactionModel.h"
 #include "ApplicationConfigurationModule.h"
-#include "PlatformConfigBuilder.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -180,8 +179,8 @@ AppHost::AppHost(
     Eegeo::EffectHandler::Initialise();
 
     std::string deviceModel = std::string(nativeState.deviceModel, strlen(nativeState.deviceModel));
-    const Eegeo::Config::PlatformConfig& defaultConfig = Eegeo::Android::AndroidPlatformConfigBuilder(deviceModel).Build();
-    const Eegeo::Config::PlatformConfig& platformConfiguration = ExampleApp::PlatformConfigBuilder::Build(defaultConfig, applicationConfiguration, "EmbeddedTheme");
+    Eegeo::Android::AndroidPlatformConfigBuilder androidPlatformConfigBuilder(deviceModel);
+    const Eegeo::Config::PlatformConfig& platformConfiguration = ExampleApp::ApplicationConfig::SdkModel::BuildPlatformConfig(androidPlatformConfigBuilder, applicationConfiguration);
 
     m_pInputProcessor = Eegeo_NEW(Eegeo::Android::Input::AndroidInputProcessor)(&m_inputHandler, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
 

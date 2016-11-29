@@ -467,8 +467,9 @@ enum MenuState
 }
 
 - (void) updateMenuSections:(ExampleApp::Menu::View::TSections*)sections
+            contentsChanged:(BOOL)contentsChanged
 {
-    [m_pDataProvider updateMenuSections:sections];
+    [m_pDataProvider updateMenuSections:sections contentsChanged:contentsChanged];
 }
 
 @end

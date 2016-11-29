@@ -27,7 +27,8 @@
 
 - (void)showOpenableArrowOpen:(UITableViewCell *)cell;
 
-- (void)updateMenuSections:(ExampleApp::Menu::View::TSections*)sections;
+- (void)updateMenuSections:(ExampleApp::Menu::View::TSections*)sections
+           contentsChanged:(BOOL)contentsChanged;
 
 - (float)getRealHeightForTable:(CustomTableView*)customTableView;
 
