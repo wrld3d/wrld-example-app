@@ -85,7 +85,6 @@
 #include "IOSMenuReactionModel.h"
 #include "TagSearchViewModule.h"
 #include "InteriorsExplorerModel.h"
-#include "PlatformConfigBuilder.h"
 
 #import "UIView+TouchExclusivity.h"
 
@@ -136,9 +135,8 @@ AppHost::AppHost(
 
     Eegeo::EffectHandler::Initialise();
 
-    const Eegeo::Config::PlatformConfig& defaultConfig = Eegeo::iOS::iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion()).Build();
-    
-    const Eegeo::Config::PlatformConfig& platformConfiguration = ExampleApp::PlatformConfigBuilder::Build(defaultConfig, applicationConfiguration, "EmbeddedTheme");
+    Eegeo::iOS::iOSPlatformConfigBuilder iOSPlatformConfigBuilder(App::GetDevice(), App::IsDeviceMultiCore(), App::GetMajorSystemVersion());
+    const Eegeo::Config::PlatformConfig& platformConfiguration = ExampleApp::ApplicationConfig::SdkModel::BuildPlatformConfig(iOSPlatformConfigBuilder, applicationConfiguration);
     
     m_pInitialExperienceModule = Eegeo_NEW(ExampleApp::InitialExperience::iOSInitialExperienceModule)(m_iOSPersistentSettingsModel, m_messageBus);
     
