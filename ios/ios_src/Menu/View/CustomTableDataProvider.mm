@@ -31,10 +31,11 @@ static NSString *SubSectionCellIdentifier = @"subsectioncell";
 NSInteger const SubItemCellOpenableMenuArrowTag = 1;
 
 - (void)updateMenuSections:(ExampleApp::Menu::View::TSections*)sections
+           contentsChanged:(BOOL)contentsChanged
 {
     bool sectionsUpdated = false;
     
-    if(sections->size() != m_currentSections.size())
+    if(sections->size() != m_currentSections.size() || contentsChanged == true)
     {
         sectionsUpdated = true;
     }

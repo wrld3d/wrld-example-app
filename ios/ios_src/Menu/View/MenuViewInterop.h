@@ -71,7 +71,7 @@ namespace ExampleApp
                 
                 void UpdateMenuSectionViews(TSections& sections, bool contentsChanged)
                 {
-                    [m_pView updateMenuSections:&sections];
+                    [m_pView updateMenuSections:&sections contentsChanged:contentsChanged];
                 }
 
                 void SetFullyOnScreenOpen()
