@@ -356,8 +356,10 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         }
         
         const bool hasDetails = document.HasMember("details");
+        const ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections.at(m_tableSectionMap[tableView]);
+        const float arrowInset = section.IsExpandable() ? 18.0f : 0.0f;
         const float textY = hasDetails ? 4.0f : 0.f;
-        const float textWidth = [tableView getCellWidth] - textInsetX;
+        const float textWidth = [tableView getCellWidth] - textInsetX - arrowInset;
         
         cell.textLabel.text = [NSString stringWithUTF8String:name.c_str()];
         cell.textLabel.font = [UIFont systemFontOfSize: [self getTextLabelFontSize:isHeader]];
@@ -367,6 +369,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         {
             cell.textLabel.allowsDefaultTighteningForTruncation = true;
         }
+        cell.textLabel.adjustsFontSizeToFitWidth = true;
         [cell.textLabel sizeToFit];
         
         const float titleTextHeight = hasDetails ? cell.textLabel.frame.size.height : textHeight;
