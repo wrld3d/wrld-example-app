@@ -679,6 +679,7 @@
     [super setOffscreenPartsHiddenState:hidden];
     self.pSearchEditBox.hidden = hidden;
     self.pSearchEditBoxBackground.hidden = hidden;
+    [self updateSearchResultsButtonVisibility];
 }
 
 - (void) setSearchResultCount:(NSInteger)searchResultCount
@@ -950,23 +951,28 @@
     [self.pInputDelegate removeSeachKeyboard];
 }
 
--(void)scrollViewDidScroll:(UIScrollView *)sender
+- (void)scrollViewDidScroll:(UIScrollView *)sender
 {
-        if(self.pSearchResultsTableContainerView.contentOffset.y + self.pSearchResultsTableContainerView.frame.size.height == self.pSearchResultsTableContainerView.contentSize.height)
+    [self updateSearchResultsButtonVisibility];
+}
+
+- (void)updateSearchResultsButtonVisibility
+{
+    if(self.pSearchResultsTableContainerView.contentOffset.y + self.pSearchResultsTableContainerView.frame.size.height == self.pSearchResultsTableContainerView.contentSize.height)
+    {
+        _pSearchMenuScrollButtonContainer.hidden = true;
+        _pSearchMenuFadeImage.hidden = true;
+    }
+    else
+    {
+        if(_pSearchMenuScrollButtonContainer.hidden == true)
         {
-            _pSearchMenuScrollButtonContainer.hidden = true;
-            _pSearchMenuFadeImage.hidden = true;
+            _pSearchMenuScrollButton.alpha = 0.0;
+            [UIView animateWithDuration:1.0 animations:^{_pSearchMenuScrollButton.alpha = 1.0;}];
         }
-        else
-        {
-            if(_pSearchMenuScrollButtonContainer.hidden == true)
-            {
-                _pSearchMenuScrollButton.alpha = 0.0;
-                [UIView animateWithDuration:1.0 animations:^{_pSearchMenuScrollButton.alpha = 1.0;}];
-            }
-            _pSearchMenuScrollButtonContainer.hidden = false;
-            _pSearchMenuFadeImage.hidden = false;
-        }
+        _pSearchMenuScrollButtonContainer.hidden = false;
+        _pSearchMenuFadeImage.hidden = false;
+    }
 }
 
 @end
