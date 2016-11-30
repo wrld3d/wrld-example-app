@@ -111,10 +111,10 @@ public class SearchMenuAdapter extends BaseAdapter
             nameLabel.setHorizontallyScrolling(false);
             nameLabel.setSingleLine();
 
-            TextView detailLabel = (TextView)contextView.findViewById(R.id.menu_list_item_detail);
+            TextView detailLabel = (TextView)itemView.findViewById(R.id.menu_list_item_detail);
             detailLabel.setText(data.optString("details"));
 
-            ImageView tagIcon = (ImageView)contextView.findViewById(R.id.menu_list_item_icon);
+            ImageView tagIcon = (ImageView)itemView.findViewById(R.id.menu_list_item_icon);
             String tagIconString = data.has("icon") ? data.getString("icon") : m_defaultIconString;
             tagIcon.setImageResource(TagResources.getSearchResultIconForTag(m_context, tagIconString));
             
