@@ -1220,6 +1220,9 @@
 	  <Component Id="_b1517288.34b6.4ab4.8761.2183de5a79ee" Directory="LABELSFOLDER" Guid="{5fccf60b-eaad-49f4-85f9-fc5622970e38}">
 		<File Id="_a659851b.b7b2.463a.aa68.323283719849" KeyPath="yes" Source="payload\Resources\Labels\label_style_sheet.json" />
 	  </Component>
+	  <Component Id="_3836d11e.e5f7.41c8.a24f.276651dfd420" Directory="INTERIORSFOLDER" Guid="{c19fd704-f604-4cca-971d-35b28822c966}">
+        <File Id="_56271ea9.8fcd.4696.baac.c21178130d13" KeyPath="yes" Source="payload\Resources\Interiors\label_category_mapping.json" />
+	  </Component>
     </ComponentGroup>
 
     <!-- Start menu definitions-->
