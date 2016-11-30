@@ -61,26 +61,9 @@ namespace ExampleApp
                     {
                         ExampleApp::PathDrawing::WayPointModel wayPointModel = wayPointVector[i];
                         
-                        ExampleApp::Search::SdkModel::TagIconKey iconKey = "";
+                        ExampleApp::Search::SdkModel::TagIconKey iconKey = "DirectionCard_RouteStart";
                         std::string duration = "Temp Duration";
                         std::string subtitle = std::to_string(routeDuration);
-                        if(i%4 == 0)
-                        {
-                            iconKey = "DirectionCard_RouteStart";
-                        }
-                        else if(i%4 == 1)
-                        {
-                            iconKey = "DirectionCard_EnterMallSelected";
-                        }
-                        else if(i%4 == 2)
-                        {
-                            iconKey = "DirectionCard_StraightAhead";
-                        }
-                        else if(i%4 == 3)
-                        {
-                            iconKey = "DirectionCard_TurnLeft";
-                        }
-                        
                         const Eegeo::Space::LatLong latlong = wayPointModel.GetLocation();
                         
                         Eegeo::Resources::Interiors::InteriorId m_buildingId("");
