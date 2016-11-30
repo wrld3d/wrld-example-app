@@ -370,7 +370,7 @@
         return false;
     }
     
-    if ((startLocationSearched || (startMyLocationSelected && [_startRouteTextField.text isEqualToString:@"My Location"])) && endLocationSearched)
+    if ((startLocationSearched || (startMyLocationSelected && [_startRouteTextField.text isEqualToString:@"My Location"])) && (endLocationSearched || ([_endRouteTextField.text isEqualToString:@"My Location"] && startLocationSearched)))
     {
         return true;
     }

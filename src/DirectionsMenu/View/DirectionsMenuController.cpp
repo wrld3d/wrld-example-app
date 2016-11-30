@@ -144,6 +144,8 @@ namespace ExampleApp
             {
                
                 Eegeo::Space::LatLong currentLatLong = Eegeo::Space::LatLong::FromDegrees(start.GetLatitudeInDegrees(), start.GetLongitudeInDegrees());
+                Eegeo::Space::LatLong endcurrentLatLong = Eegeo::Space::LatLong::FromDegrees(end.GetLatitudeInDegrees(), end.GetLongitudeInDegrees());
+
                 
                 if (currentLatLong.GetLongitudeInDegrees() == 0 && currentLatLong.GetLongitudeInDegrees() == 0)
                 {
@@ -152,11 +154,17 @@ namespace ExampleApp
                         return;
                     }
                     m_locationService.GetLocation(currentLatLong);
+                }else if(endcurrentLatLong.GetLongitudeInDegrees() == 0 && endcurrentLatLong.GetLongitudeInDegrees() == 0)
+                {
+                    if (!m_locationService.GetIsAuthorized())
+                    {
+                        return;
+                    }
+                    m_locationService.GetLocation(endcurrentLatLong);
                 }
-
             
                 const Eegeo::Space::LatLongAltitude startLoc = Eegeo::Space::LatLongAltitude::FromDegrees(currentLatLong.GetLatitudeInDegrees(), currentLatLong.GetLongitudeInDegrees(),0.0);
-                const Eegeo::Space::LatLongAltitude endLoc = Eegeo::Space::LatLongAltitude::FromDegrees(end.GetLatitudeInDegrees(), end.GetLongitudeInDegrees(),0.0);
+                const Eegeo::Space::LatLongAltitude endLoc = Eegeo::Space::LatLongAltitude::FromDegrees(endcurrentLatLong.GetLatitudeInDegrees(), endcurrentLatLong.GetLongitudeInDegrees(),0.0);
                 
                 m_messageBus.Publish(ExampleApp::DirectionsMenu::DirectionMenuFindDirectionMessage(startLoc,endLoc,true));
                 

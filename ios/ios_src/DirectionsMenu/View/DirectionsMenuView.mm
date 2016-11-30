@@ -350,11 +350,17 @@
     }
     else if(textField == _pEndRouteTextField && [m_pDirectionsMenuView shouldPerformSearch])
     {
-        [self EndRouteEntered];
-        [_pEndRouteTextField resignFirstResponder];
-        [_pStartRouteTextField resignFirstResponder];
+        [self performSelectorOnMainThread:@selector(dismissKeyboard) withObject:nil waitUntilDone:YES];
+        [self performSelector:@selector(EndRouteEntered) withObject:nil afterDelay:0.0];
     }
     return YES;
+}
+- (void) dismissKeyboard
+{
+    [self endEditing:true];
+//    [_pEndRouteTextField resignFirstResponder];
+//    [_pStartRouteTextField resignFirstResponder];
+
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
