@@ -119,7 +119,12 @@ public class SearchMenuAnimationHandler extends MenuAnimationHandler
 		{
 			View searchCountView = m_view.findViewById(R.id.search_menu_result_count_container);
 			searchCountView.setVisibility(View.VISIBLE);
-			m_searchResultsAnimatorSet.start(null, false);
+			
+			if(isClosedOnScreen() || isOpenOnScreen())
+			{
+				m_searchResultsAnimatorSet.start(null, false);
+			}
+			
 			m_showingSearchResults = true;
 		}
 	}
