@@ -118,39 +118,7 @@ namespace ExampleApp
                 if (document.HasMember("WebProxyIgnorePattern"))
                 {
                     m_builder.SetWebProxyIgnorePattern(document["WebProxyIgnorePattern"].GetString());
-                }                
-                
-                Eegeo_ASSERT(document.HasMember("Buildings"), "Buildings config not found");
-                // Using a reference for consecutive access is handy and faster.
-                const rapidjson::Value& buildingArray = document["Buildings"];
-                std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*> buildingInfoList;
-                for (rapidjson::SizeType i = 0; i < buildingArray.Size(); i++) // Uses SizeType instead of size_t
-                {
-                    const rapidjson::Value& building = buildingArray[i];
-                    Eegeo_ASSERT(building.HasMember("SenionMapKey"), "SenionMapKey config not found");
-                    std::string mapKey = building["SenionMapKey"].GetString();
-                    Eegeo_ASSERT(building.HasMember("SenionMapCustomerID"), "SenionMapCustomerID config not found");
-                    std::string customerID = building["SenionMapCustomerID"].GetString();
-                    Eegeo_ASSERT(building.HasMember("InteriorId"), "InteriorId config not found");
-                    std::string interiorID = building["InteriorId"].GetString();
-                    
-                    Eegeo_ASSERT(building.HasMember("SenionidToFloorIndexMapping"), "Senion to local floor index config not found");
-                    std::map<int,int> senionFloorMapping;
-                    const rapidjson::Value& floorMappingArray = building["SenionidToFloorIndexMapping"];
-                    for (rapidjson::SizeType y = 0; y < floorMappingArray.Size(); y++)
-                    {
-                        const rapidjson::Value& senionMapping = floorMappingArray[y];
-
-                        Eegeo_ASSERT(senionMapping.HasMember("SenionIndex"), "Senion index config not found");
-                        Eegeo_ASSERT(senionMapping.HasMember("FloorIindex"), "Floor index config not found");
-                        
-                        senionFloorMapping[static_cast<float>(senionMapping["SenionIndex"].GetInt())] = static_cast<float>(senionMapping["FloorIindex"].GetInt());
-                    }
-                    
-                    ExampleApp::ApplicationConfig::ApplicationBuildingInfo * buildingInfo = Eegeo_NEW(ExampleApp::ApplicationConfig::ApplicationBuildingInfo)(mapKey, customerID, interiorID, senionFloorMapping);
-                    buildingInfoList.push_back(buildingInfo);
                 }
-                m_builder.SetBuildingInfoArray(buildingInfoList);
                 
                 std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*> restrictedBuildingModelArray;
                 const char* wifiRestrictedBuildingTag = "WifiRestrictedBuildings";

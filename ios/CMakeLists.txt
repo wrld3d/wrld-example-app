@@ -55,12 +55,13 @@ set(ios_frameworks
   -framework CoreGraphics 
   -framework CoreData
   -framework Security
-  -framework CoreLocation
   -framework CoreMotion
-  -framework IndoorAtlas")
+  -framework CoreBluetooth
+  -framework IndoorAtlas
+  -framework SLIndoorLocation")
 
 set(linker_search_paths "-LInclude/eegeo -LInclude")
-set(framework_search_paths "${CMAKE_CURRENT_SOURCE_DIR}/Include/IndoorAtlas")
+set(framework_search_paths "${CMAKE_CURRENT_SOURCE_DIR}/Include/IndoorAtlas ${CMAKE_CURRENT_SOURCE_DIR}/Include/SenionLab")
 set(libs "${eegeo_sdk_libs} -lturbojpeg -lz -lcurl -luv -lFlurry_6.0.0")
 set(CMAKE_EXE_LINKER_FLAGS "${ios_frameworks} ${linker_search_paths} ${libs}")
 
@@ -97,7 +98,6 @@ set_xcode_property (${executable_name} INSTALL_PATH "/Applications")
 set_xcode_property (${executable_name} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon")
 set_xcode_property (${executable_name} ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME "LaunchImage")
 set_xcode_property (${executable_name} COMBINE_HIDPI_IMAGES "No")
-set_xcode_property (${executable_name} INSTALL_PATH "/Applications")
 
 set_xcode_property(${executable_name} GCC_PRECOMPILE_PREFIX_HEADER "YES")
 set_xcode_property(${executable_name} GCC_PREFIX_HEADER "ExampleApp/ProjectSwallowApp-Prefix.pch")

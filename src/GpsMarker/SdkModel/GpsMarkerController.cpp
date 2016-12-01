@@ -17,6 +17,7 @@
 #include "InteriorHeightHelpers.h"
 #include "EarthConstants.h"
 #include "InteriorsModel.h"
+#include "InteriorInteractionModel.h"
 
 namespace ExampleApp
 {
@@ -29,6 +30,7 @@ namespace ExampleApp
             GpsMarkerController::GpsMarkerController(GpsMarkerModel& model,
                                                      GpsMarkerView& view,
                                                      GpsMarkerAnchorView& anchorView,
+                                                     Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                      Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                      VisualMap::SdkModel::IVisualMapService& visualMapService,
                                                      const Eegeo::Rendering::ScreenProperties& screenProperties,
@@ -36,20 +38,24 @@ namespace ExampleApp
             : m_model(model)
             , m_view(view)
             , m_anchorView(anchorView)
+            , m_interiorInteractionModel(interiorInteractionModel)
             , m_environmentFlatteningService(environmentFlatteningService)
             , m_visualMapService(visualMapService)
             , m_messageBus(messageBus)
             , m_visibilityCount(1)
             , m_viewTransitionParam(0)
+            , m_currentFloorIndex(0)
             , m_screenPixelScale(screenProperties.GetPixelScale())
             , m_screenOversampleScale(screenProperties.GetOversampleScale())
             , m_modalityChangedHandlerBinding(this, &GpsMarkerController::OnModalityChangedMessage)
             , m_visibilityChangedHandlerBinding(this, &GpsMarkerController::OnVisibilityChangedMessage)
             , m_interiorsExplorerStateChangedCallback(this, &GpsMarkerController::OnInteriorsExplorerStateChangedMessage)
+            , m_floorSelectedCallback(this, &GpsMarkerController::OnFloorSelected)
             {
                 m_messageBus.SubscribeNative(m_modalityChangedHandlerBinding);
                 m_messageBus.SubscribeNative(m_visibilityChangedHandlerBinding);
                 m_messageBus.SubscribeUi(m_interiorsExplorerStateChangedCallback);
+                m_interiorInteractionModel.RegisterInteractionStateChangedCallback(m_floorSelectedCallback);
                 m_view.SetVisible(false);
                 m_anchorView.SetVisible(false);
             }
@@ -59,6 +65,12 @@ namespace ExampleApp
                 m_messageBus.UnsubscribeUi(m_interiorsExplorerStateChangedCallback);
                 m_messageBus.UnsubscribeNative(m_visibilityChangedHandlerBinding);
                 m_messageBus.UnsubscribeNative(m_modalityChangedHandlerBinding);
+                m_interiorInteractionModel.UnregisterInteractionStateChangedCallback(m_floorSelectedCallback);
+            }
+            
+            void GpsMarkerController::OnFloorSelected()
+            {
+                m_currentFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
             }
             
             void GpsMarkerController::OnModalityChangedMessage(const Modality::ModalityChangedMessage &message)
@@ -78,6 +90,7 @@ namespace ExampleApp
             
             void GpsMarkerController::OnInteriorsExplorerStateChangedMessage(const InteriorsExplorer::InteriorsExplorerStateChangedMessage &message)
             {
+                m_currentFloorIndex = message.GetSelectedFloorIndex();
                 m_view.UpdateMarkerRenderingLayer(message.IsInteriorVisible());
                 m_anchorView.UpdateMarkerRenderingLayer(message.IsInteriorVisible());
             }
@@ -91,7 +104,15 @@ namespace ExampleApp
                 bool isVisible = false;
                 if(currentLocationEcef.LengthSq() != 0 && m_visibilityCount == 1)
                 {
-                    isVisible = true;
+                    if(m_model.IsLocationIndoors())
+                    {
+                        if(m_currentFloorIndex == m_model.GetCurrentFloorIndex())
+                            isVisible = true;
+                    }
+                    else
+                    {
+                        isVisible = true;
+                    }
                 }
                 
                 m_view.SetVisible(isVisible);

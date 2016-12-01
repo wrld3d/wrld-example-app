@@ -30,6 +30,8 @@ namespace ExampleApp
                 void UpdateHeading(float dt);
                 const double GetSmoothedHeadingDegrees() const;
                 
+                int GetCurrentFloorIndex() const;
+                
             private:
                 
                 Eegeo::Location::ILocationService& m_locationService;
