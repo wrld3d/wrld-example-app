@@ -14,6 +14,7 @@
 
 static const float HeaderCellFontSize = 22.0f;
 static const float SubSectionCellFontSize = 16.0f;
+static const float ARROW_INSET_PADDING = 18.0f;
 
 static NSString *HeaderCellIdentifier = @"headercell";
 static NSString *SubSectionCellIdentifier = @"subsectioncell";
@@ -22,6 +23,7 @@ static NSString *SubSectionCellIdentifier = @"subsectioncell";
 {
     std::map<CustomTableView*, size_t> m_tableSectionMap;
     std::vector<size_t> m_cachedTableSizes;
+    float m_arrowInset;
 }
 
 @end
@@ -178,6 +180,8 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         {
             [cell setSeparatorInset:UIEdgeInsetsZero];
         }
+        
+        m_arrowInset = openableArrowWidth + ARROW_INSET_PADDING;
     }
     
     std::string json = isExpandableHeader ? section.SerializeJson() : section.GetItemAtIndex(static_cast<int>(index)).SerializeJson();
@@ -357,7 +361,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         
         const bool hasDetails = document.HasMember("details");
         const ExampleApp::Menu::View::IMenuSectionViewModel& section = *m_currentSections.at(m_tableSectionMap[tableView]);
-        const float arrowInset = section.IsExpandable() ? 18.0f : 0.0f;
+        const float arrowInset = section.IsExpandable() ? m_arrowInset : 0.0f;
         const float textY = hasDetails ? 4.0f : 0.f;
         const float textWidth = [tableView getCellWidth] - textInsetX - arrowInset;
         
