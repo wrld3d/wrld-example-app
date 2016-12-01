@@ -483,6 +483,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
 
     public void animateToInactive()
     {
+        endScrollingUpdate();
         m_isOnScreen = false;
     	
     	animateViewToY((int)m_topYPosInactive);
