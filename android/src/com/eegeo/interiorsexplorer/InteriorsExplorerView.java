@@ -489,7 +489,7 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
 
     public void animateToInactive()
     {
-        endDraggingButton();
+        endScrollingUpdate();
         m_isOnScreen = false;
     	
     	animateViewToY((int)m_topYPosInactive);
