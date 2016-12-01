@@ -7,6 +7,7 @@ import java.util.List;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.menu.BackwardsCompatibleListView;
 import com.eegeo.mobileexampleapp.R;
+import com.eegeo.view.OnPauseListener;
 
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -22,7 +23,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class InteriorsExplorerView implements View.OnClickListener, View.OnTouchListener
+public class InteriorsExplorerView implements OnPauseListener, View.OnClickListener, View.OnTouchListener
 {
     protected MainActivity m_activity = null;
     protected long m_nativeCallerPointer;
@@ -177,6 +178,8 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
         m_tutorialView = new InteriorsExplorerTutorialView(m_activity);
         
         hideFloorLabels();
+
+        m_activity.addOnPauseListener(this);
         
         m_scrollHandler = new Handler();
         m_scrollingRunnable = new Runnable()
@@ -207,6 +210,7 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
         m_uiRootView = null;
         
         m_scrollHandler.removeCallbacks(m_scrollingRunnable);
+        m_activity.deleteOnPauseListener(this);
     }
     
     public void playShakeSliderAnim()
@@ -523,6 +527,11 @@ public class InteriorsExplorerView implements View.OnClickListener, View.OnTouch
         {
         	m_topPanel.setY(newYPx);
         }
+    }
+
+    public void notifyOnPause()
+    {
+        endDraggingButton();
     }
     
     private void refreshFloorIndicator(int floorIndex)
