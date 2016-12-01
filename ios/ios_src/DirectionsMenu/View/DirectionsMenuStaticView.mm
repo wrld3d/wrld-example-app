@@ -121,6 +121,10 @@
     _startRouteTextField.text = _endRouteTextField.text;
     _endRouteTextField.text = temptextStart;
     
+    bool tempSearched = endLocationSearched;
+    endLocationSearched = startLocationSearched;
+    startLocationSearched = tempSearched;
+    
 }
 - (void)optionsAction
 {
