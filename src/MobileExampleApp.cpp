@@ -611,12 +611,15 @@ namespace ExampleApp
                                                                              cityThemesModule.GetCityThemesUpdater(),
                                                                              mapModule.GetEnvironmentFlatteningService());
         
+        Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
+        
         m_pGpsMarkerModule = Eegeo_NEW(ExampleApp::GpsMarker::SdkModel::GpsMarkerModule)(m_pWorld->GetRenderingModule(),
                                                                                          m_pWorld->GetSceneModelsModule().GetLocalSceneModelFactory(),
                                                                                          m_platformAbstractions,
                                                                                          m_pWorld->GetLocationService(),
                                                                                          m_pWorld->GetTerrainModelModule(),
                                                                                          m_pWorld->GetMapModule(),
+                                                                                         interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                          m_pVisualMapModule->GetVisualMapService(),
                                                                                          m_screenProperties,
                                                                                          m_messageBus);
@@ -679,8 +682,6 @@ namespace ExampleApp
         m_pSwallowSearchMenuModule = Eegeo_NEW(Search::Swallow::SdkModel::SwallowSearchMenuModule)(m_pSearchMenuModule->GetSearchMenuViewModel(),
                                                                                                    m_messageBus);
 
-        
-        Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
         Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
         
         m_pSearchResultOnMapModule = Eegeo_NEW(SearchResultOnMap::SdkModel::SearchResultOnMapModule)(m_pSearchModule->GetSearchResultRepository(),

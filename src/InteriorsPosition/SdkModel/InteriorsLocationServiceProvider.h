@@ -21,7 +21,8 @@ namespace ExampleApp
                                                  Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                  Eegeo::Helpers::CurrentLocationService::CurrentLocationService& currentLocationService,
                                                  Eegeo::Location::ILocationService& defaultLocationService,
-                                                 Eegeo::Location::ILocationService& indoorAtlasLocationService);
+                                                 Eegeo::Location::ILocationService& indoorAtlasLocationService,
+                                                 Eegeo::Location::ILocationService& senionLabLocationService);
                 
                 ~InteriorsLocationServiceProvider();
                 
@@ -32,6 +33,7 @@ namespace ExampleApp
                 Eegeo::Helpers::CurrentLocationService::CurrentLocationService& m_currentLocationService;
                 Eegeo::Location::ILocationService& m_defaultLocationService;
                 Eegeo::Location::ILocationService& m_indoorAtlasLocationService;
+                Eegeo::Location::ILocationService& m_senionLabLocationService;
                 
                 InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;

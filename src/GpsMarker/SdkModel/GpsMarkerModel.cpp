@@ -59,7 +59,7 @@ namespace ExampleApp
                 
                 if(m_currentLocationEcef.SquareDistanceTo(newLocationEcef) < jumpThreshold * jumpThreshold)
                 {
-                    m_currentLocationEcef = Eegeo::Helpers::MathsHelpers::ExpMoveTowards(m_currentLocationEcef, newLocationEcef, halfLife, dt, 0.1f);
+                    m_currentLocationEcef = Eegeo::Helpers::MathsHelpers::ExpMoveTowards(m_currentLocationEcef, newLocationEcef, halfLife, dt, 0.01f);
                 }
                 else
                 {
@@ -106,6 +106,13 @@ namespace ExampleApp
                 double smoothedHeadingDegrees = Eegeo::Math::Rad2Deg(m_currentHeadingRadians);
                 
                 return smoothedHeadingDegrees;
+            }
+            
+            int GpsMarkerModel::GetCurrentFloorIndex() const
+            {
+                int floorIndex = 0;
+                m_locationService.GetFloorIndex(floorIndex);
+                return floorIndex;
             }
         }
     }
