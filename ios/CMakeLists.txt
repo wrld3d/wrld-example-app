@@ -44,7 +44,7 @@ set(CMAKE_OSX_ARCHITECTURES "armv7;arm64;i386")
 set(IOS_WARNING_FLAGS "-Wmost -Werror -Wno-four-char-constants -Wno-unknown-pragmas -Wno-reorder")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -x objective-c++ ${IOS_WARNING_FLAGS}")
-set(eegeo_sdk_libs "-lapps-on-maps-cpp11 -lapps-on-maps-cpp11-sim")
+set(eegeo_sdk_libs "-lapps-on-maps-cpp11 -lapps-on-maps-cpp11-sim -lsdk-extensions-sqlite-cpp11 -lsdk-extensions-sqlite-cpp11-sim")
 
 set(ios_frameworks 
   "-framework CoreLocation
@@ -61,10 +61,12 @@ set(ios_frameworks
   -framework CoreData
   -framework Security
   -framework CoreMotion
-  -framework IndoorAtlas")
+  -framework CoreBluetooth
+  -framework IndoorAtlas
+  -framework SLIndoorLocation")
 
 set(linker_search_paths "-LInclude/eegeo -LInclude")
-set(framework_search_paths "${CMAKE_CURRENT_SOURCE_DIR}/Include/IndoorAtlas")
+set(framework_search_paths "${CMAKE_CURRENT_SOURCE_DIR}/Include/IndoorAtlas ${CMAKE_CURRENT_SOURCE_DIR}/Include/SenionLab")
 set(libs "${eegeo_sdk_libs} -lturbojpeg -lz -lcurl -luv -lFlurry_6.0.0")
 set(CMAKE_EXE_LINKER_FLAGS "${ios_frameworks} ${linker_search_paths} ${libs}")
 

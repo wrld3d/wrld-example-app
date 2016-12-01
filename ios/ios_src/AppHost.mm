@@ -185,12 +185,20 @@ AppHost::AppHost(
                                                                                                  applicationConfiguration,
                                                                                                  *m_piOSLocationService);
     
+    m_pSenionLabLocationModule = Eegeo_NEW(ExampleApp::SenionLab::SenionLabLocationModule)(m_pApp->GetAppModeModel(),
+                                                                                           interiorsPresentationModule.GetInteriorInteractionModel(),
+                                                                                           interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                                           mapModule.GetEnvironmentFlatteningService(),
+                                                                                           applicationConfiguration,
+                                                                                           *m_piOSLocationService);
+    
     m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(applicationConfiguration,
                                                                                                                                m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
                                                                                                                                interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                                *m_pCurrentLocationService,
                                                                                                                                *m_piOSLocationService,
-                                                                                                                               m_pIndoorAtlasLocationModule->GetLocationService());
+                                                                                                                               m_pIndoorAtlasLocationModule->GetLocationService(),
+                                                                                                                               m_pSenionLabLocationModule->GetLocationService());
     
     CreateApplicationViewModules(screenProperties);
 
@@ -239,6 +247,9 @@ AppHost::~AppHost()
     
     Eegeo_DELETE m_pIndoorAtlasLocationModule;
     m_pIndoorAtlasLocationModule = NULL;
+    
+    Eegeo_DELETE m_pSenionLabLocationModule;
+    m_pSenionLabLocationModule = NULL;
     
     Eegeo_DELETE m_pCurrentLocationService;
     m_pCurrentLocationService = NULL;

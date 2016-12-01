@@ -23,6 +23,7 @@ namespace ExampleApp
                 GpsMarkerController(GpsMarkerModel& model,
                                     GpsMarkerView& view,
                                     GpsMarkerAnchorView& anchorView,
+                                    Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                     Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                     VisualMap::SdkModel::IVisualMapService& visualMapService,
                                     const Eegeo::Rendering::ScreenProperties& screenProperties,
@@ -36,6 +37,7 @@ namespace ExampleApp
                 const static float DefaultUpdatePeriod;
                 int m_visibilityCount;
                 float m_viewTransitionParam;
+                int m_currentFloorIndex;
 
                 float m_screenPixelScale;
                 float m_screenOversampleScale;
@@ -44,14 +46,18 @@ namespace ExampleApp
                 GpsMarkerView& m_view;
                 GpsMarkerAnchorView& m_anchorView;
                 
+                Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
+                
                 Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
                 VisualMap::SdkModel::IVisualMapService& m_visualMapService;
                 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
+                Eegeo::Helpers::TCallback0<GpsMarkerController> m_floorSelectedCallback;
                 Eegeo::Helpers::TCallback1<GpsMarkerController, const Modality::ModalityChangedMessage&> m_modalityChangedHandlerBinding;
                 Eegeo::Helpers::TCallback1<GpsMarkerController, const GpsMarkerVisibilityMessage&> m_visibilityChangedHandlerBinding;
                 Eegeo::Helpers::TCallback1<GpsMarkerController, const InteriorsExplorer::InteriorsExplorerStateChangedMessage&> m_interiorsExplorerStateChangedCallback;
                 
+                void OnFloorSelected();
                 void OnModalityChangedMessage(const Modality::ModalityChangedMessage& message);
                 void OnVisibilityChangedMessage(const GpsMarkerVisibilityMessage& message);
                 void OnInteriorsExplorerStateChangedMessage(const InteriorsExplorer::InteriorsExplorerStateChangedMessage& message);

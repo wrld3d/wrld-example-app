@@ -27,6 +27,7 @@ namespace ExampleApp
                                 Eegeo::Location::ILocationService& locationService,
                                 Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
                                 Eegeo::Modules::Map::MapModule& mapModule,
+                                Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                 VisualMap::SdkModel::IVisualMapService& visualMapService,
                                 const Eegeo::Rendering::ScreenProperties& screenProperties,
                                 ExampleAppMessaging::TMessageBus& messageBus);

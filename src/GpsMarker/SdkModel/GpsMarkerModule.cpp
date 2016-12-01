@@ -34,6 +34,7 @@ namespace ExampleApp
                                              Eegeo::Location::ILocationService& locationService,
                                              Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
                                              Eegeo::Modules::Map::MapModule& mapModule,
+                                             Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                              VisualMap::SdkModel::IVisualMapService& visualMapService,
                                              const Eegeo::Rendering::ScreenProperties& screenProperties,
                                              ExampleAppMessaging::TMessageBus& messageBus)
@@ -73,7 +74,14 @@ namespace ExampleApp
                                                    platformAbstractions.GetFileIO(),
                                                    platformAbstractions.GetTextureFileLoader(),
                                                    *m_pGpsIconRenderable);
-                m_pController = Eegeo_NEW(GpsMarkerController)(*m_pModel, *m_pView, *m_pAnchorView, mapModule.GetEnvironmentFlatteningService(), visualMapService, screenProperties, messageBus);
+                m_pController = Eegeo_NEW(GpsMarkerController)(*m_pModel,
+                                                               *m_pView,
+                                                               *m_pAnchorView,
+                                                               interiorInteractionModel,
+                                                               mapModule.GetEnvironmentFlatteningService(),
+                                                               visualMapService,
+                                                               screenProperties,
+                                                               messageBus);
                 
                 m_renderableFilters.AddRenderableFilter(*m_pView);
                 m_renderableFilters.AddRenderableFilter(*m_pAnchorView);

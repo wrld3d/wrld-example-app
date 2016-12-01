@@ -545,12 +545,15 @@ namespace ExampleApp
                                                                              cityThemesModule.GetCityThemesUpdater(),
                                                                              mapModule.GetEnvironmentFlatteningService());
         
+        Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
+        
         m_pGpsMarkerModule = Eegeo_NEW(ExampleApp::GpsMarker::SdkModel::GpsMarkerModule)(m_pWorld->GetRenderingModule(),
                                                                                          m_pWorld->GetSceneModelsModule().GetLocalSceneModelFactory(),
                                                                                          m_platformAbstractions,
                                                                                          m_pWorld->GetLocationService(),
                                                                                          m_pWorld->GetTerrainModelModule(),
                                                                                          m_pWorld->GetMapModule(),
+                                                                                         interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                          m_pVisualMapModule->GetVisualMapService(),
                                                                                          m_screenProperties,
                                                                                          m_messageBus);
@@ -622,7 +625,6 @@ namespace ExampleApp
                                                                                             m_messageBus,
                                                                                             m_metricsService);
         
-        Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
         Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
         
         m_pSearchResultSectionModule = Eegeo_NEW(SearchResultSection::SdkModel::SearchResultSectionModule)(m_pSearchMenuModule->GetSearchMenuViewModel(),
@@ -1135,7 +1137,6 @@ namespace ExampleApp
             WorldPinsModule().GetWorldPinsScaleController().Update(dt, renderCamera);
             WorldPinsModule().GetWorldPinsFloorHeightController().Update(dt);
             
-            CompassModule().GetCompassUpdateController().Update(dt);
             CompassModule().GetCompassUpdateController().Update(dt);
             m_pGpsMarkerModule->GetGpsMarkerController().Update(dt, renderCamera);
             
