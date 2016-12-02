@@ -176,6 +176,8 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         m_arrowInset = openableArrowWidth + ARROW_INSET_PADDING;
     }
     
+    [(CustomTableViewCell*)cell setIndexInformation:indexPath];
+    
     std::string json = isExpandableHeader ? section.SerializeJson() : section.GetItemAtIndex(static_cast<int>(index)).SerializeJson();
     [self populateCellWithJson:json :cell :customTableView :isHeader];
 

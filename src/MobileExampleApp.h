@@ -124,6 +124,8 @@ namespace ExampleApp
         ExampleApp::TagSearch::SdkModel::ITagSearchModule* m_pTagSearchModule;
         ExampleApp::MapMode::SdkModel::IMapModeModule* m_pMapModeModule;
         ExampleApp::FlattenButton::SdkModel::IFlattenButtonModule* m_pFlattenButtonModule;
+        Search::SdkModel::SearchResultRepository* m_pSearchResultRepository;
+        Search::SdkModel::ISearchQueryPerformer* m_pSearchQueryPerformer;
         Search::SdkModel::ISearchModule* m_pSearchModule;
         Eegeo::Pins::PinsModule* m_pPinsModule;
         ExampleApp::WorldPins::SdkModel::IWorldPinIconMapping* m_pWorldPinsIconMapping;

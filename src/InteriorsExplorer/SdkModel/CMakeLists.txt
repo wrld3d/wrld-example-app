@@ -16,6 +16,11 @@ set(currsources
   ../src/InteriorsExplorer/SdkModel/InteriorWorldPinSelectionHandler.h
   ../src/InteriorsExplorer/SdkModel/InteriorsExplorerFloorDraggedObserver.cpp
   ../src/InteriorsExplorer/SdkModel/InteriorsExplorerFloorDraggedObserver.h
+  ../src/InteriorsExplorer/SdkModel/InteriorPermissionObserver.h
+  ../src/InteriorsExplorer/SdkModel/InteriorPermissionObserver.cpp
+  ../src/InteriorsExplorer/SdkModel/InteriorMenuObserver.h
+  ../src/InteriorsExplorer/SdkModel/InteriorMenuObserver.cpp
+
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\InteriorsExplorer\\SdkModel FILES ${currsources})

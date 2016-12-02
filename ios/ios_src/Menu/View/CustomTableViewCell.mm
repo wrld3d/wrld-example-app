@@ -133,8 +133,7 @@
     m_customContentFramesSet = false;
     m_hasDetails = false;
     
-    m_row = static_cast<int>(indexPath.row);
-    m_section = static_cast<int>(indexPath.section);
+    [self setIndexInformation:indexPath];
     
     self->pCustomSeparatorContainer = [[UIView alloc]  initWithFrame:CGRectMake(0,0,0,0)];
     [self addSubview:self->pCustomSeparatorContainer];
@@ -179,6 +178,12 @@
     m_pOpenableArrow = pOpenableArrow;
     
     m_requiresRefresh = true;
+}
+
+- (void)setIndexInformation:(NSIndexPath *)indexPath
+{
+    m_row = static_cast<int>(indexPath.row);
+    m_section = static_cast<int>(indexPath.section);
 }
 
 - (BOOL)canInteract

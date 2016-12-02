@@ -19,6 +19,8 @@
 #include "IInteriorsEntitiesPinsController.h"
 #include "PersistentSettings.h"
 #include "NavigationService.h"
+#include "InteriorMetaDataRepository.h"
+#include "TagSearchRepository.h"
 
 namespace ExampleApp
 {
@@ -48,7 +50,9 @@ namespace ExampleApp
                                         const bool interiorsAffectedByFlattening,
                                         InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsEntitiesPinsController,
                                         PersistentSettings::IPersistentSettingsModel& persistentSettings,
-                                        Eegeo::Location::NavigationService& navigationService);
+                                        Eegeo::Location::NavigationService& navigationService,
+                                        Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& interiorMetaDataRepo,
+                                        TagSearch::View::ITagSearchRepository& tagSearchRepository);
 
                 ~InteriorsExplorerModule();
                 
@@ -78,6 +82,7 @@ namespace ExampleApp
                 InteriorVisibilityUpdater* m_pVisibilityUpdater;
                 InteriorExplorerUserInteractionModel* m_pUserInteractionModel;
                 InteriorsExplorerFloorDraggedObserver* m_pFloorDraggedObserver;
+                InteriorMenuObserver* m_pMenuObserver;
                 
                 InteriorWorldPinController* m_pWorldPinController;
                 Eegeo::Resources::Interiors::InteriorsCameraController* m_pInteriorsCameraController;

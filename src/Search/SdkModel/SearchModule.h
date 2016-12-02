@@ -14,6 +14,7 @@
 #include "SearchQueryObserver.h"
 #include "AppModes.h"
 #include "Interiors.h"
+#include "ITagSearchRepository.h"
 
 namespace ExampleApp
 {
@@ -37,7 +38,10 @@ namespace ExampleApp
                              CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
                              Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                              ExampleAppMessaging::TMessageBus& messageBus,
-                             ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus);
+                             ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
+                             TagSearch::View::ITagSearchRepository& tagSearchRepository,
+                             ISearchQueryPerformer& searchQueryPerformer,
+                             ISearchResultRepository& searchResultRepository);
 
                 ~SearchModule();
 

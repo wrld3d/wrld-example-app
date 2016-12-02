@@ -126,6 +126,8 @@
 #include "DeepLinkModule.h"
 #include "DeepLinkController.h"
 #include "InteriorsStreamingModule.h"
+#include "InteriorMetaDataModule.h"
+#include "SearchQueryPerformer.h"
 
 namespace ExampleApp
 {
@@ -527,12 +529,12 @@ namespace ExampleApp
         
         m_pSearchServiceModule = Eegeo_NEW(Search::Combined::SdkModel::CombinedSearchServiceModule)(m_searchServiceModules, m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel());
         
-        m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(m_pSearchServiceModule->GetSearchService(),
-                                                                    *m_pGlobeCameraController,
-                                                                    *m_pCameraTransitionService,
-                                                                    m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel(),
-                                                                    m_messageBus,
-                                                                    m_sdkDomainEventBus);
+        m_pSearchResultRepository =  Eegeo_NEW(Search::SdkModel::SearchResultRepository)();
+        m_pSearchQueryPerformer = Eegeo_NEW(Search::SdkModel::SearchQueryPerformer)(m_pSearchServiceModule->GetSearchService(),
+                                                                                    *m_pSearchResultRepository,
+                                                                                     *m_pGlobeCameraController);
+        
+       
         
         // TODO: Check if this module is still relevant
         m_pAppCameraModule = Eegeo_NEW(AppCamera::SdkModel::AppCameraModule)();
@@ -583,9 +585,19 @@ namespace ExampleApp
                                                                                 m_menuReaction);
         
         m_pTagSearchModule = TagSearch::SdkModel::TagSearchModule::Create(
-                                                                          SearchModule().GetSearchQueryPerformer(),
+                                                                          *m_pSearchQueryPerformer,
                                                                           m_messageBus,
                                                                           m_metricsService);
+        
+        m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(m_pSearchServiceModule->GetSearchService(),
+                                                                    *m_pGlobeCameraController,
+                                                                    *m_pCameraTransitionService,
+                                                                    m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel(),
+                                                                    m_messageBus,
+                                                                    m_sdkDomainEventBus,
+                                                                    m_pTagSearchModule->GetTagSearchRepository(),
+                                                                    *m_pSearchQueryPerformer,
+                                                                    *m_pSearchResultRepository);
         
         m_pMapModeModule = Eegeo_NEW(MapMode::SdkModel::MapModeModule)(m_pVisualMapModule->GetVisualMapService());
         
@@ -716,7 +728,9 @@ namespace ExampleApp
                                                                                                      interiorsAffectedByFlattening,
                                                                                                      m_pInteriorsEntitiesPinsModule->GetInteriorsEntitiesPinsController(),
                                                                                                      m_persistentSettings,
-                                                                                                     *m_pNavigationService);
+                                                                                                     *m_pNavigationService,
+                                                                                                     mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
+                                                                                                     m_pTagSearchModule->GetTagSearchRepository());
         
         m_pMyPinCreationModule = Eegeo_NEW(ExampleApp::MyPinCreation::SdkModel::MyPinCreationModule)(m_pMyPinsModule->GetMyPinsService(),
                                                                                                      m_identityProvider,

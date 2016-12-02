@@ -13,6 +13,7 @@
 #include "VectorMath.h"
 #include "Interiors.h"
 #include "InteriorId.h"
+#include "ITagSearchRepository.h"
 
 namespace ExampleApp
 {
@@ -35,7 +36,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<SearchRefreshService, const SearchQuery&> m_searchResultQueryIssuedCallback;
                 Eegeo::Helpers::TCallback2<SearchRefreshService, const SearchQuery&, const std::vector<SearchResultModel>&> m_searchResultResponseReceivedCallback;
                 Eegeo::Helpers::TCallback0<SearchRefreshService> m_searchQueryResultsClearedCallback;
-                Eegeo::Helpers::TCallback0<SearchRefreshService> m_interiorChangedCallback;
+                Eegeo::Helpers::TCallback1<SearchRefreshService, TagSearch::View::TagSearchModel> m_interiorChangedCallback;
                 int m_queriesPending;
                 bool m_searchResultsExist;
                 bool m_searchResultsCleared;
@@ -53,6 +54,7 @@ namespace ExampleApp
                                      ISearchQueryPerformer& searchQueryPerformer,
                                      CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
                                      Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                     TagSearch::View::ITagSearchRepository& tagSearchRepository,
                                      float minimumSecondsBetweenUpdates,
                                      float minimumInterestLateralDeltaAt1km,
                                      float minimumInteriorInterestLateralDelta,
@@ -68,7 +70,7 @@ namespace ExampleApp
                 }
 
             private:
-                void HandleInteriorChanged();
+                void HandleInteriorChanged(TagSearch::View::TagSearchModel& model);
 
                 void HandleSearchQueryIssued(const SearchQuery& query);
 
@@ -78,6 +80,8 @@ namespace ExampleApp
                 void HandleSearchQueryResultsCleared();
                 
                 bool ShouldRefreshSearch(float deltaSeconds, const Eegeo::dv3& interestPointEcef, const Eegeo::dv3& viewpointEcef);
+                
+                TagSearch::View::ITagSearchRepository& m_tagSearchRepository;
             };
         }
     }

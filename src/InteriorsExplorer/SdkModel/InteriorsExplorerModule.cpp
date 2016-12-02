@@ -14,6 +14,8 @@
 #include "InteriorExplorerUserInteractionModel.h"
 #include "IInitialExperienceModel.h"
 #include "InteriorsExplorerFloorDraggedObserver.h"
+#include "InteriorMenuObserver.h"
+
 
 namespace ExampleApp
 {
@@ -40,7 +42,9 @@ namespace ExampleApp
                                                              const bool interiorsAffectedByFlattening,
                                                              InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsEntitiesPinsController,
                                                              PersistentSettings::IPersistentSettingsModel& persistentSettings,
-                                                             Eegeo::Location::NavigationService& navigationService)
+                                                             Eegeo::Location::NavigationService& navigationService,
+                                                             Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& interiorMetaDataRepo,
+                                                             TagSearch::View::ITagSearchRepository& tagSearchRepository)
             {
                 m_pUserInteractionModel = Eegeo_NEW(InteriorExplorerUserInteractionModel)();
                 
@@ -78,6 +82,10 @@ namespace ExampleApp
                 m_pFloorDraggedObserver = Eegeo_NEW(InteriorsExplorerFloorDraggedObserver)(*m_pModel, m_pInteriorsGpsCameraController->GetTouchController());
 
                 m_pUINotificationService = Eegeo_NEW(InteriorsUINotificationService)(messageBus, interiorsEntitiesPinsController, worldPinIconMapping);
+                
+                m_pMenuObserver = Eegeo_NEW(InteriorMenuObserver)(interiorSelectionModel,
+                                                                  interiorMetaDataRepo,
+                                                                  tagSearchRepository);
             }
             
             InteriorsExplorerModule::~InteriorsExplorerModule()
@@ -92,6 +100,7 @@ namespace ExampleApp
                 Eegeo_DELETE m_pGpsGlobeCameraController;
                 Eegeo_DELETE m_pVisibilityUpdater;
                 Eegeo_DELETE m_pUserInteractionModel;
+                Eegeo_DELETE m_pMenuObserver;
             }
             
             View::InteriorsExplorerViewModel& InteriorsExplorerModule::GetInteriorsExplorerViewModel() const

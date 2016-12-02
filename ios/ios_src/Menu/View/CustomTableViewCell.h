@@ -44,6 +44,8 @@
                         :(CGRect)textFrame
                         :(CGRect)detailTextFrame;
 
+- (void)setIndexInformation:(NSIndexPath *)indexPath;
+
 - (void)layoutSubviews;
 
 - (BOOL)canInteract;

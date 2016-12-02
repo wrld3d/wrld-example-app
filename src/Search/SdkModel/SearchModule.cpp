@@ -19,23 +19,25 @@ namespace ExampleApp
                                        CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
                                        Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                        ExampleAppMessaging::TMessageBus& messageBus,
-                                       ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus)
+                                       ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
+                                       TagSearch::View::ITagSearchRepository& tagSearchRepository,
+                                       ISearchQueryPerformer& searchQueryPerformer,
+                                       ISearchResultRepository& searchResultRepository)
             {
-                m_pSearchResultRepository = Eegeo_NEW(SearchResultRepository)();
+                m_pSearchResultRepository = &searchResultRepository;
                 
                 m_pSearchResultMyPinsService = Eegeo_NEW(MyPins::SearchResultMyPinsService)(sdkModelDomainEventBus);
                 
                 m_pMyPinsSearchResultRefreshService = Eegeo_NEW(MyPins::MyPinsSearchResultRefreshService)(*m_pSearchResultMyPinsService,
                                                                                                           exteriorSearchService);
 
-                m_pSearchQueryPerformer = Eegeo_NEW(SearchQueryPerformer)(exteriorSearchService,
-                                                                          *m_pSearchResultRepository,
-                                                                          cameraController);
+                m_pSearchQueryPerformer = &searchQueryPerformer;
 
                 m_pSearchRefreshService = Eegeo_NEW(SearchRefreshService)(exteriorSearchService,
                                           *m_pSearchQueryPerformer,
                                           cameraTransitionsController,
                                           interiorInteractionModel,
+                                          tagSearchRepository,
                                           1.f,
                                           100.f,
                                           1100.f,
