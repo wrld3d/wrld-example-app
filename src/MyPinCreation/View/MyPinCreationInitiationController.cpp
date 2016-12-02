@@ -7,6 +7,7 @@
 #include "ApplyScreenControl.h"
 #include "MyPinCreationViewStateChangedMessage.h"
 #include "MyPinCreationStage.h"
+#include "IAppModeModel.h"
 
 namespace ExampleApp
 {
@@ -59,8 +60,9 @@ namespace ExampleApp
             
             void MyPinCreationInitiationController::OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message)
             {
-                m_appModeAllowsOpen = message.GetAppMode() != AppModes::SdkModel::TourMode;
-                
+                const AppModes::SdkModel::AppMode appMode = message.GetAppMode();
+                m_appModeAllowsOpen = appMode != AppModes::SdkModel::TourMode;
+
                 if(m_appModeAllowsOpen)
                 {
                     m_viewModel.AddToScreen();
@@ -69,6 +71,18 @@ namespace ExampleApp
                 {
                     m_viewModel.RemoveFromScreen();
                 }
+
+                const bool transitionClosesPinCreationDialogue =
+                    AppModes::SdkModel::WorldMode == appMode &&
+                    AppModes::SdkModel::InteriorMode == m_lastAppMode;
+                if(transitionClosesPinCreationDialogue)
+                {
+                    MyPinCreationViewStateChangedMessage message(ExampleApp::MyPinCreation::Inactive);
+                    m_messageBus.Publish(message);
+                    m_confirmationViewModel.RemoveFromScreen();
+                }
+
+                m_lastAppMode = appMode;
             }
 
         }

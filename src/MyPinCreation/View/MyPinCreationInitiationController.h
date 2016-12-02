@@ -9,6 +9,7 @@
 #include "BidirectionalBus.h"
 #include "IMetricsService.h"
 #include "AppModeChangedMessage.h"
+#include "IAppModeModel.h"
 
 namespace ExampleApp
 {
@@ -46,6 +47,7 @@ namespace ExampleApp
                 void OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message);
                 
                 bool m_appModeAllowsOpen;
+                AppModes::SdkModel::AppMode m_lastAppMode;
             };
         }
     }
