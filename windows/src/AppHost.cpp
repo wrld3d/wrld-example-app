@@ -153,12 +153,8 @@ AppHost::AppHost(
 
     m_pJpegLoader = Eegeo_NEW(Eegeo::Helpers::Jpeg::JpegLoader)();
 
-    std::set<std::string> customApplicationAssetDirectories;
-    customApplicationAssetDirectories.insert("SearchResultOnMap");
-    customApplicationAssetDirectories.insert("ApplicationConfigs");
-
     const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration = ExampleApp::ApplicationConfig::SdkModel::LoadAppConfig(
-        WindowsFileIO(&nativeState, customApplicationAssetDirectories),
+        WindowsFileIO(&nativeState),
         ExampleApp::ApplicationConfig::SdkModel::WindowsApplicationConfigurationVersionProvider(),
         ExampleApp::ApplicationConfigurationPath);
 
@@ -170,8 +166,7 @@ AppHost::AppHost(
         display,
         resourceBuildShareContext,
         shareSurface,
-        applicationConfiguration.EegeoApiKey(),
-        customApplicationAssetDirectories);
+        applicationConfiguration.EegeoApiKey());
 
     Eegeo::EffectHandler::Initialise();
 
