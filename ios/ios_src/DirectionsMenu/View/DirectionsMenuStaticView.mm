@@ -121,6 +121,10 @@
     _startRouteTextField.text = _endRouteTextField.text;
     _endRouteTextField.text = temptextStart;
     
+    bool tempSearched = endLocationSearched;
+    endLocationSearched = startLocationSearched;
+    startLocationSearched = tempSearched;
+    
 }
 - (void)optionsAction
 {
@@ -338,14 +342,21 @@
 
 - (Eegeo::Space::LatLong) GetStartLocation
 {
+    if ((startMyLocationSelected && [_startRouteTextField.text isEqualToString:@"My Location"])) {
+        return Eegeo::Space::LatLong(0.0f,0.0f);
+    }
     if (startLocationSearched)
     {
       return m_pStartLoc.GetLocation();
     }
     return Eegeo::Space::LatLong(0.0f,0.0f);
+    
 }
 - (Eegeo::Space::LatLong) GetEndLocation
 {
+    if (([_endRouteTextField.text isEqualToString:@"My Location"])) {
+        return Eegeo::Space::LatLong(0.0f,0.0f);
+    }
     if (endLocationSearched)
     {
         return m_pEndLoc.GetLocation();
