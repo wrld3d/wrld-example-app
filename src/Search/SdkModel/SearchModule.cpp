@@ -7,6 +7,7 @@
 #include "SearchRefreshService.h"
 #include "SearchResultMyPinsService.h"
 #include "MyPinsSearchResultRefreshService.h"
+#include "TagSearchModule.h"
 
 namespace ExampleApp
 {
@@ -20,24 +21,27 @@ namespace ExampleApp
                                        Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                        ExampleAppMessaging::TMessageBus& messageBus,
                                        ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
-                                       TagSearch::View::ITagSearchRepository& tagSearchRepository,
-                                       ISearchQueryPerformer& searchQueryPerformer,
-                                       ISearchResultRepository& searchResultRepository)
+                                       Metrics::IMetricsService& metricsService)
             {
-                m_pSearchResultRepository = &searchResultRepository;
+                m_pSearchResultRepository = Eegeo_NEW(SearchResultRepository)();
                 
                 m_pSearchResultMyPinsService = Eegeo_NEW(MyPins::SearchResultMyPinsService)(sdkModelDomainEventBus);
                 
                 m_pMyPinsSearchResultRefreshService = Eegeo_NEW(MyPins::MyPinsSearchResultRefreshService)(*m_pSearchResultMyPinsService,
                                                                                                           exteriorSearchService);
 
-                m_pSearchQueryPerformer = &searchQueryPerformer;
+                m_pSearchQueryPerformer = Eegeo_NEW(Search::SdkModel::SearchQueryPerformer)(exteriorSearchService,
+                                                                                            *m_pSearchResultRepository,
+                                                                                            cameraController);
+                
+                m_pTagSearchModule = TagSearch::SdkModel::TagSearchModule::Create(*m_pSearchQueryPerformer, messageBus, metricsService);
+;
 
                 m_pSearchRefreshService = Eegeo_NEW(SearchRefreshService)(exteriorSearchService,
                                           *m_pSearchQueryPerformer,
                                           cameraTransitionsController,
                                           interiorInteractionModel,
-                                          tagSearchRepository,
+                                          m_pTagSearchModule->GetTagSearchRepository(),
                                           1.f,
                                           100.f,
                                           1100.f,
@@ -81,6 +85,11 @@ namespace ExampleApp
             MyPins::IMyPinsSearchResultRefreshService& SearchModule::GetMyPinsSearchResultRefreshService() const
             {
                 return *m_pMyPinsSearchResultRefreshService;
+            }
+            
+            TagSearch::SdkModel::ITagSearchModule& SearchModule::GetTagSearchModule() const
+            {
+                return *m_pTagSearchModule;
             }
         }
     }

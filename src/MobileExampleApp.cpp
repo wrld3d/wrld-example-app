@@ -127,7 +127,6 @@
 #include "DeepLinkController.h"
 #include "InteriorsStreamingModule.h"
 #include "InteriorMetaDataModule.h"
-#include "SearchQueryPerformer.h"
 
 namespace ExampleApp
 {
@@ -528,14 +527,8 @@ namespace ExampleApp
         }
         
         m_pSearchServiceModule = Eegeo_NEW(Search::Combined::SdkModel::CombinedSearchServiceModule)(m_searchServiceModules, m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel());
-        
-        m_pSearchResultRepository =  Eegeo_NEW(Search::SdkModel::SearchResultRepository)();
-        m_pSearchQueryPerformer = Eegeo_NEW(Search::SdkModel::SearchQueryPerformer)(m_pSearchServiceModule->GetSearchService(),
-                                                                                    *m_pSearchResultRepository,
-                                                                                     *m_pGlobeCameraController);
-        
        
-        
+    
         // TODO: Check if this module is still relevant
         m_pAppCameraModule = Eegeo_NEW(AppCamera::SdkModel::AppCameraModule)();
         
@@ -584,20 +577,14 @@ namespace ExampleApp
                                                                                 m_metricsService,
                                                                                 m_menuReaction);
         
-        m_pTagSearchModule = TagSearch::SdkModel::TagSearchModule::Create(
-                                                                          *m_pSearchQueryPerformer,
-                                                                          m_messageBus,
-                                                                          m_metricsService);
-        
         m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(m_pSearchServiceModule->GetSearchService(),
                                                                     *m_pGlobeCameraController,
                                                                     *m_pCameraTransitionService,
                                                                     m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel(),
                                                                     m_messageBus,
                                                                     m_sdkDomainEventBus,
-                                                                    m_pTagSearchModule->GetTagSearchRepository(),
-                                                                    *m_pSearchQueryPerformer,
-                                                                    *m_pSearchResultRepository);
+                                                                    m_metricsService);
+        m_pTagSearchModule = &m_pSearchModule->GetTagSearchModule();
         
         m_pMapModeModule = Eegeo_NEW(MapMode::SdkModel::MapModeModule)(m_pVisualMapModule->GetVisualMapService());
         

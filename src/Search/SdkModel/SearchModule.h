@@ -15,6 +15,8 @@
 #include "AppModes.h"
 #include "Interiors.h"
 #include "ITagSearchRepository.h"
+#include "ITagSearchModule.h"
+#include "IMetricsService.h"
 
 namespace ExampleApp
 {
@@ -31,6 +33,7 @@ namespace ExampleApp
                 SearchQueryObserver* m_pSearchQueryObserver;
                 MyPins::ISearchResultMyPinsService* m_pSearchResultMyPinsService;
                 MyPins::IMyPinsSearchResultRefreshService* m_pMyPinsSearchResultRefreshService;
+                TagSearch::SdkModel::ITagSearchModule* m_pTagSearchModule;
 
             public:
                 SearchModule(ISearchService& searchService,
@@ -39,9 +42,7 @@ namespace ExampleApp
                              Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                              ExampleAppMessaging::TMessageBus& messageBus,
                              ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
-                             TagSearch::View::ITagSearchRepository& tagSearchRepository,
-                             ISearchQueryPerformer& searchQueryPerformer,
-                             ISearchResultRepository& searchResultRepository);
+                             Metrics::IMetricsService& metricsService);
 
                 ~SearchModule();
 
@@ -54,6 +55,8 @@ namespace ExampleApp
                 MyPins::ISearchResultMyPinsService& GetSearchResultMyPinsService() const;
                 
                 MyPins::IMyPinsSearchResultRefreshService& GetMyPinsSearchResultRefreshService() const;
+                
+                ExampleApp::TagSearch::SdkModel::ITagSearchModule& GetTagSearchModule() const;
             };
         }
     }
