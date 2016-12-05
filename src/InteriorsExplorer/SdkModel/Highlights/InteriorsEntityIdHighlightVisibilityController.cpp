@@ -52,6 +52,12 @@ namespace ExampleApp
                             }
                             return entities;
                         }
+                        else if (selectedSearchResult.GetPrimaryTag() == Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME)
+                        {
+                            const Search::Swallow::SdkModel::SwallowDepartmentResultModel& department = Search::Swallow::SdkModel::SearchParser::TransformToSwallowDepartmentResult(selectedSearchResult);
+
+                            return department.GetAllDesks();
+                        }
                         else if (selectedSearchResult.GetPrimaryTag() == Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
                         {
                             const Search::Swallow::SdkModel::SwallowPersonResultModel& person = Search::Swallow::SdkModel::SearchParser::TransformToSwallowPersonResult(selectedSearchResult);
