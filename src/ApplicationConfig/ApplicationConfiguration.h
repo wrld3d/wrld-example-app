@@ -41,6 +41,7 @@ namespace ExampleApp
             std::string m_twitterAuthCode;
             bool m_isKioskTouchInputEnabled;
             bool m_useLabels;
+            bool m_useJapaneseFont;
             
             std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo> m_interiorTrackingInfo;
 
@@ -72,7 +73,8 @@ namespace ExampleApp
                 const std::string& myPinsWebServiceAuthToken,
                 const std::string& twitterAuthCode,
                 const bool isKioskTouchInputEnabled,
-                bool m_useLabels,
+                bool useLabels,
+                bool useJapaneseFont,
                 const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo
             );
             
@@ -127,6 +129,8 @@ namespace ExampleApp
             bool IsKioskTouchInputEnabled() const;
             
             bool UseLabels() const;
+            
+            bool UseJapaneseFont() const;
             
             const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& InteriorTrackingInfo() const;
         };

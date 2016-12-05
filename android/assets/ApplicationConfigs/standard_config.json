@@ -18,5 +18,7 @@
     "ThemeManifestURL": "",
     "EegeoSearchServiceUrl": "",
     "MyPinsWebServiceUrl": "",
-    "MyPinsWebServiceAuthToken": ""
+    "MyPinsWebServiceAuthToken": "",
+    "UseLabels": true,
+    "UseJapaneseFont": false
 }

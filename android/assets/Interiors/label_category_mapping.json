@@ -29,19 +29,19 @@
 	}],
 	"tag_to_label_anchor_category": [{
 		"tag": "toilets",
-		"label_anchor_category": "interior_facility_normal_priority"
+		"label_anchor_category": "interior_facility_toilets"
 	},
 	{
 		"tag": "elevator",
-		"label_anchor_category": "interior_facility_high_priority"
+		"label_anchor_category": "interior_facility_elevator"
 	},
 	{
 		"tag": "escalator",
-		"label_anchor_category": "interior_facility_high_priority"
+		"label_anchor_category": "interior_facility_escalator"
 	},
 	{
 		"tag": "stairs",
-		"label_anchor_category": "interior_facility_low_priority"
+		"label_anchor_category": "interior_facility_stairs"
 	},
     {
          "tag": "default",
@@ -62,15 +62,19 @@
     ],
 	"label_anchor_categories": [
     {
-        "label_anchor_category": "interior_facility_low_priority",
+        "label_anchor_category": "interior_facility_stairs",
         "maximum_priority": -1
     },
     {
-		"label_anchor_category": "interior_facility_normal_priority",
+		"label_anchor_category": "interior_facility_escalator",
 		"maximum_priority": -1
 	},
     {
-        "label_anchor_category": "interior_facility_high_priority",
+        "label_anchor_category": "interior_facility_elevator",
+        "maximum_priority": -1
+    },
+    {
+        "label_anchor_category": "interior_facility_toilets",
         "maximum_priority": -1
     },
     {

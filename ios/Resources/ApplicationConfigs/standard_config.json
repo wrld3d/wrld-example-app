@@ -19,6 +19,8 @@
     "EegeoSearchServiceUrl": "",
     "MyPinsWebServiceUrl": "",
     "MyPinsWebServiceAuthToken": "",
+    "UseLabels": true,
+    "UseJapaneseFont": false,
     "IndoorTrackedBuildings":
     [
         {

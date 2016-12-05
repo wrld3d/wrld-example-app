@@ -92,6 +92,12 @@ namespace ExampleApp
                     useLabels = document["UseLabels"].GetBool();
                 }
                 
+                bool useJapaneseFont = false;
+                if (document.HasMember("UseJapaneseFont"))
+                {
+                    useJapaneseFont = document["UseJapaneseFont"].GetBool();
+                }
+                
                 std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo> interiorTrackingInfoList;
                 if(document.HasMember("IndoorTrackedBuildings") && !document["IndoorTrackedBuildings"].IsNull())
                 {
@@ -126,6 +132,7 @@ namespace ExampleApp
                     twitterAuthCode,
                     isKioskTouchInputEnabled,
                     useLabels,
+                    useJapaneseFont,
                     interiorTrackingInfoList
                 );
             }

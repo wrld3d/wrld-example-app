@@ -37,8 +37,14 @@ namespace ExampleApp
                     const std::string emptyTwitterAuthCode;
                     
                     const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo> interiorTrackingInfo;
+                    
+                    const bool tryStartAtGpsLocation = false;
+                    const bool shouldStartFullscreen = false;
+                    const bool isKioskTouchInputEnabled = false;
+                    const bool useLabels = false;
+                    const bool useJapaneseFont = false;
 
-                    return ApplicationConfiguration ("Eegeo Example App", 
+                    return ApplicationConfiguration ("Eegeo Example App",
                         emptyEegeoApiKey,
                         productVersion,
                         buildNumber,
@@ -49,8 +55,8 @@ namespace ExampleApp
                         Eegeo::Space::LatLongAltitude(0.0f, 0.0f, 0.0f),
                         1000.f,
                         0.f,
-                        false,
-                        false,
+                        tryStartAtGpsLocation,
+                        shouldStartFullscreen,
                         emptyGoogleAnalyticsReferrerToken,
                         emptyFlurryApiKey,
                         emptyYelpConsumerKey,
@@ -62,8 +68,9 @@ namespace ExampleApp
                         emptyMyPinsWebServiceUrl,
                         emptyMyPinsWebServiceAuthToken,
                         emptyTwitterAuthCode,
-                        false,
-                        false,
+                        isKioskTouchInputEnabled,
+                        useLabels,
+                        useJapaneseFont,
                         interiorTrackingInfo);
                 }
             }
@@ -91,15 +98,16 @@ namespace ExampleApp
                 if (appConfig.UseLabels())
                 {
                     platformConfig.OptionsConfig.EnableLabels = true;
-                    platformConfig.MapLayersConfig.FontsModuleConfig.EnvironmentFontFilename = "IPAexGothic_sdf.fnt";
+                    platformConfig.MapLayersConfig.FontsModuleConfig.EnvironmentFontFilename = appConfig.UseJapaneseFont() ? "IPAexGothic_sdf.fnt" : "opensans_semibold_sdf.fnt";
                     platformConfig.MapLayersConfig.Interiors.UseLegacyLabels = false;
                     platformConfig.MapLayersConfig.Interiors.LabelCategoryMapPath = "Interiors/label_category_mapping.json";
                     platformConfig.MapLayersConfig.LabelsModuleConfig.StyleSheetPath = "Labels/label_style_sheet.json";
+                    platformConfig.MapLayersConfig.LabelsModuleConfig.CategoryIconMapPath = "Labels/label_category_icon_map.json";
                 }
                 else
                 {
                     platformConfig.OptionsConfig.EnableLabels = false;
-                    platformConfig.MapLayersConfig.FontsModuleConfig.EnvironmentFontFilename = "IPAexGothic32_A8_icons.fnt";
+                    platformConfig.MapLayersConfig.FontsModuleConfig.EnvironmentFontFilename = appConfig.UseJapaneseFont() ? "IPAexGothic32_A8_icons.fnt" : "FrankBold50_A8_icons.fnt";
                     platformConfig.MapLayersConfig.Interiors.UseLegacyLabels = true;
                     platformConfig.MapLayersConfig.Interiors.LabelCategoryMapPath = "";
                     platformConfig.MapLayersConfig.LabelsModuleConfig.StyleSheetPath = "";

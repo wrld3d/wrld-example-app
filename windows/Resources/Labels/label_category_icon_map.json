@@ -1,0 +1,57 @@
+{
+    "LabelCategoryIconMapping":
+    [
+    {
+        "label_anchor_category": "place_name_park_lowz",
+        "label_icon_key": "park"
+    },
+    {
+        "label_anchor_category": "place_name_park_midz",
+        "label_icon_key": "park"
+    },
+    {
+        "label_anchor_category": "place_name_park_highz",
+        "label_icon_key": "park"
+    },
+    {
+        "label_anchor_category": "place_name_golf_lowz",
+        "label_icon_key": "golf"
+    },
+    {
+        "label_anchor_category": "place_name_golf_midz",
+        "label_icon_key": "golf"
+    },
+    {
+        "label_anchor_category": "place_name_golf_highz",
+        "label_icon_key": "golf"
+    },
+    {
+        "label_anchor_category": "place_name_airp_lowz",
+        "label_icon_key": "airport"
+    },
+    {
+        "label_anchor_category": "place_name_airp_midz",
+        "label_icon_key": "airport"
+    },
+    {
+        "label_anchor_category": "place_name_airp_highz",
+        "label_icon_key": "airport"
+    },
+    {
+        "label_anchor_category": "interior_facility_stairs",
+        "label_icon_key": "stairs"
+    },
+    {
+        "label_anchor_category": "interior_facility_elevator",
+        "label_icon_key": "elevator"
+    },
+    {
+        "label_anchor_category": "interior_facility_escalator",
+        "label_icon_key": "escalator"
+    },
+    {
+        "label_anchor_category": "interior_facility_toilets",
+        "label_icon_key": "toilets"
+    }
+    ]
+}

@@ -33,6 +33,7 @@ namespace ExampleApp
             const std::string& twitterAuthCode,
             const bool isKioskTouchInputEnabled,
             const bool useLabels,
+            const bool useJapaneseFont,
             const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo
             )
         : m_name(name)
@@ -61,6 +62,7 @@ namespace ExampleApp
         , m_twitterAuthCode(twitterAuthCode)
         , m_isKioskTouchInputEnabled(isKioskTouchInputEnabled)
         , m_useLabels(useLabels)
+        , m_useJapaneseFont(useJapaneseFont)
         , m_interiorTrackingInfo(interiorTrackingInfo)
         {
         }
@@ -193,6 +195,11 @@ namespace ExampleApp
         bool ApplicationConfiguration::UseLabels() const
         {
             return m_useLabels;
+        }
+        
+        bool ApplicationConfiguration::UseJapaneseFont() const
+        {
+            return m_useJapaneseFont;
         }
         
         const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& ApplicationConfiguration::InteriorTrackingInfo() const

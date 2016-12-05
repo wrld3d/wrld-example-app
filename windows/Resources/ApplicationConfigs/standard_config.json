@@ -20,5 +20,7 @@
 	"MyPinsWebServiceUrl": "",
 	"MyPinsWebServiceAuthToken": "",
 	"IsKioskTouchInputEnabled":false, 
-    "StartAppInFullscreen":false 
+	"UseLabels": true,
+    "UseJapaneseFont": false,
+    "StartAppInFullscreen":false
 }
