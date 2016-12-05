@@ -52,6 +52,7 @@ namespace ExampleApp
             std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*>m_restrictedBuildingsInfo;
             bool m_isKioskTouchInputEnabled;
             bool m_useLabels;
+            bool m_useJapaneseFont;
             
             std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo> m_interiorTrackingInfo;
 
@@ -89,7 +90,8 @@ namespace ExampleApp
                                      const bool isKioskTouchInputEnabled,
 					                 const std::string& embeddedThemeTexturePath,
 					                 const std::string& twitterAuthCode,
-					                 bool m_useLabels,
+					                 bool useLabels,
+                                     bool useJapaneseFont,
 					                 const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo);
             
             std::string Name() const;
@@ -112,7 +114,6 @@ namespace ExampleApp
 
             std::string TwitterAuthCode() const;
             
-            bool UseLabels() const;
             std::string FlurryAppKey() const;
             
             std::string YelpConsumerKey() const;
@@ -157,6 +158,10 @@ namespace ExampleApp
             const std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*>& RestrictedBuildingsInfo() const;
             
             bool IsKioskTouchInputEnabled() const;
+            
+            bool UseLabels() const;
+            
+            bool UseJapaneseFont() const;
         };
     }
 }
