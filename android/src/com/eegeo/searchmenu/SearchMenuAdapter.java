@@ -3,7 +3,6 @@
 package com.eegeo.searchmenu;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import com.eegeo.ProjectSwallowApp.R;
@@ -14,6 +13,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils.TruncateAt;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,28 +25,23 @@ import org.json.*;
 
 public class SearchMenuAdapter extends BaseAdapter
 {
+    public enum ScaleDirection
+    {
+        ScaleUp,
+        ScaleDown
+    }
+
     private int m_itemViewId;
     private List<String> m_nameData;
     private Activity m_context;
     private final String m_defaultIconString = "misc";
-    
-    private SearchMenuListAnimationHandler m_searchMenuListAnimationHandler = null;
-    private SearchMenuListItemAnimationListener m_searchMenuListItemAnimationListener = null;
-    
-    private HashMap<String, View> m_viewCache;
-    
-    private boolean m_itemAnimationsEnabled = false;
+    private SparseArray<View> m_viewCache = new SparseArray<View>();
 
-    public SearchMenuAdapter(Activity context, int itemViewId, SearchMenuListAnimationHandler searchMenuListAnimationHandler, SearchMenuListItemAnimationListener searchMenuListItemAnimationListener)
+    public SearchMenuAdapter(Activity context, int itemViewId)
     {
         m_context = context;
         m_itemViewId = itemViewId;
         m_nameData = new ArrayList<String>();
-        
-        m_searchMenuListAnimationHandler = searchMenuListAnimationHandler;
-        m_searchMenuListItemAnimationListener = searchMenuListItemAnimationListener;
-        
-        m_viewCache = new HashMap<String, View>();
     }
 
     public void setData(List<String> nameData)
@@ -76,30 +71,14 @@ public class SearchMenuAdapter extends BaseAdapter
     @Override
     public View getView(int index, View contextView, ViewGroup parent)
     {
-    	View itemView;
-		
-		String key = Integer.toString(index);
-		
-		if(m_viewCache.containsKey(key))
-		{
-			itemView = m_viewCache.get(key);
-		}
-		else
-		{
-	        LayoutInflater inflater = (LayoutInflater)m_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	        itemView = inflater.inflate(m_itemViewId, null);
-	        
-	        if(m_itemAnimationsEnabled)
-	        {
-		        itemView.setScaleY(0);
-		        m_searchMenuListAnimationHandler.animateItemView(itemView, true, m_searchMenuListItemAnimationListener);
-	        }
-	        
-	        m_viewCache.put(key, itemView);
-		}
-		
+        View itemView = m_viewCache.get(index, null);
 		final String json = (String)getItem(index);
-        
+
+        if (null == itemView)
+        {
+            itemView = cacheNewView(index);
+        }
+
         try
         {
             JSONObject data = new JSONObject(json);
@@ -136,32 +115,29 @@ public class SearchMenuAdapter extends BaseAdapter
 
         return itemView;
     }
-    
-    public void triggerAnimations(boolean isExpanding)
+
+    public void animateItemScales(final int itemLoId, final int itemHiId, final long delay, final ScaleDirection scaleDir)
     {
-    	int count = getCount();
-    	for (int i = 0; i < count; ++i)
-		{
-			String key = Integer.toString(i);
-			if(m_viewCache.containsKey(key))
-			{
-				View itemView = m_viewCache.get(key);
-				
-				if(isExpanding)
-				{
-					itemView.setScaleY(0);
-				}
-				
-				if(m_itemAnimationsEnabled)
-				{
-					m_searchMenuListAnimationHandler.animateItemView(itemView, isExpanding, m_searchMenuListItemAnimationListener);
-				}
-			}
-		}
+        final float startScale = scaleDir == ScaleDirection.ScaleUp ? 0f : 1f;
+        final float endScale = scaleDir == ScaleDirection.ScaleUp ? 1f : 0f;
+        for (int i = itemLoId; i < itemHiId; ++i)
+        {
+            View v = m_viewCache.get(i, null);
+            if (v == null)
+            {
+                v = cacheNewView(i);
+            }
+            v.setScaleY(startScale);
+            v.animate().setStartDelay(delay).scaleY(endScale);
+        }
     }
-    
-    public void enableItemAnimations(boolean enable)
+
+    private View cacheNewView(final int id)
     {
-    	m_itemAnimationsEnabled = enable;
+        LayoutInflater inflater = (LayoutInflater)m_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View itemView = inflater.inflate(m_itemViewId, null);
+        itemView.setPivotY(0f);
+        m_viewCache.put(id, itemView);
+        return itemView;
     }
 }

@@ -17,9 +17,7 @@ public class ViewHeightAnimatorUpdateListener<T extends ViewGroup.LayoutParams> 
 	@Override
 	public void onAnimationUpdate(ValueAnimator animation)
 	{
-		T layoutParams = (T)m_view.getLayoutParams();
-		layoutParams.height = (Integer) animation.getAnimatedValue();
-    
-    	m_view.setLayoutParams(layoutParams);
+		m_view.getLayoutParams().height = (int) animation.getAnimatedValue();
+		m_view.requestLayout();
 	}
 }
