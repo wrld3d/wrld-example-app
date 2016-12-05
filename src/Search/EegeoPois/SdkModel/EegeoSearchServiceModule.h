@@ -44,6 +44,7 @@ namespace ExampleApp
                                              Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
                                              Net::SdkModel::INetworkCapabilities& networkCapabilities,
                                              const Search::SdkModel::SearchTags& searchTags,
+                                             const std::vector<std::string>& handledTags,
                                              const std::string& serviceUrl,
                                              const std::string& apiKey,
                                              const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,

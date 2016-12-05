@@ -22,6 +22,7 @@ namespace ExampleApp
                                                                    Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
                                                                    Net::SdkModel::INetworkCapabilities& networkCapabilities,
                                                                    const Search::SdkModel::SearchTags& searchTags,
+                                                                   const std::vector<std::string>& handledTags,
                                                                    const std::string& serviceUrl,
                                                                    const std::string& apiKey,
                                                                    const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
@@ -42,13 +43,6 @@ namespace ExampleApp
                     m_pReadableTagMapper = Eegeo_NEW(EegeoReadableTagMapper)(searchTags);
 
                     m_pEegeoParser = Eegeo_NEW(EegeoJsonParser)(*m_pTagIconMapper, *m_pReadableTagMapper, persistentSettings);
-
-                    std::vector<std::string> handledTags;
-                    handledTags.reserve(searchTags.tags.size());
-                    for(const auto& i : searchTags.tags)
-                    {
-                        handledTags.push_back(i.tag);
-                    }
 
                     m_pSearchService = Eegeo_NEW(EegeoSearchService)(*m_pEegeoSearchQueryFactory,
                                                                      *m_pEegeoParser,

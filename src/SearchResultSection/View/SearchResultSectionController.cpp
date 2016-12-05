@@ -70,6 +70,11 @@ namespace ExampleApp
 					const Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
 					std::string subtitle = model.GetSubtitle();
                     ExampleApp::Search::SdkModel::TagIconKey iconKey = model.GetIconKey();
+                    
+                    if (!Search::Swallow::SearchConstants::ShouldShowTagAsSearchResult(model.GetPrimaryTag()))
+                    {
+                        continue;
+                    }
 
                     if (model.GetIconKey() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
 					{

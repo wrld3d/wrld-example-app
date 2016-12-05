@@ -561,10 +561,12 @@ namespace ExampleApp
         if(useEegeoPois)
         {
             const auto& searchTags = Search::SdkModel::CreateSearchTagsFromFile(m_platformAbstractions.GetFileIO(), "swallow_search_tags.json");
+            const auto& handledTags = Search::Swallow::SearchConstants::GetAllTags();
             m_searchServiceModules[Search::EegeoVendorName] = Eegeo_NEW(Search::EegeoPois::SdkModel::EegeoSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
                                                                                                                                m_platformAbstractions.GetUrlEncoder(),
                                                                                                                                m_networkCapabilities,
                                                                                                                                searchTags,
+                                                                                                                               handledTags,
                                                                                                                                m_applicationConfiguration.EegeoSearchServiceUrl(),
                                                                                                                                m_applicationConfiguration.EegeoApiKey(),
                                                                                                                                world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel(),

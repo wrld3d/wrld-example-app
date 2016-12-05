@@ -189,7 +189,7 @@ namespace ExampleApp
                          it++)
                     {
                         const Search::SdkModel::SearchResultModel& searchResult = *it;
-                        if (searchResult.GetPrimaryTag() == Search::Swallow::SearchConstants::TRANSITION_CATEGORY_NAME)
+                        if (searchResult.GetPrimaryTag() == Search::Swallow::SearchConstants::TRANSITION_CATEGORY_NAME && !query.IsTag())
                         {
                             continue;
                         }
