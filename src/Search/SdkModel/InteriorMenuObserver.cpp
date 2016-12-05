@@ -7,19 +7,19 @@
 
 namespace ExampleApp
 {
-    namespace InteriorsExplorer
+    namespace Search
     {
         namespace SdkModel
         {
             InteriorMenuObserver::InteriorMenuObserver(Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                 Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& interiorMetaDataRepo,
-                                 TagSearch::View::ITagSearchRepository& tagSearchRepository)
+                                                       Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& interiorMetaDataRepo,
+                                                       TagSearch::View::ITagSearchRepository& tagSearchRepository)
             : m_tagSearchRepository(tagSearchRepository)
             , m_interiorSelectionChangedCallback(this, &InteriorMenuObserver::OnSelectionChanged)
             , m_interiorSelectionModel(interiorSelectionModel)
             , m_interiorMetaDataRepo(interiorMetaDataRepo)
-            , m_hasSelectedInterior(false),
-             m_defaultTagsSaved(false)
+            , m_hasSelectedInterior(false)
+            , m_defaultTagsSaved(false)
             {
                 m_interiorSelectionModel.RegisterSelectionChangedCallback(m_interiorSelectionChangedCallback);
                 m_hasSelectedInterior = m_interiorSelectionModel.IsInteriorSelected();
@@ -41,6 +41,8 @@ namespace ExampleApp
                 {
                     OnEnterInterior(interiorId, transitionState);
                 }
+                
+                NotifyInteriorTagsUpdated();
             }
             
             void InteriorMenuObserver::OnEnterInterior(const Eegeo::Resources::Interiors::InteriorId& interiorId, const TransitionState& transtionState)
@@ -146,6 +148,21 @@ namespace ExampleApp
                 {
                     return TransitionState::NoTransition;
                 }
+            }
+            
+            void InteriorMenuObserver::RegisterInteriorTagsUpdatedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_interiorTagsUpdatedCallbacks.AddCallback(callback);
+            }
+            
+            void InteriorMenuObserver::UnregisterInteriorTagsUpdatedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_interiorTagsUpdatedCallbacks.RemoveCallback(callback);
+            }
+            
+            void InteriorMenuObserver::NotifyInteriorTagsUpdated() const
+            {
+                m_interiorTagsUpdatedCallbacks.ExecuteCallbacks();
             }
         }
     }

@@ -24,7 +24,8 @@ namespace ExampleApp
                     float minimumSecondsBetweenUpdates,
                     float minimumInterestLateralDeltaAt1km,
                     float minimumInteriorInterestLateralDelta,
-                    float maximumInterestLateralSpeedAt1km)
+                    float maximumInterestLateralSpeedAt1km,
+                    InteriorMenuObserver& interiorMenuObserver)
                 : m_minimumSecondsBetweenUpdates(minimumSecondsBetweenUpdates)
                 , m_minimumInterestLateralDeltaAt1km(minimumInterestLateralDeltaAt1km)
                 , m_minimumInteriorInterestLateralDelta(minimumInteriorInterestLateralDelta)
@@ -36,7 +37,6 @@ namespace ExampleApp
                 , m_searchResultQueryIssuedCallback(this, &SearchRefreshService::HandleSearchQueryIssued)
                 , m_searchResultResponseReceivedCallback(this, &SearchRefreshService::HandleSearchResultsResponseReceived)
                 , m_searchQueryResultsClearedCallback(this, &SearchRefreshService::HandleSearchQueryResultsCleared)
-                , m_interiorChangedCallback(this, &SearchRefreshService::HandleInteriorChanged)
                 , m_queriesPending(0)
                 , m_searchResultsExist(false)
                 , m_searchResultsCleared(false)
@@ -49,16 +49,19 @@ namespace ExampleApp
                 , m_previousQueryInteriorId()
                 , m_interiorHasChanged(false)
                 , m_tagSearchRepository(tagSearchRepository)
+                , m_interiorMenuObserver(interiorMenuObserver)
+                , m_interiorTagsUpdatedCallback(this, &SearchRefreshService::HandleInteriorChanged)
             {
                 m_searchService.InsertOnPerformedQueryCallback(m_searchResultQueryIssuedCallback);
                 m_searchService.InsertOnReceivedQueryResultsCallback(m_searchResultResponseReceivedCallback);
                 m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(m_searchQueryResultsClearedCallback);
-                m_tagSearchRepository.InsertItemAddedCallback(m_interiorChangedCallback);
+                m_interiorMenuObserver.RegisterInteriorTagsUpdatedCallback(m_interiorTagsUpdatedCallback);
             }
 
             SearchRefreshService::~SearchRefreshService()
             {
-                m_tagSearchRepository.RemoveItemAddedCallback(m_interiorChangedCallback);
+                
+                m_interiorMenuObserver.UnregisterInteriorTagsUpdatedCallback(m_interiorTagsUpdatedCallback);
                 m_searchQueryPerformer.RemoveOnSearchResultsClearedCallback(m_searchQueryResultsClearedCallback);
                 m_searchService.RemoveOnReceivedQueryResultsCallback(m_searchResultResponseReceivedCallback);
                 m_searchService.RemoveOnPerformedQueryCallback(m_searchResultQueryIssuedCallback);
@@ -174,7 +177,7 @@ namespace ExampleApp
                 m_previousInterestEcefLocation = interestPointEcef;
             }
 
-            void SearchRefreshService::HandleInteriorChanged(TagSearch::View::TagSearchModel& model)
+            void SearchRefreshService::HandleInteriorChanged()
             {
                 if (!m_searchResultsCleared && m_searchResultsExist)
                 {

@@ -9,7 +9,7 @@
 
 namespace ExampleApp
 {
-    namespace InteriorsExplorer
+    namespace Search
     {
         namespace SdkModel
         {
@@ -21,6 +21,9 @@ namespace ExampleApp
                                      TagSearch::View::ITagSearchRepository& tagSearchRepository);
                 ~InteriorMenuObserver();
                 TagSearch::View::ITagSearchRepository& GetTagsRepository() { return m_tagSearchRepository; }
+                void RegisterInteriorTagsUpdatedCallback(Eegeo::Helpers::ICallback0& callback);
+                
+                void UnregisterInteriorTagsUpdatedCallback(Eegeo::Helpers::ICallback0& callback);
                 
             private:
                 enum TransitionState
@@ -37,6 +40,7 @@ namespace ExampleApp
                 void OnEnterInterior(const Eegeo::Resources::Interiors::InteriorId& interiorId, const TransitionState& transitionState);
                 void OnExitInterior();
                 void ClearTagSearchModelTracker();
+                void NotifyInteriorTagsUpdated() const;
                 
                 TagSearch::View::ITagSearchRepository& m_tagSearchRepository;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
@@ -47,8 +51,10 @@ namespace ExampleApp
                 
                 bool m_hasSelectedInterior;
                 bool m_defaultTagsSaved;
+                
+                Eegeo::Helpers::CallbackCollection0 m_interiorTagsUpdatedCallbacks;
             };
-
+            
         }
     }
 }

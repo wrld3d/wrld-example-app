@@ -21,7 +21,9 @@ namespace ExampleApp
                                        Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                        ExampleAppMessaging::TMessageBus& messageBus,
                                        ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
-                                       Metrics::IMetricsService& metricsService)
+                                       Metrics::IMetricsService& metricsService,
+                                       Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                       Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& interiorMetaDataRepo)
             {
                 m_pSearchResultRepository = Eegeo_NEW(SearchResultRepository)();
                 
@@ -35,7 +37,8 @@ namespace ExampleApp
                                                                                             cameraController);
                 
                 m_pTagSearchModule = TagSearch::SdkModel::TagSearchModule::Create(*m_pSearchQueryPerformer, messageBus, metricsService);
-;
+
+                m_pInteriorMenuObserver = Eegeo_NEW(InteriorMenuObserver)(interiorSelectionModel, interiorMetaDataRepo, m_pTagSearchModule->GetTagSearchRepository());
 
                 m_pSearchRefreshService = Eegeo_NEW(SearchRefreshService)(exteriorSearchService,
                                           *m_pSearchQueryPerformer,
@@ -45,7 +48,8 @@ namespace ExampleApp
                                           1.f,
                                           100.f,
                                           1100.f,
-                                          50.f);
+                                          50.f,
+                                          *m_pInteriorMenuObserver);
 
                 m_pSearchQueryObserver = Eegeo_NEW(SearchQueryObserver)(exteriorSearchService,
                                                                         *m_pSearchQueryPerformer,
@@ -56,6 +60,7 @@ namespace ExampleApp
             {
                 Eegeo_DELETE m_pSearchQueryObserver;
                 Eegeo_DELETE m_pSearchRefreshService;
+                Eegeo_DELETE m_pInteriorMenuObserver;
                 Eegeo_DELETE m_pSearchQueryPerformer;
                 Eegeo_DELETE m_pMyPinsSearchResultRefreshService;
                 Eegeo_DELETE m_pSearchResultMyPinsService;

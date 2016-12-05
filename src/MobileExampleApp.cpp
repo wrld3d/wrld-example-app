@@ -576,14 +576,16 @@ namespace ExampleApp
                                                                                 m_messageBus,
                                                                                 m_metricsService,
                                                                                 m_menuReaction);
-        
+
         m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(m_pSearchServiceModule->GetSearchService(),
                                                                     *m_pGlobeCameraController,
                                                                     *m_pCameraTransitionService,
                                                                     m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel(),
                                                                     m_messageBus,
                                                                     m_sdkDomainEventBus,
-                                                                    m_metricsService);
+                                                                    m_metricsService,
+                                                                    m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel(),
+                                                                    mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository());
         m_pTagSearchModule = &m_pSearchModule->GetTagSearchModule();
         
         m_pMapModeModule = Eegeo_NEW(MapMode::SdkModel::MapModeModule)(m_pVisualMapModule->GetVisualMapService());
@@ -695,6 +697,8 @@ namespace ExampleApp
                                                                                                                     m_screenProperties,
                                                                                                                     m_usingLegacyInteriorLabels));
         }
+        
+        
         
         m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                      interiorsPresentationModule.GetInteriorSelectionModel(),
