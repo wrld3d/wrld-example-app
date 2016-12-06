@@ -39,6 +39,8 @@
 
 - (void) updateScreenState:(float)onScreenState;
 
+- (void) updateScreenStateAndVisibility:(float)onScreenState;
+
 @property (nonatomic, retain) YelpHovercardView* pYelpHovercard;
 @property (nonatomic, retain) InteriorsHovercard* pInteriorHovercard;
 @property (nonatomic, retain) TourHovercardView* pTourHovercard;

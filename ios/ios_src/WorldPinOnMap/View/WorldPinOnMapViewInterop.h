@@ -27,6 +27,8 @@ namespace ExampleApp
                 void Close();
                 void UpdateScreenLocation(float posX, float posY);
                 void UpdateScreenState(float screenState);
+                void UpdateScreenStateAndVisibility(float screenState);
+
 
                 void OnSelected();
                 void InsertSelectedCallback(Eegeo::Helpers::ICallback0& callback);

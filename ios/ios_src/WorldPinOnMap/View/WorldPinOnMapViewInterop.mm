@@ -45,6 +45,11 @@ namespace ExampleApp
             {
                 [m_pView updateScreenState:screenState];
             }
+            void WorldPinOnMapViewInterop::UpdateScreenStateAndVisibility(float screenState)
+            {
+                [m_pView updateScreenStateAndVisibility:screenState];
+            }
+
         }
     }
 }

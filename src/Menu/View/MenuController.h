@@ -88,9 +88,9 @@ namespace ExampleApp
 
                 ~MenuController();
                 
-                virtual void AddDirectionMenuStateUpdateCallBack(Eegeo::Helpers::ICallback1<const float&>& callback);
+                virtual void AddDirectionMenuStateUpdateCallBack(Eegeo::Helpers::ICallback2<const float&,bool&>& callback);
                 
-                virtual void RemoveDirectionMenuStateUpdateCallBack(Eegeo::Helpers::ICallback1<const float&>& callback);
+                virtual void RemoveDirectionMenuStateUpdateCallBack(Eegeo::Helpers::ICallback2<const float&,bool&>& callback);
             };
         }
     }

@@ -35,6 +35,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<DirectionsMenuController> m_exitDirectionsCallbacks;
                 bool m_appModeAllowsOpen;
                 bool m_isExitDirections;
+                bool m_isDirectionMenuOpen;
 
                 Eegeo::Helpers::TCallback2<DirectionsMenuController, OpenableControl::View::IOpenableControlViewModel&, float> m_onOpenStateChangedCallback;
                 Eegeo::Helpers::TCallback1<DirectionsMenuController, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
@@ -55,7 +56,7 @@ namespace ExampleApp
                 void OnOpenStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& openState);
                 
                 void OnViewClosed();
-                
+                                
                 void ToggleSettingMenuButton();
 
                 void OnAppModeChanged(const AppModes::AppModeChangedMessage& message);
@@ -89,7 +90,7 @@ namespace ExampleApp
                 
                 void UpdateUiThread(float dt);
                 
-                Eegeo::Helpers::CallbackCollection1<const float &> m_updateDirectionMenuStateCallbacks;
+                Eegeo::Helpers::CallbackCollection2<const float &,bool&> m_updateDirectionMenuStateCallbacks;
                 
 
                 
@@ -113,9 +114,9 @@ namespace ExampleApp
                 
                 virtual ~DirectionsMenuController();
                 
-                void AddDirectionMenuStateUpdateCallBack(Eegeo::Helpers::ICallback1<const float&>& callback);
+                void AddDirectionMenuStateUpdateCallBack(Eegeo::Helpers::ICallback2<const float&,bool&>& callback);
                
-                void RemoveDirectionMenuStateUpdateCallBack(Eegeo::Helpers::ICallback1<const float&>& callback);
+                void RemoveDirectionMenuStateUpdateCallBack(Eegeo::Helpers::ICallback2<const float&,bool&>& callback);
 
             };
         }

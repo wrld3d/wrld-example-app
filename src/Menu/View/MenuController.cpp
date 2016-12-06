@@ -345,11 +345,11 @@ namespace ExampleApp
                 m_viewModel.RemoveOpenStateChangedCallback(m_onOpenableStateChanged);
             }
             
-            void MenuController::AddDirectionMenuStateUpdateCallBack(Eegeo::Helpers::ICallback1<const float&>& callback)
+            void MenuController::AddDirectionMenuStateUpdateCallBack(Eegeo::Helpers::ICallback2<const float&,bool&>& callback)
             {
             }
             
-            void MenuController::RemoveDirectionMenuStateUpdateCallBack(Eegeo::Helpers::ICallback1<const float&>& callback)
+            void MenuController::RemoveDirectionMenuStateUpdateCallBack(Eegeo::Helpers::ICallback2<const float&,bool&>& callback)
             {
             }
         }

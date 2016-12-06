@@ -20,6 +20,7 @@ namespace ExampleApp
                 virtual void Close() = 0;
                 virtual void UpdateScreenLocation(float posX, float posY) = 0;
                 virtual void UpdateScreenState(float screenState) = 0;
+                virtual void UpdateScreenStateAndVisibility(float screenState) = 0;
 
                 virtual void OnSelected() = 0;
                 virtual void InsertSelectedCallback(Eegeo::Helpers::ICallback0& callback) = 0;

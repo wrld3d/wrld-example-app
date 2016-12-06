@@ -26,7 +26,7 @@ namespace ExampleApp
                 
                 ~WorldPinOnMapController();
                 
-                void OnScreenStateUpdated(const float& screenState);
+                void OnScreenStateUpdated(const float& screenState,bool hidePin);
 
 
             private:
@@ -42,6 +42,8 @@ namespace ExampleApp
                 IWorldPinInFocusViewModel& m_viewModel;
                 ScreenControl::View::IScreenControlViewModel& m_screenControlViewModel;
                 Modality::View::IModalityModel& m_modalityModel;
+                
+                bool shouldForwardCall;
 
                 Eegeo::Helpers::TCallback0<WorldPinOnMapController> m_viewSelectedCallback;
                 Eegeo::Helpers::TCallback0<WorldPinOnMapController> m_viewModelOpenedCallback;

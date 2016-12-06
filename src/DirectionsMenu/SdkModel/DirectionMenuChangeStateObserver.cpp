@@ -22,9 +22,9 @@ namespace ExampleApp
                 m_directionsMenuController.RemoveDirectionMenuStateUpdateCallBack(m_onDirectionMenuStateChangeCallBackdCallback);
             }
             
-            void DirectionMenuChangeStateObserver::OnDirectionMenustateChange(const float& state)
+            void DirectionMenuChangeStateObserver::OnDirectionMenustateChange(const float& state, bool &openState)
             {
-                m_worldPinOnMapController.OnScreenStateUpdated(1.0-state);
+                m_worldPinOnMapController.OnScreenStateUpdated((1.0-state),openState);
             }
 
         }

@@ -29,10 +29,10 @@ namespace ExampleApp
                 
                 WorldPins::View::WorldPinOnMapController& m_worldPinOnMapController;
                 
-                Eegeo::Helpers::TCallback1<DirectionMenuChangeStateObserver,const float&>  m_onDirectionMenuStateChangeCallBackdCallback;
+                Eegeo::Helpers::TCallback2<DirectionMenuChangeStateObserver,const float&,bool&>  m_onDirectionMenuStateChangeCallBackdCallback;
                 
                 
-                void OnDirectionMenustateChange(const float& state);
+                void OnDirectionMenustateChange(const float& state, bool& openState);
 
             };
         }

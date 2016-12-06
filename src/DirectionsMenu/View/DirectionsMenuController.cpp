@@ -46,7 +46,7 @@ namespace ExampleApp
             , m_locationService(locationService)
             , m_settingsMenuViewModel(settingsMenuViewModel)
             , m_searchMenuViewModel(searchMenuViewModel)
-
+            , m_isDirectionMenuOpen(false)
             {
                 m_directionsMenuView.InsertSearchPeformedCallback(m_searchPerformedCallbacks);
                 m_directionsMenuView.InsertSearchClearedCallback(m_searchClearedCallbacks);
@@ -122,6 +122,7 @@ namespace ExampleApp
                 }
             }
             
+            
             void DirectionsMenuController::UpdateUiThread(float dt)
             {
                 MenuController::UpdateUiThread(dt);
@@ -130,7 +131,7 @@ namespace ExampleApp
                 {
                     const float normalisedAnimationProgress = m_view.GetAnimationProgress();
                     m_messageBus.Publish(ExampleApp::Modality::ModalityChangedMessage(normalisedAnimationProgress));
-                    m_updateDirectionMenuStateCallbacks.ExecuteCallbacks(normalisedAnimationProgress);
+                    m_updateDirectionMenuStateCallbacks.ExecuteCallbacks(normalisedAnimationProgress,m_isDirectionMenuOpen);
 
                 }
 
@@ -220,6 +221,7 @@ namespace ExampleApp
                 
                 MenuController::OnViewClicked();
                 m_isExitDirections = true;
+                m_isDirectionMenuOpen = false;
                 m_settingsMenuViewModel.AddToScreen();
                 m_searchMenuViewModel.AddToScreen();
 
@@ -227,6 +229,7 @@ namespace ExampleApp
             
             void DirectionsMenuController::ToggleSettingMenuButton()
             {
+                m_isDirectionMenuOpen = !m_isDirectionMenuOpen;
                 if(m_viewModel.IsFullyClosed())
                 {
                     m_settingsMenuViewModel.RemoveFromScreen();
@@ -299,12 +302,12 @@ namespace ExampleApp
                 m_viewModel.UpdateOpenState(1.0f);
             }
             
-            void DirectionsMenuController::AddDirectionMenuStateUpdateCallBack(Eegeo::Helpers::ICallback1<const float&>& callback)
+            void DirectionsMenuController::AddDirectionMenuStateUpdateCallBack(Eegeo::Helpers::ICallback2<const float&,bool&>& callback)
             {
                 m_updateDirectionMenuStateCallbacks.AddCallback(callback);
             }
             
-            void DirectionsMenuController::RemoveDirectionMenuStateUpdateCallBack(Eegeo::Helpers::ICallback1<const float&>& callback)
+            void DirectionsMenuController::RemoveDirectionMenuStateUpdateCallBack(Eegeo::Helpers::ICallback2<const float&,bool&>& callback)
             {
                 m_updateDirectionMenuStateCallbacks.RemoveCallback(callback);
             }
