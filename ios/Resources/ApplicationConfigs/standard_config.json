@@ -42,6 +42,30 @@
                     "TrackedFloorIndex": "d11c3970-04c9-47fc-82d8-43285509b8cb"
                 }
             ]
+        },
+        {
+            "InteriorId": "EIM-e16a94b1-f64f-41ed-a3c6-8397d9cfe607",
+            "Type": "IndoorAtlas",
+            "Config":
+            [{
+                "ApiKey": "941b8502-b022-4abb-bbf2-9a90450e4343",
+                "ApiSecret": "k9cZWpze+pjvgyGMbj06Kl2GaF2RdQdPmUlsQuWAAJRegFFXpKy+JgRpKGS6Fq5mOee3CVTPVQacBYnwGPBb28EPT3qeihS6RrbkIWnIW/DZn7JhL+ohu3gdoYOBlw=="
+            }],
+            "FloorMapping":
+            [
+                {
+                    "BuildingFloorIndex": 0,
+                    "TrackedFloorIndex": "11762d07-452f-4e25-8d4d-6612a2056088"
+                },
+                {
+                    "BuildingFloorIndex": 1,
+                    "TrackedFloorIndex": "8cddcd54-a031-41cb-b7ac-75f73aa25549"
+                },
+                {
+                    "BuildingFloorIndex": 2,
+                    "TrackedFloorIndex": "0e23e1ed-8e95-4c81-834e-5b32cc59b9ae"
+                }
+            ]
         }
     ]
 }
