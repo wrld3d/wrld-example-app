@@ -60,7 +60,6 @@ namespace ExampleApp
 
             SearchRefreshService::~SearchRefreshService()
             {
-                
                 m_interiorMenuObserver.UnregisterInteriorTagsUpdatedCallback(m_interiorTagsUpdatedCallback);
                 m_searchQueryPerformer.RemoveOnSearchResultsClearedCallback(m_searchQueryResultsClearedCallback);
                 m_searchService.RemoveOnReceivedQueryResultsCallback(m_searchResultResponseReceivedCallback);
@@ -111,7 +110,6 @@ namespace ExampleApp
 
                         return false;
                     }
-
                     
                     return true;
                 }
@@ -157,10 +155,10 @@ namespace ExampleApp
                     shouldRefresh = false;
                 }
                 
-                if (shouldRefresh)
+                const SearchQuery& previousQuery = m_searchQueryPerformer.GetPreviousSearchQuery();
+                if (shouldRefresh && TagStillPresent(previousQuery))
                 {
                     const Eegeo::Space::LatLongAltitude& currentLocation = Eegeo::Space::LatLongAltitude::FromECEF(interestPointEcef);
-                    const SearchQuery& previousQuery = m_searchQueryPerformer.GetPreviousSearchQuery();
                     m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsTag(), previousQuery.ShouldTryInteriorSearch(), currentLocation);
 
                     if (m_interiorInteractionModel.HasInteriorModel())
@@ -185,28 +183,31 @@ namespace ExampleApp
                     
                     if (previousQuery.IsTag())
                     {
-                        bool hasTag = false;
-                        for(int i = 0; i < m_tagSearchRepository.GetItemCount(); i++)
-                        {
-                            std::string tag = m_tagSearchRepository.GetItemAtIndex(i).SearchTag();
-                            Eegeo_TTY(tag.c_str());
-                            if(previousQuery.Query() == m_tagSearchRepository.GetItemAtIndex(i).SearchTag())
-                            {
-                                std::string tag = m_tagSearchRepository.GetItemAtIndex(i).SearchTag();
-                                Eegeo_TTY(tag.c_str());
-                                hasTag = true;
-                            }
-                        }
-                        
-                        if(hasTag)
+                        if(TagStillPresent(previousQuery))
                         {
                             m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsTag(), previousQuery.ShouldTryInteriorSearch());
                             m_secondsSincePreviousRefresh = 0.f;
 
                             m_interiorHasChanged = true;
                         }
+                        else
+                        {
+                            m_searchQueryPerformer.RemoveSearchQueryResults();
+                        }
                     }
                 }
+            }
+            
+            bool SearchRefreshService::TagStillPresent(const SearchQuery& previousQuery)
+            {
+                for(int i = 0; i < m_tagSearchRepository.GetItemCount(); i++)
+                {
+                    if(previousQuery.Query() == m_tagSearchRepository.GetItemAtIndex(i).SearchTag())
+                    {
+                        return true;
+                    }
+                }
+                return false;
             }
 
             void SearchRefreshService::HandleSearchQueryIssued(const SearchQuery& query)

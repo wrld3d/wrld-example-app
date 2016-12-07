@@ -84,6 +84,8 @@ namespace ExampleApp
                 
                 bool ShouldRefreshSearch(float deltaSeconds, const Eegeo::dv3& interestPointEcef, const Eegeo::dv3& viewpointEcef);
                 
+                bool TagStillPresent(const SearchQuery& previousQuery);
+                
                 TagSearch::View::ITagSearchRepository& m_tagSearchRepository;
             };
         }

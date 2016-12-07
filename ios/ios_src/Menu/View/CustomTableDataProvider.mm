@@ -42,12 +42,29 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
     }
     else
     {
+        int findSectionId = -1;
         for(int i = 0; i < sections->size(); ++i)
         {
             if((*sections)[i] != m_currentSections[i] || (*sections)[i]->GetTotalItemCount() != m_cachedTableSizes[i])
             {
                 sectionsUpdated = true;
-                break;
+            }
+            
+            if((*sections)[i]->Name() == "Find")
+            {
+                findSectionId = i;
+            }
+        }
+        
+        if(findSectionId != -1 && m_previousTags.size() > 0 && sectionsUpdated == false)
+        {
+            for(int i = 0; i < (*sections)[findSectionId]->GetTotalItemCount(); i++)
+            {
+                if((*sections)[findSectionId]->GetItemAtIndex(i).Name() != m_previousTags[i])
+                {
+                    sectionsUpdated = true;
+                    break;
+                }
             }
         }
     }
@@ -69,6 +86,11 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         }
         
         [m_pView refreshTableHeights];
+        m_previousTags.clear();
+        for(int i = 0; i < (*sections)[0]->GetTotalItemCount(); i++)
+        {
+            m_previousTags.push_back((*sections)[0]->GetItemAtIndex(i).Name());
+        }
     }
 }
 
