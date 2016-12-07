@@ -52,6 +52,7 @@ namespace ExampleApp
                 std::string m_embeddedThemeTexturePath;
                 std::string m_twitterAuthCode;
                 bool m_useLabels;
+                bool m_useJapaneseFonts;
 
                 std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo> m_interiorTrackingInfo;
                 

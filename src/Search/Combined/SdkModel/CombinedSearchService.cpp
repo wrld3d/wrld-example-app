@@ -97,10 +97,10 @@ namespace ExampleApp
                     
                     for (std::map<std::string,Search::SdkModel::ISearchService*>::const_iterator iter = m_searchServices.begin(); iter != m_searchServices.end(); ++iter)
                     {
-                        bool isIndoor = m_interiorInteractionModel.HasInteriorModel();
-                        bool isCategory = query.IsTag();
-                        bool canPerformCategory = isCategory && (*iter).second->CanHandleTag(query.Query());
-                        bool canPerformIndoor = isIndoor && (*iter).second->CanHandleIndoor();
+                        const bool isIndoor = m_interiorInteractionModel.HasInteriorModel();
+                        const bool isCategory = query.IsTag();
+                        const bool canPerformCategory = isCategory && (*iter).second->CanHandleTag(query.Query());
+                        const bool canPerformIndoor = isIndoor && (*iter).second->CanHandleIndoor() && query.Query() != "";
                         
                         if (isIndoor)
                         {

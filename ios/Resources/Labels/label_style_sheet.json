@@ -441,6 +441,14 @@
         "masked_halo_color_rgba": "FFFFFF"
     }
     ],
+    "LabelIconStyles":[
+	{
+		"name": "icon_default",
+        "size_px": 28,
+        "color": "FFFFFFFF",
+        "masked_color": "F0F0F080"
+	}
+	],
 	"LabelStyles": [{
 		"name": "road_default",
 		"label_text_style_name": "road_default",
@@ -468,36 +476,48 @@
 	{
 		"name": "place_name_park_highz",
 		"label_text_style_name": "place_name_park_highz",
+        "label_icon_style_name": "icon_default",
+        "label_horizontal_alignment": "left",
 		"constraint_radius_scale": 2.5,
 		"priority": 5
 	},
 	{
 		"name": "place_name_park_midz",
 		"label_text_style_name": "place_name_park_midz",
+        "label_icon_style_name": "icon_default",
+        "label_horizontal_alignment": "left",
 		"constraint_radius_scale": 2.5,
 		"priority": 5
 	},
 	{
 		"name": "place_name_park_lowz",
 		"label_text_style_name": "place_name_park_lowz",
+        "label_icon_style_name": "icon_default",
+        "label_horizontal_alignment": "left",
 		"constraint_radius_scale": 2.5,
 		"priority": 5
 	},
 	{
 		"name": "place_name_airport_lowz",
-		"label_text_style_name": "place_name_airport_lowz",
+        "label_text_style_name": "place_name_airport_lowz",
+        "label_icon_style_name": "icon_default",
+        "label_horizontal_alignment": "left",
 		"constraint_radius_scale": 0.6,
 		"priority": 3
 	},
 	{
 		"name": "place_name_airport_midz",
-		"label_text_style_name": "place_name_airport_midz",
+        "label_text_style_name": "place_name_airport_midz",
+        "label_icon_style_name": "icon_default",
+        "label_horizontal_alignment": "left",
 		"constraint_radius_scale": 0.6,
 		"priority": 3
 	},
 	{
 		"name": "place_name_airport_highz",
-		"label_text_style_name": "place_name_airport_highz",
+        "label_text_style_name": "place_name_airport_highz",
+        "label_icon_style_name": "icon_default",
+        "label_horizontal_alignment": "left",
 		"constraint_radius_scale": 0.6,
 		"priority": 3
 	},
@@ -781,6 +801,7 @@
     {
         "name": "interior_facility_low_priority",
         "label_text_style_name": "",
+        "label_icon_style_name": "icon_default",
         "label_orientation": "screen",
         "label_display": "screen_space",
         "label_horizontal_alignment": "center",
@@ -792,6 +813,7 @@
     {
         "name": "interior_facility_normal_priority",
         "label_text_style_name": "",
+        "label_icon_style_name": "icon_default",
         "label_orientation": "screen",
         "label_display": "screen_space",
         "label_horizontal_alignment": "center",
@@ -803,6 +825,7 @@
     {
         "name": "interior_facility_high_priority",
         "label_text_style_name": "",
+        "label_icon_style_name": "icon_default",
         "label_orientation": "screen",
         "label_display": "screen_space",
         "label_horizontal_alignment": "center",
@@ -902,11 +925,11 @@
 	},
 	{
 		"label_anchor_category": "place_name_park_midz",
-		"label_style_name": "place_name_park_midz"
+        "label_style_name": "place_name_park_midz"
 	},
 	{
 		"label_anchor_category": "place_name_golf_midz",
-		"label_style_name": "place_name_park_midz"
+        "label_style_name": "place_name_park_midz"
 	},
 	{
 		"label_anchor_category": "place_name_airp_midz",
@@ -930,11 +953,11 @@
 	},
 	{
 		"label_anchor_category": "place_name_park_lowz",
-		"label_style_name": "place_name_park_lowz"
+        "label_style_name": "place_name_park_lowz"
 	},
 	{
 		"label_anchor_category": "place_name_golf_lowz",
-		"label_style_name": "place_name_park_lowz"
+        "label_style_name": "place_name_park_lowz"
 	},
 	{
 		"label_anchor_category": "place_name_airp_lowz",
@@ -955,10 +978,6 @@
 	{
 		"label_anchor_category": "place_name_dist_lowz",
 		"label_style_name": "place_name_district_lowz"
-	},
-	{
-		"label_anchor_category": "placename_park_highz",
-		"label_style_name": "place_name_park_highz"
 	},
 	{
 		"label_anchor_category": "place_name_stat_lowz",
@@ -1171,7 +1190,6 @@
 	{
 		"label_anchor_category": "place_name_zsta_lowz",
 		"label_style_name": "place_name_japan_train_station_highz"
-
     },
     {
         "label_anchor_category": "interior_unit_very_low_priority",
@@ -1190,15 +1208,19 @@
         "label_style_name": "interior_unit_high_priority"
     },
     {
-        "label_anchor_category": "interior_facility_low_priority",
+        "label_anchor_category": "interior_facility_stairs",
         "label_style_name": "interior_facility_low_priority"
     },
     {
-        "label_anchor_category": "interior_facility_normal_priority",
+        "label_anchor_category": "interior_facility_elevator",
         "label_style_name": "interior_facility_normal_priority"
     },
     {
-        "label_anchor_category": "interior_facility_high_priority",
+        "label_anchor_category": "interior_facility_escalator",
+        "label_style_name": "interior_facility_normal_priority"
+    },
+    {
+        "label_anchor_category": "interior_facility_toilets",
         "label_style_name": "interior_facility_high_priority"
     }
     ]

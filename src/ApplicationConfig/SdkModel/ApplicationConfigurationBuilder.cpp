@@ -47,6 +47,7 @@ namespace ExampleApp
             , m_embeddedThemeTexturePath("")
             , m_twitterAuthCode("")
             , m_useLabels(false)
+            , m_useJapaneseFonts(false)
             {
                 
             }
@@ -310,6 +311,7 @@ namespace ExampleApp
                                                 m_embeddedThemeTexturePath,
                                                 m_twitterAuthCode,
                                                 m_useLabels,
+                                                m_useJapaneseFonts,
                                                 m_interiorTrackingInfo);
             }
         }

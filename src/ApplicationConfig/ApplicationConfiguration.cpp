@@ -39,6 +39,7 @@ namespace ExampleApp
 												           const std::string& embeddedThemeTexturePath,
 												           const std::string& twitterAuthCode,
 												           const bool useLabels,
+                                                           const bool useJapaneseFont,
 												           const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo)
         : m_name(name)
         , m_eegeoApiKey(eegeoApiKey)
@@ -73,6 +74,7 @@ namespace ExampleApp
         , m_restrictedBuildingsInfo(restrictedBuildingsInfo)
         , m_isKioskTouchInputEnabled(isKioskTouchInputEnabled)
         , m_useLabels(useLabels)
+        , m_useJapaneseFont(useJapaneseFont)
         , m_interiorTrackingInfo(interiorTrackingInfo)
         {
             
@@ -211,6 +213,11 @@ namespace ExampleApp
         bool ApplicationConfiguration::UseLabels() const
         {
             return m_useLabels;
+        }
+        
+        bool ApplicationConfiguration::UseJapaneseFont() const
+        {
+            return m_useJapaneseFont;
         }
         
         const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& ApplicationConfiguration::InteriorTrackingInfo() const

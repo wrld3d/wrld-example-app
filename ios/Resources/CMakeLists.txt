@@ -651,7 +651,8 @@ set(resources ${resources}
 		Resources/image_blank.png
 		Resources/image_blank@2x.png
 		Resources/image_blank@3x.png
-        Resources/Interiors
+		Resources/Interiors
+		Resources/Interiors/label_category_mapping.json
         Resources/IPAexGothic32_A8_icons_0.png
         Resources/IPAexGothic32_A8_icons_1.png
         Resources/IPAexGothic32_A8_icons_2.png
@@ -768,8 +769,9 @@ set(resources ${resources}
 		Resources/SearchResults_ScrollButton@1.5x.png
 		Resources/SearchResults_ScrollButton@2x.png
         Resources/SearchResults_ScrollButton@3x.png
-        Resources/Labels
-        Resources/Labels/label_style_sheet.json
+		Resources/Labels
+		Resources/Labels/label_style_sheet.json
+        Resources/Labels/label_category_icon_map.json
         Resources/IPAexGothic_sdf_0.png
         Resources/IPAexGothic_sdf_1.png
         Resources/IPAexGothic_sdf_2.png
@@ -777,7 +779,10 @@ set(resources ${resources}
         Resources/IPAexGothic_sdf_4.png
         Resources/IPAexGothic_sdf_5.png
         Resources/IPAexGothic_sdf_6.png
+        Resources/IPAexGothic_sdf_7.png
         Resources/IPAexGothic_sdf.fnt
+        Resources/opensans_semibold_sdf.fnt
+        Resources/opensans_semibold_sdf_0.png
 		Resources/SearchResults_ScrollButton@3x.png
 		Resources/SearchResultOnMap
 		Resources/SearchResultOnMap/pin_sheet_0.png
