@@ -102,7 +102,7 @@ namespace ExampleApp
             }
             void InteriorMenuObserver::ClearTagSearchModelTracker()
             {
-                size_t size = m_tagSearchRepository.GetItemCount();
+                size_t size = m_tagSearchModelTracker.size();
                 for(auto i = size; i > 0; i--)
                 {
                     const TagSearch::View::TagSearchModel& searchRepo = m_tagSearchRepository.GetItemAtIndex(i-1);

@@ -14,7 +14,7 @@ namespace ExampleApp
             class InteriorVisibilityUpdater;
             class InteriorExplorerUserInteractionModel;
             class InteriorsExplorerFloorDraggedObserver;
-            class InteriorMenuObserver;
+            class InteriorPermissionObserver;
             
             namespace Highlights
             {

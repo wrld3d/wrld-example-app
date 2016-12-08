@@ -26,7 +26,7 @@ namespace ExampleApp
             }
             void InteriorPermissionObserver::OnSelectionFailed(const Eegeo::Resources::Interiors::InteriorId& interiorId)
             {
-                m_alertBoxFactory.CreateSingleOptionAlertBox("Error", "We couldn't find the data for this interior", m_failAlertHandler);
+                m_alertBoxFactory.CreateSingleOptionAlertBox("Error", "You do not have permission to view this interior.", m_failAlertHandler);
             }
             
             void InteriorPermissionObserver::OnFailAlertBoxDismissed()

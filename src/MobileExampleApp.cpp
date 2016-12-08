@@ -721,7 +721,8 @@ namespace ExampleApp
                                                                                                      m_persistentSettings,
                                                                                                      *m_pNavigationService,
                                                                                                      mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
-                                                                                                     m_pTagSearchModule->GetTagSearchRepository());
+                                                                                                     m_pTagSearchModule->GetTagSearchRepository(),
+                                                                                                     m_pWorld->GetNativeUIFactories().AlertBoxFactory());
         
         m_pMyPinCreationModule = Eegeo_NEW(ExampleApp::MyPinCreation::SdkModel::MyPinCreationModule)(m_pMyPinsModule->GetMyPinsService(),
                                                                                                      m_identityProvider,

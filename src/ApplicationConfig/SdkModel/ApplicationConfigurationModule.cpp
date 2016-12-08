@@ -91,7 +91,7 @@ namespace ExampleApp
                                                               const ApplicationConfiguration& appConfig)
             {
                 Eegeo::Config::PlatformConfig platformConfig = platformConfigBuilder.Build();
-                platformConfig.CoverageTreeConfig.ManifestUrl = "http://d2xvsc8j92rfya.cloudfront.net/chunk/test_builds/indoor_maps/api_requests/EIM-ec0d0ac0-6799-4bd1-a536-09b9b79a78e5_2016_11_15_14_23_48/manifest.bin.gz";
+                platformConfig.CoverageTreeConfig.ManifestUrl = appConfig.CoverageTreeManifestURL();
                 platformConfig.CityThemesConfig.StreamedManifestUrl = appConfig.ThemeManifestURL();
                 platformConfig.CityThemesConfig.EmbeddedThemeTexturePath = appConfig.EmbeddedThemeTexturePath();
 
