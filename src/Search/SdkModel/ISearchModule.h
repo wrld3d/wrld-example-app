@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Search.h"
+#include "TagSearch.h"
 
 namespace ExampleApp
 {
@@ -20,6 +21,8 @@ namespace ExampleApp
                 virtual ISearchQueryPerformer& GetSearchQueryPerformer() const = 0;
 
                 virtual ISearchRefreshService& GetSearchRefreshService() const = 0;
+                
+                virtual ExampleApp::TagSearch::SdkModel::ITagSearchModule& GetTagSearchModule() const = 0;
                 
                 virtual MyPins::ISearchResultMyPinsService& GetSearchResultMyPinsService() const = 0;
                 

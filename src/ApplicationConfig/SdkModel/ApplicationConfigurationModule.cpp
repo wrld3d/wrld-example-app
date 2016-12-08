@@ -80,7 +80,7 @@ namespace ExampleApp
                                                                       const std::string& configFilePath
                                                                       )
             {
-                
+        
                 ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule applicationConfigurationModule(fileIO,
                                                                                                                        applicationConfigurationVersionProvider
                                                                                                                        );

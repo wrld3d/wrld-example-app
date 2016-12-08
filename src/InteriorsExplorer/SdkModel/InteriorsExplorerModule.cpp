@@ -14,6 +14,8 @@
 #include "InteriorExplorerUserInteractionModel.h"
 #include "IInitialExperienceModel.h"
 #include "InteriorsExplorerFloorDraggedObserver.h"
+#include "InteriorPermissionObserver.h"
+
 
 namespace ExampleApp
 {
@@ -40,7 +42,10 @@ namespace ExampleApp
                                                              const bool interiorsAffectedByFlattening,
                                                              InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsEntitiesPinsController,
                                                              PersistentSettings::IPersistentSettingsModel& persistentSettings,
-                                                             Eegeo::Location::NavigationService& navigationService)
+                                                             Eegeo::Location::NavigationService& navigationService,
+                                                             Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& interiorMetaDataRepo,
+                                                             TagSearch::View::ITagSearchRepository& tagSearchRepository,
+                                                             Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory)
             {
                 m_pUserInteractionModel = Eegeo_NEW(InteriorExplorerUserInteractionModel)();
                 
@@ -78,10 +83,13 @@ namespace ExampleApp
                 m_pFloorDraggedObserver = Eegeo_NEW(InteriorsExplorerFloorDraggedObserver)(*m_pModel, m_pInteriorsGpsCameraController->GetTouchController());
 
                 m_pUINotificationService = Eegeo_NEW(InteriorsUINotificationService)(messageBus, interiorsEntitiesPinsController, worldPinIconMapping);
+                
+                m_pInteriorPermissionObserver = Eegeo_NEW(InteriorPermissionObserver)(interiorSelectionModel, alertBoxFactory);
             }
             
             InteriorsExplorerModule::~InteriorsExplorerModule()
             {
+                Eegeo_DELETE m_pInteriorPermissionObserver;
                 Eegeo_DELETE m_pUINotificationService;
                 Eegeo_DELETE m_pFloorDraggedObserver;
                 Eegeo_DELETE m_pViewModel;

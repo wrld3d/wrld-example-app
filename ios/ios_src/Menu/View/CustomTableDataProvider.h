@@ -14,6 +14,7 @@
 {
     MenuView* m_pView;
     ExampleApp::Menu::View::TSections m_currentSections;
+    std::vector<std::string> m_previousTags;
 }
 
 - (id)initWithParams:(MenuView*)view
