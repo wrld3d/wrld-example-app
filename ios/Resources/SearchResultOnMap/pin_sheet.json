@@ -1014,6 +1014,33 @@
             "y": 290, 
             "x": 87, 
             "id": "male"
+        }, 
+        {
+            "index": 112, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 290, 
+            "x": 116, 
+            "id": "park_outlined"
+        }, 
+        {
+            "index": 113, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 290, 
+            "x": 145, 
+            "id": "airport_outlined"
+        }, 
+        {
+            "index": 114, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 290, 
+            "x": 174, 
+            "id": "golf_outlined"
         }
     ]
 }

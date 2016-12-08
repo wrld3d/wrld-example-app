@@ -23,8 +23,8 @@
 		"name": "place_name_park_highz",
 		"label_resource_font_binding": "place_names",
 		"size_px": 13,
-		"glyph_color_rgba": "B9F69F",
-		"halo_color_rgba": "5C7C52",
+		"glyph_color_rgba": "AEF291",
+		"halo_color_rgba": "51614C",
 		"halo_width": 3.0,
 		"halo_hardness": 0.5
 	},
@@ -32,8 +32,8 @@
 		"name": "place_name_park_midz",
 		"label_resource_font_binding": "place_names",
 		"size_px": 11.5,
-		"glyph_color_rgba": "B9F69F",
-		"halo_color_rgba": "5C7C52",
+		"glyph_color_rgba": "AEF291",
+		"halo_color_rgba": "51614C",
 		"halo_width": 3.0,
 		"halo_hardness": 0.5
 	},
@@ -41,8 +41,8 @@
 		"name": "place_name_park_lowz",
 		"label_resource_font_binding": "place_names",
 		"size_px": 9.5,
-		"glyph_color_rgba": "B9F69F",
-		"halo_color_rgba": "5C7C52",
+		"glyph_color_rgba": "AEF291",
+		"halo_color_rgba": "51614C",
 		"halo_width": 2.0,
 		"halo_hardness": 0.5
 	},

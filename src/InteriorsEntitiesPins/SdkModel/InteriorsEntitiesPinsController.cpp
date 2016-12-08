@@ -104,6 +104,7 @@ namespace ExampleApp
             
             void InteriorsEntitiesPinsController::Event_TouchTap(const AppInterface::TapData& data)
             {
+                // TODO: Support tapping labels in non-legacy mode.
                 // TODO: Leaving this here in case we want to consume touch and be able to tap pins.
                 std::vector<Eegeo::Pins::Pin*> intersectingPins;
                 m_pinController.TryGetPinsIntersectingScreenPoint(data.point, intersectingPins);
@@ -244,6 +245,11 @@ namespace ExampleApp
             
             bool InteriorsEntitiesPinsController::CanProcessEntities(const std::string& interiorName, const Eegeo::Resources::Interiors::Entities::TEntityModelVector& entities) const
             {
+                if(!m_useLegacyInteriorLabels)
+                {
+                    return false;
+                }
+                
                 if (!m_interiorInteractionModel.HasInteriorModel())
                 {
                     return false;
@@ -304,7 +310,10 @@ namespace ExampleApp
                     const Eegeo::Resources::Interiors::InteriorsModel& interiorModel = *m_interiorInteractionModel.GetInteriorModel();
                     
                     const Eegeo::Resources::Interiors::Entities::TEntityModelVector& entities = m_interiorsEntitiesRepository.GetAllStreamedEntitiesForInterior(interiorModel.GetName());
-                    AddPinsForEntities(entities);
+                    if(CanProcessEntities(interiorModel.GetName(), entities))
+                    {
+                        AddPinsForEntities(entities);
+                    }
                 }
                 else
                 {
