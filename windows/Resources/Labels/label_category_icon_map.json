@@ -3,39 +3,39 @@
     [
     {
         "label_anchor_category": "place_name_park_lowz",
-        "label_icon_key": "park"
+        "label_icon_key": "park_outlined"
     },
     {
         "label_anchor_category": "place_name_park_midz",
-        "label_icon_key": "park"
+        "label_icon_key": "park_outlined"
     },
     {
         "label_anchor_category": "place_name_park_highz",
-        "label_icon_key": "park"
+        "label_icon_key": "park_outlined"
     },
     {
         "label_anchor_category": "place_name_golf_lowz",
-        "label_icon_key": "golf"
+        "label_icon_key": "golf_outlined"
     },
     {
         "label_anchor_category": "place_name_golf_midz",
-        "label_icon_key": "golf"
+        "label_icon_key": "golf_outlined"
     },
     {
         "label_anchor_category": "place_name_golf_highz",
-        "label_icon_key": "golf"
+        "label_icon_key": "golf_outlined"
     },
     {
         "label_anchor_category": "place_name_airp_lowz",
-        "label_icon_key": "airport"
+        "label_icon_key": "airport_outlined"
     },
     {
         "label_anchor_category": "place_name_airp_midz",
-        "label_icon_key": "airport"
+        "label_icon_key": "airport_outlined"
     },
     {
         "label_anchor_category": "place_name_airp_highz",
-        "label_icon_key": "airport"
+        "label_icon_key": "airport_outlined"
     },
     {
         "label_anchor_category": "interior_facility_stairs",
