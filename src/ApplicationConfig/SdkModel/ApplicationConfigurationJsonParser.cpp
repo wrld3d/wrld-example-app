@@ -176,6 +176,11 @@ namespace ExampleApp
                     ParseIndoorTrackingInfo(interiorTrackingInfoList, indoorTrackedBuildingsArray);
                     m_builder.SetInteriorTrackingInfo(interiorTrackingInfoList);
                 }
+
+                if(document.HasMember("FixedIndoorLocation"))
+                {
+                    ParseFixedIndoorLocation(document["FixedIndoorLocation"]);
+                }
                 
                 return m_builder.Build();
             }
@@ -217,6 +222,19 @@ namespace ExampleApp
                     
                     interiorTrackingInfoList.insert(std::pair<std::string, SdkModel::ApplicationInteriorTrackingInfo>(interiorId.Value(),interiorTrackingInfo));
                 }
+            }
+
+            void ApplicationConfigurationJsonParser::ParseFixedIndoorLocation(const rapidjson::Value& fixedIndoorLocation)
+            {
+                Eegeo_ASSERT(fixedIndoorLocation.HasMember("Latitude"),   "FixedIndoorLocation.Latitude not found");
+                Eegeo_ASSERT(fixedIndoorLocation.HasMember("Longitude"),  "FixedIndoorLocation.Longitude not found");
+                Eegeo_ASSERT(fixedIndoorLocation.HasMember("InteriorId"), "FixedIndoorLocation.InteriorId not found");
+                Eegeo_ASSERT(fixedIndoorLocation.HasMember("FloorIndex"), "FixedIndoorLocation.FloorIndex not found");
+                Eegeo_ASSERT(fixedIndoorLocation.HasMember("OrientationDegrees"), "FixedIndoorLocation.OrientationDegrees not found");
+				m_builder.SetFixedIndoorLocation(Eegeo::Space::LatLong::FromDegrees(fixedIndoorLocation["Latitude"].GetDouble(), fixedIndoorLocation["Longitude"].GetDouble()),
+                                                 fixedIndoorLocation["InteriorId"].GetString(),
+										         fixedIndoorLocation["FloorIndex"].GetInt(),
+										         fixedIndoorLocation["OrientationDegrees"].GetDouble());
             }
         }
     }

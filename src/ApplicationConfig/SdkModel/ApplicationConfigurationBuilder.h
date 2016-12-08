@@ -5,6 +5,8 @@
 #include "ApplicationConfig.h"
 #include "IApplicationConfigurationBuilder.h"
 #include "Types.h"
+#include "InteriorId.h"
+#include "LatLongAltitude.h"
 
 namespace ExampleApp
 {
@@ -53,6 +55,11 @@ namespace ExampleApp
                 std::string m_twitterAuthCode;
                 bool m_useLabels;
                 bool m_useJapaneseFonts;
+
+                Eegeo::Space::LatLong m_fixedLatlong;
+                std::string m_fixedInteriorId;
+                int m_fixedFloorIndex;
+                double m_fixedHeadingDegrees;
 
                 std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo> m_interiorTrackingInfo;
                 
@@ -127,6 +134,8 @@ namespace ExampleApp
                 IApplicationConfigurationBuilder& SetUseLabels(bool useLabels);
 
                 IApplicationConfigurationBuilder& SetInteriorTrackingInfo(const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo);
+
+                IApplicationConfigurationBuilder& SetFixedIndoorLocation(const Eegeo::Space::LatLong latlong, const std::string& interiorId, const int floorIndex, const double headingDegrees);
                 
                 std::string Decrypt(const std::string& message) const;
 

@@ -58,6 +58,7 @@
 #include "IMenuReactionModel.h"
 #include "TagSearchViewIncludes.h"
 #include "SearchMenuViewModule.h"
+#include "FixedIndoorLocationService.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
@@ -113,7 +114,7 @@ public:
 private:
     bool m_isPaused;
     Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;
-    Eegeo::Windows::WindowsLocationService* m_pWindowsLocationService;
+    Eegeo::Location::FixedIndoorLocationService* m_pLocationService;
 
     bool m_shouldStartFullscreen;
 

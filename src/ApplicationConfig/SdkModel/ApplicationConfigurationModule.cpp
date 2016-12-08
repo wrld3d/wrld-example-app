@@ -85,7 +85,11 @@ namespace ExampleApp
                         emptyTwitterAuthCode,
                         useLabels,
                         useJapaneseFont,
-                        interiorTrackingInfo);
+                        interiorTrackingInfo,
+                        Eegeo::Space::LatLong(0.0, 0.0),
+                        "",
+                        0,
+                        180.0);
                 }
             }
             

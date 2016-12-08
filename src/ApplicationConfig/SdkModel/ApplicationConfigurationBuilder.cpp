@@ -2,6 +2,8 @@
 
 #include "ApplicationConfigurationBuilder.h"
 #include "IApplicationConfigurationCipher.h"
+#include "InteriorId.h"
+#include "LatLongAltitude.h"
 
 #include "HMAC_SHA1.h"
 
@@ -48,6 +50,9 @@ namespace ExampleApp
             , m_twitterAuthCode("")
             , m_useLabels(false)
             , m_useJapaneseFonts(false)
+            , m_fixedLatlong(0.0, 0.0)
+            , m_fixedFloorIndex(0)
+            , m_fixedHeadingDegrees(0.0)
             {
                 
             }
@@ -255,6 +260,15 @@ namespace ExampleApp
                 return *this;
             }
 
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetFixedIndoorLocation(const Eegeo::Space::LatLong latlong, const std::string& interiorId, const int floorIndex, const double headingDegrees)
+            {
+                m_fixedLatlong = latlong;
+                m_fixedInteriorId = interiorId;
+                m_fixedFloorIndex = floorIndex;
+                m_fixedHeadingDegrees = headingDegrees;
+                return *this;
+            }
+
             std::string ApplicationConfigurationBuilder::Decrypt(const std::string& value) const
             {
                 return m_cipher.Decrypt(value);
@@ -312,7 +326,11 @@ namespace ExampleApp
                                                 m_twitterAuthCode,
                                                 m_useLabels,
                                                 m_useJapaneseFonts,
-                                                m_interiorTrackingInfo);
+                                                m_interiorTrackingInfo,
+                                                m_fixedLatlong,
+                                                m_fixedInteriorId,
+                                                m_fixedFloorIndex,
+                                                m_fixedHeadingDegrees);
             }
         }
     }

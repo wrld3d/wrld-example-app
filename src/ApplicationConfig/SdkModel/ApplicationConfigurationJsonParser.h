@@ -27,6 +27,8 @@ namespace ExampleApp
                 
                 void ParseIndoorTrackingInfo(std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfoList,
                                              const rapidjson::Value& indoorTrackedBuildingsArray);
+
+                void ParseFixedIndoorLocation(const rapidjson::Value& fixedIndoorLocation);
             };
         }
     }
