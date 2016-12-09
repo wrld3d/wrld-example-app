@@ -31,9 +31,9 @@ namespace ExampleApp
             return true;
         }
         
-        bool SenionLabLocationService::GetIndoorID(int& indoorID)
+        Eegeo::Resources::Interiors::InteriorId SenionLabLocationService::GetInteriorId()
         {
-            return false;
+            return m_interiorInteractionModel.GetInteriorModel()->GetId();
         }
         
         bool SenionLabLocationService::GetLocation(Eegeo::Space::LatLong& latLong)
