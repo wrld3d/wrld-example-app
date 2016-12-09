@@ -21,6 +21,7 @@
 #include "WindowsUrlEncoder.h"
 #include "WindowsFileIO.h"
 #include "WindowsLocationService.h"
+#include "FixedIndoorLocationService.h"
 #include "EegeoWorld.h"
 #include "EnvironmentFlatteningService.h"
 #include "TtyHandler.h"
@@ -93,6 +94,8 @@
 #include "WindowsApplicationConfigurationVersionProvider.h"
 #include "ModalityIgnoredReactionModel.h"
 #include "WindowsApplicationConfigurationVersionProvider.h"
+#include "IUserIdleService.h"
+#include "CurrentLocationService.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
@@ -109,6 +112,8 @@ AppHost::AppHost(
     :m_isPaused(false)
     , m_pJpegLoader(NULL)
     , m_pWindowsLocationService(NULL)
+    , m_pFixedIndoorLocationService(NULL)
+    , m_pCurrentLocationService(NULL)
     , m_nativeState(nativeState)
     , m_WindowsInputBoxFactory(&nativeState)
     , m_WindowsKeyboardInputFactory(&nativeState, m_inputHandler)
@@ -157,8 +162,6 @@ AppHost::AppHost(
     locationOverride.horizontalAccuracyMeters = 10.0;
     locationOverride.headingDegrees = 0.0;
 
-    m_pWindowsLocationService = Eegeo_NEW(WindowsLocationService)(&nativeState, &locationOverride);
-
     m_pJpegLoader = Eegeo_NEW(Eegeo::Helpers::Jpeg::JpegLoader)();
 
     const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration = ExampleApp::ApplicationConfig::SdkModel::LoadAppConfig(
@@ -166,6 +169,9 @@ AppHost::AppHost(
         ExampleApp::ApplicationConfig::SdkModel::WindowsApplicationConfigurationVersionProvider(),
         ExampleApp::ApplicationConfigurationPath,
         ExampleApp::ApplicationConfigurationSecret);
+
+    m_pWindowsLocationService = Eegeo_NEW(Eegeo::Windows::WindowsLocationService)(&nativeState, &locationOverride);
+    m_pCurrentLocationService = Eegeo_NEW(Eegeo::Helpers::CurrentLocationService::CurrentLocationService)(*m_pWindowsLocationService);
 
     m_shouldStartFullscreen = applicationConfiguration.ShouldStartFullscreen();
 
@@ -210,7 +216,7 @@ AppHost::AppHost(
         applicationConfiguration,
         *m_pWindowsPlatformAbstractionModule,
         screenProperties,
-        *m_pWindowsLocationService,
+        *m_pCurrentLocationService,
         m_WindowsNativeUIFactories,
         platformConfiguration,
         *m_pJpegLoader,
@@ -222,6 +228,24 @@ AppHost::AppHost(
         *m_pWindowsFlurryMetricsService,        
         *this,
         *m_pMenuReaction);
+
+    Eegeo::Space::LatLong latlong(0.0, 0.0);
+    Eegeo::Resources::Interiors::InteriorId interiorId;
+    int floorIndex;
+    double headingDegrees;
+    const bool useFixedIndoorLocation = applicationConfiguration.FixedIndoorLocation(latlong, interiorId, floorIndex, headingDegrees);
+    if (useFixedIndoorLocation)
+    {
+        const Eegeo::Modules::Map::MapModule& mapModule = m_pApp->World().GetMapModule();
+        m_pFixedIndoorLocationService = Eegeo_NEW(Eegeo::FixedLocation::FixedIndoorLocationService)(
+            latlong,
+            interiorId,
+            floorIndex,
+            headingDegrees,
+            mapModule.GetEnvironmentFlatteningService(),
+            mapModule.GetInteriorsPresentationModule().GetInteriorInteractionModel());
+        m_pCurrentLocationService->SetLocationService(*m_pFixedIndoorLocationService);
+    }
 
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(
         m_pApp->World().GetRenderingModule(),
@@ -267,8 +291,12 @@ AppHost::~AppHost()
     Eegeo_DELETE m_pJpegLoader;
     m_pJpegLoader = NULL;
 
-    Eegeo_DELETE m_pWindowsLocationService;
+    Eegeo_DELETE(m_pCurrentLocationService);
+    m_pCurrentLocationService = NULL;
+    Eegeo_DELETE(m_pWindowsLocationService);
     m_pWindowsLocationService = NULL;
+    Eegeo_DELETE(m_pFixedIndoorLocationService);
+    m_pFixedIndoorLocationService = NULL;
 }
 
 bool AppHost::ShouldStartFullscreen()
@@ -290,7 +318,7 @@ void AppHost::OnPause()
 
         m_isPaused = true;
     m_pApp->OnPause();
-    m_pWindowsLocationService->StopListening();
+    m_pCurrentLocationService->StopListening();
 }
 
 void AppHost::NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties)
