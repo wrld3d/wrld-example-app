@@ -97,7 +97,6 @@
     {
         self.pCurrentHovercard = self.pTwitterTourHovercard;
     }
-    
     [self addSubview:self.pCurrentHovercard];
     [self.pCurrentHovercard setContent:worldPinsInFocusModel];
     [self setNeedsLayout];

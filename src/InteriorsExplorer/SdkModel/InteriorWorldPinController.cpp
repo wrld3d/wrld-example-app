@@ -114,6 +114,7 @@ namespace ExampleApp
                                                                                                NULL,
                                                                                                worldPinFocusData,
                                                                                                isInterior,
+                                                                                               true,
                                                                                                worldPinInteriorData,
                                                                                                location,
                                                                                                indoorMapEntryIconKey,

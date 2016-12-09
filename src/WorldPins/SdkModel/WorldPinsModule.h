@@ -50,7 +50,9 @@ namespace ExampleApp
                                 const IWorldPinIconMapping& worldPinIconMapping);
 
                 ~WorldPinsModule();
-
+                
+                IWorldPinsRepository& GetWorldPinsRepository() const;
+                
                 IWorldPinsService& GetWorldPinsService() const;
 
                 IWorldPinsFactory& GetWorldPinsFactory() const;

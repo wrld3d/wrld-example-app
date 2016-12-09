@@ -20,6 +20,7 @@ namespace ExampleApp
                                                  IWorldPinVisibilityStateChangedHandler* pVisibilityStateChangedHandler,
                                                  const WorldPinFocusData& worldPinFocusData,
                                                  bool interior,
+                                                 bool forInteriorTransition,
                                                  const WorldPinInteriorData& worldPinInteriorData,
                                                  int visibilityMask)
                 : m_id(id)
@@ -31,11 +32,12 @@ namespace ExampleApp
                                worldPinFocusData.vendor,
                                worldPinFocusData.json,
                                worldPinFocusData.ratingsImage,
-                               worldPinFocusData.reviewCount)
+                               worldPinFocusData.reviewCount,forInteriorTransition)
                 , m_transitionState(StableHidden)
                 , m_transitionStateValue(0.f)
                 , m_focusable(true)
                 , m_interior(interior)
+                , m_forInteriorTransition(forInteriorTransition)
                 , m_worldPinInteriorData(worldPinInteriorData)
                 , m_floorHeight(0.0f)
                 , m_hasFloorHeight(false)
@@ -165,6 +167,11 @@ namespace ExampleApp
                 return m_interior;
             }
             
+            const bool WorldPinItemModel::isInteriorTransition() const
+            {
+                return m_forInteriorTransition;
+            }
+
             const WorldPinInteriorData& WorldPinItemModel::GetInteriorData() const
             {
                 return m_worldPinInteriorData;

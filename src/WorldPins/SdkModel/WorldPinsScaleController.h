@@ -40,7 +40,13 @@ namespace ExampleApp
                 
                 ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkDomainEventBus;
                 
+                ExampleApp::AppModes::SdkModel::AppMode m_appMode;
+                Eegeo::Helpers::TCallback1<WorldPinsScaleController, const AppModes::AppModeChangedMessage&> m_appModeChangedHandler;
+
+
+                
                 int m_visibilityMask;
+                bool m_directionMenuOpen;
 
             public:
                 WorldPinsScaleController(IWorldPinsRepository& worldPinsRepository,
@@ -62,7 +68,12 @@ namespace ExampleApp
 
                 void SetHideOutdoorPinsIndoors(bool hideOutdoorPinsIndoors);
                 
+                void SetDirectionMenuOpen(bool diectionMenuOpen);
+                
+                void OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message);
+
                 void Show();
+                
                 void Hide();
 
 

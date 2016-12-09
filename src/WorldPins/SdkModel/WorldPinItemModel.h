@@ -43,6 +43,7 @@ namespace ExampleApp
                 bool m_hasFloorHeight;
                 bool m_focusable;
                 bool m_interior;
+                bool m_forInteriorTransition;
                 WorldPinInteriorData m_worldPinInteriorData;
                 int m_visibilityMask;
 
@@ -52,6 +53,7 @@ namespace ExampleApp
                                   IWorldPinVisibilityStateChangedHandler* pVisibilityStateChangedHandler,
                                   const WorldPinFocusData& worldPinFocusData,
                                   bool interior,
+                                  bool forInteriorTransition,
                                   const WorldPinInteriorData& worldPinInteriorData,
                                   int visibilityMask);
 
@@ -88,6 +90,8 @@ namespace ExampleApp
                 bool IsFocusable() const;
                 
                 bool IsInterior() const;
+                
+                const bool isInteriorTransition() const;
                 
                 const WorldPinInteriorData& GetInteriorData() const;
                 

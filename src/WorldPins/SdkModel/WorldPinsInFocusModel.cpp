@@ -20,7 +20,8 @@ namespace ExampleApp
                     const std::string& vendor,
                     const std::string& json,
                     const std::string& ratingsImage,
-                    const int reviewCount)
+                    const int reviewCount,
+                    const bool forInteriorTransition)
 
                 : m_worldPinItemModelId(worldPinItemModelId)
                 , m_title(title)
@@ -29,6 +30,7 @@ namespace ExampleApp
                 , m_json(json)
                 , m_ratingsImage(ratingsImage)
                 , m_reviewCount(reviewCount)
+                , m_forInteriorTransition(forInteriorTransition)
             {
 
             }
@@ -73,6 +75,11 @@ namespace ExampleApp
                 return m_worldPinItemModelId;
             }
             
+            const bool WorldPinsInFocusModel::isInteriorTransition() const
+            {
+                return m_forInteriorTransition;
+            }
+
             void WorldPinsInFocusModel::Refresh(const std::string& title, const std::string& subtitle, const std::string& ratingsImage, const int reviewCount)
             {
                 m_title = title;

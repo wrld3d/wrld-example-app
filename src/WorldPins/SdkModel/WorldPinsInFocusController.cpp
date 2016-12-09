@@ -47,6 +47,7 @@ namespace ExampleApp
                 , m_pLastFocussedModel(NULL)
                 , m_focusEnabled(false)
                 , m_screenOversampleScale(screenOversampleScale)
+                , m_directionEnabled(false)
             {
                 m_messageBus.SubscribeNative(m_visibilityMessageHandlerBinding);
                 m_messageBus.SubscribeNative(m_selectedFocussedMessageHandlerBinding);
@@ -113,14 +114,21 @@ namespace ExampleApp
 
                     if(m_pLastFocussedModel != NULL)
                     {
-                        m_messageBus.Publish(WorldPinGainedFocusMessage(WorldPinsInFocusModel(m_pLastFocussedModel->GetPinId(),
-                                             m_pLastFocussedModel->GetTitle(),
-                                             m_pLastFocussedModel->GetSubtitle(),
-                                             m_pLastFocussedModel->GetVendor(),
-                                             m_pLastFocussedModel->GetJsonData(),
-                                             m_pLastFocussedModel->GetRatingsImage(),
-                                             m_pLastFocussedModel->GetReviewCount()),
-                                             closestScreenPinLocation));
+                        if(m_directionEnabled && !m_pLastFocussedModel->isInteriorTransition())
+                        {
+                        }
+                        else
+                        {
+                            m_messageBus.Publish(WorldPinGainedFocusMessage(WorldPinsInFocusModel(m_pLastFocussedModel->GetPinId(),
+                                                                                                  m_pLastFocussedModel->GetTitle(),
+                                                                                                  m_pLastFocussedModel->GetSubtitle(),
+                                                                                                  m_pLastFocussedModel->GetVendor(),
+                                                                                                  m_pLastFocussedModel->GetJsonData(),
+                                                                                                  m_pLastFocussedModel->GetRatingsImage(),
+                                                                                                  m_pLastFocussedModel->GetReviewCount(),m_pLastFocussedModel->isInteriorTransition()),
+                                                                            closestScreenPinLocation));
+                        }
+
                     }
                     else
                     {
@@ -129,6 +137,7 @@ namespace ExampleApp
                 }
                 else
                 {
+
                     if(m_pLastFocussedModel != NULL)
                     {
                         m_messageBus.Publish(WorldPinInFocusChangedLocationMessage(closestScreenPinLocation));
@@ -144,6 +153,11 @@ namespace ExampleApp
             void WorldPinsInFocusController::OnSelectedFocussedMessage(const WorldPinsSelectedFocussedMessage& worldPinsSelectedFocussedMessage)
             {
                 m_worldPinsService.SelectPin(worldPinsSelectedFocussedMessage.PinId());
+            }
+            
+            void WorldPinsInFocusController::SetDiretionMenuState(bool open)
+            {
+                m_directionEnabled = open;
             }
         }
     }

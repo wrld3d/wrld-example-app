@@ -54,6 +54,7 @@ namespace ExampleApp
                                           , NULL
                                           , worldPinFocusData
                                           , false
+                                          , true
                                           , worldPinInteriorData
                                           , wayPoint->GetLocation()
                                           , GetWayPointIconForType(wayPoint->GetType())

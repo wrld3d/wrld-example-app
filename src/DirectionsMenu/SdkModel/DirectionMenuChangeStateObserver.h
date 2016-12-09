@@ -6,6 +6,10 @@
 #include "ICallback.h"
 #include "WorldPinOnMapController.h"
 #include "MenuController.h"
+#include "IWorldPinsRepository.h"
+#include "IWorldPinsService.h"
+#include "IWorldPinsScaleController.h"
+#include "IWorldPinsInFocusController.h"
 
 
 namespace ExampleApp
@@ -19,7 +23,10 @@ namespace ExampleApp
             
             public:
                 
-                DirectionMenuChangeStateObserver(ExampleApp::Menu::View::MenuController& directionsMenuController, WorldPins::View::WorldPinOnMapController& worldPinOnMapController);
+                DirectionMenuChangeStateObserver(ExampleApp::Menu::View::MenuController& directionsMenuController,
+                                                 WorldPins::View::WorldPinOnMapController& worldPinOnMapController,
+                                                 WorldPins::SdkModel::IWorldPinsScaleController& worldPinsScaleController,
+                                                 WorldPins::SdkModel::IWorldPinsInFocusController& worldPinsInFocusController);
                 
                 ~DirectionMenuChangeStateObserver();
             
@@ -29,8 +36,11 @@ namespace ExampleApp
                 
                 WorldPins::View::WorldPinOnMapController& m_worldPinOnMapController;
                 
-                Eegeo::Helpers::TCallback2<DirectionMenuChangeStateObserver,const float&,bool&>  m_onDirectionMenuStateChangeCallBackdCallback;
+                WorldPins::SdkModel::IWorldPinsScaleController& m_worldPinsScaleController;
                 
+                WorldPins::SdkModel::IWorldPinsInFocusController& m_worldPinsInFocusController;
+                
+                Eegeo::Helpers::TCallback2<DirectionMenuChangeStateObserver,const float&,bool&>  m_onDirectionMenuStateChangeCallBackdCallback;
                 
                 void OnDirectionMenustateChange(const float& state, bool& openState);
 

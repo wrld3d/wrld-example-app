@@ -120,25 +120,11 @@ namespace ExampleApp
             {
                 Direction::SdkModel::DirectionRouteModel routeModel = routes[0];
                 const std::vector<Direction::SdkModel::DirectionInnerRouteModel>& innerRoutesVector = routeModel.GetInnerRoutes();
-                int minimumDuration = 0;
-                int indexOfFatestRoute = -1;
                 
                 for(int i=0; i<innerRoutesVector.size();i++)
                 {
-
-                    Direction::SdkModel::DirectionInnerRouteModel innerRouteModel = innerRoutesVector[i];
-                    int currentRouteDuration = innerRouteModel.GetDuration();
-                    if (i == 0 || currentRouteDuration < minimumDuration)
-                    {
-                        minimumDuration = currentRouteDuration;
-                        indexOfFatestRoute = i;
-                    }
-                }
-                
-                if (indexOfFatestRoute != -1 && indexOfFatestRoute < innerRoutesVector.size())
-                {
                     RouteBuilder builder;
-                    Direction::SdkModel::DirectionInnerRouteModel innerRouteModel = innerRoutesVector[indexOfFatestRoute];
+                    Direction::SdkModel::DirectionInnerRouteModel innerRouteModel = innerRoutesVector[i];
                     
                     const Direction::SdkModel::DirectionRouteGeometryModel& innerRouteGeomatry = innerRouteModel.GetInnerRouteGeometry();
                     
@@ -147,9 +133,15 @@ namespace ExampleApp
                     const float altitudeMeters = m_pPathDrawingSettings->GetRouteAltitudeMeter();
                     
                     Eegeo::Routes::Style::RouteStyle routeStyle(&m_routeThicknessPolicy, Eegeo::Routes::Style::RouteStyle::DebugStyleNone);
-                    
-                    builder.Start(m_pPathDrawingSettings->GetRoutePrimaryColor(), m_pPathDrawingSettings->GetRouteWidth(), m_pPathDrawingSettings->GetRouteSpeed(), Routes::Road);
-
+                    if (i%2 == 0)
+                    {
+                        builder.Start(m_pPathDrawingSettings->GetRoutePrimaryColor(), m_pPathDrawingSettings->GetRouteWidth(), m_pPathDrawingSettings->GetRouteSpeed(), Routes::Road);
+                    }
+                    else
+                    {
+                        builder.Start(m_pPathDrawingSettings->GetRouteSecondaryColor(), m_pPathDrawingSettings->GetRouteWidth(), m_pPathDrawingSettings->GetRouteSpeed(), Routes::Road);
+                    }
+                                        
                     for (std::vector<Eegeo::Space::LatLong>::const_iterator it = coordinatesVector.begin() ; it != coordinatesVector.end(); ++it)
                     {
                         builder.AddPoint(it->GetLatitudeInDegrees(), it->GetLongitudeInDegrees(), altitudeMeters);
@@ -158,6 +150,7 @@ namespace ExampleApp
                     
                     m_routes.push_back(m_routeService.CreateRoute(points, routeStyle, false));
                 }
+                
             }
             m_createdRoutes = true;
         }

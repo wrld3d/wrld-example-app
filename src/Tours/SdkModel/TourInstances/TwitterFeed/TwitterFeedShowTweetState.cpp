@@ -136,6 +136,7 @@ namespace ExampleApp
                                                                     NULL,
                                                                     worldPinFocusData,
                                                                     m_isInterior,
+                                                                    false,
                                                                     m_worldPinInteriorData,
                                                                     location,
                                                                     twitterPinIconKey,

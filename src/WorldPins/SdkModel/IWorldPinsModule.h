@@ -15,6 +15,8 @@ namespace ExampleApp
             {
             public:
                 virtual ~IWorldPinsModule() { }
+                
+                virtual IWorldPinsRepository& GetWorldPinsRepository() const = 0;
 
                 virtual IWorldPinsService& GetWorldPinsService() const = 0;
 

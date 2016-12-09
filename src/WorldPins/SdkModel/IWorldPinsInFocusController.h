@@ -17,6 +17,7 @@ namespace ExampleApp
                 virtual ~IWorldPinsInFocusController() { }
 
                 virtual void Update(float dt, const Eegeo::dv3& ecefInterestPoint, const Eegeo::Camera::RenderCamera& renderCamera) = 0;
+                virtual void SetDiretionMenuState(bool open) = 0;
             };
         }
     }

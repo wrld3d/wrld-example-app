@@ -354,7 +354,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                  screenProperties.GetPixelScale(),
                                  m_pImageStore);
     
-    m_pDirectionMenuChanageStateObserver = Eegeo_NEW(ExampleApp::DirectionsMenu::SdkModel::DirectionMenuChangeStateObserver)(m_pDirectionsMenuViewModule->GetMenuController(),m_pWorldPinOnMapViewModule->GetWorldPinOnMapController());
+    m_pDirectionMenuChanageStateObserver = Eegeo_NEW(ExampleApp::DirectionsMenu::SdkModel::DirectionMenuChangeStateObserver)(m_pDirectionsMenuViewModule->GetMenuController(),m_pWorldPinOnMapViewModule->GetWorldPinOnMapController(),app.WorldPinsModule().GetWorldPinsScaleController(),app.WorldPinsModule().GetWorldPinsInFocusController());
     
     m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::View::CompassViewModule)(app.CompassModule().GetCompassViewModel(),
                            screenProperties,

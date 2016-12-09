@@ -54,12 +54,14 @@ namespace ExampleApp
             
             void WorldPinOnMapController::OnScreenStateUpdated(const float& screenState,bool hidePin)
             {
-                if(m_viewModel.IsOpen())
+                if(m_viewModel.IsOpen() && !m_viewModel.GetWorldPinsInFocusModel().isInteriorTransition())
                 {
-                    m_view.UpdateScreenStateAndVisibility(screenState);
+                    if(m_viewModel.IsOpen())
+                    {
+                        m_view.UpdateScreenStateAndVisibility(screenState);
+                    }
+                    shouldForwardCall = hidePin;
                 }
-                shouldForwardCall = hidePin;
-
             }
             
             void WorldPinOnMapController::OnSelected()

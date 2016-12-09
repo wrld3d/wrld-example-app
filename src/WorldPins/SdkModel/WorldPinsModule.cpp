@@ -118,6 +118,11 @@ namespace ExampleApp
             {
                 return m_pWorldPinsInFocusViewModel->GetScreenControlViewModel();
             }
+            
+            IWorldPinsRepository& WorldPinsModule::GetWorldPinsRepository() const
+            {
+                return *m_pWorldPinsRepository;
+            }
         }
     }
 }

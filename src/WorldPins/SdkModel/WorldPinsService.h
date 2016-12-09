@@ -50,6 +50,7 @@ namespace ExampleApp
                                           IWorldPinVisibilityStateChangedHandler* pVisibilityStateChangedHandler,
                                           const WorldPinFocusData& worldPinFocusData,
                                           bool interior,
+                                          bool forInteriorTransiation,
                                           const WorldPinInteriorData& worldPinInteriorData,
                                           const Eegeo::Space::LatLong& location,
                                           const std::string& pinIconKey,

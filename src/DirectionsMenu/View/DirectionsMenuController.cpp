@@ -130,8 +130,10 @@ namespace ExampleApp
                 if(isAnimating)
                 {
                     const float normalisedAnimationProgress = m_view.GetAnimationProgress();
-                    m_messageBus.Publish(ExampleApp::Modality::ModalityChangedMessage(normalisedAnimationProgress));
-                    m_updateDirectionMenuStateCallbacks.ExecuteCallbacks(normalisedAnimationProgress,m_isDirectionMenuOpen);
+                    //if (normalisedAnimationProgress > 0)
+                    //{
+                        m_updateDirectionMenuStateCallbacks.ExecuteCallbacks(normalisedAnimationProgress,m_isDirectionMenuOpen);
+                    //}
 
                 }
 

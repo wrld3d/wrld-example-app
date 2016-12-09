@@ -48,6 +48,7 @@ namespace ExampleApp
                                                                                                   "",
                                                                                                   0),
                                                            tourModel.IsInterior(),
+                                                           false,
                                                            tourModel.WorldPinInteriorData(),
                                                            tourModel.Location(),
                                                            tourModel.PinIconKey(),

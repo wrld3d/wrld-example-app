@@ -197,6 +197,7 @@ namespace ExampleApp
                                                                                                              NULL,
                                                                                                              worldPinFocusData,
                                                                                                              searchResultModel.IsInterior(),
+                                                                                                             false,
                                                                                                              worldPinInteriorData,
                                                                                                              searchResultModel.GetLocation(),
                                                                                                              pinIconKey,

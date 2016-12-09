@@ -26,6 +26,7 @@ namespace ExampleApp
                 const IWorldPinsInFocusModel* m_pLastFocussedModel;
 
                 bool m_focusEnabled;
+                bool m_directionEnabled;
                 const float m_screenOversampleScale;
 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
@@ -44,6 +45,9 @@ namespace ExampleApp
                 ~WorldPinsInFocusController();
 
                 void Update(float deltaSeconds, const Eegeo::dv3& ecefInterestPoint, const Eegeo::Camera::RenderCamera& renderCamera);
+                
+                void SetDiretionMenuState(bool open);
+
             };
         }
     }
