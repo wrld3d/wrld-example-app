@@ -1163,6 +1163,12 @@
 	  <Component Id="_0da0602a.3777.4621.b699.5c38b55c000b" Directory="RESOURCEFOLDER" Guid="{409f23cc-a5d9-4ac4-9611-7bf072e2ad22}">
 		<File Id="_7bdafd3f.ee37.470d.97e6.8928a353ca6f" KeyPath="yes" Source="payload\Resources\IPAexGothic_sdf_6.png" />
 	  </Component>
+      <Component Id="_255a7075.7f22.4219.8630.80ab7b7d837b" Directory="RESOURCEFOLDER" Guid="{0b3e9dca-f371-41af-83a4-efdfe96285af}">
+        <File Id="_af4a6d47.aef3.4e73.987b.c33eab9c55d6" KeyPath="yes" Source="payload\Resources\opensans_semibold_sdf.fnt" />
+      </Component>
+      <Component Id="_4e099e34.dbf0.44e2.b5c8.051fe1526979" Directory="RESOURCEFOLDER" Guid="{f9551bbb-32b6-4888-ba11-99773f659920}">
+        <File Id="_6adbed84.a9e6.41a3.b144.45722f0df7bb" KeyPath="yes" Source="payload\Resources\opensans_semibold_sdf_0.png" />
+      </Component>
 	  <Component Id="_cd407c20.cf85.4b46.9380.14b05ab9fc82" Directory="RESOURCEFOLDER" Guid="{d262b1a5-51a1-4faf-ace2-640fc1e90f2b}">
 		<File Id="_3bb6cfff.fee8.46a0.a66f.d44446212e44" KeyPath="yes" Source="payload\Resources\search_menu_items.json" />
 	  </Component>
