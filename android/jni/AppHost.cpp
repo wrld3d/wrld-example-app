@@ -89,6 +89,7 @@
 #include "WebConnectivityValidator.h"
 #include "AndroidMenuReactionModel.h"
 #include "ApplicationConfigurationModule.h"
+#include "AndroidImageNameHelper.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -178,7 +179,10 @@ AppHost::AppHost(
     Eegeo::EffectHandler::Initialise();
 
     std::string deviceModel = std::string(nativeState.deviceModel, strlen(nativeState.deviceModel));
-    Eegeo::Android::AndroidPlatformConfigBuilder androidPlatformConfigBuilder(deviceModel);
+    Eegeo::Android::AndroidImageNameHelper imageHelper(&nativeState);
+    Eegeo::Android::AndroidPlatformConfigBuilder androidPlatformConfigBuilder(deviceModel,
+																			  imageHelper.GetImageResolutionSuffix(),
+																			  imageHelper.GetImageResolutionScale());
 
     const Eegeo::Config::PlatformConfig& platformConfiguration = ExampleApp::ApplicationConfig::SdkModel::BuildPlatformConfig(androidPlatformConfigBuilder, applicationConfiguration);
 
