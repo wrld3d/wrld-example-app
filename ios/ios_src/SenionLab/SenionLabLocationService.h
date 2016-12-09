@@ -5,6 +5,7 @@
 #include "ILocationService.h"
 #include "LatLongAltitude.h"
 #include "InteriorsModel.h"
+#include "InteriorId.h"
 
 namespace ExampleApp
 {
@@ -20,7 +21,7 @@ namespace ExampleApp
             const bool GetIsAuthorized() const;
             
             bool IsIndoors();
-            bool GetIndoorID(int& indoorID);
+            Eegeo::Resources::Interiors::InteriorId GetInteriorId();
             bool GetLocation(Eegeo::Space::LatLong& latLong);
             bool GetAltitude(double& altitude);
             bool GetFloorIndex(int& floorIndex);

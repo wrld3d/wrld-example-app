@@ -2,6 +2,7 @@
 
 #include "IndoorAtlasLocationService.h"
 #include "InteriorHeightHelpers.h"
+#include "InteriorId.h"
 #include "EnvironmentFlatteningService.h"
 #include "InteriorInteractionModel.h"
 
@@ -30,9 +31,9 @@ namespace ExampleApp
             return true;
         }
         
-        bool IndoorAtlasLocationService::GetIndoorID(int& indoorID)
+        Eegeo::Resources::Interiors::InteriorId IndoorAtlasLocationService::GetInteriorId()
         {
-            return false;
+            return m_interiorInteractionModel.GetInteriorModel()->GetId();
         }
         
         bool IndoorAtlasLocationService::GetLocation(Eegeo::Space::LatLong& latLong)
