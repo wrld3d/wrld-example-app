@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "MobileExampleApp.h"
+#include "ApiKey.h"
 #include "GlobeCameraTouchController.h"
 #include "RenderCamera.h"
 #include "GpsGlobeCameraController.h"
@@ -208,7 +209,8 @@ namespace ExampleApp
         {
             const auto& tagSearchModels = TagSearch::View::CreateTagSearchModelsFromFile(
                                                                                          fileIO,
-                                                                                         "search_menu_items.json");
+                                                                                         ExampleApp::ApplicationConfigurationPath,
+                                                                                         "outdoor_search_menu_items");
             
             for (const auto& t : tagSearchModels)
             {
