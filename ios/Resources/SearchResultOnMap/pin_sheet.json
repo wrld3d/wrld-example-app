@@ -1022,7 +1022,7 @@
             "w": 28, 
             "y": 290, 
             "x": 116, 
-            "id": "park_outlined"
+            "id": "lamppost"
         }, 
         {
             "index": 113, 
@@ -1031,7 +1031,7 @@
             "w": 28, 
             "y": 290, 
             "x": 145, 
-            "id": "airport_outlined"
+            "id": "meter"
         }, 
         {
             "index": 114, 
@@ -1040,6 +1040,42 @@
             "w": 28, 
             "y": 290, 
             "x": 174, 
+            "id": "trash_empty"
+        }, 
+        {
+            "index": 115, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 290, 
+            "x": 203, 
+            "id": "trash_full"
+        }, 
+        {
+            "index": 116, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 290, 
+            "x": 232, 
+            "id": "park_outlined"
+        }, 
+        {
+            "index": 117, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 290, 
+            "x": 261, 
+            "id": "airport_outlined"
+        }, 
+        {
+            "index": 118, 
+            "h": 28, 
+            "page": 0, 
+            "w": 28, 
+            "y": 290, 
+            "x": 290, 
             "id": "golf_outlined"
         }
     ]
