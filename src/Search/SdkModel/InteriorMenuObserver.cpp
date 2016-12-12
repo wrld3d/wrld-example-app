@@ -20,6 +20,7 @@ namespace ExampleApp
             , m_interiorMetaDataRepo(interiorMetaDataRepo)
             , m_hasSelectedInterior(false)
             , m_defaultTagsSaved(false)
+            , m_hasSearchMenuItems(false)
             {
                 m_interiorSelectionModel.RegisterSelectionChangedCallback(m_interiorSelectionChangedCallback);
                 m_hasSelectedInterior = m_interiorSelectionModel.IsInteriorSelected();
@@ -54,7 +55,8 @@ namespace ExampleApp
                 rapidjson::Document document;
                 if (!document.Parse<0>(user_data.c_str()).HasParseError())
                 {
-                    if(document.HasMember("search_menu_items") && document["search_menu_items"].IsObject())
+                    m_hasSearchMenuItems = document.HasMember("search_menu_items") && document["search_menu_items"].IsObject();
+                    if(m_hasSearchMenuItems)
                     {
                         const rapidjson::Value& searchMenuItems = document["search_menu_items"];
                         
@@ -80,9 +82,6 @@ namespace ExampleApp
                             ClearTagSearchModelTracker();
                         }
                         
-                        size_t repoSize = m_tagSearchRepository.GetItemCount();
-                        Eegeo_TTY("hi, %d", repoSize);
-                        
                         if(searchMenuItems.HasMember("items") && searchMenuItems["items"].IsArray())
                         {
                             const rapidjson::Value& menuItems = searchMenuItems["items"];
@@ -94,38 +93,35 @@ namespace ExampleApp
                                 m_tagSearchRepository.AddItem(*v);
                             }
                         }
-                        
-                        repoSize = m_tagSearchRepository.GetItemCount();
-                        Eegeo_TTY("hi, %d", repoSize);
                     }
                 }
             }
             void InteriorMenuObserver::ClearTagSearchModelTracker()
             {
-                size_t size = m_tagSearchModelTracker.size();
-                for(auto i = size; i > 0; i--)
+                for(auto iter = m_tagSearchModelTracker.begin(); iter != m_tagSearchModelTracker.end(); iter++)
+                {
+                    Eegeo_DELETE *iter;
+                }
+                m_tagSearchModelTracker.clear();
+                
+                for(auto i = m_tagSearchRepository.GetItemCount(); i > 0; i--)
                 {
                     const TagSearch::View::TagSearchModel& searchRepo = m_tagSearchRepository.GetItemAtIndex(i-1);
                     m_tagSearchRepository.RemoveItem(searchRepo);
-                    Eegeo_DELETE m_tagSearchModelTracker[i-1];
                 }
-                m_tagSearchModelTracker.clear();
             }
             
             void InteriorMenuObserver::OnExitInterior()
             {
-                ClearTagSearchModelTracker();
-                
-                size_t repoSize = m_tagSearchRepository.GetItemCount();
-                Eegeo_TTY("hi, %d", repoSize);
-                
-                for(auto i = 0; i < m_previousTagSearchRepository.GetItemCount(); i++)
+                if(m_hasSearchMenuItems)
                 {
-                    m_tagSearchRepository.AddItem(m_previousTagSearchRepository.GetItemAtIndex(i));
+                    ClearTagSearchModelTracker();
+                    
+                    for(auto i = 0; i < m_previousTagSearchRepository.GetItemCount(); i++)
+                    {
+                        m_tagSearchRepository.AddItem(m_previousTagSearchRepository.GetItemAtIndex(i));
+                    }
                 }
-                
-                repoSize = m_tagSearchRepository.GetItemCount();
-                Eegeo_TTY("hi, %d", repoSize);
             }
             
             InteriorMenuObserver::TransitionState InteriorMenuObserver::HandleTransitionStates()
