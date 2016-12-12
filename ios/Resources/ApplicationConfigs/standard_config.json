@@ -1,71 +1,71 @@
 {
-    "Name": "Mobile Example App",
-    "EegeoApiKey": "",
-    "StartLocationLatitude": 37.7858,
-    "StartLocationLongitude": -122.401,
-    "StartLocationAltitude": 2.7,
-    "StartLocationDistance": 1781.0,
-    "StartLocationOrientationDegrees": 0.0,
-    "TryStartAtGpsLocation":false,
-    "GoogleAnalyticsReferrerToken":"mea_ios",
-    "FlurryAppKey": "",
-    "YelpConsumerKey": "",
-    "YelpConsumerSecret": "",
-    "YelpOAuthToken": "",
-    "YelpOAuthTokenSecret": "",
-    "GeoNamesUserName": "",
-    "CoverageTreeManifestURL": "",
-    "ThemeManifestURL": "",
-    "EegeoSearchServiceUrl": "",
-    "MyPinsWebServiceUrl": "",
-    "MyPinsWebServiceAuthToken": "",
-    "UseLabels": true,
-    "UseJapaneseFont": false,
-    "IndoorTrackedBuildings":
+    "name": "Mobile Example App",
+    "eegeo_api_key": "",
+    "start_location_latitude": 37.7858,
+    "start_location_longitude": -122.401,
+    "start_location_altitude": 2.7,
+    "start_location_distance": 1781.0,
+    "start_location_orientation_degrees": 0.0,
+    "try_start_at_gps_location":false,
+    "coveragetree_manifest_url": "",
+    "theme_manifest_url": "",
+    "google_analytics_referrer_token":"mea_ios",
+    "flurry_app_key": "",
+    "yelp_consumer_key": "",
+    "yelp_consumer_secret": "",
+    "yelp_oauth_token": "",
+    "yelp_oauth_token_secret": "",
+    "geonames_username": "",
+    "eegeo_search_service_url": "",
+    "mypins_web_service_url": "",
+    "mypins_web_service_auth_token": "",
+    "use_labels": true,
+    "use_japanese_font": false,
+    "indoor_tracked_buildings":
     [
-        {
-            "InteriorId": "westport_house",
-            "Type": "IndoorAtlas",
-            "Config":
-            [{
-                "ApiKey": "941b8502-b022-4abb-bbf2-9a90450e4343",
-                "ApiSecret": "k9cZWpze+pjvgyGMbj06Kl2GaF2RdQdPmUlsQuWAAJRegFFXpKy+JgRpKGS6Fq5mOee3CVTPVQacBYnwGPBb28EPT3qeihS6RrbkIWnIW/DZn7JhL+ohu3gdoYOBlw=="
-            }],
-            "FloorMapping":
-            [
-                {
-                    "BuildingFloorIndex": 0,
-                    "TrackedFloorIndex": "7317b943-65c5-42de-8679-26cfc770406e"
-                },
-                {
-                    "BuildingFloorIndex": 2,
-                    "TrackedFloorIndex": "d11c3970-04c9-47fc-82d8-43285509b8cb"
-                }
-            ]
-        },
-        {
-            "InteriorId": "EIM-e16a94b1-f64f-41ed-a3c6-8397d9cfe607",
-            "Type": "IndoorAtlas",
-            "Config":
-            [{
-                "ApiKey": "941b8502-b022-4abb-bbf2-9a90450e4343",
-                "ApiSecret": "k9cZWpze+pjvgyGMbj06Kl2GaF2RdQdPmUlsQuWAAJRegFFXpKy+JgRpKGS6Fq5mOee3CVTPVQacBYnwGPBb28EPT3qeihS6RrbkIWnIW/DZn7JhL+ohu3gdoYOBlw=="
-            }],
-            "FloorMapping":
-            [
-                {
-                    "BuildingFloorIndex": 0,
-                    "TrackedFloorIndex": "11762d07-452f-4e25-8d4d-6612a2056088"
-                },
-                {
-                    "BuildingFloorIndex": 1,
-                    "TrackedFloorIndex": "8cddcd54-a031-41cb-b7ac-75f73aa25549"
-                },
-                {
-                    "BuildingFloorIndex": 2,
-                    "TrackedFloorIndex": "0e23e1ed-8e95-4c81-834e-5b32cc59b9ae"
-                }
-            ]
-        }
-    ]
+     {
+     "interior_id": "westport_house",
+     "type": "IndoorAtlas",
+     "config":
+     [{
+      "api_key": "941b8502-b022-4abb-bbf2-9a90450e4343",
+      "api_secret": "k9cZWpze+pjvgyGMbj06Kl2GaF2RdQdPmUlsQuWAAJRegFFXpKy+JgRpKGS6Fq5mOee3CVTPVQacBYnwGPBb28EPT3qeihS6RrbkIWnIW/DZn7JhL+ohu3gdoYOBlw=="
+      }],
+     "floor_mapping":
+     [
+      {
+      "building_floor_index": 0,
+      "tracked_floor_index": "7317b943-65c5-42de-8679-26cfc770406e"
+      },
+      {
+      "building_floor_index": 2,
+      "tracked_floor_index": "d11c3970-04c9-47fc-82d8-43285509b8cb"
+      }
+      ]
+     },
+     {
+     "interior_id": "EIM-e16a94b1-f64f-41ed-a3c6-8397d9cfe607",
+     "type": "IndoorAtlas",
+     "config":
+     [{
+      "api_key": "941b8502-b022-4abb-bbf2-9a90450e4343",
+      "api_secret": "k9cZWpze+pjvgyGMbj06Kl2GaF2RdQdPmUlsQuWAAJRegFFXpKy+JgRpKGS6Fq5mOee3CVTPVQacBYnwGPBb28EPT3qeihS6RrbkIWnIW/DZn7JhL+ohu3gdoYOBlw=="
+      }],
+     "floor_mapping":
+     [
+      {
+      "building_floor_index": 0,
+      "tracked_floor_index": "11762d07-452f-4e25-8d4d-6612a2056088"
+      },
+      {
+      "building_floor_index": 1,
+      "tracked_floor_index": "8cddcd54-a031-41cb-b7ac-75f73aa25549"
+      },
+      {
+      "building_floor_index": 2,
+      "tracked_floor_index": "0e23e1ed-8e95-4c81-834e-5b32cc59b9ae"
+      }
+      ]
+     }
+     ]
 }

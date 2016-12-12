@@ -41,9 +41,9 @@ namespace ExampleApp
                     const bool tryStartAtGpsLocation = false;
                     const bool shouldStartFullscreen = false;
                     const bool isKioskTouchInputEnabled = false;
-                    const bool useLabels = false;
+                    const bool useLabels = true;
                     const bool useJapaneseFont = false;
-
+                    
                     return ApplicationConfiguration ("Eegeo Example App",
                         emptyEegeoApiKey,
                         productVersion,
@@ -52,8 +52,8 @@ namespace ExampleApp
                         Eegeo::Config::CoverageTreeManifestUrlDefault,
                         Eegeo::Config::CityThemesManifestUrlDefault,
                         "EmbeddedTheme",
-                        Eegeo::Space::LatLongAltitude(0.0f, 0.0f, 0.0f),
-                        1000.f,
+                        Eegeo::Space::LatLongAltitude(37.7858f, -122.401f, 2.7),
+                        1781.0f,
                         0.f,
                         tryStartAtGpsLocation,
                         shouldStartFullscreen,
