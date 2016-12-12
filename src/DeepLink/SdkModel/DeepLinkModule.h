@@ -6,6 +6,7 @@
 #include "ApplicationConfig.h"
 #include "IAlertBoxFactory.h"
 #include "IWebLoadRequestFactory.h"
+#include "CoverageTrees.h"
 
 namespace ExampleApp
 {
@@ -16,7 +17,7 @@ namespace ExampleApp
             class DeepLinkModule
             {
             public:
-                DeepLinkModule(CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController, Eegeo::Web::IWebLoadRequestFactory& webFactory, Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory, ApplicationConfig::ApplicationConfiguration& defaultConfig);
+                DeepLinkModule(CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController, Eegeo::Web::IWebLoadRequestFactory& webFactory, Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory, ApplicationConfig::ApplicationConfiguration& defaultConfig, Eegeo::Streaming::CoverageTrees::ICoverageTreeManifestLoader& manifest);
                 ~DeepLinkModule();
                 DeepLinkController& GetDeepLinkController();
             private:

@@ -5,6 +5,7 @@
 #include "IWebLoadRequestFactory.h"
 #include "ICameraTransitionController.h"
 #include "ApplicationConfigurationJsonParser.h"
+#include "ICoverageTreeManifestLoader.h"
 
 namespace ExampleApp
 {
@@ -12,13 +13,18 @@ namespace ExampleApp
     {
         namespace SdkModel
         {            
-            DeepLinkConfigHandler::DeepLinkConfigHandler(CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController, Eegeo::Web::IWebLoadRequestFactory& webRequestFactory, Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory, ApplicationConfig::ApplicationConfiguration& defaultConfig)
+            DeepLinkConfigHandler::DeepLinkConfigHandler(CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                                         Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
+                                                         Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                                                         ApplicationConfig::ApplicationConfiguration& defaultConfig,
+                                                         Eegeo::Streaming::CoverageTrees::ICoverageTreeManifestLoader& manifestLoader)
             :m_webRequestFactory(webRequestFactory)
             ,m_configRequestCompleteCallback(this, &DeepLinkConfigHandler::HandleConfigResponse)
             ,m_failAlertHandler(this, &DeepLinkConfigHandler::OnFailAlertBoxDismissed)
             ,m_cameraTransitionController(cameraTransitionController)
             ,m_alertBoxFactory(alertBoxFactory)
             ,m_defaultConfig(defaultConfig)
+            ,m_manifestLoader(manifestLoader)
             {
             }
 
@@ -45,7 +51,8 @@ namespace ExampleApp
                     if(parser.IsValidConfig(resultString))
                     {
                         ApplicationConfig::ApplicationConfiguration applicationConfig = parser.ParseConfiguration(resultString);
-                        m_cameraTransitionController.StartTransitionTo(applicationConfig.InterestLocation().ToECEF(), applicationConfig.DistanceToInterestMetres(), applicationConfig.OrientationDegrees());
+                        m_manifestLoader.LoadCoverageTreeManifest(applicationConfig.CoverageTreeManifestURL());
+                        m_cameraTransitionController.StartTransitionTo(applicationConfig.InterestLocation().ToECEF(), applicationConfig.DistanceToInterestMetres(), applicationConfig.OrientationDegrees());                        
                     }
                     else
                     {

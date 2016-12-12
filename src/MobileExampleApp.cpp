@@ -127,6 +127,7 @@
 #include "DeepLinkController.h"
 #include "InteriorsStreamingModule.h"
 #include "InteriorMetaDataModule.h"
+#include "CoverageTreeModule.h"
 
 namespace ExampleApp
 {
@@ -431,7 +432,7 @@ namespace ExampleApp
         
         m_pUserInteractionModule = Eegeo_NEW(UserInteraction::SdkModel::UserInteractionModule)(m_pAppCameraModule->GetController(), *m_pCameraTransitionService, m_pInteriorsExplorerModule->GetInteriorsExplorerUserInteractionModel(), m_messageBus);
         
-        m_pDeepLinkModule = Eegeo_NEW(DeepLink::SdkModel::DeepLinkModule)(*m_pCameraTransitionController, m_platformAbstractions.GetWebLoadRequestFactory(), m_pWorld->GetNativeUIFactories().AlertBoxFactory(), m_applicationConfiguration);
+        m_pDeepLinkModule = Eegeo_NEW(DeepLink::SdkModel::DeepLinkModule)(*m_pCameraTransitionController, m_platformAbstractions.GetWebLoadRequestFactory(), m_pWorld->GetNativeUIFactories().AlertBoxFactory(), m_applicationConfiguration, m_pWorld->GetMapModule().GetCoverageTreeModule().GetCoverageTreeLoader());
     }
     
     MobileExampleApp::~MobileExampleApp()
