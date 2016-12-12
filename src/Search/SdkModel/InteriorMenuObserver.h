@@ -51,6 +51,7 @@ namespace ExampleApp
                 
                 bool m_hasSelectedInterior;
                 bool m_defaultTagsSaved;
+                bool m_hasSearchMenuItems;
                 
                 Eegeo::Helpers::CallbackCollection0 m_interiorTagsUpdatedCallbacks;
             };
