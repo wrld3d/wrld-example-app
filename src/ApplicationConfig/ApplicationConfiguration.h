@@ -62,6 +62,11 @@ namespace ExampleApp
             
             std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo> m_interiorTrackingInfo;
 
+            std::vector<Eegeo::Space::LatLongAltitude> m_attractModeTargetSplinePoints;
+            std::vector<Eegeo::Space::LatLongAltitude> m_attractModePositionSplinePoints;
+
+            long long m_attractModeTimeoutMs;
+
         public:
             
             ApplicationConfiguration(const std::string& name,
@@ -102,7 +107,10 @@ namespace ExampleApp
                                      const Eegeo::Space::LatLong fixedLatlong,
                                      const std::string& fixedInteriorId,
                                      const int fixedFloorIndex,
-                                     const double fixedHeadingDegrees);
+                                     const double fixedHeadingDegrees,
+                                     const std::vector<Eegeo::Space::LatLongAltitude>& attractModeTargetSplinePoints,
+                                     const std::vector<Eegeo::Space::LatLongAltitude>& attractModePositionSplinePoints,
+                                     const long long attractModeTimeoutMs);
             
             std::string Name() const;
 
@@ -174,6 +182,11 @@ namespace ExampleApp
             bool UseJapaneseFont() const;
 
             bool FixedIndoorLocation(Eegeo::Space::LatLong& latlong, Eegeo::Resources::Interiors::InteriorId& interiorId, int& floorIndex, double& headingDegrees) const;
+
+            const std::vector<Eegeo::Space::LatLongAltitude>& GetAttractModeTargetSplinePoints() const;
+            const std::vector<Eegeo::Space::LatLongAltitude>& GetAttractModePositionSplinePoints() const;
+            const long long GetAttractModeTimeoutMs() const;
+            const bool IsAttractModeEnabled() const;
         };
     }
 }

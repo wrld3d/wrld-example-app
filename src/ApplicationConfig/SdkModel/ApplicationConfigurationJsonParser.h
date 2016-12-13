@@ -29,6 +29,10 @@ namespace ExampleApp
                                              const rapidjson::Value& indoorTrackedBuildingsArray);
 
                 void ParseFixedIndoorLocation(const rapidjson::Value& fixedIndoorLocation);
+
+                Eegeo::Space::LatLongAltitude ParseLatLongAltitude(const rapidjson::Value& location);
+
+                std::vector<Eegeo::Space::LatLongAltitude> ParseLatLongAltitudeArray(rapidjson::Value& pointsAst);
             };
         }
     }

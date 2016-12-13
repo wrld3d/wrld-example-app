@@ -255,7 +255,8 @@ namespace ExampleApp
                                        Net::SdkModel::INetworkCapabilities& networkCapabilities,
                                        ExampleApp::Metrics::IMetricsService& metricsService,
                                        Eegeo::IEegeoErrorHandler& errorHandler,
-                                       Menu::View::IMenuReactionModel& menuReaction)
+                                       Menu::View::IMenuReactionModel& menuReaction,
+                                       Eegeo::Input::IUserIdleService& userIdleService)
     : m_pGlobeCameraController(NULL)
     , m_pCameraTouchController(NULL)
     , m_pCurrentTouchController(NULL)
@@ -324,6 +325,7 @@ namespace ExampleApp
     , m_pInteriorsHighlightVisibilityController(NULL)
     , m_pHighlightColorMapper(NULL)
     , m_pInteriorsEntityIdHighlightVisibilityController(NULL)
+    , m_userIdleService(userIdleService)
     {
         m_metricsService.BeginSession(m_applicationConfiguration.FlurryAppKey(), EEGEO_PLATFORM_VERSION_NUMBER);
         
@@ -882,22 +884,30 @@ namespace ExampleApp
         Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
         
         AppModes::States::SdkModel::AppModeStatesFactory appModeStatesFactory(m_pAppCameraModule->GetController(),
-                                                                              *m_pGlobeCameraWrapper,
-                                                                              *m_pInteriorCameraWrapper,
-                                                                              m_pToursModule->GetCameraController(),
-                                                                              *m_pStreamingVolume,
-                                                                              m_pInteriorsExplorerModule->GetInteriorVisibilityUpdater(),
-                                                                              m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
-                                                                              m_pInteriorsExplorerModule->GetInteriorsExplorerUserInteractionModel(),
-                                                                              *m_pAppModeModel,
-                                                                              m_pToursModule->GetTourService(),
-                                                                              interiorsPresentationModule.GetInteriorSelectionModel(),
-                                                                              interiorsPresentationModule.GetInteriorInteractionModel(),
-                                                                              nativeUIFactories,
-                                                                              m_pMyPinCreationModule->GetMyPinCreationModel(),
-                                                                              m_pVisualMapModule->GetVisualMapService());
-        
-        m_pAppModeModel->InitialiseStateMachine(appModeStatesFactory.CreateStateMachineStates());
+                                                                      *m_pGlobeCameraWrapper,
+                                                                      *m_pInteriorCameraWrapper,
+                                                                      m_pToursModule->GetCameraController(),
+                                                                      *m_pStreamingVolume,
+                                                                      m_pInteriorsExplorerModule->GetInteriorVisibilityUpdater(),
+                                                                      m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
+                                                                      m_pInteriorsExplorerModule->GetInteriorsExplorerUserInteractionModel(),
+                                                                      *m_pAppModeModel,
+                                                                      m_pToursModule->GetTourService(),
+                                                                      interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                      interiorsPresentationModule.GetInteriorInteractionModel(),
+                                                                      nativeUIFactories,
+                                                                      m_pMyPinCreationModule->GetMyPinCreationModel(),
+                                                                      m_pVisualMapModule->GetVisualMapService(),
+                                                                      m_userIdleService,
+                                                                      mapModule.GetResourceCeilingProvider(),
+                                                                      m_applicationConfiguration.IsAttractModeEnabled(),
+                                                                      m_applicationConfiguration.GetAttractModeTimeoutMs(),
+                                                                      m_applicationConfiguration.GetAttractModeTargetSplinePoints(),
+                                                                      m_applicationConfiguration.GetAttractModePositionSplinePoints(),
+                                                                      m_screenProperties);
+
+        m_pAppModeModel->InitialiseStateMachine(appModeStatesFactory.CreateStateMachineStates(),
+                                                m_applicationConfiguration.IsAttractModeEnabled() ? AppModes::SdkModel::AttractMode : AppModes::SdkModel::WorldMode);
     }
     
     void MobileExampleApp::DestroyApplicationModelModules()

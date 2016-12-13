@@ -62,6 +62,11 @@ namespace ExampleApp
                 double m_fixedHeadingDegrees;
 
                 std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo> m_interiorTrackingInfo;
+
+                std::vector<Eegeo::Space::LatLongAltitude> m_attractModeTargetSplinePoints;
+                std::vector<Eegeo::Space::LatLongAltitude> m_attractModePositionSplinePoints;
+
+                long long m_attractModeTimeoutMs;
                 
             public:
                 ApplicationConfigurationBuilder(const IApplicationConfigurationCipher& applicationConfigurationEncryption,
@@ -136,6 +141,10 @@ namespace ExampleApp
                 IApplicationConfigurationBuilder& SetInteriorTrackingInfo(const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo);
 
                 IApplicationConfigurationBuilder& SetFixedIndoorLocation(const Eegeo::Space::LatLong latlong, const std::string& interiorId, const int floorIndex, const double headingDegrees);
+
+                IApplicationConfigurationBuilder& SetAttractModeTargetSplinePoints(std::vector<Eegeo::Space::LatLongAltitude> points);
+                IApplicationConfigurationBuilder& SetAttractModePositionSplinePoints(std::vector<Eegeo::Space::LatLongAltitude> points);
+                IApplicationConfigurationBuilder& SetAttractModeTimeoutMs(const long long timeoutMs);
                 
                 std::string Decrypt(const std::string& message) const;
 

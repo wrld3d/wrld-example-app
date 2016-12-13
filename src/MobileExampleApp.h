@@ -92,6 +92,7 @@
 #include "RenderingTransformMesh.h"
 
 #include "IRestrictedBuildingService.h"
+#include "IUserIdleService.h"
 
 namespace ExampleApp
 {
@@ -227,6 +228,7 @@ namespace ExampleApp
 
         RenderingTransformMesh::SdkModel::RenderingTransformMeshModule* m_pRenderingTransformMeshModule;
 
+        Eegeo::Input::IUserIdleService& m_userIdleService;
         
     public:
         MobileExampleApp(const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
@@ -243,7 +245,8 @@ namespace ExampleApp
                          ExampleApp::Net::SdkModel::INetworkCapabilities& networkCapabilities,
                          ExampleApp::Metrics::IMetricsService& metricsService,                         
                          Eegeo::IEegeoErrorHandler& errorHandler,
-                         Menu::View::IMenuReactionModel& menuReaction);
+                         Menu::View::IMenuReactionModel& menuReaction,
+                         Eegeo::Input::IUserIdleService& userIdleService);
 
         ~MobileExampleApp();
 

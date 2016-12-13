@@ -214,7 +214,8 @@ AppHost::AppHost(
                  *m_pNetworkCapabilities,
                  *m_pAndroidFlurryMetricsService,
                  *this,
-                 *m_pMenuReactionModel);
+                 *m_pMenuReactionModel,
+                 m_userIdleService);
 
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(
             m_pApp->World().GetRenderingModule(),

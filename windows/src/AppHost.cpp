@@ -146,6 +146,7 @@ AppHost::AppHost(
     , m_shouldStartFullscreen(false)
     , m_maxDeviceTouchCount(maxDeviceTouchCount)
 	, m_pTagSearchViewModule(NULL)
+	, m_userIdleService(m_inputHandler.GetUserIdleService())
 {
     ASSERT_NATIVE_THREAD
          
@@ -227,7 +228,8 @@ AppHost::AppHost(
         *m_pNetworkCapabilities,
         *m_pWindowsFlurryMetricsService,        
         *this,
-        *m_pMenuReaction);
+        *m_pMenuReaction,
+        m_userIdleService);
 
     Eegeo::Space::LatLong latlong(0.0, 0.0);
     Eegeo::Resources::Interiors::InteriorId interiorId;

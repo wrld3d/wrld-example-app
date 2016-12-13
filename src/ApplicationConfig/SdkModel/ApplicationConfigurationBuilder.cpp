@@ -7,6 +7,7 @@
 
 #include "HMAC_SHA1.h"
 
+#include <algorithm>
 #include <iostream>
 #include <iomanip>
 #include <sstream>
@@ -269,6 +270,24 @@ namespace ExampleApp
                 return *this;
             }
 
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetAttractModeTargetSplinePoints(std::vector<Eegeo::Space::LatLongAltitude> points)
+            {
+                m_attractModeTargetSplinePoints = std::move(points);
+                return *this;
+            }
+
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetAttractModePositionSplinePoints(std::vector<Eegeo::Space::LatLongAltitude> points)
+            {
+                m_attractModePositionSplinePoints = std::move(points);
+                return *this;
+            }
+
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetAttractModeTimeoutMs(const long long timeoutMs)
+            {
+                m_attractModeTimeoutMs = timeoutMs;
+                return *this;
+            }
+
             std::string ApplicationConfigurationBuilder::Decrypt(const std::string& value) const
             {
                 return m_cipher.Decrypt(value);
@@ -330,7 +349,10 @@ namespace ExampleApp
                                                 m_fixedLatlong,
                                                 m_fixedInteriorId,
                                                 m_fixedFloorIndex,
-                                                m_fixedHeadingDegrees);
+                                                m_fixedHeadingDegrees,
+                                                m_attractModeTargetSplinePoints,
+                                                m_attractModePositionSplinePoints,
+                                                m_attractModeTimeoutMs);
             }
         }
     }

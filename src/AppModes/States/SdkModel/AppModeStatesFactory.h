@@ -12,6 +12,8 @@
 #include "Tours.h"
 #include "EegeoUI.h"
 #include "MyPinCreation.h"
+#include "IUserIdleService.h"
+#include "LatLongAltitude.h"
 
 #include "VisualMap.h"
 
@@ -44,6 +46,13 @@ namespace ExampleApp
                     MyPinCreation::SdkModel::IMyPinCreationModel& m_myPinCreationModel;
                     VisualMap::SdkModel::IVisualMapService& m_visualMapService;
 
+                    Eegeo::Input::IUserIdleService& m_userIdleService;
+                    Eegeo::Streaming::ResourceCeilingProvider& m_resourceCeilingProvider;
+                    const std::vector<Eegeo::Space::LatLongAltitude>& m_cameraPositionSplinePoints;
+                    const std::vector<Eegeo::Space::LatLongAltitude>& m_cameraTargetSplinePoints;
+                    const bool m_attractModeEnabled;
+                    const long long m_attractModeTimeoutMs;
+                    const Eegeo::Rendering::ScreenProperties& m_screenProperties;
                     
                 public:
                     
@@ -61,7 +70,14 @@ namespace ExampleApp
                                          Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                          Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                          MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
-                                         VisualMap::SdkModel::IVisualMapService& visualMapService);
+                                         VisualMap::SdkModel::IVisualMapService& visualMapService,
+                                         Eegeo::Input::IUserIdleService& userIdleService,
+                                         Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
+                                         const bool attractModeEnabled,
+                                         const long long attractModeTimeout,
+                                         const std::vector<Eegeo::Space::LatLongAltitude>& cameraPositionSplinePoints,
+                                         const std::vector<Eegeo::Space::LatLongAltitude>& cameraTargetSplinePoints,
+                                         const Eegeo::Rendering::ScreenProperties& screenProperties);
                     
                     ~AppModeStatesFactory()
                     {

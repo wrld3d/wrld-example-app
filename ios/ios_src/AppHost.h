@@ -60,6 +60,7 @@
 #include "SenionLabLocationModule.h"
 #include "CurrentLocationService.h"
 #include "InteriorsLocationServiceProvider.h"
+#include "AlwaysActiveUserIdleService.h"
 
 @class ViewController;
 class AppInputDelegate;
@@ -155,6 +156,8 @@ private:
     
     Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<AppHost> m_failAlertHandler;
     Eegeo::Helpers::TCallback1<AppHost, const ExampleApp::UserInteraction::UserInteractionEnabledChangedMessage&> m_userInteractionEnabledChangedHandler;
+
+    Eegeo::Input::AlwaysActiveUserIdleService m_userIdleService;
 
     void CreateApplicationViewModules(const Eegeo::Rendering::ScreenProperties& screenProperties,const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration);
     void DestroyApplicationViewModules();

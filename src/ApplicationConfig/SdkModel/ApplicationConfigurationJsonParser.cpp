@@ -177,6 +177,17 @@ namespace ExampleApp
                     m_builder.SetInteriorTrackingInfo(interiorTrackingInfoList);
                 }
 
+                m_builder.SetAttractModeTimeoutMs(document.HasMember("AttractModeTimeout") ? document["AttractModeTimeout"].GetInt() : 0);
+                if(document.HasMember("AttractModeTargetSpline"))
+                {
+                    m_builder.SetAttractModeTargetSplinePoints(ParseLatLongAltitudeArray(document["AttractModeTargetSpline"]));
+                }
+
+                if(document.HasMember("AttractModePositionSpline"))
+                {
+                    m_builder.SetAttractModePositionSplinePoints(ParseLatLongAltitudeArray(document["AttractModePositionSpline"]));
+                }
+
                 if(document.HasMember("FixedIndoorLocation"))
                 {
                     ParseFixedIndoorLocation(document["FixedIndoorLocation"]);
@@ -235,6 +246,27 @@ namespace ExampleApp
                                                  fixedIndoorLocation["InteriorId"].GetString(),
 										         fixedIndoorLocation["FloorIndex"].GetInt(),
 										         fixedIndoorLocation["OrientationDegrees"].GetDouble());
+            }
+
+            Eegeo::Space::LatLongAltitude ApplicationConfigurationJsonParser::ParseLatLongAltitude(const rapidjson::Value& location)
+            {
+                Eegeo_ASSERT(location.HasMember("Latitude"),  "Latitude not found");
+                Eegeo_ASSERT(location.HasMember("Longitude"), "Longitude not found");
+                Eegeo_ASSERT(location.HasMember("Altitude"),  "Altitude not found");
+                return Eegeo::Space::LatLongAltitude::FromDegrees(
+                        location["Latitude"].GetDouble(),
+                        location["Longitude"].GetDouble(),
+                        location["Altitude"].GetDouble());
+            }
+
+            std::vector<Eegeo::Space::LatLongAltitude> ApplicationConfigurationJsonParser::ParseLatLongAltitudeArray(rapidjson::Value& pointsAst)
+            {
+                std::vector<Eegeo::Space::LatLongAltitude> points;
+                for(rapidjson::SizeType i = 0; i < pointsAst.Size(); ++i)
+                {
+                    points.push_back(ParseLatLongAltitude(pointsAst[i]));
+                }
+                return points;
             }
         }
     }

@@ -89,7 +89,10 @@ namespace ExampleApp
                         Eegeo::Space::LatLong(0.0, 0.0),
                         "",
                         0,
-                        180.0);
+                        180.0,
+                        std::vector<Eegeo::Space::LatLongAltitude>(),
+                        std::vector<Eegeo::Space::LatLongAltitude>(),
+                        0);
                 }
             }
             
