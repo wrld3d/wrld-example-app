@@ -25,6 +25,8 @@ namespace ExampleApp
                 
                 void UnregisterInteriorTagsUpdatedCallback(Eegeo::Helpers::ICallback0& callback);
                 
+                void UpdateDefaultOutdoorSearchMenuItems(const std::string config);
+                
             private:
                 enum TransitionState
                 {
@@ -41,6 +43,8 @@ namespace ExampleApp
                 void OnExitInterior();
                 void ClearTagSearchModelTracker();
                 void NotifyInteriorTagsUpdated() const;
+                void ParseJson(const std::string config);
+                void ClearDefaultOutdoorTags();
                 
                 TagSearch::View::ITagSearchRepository& m_tagSearchRepository;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;

@@ -205,17 +205,18 @@ namespace ExampleApp
         }
         
         void AddTagSearchModels(
-                                Eegeo::Helpers::IFileIO& fileIO,
-                                TagSearch::View::ITagSearchRepository& repository)
+                                TagSearch::View::ITagSearchRepository& repository,
+                                std::string rawConfig)
         {
             const auto& tagSearchModels = TagSearch::View::CreateTagSearchModelsFromFile(
-                                                                                         fileIO,
-                                                                                         ExampleApp::ApplicationConfigurationPath,
+                                                                                         rawConfig,
                                                                                          "outdoor_search_menu_items");
-            
-            for (const auto& t : tagSearchModels)
+            if(repository.GetItemCount() == 0)
             {
-                repository.AddItem(t);
+                for (const auto& t : tagSearchModels)
+                {
+                    repository.AddItem(t);
+                }
             }
         }
     }
@@ -434,7 +435,7 @@ namespace ExampleApp
         
         m_pUserInteractionModule = Eegeo_NEW(UserInteraction::SdkModel::UserInteractionModule)(m_pAppCameraModule->GetController(), *m_pCameraTransitionService, m_pInteriorsExplorerModule->GetInteriorsExplorerUserInteractionModel(), m_messageBus);
         
-        m_pDeepLinkModule = Eegeo_NEW(DeepLink::SdkModel::DeepLinkModule)(*m_pCameraTransitionController, m_platformAbstractions.GetWebLoadRequestFactory(), m_pWorld->GetNativeUIFactories().AlertBoxFactory(), m_applicationConfiguration, m_pWorld->GetMapModule().GetCoverageTreeModule().GetCoverageTreeLoader());
+        m_pDeepLinkModule = Eegeo_NEW(DeepLink::SdkModel::DeepLinkModule)(*m_pCameraTransitionController, m_platformAbstractions.GetWebLoadRequestFactory(), m_pWorld->GetNativeUIFactories().AlertBoxFactory(), m_applicationConfiguration, m_pWorld->GetMapModule().GetCoverageTreeModule().GetCoverageTreeLoader(), m_pSearchModule->GetInteriorMenuObserver());
     }
     
     MobileExampleApp::~MobileExampleApp()
@@ -1276,7 +1277,7 @@ namespace ExampleApp
                 AddTours();
             }
             
-            AddTagSearchModels(m_platformAbstractions.GetFileIO(), m_pTagSearchModule->GetTagSearchRepository());
+            AddTagSearchModels(m_pTagSearchModule->GetTagSearchRepository(), m_applicationConfiguration.RawConfig());
         }
     }
     

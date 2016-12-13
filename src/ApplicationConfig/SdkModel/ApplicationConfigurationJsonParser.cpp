@@ -162,7 +162,8 @@ namespace ExampleApp
                     isKioskTouchInputEnabled,
                     useLabels,
                     useJapaneseFont,
-                    interiorTrackingInfoList
+                    interiorTrackingInfoList,
+                    serialized
                 );
             }
             

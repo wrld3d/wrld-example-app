@@ -7,6 +7,7 @@
 #include "ApplicationConfig.h"
 #include "LatLongAltitude.h"
 #include "ApplicationInteriorTrackingInfo.h"
+#include "document.h"
 
 namespace ExampleApp
 {
@@ -44,6 +45,7 @@ namespace ExampleApp
             bool m_useJapaneseFont;
             
             std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo> m_interiorTrackingInfo;
+            std::string m_rawConfig;
 
         public:
             
@@ -75,7 +77,8 @@ namespace ExampleApp
                 const bool isKioskTouchInputEnabled,
                 bool useLabels,
                 bool useJapaneseFont,
-                const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo
+                const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo,
+                const std::string& rawConfig
             );
             
             std::string Name() const;
@@ -133,6 +136,8 @@ namespace ExampleApp
             bool UseJapaneseFont() const;
             
             const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& InteriorTrackingInfo() const;
+            
+            std::string RawConfig() const;
         };
     }
 }

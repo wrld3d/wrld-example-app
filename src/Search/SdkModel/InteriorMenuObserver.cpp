@@ -111,6 +111,69 @@ namespace ExampleApp
                 }
             }
             
+            void InteriorMenuObserver::ClearDefaultOutdoorTags()
+            {
+                for(auto i = m_previousTagSearchRepository.GetItemCount(); i > 0; i--)
+                {
+                    const TagSearch::View::TagSearchModel& searchRepo = m_previousTagSearchRepository.GetItemAtIndex(i-1);
+                    m_previousTagSearchRepository.RemoveItem(searchRepo);
+                }
+            }
+            
+            void InteriorMenuObserver::ParseJson(const std::string config)
+            {
+                rapidjson::Document document;
+                
+                if (document.Parse<0>(config.c_str()).HasParseError())
+                {
+                    Eegeo_ASSERT(false, "failed to parse json");
+                    return;
+                }
+                
+                const char* itemKey = "outdoor_search_menu_items";
+                Eegeo_ASSERT(document.HasMember(itemKey));
+                
+                const auto& tagSearchModelsMember = document[itemKey];
+                Eegeo_ASSERT(tagSearchModelsMember.IsArray());
+                
+                ClearTagSearchModelTracker();
+                ClearDefaultOutdoorTags();
+                
+                for (rapidjson::Value::ConstValueIterator it = tagSearchModelsMember.Begin();
+                     it != tagSearchModelsMember.End();
+                     ++it)
+                {
+                    const auto& item = *it;
+                    
+                    const char* nameKey = "name";
+                    Eegeo_ASSERT(item.HasMember(nameKey));
+                    Eegeo_ASSERT(item[nameKey].IsString());
+                    const std::string& name = item[nameKey].GetString();
+                    
+                    const char* searchTagKey = "search_tag";
+                    Eegeo_ASSERT(item.HasMember(searchTagKey));
+                    Eegeo_ASSERT(item[searchTagKey].IsString());
+                    const std::string& searchTag = item[searchTagKey].GetString();
+                    
+                    const char* iconKey = "icon_key";
+                    Eegeo_ASSERT(item.HasMember(iconKey));
+                    Eegeo_ASSERT(item[iconKey].IsString());
+                    const std::string& icon = item[iconKey].GetString();
+                    
+                    const bool visibleInSearchMenu = true;
+                    const bool interior = true;
+
+                    m_tagSearchRepository.AddItem(TagSearch::View::TagSearchModel(name, searchTag, interior, icon, visibleInSearchMenu));
+                    m_previousTagSearchRepository.AddItem(TagSearch::View::TagSearchModel(name, searchTag, interior, icon, visibleInSearchMenu));
+                }
+            }
+
+            
+            void InteriorMenuObserver::UpdateDefaultOutdoorSearchMenuItems(const std::string config)
+            {
+                ParseJson(config);
+            }
+            
             void InteriorMenuObserver::OnExitInterior()
             {
                 if(m_hasSearchMenuItems)

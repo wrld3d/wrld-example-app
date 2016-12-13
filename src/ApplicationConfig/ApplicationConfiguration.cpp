@@ -34,7 +34,8 @@ namespace ExampleApp
             const bool isKioskTouchInputEnabled,
             const bool useLabels,
             const bool useJapaneseFont,
-            const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo
+            const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo,
+            const std::string& rawConfig
             )
         : m_name(name)
         , m_eegeoApiKey(eegeoApiKey)
@@ -64,6 +65,7 @@ namespace ExampleApp
         , m_useLabels(useLabels)
         , m_useJapaneseFont(useJapaneseFont)
         , m_interiorTrackingInfo(interiorTrackingInfo)
+        , m_rawConfig(rawConfig)
         {
         }
         
@@ -205,6 +207,11 @@ namespace ExampleApp
         const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& ApplicationConfiguration::InteriorTrackingInfo() const
         {
             return m_interiorTrackingInfo;
+        }
+        
+        std::string ApplicationConfiguration::RawConfig() const
+        {
+            return m_rawConfig;
         }
     }
 }

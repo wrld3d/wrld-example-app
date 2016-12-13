@@ -61,6 +61,8 @@ namespace ExampleApp
                 MyPins::IMyPinsSearchResultRefreshService& GetMyPinsSearchResultRefreshService() const;
                 
                 ExampleApp::TagSearch::SdkModel::ITagSearchModule& GetTagSearchModule() const;
+                
+                InteriorMenuObserver& GetInteriorMenuObserver() const;
             };
         }
     }
