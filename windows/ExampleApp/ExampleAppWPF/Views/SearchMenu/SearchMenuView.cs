@@ -190,10 +190,10 @@ namespace ExampleAppWPF
             var slideInItemStoryboard = ((Storyboard)Template.Resources["SlideInNewItems"]).Clone();
             var slideOutItemStoryboard = ((Storyboard)Template.Resources["SlideOutOldItems"]).Clone();
 
-            m_openSearchIconAnim = ((Storyboard)Template.Resources["OpenSearchViewIcon"]).Clone();
+            m_openMenuIconAnim = ((Storyboard)Template.Resources["OpenSearchViewIcon"]).Clone();
             m_closeMenuIconAnim = ((Storyboard)Template.Resources["CloseSearchViewIcon"]).Clone();
 
-            m_openSearchContainerAnim = ((Storyboard)Template.Resources["OpenSearchContainer"]).Clone();
+            m_openMenuContainerAnim = ((Storyboard)Template.Resources["OpenSearchContainer"]).Clone();
             m_closeMenuContainerAnim = ((Storyboard)Template.Resources["CloseSearchContainer"]).Clone();
 
             m_openBackgroundRect = ((Storyboard)Template.Resources["OpenBackgroundRect"]).Clone();

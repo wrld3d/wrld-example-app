@@ -79,6 +79,12 @@ namespace ExampleApp
                     isKioskTouchInputEnabled = document["IsKioskTouchInputEnabled"].GetBool();
                 }
 
+                bool isInKioskMode = false;
+                if (document.HasMember("IsInKioskMode") && !document["IsInKioskMode"].IsNull())
+                {
+                    isInKioskMode = document["IsInKioskMode"].GetBool();
+                }
+
                 bool startFullscreen = false;
 
                 if (document.HasMember("StartAppInFullscreen") && !document["StartAppInFullscreen"].IsNull())
@@ -131,6 +137,7 @@ namespace ExampleApp
                     myPinsWebServiceAuthToken,
                     twitterAuthCode,
                     isKioskTouchInputEnabled,
+                    isInKioskMode,
                     useLabels,
                     useJapaneseFont,
                     interiorTrackingInfoList

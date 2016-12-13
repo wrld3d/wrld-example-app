@@ -41,6 +41,7 @@ namespace ExampleApp
                     const bool tryStartAtGpsLocation = false;
                     const bool shouldStartFullscreen = false;
                     const bool isKioskTouchInputEnabled = false;
+                    const bool isInKioskMode = false;
                     const bool useLabels = false;
                     const bool useJapaneseFont = false;
 
@@ -69,6 +70,7 @@ namespace ExampleApp
                         emptyMyPinsWebServiceAuthToken,
                         emptyTwitterAuthCode,
                         isKioskTouchInputEnabled,
+                        isInKioskMode,
                         useLabels,
                         useJapaneseFont,
                         interiorTrackingInfo);

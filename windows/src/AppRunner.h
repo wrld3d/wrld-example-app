@@ -46,6 +46,8 @@ public:
 
     void SetFullscreen(bool fullscreen);
 
+    bool IsInKioskMode() const;
+
 private:
     WindowsNativeState* m_pNativeState;
     AppHost* m_pAppHost;

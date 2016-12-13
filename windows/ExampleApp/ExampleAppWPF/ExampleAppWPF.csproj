@@ -137,6 +137,7 @@
     <Compile Include="Views\SettingsMenu\SettingsMenuView.cs" />
     <Compile Include="Views\SearchMenu\SearchMenuView.cs" />
     <Compile Include="WindowInteractionTouchHandler.cs" />
+    <Compile Include="XamlHelpers.cs" />
     <Page Include="CheckBoxStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -145,9 +146,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DefaultStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="DialogBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="KioskStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="ListBoxControlTemplateNoPadding.xaml">
       <SubType>Designer</SubType>
@@ -760,6 +769,33 @@
   <ItemGroup>
     <Resource Include="..\..\Resources\exit_blue_x_button.png">
       <Link>Assets\exit_blue_x_button.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\button_flatten_off%40kiosk.png">
+      <Link>Assets\button_flatten_off%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_flatten_on%40kiosk.png">
+      <Link>Assets\button_flatten_on%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_unflatten_off%40kiosk.png">
+      <Link>Assets\button_unflatten_off%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_unflatten_on_over%40kiosk.png">
+      <Link>Assets\button_unflatten_on_over%40kiosk.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\button_settings_off%40kiosk.png">
+      <Link>Assets\button_settings_off%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_settings_on%40kiosk.png">
+      <Link>Assets\button_settings_on%40kiosk.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\sub_menu_arrow_off%40kiosk.png">
+      <Link>Assets\sub_menu_arrow_off%40kiosk.png</Link>
     </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
