@@ -306,6 +306,11 @@ bool AppHost::ShouldStartFullscreen()
     return m_shouldStartFullscreen;
 }
 
+bool AppHost::IsInKioskMode()
+{
+    return m_pApp->GetApplicationConfiguration().IsInKioskMode();
+}
+
 void AppHost::OnResume()
 {
     ASSERT_NATIVE_THREAD

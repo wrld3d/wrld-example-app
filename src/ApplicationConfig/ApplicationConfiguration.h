@@ -52,6 +52,7 @@ namespace ExampleApp
             std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>m_buildingsInfo;
             std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*>m_restrictedBuildingsInfo;
             bool m_isKioskTouchInputEnabled;
+            bool m_isInKioskMode;
             bool m_useLabels;
             bool m_useJapaneseFont;
 
@@ -99,6 +100,7 @@ namespace ExampleApp
                                      const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>&buildingsInfo,
                                      const std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*>&restrictedBuildingsInfo,
                                      const bool isKioskTouchInputEnabled,
+                                     const bool isInKioskMode,
 					                 const std::string& embeddedThemeTexturePath,
 					                 const std::string& twitterAuthCode,
 					                 bool useLabels,
@@ -176,6 +178,8 @@ namespace ExampleApp
             const std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*>& RestrictedBuildingsInfo() const;
             
             bool IsKioskTouchInputEnabled() const;
+
+            bool IsInKioskMode() const;
             
             bool UseLabels() const;
             

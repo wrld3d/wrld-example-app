@@ -28,10 +28,10 @@ namespace ExampleAppWPF
         protected Grid m_menuViewContainer;
         protected Grid m_mainContainer;
 
-        protected Storyboard m_openSearchIconAnim;
+        protected Storyboard m_openMenuIconAnim;
         protected Storyboard m_closeMenuIconAnim;
 
-        protected Storyboard m_openSearchContainerAnim;
+        protected Storyboard m_openMenuContainerAnim;
         protected Storyboard m_closeMenuContainerAnim;
 
         protected Storyboard m_openBackgroundRect;
@@ -56,7 +56,7 @@ namespace ExampleAppWPF
 
         private Action<object, EventArgs> m_animationCompleteCallback;
 
-        private bool m_SearchMenuAnimated;
+        private bool m_MenuAnimated;
 
         protected abstract void RefreshListData(List<string> groups, List<bool> groupsExpandable, Dictionary<string, List<string>> groupToChildrenMap);
 
@@ -75,7 +75,7 @@ namespace ExampleAppWPF
             m_openState = -1.0f;
             m_isAnimating = false;
             m_isOffScreen = true;
-            m_SearchMenuAnimated = false;
+            m_MenuAnimated = false;
         }
 
         protected void PerformLayout(object sender, SizeChangedEventArgs e)
@@ -144,7 +144,7 @@ namespace ExampleAppWPF
             }
             else if (m_openState == MENU_OPENING)
             {
-                return (float)(Math.Max(0.0001f, m_openSearchIconAnim.GetCurrentProgress(m_menuIconGrid) ?? 0.0f));
+                return (float)(Math.Max(0.0001f, m_openMenuIconAnim.GetCurrentProgress(m_menuIconGrid) ?? 0.0f));
             }
 
             return 0.0f;
@@ -166,7 +166,7 @@ namespace ExampleAppWPF
             }
             else if (m_openState == MENU_OPENING)
             {
-                m_openSearchIconAnim.Completed -= OnAnimCompleted;
+                m_openMenuIconAnim.Completed -= OnAnimCompleted;
                 m_openState = MENU_OPEN;
 
                 MenuViewCLIMethods.ViewOpenCompleted(m_nativeCallerPointer);                
@@ -179,11 +179,11 @@ namespace ExampleAppWPF
                 m_isOffScreen = true;
             }
 
-            if (!m_SearchMenuAnimated)
+            if (!m_MenuAnimated)
             {
                 PerformLayout(sender, null);
             }
-            m_SearchMenuAnimated = false;
+            m_MenuAnimated = false;
 
             if (m_animationCompleteCallback != null)
             {
@@ -232,9 +232,9 @@ namespace ExampleAppWPF
             if (IsAnimating() || m_openState == MENU_OPEN)
                 return;
 
-            m_openSearchIconAnim.Completed += OnAnimCompleted;
-            m_openSearchIconAnim.Begin(m_menuIconGrid, isControllable:true);
-            m_openSearchContainerAnim.Begin(m_mainContainer);
+            m_openMenuIconAnim.Completed += OnAnimCompleted;
+            m_openMenuIconAnim.Begin(m_menuIconGrid, isControllable:true);
+            m_openMenuContainerAnim.Begin(m_mainContainer);
             m_openBackgroundRect.Begin(m_backgroundRectangle);
 
             m_isAnimating = true;
@@ -255,7 +255,7 @@ namespace ExampleAppWPF
                     if(m_offScreenPos < 0)
                     {
                         offScreenX -= (m_mainContainer.ActualWidth + m_menuIcon.ActualWidth) / 2;
-                        m_SearchMenuAnimated = true;
+                        m_MenuAnimated = true;
                     }
                     else
                     {

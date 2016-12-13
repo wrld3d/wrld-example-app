@@ -52,7 +52,7 @@ namespace ExampleAppWPF
             m_yPosInactive = screenHeight * 0.5 + viewHeight * 0.5;
 
             var transform = new TranslateTransform(
-                -(viewWidth * 0.5 + ConversionHelpers.AndroidToWindowsDip(32)),
+                -(viewWidth * 0.5 + ConversionHelpers.AndroidToWindowsDip((double)Application.Current.Resources["FlattenButtonMarginToCentre"])),
                 m_isActive ? m_yPosActive : m_yPosInactive);
 
             RenderTransform = transform;

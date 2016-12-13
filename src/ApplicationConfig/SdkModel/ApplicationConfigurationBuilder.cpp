@@ -237,6 +237,12 @@ namespace ExampleApp
                 return *this;
             }
 
+			IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetIsInKioskMode(bool isInKioskMode)
+			{
+				m_isInKioskMode = isInKioskMode;
+				return *this;
+			}
+
             IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetEmbeddedThemeTexturePath(const std::string& embeddedThemeTexturePath)
             {
                 m_embeddedThemeTexturePath = embeddedThemeTexturePath;
@@ -341,6 +347,7 @@ namespace ExampleApp
                                                 m_buildingsInfo,
                                                 m_restrictedBuildingsInfo,
                                                 m_isKioskTouchInputEnabled,
+                                                m_isInKioskMode,
                                                 m_embeddedThemeTexturePath,
                                                 m_twitterAuthCode,
                                                 m_useLabels,

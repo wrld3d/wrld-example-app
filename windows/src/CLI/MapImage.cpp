@@ -307,6 +307,11 @@ namespace ExampleApp
             m_appRunner->SetFullscreen(fullscreen);
         }
 
+        bool MapImage::IsInKioskMode()
+        {
+            return m_appRunner->IsInKioskMode();
+        }
+
         int MapImage::GetScreenDPI()
         {
             SetProcessDPIAware();

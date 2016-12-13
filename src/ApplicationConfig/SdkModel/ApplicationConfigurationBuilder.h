@@ -50,6 +50,7 @@ namespace ExampleApp
                 std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>m_buildingsInfo;
                 std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*>m_restrictedBuildingsInfo;
                 bool m_isKioskTouchInputEnabled;
+				bool m_isInKioskMode;
 
                 std::string m_embeddedThemeTexturePath;
                 std::string m_twitterAuthCode;
@@ -131,6 +132,8 @@ namespace ExampleApp
                 IApplicationConfigurationBuilder& SetShouldStartFullscreen(bool startFullscreen);
                 
                 IApplicationConfigurationBuilder& SetIsKioskTouchInputEnabled(bool kioskTouchInputEnabled);
+
+				IApplicationConfigurationBuilder& SetIsInKioskMode(bool isInKioskMode);
 
                 IApplicationConfigurationBuilder& SetEmbeddedThemeTexturePath(const std::string& embeddedThemeTexturePath);
 

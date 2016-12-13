@@ -36,6 +36,7 @@ namespace ExampleApp
                                                            const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>& buildingsInfo,
                                                            const std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*>&restrictedBuildingsInfo,
                                                            const bool isKioskTouchInputEnabled,
+                                                           const bool isInKioskMode,
 												           const std::string& embeddedThemeTexturePath,
 												           const std::string& twitterAuthCode,
 												           const bool useLabels,
@@ -80,6 +81,7 @@ namespace ExampleApp
         , m_buildingsInfo(buildingsInfo)
         , m_restrictedBuildingsInfo(restrictedBuildingsInfo)
         , m_isKioskTouchInputEnabled(isKioskTouchInputEnabled)
+        , m_isInKioskMode(isInKioskMode)
         , m_useLabels(useLabels)
         , m_useJapaneseFont(useJapaneseFont)
         , m_interiorTrackingInfo(interiorTrackingInfo)
@@ -217,6 +219,11 @@ namespace ExampleApp
         bool ApplicationConfiguration::IsKioskTouchInputEnabled() const
         {
             return m_isKioskTouchInputEnabled;
+        }
+
+        bool ApplicationConfiguration::IsInKioskMode() const
+        {
+            return m_isInKioskMode;
         }
 
         bool ApplicationConfiguration::ShouldStartFullscreen() const

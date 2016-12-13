@@ -124,6 +124,11 @@ namespace ExampleAppWPF
                 SetFullScreen(true);
             }
 
+            if(m_mapImage.IsInKioskMode())
+            {
+                Application.Current.Resources.Source = new Uri("KioskStyle.xaml", UriKind.RelativeOrAbsolute);
+            }
+
             MouseLeftButtonDown += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandlePanStartEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
             PreviewMouseLeftButtonUp += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandlePanEndEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
             MouseRightButtonDown += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandleRotateStartEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };

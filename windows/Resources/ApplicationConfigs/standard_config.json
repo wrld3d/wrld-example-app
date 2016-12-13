@@ -21,7 +21,8 @@
 	"EegeoSearchServiceUrl": "https://poi.eegeo.com/v1.1",
 	"MyPinsWebServiceUrl": "",
 	"MyPinsWebServiceAuthToken": "",
-	"IsKioskTouchInputEnabled":false, 
+	"IsKioskTouchInputEnabled":true, 
+	"IsInKioskMode":true,
     "StartAppInFullscreen":false,
     "UseLabels": true,
 }

@@ -73,6 +73,8 @@ namespace ExampleApp
 
                 virtual IApplicationConfigurationBuilder& SetIsKioskTouchInputEnabled(bool kioskTouchInputEnabled) = 0;
 
+				virtual IApplicationConfigurationBuilder& SetIsInKioskMode(bool isInKioskMode) = 0;
+
                 virtual IApplicationConfigurationBuilder& SetEmbeddedThemeTexturePath(const std::string& embeddedThemeTexturePath) = 0;
 
                 virtual IApplicationConfigurationBuilder& SetTwitterAuthCode(const std::string& twitterAuthCode) = 0;

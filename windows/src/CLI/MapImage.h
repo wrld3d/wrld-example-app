@@ -48,6 +48,7 @@ namespace ExampleApp
 
             void SetFullscreen(bool fullscreen);
 
+            bool IsInKioskMode();
             static void DeferToAlreadyRunningInstance();
 
         private:

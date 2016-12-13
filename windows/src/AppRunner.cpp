@@ -374,3 +374,8 @@ void AppRunner::SetFullscreen(bool fullscreen)
         SetWindowPos(m_pNativeState->GetWindow(), NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
     }
 }
+
+bool AppRunner::IsInKioskMode() const
+{
+    return m_pAppHost->IsInKioskMode();
+}

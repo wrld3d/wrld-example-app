@@ -148,10 +148,19 @@ namespace ExampleApp
 
                 m_builder.SetRestrictedBuildingInfoArray(restrictedBuildingModelArray);
 
+                bool isKioskTouchInputEnabled = false;
                 if (document.HasMember("IsKioskTouchInputEnabled") && !document["IsKioskTouchInputEnabled"].IsNull())
                 {
                     m_builder.SetIsKioskTouchInputEnabled(document["IsKioskTouchInputEnabled"].GetBool());
                 }
+
+                bool isInKioskMode = false;
+                if (document.HasMember("IsInKioskMode") && !document["IsInKioskMode"].IsNull())
+                {
+					m_builder.SetIsInKioskMode(document["IsInKioskMode"].GetBool());
+                }
+
+                bool startFullscreen = false;
 
                 if (document.HasMember("StartAppInFullscreen") && !document["StartAppInFullscreen"].IsNull())
                 {
