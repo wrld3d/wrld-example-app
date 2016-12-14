@@ -19,7 +19,6 @@ namespace ExampleApp
             , m_interiorSelectionModel(interiorSelectionModel)
             , m_interiorMetaDataRepo(interiorMetaDataRepo)
             , m_hasSelectedInterior(false)
-            , m_defaultTagsSaved(false)
             , m_hasSearchMenuItems(false)
             {
                 m_interiorSelectionModel.RegisterSelectionChangedCallback(m_interiorSelectionChangedCallback);
@@ -60,13 +59,12 @@ namespace ExampleApp
                     {
                         const rapidjson::Value& searchMenuItems = document["search_menu_items"];
                         
-                        if(!m_defaultTagsSaved)
+                        if(m_previousTagSearchRepository.GetItemCount() == 0)
                         {
                             for(auto i = 0; i < m_tagSearchRepository.GetItemCount(); i++)
                             {
                                 m_previousTagSearchRepository.AddItem(m_tagSearchRepository.GetItemAtIndex(i));
                             }
-                            m_defaultTagsSaved = true;
                         }
                         
                         ClearTagSearchRepository();
