@@ -39,7 +39,7 @@ namespace ExampleApp
 
             std::string DeepLinkConfigHandler::GenerateConfigUrl(const AppInterface::UrlData& data) const
             {
-                return CONFIG_FILES_HOME + data.path + ".json";
+                return CONFIG_FILES_HOME + data.path + "/manifest";
             }
 
             void DeepLinkConfigHandler::HandleConfigResponse(Eegeo::Web::IWebResponse& webResponse)

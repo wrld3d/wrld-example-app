@@ -110,40 +110,53 @@ namespace ExampleApp
                 }
                 
                 const char* itemKey = "outdoor_search_menu_items";
-                Eegeo_ASSERT(document.HasMember(itemKey));
-                
-                const auto& tagSearchModelsMember = document[itemKey];
-                Eegeo_ASSERT(tagSearchModelsMember.IsArray());
-                
-                ClearTagSearchRepository();
-                ClearDefaultOutdoorTags();
-                
-                for (rapidjson::Value::ConstValueIterator it = tagSearchModelsMember.Begin();
-                     it != tagSearchModelsMember.End();
-                     ++it)
+                if (document.HasMember(itemKey) && document[itemKey].IsArray())
                 {
-                    const auto& item = *it;
+                    const auto& tagSearchModelsMember = document[itemKey];
                     
-                    const char* nameKey = "name";
-                    Eegeo_ASSERT(item.HasMember(nameKey));
-                    Eegeo_ASSERT(item[nameKey].IsString());
-                    const std::string& name = item[nameKey].GetString();
-                    
-                    const char* searchTagKey = "search_tag";
-                    Eegeo_ASSERT(item.HasMember(searchTagKey));
-                    Eegeo_ASSERT(item[searchTagKey].IsString());
-                    const std::string& searchTag = item[searchTagKey].GetString();
-                    
-                    const char* iconKey = "icon_key";
-                    Eegeo_ASSERT(item.HasMember(iconKey));
-                    Eegeo_ASSERT(item[iconKey].IsString());
-                    const std::string& icon = item[iconKey].GetString();
+                    ClearTagSearchRepository();
+                    ClearDefaultOutdoorTags();
                     
                     const bool visibleInSearchMenu = true;
                     const bool interior = true;
+                    for (rapidjson::Value::ConstValueIterator it = tagSearchModelsMember.Begin();
+                         it != tagSearchModelsMember.End();
+                         ++it)
+                    {
+                        const auto& item = *it;
+                        
+                        const char* nameKey = "name";
+                        if(!item.HasMember(nameKey) || !item[nameKey].IsString())
+                        {
+                            Eegeo_TTY("no member 'name' or is not a string");
+                            break;
+                        }
+                        const std::string& name = item[nameKey].GetString();
+                        
+                        const char* searchTagKey = "search_tag";
+                        if(!item.HasMember(searchTagKey) || !item[searchTagKey].IsString())
+                        {
+                            Eegeo_TTY("no member search_tag or is not a string");
+                            break;
+                        }
+                        const std::string& searchTag = item[searchTagKey].GetString();
+                        
+                        const char* iconKey = "icon_key";
+                        if(!item.HasMember(iconKey) || !item[iconKey].IsString())
+                        {
+                            Eegeo_TTY("no member icon_key or is not a string");
+                            break;
+                        }
+                        const std::string& icon = item[iconKey].GetString();
+                      
 
-                    m_tagSearchRepository.AddItem(TagSearch::View::TagSearchModel(name, searchTag, interior, icon, visibleInSearchMenu));
-                    m_previousTagSearchRepository.AddItem(TagSearch::View::TagSearchModel(name, searchTag, interior, icon, visibleInSearchMenu));
+                        m_tagSearchRepository.AddItem(TagSearch::View::TagSearchModel(name, searchTag, interior, icon, visibleInSearchMenu));
+                        m_previousTagSearchRepository.AddItem(TagSearch::View::TagSearchModel(name, searchTag, interior, icon, visibleInSearchMenu));
+                    }
+                }
+                else
+                {
+                    Eegeo_TTY("outdoor_search_menu_items not a member or not an array");
                 }
             }
 
