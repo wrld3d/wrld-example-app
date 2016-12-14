@@ -759,6 +759,38 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="..\..\Resources\button_search_off%40kiosk.png">
+      <Link>Assets\button_search_off%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_search_on%40kiosk.png">
+      <Link>Assets\button_search_on%40kiosk.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\search_results_spinner%40kiosk.png">
+      <Link>Assets\search_results_spinner%40kiosk.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\button_clear_search_off%40kiosk.png">
+      <Link>Assets\button_clear_search_off%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_clear_search_on%40kiosk.png">
+      <Link>Assets\button_clear_search_on%40kiosk.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\search_results_fade%40kiosk.png">
+      <Link>Assets\search_results_fade%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\search_results_scroll_button%40kiosk.png">
+      <Link>Assets\search_results_scroll_button%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\search_results_scroll_button_down%40kiosk.png">
+      <Link>Assets\search_results_scroll_button_down%40kiosk.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="..\..\Resources\icon1_accommodation.png">
       <Link>Assets\icon1_accommodation.png</Link>
     </Resource>
