@@ -9,6 +9,7 @@
 #include "WebLoadRequestCompletionCallback.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
 #include "CoverageTrees.h"
+#include "InteriorMenuObserver.h"
 
 #include "IAlertBoxFactory.h"
 
@@ -25,7 +26,8 @@ namespace ExampleApp
                                       Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                       Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                                       ExampleApp::ApplicationConfig::ApplicationConfiguration& defaultConfig,
-                                      Eegeo::Streaming::CoverageTrees::ICoverageTreeManifestLoader& manifestLoader);
+                                      Eegeo::Streaming::CoverageTrees::ICoverageTreeManifestLoader& manifestLoader,
+                                      Search::SdkModel::InteriorMenuObserver& interiorMenuObserver);
                 void HandleDeepLink(const AppInterface::UrlData& data);
             private:
                 CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionController;
@@ -38,6 +40,7 @@ namespace ExampleApp
                 std::string GenerateConfigUrl(const AppInterface::UrlData& data) const;
                 void HandleConfigResponse(Eegeo::Web::IWebResponse& webResponse);
                 void OnFailAlertBoxDismissed();
+                Search::SdkModel::InteriorMenuObserver& m_interiorMenuObserver;
             };
         
             const std::string CONFIG_FILES_HOME = "http://cdn1.eegeo.com/test_configs";

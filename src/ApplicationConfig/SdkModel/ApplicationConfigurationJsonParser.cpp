@@ -51,7 +51,7 @@ namespace ExampleApp
                 
                 std::string ParseStringOrDefault(rapidjson::Document& document, const std::string& key, const std::string& defaultValue)
                 {
-                    if (document.HasMember(key.c_str()))
+                    if (document.HasMember(key.c_str()) && document[key.c_str()].IsString())
                     {
                         const std::string& value = document[key.c_str()].GetString();
                         if (!value.empty())
@@ -64,7 +64,7 @@ namespace ExampleApp
                 
                 bool ParseBoolOrDefault(rapidjson::Document& document, const std::string& key, bool defaultValue)
                 {
-                    if (document.HasMember(key.c_str()))
+                    if (document.HasMember(key.c_str()) && document[key.c_str()].IsBool())
                     {
                         return document[key.c_str()].GetBool();
                     }
@@ -73,7 +73,7 @@ namespace ExampleApp
                 
                 double ParseDoubleOrDefault(rapidjson::Document& document, const std::string& key, double defaultValue)
                 {
-                    if (document.HasMember(key.c_str()))
+                    if (document.HasMember(key.c_str()) && document[key.c_str()].IsDouble())
                     {
                         return document[key.c_str()].GetDouble();
                     }
@@ -162,7 +162,8 @@ namespace ExampleApp
                     isKioskTouchInputEnabled,
                     useLabels,
                     useJapaneseFont,
-                    interiorTrackingInfoList
+                    interiorTrackingInfoList,
+                    serialized
                 );
             }
             

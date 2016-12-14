@@ -96,6 +96,11 @@ namespace ExampleApp
             {
                 return *m_pTagSearchModule;
             }
+            
+            InteriorMenuObserver& SearchModule::GetInteriorMenuObserver() const
+            {
+                return *m_pInteriorMenuObserver;
+            }
         }
     }
 }

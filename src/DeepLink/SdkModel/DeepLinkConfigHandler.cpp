@@ -17,7 +17,8 @@ namespace ExampleApp
                                                          Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                                          Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                                                          ApplicationConfig::ApplicationConfiguration& defaultConfig,
-                                                         Eegeo::Streaming::CoverageTrees::ICoverageTreeManifestLoader& manifestLoader)
+                                                         Eegeo::Streaming::CoverageTrees::ICoverageTreeManifestLoader& manifestLoader,
+                                                         Search::SdkModel::InteriorMenuObserver& interiorMenuObserver)
             :m_webRequestFactory(webRequestFactory)
             ,m_configRequestCompleteCallback(this, &DeepLinkConfigHandler::HandleConfigResponse)
             ,m_failAlertHandler(this, &DeepLinkConfigHandler::OnFailAlertBoxDismissed)
@@ -25,6 +26,7 @@ namespace ExampleApp
             ,m_alertBoxFactory(alertBoxFactory)
             ,m_defaultConfig(defaultConfig)
             ,m_manifestLoader(manifestLoader)
+            ,m_interiorMenuObserver(interiorMenuObserver)
             {
             }
 
@@ -52,7 +54,8 @@ namespace ExampleApp
                     {
                         ApplicationConfig::ApplicationConfiguration applicationConfig = parser.ParseConfiguration(resultString);
                         m_manifestLoader.LoadCoverageTreeManifest(applicationConfig.CoverageTreeManifestURL());
-                        m_cameraTransitionController.StartTransitionTo(applicationConfig.InterestLocation().ToECEF(), applicationConfig.DistanceToInterestMetres(), applicationConfig.OrientationDegrees());                        
+                        m_cameraTransitionController.StartTransitionTo(applicationConfig.InterestLocation().ToECEF(), applicationConfig.DistanceToInterestMetres(), applicationConfig.OrientationDegrees());
+                        m_interiorMenuObserver.UpdateDefaultOutdoorSearchMenuItems(applicationConfig.RawConfig());
                     }
                     else
                     {

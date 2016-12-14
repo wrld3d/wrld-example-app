@@ -43,6 +43,7 @@ namespace ExampleApp
                     const bool isKioskTouchInputEnabled = false;
                     const bool useLabels = true;
                     const bool useJapaneseFont = false;
+                    std::string outdoorSearchMenuItems;
                     
                     return ApplicationConfiguration ("Eegeo Example App",
                         emptyEegeoApiKey,
@@ -71,7 +72,8 @@ namespace ExampleApp
                         isKioskTouchInputEnabled,
                         useLabels,
                         useJapaneseFont,
-                        interiorTrackingInfo);
+                        interiorTrackingInfo,
+                        outdoorSearchMenuItems);
                 }
             }
             
