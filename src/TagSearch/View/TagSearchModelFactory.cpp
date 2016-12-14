@@ -64,10 +64,10 @@ namespace ExampleApp
                 }
             }
 
-            std::vector<TagSearch::View::TagSearchModel> CreateTagSearchModelsFromFile(const std::string& fileName, const std::string& jsonAttributeName)
+            std::vector<TagSearch::View::TagSearchModel> CreateTagSearchModelsFromFile(const std::string& json, const std::string& jsonAttributeName)
             {
                 std::vector<ExampleApp::TagSearch::View::TagSearchModel> result;
-                ParseJson(fileName, result, jsonAttributeName);
+                ParseJson(json, result, jsonAttributeName);
                 return result;
             }
         }

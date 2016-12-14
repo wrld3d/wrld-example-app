@@ -41,7 +41,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<InteriorMenuObserver, const Eegeo::Resources::Interiors::InteriorId> m_interiorSelectionChangedCallback;
                 void OnEnterInterior(const Eegeo::Resources::Interiors::InteriorId& interiorId, const TransitionState& transitionState);
                 void OnExitInterior();
-                void ClearTagSearchModelTracker();
+                void ClearTagSearchRepository();
                 void NotifyInteriorTagsUpdated() const;
                 void ParseJson(const std::string config);
                 void ClearDefaultOutdoorTags();
@@ -51,7 +51,6 @@ namespace ExampleApp
                 Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& m_interiorMetaDataRepo;
                 TagSearch::View::TagSearchRepository m_previousTagSearchRepository;
                 TransitionState HandleTransitionStates();
-                std::vector<const TagSearch::View::TagSearchModel*> m_tagSearchModelTracker;
                 
                 bool m_hasSelectedInterior;
                 bool m_defaultTagsSaved;

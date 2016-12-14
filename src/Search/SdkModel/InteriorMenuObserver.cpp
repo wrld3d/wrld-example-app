@@ -69,45 +69,24 @@ namespace ExampleApp
                             m_defaultTagsSaved = true;
                         }
                         
-                        if(transtionState == TransitionState::EnteringBuilding)
-                        {
-                            size_t size = m_tagSearchRepository.GetItemCount();
-                            for(auto i = size; i > 0; i--)
-                            {
-                                m_tagSearchRepository.RemoveItem(m_tagSearchRepository.GetItemAtIndex(i-1));
-                            }
-                        }
-                        else if(transtionState == TransitionState::SwitchingBuilding)
-                        {
-                            ClearTagSearchModelTracker();
-                        }
+                        ClearTagSearchRepository();
                         
                         if(searchMenuItems.HasMember("items") && searchMenuItems["items"].IsArray())
                         {
                             const rapidjson::Value& menuItems = searchMenuItems["items"];
                             for(rapidjson::SizeType i = 0; i < menuItems.Size(); i++)
                             {
-                                const TagSearch::View::TagSearchModel* v =
-                                Eegeo_NEW(TagSearch::View::TagSearchModel(menuItems[i]["name"].GetString(), menuItems[i]["search_tag"].GetString(), true, menuItems[i]["icon_key"].GetString(), true));
-                                m_tagSearchModelTracker.push_back(v);
-                                m_tagSearchRepository.AddItem(*v);
+                                m_tagSearchRepository.AddItem(TagSearch::View::TagSearchModel(menuItems[i]["name"].GetString(), menuItems[i]["search_tag"].GetString(), true, menuItems[i]["icon_key"].GetString(), true));
                             }
                         }
                     }
                 }
             }
-            void InteriorMenuObserver::ClearTagSearchModelTracker()
+            void InteriorMenuObserver::ClearTagSearchRepository()
             {
-                for(auto iter = m_tagSearchModelTracker.begin(); iter != m_tagSearchModelTracker.end(); iter++)
-                {
-                    Eegeo_DELETE *iter;
-                }
-                m_tagSearchModelTracker.clear();
-                
                 for(auto i = m_tagSearchRepository.GetItemCount(); i > 0; i--)
                 {
-                    const TagSearch::View::TagSearchModel& searchRepo = m_tagSearchRepository.GetItemAtIndex(i-1);
-                    m_tagSearchRepository.RemoveItem(searchRepo);
+                    m_tagSearchRepository.RemoveItem(m_tagSearchRepository.GetItemAtIndex(i-1));
                 }
             }
             
@@ -136,7 +115,7 @@ namespace ExampleApp
                 const auto& tagSearchModelsMember = document[itemKey];
                 Eegeo_ASSERT(tagSearchModelsMember.IsArray());
                 
-                ClearTagSearchModelTracker();
+                ClearTagSearchRepository();
                 ClearDefaultOutdoorTags();
                 
                 for (rapidjson::Value::ConstValueIterator it = tagSearchModelsMember.Begin();
@@ -178,7 +157,7 @@ namespace ExampleApp
             {
                 if(m_hasSearchMenuItems)
                 {
-                    ClearTagSearchModelTracker();
+                    ClearTagSearchRepository();
                     
                     for(auto i = 0; i < m_previousTagSearchRepository.GetItemCount(); i++)
                     {
