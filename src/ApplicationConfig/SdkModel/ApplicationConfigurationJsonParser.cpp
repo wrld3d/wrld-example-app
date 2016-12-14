@@ -4,6 +4,7 @@
 #include "ApplicationConfigurationJsonParser.h"
 #include "MathFunc.h"
 #include "ConfigSections.h"
+#include "StringHelpers.h"
 
 namespace ExampleApp
 {
@@ -64,18 +65,44 @@ namespace ExampleApp
                 
                 bool ParseBoolOrDefault(rapidjson::Document& document, const std::string& key, bool defaultValue)
                 {
-                    if (document.HasMember(key.c_str()) && document[key.c_str()].IsBool())
+                    if (document.HasMember(key.c_str()))
                     {
-                        return document[key.c_str()].GetBool();
+                        if(document[key.c_str()].IsBool())
+                        {
+                            return document[key.c_str()].GetBool();
+                        }
+                        else if(document[key.c_str()].IsString())
+                        {
+                            std::string documentString = document[key.c_str()].GetString();
+                            if(std::strcmp(documentString.c_str(), "true") == 0)
+                            {
+                                return true;
+                            }
+                            else if(std::strcmp(documentString.c_str(), "false") == 0)
+                            {
+                                return false;
+                            }
+                        }
                     }
                     return defaultValue;
                 }
                 
                 double ParseDoubleOrDefault(rapidjson::Document& document, const std::string& key, double defaultValue)
                 {
-                    if (document.HasMember(key.c_str()) && document[key.c_str()].IsDouble())
+                    if (document.HasMember(key.c_str()))
                     {
-                        return document[key.c_str()].GetDouble();
+                        if(document[key.c_str()].IsDouble())
+                        {
+                            return document[key.c_str()].GetDouble();
+                        }
+                        else if(document[key.c_str()].IsString())
+                        {
+                            double valueFromString;
+                            if(Eegeo::Helpers::TryParseDouble(document[key.c_str()].GetString(), valueFromString))
+                            {
+                                return valueFromString;
+                            }
+                        }
                     }
                     return defaultValue;
                 }

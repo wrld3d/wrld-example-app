@@ -12,7 +12,7 @@
 
 namespace {
     const char * const LOCATION_PATH = "location";
-    const char * const MYMAP_PATH = "mymaps";
+    const char * const MYMAP_PATH = "mapscene";
     const bool CONFIG_DEEP_LINK_ENABLED = true;
 }
 

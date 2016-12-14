@@ -43,7 +43,7 @@ namespace ExampleApp
                 Search::SdkModel::InteriorMenuObserver& m_interiorMenuObserver;
             };
         
-            const std::string CONFIG_FILES_HOME = "http://mapscene-staging.eegeo.com";
+            const std::string CONFIG_FILES_HOME = "http://mapscene.eegeo.com";
         }
     }
 }
