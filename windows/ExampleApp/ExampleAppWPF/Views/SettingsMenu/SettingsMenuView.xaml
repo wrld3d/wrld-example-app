@@ -166,7 +166,7 @@
                             <Grid Grid.Row="2">
                                 <StackPanel  Orientation="Vertical">
                                     <ScrollViewer Width="{DynamicResource MenuWidth}"  Background="{StaticResource PrimaryBG_colour}" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
-                                        <ListBox Margin="{DynamicResource MenuListMargin}" Name="SettingsMenuItemList" Template="{StaticResource ListBoxControlTemplateNoPadding}" ItemsSource="{Binding Children}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0" Background="{StaticResource PrimaryBG_colour}" Focusable="False">
+                                        <ListBox Margin="{DynamicResource MenuListMarginSettings}" Name="SettingsMenuItemList" Template="{StaticResource ListBoxControlTemplateNoPadding}" ItemsSource="{Binding Children}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0" Background="{StaticResource PrimaryBG_colour}" Focusable="False">
                                             <ListBox.Resources>
                                                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
                                                 <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="Transparent"/>
@@ -175,7 +175,7 @@
 
                                                 <!-- Massive copy from SearcgMenuView-->
                                                 <DataTemplate DataType="{x:Type local:MenuListItem}">
-                                                    <Grid Name="MenuItemGrid" HorizontalAlignment="Stretch" Height="{DynamicResource MenuListItemHeight}" Background="{StaticResource Gold}" Width="{DynamicResource MenuListItemWidth}">
+                                                    <Grid Name="MenuItemGrid" HorizontalAlignment="Stretch" Height="{DynamicResource MenuListItemHeight}" Background="{StaticResource Gold}" Width="{DynamicResource MenuListItemWidthSettings}">
                                                         <Grid.Triggers>
                                                             <EventTrigger RoutedEvent="MouseLeftButtonDown">
                                                                 <BeginStoryboard>
@@ -237,7 +237,7 @@
                                                             <Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="*"/>
                                                             </Grid.ColumnDefinitions>
-                                                            <Image Name="MenuListOpenableShape" Grid.Column="0" Margin="{DynamicResource MenuListItemArrowMargin}" HorizontalAlignment="Right" VerticalAlignment="Center" RenderTransformOrigin=".5,.5" Source="{DynamicResource MenuListItemArrowImage}" Width="{DynamicResource MenuListItemArrowSize}" Height="{DynamicResource MenuListItemArrowSize}">
+                                                            <Image Name="MenuListOpenableShape" Grid.Column="0" Margin="{DynamicResource MenuListItemArrowMarginSettings}" HorizontalAlignment="Right" VerticalAlignment="Center" RenderTransformOrigin=".5,.5" Source="{DynamicResource MenuListItemArrowImage}" Width="{DynamicResource MenuListItemArrowSize}" Height="{DynamicResource MenuListItemArrowSize}">
                                                                 <Image.Style>
                                                                     <Style TargetType="{x:Type Image}">
                                                                         <Setter Property="RenderTransform">
@@ -281,7 +281,7 @@
                                                                 <Label Name="MenuItemTitle" Content="{Binding Path=Heading}" FontSize="{DynamicResource MenuListItemTitleFontSize}" Foreground="{StaticResource LightGrey}"/>
                                                             </StackPanel>
                                                         </Grid>
-                                                        <Rectangle Grid.Row="1" Grid.Column="0" Fill="{StaticResource MenuSeparator}" HorizontalAlignment="Left" Width="{DynamicResource MenuListItemInnerWidth}" Margin="0,0,0,0"  Height="1">
+                                                        <Rectangle Grid.Row="1" Grid.Column="0" Fill="{StaticResource MenuSeparator}" HorizontalAlignment="Left" Width="{DynamicResource MenuListItemInnerWidthSettings}" Margin="0,0,0,0"  Height="1">
                                                             <Rectangle.Style>
                                                                 <Style TargetType="{x:Type Rectangle}">
                                                                     <Style.Triggers>
@@ -319,7 +319,7 @@
                                                                     <ColumnDefinition Width="*"/>
                                                                     <ColumnDefinition Width="Auto"/>
                                                                 </Grid.ColumnDefinitions>
-                                                                <StackPanel Name="SettingsMenuItemPanel" Margin="0,0,0,0" Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" Background="{StaticResource SubMenuItemDefaultColour}" Width="{DynamicResource SubMenuListItemWidth}">
+                                                                <StackPanel Name="SettingsMenuItemPanel" Margin="0,0,0,0" Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" Background="{StaticResource SubMenuItemDefaultColour}" Width="{DynamicResource SubMenuListItemWidthSettings}">
                                                                     <StackPanel.Triggers>
                                                                         <EventTrigger RoutedEvent="MouseLeftButtonDown">
                                                                             <BeginStoryboard>

@@ -10,25 +10,34 @@
     <GridLength x:Key="MenuIconSizeGridLength">36</GridLength>
     <System:Double x:Key="MenuWidth">250</System:Double>
 
-    <Thickness x:Key="MenuListMargin" Left="5" Top="0" Right="5" Bottom="0"/>
-    
     <!-- Menu List Item -->
-    <System:Double x:Key="MenuListItemWidth">250</System:Double>
-    <System:Double x:Key="MenuListItemInnerWidth">238</System:Double>
+    <System:Double x:Key="MenuListItemInnerWidthSettings">238</System:Double>
+    <System:Double x:Key="MenuListItemInnerWidthSearch">225</System:Double>
     <System:Double x:Key="MenuListItemHeight">41</System:Double>
 
-    <Thickness x:Key="MenuListItemArrowMargin" Left="0" Top="0" Right="23" Bottom="0"/>
+    <Thickness x:Key="MenuListItemArrowMarginSettings" Left="0" Top="0" Right="23" Bottom="0"/>
+    <Thickness x:Key="MenuListItemArrowMarginSearch" Left="0" Top="0" Right="15" Bottom="0"/>
     <ImageSource x:Key="MenuListItemArrowImage">Assets/sub_menu_arrow_off.png</ImageSource>
     <System:Double x:Key="MenuListItemArrowSize">14</System:Double>
 
     <Thickness x:Key="MenuListItemTitleMargin" Left="5" Top="0" Right="0" Bottom="-3"/>
     <System:Double x:Key="MenuListItemTitleFontSize">16.5</System:Double>
+    <System:Double x:Key="MenuListItemWidthSettings">250</System:Double>
+    <System:Double x:Key="MenuListItemWidthSearch">225</System:Double>
+
+    <Thickness x:Key="MenuListMarginSettings" Left="5" Top="0" Right="5" Bottom="0"/>
+    <Thickness x:Key="MenuListMarginSearch" Left="13" Top="0" Right="0" Bottom="0"/>
     
     <!-- SubMenu List Item -->
-    <System:Double x:Key="SubMenuListItemWidth">250</System:Double>
+    <System:Double x:Key="SubMenuListItemWidthSettings">250</System:Double>
+    <System:Double x:Key="SubMenuListItemWidthSearch">225</System:Double>
     <System:Double x:Key="SubMenuListItemHeight">39</System:Double>
     <System:Double x:Key="SubMenuListItemIconSize">36</System:Double>
     <System:Double x:Key="SubMenuListItemFontSize">14</System:Double>
+    <System:Double x:Key="SubMenuListItemSubTitleFontSize">11</System:Double>
+    <Thickness x:Key="SubMenuListItemMarginSearch" Left="6" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="SubMenuListItemTitleMarginSearch" Left="5" Top="1" Right="0" Bottom="0"/>
+    <Thickness x:Key="SubMenuListItemSubTitleMarginSearch" Left="5" Top="-3" Right="0" Bottom="0"/>
 
     <!-- Settings Menu -->
     <Thickness x:Key="SettingsAnimOpenMenuViewIconMargin" Left="-536" Top="0" Right="0" Bottom="0"/>
@@ -49,6 +58,72 @@
 
     <System:Double x:Key="SettingsTitleFontSize">18</System:Double>
     <Thickness x:Key="SettingsTitleTextMargin" Left="10" Top="0" Right="0" Bottom="0"/>
+    
+    <!-- Search Menu List Item -->
+    <System:Double x:Key="SearchMenuListItemHeight">43</System:Double>
+    <System:Double x:Key="SearchResultPanelWidth">225</System:Double>
+    <Thickness x:Key="SearchResultPanelMargin" Left="20" Top="0" Right="0" Bottom="0"/>
+    <System:Double x:Key="SearchResultPanelIconSize">36</System:Double>
+    <Thickness x:Key="SearchResultPanelIconMargin" Left="3" Top="0" Right="0" Bottom="0"/>
+    <System:Double x:Key="SearchResultPanelStackPanelWidth">175</System:Double>
+    <System:Double x:Key="SearchResultPanelTitleFontSize">13</System:Double>
+    <Thickness x:Key="SearchResultPanelTitleMargin" Left="5" Top="1" Right="0" Bottom="0"/>
+    <System:Double x:Key="SearchResultPanelSubTitleFontSize">11</System:Double>
+    <Thickness x:Key="SearchResultPanelSubTitleMargin" Left="5" Top="0" Right="0" Bottom="0"/>
+    
+    <!-- Search Menu -->
+    <Thickness x:Key="SearchAnimOpenSearchViewIconMargin" Left="536" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="SearchAnimCloseSearchViewIconMargin" Left="76" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="SearchAnimOpenSearchContainerMargin" Left="250" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="SearchAnimCloseSearchContainerMargin" Left="-250" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="SearchAnimOpenBackgroundRectMargin" Left="250" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="SearchAnimCloseBackgroundRectMargin" Left="-250" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="SearchAnimOpenSearchInputBoxMargin" Left="263" Top="5" Right="0" Bottom="0"/>
+    <Thickness x:Key="SearchAnimOpenSearchArrowMargin" Left="78" Top="28" Right="0" Bottom="0"/>
+    <Thickness x:Key="SearchAnimCloseSearchArrowMargin" Left="-410" Top="38" Right="0" Bottom="0"/>
+
+    <Thickness x:Key="SearchBackgroundRectangleMargin" Left="250" Top="0" Right="0" Bottom="0"/>
+
+    <Thickness x:Key="SearchMenuViewContainerMargin" Left="0" Top="20" Right="0" Bottom="19"/>
+
+    <ImageSource x:Key="ButtonSearchOffImage">Assets/button_search_off.png</ImageSource>
+    <ImageSource x:Key="ButtonSearchOnImage">Assets/button_search_on.png</ImageSource>
+
+    <Thickness x:Key="SearchResultCountContainerMargin" Left="20" Top="0" Right="0" Bottom="0"/>
+    <System:Double x:Key="SearchResultCountContainerWidth">20</System:Double>
+    <Thickness x:Key="SearchResultCountTextMargin" Left="0" Top="9" Right="2" Bottom="0"/>
+    <System:Double x:Key="SearchResultCountTextFontSize">12</System:Double>
+
+    <System:Double x:Key="SearchBoxWidth">225</System:Double>
+    <System:Double x:Key="SearchBoxHeight">26</System:Double>
+    <Thickness x:Key="SearchBoxMargin" Left="0" Top="0" Right="0" Bottom="0"/>
+    <System:Double x:Key="SearchInputBoxWidth">190</System:Double>
+    <System:Double x:Key="SearchInputBoxFontSize">16</System:Double>
+    <Thickness x:Key="SearchInputBoxMargin" Left="5" Top="0" Right="0" Bottom="0"/>
+
+    <System:Double x:Key="SearchArrowWidth">8</System:Double>
+    <System:Double x:Key="SearchArrowHeight">10</System:Double>
+    <ImageSource x:Key="SearchArrowImage">Assets/arrow3_up.png</ImageSource>
+
+    <Thickness x:Key="SearchMenuMainContainerMargin" Left="-515" Top="0" Right="0" Bottom="0"/>
+
+    <Thickness x:Key="SearchResultsSpinnerMargin" Left="217" Top="0" Right="0" Bottom="0"/>
+    <ImageSource x:Key="SearchResultsSpinnerImage">/Assets/search_results_spinner.png</ImageSource>
+    <System:Double x:Key="SearchResultsSpinnerSize">18</System:Double>
+
+    <Thickness x:Key="SearchClearButtonMargin" Left="217" Top="0" Right="0" Bottom="0"/>
+    <ImageSource x:Key="SearchClearButtonOffImage">/Assets/button_clear_search_off.png</ImageSource>
+    <ImageSource x:Key="SearchClearButtonOnImage">/Assets/button_clear_search_on.png</ImageSource>
+    <ImageSource x:Key="SearchClearButtonDownImage">/Assets/button_clear_search_down.png</ImageSource>
+    <System:Double x:Key="SearchClearButtonSize">18</System:Double>
+
+    <System:Double x:Key="SearchResultsButtonAndFadeContainerWidth">225</System:Double>
+    <System:Double x:Key="SearchResultsButtonAndFadeContainerHeight">56</System:Double>
+    <Thickness x:Key="SearchResultsButtonAndFadeContainerMargin" Left="22" Top="0" Right="0" Bottom="0"/>
+    <ImageSource x:Key="SearchResultsButtonAndFadeContainerImage">/Assets/search_results_fade.png</ImageSource>
+    <System:Double x:Key="SearchResultsScrollButtonSize">48</System:Double>
+    <ImageSource x:Key="SearchResultsScrollButtonOffImage">/Assets/search_results_scroll_button.png</ImageSource>
+    <ImageSource x:Key="SearchResultsScrollButtonDownImage">/Assets/search_results_scroll_button_down.png</ImageSource>
 
     <!-- Flatten Button -->
     <ImageSource x:Key="FlattenButtonOffImage">Assets/button_flatten_off.png</ImageSource>
