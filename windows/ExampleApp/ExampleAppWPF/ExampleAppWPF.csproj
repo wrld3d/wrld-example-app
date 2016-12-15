@@ -791,6 +791,41 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="..\..\Resources\button_create_poi_off%40kiosk.png">
+      <Link>Assets\button_create_poi_off%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_create_poi_on%40kiosk.png">
+      <Link>Assets\button_create_poi_on%40kiosk.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\compass_new%40kiosk.png">
+      <Link>Assets\compass_new%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\compass_new_locate%40kiosk.png">
+      <Link>Assets\compass_new_locate%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\compass_new_locate_down%40kiosk.png">
+      <Link>Assets\compass_new_locate_down%40kiosk.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\button_exit_interior_off%40kiosk.png">
+      <Link>Assets\button_exit_interior_off%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_exit_interior_on%40kiosk.png">
+      <Link>Assets\button_exit_interior_on%40kiosk.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\floor_selection_button%40kiosk.png">
+      <Link>Assets\floor_selection_button%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\floor_selection_button_down%40kiosk.png">
+      <Link>Assets\floor_selection_button_down%40kiosk.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="..\..\Resources\icon1_accommodation.png">
       <Link>Assets\icon1_accommodation.png</Link>
     </Resource>

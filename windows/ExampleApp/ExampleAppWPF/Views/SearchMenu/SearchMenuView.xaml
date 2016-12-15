@@ -281,7 +281,7 @@
                                                                 </Grid>
                                                                 <ControlTemplate.Triggers>
                                                                     <Trigger Property="IsPressed" Value="True">
-                                                                        <Setter TargetName="SearchClear" Property="Source" Value="{DynamicResource SearchClearButtonDownImage}"/>
+                                                                        <Setter TargetName="SearchClear" Property="Source" Value="{DynamicResource SearchClearButtonOnImage}"/>
                                                                     </Trigger>
 
                                                                     <MultiTrigger>
@@ -290,7 +290,7 @@
                                                                             <Condition Property="IsMouseOver" Value="True"/>
                                                                         </MultiTrigger.Conditions>
                                                                         <MultiTrigger.Setters>
-                                                                            <Setter TargetName="SearchClear" Property="Source" Value="{DynamicResource SearchClearButtonOnImage}"/>
+                                                                            <Setter TargetName="SearchClear" Property="Source" Value="{DynamicResource SearchClearButtonOverImage}"/>
                                                                         </MultiTrigger.Setters>
                                                                     </MultiTrigger>
                                                                     <!--<Trigger Property="IsMouseOver" Value="True">

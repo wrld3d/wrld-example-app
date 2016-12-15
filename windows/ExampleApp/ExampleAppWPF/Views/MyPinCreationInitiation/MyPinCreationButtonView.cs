@@ -83,7 +83,7 @@ namespace ExampleAppWPF
             m_yPosInactive = screenHeight * 0.5 + viewHeight * 0.5;
 
             var transform = new TranslateTransform(
-                ConversionHelpers.AndroidToWindowsDip(32) + viewWidth * 0.5,
+                ConversionHelpers.AndroidToWindowsDip((double)Application.Current.Resources["PinCreationButtonMarginToCentre"]) + viewWidth * 0.5,
                 m_isActive ? m_yPosActive : m_yPosInactive);
 
             RenderTransform = transform;

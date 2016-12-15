@@ -52,9 +52,9 @@ namespace ExampleAppWPF
             m_compassNewLocked = (Image)GetTemplateChild("CompassNewLocked");
             m_compassNewUnlocked = (Image)GetTemplateChild("CompassNewUnlocked");
 
-            m_compassNewLocate.RenderTransform = new TranslateTransform((70.0 - m_compassNewLocate.Width)/2, (70.0 - m_compassNewLocate.Height)/2);
-            m_compassNewLocked.RenderTransform = new TranslateTransform((70.0 - m_compassNewLocked.Width) / 2, (70.0 - m_compassNewLocked.Height) / 2);
-            m_compassNewUnlocked.RenderTransform = new TranslateTransform((70.0 - m_compassNewUnlocked.Width) / 2, (70.0 - m_compassNewUnlocked.Height) / 2);
+            m_compassNewLocate.RenderTransform = new TranslateTransform((m_compassNew.Width - m_compassNewLocate.Width)/2, (m_compassNew.Width - m_compassNewLocate.Height)/2);
+            m_compassNewLocked.RenderTransform = new TranslateTransform((m_compassNew.Width - m_compassNewLocked.Width) / 2, (m_compassNew.Width - m_compassNewLocked.Height) / 2);
+            m_compassNewUnlocked.RenderTransform = new TranslateTransform((m_compassNew.Width - m_compassNewUnlocked.Width) / 2, (m_compassNew.Width - m_compassNewUnlocked.Height) / 2);
 
             var canvas = (Canvas)GetTemplateChild("ImageCanvas");
         }

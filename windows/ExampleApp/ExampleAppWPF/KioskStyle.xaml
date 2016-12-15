@@ -108,12 +108,12 @@
 
     <Thickness x:Key="SearchResultsSpinnerMargin" Left="447" Top="0" Right="0" Bottom="0"/>
     <ImageSource x:Key="SearchResultsSpinnerImage">/Assets/search_results_spinner@kiosk.png</ImageSource>
-    <System:Double x:Key="SearchResultsSpinnerSize">18</System:Double>
+    <System:Double x:Key="SearchResultsSpinnerSize">30</System:Double>
 
     <Thickness x:Key="SearchClearButtonMargin" Left="447" Top="0" Right="0" Bottom="0"/>
     <ImageSource x:Key="SearchClearButtonOffImage">/Assets/button_clear_search_off@kiosk.png</ImageSource>
     <ImageSource x:Key="SearchClearButtonOnImage">/Assets/button_clear_search_on@kiosk.png</ImageSource>
-    <ImageSource x:Key="SearchClearButtonDownImage">/Assets/button_clear_search_off@kiosk.png</ImageSource>
+    <ImageSource x:Key="SearchClearButtonOverImage">/Assets/button_clear_search_off@kiosk.png</ImageSource>
     <System:Double x:Key="SearchClearButtonSize">30</System:Double>
 
     <System:Double x:Key="SearchResultsButtonAndFadeContainerWidth">453</System:Double>
@@ -134,6 +134,51 @@
     <System:Double x:Key="FlattenButtonSize">102</System:Double>
     <System:Double x:Key="FlattenButtonMarginToCentre">52</System:Double>
 
+    <!-- Compass -->
+    <ImageSource x:Key="CompassNewImage">Assets/compass_new@kiosk.png</ImageSource>
+    <ImageSource x:Key="CompassNewLocateOffImage">Assets/compass_new_locate@kiosk.png</ImageSource>
+    <ImageSource x:Key="CompassNewLocateOnImage">Assets/compass_new_locate_down@kiosk.png</ImageSource>
+    <ImageSource x:Key="CompassNewLocateOverImage">Assets/compass_new_locate@kiosk.png</ImageSource>
+    <ImageSource x:Key="CompassNewLockedOffImage">Assets/compass_new_locked.png</ImageSource>
+    <ImageSource x:Key="CompassNewLockedOnImage">Assets/compass_new_locked_down.png</ImageSource>
+    <ImageSource x:Key="CompassNewLockedOverImage">Assets/compass_new_locked.png</ImageSource>
+    <ImageSource x:Key="CompassNewUnlockedOffImage">Assets/compass_new_unlocked.png</ImageSource>
+    <ImageSource x:Key="CompassNewUnlockedOnImage">Assets/compass_new_unlocked_down.png</ImageSource>
+    <ImageSource x:Key="CompassNewUnlockedOverImage">Assets/compass_new_unlocked.png</ImageSource>
+    <System:Double x:Key="CompassSize">128</System:Double>
+    <System:Double x:Key="CompassInnerSize">84</System:Double>
+    <Thickness x:Key="CompassMargin" Left="-64" Top="-64" Right="0" Bottom="0"/>
+
+    <!-- Pin Creation Button -->
+    <ImageSource x:Key="PinCreationButtonOffImage">Assets/button_create_poi_off@kiosk.png</ImageSource>
+    <ImageSource x:Key="PinCreationButtonOnImage">Assets/button_create_poi_on@kiosk.png</ImageSource>
+    <ImageSource x:Key="PinCreationButtonOverImage">Assets/button_create_poi_off@kiosk.png</ImageSource>
+    <System:Double x:Key="PinCreationButtonSize">102</System:Double>
+    <System:Double x:Key="PinCreationButtonMarginToCentre">52</System:Double>
+
+    <!-- Elevator Control -->
+    <System:Double x:Key="ExitButtonSize">80</System:Double>
+    <Thickness x:Key="ExitButtonMargin" Left="0" Top="0" Right="39" Bottom="15"/>
+    <ImageSource x:Key="ExitButtonOffImage">Assets/button_exit_interior_off@kiosk.png</ImageSource>
+    <ImageSource x:Key="ExitButtonOnImage">Assets/button_exit_interior_on@kiosk.png</ImageSource>
+    <Thickness x:Key="ElevatorSliderMargin" Left="0" Top="0" Right="39" Bottom="13"/>
+    <System:Double x:Key="ElevatorSliderMinHeight">396</System:Double>
+
+    <!-- Simple Slider Control -->
+    <System:Double x:Key="SliderThumbSize">102</System:Double>
+    <System:Double x:Key="SliderThumbHalfSize">51</System:Double>
+    <Point x:Key="SliderThumbImageClipCentre" X="51" Y="51"/>
+    <Thickness x:Key="SliderThumbLabelMargin" Left="0" Top="0" Right="0" Bottom="-2"/>
+    <System:Double x:Key="SliderThumbLabelFontSize">20</System:Double>
+    <ImageSource x:Key="SliderThumbOffImage">Assets/floor_selection_button@kiosk.png</ImageSource>
+    <ImageSource x:Key="SliderThumbOnImage">Assets/floor_selection_button_down@kiosk.png</ImageSource>
+    <ImageSource x:Key="SliderThumbOverImage">Assets/floor_selection_button@kiosk.png</ImageSource>
+
+    <System:Double x:Key="SliderTickbarWidth">30</System:Double>
+    <System:Double x:Key="SliderTickbarLabelOffset">-8</System:Double>
+    <System:Int32 x:Key="SliderTickbarLabelFontSize">22</System:Int32>
+    <Thickness x:Key="SliderTrackLineMargin" Left="0" Top="50" Right="0" Bottom="50"/>
+    <System:Double x:Key="SliderTrackMinWidth">102</System:Double>
 
     <SolidColorBrush x:Key="PrimaryBG_colour" Color="#FF1256B0"/>
     <SolidColorBrush x:Key="PrimaryBG_Over_Colour" Color="#002B63"/>
