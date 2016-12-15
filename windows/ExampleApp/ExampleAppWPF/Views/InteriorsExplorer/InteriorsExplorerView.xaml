@@ -15,11 +15,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Grid Name="ExitButtonGrid" Background="{StaticResource PrimaryBG_colour}">
-                        <Image Source="/Assets/button_exit_interior_off.png"  Name="ExitButtonIcon"/>
+                        <Image Source="{DynamicResource ExitButtonOffImage}"  Name="ExitButtonIcon"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="ExitButtonIcon" Property="Source" Value="/Assets/button_exit_interior_on.png"/>
+                            <Setter TargetName="ExitButtonIcon" Property="Source" Value="{DynamicResource ExitButtonOnImage}"/>
                             <Setter TargetName="ExitButtonGrid" Property="Background" Value="{StaticResource PrimaryBG_Down_Colour}"/>
                         </Trigger>
                         <MultiTrigger>
@@ -41,7 +41,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:InteriorsExplorerView}">
-                    <Grid Name="Container" Margin="0,0,0,75">
+                    <Grid Name="Container" Margin="0,0,0,0">
                         <Grid Name="DetailsPanel" Width="Auto" Height="36" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,20,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="245"/>
@@ -59,15 +59,15 @@
                             </Grid>
                         </Grid>
 
-                        <StackPanel Orientation="Vertical" Grid.Column="0"  HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                            <Button Name="DismissButton" Width="36" Height="36" Grid.Column="2" Style="{StaticResource ExitButtonStyle}" Margin="0,0,0,15"/>
+                        <StackPanel Orientation="Vertical" Grid.Column="0"  HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Button Name="DismissButton" Width="{DynamicResource ExitButtonSize}" Height="{DynamicResource ExitButtonSize}" Grid.Column="2" Style="{StaticResource ExitButtonStyle}" Margin="{DynamicResource ExitButtonMargin}"/>
                             <Grid Name="FloorPanel" Width="auto">
                                 <Slider Name="FloorSlider"
                                     Style="{StaticResource SimpleSlider}"
                                     Orientation="Vertical"                                    
                                     VerticalAlignment="Bottom"
-                                    Margin="0,0,20,13"
-                                    MinHeight="300"
+                                    Margin="{DynamicResource ElevatorSliderMargin}"
+                                    MinHeight="{DynamicResource ElevatorSliderMinHeight}"
                                     Minimum="0"
                                     Maximum="1"
                                     TickFrequency="1"

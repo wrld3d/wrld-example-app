@@ -114,7 +114,7 @@
     <Thickness x:Key="SearchClearButtonMargin" Left="217" Top="0" Right="0" Bottom="0"/>
     <ImageSource x:Key="SearchClearButtonOffImage">/Assets/button_clear_search_off.png</ImageSource>
     <ImageSource x:Key="SearchClearButtonOnImage">/Assets/button_clear_search_on.png</ImageSource>
-    <ImageSource x:Key="SearchClearButtonDownImage">/Assets/button_clear_search_down.png</ImageSource>
+    <ImageSource x:Key="SearchClearButtonOverImage">/Assets/button_clear_search_down.png</ImageSource>
     <System:Double x:Key="SearchClearButtonSize">18</System:Double>
 
     <System:Double x:Key="SearchResultsButtonAndFadeContainerWidth">225</System:Double>
@@ -135,6 +135,51 @@
     <System:Double x:Key="FlattenButtonSize">60</System:Double>
     <System:Double x:Key="FlattenButtonMarginToCentre">32</System:Double>
     
+    <!-- Compass -->
+    <ImageSource x:Key="CompassNewImage">Assets/compass_new.png</ImageSource>
+    <ImageSource x:Key="CompassNewLocateOffImage">Assets/compass_new_locate.png</ImageSource>
+    <ImageSource x:Key="CompassNewLocateOnImage">Assets/compass_new_locate_down.png</ImageSource>
+    <ImageSource x:Key="CompassNewLocateOverImage">Assets/compass_new_locate_over.png</ImageSource>
+    <ImageSource x:Key="CompassNewLockedOffImage">Assets/compass_new_locked.png</ImageSource>
+    <ImageSource x:Key="CompassNewLockedOnImage">Assets/compass_new_locked_down.png</ImageSource>
+    <ImageSource x:Key="CompassNewLockedOverImage">Assets/compass_new_locked_over.png</ImageSource>
+    <ImageSource x:Key="CompassNewUnlockedOffImage">Assets/compass_new_unlocked.png</ImageSource>
+    <ImageSource x:Key="CompassNewUnlockedOnImage">Assets/compass_new_unlocked_down.png</ImageSource>
+    <ImageSource x:Key="CompassNewUnlockedOverImage">Assets/compass_new_unlocked_over.png</ImageSource>
+    <System:Double x:Key="CompassSize">70</System:Double>
+    <System:Double x:Key="CompassInnerSize">46.67</System:Double>
+    <Thickness x:Key="CompassMargin" Left="-35" Top="-35" Right="0" Bottom="0"/>
+    
+    <!-- Pin Creation Button -->
+    <ImageSource x:Key="PinCreationButtonOffImage">Assets/button_create_poi_off.png</ImageSource>
+    <ImageSource x:Key="PinCreationButtonOnImage">Assets/button_create_poi_on.png</ImageSource>
+    <ImageSource x:Key="PinCreationButtonOverImage">Assets/button_create_poi_over.png</ImageSource>
+    <System:Double x:Key="PinCreationButtonSize">60</System:Double>
+    <System:Double x:Key="PinCreationButtonMarginToCentre">32</System:Double>
+
+    <!-- Interior Control -->
+    <System:Double x:Key="ExitButtonSize">36</System:Double>
+    <Thickness x:Key="ExitButtonMargin" Left="0" Top="0" Right="13" Bottom="15"/>
+    <ImageSource x:Key="ExitButtonOffImage">Assets/button_exit_interior_off.png</ImageSource>
+    <ImageSource x:Key="ExitButtonOnImage">Assets/button_exit_interior_on.png</ImageSource>
+    <Thickness x:Key="ElevatorSliderMargin" Left="0" Top="0" Right="13" Bottom="13"/>
+    <System:Double x:Key="ElevatorSliderMinHeight">300</System:Double>
+    
+    <!-- Simple Slider Control -->
+    <System:Double x:Key="SliderThumbSize">50</System:Double>
+    <System:Double x:Key="SliderThumbHalfSize">25</System:Double>
+    <Point x:Key="SliderThumbImageClipCentre" X="25" Y="25"/>
+    <Thickness x:Key="SliderThumbLabelMargin" Left="0" Top="0" Right="0" Bottom="-2"/>
+    <System:Double x:Key="SliderThumbLabelFontSize">10</System:Double>
+    <ImageSource x:Key="SliderThumbOffImage">Assets/floor_selection_button.png</ImageSource>
+    <ImageSource x:Key="SliderThumbOnImage">Assets/floor_selection_button_down.png</ImageSource>
+    <ImageSource x:Key="SliderThumbOverImage">Assets/floor_selection_button_mouse_over.png</ImageSource>
+
+    <System:Double x:Key="SliderTickbarWidth">15</System:Double>
+    <System:Double x:Key="SliderTickbarLabelOffset">-4</System:Double>
+    <System:Int32 x:Key="SliderTickbarLabelFontSize">16</System:Int32>
+    <Thickness x:Key="SliderTrackLineMargin" Left="1" Top="25" Right="0" Bottom="25"/>
+    <System:Double x:Key="SliderTrackMinWidth">50</System:Double>
 
     <SolidColorBrush x:Key="PrimaryBG_colour" Color="#FF1256B0"/>
     <SolidColorBrush x:Key="PrimaryBG_Over_Colour" Color="#002B63"/>
