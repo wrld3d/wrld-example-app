@@ -33,8 +33,6 @@ namespace ExampleApp
 
                 AttractState::AttractState(AppModes::SdkModel::IAppModeModel& appModeModel,
                                            AppCamera::SdkModel::IAppCameraController& cameraController,
-                                           Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
-                                           Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                            Eegeo::ITouchController& touchController,
                                            Eegeo::Input::IUserIdleService& userIdleService,
                                            Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
@@ -44,11 +42,8 @@ namespace ExampleApp
                                            const Eegeo::Rendering::ScreenProperties& screenProperties)
                 : m_appModeModel(appModeModel)
                 , m_cameraController(cameraController)
-                , m_interiorsCameraController(interiorsCameraController)
-                , m_interiorSelectionModel(interiorSelectionModel)
                 , m_userIdleService(userIdleService)
-                , m_interiorSelectionModelChangedCallback(this, &AttractState::OnInteriorSelectionModelChanged)
-                , m_startTimeMs(0)
+                , m_startTimeMs(Eegeo::Helpers::Time::MillisecondsSinceEpoch())
                 , m_cameraSplinePlaybackController(Eegeo::Camera::SplinePlayback::CameraSplinePlaybackController(resourceCeilingProvider))
                 , m_appCamera(m_cameraSplinePlaybackController, touchController)
                 , m_cameraHandle(0)
@@ -72,7 +67,6 @@ namespace ExampleApp
 
                 void AttractState::Enter(int previousState)
                 {
-                    m_interiorSelectionModel.RegisterSelectionChangedCallback(m_interiorSelectionModelChangedCallback);
                     m_startTimeMs = m_userIdleService.GetUserIdleTimeMs();
                     m_cameraSplinePlaybackController.Play();
                     m_cameraController.TransitionToCameraWithHandle(m_cameraHandle);
@@ -89,21 +83,7 @@ namespace ExampleApp
 
                 void AttractState::Exit(int nextState)
                 {
-                    m_interiorSelectionModel.UnregisterSelectionChangedCallback(m_interiorSelectionModelChangedCallback);
                     m_cameraSplinePlaybackController.Stop();
-
-                    if(nextState == AppModes::SdkModel::InteriorMode)
-                    {
-                        m_interiorsCameraController.SetHeading(m_cameraController.GetHeadingDegrees());
-                    }
-                }
-
-                void AttractState::OnInteriorSelectionModelChanged(const Eegeo::Resources::Interiors::InteriorId& interiorId)
-                {
-                    if(m_interiorSelectionModel.IsInteriorSelected())
-                    {
-                        m_appModeModel.SetAppMode(ExampleApp::AppModes::SdkModel::InteriorMode);
-                    }
                 }
             }
         }

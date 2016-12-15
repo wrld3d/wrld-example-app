@@ -93,6 +93,7 @@
 
 #include "IRestrictedBuildingService.h"
 #include "IUserIdleService.h"
+#include "GlobalAppModeTransitionRules.h"
 
 namespace ExampleApp
 {
@@ -229,6 +230,7 @@ namespace ExampleApp
         RenderingTransformMesh::SdkModel::RenderingTransformMeshModule* m_pRenderingTransformMeshModule;
 
         Eegeo::Input::IUserIdleService& m_userIdleService;
+        AppModes::GlobalAppModeTransitionRules* m_pGlobalAppModeTransitionRules;
         
     public:
         MobileExampleApp(const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,

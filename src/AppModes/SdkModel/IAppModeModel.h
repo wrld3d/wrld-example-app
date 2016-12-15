@@ -34,7 +34,7 @@ namespace ExampleApp
 
                 }
                 
-                virtual void InitialiseStateMachine(const std::vector<Helpers::IStateMachineState*>& appStates, const AppMode initialState) = 0;
+                virtual void InitialiseStateMachine(const std::vector<Helpers::IStateMachineState*>& appStates, const AppModes::SdkModel::AppMode initialState, GlobalAppModeTransitionRules* pGlobalAppTransitionRules) = 0;
 
 				virtual void DestroyStateMachine() = 0;
 

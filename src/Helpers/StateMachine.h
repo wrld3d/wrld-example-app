@@ -5,6 +5,7 @@
 #include "Types.h"
 #include <vector>
 #include "IStateMachineState.h"
+#include "GlobalAppModeTransitionRules.h"
 
 namespace ExampleApp
 {
@@ -16,10 +17,11 @@ namespace ExampleApp
             
             const std::vector<IStateMachineState*>& m_states;
             int m_currentState;
+            IStateMachineState* m_pGlobalAppModeTransitionRules;
             
         public:
             
-            StateMachine(const std::vector<IStateMachineState*>& m_states);
+            StateMachine(const std::vector<IStateMachineState*>& m_states, IStateMachineState* globalAppModeTransitionRules=nullptr);
             
             ~StateMachine();
             

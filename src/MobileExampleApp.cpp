@@ -150,6 +150,7 @@
 
 #include "RestrictedBuildingService.h"
 #include "InteriorsStreamingModule.h"
+#include "GlobalAppModeTransitionRules.h"
 
 namespace ExampleApp
 {
@@ -326,6 +327,7 @@ namespace ExampleApp
     , m_pHighlightColorMapper(NULL)
     , m_pInteriorsEntityIdHighlightVisibilityController(NULL)
     , m_userIdleService(userIdleService)
+    , m_pGlobalAppModeTransitionRules(NULL)
     {
         m_metricsService.BeginSession(m_applicationConfiguration.FlurryAppKey(), EEGEO_PLATFORM_VERSION_NUMBER);
         
@@ -465,6 +467,19 @@ namespace ExampleApp
             m_pNavigationService->SetGpsMode(Eegeo::Location::NavigationService::GpsModeFollow);
         }
         
+        m_pGlobalAppModeTransitionRules = Eegeo_NEW(AppModes::GlobalAppModeTransitionRules)(m_pAppCameraModule->GetController(),
+                                                                                            m_pToursModule->GetTourService(),
+                                                                                            m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
+                                                                                            interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                                            GetAppModeModel(),
+                                                                                            *m_pGlobeCameraWrapper,
+                                                                                            *m_pInteriorCameraWrapper,
+                                                                                            m_pToursModule->GetCameraController(),
+                                                                                            m_userIdleService,
+                                                                                            m_applicationConfiguration.IsAttractModeEnabled(),
+                                                                                            m_applicationConfiguration.GetAttractModeTimeoutMs(),
+                                                                                            m_pMyPinCreationModule->GetMyPinCreationModel(),
+                                                                                            m_pVisualMapModule->GetVisualMapService());
         InitialiseAppState(nativeUIFactories);
         
         m_pUserInteractionModule = Eegeo_NEW(UserInteraction::SdkModel::UserInteractionModule)(m_pAppCameraModule->GetController(), *m_pCameraTransitionService, m_pInteriorsExplorerModule->GetInteriorsExplorerUserInteractionModel(), m_messageBus);
@@ -477,6 +492,8 @@ namespace ExampleApp
 		m_pAppModeModel->DestroyStateMachine();
         
         Eegeo_DELETE m_pUserInteractionModule;
+
+        Eegeo_DELETE m_pGlobalAppModeTransitionRules;
         
         Eegeo_DELETE m_pStreamingVolume;
         
@@ -886,7 +903,6 @@ namespace ExampleApp
         AppModes::States::SdkModel::AppModeStatesFactory appModeStatesFactory(m_pAppCameraModule->GetController(),
                                                                       *m_pGlobeCameraWrapper,
                                                                       *m_pInteriorCameraWrapper,
-                                                                      m_pToursModule->GetCameraController(),
                                                                       *m_pStreamingVolume,
                                                                       m_pInteriorsExplorerModule->GetInteriorVisibilityUpdater(),
                                                                       m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
@@ -896,7 +912,6 @@ namespace ExampleApp
                                                                       interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                       interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                       nativeUIFactories,
-                                                                      m_pMyPinCreationModule->GetMyPinCreationModel(),
                                                                       m_pVisualMapModule->GetVisualMapService(),
                                                                       m_userIdleService,
                                                                       mapModule.GetResourceCeilingProvider(),
@@ -906,8 +921,9 @@ namespace ExampleApp
                                                                       m_applicationConfiguration.GetAttractModePositionSplinePoints(),
                                                                       m_screenProperties);
 
-        m_pAppModeModel->InitialiseStateMachine(appModeStatesFactory.CreateStateMachineStates(),
-                                                m_applicationConfiguration.IsAttractModeEnabled() ? AppModes::SdkModel::AttractMode : AppModes::SdkModel::WorldMode);
+        m_pAppModeModel->InitialiseStateMachine(appModeStatesFactory.CreateStateMachineStates(*m_pGlobalAppModeTransitionRules),
+                                                m_applicationConfiguration.IsAttractModeEnabled() ? AppModes::SdkModel::AttractMode : AppModes::SdkModel::WorldMode,
+                                                m_pGlobalAppModeTransitionRules);
     }
     
     void MobileExampleApp::DestroyApplicationModelModules()

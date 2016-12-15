@@ -8,6 +8,7 @@
 #include "TourService.h"
 #include "WorldState.h"
 #include "InteriorExplorerState.h"
+#include "GlobalAppModeTransitionRules.h"
 
 namespace ExampleApp
 {
@@ -73,14 +74,14 @@ namespace ExampleApp
                 m_pStateMachine->Update(dt);
             }
             
-            void AppModeModel::InitialiseStateMachine(const std::vector<Helpers::IStateMachineState*>& appStates, const AppModes::SdkModel::AppMode initialState)
+            void AppModeModel::InitialiseStateMachine(const std::vector<Helpers::IStateMachineState*>& appStates, const AppModes::SdkModel::AppMode initialState, ExampleApp::AppModes::GlobalAppModeTransitionRules* pGlobalAppTransitionRules)
             {
                 Eegeo_ASSERT(m_pStateMachine == NULL, "Cannot initialise the state machine twice");
                 
                 m_appMode = initialState;
                 m_appStates = appStates;
                 
-                m_pStateMachine = Eegeo_NEW(Helpers::StateMachine)(m_appStates);
+                m_pStateMachine = Eegeo_NEW(Helpers::StateMachine)(m_appStates, pGlobalAppTransitionRules);
                 
                 m_pStateMachine->StartStateMachine(initialState);
             }
