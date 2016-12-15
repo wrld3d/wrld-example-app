@@ -17,13 +17,15 @@ namespace ExampleApp
                 const std::string& platformVersion,
                 const std::string& platformHash,
                 const std::string& platformArchitecture,
-                const std::string& aboutText)
+                const std::string& aboutText,
+                const std::string& appName)
                 : m_openable(identity, reactionControllerModel)
                 , m_buildVersion(buildVersion)
                 , m_platformVersion(platformVersion)
                 , m_platformHash(platformHash)
                 , m_platformArchitecture(platformArchitecture)
                 , m_aboutText(aboutText)
+                , m_appName(appName)
             {
 
             }
@@ -52,6 +54,7 @@ namespace ExampleApp
                         << "\n\nPlatform version: " + m_platformVersion
                         << "\nPlatform hash: " + m_platformHash
                         << "\nPlatform runtime arch: " + m_platformArchitecture
+                        << "\nApplication Name: " + m_appName
                         << "\n\n";
                 
                 return content.str();
@@ -80,7 +83,12 @@ namespace ExampleApp
                     m_closedCallbacks.ExecuteCallbacks();
                 }
             }
-
+            
+            void AboutPageViewModel::UpdateApplicationName(const std::string& appName)
+            {
+                m_appName = appName;
+            }
+            
             OpenableControl::View::IOpenableControlViewModel& AboutPageViewModel::GetOpenableControl()
             {
                 return m_openable;

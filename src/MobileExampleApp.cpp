@@ -435,7 +435,7 @@ namespace ExampleApp
         
         m_pUserInteractionModule = Eegeo_NEW(UserInteraction::SdkModel::UserInteractionModule)(m_pAppCameraModule->GetController(), *m_pCameraTransitionService, m_pInteriorsExplorerModule->GetInteriorsExplorerUserInteractionModel(), m_messageBus);
         
-        m_pDeepLinkModule = Eegeo_NEW(DeepLink::SdkModel::DeepLinkModule)(*m_pCameraTransitionController, m_platformAbstractions.GetWebLoadRequestFactory(), m_pWorld->GetNativeUIFactories().AlertBoxFactory(), m_applicationConfiguration, m_pWorld->GetMapModule().GetCoverageTreeModule().GetCoverageTreeLoader(), m_pSearchModule->GetInteriorMenuObserver());
+        m_pDeepLinkModule = Eegeo_NEW(DeepLink::SdkModel::DeepLinkModule)(*m_pCameraTransitionController, m_platformAbstractions.GetWebLoadRequestFactory(), m_pWorld->GetNativeUIFactories().AlertBoxFactory(), m_applicationConfiguration, m_pWorld->GetMapModule().GetCoverageTreeModule().GetCoverageTreeLoader(), m_pSearchModule->GetInteriorMenuObserver(), m_pAboutPageModule->GetAboutPageViewModel());
     }
     
     MobileExampleApp::~MobileExampleApp()
@@ -482,7 +482,8 @@ namespace ExampleApp
         
         m_pAboutPageModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageModule)(m_identityProvider,
                                                                                      m_pReactionControllerModule->GetReactionControllerModel(),
-                                                                                     m_applicationConfiguration.ProductVersion());
+                                                                                     m_applicationConfiguration.ProductVersion(),
+                                                                                     m_applicationConfiguration.Name());
         
         m_pOptionsModule = Eegeo_NEW(ExampleApp::Options::OptionsModule)(m_identityProvider,
                                                                          m_pReactionControllerModule->GetReactionControllerModel(),

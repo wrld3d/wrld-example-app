@@ -18,7 +18,8 @@ namespace ExampleApp
                                                          Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                                                          ApplicationConfig::ApplicationConfiguration& defaultConfig,
                                                          Eegeo::Streaming::CoverageTrees::ICoverageTreeManifestLoader& manifestLoader,
-                                                         Search::SdkModel::InteriorMenuObserver& interiorMenuObserver)
+                                                         Search::SdkModel::InteriorMenuObserver& interiorMenuObserver,
+                                                         AboutPage::View::IAboutPageViewModel& aboutPageViewModule)
             :m_webRequestFactory(webRequestFactory)
             ,m_configRequestCompleteCallback(this, &DeepLinkConfigHandler::HandleConfigResponse)
             ,m_failAlertHandler(this, &DeepLinkConfigHandler::OnFailAlertBoxDismissed)
@@ -27,6 +28,7 @@ namespace ExampleApp
             ,m_defaultConfig(defaultConfig)
             ,m_manifestLoader(manifestLoader)
             ,m_interiorMenuObserver(interiorMenuObserver)
+            ,m_aboutPageViewModule(aboutPageViewModule)
             {
             }
 
@@ -56,6 +58,8 @@ namespace ExampleApp
                         m_manifestLoader.LoadCoverageTreeManifest(applicationConfig.CoverageTreeManifestURL());
                         m_cameraTransitionController.StartTransitionTo(applicationConfig.InterestLocation().ToECEF(), applicationConfig.DistanceToInterestMetres(), applicationConfig.OrientationDegrees());
                         m_interiorMenuObserver.UpdateDefaultOutdoorSearchMenuItems(applicationConfig.RawConfig());
+                        m_aboutPageViewModule.UpdateApplicationName(applicationConfig.Name());
+                        
                     }
                     else
                     {

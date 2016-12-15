@@ -10,6 +10,7 @@
 #include "ISingleOptionAlertBoxDismissedHandler.h"
 #include "CoverageTrees.h"
 #include "InteriorMenuObserver.h"
+#include "AboutPageViewModel.h"
 
 #include "IAlertBoxFactory.h"
 
@@ -27,7 +28,8 @@ namespace ExampleApp
                                       Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                                       ExampleApp::ApplicationConfig::ApplicationConfiguration& defaultConfig,
                                       Eegeo::Streaming::CoverageTrees::ICoverageTreeManifestLoader& manifestLoader,
-                                      Search::SdkModel::InteriorMenuObserver& interiorMenuObserver);
+                                      Search::SdkModel::InteriorMenuObserver& interiorMenuObserver,
+                                      AboutPage::View::IAboutPageViewModel& aboutPageViewModule);
                 void HandleDeepLink(const AppInterface::UrlData& data);
             private:
                 CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionController;
@@ -41,6 +43,7 @@ namespace ExampleApp
                 void HandleConfigResponse(Eegeo::Web::IWebResponse& webResponse);
                 void OnFailAlertBoxDismissed();
                 Search::SdkModel::InteriorMenuObserver& m_interiorMenuObserver;
+                AboutPage::View::IAboutPageViewModel& m_aboutPageViewModule;
             };
         
             const std::string CONFIG_FILES_HOME = "http://mapscene.eegeo.com";

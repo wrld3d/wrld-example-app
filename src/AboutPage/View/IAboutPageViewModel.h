@@ -24,6 +24,8 @@ namespace ExampleApp
                 virtual void Open() = 0;
 
                 virtual void Close() = 0;
+                
+                virtual void UpdateApplicationName(const std::string&) = 0;
 
                 virtual const std::string GetContent() const = 0;
 
