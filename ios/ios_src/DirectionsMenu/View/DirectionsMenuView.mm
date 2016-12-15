@@ -351,7 +351,7 @@
     else if(textField == _pEndRouteTextField && [m_pDirectionsMenuView shouldPerformSearch])
     {
         [self performSelectorOnMainThread:@selector(dismissKeyboard) withObject:nil waitUntilDone:YES];
-        [self performSelector:@selector(EndRouteEntered) withObject:nil afterDelay:0.0];
+        [self performSelector:@selector(EndRouteEntered) withObject:nil afterDelay:2.0];
     }
     return YES;
 }

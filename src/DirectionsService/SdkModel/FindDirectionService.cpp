@@ -61,7 +61,7 @@ namespace ExampleApp
                     DirectionResultModel result =  m_findDirectionResultParser.ParseGeoNamesQueryResults(response);
                      m_messageBus.Publish(DirectionResultSection::DirectionQueryResponseReceivedMessage(result));
                     
-                    if(result.GetCode() == "Error")
+                    if(result.GetCode() == "Error" || result.GetRoutes().size() == 0)
                     {
                          m_alertBoxFactory.CreateSingleOptionAlertBox("Failed to obtain route.", "No location found matching.", m_failAlertHandler);
                     }

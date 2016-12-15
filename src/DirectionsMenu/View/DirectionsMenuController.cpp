@@ -156,14 +156,16 @@ namespace ExampleApp
                     {
                         return;
                     }
-                    m_locationService.GetLocation(currentLatLong);
+                    //m_locationService.GetLocation(currentLatLong);
+                     currentLatLong = Eegeo::Space::LatLong::FromDegrees(56.460127, -2.978369);
                 }else if(endcurrentLatLong.GetLongitudeInDegrees() == 0 && endcurrentLatLong.GetLongitudeInDegrees() == 0)
                 {
                     if (!m_locationService.GetIsAuthorized())
                     {
                         return;
                     }
-                    m_locationService.GetLocation(endcurrentLatLong);
+                    //m_locationService.GetLocation(endcurrentLatLong);
+                    endcurrentLatLong = Eegeo::Space::LatLong::FromDegrees(56.460127, -2.978369);
                 }
             
                 const Eegeo::Space::LatLongAltitude startLoc = Eegeo::Space::LatLongAltitude::FromDegrees(currentLatLong.GetLatitudeInDegrees(), currentLatLong.GetLongitudeInDegrees(),0.0);
