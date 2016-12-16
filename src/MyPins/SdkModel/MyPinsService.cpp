@@ -89,7 +89,6 @@ namespace ExampleApp
                                                                                                       pVisibilityChangedHandler,
                                                                                                       worldPinFocusData,
                                                                                                       pMyPinModel->IsInterior(),
-                                                                                                       false,
                                                                                                       worldPinInteriorData,
                                                                                                       pMyPinModel->GetLatLong(),
                                                                                                       pMyPinModel->GetPinIconKey(),

@@ -9,8 +9,6 @@ set(currsources
   ../src/DirectionsMenu/SdkModel/DirectionMenuFindDirectionMessageHandler.h
   ../src/DirectionsMenu/SdkModel/DirectionMenuGeoNameMessageHandler.h
   ../src/DirectionsMenu/SdkModel/DirectionMenuGeoNameMessageHandler.cpp
-  ../src/DirectionsMenu/SdkModel/DirectionMenuChangeStateObserver.h
-  ../src/DirectionsMenu/SdkModel/DirectionMenuChangeStateObserver.cpp
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\DirectionsMenu\\SdkModel FILES ${currsources})

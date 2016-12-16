@@ -88,12 +88,6 @@ namespace ExampleApp
                 
                 void OnGeoNamesStartLocationResponseReceived(const DirectionsMenu::DirectionMenuGeoNamesResponseReceivedMessage& message);
                 
-                void UpdateUiThread(float dt);
-                
-                Eegeo::Helpers::CallbackCollection2<const float &,bool&> m_updateDirectionMenuStateCallbacks;
-                
-
-                
             protected:
                 
                 virtual void RefreshPresentation();
@@ -113,11 +107,6 @@ namespace ExampleApp
                                          ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel);
                 
                 virtual ~DirectionsMenuController();
-                
-                void AddDirectionMenuStateUpdateCallBack(Eegeo::Helpers::ICallback2<const float&,bool&>& callback);
-               
-                void RemoveDirectionMenuStateUpdateCallBack(Eegeo::Helpers::ICallback2<const float&,bool&>& callback);
-
             };
         }
     }

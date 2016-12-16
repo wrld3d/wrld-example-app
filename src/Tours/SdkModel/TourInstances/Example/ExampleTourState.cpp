@@ -98,7 +98,6 @@ namespace ExampleApp
                                                                         NULL,
                                                                         worldPinFocusData,
                                                                         m_interior,
-                                                                        false,
                                                                         m_worldPinInteriorData,
                                                                         m_position,
                                                                         tourEntryPinIconKey,

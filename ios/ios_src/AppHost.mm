@@ -353,9 +353,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                  app.PinDiameter(),
                                  screenProperties.GetPixelScale(),
                                  m_pImageStore);
-    
-    m_pDirectionMenuChanageStateObserver = Eegeo_NEW(ExampleApp::DirectionsMenu::SdkModel::DirectionMenuChangeStateObserver)(m_pDirectionsMenuViewModule->GetMenuController(),m_pWorldPinOnMapViewModule->GetWorldPinOnMapController(),app.WorldPinsModule().GetWorldPinsScaleController(),app.WorldPinsModule().GetWorldPinsInFocusController());
-    
+        
     m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::View::CompassViewModule)(app.CompassModule().GetCompassViewModel(),
                            screenProperties,
                            m_messageBus);
@@ -575,7 +573,6 @@ void AppHost::DestroyApplicationViewModules()
     
     Eegeo_DELETE m_pDirectionsMenuInitiationViewModule;
     
-    Eegeo_DELETE m_pDirectionMenuChanageStateObserver;
 }
 
 void AppHost::SetTouchExclusivity()

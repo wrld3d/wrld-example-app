@@ -25,7 +25,6 @@ namespace ExampleApp
                 
                 virtual void SetHideOutdoorPinsIndoors(bool hideOutdoorPinsIndoors) = 0;
                 
-                virtual void SetDirectionMenuOpen(bool diectionMenuOpen) = 0;
 
             };
         }

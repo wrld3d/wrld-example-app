@@ -21,8 +21,7 @@ namespace ExampleApp
                                       const std::string& vendor,
                                       const std::string& json,
                                       const std::string& ratingsImage,
-                                      const int reviewCount,
-                                      const bool forInteriorTransition);
+                                      const int reviewCount);
 
                 const std::string& GetTitle() const;
                 const std::string& GetSubtitle() const;
@@ -32,7 +31,6 @@ namespace ExampleApp
                 const std::string& GetRatingsImage() const;
                 const int GetReviewCount() const;
                 const int GetPinId() const;
-                const bool isInteriorTransition() const;
                 
                 void Refresh(const std::string& title, const std::string& subtitle, const std::string& ratingsImage, const int reviewCount);
 
@@ -45,7 +43,6 @@ namespace ExampleApp
                 std::string m_json;
                 std::string m_ratingsImage;
                 int m_reviewCount;
-                bool m_forInteriorTransition;
             };
         }
     }

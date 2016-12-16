@@ -156,14 +156,6 @@
     if(self.pCurrentHovercard != nil)
     {
         [self.pCurrentHovercard setAlpha:onScreenState];
-        if (onScreenState < 0.1)
-        {
-            self.pCurrentHovercard.hidden = true;
-        }
-        else
-        {
-            self.pCurrentHovercard.hidden = false;
-        }
     }
     
 }

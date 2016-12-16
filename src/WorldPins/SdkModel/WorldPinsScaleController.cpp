@@ -39,22 +39,17 @@ namespace ExampleApp
                 , m_sdkDomainEventBus(sdkDomainEventBus)
                 , m_visibilityMask(WorldPins::SdkModel::WorldPinVisibility::All)
                 , m_hideOutdoorPinsIndoors(true)
-                , m_directionMenuOpen(false)
-                , m_appModeChangedHandler(this, &WorldPinsScaleController::OnAppModeChangedMessage)
-                , m_appMode(AppModes::SdkModel::WorldMode)
             
 
             {
                 m_messageBus.SubscribeNative(m_visibilityMessageHandlerBinding);
                 m_sdkDomainEventBus.Subscribe(m_visibilityMessageHandlerBinding);
-                m_messageBus.SubscribeUi(m_appModeChangedHandler);
             }
 
             WorldPinsScaleController::~WorldPinsScaleController()
             {
                 m_messageBus.UnsubscribeNative(m_visibilityMessageHandlerBinding);
                 m_sdkDomainEventBus.Unsubscribe(m_visibilityMessageHandlerBinding);
-                m_messageBus.UnsubscribeUi(m_appModeChangedHandler);
             }
 
             void WorldPinsScaleController::Update(float deltaSeconds, const Eegeo::Camera::RenderCamera& renderCamera)
@@ -71,16 +66,9 @@ namespace ExampleApp
                 {
                     WorldPinItemModel& worldPinItemModel = *m_worldPinsRepository.GetItemAtIndex(i);
                     UpdateWorldPin(worldPinItemModel, deltaSeconds, renderCamera);
-                    if (m_directionMenuOpen && worldPinItemModel.isInteriorTransition() && m_appMode != AppModes::SdkModel::InteriorMode)
-                    {
-                    
-                    }
-                    else
-                    {
-                        const float globalScale = 1.f - m_modality;
-                        float scale = globalScale  * worldPinItemModel.TransitionStateValue() * m_visibilityScale;
-                        m_worldPinsService.UpdatePinScale(worldPinItemModel, scale);
-                    }
+                    const float globalScale = 1.f - m_modality;
+                    float scale = globalScale  * worldPinItemModel.TransitionStateValue() * m_visibilityScale;
+                    m_worldPinsService.UpdatePinScale(worldPinItemModel, scale);
                 }
             }
             
@@ -95,12 +83,6 @@ namespace ExampleApp
 
                 m_modality = modality;
             }
-            
-            void WorldPinsScaleController::SetDirectionMenuOpen(bool diectionMenuOpen)
-            {
-                m_directionMenuOpen = diectionMenuOpen;
-            }
-
             
             int WorldPinsScaleController::GetVisibilityMask()
             {
@@ -204,22 +186,6 @@ namespace ExampleApp
                 }
                 
                 m_visibilityMask = worldPinsVisibilityMessage.VisibilityMask();
-            }
-            
-            void WorldPinsScaleController::OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message)
-            {
-                if (m_appMode == AppModes::SdkModel::InteriorMode && message.GetAppMode() == AppModes::SdkModel::WorldMode)
-                {
-                    for(size_t i = 0; i < m_worldPinsRepository.GetItemCount(); ++i)
-                    {
-                        WorldPinItemModel& worldPinItemModel = *m_worldPinsRepository.GetItemAtIndex(i);
-                        if (m_directionMenuOpen && worldPinItemModel.isInteriorTransition())
-                        {
-                            m_worldPinsService.UpdatePinScale(worldPinItemModel, 1);
-                        }
-                    }
-                }
-                m_appMode = message.GetAppMode();  
             }
         }
     }

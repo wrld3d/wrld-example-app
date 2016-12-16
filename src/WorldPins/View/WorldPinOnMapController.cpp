@@ -25,7 +25,6 @@ namespace ExampleApp
             , m_viewModelClosedCallback(this, &WorldPinOnMapController::OnClosed)
             , m_viewModelUpdateCallback(this, &WorldPinOnMapController::OnUpdated)
             , m_viewModelScreenStateCallback(this, &WorldPinOnMapController::OnScreenStateUpdated)
-            , shouldForwardCall(false)
             {
                 m_view.InsertSelectedCallback(m_viewSelectedCallback);
                 m_viewModel.InsertOpenedCallback(m_viewModelOpenedCallback);
@@ -52,18 +51,6 @@ namespace ExampleApp
                 m_view.RemoveSelectedCallback(m_viewSelectedCallback);
             }
             
-            void WorldPinOnMapController::OnScreenStateUpdated(const float& screenState,bool hidePin)
-            {
-                if(m_viewModel.IsOpen() && !m_viewModel.GetWorldPinsInFocusModel().isInteriorTransition())
-                {
-                    if(m_viewModel.IsOpen())
-                    {
-                        m_view.UpdateScreenStateAndVisibility(screenState);
-                    }
-                    shouldForwardCall = hidePin;
-                }
-            }
-            
             void WorldPinOnMapController::OnSelected()
             {
                 if(!m_modalityModel.IsModalEnabled())
@@ -79,10 +66,6 @@ namespace ExampleApp
             {
                 m_view.Open(m_viewModel.GetWorldPinsInFocusModel(), m_modalityModel.GetModality());
                 OnUpdated();
-                if(shouldForwardCall)
-                {
-                    m_view.UpdateScreenStateAndVisibility(0.0);
-                }
             }
             
             void WorldPinOnMapController::OnClosed()

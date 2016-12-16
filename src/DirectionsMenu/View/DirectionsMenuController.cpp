@@ -122,27 +122,6 @@ namespace ExampleApp
                 }
             }
             
-            
-            void DirectionsMenuController::UpdateUiThread(float dt)
-            {
-                MenuController::UpdateUiThread(dt);
-                const bool isAnimating = m_view.IsAnimating();
-                if(isAnimating)
-                {
-                    const float normalisedAnimationProgress = m_view.GetAnimationProgress();
-                    //if (normalisedAnimationProgress > 0)
-                    //{
-                        m_updateDirectionMenuStateCallbacks.ExecuteCallbacks(normalisedAnimationProgress,m_isDirectionMenuOpen);
-                    //}
-
-                }
-
-
-
-                
-            }
-
-            
             void DirectionsMenuController::OnSearch(const Eegeo::Space::LatLong& start,const Eegeo::Space::LatLong& end)
             {
                
@@ -306,15 +285,6 @@ namespace ExampleApp
                 m_viewModel.UpdateOpenState(1.0f);
             }
             
-            void DirectionsMenuController::AddDirectionMenuStateUpdateCallBack(Eegeo::Helpers::ICallback2<const float&,bool&>& callback)
-            {
-                m_updateDirectionMenuStateCallbacks.AddCallback(callback);
-            }
-            
-            void DirectionsMenuController::RemoveDirectionMenuStateUpdateCallBack(Eegeo::Helpers::ICallback2<const float&,bool&>& callback)
-            {
-                m_updateDirectionMenuStateCallbacks.RemoveCallback(callback);
-            }
         }
     }
 }

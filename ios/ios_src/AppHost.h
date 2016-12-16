@@ -60,7 +60,6 @@
 #include "DirectionsMenuViewIncludes.h"
 #include "TagSearchViewIncludes.h"
 #include "DirectionResultSectionViewModule.h"
-#include "DirectionMenuChangeStateObserver.h"
 
 @class ViewController;
 class AppInputDelegate;
@@ -145,7 +144,6 @@ private:
     ExampleApp::Surveys::View::ISurveyViewModule* m_pSurveyViewModule;
     ExampleApp::Menu::View::IMenuReactionModel* m_pMenuReactionModel;
     ExampleApp::DirectionResultSection::View::DirectionResultSectionViewModule* m_pDirectionResultSectionViewModule;
-    ExampleApp::DirectionsMenu::SdkModel::DirectionMenuChangeStateObserver* m_pDirectionMenuChanageStateObserver;
     
     ImageStore* m_pImageStore;
     

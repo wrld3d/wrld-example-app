@@ -48,7 +48,6 @@ namespace ExampleApp
                                                         IWorldPinVisibilityStateChangedHandler* pVisibilityStateChangedHandler,
                                                         const WorldPinFocusData& worldPinFocusData,
                                                         bool interior,
-                                                        bool forInteriorTransiation,
                                                         const WorldPinInteriorData& worldPinInteriorData,
                                                         const Eegeo::Space::LatLong& location,
                                                         const std::string& pinIconKey,
@@ -75,7 +74,6 @@ namespace ExampleApp
                                                                         pVisibilityStateChangedHandler,
                                                                         worldPinFocusData,
                                                                         interior,
-                                                                        forInteriorTransiation,
                                                                         worldPinInteriorData,
                                                                         visibilityMask);
                 m_worldPinsRepository.AddItem(model);
