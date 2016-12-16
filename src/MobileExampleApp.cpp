@@ -289,6 +289,7 @@ namespace ExampleApp
     , m_applicationConfiguration(applicationConfiguration)
     , m_interiorsEnabled(platformConfig.OptionsConfig.EnableInteriors)
     , m_usingLegacyInteriorLabels(!platformConfig.OptionsConfig.EnableLabels || platformConfig.MapLayersConfig.Interiors.UseLegacyLabels)
+    , m_useIndoorEntryMarkerLabels(!(platformConfig.MapLayersConfig.Interiors.UseLegacyLabels || platformConfig.MapLayersConfig.Interiors.UseLegacyEntryMarkers))
     , m_pToursModule(NULL)
     , m_pGlobeCameraWrapper(NULL)
     , m_pTwitterFeedModule(NULL)
@@ -730,6 +731,7 @@ namespace ExampleApp
                                                                                                      m_metricsService,
                                                                                                      initialExperienceModel,
                                                                                                      interiorsAffectedByFlattening,
+                                                                                                     m_useIndoorEntryMarkerLabels,
                                                                                                      m_pInteriorsEntitiesPinsModule->GetInteriorsEntitiesPinsController(),
                                                                                                      m_persistentSettings,
                                                                                                      *m_pNavigationService,
@@ -999,7 +1001,9 @@ namespace ExampleApp
                                                                                          interiorsAffectedByFlattening,
                                                                                          m_menuReaction,
                                                                                          screenOversampleScale,
-                                                                                         *m_pWorldPinsIconMapping);
+                                                                                         *m_pWorldPinsIconMapping,
+                                                                                         interiorsPresentationModule.GetInteriorMarkerPickingService(),
+                                                                                         m_useIndoorEntryMarkerLabels);
     }
     
     void MobileExampleApp::InitialiseToursModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world, const bool interiorsAffectedByFlattening)

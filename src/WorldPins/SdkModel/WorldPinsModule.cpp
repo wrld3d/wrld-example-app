@@ -29,7 +29,9 @@ namespace ExampleApp
                                              const bool interiorsAffectedByFlattening,
                                              const Menu::View::IMenuReactionModel& menuReaction,
                                              const float screenOversampleScale,
-                                             const IWorldPinIconMapping& worldPinIconMapping)
+                                             const IWorldPinIconMapping& worldPinIconMapping,
+                                             Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& interiorMarkerPickingService,
+                                             const bool useIndoorEntryMarkerLabels)
             {
                 m_pWorldPinsFactory = Eegeo_NEW(WorldPinsFactory);
 
@@ -40,7 +42,9 @@ namespace ExampleApp
                                       pinRepository,
                                       pinController,
                                       environmentFlatteningService,
-                                      worldPinIconMapping);
+                                      worldPinIconMapping,
+                                      interiorMarkerPickingService,
+                                      useIndoorEntryMarkerLabels);
 
                 m_pWorldPinsScaleController = Eegeo_NEW(WorldPinsScaleController)(*m_pWorldPinsRepository,
                                               *m_pWorldPinsService,
