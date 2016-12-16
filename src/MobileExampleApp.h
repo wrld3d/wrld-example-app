@@ -181,6 +181,7 @@ namespace ExampleApp
         
         const bool m_interiorsEnabled;
         const bool m_usingLegacyInteriorLabels;
+        const bool m_useIndoorEntryMarkerLabels;
 
         void CreateApplicationModelModules(Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                            const bool interiorsAffectedByFlattening);

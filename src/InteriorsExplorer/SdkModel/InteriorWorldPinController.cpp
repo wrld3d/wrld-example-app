@@ -12,6 +12,7 @@
 #include "MenuDragStateChangedMessage.h"
 #include "SearchVendorNames.h"
 #include "IInitialExperienceModel.h"
+#include "InteriorSelectionController.h"
 
 namespace ExampleApp
 {
@@ -24,7 +25,8 @@ namespace ExampleApp
                                                                    WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                                    Eegeo::Resources::Interiors::InteriorsCameraController& cameraController,
                                                                    ExampleAppMessaging::TMessageBus& messageBus,
-                                                                   const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel)
+                                                                   const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel,
+                                                                   bool useIndoorEntryMarkerLabels)
             : m_interiorSelectionModel(interiorSelectionModel)
             , m_markerRepository(markerRepository)
             , m_worldPinsService(worldPinsService)
@@ -35,9 +37,13 @@ namespace ExampleApp
             , m_menuDraggedCallback(this, &InteriorWorldPinController::HandleMenuDragged)
             , m_menuIsDragging(false)
             , m_initialExperienceModel(initialExperienceModel)
+            , m_useIndoorEntryMarkerLabels(useIndoorEntryMarkerLabels)
             {
-                m_markerRepository.RegisterNotifyAddedCallback(m_markerAddedCallback);
-                m_markerRepository.RegisterNotifyRemovedCallback(m_markerRemovedCallback);
+                if (!m_useIndoorEntryMarkerLabels)
+                {
+                    m_markerRepository.RegisterNotifyAddedCallback(m_markerAddedCallback);
+                    m_markerRepository.RegisterNotifyRemovedCallback(m_markerRemovedCallback);
+                }
                 
                 m_messageBus.SubscribeNative(m_menuDraggedCallback);
             }
@@ -46,8 +52,11 @@ namespace ExampleApp
             {
                 m_messageBus.UnsubscribeNative(m_menuDraggedCallback);
                 
-                m_markerRepository.UnregisterNotifyAddedCallback(m_markerAddedCallback);
-                m_markerRepository.UnregisterNotifyRemovedCallback(m_markerRemovedCallback);
+                if (!m_useIndoorEntryMarkerLabels)
+                {
+                    m_markerRepository.UnregisterNotifyAddedCallback(m_markerAddedCallback);
+                    m_markerRepository.UnregisterNotifyRemovedCallback(m_markerRemovedCallback);
+                }
                 
                 for(std::map<std::string, WorldPins::SdkModel::WorldPinItemModel*>::iterator it = m_interiorIdToWorldPinMap.begin();
                     it != m_interiorIdToWorldPinMap.end();
@@ -106,8 +115,7 @@ namespace ExampleApp
                 
                 InteriorWorldPinSelectionHandler* pSelectionHandler = Eegeo_NEW(InteriorWorldPinSelectionHandler)(markerModel.GetInteriorId(),
                                                                                                                   m_interiorSelectionModel,
-                                                                                                                  m_cameraController,
-                                                                                                                  markerModel.GetMarkerLatLongAltitude().ToECEF(),
+                                                                                                                  
                                                                                                                   *this);
                 
                 WorldPins::SdkModel::WorldPinItemModel* pItemModel = m_worldPinsService.AddPin(pSelectionHandler,

@@ -7,18 +7,20 @@
 #include "ApplicationConfigurationJsonParser.h"
 #include "ICoverageTreeManifestLoader.h"
 #include "ApiTokenService.h"
+#include "CityThemeLoader.h"
 
 namespace ExampleApp
 {
     namespace DeepLink
     {
         namespace SdkModel
-        {            
+        {
             DeepLinkConfigHandler::DeepLinkConfigHandler(CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                                                          Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                                          Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                                                          ApplicationConfig::ApplicationConfiguration& defaultConfig,
                                                          Eegeo::Streaming::CoverageTrees::ICoverageTreeManifestLoader& manifestLoader,
+                                                         Eegeo::Resources::CityThemes::CityThemeLoader& cityThemeLoader,
                                                          Search::SdkModel::InteriorMenuObserver& interiorMenuObserver,
                                                          AboutPage::View::IAboutPageViewModel& aboutPageViewModule,
                                                          Eegeo::Web::ApiTokenService& apiTokenService)
@@ -29,6 +31,7 @@ namespace ExampleApp
             ,m_alertBoxFactory(alertBoxFactory)
             ,m_defaultConfig(defaultConfig)
             ,m_manifestLoader(manifestLoader)
+            ,m_cityThemeLoader(cityThemeLoader)
             ,m_interiorMenuObserver(interiorMenuObserver)
             ,m_aboutPageViewModule(aboutPageViewModule)
             ,m_apiTokenService(apiTokenService)
@@ -54,16 +57,21 @@ namespace ExampleApp
                     ApplicationConfig::SdkModel::ApplicationConfigurationJsonParser parser(m_defaultConfig);
                     size_t resultSize = webResponse.GetBodyData().size();
                     std::string resultString = std::string(reinterpret_cast<char const*>(&(webResponse.GetBodyData().front())), resultSize);
-                    
+
                     if(parser.IsValidConfig(resultString))
                     {
                         ApplicationConfig::ApplicationConfiguration applicationConfig = parser.ParseConfiguration(resultString);
                         m_apiTokenService.ApiKeyChanged(applicationConfig.EegeoApiKey());
                         m_manifestLoader.LoadCoverageTreeManifest(applicationConfig.CoverageTreeManifestURL());
+
+                        const std::string themeNameContains = "Summer";
+                        const std::string themeStateName = "DayDefault";
+                        m_cityThemeLoader.LoadThemes(applicationConfig.ThemeManifestURL(), themeNameContains, themeStateName);
+
                         m_cameraTransitionController.StartTransitionTo(applicationConfig.InterestLocation().ToECEF(), applicationConfig.DistanceToInterestMetres(), applicationConfig.OrientationDegrees());
                         m_interiorMenuObserver.UpdateDefaultOutdoorSearchMenuItems(applicationConfig.RawConfig());
                         m_aboutPageViewModule.UpdateApplicationName(applicationConfig.Name());
-                        
+
                     }
                     else
                     {
