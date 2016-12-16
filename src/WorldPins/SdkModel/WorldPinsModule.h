@@ -48,6 +48,8 @@ namespace ExampleApp
                                 const Menu::View::IMenuReactionModel& menuReaction,
                                 const float screenOversampleScale,
                                 const IWorldPinIconMapping& worldPinIconMapping,
+                                Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& interiorMarkerPickingService,
+                                const bool useIndoorEntryMarkerLabels,
                                 bool isInKioskMode);
 
                 ~WorldPinsModule();

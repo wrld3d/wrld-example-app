@@ -49,6 +49,7 @@ namespace ExampleApp
                                         Metrics::IMetricsService& metricsService,
                                         const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel,
                                         const bool interiorsAffectedByFlattening,
+                                        const bool useIndoorEntryMarkerLabels,
                                         InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsEntitiesPinsController,
                                         PersistentSettings::IPersistentSettingsModel& persistentSettings,
                                         Eegeo::Location::NavigationService& navigationServic,
@@ -85,6 +86,7 @@ namespace ExampleApp
                 InteriorsExplorerFloorDraggedObserver* m_pFloorDraggedObserver;
                 
                 InteriorWorldPinController* m_pWorldPinController;
+                InteriorSelectionController* m_pInteriorSelectionController;
                 Eegeo::Resources::Interiors::InteriorsCameraController* m_pInteriorsCameraController;
                 Eegeo::Resources::Interiors::InteriorsGpsCameraController* m_pInteriorsGpsCameraController;
                 Eegeo::Camera::GlobeCamera::GlobeCameraTouchController* m_pGlobeCameraTouchController;

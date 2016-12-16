@@ -187,6 +187,7 @@ namespace ExampleApp
 
         const bool m_interiorsEnabled;
         const bool m_usingLegacyInteriorLabels;
+        const bool m_useIndoorEntryMarkerLabels;
         
         ExampleApp::WifiInfo::IRestrictedBuildingService* m_pRestrictedBuildingInfoService;
         

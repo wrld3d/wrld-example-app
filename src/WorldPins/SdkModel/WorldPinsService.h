@@ -10,6 +10,7 @@
 #include "IWorldPinsService.h"
 #include "VectorMath.h"
 #include "EnvironmentFlatteningService.h"
+#include "Interiors.h"
 
 namespace ExampleApp
 {
@@ -34,6 +35,8 @@ namespace ExampleApp
                 Eegeo::Pins::PinController& m_pinController;
                 const Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
                 const IWorldPinIconMapping& m_worldPinIconMapping;
+                Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& m_interiorMarkerPickingService;
+                const bool m_useIndoorEntryMarkerLabels;
                 bool m_pinAlreadySelected;
 
             public:
@@ -42,7 +45,9 @@ namespace ExampleApp
                                  Eegeo::Pins::PinRepository& pinRepository,
                                  Eegeo::Pins::PinController& pinController,
                                  const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                 const IWorldPinIconMapping& worldPinIconMapping);
+                                 const IWorldPinIconMapping& worldPinIconMapping,
+                                 Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& interiorMarkerPickingService,
+                                 const bool useIndoorEntryMarkerLabels);
 
                 ~WorldPinsService();
 

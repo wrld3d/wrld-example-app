@@ -435,10 +435,21 @@
         "name": "interior_default",
         "label_resource_font_binding": "interiors",
         "size_px": 12,
-        "glyph_color_rgba": "000000",
-        "halo_color_rgba": "FFFFFF",
-        "masked_glyph_color_rgba": "000000",
-        "masked_halo_color_rgba": "FFFFFF"
+        "glyph_color_rgba": "FFFFFF",
+        "halo_color_rgba": "3A3A3A",
+        "masked_glyph_color_rgba": "E0E0E0A0",
+        "masked_halo_color_rgba": "00000080"
+    },
+    {
+        "name": "indoor_map_marker",
+        "label_resource_font_binding": "interiors",
+        "size_px": 10,
+        "glyph_color_rgba": "F2F2F2",
+        "halo_color_rgba": "1040A0",
+        "masked_glyph_color_rgba": "F2F2F2",
+        "masked_halo_color_rgba": "1040A0",
+        "halo_width": 3.0,
+        "halo_hardness": 1.0
     }
     ],
     "LabelIconStyles":[
@@ -447,7 +458,13 @@
         "size_px": 28,
         "color": "FFFFFFFF",
         "masked_color": "F0F0F080"
-	}
+	},
+    {
+        "name": "indoor_map_marker",
+        "size_px": 40,
+        "color": "FFFFFFFF",
+        "masked_color": "F0F0F080"
+    }
 	],
 	"LabelStyles": [{
 		"name": "road_default",
@@ -833,6 +850,19 @@
         "constraint_radius_scale": 1.0,
         "stencil_mode": "always",
         "priority": 2
+    },
+    {
+        "name": "indoor_map_marker",
+        "label_text_style_name": "indoor_map_marker",
+        "label_icon_style_name": "indoor_map_marker",
+        "label_orientation": "screen",
+        "label_display": "screen_space",
+        "label_horizontal_alignment": "left",
+        "label_vertical_alignment": "middle",
+        "constraint_radius_scale": 1.0,
+        "pickable": true,
+        "stencil_mode": "always",
+        "priority": 5
     }
     ],
 	"LabelStyleBindings": [{
@@ -1222,6 +1252,10 @@
     {
         "label_anchor_category": "interior_facility_toilets",
         "label_style_name": "interior_facility_high_priority"
+    },
+    {
+        "label_anchor_category": "indoor_map",
+        "label_style_name": "indoor_map_marker"
     }
     ]
 }

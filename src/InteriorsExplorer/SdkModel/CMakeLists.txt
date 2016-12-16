@@ -18,6 +18,8 @@ set(currsources
   ../src/InteriorsExplorer/SdkModel/InteriorExplorerConnectionChangedObserver.h
   ../src/InteriorsExplorer/SdkModel/InteriorsExplorerFloorDraggedObserver.cpp
   ../src/InteriorsExplorer/SdkModel/InteriorsExplorerFloorDraggedObserver.h
+  ../src/InteriorsExplorer/SdkModel/InteriorSelectionController.cpp
+  ../src/InteriorsExplorer/SdkModel/InteriorSelectionController.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\InteriorsExplorer\\SdkModel FILES ${currsources})

@@ -28,7 +28,8 @@ namespace ExampleApp
                                            Eegeo::Resources::Interiors::InteriorsCameraController& cameraController,
                                            ExampleAppMessaging::TMessageBus& messageBus,
                                            const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel,
-                                           ExampleApp::WifiInfo::IRestrictedBuildingService& restrictedBuildingInformationService);
+                                           ExampleApp::WifiInfo::IRestrictedBuildingService& restrictedBuildingInformationService,
+                                           const bool useIndoorEntryMarkerLabels);
                 ~InteriorWorldPinController();
                 
                 const bool PinInteractionAllowed(const std::string& interiorId) const;
@@ -49,6 +50,7 @@ namespace ExampleApp
                 std::map<std::string, WorldPins::SdkModel::WorldPinItemModel*> m_deferedRemovalMap;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 const InitialExperience::SdkModel::IInitialExperienceModel& m_initialExperienceModel;
+                const bool m_useIndoorEntryMarkerLabels;
                 bool m_menuIsDragging;
                 
                 Eegeo::Helpers::TCallback1<InteriorWorldPinController, const Eegeo::Resources::Interiors::Markers::InteriorMarkerModel&> m_markerAddedCallback;
