@@ -27,7 +27,8 @@ namespace ExampleApp
                                                                            Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory, ApplicationConfig::ApplicationConfiguration& defaultConfig,
                                                                            Eegeo::Streaming::CoverageTrees::ICoverageTreeManifestLoader& manifestLoader,
                                                                            Search::SdkModel::InteriorMenuObserver& interiorMenuObserver,
-                                                                           AboutPage::View::IAboutPageViewModel& aboutPageViewModule)
+                                                                           AboutPage::View::IAboutPageViewModel& aboutPageViewModule,
+                                                                           Eegeo::Web::ApiTokenService& apiTokenService)
             {
                 m_pDeepLinkModel = Eegeo_NEW(DeepLinkModel)();
                 DeepLinkLocationHandler* locationHandler = Eegeo_NEW(DeepLinkLocationHandler)(cameraTransitionController, alertBoxFactory);
@@ -35,7 +36,7 @@ namespace ExampleApp
                 
                 if(CONFIG_DEEP_LINK_ENABLED)
                 {
-                    DeepLinkConfigHandler* configHandler= Eegeo_NEW(DeepLinkConfigHandler)(cameraTransitionController, webFactory, alertBoxFactory, defaultConfig, manifestLoader, interiorMenuObserver, aboutPageViewModule);
+                    DeepLinkConfigHandler* configHandler= Eegeo_NEW(DeepLinkConfigHandler)(cameraTransitionController, webFactory, alertBoxFactory, defaultConfig, manifestLoader, interiorMenuObserver, aboutPageViewModule, apiTokenService);
                     m_pDeepLinkModel->AddRoute(MYMAP_PATH, configHandler);
                 }
 

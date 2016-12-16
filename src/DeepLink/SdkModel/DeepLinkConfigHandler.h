@@ -29,7 +29,8 @@ namespace ExampleApp
                                       ExampleApp::ApplicationConfig::ApplicationConfiguration& defaultConfig,
                                       Eegeo::Streaming::CoverageTrees::ICoverageTreeManifestLoader& manifestLoader,
                                       Search::SdkModel::InteriorMenuObserver& interiorMenuObserver,
-                                      AboutPage::View::IAboutPageViewModel& aboutPageViewModule);
+                                      AboutPage::View::IAboutPageViewModel& aboutPageViewModule,
+                                      Eegeo::Web::ApiTokenService& apiTokenService);
                 void HandleDeepLink(const AppInterface::UrlData& data);
             private:
                 CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionController;
@@ -44,6 +45,7 @@ namespace ExampleApp
                 void OnFailAlertBoxDismissed();
                 Search::SdkModel::InteriorMenuObserver& m_interiorMenuObserver;
                 AboutPage::View::IAboutPageViewModel& m_aboutPageViewModule;
+                Eegeo::Web::ApiTokenService& m_apiTokenService;
             };
         
             const std::string CONFIG_FILES_HOME = "http://mapscene.eegeo.com";

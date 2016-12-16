@@ -435,7 +435,7 @@ namespace ExampleApp
         
         m_pUserInteractionModule = Eegeo_NEW(UserInteraction::SdkModel::UserInteractionModule)(m_pAppCameraModule->GetController(), *m_pCameraTransitionService, m_pInteriorsExplorerModule->GetInteriorsExplorerUserInteractionModel(), m_messageBus);
         
-        m_pDeepLinkModule = Eegeo_NEW(DeepLink::SdkModel::DeepLinkModule)(*m_pCameraTransitionController, m_platformAbstractions.GetWebLoadRequestFactory(), m_pWorld->GetNativeUIFactories().AlertBoxFactory(), m_applicationConfiguration, m_pWorld->GetMapModule().GetCoverageTreeModule().GetCoverageTreeLoader(), m_pSearchModule->GetInteriorMenuObserver(), m_pAboutPageModule->GetAboutPageViewModel());
+        m_pDeepLinkModule = Eegeo_NEW(DeepLink::SdkModel::DeepLinkModule)(*m_pCameraTransitionController, m_platformAbstractions.GetWebLoadRequestFactory(), m_pWorld->GetNativeUIFactories().AlertBoxFactory(), m_applicationConfiguration, m_pWorld->GetMapModule().GetCoverageTreeModule().GetCoverageTreeLoader(), m_pSearchModule->GetInteriorMenuObserver(), m_pAboutPageModule->GetAboutPageViewModel(), m_pWorld->GetApiTokenService());
     }
     
     MobileExampleApp::~MobileExampleApp()
@@ -511,7 +511,7 @@ namespace ExampleApp
                                                                                                                                m_networkCapabilities,
                                                                                                                                searchTags,
                                                                                                                                m_applicationConfiguration.EegeoSearchServiceUrl(),
-                                                                                                                               m_applicationConfiguration.EegeoApiKey(),
+                                                                                                                               m_pWorld->GetApiTokenModel(),
                                                                                                                                world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel());
         }
         

@@ -6,6 +6,7 @@
 #include "ICameraTransitionController.h"
 #include "ApplicationConfigurationJsonParser.h"
 #include "ICoverageTreeManifestLoader.h"
+#include "ApiTokenService.h"
 
 namespace ExampleApp
 {
@@ -19,7 +20,8 @@ namespace ExampleApp
                                                          ApplicationConfig::ApplicationConfiguration& defaultConfig,
                                                          Eegeo::Streaming::CoverageTrees::ICoverageTreeManifestLoader& manifestLoader,
                                                          Search::SdkModel::InteriorMenuObserver& interiorMenuObserver,
-                                                         AboutPage::View::IAboutPageViewModel& aboutPageViewModule)
+                                                         AboutPage::View::IAboutPageViewModel& aboutPageViewModule,
+                                                         Eegeo::Web::ApiTokenService& apiTokenService)
             :m_webRequestFactory(webRequestFactory)
             ,m_configRequestCompleteCallback(this, &DeepLinkConfigHandler::HandleConfigResponse)
             ,m_failAlertHandler(this, &DeepLinkConfigHandler::OnFailAlertBoxDismissed)
@@ -29,6 +31,7 @@ namespace ExampleApp
             ,m_manifestLoader(manifestLoader)
             ,m_interiorMenuObserver(interiorMenuObserver)
             ,m_aboutPageViewModule(aboutPageViewModule)
+            ,m_apiTokenService(apiTokenService)
             {
             }
 
@@ -55,6 +58,7 @@ namespace ExampleApp
                     if(parser.IsValidConfig(resultString))
                     {
                         ApplicationConfig::ApplicationConfiguration applicationConfig = parser.ParseConfiguration(resultString);
+                        m_apiTokenService.ApiKeyChanged(applicationConfig.EegeoApiKey());
                         m_manifestLoader.LoadCoverageTreeManifest(applicationConfig.CoverageTreeManifestURL());
                         m_cameraTransitionController.StartTransitionTo(applicationConfig.InterestLocation().ToECEF(), applicationConfig.DistanceToInterestMetres(), applicationConfig.OrientationDegrees());
                         m_interiorMenuObserver.UpdateDefaultOutdoorSearchMenuItems(applicationConfig.RawConfig());
