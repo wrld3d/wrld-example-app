@@ -17,7 +17,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class DeepLinkModule
+            class DeepLinkModule: private Eegeo::NonCopyable
             {
             public:
 

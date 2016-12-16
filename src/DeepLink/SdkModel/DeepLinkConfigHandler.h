@@ -21,7 +21,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class DeepLinkConfigHandler: public IDeepLinkHandler
+            class DeepLinkConfigHandler: public IDeepLinkHandler, private Eegeo::NonCopyable
             {
             public:
                 DeepLinkConfigHandler(CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
