@@ -47,14 +47,11 @@ namespace ExampleApp
                 Search::SdkModel::InteriorMenuObserver& m_interiorMenuObserver;
                 AboutPage::View::IAboutPageViewModel& m_aboutPageViewModule;
                 Eegeo::Location::NavigationService& m_navigationService;
+                Eegeo::Web::ApiTokenService& m_apiTokenService;
 
                 std::string GenerateConfigUrl(const AppInterface::UrlData& data) const;
                 void HandleConfigResponse(Eegeo::Web::IWebResponse& webResponse);
                 void OnFailAlertBoxDismissed();
-
-                Search::SdkModel::InteriorMenuObserver& m_interiorMenuObserver;
-                AboutPage::View::IAboutPageViewModel& m_aboutPageViewModule;
-                Eegeo::Web::ApiTokenService& m_apiTokenService;
             };
         
             const std::string CONFIG_FILES_HOME = "http://mapscene.eegeo.com";
