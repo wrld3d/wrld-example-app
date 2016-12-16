@@ -6,6 +6,7 @@
 #include "ICameraTransitionController.h"
 #include "ApplicationConfigurationJsonParser.h"
 #include "ICoverageTreeManifestLoader.h"
+#include "CityThemeLoader.h"
 
 namespace ExampleApp
 {
@@ -18,6 +19,7 @@ namespace ExampleApp
                                                          Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                                                          ApplicationConfig::ApplicationConfiguration& defaultConfig,
                                                          Eegeo::Streaming::CoverageTrees::ICoverageTreeManifestLoader& manifestLoader,
+                                                         Eegeo::Resources::CityThemes::CityThemeLoader& cityThemeLoader,
                                                          Search::SdkModel::InteriorMenuObserver& interiorMenuObserver,
                                                          AboutPage::View::IAboutPageViewModel& aboutPageViewModule)
             :m_webRequestFactory(webRequestFactory)
@@ -27,6 +29,7 @@ namespace ExampleApp
             ,m_alertBoxFactory(alertBoxFactory)
             ,m_defaultConfig(defaultConfig)
             ,m_manifestLoader(manifestLoader)
+            ,m_cityThemeLoader(cityThemeLoader)
             ,m_interiorMenuObserver(interiorMenuObserver)
             ,m_aboutPageViewModule(aboutPageViewModule)
             {
@@ -56,6 +59,11 @@ namespace ExampleApp
                     {
                         ApplicationConfig::ApplicationConfiguration applicationConfig = parser.ParseConfiguration(resultString);
                         m_manifestLoader.LoadCoverageTreeManifest(applicationConfig.CoverageTreeManifestURL());
+
+                        const std::string themeNameContains = "Summer";
+                        const std::string themeStateName = "DayDefault";
+                        m_cityThemeLoader.LoadThemes(applicationConfig.ThemeManifestURL(), themeNameContains, themeStateName);
+
                         m_cameraTransitionController.StartTransitionTo(applicationConfig.InterestLocation().ToECEF(), applicationConfig.DistanceToInterestMetres(), applicationConfig.OrientationDegrees());
                         m_interiorMenuObserver.UpdateDefaultOutdoorSearchMenuItems(applicationConfig.RawConfig());
                         m_aboutPageViewModule.UpdateApplicationName(applicationConfig.Name());

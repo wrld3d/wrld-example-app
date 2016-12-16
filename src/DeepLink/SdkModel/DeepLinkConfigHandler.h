@@ -9,6 +9,7 @@
 #include "WebLoadRequestCompletionCallback.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
 #include "CoverageTrees.h"
+#include "CityThemes.h"
 #include "InteriorMenuObserver.h"
 #include "AboutPageViewModel.h"
 
@@ -28,6 +29,7 @@ namespace ExampleApp
                                       Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                                       ExampleApp::ApplicationConfig::ApplicationConfiguration& defaultConfig,
                                       Eegeo::Streaming::CoverageTrees::ICoverageTreeManifestLoader& manifestLoader,
+                                      Eegeo::Resources::CityThemes::CityThemeLoader& cityThemeLoader,
                                       Search::SdkModel::InteriorMenuObserver& interiorMenuObserver,
                                       AboutPage::View::IAboutPageViewModel& aboutPageViewModule);
                 void HandleDeepLink(const AppInterface::UrlData& data);
@@ -39,6 +41,7 @@ namespace ExampleApp
                 Eegeo::Web::TWebLoadRequestCompletionCallback<DeepLinkConfigHandler> m_configRequestCompleteCallback;
                 Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<DeepLinkConfigHandler> m_failAlertHandler;
                 Eegeo::Streaming::CoverageTrees::ICoverageTreeManifestLoader& m_manifestLoader;
+                Eegeo::Resources::CityThemes::CityThemeLoader& m_cityThemeLoader;
                 std::string GenerateConfigUrl(const AppInterface::UrlData& data) const;
                 void HandleConfigResponse(Eegeo::Web::IWebResponse& webResponse);
                 void OnFailAlertBoxDismissed();

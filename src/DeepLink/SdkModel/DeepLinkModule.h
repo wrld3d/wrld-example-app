@@ -7,6 +7,7 @@
 #include "IAlertBoxFactory.h"
 #include "IWebLoadRequestFactory.h"
 #include "CoverageTrees.h"
+#include "CityThemes.h"
 #include "InteriorMenuObserver.h"
 #include "AboutPageViewModel.h"
 
@@ -19,7 +20,16 @@ namespace ExampleApp
             class DeepLinkModule
             {
             public:
-                DeepLinkModule(CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController, Eegeo::Web::IWebLoadRequestFactory& webFactory, Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory, ApplicationConfig::ApplicationConfiguration& defaultConfig, Eegeo::Streaming::CoverageTrees::ICoverageTreeManifestLoader& manifest, Search::SdkModel::InteriorMenuObserver& interiorMenuObserver, AboutPage::View::IAboutPageViewModel& aboutPageViewModule);
+                DeepLinkModule(
+                    CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                    Eegeo::Web::IWebLoadRequestFactory& webFactory,
+                    Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                    ApplicationConfig::ApplicationConfiguration& defaultConfig,
+                    Eegeo::Streaming::CoverageTrees::ICoverageTreeManifestLoader& manifest,
+                    Eegeo::Resources::CityThemes::CityThemeLoader& cityThemeLoader,
+                    Search::SdkModel::InteriorMenuObserver& interiorMenuObserver,
+                    AboutPage::View::IAboutPageViewModel& aboutPageViewModule);
+
                 ~DeepLinkModule();
                 DeepLinkController& GetDeepLinkController();
             private:
