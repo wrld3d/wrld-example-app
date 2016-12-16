@@ -30,12 +30,13 @@ namespace ExampleApp
                                                                            Eegeo::Resources::CityThemes::CityThemeLoader& cityThemeLoader,
                                                                            Search::SdkModel::InteriorMenuObserver& interiorMenuObserver,
                                                                            AboutPage::View::IAboutPageViewModel& aboutPageViewModule,
-                                                                           Eegeo::Location::NavigationService& navigationService)
+                                                                           Eegeo::Location::NavigationService& navigationService,
+                                                                           Eegeo::Web::ApiTokenService& apiTokenService)
             {
                 m_pDeepLinkModel = Eegeo_NEW(DeepLinkModel)();
                 DeepLinkLocationHandler* locationHandler = Eegeo_NEW(DeepLinkLocationHandler)(cameraTransitionController, alertBoxFactory);
                 m_pDeepLinkModel->AddRoute(LOCATION_PATH, locationHandler);
-                
+
                 if(CONFIG_DEEP_LINK_ENABLED)
                 {
                     DeepLinkConfigHandler* configHandler= Eegeo_NEW(DeepLinkConfigHandler)(cameraTransitionController,
@@ -46,7 +47,8 @@ namespace ExampleApp
                     cityThemeLoader,
                     interiorMenuObserver,
                     aboutPageViewModule,
-                    navigationService);
+                    navigationService,
+                    apiTokenService);
 
                     m_pDeepLinkModel->AddRoute(MYMAP_PATH, configHandler);
                 }

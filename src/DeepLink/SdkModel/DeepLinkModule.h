@@ -18,9 +18,10 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class DeepLinkModule
+            class DeepLinkModule: private Eegeo::NonCopyable
             {
             public:
+
                 DeepLinkModule(
                     CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                     Eegeo::Web::IWebLoadRequestFactory& webFactory,
@@ -30,7 +31,8 @@ namespace ExampleApp
                     Eegeo::Resources::CityThemes::CityThemeLoader& cityThemeLoader,
                     Search::SdkModel::InteriorMenuObserver& interiorMenuObserver,
                     AboutPage::View::IAboutPageViewModel& aboutPageViewModule,
-                    Eegeo::Location::NavigationService& navigationService);
+                    Eegeo::Location::NavigationService& navigationService,
+                    Eegeo::Web::ApiTokenService& apiTokenService);
 
                 ~DeepLinkModule();
                 DeepLinkController& GetDeepLinkController();
