@@ -80,7 +80,20 @@
                 }
              ]
         }
-     ]
+     ],
+    "WifiRestrictedBuildings": [{
+       "InteriorId": "swallow_lon_38finsbury",
+       "AllowedSSIDs": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
+    }, {
+       "InteriorId": "swallow_lon_citygatehouse",
+       "AllowedSSIDs": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
+    }, {
+       "InteriorId": "swallow_lon_50finsbury",
+       "AllowedSSIDs": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
+    }, {
+       "InteriorId": "swallow_lon_parkhouse",
+       "AllowedSSIDs": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
+    }]
 
 	
 }
