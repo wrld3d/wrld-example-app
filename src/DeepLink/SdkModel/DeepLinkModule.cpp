@@ -29,7 +29,8 @@ namespace ExampleApp
                                                                            Eegeo::Streaming::CoverageTrees::ICoverageTreeManifestLoader& manifestLoader,
                                                                            Eegeo::Resources::CityThemes::CityThemeLoader& cityThemeLoader,
                                                                            Search::SdkModel::InteriorMenuObserver& interiorMenuObserver,
-                                                                           AboutPage::View::IAboutPageViewModel& aboutPageViewModule)
+                                                                           AboutPage::View::IAboutPageViewModel& aboutPageViewModule,
+                                                                           Eegeo::Location::NavigationService& navigationService)
             {
                 m_pDeepLinkModel = Eegeo_NEW(DeepLinkModel)();
                 DeepLinkLocationHandler* locationHandler = Eegeo_NEW(DeepLinkLocationHandler)(cameraTransitionController, alertBoxFactory);
@@ -44,7 +45,8 @@ namespace ExampleApp
                     manifestLoader,
                     cityThemeLoader,
                     interiorMenuObserver,
-                    aboutPageViewModule);
+                    aboutPageViewModule,
+                    navigationService);
 
                     m_pDeepLinkModel->AddRoute(MYMAP_PATH, configHandler);
                 }

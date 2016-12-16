@@ -444,7 +444,8 @@ namespace ExampleApp
             m_pWorld->GetMapModule().GetCoverageTreeModule().GetCoverageTreeLoader(),
             m_pWorld->GetMapModule().GetCityThemesModule().GetCityThemeLoader(),
             m_pSearchModule->GetInteriorMenuObserver(),
-            m_pAboutPageModule->GetAboutPageViewModel());
+            m_pAboutPageModule->GetAboutPageViewModel(),
+            *m_pNavigationService);
     }
     
     MobileExampleApp::~MobileExampleApp()

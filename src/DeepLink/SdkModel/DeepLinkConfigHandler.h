@@ -12,8 +12,8 @@
 #include "CityThemes.h"
 #include "InteriorMenuObserver.h"
 #include "AboutPageViewModel.h"
-
 #include "IAlertBoxFactory.h"
+#include "Location.h"
 
 namespace ExampleApp
 {
@@ -31,7 +31,8 @@ namespace ExampleApp
                                       Eegeo::Streaming::CoverageTrees::ICoverageTreeManifestLoader& manifestLoader,
                                       Eegeo::Resources::CityThemes::CityThemeLoader& cityThemeLoader,
                                       Search::SdkModel::InteriorMenuObserver& interiorMenuObserver,
-                                      AboutPage::View::IAboutPageViewModel& aboutPageViewModule);
+                                      AboutPage::View::IAboutPageViewModel& aboutPageViewModule,
+                                      Eegeo::Location::NavigationService& navigationService);
                 void HandleDeepLink(const AppInterface::UrlData& data);
             private:
                 CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionController;
@@ -42,11 +43,13 @@ namespace ExampleApp
                 Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<DeepLinkConfigHandler> m_failAlertHandler;
                 Eegeo::Streaming::CoverageTrees::ICoverageTreeManifestLoader& m_manifestLoader;
                 Eegeo::Resources::CityThemes::CityThemeLoader& m_cityThemeLoader;
+                Search::SdkModel::InteriorMenuObserver& m_interiorMenuObserver;
+                AboutPage::View::IAboutPageViewModel& m_aboutPageViewModule;
+                Eegeo::Location::NavigationService& m_navigationService;
+
                 std::string GenerateConfigUrl(const AppInterface::UrlData& data) const;
                 void HandleConfigResponse(Eegeo::Web::IWebResponse& webResponse);
                 void OnFailAlertBoxDismissed();
-                Search::SdkModel::InteriorMenuObserver& m_interiorMenuObserver;
-                AboutPage::View::IAboutPageViewModel& m_aboutPageViewModule;
             };
         
             const std::string CONFIG_FILES_HOME = "http://mapscene.eegeo.com";

@@ -7,6 +7,7 @@
 #include "ApplicationConfigurationJsonParser.h"
 #include "ICoverageTreeManifestLoader.h"
 #include "CityThemeLoader.h"
+#include "NavigationService.h"
 
 namespace ExampleApp
 {
@@ -21,7 +22,8 @@ namespace ExampleApp
                                                          Eegeo::Streaming::CoverageTrees::ICoverageTreeManifestLoader& manifestLoader,
                                                          Eegeo::Resources::CityThemes::CityThemeLoader& cityThemeLoader,
                                                          Search::SdkModel::InteriorMenuObserver& interiorMenuObserver,
-                                                         AboutPage::View::IAboutPageViewModel& aboutPageViewModule)
+                                                         AboutPage::View::IAboutPageViewModel& aboutPageViewModule,
+                                                         Eegeo::Location::NavigationService& navigationService)
             :m_webRequestFactory(webRequestFactory)
             ,m_configRequestCompleteCallback(this, &DeepLinkConfigHandler::HandleConfigResponse)
             ,m_failAlertHandler(this, &DeepLinkConfigHandler::OnFailAlertBoxDismissed)
@@ -32,6 +34,7 @@ namespace ExampleApp
             ,m_cityThemeLoader(cityThemeLoader)
             ,m_interiorMenuObserver(interiorMenuObserver)
             ,m_aboutPageViewModule(aboutPageViewModule)
+            ,m_navigationService(navigationService)
             {
             }
 
@@ -68,6 +71,15 @@ namespace ExampleApp
                         m_interiorMenuObserver.UpdateDefaultOutdoorSearchMenuItems(applicationConfig.RawConfig());
                         m_aboutPageViewModule.UpdateApplicationName(applicationConfig.Name());
                         
+                        const bool useGps = applicationConfig.TryStartAtGpsLocation();
+                        if (useGps)
+                        {
+                            m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsModeFollow);
+                        }
+                        else
+                        {
+                            m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsModeOff);
+                        }
                     }
                     else
                     {

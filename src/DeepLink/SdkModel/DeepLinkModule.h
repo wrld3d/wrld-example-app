@@ -10,6 +10,7 @@
 #include "CityThemes.h"
 #include "InteriorMenuObserver.h"
 #include "AboutPageViewModel.h"
+#include "Location.h"
 
 namespace ExampleApp
 {
@@ -28,7 +29,8 @@ namespace ExampleApp
                     Eegeo::Streaming::CoverageTrees::ICoverageTreeManifestLoader& manifest,
                     Eegeo::Resources::CityThemes::CityThemeLoader& cityThemeLoader,
                     Search::SdkModel::InteriorMenuObserver& interiorMenuObserver,
-                    AboutPage::View::IAboutPageViewModel& aboutPageViewModule);
+                    AboutPage::View::IAboutPageViewModel& aboutPageViewModule,
+                    Eegeo::Location::NavigationService& navigationService);
 
                 ~DeepLinkModule();
                 DeepLinkController& GetDeepLinkController();
