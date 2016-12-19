@@ -12,8 +12,6 @@
 #include "ILocationService.h"
 #include "AndroidNativeState.h"
 
-class IndoorAtlasLocationManager;
-
 namespace ExampleApp
 {
     namespace IndoorAtlas
@@ -27,7 +25,8 @@ namespace ExampleApp
                                       const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                       const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
                                       Eegeo::Location::ILocationService& defaultLocationService,
-									  AndroidNativeState& nativeState);
+									  AndroidNativeState& nativeState,
+									  ExampleAppMessaging::TMessageBus& messageBus);
             ~IndoorAtlasLocationModule();
             
             IndoorAtlasLocationService& GetLocationService() { return *m_pLocationService; }
@@ -35,7 +34,7 @@ namespace ExampleApp
         private:
             IndoorAtlasLocationController* m_pLocationController;
             IndoorAtlasLocationService* m_pLocationService;
-            IndoorAtlasLocationManager* m_pLocationManager;
+            View::IndoorAtlasLocationManager* m_pLocationManager;
         };
     }
 }

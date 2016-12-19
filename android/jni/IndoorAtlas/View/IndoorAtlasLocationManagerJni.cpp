@@ -12,7 +12,7 @@ JNIEXPORT void JNICALL Java_com_eegeo_indooratlas_IndoorAtlasJniMethods_OnLocati
 {
     ASSERT_UI_THREAD
 
-    ExampleApp::IndoorAtlas::IndoorAtlasLocationManager* pView = reinterpret_cast<ExampleApp::IndoorAtlas::IndoorAtlasLocationManager*>(nativeObjectPtr);
+    ExampleApp::IndoorAtlas::View::IndoorAtlasLocationManager* pView = reinterpret_cast<ExampleApp::IndoorAtlas::View::IndoorAtlasLocationManager*>(nativeObjectPtr);
     pView->OnUpdateLocation(latitude, longitude);
 }
 

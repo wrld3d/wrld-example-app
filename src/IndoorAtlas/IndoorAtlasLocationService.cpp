@@ -12,13 +12,22 @@ namespace ExampleApp
     {
         IndoorAtlasLocationService::IndoorAtlasLocationService(Eegeo::Location::ILocationService& defaultLocationService,
                                                                const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                                               const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel)
+                                                               const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                               ExampleApp::ExampleAppMessaging::TMessageBus& messageBus)
         : m_defaultLocationService(defaultLocationService)
         , m_environmentFlatteningService(environmentFlatteningService)
         , m_interiorInteractionModel(interiorInteractionModel)
         , m_latLong(Eegeo::Space::LatLong::FromDegrees(0, 0))
         , m_floorIndex(0)
+        , m_messageBus(messageBus)
+        , m_LocationChangeCallback(this, &IndoorAtlasLocationService::OnLocationChanged)
         {
+            m_messageBus.SubscribeNative(m_LocationChangeCallback);
+        }
+
+        IndoorAtlasLocationService::~IndoorAtlasLocationService()
+        {
+            m_messageBus.UnsubscribeNative(m_LocationChangeCallback);
         }
         
         const bool IndoorAtlasLocationService::GetIsAuthorized() const
@@ -82,6 +91,11 @@ namespace ExampleApp
             m_latLong = latLong;
         }
         
+        void IndoorAtlasLocationService::OnLocationChanged(const ExampleApp::IndoorLocation::IndoorLocationChangedMessage& locationChangedMessage)
+        {
+        	SetLocation(locationChangedMessage.GetLocation());
+        }
+
         void IndoorAtlasLocationService::SetFloorIndex(int floorIndex)
         {
             m_floorIndex = floorIndex;

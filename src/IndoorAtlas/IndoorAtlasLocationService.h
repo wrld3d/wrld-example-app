@@ -6,6 +6,9 @@
 #include "LatLongAltitude.h"
 #include "InteriorsModel.h"
 #include "InteriorId.h"
+#include "BidirectionalBus.h"
+#include "ICallback.h"
+#include "IndoorLocationChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -16,8 +19,9 @@ namespace ExampleApp
         public:
             IndoorAtlasLocationService(Eegeo::Location::ILocationService& defaultLocationService,
                                        const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                       const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel);
-            
+                                       const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                       ExampleApp::ExampleAppMessaging::TMessageBus& messageBus);
+            ~IndoorAtlasLocationService();
             const bool GetIsAuthorized() const;
             
             bool IsIndoors();
@@ -31,6 +35,7 @@ namespace ExampleApp
             
             void SetLocation(Eegeo::Space::LatLong& latLong);
             void SetFloorIndex(int floorIndex);
+            void OnLocationChanged(const ExampleApp::IndoorLocation::IndoorLocationChangedMessage& locationChangedMessage);
             
         private:
             Eegeo::Location::ILocationService& m_defaultLocationService;
@@ -39,6 +44,8 @@ namespace ExampleApp
             
             Eegeo::Space::LatLong m_latLong;
             int m_floorIndex;
+            ExampleApp::ExampleAppMessaging::TMessageBus& m_messageBus;
+            Eegeo::Helpers::TCallback1<IndoorAtlasLocationService, const ExampleApp::IndoorLocation::IndoorLocationChangedMessage&> m_LocationChangeCallback;
         };
     }
 }

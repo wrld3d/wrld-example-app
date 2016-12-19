@@ -21,9 +21,8 @@ public class IndoorAtlasManager implements IALocationListener, IARegion.Listener
 	private IALocationManager m_locationManager;
 	
 	
-	public IndoorAtlasManager(
-			MainActivity activity,
-			long nativeCallerPointer)
+	public IndoorAtlasManager(MainActivity activity,
+							  long nativeCallerPointer)
 	{
 		Log.d(TAG, "IndoorAtlasManager()");
 		
@@ -31,24 +30,27 @@ public class IndoorAtlasManager implements IALocationListener, IARegion.Listener
 		m_nativeCallerPointer = nativeCallerPointer;
 	}
 
-	public void StartUpdatingLocation(
-			final String apiKey,
-			final String apiSecret,
-    		final String planId)
+	public void StartUpdatingLocation(final String apiKey,
+									  final String apiSecret,
+									  final String planId)
 	{
 		Log.d(TAG, "StartUpdatingLocationWithFloorPlanId:" + planId);
-		m_activity.runOnUiThread(new Runnable() {
+		m_activity.runOnUiThread(new Runnable() 
+		{
 			@Override
-			public void run() {
-				if(m_locationManager == null){
+			public void run() 
+			{
+				if(m_locationManager == null)
+				{
 					final Bundle extras = new Bundle(2);
 					extras.putString(IALocationManager.EXTRA_API_KEY, apiKey);
 			        extras.putString(IALocationManager.EXTRA_API_SECRET, apiSecret);
 					m_locationManager = IALocationManager.create(m_activity, extras);
 				}
+				
 				IALocationRequest request = IALocationRequest.create();
 				request.setFastestInterval(100);
-				m_locationManager.registerRegionListener(IndoorAtlasManager.this);
+  				m_locationManager.registerRegionListener(IndoorAtlasManager.this);
 				m_locationManager.removeLocationUpdates(IndoorAtlasManager.this);
 				m_locationManager.requestLocationUpdates(request, IndoorAtlasManager.this);
 				
@@ -60,32 +62,40 @@ public class IndoorAtlasManager implements IALocationListener, IARegion.Listener
 	
 	public void SetFloorIndex(final String planId) 
 	{
-		m_activity.runOnUiThread(new Runnable() {
+		m_activity.runOnUiThread(new Runnable() 
+		{
 			@Override
-			public void run() {
-				Log.d(TAG, "SetFloorIndex: " + planId);
-				IALocationRequest request = IALocationRequest.create();
-				request.setFastestInterval(100);
-				m_locationManager.registerRegionListener(IndoorAtlasManager.this);
-				m_locationManager.removeLocationUpdates(IndoorAtlasManager.this);
-				m_locationManager.requestLocationUpdates(request, IndoorAtlasManager.this);
-				
-				final IARegion region = IARegion.floorPlan(planId);
-				m_locationManager.setLocation(IALocation.from(region));
+			public void run() 
+			{
+				if(m_locationManager!=null) 
+				{
+					Log.d(TAG, "SetFloorIndex: " + planId);
+					IALocationRequest request = IALocationRequest.create();
+					request.setFastestInterval(100);
+					m_locationManager.registerRegionListener(IndoorAtlasManager.this);
+					m_locationManager.removeLocationUpdates(IndoorAtlasManager.this);
+					m_locationManager.requestLocationUpdates(request, IndoorAtlasManager.this);
+					
+					final IARegion region = IARegion.floorPlan(planId);
+					m_locationManager.setLocation(IALocation.from(region));
+				}
 			}
 		});
 	}
 	
 	public void StopUpdatingLocation()
 	{
-		m_activity.runOnUiThread(new Runnable() {
-			
+		m_activity.runOnUiThread(new Runnable() 
+		{
 			@Override
-			public void run() {
+			public void run() 
+			{
 				if(m_locationManager!=null) 
 				{
 					m_locationManager.unregisterRegionListener(IndoorAtlasManager.this);
 					m_locationManager.removeLocationUpdates(IndoorAtlasManager.this);
+					m_locationManager.destroy();
+					m_locationManager = null;
 				}
 			}
 		});
@@ -104,7 +114,8 @@ public class IndoorAtlasManager implements IALocationListener, IARegion.Listener
 		switch (status) {
         case IALocationManager.STATUS_CALIBRATION_CHANGED:
             String quality = "unknown";
-            switch (extras.getInt("quality")) {
+            switch (extras.getInt("quality")) 
+            {
                 case IALocationManager.CALIBRATION_POOR:
                     quality = "Poor";
                     break;
@@ -146,8 +157,6 @@ public class IndoorAtlasManager implements IALocationListener, IARegion.Listener
 	public void destroy()
     {
 		Log.d(TAG, "destroy()");
-		StopUpdatingLocation();
-		m_locationManager.destroy();
 		m_locationManager = null;
     }
 }

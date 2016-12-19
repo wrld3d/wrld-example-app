@@ -5,13 +5,12 @@
 #include "IndoorAtlasLocationController.h"
 #include "IndoorAtlasLocationManager.h"
 #include "IndoorAtlasLocationService.h"
+#include "BidirectionalBus.h"
 #include "ICallback.h"
 #include "AppModeModel.h"
 #include "InteriorsExplorer.h"
 #include "ApplicationConfiguration.h"
 #include "ILocationService.h"
-
-@class IndoorAtlasLocationManager;
 
 namespace ExampleApp
 {
@@ -25,7 +24,8 @@ namespace ExampleApp
                                       const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                       const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                       const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
-                                      Eegeo::Location::ILocationService& defaultLocationService);
+                                      Eegeo::Location::ILocationService& defaultLocationService,
+                                      ExampleApp::ExampleAppMessaging::TMessageBus& messageBus);
             ~IndoorAtlasLocationModule();
             
             IndoorAtlasLocationService& GetLocationService() { return *m_pLocationService; }

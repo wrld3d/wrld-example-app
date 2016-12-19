@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "IndoorAtlasLocationManager.h"
+#include "IIndoorAtlasLocationManager.h"
 #include "ICallback.h"
 #include "AppModeModel.h"
 #include "InteriorsExplorer.h"
@@ -15,7 +15,7 @@ namespace ExampleApp
         class IndoorAtlasLocationController
         {
         public:
-            IndoorAtlasLocationController(IndoorAtlasLocationManager& locationManager,
+            IndoorAtlasLocationController(View::IIndoorAtlasLocationManager& locationManager,
                                           ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                           Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                           const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
@@ -23,12 +23,11 @@ namespace ExampleApp
             ~IndoorAtlasLocationController();
             
         private:
-            IndoorAtlasLocationManager& m_locationManager;
+            View::IIndoorAtlasLocationManager& m_locationManager;
             
             ExampleApp::AppModes::SdkModel::IAppModeModel& m_appModeModel;
             Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
             const Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
-            const ExampleApp::ApplicationConfig::ApplicationConfiguration& m_applicationConfiguration;
             const std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo> m_trackingInfoMap;
             
             Eegeo::Helpers::TCallback0<IndoorAtlasLocationController> m_floorSelectedCallback;

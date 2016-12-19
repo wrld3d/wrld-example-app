@@ -183,7 +183,8 @@ AppHost::AppHost(
                                                                                                  interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                  mapModule.GetEnvironmentFlatteningService(),
                                                                                                  applicationConfiguration,
-                                                                                                 *m_piOSLocationService);
+                                                                                                 *m_piOSLocationService,
+                                                                                                 m_messageBus);
     
     m_pSenionLabLocationModule = Eegeo_NEW(ExampleApp::SenionLab::SenionLabLocationModule)(m_pApp->GetAppModeModel(),
                                                                                            interiorsPresentationModule.GetInteriorInteractionModel(),

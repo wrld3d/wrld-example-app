@@ -3,6 +3,7 @@
 #include "IndoorAtlasLocationModule.h"
 #include "InteriorSelectionModel.h"
 #include "InteriorInteractionModel.h"
+#include "IndoorAtlasLocationManager.h"
 #include <map>
 #include <string>
 
@@ -16,22 +17,24 @@ namespace ExampleApp
                                                              const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                              const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
                                                              Eegeo::Location::ILocationService& defaultLocationService,
-															 AndroidNativeState& nativeState)
+                                                             AndroidNativeState& nativeState,
+                                                             ExampleAppMessaging::TMessageBus& messageBus)
         : m_pLocationController(NULL)
         , m_pLocationManager(NULL)
         , m_pLocationService(NULL)
         {
             m_pLocationService = Eegeo_NEW(IndoorAtlasLocationService)(defaultLocationService,
                                                                        environmentFlatteningService,
-                                                                       interiorInteractionModel);
+                                                                       interiorInteractionModel,
+                                                                       messageBus);
             
-            m_pLocationManager = Eegeo_NEW(IndoorAtlasLocationManager)(m_pLocationService, nativeState);
+            m_pLocationManager = Eegeo_NEW(ExampleApp::IndoorAtlas::View::IndoorAtlasLocationManager)(m_pLocationService, nativeState, messageBus);
 
             m_pLocationController = Eegeo_NEW(IndoorAtlasLocationController)(*m_pLocationManager,
                                                                              appModeModel,
                                                                              interiorInteractionModel,
                                                                              interiorSelectionModel,
-                                                                             applicationConfiguration);
+																			 applicationConfiguration);
         }
         
         IndoorAtlasLocationModule::~IndoorAtlasLocationModule()

@@ -1,6 +1,6 @@
 {
     "name": "Mobile Example App",
-    "eegeo_api_key": "b488cb833b4d73f0ff4662160743e8f2",
+    "eegeo_api_key": "",
     "start_location_latitude": 37.7858,
     "start_location_longitude": -122.401,
     "start_location_altitude": 2.7,

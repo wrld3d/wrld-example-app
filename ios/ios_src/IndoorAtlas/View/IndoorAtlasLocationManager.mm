@@ -1,5 +1,6 @@
 // Copyright eeGeo Ltd (2012-2016), All Rights Reserved
-#import "IndoorAtlasLocationManager.h"
+#include "IndoorAtlasLocationManager.h"
+#include "IndoorAtlasLocationManagerInterop.h"
 #import <IndoorAtlas/IALocationManager.h>
 #include "LatLongAltitude.h"
 
@@ -7,7 +8,6 @@
 {
     std::map<int, std::string> m_floorMap;
     int m_floorIndex;
-    ExampleApp::IndoorAtlas::IndoorAtlasLocationService* m_pIndoorAtlasLocationService;
 }
 @property (nonatomic, strong) IALocationManager *locationManager;
 @end
@@ -15,10 +15,11 @@
 @implementation IndoorAtlasLocationManager
 
 -(instancetype) Init: (ExampleApp::IndoorAtlas::IndoorAtlasLocationService*) indoorAtlasLocationService
+        ndMessageBus: (ExampleApp::ExampleAppMessaging::TMessageBus&) messageBus
 {
     if(self = [super init])
     {
-        m_pIndoorAtlasLocationService = indoorAtlasLocationService;
+        m_pInterop = Eegeo_NEW(ExampleApp::IndoorAtlas::View::IndoorAtlasLocationManagerInterop)(self, indoorAtlasLocationService, messageBus);
     }
     
     return self;
@@ -62,12 +63,18 @@
     {
         IALocation *location = [IALocation locationWithFloorPlanId:floorPlanId];
         self.locationManager.location = location;
-        m_pIndoorAtlasLocationService->SetFloorIndex(m_floorIndex);
+        m_pInterop->OnSetFloorIndex(m_floorIndex);
     }
+}
+
+- (ExampleApp::IndoorAtlas::View::IndoorAtlasLocationManagerInterop*) getInterop
+{
+    return m_pInterop;
 }
 
 -(void) dealloc
 {
+    Eegeo_DELETE m_pInterop;
     [self.locationManager stopUpdatingLocation];
     self.locationManager.delegate = nil;
     [super dealloc];
@@ -77,7 +84,7 @@
 {
     CLLocation *l = [(IALocation*)locations.lastObject location];
     Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong::FromDegrees(l.coordinate.latitude, l.coordinate.longitude);
-    m_pIndoorAtlasLocationService->SetLocation(latLong);
+    m_pInterop->OnLocationChanged(latLong);
 }
 
 -(NSString*) getFloorPlanIdFromFloorIndex: (int) floorIndex

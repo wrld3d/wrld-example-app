@@ -232,7 +232,8 @@ AppHost::AppHost(
                                                                                                      mapModule.GetEnvironmentFlatteningService(),
                                                                                                      applicationConfiguration,
                                                                                                      *m_pAndroidLocationService,
-																									 m_nativeState);
+																									 m_nativeState,
+																									 m_messageBus);
 
 	m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(applicationConfiguration,
 																															   m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
