@@ -342,18 +342,22 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         }
     }
     
-    private void updateResults(ArrayList<String> searchResults)
+    private void updateResults(final ArrayList<String> searchResults)
     {
         m_resultsCount = searchResults.size();
-        
-        if (m_resultsCount > 0)
+        m_list.post(new Runnable()
         {
-        	m_list.collapseAllGroups();
-        }
-        
-    	updateSearchMenuHeight(m_resultsCount);
-    	m_searchListAdapter.setData(searchResults);
-    	m_pendingResults = null;
+            public void run()
+            {
+                if (m_resultsCount > 0)
+                {
+                    m_list.collapseAllGroups();
+                }
+                updateSearchMenuHeight(m_resultsCount);
+                m_searchListAdapter.setData(searchResults);
+                m_pendingResults = null;
+            }
+        });
     }
     
     private void updateSearchMenuHeight(int resultCount)
