@@ -36,7 +36,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
         		<category android:name="android.intent.category.BROWSABLE" />
 		        <data android:scheme="eegeo" android:host="location" />
-		        <data android:scheme="eegeo" android:host="mymaps" />         		
+		        <data android:scheme="eegeo" android:host="mapscene" />         		
             </intent-filter>
         </activity>
         
