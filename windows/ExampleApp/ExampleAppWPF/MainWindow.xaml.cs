@@ -7,7 +7,9 @@ using System.Diagnostics;
 using System.Windows.Navigation;
 using System.Windows.Threading;
 using System.Collections.Generic;
-using System.Linq;
+using System.Windows.Controls;
+
+using ExampleAppWPF.VirtualKeyboard;
 
 namespace ExampleAppWPF
 {
@@ -39,6 +41,8 @@ namespace ExampleAppWPF
 
         private bool m_isFullscreen;
 
+        private QuertyKeyboard m_keyboard;
+
         public MainWindow()
         {
             MapImage.DeferToAlreadyRunningInstance();
@@ -60,6 +64,8 @@ namespace ExampleAppWPF
             m_zeroIndexedTouchIds = new List<KeyValuePair<int, bool>>();
 
             m_isFullscreen = false;
+
+            InitializeVirtualKeyboard();
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
@@ -151,6 +157,8 @@ namespace ExampleAppWPF
             };
 
             Dispatcher.Hooks.DispatcherInactive += new EventHandler(DispatcherInactive);
+
+            OnLoadedAddVirtualKeyboardFocusHandlers<TextBox>(MainGrid.Children);
         }
 
         public void PopAllTouchEvents()
@@ -362,6 +370,72 @@ namespace ExampleAppWPF
         {
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
             e.Handled = true;
+        }
+
+        private void InitializeVirtualKeyboard()
+        {
+            m_keyboard = new QuertyKeyboard();
+            m_keyboard.Visibility = Visibility.Collapsed;
+            m_keyboard.CustomKeyUp += (key) =>
+            {
+                if (key == "HideKeyboard")
+                {
+                    HideVirtualKeyboard();
+                }
+            };
+            MainGrid.Children.Add(m_keyboard);
+        }
+
+        private void OnLoadedAddVirtualKeyboardFocusHandlers<T>(UIElementCollection elements) where T : Control
+        {
+            foreach (FrameworkElement element in elements)
+            {
+                element.Loaded += (o, e) => AddVirtualKeyboardFocusHandlers<T>(element);
+            }
+        }
+
+        private IEnumerable<T> FindChildrenOfType<T>(DependencyObject obj) where T : Control
+        {
+            if (obj == null)
+            {
+                yield break;
+            }
+
+            var numChildren = VisualTreeHelper.GetChildrenCount(obj);
+            for (int i = 0; i < numChildren; ++i)
+            {
+                var child = VisualTreeHelper.GetChild(obj, i);
+                if (child != null && child is T)
+                {
+                    yield return (T)child;
+                }
+                else
+                {
+                    foreach (var recChild in FindChildrenOfType<T>(child))
+                    {
+                        yield return recChild;
+                    }
+                }
+            }
+        }
+
+        private void AddVirtualKeyboardFocusHandlers<T>(DependencyObject obj) where T : Control
+        {
+            foreach (var child in FindChildrenOfType<T>(obj))
+            {
+                child.PreviewMouseDown += (o, e) => ShowVirtualKeyboard();
+                child.LostFocus += (o, e) => HideVirtualKeyboard();
+            }
+        }
+
+        public void ShowVirtualKeyboard()
+        {
+            m_keyboard.Visibility = Visibility.Visible;
+        }
+
+        public void HideVirtualKeyboard()
+        {
+            m_keyboard.Visibility = Visibility.Collapsed;
         }
     }
 }
