@@ -9,6 +9,7 @@
 #include "YelpSearchQueryFactory.h"
 #include "YelpBusinessQueryFactory.h"
 #include "EegeoTagIconMapperFactory.h"
+#include "YelpCategoryMapperUpdater.h"
 #include <vector>
 
 namespace ExampleApp
@@ -54,13 +55,19 @@ namespace ExampleApp
                 m_pYelpSearchJsonParser = Eegeo_NEW(Yelp::SdkModel::YelpSearchJsonParser)(*m_pYelpCategoryMapper, *m_pTagIconMapper);
                 
                 m_pYelpBusinessJsonParser = Eegeo_NEW(Yelp::SdkModel::YelpBusinessJsonParser)(*m_pYelpCategoryMapper, *m_pTagIconMapper);
+                
+                m_pYelpCategoryMapperUpdater = Eegeo_NEW(SdkModel::YelpCategoryMapperUpdater)();
 
+                m_pSearchTagToYelpCategoryMapper = Eegeo_NEW(SdkModel::SearchTagToYelpCategoryMapper)(yelpData.appTagToYelpCategory,
+                                                                                                      *m_pYelpCategoryMapperUpdater,
+                                                                                                      yelpData.defaultAppTag);
+                
                 m_pSearchQueryFactory = Eegeo_NEW(Yelp::SdkModel::YelpSearchQueryFactory)(
                     yelpConsumerKey,
                     yelpConsumerSecret,
                     yelpOAuthToken,
                     yelpOAuthTokenSecret,
-                    yelpData.appTagToYelpCategory,
+                    *m_pSearchTagToYelpCategoryMapper,
                     webRequestFactory);
                 
                 m_pYelpBusinessQueryFactory = Eegeo_NEW(Yelp::SdkModel::YelpBusinessQueryFactory)(
@@ -75,11 +82,13 @@ namespace ExampleApp
                                                                                 *m_pYelpBusinessQueryFactory,
                                                                                 *m_pYelpSearchJsonParser,
                                                                                 networkCapabilities,
-                                                                                appTags);
+                                                                                appTags,
+                                                                                *m_pSearchTagToYelpCategoryMapper);
             }
 
             YelpSearchServiceModule::~YelpSearchServiceModule()
             {
+                Eegeo_DELETE m_pSearchTagToYelpCategoryMapper;
                 Eegeo_DELETE m_pSearchService;
                 Eegeo_DELETE m_pSearchQueryFactory;
                 Eegeo_DELETE m_pYelpBusinessQueryFactory;
@@ -92,6 +101,16 @@ namespace ExampleApp
             Search::SdkModel::ISearchService& YelpSearchServiceModule::GetSearchService() const
             {
                 return *m_pSearchService;
+            }
+            
+            Yelp::SdkModel::IYelpCategoryToTagMapper& YelpSearchServiceModule::GetYelpCategoryMapper() const
+            {
+                return *m_pYelpCategoryMapper;
+            }
+            
+            Search::Yelp::SdkModel::YelpCategoryMapperUpdater& YelpSearchServiceModule::GetYelpCategoryMapperUpdater() const
+            {
+                return *m_pYelpCategoryMapperUpdater;
             }
         }
     }

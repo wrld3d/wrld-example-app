@@ -43,7 +43,8 @@ namespace ExampleApp
                                   YelpBusinessQueryFactory& yelpBusinessQueryFactory,
                                   Search::SdkModel::ISearchResultParser& searchResultParser,
                                   Net::SdkModel::INetworkCapabilities& networkCapabilities,
-                                  const std::vector<std::string>& handledTags);
+                                  const std::vector<std::string>& handledTags,
+                                  SdkModel::SearchTagToYelpCategoryMapper& searchTagToYelpCategoryMap);
                 
                 ~YelpSearchService();
                 
@@ -60,6 +61,8 @@ namespace ExampleApp
                 void HandleSearchResponse();
                 
                 void HandleYelpBusinessQueryDestroy(YelpBusinessQuery& yelpBusinessQuery);
+                
+                SdkModel::SearchTagToYelpCategoryMapper& m_searchTagToYelpCategoryMap;
             };
         }
         }

@@ -88,6 +88,7 @@
 #include "IRayCaster.h"
 #include "InteriorsEntityIdHighlightVisibilityController.h"
 #include "DeepLink.h"
+#include "YelpCategoryMapperUpdater.h"
 
 namespace ExampleApp
 {

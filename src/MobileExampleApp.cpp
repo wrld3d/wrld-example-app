@@ -206,11 +206,13 @@ namespace ExampleApp
         
         void AddTagSearchModels(
                                 TagSearch::View::ITagSearchRepository& repository,
-                                std::string rawConfig)
+                                std::string rawConfig,
+                                Search::Yelp::SdkModel::YelpCategoryMapperUpdater& yelpCategoryMapperUpdater)
         {
             const auto& tagSearchModels = TagSearch::View::CreateTagSearchModelsFromFile(
                                                                                          rawConfig,
-                                                                                         "outdoor_search_menu_items");
+                                                                                         "outdoor_search_menu_items",
+                                                                                         yelpCategoryMapperUpdater);
             if(repository.GetItemCount() == 0)
             {
                 for (const auto& t : tagSearchModels)
@@ -532,7 +534,6 @@ namespace ExampleApp
         }
         
         m_pSearchServiceModule = Eegeo_NEW(Search::Combined::SdkModel::CombinedSearchServiceModule)(m_searchServiceModules, m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel());
-       
     
         // TODO: Check if this module is still relevant
         m_pAppCameraModule = Eegeo_NEW(AppCamera::SdkModel::AppCameraModule)();
@@ -1278,7 +1279,8 @@ namespace ExampleApp
                 AddTours();
             }
             
-            AddTagSearchModels(m_pTagSearchModule->GetTagSearchRepository(), m_applicationConfiguration.RawConfig());
+            AddTagSearchModels(m_pTagSearchModule->GetTagSearchRepository(), m_applicationConfiguration.RawConfig(),
+                               dynamic_cast<Search::Yelp::YelpSearchServiceModule*>(m_searchServiceModules[ExampleApp::Search::YelpVendorName])->GetYelpCategoryMapperUpdater());
         }
     }
     
