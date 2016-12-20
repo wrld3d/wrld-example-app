@@ -2,14 +2,18 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 
 namespace ExampleAppWPF
 {
     public class YelpSearchResultsPoiView : SearchResultPoiViewBase
     {
+        private bool m_isInKioskMode;
+
         private TextBlock m_titleView = null;
         private Image m_poiImage = null;
         
@@ -18,6 +22,8 @@ namespace ExampleAppWPF
         private string m_titleText;
         private string m_poiViewRatingCountText;
         private string m_reviewText;
+        private string m_qrCodeStyleText;
+        private string m_qrCodeText;
         private string m_humanReadableTagsText;
         private ImageSource m_tagIcon;
         private Image m_ratingsImage;
@@ -26,15 +32,23 @@ namespace ExampleAppWPF
         private FrameworkElement m_reviewsIcon;
         private ImageSource m_placeholderImage;
         private ScrollViewer m_contentContainer;
+        private Image m_headerFade;
         private Image m_footerFade;
         private Grid m_previewImageSpinner;
         private Grid m_poiImageContainer;
         private Grid m_imageGradient;
         private Grid m_poiImageAndGradientContainer;
         private Grid m_detailsContainer;
+        private double m_detailsContainerHeight;
+
+        private Storyboard m_scrollFadeInAnim;
+        private Storyboard m_scrollFadeOutAnim;
 
         private ControlClickHandler m_yelpReviewImageClickHandler;
         private Image m_yelpButton;
+
+        private RepeatButton m_scrollDownButton;
+        private RepeatButton m_scrollUpButton;
 
         public string PhoneText
         {
@@ -96,6 +110,18 @@ namespace ExampleAppWPF
             {
                 m_reviewText = value;
                 OnPropertyChanged("ReviewText");
+            }
+        }
+        public string QRCodeText
+        {
+            get
+            {
+                return m_qrCodeText;
+            }
+            set
+            {
+                m_qrCodeText = value;
+                OnPropertyChanged("QRCodeText");
             }
         }
         public string HumanReadableTagsText
@@ -168,10 +194,10 @@ namespace ExampleAppWPF
             DefaultStyleKeyProperty.OverrideMetadata(typeof(YelpSearchResultsPoiView), new FrameworkPropertyMetadata(typeof(YelpSearchResultsPoiView)));
         }
 
-        public YelpSearchResultsPoiView(IntPtr nativeCallerPointer)
+        public YelpSearchResultsPoiView(IntPtr nativeCallerPointer, bool isInKioskMode)
             : base(nativeCallerPointer)
         {
-
+            m_isInKioskMode = isInKioskMode;
         }
 
         public override void OnApplyTemplate()
@@ -192,6 +218,8 @@ namespace ExampleAppWPF
 
             m_contentContainer.ScrollChanged += OnSearchResultsScrolled;
 
+            m_headerFade = (Image)GetTemplateChild("HeaderFade");
+
             m_footerFade = (Image)GetTemplateChild("FooterFade");
 
             m_previewImageSpinner = (Grid)GetTemplateChild("PreviewImageSpinner");
@@ -206,6 +234,19 @@ namespace ExampleAppWPF
 
             m_detailsContainer = (Grid)GetTemplateChild("DetailsContainer");
 
+            m_detailsContainerHeight = (double)Application.Current.Resources["YelpPOIViewDetailsContainerHeight"];
+
+            m_qrCodeStyleText = (string)Application.Current.Resources["YelpPOIViewQRCodeText"];
+
+            m_scrollUpButton = (RepeatButton)GetTemplateChild("YelpPOIViewScrollUpButton");
+            m_scrollUpButton.Click += HandleScrollUpButtonClicked;
+
+            m_scrollDownButton = (RepeatButton)GetTemplateChild("YelpPOIViewScrollDownButton");
+            m_scrollDownButton.Click += HandleScrollDownButtonClicked;
+
+            m_scrollFadeInAnim = ((Storyboard)Template.Resources["ScrollFadeIn"]).Clone();
+            m_scrollFadeOutAnim = ((Storyboard)Template.Resources["ScrollFadeOut"]).Clone();
+
             var mainGrid = (Application.Current.MainWindow as MainWindow).MainGrid;
             var screenWidth = mainGrid.ActualWidth;
 
@@ -217,11 +258,45 @@ namespace ExampleAppWPF
         {
             if (m_contentContainer.VerticalOffset == m_contentContainer.ScrollableHeight)
             {
-                m_footerFade.Visibility = Visibility.Hidden;
+                if(m_headerFade.Opacity <= 0)
+                {
+                    m_scrollFadeInAnim.Begin(m_headerFade);
+                    m_scrollFadeInAnim.Begin(m_scrollUpButton);
+                }
+
+                if(m_footerFade.Opacity >= 1)
+                {
+                    m_scrollFadeOutAnim.Begin(m_footerFade);
+                    m_scrollFadeOutAnim.Begin(m_scrollDownButton);
+                }
+            }
+            else if(m_contentContainer.VerticalOffset == 0)
+            {
+                if (m_headerFade.Opacity >= 1)
+                {
+                    m_scrollFadeOutAnim.Begin(m_headerFade);
+                    m_scrollFadeOutAnim.Begin(m_scrollUpButton);
+                }
+
+                if(m_footerFade.Opacity <= 0)
+                {
+                    m_scrollFadeInAnim.Begin(m_footerFade);
+                    m_scrollFadeInAnim.Begin(m_scrollDownButton);
+                }
             }
             else
             {
-                m_footerFade.Visibility = Visibility.Visible;
+                if (m_headerFade.Opacity <= 0)
+                {
+                    m_scrollFadeInAnim.Begin(m_headerFade);
+                    m_scrollFadeInAnim.Begin(m_scrollUpButton);
+                }
+
+                if (m_footerFade.Opacity <= 0)
+                {
+                    m_scrollFadeInAnim.Begin(m_footerFade);
+                    m_scrollFadeInAnim.Begin(m_scrollDownButton);
+                }
             }
         }
 
@@ -245,6 +320,7 @@ namespace ExampleAppWPF
             PhoneText = yelpResultModel.Phone;
             HumanReadableTagsText = string.Join(", ", model.HumanReadableTags);
             ReviewText = string.Join(Environment.NewLine, yelpResultModel.Reviews);
+            QRCodeText = string.Format(m_qrCodeStyleText, TitleText);
             TagIcon = SearchResultPoiViewIconProvider.GetIconForTag(model.IconKey);
             PoiViewRatingCountText = yelpResultModel.ReviewCount > 0 ? yelpResultModel.ReviewCount.ToString() : string.Empty;
             RatingsImage.Source = null;
@@ -253,7 +329,7 @@ namespace ExampleAppWPF
 
             if (yelpResultModel.ReviewCount > 0 && !string.IsNullOrEmpty(yelpResultModel.RatingsImageUrl))
             {
-                RatingsImage.Source = new BitmapImage(ViewHelpers.MakeUriForImage(string.Format("{0}.png", yelpResultModel.RatingsImageUrl)));
+                RatingsImage.Source = new BitmapImage(ViewHelpers.MakeUriForImage(string.Format("{0}{1}.png", yelpResultModel.RatingsImageUrl, m_isInKioskMode ? "@kiosk" : "")));
             }
 
             if (string.IsNullOrEmpty(yelpResultModel.ImageUrl))
@@ -268,7 +344,7 @@ namespace ExampleAppWPF
                 m_previewImageSpinner.Visibility = Visibility.Visible;
                 m_imageGradient.Visibility = Visibility.Visible;
                 m_poiImageAndGradientContainer.Visibility = Visibility.Visible;
-                m_detailsContainer.Height = 250;
+                m_detailsContainer.Height = m_detailsContainerHeight;
             }
 
             RatingCountVisibility = !string.IsNullOrEmpty(yelpResultModel.RatingsImageUrl) && yelpResultModel.ReviewCount > 0 ? Visibility.Visible : Visibility.Collapsed;
@@ -308,6 +384,16 @@ namespace ExampleAppWPF
             {
                 Process.Start(m_url);
             }
+        }
+
+        public void HandleScrollUpButtonClicked(object sender, RoutedEventArgs e)
+        {
+            m_contentContainer.ScrollToVerticalOffset(m_contentContainer.VerticalOffset - 10);
+        }
+
+        public void HandleScrollDownButtonClicked(object sender, RoutedEventArgs e)
+        {
+            m_contentContainer.ScrollToVerticalOffset(m_contentContainer.VerticalOffset + 10);
         }
     }
 }

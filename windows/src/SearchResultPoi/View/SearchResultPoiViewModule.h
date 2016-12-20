@@ -33,7 +33,8 @@ namespace ExampleApp
                     ExampleAppMessaging::TMessageBus& messageBus,
                     Metrics::IMetricsService& metricsService,
                     MyPinCreation::View::IMyPinCreationInitiationView& pinCreationInitiationView,
-                    Eegeo::Resources::Interiors::InteriorSelectionModel& interiorsSelectionModel
+                    Eegeo::Resources::Interiors::InteriorSelectionModel& interiorsSelectionModel,
+					bool isInKioskMode
                 );
 
                 ~SearchResultPoiViewModule();

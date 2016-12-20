@@ -51,7 +51,7 @@ namespace ExampleApp
                 bool m_isAnyPoiOpen;
 
             public:
-                SearchResultPoiView(WindowsNativeState& nativeState);
+                SearchResultPoiView(WindowsNativeState& nativeState, bool isInKioskMode);
 
                 ~SearchResultPoiView();
 

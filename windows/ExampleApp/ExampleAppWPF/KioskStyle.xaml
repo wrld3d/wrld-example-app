@@ -5,6 +5,114 @@
     xmlns:System="clr-namespace:System;assembly=mscorlib" 
     mc:Ignorable="d">
 
+    <!-- POI View -->
+    <ImageSource x:Key="POIViewAddRemovePinButtonRemoveOffImage">/Assets/button_remove_pin_off.png</ImageSource>
+    <ImageSource x:Key="POIViewAddRemovePinButtonRemoveOnImage">/Assets/button_remove_pin_on.png</ImageSource>
+    <ImageSource x:Key="POIViewAddRemovePinButtonAddOffImage">/Assets/button_add_pin_off.png</ImageSource>
+    <ImageSource x:Key="POIViewAddRemovePinButtonAddOnImage">/Assets/button_add_pin_on.png</ImageSource>
+    <System:Double x:Key="POIViewAddRemovePinButtonSize">48</System:Double>
+    <Thickness x:Key="POIViewAddRemoveButtonMargin" Left="115" Top="0" Right="0" Bottom="0"/>
+    <System:Double x:Key="POIViewAddRemovePinButtonFontSize">28</System:Double>
+    <Thickness x:Key="POIViewAddRemoveButtonTextMargin" Left="165" Top="-5" Right="0" Bottom="0"/>
+    
+    <ImageSource x:Key="POIViewPlaceholderImage">/Assets/poi_placeholder@kiosk.png</ImageSource>
+    <System:Double x:Key="POIViewPlaceholderImageGradientHeight">94</System:Double>
+    <ImageSource x:Key="POIViewSpinnerImage">/Assets/search_results_spinner@kiosk.png</ImageSource>
+    <System:Double x:Key="POIViewSpinnerSize">30</System:Double>
+
+    <!-- Yelp POI View -->
+    <ImageSource x:Key="YelpPOIViewCloseButtonOffImage">/Assets/button_close_off@kiosk.png</ImageSource>
+    <ImageSource x:Key="YelpPOIViewCloseButtonOnImage">/Assets/button_close_on@kiosk.png</ImageSource>
+    <System:Double x:Key="YelpPOIViewCloseButtonSize">54</System:Double>
+    <SolidColorBrush x:Key="YelpPOIViewCloseButtonOffColour" Color="White"/>
+    <SolidColorBrush x:Key="YelpPOIViewCloseButtonOnColour" Color="White"/>
+    <SolidColorBrush x:Key="YelpPOIViewCloseButtonOverColour" Color="White"/>
+
+    <Visibility x:Key="YelpPOIViewScrollButtonVisibility">Visible</Visibility>
+    <System:Double x:Key="YelpPOIViewScrollButtonSize">64</System:Double>
+    <Thickness x:Key="YelpPOIViewScrollUpButtonMargin" Left="0" Top="86" Right="0" Bottom="0"/>
+
+    <System:Double x:Key="YelpPOIViewContainerWidth">540</System:Double>
+    <Thickness x:Key="YelpPOIViewContainerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
+    <System:Double x:Key="YelpPOIViewContainerInnerWidth">496</System:Double>
+    <Thickness x:Key="YelpPOIViewContainerInnerMargin" Left="22" Top="20" Right="22" Bottom="20"/>
+    <GridLength x:Key="YelpPOIViewContainerRow0Height">76</GridLength>
+    <GridLength x:Key="YelpPOIViewContainerRow2Height">0</GridLength>
+
+    <GridLength x:Key="YelpPOIViewTitleColumn0">442</GridLength>
+    <GridLength x:Key="YelpPOIViewTitleColumn1">54</GridLength>
+    <Thickness x:Key="YelpPOIViewTitleMargin" Left="0" Top="0" Right="0" Bottom="10"/>
+    <System:Double x:Key="YelpPOIViewTitleMaxWidth">350</System:Double>
+    <System:Double x:Key="YelpPOIViewTitleFontSize">30</System:Double>
+    <Thickness x:Key="YelpPOIViewTitleTextMargin" Left="15" Top="10" Right="0" Bottom="0"/>
+    <Visibility x:Key="YelpPOIViewDetailsTitleDividerVisibility">Collapsed</Visibility>
+    
+    <Thickness x:Key="YelpPOIViewContentContainerMargin" Left="0" Top="10" Right="0" Bottom="20"/>
+    <ScrollBarVisibility x:Key="YelpPOIViewContentContainerScrollBarVisibility">Hidden</ScrollBarVisibility>
+
+    <System:Double x:Key="YelpPOIViewDetailsContainerHeight">500</System:Double>
+    <System:Double x:Key="YelpPOIViewDetailsImageWidth">496</System:Double>
+    <System:Double x:Key="YelpPOIViewDetailsImageHeight">330</System:Double>
+    <GridLength x:Key="YelpPOIViewDetailsColumn0Width">496</GridLength>
+    <GridLength x:Key="YelpPOIViewDetailsColumn1Width">0</GridLength>
+    <GridLength x:Key="YelpPOIViewDetailsColumn2Width">0</GridLength>
+    <GridLength x:Key="YelpPOIViewDetailsRow0Height">380</GridLength>
+    <GridLength x:Key="YelpPOIViewDetailsRow1Height">10</GridLength>
+    
+    <Thickness x:Key="YelpPOIViewRatingContainerMargin" Left="0" Top="0" Right="0" Bottom="5"/>
+    <Thickness x:Key="YelpPOIViewRatingImageMargin" Left="5" Top="5" Right="5" Bottom="5"/>
+    <System:Double x:Key="YelpPOIViewRatingImageWidth">138</System:Double>
+    <System:Double x:Key="YelpPOIViewRatingImageHeight">30</System:Double>
+    <System:Double x:Key="YelpPOIViewRatingOverImageHeight">20</System:Double>
+    <System:Double x:Key="YelpPOIViewRatingReviewCountHeight">20</System:Double>
+    <Thickness x:Key="YelpPOIViewRatingReviewCountMargin" Left="3" Top="0" Right="0" Bottom="0"/>
+    <System:Double x:Key="YelpPOIViewRatingReviewCountFontSize">16</System:Double>
+    
+    <Thickness x:Key="YelpPOIViewVendorButtonMargin" Left="0" Top="0" Right="0" Bottom="-50"/>
+    <Thickness x:Key="YelpPOIViewVendorButtonImageMargin" Left="5" Top="10" Right="5" Bottom="5"/>
+    <ImageSource x:Key="YelpPOIViewVendorButtonImage">/Assets/yelp_reviews@kiosk.png</ImageSource>
+
+    <Visibility x:Key="YelpPOIViewDetailsInnerDividerVisibility">Visible</Visibility>
+    <Thickness x:Key="YelpPOIViewDetailsInnerDividerMargin" Left="0" Top="0" Right="0" Bottom="20"/>
+
+    <System:Int32 x:Key="YelpPOIViewLowerDetailsColumn">0</System:Int32>
+    <System:Int32 x:Key="YelpPOIViewLowerDetailsRow">2</System:Int32>
+    <System:Double x:Key="YelpPOIViewLowerDetailsContainerHeight">280</System:Double>
+    <System:Double x:Key="YelpPOIViewLowerDetailsIconSize">24</System:Double>
+    <Thickness x:Key="YelpPOIViewLowerDetailsPhoneMargin" Left="5" Top="0" Right="0" Bottom="0"/>
+    <System:Double x:Key="YelpPOIViewLowerDetailsPhoneFontSize">26</System:Double>
+    <Thickness x:Key="YelpPOIViewLowerDetailsPhoneTextMargin" Left="35" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="YelpPOIViewLowerDetailsAddressMargin" Left="5" Top="15" Right="0" Bottom="0"/>
+    <System:Double x:Key="YelpPOIViewLowerDetailsAddressFontSize">26</System:Double>
+    <Thickness x:Key="YelpPOIViewLowerDetailsAddressTextMargin" Left="35" Top="-4" Right="0" Bottom="0"/>
+    <Thickness x:Key="YelpPOIViewDetailsDividerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
+
+    <Thickness x:Key="YelpPOIViewTagsMargin" Left="5" Top="0" Right="0" Bottom="0"/>
+    <System:Double x:Key="YelpPOIViewTagsFontSize">26</System:Double>
+    <Thickness x:Key="YelpPOIViewTagsTextMargin" Left="35" Top="-4" Right="0" Bottom="0"/>
+
+    <Thickness x:Key="YelpPOIViewReviewsDividerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
+    <Thickness x:Key="YelpPOIViewReviewsMargin" Left="5" Top="0" Right="0" Bottom="0"/>
+    <System:Double x:Key="YelpPOIViewReviewsFontSize">26</System:Double>
+    <Thickness x:Key="YelpPOIViewReviewsTextMargin" Left="35" Top="-4" Right="0" Bottom="0"/>
+
+    <Visibility x:Key="YelpPOIViewQRCodeVisibility">Visible</Visibility>
+    <Thickness x:Key="YelpPOIViewQRCodeDividerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
+    <Thickness x:Key="YelpPOIViewQRCodeMargin" Left="5" Top="0" Right="0" Bottom="30"/>
+    <System:Double x:Key="YelpPOIViewQRCodeFontSize">26</System:Double>
+    <System:String x:Key="YelpPOIViewQRCodeText">Scan the QR Code with your device to read the {0} review on Yelp.</System:String>
+    <Thickness x:Key="YelpPOIViewQRCodeTextMargin" Left="35" Top="-4" Right="0" Bottom="0"/>
+    <ImageSource x:Key="YelpPOIViewQRCodeImage">/Assets/qrcode_preview.png</ImageSource>
+    <System:Double x:Key="YelpPOIViewQRCodeImageSize">176</System:Double>
+    <Thickness x:Key="YelpPOIViewQRCodeImageMargin" Left="0" Top="20" Right="0" Bottom="0"/>
+
+    <System:Double x:Key="YelpPOIViewBottomSpacerHeight">20</System:Double>
+    <ImageSource x:Key="YelpPOIViewFooterFadeImage">/Assets/search_results_fade@kiosk.png</ImageSource>
+    <System:Double x:Key="YelpPOIViewFooterFadeWidth">500</System:Double>
+
+    <Visibility x:Key="TogglePinnedButtonDividerVisibility">Collapsed</Visibility>
+    <Visibility x:Key="TogglePinnedButtonVisibility">Collapsed</Visibility>
+
     <!-- Menu -->
     <System:Double x:Key="MenuIconSize">80</System:Double>
     <GridLength x:Key="MenuIconSizeGridLength">80</GridLength>
