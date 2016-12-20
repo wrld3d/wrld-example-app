@@ -27,7 +27,8 @@ namespace ExampleApp
 				const std::string& yelpConsumerSecret,
 				const std::string& yelpOAuthToken,
 				const std::string& yelpOAuthTokenSecret,
-                Eegeo::Helpers::IFileIO& fileIO)
+                Eegeo::Helpers::IFileIO& fileIO,
+                Search::Yelp::SdkModel::YelpCategoryMapperUpdater& yelpCategoryMapperUpdater)
             : m_pSearchService(NULL)
             , m_pSearchQueryFactory(NULL)
             , m_pYelpBusinessQueryFactory(NULL)
@@ -55,11 +56,9 @@ namespace ExampleApp
                 m_pYelpSearchJsonParser = Eegeo_NEW(Yelp::SdkModel::YelpSearchJsonParser)(*m_pYelpCategoryMapper, *m_pTagIconMapper);
                 
                 m_pYelpBusinessJsonParser = Eegeo_NEW(Yelp::SdkModel::YelpBusinessJsonParser)(*m_pYelpCategoryMapper, *m_pTagIconMapper);
-                
-                m_pYelpCategoryMapperUpdater = Eegeo_NEW(SdkModel::YelpCategoryMapperUpdater)();
 
                 m_pSearchTagToYelpCategoryMapper = Eegeo_NEW(SdkModel::SearchTagToYelpCategoryMapper)(yelpData.appTagToYelpCategory,
-                                                                                                      *m_pYelpCategoryMapperUpdater,
+                                                                                                      yelpCategoryMapperUpdater,
                                                                                                       yelpData.defaultAppTag);
                 
                 m_pSearchQueryFactory = Eegeo_NEW(Yelp::SdkModel::YelpSearchQueryFactory)(
@@ -106,11 +105,6 @@ namespace ExampleApp
             Yelp::SdkModel::IYelpCategoryToTagMapper& YelpSearchServiceModule::GetYelpCategoryMapper() const
             {
                 return *m_pYelpCategoryMapper;
-            }
-            
-            Search::Yelp::SdkModel::YelpCategoryMapperUpdater& YelpSearchServiceModule::GetYelpCategoryMapperUpdater() const
-            {
-                return *m_pYelpCategoryMapperUpdater;
             }
         }
     }

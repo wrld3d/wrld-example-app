@@ -6,6 +6,7 @@
 #include "InteriorSelectionModel.h"
 #include "InteriorMetaDataRepository.h"
 #include "TagSearchRepository.h"
+#include "YelpCategoryMapperUpdater.h"
 
 namespace ExampleApp
 {
@@ -18,7 +19,8 @@ namespace ExampleApp
             public:
                 InteriorMenuObserver(Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                      Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& interiorMetaDataRepo,
-                                     TagSearch::View::ITagSearchRepository& tagSearchRepository);
+                                     TagSearch::View::ITagSearchRepository& tagSearchRepository,
+                                     Search::Yelp::SdkModel::YelpCategoryMapperUpdater& yelpCategoryMapperUpdater);
                 ~InteriorMenuObserver();
                 TagSearch::View::ITagSearchRepository& GetTagsRepository() { return m_tagSearchRepository; }
                 void RegisterInteriorTagsUpdatedCallback(Eegeo::Helpers::ICallback0& callback);
@@ -51,6 +53,7 @@ namespace ExampleApp
                 Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& m_interiorMetaDataRepo;
                 TagSearch::View::TagSearchRepository m_previousTagSearchRepository;
                 TransitionState HandleTransitionStates();
+                Search::Yelp::SdkModel::YelpCategoryMapperUpdater& m_yelpCategoryMapperUpdater;
                 
                 bool m_hasSelectedInterior;
                 bool m_hasSearchMenuItems;

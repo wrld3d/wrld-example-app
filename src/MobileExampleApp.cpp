@@ -540,7 +540,8 @@ namespace ExampleApp
                                                                                                                                       m_applicationConfiguration.YelpConsumerSecret(),
                                                                                                                                       m_applicationConfiguration.YelpOAuthToken(),
                                                                                                                                       m_applicationConfiguration.YelpOAuthTokenSecret(),
-                                                                                                                                      m_platformAbstractions.GetFileIO()
+                                                                                                                                      m_platformAbstractions.GetFileIO(),
+                                                                                                                                      m_yelpCategoryMapperUpdater
                                                                                                                                       );
         }
 
@@ -602,7 +603,8 @@ namespace ExampleApp
                                                                     m_sdkDomainEventBus,
                                                                     m_metricsService,
                                                                     m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel(),
-                                                                    mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository());
+                                                                    mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
+                                                                    m_yelpCategoryMapperUpdater);
         m_pTagSearchModule = &m_pSearchModule->GetTagSearchModule();
 
         m_pMapModeModule = Eegeo_NEW(MapMode::SdkModel::MapModeModule)(m_pVisualMapModule->GetVisualMapService());
@@ -1294,7 +1296,7 @@ namespace ExampleApp
             }
 
             AddTagSearchModels(m_pTagSearchModule->GetTagSearchRepository(), m_applicationConfiguration.RawConfig(),
-                               dynamic_cast<Search::Yelp::YelpSearchServiceModule*>(m_searchServiceModules[ExampleApp::Search::YelpVendorName])->GetYelpCategoryMapperUpdater());
+                               m_yelpCategoryMapperUpdater);
         }
     }
 

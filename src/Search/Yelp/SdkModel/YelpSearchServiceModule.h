@@ -31,7 +31,6 @@ namespace ExampleApp
                 Yelp::SdkModel::IYelpCategoryToTagMapper* m_pYelpCategoryMapper;
                 TagSearch::SdkModel::ITagIconMapper *m_pTagIconMapper;
                 Yelp::SdkModel::SearchTagToYelpCategoryMapper *m_pSearchTagToYelpCategoryMapper;
-                Search::Yelp::SdkModel::YelpCategoryMapperUpdater* m_pYelpCategoryMapperUpdater;
 
             public:
                 YelpSearchServiceModule(
@@ -43,13 +42,13 @@ namespace ExampleApp
 					const std::string& yelpConsumerSecret,
 					const std::string& yelpOAuthToken,
 					const std::string& yelpOAuthTokenSecret,
-                    Eegeo::Helpers::IFileIO& fileIO);
+                    Eegeo::Helpers::IFileIO& fileIO,
+                    Search::Yelp::SdkModel::YelpCategoryMapperUpdater& yelpCategoryMapperUpdater);
 
                 ~YelpSearchServiceModule();
 
                 Search::SdkModel::ISearchService& GetSearchService() const;
                 Yelp::SdkModel::IYelpCategoryToTagMapper& GetYelpCategoryMapper() const;
-                Search::Yelp::SdkModel::YelpCategoryMapperUpdater& GetYelpCategoryMapperUpdater() const;
             };
         }
     }
