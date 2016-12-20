@@ -102,6 +102,7 @@ namespace ExampleApp
                     platformConfig.OptionsConfig.EnableLabels = true;
                     platformConfig.MapLayersConfig.FontsModuleConfig.EnvironmentFontFilename = appConfig.UseJapaneseFont() ? "IPAexGothic_sdf.fnt" : "opensans_semibold_sdf.fnt";
                     platformConfig.MapLayersConfig.Interiors.UseLegacyLabels = false;
+                    platformConfig.MapLayersConfig.Interiors.UseLegacyEntryMarkers = false;
                     platformConfig.MapLayersConfig.Interiors.LabelCategoryMapPath = "Interiors/label_category_mapping.json";
                     platformConfig.MapLayersConfig.LabelsModuleConfig.StyleSheetPath = "Labels/label_style_sheet.json";
                     platformConfig.MapLayersConfig.LabelsModuleConfig.CategoryIconMapPath = "Labels/label_category_icon_map.json";

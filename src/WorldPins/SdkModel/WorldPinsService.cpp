@@ -12,6 +12,7 @@
 #include "EarthConstants.h"
 #include "Logger.h"
 #include "WorldPinIconMapping.h"
+#include "IInteriorMarkerPickingService.h"
 
 namespace ExampleApp
 {
@@ -24,13 +25,17 @@ namespace ExampleApp
                                                Eegeo::Pins::PinRepository& pinRepository,
                                                Eegeo::Pins::PinController& pinController,
                                                const Eegeo::Rendering::EnvironmentFlatteningService& flatteningService,
-                                               const IWorldPinIconMapping& worldPinIconMapping)
+                                               const IWorldPinIconMapping& worldPinIconMapping,
+                                               Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& interiorMarkerPickingService,
+                                               const bool useIndoorEntryMarkerLabels)
                 : m_worldPinsRepository(worldPinsRepository)
                 , m_worldPinsFactory(worldPinsFactory)
                 , m_pinRepository(pinRepository)
                 , m_pinController(pinController)
                 , m_environmentFlatteningService(flatteningService)
                 , m_worldPinIconMapping(worldPinIconMapping)
+                , m_interiorMarkerPickingService(interiorMarkerPickingService)
+                , m_useIndoorEntryMarkerLabels(useIndoorEntryMarkerLabels)
                 , m_pinAlreadySelected(false)
             {
             }
@@ -116,6 +121,15 @@ namespace ExampleApp
 
 			bool WorldPinsService::TrySelectPinAtPoint(const Eegeo::v2& screenPoint)
 			{
+                if (m_useIndoorEntryMarkerLabels)
+                {
+                    if (m_interiorMarkerPickingService.TryEnterInterior(screenPoint))
+                    {
+                        return true;
+                    }
+                }
+                
+                
 				std::vector<Eegeo::Pins::Pin*> intersectingPinsClosestToCameraFirst;
 
 				if (m_pinController.TryGetPinsIntersectingScreenPoint(screenPoint, intersectingPinsClosestToCameraFirst))
