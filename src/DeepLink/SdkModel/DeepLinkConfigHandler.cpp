@@ -6,20 +6,26 @@
 #include "ICameraTransitionController.h"
 #include "ApplicationConfigurationJsonParser.h"
 #include "ICoverageTreeManifestLoader.h"
+#include "ApiTokenService.h"
+#include "CityThemeLoader.h"
+#include "NavigationService.h"
 
 namespace ExampleApp
 {
     namespace DeepLink
     {
         namespace SdkModel
-        {            
+        {
             DeepLinkConfigHandler::DeepLinkConfigHandler(CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                                                          Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                                          Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                                                          ApplicationConfig::ApplicationConfiguration& defaultConfig,
                                                          Eegeo::Streaming::CoverageTrees::ICoverageTreeManifestLoader& manifestLoader,
+                                                         Eegeo::Resources::CityThemes::CityThemeLoader& cityThemeLoader,
                                                          Search::SdkModel::InteriorMenuObserver& interiorMenuObserver,
-                                                         AboutPage::View::IAboutPageViewModel& aboutPageViewModule)
+                                                         AboutPage::View::IAboutPageViewModel& aboutPageViewModule,
+                                                         Eegeo::Location::NavigationService& navigationService,
+                                                         Eegeo::Web::ApiTokenService& apiTokenService)
             :m_webRequestFactory(webRequestFactory)
             ,m_configRequestCompleteCallback(this, &DeepLinkConfigHandler::HandleConfigResponse)
             ,m_failAlertHandler(this, &DeepLinkConfigHandler::OnFailAlertBoxDismissed)
@@ -27,8 +33,11 @@ namespace ExampleApp
             ,m_alertBoxFactory(alertBoxFactory)
             ,m_defaultConfig(defaultConfig)
             ,m_manifestLoader(manifestLoader)
+            ,m_cityThemeLoader(cityThemeLoader)
             ,m_interiorMenuObserver(interiorMenuObserver)
             ,m_aboutPageViewModule(aboutPageViewModule)
+            ,m_navigationService(navigationService)
+            ,m_apiTokenService(apiTokenService)
             {
             }
 
@@ -51,15 +60,31 @@ namespace ExampleApp
                     ApplicationConfig::SdkModel::ApplicationConfigurationJsonParser parser(m_defaultConfig);
                     size_t resultSize = webResponse.GetBodyData().size();
                     std::string resultString = std::string(reinterpret_cast<char const*>(&(webResponse.GetBodyData().front())), resultSize);
-                    
+
                     if(parser.IsValidConfig(resultString))
                     {
                         ApplicationConfig::ApplicationConfiguration applicationConfig = parser.ParseConfiguration(resultString);
+                        m_apiTokenService.ApiKeyChanged(applicationConfig.EegeoApiKey());
                         m_manifestLoader.LoadCoverageTreeManifest(applicationConfig.CoverageTreeManifestURL());
-                        m_cameraTransitionController.StartTransitionTo(applicationConfig.InterestLocation().ToECEF(), applicationConfig.DistanceToInterestMetres(), applicationConfig.OrientationDegrees());
+
+                        const std::string themeNameContains = "Summer";
+                        const std::string themeStateName = "DayDefault";
+                        m_cityThemeLoader.LoadThemes(applicationConfig.ThemeManifestURL(), themeNameContains, themeStateName);
+
+                        const float newHeading = Eegeo::Math::Deg2Rad(applicationConfig.OrientationDegrees());
+                        m_cameraTransitionController.StartTransitionTo(applicationConfig.InterestLocation().ToECEF(), applicationConfig.DistanceToInterestMetres(), newHeading);
                         m_interiorMenuObserver.UpdateDefaultOutdoorSearchMenuItems(applicationConfig.RawConfig());
                         m_aboutPageViewModule.UpdateApplicationName(applicationConfig.Name());
                         
+                        const bool useGps = applicationConfig.TryStartAtGpsLocation();
+                        if (useGps)
+                        {
+                            m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsModeFollow);
+                        }
+                        else
+                        {
+                            m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsModeOff);
+                        }
                     }
                     else
                     {

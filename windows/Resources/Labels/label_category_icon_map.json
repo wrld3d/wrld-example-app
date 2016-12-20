@@ -52,6 +52,10 @@
     {
         "label_anchor_category": "interior_facility_toilets",
         "label_icon_key": "toilets"
+    },
+    {
+        "label_anchor_category": "indoor_map",
+        "label_icon_key": "indoor_map"
     }
     ]
 }
