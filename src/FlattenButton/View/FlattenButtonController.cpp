@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "FlattenButtonController.h"
+#include "VirtualKeyboardStateChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -74,6 +75,18 @@ namespace ExampleApp
                 }
             }
 
+            void FlattenButtonController::OnVirtualKeyboardStateChangedMessage(const VirtualKeyboard::VirtualKeyboardStateChangedMessage& message)
+            {
+                if (message.IsVirtualKeyboardVisible())
+                {
+                    m_viewModel.RemoveFromScreen();
+                }
+                else
+                {
+                    m_viewModel.AddToScreen();
+                }
+            }
+
             FlattenButtonController::FlattenButtonController(
                 IFlattenButtonViewModel& viewModel,
                 IFlattenButtonView& view,
@@ -91,16 +104,19 @@ namespace ExampleApp
                 , m_viewStateCallback(this, &FlattenButtonController::OnViewStateChangeScreenControl)
                 , m_myPinCreationStateChangedMessageHandler(this, &FlattenButtonController::OnMyPinCreationStateChangedMessage)
                 , m_appModeChangedHandler(this, &FlattenButtonController::OnAppModeChangedMessage)
+                , m_virtualKeyboardStateChangedMessageHandler(this, &FlattenButtonController::OnVirtualKeyboardStateChangedMessage)
             {
                 m_view.InsertToggleCallback(m_toggledCallback);
                 m_viewModel.InsertOnScreenStateChangedCallback(m_viewStateCallback);
                 m_messageBus.SubscribeUi(m_stateChangeHandler);
                 m_messageBus.SubscribeUi(m_myPinCreationStateChangedMessageHandler);
                 m_messageBus.SubscribeUi(m_appModeChangedHandler);
+                m_messageBus.SubscribeUi(m_virtualKeyboardStateChangedMessageHandler);
             }
 
             FlattenButtonController::~FlattenButtonController()
             {
+                m_messageBus.UnsubscribeUi(m_virtualKeyboardStateChangedMessageHandler);
                 m_messageBus.UnsubscribeUi(m_appModeChangedHandler);
                 m_messageBus.UnsubscribeUi(m_myPinCreationStateChangedMessageHandler);
                 m_messageBus.UnsubscribeUi(m_stateChangeHandler);

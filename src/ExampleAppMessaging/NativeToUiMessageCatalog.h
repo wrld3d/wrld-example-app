@@ -41,6 +41,7 @@
 #include "InteriorsExplorerUINotifyMessage.h"
 #include "TagSearchAddedMessage.h"
 #include "TagSearchRemovedMessage.h"
+#include "VirtualKeyboardStateChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -84,6 +85,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<URLRequest::DeeplinkURLRequestedMessage>
             , public Eegeo::Messaging::CatalogBinding<Net::ConnectivityChangedViewMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerUINotifyMessage>
+            , public Eegeo::Messaging::CatalogBinding<VirtualKeyboard::VirtualKeyboardStateChangedMessage>
             , private Eegeo::NonCopyable
         {
 
