@@ -146,6 +146,7 @@
     <Compile Include="Views\MyPinCreationDetails\MyPinCreationDetailsView.cs" />
     <Compile Include="Views\MyPinCreationDetails\MyPinDetailsView.cs" />
     <Compile Include="Views\ToggleButtonBase.cs" />
+    <Compile Include="Views\VirtualKeyboard\VirtualKeyboardView.cs" />
     <Compile Include="Views\Watermark\WatermarkView.cs" />
     <Compile Include="Views\WorldPinOnMap\WorldPinOnMapView.cs" />
     <Compile Include="Views\Menu\MenuView.cs" />
@@ -297,6 +298,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\VirtualKeyboard\VirtualKeyboard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Watermark\WatermarkView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -304,10 +309,6 @@
     <Page Include="Views\WorldPinOnMap\WorldPinOnMapView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="VirtualKeyboard\VirtualKeyboard.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

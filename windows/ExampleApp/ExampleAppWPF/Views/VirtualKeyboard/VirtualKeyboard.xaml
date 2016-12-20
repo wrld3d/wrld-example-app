@@ -4,7 +4,7 @@
     xmlns:pk="clr-namespace:ExampleAppWPF.VirtualKeyboard">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="../Colours.xaml" />
+        <ResourceDictionary Source="../../Colours.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="KeyboardButtonStyle" TargetType="{x:Type Button}">
