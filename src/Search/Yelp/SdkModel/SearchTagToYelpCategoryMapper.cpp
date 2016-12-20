@@ -14,11 +14,14 @@ namespace ExampleApp
                                                                              const std::string& defaultTag)
                 : m_yelpCategoryMapperUpdater(yelpCategoryMapperUpdater)
                 , m_yelpCategoryMapperChangedCallback(this, &SearchTagToYelpCategoryMapper::OnYelpCategoryMapperAdded)
+                , m_yelpCategoryMapperResetCallback(this, &SearchTagToYelpCategoryMapper::OnYelpCategoryMapperReset)
+                , m_appTagToYelpCategoryMap(appTagToYelpCategoryMap)
                 , m_defaultTag(defaultTag)
                 {
                     m_yelpCategoryMapperUpdater.RegisterMappingAdded(m_yelpCategoryMapperChangedCallback);
+                    m_yelpCategoryMapperUpdater.RegisterMappingReset(m_yelpCategoryMapperResetCallback);
                     
-                    for(auto it = appTagToYelpCategoryMap.begin(); it != appTagToYelpCategoryMap.end(); ++it)
+                    for(auto it = m_appTagToYelpCategoryMap.begin(); it != m_appTagToYelpCategoryMap.end(); ++it)
                     {
                         m_searchTagToYelpRootCategoryModel[it->first].yelpCategoryFilter = it->second;
                         m_searchTagToYelpRootCategoryModel[it->first].performYelpSearch = true;
@@ -27,6 +30,7 @@ namespace ExampleApp
                 
                 SearchTagToYelpCategoryMapper::~SearchTagToYelpCategoryMapper()
                 {
+                    m_yelpCategoryMapperUpdater.UnregisterMappingReset(m_yelpCategoryMapperResetCallback);
                     m_yelpCategoryMapperUpdater.UnregisterMappingAdded(m_yelpCategoryMapperChangedCallback);
                 }
                 
@@ -43,6 +47,16 @@ namespace ExampleApp
                 void SearchTagToYelpCategoryMapper::OnYelpCategoryMapperAdded(const std::string& tag, const YelpCategoryModel& yelpCategoryModel)
                 {
                     AddMapping(tag, yelpCategoryModel);
+                }
+                
+                void SearchTagToYelpCategoryMapper::OnYelpCategoryMapperReset()
+                {
+                    m_searchTagToYelpRootCategoryModel.clear();
+                    for(auto it = m_appTagToYelpCategoryMap.begin(); it != m_appTagToYelpCategoryMap.end(); ++it)
+                    {
+                        m_searchTagToYelpRootCategoryModel[it->first].yelpCategoryFilter = it->second;
+                        m_searchTagToYelpRootCategoryModel[it->first].performYelpSearch = true;
+                    }
                 }
                 
                 bool SearchTagToYelpCategoryMapper::TryGetBestYelpCategoryForSearchTag(const std::string& searchTag, YelpCategoryModel& out_bestMatchedYelpCategoryModel)

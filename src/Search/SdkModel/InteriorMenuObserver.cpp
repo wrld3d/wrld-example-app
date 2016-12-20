@@ -74,6 +74,7 @@ namespace ExampleApp
                         
                         if(searchMenuItems.HasMember("items") && searchMenuItems["items"].IsArray())
                         {
+                            m_yelpCategoryMapperUpdater.ResetMapping();
                             const rapidjson::Value& menuItems = searchMenuItems["items"];
                             for(rapidjson::SizeType i = 0; i < menuItems.Size(); i++)
                             {
@@ -164,6 +165,7 @@ namespace ExampleApp
                     
                     const bool visibleInSearchMenu = true;
                     const bool interior = true;
+                    m_yelpCategoryMapperUpdater.ResetMapping();
                     for (rapidjson::Value::ConstValueIterator it = tagSearchModelsMember.Begin();
                          it != tagSearchModelsMember.End();
                          ++it)

@@ -30,6 +30,21 @@ namespace ExampleApp
                 {
                     m_callbacks.ExecuteCallbacks(tag, yelpCategoryModel);
                 }
+                
+                void YelpCategoryMapperUpdater::RegisterMappingReset(Eegeo::Helpers::ICallback0& callback)
+                {
+                    m_callbacks0.AddCallback(callback);
+                }
+                
+                void YelpCategoryMapperUpdater::UnregisterMappingReset(Eegeo::Helpers::ICallback0& callback)
+                {
+                    m_callbacks0.RemoveCallback(callback);
+                }
+                
+                void YelpCategoryMapperUpdater::ResetMapping()
+                {
+                    m_callbacks0.ExecuteCallbacks();
+                }
             }
         }
     }

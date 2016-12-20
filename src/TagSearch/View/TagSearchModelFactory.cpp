@@ -33,7 +33,7 @@ namespace ExampleApp
                     Eegeo_ASSERT(tagSearchModelsMember.IsArray());
 
                     out_models = std::vector<ExampleApp::TagSearch::View::TagSearchModel>();
-
+                    yelpCategoryMapperUpdater.ResetMapping();
                     for (rapidjson::Value::ConstValueIterator it = tagSearchModelsMember.Begin();
                          it != tagSearchModelsMember.End();
                          ++it)

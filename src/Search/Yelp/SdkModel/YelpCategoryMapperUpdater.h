@@ -24,8 +24,12 @@ namespace ExampleApp
                     void RegisterMappingAdded(Eegeo::Helpers::ICallback2<const std::string, const YelpCategoryModel>& callback);
                     void UnregisterMappingAdded(Eegeo::Helpers::ICallback2<const std::string, const YelpCategoryModel>& callback);
                     void AddMapping(const std::string& tag, const YelpCategoryModel& yelpCategoryModel);
+                    void RegisterMappingReset(Eegeo::Helpers::ICallback0& callback);
+                    void UnregisterMappingReset(Eegeo::Helpers::ICallback0& callback);
+                    void ResetMapping();
                 private:
                     Eegeo::Helpers::CallbackCollection2<const std::string, const YelpCategoryModel> m_callbacks;
+                    Eegeo::Helpers::CallbackCollection0 m_callbacks0;
                     
                 };
             }
