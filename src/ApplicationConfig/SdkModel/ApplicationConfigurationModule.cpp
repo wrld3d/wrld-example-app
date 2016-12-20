@@ -42,9 +42,10 @@ namespace ExampleApp
                     const bool shouldStartFullscreen = false;
                     const bool isKioskTouchInputEnabled = false;
                     const bool isInKioskMode = false;
-                    const bool useLabels = false;
+                    const bool useLabels = true;
                     const bool useJapaneseFont = false;
-
+                    std::string outdoorSearchMenuItems;
+                    
                     return ApplicationConfiguration ("Eegeo Example App",
                         emptyEegeoApiKey,
                         productVersion,
@@ -53,8 +54,8 @@ namespace ExampleApp
                         Eegeo::Config::CoverageTreeManifestUrlDefault,
                         Eegeo::Config::CityThemesManifestUrlDefault,
                         "EmbeddedTheme",
-                        Eegeo::Space::LatLongAltitude(0.0f, 0.0f, 0.0f),
-                        1000.f,
+                        Eegeo::Space::LatLongAltitude(37.7858f, -122.401f, 2.7),
+                        1781.0f,
                         0.f,
                         tryStartAtGpsLocation,
                         shouldStartFullscreen,
@@ -73,7 +74,8 @@ namespace ExampleApp
                         isInKioskMode,
                         useLabels,
                         useJapaneseFont,
-                        interiorTrackingInfo);
+                        interiorTrackingInfo,
+                        outdoorSearchMenuItems);
                 }
             }
             
@@ -82,7 +84,7 @@ namespace ExampleApp
                                                                       const std::string& configFilePath
                                                                       )
             {
-                
+        
                 ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationModule applicationConfigurationModule(fileIO,
                                                                                                                        applicationConfigurationVersionProvider
                                                                                                                        );
@@ -102,9 +104,12 @@ namespace ExampleApp
                     platformConfig.OptionsConfig.EnableLabels = true;
                     platformConfig.MapLayersConfig.FontsModuleConfig.EnvironmentFontFilename = appConfig.UseJapaneseFont() ? "IPAexGothic_sdf.fnt" : "opensans_semibold_sdf.fnt";
                     platformConfig.MapLayersConfig.Interiors.UseLegacyLabels = false;
+                    platformConfig.MapLayersConfig.Interiors.UseLegacyEntryMarkers = false;
                     platformConfig.MapLayersConfig.Interiors.LabelCategoryMapPath = "Interiors/label_category_mapping.json";
                     platformConfig.MapLayersConfig.LabelsModuleConfig.StyleSheetPath = "Labels/label_style_sheet.json";
                     platformConfig.MapLayersConfig.LabelsModuleConfig.CategoryIconMapPath = "Labels/label_category_icon_map.json";
+                    platformConfig.MapLayersConfig.IconsModuleConfig.IconsEnabled = true;
+                    platformConfig.MapLayersConfig.IconsModuleConfig.IconSetManifestPath = "SearchResultOnMap/pin_sheet.json";
                 }
                 else
                 {

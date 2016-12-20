@@ -20,10 +20,12 @@ namespace ExampleApp
                     ISearchQueryPerformer& searchQueryPerformer,
                     CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
                     Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                    TagSearch::View::ITagSearchRepository& tagSearchRepository,
                     float minimumSecondsBetweenUpdates,
                     float minimumInterestLateralDeltaAt1km,
                     float minimumInteriorInterestLateralDelta,
-                    float maximumInterestLateralSpeedAt1km)
+                    float maximumInterestLateralSpeedAt1km,
+                    InteriorMenuObserver& interiorMenuObserver)
                 : m_minimumSecondsBetweenUpdates(minimumSecondsBetweenUpdates)
                 , m_minimumInterestLateralDeltaAt1km(minimumInterestLateralDeltaAt1km)
                 , m_minimumInteriorInterestLateralDelta(minimumInteriorInterestLateralDelta)
@@ -35,7 +37,6 @@ namespace ExampleApp
                 , m_searchResultQueryIssuedCallback(this, &SearchRefreshService::HandleSearchQueryIssued)
                 , m_searchResultResponseReceivedCallback(this, &SearchRefreshService::HandleSearchResultsResponseReceived)
                 , m_searchQueryResultsClearedCallback(this, &SearchRefreshService::HandleSearchQueryResultsCleared)
-                , m_interiorChangedCallback(this, &SearchRefreshService::HandleInteriorChanged)
                 , m_queriesPending(0)
                 , m_searchResultsExist(false)
                 , m_searchResultsCleared(false)
@@ -47,16 +48,19 @@ namespace ExampleApp
                 , m_previousQueryInterestDistance(0.f)
                 , m_previousQueryInteriorId()
                 , m_interiorHasChanged(false)
+                , m_tagSearchRepository(tagSearchRepository)
+                , m_interiorMenuObserver(interiorMenuObserver)
+                , m_interiorTagsUpdatedCallback(this, &SearchRefreshService::HandleInteriorChanged)
             {
                 m_searchService.InsertOnPerformedQueryCallback(m_searchResultQueryIssuedCallback);
                 m_searchService.InsertOnReceivedQueryResultsCallback(m_searchResultResponseReceivedCallback);
                 m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(m_searchQueryResultsClearedCallback);
-                m_interiorInteractionModel.RegisterModelChangedCallback(m_interiorChangedCallback);
+                m_interiorMenuObserver.RegisterInteriorTagsUpdatedCallback(m_interiorTagsUpdatedCallback);
             }
 
             SearchRefreshService::~SearchRefreshService()
             {
-                m_interiorInteractionModel.UnregisterModelChangedCallback(m_interiorChangedCallback);
+                m_interiorMenuObserver.UnregisterInteriorTagsUpdatedCallback(m_interiorTagsUpdatedCallback);
                 m_searchQueryPerformer.RemoveOnSearchResultsClearedCallback(m_searchQueryResultsClearedCallback);
                 m_searchService.RemoveOnReceivedQueryResultsCallback(m_searchResultResponseReceivedCallback);
                 m_searchService.RemoveOnPerformedQueryCallback(m_searchResultQueryIssuedCallback);
@@ -106,7 +110,6 @@ namespace ExampleApp
 
                         return false;
                     }
-
                     
                     return true;
                 }
@@ -152,10 +155,10 @@ namespace ExampleApp
                     shouldRefresh = false;
                 }
                 
-                if (shouldRefresh)
+                const SearchQuery& previousQuery = m_searchQueryPerformer.GetPreviousSearchQuery();
+                if (shouldRefresh && TagStillPresent(previousQuery))
                 {
                     const Eegeo::Space::LatLongAltitude& currentLocation = Eegeo::Space::LatLongAltitude::FromECEF(interestPointEcef);
-                    const SearchQuery& previousQuery = m_searchQueryPerformer.GetPreviousSearchQuery();
                     m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsTag(), previousQuery.ShouldTryInteriorSearch(), currentLocation);
 
                     if (m_interiorInteractionModel.HasInteriorModel())
@@ -180,12 +183,31 @@ namespace ExampleApp
                     
                     if (previousQuery.IsTag())
                     {
-                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsTag(), previousQuery.ShouldTryInteriorSearch());
-                        m_secondsSincePreviousRefresh = 0.f;
+                        if(TagStillPresent(previousQuery))
+                        {
+                            m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsTag(), previousQuery.ShouldTryInteriorSearch());
+                            m_secondsSincePreviousRefresh = 0.f;
 
-                        m_interiorHasChanged = true;
+                            m_interiorHasChanged = true;
+                        }
+                        else
+                        {
+                            m_searchQueryPerformer.RemoveSearchQueryResults();
+                        }
                     }
                 }
+            }
+            
+            bool SearchRefreshService::TagStillPresent(const SearchQuery& previousQuery)
+            {
+                for(int i = 0; i < m_tagSearchRepository.GetItemCount(); i++)
+                {
+                    if(previousQuery.Query() == m_tagSearchRepository.GetItemAtIndex(i).SearchTag())
+                    {
+                        return true;
+                    }
+                }
+                return false;
             }
 
             void SearchRefreshService::HandleSearchQueryIssued(const SearchQuery& query)

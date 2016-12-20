@@ -41,7 +41,7 @@ namespace ExampleApp
                                              Net::SdkModel::INetworkCapabilities& networkCapabilities,
                                              const Search::SdkModel::SearchTags& searchTags,
                                              const std::string& serviceUrl,
-                                             const std::string& apiKey,
+                                             const Eegeo::Web::ApiTokenModel& apiTokenModel,
                                              const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel);
                     
                     ~EegeoSearchServiceModule();

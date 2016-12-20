@@ -3,6 +3,8 @@
 #pragma once
 
 #include "Search.h"
+#include "TagSearch.h"
+#include "InteriorMenuObserver.h"
 
 namespace ExampleApp
 {
@@ -21,9 +23,13 @@ namespace ExampleApp
 
                 virtual ISearchRefreshService& GetSearchRefreshService() const = 0;
                 
+                virtual ExampleApp::TagSearch::SdkModel::ITagSearchModule& GetTagSearchModule() const = 0;
+                
                 virtual MyPins::ISearchResultMyPinsService& GetSearchResultMyPinsService() const = 0;
                 
                 virtual MyPins::IMyPinsSearchResultRefreshService& GetMyPinsSearchResultRefreshService() const = 0;
+                
+                virtual InteriorMenuObserver& GetInteriorMenuObserver() const = 0;
             };
         }
     }

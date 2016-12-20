@@ -19,6 +19,9 @@
 #include "IInteriorsEntitiesPinsController.h"
 #include "PersistentSettings.h"
 #include "NavigationService.h"
+#include "InteriorMetaDataRepository.h"
+#include "TagSearchRepository.h"
+#include "IAlertBoxFactory.h"
 
 namespace ExampleApp
 {
@@ -46,9 +49,13 @@ namespace ExampleApp
                                         Metrics::IMetricsService& metricsService,
                                         const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel,
                                         const bool interiorsAffectedByFlattening,
+                                        const bool useIndoorEntryMarkerLabels,
                                         InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsEntitiesPinsController,
                                         PersistentSettings::IPersistentSettingsModel& persistentSettings,
-                                        Eegeo::Location::NavigationService& navigationService);
+                                        Eegeo::Location::NavigationService& navigationService,
+                                        Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& interiorMetaDataRepo,
+                                        TagSearch::View::ITagSearchRepository& tagSearchRepository,
+                                        Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory);
 
                 ~InteriorsExplorerModule();
                 
@@ -78,8 +85,10 @@ namespace ExampleApp
                 InteriorVisibilityUpdater* m_pVisibilityUpdater;
                 InteriorExplorerUserInteractionModel* m_pUserInteractionModel;
                 InteriorsExplorerFloorDraggedObserver* m_pFloorDraggedObserver;
+                InteriorPermissionObserver* m_pInteriorPermissionObserver;
                 
                 InteriorWorldPinController* m_pWorldPinController;
+                InteriorSelectionController* m_pInteriorSelectionController;
                 Eegeo::Resources::Interiors::InteriorsCameraController* m_pInteriorsCameraController;
                 Eegeo::Resources::Interiors::InteriorsGpsCameraController* m_pInteriorsGpsCameraController;
                 Eegeo::Camera::GlobeCamera::GlobeCameraTouchController* m_pGlobeCameraTouchController;

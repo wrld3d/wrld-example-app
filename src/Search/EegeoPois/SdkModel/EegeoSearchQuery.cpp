@@ -3,6 +3,7 @@
 #include "EegeoSearchQuery.h"
 #include "IWebLoadRequestFactory.h"
 #include "IWebLoadRequest.h"
+#include "ApiTokenModel.h"
 
 #include <sstream>
 #include <iomanip>
@@ -19,9 +20,9 @@ namespace ExampleApp
                                                    Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
                                                    const Search::SdkModel::SearchQuery& query,
                                                    const std::string& serviceUrl,
-                                                   const std::string& apiKey,
+                                                   const Eegeo::Web::ApiTokenModel& apiTokenModel,
                                                    Eegeo::Helpers::ICallback0& completionCallback)
-                : m_apiKey(apiKey)
+                : m_apiTokenModel(apiTokenModel)
                 , m_completionCallback(completionCallback)
                 , m_responseString("")
                 , m_isSuccess(false)
@@ -54,7 +55,7 @@ namespace ExampleApp
                     urlstream << "&lon=" << std::setprecision(8) << query.Location().GetLongitudeInDegrees();
                     urlstream << "&n=" << maximumNumberOfResults;
                     urlstream << "&ms=" << std::setprecision(2) << minimumScore;
-                    urlstream << "&apikey=" << m_apiKey;
+                    urlstream << "&apikey=" << m_apiTokenModel.GetApiKey();
                     
                     std::string url = urlstream.str();
                     m_pWebLoadRequest = webRequestFactory

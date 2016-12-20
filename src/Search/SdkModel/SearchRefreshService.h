@@ -13,6 +13,8 @@
 #include "VectorMath.h"
 #include "Interiors.h"
 #include "InteriorId.h"
+#include "ITagSearchRepository.h"
+#include "InteriorMenuObserver.h"
 
 namespace ExampleApp
 {
@@ -30,12 +32,13 @@ namespace ExampleApp
                 ISearchService& m_searchService;
                 
                 ISearchQueryPerformer& m_searchQueryPerformer;
+                InteriorMenuObserver& m_interiorMenuObserver;
                 CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionsController;
                 Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 Eegeo::Helpers::TCallback1<SearchRefreshService, const SearchQuery&> m_searchResultQueryIssuedCallback;
                 Eegeo::Helpers::TCallback2<SearchRefreshService, const SearchQuery&, const std::vector<SearchResultModel>&> m_searchResultResponseReceivedCallback;
                 Eegeo::Helpers::TCallback0<SearchRefreshService> m_searchQueryResultsClearedCallback;
-                Eegeo::Helpers::TCallback0<SearchRefreshService> m_interiorChangedCallback;
+                Eegeo::Helpers::TCallback0<SearchRefreshService> m_interiorTagsUpdatedCallback;
                 int m_queriesPending;
                 bool m_searchResultsExist;
                 bool m_searchResultsCleared;
@@ -53,10 +56,12 @@ namespace ExampleApp
                                      ISearchQueryPerformer& searchQueryPerformer,
                                      CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
                                      Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                     TagSearch::View::ITagSearchRepository& tagSearchRepository,
                                      float minimumSecondsBetweenUpdates,
                                      float minimumInterestLateralDeltaAt1km,
                                      float minimumInteriorInterestLateralDelta,
-                                     float maximumInterestLateralSpeedAt1km);
+                                     float maximumInterestLateralSpeedAt1km,
+                                     InteriorMenuObserver& interiorMenuObserver);
 
                 ~SearchRefreshService();
 
@@ -78,6 +83,10 @@ namespace ExampleApp
                 void HandleSearchQueryResultsCleared();
                 
                 bool ShouldRefreshSearch(float deltaSeconds, const Eegeo::dv3& interestPointEcef, const Eegeo::dv3& viewpointEcef);
+                
+                bool TagStillPresent(const SearchQuery& previousQuery);
+                
+                TagSearch::View::ITagSearchRepository& m_tagSearchRepository;
             };
         }
     }

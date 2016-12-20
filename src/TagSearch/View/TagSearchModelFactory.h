@@ -14,8 +14,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            std::vector<TagSearch::View::TagSearchModel> CreateTagSearchModelsFromFile(
-                    Eegeo::Helpers::IFileIO& fileIO, const std::string& fileName);
+            std::vector<TagSearch::View::TagSearchModel> CreateTagSearchModelsFromFile(const std::string& fileName, const std::string& jsonAttributeName);
         }
     }
 }

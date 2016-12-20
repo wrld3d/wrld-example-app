@@ -1,24 +1,73 @@
 {
-    "Name": "Mobile Example App",
-    "EegeoApiKey": "",
-    "StartLocationLatitude": 37.7858,
-    "StartLocationLongitude": -122.401,
-    "StartLocationAltitude": 2.7,
-    "StartLocationDistance": 1781.0,
-    "StartLocationOrientationDegrees": 0.0,
-    "TryStartAtGpsLocation":false,
-    "GoogleAnalyticsReferrerToken":"mea_android",
-    "FlurryAppKey": "",
-    "YelpConsumerKey": "",
-    "YelpConsumerSecret": "",
-    "YelpOAuthToken": "",
-    "YelpOAuthTokenSecret": "",
-    "GeoNamesUserName": "",
-    "CoverageTreeManifestURL": "",
-    "ThemeManifestURL": "",
-    "EegeoSearchServiceUrl": "",
-    "MyPinsWebServiceUrl": "",
-    "MyPinsWebServiceAuthToken": "",
-    "UseLabels": true,
-    "UseJapaneseFont": false
+    "name": "Mobile Example App",
+    "eegeo_api_key": "",
+    "start_location_latitude": 37.7858,
+    "start_location_longitude": -122.401,
+    "start_location_altitude": 2.7,
+    "start_location_distance": 1781.0,
+    "start_location_orientation_degrees": 0.0,
+    "try_start_at_gps_location":false,
+    "coveragetree_manifest_url": "",
+    "theme_manifest_url": "",
+    "google_analytics_referrer_token":"mea_android",
+    "flurry_app_key": "",
+    "yelp_consumer_key": "",
+    "yelp_consumer_secret": "",
+    "yelp_oauth_token": "",
+    "yelp_oauth_token_secret": "",
+    "geonames_username": "",
+    "eegeo_search_service_url": "",
+    "mypins_web_service_url": "",
+    "mypins_web_service_auth_token": "",
+    "use_labels": true,
+    "use_japanese_font": false,
+    "outdoor_search_menu_items": [{
+                                  "name": "Around Me",
+                                  "search_tag": "",
+                                  "icon_key": "aroundme"
+                                  }, {
+                                  "name": "Accommodation",
+                                  "search_tag": "accommodation",
+                                  "icon_key": "accommodation"
+                                  }, {
+                                  "name": "Art & Museum",
+                                  "search_tag": "art_museums",
+                                  "icon_key": "art_museums"
+                                  }, {
+                                  "name": "Business",
+                                  "search_tag": "business",
+                                  "icon_key": "business"
+                                  }, {
+                                  "name": "Entertainment",
+                                  "search_tag": "entertainment",
+                                  "icon_key": "entertainment"
+                                  }, {
+                                  "name": "Food & Drink",
+                                  "search_tag": "food_drink",
+                                  "icon_key": "food_drink"
+                                  }, {
+                                  "name": "General Amenities",
+                                  "search_tag": "amenities",
+                                  "icon_key": "amenities"
+                                  }, {
+                                  "name": "Health",
+                                  "search_tag": "health",
+                                  "icon_key": "health"
+                                  }, {
+                                  "name": "Shopping",
+                                  "search_tag": "shopping",
+                                  "icon_key": "shopping"
+                                  }, {
+                                  "name": "Sport & Leisure",
+                                  "search_tag": "sports_leisure",
+                                  "icon_key": "sports_leisure"
+                                  }, {
+                                  "name": "Tourist",
+                                  "search_tag": "tourism",
+                                  "icon_key": "tourism"
+                                  }, {
+                                  "name": "Transport",
+                                  "search_tag": "transport",
+                                  "icon_key": "transport"
+                                  }]
 }

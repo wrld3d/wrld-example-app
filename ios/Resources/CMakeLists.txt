@@ -259,6 +259,18 @@ set(resources ${resources}
         Resources/gps_marker.png
         Resources/gps_marker@2x.png
         Resources/gps_marker@3x.png
+        Resources/icon1_lamppost.png
+        Resources/icon1_lamppost@2x.png
+        Resources/icon1_lamppost@3x.png
+        Resources/icon1_meter.png
+        Resources/icon1_meter@2x.png
+        Resources/icon1_meter@3x.png
+        Resources/icon1_trash_empty.png
+        Resources/icon1_trash_empty@2x.png
+        Resources/icon1_trash_empty@3x.png
+        Resources/icon1_trash_full.png
+        Resources/icon1_trash_full@2x.png
+        Resources/icon1_trash_full@3x.png
         Resources/icon1_accommodation.png
         Resources/icon1_accommodation@2x.png
         Resources/icon1_accommodation@3x.png
@@ -797,7 +809,6 @@ set(resources ${resources}
         Resources/sub_menu_arrow_on.png
         Resources/sub_menu_arrow_on@2x.png
         Resources/sub_menu_arrow_on@3x.png
-        Resources/search_menu_items.json
         Resources/search_tags.json
         Resources/EmbeddedTheme
         Resources/Tours

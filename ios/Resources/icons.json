@@ -491,6 +491,22 @@
         {
             "name": "male", 
             "file": "icon1_male.png"
+        }, 
+        {
+            "name": "lamppost", 
+            "file": "icon1_lamppost.png"
+        }, 
+        {
+            "name": "trash_empty", 
+            "file": "icon1_trash_empty.png"
+        }, 
+        {
+            "name": "trash_full", 
+            "file": "icon1_trash_full.png"
+        }, 
+        {
+            "name": "meter", 
+            "file": "icon1_meter.png"
         }
     ]
 }

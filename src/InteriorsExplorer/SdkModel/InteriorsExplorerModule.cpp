@@ -14,6 +14,9 @@
 #include "InteriorExplorerUserInteractionModel.h"
 #include "IInitialExperienceModel.h"
 #include "InteriorsExplorerFloorDraggedObserver.h"
+#include "InteriorPermissionObserver.h"
+#include "InteriorSelectionController.h"
+
 
 namespace ExampleApp
 {
@@ -38,9 +41,15 @@ namespace ExampleApp
                                                              Metrics::IMetricsService& metricsService,
                                                              const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel,
                                                              const bool interiorsAffectedByFlattening,
+                                                             const bool useIndoorEntryMarkerLabels,
+                                            
                                                              InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsEntitiesPinsController,
                                                              PersistentSettings::IPersistentSettingsModel& persistentSettings,
-                                                             Eegeo::Location::NavigationService& navigationService)
+                                                             Eegeo::Location::NavigationService& navigationService,
+                                                             Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& interiorMetaDataRepo,
+                                                             TagSearch::View::ITagSearchRepository& tagSearchRepository,
+                                                             Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory)
+            : m_pInteriorSelectionController(NULL)
             {
                 m_pUserInteractionModel = Eegeo_NEW(InteriorExplorerUserInteractionModel)();
                 
@@ -57,13 +66,18 @@ namespace ExampleApp
                                                                                                                         *m_pGlobeCameraTouchController,
                                                                                                                         *m_pGpsGlobeCameraController);
                 
+
+                m_pInteriorSelectionController = Eegeo_NEW(InteriorSelectionController)(interiorSelectionModel,
+                                                                                        markerRepository,
+                                                                                        *m_pInteriorsCameraController);
                 
                 m_pWorldPinController = Eegeo_NEW(InteriorWorldPinController)(interiorSelectionModel,
                                                                               markerRepository,
                                                                               worldPinsService,
                                                                               *m_pInteriorsCameraController,
                                                                               messageBus,
-                                                                              initialExperienceModel);
+                                                                              initialExperienceModel,
+                                                                              useIndoorEntryMarkerLabels);
                 
                 m_pModel = Eegeo_NEW(InteriorsExplorerModel)(interiorInteractionModel,
                                                              interiorSelectionModel,
@@ -78,10 +92,13 @@ namespace ExampleApp
                 m_pFloorDraggedObserver = Eegeo_NEW(InteriorsExplorerFloorDraggedObserver)(*m_pModel, m_pInteriorsGpsCameraController->GetTouchController());
 
                 m_pUINotificationService = Eegeo_NEW(InteriorsUINotificationService)(messageBus, interiorsEntitiesPinsController, worldPinIconMapping);
+                
+                m_pInteriorPermissionObserver = Eegeo_NEW(InteriorPermissionObserver)(interiorSelectionModel, alertBoxFactory);
             }
             
             InteriorsExplorerModule::~InteriorsExplorerModule()
             {
+                Eegeo_DELETE m_pInteriorPermissionObserver;
                 Eegeo_DELETE m_pUINotificationService;
                 Eegeo_DELETE m_pFloorDraggedObserver;
                 Eegeo_DELETE m_pViewModel;
@@ -92,6 +109,7 @@ namespace ExampleApp
                 Eegeo_DELETE m_pGpsGlobeCameraController;
                 Eegeo_DELETE m_pVisibilityUpdater;
                 Eegeo_DELETE m_pUserInteractionModel;
+                Eegeo_DELETE m_pInteriorSelectionController;
             }
             
             View::InteriorsExplorerViewModel& InteriorsExplorerModule::GetInteriorsExplorerViewModel() const

@@ -13,7 +13,7 @@ namespace ExampleApp
         {
             namespace
             {
-                void ParseJson(const std::string& json, std::vector<ExampleApp::TagSearch::View::TagSearchModel>& out_models)
+                void ParseJson(const std::string& json, std::vector<ExampleApp::TagSearch::View::TagSearchModel>& out_models, const std::string& jsonAttributeName)
                 {
                     rapidjson::Document document;
 
@@ -23,7 +23,7 @@ namespace ExampleApp
                         return;
                     }
 
-                    const char* itemKey = "items";
+                    const char* itemKey = jsonAttributeName.c_str();
                     Eegeo_ASSERT(document.HasMember(itemKey));
 
                     const auto& tagSearchModelsMember = document[itemKey];
@@ -64,13 +64,10 @@ namespace ExampleApp
                 }
             }
 
-            std::vector<TagSearch::View::TagSearchModel> CreateTagSearchModelsFromFile(
-                    Eegeo::Helpers::IFileIO& fileIO, const std::string& fileName)
+            std::vector<TagSearch::View::TagSearchModel> CreateTagSearchModelsFromFile(const std::string& json, const std::string& jsonAttributeName)
             {
-                const std::string& json = Helpers::FileHelpers::GetFileContentsAsString(fileIO, fileName);
-
                 std::vector<ExampleApp::TagSearch::View::TagSearchModel> result;
-                ParseJson(json, result);
+                ParseJson(json, result, jsonAttributeName);
                 return result;
             }
         }

@@ -26,6 +26,7 @@ namespace ExampleApp
                 const std::string m_platformHash;
                 const std::string m_platformArchitecture;
                 const std::string m_aboutText;
+                std::string m_appName;
 
             public:
                 AboutPageViewModel(
@@ -35,7 +36,8 @@ namespace ExampleApp
                     const std::string& platformVersion,
                     const std::string& platformHash,
                     const std::string& platformArchitecture,
-                    const std::string& aboutText);
+                    const std::string& aboutText,
+                    const std::string& appName);
 
                 ~AboutPageViewModel();
 
@@ -46,6 +48,8 @@ namespace ExampleApp
                 void Open();
 
                 void Close();
+                
+                void UpdateApplicationName(const std::string& appName);
 
                 const std::string GetContent() const;
 
