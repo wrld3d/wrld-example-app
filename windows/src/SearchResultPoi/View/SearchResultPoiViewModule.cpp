@@ -18,11 +18,12 @@ namespace ExampleApp
                 ExampleAppMessaging::TMessageBus& messageBus,
                 Metrics::IMetricsService& metricsService,
                 MyPinCreation::View::IMyPinCreationInitiationView& pinCreationInitiationView,
-                Eegeo::Resources::Interiors::InteriorSelectionModel& interiorsSelectionModel
+                Eegeo::Resources::Interiors::InteriorSelectionModel& interiorsSelectionModel,
+				bool isInKioskMode
             )
             {
                 ASSERT_UI_THREAD
-                m_pView = Eegeo_NEW(SearchResultPoiView)(nativeState);
+                m_pView = Eegeo_NEW(SearchResultPoiView)(nativeState, isInKioskMode);
                 m_pController = Eegeo_NEW(DesktopSearchResultPoiController)(*m_pView, searchResultPoiViewModel, messageBus, metricsService, pinCreationInitiationView, interiorsSelectionModel);
             }
 

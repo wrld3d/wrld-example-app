@@ -865,6 +865,61 @@
       <Link>Assets\floor_selection_button_down%40kiosk.png</Link>
     </Resource>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\poi_placeholder%40kiosk.png">
+      <Link>Assets\poi_placeholder%40kiosk.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\qrcode_preview.png">
+      <Link>Assets\qrcode_preview.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\button_close_off%40kiosk.png">
+      <Link>Assets\button_close_off%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_close_on%40kiosk.png">
+      <Link>Assets\button_close_on%40kiosk.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\Yelp\stars_0_0%40kiosk.png">
+      <Link>Assets\stars_0_0%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\Yelp\stars_1_0%40kiosk.png">
+      <Link>Assets\stars_1_0%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\Yelp\stars_1_5%40kiosk.png">
+      <Link>Assets\stars_1_5%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\Yelp\stars_2_0%40kiosk.png">
+      <Link>Assets\stars_2_0%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\Yelp\stars_2_5%40kiosk.png">
+      <Link>Assets\stars_2_5%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\Yelp\stars_3_0%40kiosk.png">
+      <Link>Assets\stars_3_0%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\Yelp\stars_3_5%40kiosk.png">
+      <Link>Assets\stars_3_5%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\Yelp\stars_4_0%40kiosk.png">
+      <Link>Assets\stars_4_0%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\Yelp\stars_4_5%40kiosk.png">
+      <Link>Assets\stars_4_5%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\Yelp\stars_5_0%40kiosk.png">
+      <Link>Assets\stars_5_0%40kiosk.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\yelp_reviews%40kiosk.png">
+      <Link>Assets\yelp_reviews%40kiosk.png</Link>
+    </Resource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)..\..\Resources" "$(TargetDir)Resources" /e /y /i /r

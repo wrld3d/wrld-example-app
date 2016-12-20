@@ -539,7 +539,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_messageBus,
         *m_pWindowsFlurryMetricsService,
         m_pMyPinCreationViewModule->GetMyPinCreationInitiationView(),
-        app.World().GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel()
+        app.World().GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel(),
+        app.GetApplicationConfiguration().IsInKioskMode()
         );
 
     m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewModule)(
