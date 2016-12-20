@@ -49,6 +49,18 @@ namespace ExampleApp
                 const std::string FloorMapping = "floor_mapping";
                 const std::string BuildingFloorIndex = "building_floor_index";
                 const std::string TrackedFloorIndex = "tracked_floor_index";
+                const std::string LocationDegrees = "location_degrees";
+                const std::string Latitude = "latitude";
+                const std::string Longitude = "longitude";
+                const std::string OrientationDegrees = "orientation_degrees";
+                const std::string FixedIndoorLocation = "fixed_indoor_location";
+
+                struct FixedIndoorLocationData {
+                    const Eegeo::Space::LatLong location;
+                    const std::string interiorId;
+                    const int buildingFloorIndex;
+                    const double orientationDegrees;
+                };
                 
                 std::string ParseStringOrDefault(rapidjson::Document& document, const std::string& key, const std::string& defaultValue)
                 {
@@ -106,6 +118,29 @@ namespace ExampleApp
                     }
                     return defaultValue;
                 }
+
+                Eegeo::Space::LatLong ParseLatLong(const rapidjson::Value& latlong)
+                {
+                    return Eegeo::Space::LatLong::FromDegrees(
+                            latlong.HasMember(Latitude.c_str()) && latlong[Latitude.c_str()].IsDouble() ? latlong[Latitude.c_str()].GetDouble() : 0.0,
+                            latlong.HasMember(Longitude.c_str()) && latlong[Longitude.c_str()].IsDouble() ? latlong[Longitude.c_str()].GetDouble() : 0.0);
+                }
+
+                FixedIndoorLocationData ParseFixedIndoorLocation(const rapidjson::Value& fixedIndoorLocation)
+                {
+                    const rapidjson::Value empty(rapidjson::kObjectType);
+                    return FixedIndoorLocationData {
+                        ParseLatLong(fixedIndoorLocation.HasMember(LocationDegrees.c_str()) ? fixedIndoorLocation[LocationDegrees.c_str()] : empty),
+                        fixedIndoorLocation.HasMember(InteriorId.c_str()) && fixedIndoorLocation[InteriorId.c_str()].IsString()
+                            ? fixedIndoorLocation[InteriorId.c_str()].GetString()
+                            : "",
+                        fixedIndoorLocation.HasMember(BuildingFloorIndex.c_str()) && fixedIndoorLocation[BuildingFloorIndex.c_str()].IsInt()
+                            ? fixedIndoorLocation[BuildingFloorIndex.c_str()].GetInt()
+                            : 0,
+                        fixedIndoorLocation.HasMember(OrientationDegrees.c_str()) && fixedIndoorLocation[OrientationDegrees.c_str()].IsDouble()
+                            ? fixedIndoorLocation[OrientationDegrees.c_str()].GetDouble()
+                            : 180.0 };
+                }
             }
 
             ApplicationConfigurationJsonParser::ApplicationConfigurationJsonParser(const ApplicationConfiguration& defaultConfig)
@@ -160,6 +195,9 @@ namespace ExampleApp
                     const rapidjson::Value& indoorTrackedBuildingsArray = document[IndoorTrackedBuildings.c_str()];
                     ParseIndoorTrackingInfo(interiorTrackingInfoList, indoorTrackedBuildingsArray);
                 }
+
+                const rapidjson::Value empty(rapidjson::kObjectType);
+                const FixedIndoorLocationData fixedIndoorLocation = ParseFixedIndoorLocation(document.HasMember(FixedIndoorLocation.c_str()) ? document[FixedIndoorLocation.c_str()] : empty);
                 
                 return ApplicationConfiguration(
                     name,
@@ -190,7 +228,11 @@ namespace ExampleApp
                     useLabels,
                     useJapaneseFont,
                     interiorTrackingInfoList,
-                    serialized
+                    serialized,
+                    fixedIndoorLocation.location,
+                    fixedIndoorLocation.interiorId,
+                    fixedIndoorLocation.buildingFloorIndex,
+                    fixedIndoorLocation.orientationDegrees
                 );
             }
             

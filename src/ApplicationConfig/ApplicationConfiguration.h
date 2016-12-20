@@ -43,6 +43,11 @@ namespace ExampleApp
             bool m_isKioskTouchInputEnabled;
             bool m_useLabels;
             bool m_useJapaneseFont;
+
+            Eegeo::Space::LatLong m_fixedLatlong;
+            Eegeo::Resources::Interiors::InteriorId m_fixedInteriorId;
+            int m_fixedFloorIndex;
+            double m_fixedHeadingDegrees;
             
             std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo> m_interiorTrackingInfo;
             std::string m_rawConfig;
@@ -78,7 +83,11 @@ namespace ExampleApp
                 bool useLabels,
                 bool useJapaneseFont,
                 const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo,
-                const std::string& rawConfig
+                const std::string& rawConfig,
+                const Eegeo::Space::LatLong fixedLatlong,
+                const std::string& fixedInteriorId,
+                const int fixedFloorIndex,
+                const double fixedHeadingDegrees
             );
             
             std::string Name() const;
@@ -138,6 +147,8 @@ namespace ExampleApp
             const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& InteriorTrackingInfo() const;
             
             std::string RawConfig() const;
+
+            bool FixedIndoorLocation(Eegeo::Space::LatLong& latlong, Eegeo::Resources::Interiors::InteriorId& interiorId, int& floorIndex, double& headingDegrees) const;
         };
     }
 }
