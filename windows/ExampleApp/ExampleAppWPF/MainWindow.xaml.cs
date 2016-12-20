@@ -9,8 +9,6 @@ using System.Windows.Threading;
 using System.Collections.Generic;
 using System.Windows.Controls;
 
-using ExampleAppWPF.VirtualKeyboard;
-
 namespace ExampleAppWPF
 {
 	/// <summary>

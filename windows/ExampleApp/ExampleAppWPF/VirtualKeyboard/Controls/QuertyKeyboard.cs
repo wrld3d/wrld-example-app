@@ -42,6 +42,20 @@ namespace ExampleAppWPF.VirtualKeyboard
 
         #endregion Visual states
 
+        public static readonly DependencyProperty IsShiftPressedProperty =
+            DependencyProperty.Register(
+                "IsShiftPressed", typeof(bool), typeof(QuertyKeyboard),
+                new FrameworkPropertyMetadata(false));
+
+        public bool IsShiftPressed
+        {
+            get { return isShiftPressed; }
+            set {
+                isShiftPressed = value;
+                SetValue(IsShiftPressedProperty, value);
+            }
+        }
+
         #region KeyboardLayout
 
         /// <summary>
@@ -240,7 +254,7 @@ namespace ExampleAppWPF.VirtualKeyboard
                     VirtualKeyboardInputButton inputButton = (VirtualKeyboardInputButton)key;
                     string keyInput = inputButton.GetKeyInputValue();
                     string keyShiftInput = inputButton.GetKeyShiftInputValue();
-                    VirtualKeyboardService.Instance.SendKey(isShiftPressed && !String.IsNullOrEmpty(keyShiftInput)
+                    VirtualKeyboardService.Instance.SendKey(IsShiftPressed && !String.IsNullOrEmpty(keyShiftInput)
                         ? keyShiftInput[0]
                         : keyInput[0]);
 
@@ -286,7 +300,7 @@ namespace ExampleAppWPF.VirtualKeyboard
 
         private void SetShift(bool isPressed)
         {
-            isShiftPressed = isPressed;
+            IsShiftPressed = isPressed;
             UpdateButtonLabels();
         }
 
@@ -302,7 +316,7 @@ namespace ExampleAppWPF.VirtualKeyboard
 
         private void OnShiftPressed()
         {
-            SetShift(!isShiftPressed);
+            SetShift(!IsShiftPressed);
         }
 
         private void UpdateButtonLabels()
@@ -312,10 +326,13 @@ namespace ExampleAppWPF.VirtualKeyboard
                 if (key.GetKeyType() == VirtualKeyboardButton.KeyType.Input)
                 {
                     VirtualKeyboardInputButton inputButton = (VirtualKeyboardInputButton)key;
-                    string shiftInputValue = inputButton.GetKeyShiftInputValue();
-                    inputButton.Content = isShiftPressed && !String.IsNullOrEmpty(shiftInputValue)
-                        ? shiftInputValue
-                        : inputButton.GetKeyInputValue();
+                    if (inputButton.GetAutoLabel())
+                    {
+                        string shiftInputValue = inputButton.GetKeyShiftInputValue();
+                        inputButton.Content = IsShiftPressed && !String.IsNullOrEmpty(shiftInputValue)
+                            ? shiftInputValue
+                            : inputButton.GetKeyInputValue();
+                    }
                 }
             }
         }

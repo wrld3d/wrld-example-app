@@ -4,6 +4,13 @@ namespace ExampleAppWPF.VirtualKeyboard
 {
     class VirtualKeyboardInputButton : VirtualKeyboardButton
     {
+        public static readonly DependencyProperty AutoLabelProperty =
+            DependencyProperty.RegisterAttached(
+                "AutoLabel",
+                typeof(bool),
+                typeof(VirtualKeyboardButton),
+                new PropertyMetadata(true));
+
         public static readonly DependencyProperty KeyInputValueProperty =
             DependencyProperty.RegisterAttached(
                 "KeyInputValue",
@@ -18,6 +25,16 @@ namespace ExampleAppWPF.VirtualKeyboard
                 typeof(VirtualKeyboardButton),
                 new PropertyMetadata(default(string)));
 
+        public static void SetAutoLabel(UIElement e, bool v)
+        {
+            e.SetValue(AutoLabelProperty, v);
+        }
+
+        public static bool GetAutoLabel(UIElement e)
+        {
+            return (bool)e.GetValue(AutoLabelProperty);
+        }
+
         public static void SetKeyInputValue(UIElement e, string v)
         {
             e.SetValue(KeyInputValueProperty, v);
@@ -31,6 +48,11 @@ namespace ExampleAppWPF.VirtualKeyboard
         public static void SetKeyShiftInputValue(UIElement e, string v)
         {
             e.SetValue(KeyShiftInputValueProperty, v);
+        }
+
+        public bool GetAutoLabel()
+        {
+            return GetAutoLabel(this);
         }
 
         public static string GetKeyShiftInputValue(UIElement e)

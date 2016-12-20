@@ -9,4 +9,4 @@ namespace ExampleApp
     public:
         static void OnVisibilityChanged(System::IntPtr^ nativeObjectPtr, bool isVisible);
     };
-};
+}
