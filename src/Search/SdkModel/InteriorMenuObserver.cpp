@@ -4,6 +4,7 @@
 #include "TagSearchModel.h"
 #include "document.h"
 #include "writer.h"
+#include "YelpCategoryModel.h"
 
 namespace ExampleApp
 {
@@ -13,13 +14,15 @@ namespace ExampleApp
         {
             InteriorMenuObserver::InteriorMenuObserver(Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                        Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& interiorMetaDataRepo,
-                                                       TagSearch::View::ITagSearchRepository& tagSearchRepository)
+                                                       TagSearch::View::ITagSearchRepository& tagSearchRepository,
+                                                       Search::Yelp::SdkModel::YelpCategoryMapperUpdater& yelpCategoryMapperUpdater)
             : m_tagSearchRepository(tagSearchRepository)
             , m_interiorSelectionChangedCallback(this, &InteriorMenuObserver::OnSelectionChanged)
             , m_interiorSelectionModel(interiorSelectionModel)
             , m_interiorMetaDataRepo(interiorMetaDataRepo)
             , m_hasSelectedInterior(false)
             , m_hasSearchMenuItems(false)
+            , m_yelpCategoryMapperUpdater(yelpCategoryMapperUpdater)
             {
                 m_interiorSelectionModel.RegisterSelectionChangedCallback(m_interiorSelectionChangedCallback);
                 m_hasSelectedInterior = m_interiorSelectionModel.IsInteriorSelected();
@@ -71,10 +74,55 @@ namespace ExampleApp
                         
                         if(searchMenuItems.HasMember("items") && searchMenuItems["items"].IsArray())
                         {
+                            m_yelpCategoryMapperUpdater.ResetMapping();
                             const rapidjson::Value& menuItems = searchMenuItems["items"];
                             for(rapidjson::SizeType i = 0; i < menuItems.Size(); i++)
                             {
-                                m_tagSearchRepository.AddItem(TagSearch::View::TagSearchModel(menuItems[i]["name"].GetString(), menuItems[i]["search_tag"].GetString(), true, menuItems[i]["icon_key"].GetString(), true));
+                                const auto& item = menuItems[i];
+                                
+                                const char* nameKey = "name";
+                                if(!item.HasMember(nameKey) || !item[nameKey].IsString())
+                                {
+                                    Eegeo_TTY("no member 'name' or is not a string");
+                                    break;
+                                }
+                                const std::string& name = item[nameKey].GetString();
+                                
+                                const char* searchTagKey = "search_tag";
+                                if(!item.HasMember(searchTagKey) || !item[searchTagKey].IsString())
+                                {
+                                    Eegeo_TTY("no member search_tag or is not a string");
+                                    break;
+                                }
+                                const std::string& searchTag = item[searchTagKey].GetString();
+                                
+                                const char* iconKey = "icon_key";
+                                if(!item.HasMember(iconKey) || !item[iconKey].IsString())
+                                {
+                                    Eegeo_TTY("no member icon_key or is not a string");
+                                    break;
+                                }
+                                const std::string& icon = item[iconKey].GetString();
+                                
+                                const char* skipYelpSearchKey = "skip_yelp_search";
+                                const char* yelpMappingKey = "yelp_mapping";
+                                if(item.HasMember(skipYelpSearchKey) && item[skipYelpSearchKey].IsBool())
+                                {
+                                    bool skipYelpSearch = item[skipYelpSearchKey].GetBool();
+                                    if(skipYelpSearch)
+                                    {
+                                        Search::Yelp::SdkModel::YelpCategoryModel yelpCategoryModel { "unused_string", false };
+                                        m_yelpCategoryMapperUpdater.AddMapping(searchTag, yelpCategoryModel);
+                                    }
+                                }
+                                else if(item.HasMember(yelpMappingKey) && item[yelpMappingKey].IsString())
+                                {
+                                    const std::string& yelpMapping = item[yelpMappingKey].GetString();
+                                    Search::Yelp::SdkModel::YelpCategoryModel yelpCategoryModel { yelpMapping, true };
+                                    m_yelpCategoryMapperUpdater.AddMapping(searchTag, yelpCategoryModel);
+                                }
+                                
+                                m_tagSearchRepository.AddItem(TagSearch::View::TagSearchModel(name, searchTag, true, icon, true));
                             }
                         }
                     }
@@ -117,6 +165,7 @@ namespace ExampleApp
                     
                     const bool visibleInSearchMenu = true;
                     const bool interior = true;
+                    m_yelpCategoryMapperUpdater.ResetMapping();
                     for (rapidjson::Value::ConstValueIterator it = tagSearchModelsMember.Begin();
                          it != tagSearchModelsMember.End();
                          ++it)
@@ -146,6 +195,24 @@ namespace ExampleApp
                             break;
                         }
                         const std::string& icon = item[iconKey].GetString();
+                        
+                        const char* skipYelpSearchKey = "skip_yelp_search";
+                        const char* yelpMappingKey = "yelp_mapping";
+                        if(item.HasMember(skipYelpSearchKey) && item[skipYelpSearchKey].IsBool())
+                        {
+                            bool skipYelpSearch = item[skipYelpSearchKey].GetBool();
+                            if(skipYelpSearch)
+                            {
+                                Search::Yelp::SdkModel::YelpCategoryModel yelpCategoryModel { "unused_string", false };
+                                m_yelpCategoryMapperUpdater.AddMapping(searchTag, yelpCategoryModel);
+                            }
+                        }
+                        else if(item.HasMember(yelpMappingKey) && item[yelpMappingKey].IsString())
+                        {
+                            const std::string& yelpMapping = item[yelpMappingKey].GetString();
+                            Search::Yelp::SdkModel::YelpCategoryModel yelpCategoryModel { yelpMapping, true };
+                            m_yelpCategoryMapperUpdater.AddMapping(searchTag, yelpCategoryModel);
+                        }
                       
 
                         m_tagSearchRepository.AddItem(TagSearch::View::TagSearchModel(name, searchTag, interior, icon, visibleInSearchMenu));

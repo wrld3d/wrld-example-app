@@ -206,11 +206,13 @@ namespace ExampleApp
 
         void AddTagSearchModels(
                                 TagSearch::View::ITagSearchRepository& repository,
-                                std::string rawConfig)
+                                std::string rawConfig,
+                                Search::Yelp::SdkModel::YelpCategoryMapperUpdater& yelpCategoryMapperUpdater)
         {
             const auto& tagSearchModels = TagSearch::View::CreateTagSearchModelsFromFile(
                                                                                          rawConfig,
-                                                                                         "outdoor_search_menu_items");
+                                                                                         "outdoor_search_menu_items",
+                                                                                         yelpCategoryMapperUpdater);
             if(repository.GetItemCount() == 0)
             {
                 for (const auto& t : tagSearchModels)
@@ -538,13 +540,13 @@ namespace ExampleApp
                                                                                                                                       m_applicationConfiguration.YelpConsumerSecret(),
                                                                                                                                       m_applicationConfiguration.YelpOAuthToken(),
                                                                                                                                       m_applicationConfiguration.YelpOAuthTokenSecret(),
-                                                                                                                                      m_platformAbstractions.GetFileIO()
+                                                                                                                                      m_platformAbstractions.GetFileIO(),
+                                                                                                                                      m_yelpCategoryMapperUpdater
                                                                                                                                       );
         }
 
         m_pSearchServiceModule = Eegeo_NEW(Search::Combined::SdkModel::CombinedSearchServiceModule)(m_searchServiceModules, m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel());
-
-
+    
         // TODO: Check if this module is still relevant
         m_pAppCameraModule = Eegeo_NEW(AppCamera::SdkModel::AppCameraModule)();
 
@@ -601,7 +603,8 @@ namespace ExampleApp
                                                                     m_sdkDomainEventBus,
                                                                     m_metricsService,
                                                                     m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel(),
-                                                                    mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository());
+                                                                    mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
+                                                                    m_yelpCategoryMapperUpdater);
         m_pTagSearchModule = &m_pSearchModule->GetTagSearchModule();
 
         m_pMapModeModule = Eegeo_NEW(MapMode::SdkModel::MapModeModule)(m_pVisualMapModule->GetVisualMapService());
@@ -1292,7 +1295,8 @@ namespace ExampleApp
                 AddTours();
             }
 
-            AddTagSearchModels(m_pTagSearchModule->GetTagSearchRepository(), m_applicationConfiguration.RawConfig());
+            AddTagSearchModels(m_pTagSearchModule->GetTagSearchRepository(), m_applicationConfiguration.RawConfig(),
+                               m_yelpCategoryMapperUpdater);
         }
     }
 
