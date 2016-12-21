@@ -20,18 +20,88 @@
     <ImageSource x:Key="POIViewSpinnerImage">/Assets/search_results_spinner@kiosk.png</ImageSource>
     <System:Double x:Key="POIViewSpinnerSize">30</System:Double>
 
+    <ImageSource x:Key="POIViewCloseButtonOffImage">/Assets/button_close_off@kiosk.png</ImageSource>
+    <ImageSource x:Key="POIViewCloseButtonOnImage">/Assets/button_close_on@kiosk.png</ImageSource>
+    <System:Double x:Key="POIViewCloseButtonSize">54</System:Double>
+    <SolidColorBrush x:Key="POIViewCloseButtonOffColour" Color="White"/>
+    <SolidColorBrush x:Key="POIViewCloseButtonOnColour" Color="White"/>
+    <SolidColorBrush x:Key="POIViewCloseButtonOverColour" Color="White"/>
+
+    <System:Double x:Key="POIViewLowerDetailsIconSize">24</System:Double>
+
+    <Visibility x:Key="POIViewScrollButtonVisibility">Visible</Visibility>
+    <System:Double x:Key="POIViewScrollButtonSize">64</System:Double>
+    <Thickness x:Key="POIViewScrollUpButtonMargin" Left="0" Top="86" Right="0" Bottom="0"/>
+    
+    <!-- Eegeo POI View -->
+    <System:Double x:Key="EegeoPOIViewContainerWidth">540</System:Double>
+    <Thickness x:Key="EegeoPOIViewContainerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
+    <System:Double x:Key="EegeoPOIViewContainerInnerWidth">496</System:Double>
+    <Thickness x:Key="EegeoPOIViewContainerInnerMargin" Left="22" Top="20" Right="22" Bottom="20"/>
+    <GridLength x:Key="EegeoPOIViewContainerRow0Height">76</GridLength>
+    <GridLength x:Key="EegeoPOIViewContainerRow2Height">0</GridLength>
+
+    <Thickness x:Key="EegeoPOIViewTitleMargin" Left="0" Top="0" Right="0" Bottom="10"/>
+    <GridLength x:Key="EegeoPOIViewTitleColumn0">442</GridLength>
+    <GridLength x:Key="EegeoPOIViewTitleColumn1">54</GridLength>
+    <System:Double x:Key="EegeoPOIViewTitleMaxWidth">350</System:Double>
+    <System:Double x:Key="EegeoPOIViewTitleFontSize">30</System:Double>
+    <System:Double x:Key="EegeoPOIViewSubTitleFontSize">15</System:Double>
+    <Thickness x:Key="EegeoPOIViewTitleTextMargin" Left="15" Top="6" Right="0" Bottom="0"/>
+    <Thickness x:Key="EegeoPOIViewSubTitleTextMargin" Left="15" Top="4" Right="0" Bottom="-4"/>
+    <Visibility x:Key="EegeoPOIViewDetailsTitleDividerVisibility">Collapsed</Visibility>
+
+    <Thickness x:Key="EegeoPOIViewContentContainerMargin" Left="0" Top="10" Right="0" Bottom="20"/>
+    <ScrollBarVisibility x:Key="EegeoPOIViewContentContainerScrollBarVisibility">Hidden</ScrollBarVisibility>
+
+    <Thickness x:Key="EegeoPOIViewImageContainerMargin" Left="0" Top="0" Right="0" Bottom="15"/>
+    <System:Double x:Key="EegeoPOIViewImageContainerHeight">330</System:Double>
+    <System:Double x:Key="EegeoPOIViewDetailsImageWidth">496</System:Double>
+    <System:Double x:Key="EegeoPOIViewDetailsImageHeight">330</System:Double>
+    <System:Double x:Key="EegeoPOIViewDetailsWebViewDefaultHeight">330</System:Double>
+    <System:Double x:Key="EegeoPOIViewDetailsWebViewMaxHeight">500</System:Double>
+
+    <Thickness x:Key="EegeoPOIViewDetailsDividerMargin" Left="0" Top="6" Right="0" Bottom="15"/>
+    <System:Double x:Key="EegeoPOIViewDetailsContainerMaxHeight">280</System:Double>
+    
+    <Thickness x:Key="EegeoPOIViewDetailsPhoneMargin" Left="5" Top="0" Right="0" Bottom="15"/>
+    <System:Double x:Key="EegeoPOIViewDetailsPhoneFontSize">26</System:Double>
+    <Thickness x:Key="EegeoPOIViewDetailsPhoneTextMargin" Left="35" Top="0" Right="0" Bottom="0"/>
+    
+    <Thickness x:Key="EegeoPOIViewDetailsAddressMargin" Left="5" Top="0" Right="0" Bottom="15"/>
+    <Thickness x:Key="EegeoPOIViewDetailsAddressIconMargin" Left="0" Top="0" Right="0" Bottom="0"/>
+    <System:Double x:Key="EegeoPOIViewDetailsAddressFontSize">26</System:Double>
+    <Thickness x:Key="EegeoPOIViewDetailsAddressTextMargin" Left="35" Top="0" Right="0" Bottom="0"/>
+    
+    <Visibility x:Key="EegeoPOIViewDetailsWebLinksVisibility">Collapsed</Visibility>
+    
+    <Thickness x:Key="EegeoPOIViewDetailsTagsDividerMargin" Left="0" Top="0" Right="0" Bottom="15"/>
+    <Thickness x:Key="EegeoPOIViewDetailsTagsMargin" Left="5" Top="0" Right="0" Bottom="15"/>
+    <Thickness x:Key="EegeoPOIViewDetailsTagsIconMargin" Left="0" Top="0" Right="0" Bottom="0"/>
+    <System:Double x:Key="EegeoPOIViewDetailsTagsFontSize">26</System:Double>
+    <Thickness x:Key="EegeoPOIViewDetailsTagsTextMargin" Left="35" Top="0" Right="0" Bottom="0"/>
+    
+    <Thickness x:Key="EegeoPOIViewDetailsReviewDividerMargin" Left="0" Top="0" Right="0" Bottom="15"/>
+    <Thickness x:Key="EegeoPOIViewDetailsReviewMargin" Left="5" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="EegeoPOIViewDetailsReviewIconMargin" Left="0" Top="0" Right="0" Bottom="0"/>
+    <System:Double x:Key="EegeoPOIViewDetailsReviewFontSize">26</System:Double>
+    <Thickness x:Key="EegeoPOIViewDetailsReviewTextMargin" Left="35" Top="0" Right="0" Bottom="0"/>
+
+    <Visibility x:Key="EegeoPOIViewQRCodeVisibility">Visible</Visibility>
+    <Thickness x:Key="EegeoPOIViewQRCodeDividerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
+    <Thickness x:Key="EegeoPOIViewQRCodeMargin" Left="5" Top="0" Right="0" Bottom="30"/>
+    <System:Double x:Key="EegeoPOIViewQRCodeFontSize">26</System:Double>
+    <System:String x:Key="EegeoPOIViewQRCodeText">Scan the QR Code with your device to find out more.</System:String>
+    <Thickness x:Key="EegeoPOIViewQRCodeTextMargin" Left="35" Top="-4" Right="0" Bottom="0"/>
+    <ImageSource x:Key="EegeoPOIViewQRCodeImage">/Assets/qrcode_preview.png</ImageSource>
+    <System:Double x:Key="EegeoPOIViewQRCodeImageSize">176</System:Double>
+    <Thickness x:Key="EegeoPOIViewQRCodeImageMargin" Left="0" Top="20" Right="0" Bottom="0"/>
+
+    <System:Double x:Key="EegeoPOIViewBottomSpacerHeight">20</System:Double>
+    <ImageSource x:Key="EegeoPOIViewFooterFadeImage">/Assets/search_results_fade@kiosk.png</ImageSource>
+    <System:Double x:Key="EegeoPOIViewFooterFadeWidth">500</System:Double>
+
     <!-- Yelp POI View -->
-    <ImageSource x:Key="YelpPOIViewCloseButtonOffImage">/Assets/button_close_off@kiosk.png</ImageSource>
-    <ImageSource x:Key="YelpPOIViewCloseButtonOnImage">/Assets/button_close_on@kiosk.png</ImageSource>
-    <System:Double x:Key="YelpPOIViewCloseButtonSize">54</System:Double>
-    <SolidColorBrush x:Key="YelpPOIViewCloseButtonOffColour" Color="White"/>
-    <SolidColorBrush x:Key="YelpPOIViewCloseButtonOnColour" Color="White"/>
-    <SolidColorBrush x:Key="YelpPOIViewCloseButtonOverColour" Color="White"/>
-
-    <Visibility x:Key="YelpPOIViewScrollButtonVisibility">Visible</Visibility>
-    <System:Double x:Key="YelpPOIViewScrollButtonSize">64</System:Double>
-    <Thickness x:Key="YelpPOIViewScrollUpButtonMargin" Left="0" Top="86" Right="0" Bottom="0"/>
-
     <System:Double x:Key="YelpPOIViewContainerWidth">540</System:Double>
     <Thickness x:Key="YelpPOIViewContainerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
     <System:Double x:Key="YelpPOIViewContainerInnerWidth">496</System:Double>
@@ -78,7 +148,6 @@
     <System:Int32 x:Key="YelpPOIViewLowerDetailsColumn">0</System:Int32>
     <System:Int32 x:Key="YelpPOIViewLowerDetailsRow">2</System:Int32>
     <System:Double x:Key="YelpPOIViewLowerDetailsContainerHeight">280</System:Double>
-    <System:Double x:Key="YelpPOIViewLowerDetailsIconSize">24</System:Double>
     <Thickness x:Key="YelpPOIViewLowerDetailsPhoneMargin" Left="5" Top="0" Right="0" Bottom="0"/>
     <System:Double x:Key="YelpPOIViewLowerDetailsPhoneFontSize">26</System:Double>
     <Thickness x:Key="YelpPOIViewLowerDetailsPhoneTextMargin" Left="35" Top="0" Right="0" Bottom="0"/>

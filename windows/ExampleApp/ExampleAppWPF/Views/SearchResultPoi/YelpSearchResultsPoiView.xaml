@@ -159,11 +159,11 @@
                                 <VisualState x:Name="Disabled"/>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Rectangle x:Name="rectangle1" Fill="{DynamicResource YelpPOIViewCloseButtonOffColour}" Margin="0"/>
-                        <Rectangle x:Name="rectangle" Fill="{DynamicResource YelpPOIViewCloseButtonOverColour}" Margin="0" Visibility="Hidden"/>
-                        <Rectangle x:Name="rectangle2" Fill="{DynamicResource YelpPOIViewCloseButtonOnColour}" Margin="0" Visibility="Hidden"/>
-                        <Image x:Name="image" Source="{DynamicResource YelpPOIViewCloseButtonOffImage}"/>
-                        <Image x:Name="image1" Source="{DynamicResource YelpPOIViewCloseButtonOnImage}" Visibility="Hidden"/>
+                        <Rectangle x:Name="rectangle1" Fill="{DynamicResource POIViewCloseButtonOffColour}" Margin="0"/>
+                        <Rectangle x:Name="rectangle" Fill="{DynamicResource POIViewCloseButtonOverColour}" Margin="0" Visibility="Hidden"/>
+                        <Rectangle x:Name="rectangle2" Fill="{DynamicResource POIViewCloseButtonOnColour}" Margin="0" Visibility="Hidden"/>
+                        <Image x:Name="image" Source="{DynamicResource POIViewCloseButtonOffImage}"/>
+                        <Image x:Name="image1" Source="{DynamicResource POIViewCloseButtonOnImage}" Visibility="Hidden"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -202,7 +202,7 @@
                                         <TextBlock Name="Title" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=TitleText}"  MaxWidth="{DynamicResource YelpPOIViewTitleMaxWidth}" VerticalAlignment="Center" FontSize="{DynamicResource YelpPOIViewTitleFontSize}" Margin="{DynamicResource YelpPOIViewTitleTextMargin}"  Foreground="{DynamicResource PrimaryBG_Over_Colour}" FontFamily="{DynamicResource PrimaryUIFont}" TextTrimming="CharacterEllipsis"/>
                                     </StackPanel>
                                     <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="Auto" Grid.Column="1">
-                                        <Button Style="{StaticResource POIcard_CloseButton}" Name="CloseButton" HorizontalAlignment="Right" Width="{DynamicResource YelpPOIViewCloseButtonSize}" Height="{DynamicResource YelpPOIViewCloseButtonSize}" />
+                                        <Button Style="{StaticResource POIcard_CloseButton}" Name="CloseButton" HorizontalAlignment="Right" Width="{DynamicResource POIViewCloseButtonSize}" Height="{DynamicResource POIViewCloseButtonSize}" />
                                     </Border>
                                     <Border Visibility="{DynamicResource YelpPOIViewDetailsTitleDividerVisibility}" BorderBrush="{x:Null}" HorizontalAlignment="Stretch" Height="1" Margin="0,0,0,-5" Background="{StaticResource Gold}" Grid.ColumnSpan="2" VerticalAlignment="Bottom" />
                                 </Grid>
@@ -293,7 +293,7 @@
 
                                                     <!--Phone-->
                                                     <Grid Width="Auto" Margin="{DynamicResource YelpPOIViewLowerDetailsPhoneMargin}">
-                                                        <Grid HorizontalAlignment="Left" VerticalAlignment="Center" Width="{DynamicResource YelpPOIViewLowerDetailsIconSize}" Height="{DynamicResource YelpPOIViewLowerDetailsIconSize}">
+                                                        <Grid HorizontalAlignment="Left" VerticalAlignment="Center" Width="{DynamicResource POIViewLowerDetailsIconSize}" Height="{DynamicResource POIViewLowerDetailsIconSize}">
                                                             <Viewbox Stretch="Uniform">
                                                                 <Canvas Name="TelephoneIcon" Width="16" Height="16">
                                                                     <Path Fill="{StaticResource POIdetailsColour}" Data="F1 M 7.606,11.826 C 6.991,12.379 6.261,12.107 5.727,11.537 C 4.738,10.482 3.555,8.778 2.793,7.053 C 2.533,6.466 2.815,6.136 3.299,5.910 C 3.320,5.900 3.341,5.888 3.361,5.878 L 2.632,0.253 C 2.117,0.235 1.596,0.284 1.309,0.436 C 0.447,0.877 -0.501,2.902 0.306,7.133 C 0.657,8.970 2.725,12.565 5.520,14.352 C 7.579,15.669 9.425,16.039 10.894,15.997 C 11.663,15.974 11.857,15.526 12.191,15.028 C 12.313,14.845 12.415,14.668 12.496,14.490 L 7.642,11.790 C 7.630,11.802 7.619,11.814 7.606,11.826 Z" Margin="1.25,0,0,0"/>
@@ -307,7 +307,7 @@
 
                                                     <!--Address-->
                                                     <Grid Margin="{DynamicResource YelpPOIViewLowerDetailsAddressMargin}">
-                                                        <Grid Width="{DynamicResource YelpPOIViewLowerDetailsIconSize}" Height="{DynamicResource YelpPOIViewLowerDetailsIconSize}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                                        <Grid Width="{DynamicResource POIViewLowerDetailsIconSize}" Height="{DynamicResource POIViewLowerDetailsIconSize}" HorizontalAlignment="Left" VerticalAlignment="Top">
                                                             <Viewbox Stretch="Uniform">
                                                                 <Canvas Name="HomeAddressIcon" Width="16" Height="16">
                                                                     <!-- Layer 1/<Group>/<Path> -->
@@ -328,7 +328,7 @@
 
                                             <!--Tags-->
                                             <Grid Width="Auto" Height="Auto" Margin="{DynamicResource YelpPOIViewTagsMargin}">
-                                                <Grid Width="{DynamicResource YelpPOIViewLowerDetailsIconSize}" Height="{DynamicResource YelpPOIViewLowerDetailsIconSize}" HorizontalAlignment="Left">
+                                                <Grid Width="{DynamicResource POIViewLowerDetailsIconSize}" Height="{DynamicResource POIViewLowerDetailsIconSize}" HorizontalAlignment="Left">
                                                     <Viewbox Stretch="Uniform">
                                                         <Canvas Name="TagLabelIcon" Width="16" Height="16">
                                                             <!-- Layer 3/<Compound Path> -->
@@ -344,7 +344,7 @@
 
                                             <!--Reviews-->
                                             <Grid Width="Auto" Height="Auto" Margin="{DynamicResource YelpPOIViewReviewsMargin}" >
-                                                <Grid Width="{DynamicResource YelpPOIViewLowerDetailsIconSize}" Height="{DynamicResource YelpPOIViewLowerDetailsIconSize}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                                <Grid Width="{DynamicResource POIViewLowerDetailsIconSize}" Height="{DynamicResource POIViewLowerDetailsIconSize}" HorizontalAlignment="Left" VerticalAlignment="Top">
                                                     <Viewbox Stretch="Uniform">
                                                         <Canvas Name="ReviewsIcon" Width="16" Height="16">
                                                             <!-- Layer 3/<Path> -->
@@ -363,7 +363,7 @@
 
                                             <!-- QR Code -->
                                             <Grid Width="Auto" Height="Auto" Margin="{DynamicResource YelpPOIViewQRCodeMargin}" Visibility="{DynamicResource YelpPOIViewQRCodeVisibility}">
-                                                <Grid Width="{DynamicResource YelpPOIViewLowerDetailsIconSize}" Height="{DynamicResource YelpPOIViewLowerDetailsIconSize}" HorizontalAlignment="Left">
+                                                <Grid Width="{DynamicResource POIViewLowerDetailsIconSize}" Height="{DynamicResource POIViewLowerDetailsIconSize}" HorizontalAlignment="Left" VerticalAlignment="Top">
                                                     <Viewbox Stretch="Uniform">
                                                         <Canvas Name="QRIcon" Width="16" Height="16">
                                                             <!-- Layer 3/<Compound Path> -->
@@ -379,7 +379,7 @@
                                             <Grid Height="{DynamicResource YelpPOIViewBottomSpacerHeight}"/>
                                         </StackPanel>
                                     </ScrollViewer>
-                                    <Image IsHitTestVisible="False" Name="HeaderFade" Source="{DynamicResource YelpPOIViewFooterFadeImage}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{DynamicResource YelpPOIViewScrollButtonVisibility}" Width="{DynamicResource YelpPOIViewFooterFadeWidth}" RenderTransformOrigin="0.5, 0.5" Margin="-4, 0, 0, 0">
+                                    <Image IsHitTestVisible="False" Name="HeaderFade" Source="{DynamicResource YelpPOIViewFooterFadeImage}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{DynamicResource POIViewScrollButtonVisibility}" Width="{DynamicResource YelpPOIViewFooterFadeWidth}" RenderTransformOrigin="0.5, 0.5" Margin="-4, 0, 0, 0">
                                         <Image.RenderTransform>
                                             <RotateTransform Angle="180"/>
                                         </Image.RenderTransform>
@@ -388,7 +388,7 @@
                                     <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="1" Background="{StaticResource Gold}" Margin="0" VerticalAlignment="Bottom" Visibility="{DynamicResource TogglePinnedButtonDividerVisibility}"/>
                                 </Grid>
                             </Grid>
-                            <RepeatButton Grid.Row="1" Name="YelpPOIViewScrollUpButton" Width="{DynamicResource YelpPOIViewScrollButtonSize}" Height="{DynamicResource YelpPOIViewScrollButtonSize}" Visibility="{DynamicResource YelpPOIViewScrollButtonVisibility}" VerticalAlignment="Top" Margin="{DynamicResource YelpPOIViewScrollUpButtonMargin}">
+                            <RepeatButton Grid.Row="1" Name="YelpPOIViewScrollUpButton" Width="{DynamicResource POIViewScrollButtonSize}" Height="{DynamicResource POIViewScrollButtonSize}" Visibility="{DynamicResource POIViewScrollButtonVisibility}" VerticalAlignment="Top" Margin="{DynamicResource POIViewScrollUpButtonMargin}">
                                 <RepeatButton.Style>
                                     <Style TargetType="{x:Type RepeatButton}">
                                         <Style.Setters>
@@ -428,7 +428,7 @@
                                     </Style>
                                 </RepeatButton.Style>
                             </RepeatButton>
-                            <RepeatButton Grid.Row="1" Name="YelpPOIViewScrollDownButton" Width="{DynamicResource YelpPOIViewScrollButtonSize}" Height="{DynamicResource YelpPOIViewScrollButtonSize}" Visibility="{DynamicResource YelpPOIViewScrollButtonVisibility}" VerticalAlignment="Bottom" Margin="0, 0, 0, 0">
+                            <RepeatButton Grid.Row="1" Name="YelpPOIViewScrollDownButton" Width="{DynamicResource POIViewScrollButtonSize}" Height="{DynamicResource POIViewScrollButtonSize}" Visibility="{DynamicResource POIViewScrollButtonVisibility}" VerticalAlignment="Bottom" Margin="0, 0, 0, 0">
                                 <RepeatButton.Style>
                                     <Style TargetType="{x:Type RepeatButton}">
                                         <Style.Setters>
