@@ -8,6 +8,10 @@
 #include "AppGlobeCameraWrapper.h"
 #include "AppInteriorCameraWrapper.h"
 #include "IToursCameraController.h"
+#include "AttractState.h"
+#include "IUserIdleService.h"
+#include "LatLongAltitude.h"
+#include "ScreenProperties.h"
 
 namespace ExampleApp
 {
@@ -31,7 +35,14 @@ namespace ExampleApp
                                                            Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                            Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                                            MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
-                                                           VisualMap::SdkModel::IVisualMapService& visualMapService)
+                                                           VisualMap::SdkModel::IVisualMapService& visualMapService,
+                                                           Eegeo::Input::IUserIdleService& userIdleService,
+                                                           Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
+                                                           const bool attractModeEnabled,
+                                                           const long long attractModeTimeout,
+                                                           const std::vector<Eegeo::Space::LatLongAltitude>& cameraPositionSplinePoints,
+                                                           const std::vector<Eegeo::Space::LatLongAltitude>& cameraTargetSplinePoints,
+                                                           const Eegeo::Rendering::ScreenProperties& screenProperties)
                 : m_appCameraController(appCameraController)
                 , m_worldCameraController(worldCameraController)
                 , m_interiorCameraController(interiorCameraController)
@@ -47,6 +58,13 @@ namespace ExampleApp
                 , m_nativeUIFactories(nativeUIFactories)
                 , m_myPinCreationModel(myPinCreationModel)
                 , m_visualMapService(visualMapService)
+                , m_userIdleService(userIdleService)
+                , m_resourceCeilingProvider(resourceCeilingProvider)
+                , m_attractModeEnabled(attractModeEnabled)
+                , m_attractModeTimeoutMs(attractModeTimeout)
+                , m_cameraPositionSplinePoints(cameraPositionSplinePoints)
+                , m_cameraTargetSplinePoints(cameraTargetSplinePoints)
+                , m_screenProperties(screenProperties)
                 {
                     
                 }
@@ -64,7 +82,10 @@ namespace ExampleApp
                                                                              m_tourService,
                                                                              m_interiorSelectionModel,
                                                                              m_appModeModel,
-                                                                             m_interiorCameraController.GetInteriorCameraController()));
+                                                                             m_interiorCameraController.GetInteriorCameraController(),
+                                                                             m_userIdleService,
+                                                                             m_attractModeEnabled,
+                                                                             m_attractModeTimeoutMs));
                     
                     states.push_back(Eegeo_NEW(States::SdkModel::InteriorExplorerState)(m_appCameraController,
                                                                                         m_interiorSelectionModel,
@@ -91,6 +112,21 @@ namespace ExampleApp
                                                                             m_interiorsExplorerModel,
                                                                             m_myPinCreationModel,
                                                                             m_visualMapService));
+
+                    if (m_attractModeEnabled)
+                    {
+                        states.push_back(Eegeo_NEW(States::SdkModel::AttractState)(m_appModeModel,
+                                                                                   m_appCameraController,
+                                                                                   m_interiorCameraController.GetInteriorCameraController(),
+                                                                                   m_interiorSelectionModel,
+                                                                                   m_worldCameraController.GetTouchController(),
+                                                                                   m_userIdleService,
+                                                                                   m_resourceCeilingProvider,
+                                                                                   m_attractModeTimeoutMs,
+                                                                                   m_cameraPositionSplinePoints,
+                                                                                   m_cameraTargetSplinePoints,
+                                                                                   m_screenProperties));
+                    }
 
                     return states;
                 }

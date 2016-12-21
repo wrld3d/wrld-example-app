@@ -1,6 +1,5 @@
 #include "SearchTagToYelpCategoryMapper.h"
 
-
 namespace ExampleApp
 {
     namespace Search

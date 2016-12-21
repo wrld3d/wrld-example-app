@@ -52,8 +52,12 @@ namespace ExampleApp
                 const std::string LocationDegrees = "location_degrees";
                 const std::string Latitude = "latitude";
                 const std::string Longitude = "longitude";
+                const std::string Altitude = "altitude";
                 const std::string OrientationDegrees = "orientation_degrees";
                 const std::string FixedIndoorLocation = "fixed_indoor_location";
+                const std::string AttractModeTargetSpline = "attract_mode_target_spline";
+                const std::string AttractModePositionSpline = "attract_mode_position_spline";
+                const std::string AttractModeTimeoutMillis = "attract_mode_timeout_millis";
 
                 struct FixedIndoorLocationData {
                     const Eegeo::Space::LatLong location;
@@ -119,11 +123,54 @@ namespace ExampleApp
                     return defaultValue;
                 }
 
+                int ParseIntOrDefault(rapidjson::Document& document, const std::string& key, int defaultValue)
+                {
+                    if (document.HasMember(key.c_str()))
+                    {
+                        if(document[key.c_str()].IsInt())
+                        {
+                            return document[key.c_str()].GetInt();
+                        }
+                        else if(document[key.c_str()].IsString())
+                        {
+                            int valueFromString;
+                            if(Eegeo::Helpers::TryParseInt(document[key.c_str()].GetString(), valueFromString))
+                            {
+                                return valueFromString;
+                            }
+                        }
+                    }
+                    return defaultValue;
+                }
+
                 Eegeo::Space::LatLong ParseLatLong(const rapidjson::Value& latlong)
                 {
                     return Eegeo::Space::LatLong::FromDegrees(
                             latlong.HasMember(Latitude.c_str()) && latlong[Latitude.c_str()].IsDouble() ? latlong[Latitude.c_str()].GetDouble() : 0.0,
                             latlong.HasMember(Longitude.c_str()) && latlong[Longitude.c_str()].IsDouble() ? latlong[Longitude.c_str()].GetDouble() : 0.0);
+                }
+
+                Eegeo::Space::LatLongAltitude ParseLatLongAltitude(const rapidjson::Value& location)
+                {
+                    return Eegeo::Space::LatLongAltitude::FromDegrees(
+                            location.HasMember(Latitude.c_str()) && location[Latitude.c_str()].IsDouble() ? location[Latitude.c_str()].GetDouble() : 0.0,
+                            location.HasMember(Longitude.c_str()) && location[Longitude.c_str()].IsDouble() ? location[Longitude.c_str()].GetDouble() : 0.0,
+                            location.HasMember(Altitude.c_str()) && location[Altitude.c_str()].IsDouble() ? location[Altitude.c_str()].GetDouble() : 0.0);
+                }
+
+                template <typename T, typename Parser>
+                std::vector<T> ParseArray(const rapidjson::Value& xsAst, Parser parse)
+                {
+                    std::vector<T> xs;
+                    if (xsAst.IsArray())
+                    {
+                        for (rapidjson::SizeType i = 0; i < xsAst.Size(); ++i)
+                        {
+                            xs.push_back(parse(xsAst[i]));
+                        }
+                    }
+
+                    return xs;
                 }
 
                 FixedIndoorLocationData ParseFixedIndoorLocation(const rapidjson::Value& fixedIndoorLocation)
@@ -198,7 +245,20 @@ namespace ExampleApp
 
                 const rapidjson::Value empty(rapidjson::kObjectType);
                 const FixedIndoorLocationData fixedIndoorLocation = ParseFixedIndoorLocation(document.HasMember(FixedIndoorLocation.c_str()) ? document[FixedIndoorLocation.c_str()] : empty);
-                
+
+                const std::vector<Eegeo::Space::LatLongAltitude> attractModeTargetSplinePoints(
+                    ParseArray<Eegeo::Space::LatLongAltitude>(document.HasMember(AttractModeTargetSpline.c_str())
+                                                                ? document[AttractModeTargetSpline.c_str()]
+                                                                : empty,
+                                                              ParseLatLongAltitude));
+                const std::vector<Eegeo::Space::LatLongAltitude> attractModePositionSplinePoints(
+                    ParseArray<Eegeo::Space::LatLongAltitude>(document.HasMember(AttractModePositionSpline.c_str())
+                                                                ? document[AttractModePositionSpline.c_str()]
+                                                                : empty,
+                                                              ParseLatLongAltitude));
+
+                const long long attractModeTimeoutMillis = ParseIntOrDefault(document, AttractModeTimeoutMillis, 0);
+
                 return ApplicationConfiguration(
                     name,
                     eegeoApiKey,
@@ -232,7 +292,10 @@ namespace ExampleApp
                     fixedIndoorLocation.location,
                     fixedIndoorLocation.interiorId,
                     fixedIndoorLocation.buildingFloorIndex,
-                    fixedIndoorLocation.orientationDegrees
+                    fixedIndoorLocation.orientationDegrees,
+                    attractModeTargetSplinePoints,
+                    attractModePositionSplinePoints,
+                    attractModeTimeoutMillis
                 );
             }
             

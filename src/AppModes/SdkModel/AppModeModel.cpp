@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 
+#include "IAppModeModel.h"
 #include "AppModeModel.h"
 #include "InteriorSelectionModel.h"
 #include "AppModeChangedMessage.h"
@@ -72,15 +73,16 @@ namespace ExampleApp
                 m_pStateMachine->Update(dt);
             }
             
-            void AppModeModel::InitialiseStateMachine(const std::vector<Helpers::IStateMachineState*>& appStates)
+            void AppModeModel::InitialiseStateMachine(const std::vector<Helpers::IStateMachineState*>& appStates, const AppModes::SdkModel::AppMode initialState)
             {
                 Eegeo_ASSERT(m_pStateMachine == NULL, "Cannot initialise the state machine twice");
                 
+                m_appMode = initialState;
                 m_appStates = appStates;
                 
                 m_pStateMachine = Eegeo_NEW(Helpers::StateMachine)(m_appStates);
                 
-                m_pStateMachine->StartStateMachine(WorldMode);
+                m_pStateMachine->StartStateMachine(initialState);
             }
 
 			void AppModeModel::DestroyStateMachine()

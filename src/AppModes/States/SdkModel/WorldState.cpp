@@ -10,6 +10,9 @@
 #include "CameraState.h"
 #include "RenderCamera.h"
 #include "InteriorsCameraController.h"
+#include "IUserIdleService.h"
+
+#include <limits>
 
 namespace ExampleApp
 {
@@ -24,7 +27,10 @@ namespace ExampleApp
                                        Tours::SdkModel::ITourService& tourService,
                                        Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                        AppModes::SdkModel::IAppModeModel& appModeModel,
-                                       Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController)
+                                       Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
+                                       Eegeo::Input::IUserIdleService& userIdleService,
+                                       const bool attractModeEnabled,
+                                       const long long attractModeTimeout)
                 : m_cameraController(cameraController)
                 , m_worldCameraHandle(worldCameraHandle)
                 , m_tourService(tourService)
@@ -33,6 +39,7 @@ namespace ExampleApp
                 , m_interiorSelectionModelChangedCallback(this, &WorldState::OnInteriorSelectionModelChanged)
                 , m_appModeModel(appModeModel)
                 , m_interiorsCameraController(interiorsCameraController)
+                , m_attractModeTimer(userIdleService, attractModeEnabled ? attractModeTimeout : std::numeric_limits<long long>::max())
                 {
                 }
                 
@@ -49,7 +56,10 @@ namespace ExampleApp
                 
                 void WorldState::Update(float dt)
                 {
-                    
+                    if (m_attractModeTimer.IsComplete())
+                    {
+                        m_appModeModel.SetAppMode(ExampleApp::AppModes::SdkModel::AttractMode);
+                    }
                 }
                 
                 void WorldState::Exit(int nextState)

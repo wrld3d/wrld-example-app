@@ -49,6 +49,10 @@ namespace ExampleApp
                     const std::string fixedInteriorId("");
                     const int fixedFloorIndex = 0;
                     const double fixedOrientationDegrees = 180.0;
+
+                    const std::vector<Eegeo::Space::LatLongAltitude> attractModeTargetSplinePoints;
+                    const std::vector<Eegeo::Space::LatLongAltitude> attractModePositionSplinePoints;
+                    const long long attractModeTimeoutDisabled = 0;
                     
                     return ApplicationConfiguration ("Eegeo Example App",
                         emptyEegeoApiKey,
@@ -82,7 +86,10 @@ namespace ExampleApp
                         fixedLocation,
                         fixedInteriorId,
                         fixedFloorIndex,
-                        fixedOrientationDegrees);
+                        fixedOrientationDegrees,
+                        attractModeTargetSplinePoints,
+                        attractModePositionSplinePoints,
+                        attractModeTimeoutDisabled);
                 }
             }
             

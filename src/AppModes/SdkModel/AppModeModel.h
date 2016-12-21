@@ -21,8 +21,7 @@ namespace ExampleApp
                 AppModeModel(ExampleAppMessaging::TMessageBus& messageBus);
                 ~AppModeModel();
 
-                
-                void InitialiseStateMachine(const std::vector<Helpers::IStateMachineState*>& appStates);
+                void InitialiseStateMachine(const std::vector<Helpers::IStateMachineState*>& appStates, const AppModes::SdkModel::AppMode initialState);
 
 				void DestroyStateMachine();
                 

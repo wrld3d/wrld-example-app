@@ -39,7 +39,10 @@ namespace ExampleApp
             const Eegeo::Space::LatLong fixedLatlong,
             const std::string& fixedInteriorId,
             const int fixedFloorIndex,
-            const double fixedHeadingDegrees
+            const double fixedHeadingDegrees,
+            const std::vector<Eegeo::Space::LatLongAltitude>& attractModeTargetSplinePoints,
+            const std::vector<Eegeo::Space::LatLongAltitude>& attractModePositionSplinePoints,
+            const long long attractModeTimeoutMs
             )
         : m_name(name)
         , m_eegeoApiKey(eegeoApiKey)
@@ -74,6 +77,9 @@ namespace ExampleApp
         , m_fixedLatlong(fixedLatlong)
         , m_fixedFloorIndex(fixedFloorIndex)
         , m_fixedHeadingDegrees(fixedHeadingDegrees)
+        , m_attractModeTargetSplinePoints(attractModeTargetSplinePoints)
+        , m_attractModePositionSplinePoints(attractModePositionSplinePoints)
+        , m_attractModeTimeoutMs(attractModeTimeoutMs)
         {
         }
         
@@ -235,6 +241,28 @@ namespace ExampleApp
             headingDegrees = m_fixedHeadingDegrees;
 
             return true;
+        }
+
+        const std::vector<Eegeo::Space::LatLongAltitude>& ApplicationConfiguration::GetAttractModeTargetSplinePoints() const
+        {
+            return m_attractModeTargetSplinePoints;
+        }
+
+        const std::vector<Eegeo::Space::LatLongAltitude>& ApplicationConfiguration::GetAttractModePositionSplinePoints() const
+        {
+            return m_attractModePositionSplinePoints;
+        }
+
+        const long long ApplicationConfiguration::GetAttractModeTimeoutMs() const
+        {
+            return m_attractModeTimeoutMs;
+        }
+
+        const bool ApplicationConfiguration::IsAttractModeEnabled() const
+        {
+            return m_attractModeTimeoutMs > 0 &&
+                   m_attractModeTargetSplinePoints.size() > 0 &&
+                   m_attractModePositionSplinePoints.size() >= 2;
         }
     }
 }

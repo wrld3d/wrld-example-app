@@ -238,7 +238,8 @@ namespace ExampleApp
                                        Net::SdkModel::INetworkCapabilities& networkCapabilities,
                                        ExampleApp::Metrics::IMetricsService& metricsService,
                                        Eegeo::IEegeoErrorHandler& errorHandler,
-                                       Menu::View::IMenuReactionModel& menuReaction)
+                                       Menu::View::IMenuReactionModel& menuReaction,
+                                       Eegeo::Input::IUserIdleService& userIdleService)
     : m_pGlobeCameraController(NULL)
     , m_pCameraTouchController(NULL)
     , m_pCurrentTouchController(NULL)
@@ -309,6 +310,7 @@ namespace ExampleApp
     , m_pHighlightColorMapper(NULL)
     , m_pInteriorsEntityIdHighlightVisibilityController(NULL)
     , m_pDeepLinkModule(NULL)
+    , m_userIdleService(userIdleService)
     {
         m_metricsService.BeginSession(m_applicationConfiguration.FlurryAppKey(), EEGEO_PLATFORM_VERSION_NUMBER);
 
@@ -848,9 +850,17 @@ namespace ExampleApp
                                                                               interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                               nativeUIFactories,
                                                                               m_pMyPinCreationModule->GetMyPinCreationModel(),
-                                                                              m_pVisualMapModule->GetVisualMapService());
+                                                                              m_pVisualMapModule->GetVisualMapService(),
+                                                                              m_userIdleService,
+                                                                              mapModule.GetResourceCeilingProvider(),
+                                                                              m_applicationConfiguration.IsAttractModeEnabled(),
+                                                                              m_applicationConfiguration.GetAttractModeTimeoutMs(),
+                                                                              m_applicationConfiguration.GetAttractModeTargetSplinePoints(),
+                                                                              m_applicationConfiguration.GetAttractModePositionSplinePoints(),
+                                                                              m_screenProperties);
 
-        m_pAppModeModel->InitialiseStateMachine(appModeStatesFactory.CreateStateMachineStates());
+        m_pAppModeModel->InitialiseStateMachine(appModeStatesFactory.CreateStateMachineStates(),
+                                                m_applicationConfiguration.IsAttractModeEnabled() ? AppModes::SdkModel::AttractMode : AppModes::SdkModel::WorldMode);
     }
 
     void MobileExampleApp::DestroyApplicationModelModules()

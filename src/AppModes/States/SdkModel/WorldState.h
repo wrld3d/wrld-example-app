@@ -9,6 +9,8 @@
 #include "ICallback.h"
 #include "Interiors.h"
 #include "InteriorsExplorer.h"
+#include "AttractModeTimer.h"
+#include "IUserIdleService.h"
 
 namespace ExampleApp
 {
@@ -36,6 +38,8 @@ namespace ExampleApp
                     Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                     Eegeo::Helpers::TCallback1<WorldState, const Eegeo::Resources::Interiors::InteriorId> m_interiorSelectionModelChangedCallback;
                     void OnInteriorSelectionModelChanged(const Eegeo::Resources::Interiors::InteriorId& interiorId);
+
+                    AttractModeTimer m_attractModeTimer;
                     
                 public:
                     
@@ -44,7 +48,10 @@ namespace ExampleApp
                                Tours::SdkModel::ITourService& tourService,
                                Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                AppModes::SdkModel::IAppModeModel& appModeModel,
-                               Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController);
+                               Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
+                               Eegeo::Input::IUserIdleService& userIdleService,
+                               const bool attractModeEnabled,
+                               const long long attractModeTimeout);
                     
                     ~WorldState();
                     

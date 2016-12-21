@@ -182,4 +182,6 @@ private:
     void HandleStartupFailure();
 
     int m_maxDeviceTouchCount;
+
+    Eegeo::Input::IUserIdleService& m_userIdleService;
 };
