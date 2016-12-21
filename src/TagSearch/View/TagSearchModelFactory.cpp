@@ -57,12 +57,12 @@ namespace ExampleApp
                         Eegeo_ASSERT(item[iconKey].IsString());
                         const std::string& icon = item[iconKey].GetString();
                         
-                        const char* performYelpSearchKey = "perform_yelp_search";
+                        const char* skipYelpSearchKey = "perform_yelp_search";
                         const char* yelpMappingKey = "yelp_mapping";
-                        if(item.HasMember(performYelpSearchKey) && item[performYelpSearchKey].IsBool())
+                        if(item.HasMember(skipYelpSearchKey) && item[skipYelpSearchKey].IsBool())
                         {
-                            bool performYelpSearch = item[performYelpSearchKey].GetBool();
-                            if(!performYelpSearch)
+                            bool skipYelpSearch = item[skipYelpSearchKey].GetBool();
+                            if(skipYelpSearch)
                             {
                                 Search::Yelp::SdkModel::YelpCategoryModel yelpCategoryModel { "unused_string", false };
                                 yelpCategoryMapperUpdater.AddMapping(searchTag, yelpCategoryModel);
