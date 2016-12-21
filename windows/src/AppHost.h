@@ -13,6 +13,7 @@
 #include "WindowsInputProcessor.h"
 #include "WindowsLocationService.h"
 #include "IJpegLoader.h"
+#include "ILocationService.h"
 #include "WindowsUrlEncoder.h"
 #include "GlobeCameraInterestPointProvider.h"
 #include "TerrainHeightProvider.h"
@@ -59,6 +60,8 @@
 #include "IMenuReactionModel.h"
 #include "TagSearchViewIncludes.h"
 #include "FixedIndoorLocationService.h"
+#include "IUserIdleService.h"
+#include "CurrentLocationService.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
@@ -115,6 +118,8 @@ private:
     bool m_isPaused;
     Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;
     Eegeo::Windows::WindowsLocationService* m_pWindowsLocationService;
+    Eegeo::FixedLocation::FixedIndoorLocationService* m_pFixedIndoorLocationService;
+    Eegeo::Helpers::CurrentLocationService::CurrentLocationService * m_pCurrentLocationService;
 
     bool m_shouldStartFullscreen;
 
