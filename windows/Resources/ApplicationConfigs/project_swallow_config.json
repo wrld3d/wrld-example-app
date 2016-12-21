@@ -71,5 +71,12 @@
         { "Latitude": 51.521941255948114, "Longitude": -0.082864185829884335, "Altitude": 583.26082612946630 },
         { "Latitude": 51.518010566322310, "Longitude": -0.088882452112772195, "Altitude": 581.92905434779823 },
         { "Latitude": 51.523064656349298, "Longitude": -0.091739907647419919, "Altitude": 587.27930269949138 }
-    ]
+    ],
+    "FixedIndoorLocation": {
+        "Latitude": 51.520275,
+        "Longitude": -0.086135,
+        "InteriorId": "",
+        "FloorIndex": 2,
+        "OrientationDegrees": 180.0
+    }
 }
