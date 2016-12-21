@@ -104,7 +104,7 @@ namespace ExampleApp
                                 }
                                 const std::string& icon = item[iconKey].GetString();
                                 
-                                const char* skipYelpSearchKey = "perform_yelp_search";
+                                const char* skipYelpSearchKey = "skip_yelp_search";
                                 const char* yelpMappingKey = "yelp_mapping";
                                 if(item.HasMember(skipYelpSearchKey) && item[skipYelpSearchKey].IsBool())
                                 {
