@@ -58,6 +58,7 @@
 #include "ISurveyViewModule.h"
 #include "IMenuReactionModel.h"
 #include "TagSearchViewIncludes.h"
+#include "FixedIndoorLocationService.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
