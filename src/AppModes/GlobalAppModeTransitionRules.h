@@ -41,6 +41,7 @@ namespace ExampleApp
             const int m_worldCameraHandle;
             const int m_interiorCameraHandle;
             const int m_toursCameraHandle;
+            SdkModel::AppMode m_currentState;
 
             void OnTourStarted();
             void OnInteriorSelectionModelChanged(const Eegeo::Resources::Interiors::InteriorId& interiorId);

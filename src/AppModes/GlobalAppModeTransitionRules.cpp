@@ -87,6 +87,7 @@ namespace ExampleApp
         , m_worldCameraHandle(m_cameraController.CreateCameraHandleFromController(m_worldCameraController))
         , m_interiorCameraHandle(m_cameraController.CreateCameraHandleFromController(m_interiorCameraController))
         , m_toursCameraHandle(m_cameraController.CreateCameraHandleFromController(toursCameraController))
+        , m_currentState(appModeModel.GetAppMode())
         {
         }
 
@@ -99,20 +100,20 @@ namespace ExampleApp
 
         void GlobalAppModeTransitionRules::Enter(int previousState)
         {
-            const SdkModel::AppMode currentState = m_appModeModel.GetAppMode();
-            if (HandleTourStart[currentState])
+            m_currentState = m_appModeModel.GetAppMode();
+            if (HandleTourStart[m_currentState])
             {
                 m_tourService.RegisterTourStartedCallback(m_tourStartedCallback);
             }
-            if (HandleInteriorSelection[currentState])
+            if (HandleInteriorSelection[m_currentState])
             {
                 m_interiorSelectionModel.RegisterSelectionChangedCallback(m_interiorSelectionModelChangedCallback);
             }
-            if (StoreMapState[currentState])
+            if (StoreMapState[m_currentState])
             {
                 m_visualMapService.StoreCurrentMapState();
             }
-            if (DisablePinCreation[currentState])
+            if (DisablePinCreation[m_currentState])
             {
                 m_myPinCreationModel.SetCreationStage(MyPinCreation::Inactive);
             }
@@ -137,19 +138,18 @@ namespace ExampleApp
 
         void GlobalAppModeTransitionRules::Exit(int nextState)
         {
-            const SdkModel::AppMode currentState = m_appModeModel.GetAppMode();
-            if (HandleTourStart[currentState])
+            if (HandleTourStart[m_currentState])
             {
                 m_tourService.UnregisterTourStartedCallback(m_tourStartedCallback);
             }
 
-            if (HandleInteriorSelection[currentState])
+            if (HandleInteriorSelection[m_currentState])
             {
                 m_interiorSelectionModel.UnregisterSelectionChangedCallback(m_interiorSelectionModelChangedCallback);
             }
 
-            SetupCameraForNextMode(currentState, static_cast<SdkModel::AppMode>(nextState));
-            if (StoreMapState[currentState])
+            SetupCameraForNextMode(m_currentState, static_cast<SdkModel::AppMode>(nextState));
+            if (StoreMapState[m_currentState])
             {
                 m_visualMapService.RestorePreviousMapState();
             }
@@ -195,9 +195,7 @@ namespace ExampleApp
         void GlobalAppModeTransitionRules::SetupInteriorCamera()
         {
             Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController = m_interiorCameraController.GetInteriorCameraController();
-            interiorsCameraController.SetDistanceToInterest(interiorsCameraController.GetDistanceToInterest());
             interiorsCameraController.SetHeading(m_worldCameraController.GetHeadingDegrees());
-            interiorsCameraController.SetInterestLocation(m_worldCameraController.GetCameraState().InterestPointEcef());
         }
 
         const int GlobalAppModeTransitionRules::GetWorldCameraHandle() const
