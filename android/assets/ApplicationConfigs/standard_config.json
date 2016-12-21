@@ -72,7 +72,7 @@
                                   }],
     "indoor_tracked_buildings": [{
                                  "interior_id": "westport_house",
-                                 "type": "IndoorAtlas",
+                                 "type": "Senion",
                                  "config": [{
                                             "api_key": "941b8502-b022-4abb-bbf2-9a90450e4343",
                                             "api_secret": "k9cZWpze+pjvgyGMbj06Kl2GaF2RdQdPmUlsQuWAAJRegFFXpKy+JgRpKGS6Fq5mOee3CVTPVQacBYnwGPBb28EPT3qeihS6RrbkIWnIW/DZn7JhL+ohu3gdoYOBlw=="

@@ -11,16 +11,25 @@ namespace ExampleApp
     {
         SenionLabLocationService::SenionLabLocationService(Eegeo::Location::ILocationService& defaultLocationService,
                                                            const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                                           const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel)
+                                                           const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+														   ExampleApp::ExampleAppMessaging::TMessageBus& messageBus)
         : m_defaultLocationService(defaultLocationService)
         , m_environmentFlatteningService(environmentFlatteningService)
         , m_interiorInteractionModel(interiorInteractionModel)
         , m_isAuthorized(false)
         , m_latLong(Eegeo::Space::LatLong::FromDegrees(0, 0))
         , m_floorIndex(-1)
+        , m_messageBus(messageBus)
+        , m_LocationChangeCallback(this, &SenionLabLocationService::OnLocationChanged)
         {
+        	m_messageBus.SubscribeNative(m_LocationChangeCallback);
         }
         
+        SenionLabLocationService::~SenionLabLocationService()
+        {
+        	m_messageBus.UnsubscribeNative(m_LocationChangeCallback);
+        }
+
         const bool SenionLabLocationService::GetIsAuthorized() const
         {
             return m_isAuthorized;
@@ -90,6 +99,12 @@ namespace ExampleApp
         void SenionLabLocationService::SetFloorIndex(int floorIndex)
         {
             m_floorIndex = floorIndex;
+        }
+
+        void SenionLabLocationService::OnLocationChanged(const ExampleApp::SenionLab::SenionLabLocationChangedMessage& locationChangedMessage)
+        {
+        	SetLocation(locationChangedMessage.GetLocation());
+        	SetFloorIndex(locationChangedMessage.GetFloorIndex());
         }
     }
 }

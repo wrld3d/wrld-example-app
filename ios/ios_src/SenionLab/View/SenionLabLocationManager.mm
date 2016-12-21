@@ -1,5 +1,6 @@
 // Copyright eeGeo Ltd (2012-2016), All Rights Reserved
 #import "SenionLabLocationManager.h"
+#include "SenionLabLocationManagerInterop.h"
 #import <SLIndoorLocation/SLCoordinate3D.h>
 #import <SLIndoorLocation/SLIndoorLocationManager.h>
 #include "LatLongAltitude.h"
@@ -8,7 +9,6 @@
 {
     std::map<int, std::string> m_floorMap;
     int m_floorIndex;
-    ExampleApp::SenionLab::SenionLabLocationService* m_pSenionLabLocationService;
 }
 @property (nonatomic, strong) SLIndoorLocationManager *locationManager;
 @end
@@ -16,10 +16,14 @@
 @implementation SenionLabLocationManager
 
 -(instancetype) Init: (ExampleApp::SenionLab::SenionLabLocationService*) senionLabLocationService
+        ndMessageBus: (ExampleApp::ExampleAppMessaging::TMessageBus&) messageBus
 {
     if(self = [super init])
     {
-        m_pSenionLabLocationService = senionLabLocationService;
+        m_pInterop = Eegeo_NEW(ExampleApp::SenionLab::View::SenionLabLocationManagerInterop)(self,
+                                                                                             senionLabLocationService,
+                                                                                             messageBus);
+        
     }
     
     return self;
@@ -41,6 +45,11 @@
     [self.locationManager stopUpdatingLocation];
 }
 
+- (ExampleApp::SenionLab::View::SenionLabLocationManagerInterop*) getInterop
+{
+    return m_pInterop;
+}
+
 -(void) dealloc
 {
     [self.locationManager stopUpdatingLocation];
@@ -55,47 +64,47 @@
 
 -(void) didUpdateLocation:(SLCoordinate3D *)location withUncertainty:(double)radius andStatus:(SLLocationStatus)locationStatus
 {
-    m_pSenionLabLocationService->SetIsAuthorized(true);
+    m_pInterop->SetIsAuthorized(true);
     
     Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong::FromDegrees(location.latitude, location.longitude);
-    m_pSenionLabLocationService->SetLocation(latLong);
+    m_pInterop->OnLocationChanged(latLong);
     
     int floorIndex = [self getFloorIndexFromSenionFloorIndex:std::to_string(location.floorNr)];
-    m_pSenionLabLocationService->SetFloorIndex(floorIndex);
+    m_pInterop->OnSetFloorIndex(floorIndex);
 }
 
 -(void) didUpdateHeading:(double)heading withStatus:(BOOL)status
 {
-    m_pSenionLabLocationService->SetIsAuthorized(true);
+    m_pInterop->SetIsAuthorized(true);
 }
 
 -(void) didUpdateMotionType:(SLMotionState)motionState
 {
-    m_pSenionLabLocationService->SetIsAuthorized(true);
+    m_pInterop->SetIsAuthorized(true);
 }
 
 -(void) didFailInternetConnectionWithError:(NSError *)error
 {
     NSLog(@"SenionLabLocationManager didFailInternetConnectionWithError");
-    m_pSenionLabLocationService->SetIsAuthorized(false);
+    m_pInterop->SetIsAuthorized(false);
 }
 
 -(void) didFailInvalidIds:(NSError *)error
 {
     NSLog(@"SenionLabLocationManager didFailInvalidIds");
-    m_pSenionLabLocationService->SetIsAuthorized(false);
+    m_pInterop->SetIsAuthorized(false);
 }
 
 -(void) didFailLocationAuthorizationStatus
 {
     NSLog(@"SenionLabLocationManager didFailLocationAuthorizationStatus");
-    m_pSenionLabLocationService->SetIsAuthorized(false);
+    m_pInterop->SetIsAuthorized(false);
 }
 
 -(void) didFailScanningBT
 {
     NSLog(@"SenionLabLocationManager didFailScanningBT");
-    m_pSenionLabLocationService->SetIsAuthorized(false);
+    m_pInterop->SetIsAuthorized(false);
 }
 
 -(int) getFloorIndexFromSenionFloorIndex: (std::string) senionFloorIndex

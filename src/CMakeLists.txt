@@ -64,4 +64,5 @@ include(../src/WorldAreaLoader/CMakeLists.txt)
 include(../src/WorldPins/CMakeLists.txt)
 include(../src/DoubleTapIndoorInteraction/CMakeLists.txt)
 include(../src/IndoorAtlas/CMakeLists.txt)
+include(../src/SenionLab/CMakeLists.txt)
 

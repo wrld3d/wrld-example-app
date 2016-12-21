@@ -12,8 +12,6 @@
 #include "ILocationService.h"
 #include "BidirectionalBus.h"
 
-@class SenionLabLocationManager;
-
 namespace ExampleApp
 {
     namespace SenionLab
@@ -27,15 +25,16 @@ namespace ExampleApp
                                     const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                     const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
                                     Eegeo::Location::ILocationService& defaultLocationService,
-                                    ExampleApp::ExampleAppMessaging::TMessageBus& messageBus);
+                                    ExampleApp::ExampleAppMessaging::TMessageBus& messageBus,
+									AndroidNativeState& nativeState);
             ~SenionLabLocationModule();
-            
+
             SenionLabLocationService& GetLocationService() { return *m_pLocationService; }
             
         private:
             SenionLabLocationController* m_pLocationController;
             SenionLabLocationService* m_pLocationService;
-            SenionLabLocationManager* m_pLocationManager;
+            View::SenionLabLocationManager* m_pLocationManager;
         };
     }
 }

@@ -235,13 +235,22 @@ AppHost::AppHost(
 																									 m_nativeState,
 																									 m_messageBus);
 
+    m_pSenionLabLocationModule = Eegeo_NEW(ExampleApp::SenionLab::SenionLabLocationModule)(m_pApp->GetAppModeModel(),
+																						   interiorsPresentationModule.GetInteriorInteractionModel(),
+																						   interiorsPresentationModule.GetInteriorSelectionModel(),
+																						   mapModule.GetEnvironmentFlatteningService(),
+																						   applicationConfiguration,
+																						   *m_pAndroidLocationService,
+																						   m_messageBus,
+																						   m_nativeState);
+
 	m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(applicationConfiguration,
 																															   m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
 																															   interiorsPresentationModule.GetInteriorSelectionModel(),
 																															   *m_pCurrentLocationService,
 																															   *m_pAndroidLocationService,
 																															   m_pIndoorAtlasLocationModule->GetLocationService(),
-																															   m_pIndoorAtlasLocationModule->GetLocationService());
+																															   m_pSenionLabLocationModule->GetLocationService());
 
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(
             m_pApp->World().GetRenderingModule(),
@@ -719,4 +728,3 @@ void AppHost::HandleOpenUrlEvent(const AppInterface::UrlData& data)
 {
 	m_pApp->Event_OpenUrl(data);
 }
-

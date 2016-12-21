@@ -5,6 +5,9 @@
 #include "ILocationService.h"
 #include "LatLongAltitude.h"
 #include "InteriorsModel.h"
+#include "BidirectionalBus.h"
+#include "ICallback.h"
+#include "SenionLabLocationChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -15,8 +18,10 @@ namespace ExampleApp
         public:
             SenionLabLocationService(Eegeo::Location::ILocationService& defaultLocationService,
                                      const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                     const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel);
+                                     const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+									 ExampleApp::ExampleAppMessaging::TMessageBus& messageBus);
             
+            ~SenionLabLocationService();
             const bool GetIsAuthorized() const;
             
             bool IsIndoors();
@@ -27,7 +32,7 @@ namespace ExampleApp
             bool GetHorizontalAccuracy(double& accuracy);
             bool GetHeadingDegrees(double& headingDegrees);
             void StopListening();
-            
+            void OnLocationChanged(const ExampleApp::SenionLab::SenionLabLocationChangedMessage& locationChangedMessage);
             void SetIsAuthorized(bool isAuthorized);
             void SetLocation(Eegeo::Space::LatLong& latLong);
             void SetFloorIndex(int floorIndex);
@@ -40,6 +45,8 @@ namespace ExampleApp
             bool m_isAuthorized;
             Eegeo::Space::LatLong m_latLong;
             int m_floorIndex;
+            ExampleApp::ExampleAppMessaging::TMessageBus& m_messageBus;
+            Eegeo::Helpers::TCallback1<SenionLabLocationService, const ExampleApp::SenionLab::SenionLabLocationChangedMessage&> m_LocationChangeCallback;
         };
     }
 }

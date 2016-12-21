@@ -38,6 +38,7 @@
 #include "MenuSectionExpandedChangedMessage.h"
 #include "WorldPinsSelectedFocussedMessage.h"
 #include "IndoorLocationChangedMessage.h"
+#include "SenionLabLocationChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -78,6 +79,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Menu::MenuSectionExpandedChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<WorldPins::WorldPinsSelectedFocussedMessage>
             , public Eegeo::Messaging::CatalogBinding<IndoorLocation::IndoorLocationChangedMessage>
+        	, public Eegeo::Messaging::CatalogBinding<SenionLab::SenionLabLocationChangedMessage>
             , private Eegeo::NonCopyable
         {
 

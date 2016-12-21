@@ -3,7 +3,6 @@
 #include "SenionLabLocationModule.h"
 #include "InteriorSelectionModel.h"
 #include "InteriorInteractionModel.h"
-#include "SenionLabLocationManagerInterop.h"
 #include <map>
 #include <string>
 
@@ -17,17 +16,19 @@ namespace ExampleApp
                                                          const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                          const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
                                                          Eegeo::Location::ILocationService& defaultLocationService,
-                                                         ExampleApp::ExampleAppMessaging::TMessageBus& messageBus)
+                                                         ExampleApp::ExampleAppMessaging::TMessageBus& messageBus,
+														 AndroidNativeState& nativeState)
         : m_pLocationController(NULL)
         , m_pLocationManager(NULL)
         , m_pLocationService(NULL)
         {
             m_pLocationService = Eegeo_NEW(SenionLabLocationService)(defaultLocationService,
                                                                      environmentFlatteningService,
-                                                                     interiorInteractionModel);
-            m_pLocationManager = [[SenionLabLocationManager alloc] Init: m_pLocationService ndMessageBus:messageBus];
-            
-            m_pLocationController = Eegeo_NEW(SenionLabLocationController)(*[m_pLocationManager getInterop],
+                                                                     interiorInteractionModel,
+																	 messageBus);
+            m_pLocationManager = Eegeo_NEW(View::SenionLabLocationManager)(m_pLocationService, messageBus, nativeState);
+
+            m_pLocationController = Eegeo_NEW(SenionLabLocationController)(*m_pLocationManager,
                                                                            appModeModel,
                                                                            interiorSelectionModel,
                                                                            applicationConfiguration);
@@ -38,7 +39,7 @@ namespace ExampleApp
             Eegeo_DELETE m_pLocationController;
             m_pLocationController = NULL;
             
-            [m_pLocationManager release];
+            Eegeo_DELETE m_pLocationManager;
             m_pLocationManager = NULL;
             
             Eegeo_DELETE m_pLocationService;
