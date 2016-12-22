@@ -14,8 +14,8 @@ namespace ExampleApp
                                                              Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                              const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                              const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                                             const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
-                                                             Eegeo::Location::ILocationService& defaultLocationService)
+                                                             Eegeo::Location::ILocationService& defaultLocationService,
+                                                             Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository)
         : m_pLocationController(NULL)
         , m_pLocationManager(NULL)
         , m_pLocationService(NULL)
@@ -29,7 +29,7 @@ namespace ExampleApp
                                                                              appModeModel,
                                                                              interiorInteractionModel,
                                                                              interiorSelectionModel,
-                                                                             applicationConfiguration);
+                                                                             interiorMetaDataRepository);
         }
         
         IndoorAtlasLocationModule::~IndoorAtlasLocationModule()
