@@ -37,10 +37,7 @@ namespace ExampleApp
             const bool useJapaneseFont,
             const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo,
             const std::string& rawConfig,
-            const Eegeo::Space::LatLong fixedLatlong,
-            const std::string& fixedInteriorId,
-            const int fixedFloorIndex,
-            const double fixedHeadingDegrees,
+            const SdkModel::ApplicationFixedIndoorLocation& fixedIndoorLocation,
             const std::vector<Eegeo::Space::LatLongAltitude>& attractModeTargetSplinePoints,
             const std::vector<Eegeo::Space::LatLongAltitude>& attractModePositionSplinePoints,
             const long long attractModeTimeoutMs
@@ -75,10 +72,7 @@ namespace ExampleApp
         , m_useJapaneseFont(useJapaneseFont)
         , m_interiorTrackingInfo(interiorTrackingInfo)
         , m_rawConfig(rawConfig)
-        , m_fixedInteriorId(Eegeo::Resources::Interiors::InteriorId(fixedInteriorId))
-        , m_fixedLatlong(fixedLatlong)
-        , m_fixedFloorIndex(fixedFloorIndex)
-        , m_fixedHeadingDegrees(fixedHeadingDegrees)
+        , m_fixedIndoorLocation(fixedIndoorLocation)
         , m_attractModeTargetSplinePoints(attractModeTargetSplinePoints)
         , m_attractModePositionSplinePoints(attractModePositionSplinePoints)
         , m_attractModeTimeoutMs(attractModeTimeoutMs)
@@ -235,19 +229,14 @@ namespace ExampleApp
             return m_rawConfig;
         }
 
-        bool ApplicationConfiguration::FixedIndoorLocation(Eegeo::Space::LatLong& latlong, Eegeo::Resources::Interiors::InteriorId& interiorId, int& floorIndex, double& headingDegrees) const
+        bool ApplicationConfiguration::IsFixedIndoorLocationEnabled() const
         {
-            if (!m_fixedInteriorId.IsValid())
-            {
-                return false;
-            }
+            return m_fixedIndoorLocation.GetInteriorId().IsValid();
+        }
 
-            latlong = m_fixedLatlong;
-            interiorId = m_fixedInteriorId;
-            floorIndex = m_fixedFloorIndex;
-            headingDegrees = m_fixedHeadingDegrees;
-
-            return true;
+        const SdkModel::ApplicationFixedIndoorLocation& ApplicationConfiguration::FixedIndoorLocation() const
+        {
+            return m_fixedIndoorLocation;
         }
 
         const std::vector<Eegeo::Space::LatLongAltitude>& ApplicationConfiguration::GetAttractModeTargetSplinePoints() const

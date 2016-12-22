@@ -223,19 +223,15 @@ AppHost::AppHost(
         *m_pMenuReaction,
         m_userIdleService);
 
-    Eegeo::Space::LatLong latlong(0.0, 0.0);
-    Eegeo::Resources::Interiors::InteriorId interiorId;
-    int floorIndex;
-    double headingDegrees;
-    const bool useFixedIndoorLocation = applicationConfiguration.FixedIndoorLocation(latlong, interiorId, floorIndex, headingDegrees);
-    if (useFixedIndoorLocation)
+    if (applicationConfiguration.IsFixedIndoorLocationEnabled())
     {
+        const ExampleApp::ApplicationConfig::SdkModel::ApplicationFixedIndoorLocation& fixedIndoorLocation = applicationConfiguration.FixedIndoorLocation();
         const Eegeo::Modules::Map::MapModule& mapModule = m_pApp->World().GetMapModule();
         m_pFixedIndoorLocationService = Eegeo_NEW(Eegeo::FixedLocation::FixedIndoorLocationService)(
-            latlong,
-            interiorId,
-            floorIndex,
-            headingDegrees,
+            fixedIndoorLocation.GetLocation(),
+            fixedIndoorLocation.GetInteriorId(),
+            fixedIndoorLocation.GetBuildingFloorIndex(),
+            fixedIndoorLocation.GetOrientationDegrees(),
             mapModule.GetEnvironmentFlatteningService(),
             mapModule.GetInteriorsPresentationModule().GetInteriorInteractionModel());
         m_pCurrentLocationService->SetLocationService(*m_pFixedIndoorLocationService);

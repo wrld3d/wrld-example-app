@@ -46,10 +46,7 @@ namespace ExampleApp
                     const bool useJapaneseFont = false;
                     std::string outdoorSearchMenuItems;
 
-                    const Eegeo::Space::LatLong fixedLocation(Eegeo::Space::LatLong(0.0, 0.0));
-                    const std::string fixedInteriorId("");
-                    const int fixedFloorIndex = 0;
-                    const double fixedOrientationDegrees = 180.0;
+                    const SdkModel::ApplicationFixedIndoorLocation fixedIndoorLocation(Eegeo::Space::LatLong(0.0, 0.0), "", 0, 180.0);
 
                     const std::vector<Eegeo::Space::LatLongAltitude> attractModeTargetSplinePoints;
                     const std::vector<Eegeo::Space::LatLongAltitude> attractModePositionSplinePoints;
@@ -85,10 +82,7 @@ namespace ExampleApp
                         useJapaneseFont,
                         interiorTrackingInfo,
                         outdoorSearchMenuItems,
-                        fixedLocation,
-                        fixedInteriorId,
-                        fixedFloorIndex,
-                        fixedOrientationDegrees,
+                        fixedIndoorLocation,
                         attractModeTargetSplinePoints,
                         attractModePositionSplinePoints,
                         attractModeTimeoutDisabled);
