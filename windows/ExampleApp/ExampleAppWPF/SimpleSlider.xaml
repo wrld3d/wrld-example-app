@@ -12,24 +12,22 @@
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="Focusable" Value="False" />
-        <Setter Property="Height"
-          Value="50" />
-        <Setter Property="Width"
-          Value="50" />
+        <Setter Property="Height" Value="{DynamicResource SliderThumbSize}" />
+        <Setter Property="Width" Value="{DynamicResource SliderThumbSize}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
                     <Canvas SnapsToDevicePixels="true">
-                        <Grid Height="50" Width="50">
-                            <Image x:Name="Thumb_Background" Height="50" Width="50" Source="/Assets/floor_selection_button.png" >
+                        <Grid Height="{DynamicResource SliderThumbSize}" Width="{DynamicResource SliderThumbSize}">
+                            <Image x:Name="Thumb_Background" Height="{DynamicResource SliderThumbSize}" Width="{DynamicResource SliderThumbSize}" Source="{DynamicResource SliderThumbOffImage}" >
                                 <Image.Clip>
-                                    <EllipseGeometry Center="25,25" RadiusX="25" RadiusY="25" />
+                                    <EllipseGeometry Center="{DynamicResource SliderThumbImageClipCentre}" RadiusX="{DynamicResource SliderThumbHalfSize}" RadiusY="{DynamicResource SliderThumbHalfSize}" />
                                 </Image.Clip>
                             </Image>
-                            <Border BorderBrush="{x:Null}" Margin="0,0,0,-2">
+                            <Border BorderBrush="{x:Null}" Margin="{DynamicResource SliderThumbLabelMargin}">
                                 <Label x:Name="Thumb_Label" HorizontalAlignment="Center" VerticalAlignment="Center"
                                            Foreground="{StaticResource Blue}"
-                                           FontSize="10"
+                                           FontSize="{DynamicResource SliderThumbLabelFontSize}"
                                            Content="{Binding Tag, RelativeSource={RelativeSource AncestorType={x:Type Slider}}}"
                                            />
                                 
@@ -38,11 +36,11 @@
                     </Canvas>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Source" TargetName="Thumb_Background" Value="/Assets/floor_selection_button_mouse_over.png"/>
+                            <Setter Property="Source" TargetName="Thumb_Background" Value="{DynamicResource SliderThumbOverImage}"/>
                             <Setter Property="Foreground" TargetName="Thumb_Label" Value="{StaticResource Blue}"/>
                         </Trigger>
                         <Trigger Property="IsDragging" Value="true">
-                            <Setter Property="Source" TargetName="Thumb_Background" Value="/Assets/floor_selection_button_down.png"/>
+                            <Setter Property="Source" TargetName="Thumb_Background" Value="{DynamicResource SliderThumbOnImage}"/>
                             <Setter Property="Foreground" TargetName="Thumb_Label" Value="{StaticResource SliderThumbActive}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -90,32 +88,42 @@
                                              TickLabels=""  
                                              Visibility="Visible" 
                                              Fill="{TemplateBinding Foreground}" 
-                                             HorizontalAlignment="Right" 
+                                             HorizontalAlignment="Center" 
                                              Placement="Left" 
-                                             Grid.Column="1" 
-                                             Width="15" 
-                                             TickLabelsOffset="-4.0"
+                                             Grid.Column="0" 
+                                             Width="{DynamicResource SliderTickbarWidth}" 
+                                             TickLabelsOffset="{DynamicResource SliderTickbarLabelOffset}"
                                              Panel.ZIndex="-10"
                                              IsHitTestVisible="False"
                                              TickLabelsOpacity="{Binding Background.Opacity, RelativeSource={RelativeSource AncestorType={x:Type Slider}}}"
                                              >
                 <local:TickBarVerticalWithLabels.Style>
                     <Style>
-                        <Setter Property="local:TickBarVerticalWithLabels.FontSize" Value="16" />
+                        <Setter Property="local:TickBarVerticalWithLabels.FontSize" Value="{DynamicResource SliderTickbarLabelFontSize}" />
                     </Style>
                 </local:TickBarVerticalWithLabels.Style>
             </local:TickBarVerticalWithLabels>
-                                             
-                                             
+
+            <TickBar x:Name="SliderTickBar2"
+                     Visibility="Visible"
+                     Fill="{TemplateBinding Foreground}"
+                     HorizontalAlignment="Center"
+                     Placement="Right"
+                     Grid.Column="0"
+                     Width="{DynamicResource SliderTickbarWidth}"
+                     Panel.ZIndex="-10"
+                     IsHitTestVisible="False"/>
+
             <Border x:Name="TrackLine" 
                     BorderBrush="{TemplateBinding Foreground}"                                        
                     BorderThickness="1.0" 
                     CornerRadius="1"
-                    Margin="0,25" 
-                    HorizontalAlignment="Right" 
+                    Margin="{DynamicResource SliderTrackLineMargin}" 
+                    HorizontalAlignment="Center" 
                     Width="1.0" 
                     IsHitTestVisible="False"
-                    Grid.Column="1" />
+                    Panel.ZIndex="-10"
+                    Grid.Column="0" />
         </Grid>
     </ControlTemplate>
 
@@ -131,7 +139,7 @@
                             
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Vertical">
-                <Setter Property="MinWidth" Value="50" />
+                <Setter Property="MinWidth" Value="{DynamicResource SliderTrackMinWidth}" />
                 <Setter Property="Template" Value="{StaticResource Slider}" />
             </Trigger>
 

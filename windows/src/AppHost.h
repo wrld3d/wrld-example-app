@@ -115,6 +115,8 @@ public:
 
     bool ShouldStartFullscreen();
 
+    bool IsInKioskMode();
+
 private:
     bool m_isPaused;
     Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;

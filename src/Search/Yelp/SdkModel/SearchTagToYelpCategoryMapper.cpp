@@ -63,7 +63,7 @@ namespace ExampleApp
                     for(int i = 0; i < m_searchTagToYelpRootCategoryModel.size(); i++)
                     {
                         YelpCategoryModel value = m_searchTagToYelpRootCategoryModel[searchTag];
-                        if (std::strcmp(value.yelpCategoryFilter.c_str(), "") != 0)
+                        if (value.yelpCategoryFilter == "")
                         {
                             out_bestMatchedYelpCategoryModel = value;
                             return true;

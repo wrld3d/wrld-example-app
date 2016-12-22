@@ -32,6 +32,7 @@ namespace ExampleApp
             const std::string& myPinsWebServiceAuthToken,
             const std::string& twitterAuthCode,
             const bool isKioskTouchInputEnabled,
+            const bool isInKioskMode,
             const bool useLabels,
             const bool useJapaneseFont,
             const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo,
@@ -69,6 +70,7 @@ namespace ExampleApp
         , m_myPinsWebServiceAuthToken(myPinsWebServiceAuthToken)
         , m_twitterAuthCode(twitterAuthCode)
         , m_isKioskTouchInputEnabled(isKioskTouchInputEnabled)
+        , m_isInKioskMode(isInKioskMode)
         , m_useLabels(useLabels)
         , m_useJapaneseFont(useJapaneseFont)
         , m_interiorTrackingInfo(interiorTrackingInfo)
@@ -201,6 +203,11 @@ namespace ExampleApp
         bool ApplicationConfiguration::IsKioskTouchInputEnabled() const
         {
             return m_isKioskTouchInputEnabled;
+        }
+
+        bool ApplicationConfiguration::IsInKioskMode() const
+        {
+            return m_isInKioskMode;
         }
 
         bool ApplicationConfiguration::ShouldStartFullscreen() const

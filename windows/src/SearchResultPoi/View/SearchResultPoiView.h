@@ -43,7 +43,7 @@ namespace ExampleApp
                 int m_currentVendor;
 
             public:
-                SearchResultPoiView(WindowsNativeState& nativeState);
+                SearchResultPoiView(WindowsNativeState& nativeState, bool isInKioskMode);
 
                 ~SearchResultPoiView();
 
