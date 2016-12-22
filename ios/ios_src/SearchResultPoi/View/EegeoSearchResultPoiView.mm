@@ -207,12 +207,6 @@ const int DeletePinAlertViewTag = 2;
         self.pWebView.scalesPageToFit = YES;
         self.pWebView.delegate = self;
         
-        m_pGradientMask = [[CAGradientLayer layer] retain];
-        m_pGradientMask.colors = @[(id)[UIColor clearColor].CGColor,
-                                   (id)[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.5f].CGColor];
-        m_pGradientMask.locations = @[@0.8, @1.0];
-        [self.pPreviewImage.layer addSublayer:m_pGradientMask];
-        
         [self setTouchExclusivity: self];
         
         m_poiImageLoadedSuccessfully = true;
@@ -226,9 +220,6 @@ const int DeletePinAlertViewTag = 2;
 
 - (void)dealloc
 {
-    [m_pGradientMask release];
-    m_pGradientMask = nil;
-    
     [self.pCloseButton removeFromSuperview];
     [self.pCloseButton release];
     
@@ -846,8 +837,6 @@ const int DeletePinAlertViewTag = 2;
             self.pPreviewImage.frame = frame;
             self.pPreviewImage.contentMode = UIViewContentModeScaleAspectFill;
             
-            m_pGradientMask.frame = self.pPreviewImage.bounds;
-            [m_pGradientMask removeAllAnimations];
             [self.pPreviewImage.layer removeAllAnimations];
             
             const CGFloat imageContentHeightDifference = (image.size.height - initialFrameHeight);
@@ -859,7 +848,6 @@ const int DeletePinAlertViewTag = 2;
         else
         {
             m_poiImageLoadedSuccessfully = false;
-            m_pGradientMask.frame = CGRectMake(0, 0, 0, 0);
             self.pPreviewImage.frame = CGRectMake(0, 0, 0, 0);
             [self performDynamicContentLayout];
         }
