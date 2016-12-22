@@ -875,9 +875,7 @@ namespace ExampleApp
                                                                               m_applicationConfiguration.GetAttractModePositionSplinePoints(),
                                                                               m_screenProperties);
 
-        m_pAppModeModel->InitialiseStateMachine(appModeStatesFactory.CreateStateMachineStates(*m_pGlobalAppModeTransitionRules),
-                                                m_applicationConfiguration.IsAttractModeEnabled() ? AppModes::SdkModel::AttractMode : AppModes::SdkModel::WorldMode,
-                                                m_pGlobalAppModeTransitionRules);
+        m_pAppModeModel->InitialiseStateMachine(appModeStatesFactory.CreateStateMachineStates(*m_pGlobalAppModeTransitionRules), AppModes::SdkModel::WorldMode, m_pGlobalAppModeTransitionRules);
     }
 
     void MobileExampleApp::DestroyApplicationModelModules()
@@ -1335,6 +1333,11 @@ namespace ExampleApp
 
             AddTagSearchModels(m_pTagSearchModule->GetTagSearchRepository(), m_applicationConfiguration.RawConfig(),
                                m_yelpCategoryMapperUpdater);
+
+            if (m_applicationConfiguration.IsAttractModeEnabled())
+            {
+                m_pAppModeModel->SetAppMode(AppModes::SdkModel::AttractMode);
+            }
         }
     }
 
