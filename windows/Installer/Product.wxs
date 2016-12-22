@@ -1229,6 +1229,129 @@
 	  <Component Id="_3836d11e.e5f7.41c8.a24f.276651dfd420" Directory="INTERIORSFOLDER" Guid="{c19fd704-f604-4cca-971d-35b28822c966}">
         <File Id="_56271ea9.8fcd.4696.baac.c21178130d13" KeyPath="yes" Source="payload\Resources\Interiors\label_category_mapping.json" />
 	  </Component>
+	  <Component Id="_1b7331b3.4f12.4507.84d4.359f55059df9" Directory="RESOURCEFOLDER" Guid="{d293a7d0-2302-4739-89fd-dfdffc495fd4}">
+        <File Id="_3ee3ff9d.c5e1.4c72.8053.0ffe665b34ae" KeyPath="yes" Source="payload\Resources\button_clear_search_off@kiosk.png" />
+	  </Component>
+	  <Component Id="_fd63f5f0.57b3.4fbc.8910.72d953718668" Directory="RESOURCEFOLDER" Guid="{aa6efd46-9022-4bca-9e8d-354d3c9e6806}">
+		<File Id="_2c878f26.61e1.40f9.a76a.e2e4b328c37a" KeyPath="yes" Source="payload\Resources\button_clear_search_on@kiosk.png" />
+	  </Component>
+  	  <Component Id="_324a54d8.5728.40cc.83d9.fc2494531304" Directory="RESOURCEFOLDER" Guid="{f4bff874-4b8d-4eab-aaea-78938f1e3310}">
+		<File Id="_7cc80ac0.269b.4533.8437.ebd4369841b1" KeyPath="yes" Source="payload\Resources\button_close_off@kiosk.png" />
+	  </Component>
+	  <Component Id="_e3ff3ed1.a76a.4477.a91d.d456bc7f4494" Directory="RESOURCEFOLDER" Guid="{0232e1a6-16a9-47f8-9d12-b7d4b62cd03e}">
+		<File Id="_38c5d26c.9f28.4576.88f2.1ed40d991df8" KeyPath="yes" Source="payload\Resources\button_close_on@kiosk.png" />
+	  </Component>
+  	  <Component Id="_625096bb.4ebe.4e59.aa8a.07718c8b2634" Directory="RESOURCEFOLDER" Guid="{d9194008-e1dc-4af2-a8de-17d106dab6f2}">
+		<File Id="_976d5440.5729.48e8.a2f8.3c9c146b95af" KeyPath="yes" Source="payload\Resources\button_create_poi_off@kiosk.png" />
+	  </Component>
+	  <Component Id="_43e5a0ae.fc59.447d.8d00.be5c8d76a4fc" Directory="RESOURCEFOLDER" Guid="{0eb16b52-8fb9-43db-9e3f-b866cde1e8f7}">
+		<File Id="_7facbd12.9091.4584.ae99.7c5e14d15fe2" KeyPath="yes" Source="payload\Resources\button_create_poi_on@kiosk.png" />
+	  </Component>  
+	  <Component Id="_02f5246b.d8cc.4461.ac84.ae8d575c4882" Directory="RESOURCEFOLDER" Guid="{bcabb137-78d4-4784-9620-5de34496428b}">  
+		<File Id="_c0cf898f.ffa9.4bcc.b414.7839ffd57398" KeyPath="yes" Source="payload\Resources\button_exit_interior_off@kiosk.png" />
+	  </Component>
+	  <Component Id="_04f8f7a2.46c8.4540.9ae2.9e5c8f38fd1b" Directory="RESOURCEFOLDER" Guid="{8ca57f2c-8f04-49dc-a476-c901d9c529f3}">
+		<File Id="_29357381.5fb8.4daa.aa5b.5b92f91906d5" KeyPath="yes" Source="payload\Resources\button_exit_interior_on@kiosk.png" />
+	  </Component>  
+	  <Component Id="_697219f1.ffb2.47ca.a44f.da75bda5d177" Directory="RESOURCEFOLDER" Guid="{02aecffe-7f19-4a6b-9703-0d5a24cbb699}">
+		<File Id="_59aa085d.9201.4189.abed.95177f5605d2" KeyPath="yes" Source="payload\Resources\button_flatten_off@kiosk.png" />
+	  </Component>
+	  <Component Id="_82fbcdf5.3aa9.4672.a623.3c20566c4b42" Directory="RESOURCEFOLDER" Guid="{b03653e6-ce12-466f-b1c3-36f65bb40373}">
+		<File Id="_4e9118d2.fa49.4772.b476.0261b60919f1" KeyPath="yes" Source="payload\Resources\button_flatten_on@kiosk.png" />
+	  </Component>  
+	  <Component Id="_d02a6c8f.d473.4d2c.9d55.034d12f0ed55" Directory="RESOURCEFOLDER" Guid="{12ac7c0e-6b3f-427a-8efc-9e10dac4c672}">
+		<File Id="_384fa0b5.6cf3.4b2f.afa6.ee94ed048e41" KeyPath="yes" Source="payload\Resources\button_search_off@kiosk.png" />
+	  </Component>  
+	  <Component Id="_ec133229.50e1.4e3b.98b1.21bc894fbb45" Directory="RESOURCEFOLDER" Guid="{8ca88f63-fb34-41d0-b997-f1b25ce679f4}">
+		<File Id="_b7a8cca3.df64.4aae.804d.69ca5f432de8" KeyPath="yes" Source="payload\Resources\button_search_on@kiosk.png" />
+	  </Component>
+	  <Component Id="_2136171b.a961.4d14.9939.63c6de405909" Directory="RESOURCEFOLDER" Guid="{7e73689f-e3ca-4739-8949-8cc75f40e9ec}">
+		<File Id="_95f769bc.391d.45fb.925f.840dcc48ab02" KeyPath="yes" Source="payload\Resources\button_settings_off@kiosk.png" />
+	  </Component>  
+	  <Component Id="_6e069d1c.baf2.4b32.a32d.cf24256fcbff" Directory="RESOURCEFOLDER" Guid="{2410dcf5-9915-410c-8fef-47da17f03490}">
+		<File Id="_1c7f24d2.132c.41ea.82e1.50e357179be5" KeyPath="yes" Source="payload\Resources\button_settings_on@kiosk.png" />
+	  </Component>
+	  <Component Id="_25d06f2f.6a32.437d.a24b.cf32a54eef92" Directory="RESOURCEFOLDER" Guid="{eb7d11b8-1d94-4705-b633-0f02fe83494d}">
+		<File Id="_8ca78f73.48ac.424b.b7f7.cee365a93b23" KeyPath="yes" Source="payload\Resources\button_unflatten_off@kiosk.png" />
+	  </Component>
+  	  <Component Id="_9c99f8f7.aa68.4b85.95d5.518646410c70" Directory="RESOURCEFOLDER" Guid="{794e3e37-0538-4f03-88dd-a4cafc045f9c}">
+		<File Id="_e41037ad.f4f0.4a0a.90f6.7d84453d24de" KeyPath="yes" Source="payload\Resources\button_unflatten_on_over@kiosk.png" />
+	  </Component>
+  	  <Component Id="_3ec97466.8b8f.4c7a.87e9.7c4db8ec3189" Directory="RESOURCEFOLDER" Guid="{ca1dd784-cbef-48be-b558-c7244d958159}">
+		<File Id="_09a5c301.0584.4029.98a4.72bdd716531b" KeyPath="yes" Source="payload\Resources\compass_new@kiosk.png" />
+	  </Component>
+      <Component Id="_33a62113.92c1.4c78.887c.6f62c7a26246" Directory="RESOURCEFOLDER" Guid="{5cd7a288-f278-46ed-9696-788814ca14e8}">
+		<File Id="_e9ac5cc9.5a2b.4137.90ae.58b9e53b4cd3" KeyPath="yes" Source="payload\Resources\compass_new_locate@kiosk.png" />
+	  </Component>
+  	  <Component Id="_5e5b95b0.a8a4.4209.8f0f.616951a9fe26" Directory="RESOURCEFOLDER" Guid="{12eeb93e-574e-4790-bd7b-a091e438f006}">
+		<File Id="_8cf504cc.4ca0.4362.8ae8.6f6abacd520c" KeyPath="yes" Source="payload\Resources\compass_new_locate_down@kiosk.png" />
+	  </Component>
+      <Component Id="_ebf6f789.bb44.4814.804d.18bfedb36229" Directory="RESOURCEFOLDER" Guid="{15f3d041-14bb-4ce8-8f03-5b9def92a67b}">
+		<File Id="_acec3361.f291.4fc2.9864.6195b62ad159" KeyPath="yes" Source="payload\Resources\floor_selection_button@kiosk.png" />
+	  </Component>
+  	  <Component Id="_f8263285.9ede.4443.b822.b02d3cbdcf3b" Directory="RESOURCEFOLDER" Guid="{aac717d0-5c0e-4a4a-a4ee-e3bcbd73c70d}">
+		<File Id="_fa1ca32e.fd34.4159.8879.3656cfb90a56" KeyPath="yes" Source="payload\Resources\floor_selection_button_down@kiosk.png" />
+	  </Component>
+  	  <Component Id="_4e0f0600.5174.4f04.b976.a5619b247d71" Directory="RESOURCEFOLDER" Guid="{b9e402dc-e346-43b3-a5a9-3c3ad51fcd2a}">
+		<File Id="_2573e939.f01d.4635.8b9d.c273ab24f860" KeyPath="yes" Source="payload\Resources\IPAexGothic_sdf_7.png" />
+	  </Component>
+      <Component Id="_2a2f9e77.80cb.4da0.b418.d864c7c9ab69" Directory="RESOURCEFOLDER" Guid="{f65b0ae7-9f25-4c1d-a974-45d1f80c8796}">
+		<File Id="_53b1f2fd.6712.44a6.b952.6653b20815ce" KeyPath="yes" Source="payload\Resources\poi_placeholder@kiosk.png" />
+	  </Component>
+  	  <Component Id="_0ac5c3cb.02a1.4af7.98e3.d64f1443c481" Directory="RESOURCEFOLDER" Guid="{07d68be5-66fd-49a9-b8a5-5fb2870a2eb4}">
+		<File Id="_7af5e3d6.195c.465a.af3b.5c4fb6aa8f88" KeyPath="yes" Source="payload\Resources\qrcode_preview.png" />
+	  </Component>
+  	  <Component Id="_a10c4ac9.c156.465a.9cf3.ce8eb529b141" Directory="RESOURCEFOLDER" Guid="{9cb446f7-4870-4ed3-a12a-945969329f69}">
+		<File Id="_a91919af.ae37.407c.8e0a.658e161cd26e" KeyPath="yes" Source="payload\Resources\search_results_fade@kiosk.png" />
+	  </Component>
+  	  <Component Id="_ee51539f.7b20.4b7c.99ac.b22666b3772d" Directory="RESOURCEFOLDER" Guid="{ae96ada3-abdf-4f1e-9861-5c6594f3b5e8}">
+		<File Id="_d4563210.a075.4dbc.b827.a8a1e6287f47" KeyPath="yes" Source="payload\Resources\search_results_scroll_button@kiosk.png" />
+	  </Component>
+  	  <Component Id="_531bcefa.04b3.4d7d.844f.14be36952eb1" Directory="RESOURCEFOLDER" Guid="{46aa733f-97b6-42b2-9ed8-0cf884e9128e}">
+		<File Id="_b4255d5d.3de9.416c.97ec.cafd6b1edb22" KeyPath="yes" Source="payload\Resources\search_results_scroll_button_down@kiosk.png" />
+	  </Component>
+  	  <Component Id="_93a2008b.4396.476c.8a5d.849d6241b490" Directory="RESOURCEFOLDER" Guid="{e7ee2ce3-d428-4975-806d-802d02fc74a1}">
+		<File Id="_3ca49c29.5d33.4293.98b4.897e611d4660" KeyPath="yes" Source="payload\Resources\search_results_spinner@kiosk.png" />
+	  </Component>
+  	  <Component Id="_f6390be1.2153.44d5.98e8.3fd99789e76f" Directory="RESOURCEFOLDER" Guid="{b79464fa-3b94-44fb-850e-03a852a6ed53}">
+		<File Id="_cd8a1aab.62c1.475a.b16f.742cf19cb6bc" KeyPath="yes" Source="payload\Resources\sub_menu_arrow_off@kiosk.png" />
+	  </Component>
+  	  <Component Id="_26c61d6b.420d.4a2c.9d2f.27afea051786" Directory="RESOURCEFOLDER" Guid="{8bf85e82-4cbb-4fe5-a1a3-938d0bd1edbd}">
+		<File Id="_71d45941.989f.4005.bb2c.995f3d36d556" KeyPath="yes" Source="payload\Resources\yelp_reviews@kiosk.png" />
+	  </Component>
+  	  <Component Id="_1f0b5e85.5f63.43bf.92d1.5b5180661a14" Directory="RESOURCEFOLDER" Guid="{4c8daa4a-8318-4b7c-b602-52ff6f39bd30}">
+		<File Id="_9b7c6ce3.012d.4e94.9d9b.4bec4d23eb4b" KeyPath="yes" Source="payload\Resources\Labels\label_category_icon_map.json" />
+	  </Component>
+  	  <Component Id="_4f933355.67e9.4880.8d0e.98d15df6c4bd" Directory="RESOURCEFOLDER" Guid="{134992c7-8def-462f-8ea9-0ebed49e3755}">
+		<File Id="_3b67701a.4b29.4eea.877d.94c2cac8c4d5" KeyPath="yes" Source="payload\Resources\Yelp\stars_0_0@kiosk.png" />
+	  </Component>
+  	  <Component Id="_b0d4b535.478f.418e.b8e5.200352171046" Directory="RESOURCEFOLDER" Guid="{fd82c235-252d-497a-9f50-97b5cd045f6f}">
+		<File Id="_43b0963d.a642.4d32.bc83.263c6575a970" KeyPath="yes" Source="payload\Resources\Yelp\stars_1_0@kiosk.png" />
+	  </Component>
+  	  <Component Id="_c4821dc2.31e9.45c6.ae80.2133cf187a83" Directory="RESOURCEFOLDER" Guid="{9c9a26d3-65c3-453c-8f36-dff66cb7c77f}">
+		<File Id="_4cf11f95.1da7.4c78.8e2d.f4ca8e2baa6d" KeyPath="yes" Source="payload\Resources\Yelp\stars_1_5@kiosk.png" />
+	  </Component>
+  	  <Component Id="_0742807a.7f84.4a07.b8a8.ec41bd54bf17" Directory="RESOURCEFOLDER" Guid="{58860a32-7e8e-4f25-8345-87343753d0c3}">
+		<File Id="_268f633e.10d4.4e77.9cd8.47fb7e5b7249" KeyPath="yes" Source="payload\Resources\Yelp\stars_2_0@kiosk.png" />
+	  </Component>
+  	  <Component Id="_c217936e.df16.423c.916a.cd8aced750e1" Directory="RESOURCEFOLDER" Guid="{df1aa35a-2777-486d-b094-e39474a42412}">
+		<File Id="_2d5e6609.28b2.4d57.ae44.baa50ddd43b1" KeyPath="yes" Source="payload\Resources\Yelp\stars_2_5@kiosk.png" />
+	  </Component>
+  	  <Component Id="_d00c24e5.6c70.4306.b75c.b4f692b94c11" Directory="RESOURCEFOLDER" Guid="{ba179b8b-59f2-4720-8b22-b8f42e758beb}">
+		<File Id="_ec281fbd.fb57.4fea.80ea.03b8ed09209c" KeyPath="yes" Source="payload\Resources\Yelp\stars_3_0@kiosk.png" />
+	  </Component>
+  	  <Component Id="_ff2c4acb.e913.40e2.aec3.0aaf6308a0d2" Directory="RESOURCEFOLDER" Guid="{f2eb93fb-b005-4d2d-ba08-43ef1c1f8488}">
+		<File Id="_1411e0e7.3a78.458b.bf86.3a0a5a0ca1b3" KeyPath="yes" Source="payload\Resources\Yelp\stars_3_5@kiosk.png" />
+	  </Component>
+  	  <Component Id="_525312bc.d681.47da.992d.df7275f53b36" Directory="RESOURCEFOLDER" Guid="{6a33c11b-dc58-4484-9f1e-e1c2cdb113f8}">
+		<File Id="_ee07f333.60ab.428d.b5f9.7eab3b23b28b" KeyPath="yes" Source="payload\Resources\Yelp\stars_4_0@kiosk.png" />
+	  </Component>
+  	  <Component Id="_bfa443cb.20c7.4725.972a.aa0569b5c97a" Directory="RESOURCEFOLDER" Guid="{942d5adc-73fe-45b1-96a8-1281ec6064c9}">
+		<File Id="_90903e5c.14c7.4ac6.abcf.9a055233d385" KeyPath="yes" Source="payload\Resources\Yelp\stars_4_5@kiosk.png" />
+	  </Component>
+  	  <Component Id="_198a8cc7.359e.4e96.ac4d.e7136ff3d89d" Directory="RESOURCEFOLDER" Guid="{013aa306-f8a2-47e1-9b86-57c9047e5a8d}">
+		<File Id="_98b1b10a.9548.4678.a0a1.da0413f087fe" KeyPath="yes" Source="payload\Resources\Yelp\stars_5_0@kiosk.png" />
+	  </Component>
     </ComponentGroup>
 
     <!-- Start menu definitions-->

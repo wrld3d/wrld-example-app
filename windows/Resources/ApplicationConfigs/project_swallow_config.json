@@ -27,6 +27,7 @@
     "WebProxyPort":0,
     "WebProxyIgnorePattern":"",
 	"IsKioskTouchInputEnabled":false,
+	"IsInKioskMode":false,
 	"StartAppInFullscreen":false,
     "UseLabels": true,
     "Buildings": [
