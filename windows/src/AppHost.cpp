@@ -608,7 +608,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
 
-    if (m_pApp->GetApplicationConfiguration().IsKioskTouchInputEnabled())
+    if (IsInKioskMode())
     {
         m_pVirtualKeyboardView = Eegeo_NEW(ExampleApp::VirtualKeyboard::View::VirtualKeyboardView)(m_nativeState, m_messageBus);
     }
