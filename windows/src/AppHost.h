@@ -62,6 +62,7 @@
 #include "FixedIndoorLocationService.h"
 #include "IUserIdleService.h"
 #include "CurrentLocationService.h"
+#include "VirtualKeyboardView.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
@@ -184,4 +185,6 @@ private:
     int m_maxDeviceTouchCount;
 
     Eegeo::Input::IUserIdleService& m_userIdleService;
+
+    ExampleApp::VirtualKeyboard::View::VirtualKeyboardView* m_pVirtualKeyboardView;
 };

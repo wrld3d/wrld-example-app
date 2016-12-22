@@ -1,0 +1,323 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:pk="clr-namespace:ExampleAppWPF.VirtualKeyboard">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../../Colours.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="KeyboardButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Margin" Value="3" />
+        <Setter Property="Foreground" Value="#ffffff" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="MinWidth" Value="80" />
+        <Setter Property="MinHeight" Value="50" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="FontSize" Value="14.667" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Name="border" CornerRadius="0" Background="{DynamicResource PrimaryBG_colour}">
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="{DynamicResource PrimaryBG_Down_Colour}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="KeyboardNumButtonStyle" BasedOn="{StaticResource KeyboardButtonStyle}" TargetType="{x:Type Button}">
+        <Setter Property="MinWidth" Value="80" />
+        <Setter Property="MinHeight" Value="40" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Name="border" CornerRadius="0" Background="#003b92">
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="#ffcdfc0d" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="KeyTextBlockStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="FontSize" Value="14.667" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+
+    <!--QuertyKeyboard-->
+    <Style TargetType="{x:Type pk:QuertyKeyboard}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type pk:QuertyKeyboard}">
+                    <Border BorderBrush="{DynamicResource PrimaryBG_colour}" BorderThickness="1"
+                            HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                            Margin="0,0,0,50">
+                        <Grid x:Name="KeyboardLayout" Background="{DynamicResource PrimaryBG_Over_Colour}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="KeyboardLayoutStates">
+                                    <VisualState x:Name="NumericState">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="QuertyKeyboard" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                                <DiscreteObjectKeyFrame KeyTime="00:00:00.1170000" Value="{x:Static Visibility.Collapsed}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="NumericKeyboard" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                                <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="00:00:00.1170000" Value="{x:Static Visibility.Visible}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+
+                                    <VisualState x:Name="QuertyState">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="QuertyKeyboard" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                                <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="00:00:00.1170000" Value="{x:Static Visibility.Visible}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="NumericKeyboard" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                                <DiscreteObjectKeyFrame KeyTime="00:00:00.1170000" Value="{x:Static Visibility.Collapsed}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+                            <StackPanel x:Name="QuertyKeyboard" HorizontalAlignment="Center" Orientation="Vertical">
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardNumButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="1"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardNumButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="2"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardNumButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="3"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardNumButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="4"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardNumButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="5"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardNumButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="6"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardNumButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="7"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardNumButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="8"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardNumButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="9"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardNumButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="0"/>
+                                    <pk:VirtualKeyboardSpecialButton Style="{StaticResource KeyboardNumButtonStyle}"
+                                                                     pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="HideKeyboard">
+                                        <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="Exit" />
+                                    </pk:VirtualKeyboardSpecialButton>
+                                </StackPanel>
+
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="q"
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="Q"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="w"
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="W"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="e"
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="E"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="r"
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="R"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="t"
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="T"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="y"
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="Y"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="u"
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="U"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="i"
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="I"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="o"
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="O"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="p"
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="P"/>
+                                    <pk:VirtualKeyboardControlButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardControlButton.KeyControlInputValue="0x8">
+                                        <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="Del" />
+                                    </pk:VirtualKeyboardControlButton>
+                                </StackPanel>
+
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="a"
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="A"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="s"
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="S"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="d"
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="D"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="f"
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="F"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="g"
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="G"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="h"
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="H"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="j"
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="J"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="k"
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="K"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="l"
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="L"/>
+                                    <pk:VirtualKeyboardControlButton Style="{StaticResource KeyboardButtonStyle}" Width="120"
+                                                              pk:VirtualKeyboardControlButton.KeyControlInputValue="0xd">
+                                        <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="Done" />
+                                    </pk:VirtualKeyboardControlButton>
+                                </StackPanel>
+
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                    <pk:VirtualKeyboardSpecialButton Style="{StaticResource KeyboardButtonStyle}"
+                                                                     pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="NumericSwitch">
+                                        <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="Sym" />
+                                    </pk:VirtualKeyboardSpecialButton>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="z"
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="Z"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="x"
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="X"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="c"
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="C"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="v"
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="V"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="b"
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="B"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="n"
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="N"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="m"
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="M"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="!"
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue=","/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="?"
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="."/>
+
+                                </StackPanel>
+
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                    <pk:VirtualKeyboardSpecialButton Style="{StaticResource KeyboardButtonStyle}"
+                                                                     pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="ShiftKey">
+                                        <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="⬆" />
+                                    </pk:VirtualKeyboardSpecialButton>
+                                    <pk:VirtualKeyboardControlButton Style="{StaticResource KeyboardButtonStyle}" Width="620"
+                                                              pk:VirtualKeyboardControlButton.KeyControlInputValue="0x20" />
+                                    <pk:VirtualKeyboardSpecialButton Style="{StaticResource KeyboardButtonStyle}"
+                                                                     pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="ShiftKey">
+                                        <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="⬆" />
+                                    </pk:VirtualKeyboardSpecialButton>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <StackPanel x:Name="NumericKeyboard" HorizontalAlignment="Center" Orientation="Vertical" Visibility="Collapsed">
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardNumButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="1"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardNumButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="2"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardNumButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="3"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardNumButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="4"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardNumButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="5"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardNumButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="6"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardNumButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="7"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardNumButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="8"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardNumButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="9"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardNumButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="0"/>
+                                    <pk:VirtualKeyboardSpecialButton Style="{StaticResource KeyboardNumButtonStyle}"
+                                                                     pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="HideKeyboard">
+                                        <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="Exit" />
+                                    </pk:VirtualKeyboardSpecialButton>
+                                </StackPanel>
+
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue=":"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue=";"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="("/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue=")"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="£"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="&amp;"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="@"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="?"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="!"/>
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue='"'/>
+
+                                    <pk:VirtualKeyboardControlButton Style="{StaticResource KeyboardButtonStyle}"
+                                                              pk:VirtualKeyboardControlButton.KeyControlInputValue="0x8">
+                                        <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="Del" />
+                                    </pk:VirtualKeyboardControlButton>
+                                </StackPanel>
+
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                    <pk:VirtualKeyboardSpecialButton Style="{StaticResource KeyboardButtonStyle}"
+                                                                     pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="AlphaSwitch">
+                                        <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="ABC" />
+                                    </pk:VirtualKeyboardSpecialButton>
+                                    <pk:VirtualKeyboardControlButton Style="{StaticResource KeyboardButtonStyle}" Width="700"
+                                                              pk:VirtualKeyboardControlButton.KeyControlInputValue="0x20"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--QuertyKeyboard-->
+    
+</ResourceDictionary>

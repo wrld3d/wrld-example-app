@@ -146,6 +146,7 @@ AppHost::AppHost(
     , m_maxDeviceTouchCount(maxDeviceTouchCount)
 	, m_pTagSearchViewModule(NULL)
     , m_userIdleService(m_inputHandler.GetUserIdleService())
+    , m_pVirtualKeyboardView(NULL)
 {
     ASSERT_NATIVE_THREAD
          
@@ -605,6 +606,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
 
+    m_pVirtualKeyboardView = Eegeo_NEW(ExampleApp::VirtualKeyboard::View::VirtualKeyboardView)(m_nativeState, m_messageBus);
+
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
 
     viewControllerUpdaterModel.AddUpdateableObject(m_pSettingsMenuViewModule->GetMenuController());
@@ -626,6 +629,8 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
 
         if (m_createdUIModules)
         {
+            Eegeo_DELETE m_pVirtualKeyboardView;
+
             Eegeo_DELETE m_pMyPinDetailsViewModule;
 
             Eegeo_DELETE m_pViewControllerUpdaterModule;

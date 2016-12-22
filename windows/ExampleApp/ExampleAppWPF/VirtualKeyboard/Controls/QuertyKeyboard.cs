@@ -18,7 +18,7 @@ namespace ExampleAppWPF.VirtualKeyboard
     [TemplateVisualState(Name = VisualStateQuertyName, GroupName = VisualStateGroupKeyboardLayoutName)]
     [TemplateVisualState(Name = VisualStateNumericName, GroupName = VisualStateGroupKeyboardLayoutName)]
 
-    public class QuertyKeyboard : Control
+    public class QuertyKeyboard : ControlBase
     {
         #region Template Parts
 
