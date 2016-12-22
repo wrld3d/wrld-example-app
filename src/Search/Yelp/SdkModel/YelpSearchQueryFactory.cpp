@@ -76,7 +76,7 @@ namespace ExampleApp
                     if (searchQuery.IsTag())
                     {
                         m_searchTagToYelpCategoryMap.TryGetBestYelpCategoryForSearchTag(searchQuery.Query(), categoryFilter);
-                        if(categoryFilter.performYelpSearch == false)
+                        if(categoryFilter.skipYelpSearch == true)
                         {
                             searchLimit = "0";
                         }
