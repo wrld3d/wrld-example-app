@@ -11,6 +11,11 @@
 #include "WorldPinInFocusViewModel.h"
 #include "WorldPinIconMappingFactory.h"
 #include "WorldPinIconMapping.h"
+#include "WorldLabelsService.h"
+#include "ILabelModelService.h"
+#include "LabelAnchorCategory.h"
+#include "LabelLayer.h"
+#include "ILabelFilterModel.h"
 
 namespace ExampleApp
 {
@@ -31,40 +36,66 @@ namespace ExampleApp
                                              const float screenOversampleScale,
                                              const IWorldPinIconMapping& worldPinIconMapping,
                                              Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& interiorMarkerPickingService,
-                                             const bool useIndoorEntryMarkerLabels)
+                                             Eegeo::Labels::ILabelModelService& labelModelService,
+                                             Eegeo::Labels::ILabelAnchorFilterModel& labelAnchorFilterModel,
+                                             Eegeo::Labels::ILabelFilterModel& labelFilterModel,
+                                             Eegeo::Labels::ILabelPicker& labelPicker,
+                                             const bool useIndoorEntryMarkerLabels,
+                                             const bool useLabels)
             {
                 m_pWorldPinsFactory = Eegeo_NEW(WorldPinsFactory);
 
                 m_pWorldPinsRepository = Eegeo_NEW(WorldPinsRepository);
 
-                m_pWorldPinsService = Eegeo_NEW(WorldPinsService)(*m_pWorldPinsRepository,
-                                      *m_pWorldPinsFactory,
-                                      pinRepository,
-                                      pinController,
-                                      environmentFlatteningService,
-                                      worldPinIconMapping,
-                                      interiorMarkerPickingService,
-                                      useIndoorEntryMarkerLabels);
+                if(useLabels)
+                {
+                    Eegeo::Labels::LabelLayer::IdType labelLayerId = labelModelService.RegisterLayer("pins");
+                    labelFilterModel.SetLayerShownInExterior(labelLayerId, true);
+                    labelFilterModel.SetLayerShownInInterior(labelLayerId, true);
+                    m_pWorldPinLabelCategory = Eegeo::Labels::LabelAnchorCategory::Create("eea_pin_label", labelLayerId, 0, 14, Eegeo::Labels::LabelPlacement::Point);
+                    m_pWorldPinsService = Eegeo_NEW(WorldLabelsService)(labelModelService,
+                                                                        labelAnchorFilterModel,
+                                                                        *m_pWorldPinLabelCategory,
+                                                                        labelPicker,
+                                                                        labelLayerId,
+                                                                        *m_pWorldPinsRepository,
+                                                                        interiorMarkerPickingService);
+                }
+                else
+                {
+                    m_pWorldPinsService = Eegeo_NEW(WorldPinsService)(*m_pWorldPinsRepository,
+                                                                      *m_pWorldPinsFactory,
+                                                                      pinRepository,
+                                                                      pinController,
+                                                                      environmentFlatteningService,
+                                                                      worldPinIconMapping,
+                                                                      interiorMarkerPickingService,
+                                                                      useIndoorEntryMarkerLabels);
+                }
+                
 
                 m_pWorldPinsScaleController = Eegeo_NEW(WorldPinsScaleController)(*m_pWorldPinsRepository,
                                               *m_pWorldPinsService,
                                               messageBus,
                                               interiorInteractionModel,
                                               interiorTransitionModel,
-                                              sdkDomainEventBus);
+                                              sdkDomainEventBus,
+                                              useLabels);
                 
                 
                 m_pWorldPinsFloorHeightController = Eegeo_NEW(WorldPinsFloorHeightController)(*m_pWorldPinsRepository,
                                                                                               pinRepository,
                                                                                               interiorInteractionModel,
-                                                                                              interiorsAffectedByFlattening);
+                                                                                              interiorsAffectedByFlattening,
+                                                                                              useLabels);
 
                 m_pWorldPinsInFocusViewModel = Eegeo_NEW(View::WorldPinInFocusViewModel)(identityProvider.GetNextIdentity());
 
                 m_pWorldPinsInFocusController = Eegeo_NEW(WorldPinsInFocusController)(*m_pWorldPinsRepository,
                                                 *m_pWorldPinsService,
                                                 screenOversampleScale,
-                                                messageBus);
+                                                messageBus,
+                                                useLabels);
 
 
                 m_pWorldPinInFocusObserver = Eegeo_NEW(View::WorldPinInFocusObserver)(*m_pWorldPinsInFocusViewModel,

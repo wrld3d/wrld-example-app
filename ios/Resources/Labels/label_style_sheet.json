@@ -863,6 +863,17 @@
         "pickable": true,
         "stencil_mode": "always",
         "priority": 5
+    },
+    {
+        "name": "eea_pin_label",
+        "label_text_style_name": "road_default",
+        "label_icon_style_name": "icon_default",
+        "label_horizontal_alignment": "left",
+        "pickable": true,
+        "fade_duration": 0.25,
+        "screen_margin": 50.0,
+        "screen_margin_hiding": "if_icon_outside_margin",
+        "priority": 5
     }
     ],
 	"LabelStyleBindings": [{
@@ -1256,6 +1267,11 @@
     {
         "label_anchor_category": "indoor_map",
         "label_style_name": "indoor_map_marker"
-    }
+   },
+   {
+                           "label_anchor_category": "eea_pin_label",
+                           "label_style_name": "eea_pin_label"
+   }
+                           
     ]
 }

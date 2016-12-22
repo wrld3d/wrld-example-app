@@ -9,6 +9,7 @@
 #include "InteriorsModel.h"
 #include "PinRepository.h"
 #include "Pin.h"
+#include "IImmutableInteriorViewModel.h"
 
 #include "InteriorHeightHelpers.h"
 
@@ -21,11 +22,13 @@ namespace ExampleApp
             WorldPinsFloorHeightController::WorldPinsFloorHeightController(IWorldPinsRepository& worldPinsRepository,
                                                                            Eegeo::Pins::PinRepository& pinRepository,
                                                                            const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                                                           const bool interiorsAffectedByFlattening)
+                                                                           const bool interiorsAffectedByFlattening,
+                                                                           const bool useLabels)
                 : m_worldPinsRepository(worldPinsRepository)
                 , m_pinRepository(pinRepository)
                 , m_interiorInteractionModel(interiorInteractionModel)
                 , m_interiorsAffectedByFlattening(interiorsAffectedByFlattening)
+                , m_useLabels(useLabels)
             {
             }
             
@@ -33,7 +36,16 @@ namespace ExampleApp
             {
             }
             
+            
+            
             void WorldPinsFloorHeightController::Update(float deltaSeconds)
+            {
+                if (!m_useLabels)
+                {
+                    UpdatePins(deltaSeconds);
+                }
+            }
+            void WorldPinsFloorHeightController::UpdatePins(float deltaSeconds)
             {
                 if (m_interiorInteractionModel.HasInteriorModel())
                 {

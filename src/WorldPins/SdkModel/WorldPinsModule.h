@@ -16,6 +16,7 @@
 #include "Interiors.h"
 #include "SdkModelDomainEventBus.h"
 #include "IMenuReactionModel.h"
+#include "Labels.h"
 
 namespace ExampleApp
 {
@@ -34,6 +35,8 @@ namespace ExampleApp
                 IWorldPinsInFocusController* m_pWorldPinsInFocusController;
                 View::WorldPinInFocusObserver* m_pWorldPinInFocusObserver;
                 WorldPinsModalityObserver* m_pWorldPinsModalityObserver;
+                
+                Eegeo::Labels::LabelAnchorCategory* m_pWorldPinLabelCategory;
 
             public:
                 WorldPinsModule(Eegeo::Pins::PinRepository& pinRepository,
@@ -49,7 +52,12 @@ namespace ExampleApp
                                 const float screenOversampleScale,
                                 const IWorldPinIconMapping& worldPinIconMapping,
                                 Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& interiorMarkerPickingService,
-                                const bool useIndoorEntryMarkerLabels);
+                                Eegeo::Labels::ILabelModelService& labelModelService,
+                                Eegeo::Labels::ILabelAnchorFilterModel& labelAnchorFilterModel,
+                                Eegeo::Labels::ILabelFilterModel& labelFilterModel,
+                                Eegeo::Labels::ILabelPicker& labelPicker,
+                                const bool useIndoorEntryMarkerLabels,
+                                const bool useLabels);
 
                 ~WorldPinsModule();
 

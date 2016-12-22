@@ -130,7 +130,8 @@
 #include "InteriorMetaDataModule.h"
 #include "CoverageTreeModule.h"
 #include "GlobalAppModeTransitionRules.h"
-#include "GlobalAppModeTransitionRules.h"
+#include "ILabelOptionsModel.h"
+#include "MapLayersModule.h"
 
 namespace ExampleApp
 {
@@ -1044,7 +1045,15 @@ namespace ExampleApp
                                                                                          screenOversampleScale,
                                                                                          *m_pWorldPinsIconMapping,
                                                                                          interiorsPresentationModule.GetInteriorMarkerPickingService(),
-                                                                                         m_useIndoorEntryMarkerLabels);
+                                                                                         mapModule.GetMapLayersModule().GetLabelModelService(),
+                                                                                         mapModule.GetLabelsModule().GetLabelHiddenFilterModel(),
+                                                                                         mapModule.GetLabelsModule().GetLabelLayerFilterModel(),
+                                                                                         mapModule.GetLabelsModule().GetLabelPicker(),
+                                                                                         m_useIndoorEntryMarkerLabels,
+                                                                                         true);
+        
+        // Switch to more stable occlusion mode.
+        world.GetMapModule().GetLabelsModule().GetLabelOptionsModel().SetOcclusionMode(Eegeo::Labels::OcclusionResolverMode::Always);
     }
 
     void MobileExampleApp::InitialiseToursModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world, const bool interiorsAffectedByFlattening)

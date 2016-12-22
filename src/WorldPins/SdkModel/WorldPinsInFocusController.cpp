@@ -38,7 +38,8 @@ namespace ExampleApp
             WorldPinsInFocusController::WorldPinsInFocusController(IWorldPinsRepository& worldPinsRepository,
                     IWorldPinsService& worldPinsService,
                     float screenOversampleScale,
-                    ExampleAppMessaging::TMessageBus& messageBus)
+                    ExampleAppMessaging::TMessageBus& messageBus,
+                    bool useLabels)
                 : m_worldPinsRepository(worldPinsRepository)
                 , m_worldPinsService(worldPinsService)
                 , m_messageBus(messageBus)
@@ -46,6 +47,7 @@ namespace ExampleApp
                 , m_selectedFocussedMessageHandlerBinding(this, &WorldPinsInFocusController::OnSelectedFocussedMessage)
                 , m_pLastFocussedModel(NULL)
                 , m_focusEnabled(false)
+                , m_useLabels(useLabels)
                 , m_screenOversampleScale(screenOversampleScale)
             {
                 m_messageBus.SubscribeNative(m_visibilityMessageHandlerBinding);
@@ -65,7 +67,7 @@ namespace ExampleApp
                 Eegeo::v2 closestScreenPinLocation;
                 Eegeo::v2 screenInterestPoint = ProjectEcefToScreen(ecefInterestPoint, renderCamera, m_screenOversampleScale);
 
-                if(m_focusEnabled)
+                if(m_focusEnabled && !m_useLabels)
                 {
                     for(size_t i = 0; i < m_worldPinsRepository.GetItemCount(); ++i)
                     {

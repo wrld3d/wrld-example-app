@@ -26,6 +26,7 @@ namespace ExampleApp
                 const IWorldPinsInFocusModel* m_pLastFocussedModel;
 
                 bool m_focusEnabled;
+                const bool m_useLabels;
                 const float m_screenOversampleScale;
 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
@@ -39,7 +40,8 @@ namespace ExampleApp
                 WorldPinsInFocusController(IWorldPinsRepository& worldPinsRepository,
                                            IWorldPinsService& worldPinsService,
                                            float screenOversampleScale,
-                                           ExampleAppMessaging::TMessageBus& messageBus);
+                                           ExampleAppMessaging::TMessageBus& messageBus,
+                                           bool useLabels);
 
                 ~WorldPinsInFocusController();
 
