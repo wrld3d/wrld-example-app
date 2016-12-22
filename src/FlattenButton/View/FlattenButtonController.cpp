@@ -55,7 +55,8 @@ namespace ExampleApp
             
             void FlattenButtonController::OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message)
             {
-                m_appModeAllowsOpen = message.GetAppMode() != AppModes::SdkModel::TourMode;
+                m_appModeAllowsOpen = message.GetAppMode() != AppModes::SdkModel::TourMode &&
+                                      message.GetAppMode() != AppModes::SdkModel::AttractMode;
                 
                 if(m_appModeAllowsOpen)
                 {
