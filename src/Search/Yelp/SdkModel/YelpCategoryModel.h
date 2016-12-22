@@ -14,7 +14,7 @@ namespace ExampleApp
                 struct YelpCategoryModel
                 {
                     std::string yelpCategoryFilter;
-                    bool performYelpSearch;
+                    bool skipYelpSearch;
                 };
             }
         }
