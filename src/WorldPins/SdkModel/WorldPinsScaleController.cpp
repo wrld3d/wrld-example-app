@@ -26,7 +26,8 @@ namespace ExampleApp
                                                                const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                                                ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
-                                                               bool isInKioskMode)
+                                                               bool isInKioskMode,
+                                                               bool useLabels)
                 : m_worldPinsRepository(worldPinsRepository)
                 , m_worldPinsService(worldPinsService)
                 , m_messageBus(messageBus)
@@ -41,6 +42,7 @@ namespace ExampleApp
                 , m_sdkDomainEventBus(sdkDomainEventBus)
                 , m_visibilityMask(WorldPins::SdkModel::WorldPinVisibility::All)
                 , m_hideOutdoorPinsIndoors(true)
+                , m_useLabels(useLabels)
             {
                 m_messageBus.SubscribeNative(m_visibilityMessageHandlerBinding);
                 m_sdkDomainEventBus.Subscribe(m_visibilityMessageHandlerBinding);
@@ -107,6 +109,11 @@ namespace ExampleApp
                     return true;
                 }
                 
+                if(m_modality > 0.0f)
+                {
+                    return true;
+                }
+                
                 if(m_hideOutdoorPinsIndoors && showingInterior && !worldPinItemModel.IsInterior())
                 {
                     return true;
@@ -127,14 +134,17 @@ namespace ExampleApp
                     hidePinFromInteriorData = !isSameBuilding || !isSameFloor || !isCollapsed;
                 }
                 
-                // hide when close to edge of screen
-                Eegeo::v2 screenLocation;
-                GetScreenLocation(worldPinItemModel, screenLocation, renderCamera);
-                
-                const float ratioX = screenLocation.GetX() / renderCamera.GetViewportWidth();
-                const float ratioY = screenLocation.GetY() / renderCamera.GetViewportHeight();
-                const bool hidePinFromScreenPosition = (ratioX < 0.1f) || (ratioX > 0.9f) || (ratioY < 0.15f) || (ratioY > 0.9f);
-                
+                // hide when close to edge of screen (Labels already do this)
+                bool hidePinFromScreenPosition = false;
+                if(!m_useLabels)
+                {
+                    Eegeo::v2 screenLocation;
+                    GetScreenLocation(worldPinItemModel, screenLocation, renderCamera);
+                    
+                    const float ratioX = screenLocation.GetX() / renderCamera.GetViewportWidth();
+                    const float ratioY = screenLocation.GetY() / renderCamera.GetViewportHeight();
+                    hidePinFromScreenPosition = (ratioX < 0.1f) || (ratioX > 0.9f) || (ratioY < 0.15f) || (ratioY > 0.9f);
+                }
                 return hidePinFromScreenPosition || hidePinFromInteriorData;
             }
 

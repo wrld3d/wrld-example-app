@@ -145,6 +145,8 @@
 #include "RestrictedBuildingService.h"
 #include "InteriorsStreamingModule.h"
 #include "GlobalAppModeTransitionRules.h"
+#include "ILabelOptionsModel.h"
+#include "MapLayersModule.h"
 #include "CameraSplinePlaybackController.h"
 #include "document.h"
 
@@ -1136,8 +1138,16 @@ namespace ExampleApp
                                                                                          screenOversampleScale,
                                                                                          *m_pWorldPinsIconMapping,
                                                                                          interiorsPresentationModule.GetInteriorMarkerPickingService(),
+                                                                                         mapModule.GetMapLayersModule().GetLabelModelService(),
+                                                                                         mapModule.GetLabelsModule().GetLabelHiddenFilterModel(),
+                                                                                         mapModule.GetLabelsModule().GetLabelLayerFilterModel(),
+                                                                                         mapModule.GetLabelsModule().GetLabelPicker(),
                                                                                          m_useIndoorEntryMarkerLabels,
-                                                                                         m_applicationConfiguration.IsInKioskMode());
+                                                                                         m_applicationConfiguration.IsInKioskMode(),
+                                                                                         true);
+        
+        // Switch to more stable occlusion mode.
+        world.GetMapModule().GetLabelsModule().GetLabelOptionsModel().SetOcclusionMode(Eegeo::Labels::OcclusionResolverMode::Always);
     }
     
     void MobileExampleApp::OnPause()

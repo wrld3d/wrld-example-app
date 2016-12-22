@@ -43,6 +43,7 @@ namespace ExampleApp
                 ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkDomainEventBus;
                 
                 int m_visibilityMask;
+                bool m_useLabels;
 
             public:
                 WorldPinsScaleController(IWorldPinsRepository& worldPinsRepository,
@@ -51,7 +52,8 @@ namespace ExampleApp
                                          const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                          const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                          ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
-                                         bool isInKioskMode);
+                                         bool isInKioskMode,
+                                         bool useLabels);
 
                 ~WorldPinsScaleController();
 
