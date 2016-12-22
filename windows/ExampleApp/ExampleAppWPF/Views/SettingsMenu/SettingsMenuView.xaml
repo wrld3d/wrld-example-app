@@ -51,25 +51,25 @@
                             </ThicknessAnimationUsingKeyFrames>
                         </Storyboard>
 
-                        <Storyboard x:Key="OpenSearchViewIcon">
+                        <Storyboard x:Key="OpenMenuViewIcon">
                             <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Duration="0:0:0.2" >
                                 <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="-536,0,0,0" KeySpline="0.0,1.0 0.6,1.0"/>
                             </ThicknessAnimationUsingKeyFrames>
                         </Storyboard>
 
-                        <Storyboard x:Key="CloseSearchViewIcon">
+                        <Storyboard x:Key="CloseMenuViewIcon">
                             <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Duration="0:0:0.2" >
                                 <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="-76,0,0,0" KeySpline="0.0,1.0 1.0,0.8"/>
                             </ThicknessAnimationUsingKeyFrames>
                         </Storyboard>
 
-                        <Storyboard x:Key="OpenSearchContainer">
+                        <Storyboard x:Key="OpenMenuContainer">
                             <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Duration="0:0:0.2" >
                                 <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="-250,0,0,0" KeySpline="0.0,1.0 1.0,0.8"/>
                             </ThicknessAnimationUsingKeyFrames>
                         </Storyboard>
 
-                        <Storyboard x:Key="CloseSearchContainer">
+                        <Storyboard x:Key="CloseMenuContainer">
                             <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00" Duration="0:0:0.2" >
                                 <SplineThicknessKeyFrame KeyTime="00:00:00.2" Value="250,0,0,0" KeySpline="0.0,1.0 0.6,1.0"/>
                             </ThicknessAnimationUsingKeyFrames>
@@ -90,10 +90,10 @@
                         </Storyboard>
                     </ControlTemplate.Resources>
 
-                    <Grid Margin="0,20,0,0" Name="SettingsMenuViewContainer">
+                    <Grid Margin="{DynamicResource SettingsMenuViewContainerMargin}" Name="SettingsMenuViewContainer">
 
                         <!--Closed: -114 Open: -714 -->
-                        <Grid Margin="-114,0,0,0" Width="36" Height="36" VerticalAlignment="Top" DockPanel.Dock="Left" Name="SettingsIconGrid" Background="{StaticResource PrimaryBG_colour}" Panel.ZIndex="99">
+                        <Grid Margin="-114,0,0,0" Width="{DynamicResource MenuIconSize}" Height="{DynamicResource MenuIconSize}" VerticalAlignment="Top" DockPanel.Dock="Left" Name="SettingsIconGrid" Background="{StaticResource PrimaryBG_colour}" Panel.ZIndex="99">
                             <Button Width="Auto" Height="Auto" Name="SettingsMenuIconButton" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}">
@@ -101,16 +101,16 @@
                                             <Setter Property="Template">
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="{x:Type Button}">
-                                                        <Grid Name="SearchButtonGrid"  Background="{StaticResource Gold}">
-                                                            <Image Source="/Assets/button_settings_off.png" Width="36" Height="36" Name="SearchButtonIcon" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                        <Grid Name="MenuButtonGrid"  Background="{StaticResource Gold}">
+                                                            <Image Source="{DynamicResource ButtonSettingsOffImage}" Name="MenuButtonIcon" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                                         </Grid>
                                                         <ControlTemplate.Triggers>
                                                             <Trigger Property="IsPressed" Value="True">
-                                                                <Setter TargetName="SearchButtonIcon" Property="Source" Value="/Assets/button_settings_on.png"/>
-                                                                <Setter TargetName="SearchButtonGrid" Property="Background" Value="{StaticResource PrimaryBG_Down_Colour}"/>
+                                                                <Setter TargetName="MenuButtonIcon" Property="Source" Value="{DynamicResource ButtonSettingsOnImage}"/>
+                                                                <Setter TargetName="MenuButtonGrid" Property="Background" Value="{StaticResource PrimaryBG_Down_Colour}"/>
                                                             </Trigger>
                                                             <Trigger Property="IsMouseOver" Value="False">
-                                                                <Setter TargetName="SearchButtonGrid" Property="Background" Value="{StaticResource PrimaryBG_colour}"/>
+                                                                <Setter TargetName="MenuButtonGrid" Property="Background" Value="{StaticResource PrimaryBG_colour}"/>
                                                             </Trigger>
                                                             <MultiTrigger>
                                                                 <MultiTrigger.Conditions>
@@ -118,7 +118,7 @@
                                                                     <Condition Property="IsPressed" Value="False" />
                                                                 </MultiTrigger.Conditions>
                                                                 <MultiTrigger.Setters>
-                                                                    <Setter TargetName="SearchButtonGrid" Property="Background" Value="{StaticResource PrimaryBG_Over_Colour}"/>
+                                                                    <Setter TargetName="MenuButtonGrid" Property="Background" Value="{StaticResource PrimaryBG_Over_Colour}"/>
                                                                 </MultiTrigger.Setters>
                                                             </MultiTrigger>
                                                         </ControlTemplate.Triggers>
@@ -132,7 +132,7 @@
                         </Grid>
 
                         <!--Closed: 268 Open 332-->
-                        <Rectangle Name="BackgroundRect" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="250,0,0,0" Width="250" Height="36" Fill="{StaticResource PrimaryBG_colour}" RenderTransformOrigin="0.0, 0.0">
+                        <Rectangle Name="BackgroundRect" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="{DynamicResource SettingsBackgroundRectangleMargin}" Width="{DynamicResource MenuWidth}" Height="{DynamicResource MenuIconSize}" Fill="{StaticResource PrimaryBG_colour}" RenderTransformOrigin="0.0, 0.0">
                             <Rectangle.Resources>
                                 <Style TargetType="{x:Type Rectangle}">
                                     <Setter Property="RenderTransform">
@@ -145,9 +145,9 @@
                         </Rectangle>
                         
                         <!--Closed: 332 Open: -332-->
-                        <Grid Name="SettingsMenuMainContainer" Margin="250,0,0,0" HorizontalAlignment="Center">
+                        <Grid Name="SettingsMenuMainContainer" Margin="{DynamicResource SettingsMenuMainContainerMargin}" HorizontalAlignment="Center">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="36"/>
+                                <RowDefinition Height="{DynamicResource MenuIconSizeGridLength}"/>
                                 <RowDefinition Height="2"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
@@ -157,16 +157,16 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid Grid.Column="0">
-                                    <TextBlock Text="Settings" Foreground="White" FontSize="18" FontFamily="{StaticResource PrimaryUIFont}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+                                    <TextBlock Text="Settings" Foreground="White" FontSize="{DynamicResource SettingsTitleFontSize}" FontFamily="{StaticResource PrimaryUIFont}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="{DynamicResource SettingsTitleTextMargin}"/>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="1">
-                                <Rectangle Width="250" Height="2" Fill="{StaticResource PrimaryBG_Over_Colour}" />
+                                <Rectangle Width="{DynamicResource MenuWidth}" Height="2" Fill="{StaticResource PrimaryBG_Over_Colour}" />
                             </Grid>
                             <Grid Grid.Row="2">
                                 <StackPanel  Orientation="Vertical">
-                                    <ScrollViewer Width="250"  Background="{StaticResource PrimaryBG_colour}" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
-                                        <ListBox Margin="5,0,5,0" Name="SettingsMenuItemList" Template="{StaticResource ListBoxControlTemplateNoPadding}" ItemsSource="{Binding Children}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0" Background="{StaticResource PrimaryBG_colour}" Focusable="False">
+                                    <ScrollViewer Width="{DynamicResource MenuWidth}"  Background="{StaticResource PrimaryBG_colour}" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+                                        <ListBox Margin="{DynamicResource MenuListMarginSettings}" Name="SettingsMenuItemList" Template="{StaticResource ListBoxControlTemplateNoPadding}" ItemsSource="{Binding Children}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0" Background="{StaticResource PrimaryBG_colour}" Focusable="False">
                                             <ListBox.Resources>
                                                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
                                                 <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="Transparent"/>
@@ -175,7 +175,7 @@
 
                                                 <!-- Massive copy from SearcgMenuView-->
                                                 <DataTemplate DataType="{x:Type local:MenuListItem}">
-                                                    <Grid Name="MenuItemGrid" HorizontalAlignment="Stretch" Height="41" Background="{StaticResource Gold}" Width="250">
+                                                    <Grid Name="MenuItemGrid" HorizontalAlignment="Stretch" Height="{DynamicResource MenuListItemHeight}" Background="{StaticResource Gold}" Width="{DynamicResource MenuListItemWidthSettings}">
                                                         <Grid.Triggers>
                                                             <EventTrigger RoutedEvent="MouseLeftButtonDown">
                                                                 <BeginStoryboard>
@@ -237,7 +237,7 @@
                                                             <Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="*"/>
                                                             </Grid.ColumnDefinitions>
-                                                            <Image Name="MenuListOpenableShape" Grid.Column="0" Margin="0,0,23,0" HorizontalAlignment="Right" VerticalAlignment="Center" RenderTransformOrigin=".5,.5" Source="/Assets/sub_menu_arrow_off.png" Width="14" Height="14">
+                                                            <Image Name="MenuListOpenableShape" Grid.Column="0" Margin="{DynamicResource MenuListItemArrowMarginSettings}" HorizontalAlignment="Right" VerticalAlignment="Center" RenderTransformOrigin=".5,.5" Source="{DynamicResource MenuListItemArrowImage}" Width="{DynamicResource MenuListItemArrowSize}" Height="{DynamicResource MenuListItemArrowSize}">
                                                                 <Image.Style>
                                                                     <Style TargetType="{x:Type Image}">
                                                                         <Setter Property="RenderTransform">
@@ -277,11 +277,11 @@
                                                                     </Style>
                                                                 </Image.Style>
                                                             </Image>
-                                                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal" Grid.Column="0" Margin="5,0,0,-3">
-                                                                <Label Name="MenuItemTitle" Content="{Binding Path=Heading}" FontSize="16.5" Foreground="{StaticResource LightGrey}"/>
+                                                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal" Grid.Column="0" Margin="{DynamicResource MenuListItemTitleMargin}">
+                                                                <Label Name="MenuItemTitle" Content="{Binding Path=Heading}" FontSize="{DynamicResource MenuListItemTitleFontSize}" Foreground="{StaticResource LightGrey}"/>
                                                             </StackPanel>
                                                         </Grid>
-                                                        <Rectangle Grid.Row="1" Grid.Column="0" Fill="{StaticResource MenuSeparator}" HorizontalAlignment="Left" Width="238" Margin="0,0,0,0"  Height="1">
+                                                        <Rectangle Grid.Row="1" Grid.Column="0" Fill="{StaticResource MenuSeparator}" HorizontalAlignment="Left" Width="{DynamicResource MenuListItemInnerWidthSettings}" Margin="0,0,0,0"  Height="1">
                                                             <Rectangle.Style>
                                                                 <Style TargetType="{x:Type Rectangle}">
                                                                     <Style.Triggers>
@@ -306,7 +306,7 @@
                                                 </DataTemplate>
 
                                                 <DataTemplate DataType="{x:Type local:SubMenuListItem}">
-                                                    <Grid Height="39" Background="{StaticResource Gold}">
+                                                    <Grid Height="{DynamicResource SubMenuListItemHeight}" Background="{StaticResource Gold}">
                                                         <Grid>
                                                             <Grid.RowDefinitions>
                                                                 <RowDefinition Height="*"/>
@@ -319,7 +319,7 @@
                                                                     <ColumnDefinition Width="*"/>
                                                                     <ColumnDefinition Width="Auto"/>
                                                                 </Grid.ColumnDefinitions>
-                                                                <StackPanel Name="SettingsMenuItemPanel" Margin="0,0,0,0" Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" Background="{StaticResource SubMenuItemDefaultColour}" Width="250">
+                                                                <StackPanel Name="SettingsMenuItemPanel" Margin="0,0,0,0" Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" Background="{StaticResource SubMenuItemDefaultColour}" Width="{DynamicResource SubMenuListItemWidthSettings}">
                                                                     <StackPanel.Triggers>
                                                                         <EventTrigger RoutedEvent="MouseLeftButtonDown">
                                                                             <BeginStoryboard>
@@ -358,8 +358,8 @@
                                                                             </Setter>
                                                                         </Style>
                                                                     </StackPanel.Resources>
-                                                                    <Image Source="{Binding Path=Icon}" Width="36" Height="36" VerticalAlignment="Center" Margin="1,0,0,0"/>
-                                                                    <Label Content="{Binding Path=Heading}" FontSize="14" Foreground="{StaticResource DarkGrey}" VerticalAlignment="Center"/>
+                                                                    <Image Source="{Binding Path=Icon}" Width="{DynamicResource SubMenuListItemIconSize}" Height="{DynamicResource SubMenuListItemIconSize}" VerticalAlignment="Center" Margin="1,0,0,0"/>
+                                                                    <Label Content="{Binding Path=Heading}" FontSize="{DynamicResource SubMenuListItemFontSize}" Foreground="{StaticResource DarkGrey}" VerticalAlignment="Center"/>
                                                                 </StackPanel>
                                                             </Grid>
                                                         </Grid>

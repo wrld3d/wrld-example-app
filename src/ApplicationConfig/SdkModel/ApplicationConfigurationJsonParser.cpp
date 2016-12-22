@@ -37,6 +37,7 @@ namespace ExampleApp
                 const std::string MyPinsWebServiceAuthToken = "mypins_web_service_auth_token";
                 const std::string TwitterAuthCode = "twitter_auth_code";
                 const std::string IsKioskTouchInputEnabled = "is_kiosk_touch_input_enabled";
+                const std::string IsInKioskMode = "is_in_kiosk_mode";
                 const std::string StartAppInFullscreen = "start_app_in_fullscreen";
                 const std::string UseLabels = "use_labels";
                 const std::string UseJapaneseFont = "use_japanese_font";
@@ -150,6 +151,7 @@ namespace ExampleApp
                 const std::string& myPinsWebServiceAuthToken = ParseStringOrDefault(document, MyPinsWebServiceAuthToken, m_defaultConfig.MyPinsWebServiceAuthToken());
                 const std::string& twitterAuthCode = ParseStringOrDefault(document, TwitterAuthCode, m_defaultConfig.TwitterAuthCode());
                 bool isKioskTouchInputEnabled = ParseBoolOrDefault(document, IsKioskTouchInputEnabled, m_defaultConfig.IsKioskTouchInputEnabled());
+                bool isInKioskMode = ParseBoolOrDefault(document, IsInKioskMode, m_defaultConfig.IsInKioskMode());
                 bool startFullscreen = ParseBoolOrDefault(document, StartAppInFullscreen, m_defaultConfig.ShouldStartFullscreen());
                 bool useLabels = ParseBoolOrDefault(document, UseLabels, m_defaultConfig.UseLabels());
                 bool useJapaneseFont = ParseBoolOrDefault(document, UseJapaneseFont, m_defaultConfig.UseJapaneseFont());
@@ -187,6 +189,7 @@ namespace ExampleApp
                     myPinsWebServiceAuthToken,
                     twitterAuthCode,
                     isKioskTouchInputEnabled,
+                    isInKioskMode,
                     useLabels,
                     useJapaneseFont,
                     interiorTrackingInfoList,

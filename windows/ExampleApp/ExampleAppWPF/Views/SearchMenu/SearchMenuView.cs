@@ -190,23 +190,43 @@ namespace ExampleAppWPF
             var slideInItemStoryboard = ((Storyboard)Template.Resources["SlideInNewItems"]).Clone();
             var slideOutItemStoryboard = ((Storyboard)Template.Resources["SlideOutOldItems"]).Clone();
 
-            m_openSearchIconAnim = ((Storyboard)Template.Resources["OpenSearchViewIcon"]).Clone();
-            m_closeMenuIconAnim = ((Storyboard)Template.Resources["CloseSearchViewIcon"]).Clone();
+            string searchAnimString = "SearchAnim";
 
-            m_openSearchContainerAnim = ((Storyboard)Template.Resources["OpenSearchContainer"]).Clone();
-            m_closeMenuContainerAnim = ((Storyboard)Template.Resources["CloseSearchContainer"]).Clone();
+            string openMenuViewIconString = "OpenSearchViewIcon";
+            m_openMenuIconAnim = ((Storyboard)Template.Resources[openMenuViewIconString]).Clone();
+            XamlHelpers.UpdateThicknessAnimationMarginValue(m_openMenuIconAnim, searchAnimString + openMenuViewIconString);
+            string closeMenuViewIconString = "CloseSearchViewIcon";
+            m_closeMenuIconAnim = ((Storyboard)Template.Resources[closeMenuViewIconString]).Clone();
+            XamlHelpers.UpdateThicknessAnimationMarginValue(m_closeMenuIconAnim, searchAnimString + closeMenuViewIconString);
 
-            m_openBackgroundRect = ((Storyboard)Template.Resources["OpenBackgroundRect"]).Clone();
-            m_closeBackgroundRect = ((Storyboard)Template.Resources["CloseBackgroundRect"]).Clone();
+            string openMenuContainerString = "OpenSearchContainer";
+            m_openMenuContainerAnim = ((Storyboard)Template.Resources[openMenuContainerString]).Clone();
+            XamlHelpers.UpdateThicknessAnimationMarginValue(m_openMenuContainerAnim, searchAnimString + openMenuContainerString);
+            string closeMenuContainerString = "CloseSearchContainer";
+            m_closeMenuContainerAnim = ((Storyboard)Template.Resources[closeMenuContainerString]).Clone();
+            XamlHelpers.UpdateThicknessAnimationMarginValue(m_closeMenuContainerAnim, searchAnimString + closeMenuContainerString);
 
-            m_searchInputOpen = ((Storyboard)Template.Resources["OpenSearchInputBox"]).Clone();
+            string openBackgroundRectString = "OpenBackgroundRect";
+            m_openBackgroundRect = ((Storyboard)Template.Resources[openBackgroundRectString]).Clone();
+            XamlHelpers.UpdateThicknessAnimationMarginValue(m_openBackgroundRect, searchAnimString + openBackgroundRectString);
+            string closeBackgroundRectString = "CloseBackgroundRect";
+            m_closeBackgroundRect = ((Storyboard)Template.Resources[closeBackgroundRectString]).Clone();
+            XamlHelpers.UpdateThicknessAnimationMarginValue(m_closeBackgroundRect, searchAnimString + closeBackgroundRectString);
+
+            string openSearchInputBoxString = "OpenSearchInputBox";
+            m_searchInputOpen = ((Storyboard)Template.Resources[openSearchInputBoxString]).Clone();
+            XamlHelpers.UpdateThicknessAnimationMarginValue(m_searchInputOpen, searchAnimString + openSearchInputBoxString);
             m_searchInputClose = ((Storyboard)Template.Resources["CloseSearchInputBox"]).Clone();
 
             m_searchInputTextOpen = ((Storyboard)Template.Resources["OpenSearchInputBoxText"]).Clone();
             m_searchInputTextClose = ((Storyboard)Template.Resources["CloseSearchInputBoxText"]).Clone();
 
-            m_searchArrowOpen = ((Storyboard)Template.Resources["OpenSearchArrow"]).Clone();
-            m_searchArrowClosed = ((Storyboard)Template.Resources["CloseSearchArrow"]).Clone();
+            string openSearchArrowString = "OpenSearchArrow";
+            m_searchArrowOpen = ((Storyboard)Template.Resources[openSearchArrowString]).Clone();
+            XamlHelpers.UpdateThicknessAnimationMarginValue(m_searchArrowOpen, searchAnimString + openSearchArrowString);
+            string closeSearchArrowString = "CloseSearchArrow";
+            m_searchArrowClosed = ((Storyboard)Template.Resources[closeSearchArrowString]).Clone();
+            XamlHelpers.UpdateThicknessAnimationMarginValue(m_searchArrowClosed, searchAnimString + closeSearchArrowString);
 
             m_adapter = new MenuListAdapter(false, m_list, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SubMenuItemPanel");
             m_resultListAdapter = new MenuListAdapter(false, m_resultsList, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SearchResultPanel");

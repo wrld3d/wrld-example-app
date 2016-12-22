@@ -2,9 +2,11 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 
 namespace ExampleAppWPF
@@ -36,6 +38,7 @@ namespace ExampleAppWPF
         private Image m_emailIcon;
         private Image m_linkedInIcon;
         private Image m_slackIcon;
+        private Image m_headerFade;
         private Image m_footerFade;
         private WrapPanel m_socialLinkIconsContainer;
         private Border m_detailsDivider;
@@ -49,9 +52,17 @@ namespace ExampleAppWPF
         private double m_webBrowserOriginalHeight;
         private TextBlock m_subTitle;
         private Grid m_titlesGrid;
+        private StackPanel m_qrCodeContainer;
 
-        private const double MAX_WEB_VIEW_HEIGHT = 430;
-        private const double DEFAULT_WEB_VIEW_HEIGHT = 250;
+        private Storyboard m_scrollFadeInAnim;
+        private Storyboard m_scrollFadeOutAnim;
+        
+        private RepeatButton m_scrollDownButton;
+        private RepeatButton m_scrollUpButton;
+
+        private double m_imageContainerHeight;
+        private double m_defaultWebViewHeight;
+        private double m_maxWebViewHeight;
 
         public string PhoneText
         {
@@ -209,6 +220,8 @@ namespace ExampleAppWPF
 
             m_contentContainer.ScrollChanged += OnSearchResultsScrolled;
 
+            m_headerFade = (Image)GetTemplateChild("HeaderFade");
+
             m_footerFade = (Image)GetTemplateChild("FooterFade");
 
             m_previewImageSpinner = (Grid)GetTemplateChild("PreviewImageSpinner");
@@ -219,6 +232,23 @@ namespace ExampleAppWPF
             m_subTitle = (TextBlock)GetTemplateChild("SubTitle");
 
             m_titlesGrid = (Grid)GetTemplateChild("TitlesGrid");
+
+            m_qrCodeContainer = (StackPanel)GetTemplateChild("QRCodeContainer");
+            
+            m_scrollUpButton = (RepeatButton)GetTemplateChild("EegeoPOIViewScrollUpButton");
+            m_scrollUpButton.Click += HandleScrollUpButtonClicked;
+
+            m_scrollDownButton = (RepeatButton)GetTemplateChild("EegeoPOIViewScrollDownButton");
+            m_scrollDownButton.Click += HandleScrollDownButtonClicked;
+
+            m_scrollFadeInAnim = ((Storyboard)Template.Resources["ScrollFadeIn"]).Clone();
+            m_scrollFadeOutAnim = ((Storyboard)Template.Resources["ScrollFadeOut"]).Clone();
+
+            m_imageContainerHeight = (double)Application.Current.Resources["EegeoPOIViewImageContainerHeight"];
+
+            m_defaultWebViewHeight = (double)Application.Current.Resources["EegeoPOIViewDetailsWebViewDefaultHeight"];
+
+            m_maxWebViewHeight = (double)Application.Current.Resources["EegeoPOIViewDetailsWebViewMaxHeight"];
 
             var mainGrid = (Application.Current.MainWindow as MainWindow).MainGrid;
             var screenWidth = mainGrid.ActualWidth;
@@ -284,9 +314,9 @@ namespace ExampleAppWPF
                 newBrowserHeight = 0;
             }
 
-            if (newBrowserHeight > MAX_WEB_VIEW_HEIGHT)
+            if (newBrowserHeight > m_maxWebViewHeight)
             {
-                newBrowserHeight = MAX_WEB_VIEW_HEIGHT;
+                newBrowserHeight = m_maxWebViewHeight;
             }
 
             m_webBrowser.Height = newBrowserHeight;
@@ -302,11 +332,45 @@ namespace ExampleAppWPF
 
             if (m_contentContainer.VerticalOffset == m_contentContainer.ScrollableHeight)
             {
-                m_footerFade.Visibility = Visibility.Hidden;
+                if (m_headerFade.Opacity <= 0)
+                {
+                    m_scrollFadeInAnim.Begin(m_headerFade);
+                    m_scrollFadeInAnim.Begin(m_scrollUpButton);
+                }
+
+                if (m_footerFade.Opacity >= 1)
+                {
+                    m_scrollFadeOutAnim.Begin(m_footerFade);
+                    m_scrollFadeOutAnim.Begin(m_scrollDownButton);
+                }
+            }
+            else if (m_contentContainer.VerticalOffset == 0)
+            {
+                if (m_headerFade.Opacity >= 1)
+                {
+                    m_scrollFadeOutAnim.Begin(m_headerFade);
+                    m_scrollFadeOutAnim.Begin(m_scrollUpButton);
+                }
+
+                if (m_footerFade.Opacity <= 0)
+                {
+                    m_scrollFadeInAnim.Begin(m_footerFade);
+                    m_scrollFadeInAnim.Begin(m_scrollDownButton);
+                }
             }
             else
             {
-                m_footerFade.Visibility = Visibility.Visible;
+                if (m_headerFade.Opacity <= 0)
+                {
+                    m_scrollFadeInAnim.Begin(m_headerFade);
+                    m_scrollFadeInAnim.Begin(m_scrollUpButton);
+                }
+
+                if (m_footerFade.Opacity <= 0)
+                {
+                    m_scrollFadeInAnim.Begin(m_footerFade);
+                    m_scrollFadeInAnim.Begin(m_scrollDownButton);
+                }
             }
         }
 
@@ -327,13 +391,16 @@ namespace ExampleAppWPF
         }
         protected override void DisplayCustomPoiInfo(Object modelObject)
         {
+            m_headerFade.Opacity = 0;
+            m_scrollUpButton.Opacity = 0;
+
             ExampleApp.SearchResultModelCLI model = modelObject as ExampleApp.SearchResultModelCLI;
 
             EegeoResultModel eegeoResultModel = EegeoResultModel.FromResultModel(model);
             m_closing = false;
             m_webBrowserSelected = false;
             m_titlesGrid.RowDefinitions[1].Height = new GridLength(1, GridUnitType.Star);
-            m_poiImageContainer.Height = DEFAULT_WEB_VIEW_HEIGHT;
+            m_poiImageContainer.Height = m_imageContainerHeight;
             bool webViewUrlIsValid = false;
             m_poiImageContainer.Visibility = Visibility.Visible;
             m_poiImage.Visibility = Visibility.Collapsed;
@@ -359,16 +426,16 @@ namespace ExampleAppWPF
                         m_webBrowserOriginalHeight = eegeoResultModel.WebViewHeight;
                         m_poiImageContainer.Height = eegeoResultModel.WebViewHeight;
 
-                        if (eegeoResultModel.WebViewHeight > MAX_WEB_VIEW_HEIGHT)
+                        if (eegeoResultModel.WebViewHeight > m_maxWebViewHeight)
                         {
-                            m_webBrowserOriginalHeight = MAX_WEB_VIEW_HEIGHT;
-                            m_poiImageContainer.Height = MAX_WEB_VIEW_HEIGHT;
+                            m_webBrowserOriginalHeight = m_maxWebViewHeight;
+                            m_poiImageContainer.Height = m_maxWebViewHeight;
                         }
                     }
                     else
                     {
-                        m_webBrowserOriginalHeight = DEFAULT_WEB_VIEW_HEIGHT;
-                        m_poiImageContainer.Height = DEFAULT_WEB_VIEW_HEIGHT;
+                        m_webBrowserOriginalHeight = m_defaultWebViewHeight;
+                        m_poiImageContainer.Height = m_defaultWebViewHeight;
                     }
                 }
                 else
@@ -420,10 +487,12 @@ namespace ExampleAppWPF
             {
                 WebAddressText = eegeoResultModel.WebUrl;
                 m_webDetailsContainer.Visibility = Visibility.Visible;
+                m_qrCodeContainer.Visibility = Visibility.Visible;
             }
             else
             {
                 m_webDetailsContainer.Visibility = Visibility.Collapsed;
+                m_qrCodeContainer.Visibility = Visibility.Collapsed;
             }
 
             if (eegeoResultModel.Facebook != null)
@@ -528,6 +597,16 @@ namespace ExampleAppWPF
                 m_poiImageDivider.Visibility = Visibility.Visible;
             }
             m_previewImageSpinner.Visibility = Visibility.Collapsed;
+        }
+
+        public void HandleScrollUpButtonClicked(object sender, RoutedEventArgs e)
+        {
+            m_contentContainer.ScrollToVerticalOffset(m_contentContainer.VerticalOffset - 10);
+        }
+
+        public void HandleScrollDownButtonClicked(object sender, RoutedEventArgs e)
+        {
+            m_contentContainer.ScrollToVerticalOffset(m_contentContainer.VerticalOffset + 10);
         }
     }
 }
