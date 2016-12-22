@@ -47,7 +47,9 @@ namespace ExampleApp
                                 const bool interiorsAffectedByFlattening,
                                 const Menu::View::IMenuReactionModel& menuReaction,
                                 const float screenOversampleScale,
-                                const IWorldPinIconMapping& worldPinIconMapping);
+                                const IWorldPinIconMapping& worldPinIconMapping,
+                                Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& interiorMarkerPickingService,
+                                const bool useIndoorEntryMarkerLabels);
 
                 ~WorldPinsModule();
 

@@ -88,6 +88,7 @@
 #include "IRayCaster.h"
 #include "InteriorsEntityIdHighlightVisibilityController.h"
 #include "DeepLink.h"
+#include "YelpCategoryMapperUpdater.h"
 
 namespace ExampleApp
 {
@@ -164,6 +165,8 @@ namespace ExampleApp
         InteriorsExplorer::SdkModel::Highlights::IHighlightColorMapper* m_pHighlightColorMapper;
         InteriorsExplorer::SdkModel::Highlights::InteriorsEntityIdHighlightVisibilityController* m_pInteriorsEntityIdHighlightVisibilityController;
         
+        Search::Yelp::SdkModel::YelpCategoryMapperUpdater m_yelpCategoryMapperUpdater;
+        
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
         Net::SdkModel::ConnectivityChangedObserver* m_pConnectivityChangedObserver;
         
@@ -181,6 +184,7 @@ namespace ExampleApp
         
         const bool m_interiorsEnabled;
         const bool m_usingLegacyInteriorLabels;
+        const bool m_useIndoorEntryMarkerLabels;
 
         void CreateApplicationModelModules(Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                            const bool interiorsAffectedByFlattening);

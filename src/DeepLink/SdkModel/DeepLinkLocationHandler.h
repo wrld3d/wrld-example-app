@@ -13,7 +13,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class DeepLinkLocationHandler: public IDeepLinkHandler
+            class DeepLinkLocationHandler: public IDeepLinkHandler, private Eegeo::NonCopyable
             {
             public:
                 DeepLinkLocationHandler(CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController, Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory);
