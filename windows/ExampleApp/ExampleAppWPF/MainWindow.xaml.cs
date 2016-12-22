@@ -53,7 +53,7 @@ namespace ExampleAppWPF
             m_mapImage = new MapImage();
             Loaded += MainWindow_Loaded;
             Closed += MainWindow_Closed;
-
+            ContentRendered += (o, e) => OnContentRenderedAddVirtualKeyboardFocusHandlers<TextBox>(MainGrid.Children);
 
             m_frameTimer = Stopwatch.StartNew();
 
@@ -151,10 +151,8 @@ namespace ExampleAppWPF
             };
 
             Dispatcher.Hooks.DispatcherInactive += new EventHandler(DispatcherInactive);
-
-            OnLoadedAddVirtualKeyboardFocusHandlers<TextBox>(MainGrid.Children);
-
         }
+
         public void PopAllTouchEvents()
         {
             if (m_isTouchInputActive)
@@ -380,11 +378,11 @@ namespace ExampleAppWPF
             MainGrid.Children.Add(m_keyboard);
         }
 
-        private void OnLoadedAddVirtualKeyboardFocusHandlers<T>(UIElementCollection elements) where T : Control
+        private void OnContentRenderedAddVirtualKeyboardFocusHandlers<T>(UIElementCollection elements) where T : Control
         {
             foreach (FrameworkElement element in elements)
             {
-                element.Loaded += (o, e) => AddVirtualKeyboardFocusHandlers<T>(element);
+                AddVirtualKeyboardFocusHandlers<T>(element);
             }
         }
 
