@@ -8,6 +8,7 @@
 #include "StateMachine.h"
 #include "IStateMachineState.h"
 #include "AppCamera.h"
+#include "GlobalAppModeTransitionRules.h"
 
 namespace ExampleApp
 {
@@ -21,7 +22,7 @@ namespace ExampleApp
                 AppModeModel(ExampleAppMessaging::TMessageBus& messageBus);
                 ~AppModeModel();
 
-                void InitialiseStateMachine(const std::vector<Helpers::IStateMachineState*>& appStates, const AppModes::SdkModel::AppMode initialState);
+                void InitialiseStateMachine(const std::vector<Helpers::IStateMachineState*>& appStates, const AppModes::SdkModel::AppMode initialState, ExampleApp::AppModes::GlobalAppModeTransitionRules* pGlobalAppTransitionRules);
 
 				void DestroyStateMachine();
                 

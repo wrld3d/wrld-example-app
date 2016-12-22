@@ -5,6 +5,7 @@
 #include "Types.h"
 #include <vector>
 #include "IStateMachineState.h"
+#include "GlobalAppModeTransitionRules.h"
 
 namespace ExampleApp
 {
@@ -20,7 +21,7 @@ namespace ExampleApp
                     
                 }
                 
-                virtual const std::vector<Helpers::IStateMachineState*> CreateStateMachineStates() = 0;
+                virtual const std::vector<Helpers::IStateMachineState*> CreateStateMachineStates(GlobalAppModeTransitionRules& globalAppModeTransitionRules) = 0;
             };
         }
     }
