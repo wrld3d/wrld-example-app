@@ -69,7 +69,7 @@ namespace ExampleApp
                             return true;
                         }
                     }
-                    YelpCategoryModel defaultValue { m_defaultTag, false };
+                    YelpCategoryModel defaultValue { "", false };
                     out_bestMatchedYelpCategoryModel = defaultValue;
                     return false;
                 }
