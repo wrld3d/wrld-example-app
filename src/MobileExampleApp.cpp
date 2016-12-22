@@ -929,9 +929,9 @@ namespace ExampleApp
         openables.push_back(&MyPinCreationDetailsModule().GetObservableOpenableControl());
         openables.push_back(&MyPinDetailsModule().GetObservableOpenableControl());
         openables.push_back(&MyPinCreationModule().GetObservableOpenableControl());
-//      openables.push_back(&DirectionsMenuInitiationModule().GetObservableOpenableControl());
+        //openables.push_back(&DirectionsMenuInitiationModule().GetObservableOpenableControl());
         openables.push_back(&OptionsModule().GetObservableOpenableControl());
-//        openables.push_back(&DirectionsMenuModule().GetDirectionsMenuViewModel());
+        //openables.push_back(&DirectionsMenuModule().GetDirectionsMenuViewModel());
         return openables;
     }
 
@@ -947,7 +947,7 @@ namespace ExampleApp
         reactors.push_back(&DirectionsMenuInitiationModule().GetInitiationScreenControlViewModel());
         reactors.push_back(&WatermarkModule().GetScreenControlViewModel());
         reactors.push_back(&InteriorsExplorerModule().GetScreenControlViewModel());
-//        reactors.push_back(&DirectionsMenuModule().GetDirectionsMenuViewModel());
+        //reactors.push_back(&DirectionsMenuModule().GetDirectionsMenuViewModel());
         if(m_enableTours)
         {
             reactors.push_back(&ToursModule().GetToursExplorerViewModel());

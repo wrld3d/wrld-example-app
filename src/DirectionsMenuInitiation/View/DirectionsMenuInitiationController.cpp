@@ -43,7 +43,7 @@ namespace ExampleApp
             {
                 if(m_appModeAllowsOpen)
                 {
-                    DirectionsMenuStateChangedMessage message(ExampleApp::DirectionsMenuInitiation::Active);
+                    DirectionsMenuStateChangedMessage message(ExampleApp::DirectionsMenuInitiation::Active,false);
                     m_messageBus.Publish(message);
                 }
             }

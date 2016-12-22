@@ -115,7 +115,7 @@ namespace ExampleApp
                 if (m_isExitDirections)
                 {
                     m_isExitDirections = false;
-                    DirectionsMenuInitiation::DirectionsMenuStateChangedMessage message(ExampleApp::DirectionsMenuInitiation::Inactive);
+                    DirectionsMenuInitiation::DirectionsMenuStateChangedMessage message(ExampleApp::DirectionsMenuInitiation::Inactive,false);
                     m_messageBus.Publish(message);
                     
                     RefreshPresentation();
@@ -135,16 +135,14 @@ namespace ExampleApp
                     {
                         return;
                     }
-                    //m_locationService.GetLocation(currentLatLong);
-                     currentLatLong = Eegeo::Space::LatLong::FromDegrees(56.460127, -2.978369);
+                    m_locationService.GetLocation(currentLatLong);
                 }else if(endcurrentLatLong.GetLongitudeInDegrees() == 0 && endcurrentLatLong.GetLongitudeInDegrees() == 0)
                 {
                     if (!m_locationService.GetIsAuthorized())
                     {
                         return;
                     }
-                    //m_locationService.GetLocation(endcurrentLatLong);
-                    endcurrentLatLong = Eegeo::Space::LatLong::FromDegrees(56.460127, -2.978369);
+                    m_locationService.GetLocation(endcurrentLatLong);
                 }
             
                 const Eegeo::Space::LatLongAltitude startLoc = Eegeo::Space::LatLongAltitude::FromDegrees(currentLatLong.GetLatitudeInDegrees(), currentLatLong.GetLongitudeInDegrees(),0.0);
@@ -237,8 +235,27 @@ namespace ExampleApp
             {
                 if (message.GetDirectionsMenuStage() == DirectionsMenuInitiation::Active)
                 {
-                    DirectionsMenuController::ToggleSettingMenuButton();
-                    MenuController::OnViewClicked();
+                    if(message.GetCloseForWorldPin())
+                    {
+                        if(m_isDirectionMenuOpen)
+                        {
+                            DirectionsMenuController::ToggleSettingMenuButton();
+                            m_viewModel.RemoveFromScreen();
+
+                        }
+
+                    }
+                    else
+                    {
+                        DirectionsMenuController::ToggleSettingMenuButton();
+                        if (!m_viewModel.IsAddedToScreen())
+                        {
+                            m_viewModel.AddToScreen();
+                        }
+                        MenuController::OnViewClicked();
+
+                    }
+
                 }
             }
             

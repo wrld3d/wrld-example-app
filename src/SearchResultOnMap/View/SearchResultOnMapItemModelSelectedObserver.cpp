@@ -1,7 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "SearchResultOnMapItemModelSelectedObserver.h"
-
+#include "DirectionsMenuStateChangedMessage.h"
 namespace ExampleApp
 {
     namespace SearchResultOnMap
@@ -30,6 +30,8 @@ namespace ExampleApp
                 {
                     if (!m_searchResultPoiViewModel.IsOpen())
                     {
+                        DirectionsMenuInitiation::DirectionsMenuStateChangedMessage directionMenuStateChangeMessage(ExampleApp::DirectionsMenuInitiation::Active,true);
+                        m_messageBus.Publish(directionMenuStateChangeMessage);
                         m_searchResultPoiViewModel.Open(message.GetModel(), false);
                     }
                 }
