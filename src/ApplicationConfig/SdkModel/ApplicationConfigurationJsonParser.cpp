@@ -75,11 +75,11 @@ namespace ExampleApp
                         else if(document[key.c_str()].IsString())
                         {
                             std::string documentString = document[key.c_str()].GetString();
-                            if(std::strcmp(documentString.c_str(), "true") == 0)
+                            if(documentString == "true")
                             {
                                 return true;
                             }
-                            else if(std::strcmp(documentString.c_str(), "false") == 0)
+                            else if(documentString == "false")
                             {
                                 return false;
                             }

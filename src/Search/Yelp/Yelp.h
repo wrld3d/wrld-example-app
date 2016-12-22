@@ -17,6 +17,8 @@ namespace ExampleApp
                 class YelpBusinessJsonParser;
                 class YelpBusinessQueryFactory;
                 class YelpBusinessQuery;
+                class ISearchTagToYelpCategoryMapper;
+                class SearchTagToYelpCategoryMapper;
             }
         }
     }

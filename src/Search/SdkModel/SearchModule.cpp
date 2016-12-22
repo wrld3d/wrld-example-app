@@ -23,7 +23,9 @@ namespace ExampleApp
                                        ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                        Metrics::IMetricsService& metricsService,
                                        Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                       Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& interiorMetaDataRepo)
+                                       Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& interiorMetaDataRepo,
+                                       Search::Yelp::SdkModel::YelpCategoryMapperUpdater& yelpCategoryMapperUpdater
+                                       )
             {
                 m_pSearchResultRepository = Eegeo_NEW(SearchResultRepository)();
                 
@@ -38,7 +40,7 @@ namespace ExampleApp
                 
                 m_pTagSearchModule = TagSearch::SdkModel::TagSearchModule::Create(*m_pSearchQueryPerformer, messageBus, metricsService);
 
-                m_pInteriorMenuObserver = Eegeo_NEW(InteriorMenuObserver)(interiorSelectionModel, interiorMetaDataRepo, m_pTagSearchModule->GetTagSearchRepository());
+                m_pInteriorMenuObserver = Eegeo_NEW(InteriorMenuObserver)(interiorSelectionModel, interiorMetaDataRepo, m_pTagSearchModule->GetTagSearchRepository(), yelpCategoryMapperUpdater);
 
                 m_pSearchRefreshService = Eegeo_NEW(SearchRefreshService)(exteriorSearchService,
                                           *m_pSearchQueryPerformer,

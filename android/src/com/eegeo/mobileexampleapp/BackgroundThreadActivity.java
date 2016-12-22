@@ -66,6 +66,13 @@ public class BackgroundThreadActivity extends MainActivity
 
         setContentView(R.layout.activity_main);
 
+        Intent intent = getIntent();
+        if(intent !=null)
+        {
+            m_deepLinkUrlData = intent.getData();
+        }
+
+
         m_surfaceView = (EegeoSurfaceView)findViewById(R.id.surface);
         m_surfaceView.getHolder().addCallback(this);
         m_surfaceView.setActivity(this);
@@ -115,10 +122,12 @@ public class BackgroundThreadActivity extends MainActivity
                 if(m_surfaceHolder != null && m_surfaceHolder.getSurface() != null)
                 {
                     NativeJniCalls.setNativeSurface(m_surfaceHolder.getSurface());
-                }
 
-                if(m_deepLinkUrlData != null) {
-                    NativeJniCalls.handleUrlOpenEvent(m_deepLinkUrlData.getHost(), m_deepLinkUrlData.getPath());
+                    if(m_deepLinkUrlData != null)
+                    {
+                        NativeJniCalls.handleUrlOpenEvent(m_deepLinkUrlData.getHost(), m_deepLinkUrlData.getPath());
+                        m_deepLinkUrlData = null;
+                    }
                 }
             }
         });
@@ -128,8 +137,6 @@ public class BackgroundThreadActivity extends MainActivity
     protected void onPause()
     {
         super.onPause();
-
-        m_deepLinkUrlData = null;
 
         runOnNativeThread(new Runnable()
         {
@@ -217,6 +224,12 @@ public class BackgroundThreadActivity extends MainActivity
                 {
                     NativeJniCalls.setNativeSurface(m_surfaceHolder.getSurface());
                     m_threadedRunner.start();
+
+                    if(m_deepLinkUrlData != null)
+                    {
+                        NativeJniCalls.handleUrlOpenEvent(m_deepLinkUrlData.getHost(), m_deepLinkUrlData.getPath());
+                        m_deepLinkUrlData = null;
+                    }
                 }
             }
         });

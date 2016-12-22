@@ -12,6 +12,8 @@
 #include "IFileIO.h"
 #include "TagSearch.h"
 #include "SearchTags.h"
+#include "YelpCategoryMapperUpdater.h"
+#include "SearchTagToYelpCategoryMapper.h"
 
 namespace ExampleApp
 {
@@ -28,6 +30,7 @@ namespace ExampleApp
                 Yelp::SdkModel::YelpBusinessJsonParser* m_pYelpBusinessJsonParser;
                 Yelp::SdkModel::IYelpCategoryToTagMapper* m_pYelpCategoryMapper;
                 TagSearch::SdkModel::ITagIconMapper *m_pTagIconMapper;
+                Yelp::SdkModel::SearchTagToYelpCategoryMapper *m_pSearchTagToYelpCategoryMapper;
 
             public:
                 YelpSearchServiceModule(
@@ -39,11 +42,13 @@ namespace ExampleApp
 					const std::string& yelpConsumerSecret,
 					const std::string& yelpOAuthToken,
 					const std::string& yelpOAuthTokenSecret,
-                    Eegeo::Helpers::IFileIO& fileIO);
+                    Eegeo::Helpers::IFileIO& fileIO,
+                    Search::Yelp::SdkModel::YelpCategoryMapperUpdater& yelpCategoryMapperUpdater);
 
                 ~YelpSearchServiceModule();
 
                 Search::SdkModel::ISearchService& GetSearchService() const;
+                Yelp::SdkModel::IYelpCategoryToTagMapper& GetYelpCategoryMapper() const;
             };
         }
     }
