@@ -43,6 +43,7 @@
 #include "InteriorsExplorerUINotifyMessage.h"
 #include "TagSearchAddedMessage.h"
 #include "TagSearchRemovedMessage.h"
+#include "VirtualKeyboardStateChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -88,6 +89,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Surveys::StartSearchSurveyMessage>
             , public Eegeo::Messaging::CatalogBinding<Surveys::StartUxSurveyMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerUINotifyMessage>
+            , public Eegeo::Messaging::CatalogBinding<VirtualKeyboard::VirtualKeyboardStateChangedMessage>
             , private Eegeo::NonCopyable
         {
 

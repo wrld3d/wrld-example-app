@@ -39,9 +39,6 @@ namespace ExampleApp
                 class InteriorExplorerState : public Helpers::IStateMachineState
                 {
                 private:
-                    Eegeo::Helpers::TCallback0<InteriorExplorerState> m_tourStartedCallback;
-                    Tours::SdkModel::ITourService& m_tourService;
-                    Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_worldCameraController;
                     Eegeo::Resources::Interiors::InteriorsCameraController& m_interiorsCameraController;
                     Eegeo::UI::NativeUIFactories& m_nativeUIFactories;
                     Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<InteriorExplorerState> m_failAlertHandler;
@@ -51,31 +48,25 @@ namespace ExampleApp
                     
                     AppModes::SdkModel::IAppModeModel& m_appModeModel;
                     
-                    MyPinCreation::SdkModel::IMyPinCreationModel& m_myPinCreationModel;
                     InteriorsExplorer::SdkModel::InteriorExplorerUserInteractionModel& m_interiorExplorerUserInteractionModel;
                     
                     bool m_lastEntryAttemptSuccessful;
                     
                     void OnFailAlertBoxDismissed();
                     
-                    void OnTourStarted();
-                
                 public:
                     
                     InteriorExplorerState(AppCamera::SdkModel::IAppCameraController& cameraController,
                                           Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                           Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                           int interiorCameraHandle,
-                                          Tours::SdkModel::ITourService& tourService,
                                           Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
                                           InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
                                           InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                           InteriorsExplorer::SdkModel::InteriorExplorerUserInteractionModel& interiorExplorerUserInteractionModel,
                                           AppModes::SdkModel::IAppModeModel& appModeModel,
-                                          Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& worldCameraController,
                                           Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
-                                          Eegeo::UI::NativeUIFactories& nativeUIFactories,
-                                          MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel);
+                                          Eegeo::UI::NativeUIFactories& nativeUIFactories);
                     
                     ~InteriorExplorerState();
                     

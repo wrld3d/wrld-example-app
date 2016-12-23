@@ -131,11 +131,22 @@
     <Compile Include="Views\MyPinCreationDetails\MyPinCreationDetailsView.cs" />
     <Compile Include="Views\MyPinCreationDetails\MyPinDetailsView.cs" />
     <Compile Include="Views\ToggleButtonBase.cs" />
+    <Compile Include="Views\VirtualKeyboard\VirtualKeyboardView.cs" />
     <Compile Include="Views\Watermark\WatermarkView.cs" />
     <Compile Include="Views\WorldPinOnMap\WorldPinOnMapView.cs" />
     <Compile Include="Views\Menu\MenuView.cs" />
     <Compile Include="Views\SettingsMenu\SettingsMenuView.cs" />
     <Compile Include="Views\SearchMenu\SearchMenuView.cs" />
+    <Compile Include="VirtualKeyboard\Controls\QuertyKeyboard.cs" />
+    <Compile Include="VirtualKeyboard\Controls\QuertyKeyboardButton.cs" />
+    <Compile Include="VirtualKeyboard\Controls\VirtualKeyboardButton.cs" />
+    <Compile Include="VirtualKeyboard\Controls\VirtualKeyboardControlButton.cs" />
+    <Compile Include="VirtualKeyboard\Controls\VirtualKeyboardInputButton.cs" />
+    <Compile Include="VirtualKeyboard\Controls\VirtualKeyboardSpecialButton.cs" />
+    <Compile Include="VirtualKeyboard\Extensions\WeakEventHandling.cs" />
+    <Compile Include="VirtualKeyboard\Services\KeysEx.cs" />
+    <Compile Include="VirtualKeyboard\Services\NativeUser32.cs" />
+    <Compile Include="VirtualKeyboard\Services\VirtualKeyboardService.cs" />
     <Compile Include="WindowInteractionTouchHandler.cs" />
     <Compile Include="XamlHelpers.cs" />
     <Page Include="CheckBoxStyle.xaml">
@@ -260,6 +271,10 @@
     <Page Include="Views\SearchMenu\SearchMenuView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\VirtualKeyboard\VirtualKeyboard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Watermark\WatermarkView.xaml">
       <SubType>Designer</SubType>

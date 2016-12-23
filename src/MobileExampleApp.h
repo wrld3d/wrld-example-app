@@ -89,6 +89,8 @@
 #include "InteriorsEntityIdHighlightVisibilityController.h"
 #include "DeepLink.h"
 #include "YelpCategoryMapperUpdater.h"
+#include "IUserIdleService.h"
+#include "GlobalAppModeTransitionRules.h"
 
 namespace ExampleApp
 {
@@ -186,6 +188,9 @@ namespace ExampleApp
         const bool m_usingLegacyInteriorLabels;
         const bool m_useIndoorEntryMarkerLabels;
 
+        Eegeo::Input::IUserIdleService& m_userIdleService;
+        AppModes::GlobalAppModeTransitionRules* m_pGlobalAppModeTransitionRules;
+
         void CreateApplicationModelModules(Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                            const bool interiorsAffectedByFlattening);
 
@@ -233,7 +238,8 @@ namespace ExampleApp
                          ExampleApp::Net::SdkModel::INetworkCapabilities& networkCapabilities,
                          ExampleApp::Metrics::IMetricsService& metricsService,                         
                          Eegeo::IEegeoErrorHandler& errorHandler,
-                         Menu::View::IMenuReactionModel& menuReaction);
+                         Menu::View::IMenuReactionModel& menuReaction,
+                         Eegeo::Input::IUserIdleService& userIdleService);
 
         ~MobileExampleApp();
 

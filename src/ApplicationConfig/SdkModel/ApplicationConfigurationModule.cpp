@@ -45,6 +45,15 @@ namespace ExampleApp
                     const bool useLabels = true;
                     const bool useJapaneseFont = false;
                     std::string outdoorSearchMenuItems;
+
+                    const Eegeo::Space::LatLong fixedLocation(Eegeo::Space::LatLong(0.0, 0.0));
+                    const std::string fixedInteriorId("");
+                    const int fixedFloorIndex = 0;
+                    const double fixedOrientationDegrees = 180.0;
+
+                    const std::vector<Eegeo::Space::LatLongAltitude> attractModeTargetSplinePoints;
+                    const std::vector<Eegeo::Space::LatLongAltitude> attractModePositionSplinePoints;
+                    const long long attractModeTimeoutDisabled = 0;
                     
                     return ApplicationConfiguration ("Eegeo Example App",
                         emptyEegeoApiKey,
@@ -75,7 +84,14 @@ namespace ExampleApp
                         useLabels,
                         useJapaneseFont,
                         interiorTrackingInfo,
-                        outdoorSearchMenuItems);
+                        outdoorSearchMenuItems,
+                        fixedLocation,
+                        fixedInteriorId,
+                        fixedFloorIndex,
+                        fixedOrientationDegrees,
+                        attractModeTargetSplinePoints,
+                        attractModePositionSplinePoints,
+                        attractModeTimeoutDisabled);
                 }
             }
             
