@@ -64,6 +64,8 @@ namespace ExampleAppWPF
         private double m_defaultWebViewHeight;
         private double m_maxWebViewHeight;
 
+        private Visibility m_detailsDividerVisibility;
+
         public string PhoneText
         {
             get
@@ -250,6 +252,8 @@ namespace ExampleAppWPF
 
             m_maxWebViewHeight = (double)Application.Current.Resources["EegeoPOIViewDetailsWebViewMaxHeight"];
 
+            m_detailsDividerVisibility = (Visibility)Application.Current.Resources["EegeoPOIViewDetailsWebLinksVisibility"];
+
             var mainGrid = (Application.Current.MainWindow as MainWindow).MainGrid;
             var screenWidth = mainGrid.ActualWidth;
             m_webBrowserSelected = false;
@@ -330,9 +334,10 @@ namespace ExampleAppWPF
 
             m_contentContainerLastScrollY = newBrowserHeight;
 
+            bool canScroll = m_contentContainer.Height > m_contentContainer.MaxHeight;
             if (m_contentContainer.VerticalOffset == m_contentContainer.ScrollableHeight)
             {
-                if (m_headerFade.Opacity <= 0)
+                if (canScroll && m_headerFade.Opacity <= 0)
                 {
                     m_scrollFadeInAnim.Begin(m_headerFade);
                     m_scrollFadeInAnim.Begin(m_scrollUpButton);
@@ -352,13 +357,13 @@ namespace ExampleAppWPF
                     m_scrollFadeOutAnim.Begin(m_scrollUpButton);
                 }
 
-                if (m_footerFade.Opacity <= 0)
+                if (canScroll && m_footerFade.Opacity <= 0)
                 {
                     m_scrollFadeInAnim.Begin(m_footerFade);
                     m_scrollFadeInAnim.Begin(m_scrollDownButton);
                 }
             }
-            else
+            else if (canScroll)
             {
                 if (m_headerFade.Opacity <= 0)
                 {
@@ -393,6 +398,12 @@ namespace ExampleAppWPF
         {
             m_headerFade.Opacity = 0;
             m_scrollUpButton.Opacity = 0;
+
+            if (m_contentContainer.Height < m_contentContainer.MaxHeight)
+            {
+                m_footerFade.Opacity = 0;
+                m_scrollDownButton.Opacity = 0;
+            }
 
             ExampleApp.SearchResultModelCLI model = modelObject as ExampleApp.SearchResultModelCLI;
 
@@ -532,7 +543,7 @@ namespace ExampleAppWPF
                 eegeoResultModel.Phone == null &&
                 eegeoResultModel.WebUrl == null;
 
-            if (shouldCollapseDivider)
+            if (shouldCollapseDivider || m_detailsDividerVisibility == Visibility.Collapsed)
             {
                 m_detailsDivider.Visibility = Visibility.Collapsed;
             }
