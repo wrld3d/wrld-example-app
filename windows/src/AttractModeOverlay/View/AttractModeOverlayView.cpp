@@ -15,10 +15,15 @@ namespace ExampleApp
     {
         namespace View
         {
-            AttractModeOverlayView::AttractModeOverlayView(WindowsNativeState& nativeState, AppModes::SdkModel::IAppModeModel& appModeModel)
+            AttractModeOverlayView::AttractModeOverlayView(WindowsNativeState& nativeState,
+                                                           AppModes::SdkModel::IAppModeModel& appModeModel,
+                                                           ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
+                                                           ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel)
                 : m_nativeState(nativeState)
                 , m_appModeChangedCallback(this, &AttractModeOverlayView::OnAppModeChanged)
                 , m_appModeModel(appModeModel)
+                , m_searchMenuViewModel(searchMenuViewModel)
+                , m_settingsMenuViewModel(settingsMenuViewModel)
             {
                 m_uiViewClass = GetTypeFromEntryAssembly("ExampleAppWPF.AttractModeOverlayView");
                 ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid));
@@ -40,10 +45,14 @@ namespace ExampleApp
             {
                 if (m_appModeModel.GetAppMode() == AppModes::SdkModel::AppMode::AttractMode)
                 {
+                    m_searchMenuViewModel.RemoveFromScreen();
+                    m_settingsMenuViewModel.RemoveFromScreen();
                     mOnAttractModeStart();
                 }
                 else
                 {
+                    m_searchMenuViewModel.AddToScreen();
+                    m_settingsMenuViewModel.AddToScreen();
                     mOnAttractModeStop();
                 }
             }
