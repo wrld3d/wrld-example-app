@@ -334,7 +334,7 @@ namespace ExampleAppWPF
 
             m_contentContainerLastScrollY = newBrowserHeight;
 
-            bool canScroll = m_contentContainer.Height > m_contentContainer.MaxHeight;
+            bool canScroll = m_contentContainer.ExtentHeight > m_contentContainer.ActualHeight;
             if (m_contentContainer.VerticalOffset == m_contentContainer.ScrollableHeight)
             {
                 if (canScroll && m_headerFade.Opacity <= 0)
@@ -398,12 +398,8 @@ namespace ExampleAppWPF
         {
             m_headerFade.Opacity = 0;
             m_scrollUpButton.Opacity = 0;
-
-            if (m_contentContainer.Height < m_contentContainer.MaxHeight)
-            {
-                m_footerFade.Opacity = 0;
-                m_scrollDownButton.Opacity = 0;
-            }
+            m_footerFade.Opacity = 0;
+            m_scrollDownButton.Opacity = 0;
 
             ExampleApp.SearchResultModelCLI model = modelObject as ExampleApp.SearchResultModelCLI;
 
