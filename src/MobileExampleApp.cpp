@@ -1050,7 +1050,7 @@ namespace ExampleApp
                                                                                          mapModule.GetLabelsModule().GetLabelLayerFilterModel(),
                                                                                          mapModule.GetLabelsModule().GetLabelPicker(),
                                                                                          m_useIndoorEntryMarkerLabels,
-                                                                                         true);
+                                                                                         m_applicationConfiguration.UseLabels());
         
         // Switch to more stable occlusion mode.
         world.GetMapModule().GetLabelsModule().GetLabelOptionsModel().SetOcclusionMode(Eegeo::Labels::OcclusionResolverMode::Always);
