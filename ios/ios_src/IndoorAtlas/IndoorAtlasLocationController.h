@@ -38,8 +38,6 @@ namespace ExampleApp
             void OnFloorSelected();
             
             Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& m_interiorMetaDataRepository;
-            void ParseIndoorTrackingInfo(std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfoList,
-                                    const rapidjson::Value& indoorTrackedBuildingsArray);
         };
     }
 }

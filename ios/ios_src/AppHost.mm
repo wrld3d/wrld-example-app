@@ -191,9 +191,9 @@ AppHost::AppHost(
     m_pSenionLabLocationModule = Eegeo_NEW(ExampleApp::SenionLab::SenionLabLocationModule)(m_pApp->GetAppModeModel(),
                                                                                            interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                            interiorsPresentationModule.GetInteriorSelectionModel(),
-                                                                                           mapModule.GetEnvironmentFlatteningService(),
-                                                                                           applicationConfiguration,
-                                                                                           *m_piOSLocationService);
+                                                                                           mapModule.GetEnvironmentFlatteningService(),                                                                                                                                                                                                                                                                
+                                                                                           *m_piOSLocationService,
+                                                                                           mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository());
     
     m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(                                                                                                                               m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
                                                                                                                                interiorsPresentationModule.GetInteriorSelectionModel(),

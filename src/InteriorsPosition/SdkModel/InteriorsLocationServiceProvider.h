@@ -44,8 +44,6 @@ namespace ExampleApp
                 void OnInteriorExplorerExit();
                 Eegeo::Helpers::TCallback0<InteriorsLocationServiceProvider> m_interiorExplorerExitCallback;
                 Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& m_interiorMetaDataRepository;
-                void ParseIndoorTrackingInfo(std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfoList,
-                                             const rapidjson::Value& indoorTrackedBuildingsArray);
             };
         }
     }
