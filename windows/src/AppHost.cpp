@@ -94,6 +94,7 @@
 #include "WindowsApplicationConfigurationVersionProvider.h"
 #include "IUserIdleService.h"
 #include "CurrentLocationService.h"
+#include "AttractModeOverlayView.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
@@ -147,6 +148,7 @@ AppHost::AppHost(
 	, m_pTagSearchViewModule(NULL)
     , m_userIdleService(m_inputHandler.GetUserIdleService())
     , m_pVirtualKeyboardView(NULL)
+    , m_pAttractModeOverlayView(NULL)
 {
     ASSERT_NATIVE_THREAD
          
@@ -608,6 +610,11 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
 
+    if (m_pApp->GetApplicationConfiguration().IsAttractModeEnabled())
+    {
+        m_pAttractModeOverlayView = Eegeo_NEW(ExampleApp::AttractModeOverlay::View::AttractModeOverlayView)(m_nativeState, m_pApp->GetAppModeModel());
+    }
+
     if (IsInKioskMode())
     {
         m_pVirtualKeyboardView = Eegeo_NEW(ExampleApp::VirtualKeyboard::View::VirtualKeyboardView)(m_nativeState, m_messageBus);
@@ -635,6 +642,8 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
         if (m_createdUIModules)
         {
             Eegeo_DELETE m_pVirtualKeyboardView;
+
+            Eegeo_DELETE m_pAttractModeOverlayView;
 
             Eegeo_DELETE m_pMyPinDetailsViewModule;
 
