@@ -87,6 +87,8 @@
 #include "TagSearchViewModule.h"
 #include "InteriorsExplorerModel.h"
 #include "AppUrlDelegate.h"
+#include "InteriorMetaDataRepository.h"
+#include "InteriorMetaDataModule.h"
 
 #import "UIView+TouchExclusivity.h"
 
@@ -182,8 +184,8 @@ AppHost::AppHost(
                                                                                                  interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                  interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                  mapModule.GetEnvironmentFlatteningService(),
-                                                                                                 applicationConfiguration,
-                                                                                                 *m_piOSLocationService);
+                                                                                                 *m_piOSLocationService,
+                                                                                                 mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository());
     
     m_pSenionLabLocationModule = Eegeo_NEW(ExampleApp::SenionLab::SenionLabLocationModule)(m_pApp->GetAppModeModel(),
                                                                                            interiorsPresentationModule.GetInteriorInteractionModel(),
@@ -192,13 +194,13 @@ AppHost::AppHost(
                                                                                            applicationConfiguration,
                                                                                            *m_piOSLocationService);
     
-    m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(applicationConfiguration,
-                                                                                                                               m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
+    m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(                                                                                                                               m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
                                                                                                                                interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                                *m_pCurrentLocationService,
                                                                                                                                *m_piOSLocationService,
                                                                                                                                m_pIndoorAtlasLocationModule->GetLocationService(),
-                                                                                                                               m_pSenionLabLocationModule->GetLocationService());
+                                                                                                                               m_pSenionLabLocationModule->GetLocationService(),
+                                                                                                                               mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository());
     
     CreateApplicationViewModules(screenProperties);
 
