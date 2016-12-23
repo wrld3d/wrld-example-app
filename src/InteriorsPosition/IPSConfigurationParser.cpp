@@ -54,7 +54,12 @@ namespace ExampleApp
         
         void TryAndGetInteriorTrackingInfo(std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfoList, Eegeo::Resources::Interiors::InteriorId& interiorId, Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository)
         {
-            // if m_interiorMetaDataRepository.HASDATA
+            if(!interiorMetaDataRepository.Contains(interiorId))
+            {
+                // This will return when trying to enter building before web request can be proccessed.
+                // Will need a proper fix. Talk to Tim or Michael.
+                return;
+            }
             const Eegeo::Resources::Interiors::MetaData::InteriorMetaDataDto* dto = interiorMetaDataRepository.Get(interiorId);
             std::string user_data = "";
             user_data = dto->GetUserData();
