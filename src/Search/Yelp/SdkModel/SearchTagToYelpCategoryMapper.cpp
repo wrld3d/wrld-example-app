@@ -63,13 +63,13 @@ namespace ExampleApp
                     for(int i = 0; i < m_searchTagToYelpRootCategoryModel.size(); i++)
                     {
                         YelpCategoryModel value = m_searchTagToYelpRootCategoryModel[searchTag];
-                        if (!value.yelpCategoryFilter.empty())
+                        if (!value.yelpCategoryFilter.empty() || searchTag.empty())
                         {
                             out_bestMatchedYelpCategoryModel = value;
                             return true;
                         }
                     }
-                    YelpCategoryModel defaultValue { "", false };
+                    YelpCategoryModel defaultValue { m_defaultTag, false };
                     out_bestMatchedYelpCategoryModel = defaultValue;
                     return false;
                 }
