@@ -28,13 +28,15 @@ namespace ExampleApp
                                                                        interiorInteractionModel,
                                                                        messageBus);
             
-            m_pLocationManager = Eegeo_NEW(ExampleApp::IndoorAtlas::View::IndoorAtlasLocationManager)(m_pLocationService, nativeState, messageBus);
+            m_pLocationManager = Eegeo_NEW(ExampleApp::IndoorAtlas::View::IndoorAtlasLocationManager)(m_pLocationService,
+                                                                                                      nativeState,
+                                                                                                      messageBus);
 
-            m_pLocationController = Eegeo_NEW(IndoorAtlasLocationController)(*m_pLocationManager,
-                                                                             appModeModel,
+            m_pLocationController = Eegeo_NEW(IndoorAtlasLocationController)(appModeModel,
                                                                              interiorInteractionModel,
                                                                              interiorSelectionModel,
-																			 applicationConfiguration);
+																			 applicationConfiguration,
+																			 messageBus);
         }
         
         IndoorAtlasLocationModule::~IndoorAtlasLocationModule()

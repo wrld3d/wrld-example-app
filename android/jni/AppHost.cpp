@@ -223,26 +223,6 @@ AppHost::AppHost(
                  *this,
                  *m_pMenuReactionModel);
 
-    Eegeo::Modules::Map::MapModule& mapModule = m_pApp->World().GetMapModule();
-    Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
-
-    m_pIndoorAtlasLocationModule = Eegeo_NEW(ExampleApp::IndoorAtlas::IndoorAtlasLocationModule)(m_pApp->GetAppModeModel(),
-                                                                                                     interiorsPresentationModule.GetInteriorInteractionModel(),
-                                                                                                     interiorsPresentationModule.GetInteriorSelectionModel(),
-                                                                                                     mapModule.GetEnvironmentFlatteningService(),
-                                                                                                     applicationConfiguration,
-                                                                                                     *m_pAndroidLocationService,
-																									 m_nativeState,
-																									 m_messageBus);
-
-	m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(applicationConfiguration,
-																															   m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
-																															   interiorsPresentationModule.GetInteriorSelectionModel(),
-																															   *m_pCurrentLocationService,
-																															   *m_pAndroidLocationService,
-																															   m_pIndoorAtlasLocationModule->GetLocationService(),
-																															   m_pIndoorAtlasLocationModule->GetLocationService());
-
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(
             m_pApp->World().GetRenderingModule(),
             m_messageBus);
@@ -596,6 +576,33 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
+
+    std::set<std::string> customApplicationAssetDirectories;
+    customApplicationAssetDirectories.insert("SearchResultOnMap");
+    customApplicationAssetDirectories.insert("ApplicationConfigs");
+
+    //TODO: This is a placeholder code for the IPS configuration when not contained in the application configuration file. Indoor Atlas and Senion managers needs to be on UI thread.
+    const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration = LoadApplicationConfiguration(m_nativeState, customApplicationAssetDirectories);
+
+    Eegeo::Modules::Map::MapModule& mapModule = m_pApp->World().GetMapModule();
+    Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
+
+    m_pIndoorAtlasLocationModule = Eegeo_NEW(ExampleApp::IndoorAtlas::IndoorAtlasLocationModule)(m_pApp->GetAppModeModel(),
+                                                                                                     interiorsPresentationModule.GetInteriorInteractionModel(),
+                                                                                                     interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                                                     mapModule.GetEnvironmentFlatteningService(),
+                                                                                                     applicationConfiguration,
+                                                                                                     *m_pAndroidLocationService,
+                                                                                                     m_nativeState,
+                                                                                                     m_messageBus);
+
+    m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(applicationConfiguration,
+                                                                                                                               m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
+                                                                                                                               interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                                                                               *m_pCurrentLocationService,
+                                                                                                                               *m_pAndroidLocationService,
+                                                                                                                               m_pIndoorAtlasLocationModule->GetLocationService(),
+                                                                                                                               m_pIndoorAtlasLocationModule->GetLocationService());
 
     viewControllerUpdaterModel.AddUpdateableObject(m_pSettingsMenuViewModule->GetMenuController());
     viewControllerUpdaterModel.AddUpdateableObject(m_pSearchMenuViewModule->GetMenuController());

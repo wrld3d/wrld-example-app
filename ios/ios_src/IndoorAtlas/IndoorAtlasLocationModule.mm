@@ -29,11 +29,11 @@ namespace ExampleApp
             
             m_pLocationManager = [[IndoorAtlasLocationManager alloc] Init: m_pLocationService ndMessageBus: messageBus];
             
-            m_pLocationController = Eegeo_NEW(IndoorAtlasLocationController)(*[m_pLocationManager getInterop],
-                                                                             appModeModel,
+            m_pLocationController = Eegeo_NEW(IndoorAtlasLocationController)(appModeModel,
                                                                              interiorInteractionModel,
                                                                              interiorSelectionModel,
-                                                                             applicationConfiguration);
+                                                                             applicationConfiguration,
+                                                                             messageBus);
         }
         
         IndoorAtlasLocationModule::~IndoorAtlasLocationModule()

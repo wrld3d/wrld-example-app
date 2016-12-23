@@ -43,6 +43,9 @@
 #include "InteriorsExplorerUINotifyMessage.h"
 #include "TagSearchAddedMessage.h"
 #include "TagSearchRemovedMessage.h"
+#include "InteriorsPositionStartUpdatingLocationMessage.h"
+#include "InteriorsPositionStopUpdatingLocationMessage.h"
+#include "InteriorsPositionFloorChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -88,6 +91,9 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Surveys::StartSearchSurveyMessage>
             , public Eegeo::Messaging::CatalogBinding<Surveys::StartUxSurveyMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerUINotifyMessage>
+            , public Eegeo::Messaging::CatalogBinding<ExampleApp::InteriorsPosition::InteriorsPositionStartUpdatingLocationMessage>
+            , public Eegeo::Messaging::CatalogBinding<ExampleApp::InteriorsPosition::InteriorsPositionStopUpdatingLocationMessage>
+            , public Eegeo::Messaging::CatalogBinding<ExampleApp::InteriorsPosition::InteriorsPositionFloorChangedMessage>
             , private Eegeo::NonCopyable
         {
 

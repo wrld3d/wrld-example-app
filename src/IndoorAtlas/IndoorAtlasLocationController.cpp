@@ -3,6 +3,9 @@
 #include "IndoorAtlasLocationController.h"
 #include "InteriorSelectionModel.h"
 #include "InteriorInteractionModel.h"
+#include "InteriorsPositionStartUpdatingLocationMessage.h"
+#include "InteriorsPositionStopUpdatingLocationMessage.h"
+#include "InteriorsPositionFloorChangedMessage.h"
 #include <map>
 #include <string>
 
@@ -10,18 +13,18 @@ namespace ExampleApp
 {
     namespace IndoorAtlas
     {
-        IndoorAtlasLocationController::IndoorAtlasLocationController(View::IIndoorAtlasLocationManager& locationManager,
-                                                                     ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
+        IndoorAtlasLocationController::IndoorAtlasLocationController(ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                                                      Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                      const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                                     const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration)
-        : m_locationManager(locationManager)
-        , m_appModeModel(appModeModel)
+                                                                     const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
+                                                                     ExampleApp::ExampleAppMessaging::TMessageBus& messageBus)
+        : m_appModeModel(appModeModel)
         , m_interiorInteractionModel(interiorInteractionModel)
         , m_interiorSelectionModel(interiorSelectionModel)
         , m_appModeChangedCallback(this, &IndoorAtlasLocationController::OnAppModeChanged)
         , m_floorSelectedCallback(this, &IndoorAtlasLocationController::OnFloorSelected)
         , m_trackingInfoMap(applicationConfiguration.InteriorTrackingInfo())
+        , m_messageBus(messageBus)
         {
             m_appModeModel.RegisterAppModeChangedCallback(m_appModeChangedCallback);
             m_interiorInteractionModel.RegisterInteractionStateChangedCallback(m_floorSelectedCallback);
@@ -37,7 +40,6 @@ namespace ExampleApp
         {
         	Eegeo::Resources::Interiors::InteriorId interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
             int currentFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
-            m_locationManager.StopUpdatingLocation();
 
             if(m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode)
             {
@@ -50,19 +52,24 @@ namespace ExampleApp
                         std::string apiKey = trackingInfo.GetConfig().GetApiKey();
                         std::string apiSecret = trackingInfo.GetConfig().GetApiSecret();
                         std::map<int, std::string> floorMap = trackingInfo.GetFloorIndexMap();
-                        m_locationManager.StartUpdatingLocation(apiKey,
-                                                                apiSecret,
-                                                                floorMap,
-                                                                currentFloorIndex);
+                        ExampleApp::InteriorsPosition::InteriorsPositionStartUpdatingLocationMessage message(apiKey,
+                                                                                                             apiSecret,
+                                                                                                             floorMap,
+                                                                                                             currentFloorIndex);
+                        m_messageBus.Publish(message);
                     }
                 }
+            }
+            else
+            {
+                m_messageBus.Publish(ExampleApp::InteriorsPosition::InteriorsPositionStopUpdatingLocationMessage());
             }
         }
         
         void IndoorAtlasLocationController::OnFloorSelected()
         {
             int currentFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
-            m_locationManager.SetFloorIndex(currentFloorIndex);
+            m_messageBus.Publish(ExampleApp::InteriorsPosition::InteriorsPositionFloorChangedMessage(currentFloorIndex));
         }
     }
 }

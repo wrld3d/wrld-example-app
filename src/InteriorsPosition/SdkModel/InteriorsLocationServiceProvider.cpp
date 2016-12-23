@@ -30,34 +30,34 @@ namespace ExampleApp
                 m_interiorsExplorerModel.InsertInteriorExplorerEnteredCallback(m_interiorExplorerEnteredCallback);
                 m_interiorsExplorerModel.InsertInteriorExplorerExitedCallback(m_interiorExplorerExitCallback);
             }
-            
+
             InteriorsLocationServiceProvider::~InteriorsLocationServiceProvider()
             {
                 m_interiorsExplorerModel.RemoveInteriorExplorerEnteredCallback(m_interiorExplorerEnteredCallback);
                 m_interiorsExplorerModel.RemoveInteriorExplorerExitedCallback(m_interiorExplorerExitCallback);
             }
-            
+
             void InteriorsLocationServiceProvider::OnInteriorExplorerEntered()
             {
                 Eegeo::Resources::Interiors::InteriorId interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
                 const std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>::const_iterator it = m_trackingInfoMap.find(interiorId.Value());
-                if(it != m_trackingInfoMap.end())
+                if (it != m_trackingInfoMap.end())
                 {
                     const ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo& trackingInfo = it->second;
 
-                    if(trackingInfo.GetType() == "IndoorAtlas")
+                    if (trackingInfo.GetType() == "IndoorAtlas")
                     {
                         Eegeo_TTY("using IndoorAtlas location service");
                         m_currentLocationService.SetLocationService(m_indoorAtlasLocationService);
                     }
-                    else if(trackingInfo.GetType() == "Senion")
+                    else if (trackingInfo.GetType() == "Senion")
                     {
                         Eegeo_TTY("using SenionLab location service");
                         m_currentLocationService.SetLocationService(m_senionLabLocationService);
                     }
                 }
             }
-            
+
             void InteriorsLocationServiceProvider::OnInteriorExplorerExit()
             {
                 Eegeo_TTY("using default location service");

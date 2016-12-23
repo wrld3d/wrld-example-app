@@ -10,20 +10,32 @@ namespace ExampleApp
     {
         namespace View
         {
-            IndoorAtlasLocationManagerInterop::IndoorAtlasLocationManagerInterop(IndoorAtlasLocationManager* indoorAtlasLocationManager,
+            IndoorAtlasLocationManagerInterop::IndoorAtlasLocationManagerInterop(IndoorAtlasLocationManager* pIndoorAtlasLocationManager,
                                                                                  ExampleApp::IndoorAtlas::IndoorAtlasLocationService* pIndoorAtlasLocationService,
                                                                                  ExampleApp::ExampleAppMessaging::TMessageBus& messageBus)
-            : m_pIndoorAtlasLocationManager(indoorAtlasLocationManager)
+            : m_pIndoorAtlasLocationManager(pIndoorAtlasLocationManager)
             , m_pIndoorAtlasLocationService(pIndoorAtlasLocationService)
             , m_messageBus(messageBus)
+            , m_startUpdatingLocationCallback(this, &IndoorAtlasLocationManagerInterop::OnStartUpdatingLocation)
+            , m_stopUpdatingLocationCallback(this, &IndoorAtlasLocationManagerInterop::OnStopUpdatingLocation)
+            , m_floorIndexChangedCallback(this, &IndoorAtlasLocationManagerInterop::OnFloorIndexChanged)
             {
-            
+                m_messageBus.SubscribeUi(m_startUpdatingLocationCallback);
+                m_messageBus.SubscribeUi(m_stopUpdatingLocationCallback);
+                m_messageBus.SubscribeUi(m_floorIndexChangedCallback);
             }
             
-            void IndoorAtlasLocationManagerInterop::StartUpdatingLocation(std::string apiKey,
-                                                                          std::string apiSecret,
-                                                                          std::map<int, std::string> floorMap,
-                                                                          int floorIndex)
+            IndoorAtlasLocationManagerInterop::~IndoorAtlasLocationManagerInterop()
+            {
+                m_messageBus.UnsubscribeUi(m_startUpdatingLocationCallback);
+                m_messageBus.UnsubscribeUi(m_stopUpdatingLocationCallback);
+                m_messageBus.UnsubscribeUi(m_floorIndexChangedCallback);
+            }
+            
+            void IndoorAtlasLocationManagerInterop::StartUpdatingLocation(const std::string apiKey,
+                                                                          const std::string apiSecret,
+                                                                          const std::map<int, std::string> floorMap,
+                                                                          const int floorIndex)
             {
                 [m_pIndoorAtlasLocationManager StartUpdatingLocation:[NSString stringWithFormat:@"%s", apiKey.c_str()] apiSecret:[NSString stringWithFormat:@"%s",apiSecret.c_str()]  floorMap:floorMap floorIndex:floorIndex];
             }
@@ -45,8 +57,25 @@ namespace ExampleApp
             
             void IndoorAtlasLocationManagerInterop::OnLocationChanged(Eegeo::Space::LatLong& location)
             {
-                m_messageBus.Publish(ExampleApp::IndoorLocation::IndoorLocationChangedMessage(location));
-                m_messageBus.FlushToNative();
+                m_messageBus.Publish(ExampleApp::InteriorsPosition::InteriorsPositionLocationChangedMessage(location));
+            }
+            
+            void IndoorAtlasLocationManagerInterop::OnStartUpdatingLocation(const ExampleApp::InteriorsPosition::InteriorsPositionStartUpdatingLocationMessage& startUpdatingLocationMessage)
+            {
+                StartUpdatingLocation(startUpdatingLocationMessage.GetApiKey(),
+                                      startUpdatingLocationMessage.GetApiSecret(),
+                                      startUpdatingLocationMessage.GetFloorMap(),
+                                      startUpdatingLocationMessage.GetCurrentFloorIndex());
+            }
+            
+            void IndoorAtlasLocationManagerInterop::OnStopUpdatingLocation(const ExampleApp::InteriorsPosition::InteriorsPositionStopUpdatingLocationMessage& stopUpdatingLocationMessage)
+            {
+                StopUpdatingLocation();
+            }
+            
+            void IndoorAtlasLocationManagerInterop::OnFloorIndexChanged(const ExampleApp::InteriorsPosition::InteriorsPositionFloorChangedMessage& floorChangedMessage)
+            {
+                SetFloorIndex(floorChangedMessage.GetFloorIndex());
             }
         }
     }
