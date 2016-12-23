@@ -9,6 +9,7 @@
 #include "BidirectionalBus.h"
 #include "IMetricsService.h"
 #include "AppModeChangedMessage.h"
+#include "VirtualKeyboard.h"
 
 namespace ExampleApp
 {
@@ -41,9 +42,12 @@ namespace ExampleApp
                 
                 Eegeo::Helpers::TCallback2<MyPinCreationInitiationController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
                 Eegeo::Helpers::TCallback0<MyPinCreationInitiationController> m_selectedCallback;
+                Eegeo::Helpers::TCallback1<MyPinCreationInitiationController, const VirtualKeyboard::VirtualKeyboardStateChangedMessage&> m_virtualKeyboardStateChangedMessageHandler;
                 
                 Eegeo::Helpers::TCallback1<MyPinCreationInitiationController, const AppModes::AppModeChangedMessage&> m_appModeChangedHandler;
                 void OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message);
+
+                void OnVirtualKeyboardStateChangedMessage(const VirtualKeyboard::VirtualKeyboardStateChangedMessage& message);
                 
                 bool m_appModeAllowsOpen;
             };

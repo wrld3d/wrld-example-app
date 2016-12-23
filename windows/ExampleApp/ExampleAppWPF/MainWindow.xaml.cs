@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Windows.Navigation;
 using System.Windows.Threading;
 using System.Collections.Generic;
-using System.Linq;
+using System.Windows.Controls;
 
 namespace ExampleAppWPF
 {
@@ -49,7 +49,6 @@ namespace ExampleAppWPF
             m_mapImage = new MapImage();
             Loaded += MainWindow_Loaded;
             Closed += MainWindow_Closed;
-
 
             m_frameTimer = Stopwatch.StartNew();
 
@@ -150,8 +149,8 @@ namespace ExampleAppWPF
             };
 
             Dispatcher.Hooks.DispatcherInactive += new EventHandler(DispatcherInactive);
-
         }
+
         public void PopAllTouchEvents()
         {
             if (m_isTouchInputActive)

@@ -6,6 +6,8 @@ namespace ExampleApp
 {
     namespace AppModes
     {
+        class GlobalAppModeTransitionRules;
+
         namespace SdkModel
         {
             class AppModeModel;
