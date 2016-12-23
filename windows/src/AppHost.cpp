@@ -610,17 +610,18 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
 
+    if (IsInKioskMode())
+    {
+        m_pVirtualKeyboardView = Eegeo_NEW(ExampleApp::VirtualKeyboard::View::VirtualKeyboardView)(m_nativeState, m_messageBus);
+    }
+
     if (m_pApp->GetApplicationConfiguration().IsAttractModeEnabled())
     {
         m_pAttractModeOverlayView = Eegeo_NEW(ExampleApp::AttractModeOverlay::View::AttractModeOverlayView)(m_nativeState,
                                                                                                             m_pApp->GetAppModeModel(),
                                                                                                             app.SettingsMenuModule().GetSettingsMenuViewModel(),
-                                                                                                            app.SearchMenuModule().GetSearchMenuViewModel());
-    }
-
-    if (IsInKioskMode())
-    {
-        m_pVirtualKeyboardView = Eegeo_NEW(ExampleApp::VirtualKeyboard::View::VirtualKeyboardView)(m_nativeState, m_messageBus);
+                                                                                                            app.SearchMenuModule().GetSearchMenuViewModel(),
+                                                                                                            m_pVirtualKeyboardView);
     }
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
@@ -644,9 +645,9 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
 
         if (m_createdUIModules)
         {
-            Eegeo_DELETE m_pVirtualKeyboardView;
-
             Eegeo_DELETE m_pAttractModeOverlayView;
+
+            Eegeo_DELETE m_pVirtualKeyboardView;
 
             Eegeo_DELETE m_pMyPinDetailsViewModule;
 

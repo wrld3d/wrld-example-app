@@ -4,6 +4,7 @@
 
 #include "IMenuViewModel.h"
 #include "ReflectionHelpers.h"
+#include "VirtualKeyboardView.h"
 #include "WindowsNativeState.h"
 
 namespace ExampleApp
@@ -18,7 +19,8 @@ namespace ExampleApp
                 AttractModeOverlayView(WindowsNativeState& nativeState,
                                        AppModes::SdkModel::IAppModeModel& appModeModel,
                                        ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
-                                       ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel);
+                                       ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
+                                       ExampleApp::VirtualKeyboard::View::VirtualKeyboardView* pVirtualKeyboard);
                 ~AttractModeOverlayView();
 
             private:
@@ -33,6 +35,8 @@ namespace ExampleApp
 
                 ExampleApp::Menu::View::IMenuViewModel& m_searchMenuViewModel;
                 ExampleApp::Menu::View::IMenuViewModel& m_settingsMenuViewModel;
+
+                ExampleApp::VirtualKeyboard::View::VirtualKeyboardView* m_pVirtualKeyboard;
 
                 WindowsNativeState& m_nativeState;
 
