@@ -59,6 +59,7 @@
 #include "IndoorAtlasLocationModule.h"
 #include "CurrentLocationService.h"
 #include "InteriorsLocationServiceProvider.h"
+#include "AlwaysActiveUserIdleService.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
@@ -161,6 +162,8 @@ private:
     ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus m_sdkDomainEventBus;
     Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<AppHost> m_failAlertHandler;
     Eegeo::Helpers::TCallback1<AppHost, const ExampleApp::UserInteraction::UserInteractionEnabledChangedMessage&> m_userInteractionEnabledChangedHandler;
+
+    Eegeo::Input::AlwaysActiveUserIdleService m_userIdleService;
 
     void DispatchRevealUiMessageToUiThreadFromNativeThread();
     void DispatchUiCreatedMessageToNativeThreadFromUiThread();

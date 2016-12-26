@@ -48,6 +48,8 @@ namespace ExampleApp
 
             void SetFullscreen(bool fullscreen);
 
+            bool IsInKioskMode();
+
         private:
 
             int ScaledScreenCoord(int value);

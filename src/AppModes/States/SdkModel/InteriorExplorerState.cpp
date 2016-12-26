@@ -33,25 +33,18 @@ namespace ExampleApp
                                                              Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                              Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                              int interiorCameraHandle,
-                                                             Tours::SdkModel::ITourService& tourService,
                                                              Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
                                                              InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
                                                              InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                                              InteriorsExplorer::SdkModel::InteriorExplorerUserInteractionModel& interiorExplorerUserInteractionModel,
                                                              AppModes::SdkModel::IAppModeModel& appModeModel,
-                                                             Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& worldCameraController,
                                                              Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
-                                                             Eegeo::UI::NativeUIFactories& nativeUIFactories,
-                                                             MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel)
-                : m_tourService(tourService)
-                , m_tourStartedCallback(this, &InteriorExplorerState::OnTourStarted)
-                , m_interiorExplorerUserInteractionModel(interiorExplorerUserInteractionModel)
+                                                             Eegeo::UI::NativeUIFactories& nativeUIFactories)
+                : m_interiorExplorerUserInteractionModel(interiorExplorerUserInteractionModel)
                 , m_appModeModel(appModeModel)
-                , m_worldCameraController(worldCameraController)
                 , m_interiorsCameraController(interiorsCameraController)
                 , m_nativeUIFactories(nativeUIFactories)
                 , m_failAlertHandler(this, &InteriorExplorerState::OnFailAlertBoxDismissed)
-                , m_myPinCreationModel(myPinCreationModel)
                 , m_lastEntryAttemptSuccessful(false)
                 {
                     
@@ -100,8 +93,6 @@ namespace ExampleApp
                 void InteriorExplorerState::Enter(int previousState)
                 {
                     m_interiorExplorerUserInteractionModel.SetEnabled(false);
-                    m_tourService.RegisterTourStartedCallback(m_tourStartedCallback);
-                    m_myPinCreationModel.SetCreationStage(MyPinCreation::Inactive);
                     m_interiorsCameraController.SetTilt(0.0f);
                     m_pSubStateMachine->StartStateMachine(0);
                 }
@@ -116,19 +107,11 @@ namespace ExampleApp
                 
                 void InteriorExplorerState::Exit(int nextState)
                 {
-                    Eegeo::Space::LatLongAltitude latLong = Eegeo::Space::LatLongAltitude::FromECEF(m_interiorsCameraController.GetCameraState().InterestPointEcef());
-                    const float interestDistance = 500.0f;
-                    m_worldCameraController.SetView(latLong.GetLatitudeInDegrees(), latLong.GetLongitudeInDegrees(),
-                                                    m_interiorsCameraController.GetHeadingDegrees(),
-                                                    interestDistance);
-                    m_worldCameraController.GetGlobeCameraController().ApplyTilt(0.0f);
-                    
                     if(m_pSubStateMachine->GetCurrentStateIndex() >= 0)
                     {
                         m_pSubStateMachine->StopStateMachine();
                     }
                     
-                    m_tourService.UnregisterTourStartedCallback(m_tourStartedCallback);
                     m_interiorExplorerUserInteractionModel.SetEnabled(true);
                 }
                 
@@ -150,11 +133,6 @@ namespace ExampleApp
                 
                 void InteriorExplorerState::OnFailAlertBoxDismissed()
                 {
-                }
-                
-                void InteriorExplorerState::OnTourStarted()
-                {
-                    m_appModeModel.SetAppMode(ExampleApp::AppModes::SdkModel::TourMode);
                 }
                 
                 void InteriorExplorerState::SetLastEntryAttemptSuccessful(bool successful)

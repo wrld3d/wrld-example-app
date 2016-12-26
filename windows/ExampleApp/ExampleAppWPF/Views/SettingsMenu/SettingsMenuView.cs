@@ -62,14 +62,28 @@ namespace ExampleAppWPF
 
             m_menuIconGrid = (Grid)GetTemplateChild("SettingsIconGrid");
 
-            m_openSearchIconAnim = ((Storyboard)Template.Resources["OpenSearchViewIcon"]).Clone();
-            m_closeMenuIconAnim = ((Storyboard)Template.Resources["CloseSearchViewIcon"]).Clone();
+            string settingsAnimString = "SettingsAnim";
 
-            m_openSearchContainerAnim = ((Storyboard)Template.Resources["OpenSearchContainer"]).Clone();
-            m_closeMenuContainerAnim = ((Storyboard)Template.Resources["CloseSearchContainer"]).Clone();
+            string openMenuViewIconString = "OpenMenuViewIcon";
+            m_openMenuIconAnim = ((Storyboard)Template.Resources[openMenuViewIconString]).Clone();
+            XamlHelpers.UpdateThicknessAnimationMarginValue(m_openMenuIconAnim, settingsAnimString + openMenuViewIconString);
+            string closeMenuViewIconString = "CloseMenuViewIcon";
+            m_closeMenuIconAnim = ((Storyboard)Template.Resources[closeMenuViewIconString]).Clone();
+            XamlHelpers.UpdateThicknessAnimationMarginValue(m_closeMenuIconAnim, settingsAnimString + closeMenuViewIconString);
 
-            m_openBackgroundRect = ((Storyboard)Template.Resources["OpenBackgroundRect"]).Clone();
-            m_closeBackgroundRect = ((Storyboard)Template.Resources["CloseBackgroundRect"]).Clone();
+            string openMenuContainerString = "OpenMenuContainer";
+            m_openMenuContainerAnim = ((Storyboard)Template.Resources[openMenuContainerString]).Clone();
+            XamlHelpers.UpdateThicknessAnimationMarginValue(m_openMenuContainerAnim, settingsAnimString + openMenuContainerString);
+            string closeMenuContainerString = "CloseMenuContainer";
+            m_closeMenuContainerAnim = ((Storyboard)Template.Resources[closeMenuContainerString]).Clone();
+            XamlHelpers.UpdateThicknessAnimationMarginValue(m_closeMenuContainerAnim, settingsAnimString + closeMenuContainerString);
+
+            string openBackgroundRectString = "OpenBackgroundRect";
+            m_openBackgroundRect = ((Storyboard)Template.Resources[openBackgroundRectString]).Clone();
+            XamlHelpers.UpdateThicknessAnimationMarginValue(m_openBackgroundRect, settingsAnimString + openBackgroundRectString);
+            string closeBackgroundRectString = "CloseBackgroundRect";
+            m_closeBackgroundRect = ((Storyboard)Template.Resources[closeBackgroundRectString]).Clone();
+            XamlHelpers.UpdateThicknessAnimationMarginValue(m_closeBackgroundRect, settingsAnimString + closeBackgroundRectString);
 
             m_adapter = new MenuListAdapter(false, m_list,slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SettingsMenuItemPanel");
 

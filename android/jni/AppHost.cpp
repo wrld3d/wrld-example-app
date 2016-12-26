@@ -90,6 +90,8 @@
 #include "AndroidMenuReactionModel.h"
 #include "ApplicationConfigurationModule.h"
 #include "AndroidImageNameHelper.h"
+#include "InteriorMetaDataRepository.h"
+#include "InteriorMetaDataModule.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -221,7 +223,8 @@ AppHost::AppHost(
                  *m_pNetworkCapabilities,
                  *m_pAndroidFlurryMetricsService,
                  *this,
-                 *m_pMenuReactionModel);
+                 *m_pMenuReactionModel,
+                 m_userIdleService);
 
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(
             m_pApp->World().GetRenderingModule(),
@@ -577,13 +580,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
 
-    std::set<std::string> customApplicationAssetDirectories;
-    customApplicationAssetDirectories.insert("SearchResultOnMap");
-    customApplicationAssetDirectories.insert("ApplicationConfigs");
-
-    //TODO: This is a placeholder code for the IPS configuration when not contained in the application configuration file. Indoor Atlas and Senion managers needs to be on UI thread.
-    const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration = LoadApplicationConfiguration(m_nativeState, customApplicationAssetDirectories);
-
     Eegeo::Modules::Map::MapModule& mapModule = m_pApp->World().GetMapModule();
     Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
 
@@ -591,18 +587,18 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                                                                                      interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                      interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                      mapModule.GetEnvironmentFlatteningService(),
-                                                                                                     applicationConfiguration,
                                                                                                      *m_pAndroidLocationService,
+                                                                                                     mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
                                                                                                      m_nativeState,
                                                                                                      m_messageBus);
 
-    m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(applicationConfiguration,
-                                                                                                                               m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
+    m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
                                                                                                                                interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                                *m_pCurrentLocationService,
                                                                                                                                *m_pAndroidLocationService,
                                                                                                                                m_pIndoorAtlasLocationModule->GetLocationService(),
-                                                                                                                               m_pIndoorAtlasLocationModule->GetLocationService());
+                                                                                                                               m_pIndoorAtlasLocationModule->GetLocationService(),
+                                                                                                                               mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository());
 
     viewControllerUpdaterModel.AddUpdateableObject(m_pSettingsMenuViewModule->GetMenuController());
     viewControllerUpdaterModel.AddUpdateableObject(m_pSearchMenuViewModule->GetMenuController());

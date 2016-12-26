@@ -70,10 +70,10 @@ namespace ExampleApp
                     
                     ExecuteQueryPerformedCallbacks(searchQuery);
                     
-                    YelpCategoryModel categoryFilter { "", true };
+                    YelpCategoryModel categoryFilter { "", false };
                     m_searchTagToYelpCategoryMap.TryGetBestYelpCategoryForSearchTag(searchQuery.Query(), categoryFilter);
                     const bool noWifi = m_networkCapabilities.StreamOverWifiOnly() && !m_networkCapabilities.ConnectedToWifi();
-                    if(noWifi || categoryFilter.performYelpSearch == false)
+                    if(noWifi || categoryFilter.skipYelpSearch == true)
                     {
                         ExecutQueryResponseReceivedCallbacks(searchQuery, std::vector<Search::SdkModel::SearchResultModel>());
                         return;

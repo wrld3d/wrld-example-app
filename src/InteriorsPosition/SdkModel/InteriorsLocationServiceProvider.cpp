@@ -2,6 +2,7 @@
 
 #include "InteriorsLocationServiceProvider.h"
 #include "InteriorSelectionModel.h"
+#include "IPSConfigurationParser.h"
 
 namespace ExampleApp
 {
@@ -9,15 +10,14 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            InteriorsLocationServiceProvider::InteriorsLocationServiceProvider(const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
-                                                                               InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
+            InteriorsLocationServiceProvider::InteriorsLocationServiceProvider(InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                                                                Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                                Eegeo::Helpers::CurrentLocationService::CurrentLocationService& currentLocationService,
                                                                                Eegeo::Location::ILocationService& defaultLocationService,
                                                                                Eegeo::Location::ILocationService& indoorAtlasLocationService,
-                                                                               Eegeo::Location::ILocationService& senionLabLocationService)
-            : m_applicationConfiguration(applicationConfiguration)
-            , m_currentLocationService(currentLocationService)
+                                                                               Eegeo::Location::ILocationService& senionLabLocationService,
+                                                                               Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository)
+            : m_currentLocationService(currentLocationService)
             , m_defaultLocationService(defaultLocationService)
             , m_indoorAtlasLocationService(indoorAtlasLocationService)
             , m_senionLabLocationService(senionLabLocationService)
@@ -25,7 +25,7 @@ namespace ExampleApp
             , m_interiorSelectionModel(interiorSelectionModel)
             , m_interiorExplorerEnteredCallback(this, &InteriorsLocationServiceProvider::OnInteriorExplorerEntered)
             , m_interiorExplorerExitCallback(this, &InteriorsLocationServiceProvider::OnInteriorExplorerExit)
-            , m_trackingInfoMap(m_applicationConfiguration.InteriorTrackingInfo())
+            , m_interiorMetaDataRepository(interiorMetaDataRepository)
             {
                 m_interiorsExplorerModel.InsertInteriorExplorerEnteredCallback(m_interiorExplorerEnteredCallback);
                 m_interiorsExplorerModel.InsertInteriorExplorerExitedCallback(m_interiorExplorerExitCallback);
@@ -40,11 +40,23 @@ namespace ExampleApp
             void InteriorsLocationServiceProvider::OnInteriorExplorerEntered()
             {
                 Eegeo::Resources::Interiors::InteriorId interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
-                const std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>::const_iterator it = m_trackingInfoMap.find(interiorId.Value());
-                if (it != m_trackingInfoMap.end())
+                std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo> interiorTrackingInfoList;
+                
+                if(interiorId.IsValid())
+                {
+                    InteriorsPosition::TryAndGetInteriorTrackingInfo(interiorTrackingInfoList, interiorId, m_interiorMetaDataRepository);
+                }
+                else
+                {
+                    return;
+                }
+                
+                const std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& trackingInfoMap = interiorTrackingInfoList;
+                const std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>::const_iterator it = trackingInfoMap.find(interiorId.Value());
+                
+                if(it != trackingInfoMap.end())
                 {
                     const ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo& trackingInfo = it->second;
-
                     if (trackingInfo.GetType() == "IndoorAtlas")
                     {
                         Eegeo_TTY("using IndoorAtlas location service");

@@ -46,6 +46,7 @@
 #include "InteriorsPositionStartUpdatingLocationMessage.h"
 #include "InteriorsPositionStopUpdatingLocationMessage.h"
 #include "InteriorsPositionFloorChangedMessage.h"
+#include "VirtualKeyboardStateChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -94,6 +95,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<ExampleApp::InteriorsPosition::InteriorsPositionStartUpdatingLocationMessage>
             , public Eegeo::Messaging::CatalogBinding<ExampleApp::InteriorsPosition::InteriorsPositionStopUpdatingLocationMessage>
             , public Eegeo::Messaging::CatalogBinding<ExampleApp::InteriorsPosition::InteriorsPositionFloorChangedMessage>
+            , public Eegeo::Messaging::CatalogBinding<VirtualKeyboard::VirtualKeyboardStateChangedMessage>
             , private Eegeo::NonCopyable
         {
 

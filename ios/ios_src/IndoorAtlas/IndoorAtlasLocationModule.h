@@ -23,8 +23,8 @@ namespace ExampleApp
                                       Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                       const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                       const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                      const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
                                       Eegeo::Location::ILocationService& defaultLocationService,
+                                      Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
                                       ExampleApp::ExampleAppMessaging::TMessageBus& messageBus);
             ~IndoorAtlasLocationModule();
             
