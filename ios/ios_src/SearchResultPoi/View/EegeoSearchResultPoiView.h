@@ -34,8 +34,6 @@
     UIImage* m_pRemovePinHighlightButtonBackgroundImage;
     UIImage* m_pAddPinButtonBackgroundImage;
     UIImage* m_pAddPinHighlightButtonBackgroundImage;
-    
-    CAGradientLayer* m_pGradientMask;
 }
 
 - (id)initWithInterop:(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*)pInterop;

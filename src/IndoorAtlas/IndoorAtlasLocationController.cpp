@@ -8,6 +8,7 @@
 #include "InteriorsPositionFloorChangedMessage.h"
 #include <map>
 #include <string>
+#include "IPSConfigurationParser.h"
 
 namespace ExampleApp
 {
@@ -16,15 +17,15 @@ namespace ExampleApp
         IndoorAtlasLocationController::IndoorAtlasLocationController(ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                                                      Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                      const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                                     const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
+                                                                     Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
                                                                      ExampleApp::ExampleAppMessaging::TMessageBus& messageBus)
         : m_appModeModel(appModeModel)
         , m_interiorInteractionModel(interiorInteractionModel)
         , m_interiorSelectionModel(interiorSelectionModel)
+        , m_interiorMetaDataRepository(interiorMetaDataRepository)
+        , m_messageBus(messageBus)
         , m_appModeChangedCallback(this, &IndoorAtlasLocationController::OnAppModeChanged)
         , m_floorSelectedCallback(this, &IndoorAtlasLocationController::OnFloorSelected)
-        , m_trackingInfoMap(applicationConfiguration.InteriorTrackingInfo())
-        , m_messageBus(messageBus)
         {
             m_appModeModel.RegisterAppModeChangedCallback(m_appModeChangedCallback);
             m_interiorInteractionModel.RegisterInteractionStateChangedCallback(m_floorSelectedCallback);
@@ -38,13 +39,25 @@ namespace ExampleApp
         
         void IndoorAtlasLocationController::OnAppModeChanged()
         {
-        	Eegeo::Resources::Interiors::InteriorId interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
-            int currentFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
-
             if(m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode)
             {
-                const std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>::const_iterator it = m_trackingInfoMap.find(interiorId.Value());
-                if(it != m_trackingInfoMap.end())
+            	Eegeo::Resources::Interiors::InteriorId interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
+				std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo> interiorTrackingInfoList;
+
+				if(interiorId.IsValid())
+				{
+					InteriorsPosition::TryAndGetInteriorTrackingInfo(interiorTrackingInfoList, interiorId, m_interiorMetaDataRepository);
+				}
+				else
+				{
+					return;
+				}
+
+				int currentFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
+                const std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& trackingInfoMap = interiorTrackingInfoList;
+                const std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>::const_iterator it = trackingInfoMap.find(interiorId.Value());
+         
+                if(it != trackingInfoMap.end())
                 {
                     const ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo& trackingInfo = (*it).second;
                     if(trackingInfo.GetType() == "IndoorAtlas")

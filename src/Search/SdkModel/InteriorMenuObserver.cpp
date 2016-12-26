@@ -159,9 +159,11 @@ namespace ExampleApp
                 if (document.HasMember(itemKey) && document[itemKey].IsArray())
                 {
                     const auto& tagSearchModelsMember = document[itemKey];
-                    
-                    ClearTagSearchRepository();
-                    ClearDefaultOutdoorTags();
+                    if(tagSearchModelsMember.Size() > 0)
+                    {
+                        ClearTagSearchRepository();
+                        ClearDefaultOutdoorTags();
+                    }
                     
                     const bool visibleInSearchMenu = true;
                     const bool interior = true;

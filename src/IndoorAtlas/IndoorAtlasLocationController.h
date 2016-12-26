@@ -7,6 +7,8 @@
 #include "BidirectionalBus.h"
 #include "InteriorsExplorer.h"
 #include "ApplicationConfiguration.h"
+#include "InteriorMetaDataRepository.h"
+#include "ApplicationInteriorTrackingInfo.h"
 
 namespace ExampleApp
 {
@@ -18,7 +20,7 @@ namespace ExampleApp
             IndoorAtlasLocationController(ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                           Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                           const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                          const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
+                                          Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
                                           ExampleApp::ExampleAppMessaging::TMessageBus& messageBus);
             ~IndoorAtlasLocationController();
             
@@ -26,7 +28,6 @@ namespace ExampleApp
             ExampleApp::AppModes::SdkModel::IAppModeModel& m_appModeModel;
             Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
             const Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
-            const std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo> m_trackingInfoMap;
             ExampleApp::ExampleAppMessaging::TMessageBus& m_messageBus;
             
             Eegeo::Helpers::TCallback0<IndoorAtlasLocationController> m_floorSelectedCallback;
@@ -34,6 +35,8 @@ namespace ExampleApp
             
             void OnAppModeChanged();
             void OnFloorSelected();
+            
+            Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& m_interiorMetaDataRepository;
         };
     }
 }

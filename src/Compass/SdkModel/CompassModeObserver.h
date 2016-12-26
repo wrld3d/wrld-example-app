@@ -17,19 +17,20 @@ namespace ExampleApp
             class CompassModeObserver : private Eegeo::NonCopyable
             {
             private:
-                ICompassModel& m_model;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Helpers::TCallback0<CompassModeObserver> m_callback;
                 Eegeo::Helpers::TCallback0<CompassModeObserver> m_unauthorizedCallback;
 
-                void OnGpsModeChanged();
-                void OnGpsModeDeniedBecauseUnauthorized();
+            protected:
+                ICompassModel& m_model;
+                virtual void OnGpsModeChanged();
+                virtual void OnGpsModeDeniedBecauseUnauthorized();
 
             public:
                 CompassModeObserver(ICompassModel& model,
                                     ExampleAppMessaging::TMessageBus& messageBus);
 
-                ~CompassModeObserver();
+                virtual ~CompassModeObserver();
             };
         }
     }

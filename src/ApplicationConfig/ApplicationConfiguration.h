@@ -41,11 +41,22 @@ namespace ExampleApp
             std::string m_myPinsWebServiceAuthToken;
             std::string m_twitterAuthCode;
             bool m_isKioskTouchInputEnabled;
+            bool m_isInKioskMode;
             bool m_useLabels;
             bool m_useJapaneseFont;
+
+            Eegeo::Space::LatLong m_fixedLatlong;
+            Eegeo::Resources::Interiors::InteriorId m_fixedInteriorId;
+            int m_fixedFloorIndex;
+            double m_fixedHeadingDegrees;
             
             std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo> m_interiorTrackingInfo;
             std::string m_rawConfig;
+
+            std::vector<Eegeo::Space::LatLongAltitude> m_attractModeTargetSplinePoints;
+            std::vector<Eegeo::Space::LatLongAltitude> m_attractModePositionSplinePoints;
+
+            long long m_attractModeTimeoutMs;
 
         public:
             
@@ -75,10 +86,18 @@ namespace ExampleApp
                 const std::string& myPinsWebServiceAuthToken,
                 const std::string& twitterAuthCode,
                 const bool isKioskTouchInputEnabled,
+                const bool isInKioskMode,
                 bool useLabels,
                 bool useJapaneseFont,
                 const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo,
-                const std::string& rawConfig
+                const std::string& rawConfig,
+                const Eegeo::Space::LatLong fixedLatlong,
+                const std::string& fixedInteriorId,
+                const int fixedFloorIndex,
+                const double fixedHeadingDegrees,
+                const std::vector<Eegeo::Space::LatLongAltitude>& attractModeTargetSplinePoints,
+                const std::vector<Eegeo::Space::LatLongAltitude>& attractModePositionSplinePoints,
+                const long long attractModeTimeoutMs
             );
             
             std::string Name() const;
@@ -130,6 +149,8 @@ namespace ExampleApp
             std::string TwitterAuthCode() const;
 
             bool IsKioskTouchInputEnabled() const;
+
+            bool IsInKioskMode() const;
             
             bool UseLabels() const;
             
@@ -138,6 +159,13 @@ namespace ExampleApp
             const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& InteriorTrackingInfo() const;
             
             std::string RawConfig() const;
+
+            bool FixedIndoorLocation(Eegeo::Space::LatLong& latlong, Eegeo::Resources::Interiors::InteriorId& interiorId, int& floorIndex, double& headingDegrees) const;
+
+            const std::vector<Eegeo::Space::LatLongAltitude>& GetAttractModeTargetSplinePoints() const;
+            const std::vector<Eegeo::Space::LatLongAltitude>& GetAttractModePositionSplinePoints() const;
+            const long long GetAttractModeTimeoutMs() const;
+            const bool IsAttractModeEnabled() const;
         };
     }
 }

@@ -7,6 +7,7 @@
 #include "ApplyScreenControl.h"
 #include "MyPinCreationViewStateChangedMessage.h"
 #include "MyPinCreationStage.h"
+#include "VirtualKeyboardStateChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -29,14 +30,17 @@ namespace ExampleApp
                 , m_selectedCallback(this, &MyPinCreationInitiationController::OnSelected)
                 , m_viewStateCallback(this, &MyPinCreationInitiationController::OnViewStateChangeScreenControl)
                 , m_appModeChangedHandler(this, &MyPinCreationInitiationController::OnAppModeChangedMessage)
+                , m_virtualKeyboardStateChangedMessageHandler(this, &MyPinCreationInitiationController::OnVirtualKeyboardStateChangedMessage)
             {
                 m_view.InsertSelectedCallback(m_selectedCallback);
                 m_viewModel.InsertOnScreenStateChangedCallback(m_viewStateCallback);
                 m_messageBus.SubscribeUi(m_appModeChangedHandler);
+                m_messageBus.SubscribeUi(m_virtualKeyboardStateChangedMessageHandler);
             }
 
             MyPinCreationInitiationController::~MyPinCreationInitiationController()
             {
+                m_messageBus.UnsubscribeUi(m_virtualKeyboardStateChangedMessageHandler);
                 m_messageBus.UnsubscribeUi(m_appModeChangedHandler);
                 m_viewModel.RemoveOnScreenStateChangedCallback(m_viewStateCallback);
                 m_view.RemoveSelectedCallback(m_selectedCallback);
@@ -59,7 +63,8 @@ namespace ExampleApp
             
             void MyPinCreationInitiationController::OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message)
             {
-                m_appModeAllowsOpen = message.GetAppMode() != AppModes::SdkModel::TourMode;
+                m_appModeAllowsOpen = message.GetAppMode() != AppModes::SdkModel::TourMode &&
+                                      message.GetAppMode() != AppModes::SdkModel::AttractMode;
                 
                 if(m_appModeAllowsOpen)
                 {
@@ -71,6 +76,17 @@ namespace ExampleApp
                 }
             }
 
+            void MyPinCreationInitiationController::OnVirtualKeyboardStateChangedMessage(const VirtualKeyboard::VirtualKeyboardStateChangedMessage& message)
+            {
+                if (message.IsVirtualKeyboardVisible())
+                {
+                    m_viewModel.RemoveFromScreen();
+                }
+                else
+                {
+                    m_viewModel.AddToScreen();
+                }
+            }
         }
     }
 }

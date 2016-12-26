@@ -1,6 +1,5 @@
 #include "SearchTagToYelpCategoryMapper.h"
 
-
 namespace ExampleApp
 {
     namespace Search
@@ -24,7 +23,7 @@ namespace ExampleApp
                     for(auto it = m_appTagToYelpCategoryMap.begin(); it != m_appTagToYelpCategoryMap.end(); ++it)
                     {
                         m_searchTagToYelpRootCategoryModel[it->first].yelpCategoryFilter = it->second;
-                        m_searchTagToYelpRootCategoryModel[it->first].performYelpSearch = true;
+                        m_searchTagToYelpRootCategoryModel[it->first].skipYelpSearch = false;
                     }
                 }
                 
@@ -55,7 +54,7 @@ namespace ExampleApp
                     for(auto it = m_appTagToYelpCategoryMap.begin(); it != m_appTagToYelpCategoryMap.end(); ++it)
                     {
                         m_searchTagToYelpRootCategoryModel[it->first].yelpCategoryFilter = it->second;
-                        m_searchTagToYelpRootCategoryModel[it->first].performYelpSearch = true;
+                        m_searchTagToYelpRootCategoryModel[it->first].skipYelpSearch = false;
                     }
                 }
                 
@@ -64,13 +63,13 @@ namespace ExampleApp
                     for(int i = 0; i < m_searchTagToYelpRootCategoryModel.size(); i++)
                     {
                         YelpCategoryModel value = m_searchTagToYelpRootCategoryModel[searchTag];
-                        if (value.yelpCategoryFilter == "")
+                        if (!value.yelpCategoryFilter.empty() || searchTag.empty())
                         {
                             out_bestMatchedYelpCategoryModel = value;
                             return true;
                         }
                     }
-                    YelpCategoryModel defaultValue { m_defaultTag, true };
+                    YelpCategoryModel defaultValue { m_defaultTag, false };
                     out_bestMatchedYelpCategoryModel = defaultValue;
                     return false;
                 }
