@@ -15,8 +15,8 @@ namespace ExampleApp
                                                              Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                              const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                              const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                                             const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
                                                              Eegeo::Location::ILocationService& defaultLocationService,
+                                                             Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
                                                              ExampleApp::ExampleAppMessaging::TMessageBus& messageBus)
         : m_pLocationController(NULL)
         , m_pLocationManager(NULL)
@@ -29,11 +29,11 @@ namespace ExampleApp
             
             m_pLocationManager = [[IndoorAtlasLocationManager alloc] Init: m_pLocationService ndMessageBus: messageBus];
             
-            m_pLocationController = Eegeo_NEW(IndoorAtlasLocationController)(*[m_pLocationManager getInterop],
-                                                                             appModeModel,
+            m_pLocationController = Eegeo_NEW(IndoorAtlasLocationController)(appModeModel,
                                                                              interiorInteractionModel,
                                                                              interiorSelectionModel,
-                                                                             applicationConfiguration);
+                                                                             interiorMetaDataRepository,
+                                                                             messageBus);
         }
         
         IndoorAtlasLocationModule::~IndoorAtlasLocationModule()

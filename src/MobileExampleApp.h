@@ -88,6 +88,9 @@
 #include "IRayCaster.h"
 #include "InteriorsEntityIdHighlightVisibilityController.h"
 #include "DeepLink.h"
+#include "YelpCategoryMapperUpdater.h"
+#include "IUserIdleService.h"
+#include "GlobalAppModeTransitionRules.h"
 
 namespace ExampleApp
 {
@@ -164,6 +167,8 @@ namespace ExampleApp
         InteriorsExplorer::SdkModel::Highlights::IHighlightColorMapper* m_pHighlightColorMapper;
         InteriorsExplorer::SdkModel::Highlights::InteriorsEntityIdHighlightVisibilityController* m_pInteriorsEntityIdHighlightVisibilityController;
         
+        Search::Yelp::SdkModel::YelpCategoryMapperUpdater m_yelpCategoryMapperUpdater;
+        
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
         Net::SdkModel::ConnectivityChangedObserver* m_pConnectivityChangedObserver;
         
@@ -182,6 +187,9 @@ namespace ExampleApp
         const bool m_interiorsEnabled;
         const bool m_usingLegacyInteriorLabels;
         const bool m_useIndoorEntryMarkerLabels;
+
+        Eegeo::Input::IUserIdleService& m_userIdleService;
+        AppModes::GlobalAppModeTransitionRules* m_pGlobalAppModeTransitionRules;
 
         void CreateApplicationModelModules(Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                            const bool interiorsAffectedByFlattening);
@@ -230,7 +238,8 @@ namespace ExampleApp
                          ExampleApp::Net::SdkModel::INetworkCapabilities& networkCapabilities,
                          ExampleApp::Metrics::IMetricsService& metricsService,                         
                          Eegeo::IEegeoErrorHandler& errorHandler,
-                         Menu::View::IMenuReactionModel& menuReaction);
+                         Menu::View::IMenuReactionModel& menuReaction,
+                         Eegeo::Input::IUserIdleService& userIdleService);
 
         ~MobileExampleApp();
 

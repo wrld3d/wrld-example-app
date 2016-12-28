@@ -16,8 +16,17 @@ namespace ExampleApp
             : m_pSenionLabLocationManager(senionLabLocationManager)
             , m_pSenionLabLocationService(pSenionLabLocationService)
             , m_messageBus(messageBus)
+            , m_startUpdatingLocationCallback(this, &SenionLabLocationManagerInterop::OnStartUpdatingLocation)
+            , m_stopUpdatingLocationCallback(this, &SenionLabLocationManagerInterop::OnStopUpdatingLocation)
             {
+                m_messageBus.SubscribeUi(m_startUpdatingLocationCallback);
+                m_messageBus.SubscribeUi(m_stopUpdatingLocationCallback);
+            }
             
+            SenionLabLocationManagerInterop::~SenionLabLocationManagerInterop()
+            {
+                m_messageBus.UnsubscribeUi(m_startUpdatingLocationCallback);
+                m_messageBus.UnsubscribeUi(m_stopUpdatingLocationCallback);
             }
             
             void SenionLabLocationManagerInterop::StartUpdatingLocation(std::string apiKey,
@@ -34,8 +43,7 @@ namespace ExampleApp
             
             void SenionLabLocationManagerInterop::OnLocationChanged(Eegeo::Space::LatLong& location)
             {
-                m_messageBus.Publish(ExampleApp::IndoorLocation::IndoorLocationChangedMessage(location));
-                m_messageBus.FlushToNative();
+                m_messageBus.Publish(ExampleApp::InteriorsPosition::InteriorsPositionLocationChangedMessage(location));
             }
             
             void SenionLabLocationManagerInterop::SetIsAuthorized(bool isAuthorize)
@@ -46,6 +54,18 @@ namespace ExampleApp
             void SenionLabLocationManagerInterop::OnSetFloorIndex(int floorIndex)
             {
                 m_pSenionLabLocationService->SetFloorIndex(floorIndex);
+            }
+            
+            void SenionLabLocationManagerInterop::OnStartUpdatingLocation(const ExampleApp::InteriorsPosition::InteriorsPositionStartUpdatingLocationMessage& startUpdatingLocationMessage)
+            {
+                StartUpdatingLocation(startUpdatingLocationMessage.GetApiKey(),
+                                      startUpdatingLocationMessage.GetApiSecret(),
+                                      startUpdatingLocationMessage.GetFloorMap());
+            }
+            
+            void SenionLabLocationManagerInterop::OnStopUpdatingLocation(const ExampleApp::InteriorsPosition::InteriorsPositionStopUpdatingLocationMessage& stopUpdatingLocationMessage)
+            {
+                StopUpdatingLocation();
             }
         }
     }

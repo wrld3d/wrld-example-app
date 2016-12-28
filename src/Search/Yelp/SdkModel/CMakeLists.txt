@@ -2,6 +2,10 @@ set(headers ${headers} ../src/Search/Yelp/SdkModel
 )
 set(currsources
   ../src/Search/Yelp/SdkModel/CMakeLists.txt
+ ../src/Search/Yelp/SdkModel/YelpCategoryModel.h
+  ../src/Search/Yelp/SdkModel/ISearchTagToYelpCategoryMapper.h
+  ../src/Search/Yelp/SdkModel/SearchTagToYelpCategoryMapper.h
+  ../src/Search/Yelp/SdkModel/SearchTagToYelpCategoryMapper.cpp
   ../src/Search/Yelp/SdkModel/IYelpCategoryToTagMapper.h
   ../src/Search/Yelp/SdkModel/IYelpSearchQuery.h
   ../src/Search/Yelp/SdkModel/YelpBusinessQuery.cpp
@@ -26,6 +30,9 @@ set(currsources
   ../src/Search/Yelp/SdkModel/YelpSearchService.h
   ../src/Search/Yelp/SdkModel/YelpParsingHelpers.cpp
   ../src/Search/Yelp/SdkModel/YelpParsingHelpers.h
+  ../src/Search/Yelp/SdkModel/YelpCategoryMapperUpdater.cpp
+  ../src/Search/Yelp/SdkModel/YelpCategoryMapperUpdater.h
+
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\Search\\Yelp\\SdkModel FILES ${currsources})

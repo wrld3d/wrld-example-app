@@ -5,7 +5,9 @@
 #include "ILocationService.h"
 #include "CurrentLocationService.h"
 #include "InteriorsExplorerModel.h"
-#include "ApplicationConfiguration.h"
+#include "InteriorMetaDataRepository.h"
+#include "ApplicationInteriorTrackingInfo.h"
+#include "InteriorMetaDataRepository.h"
 
 namespace ExampleApp
 {
@@ -16,20 +18,19 @@ namespace ExampleApp
             class InteriorsLocationServiceProvider
             {
             public:
-                InteriorsLocationServiceProvider(const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
-                                                 InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
+                InteriorsLocationServiceProvider(InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                                  Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                  Eegeo::Helpers::CurrentLocationService::CurrentLocationService& currentLocationService,
                                                  Eegeo::Location::ILocationService& defaultLocationService,
                                                  Eegeo::Location::ILocationService& indoorAtlasLocationService,
-                                                 Eegeo::Location::ILocationService& senionLabLocationService);
+                                                 Eegeo::Location::ILocationService& senionLabLocationService,
+                                                 Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository);
                 
                 ~InteriorsLocationServiceProvider();
                 
                 const Eegeo::Helpers::CurrentLocationService::CurrentLocationService& GetCurrentLocationService() { return m_currentLocationService; }
                 
             private:
-                const ExampleApp::ApplicationConfig::ApplicationConfiguration& m_applicationConfiguration;
                 Eegeo::Helpers::CurrentLocationService::CurrentLocationService& m_currentLocationService;
                 Eegeo::Location::ILocationService& m_defaultLocationService;
                 Eegeo::Location::ILocationService& m_indoorAtlasLocationService;
@@ -43,6 +44,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<InteriorsLocationServiceProvider> m_interiorExplorerEnteredCallback;
                 void OnInteriorExplorerExit();
                 Eegeo::Helpers::TCallback0<InteriorsLocationServiceProvider> m_interiorExplorerExitCallback;
+                Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& m_interiorMetaDataRepository;
             };
         }
     }

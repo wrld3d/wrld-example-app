@@ -28,8 +28,6 @@ namespace ExampleAppWPF
         private bool m_animationInProgress = false;
         private string[] m_floorShortNames = new string[] {};
 
-        private const float DefaultOffscreenOffsetX = 100.0f;
-
         private int FloorCount { get { return m_floorShortNames.Length; } }
         private bool FloorSelectionEnabled { get { return FloorCount > 1; } }
 
@@ -49,7 +47,7 @@ namespace ExampleAppWPF
         {
             base.OnApplyTemplate();
 
-            m_panelOffscreenOffsetX = DefaultOffscreenOffsetX;
+            m_panelOffscreenOffsetX = ((double)Application.Current.Resources["SliderThumbSize"]) * 2;
 			
 			m_container = GetTemplateChild("Container") as Grid;
 

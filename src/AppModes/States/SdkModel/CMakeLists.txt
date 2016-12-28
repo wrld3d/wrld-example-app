@@ -10,6 +10,8 @@ set(currsources
   ../src/AppModes/States/SdkModel/TourState.h
   ../src/AppModes/States/SdkModel/WorldState.cpp
   ../src/AppModes/States/SdkModel/WorldState.h
+  ../src/AppModes/States/SdkModel/AttractState.cpp
+  ../src/AppModes/States/SdkModel/AttractState.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\AppModes\\States\\SdkModel FILES ${currsources})

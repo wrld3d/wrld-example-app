@@ -37,8 +37,7 @@
 #include "CurrentTourCardTappedMessage.h"
 #include "MenuSectionExpandedChangedMessage.h"
 #include "WorldPinsSelectedFocussedMessage.h"
-#include "IndoorLocationChangedMessage.h"
-#include "SenionLabLocationChangedMessage.h"
+#include "InteriorsPositionLocationChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -78,8 +77,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Tours::CurrentTourCardTappedMessage>
             , public Eegeo::Messaging::CatalogBinding<Menu::MenuSectionExpandedChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<WorldPins::WorldPinsSelectedFocussedMessage>
-            , public Eegeo::Messaging::CatalogBinding<IndoorLocation::IndoorLocationChangedMessage>
-        	, public Eegeo::Messaging::CatalogBinding<SenionLab::SenionLabLocationChangedMessage>
+            , public Eegeo::Messaging::CatalogBinding<InteriorsPosition::InteriorsPositionLocationChangedMessage>
             , private Eegeo::NonCopyable
         {
 

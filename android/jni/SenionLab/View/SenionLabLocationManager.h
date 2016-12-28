@@ -1,8 +1,10 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 #pragma once
 
-#include "ISenionLabLocationManager.h"
 #include "BidirectionalBus.h"
+#include "InteriorsPositionStartUpdatingLocationMessage.h"
+#include "InteriorsPositionStopUpdatingLocationMessage.h"
+#include "ICallback.h"
 #include <map>
 #include <string>
 #include "AndroidNativeState.h"
@@ -15,7 +17,7 @@ namespace ExampleApp
     	class SenionLabLocationService;
     	namespace View
 		{
-			class SenionLabLocationManager: public ISenionLabLocationManager, private Eegeo::NonCopyable
+			class SenionLabLocationManager: private Eegeo::NonCopyable
 			{
 			private:
 
@@ -43,6 +45,12 @@ namespace ExampleApp
 										   std::map<int, std::string> floorMap);
 				void StopUpdatingLocation();
 				void OnUpdateLocation(double latitude, double longitude, std::string floorNo);
+
+				void OnStartUpdatingLocation(const ExampleApp::InteriorsPosition::InteriorsPositionStartUpdatingLocationMessage& startUpdatingLocationMessage);
+                void OnStopUpdatingLocation(const ExampleApp::InteriorsPosition::InteriorsPositionStopUpdatingLocationMessage& stopUpdatingLocationMessage);
+
+				Eegeo::Helpers::TCallback1<SenionLabLocationManager, const ExampleApp::InteriorsPosition::InteriorsPositionStartUpdatingLocationMessage&> m_startUpdatingLocationCallback;
+				Eegeo::Helpers::TCallback1<SenionLabLocationManager, const ExampleApp::InteriorsPosition::InteriorsPositionStopUpdatingLocationMessage&> m_stopUpdatingLocationCallback;
     		};
 		}
     }

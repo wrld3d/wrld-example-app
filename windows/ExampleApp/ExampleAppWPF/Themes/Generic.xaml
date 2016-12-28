@@ -25,6 +25,7 @@
         <ResourceDictionary Source="../Views/SearchResultPoi/GeoNamesSearchResultsPoiView.xaml" />
         <ResourceDictionary Source="../Views/SearchResultPoi/YelpSearchResultsPoiView.xaml" />
         <ResourceDictionary Source="../Views/InteriorsExplorer/InteriorsExplorerView.xaml" />
+        <ResourceDictionary Source="../Views/VirtualKeyboard/VirtualKeyboard.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

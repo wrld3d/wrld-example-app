@@ -10,6 +10,7 @@
 #include "MyPinCreationStateChangedMessage.h"
 #include "IMetricsService.h"
 #include "AppModeChangedMessage.h"
+#include "VirtualKeyboard.h"
 
 namespace ExampleApp
 {
@@ -29,6 +30,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback2<FlattenButtonController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
                 Eegeo::Helpers::TCallback1<FlattenButtonController, const MyPinCreation::MyPinCreationStateChangedMessage&> m_myPinCreationStateChangedMessageHandler;
                 Eegeo::Helpers::TCallback1<FlattenButtonController, const AppModes::AppModeChangedMessage&> m_appModeChangedHandler;
+                Eegeo::Helpers::TCallback1<FlattenButtonController, const VirtualKeyboard::VirtualKeyboardStateChangedMessage&> m_virtualKeyboardStateChangedMessageHandler;
 
                 Metrics::IMetricsService& m_metricsService;
                 
@@ -43,6 +45,8 @@ namespace ExampleApp
                 void OnMyPinCreationStateChangedMessage(const MyPinCreation::MyPinCreationStateChangedMessage& message);
 
                 void OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message);
+
+                void OnVirtualKeyboardStateChangedMessage(const VirtualKeyboard::VirtualKeyboardStateChangedMessage& message);
 
             public:
                 FlattenButtonController(

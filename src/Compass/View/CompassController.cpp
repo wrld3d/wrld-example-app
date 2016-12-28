@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "CompassController.h"
+#include "VirtualKeyboardStateChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -71,7 +72,8 @@ namespace ExampleApp
             
             void CompassController::OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message)
             {
-                m_appModeAllowsOpen = message.GetAppMode() != AppModes::SdkModel::TourMode;
+                m_appModeAllowsOpen = message.GetAppMode() != AppModes::SdkModel::TourMode &&
+                                      message.GetAppMode() != AppModes::SdkModel::AttractMode;
                 
                 if(m_appModeAllowsOpen)
                 {
@@ -80,6 +82,18 @@ namespace ExampleApp
                 else
                 {
                     m_viewModel.RemoveFromScreen();
+                }
+            }
+
+            void CompassController::OnVirtualKeyboardStateChangedMessage(const VirtualKeyboard::VirtualKeyboardStateChangedMessage& message)
+            {
+                if (message.IsVirtualKeyboardVisible())
+                {
+                    m_viewModel.RemoveFromScreen();
+                }
+                else
+                {
+                    m_viewModel.AddToScreen();
                 }
             }
             
@@ -97,12 +111,14 @@ namespace ExampleApp
                 , m_myPinCreationStateChangedMessageHandler(this, &CompassController::OnMyPinCreationStateChangedMessage)
                 , m_viewCycledCallback(this, &CompassController::OnViewCycled)
                 , m_appModeChangedHandler(this, &CompassController::OnAppModeChangedMessage)
+                , m_virtualKeyboardStateChangedMessageHandler(this, &CompassController::OnVirtualKeyboardStateChangedMessage)
             {
                 m_messageBus.SubscribeUi(m_modeChangedHandler);
                 m_messageBus.SubscribeUi(m_headingChangedHandler);
                 m_messageBus.SubscribeUi(m_myPinCreationStateChangedMessageHandler);
                 m_messageBus.SubscribeUi(m_modeUnauthorizedHandler);
                 m_messageBus.SubscribeUi(m_appModeChangedHandler);
+                m_messageBus.SubscribeUi(m_virtualKeyboardStateChangedMessageHandler);
                 
                 m_view.InsertCycledCallback(m_viewCycledCallback);
                 m_viewModel.InsertOnScreenStateChangedCallback(m_viewStateCallback);
@@ -115,6 +131,7 @@ namespace ExampleApp
                 m_viewModel.RemoveOnScreenStateChangedCallback(m_viewStateCallback);
                 m_view.RemoveCycledCallback(m_viewCycledCallback);
 
+                m_messageBus.UnsubscribeUi(m_virtualKeyboardStateChangedMessageHandler);
                 m_messageBus.UnsubscribeUi(m_appModeChangedHandler);
                 m_messageBus.UnsubscribeUi(m_modeUnauthorizedHandler);
                 m_messageBus.UnsubscribeUi(m_headingChangedHandler);

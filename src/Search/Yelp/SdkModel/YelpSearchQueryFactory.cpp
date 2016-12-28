@@ -6,6 +6,7 @@
 #include "YelpSearchQueryFactory.h"
 #include "YelpSearchQuery.h"
 #include "YelpSearchConstants.h"
+#include "YelpCategoryModel.h"
 
 
 #include "urlencode.h"
@@ -23,7 +24,6 @@ namespace ExampleApp
                 namespace
                 {
                     const float MaxRadiusMetres = 40000.0f;
-                    const std::string searchLimit("20");
                     
                     std::string UrlGetParamsEncoder(const std::map<std::string, std::string>& params)
                     {
@@ -49,12 +49,12 @@ namespace ExampleApp
                     const std::string& yelpConsumerSecret,
                     const std::string& yelpOAuthToken,
                     const std::string& yelpOAuthTokenSecret,
-                    const std::map<std::string, std::string>& appTagToYelpCategoryMap,
+                    SdkModel::SearchTagToYelpCategoryMapper& searchTagToYelpCategoryMap,
                     Eegeo::Web::IWebLoadRequestFactory& webRequestFactory)
                 : m_webRequestFactory(webRequestFactory)
                 , m_consumer(yelpConsumerKey, yelpConsumerSecret)
                 , m_token(yelpOAuthToken, yelpOAuthTokenSecret)
-                , m_applicationTagToYelpCategoryMap(appTagToYelpCategoryMap)
+                , m_searchTagToYelpCategoryMap(searchTagToYelpCategoryMap)
                 , m_client(&m_consumer, &m_token)
                 , m_apiUrl("https://api.yelp.com/v2/search")
                 {
@@ -70,15 +70,15 @@ namespace ExampleApp
 
                 {
                     std::string searchTerm = "";
-                    std::string categoryFilter = "";
+                    YelpCategoryModel categoryFilter { "", true };
+                    std::string searchLimit("20");
                     
                     if (searchQuery.IsTag())
                     {
-                        std::map<std::string, std::string>::const_iterator category = m_applicationTagToYelpCategoryMap.find(searchQuery.Query());
-                        
-                        if (category != m_applicationTagToYelpCategoryMap.end())
+                        m_searchTagToYelpCategoryMap.TryGetBestYelpCategoryForSearchTag(searchQuery.Query(), categoryFilter);
+                        if(categoryFilter.skipYelpSearch == true)
                         {
-                            categoryFilter = category->second;
+                            searchLimit = "0";
                         }
                     }
                     else
@@ -104,7 +104,7 @@ namespace ExampleApp
                     std::string radiusFilterStr = conversionStream.str();
                     
                     params["term"] = searchTerm;
-                    params["category_filter"] = categoryFilter;
+                    params["category_filter"] = categoryFilter.yelpCategoryFilter;
                     params["ll"] = latLong;
                     params["radius_filter"] = radiusFilterStr;
                     params["limit"] = searchLimit;

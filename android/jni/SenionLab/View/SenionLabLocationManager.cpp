@@ -3,7 +3,7 @@
 #include "SenionLabLocationService.h"
 #include "AndroidAppThreadAssertionMacros.h"
 #include "LatLongAltitude.h"
-#include "SenionLabLocationChangedMessage.h"
+#include "InteriorsPositionLocationChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -18,8 +18,14 @@ namespace ExampleApp
 			, m_messageBus(messageBus)
 			, m_nativeState(nativeState)
 			, m_floorIndex(-1)
+			, m_startUpdatingLocationCallback(this, &SenionLabLocationManager::OnStartUpdatingLocation)
+            , m_stopUpdatingLocationCallback(this, &SenionLabLocationManager::OnStopUpdatingLocation)
 			{
-				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+			    ASSERT_UI_THREAD
+                m_messageBus.SubscribeUi(m_startUpdatingLocationCallback);
+                m_messageBus.SubscribeUi(m_stopUpdatingLocationCallback);
+
+			    AndroidSafeNativeThreadAttachment attached(m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
 				jstring strClassName = env->NewStringUTF("com/eegeo/senion/SenionLabLocationManager");
@@ -41,6 +47,9 @@ namespace ExampleApp
 
 			SenionLabLocationManager::~SenionLabLocationManager()
 			{
+			    m_messageBus.UnsubscribeUi(m_startUpdatingLocationCallback);
+                m_messageBus.UnsubscribeUi(m_stopUpdatingLocationCallback);
+
 				AndroidSafeNativeThreadAttachment attached(m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
@@ -52,7 +61,7 @@ namespace ExampleApp
 															   	 std::string apiSecret,
 															     std::map<int, std::string> floorMap)
 			{
-				Eegeo_TTY("senion StartUpdatingLocation");
+			    ASSERT_UI_THREAD
 				m_floorMap = floorMap;
 
 				AndroidSafeNativeThreadAttachment attached(m_nativeState);
@@ -73,6 +82,7 @@ namespace ExampleApp
 
 			void SenionLabLocationManager::StopUpdatingLocation()
 			{
+			    ASSERT_UI_THREAD
 				AndroidSafeNativeThreadAttachment attached(m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
@@ -97,8 +107,22 @@ namespace ExampleApp
 				ASSERT_UI_THREAD;
 				Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong::FromDegrees(latitude, longitude);
 				int floorNum = getFloorIndexFromSenionFloorIndex(senionFloorNo);
-				m_messageBus.Publish(ExampleApp::SenionLab::SenionLabLocationChangedMessage(latLong, floorNum));
-				m_messageBus.FlushToNative();
+				m_messageBus.Publish(ExampleApp::InteriorsPosition::InteriorsPositionLocationChangedMessage(latLong, floorNum));
+			}
+
+			void SenionLabLocationManager::OnStartUpdatingLocation(const ExampleApp::InteriorsPosition::InteriorsPositionStartUpdatingLocationMessage& startUpdatingLocationMessage)
+			{
+			    ASSERT_UI_THREAD
+                StartUpdatingLocation(startUpdatingLocationMessage.GetApiKey(),
+                                      startUpdatingLocationMessage.GetApiSecret(),
+                                      startUpdatingLocationMessage.GetFloorMap());
+
+			}
+
+			void SenionLabLocationManager::OnStopUpdatingLocation(const ExampleApp::InteriorsPosition::InteriorsPositionStopUpdatingLocationMessage& stopUpdatingLocationMessage)
+			{
+			    ASSERT_UI_THREAD
+                StopUpdatingLocation();
 			}
 		}
     }

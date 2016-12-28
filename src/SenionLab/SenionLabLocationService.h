@@ -7,7 +7,7 @@
 #include "InteriorsModel.h"
 #include "BidirectionalBus.h"
 #include "ICallback.h"
-#include "SenionLabLocationChangedMessage.h"
+#include "InteriorsPositionLocationChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -32,9 +32,9 @@ namespace ExampleApp
             bool GetHorizontalAccuracy(double& accuracy);
             bool GetHeadingDegrees(double& headingDegrees);
             void StopListening();
-            void OnLocationChanged(const ExampleApp::SenionLab::SenionLabLocationChangedMessage& locationChangedMessage);
+            void OnLocationChanged(const ExampleApp::InteriorsPosition::InteriorsPositionLocationChangedMessage& locationChangedMessage);
             void SetIsAuthorized(bool isAuthorized);
-            void SetLocation(Eegeo::Space::LatLong& latLong);
+            void SetLocation(Eegeo::Space::LatLong latLong);
             void SetFloorIndex(int floorIndex);
             
         private:
@@ -46,7 +46,7 @@ namespace ExampleApp
             Eegeo::Space::LatLong m_latLong;
             int m_floorIndex;
             ExampleApp::ExampleAppMessaging::TMessageBus& m_messageBus;
-            Eegeo::Helpers::TCallback1<SenionLabLocationService, const ExampleApp::SenionLab::SenionLabLocationChangedMessage&> m_LocationChangeCallback;
+            Eegeo::Helpers::TCallback1<SenionLabLocationService, const ExampleApp::InteriorsPosition::InteriorsPositionLocationChangedMessage&> m_LocationChangeCallback;
         };
     }
 }

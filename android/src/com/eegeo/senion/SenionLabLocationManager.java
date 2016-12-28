@@ -3,6 +3,8 @@ package com.eegeo.senion;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.util.Log;
+
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.senionlab.slutilities.geofencing.interfaces.SLGeometry;
 import com.senionlab.slutilities.service.SLBroadcastReceiver;
@@ -18,6 +20,7 @@ import com.senionlab.slutilities.type.SLMotionType;
 
 public class SenionLabLocationManager implements SLConsumer 
 {
+    private final String TAG = "Senion";
 	private SLServiceManager m_serviceManager;
 	private boolean m_firstTimeBound = true;
 	private MainActivity m_activity;
@@ -27,6 +30,7 @@ public class SenionLabLocationManager implements SLConsumer
 	public SenionLabLocationManager(MainActivity activity, 
 									long nativeCallerPointer) 
 	{
+	    Log.d(TAG, "SenionLabLocationManager() called");
 		m_activity = activity;
 		m_nativeCallerPointer = nativeCallerPointer;
 		m_serviceManager = SLServiceManager.getInstance(m_activity);
@@ -34,6 +38,7 @@ public class SenionLabLocationManager implements SLConsumer
 
 	public void StopUpdatingLocation() 
 	{
+	    Log.d(TAG, "StopUpdatingLocation() called");
 		try 
 		{
 			if(m_isServiceBound) 
@@ -53,15 +58,16 @@ public class SenionLabLocationManager implements SLConsumer
 	public void StartUpdatingLocation(String mapKey, 
 									  String customerId) 
 	{
+	    Log.d(TAG, "StartUpdatingLocation() called mapKey:" + mapKey + " customerId:" + customerId);
 		try 
 		{
 			m_serviceManager.registerReceiver(receiver);
 			m_serviceManager.bindService(SenionLabLocationManager.this);
 			m_isServiceBound = true;
-			m_serviceManager.start(mapKey,customerId);
+//			m_serviceManager.start(mapKey,customerId);
 			
 			// For mock testing
-//			StartSenionMockTesting(mapKey, customerId);
+			StartSenionMockTesting(mapKey, customerId);
 		} 
 		catch (SLIndoorLocationException e) 
 		{
@@ -118,6 +124,7 @@ public class SenionLabLocationManager implements SLConsumer
 		{
 			synchronized (this) 
 			{
+			    Log.v(TAG, "didUpdateLocation() called location="+ location.getLatitude() + ":" + location.getLongitude());
 				SenionLabLocationJniMethods.OnLocationChanged(m_nativeCallerPointer, 
 															  location.getLatitude(), 
 															  location.getLongitude(), 

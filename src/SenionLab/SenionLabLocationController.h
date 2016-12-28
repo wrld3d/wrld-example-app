@@ -2,11 +2,13 @@
 
 #pragma once
 
-#include "ISenionLabLocationManager.h"
 #include "ICallback.h"
 #include "AppModeModel.h"
+#include "BidirectionalBus.h"
 #include "InteriorsExplorer.h"
 #include "ApplicationConfiguration.h"
+#include "InteriorMetaDataRepository.h"
+#include "ApplicationInteriorTrackingInfo.h"
 
 namespace ExampleApp
 {
@@ -15,19 +17,21 @@ namespace ExampleApp
         class SenionLabLocationController
         {
         public:
-            SenionLabLocationController(View::ISenionLabLocationManager& locationManager,
-                                        ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
+            SenionLabLocationController(ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                         const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                        const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration);
+                                        Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
+                                        ExampleApp::ExampleAppMessaging::TMessageBus& messageBus);
             ~SenionLabLocationController();
             
         private:
-            View::ISenionLabLocationManager& m_locationManager;
             ExampleApp::AppModes::SdkModel::IAppModeModel& m_appModeModel;
             const Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
-            const std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo> m_trackingInfoMap;
             Eegeo::Helpers::TCallback0<SenionLabLocationController> m_appModeChangedCallback;
+            ExampleApp::ExampleAppMessaging::TMessageBus& m_messageBus;
+
             void OnAppModeChanged();
+            
+            Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& m_interiorMetaDataRepository;
         };
     }
 }

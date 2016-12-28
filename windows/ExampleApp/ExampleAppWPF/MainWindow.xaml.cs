@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Windows.Navigation;
 using System.Windows.Threading;
 using System.Collections.Generic;
-using System.Linq;
+using System.Windows.Controls;
 
 namespace ExampleAppWPF
 {
@@ -49,7 +49,6 @@ namespace ExampleAppWPF
             m_mapImage = new MapImage();
             Loaded += MainWindow_Loaded;
             Closed += MainWindow_Closed;
-
 
             m_frameTimer = Stopwatch.StartNew();
 
@@ -118,6 +117,11 @@ namespace ExampleAppWPF
                 SetFullScreen(true);
             }
 
+            if(m_mapImage.IsInKioskMode())
+            {
+                Application.Current.Resources.Source = new Uri("KioskStyle.xaml", UriKind.RelativeOrAbsolute);
+            }
+
             MouseLeftButtonDown += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandlePanStartEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
             PreviewMouseLeftButtonUp += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandlePanEndEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
             MouseRightButtonDown += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandleRotateStartEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
@@ -145,8 +149,8 @@ namespace ExampleAppWPF
             };
 
             Dispatcher.Hooks.DispatcherInactive += new EventHandler(DispatcherInactive);
-
         }
+
         public void PopAllTouchEvents()
         {
             if (m_isTouchInputActive)

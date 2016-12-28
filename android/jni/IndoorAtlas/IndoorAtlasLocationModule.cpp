@@ -15,8 +15,8 @@ namespace ExampleApp
                                                              Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                              const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                              const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                                             const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
                                                              Eegeo::Location::ILocationService& defaultLocationService,
+                                                             Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
                                                              AndroidNativeState& nativeState,
                                                              ExampleAppMessaging::TMessageBus& messageBus)
         : m_pLocationController(NULL)
@@ -28,13 +28,15 @@ namespace ExampleApp
                                                                        interiorInteractionModel,
                                                                        messageBus);
             
-            m_pLocationManager = Eegeo_NEW(ExampleApp::IndoorAtlas::View::IndoorAtlasLocationManager)(m_pLocationService, nativeState, messageBus);
+            m_pLocationManager = Eegeo_NEW(ExampleApp::IndoorAtlas::View::IndoorAtlasLocationManager)(m_pLocationService,
+                                                                                                      nativeState,
+                                                                                                      messageBus);
 
-            m_pLocationController = Eegeo_NEW(IndoorAtlasLocationController)(*m_pLocationManager,
-                                                                             appModeModel,
+            m_pLocationController = Eegeo_NEW(IndoorAtlasLocationController)(appModeModel,
                                                                              interiorInteractionModel,
                                                                              interiorSelectionModel,
-																			 applicationConfiguration);
+																			 interiorMetaDataRepository,
+																			 messageBus);
         }
         
         IndoorAtlasLocationModule::~IndoorAtlasLocationModule()

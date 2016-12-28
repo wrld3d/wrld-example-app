@@ -91,7 +91,7 @@ namespace ExampleApp
             m_isAuthorized = isAuthorized;
         }
         
-        void SenionLabLocationService::SetLocation(Eegeo::Space::LatLong &latLong)
+        void SenionLabLocationService::SetLocation(Eegeo::Space::LatLong latLong)
         {
             m_latLong = latLong;
         }
@@ -101,9 +101,9 @@ namespace ExampleApp
             m_floorIndex = floorIndex;
         }
 
-        void SenionLabLocationService::OnLocationChanged(const ExampleApp::SenionLab::SenionLabLocationChangedMessage& locationChangedMessage)
+        void SenionLabLocationService::OnLocationChanged(const ExampleApp::InteriorsPosition::InteriorsPositionLocationChangedMessage& locationChangedMessage)
         {
-        	SetLocation(locationChangedMessage.GetLocation());
+            SetLocation(locationChangedMessage.GetLocation());
         	SetFloorIndex(locationChangedMessage.GetFloorIndex());
         }
     }

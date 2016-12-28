@@ -18,6 +18,7 @@
 #include "ITagSearchModule.h"
 #include "IMetricsService.h"
 #include "InteriorMenuObserver.h"
+#include "YelpCategoryMapperUpdater.h"
 
 namespace ExampleApp
 {
@@ -46,7 +47,8 @@ namespace ExampleApp
                              ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                              Metrics::IMetricsService& metricsService,
                              Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                             Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& interiorMetaDataRepo);
+                             Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& interiorMetaDataRepo,
+                             Search::Yelp::SdkModel::YelpCategoryMapperUpdater& yelpCategoryMapperUpdater);
 
                 ~SearchModule();
 

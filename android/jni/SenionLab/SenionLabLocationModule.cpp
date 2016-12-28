@@ -14,10 +14,10 @@ namespace ExampleApp
                                                          Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                          const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                          const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                                         const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
                                                          Eegeo::Location::ILocationService& defaultLocationService,
+                                                         Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
                                                          ExampleApp::ExampleAppMessaging::TMessageBus& messageBus,
-														 AndroidNativeState& nativeState)
+                                                         AndroidNativeState& nativeState)
         : m_pLocationController(NULL)
         , m_pLocationManager(NULL)
         , m_pLocationService(NULL)
@@ -26,12 +26,15 @@ namespace ExampleApp
                                                                      environmentFlatteningService,
                                                                      interiorInteractionModel,
 																	 messageBus);
-            m_pLocationManager = Eegeo_NEW(View::SenionLabLocationManager)(m_pLocationService, messageBus, nativeState);
 
-            m_pLocationController = Eegeo_NEW(SenionLabLocationController)(*m_pLocationManager,
-                                                                           appModeModel,
+            m_pLocationManager = Eegeo_NEW(View::SenionLabLocationManager)(m_pLocationService,
+                                                                           messageBus,
+                                                                           nativeState);
+
+            m_pLocationController = Eegeo_NEW(SenionLabLocationController)(appModeModel,
                                                                            interiorSelectionModel,
-                                                                           applicationConfiguration);
+                                                                           interiorMetaDataRepository,
+                                                                           messageBus);
         }
         
         SenionLabLocationModule::~SenionLabLocationModule()
