@@ -1051,9 +1051,6 @@ namespace ExampleApp
                                                                                          mapModule.GetLabelsModule().GetLabelPicker(),
                                                                                          m_useIndoorEntryMarkerLabels,
                                                                                          m_applicationConfiguration.UseLabels());
-        
-        // Switch to more stable occlusion mode.
-        world.GetMapModule().GetLabelsModule().GetLabelOptionsModel().SetOcclusionMode(Eegeo::Labels::OcclusionResolverMode::Always);
     }
 
     void MobileExampleApp::InitialiseToursModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world, const bool interiorsAffectedByFlattening)
