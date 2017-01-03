@@ -53,6 +53,7 @@ namespace ExampleAppWPF
         private TextBlock m_subTitle;
         private Grid m_titlesGrid;
         private StackPanel m_qrCodeContainer;
+        private ImageSource m_placeholderImage;
 
         private Storyboard m_scrollFadeInAnim;
         private Storyboard m_scrollFadeOutAnim;
@@ -179,6 +180,7 @@ namespace ExampleAppWPF
             m_titleView = (TextBlock)GetTemplateChild("Title");
             
             m_poiImage = (Image)GetTemplateChild("PoiImage");
+            m_placeholderImage = m_poiImage.Source;
 
             var yelpButton = (Image)GetTemplateChild("WebVendorLinkStyle");
 
@@ -379,19 +381,24 @@ namespace ExampleAppWPF
             }
         }
 
+        private void DisplayPoiImage(bool display)
+        {
+            m_poiImageContainer.Visibility = display ? Visibility.Visible : Visibility.Collapsed;
+            m_poiImage.Visibility = display ? Visibility.Visible : Visibility.Collapsed;
+            m_poiImageDivider.Visibility = display ? Visibility.Visible : Visibility.Collapsed;
+        }
+
         private void HandleNoWebView(EegeoResultModel eegeoResultModel)
         {
             m_webBrowser.Visibility = Visibility.Collapsed;
             m_webBrowserSelected = false;
             m_poiImageContainer.Visibility = Visibility.Collapsed;
             m_webBrowserSelected = false;
-            m_poiImageContainer.Visibility = Visibility.Collapsed;
 
             if (eegeoResultModel.ImageUrl != null)
             {
-                m_poiImageContainer.Visibility = Visibility.Visible;
-                m_poiImage.Visibility = Visibility.Visible;
-                m_poiImageDivider.Visibility = Visibility.Collapsed;
+                m_poiImage.Source = m_placeholderImage;
+                DisplayPoiImage(true);
             }
         }
         protected override void DisplayCustomPoiInfo(Object modelObject)
@@ -598,11 +605,19 @@ namespace ExampleAppWPF
         {
             if (hasImage && !m_webBrowserSelected)
             {
-                m_poiImage.Source = LoadImageFromByteArray(imgData);
-                m_poiImage.Visibility = Visibility.Visible;
-                m_poiImageContainer.Visibility = Visibility.Visible;
-                m_poiImageDivider.Visibility = Visibility.Visible;
+                var imageSource = LoadImageFromByteArray(imgData);
+
+                if (imageSource == null)
+                {
+                    DisplayPoiImage(false);
+                }
+                else
+                {
+                    m_poiImage.Source = imageSource;
+                    DisplayPoiImage(true);
+                }
             }
+
             m_previewImageSpinner.Visibility = Visibility.Collapsed;
         }
 
