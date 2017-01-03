@@ -270,6 +270,7 @@ namespace ExampleAppWPF
             string script = "document.body.style.overflow ='hidden'";
             WebBrowser wb = (WebBrowser)sender;
             wb.InvokeScript("execScript", new Object[] { script, "JavaScript" });
+            wb.Visibility = Visibility.Visible;
         }
 
         // Validating urls here although the url's should be validated in the poi tool before reaching this.
@@ -392,13 +393,15 @@ namespace ExampleAppWPF
         {
             m_webBrowser.Visibility = Visibility.Collapsed;
             m_webBrowserSelected = false;
-            m_poiImageContainer.Visibility = Visibility.Collapsed;
-            m_webBrowserSelected = false;
 
             if (eegeoResultModel.ImageUrl != null)
             {
                 m_poiImage.Source = m_placeholderImage;
                 DisplayPoiImage(true);
+            }
+            else
+            {
+                DisplayPoiImage(false);
             }
         }
         protected override void DisplayCustomPoiInfo(Object modelObject)
@@ -418,17 +421,17 @@ namespace ExampleAppWPF
             bool webViewUrlIsValid = false;
             m_poiImageContainer.Visibility = Visibility.Visible;
             m_poiImage.Visibility = Visibility.Collapsed;
-            m_webBrowser.Visibility = Visibility.Visible;
             m_poiImageDivider.Visibility = Visibility.Visible;
 
             m_contentContainer.ScrollToTop();
 
             if (eegeoResultModel.WebViewUrl != null)
             {
+                m_webBrowser.Visibility = Visibility.Hidden;
                 m_webBrowserSelected = true;
                 Uri hyperlink;
                 webViewUrlIsValid = Uri.TryCreate(eegeoResultModel.WebViewUrl, UriKind.Absolute, out hyperlink)
-                && (hyperlink.Scheme == Uri.UriSchemeHttp || hyperlink.Scheme == Uri.UriSchemeHttps);
+                    && (hyperlink.Scheme == Uri.UriSchemeHttp || hyperlink.Scheme == Uri.UriSchemeHttps);
 
                 if (webViewUrlIsValid)
                 {
