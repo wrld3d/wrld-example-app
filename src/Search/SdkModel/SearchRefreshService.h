@@ -45,7 +45,6 @@ namespace ExampleApp
                 double m_previousQueryInterestDistance;
                 bool m_enabled;
                 int m_previousQueryFloorIndex;
-                bool m_interiorHasChanged;
                 Eegeo::Resources::Interiors::InteriorId m_previousQueryInteriorId;
 
             public:
