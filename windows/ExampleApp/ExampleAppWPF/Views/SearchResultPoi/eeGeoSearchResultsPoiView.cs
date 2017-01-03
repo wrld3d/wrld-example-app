@@ -53,6 +53,7 @@ namespace ExampleAppWPF
         private TextBlock m_subTitle;
         private Grid m_titlesGrid;
         private StackPanel m_qrCodeContainer;
+        private ImageSource m_placeholderImage;
 
         private Storyboard m_scrollFadeInAnim;
         private Storyboard m_scrollFadeOutAnim;
@@ -63,6 +64,8 @@ namespace ExampleAppWPF
         private double m_imageContainerHeight;
         private double m_defaultWebViewHeight;
         private double m_maxWebViewHeight;
+
+        private Visibility m_detailsDividerVisibility;
 
         public string PhoneText
         {
@@ -177,6 +180,7 @@ namespace ExampleAppWPF
             m_titleView = (TextBlock)GetTemplateChild("Title");
             
             m_poiImage = (Image)GetTemplateChild("PoiImage");
+            m_placeholderImage = m_poiImage.Source;
 
             var yelpButton = (Image)GetTemplateChild("WebVendorLinkStyle");
 
@@ -249,6 +253,8 @@ namespace ExampleAppWPF
             m_defaultWebViewHeight = (double)Application.Current.Resources["EegeoPOIViewDetailsWebViewDefaultHeight"];
 
             m_maxWebViewHeight = (double)Application.Current.Resources["EegeoPOIViewDetailsWebViewMaxHeight"];
+
+            m_detailsDividerVisibility = (Visibility)Application.Current.Resources["EegeoPOIViewDetailsWebLinksVisibility"];
 
             var mainGrid = (Application.Current.MainWindow as MainWindow).MainGrid;
             var screenWidth = mainGrid.ActualWidth;
@@ -330,9 +336,10 @@ namespace ExampleAppWPF
 
             m_contentContainerLastScrollY = newBrowserHeight;
 
+            bool canScroll = m_contentContainer.ExtentHeight > m_contentContainer.ActualHeight;
             if (m_contentContainer.VerticalOffset == m_contentContainer.ScrollableHeight)
             {
-                if (m_headerFade.Opacity <= 0)
+                if (canScroll && m_headerFade.Opacity <= 0)
                 {
                     m_scrollFadeInAnim.Begin(m_headerFade);
                     m_scrollFadeInAnim.Begin(m_scrollUpButton);
@@ -352,13 +359,13 @@ namespace ExampleAppWPF
                     m_scrollFadeOutAnim.Begin(m_scrollUpButton);
                 }
 
-                if (m_footerFade.Opacity <= 0)
+                if (canScroll && m_footerFade.Opacity <= 0)
                 {
                     m_scrollFadeInAnim.Begin(m_footerFade);
                     m_scrollFadeInAnim.Begin(m_scrollDownButton);
                 }
             }
-            else
+            else if (canScroll)
             {
                 if (m_headerFade.Opacity <= 0)
                 {
@@ -374,25 +381,32 @@ namespace ExampleAppWPF
             }
         }
 
+        private void DisplayPoiImage(bool display)
+        {
+            m_poiImageContainer.Visibility = display ? Visibility.Visible : Visibility.Collapsed;
+            m_poiImage.Visibility = display ? Visibility.Visible : Visibility.Collapsed;
+            m_poiImageDivider.Visibility = display ? Visibility.Visible : Visibility.Collapsed;
+        }
+
         private void HandleNoWebView(EegeoResultModel eegeoResultModel)
         {
             m_webBrowser.Visibility = Visibility.Collapsed;
             m_webBrowserSelected = false;
             m_poiImageContainer.Visibility = Visibility.Collapsed;
             m_webBrowserSelected = false;
-            m_poiImageContainer.Visibility = Visibility.Collapsed;
 
             if (eegeoResultModel.ImageUrl != null)
             {
-                m_poiImageContainer.Visibility = Visibility.Visible;
-                m_poiImage.Visibility = Visibility.Visible;
-                m_poiImageDivider.Visibility = Visibility.Collapsed;
+                m_poiImage.Source = m_placeholderImage;
+                DisplayPoiImage(true);
             }
         }
         protected override void DisplayCustomPoiInfo(Object modelObject)
         {
             m_headerFade.Opacity = 0;
             m_scrollUpButton.Opacity = 0;
+            m_footerFade.Opacity = 0;
+            m_scrollDownButton.Opacity = 0;
 
             ExampleApp.SearchResultModelCLI model = modelObject as ExampleApp.SearchResultModelCLI;
 
@@ -532,7 +546,7 @@ namespace ExampleAppWPF
                 eegeoResultModel.Phone == null &&
                 eegeoResultModel.WebUrl == null;
 
-            if (shouldCollapseDivider)
+            if (shouldCollapseDivider || m_detailsDividerVisibility == Visibility.Collapsed)
             {
                 m_detailsDivider.Visibility = Visibility.Collapsed;
             }
@@ -591,11 +605,19 @@ namespace ExampleAppWPF
         {
             if (hasImage && !m_webBrowserSelected)
             {
-                m_poiImage.Source = LoadImageFromByteArray(imgData);
-                m_poiImage.Visibility = Visibility.Visible;
-                m_poiImageContainer.Visibility = Visibility.Visible;
-                m_poiImageDivider.Visibility = Visibility.Visible;
+                var imageSource = LoadImageFromByteArray(imgData);
+
+                if (imageSource == null)
+                {
+                    DisplayPoiImage(false);
+                }
+                else
+                {
+                    m_poiImage.Source = imageSource;
+                    DisplayPoiImage(true);
+                }
             }
+
             m_previewImageSpinner.Visibility = Visibility.Collapsed;
         }
 

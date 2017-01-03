@@ -3,8 +3,7 @@
 #include "SenionLabLocationController.h"
 #include "InteriorSelectionModel.h"
 #include "InteriorInteractionModel.h"
-#include <map>
-#include <string>
+#include "IPSConfigurationParser.h"
 
 namespace ExampleApp
 {
@@ -13,12 +12,12 @@ namespace ExampleApp
         SenionLabLocationController::SenionLabLocationController(SenionLabLocationManager& locationManager,
                                                                  ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                                                  const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                                 const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration)
+                                                                 Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository)
         : m_locationManager(locationManager)
         , m_appModeModel(appModeModel)
         , m_interiorSelectionModel(interiorSelectionModel)
-        , m_applicationConfiguration(applicationConfiguration)
         , m_appModeChangedCallback(this, &SenionLabLocationController::OnAppModeChanged)
+        , m_interiorMetaDataRepository(interiorMetaDataRepository)
         {
             m_appModeModel.RegisterAppModeChangedCallback(m_appModeChangedCallback);
         }
@@ -31,12 +30,22 @@ namespace ExampleApp
         void SenionLabLocationController::OnAppModeChanged()
         {
             Eegeo::Resources::Interiors::InteriorId interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
-         
+            std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo> interiorTrackingInfoList;
+            
+            if(interiorId.IsValid())
+            {
+                InteriorsPosition::TryAndGetInteriorTrackingInfo(interiorTrackingInfoList, interiorId, m_interiorMetaDataRepository);
+            }
+            else
+            {
+                return;
+            }
+            
             [&m_locationManager StopUpdatingLocation];
          
             if(m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode)
             {
-                const std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& trackingInfoMap = m_applicationConfiguration.InteriorTrackingInfo();
+                const std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& trackingInfoMap = interiorTrackingInfoList;
                 const std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>::const_iterator it = trackingInfoMap.find(interiorId.Value());
          
                 if(it != trackingInfoMap.end())

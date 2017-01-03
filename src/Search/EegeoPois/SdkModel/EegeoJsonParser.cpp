@@ -231,7 +231,6 @@ namespace ExampleApp
                     
                     if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
                     {
-                        
                         if(json.HasMember(phoneName.c_str()) && json[phoneName.c_str()].IsString())
                         {
                             phone = json[phoneName.c_str()].GetString();
@@ -255,9 +254,6 @@ namespace ExampleApp
                         if(json.HasMember(imageName.c_str()) && json[imageName.c_str()].IsString())
                         {
                             imageUrl = json[imageName.c_str()].GetString();
-                            const size_t lastSlashIndex(imageUrl.rfind("/"));
-                            Eegeo_ASSERT(lastSlashIndex != std::string::npos, "The image_url is not well formed: %s.\n",
-                                         imageUrl.c_str());
                         }
                         
                         if(json.HasMember(facebookName.c_str()) && json[facebookName.c_str()].IsString())
@@ -303,10 +299,14 @@ namespace ExampleApp
                     if(searchResultModel.GetVendor() == ExampleApp::Search::EegeoVendorName)
                     {
                         Search::EegeoPois::SdkModel::EegeoSearchResultModel eegeoResultModel = Search::EegeoPois::SdkModel::TransformToEegeoSearchResult(searchResultModel);
-                        
-                        out_imageUrl = eegeoResultModel.GetImageUrl();
-                        
-                        return true;
+                        const size_t lastSlashIndex(eegeoResultModel.GetImageUrl().rfind("/"));
+
+                        if (lastSlashIndex != std::string::npos)
+                        {
+                            out_imageUrl = eegeoResultModel.GetImageUrl();
+
+                            return true;
+                        }
                     }
                     
                     return false;

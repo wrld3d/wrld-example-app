@@ -176,10 +176,10 @@
                 <ControlTemplate TargetType="{x:Type local:YelpSearchResultsPoiView}">
                     <ControlTemplate.Resources>
                         <Storyboard x:Key="ScrollFadeIn">
-                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0.0" To="1.0" Duration="0:0:1"/>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1.0" Duration="0:0:1"/>
                         </Storyboard>
                         <Storyboard x:Key="ScrollFadeOut">
-                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1.0" To="0.0" Duration="0:0:1"/>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.0" Duration="0:0:1"/>
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <Grid Name="SearchresultsPoiViewContainer" Width="{DynamicResource YelpPOIViewContainerWidth}" Height="Auto" Background="White" Margin="{DynamicResource YelpPOIViewContainerMargin}">
