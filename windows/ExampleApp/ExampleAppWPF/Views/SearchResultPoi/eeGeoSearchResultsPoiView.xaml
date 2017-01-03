@@ -186,7 +186,7 @@
                         <Grid Width="{DynamicResource EegeoPOIViewContainerInnerWidth}"  Margin="{DynamicResource EegeoPOIViewContainerInnerMargin}">
                             <Grid Background="White">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="{DynamicResource EegeoPOIViewContainerRow0Height}"/>
+                                    <RowDefinition Height="Auto" MinHeight="{DynamicResource EegeoPOIViewContainerRow0Height}"/>
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="{DynamicResource EegeoPOIViewContainerRow2Height}"/>
                                 </Grid.RowDefinitions>
