@@ -186,7 +186,7 @@
                         <Grid Width="{DynamicResource EegeoPOIViewContainerInnerWidth}"  Margin="{DynamicResource EegeoPOIViewContainerInnerMargin}">
                             <Grid Background="White">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="{DynamicResource EegeoPOIViewContainerRow0Height}"/>
+                                    <RowDefinition Height="Auto" MinHeight="{DynamicResource EegeoPOIViewContainerRow0Height}"/>
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="{DynamicResource EegeoPOIViewContainerRow2Height}"/>
                                 </Grid.RowDefinitions>
@@ -286,7 +286,6 @@
                                                         </Canvas>
                                                         <TextBlock Name="WebAddress" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=WebAddressText}" FontSize="18" Margin="25,-4,0,0" Foreground="{StaticResource Gold}" FontFamily="{DynamicResource PrimaryUIFont}"></TextBlock>
                                                     </Grid>
-
                                                     <WrapPanel x:Name="SocialLinkIcons" Height="Auto" Margin="30,0,-30,15" Width="Auto" HorizontalAlignment="Left" >
                                                         <Image x:Name="SocialIcon_Mail" Source="/Assets/social_icon_mail.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="54" Height="54" Margin="0,0,25,0" />
                                                         <Image x:Name="SocialIcon_FB" Source="/Assets/social_icon_fb.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="54" Height="54" Margin="0,0,25,0" />
