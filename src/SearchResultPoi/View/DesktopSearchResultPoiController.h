@@ -28,8 +28,11 @@ namespace ExampleApp
 
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                 Eegeo::Helpers::TCallback1<DesktopSearchResultPoiController, const Eegeo::Resources::Interiors::InteriorId> m_interiorChangedCallback;
+                Eegeo::Helpers::TCallback1<DesktopSearchResultPoiController, const AppModes::AppModeChangedMessage&> m_appModeChangedHandler;
 
                 void OnInteriorSelectionChanged(const Eegeo::Resources::Interiors::InteriorId& interiorId);
+
+                void OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message);
 
             public:
                 DesktopSearchResultPoiController(ISearchResultPoiView& view,
