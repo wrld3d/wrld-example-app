@@ -16,7 +16,7 @@ namespace ExampleApp
             , m_screenViewModel(identity)
             {
             }
-            
+
             Eegeo::Helpers::TIdentity MenuViewModel::GetIdentity() const
             {
                 return m_identity;
@@ -141,6 +141,6 @@ namespace ExampleApp
             {
                 return m_sectionsViewModel.GetMenuSection(index);
             }
-        }
+       }
     }
 }

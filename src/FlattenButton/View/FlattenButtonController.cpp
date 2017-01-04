@@ -37,7 +37,10 @@ namespace ExampleApp
                 {
                     case MyPinCreation::Inactive:
                     {
-                        m_viewModel.AddToScreen();
+                        if (m_appModeAllowsOpen)
+                        {
+                            m_viewModel.AddToScreen();
+                        }
                     }break;
                     case MyPinCreation::Ring:
                     {
