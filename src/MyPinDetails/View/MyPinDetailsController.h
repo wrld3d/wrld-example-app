@@ -28,6 +28,8 @@ namespace ExampleApp
                 void OnDismissed();
                 void OnRemovePin();
 
+                void OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message);
+
                 IMyPinDetailsView& m_view;
                 IMyPinDetailsViewModel& m_viewModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
@@ -37,6 +39,8 @@ namespace ExampleApp
 
                 Eegeo::Helpers::TCallback0<MyPinDetailsController> m_viewRemovePinCallback;
                 Eegeo::Helpers::TCallback0<MyPinDetailsController> m_viewDismissedCallback;
+
+                Eegeo::Helpers::TCallback1<MyPinDetailsController, const AppModes::AppModeChangedMessage&> m_appModeChangedHandler;
             };
         }
     }
